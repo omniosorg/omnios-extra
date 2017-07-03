@@ -20,7 +20,7 @@ upstream        https://github.com/illumos/illumos-gate (push)
 $ git checkout upstream
 Branch upstream set up to track remote branch upstream from origin.
 Switched to a new branch 'upstream'
-illumos-omnios:upstream% git pull upstream master
+$ git pull upstream master
 remote: Counting objects: 1115, done.
 remote: Total 1115 (delta 804), reused 804 (delta 804), pack-reused 311
 Receiving objects: 100% (1115/1115), 543.67 KiB | 448.00 KiB/s, done.
