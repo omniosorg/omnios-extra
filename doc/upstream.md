@@ -5,7 +5,7 @@
 
 This process is easier if you set up a git remote called _upstream_
 
-```Shell Session
+```shell
 $ git remote add -t master upstream https://github.com/illumos/illumos-gate
 $ git remote -v
 origin  https://github.com/omniosorg/illumos-omnios.git (fetch)
@@ -16,7 +16,7 @@ upstream        https://github.com/illumos/illumos-gate (push)
 
 ## Check out and update the upstream branch
 
-```Shell Session
+```shell
 $ git checkout upstream
 Branch upstream set up to track remote branch upstream from origin.
 Switched to a new branch 'upstream'
@@ -49,7 +49,7 @@ to create a pull request. The branch name should be
 _upstream-merge/YYYYMMMMDDnn_ where _nn_ starts at 01 and is incremented in
 the case that there is more than one merge in the same day.
 
-```Shell Session
+```shell
 $ git checkout -b upstream-merge/2017070301
 Switched to a new branch 'upstream-merge/2017070301'
 ```
@@ -65,7 +65,7 @@ TBC...
 
 ### Process for a failed merge
 
-```Shell Session
+```shell
 $ git merge upstream
 Auto-merging usr/src/uts/intel/sys/ucontext.h
 ... additional output deleted ...
@@ -82,7 +82,7 @@ Unmerged paths:
 Once you have manually resolved the conflicts, add the files and commit
 the change.
 
-```Shell Session
+```shell
 $ git add usr/src/head/lastlog.h
 $ git add usr/src/man/man1m/zonecfg.1m
 $ git commit -m 'Merge upstream'
@@ -91,7 +91,7 @@ $ git commit -m 'Merge upstream'
 
 ## Push the merged branch
 
-```Shell Session
+```shell
 $ git push --set-upstream origin upstream-merge/2017070301
 Counting objects: 1224, done.
 Delta compression using up to 40 threads.
