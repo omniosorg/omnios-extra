@@ -120,9 +120,9 @@ upstream-merge branch to the master. Take care to change the _base fork_
 value to _omniosorg/master_ as it will default to the upstream OmniTI
 repository.
 
-Review the list of commits included in this merge and include any which
+* Include the `mail_msg` file from the test build;
+* Review the list of commits included in this merge and include any which
 are backport candidates in the description of the PR. If there are none
-state that too.
-
-Assign reviewers and the _upstream-merge_ tag.
+state that too;
+* Assign reviewers and the _upstream-merge_ tag.
 
