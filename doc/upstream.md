@@ -89,6 +89,15 @@ $ git commit -m 'Merge upstream'
 [upstream-merge/2017070301 8a5908ecf9] Merge upstream
 ```
 
+## Perform a test build
+
+```shell
+$ nightly /path/to/omnios.env
+```
+
+If the build is unsuccessful, resolve this before moving on to the next
+step.
+
 ## Push the merged branch
 
 ```shell
