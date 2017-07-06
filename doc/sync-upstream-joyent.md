@@ -139,6 +139,9 @@ GOING TO CHERRYPICK!
 You're on your own now.
 ```
 
+If the merge fails, you will have to manually resolve it before proceeding
+to the next commit.
+
 You will eventually reach the end of the commit list and see:
 
 ```
@@ -180,6 +183,12 @@ $ nightly /path/to/omnios.env
 If the build is unsuccessful, resolve this before moving on to the next
 step.
 
+## Update the last commit version in README.OmniOS
+
+Modify the README.OmniOS file in the upstream branch to reflect the latest
+Joyent commit which has been evaluated. This will be part of the pull
+request.
+
 ## Push the merged branch
 
 ```shell
@@ -209,5 +218,5 @@ $ git add 2017/Jul05
 $ git commit -m 'Updated LX port data for Jul05'
 ```
 
-## Update the last commit version in README.OmniOS
+
 
