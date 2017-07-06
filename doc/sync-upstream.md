@@ -85,8 +85,7 @@ the change.
 ```shell
 $ git add usr/src/head/lastlog.h
 $ git add usr/src/man/man1m/zonecfg.1m
-$ git commit -m 'Merge upstream'
-[upstream-merge/2017070301 8a5908ecf9] Merge upstream
+$ git commit
 ```
 
 ## Perform a test build
