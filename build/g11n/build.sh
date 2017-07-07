@@ -43,7 +43,7 @@ VER=$PVER
 BUILDNUM=$RELVER
 if [[ -z "$PKGPUBLISHER" ]]; then
     logerr "No PKGPUBLISHER specified in config.sh"
-    exit # Force it, we're fucked here.
+    exit
 fi
 
 GIT=/usr/bin/git
@@ -58,7 +58,7 @@ clone_source(){
     logcmd mkdir -p $TMPDIR/$BUILDDIR
     pushd $TMPDIR/$BUILDDIR > /dev/null 
     if [[ ! -d g11n ]]; then
-        logcmd  $GIT clone -b omni anon@src.omniti.com:~omnios/core/g11n
+        logcmd  $GIT clone -b omni https://github.com/omniosorg/g11n.git
     fi
     logcmd  cd g11n || logerr "g11n inaccessible"
     SRC=$TMPDIR/$BUILDDIR/g11n

@@ -505,7 +505,7 @@ get_resource() {
 #
 # E.g.
 #       download_source myprog myprog 1.2.3 will try:
-#       http://mirrors.omniti.com/myprog/myprog-1.2.3.tar.gz
+#       http://mirrors.omniosce.org/myprog/myprog-1.2.3.tar.gz
 download_source() {
     local DLDIR=$1
     local PROG=$2
@@ -680,7 +680,7 @@ make_package() {
     fi
     echo "set name=pkg.summary value=\"$SUMMARY\"" >> $MY_MOG_FILE
     echo "set name=pkg.descr value=\"$DESCSTR\"" >> $MY_MOG_FILE
-    echo "set name=publisher value=\"sa@omniti.com\"" >> $MY_MOG_FILE
+    echo "set name=publisher value=\"sa@omniosce.org\"" >> $MY_MOG_FILE
     if [[ -f $SRCDIR/local.mog ]]; then
         LOCAL_MOG_FILE=$SRCDIR/local.mog
     fi
