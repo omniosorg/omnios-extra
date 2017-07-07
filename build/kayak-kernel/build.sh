@@ -89,7 +89,7 @@ clone_source() {
         logmsg "--- old checkout found, removing it."
         logcmd rm -rf kayak
     fi
-    logcmd $GIT clone https://github.com/omniti-labs/kayak
+    logcmd $GIT clone https://github.com/omniosorg/kayak
     pushd kayak > /dev/null
     logcmd $GIT checkout r$RELVER || logmsg "No r$RELVER branch, using master."
     GITREV=`$GIT log -1  --format=format:%at`
