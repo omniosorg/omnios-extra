@@ -11,8 +11,8 @@ if [ ! -x "$dir/buildctl" ]; then
 	exit 1
 fi
 
-find $dir -type f -name \*build\*.sh -exec grep -h BUILD_DEPENDS_IPS {} + | \
-    sed -n '
+find $dir -type f -name \*build\*.sh \
+    -exec ggrep -A1 -h BUILD_DEPENDS_IPS {} + | sed -n '
 	/=/ {
 		# Remove quotes
 		s/["'"'"']//g
@@ -22,6 +22,8 @@ find $dir -type f -name \*build\*.sh -exec grep -h BUILD_DEPENDS_IPS {} + | \
 		s/\$[^ ]* *//g
 		# Remove comments
 		s/^ *#.*//
+		# Remove specific versions
+		s/@[^ ]* *//
 		# Swap whitespace for = (tr will switch to newline)
 		s/  */=/g
 		# Skip lines now blank
@@ -29,7 +31,10 @@ find $dir -type f -name \*build\*.sh -exec grep -h BUILD_DEPENDS_IPS {} + | \
 		p
 	}
 ' | tr '=' '\n' | sort | uniq | sed '
+	/^\//d
+	/SUNWcs/d
 	/^gcc[0-9]*$/d
+	/^[0-9]/d
 	/^auto/d
 	/^omniti/d
 	/^developer\/gcc44/d
