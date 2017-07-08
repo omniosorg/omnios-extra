@@ -23,6 +23,11 @@ KAYAK_CLOBBER=${KAYAK_CLOBBER:=0}
 # Load support functions
 . ../../lib/functions.sh
 
+if [ -n "$SKIP_KAYAK_KERNEL" ]; then
+    logmsg "Skipping kayak-kernel build"
+    exit 0
+fi
+
 # Reality check.
 if [[ "$UID" == 0 ]]; then
     SUDO=""
@@ -31,7 +36,7 @@ elif [[ ! -z $KAYAK_SUDO_BUILD ]]; then
     SUDO="sudo -n"
     OLDUSER=`whoami`
 else
-    logerr "--- You must be root or set KAYAK_SUDO_BUILD and have no-password sudo enabled"
+    logerr "--- You must be root or set KAYAK_SUDO_BUILD, and be in the global zone"
     logmsg "Proceeding as if KAYAK_SUDO_BUILD was set to 1."
     KAYAK_SUDO_BUILD=1
     SUDO="sudo -n"
