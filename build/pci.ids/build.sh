@@ -33,7 +33,7 @@ FORMAT=2.2
 PCIIDS_PATH=usr/src/data/hwdata/${PROG}
 LOCAL_PCIIDS=${PREBUILT_ILLUMOS}/${PCIIDS_PATH}
 BRANCH=$(git branch | fgrep \* | awk '{print $2}')
-GITHUB_PREFIX=https://github.com/omniti-labs/illumos-omnios/raw
+GITHUB_PREFIX=https://github.com/omniosorg/illumos-omnios/raw
 GITHUB_PCIIDS=${GITHUB_PREFIX}/${BRANCH}/${PCIIDS_PATH}
 
 # We should grab the pci.ids from $PREBUILT_ILLUMOS so we match the illumos

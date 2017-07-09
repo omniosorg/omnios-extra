@@ -32,8 +32,8 @@ VER=4.4.4
 #
 # The ILLUMOSVER is the suffix of the tag gcc-4.4.4-<ILLUMOSVER>.
 # It takes the form "il-N" for some number N.  These are announced to the
-# illumos developer's list, and it is expected that OmniTI will keep a
-# copy at mirrors.omniti.com, or local maintainers keep it whereever they
+# illumos developer's list, and it is expected that OmniOSce will keep a
+# copy at mirrors.omniosce.org, or local maintainers keep it whereever they
 # keep their local mirrors.
 #
 ILLUMOSVER=il-4
