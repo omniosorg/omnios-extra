@@ -1,0 +1,49 @@
+set name=pkg.fmri value=pkg://@PKGPUBLISHER@/developer/omnios-build-tools@11,5.11-@PVER@
+set name=pkg.depend.install-hold value=core-os.omnios
+set name=pkg.summary value="Single meta-package containing required tools to build omnios."
+set name=pkg.description value="Single meta-package containing required tools to build omnios."
+
+depend fmri=archiver/gnu-tar type=require
+depend fmri=compatibility/ucb type=require
+depend fmri=compress/xz type=require
+depend fmri=developer/build/autoconf type=require
+depend fmri=developer/build/automake type=require
+depend fmri=developer/build/gnu-make type=require
+depend fmri=developer/build/libtool type=require
+depend fmri=developer/dtrace type=require
+depend fmri=developer/illumos-tools type=require
+depend fmri=developer/lexer/flex type=require
+depend fmri=developer/macro/gnu-m4 type=require
+depend fmri=developer/parser/bison type=require
+depend fmri=developer/pkg-config type=require
+depend fmri=developer/sunstudio12.1 type=require
+depend fmri=developer/versioning/git type=require
+depend fmri=developer/versioning/mercurial type=require
+depend fmri=driver/ipmi type=require
+depend fmri=file/gnu-coreutils type=require
+depend fmri=library/expat type=require
+depend fmri=library/glib2 type=require
+depend fmri=library/gmp type=require
+depend fmri=library/idnkit type=require
+depend fmri=library/libffi type=require
+depend fmri=library/libidn type=require
+depend fmri=library/nspr/header-nspr type=require
+depend fmri=library/security/openssl type=require
+depend fmri=library/security/opensslweb/ca-bundle type=require
+depend fmri=library/zlib type=require
+depend fmri=network/rsync type=require
+depend fmri=runtime/java type=require
+depend fmri=runtime/perl type=require
+depend fmri=runtime/perl-64 type=require
+depend fmri=runtime/perl/manual type=require
+depend fmri=runtime/python-27 type=require
+depend fmri=service/network/tftp type=require
+depend fmri=sunstudio12.1 type=require
+depend fmri=swig type=require
+depend fmri=system/header/header-audio type=require
+depend fmri=system/library type=require
+depend fmri=system/library/gcc-5-runtime type=require
+depend fmri=system/library/math type=require
+depend fmri=system/zones/internal type=require
+depend fmri=text/gnu-sed type=require
+
