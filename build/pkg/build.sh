@@ -47,7 +47,7 @@ GIT=/usr/bin/git
 HEADERS="libbrand.h libuutil.h libzonecfg.h"
 BRAND_CFLAGS="-I./gate-include"
 
-BUILD_DEPENDS_IPS="developer/versioning/git developer/versioning/mercurial system/zones/internal"
+BUILD_DEPENDS_IPS="developer/versioning/git developer/versioning/mercurial system/zones/internal text/intltool"
 DEPENDS_IPS="runtime/python-27"
 
 crib_headers(){
