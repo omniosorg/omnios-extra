@@ -1,7 +1,7 @@
 set name=pkg.fmri value=pkg://@PKGPUBLISHER@/developer/sunstudio12.1@12.1,5.11-@PVER@:20110928T020752Z
 set name=pkg.summary value="sunstudio - Sun Studio"
 set name=pkg.descr value="sunstudio - Sun Studio (12.1)"
-set name=publisher value=sa@omniti.com
+set name=publisher value=sa@omniosce.org
 dir  path=opt/sunstudio12.1 owner=root group=bin mode=0755
 dir  path=opt/sunstudio12.1/LEGAL owner=root group=bin mode=0755
 file opt/sunstudio12.1/LEGAL/Copyright.html path=opt/sunstudio12.1/LEGAL/Copyright.html owner=root group=bin mode=0644

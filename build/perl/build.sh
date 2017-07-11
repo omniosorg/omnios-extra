@@ -65,7 +65,7 @@ PERL_BUILD_OPTS_COMMON="-des \
         -Umydomain \
         -Umyuname \
         -Dcf_by=omnios-builder \
-        -Dcf_email=omnios-builder@omniti.com \
+        -Dcf_email=omnios-builder@omniosce.org \
         -Dcc=gcc \
         -Dld=/usr/ccs/bin/ld \
         -Doptimize=-O3"

@@ -33,7 +33,7 @@ PVER=0.$RELVER
 
 # Which server to fetch files from.
 # If $MIRROR begins with a '/', it is treated as a local directory.
-MIRROR=mirrors.omniti.com
+MIRROR=https://mirrors.omniosce.org
 
 # Default prefix for packages (may be overridden)
 PREFIX=/usr

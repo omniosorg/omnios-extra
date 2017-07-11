@@ -39,7 +39,7 @@ VER=omni
 BUILDNUM=$RELVER
 if [[ -z "$PKGPUBLISHER" ]]; then
     logerr "No PKGPUBLISHER specified. Check lib/site.sh?"
-    exit # Force it, we're fucked here.
+    exit
 fi
 
 GIT=/usr/bin/git
@@ -47,7 +47,7 @@ GIT=/usr/bin/git
 HEADERS="libbrand.h libuutil.h libzonecfg.h"
 BRAND_CFLAGS="-I./gate-include"
 
-BUILD_DEPENDS_IPS="developer/versioning/git developer/versioning/mercurial system/zones/internal"
+BUILD_DEPENDS_IPS="developer/versioning/git developer/versioning/mercurial system/zones/internal text/intltool"
 DEPENDS_IPS="runtime/python-27"
 
 crib_headers(){
@@ -67,7 +67,7 @@ crib_headers(){
 }
 
 # Respect an environmental override on this, for development's sake.
-PKG_SOURCE_REPO=${PKG_SOURCE_REPO:-https://github.com/omniti-labs/pkg5}
+PKG_SOURCE_REPO=${PKG_SOURCE_REPO:-https://github.com/omniosorg/pkg5}
 
 clone_source(){
     logmsg "pkg -> $TMPDIR/$BUILDDIR/pkg"

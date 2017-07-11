@@ -57,8 +57,7 @@ CODEMGR_WS=$TMPDIR/$BUILDDIR/illumos-omnios
 #Since these variables are used in a sed statment make sure to escape properly
 ILLUMOS_NO="NIGHTLY\_OPTIONS=\'\-nDCmpr\'"
 ILLUMOS_CODEMGR_WS="CODEMGR\_WS=/code/$BUILDDIR/illumos\-omnios"
-#ILLUMOS_CLONE_WS="CLONE\_WS=\'ssh://anonhg@hg.illumos.org/illumos\-gate\'"
-ILLUMOS_CLONE_WS="CLONE\_WS=\'anon@src.omniti.com:~omnios/core/illumos\-omnios\'"
+ILLUMOS_CLONE_WS="CLONE\_WS=\'https:\/\/github.com\/omniosorg/illumos\-omnios'"
 
 ILLUMOS_PKG_REDIST="PKGPUBLISHER\_REDIST=\'omnios\'"
 
@@ -94,7 +93,7 @@ clone_source(){
         logmsg "OMNI Illumos Source in place. Using existing workspace."
     else
         logmsg "Cloning OMNI Illumos Source..."
-        logcmd  $GIT clone anon@src.omniti.com:~omnios/core/illumos-omnios || \
+        logcmd  $GIT clone https://github.com/omniosorg/illumos-omnios.git || \
             logerr "--- Failed to clone source"
     fi
     pushd illumos-omnios 
@@ -152,7 +151,7 @@ closed_bins() {
     logmsg "Getting Closed Source Bins..."
     for bin in on-closed-bins.i386.tar.bz2 on-closed-bins-nd.i386.tar.bz2 ; do
 	if [[ ! -f $bin ]]; then
-            logcmd curl -s -O http://mirrors.omniti.com/illumos-gate/$bin
+            logcmd curl -s -O $MIRROR/illumos-gate/$bin
 	fi
     	logcmd tar xvpf $bin
     done
