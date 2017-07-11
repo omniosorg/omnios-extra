@@ -33,7 +33,7 @@ VERHUMAN=$VER   # Human-readable version
 NSSVER=3.30.2   # Keep this in sync with the version of system/library/mozilla-nss
 PKG=web/ca-bundle  # Package name (without prefix)
 SUMMARY="$PROG - Bundle of SSL Root CA certificates"
-DESC="SSL Root CA certificates extracted from mozilla-nss $NSSVER source, plus OmniTI CA cert."
+DESC="SSL Root CA certificates extracted from mozilla-nss $NSSVER source, plus OmniOSce CA cert."
 
 BUILDARCH=32
 
@@ -78,9 +78,9 @@ install_pem() {
   popd > /dev/null
 }
 
-# Install the OmniTI CA cert separately, to be used by pkg(1)
+# Install the OmniOSce CA cert separately, to be used by pkg(1)
 install_omniti_cacert() {
-  logmsg "Installing OmniTI CA certs for pkg(1) use"
+  logmsg "Installing OmniOSce CA certs for pkg(1) use"
   logcmd mkdir -p $DESTDIR/etc/ssl/pkg
 
   for cert in $SRCDIR/files/*.pem; do
