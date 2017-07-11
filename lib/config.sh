@@ -65,9 +65,7 @@ NOSCRIPTSTUB=
 #############################################################################
 
 # libffi --> use pkg(5) to determine what we're running:
-FFIVERS=`pkg list libffi | grep libffi | awk '{print $2}' | \
-	awk -F- '{print $1}'`
-
+FFIVERS=`pkg list -H libffi | awk '{print $(NF-1)}' | cut -d- -f1`
 
 #############################################################################
 # Perl stuff
