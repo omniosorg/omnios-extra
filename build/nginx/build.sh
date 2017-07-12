@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=nginx
-VER=1.12.0
+VER=1.12.1
 VERHUMAN=$VER
 PKG=ooce/server/nginx
 SUMMARY="nginx web server"
