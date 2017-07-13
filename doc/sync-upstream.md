@@ -1,57 +1,69 @@
 
-# Keeping up-to-date with upstream illumos gate.
+# Keeping up-to-date with upstream illumos-gate and illumos-joyent.
 
 ## Initial repository configuration
 
-This process is easier if you set up a git remote called _upstream_
+Fork the _illumos-omnios_ repository to your personal GitHub profile.
+Then clone it to your development machine.
 
 ```shell
-$ git remote add -t master upstream https://github.com/illumos/illumos-gate
+$ git clone git@github.com:<github_name>/illumos-omnios.git
+```
+
+Set-up remote repositories.
+
+```shell
+$ git remote add upstream git@github.com:omniosorg/illumos-omnios.git
+$ git remote add -t master upstream_gate https://github.com/illumos/illumos-gate.git
+$ git remote add -t master upstream_joyent https://github.com/joyent/illumos-joyent.git
 $ git remote -v
-origin  https://github.com/omniosorg/illumos-omnios.git (fetch)
-origin  https://github.com/omniosorg/illumos-omnios.git (push)
-upstream        https://github.com/illumos/illumos-gate (fetch)
-upstream        https://github.com/illumos/illumos-gate (push)
+origin  git@github.com:<github_name>/illumos-omnios.git (fetch)
+origin  git@github.com:<github_name>/illumos-omnios.git (push)
+upstream    git@github.com:omniosorg/illumos-omnios.git (fetch)
+upstream    git@github.com:omniosorg/illumos-omnios.git (push)
+upstream_gate   https://github.com/illumos/illumos-gate.git (fetch)
+upstream_gate   https://github.com/illumos/illumos-gate.git (push)
+upstream_joyent https://github.com/joyent/illumos-joyent.git (fetch)
+upstream_joyent https://github.com/joyent/illumos-joyent.git (push)
 ```
 
-## Check out and update the upstream branch
+## Update your local repository
+
+Update your local repository.
 
 ```shell
-$ git checkout upstream
-Branch upstream set up to track remote branch upstream from origin.
-Switched to a new branch 'upstream'
+$ git checkout master
 $ git pull upstream master
-remote: Counting objects: 1115, done.
-remote: Total 1115 (delta 804), reused 804 (delta 804), pack-reused 311
-Receiving objects: 100% (1115/1115), 543.67 KiB | 448.00 KiB/s, done.
-Resolving deltas: 100% (909/909), completed with 676 local objects.
-From https://github.com/illumos/illumos-gate
- * branch                  master     -> FETCH_HEAD
- * [new branch]            master     -> upstream/master
-Updating a40ea1a7d8..8902f61a33
-Fast-forward
-... lots of output ...
 
-$ git status .
-On branch upstream
-Your branch is ahead of 'origin/upstream' by 34 commits.
-  (use "git push" to publish your local commits)
-nothing to commit, working tree clean
+$ git checkout upstream
+$ git pull upstream_gate master
+
+$ git checkout upstream_joyent
+$ git pull upstream_joyent master
 ```
 
-Since the upstream branch tracks illumos-gate/master, this should always
+Since the upstream branches track the remotes, this should always
 result in a clean working tree.
+
+Push the upstream branches to the remote repositories.
+
+```shell
+$ git push -u upstream upstream
+$ git push -u upstream upstream_joyent
+
+$ git push -u origin upstream
+$ git push -u origin upstream_joyent
+```
 
 ## Merge upstream changes into new branch
 
 Create a new branch into which the upstream changes will be merged in order
 to create a pull request. The branch name should be
-_upstream-merge/YYYYMMMMDDnn_ where _nn_ starts at 01 and is incremented in
+_upstream-merge/YYYYMMDDnn_ where _nn_ starts at 01 and is incremented in
 the case that there is more than one merge in the same day.
 
 ```shell
-$ git checkout -b upstream-merge/2017070301
-Switched to a new branch 'upstream-merge/2017070301'
+$ git checkout -b upstream-merge/2017070301 master
 ```
 
 Merge the upstream changes. This will either complete successfully or produce
@@ -61,7 +73,13 @@ accompanying infrastructure.
 
 ### Process for a successful merge
 
-TBC...
+```shell
+$ git merge upstream
+
+$ git status
+On branch upstream-merge/2017070301
+nothing to commit, working tree clean
+```
 
 ### Process for a failed merge
 
@@ -100,7 +118,7 @@ step.
 ## Push the merged branch
 
 ```shell
-$ git push --set-upstream origin upstream-merge/2017070301
+$ git push -u origin upstream-merge/2017070301
 Counting objects: 1224, done.
 Delta compression using up to 40 threads.
 Compressing objects: 100% (352/352), done.
