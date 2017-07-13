@@ -125,7 +125,7 @@ Compressing objects: 100% (352/352), done.
 Writing objects: 100% (1224/1224), 401.27 KiB | 0 bytes/s, done.
 Total 1224 (delta 1017), reused 1022 (delta 826)
 remote: Resolving deltas: 100% (1017/1017), completed with 742 local objects.
-To https://github.com/omniosorg/illumos-omnios.git
+To https://github.com/<github_name>/illumos-omnios.git
  * [new branch]            upstream-merge/2017070301 -> upstream-merge/2017070301
 Branch upstream-merge/2017070301 set up to track remote branch upstream-merge/2017070301 from origin.
 ```
@@ -133,9 +133,7 @@ Branch upstream-merge/2017070301 set up to track remote branch upstream-merge/20
 ## Create a pull request
 
 Use the Github web-interface to create a pull request from the new
-upstream-merge branch to the master. Take care to change the _base fork_
-value to _omniosorg/master_ as it will default to the upstream OmniTI
-repository.
+upstream-merge branch to the master.
 
 * Include the `mail_msg` file from the test build;
 * Review the list of commits included in this merge and include any which
@@ -143,3 +141,4 @@ are backport candidates in the description of the PR. If there are none
 state that too;
 * Assign reviewers and the _upstream-merge_ tag.
 
+As soon as your PR got merged, head over to _sync-upstream-joyent.md_.
