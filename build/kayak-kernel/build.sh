@@ -36,11 +36,37 @@ elif [[ ! -z $KAYAK_SUDO_BUILD ]]; then
     SUDO="sudo -n"
     OLDUSER=`whoami`
 else
-    logerr "--- You must be root or set KAYAK_SUDO_BUILD, and be in the global zone"
+    logerr "--- You must be root or set KAYAK_SUDO_BUILD"
     logmsg "Proceeding as if KAYAK_SUDO_BUILD was set to 1."
     KAYAK_SUDO_BUILD=1
     SUDO="sudo -n"
     OLDUSER=`whoami`
+fi
+
+# The kernel and pxeboot binaries and must be accessible.
+# If not running in the global zone then loopback mounts should be created
+# via zonecfg. UFS must also be added to the allowed filesystems so that
+# the miniroot can be built via a lofi device.
+#   add fs
+#       set dir=/platform/i86pc/kernel/amd64
+#       set special=/platform/i86pc/kernel/amd64
+#       set type=lofs
+#       set options=ro
+#   add fs
+#       set dir=/boot
+#       set special=/boot
+#       set type=lofs
+#       set options=ro
+#   set fs-allowed=ufs
+
+if [ ! -r /platform/i86pc/kernel/amd64/unix ]; then
+    logerr "--- Cannot access kernel binary."\
+        "Run in global zone or add loopback mount."
+fi
+
+if [ ! -r /boot/pxeboot ]; then
+    logerr "--- Cannot access pxeboot binary."\
+        "Run in global zone or add loopback mount."
 fi
 
 # Explicitly figure out BATCH so the sudo-bits can honor it.
@@ -64,15 +90,11 @@ else
     PREBUILT_ILLUMOS="/dev/null"
 fi
 
-# We also need to be in the global zone to access the kernel binary
-if [[ `zonename` != "global" ]]; then
-    logerr "--- This script must be run in the global zone."
-fi
-
 VER=1.1
 GIT=/usr/bin/git
 CHECKOUTDIR=$TMPDIR/$BUILDDIR
 IMG_DSET=rpool/kayak_image
+[ -n "$KAYAK_IMG_DSET" ] && IMG_DSET=$KAYAK_IMG_DSET
 # NOTE: If PKGURL is specified, allow it to be different than the destination
 # PKGSRVR.  PKGURL is from where kayak-kernel takes its bits. PKGSRVR is where
 # this package (with a prebuilt miniroot and unix) will be installed.
