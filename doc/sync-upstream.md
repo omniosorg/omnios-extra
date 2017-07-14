@@ -3,7 +3,7 @@
 
 ## Initial repository configuration
 
-Fork the _illumos-omnios_ repository to your personal GitHub profile.
+Fork the _omniosorg/illumos-omnios_ repository to your personal GitHub profile.
 Then clone it to your development machine.
 
 ```shell
@@ -35,7 +35,7 @@ Update your local repository.
 $ git checkout master
 $ git pull upstream master
 
-$ git checkout upstream
+$ git checkout upstream_gate
 $ git pull upstream_gate master
 
 $ git checkout upstream_joyent
@@ -48,10 +48,10 @@ result in a clean working tree.
 Push the upstream branches to the remote repositories.
 
 ```shell
-$ git push -u upstream upstream
+$ git push -u upstream upstream_gate
 $ git push -u upstream upstream_joyent
 
-$ git push -u origin upstream
+$ git push -u origin upstream_gate
 $ git push -u origin upstream_joyent
 ```
 
@@ -74,7 +74,7 @@ accompanying infrastructure.
 ### Process for a successful merge
 
 ```shell
-$ git merge upstream
+$ git merge upstream_gate
 
 $ git status
 On branch upstream-merge/2017070301
@@ -84,7 +84,7 @@ nothing to commit, working tree clean
 ### Process for a failed merge
 
 ```shell
-$ git merge upstream
+$ git merge upstream_gate
 Auto-merging usr/src/uts/intel/sys/ucontext.h
 ... additional output deleted ...
 Automatic merge failed; fix conflicts and then commit the result.
@@ -141,4 +141,5 @@ are backport candidates in the description of the PR. If there are none
 state that too;
 * Assign reviewers and the _upstream-merge_ tag.
 
-As soon as your PR got merged, head over to _sync-upstream-joyent.md_.
+As soon as your PR has been merged, head over to
+[_sync-upstream-joyent.md_.](sync-upstream-joyent.md)
