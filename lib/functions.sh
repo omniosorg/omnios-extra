@@ -767,6 +767,33 @@ make_package() {
 }
 
 #############################################################################
+# Re-publish packages from one repository to another, changing the publisher
+#############################################################################
+republish_packages() {
+    REPUBLISH_SRC="$1"
+    logmsg "Republishing packages from $REPUBLISH_SRC"
+    [ -d $TMPDIR/$BUILDDIR ] || mkdir $TMPDIR/$BUILDDIR
+    mog=$TMPDIR/$BUILDDIR/pkgpublisher.mog
+    cat << EOM > $mog
+<transform set name=pkg.fmri -> edit value pkg://[^/]+/ pkg://$PKGPUBLISHER/>
+EOM
+
+    incoming=$TMPDIR/$BUILDDIR/incoming
+    [ -d $incoming ] && rm -rf $incoming
+    mkdir $incoming
+    for pkg in `pkgrecv -s $REPUBLISH_SRC -d $incoming --newest`; do
+        logmsg "    Receiving $pkg"
+        logcmd pkgrecv -s $REPUBLISH_SRC -d $incoming --raw $pkg
+    done
+
+    for pdir in $incoming/*/*; do
+        logmsg "    Processing $pdir"
+        pkgmogrify $pdir/manifest $mog > $pdir/manifest.newpub
+        logcmd pkgsend publish -s $PKGSRVR -d $pdir $pdir/manifest.newpub
+    done
+}
+
+#############################################################################
 # Make isaexec stub binaries
 #############################################################################
 make_isa_stub() {
