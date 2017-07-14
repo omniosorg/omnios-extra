@@ -15,7 +15,7 @@ Weekly release for w/c 17th of July 2017, uname -a shows `omnios-r151022-a9c29b1
 * [7600](https://www.illumos.org/issues/7600) zfs rollback should pass target snapshot to kernel
 * [8055](https://www.illumos.org/issues/8055) mr_sas online-controller-reset (OCR) does not work with some gen3 adapters
 * [8303](https://www.illumos.org/issues/8303) loader: biosdisk interface should be able to cope with 4k sectors
-* [8377](https://www.illumos.org/issues/8377) Panic in bookmark deletion
+* [8377](https://www.illumos.org/issues/8377) Panic in bookmark deletion (ZFS)
 * [8378](https://www.illumos.org/issues/8378) crash due to bp in-memory modification of nopwrite block
 * [8429](https://www.illumos.org/issues/8429) getallifaddrs dereferences invalid pointer causing SIGSEGV
 
