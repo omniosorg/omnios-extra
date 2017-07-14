@@ -88,7 +88,7 @@ clone_source(){
 build(){
     pushd $TMPDIR/$BUILDDIR/pkg/src > /dev/null || logerr "Cannot change to src dir"
     find . -depth -name \*.mo -exec touch {} \;
-    touch `find gui/help -depth -name \*.in | sed -e 's/\.in$//'`
+    find gui/help -depth -name \*.in | sed -e 's/\.in$//' | xargs touch
     pushd $TMPDIR/$BUILDDIR/pkg/src/brand > /dev/null
     logmsg "--- brand subbuild"
     logcmd make clean
@@ -104,6 +104,7 @@ build(){
         CODE_WS=$TMPDIR/$BUILDDIR/pkg || logerr "proto install failed"
     popd > /dev/null
 }
+
 package(){
     pushd $TMPDIR/$BUILDDIR/pkg/src/pkg > /dev/null
     logmsg "--- packaging"
@@ -122,6 +123,13 @@ package(){
     popd > /dev/null
 }
 
+cleanup(){
+    logmsg "--- cleaning up"
+    if [[ "$PKGSRVR" = file:* ]]; then
+	logcmd pkgrepo remove-publisher -s $PKGSRVR pkg5-localizable
+    fi
+}
+
 init
 clone_source
 # This is hugely expensive
@@ -129,3 +137,7 @@ clone_source
 #crib_headers
 build
 package
+cleanup
+
+# Vim hints
+# vim:ts=4:sw=4:et:
