@@ -44,10 +44,10 @@ This is the initial OmniOSce release.
 
 ### Security fixes
 
-* expat updated to version 2.2.1 (CVE-2017-9233)
-* curl updated to version 7.54.1 (CVE-2017-9502)
-* bind updated to version 9.10.5-P3 (CVE-2017-3140, CVE-2017-3141)
-* p7zip updated (CVE-2016-9296)
+* expat updated to version 2.2.1 ([CVE-2017-9233](https://libexpat.github.io/doc/cve-2017-9233/))
+* curl updated to version 7.54.1 ([CVE-2017-9502](https://curl.haxx.se/docs/adv_20170614.html))
+* bind updated to version 9.10.5-P3 ([CVE-2017-3140](https://kb.isc.org/article/AA-01495/0/CVE-2017-3140%3A-An-error-processing-RPZ-rules-can-cause-named-to-loop-endlessly-after-handling-a-query.html))
+* p7zip updated ([CVE-2016-9296](https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-9296))
 
 ### Other updates
 
