@@ -50,9 +50,7 @@ USE_SYSTEM_SSL_HEADERS="TRUE"
 
 PKGPREFIX=""
 PREFIX=""
-TMPDIR=/code	# This directory must be writable as your non-root user
 BUILDDIR=$USER-$PROG-$VER
-CODEMGR_WS=$TMPDIR/$BUILDDIR/illumos-omnios
 
 #Since these variables are used in a sed statment make sure to escape properly
 ILLUMOS_NO="NIGHTLY\_OPTIONS=\'\-nDCmpr\'"
@@ -188,9 +186,21 @@ push_pkgs() {
     #      pkg change-variant debug.illumos=true
     #
     # and a new BE with DEBUG bits appears.
-    logcmd pkgmerge -d $PKGSRVR \
+
+    [ -d $TMPDIR/$BUILDDIR ] || mkdir -p $TMPDIR/$BUILDDIR
+    STAGE_REPO=$TMPDIR/$BUILDDIR
+    [ -d $STAGE_REPO ] && rm -rf $STAGE_REPO
+    logmsg "Creating staging repo at $STAGE_REPO"
+    pkgrepo create $STAGE_REPO || logerr "Could not create staging repo"
+    pkgrepo add-publisher -s $STAGE_REPO $PKGPUBLISHER || \
+	logerr "Could not set publisher on staging repo"
+
+    logmsg "Staging illumos packages to $STAGE_REPO"
+    logcmd pkgmerge -d $STAGE_REPO \
 	-s debug.illumos=false,packages/i386/nightly-nd/repo.redist/ \
 	-s debug.illumos=true,packages/i386/nightly/repo.redist/
+
+    republish_packages $STAGE_REPO
 
     logmsg "Leaving $CODEMGR_WS"
     popd > /dev/null
@@ -212,6 +222,8 @@ if [ -d ${PREBUILT_ILLUMOS:-/dev/null} ]; then
         fi
     fi
 else
+    TMPDIR=/code	# This directory must be writable as your non-root user
+    CODEMGR_WS=$TMPDIR/$BUILDDIR/illumos-omnios
     sunstudio_location
     clone_source
     modify_build_script
