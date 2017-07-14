@@ -2,6 +2,8 @@
 
 # Release Notes for OmniOSce v11 r151022
 
+[instructions for updating from OmniTI r151022 can be found below](#upgrading-from-omniti-released-r151022)
+
 ## r151022i (2017-07-17)
 
 Weekly release for w/c 17th of July 2017, uname -a shows `omnios-r151022-a9c29b1`
