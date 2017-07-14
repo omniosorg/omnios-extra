@@ -42,7 +42,7 @@ CDDL HEADER END
             name="start"
             exec="/lib/svc/method/http-nginx start"
             timeout_seconds="60">
-            <method_context>
+            <method_context security_flags="aslr">
                 <method_credential user="nginx" group="nginx"
                     privileges="basic,net_privaddr,!proc_info,!proc_session" />
             </method_context>
