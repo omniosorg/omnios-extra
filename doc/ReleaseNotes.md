@@ -31,6 +31,10 @@ Weekly release for w/c 17th of July 2017, uname -a shows `omnios-r151022-a9c29b1
 * Updated `package/pkg` to display link for OmniOSce release notes
 * Added `developer/omnios-build-tools` meta-package
 
+<br>
+
+----  
+
 ## r151022h (2017-07-12)
 
 Weekly release for w/c 10th of July 2017, uname -a shows `omnios-r151022-f9693432c2` (no change from previous release)
@@ -47,6 +51,10 @@ This is the initial OmniOSce release.
 
 * openssl updated to version 1.0.2l
 * web/ca-bundle updated to include OmniOSce Certificate Authority certificate
+
+<br>
+
+----  
 
 ### Upgrading from OmniTI-released r151022
 
