@@ -1,43 +1,12 @@
 
 # Keeping up-to-date with upstream Joyent gate for LX Zones.
 
-## Initial repository configuration
+## Check out the upstream\_joyent branch
 
-This process is easier if you set up a git remote called *upstream_joyent*
-
-```shell
-$ git remote add -t master upstream_joyent https://github.com/joyent/illumos-joyent
-$ git remote -v
-origin  https://github.com/omniosorg/illumos-omnios.git (fetch)
-origin  https://github.com/omniosorg/illumos-omnios.git (push)
-upstream        https://github.com/illumos/illumos-gate (fetch)
-upstream        https://github.com/illumos/illumos-gate (push)
-upstream_joyent https://github.com/joyent/illumos-joyent (fetch)
-upstream_joyent https://github.com/joyent/illumos-joyent (push)
-```
-
-## Check out and update the upstream_joyent branch
+NOTE: make sure you did all the steps in _sync-upstream.md_ before!
 
 ```shell
 $ git checkout upstream_joyent
-Branch upstream_joyent set up to track remote branch upstream_joyent from origin.
-Switched to a new branch 'upstream_joyent'
-$ git pull upstream_joyent master
-remote: Counting objects: 42002, done.
-remote: Total 42002 (delta 16751), reused 16751 (delta 16751), pack-reused 2525
-Receiving objects: 100% (42002/42002), 16.28 MiB | 660.00 KiB/s, done.
-Resolving deltas: 100% (32123/32123), completed with 3089 local objects.
-From https://github.com/joyent/illumos-joyent
- * branch                  master     -> FETCH_HEAD
- * [new branch]            master     -> upstream_joyent/master
-Updating f6eee9d5d9..75647a9226
-Checking out files: 100% (2179/2179), done.
-Fast-forward
-... lots of output ...
-
-$ git status .
-On branch upstream_joyent
-Your branch is ahead of 'origin/upstream_joyent' by 260 commits.
 ```
 
 ## Retrieve a list of commits since the last cherry-pick session
@@ -69,7 +38,7 @@ In this example, that leaves 42 commits which need to be reviewed.
 
 Create a new branch into which the upstream changes will be merged in order
 to create a pull request. The branch name should be
-_joyent-merge/YYYYMMMMDDnn_ where _nn_ starts at 01 and is incremented in
+_joyent-merge/YYYYMMDDnn_ where _nn_ starts at 01 and is incremented in
 the case that there is more than one merge in the same day.
 
 ```shell
@@ -198,9 +167,7 @@ $ git push --set-upstream origin joyent-merge/2017070501
 ## Create a pull request
 
 Use the Github web-interface to create a pull request from the new
-joyent-merge branch to the master. Take care to change the _base fork_
-value to _omniosorg/master_ as it will default to the upstream OmniTI
-repository.
+joyent-merge branch to the master.
 
 * Include the `mail_msg` file from the test build;
 * Review the list of commits included in this merge and include any which

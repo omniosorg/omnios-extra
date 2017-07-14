@@ -61,7 +61,7 @@ move_libs() {
     popd>/dev/null
 }
 
-#SKIP_PKGLINT=1
+SKIP_PKGLINT=1
 init
 download_source $PROG $PROG $VER
 patch_source
