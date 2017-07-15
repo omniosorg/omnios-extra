@@ -11,7 +11,7 @@ Weekly release for w/c 17th of July 2017, uname -a shows `omnios-r151022-5e982da
 
 ### Security fixes
 
-* expat updated to version 2.2.2 with some [security fixes](https://github.com/libexpat/libexpat/blob/R_2_2_2/expat/Changes)
+* expat updated to version 2.2.2 ([release notes](https://github.com/libexpat/libexpat/blob/R_2_2_2/expat/Changes))
 
 ### Bug fixes
 
