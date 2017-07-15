@@ -1,0 +1,8 @@
+--- python3.6/Lib/cgi.py	Tue Mar 21 07:32:38 2017
++++ python3.6/Lib/cgi.py	Sat Jul 15 22:13:21 2017
+@@ -1,4 +1,4 @@
+-#! /usr/local/bin/python
++#! /opt/ooce/bin/python3
+ 
+ # NOTE: the above "/usr/local/bin/python" is NOT a mistake.  It is
+ # intentionally NOT "/usr/bin/env python".  On many systems
