@@ -6,7 +6,7 @@
 
 ## r151022i (2017-07-17)
 
-Weekly release for w/c 17th of July 2017, uname -a shows `omnios-r151022-a9c29b1`
+Weekly release for w/c 17th of July 2017, uname -a shows `omnios-r151022-5e982daae6`
 > This release updates the kernel and therefore requires a reboot.
 
 ### Bug fixes
