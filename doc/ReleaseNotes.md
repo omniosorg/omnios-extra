@@ -2,7 +2,7 @@
 
 # Release Notes for OmniOSce v11 r151022
 
-[instructions for updating from OmniTI r151022 can be found below](#upgrading-from-omniti-released-r151022)
+[instructions for updating from OmniTI OmniOS r151022 to the community edition can be found below](#upgrading-from-omniti-released-r151022)
 
 ## r151022i (2017-07-17)
 
