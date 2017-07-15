@@ -9,6 +9,10 @@
 Weekly release for w/c 17th of July 2017, uname -a shows `omnios-r151022-5e982daae6`
 > This release updates the kernel and therefore requires a reboot.
 
+### Security fixes
+
+* expat updated to version 2.2.2 with some [security fixes](https://github.com/libexpat/libexpat/blob/R_2_2_2/expat/Changes)
+
 ### Bug fixes
 
 * [3167](https://www.illumos.org/issues/3167) kernel panic in apix:apic_timer_init
