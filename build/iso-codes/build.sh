@@ -35,8 +35,8 @@ SUMMARY="ISO code lists and translations"
 DESC="$SUMMARY"
 
 # As of 3.70, iso-codes needs Python3 to build. Make sure python3 is around.
-BUILD_DEPENDS_IPS="omniti/runtime/python-34"
-export PATH=/opt/python34/bin:$PATH
+BUILD_DEPENDS_IPS="ooce/runtime/python-36"
+export PATH=/opt/ooce/bin:$PATH
 
 BUILDARCH=32
 
