@@ -1,0 +1,10 @@
+--- sudo-1.8.20p2/Makefile.in	Wed May 10 17:38:43 2017
++++ sudo-1.8.20p2/Makefile.in	Sun Jul  9 17:06:55 2017
+@@ -63,7 +63,6 @@
+ SED = @SED@
+ 
+ INSTALL = $(SHELL) $(top_srcdir)/install-sh -c
+-INSTALL_OWNER = -o $(install_uid) -g $(install_gid)
+ 
+ ECHO_N = @ECHO_N@
+ ECHO_C = @ECHO_C@
