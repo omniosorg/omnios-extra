@@ -1,0 +1,2 @@
+license LICENSE license=Python
+set name=pkg.depend.runpath value=$PKGDEPEND_RUNPATH:/opt/ooce/python-VERSION/lib
