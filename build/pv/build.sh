@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=pv
-VER=1.6.0
+VER=1.6.6
 VERHUMAN=$VER
 PKG=shell/pipe-viewer
 SUMMARY="Pipe Viewer"
