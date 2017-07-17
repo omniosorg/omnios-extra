@@ -79,9 +79,8 @@ create_symlinks() {
     logmsg "--- Create man symlink"
     logcmd mkdir -p $DESTDIR/$ORIGPREFIX/share/man/man1
     logcmd ln -s $PREFIX/share/man/man1/$PROGLC${VERMAJOR}.1 $DESTDIR/$ORIGPREFIX/share/man/man1/$PROGLC${VERMAJOR}.1
-    logmsg "--- Patch runpath in local.mog" 
-    logcmd cp $SRCDIR/files/local.mog $SRCDIR
-    logcmd gsed -i 's|PKGDEPEND_RUNPATH:/opt/ooce/python-[^/]\+/lib|PKGDEPEND_RUNPATH:/opt/ooce/python-'$VER'/lib|' $SRCDIR/local.mog
+    logmsg "--- Update version number in local.mog file" 
+    sed "s/__VERSION__/$VER/g" < $SRCDIR/files/local.mog > $SRCDIR/local.mog
 }
 
 init
