@@ -40,7 +40,7 @@ BUILD_DEPENDS_IPS="system/library/gcc-5-runtime library/libffi"
 RUN_DEPENDS_IPS=$BUILD_DEPENDS_IPS
 
 ORIGPREFIX=$PREFIX
-PREFIX=$PREFIX/$PROGLC-$VER
+PREFIX=$PREFIX/$PROGLC-$VERMAJOR
 BUILDARCH=64
 
 CFLAGS="-O3"
@@ -75,13 +75,15 @@ make_install64() {
 create_symlinks() {
     logmsg "--- Create bin symlink"
     logcmd mkdir -p $DESTDIR/$ORIGPREFIX/bin
-    logcmd ln -s $PREFIX/bin/$PROGLC$VERMAJOR $DESTDIR/$ORIGPREFIX/bin/${PROGLC}3
+    logcmd ln -s ../$PROGLC-$VERMAJOR/bin/$PROGLC$VERMAJOR $DESTDIR/$ORIGPREFIX/bin/$PROGLC$VERMAJOR
+    logcmd ln -s $PROGLC$VERMAJOR $DESTDIR/$ORIGPREFIX/bin/${PROGLC}3
     logmsg "--- Create man symlink"
     logcmd mkdir -p $DESTDIR/$ORIGPREFIX/share/man/man1
-    logcmd ln -s $PREFIX/share/man/man1/$PROGLC${VERMAJOR}.1 $DESTDIR/$ORIGPREFIX/share/man/man1/$PROGLC${VERMAJOR}.1
-    logmsg "--- Patch runpath in local.mog" 
-    logcmd cp $SRCDIR/files/local.mog $SRCDIR
-    logcmd gsed -i 's|PKGDEPEND_RUNPATH:/opt/ooce/python-[^/]\+/lib|PKGDEPEND_RUNPATH:/opt/ooce/python-'$VER'/lib|' $SRCDIR/local.mog
+    logcmd ln -s ../../../$PROGLC-$VERMAJOR/share/man/man1/$PROGLC${VERMAJOR}.1 \
+        $DESTDIR/$ORIGPREFIX/share/man/man1/$PROGLC${VERMAJOR}.1
+    logcmd ln -s $PROGLC${VERMAJOR}.1 $DESTDIR/$ORIGPREFIX/share/man/man1/${PROGLC}3.1
+    logmsg "--- Update version number in local.mog file"
+    sed "s/__VERSION__/$VERMAJOR/g" < $SRCDIR/files/local.mog > $SRCDIR/local.mog
 }
 
 init
