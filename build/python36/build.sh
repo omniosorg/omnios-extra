@@ -79,7 +79,9 @@ create_symlinks() {
     logcmd ln -s $PROGLC$VERMAJOR $DESTDIR/$ORIGPREFIX/bin/${PROGLC}3
     logmsg "--- Create man symlink"
     logcmd mkdir -p $DESTDIR/$ORIGPREFIX/share/man/man1
-    logcmd ln -s $PREFIX/share/man/man1/$PROGLC${VERMAJOR}.1 $DESTDIR/$ORIGPREFIX/share/man/man1/$PROGLC${VERMAJOR}.1
+    logcmd ln -s ../../../$PROGLC-$VERMAJOR/share/man/man1/$PROGLC${VERMAJOR}.1 \
+        $DESTDIR/$ORIGPREFIX/share/man/man1/$PROGLC${VERMAJOR}.1
+    logcmd ln -s $PROGLC${VERMAJOR}.1 $DESTDIR/$ORIGPREFIX/share/man/man1/${PROGLC}3.1
     logmsg "--- Update version number in local.mog file"
     sed "s/__VERSION__/$VERMAJOR/g" < $SRCDIR/files/local.mog > $SRCDIR/local.mog
 }
