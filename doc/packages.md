@@ -5,6 +5,12 @@
 | network/dns/bind 			| 9.10.5P3 | -		| http://www.isc.org/downloads/bind/
 | service/network/ntp 			| 4.2.8p10 | -		| http://www.ntp.org/downloads.html
 | service/network/ssh 			| 7.4.1 | -		| https://mirrors.evowise.com/pub/OpenBSD/OpenSSH/portable/
+| database/sqlite-3 			| 3.18.0 | 3.19.3	| https://www.sqlite.org/
+| developer/versioning/git 		| 2.13.0 | 2.13.3	| https://git-scm.com/downloads
+| shell/pipe-viewer 			| 1.6.0 | 1.6.6		| http://www.ivarch.com/programs/pv.shtml
+| system/management/ipmitool 		| 1.8.16 | 1.8.18	| https://sourceforge.net/projects/ipmitool/
+| terminal/screen 			| 4.5.1 | 4.6.1		| http://savannah.gnu.org/news/?group=screen
+| text/gnu-grep 			| 3.0 | 3.1		| http://savannah.gnu.org/news/?group=grep
 | security/sudo				| 1.8.7 | -		| https://www.sudo.ws/
 | archiver/gnu-tar 			| 1.29 | - 		| http://savannah.gnu.org/news/?group=tar
 | compress/bzip2 			| 1.0.6 | -	 	| http://www.bzip.org/
@@ -14,7 +20,6 @@
 | compress/xz 				| 5.2.3 | -		| https://tukaani.org/xz/
 | compress/zip				| 3.0 | -
 | data/iso-codes 			| 3.74 | -		| http://pkg-isocodes.alioth.debian.org/downloads/
-| database/sqlite-3 			| 3.18.0 | 3.19.3	| https://www.sqlite.org/
 | developer/bmake 			| 20160926 | -		| http://www.crufty.net/ftp/pub/sjg/
 | developer/build/autoconf 		| 2.69 | -		| https://savannah.gnu.org/news/?group=autocon 
 | developer/build/automake 		| 1.15 | -		| https://savannah.gnu.org/news/?group=automake
@@ -27,7 +32,6 @@
 | developer/parser/bison		| 3.0.4 | -		| https://savannah.gnu.org/news/?group=bison
 | developer/pkg-config			| 0.29.2 | -		| https://www.freedesktop.org/wiki/Software/pkg-config/
 | developer/swig			| 2.0.12 | -		| http://www.swig.org/download.html
-| developer/versioning/git 		| 2.13.0 | 2.13.3	| https://git-scm.com/downloads
 | developer/versioning/mercurial	| 4.1.3 | -		| https://www.mercurial-scm.org/release/?M=D
 | driver/tuntap				| 1.3.3 | -		| https://github.com/kaizawa/tuntap
 | editor/vim				| 8.0.567 | -		| http://www.vim.org/download.php
@@ -55,22 +59,18 @@
 | network/test/iperf 			| 3.1.3 | -		| https://iperf.fr/iperf-download.php#source
 | network/test/netperf 			| 2.7.0 | -		| https://hewlettpackard.github.io/netperf/
 | shell/bash 				| 4.4.12 | -		| https://ftp.gnu.org/gnu/bash/
-| shell/pipe-viewer 			| 1.6.0 | 1.6.6		| http://www.ivarch.com/programs/pv.shtml
 | shell/tcsh 				| 6.20.0 | -		| http://www.tcsh.org/
 | shell/zsh 				| 5.3.1 | -		| http://zsh.sourceforge.net/News/
 | system/library/dbus 			| 1.11.12 | -		| https://www.freedesktop.org/wiki/Software/dbus/#index5h1
 | system/library/pcap 			| 1.8.1 | -		| http://www.tcpdump.org/#latest-releases
-| system/management/ipmitool 		| 1.8.16 | -		| https://sourceforge.net/projects/ipmitool/
 | system/management/snmp/net-snmp 	| 5.7.3 | -		| http://www.net-snmp.org/download.html
 | system/pciutils 			| 3.5.4 | -		| https://www.kernel.org/pub/software/utils/pciutils/
 | system/test/fio 			| 2.12 | -		| https://github.com/axboe/fio/releases
 | system/virtualization/open-vm-tools 	| 9.4.0 | -		| https://sourceforge.net/projects/open-vm-tools/
-| terminal/screen 			| 4.5.1 | 4.6.1		| http://savannah.gnu.org/news/?group=screen
 | terminal/tmux 			| 2.3 | -		| https://github.com/tmux/tmux/releases
 | text/gawk 				| 4.1.4 | -		| https://ftp.gnu.org/gnu/gawk/
 | text/gnu-diffutils 			| 3.5 | -		| http://savannah.gnu.org/news/?group=diffutils
 | text/gnu-gettext 			| 0.19.8.1 | -		| http://savannah.gnu.org/news/?group=gettext
-| text/gnu-grep 			| 3.0 | 3.1		| http://savannah.gnu.org/news/?group=grep
 | text/gnu-patch 			| 2.7.5 | -		| http://savannah.gnu.org/news/?group=patch
 | text/gnu-sed 				| 4.4 | -		| http://savannah.gnu.org/news/?group=sed
 | text/groff 				| 1.22.3 | -		| https://ftp.gnu.org/gnu/groff/
