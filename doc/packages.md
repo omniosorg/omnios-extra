@@ -4,7 +4,7 @@
 | library/security/openssl 		| 1.0.2l | -		| https://www.openssl.org/source/
 | network/dns/bind 			| 9.10.5P3 | -		| http://www.isc.org/downloads/bind/
 | service/network/ntp 			| 4.2.8p10 | -		| http://www.ntp.org/downloads.html
-| service/network/ssh 			| 7.4.1 | -		| https://mirrors.evowise.com/pub/OpenBSD/OpenSSH/portable/
+| service/network/ssh 			| 7.4p1 | -		| https://mirrors.evowise.com/pub/OpenBSD/OpenSSH/portable/
 | database/sqlite-3 			| 3.18.0 | 3.19.3	| https://www.sqlite.org/
 | developer/versioning/git 		| 2.13.0 | 2.13.3	| https://git-scm.com/downloads
 | shell/pipe-viewer 			| 1.6.0 | 1.6.6		| http://www.ivarch.com/programs/pv.shtml
@@ -67,9 +67,9 @@
 | system/pciutils 			| 3.5.4 | -		| https://www.kernel.org/pub/software/utils/pciutils/
 | system/test/fio 			| 2.12 | -		| https://github.com/axboe/fio/releases
 | system/virtualization/open-vm-tools 	| 9.4.0 | -		| https://sourceforge.net/projects/open-vm-tools/
-| terminal/tmux 			| 2.3 | -		| https://github.com/tmux/tmux/releases
+| terminal/tmux 			| 2.3 | 2.5		| https://github.com/tmux/tmux/releases
 | text/gawk 				| 4.1.4 | -		| https://ftp.gnu.org/gnu/gawk/
-| text/gnu-diffutils 			| 3.5 | -		| http://savannah.gnu.org/news/?group=diffutils
+| text/gnu-diffutils 			| 3.5 | 3.6		| http://savannah.gnu.org/news/?group=diffutils
 | text/gnu-gettext 			| 0.19.8.1 | -		| http://savannah.gnu.org/news/?group=gettext
 | text/gnu-patch 			| 2.7.5 | -		| http://savannah.gnu.org/news/?group=patch
 | text/gnu-sed 				| 4.4 | -		| http://savannah.gnu.org/news/?group=sed
