@@ -1,13 +1,18 @@
 
 | Package | Stable | Bloody | Link | Notes |
 | ------- | ------ | ------ | ---- | ----- |
+| library/security/openssl 		| 1.0.2l | -		| https://www.openssl.org/source/
+| network/dns/bind 			| 9.10.5P3 | -		| http://www.isc.org/downloads/bind/
+| service/network/ntp 			| 4.2.8p10 | -		| http://www.ntp.org/downloads.html
+| service/network/ssh 			| 7.4.1 | -		| https://mirrors.evowise.com/pub/OpenBSD/OpenSSH/portable/
+| security/sudo				| 1.8.7 | -		| https://www.sudo.ws/
 | archiver/gnu-tar 			| 1.29 | - 		| http://savannah.gnu.org/news/?group=tar
 | compress/bzip2 			| 1.0.6 | -	 	| http://www.bzip.org/
 | compress/gzip 			| 1.8 | - 		| http://savannah.gnu.org/news/?group=gzip
 | compress/p7zip 			| 16.2 | -		| https://sourceforge.net/projects/p7zip/
 | compress/unzip			| 6.0 | -
 | compress/xz 				| 5.2.3 | -		| https://tukaani.org/xz/
-| compress/zip				| 3.0 | -0
+| compress/zip				| 3.0 | -
 | data/iso-codes 			| 3.74 | -		| http://pkg-isocodes.alioth.debian.org/downloads/
 | database/sqlite-3 			| 3.18.0 | 3.19.3	| https://www.sqlite.org/
 | developer/bmake 			| 20160926 | -		| http://www.crufty.net/ftp/pub/sjg/
@@ -41,19 +46,14 @@
 | library/nspr 				| 4.14 | - 		| http://archive.mozilla.org/pub/nspr/releases/
 | library/pcre 				| 8.40 | -		| https://ftp.pcre.org/pub/pcre/
 | library/readline 			| 7.0 | - 		| https://ftp.gnu.org/gnu/readline/
-| library/security/openssl 		| 1.0.2l | -		| https://www.openssl.org/source/
 | library/security/trousers 		| 0.3.8 | -		| https://sourceforge.net/projects/trousers/
 | library/unixodbc 			| 2.3.4 | -		| http://www.unixodbc.org/download.html
 | library/zlib 				| 1.2.11 | -		| http://www.zlib.net/
 | media/cdrtools			| 3.0 | -
-| network/dns/bind 			| 9.10.5P3 | -		| http://www.isc.org/downloads/bind/
 | network/rsync 			| 3.1.2 | -		| https://rsync.samba.org/
 | network/service/isc-dhcp 		| 4.3.5 | -		| https://www.isc.org/downloads/dhcp/
 | network/test/iperf 			| 3.1.3 | -		| https://iperf.fr/iperf-download.php#source
 | network/test/netperf 			| 2.7.0 | -		| https://hewlettpackard.github.io/netperf/
-| security/sudo				| 1.8.7 | -		| https://www.sudo.ws/
-| service/network/ntp 			| 4.2.8p10 | -		| http://www.ntp.org/downloads.html
-| service/network/ssh 			| 7.4.1 | -		| https://mirrors.evowise.com/pub/OpenBSD/OpenSSH/portable/
 | shell/bash 				| 4.4.12 | -		| https://ftp.gnu.org/gnu/bash/
 | shell/pipe-viewer 			| 1.6.0 | 1.6.6		| http://www.ivarch.com/programs/pv.shtml
 | shell/tcsh 				| 6.20.0 | -		| http://www.tcsh.org/
