@@ -43,32 +43,6 @@ else
     OLDUSER=`whoami`
 fi
 
-# The kernel and pxeboot binaries and must be accessible.
-# If not running in the global zone then loopback mounts should be created
-# via zonecfg. UFS must also be added to the allowed filesystems so that
-# the miniroot can be built via a lofi device.
-#   add fs
-#       set dir=/platform/i86pc/kernel/amd64
-#       set special=/platform/i86pc/kernel/amd64
-#       set type=lofs
-#       set options=ro
-#   add fs
-#       set dir=/boot
-#       set special=/boot
-#       set type=lofs
-#       set options=ro
-#   set fs-allowed=ufs
-
-if [ ! -r /platform/i86pc/kernel/amd64/unix ]; then
-    logerr "--- Cannot access kernel binary."\
-        "Run in global zone or add loopback mount."
-fi
-
-if [ ! -r /boot/pxeboot ]; then
-    logerr "--- Cannot access pxeboot binary."\
-        "Run in global zone or add loopback mount."
-fi
-
 # Explicitly figure out BATCH so the sudo-bits can honor it.
 if [[ ${BATCH} == 1 ]]; then
     BATCHMODE=1
@@ -93,8 +67,17 @@ fi
 VER=1.1
 GIT=/usr/bin/git
 CHECKOUTDIR=$TMPDIR/$BUILDDIR
-IMG_DSET=rpool/kayak_image
+
+# Pick a reasonable default for ZFS filesystem to use for the build...
+if [ "`zonename`" = global ]; then
+    IMG_DSET=rpool/kayak_image
+else
+    rootfs="`df / | cut -d\( -f2 | cut -d\) -f1`"
+    IMG_DSET="$rootfs/kayak_image"
+fi
+# ... but allow it to be overidden in site.sh
 [ -n "$KAYAK_IMG_DSET" ] && IMG_DSET=$KAYAK_IMG_DSET
+
 # NOTE: If PKGURL is specified, allow it to be different than the destination
 # PKGSRVR.  PKGURL is from where kayak-kernel takes its bits. PKGSRVR is where
 # this package (with a prebuilt miniroot and unix) will be installed.
