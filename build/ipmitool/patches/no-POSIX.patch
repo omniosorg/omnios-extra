@@ -1,36 +1,69 @@
---- ipmitool-1.8.16-orig/lib/helper.c	Fri Feb 19 16:01:38 2016
-+++ ipmitool-1.8.16/lib/helper.c	Wed Mar 23 14:24:07 2016
+--- ipmitool-1.8.18/lib/helper.c	Sun Jul 31 08:52:40 2016
++++ ipmitool-1.8.18/lib/helper.c	Sun Jul 16 15:58:33 2017
 @@ -29,7 +29,7 @@
   * LIABILITY, ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE,
   * EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
   */
 -#define _POSIX_SOURCE
 +/* #define _POSIX_SOURCE */
- 
- #include <sys/types.h>
- #include <sys/stat.h>
---- ipmitool-1.8.16-orig/src/plugins/open/open.c	Fri Feb 19 16:01:38 2016
-+++ ipmitool-1.8.16/src/plugins/open/open.c	Wed Mar 23 14:24:44 2016
+ #define /* glibc 2.19 and earlier */ _BSD_SOURCE || \
+ 	/* Since glibc 2.20 */_DEFAULT_SOURCE || \
+ 	_XOPEN_SOURCE >= 500 || \
+--- ipmitool-1.8.18/src/plugins/open/open.c	Tue May 31 22:26:19 2016
++++ ipmitool-1.8.18/src/plugins/open/open.c	Sun Jul 16 16:04:37 2017
 @@ -29,7 +29,7 @@
   * LIABILITY, ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE,
   * EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
   */
--#define _POSIX_SOURCE
-+/* #define _POSIX_SOURCE */
- 
+-#define _POSIX_C_SOURCE 1
++/* #define _POSIX_C_SOURCE 1 */
+
  #include <stdio.h>
  #include <fcntl.h>
---- ipmitool-1.8.16-orig/src/plugins/ipmi_intf.c        Fri Feb 19 16:02:19 2016
-+++ ipmitool-1.8.16/src/plugins/ipmi_intf.c     Wed Mar 23 15:17:54 2016
-@@ -29,8 +29,8 @@
+--- ipmitool-1.8.18/src/plugins/ipmi_intf.c	Sun Jul 31 08:52:40 2016
++++ ipmitool-1.8.18/src/plugins/ipmi_intf.c	Sun Jul 16 16:07:04 2017
+@@ -29,9 +29,9 @@
   * LIABILITY, ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE,
   * EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
   */
 -#define _XOPEN_SOURCE 700
--#define _GNU_SOURCE 1
-+/*#define _XOPEN_SOURCE 700
-+#define _GNU_SOURCE 1 */
- 
++/* #define _XOPEN_SOURCE 700
+ #define _GNU_SOURCE 1
+-#define _DARWIN_C_SOURCE 1
++#define _DARWIN_C_SOURCE 1 */
+
  #include <stdio.h>
  #include <stdlib.h>
-
+--- ipmitool-1.8.18/lib/ipmi_sol.c	Wed Jun 29 20:06:29 2016
++++ ipmitool-1.8.18/lib/ipmi_sol.c	Sun Jul 16 16:33:43 2017
+@@ -29,7 +29,7 @@
+  * LIABILITY, ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE,
+  * EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+  */
+-#define _XOPEN_SOURCE
++/* #define _XOPEN_SOURCE */
+ #define _BSD_SOURCE || \
+ 	(_XOPEN_SOURCE >= 500 || \
+                        _XOPEN_SOURCE && _XOPEN_SOURCE_EXTENDED) && \
+--- ipmitool-1.8.18/lib/ipmi_sunoem.c	Mon May 30 20:28:40 2016
++++ ipmitool-1.8.18/lib/ipmi_sunoem.c	Sun Jul 16 16:35:50 2017
+@@ -29,7 +29,7 @@
+  * LIABILITY, ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE,
+  * EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+  */
+-#define _XOPEN_SOURCE
++/* #define _XOPEN_SOURCE */
+ 
+ #include <stdlib.h>
+ #include <stdio.h>
+--- ipmitool-1.8.18/lib/ipmi_isol.c	Sun Mar 13 11:14:08 2016
++++ ipmitool-1.8.18/lib/ipmi_isol.c.new	Sun Jul 16 16:38:19 2017
+@@ -29,7 +29,7 @@
+  * LIABILITY, ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE,
+  * EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+  */
+-#define _XOPEN_SOURCE
++/* #define _XOPEN_SOURCE */
+ 
+ #include <stdlib.h>
+ #include <string.h>
