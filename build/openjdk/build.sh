@@ -52,10 +52,10 @@ BUILDARCH=32
 DESTDIR=
 DATETIME=`TZ=UTC /usr/bin/date +"%Y%m%dT%H%M%SZ"`
 
-BUILD_DEPENDS_IPS="developer/sunstudio12.1 system/header/header-audio developer/versioning/mercurial runtime/java omniti/developer/build/ant omniti/library/freetype2"
+BUILD_DEPENDS_IPS="developer/sunstudio12.1 system/header/header-audio developer/versioning/mercurial runtime/java ooce/developer/build/ant ooce/library/freetype2"
 
 REPO="http://hg.openjdk.java.net/jdk7u/jdk7u"
-PATH=/opt/sunstudio12.1/bin:/opt/omni/bin:${PATH}
+PATH=/opt/sunstudio12.1/bin:/opt/ooce/apache-ant/bin:${PATH}
 export PATH
 
 ALT_BOOTDIR="/usr/java"
@@ -143,8 +143,8 @@ build32() {
         ALT_COMPILER_PATH=$ALT_COMPILER_PATH \
         ALT_CUPS_HEADERS_PATH=$ALT_CUPS_HEADERS_PATH \
         ALT_UNIXCCS_PATH=/usr/bin \
-        ALT_FREETYPE_HEADERS_PATH=/opt/omni/include \
-        ALT_FREETYPE_LIB_PATH=/opt/omni/lib \
+        ALT_FREETYPE_HEADERS_PATH=/opt/ooce/include \
+        ALT_FREETYPE_LIB_PATH=/opt/ooce/lib \
         ALT_OPENWIN_HOME=$ALT_OPENWIN_HOME || \
             logerr "--- make sanity failed"
 
@@ -161,8 +161,8 @@ build32() {
         ALT_COMPILER_PATH=$ALT_COMPILER_PATH \
         ALT_CUPS_HEADERS_PATH=$ALT_CUPS_HEADERS_PATH \
         ALT_UNIXCCS_PATH=/usr/bin \
-        ALT_FREETYPE_HEADERS_PATH=/opt/omni/include \
-        ALT_FREETYPE_LIB_PATH=/opt/omni/lib \
+        ALT_FREETYPE_HEADERS_PATH=/opt/ooce/include \
+        ALT_FREETYPE_LIB_PATH=/opt/ooce/lib \
         ALT_OPENWIN_HOME=$ALT_OPENWIN_HOME || \
             logerr "--- make failed"
     popd > /dev/null
