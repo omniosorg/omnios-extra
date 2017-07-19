@@ -24,6 +24,7 @@
 # Copyright 2015 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 # Copyright (c) 2014 by Delphix. All rights reserved.
+# Copyright 2017 OmniOS Community Edition Association (OmniOSce)
 #
 
 umask 022
@@ -181,9 +182,12 @@ ask_to_install() {
 }
 
 ask_to_pkglint() {
-    local MANIFEST=$1
-
     ask_to_continue_ "" "Do you want to run pkglint at this time?" "y/n" "[yYnN]"
+    [[ "$REPLY" == "y" || "$REPLY" == "Y" ]]
+}
+
+ask_to_testsuite() {
+    ask_to_continue_ "" "Do you want to run the test-suite at this time?" "y/n" "[yYnN]"
     [[ "$REPLY" == "y" || "$REPLY" == "Y" ]]
 }
 
@@ -1010,6 +1014,17 @@ build64() {
     make_prog64
     make_install64
     popd > /dev/null
+}
+
+run_testsuite() {
+    local target="${1:-test}"
+    local dir="$2"
+    if [ -z "$SKIP_TESTSUITE" ] && ( [ -n "$BATCH" ] || ask_to_testsuite ); then
+        pushd $TMPDIR/$BUILDDIR/$dir > /dev/null
+        logmsg "Running testsuite"
+        gmake --quiet $target 2>&1 | tee $SRCDIR/testsuite.log
+        popd > /dev/null
+    fi
 }
 
 #############################################################################
