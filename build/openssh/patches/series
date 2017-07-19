@@ -1,4 +1,3 @@
-no_xopen_source.patch
 sshd_config.patch
 0001-Skip-config-check.patch
 0002-PAM-Support.patch

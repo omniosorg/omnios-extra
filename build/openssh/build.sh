@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=openssh
-VER=7.4p1
+VER=7.5p1
 VERHUMAN=$VER
 PKG=network/openssh
 SUMMARY="OpenSSH Client and utilities"
@@ -70,7 +70,7 @@ CFLAGS+="-DDEPRECATE_SUNSSH_OPT -DOPTION_DEFAULT_VALUE -DSANDBOX_SOLARIS"
 
 auto_reconf() {
         # This package needs a whack upside the head post-patches!
-        pushd $TMPDIR/$BUILDDIR
+        pushd $TMPDIR/$BUILDDIR >/dev/null
         autoreconf -fi
         popd
 }
@@ -83,14 +83,49 @@ copy_smf() {
         logerr 'manifest copy failed'
 }
 
+move_manpage() {
+    local page=$1
+    local old=$2
+    local new=$3
+
+    logmsg "-- Move manpage $page.$old -> $page.$new"
+    if [ -f $page.$old ]; then
+        mv $page.$old $page.$new
+    elif [ -f $page.$new ]; then
+        logmsg "---- Was already moved"
+    else
+        logerr "---- Not found"
+    fi
+}
+
+move_manpages() {
+    pushd $TMPDIR/$BUILDDIR >/dev/null
+
+    move_manpage moduli             5 4
+    move_manpage ssh_config         5 4
+    move_manpage sshd_config        5 4
+
+    move_manpage sshd               8 1m
+    move_manpage sftp-server        8 1m
+    move_manpage ssh-keysign        8 1m
+    move_manpage ssh-pkcs11-helper  8 1m
+
+    popd
+}
+
+# Skip tests when in batch mode as they take a long time
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
+
 init
 download_source $PROG $PROG $VER
+move_manpages
 patch_source
 copy_smf
 auto_reconf
 prep_build
 run_autoconf
 build
+run_testsuite tests
 
 # Remove the letter from VER for packaging
 VER=${VER//p/.}
