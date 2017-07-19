@@ -57,7 +57,7 @@
 | system/library/pcap			| 1.8.1			| http://www.tcpdump.org/#latest-releases
 | system/management/ipmitool		| 1.8.18		| https://sourceforge.net/projects/ipmitool/
 | system/management/snmp/net-snmp	| 5.7.3			| http://www.net-snmp.org/download.html
-| system/pciutils			| 3.5.4			| https://www.kernel.org/pub/software/utils/pciutils/
+| system/pciutils			| 3.5.5			| https://www.kernel.org/pub/software/utils/pciutils/
 | system/test/fio			| 2.12			| https://github.com/axboe/fio/releases
 | terminal/screen			| 4.6.1			| http://savannah.gnu.org/news/?group=screen
 | terminal/tmux				| 2.5			| https://github.com/tmux/tmux/releases
