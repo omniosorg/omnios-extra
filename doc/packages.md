@@ -34,7 +34,7 @@
 | library/libxml2			| 2.9.4			| http://xmlsoft.org/news.html
 | library/libxslt			| 1.1.29		| http://xmlsoft.org/libxslt/news.html
 | library/ncurses			| 6.0			| https://ftp.gnu.org/gnu/ncurses/
-| library/nghttp2			| 1.12.1		| https://nghttp2.org/blog/
+| library/nghttp2			| 1.24.0		| https://nghttp2.org/blog/
 | library/nspr				| 4.14			| http://archive.mozilla.org/pub/nspr/releases/
 | library/pcre				| 8.41			| https://ftp.pcre.org/pub/pcre/
 | library/readline			| 7.0			| https://ftp.gnu.org/gnu/readline/
