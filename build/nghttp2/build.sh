@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=nghttp2
-VER=1.21.1
+VER=1.24.0
 VERHUMAN=$VER
 PKG=library/nghttp2
 SUMMARY="Nghttp2: HTTP/2 C Library"
@@ -50,6 +50,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_isa_stub
 make_package
 clean_up
