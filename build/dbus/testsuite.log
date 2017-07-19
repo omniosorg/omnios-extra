@@ -1,0 +1,50 @@
+Making check in dbus
+Making check in bus
+Making check in tools
+Making check in test
+Making check in .
+  GEN      copy-config-local
+-- No need to copy test data as srcdir = builddir
+  GEN      uninstalled-config-local
+PASS: test-shell 1
+PASS: test-shell 2
+PASS: test-shell 3
+PASS: test-shell 4
+PASS: test-shell 5
+PASS: test-shell 6
+PASS: test-shell 7
+PASS: test-shell 8
+PASS: test-shell 9
+PASS: test-shell 10
+PASS: test-shell 11
+PASS: test-printf 1
+PASS: test-printf 2
+PASS: test-printf 3
+PASS: test-printf 4
+PASS: test-printf 5
+PASS: test-printf 6
+PASS: test-printf 7
+============================================================================
+Testsuite summary for dbus 1.11.14
+============================================================================
+# TOTAL: 18
+# PASS:  18
+# SKIP:  0
+# XFAIL: 0
+# FAIL:  0
+# XPASS: 0
+# ERROR: 0
+============================================================================
+Making check in name-test
+============================================================================
+Testsuite summary for dbus 1.11.14
+============================================================================
+# TOTAL: 0
+# PASS:  0
+# SKIP:  0
+# XFAIL: 0
+# FAIL:  0
+# XPASS: 0
+# ERROR: 0
+============================================================================
+Making check in doc
