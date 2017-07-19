@@ -1,7 +1,6 @@
 
 | Package | Version | Link | Notes |
 | ------- | ------- | ---- | ----- |
-
 | archiver/gnu-tar			| 1.29			| http://savannah.gnu.org/news/?group=tar
 | compress/bzip2			| 1.0.6			| http://www.bzip.org/
 | compress/gzip				| 1.8			| http://savannah.gnu.org/news/?group=gzip
@@ -72,7 +71,6 @@
 | text/less				| 487			| https://ftp.gnu.org/gnu/less/
 | web/curl				| 7.54.1		| https://curl.haxx.se/download.html
 | web/wget				| 1.19.1		| https://savannah.gnu.org/news/?group=wget
-
 | library/glib2				| 2.34.3		| https://www.gtk.org/download/linux.php | 2.50 had possible problem
 | developer/gnu-binutils		| 2.25			| https://www.gnu.org/software/binutils/ | On hold pending illumos fix https://www.illumos.org/issues/6653
 | media/cdrtools			| 3.0			| http://cdrtools.sourceforge.net/private/cdrecord.html | Not worth cost of investigating 3.01?
