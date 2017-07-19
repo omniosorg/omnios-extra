@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=pcre
-VER=8.40
+VER=8.41
 VERHUMAN=$VER
 PKG=library/pcre
 SUMMARY="Perl-Compatible Regular Expressions"
@@ -70,6 +70,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_isa_stub
 make_package
 clean_up
