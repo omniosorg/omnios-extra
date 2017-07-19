@@ -1,0 +1,37 @@
+Making check in lib
+Making check in includes
+Making check in third-party
+Making check in src
+Making check in includes
+Making all in includes
+============================================================================
+Testsuite summary for nghttp2 1.24.0
+============================================================================
+# TOTAL: 0
+# PASS:  0
+# SKIP:  0
+# XFAIL: 0
+# FAIL:  0
+# XPASS: 0
+# ERROR: 0
+============================================================================
+Making check in examples
+Making check in python
+Making check in tests
+Making check in testdata
+Making all in testdata
+============================================================================
+Testsuite summary for nghttp2 1.24.0
+============================================================================
+# TOTAL: 0
+# PASS:  0
+# SKIP:  0
+# XFAIL: 0
+# FAIL:  0
+# XPASS: 0
+# ERROR: 0
+============================================================================
+Making check in integration-tests
+Making check in doc
+Making check in contrib
+Making check in script
