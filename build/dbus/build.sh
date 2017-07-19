@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=dbus
-VER=1.11.12
+VER=1.11.14
 PKG=dbus ##IGNORE##
 SUMMARY="$PROG - IPC-based message notifications"
 DESC="$SUMMARY"
@@ -81,6 +81,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_isa_stub
 post_install
 
