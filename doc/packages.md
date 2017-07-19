@@ -36,7 +36,7 @@
 | library/ncurses			| 6.0			| https://ftp.gnu.org/gnu/ncurses/
 | library/nghttp2			| 1.12.1		| https://nghttp2.org/blog/
 | library/nspr				| 4.14			| http://archive.mozilla.org/pub/nspr/releases/
-| library/pcre				| 8.40			| https://ftp.pcre.org/pub/pcre/
+| library/pcre				| 8.41			| https://ftp.pcre.org/pub/pcre/
 | library/readline			| 7.0			| https://ftp.gnu.org/gnu/readline/
 | library/security/openssl		| 1.0.2l		| https://www.openssl.org/source/
 | library/unixodbc			| 2.3.4			| http://www.unixodbc.org/download.html
