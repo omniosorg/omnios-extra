@@ -85,6 +85,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite
 make_isa_stub
 install_man
 make_package

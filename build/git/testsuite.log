@@ -1,0 +1,142 @@
+Manifying 9 pod documents
+*** t0000-basic.sh ***
+ok 1 - .git/objects should be empty after git init in an empty repo
+ok 2 - .git/objects should have 3 subdirectories
+ok 3 - success is reported like this
+ok 4 - pretend we have a fully passing test suite
+ok 5 - pretend we have a partially passing test suite
+ok 6 - pretend we have a known breakage
+ok 7 - pretend we have fixed a known breakage
+ok 8 - pretend we have fixed one of two known breakages (run in sub test-lib)
+ok 9 - pretend we have a pass, fail, and known breakage
+ok 10 - pretend we have a mix of all possible results
+ok 11 - test --verbose
+ok 12 - test --verbose-only
+ok 13 - GIT_SKIP_TESTS
+ok 14 - GIT_SKIP_TESTS several tests
+ok 15 - GIT_SKIP_TESTS sh pattern
+ok 16 - --run basic
+ok 17 - --run with a range
+ok 18 - --run with two ranges
+ok 19 - --run with a left open range
+ok 20 - --run with a right open range
+ok 21 - --run with basic negation
+ok 22 - --run with two negations
+ok 23 - --run a range and negation
+ok 24 - --run range negation
+ok 25 - --run include, exclude and include
+ok 26 - --run include, exclude and include, comma separated
+ok 27 - --run exclude and include
+ok 28 - --run empty selectors
+ok 29 - --run invalid range start
+ok 30 - --run invalid range end
+ok 31 - --run invalid selector
+ok 32 - test runs if prerequisite is satisfied
+ok 33 # skip unmet prerequisite causes test to be skipped (missing DONTHAVEIT)
+ok 34 - test runs if prerequisites are satisfied
+ok 35 # skip unmet prerequisites causes test to be skipped (missing DONTHAVEIT of HAVEIT,DONTHAVEIT)
+ok 36 # skip unmet prerequisites causes test to be skipped (missing DONTHAVEIT of DONTHAVEIT,HAVEIT)
+ok 37 - test runs if lazy prereq is satisfied
+ok 38 # skip missing lazy prereqs skip tests (missing !LAZY_TRUE)
+ok 39 - negative lazy prereqs checked
+ok 40 # skip missing negative lazy prereqs will skip (missing LAZY_FALSE)
+ok 41 - tests clean up after themselves
+ok 42 - tests clean up even on failures
+ok 43 - git update-index without --add should fail adding
+ok 44 - git update-index with --add should succeed
+ok 45 - writing tree out with git write-tree
+ok 46 - validate object ID of a known tree
+ok 47 - git update-index without --remove should fail removing
+ok 48 - git update-index with --remove should be able to remove
+ok 49 - git write-tree should be able to write an empty tree
+ok 50 - validate object ID of a known tree
+ok 51 - adding various types of objects with git update-index --add
+ok 52 - showing stage with git ls-files --stage
+ok 53 - validate git ls-files output for a known tree
+ok 54 - writing tree out with git write-tree
+ok 55 - validate object ID for a known tree
+ok 56 - showing tree with git ls-tree
+ok 57 - git ls-tree output for a known tree
+ok 58 - showing tree with git ls-tree -r
+ok 59 - git ls-tree -r output for a known tree
+ok 60 - showing tree with git ls-tree -r -t
+ok 61 - git ls-tree -r output for a known tree
+ok 62 - writing partial tree out with git write-tree --prefix
+ok 63 - validate object ID for a known tree
+ok 64 - writing partial tree out with git write-tree --prefix
+ok 65 - validate object ID for a known tree
+ok 66 - put invalid objects into the index
+ok 67 - writing this tree without --missing-ok
+ok 68 - writing this tree with --missing-ok
+ok 69 - git read-tree followed by write-tree should be idempotent
+ok 70 - validate git diff-files output for a know cache/work tree state
+ok 71 - git update-index --refresh should succeed
+ok 72 - no diff after checkout and git update-index --refresh
+ok 73 - git commit-tree records the correct tree in a commit
+ok 74 - git commit-tree records the correct parent in a commit
+ok 75 - git commit-tree omits duplicated parent in a commit
+ok 76 - update-index D/F conflict
+ok 77 - very long name in the index handled sanely
+# passed all 77 test(s)
+1..77
+*** t0001-init.sh ***
+ok 1 - plain
+ok 2 - plain nested in bare
+ok 3 - plain through aliased command, outside any git repo
+ok 4 - plain nested through aliased command
+ok 5 - plain nested in bare through aliased command
+ok 6 - No extra GIT_* on alias scripts
+ok 7 - plain with GIT_WORK_TREE
+ok 8 - plain bare
+ok 9 - plain bare with GIT_WORK_TREE
+ok 10 - GIT_DIR bare
+ok 11 - init --bare
+ok 12 - GIT_DIR non-bare
+ok 13 - GIT_DIR & GIT_WORK_TREE (1)
+ok 14 - GIT_DIR & GIT_WORK_TREE (2)
+ok 15 - reinit
+ok 16 - init with --template
+ok 17 - init with --template (blank)
+ok 18 - init with init.templatedir set
+ok 19 - init --bare/--shared overrides system/global config
+ok 20 - init honors global core.sharedRepository
+ok 21 - init allows insanely long --template
+ok 22 - init creates a new directory
+ok 23 - init creates a new bare directory
+ok 24 - init recreates a directory
+ok 25 - init recreates a new bare directory
+ok 26 - init creates a new deep directory
+ok 27 - init creates a new deep directory (umask vs. shared)
+ok 28 - init notices EEXIST (1)
+ok 29 - init notices EEXIST (2)
+ok 30 - init notices EPERM
+ok 31 - init creates a new bare directory with global --bare
+ok 32 - init prefers command line to GIT_DIR
+ok 33 - init with separate gitdir
+not ok 34 - init in long base path
+#	
+#		# exceed initial buffer size of strbuf_getcwd()
+#		component=123456789abcdef &&
+#		test_when_finished "chmod 0700 $component; rm -rf $component" &&
+#		p31=$component/$component &&
+#		p127=$p31/$p31/$p31/$p31 &&
+#		mkdir -p $p127 &&
+#		chmod 0111 $component &&
+#		(
+#			cd $p127 &&
+#			git init newdir
+#		)
+#	
+ok 35 - re-init on .git file
+ok 36 - re-init to update git link
+ok 37 - re-init to move gitdir
+ok 38 - re-init to move gitdir symlink
+ok 39 # skip .git hidden (missing MINGW)
+ok 40 # skip bare git dir not hidden (missing MINGW)
+ok 41 - remote init from does not use config from cwd
+ok 42 - re-init from a linked worktree
+# failed 1 among 42 test(s)
+1..42
+gmake[2]: *** [Makefile:49: t0001-init.sh] Error 1
+gmake[1]: *** [Makefile:36: test] Error 2
+gmake: *** [Makefile:2322: test] Error 2
