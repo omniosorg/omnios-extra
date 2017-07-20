@@ -656,9 +656,10 @@ make_package() {
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
     GLOBAL_MOG_FILE=$MYDIR/global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
-    [ -f $SRCDIR/local.mog ] && LOCAL_MOG_FILE=local.mog || LOCAL_MOG_FILE=
-    [ -n "$1" ] && EXTRA_MOG_FILE="$1" || EXTRA_MOG_FILE=
-    [ -n "$2" ] && FINAL_MOG_FILE="$2" || FINAL_MOG_FILE=
+    [ -f $SRCDIR/local.mog ] && \
+        LOCAL_MOG_FILE=$SRCDIR/local.mog || LOCAL_MOG_FILE=
+    [ -n "$1" ] && EXTRA_MOG_FILE="$SRCDIR/$1" || EXTRA_MOG_FILE=
+    [ -n "$2" ] && FINAL_MOG_FILE="$SRCDIR/$2" || FINAL_MOG_FILE=
 
     ## Strip leading zeros in version components.
     VER=`echo $VER | sed -e 's/\.0*\([1-9]\)/.\1/g;'`
