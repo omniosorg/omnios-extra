@@ -4,7 +4,7 @@
  #ifndef _SUDO_DEBUG_H
  #define _SUDO_DEBUG_H
  
-+#include "missing.h"
++#include "sudo_compat.h"
  #include <stdarg.h>
  
  /*
