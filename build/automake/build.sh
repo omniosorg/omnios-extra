@@ -28,11 +28,14 @@
 . ../../lib/functions.sh
 
 PROG=automake
-VER=1.15
+VER=1.15.1
 VERHUMAN=$VER
 PKG=developer/build/automake
 SUMMARY="GNU Automake $VER"
 DESC="GNU Automake - A Makefile generator ($VER)"
+
+# skip tests when in batch mode as they take 1h+
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 BUILDARCH=32
 BUILD_DEPENDS_IPS="compress/xz developer/build/autoconf"
@@ -46,6 +49,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+PATH=/usr/gnu/bin:$PATH run_testsuite check
 make_isa_stub
 make_package
 clean_up
