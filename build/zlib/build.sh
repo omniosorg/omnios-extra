@@ -61,12 +61,12 @@ move_libs() {
     popd>/dev/null
 }
 
-SKIP_PKGLINT=1
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite
 make_lintlibs z /usr/lib /usr/include
 make_isa_stub
 install_license
