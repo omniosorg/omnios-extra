@@ -61,5 +61,5 @@ download_source $PROG $PROG $VER
 prep_build
 build
 make_isa_stub
-SKIP_PKGLINT=1 make_package libgmp.mog
+make_package libgmp.mog libgmp-final.mog
 clean_up
