@@ -23,7 +23,7 @@
 | developer/versioning/git		| 2.13.3		| https://git-scm.com/downloads
 | developer/versioning/mercurial	| 4.2.2			| https://www.mercurial-scm.org/release/?M=D
 | driver/tuntap				| 1.3.3			| https://github.com/kaizawa/tuntap
-| editor/vim				| 8.0.567		| http://www.vim.org/download.php
+| editor/vim				| 8.0.586		| http://www.vim.org/download.php
 | file/gnu-coreutils			| 8.27			| https://savannah.gnu.org/news/?group=coreutils
 | file/gnu-findutils			| 4.6.0			| https://ftp.gnu.org/pub/gnu/findutils/
 | library/c++/sigcpp			| 2.99.8		| https://download.gnome.org/sources/libsigc++/

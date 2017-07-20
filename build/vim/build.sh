@@ -27,23 +27,14 @@
 # Load support functions
 . ../../lib/functions.sh
 
-# Patches are obtained from ftp://ftp.vim.org/pub/vim/patches/8.0/
-# To update, append each patch to patches/all-patches and set the
-# PATCHLEVEL variable below to match the number of the most recent
-# patch, removing any zero padding.
-#
-# NOTE:  Patches 0001 and 0002 were included in the tarball afterwards.  Do
-# not apply those.  Also, patch 0014 is severely broken, so we built it by hand
-# and patches subsequent to 0014 should be put in patches/rest-of-patches.
-
 PROG=vim
-VER=8.0
-PATCHLEVEL=567
+VER=8.0.586
 PKG=editor/vim
 SUMMARY="Vi IMproved"
 DESC="$SUMMARY version $VER"
 
-BUILDDIR=${PROG}${VER/./}     # Location of extracted source
+#BUILDDIR=${PROG}${VER/./}     # Location of extracted source
+BUILDDIR=vim80
 BUILDARCH=32
 
 DEPENDS_IPS="system/extended-system-utilities system/library system/library/math"
@@ -75,7 +66,6 @@ prep_build
 build
 link_vi
 make_isa_stub
-VER=${VER}.${PATCHLEVEL}
 make_package
 clean_up
 
