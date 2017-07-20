@@ -71,9 +71,9 @@ index 2a7939bf..6c0355bb 100644
 --- a/ssh-keygen.c
 +++ b/ssh-keygen.c
 @@ -37,6 +37,7 @@
- #include <string.h>
  #include <unistd.h>
  #include <limits.h>
+ #include <locale.h>
 +#include <assert.h>
  
  #include "xmalloc.h"
@@ -124,13 +124,13 @@ index 2a7939bf..6c0355bb 100644
  	ra = sshkey_fingerprint(public, fingerprint_hash, SSH_FP_RANDOMART);
  	if (fp == NULL || ra == NULL)
  		fatal("%s: sshkey_fingerprint failed", __func__);
--	printf("%u %s %s (%s)\n", sshkey_size(public), fp,
+-	mprintf("%u %s %s (%s)\n", sshkey_size(public), fp,
 +	fpp = fp;
 +	if (!print_bubblebabble && fingerprint_compat == 1) {
 +		assert(strncmp(fp, "MD5:", 4) == 0);
 +		fpp += 4;
 +	}
-+	printf("%u %s %s (%s)\n", sshkey_size(public), fpp,
++	mprintf("%u %s %s (%s)\n", sshkey_size(public), fpp,
  	    comment ? comment : "no comment", sshkey_type(public));
  	if (log_level >= SYSLOG_LEVEL_VERBOSE)
  		printf("%s\n", ra);

@@ -84,7 +84,7 @@ index 6b790fb7..0953f11c 100644
  token used for the session will be set to expire after 20 minutes.
  Remote clients will be refused access after this time.
  .Pp
-+The default on Solaris is
++The default on OmniOS is
 +.Dq yes .
 +.Pp
  See the X11 SECURITY extension specification for full details on
@@ -96,7 +96,7 @@ index 6b790fb7..0953f11c 100644
  Specifies whether user authentication based on GSSAPI is allowed.
 -The default is
 -.Cm no .
-+The default on Solaris is
++The default on OmniOS is
 +.Dq yes .
  .It Cm GSSAPIDelegateCredentials
  Forward (delegate) credentials to the server.
@@ -111,7 +111,7 @@ index 7e4a376b..45c54629 100644
  Specifies whether user authentication based on GSSAPI is allowed.
 -The default is
 -.Cm no .
-+The default on Solaris is
++The default on OmniOS is
 +.Cm yes .
  .It Cm GSSAPICleanupCredentials
  Specifies whether to automatically destroy the user's credentials cache
@@ -122,7 +122,7 @@ index 7e4a376b..45c54629 100644
  .Cm no .
 -The default is
 -.Cm no .
-+The default on Solaris is
++The default on OmniOS is
 +.Cm yes .
  .Pp
  When X11 forwarding is enabled, there may be additional exposure to
