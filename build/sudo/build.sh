@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=sudo
-VER=1.8.7
+VER=1.8.20p2
 VERHUMAN=$VER
 PKG=security/sudo
 SUMMARY="$PROG - authority delegation tool"
@@ -43,7 +43,7 @@ CFLAGS="$CFLAGS -fno-stack-protector"
 CONFIGURE_OPTS="
     --with-ldap
     --with-project
-    --with-timedir=/var/run/sudo
+    --with-rundir=/var/run/sudo
     --with-pam --with-pam-login
     --with-tty-tickets
     --without-insults
@@ -62,6 +62,7 @@ make_install64() {
     logcmd rm -rf $DESTDIR/usr/bin/amd64
     logcmd rm -rf $DESTDIR/usr/sbin/amd64
     logcmd rm -rf $DESTDIR/usr/include/amd64
+    logcmd rm -rf $DESTDIR/var/db
 }
 
 init

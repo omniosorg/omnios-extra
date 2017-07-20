@@ -12,7 +12,7 @@
 | database/sqlite-3			| 3.19.3		| https://www.sqlite.org/
 | developer/bmake			| 20160926		| http://www.crufty.net/ftp/pub/sjg/
 | developer/build/autoconf		| 2.69			| https://savannah.gnu.org/news/?group=autocon 
-| developer/build/automake		| 1.15			| https://savannah.gnu.org/news/?group=automake
+| developer/build/automake		| 1.15.1		| https://savannah.gnu.org/news/?group=automake
 | developer/build/gnu-make		| 4.2.1			| http://savannah.gnu.org/news/?group=make
 | developer/build/libtool		| 2.4.6			| https://www.gnu.org/software/libtool/
 | developer/gcc51			| 5.1.0			| https://www.gnu.org/software/gcc/
