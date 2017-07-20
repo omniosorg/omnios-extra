@@ -18,7 +18,7 @@ diff --git a/compat.c b/compat.c
 index 69a104fb..55fb3d93 100644
 --- a/compat.c
 +++ b/compat.c
-@@ -92,7 +92,9 @@ compat_datafellows(const char *version)
+@@ -93,7 +93,9 @@
  		  "OpenSSH_3.0*,"
  		  "OpenSSH_3.1*",	SSH_BUG_EXTEOF|SSH_OLD_FORWARD_ADDR},
  		{ "OpenSSH_3.*",	SSH_OLD_FORWARD_ADDR },
@@ -29,8 +29,8 @@ index 69a104fb..55fb3d93 100644
  		{ "OpenSSH_4*",		0 },
  		{ "OpenSSH_5*",		SSH_NEW_OPENSSH|SSH_BUG_DYNAMIC_RPORT},
  		{ "OpenSSH_6.6.1*",	SSH_NEW_OPENSSH},
-@@ -279,6 +281,31 @@ filter_proposal(char *proposal, const char *filter)
- 	return fix_prop;
+@@ -279,6 +281,31 @@
+ 	return pkalg_prop;
  }
  
 +/*
@@ -59,12 +59,12 @@ index 69a104fb..55fb3d93 100644
 +}
 +
  char *
- compat_cipher_proposal(char *cipher_prop)
+ compat_kex_proposal(char *p)
  {
-@@ -316,6 +343,8 @@ compat_kex_proposal(char *p)
- 	if ((datafellows & SSH_OLD_DHGEX) != 0) {
- 		p = filter_proposal(p, "diffie-hellman-group-exchange-sha256");
- 		p = filter_proposal(p, "diffie-hellman-group-exchange-sha1");
+@@ -294,6 +321,8 @@
+ 		    "diffie-hellman-group-exchange-sha256,"
+ 		    "diffie-hellman-group-exchange-sha1")) == NULL)
+ 			fatal("match_filter_list failed");
 +		p = append_proposal(p, "diffie-hellman-group14-sha1");
 +		p = append_proposal(p, "diffie-hellman-group1-sha1");
  	}

@@ -48,7 +48,7 @@
 | network/test/netperf			| 2.7.0			| https://hewlettpackard.github.io/netperf/
 | security/sudo				| 1.8.7			| https://www.sudo.ws/
 | service/network/ntp			| 4.2.8p10		| http://www.ntp.org/downloads.html
-| service/network/ssh			| 7.4p1			| https://mirrors.evowise.com/pub/OpenBSD/OpenSSH/portable/
+| service/network/ssh			| 7.5p1			| https://mirrors.evowise.com/pub/OpenBSD/OpenSSH/portable/
 | shell/bash				| 4.4.12		| https://ftp.gnu.org/gnu/bash/
 | shell/pipe-viewer			| 1.6.6			| http://www.ivarch.com/programs/pv.shtml
 | shell/tcsh				| 6.20.0		| http://www.tcsh.org/
