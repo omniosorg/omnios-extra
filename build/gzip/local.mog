@@ -23,7 +23,5 @@
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 #
-# uncompress is delivered by another package
-<transform hardlink path=.*/uncompress$ -> drop>
 <transform file path=usr/sfw/.* -> drop>
 license COPYING license=GPLv3
