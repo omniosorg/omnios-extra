@@ -202,7 +202,7 @@ push_pkgs() {
 
     logmsg "Staging repository information"
     pkgrepo -s $STAGE_REPO info
-    pkgrepo -s $STAGE_REPO | sed 1d | awk '{print $2}' > $SRCDIR/pkg.list
+    pkgrepo -s $STAGE_REPO list | sed 1d | awk '{print $2}' > $SRCDIR/pkg.list
 
     republish_packages $STAGE_REPO
 
