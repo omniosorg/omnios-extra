@@ -656,6 +656,24 @@ make_package() {
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
     GLOBAL_MOG_FILE=$MYDIR/global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
+    [ -f $SRCDIR/local.mog ] && \
+        LOCAL_MOG_FILE=$SRCDIR/local.mog || LOCAL_MOG_FILE=
+    EXTRA_MOG_FILE=
+    FINAL_MOG_FILE=
+    if [ -n "$1" ]; then
+            if [[ "$1" = /* ]]; then
+                EXTRA_MOG_FILE="$1"
+            else
+                EXTRA_MOG_FILE="$SRCDIR/$1"
+            fi
+    fi
+    if [ -n "$2" ]; then
+            if [[ "$2" = /* ]]; then
+                FINAL_MOG_FILE="$2"
+            else
+                FINAL_MOG_FILE="$SRCDIR/$2"
+            fi
+    fi
 
     ## Strip leading zeros in version components.
     VER=`echo $VER | sed -e 's/\.0*\([1-9]\)/.\1/g;'`
@@ -685,11 +703,8 @@ make_package() {
     echo "set name=pkg.summary value=\"$SUMMARY\"" >> $MY_MOG_FILE
     echo "set name=pkg.descr value=\"$DESCSTR\"" >> $MY_MOG_FILE
     echo "set name=publisher value=\"sa@omniosce.org\"" >> $MY_MOG_FILE
-    if [[ -f $SRCDIR/local.mog ]]; then
-        LOCAL_MOG_FILE=$SRCDIR/local.mog
-    fi
     logmsg "--- Applying transforms"
-    $PKGMOGRIFY $XFORM_ARGS $P5M_INT $MY_MOG_FILE $GLOBAL_MOG_FILE $LOCAL_MOG_FILE $* | $PKGFMT -u > $P5M_INT2
+    $PKGMOGRIFY $XFORM_ARGS $P5M_INT $MY_MOG_FILE $GLOBAL_MOG_FILE $LOCAL_MOG_FILE $EXTRA_MOG_FILE | $PKGFMT -u > $P5M_INT2
     logmsg "--- Resolving dependencies"
     (
         set -e
@@ -748,7 +763,8 @@ make_package() {
             fi
         done
     fi
-    $PKGMOGRIFY "${P5M_INT3}.res" "$MANUAL_DEPS" | $PKGFMT -u > $P5M_FINAL
+    $PKGMOGRIFY "${P5M_INT3}.res" "$MANUAL_DEPS" $FINAL_MOG_FILE | \
+        $PKGFMT -u > $P5M_FINAL
     if [[ -z $SKIP_PKGLINT ]] && ( [[ -n $BATCH ]] ||  ask_to_pkglint ); then
         $PKGLINT -c $TMPDIR/lint-cache -r $PKGSRVR $P5M_FINAL || \
             logerr "----- pkglint failed"
