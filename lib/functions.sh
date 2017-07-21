@@ -24,7 +24,7 @@
 # Copyright 2015 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 # Copyright (c) 2014 by Delphix. All rights reserved.
-# Copyright 2017 OmniOS Community Edition Association (OmniOSce)
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 #
 
 umask 022
