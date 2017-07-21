@@ -200,6 +200,10 @@ push_pkgs() {
 	-s debug.illumos=false,packages/i386/nightly-nd/repo.redist/ \
 	-s debug.illumos=true,packages/i386/nightly/repo.redist/
 
+    logmsg "Staging repository information"
+    pkgrepo -s $STAGE_REPO info
+    pkgrepo -s $STAGE_REPO | awk '{print $2}' > $SRCDIR/pkg.list
+
     republish_packages $STAGE_REPO
 
     logmsg "Leaving $CODEMGR_WS"
