@@ -62,6 +62,14 @@ rename_files() {
     done
 }
 
+remove_files() {
+    logmsg "Removing unwanted files in $DESTDIR"
+    # Uncompress is delivered by system/extended-system-utilities
+    # Can't do this in local.mog as it's a hardlink and can either by
+    # discovered as a file or a hardlink.
+    find $DESTDIR -name uncompress -exec rm {} +
+}
+
 build32() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
     logmsg "Building 32-bit"
@@ -72,6 +80,7 @@ build32() {
     rename_in_docs
     make_install32
     rename_files
+    remove_files
     popd > /dev/null
     unset ISALIST
     export ISALIST
