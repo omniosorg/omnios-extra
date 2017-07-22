@@ -275,6 +275,9 @@ fi
 #############################################################################
 [[ -z "$NOBANNER" ]] && logmsg "===== Build started at `date` ====="
 
+build_start=`date +%s`
+trap 'logmsg Time: $PKG - $((`date +%s` - build_start))' EXIT
+
 
 #############################################################################
 # Libtool -nostdlib hacking
