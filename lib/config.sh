@@ -31,6 +31,9 @@
 RELVER=151022
 PVER=0.$RELVER
 
+# set locale to C
+export LC_ALL=C
+
 # Which server to fetch files from.
 # If $MIRROR begins with a '/', it is treated as a local directory.
 MIRROR=https://mirrors.omniosce.org
