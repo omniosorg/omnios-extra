@@ -4,6 +4,32 @@
 
 [instructions for updating from OmniTI OmniOS r151022 to the community edition can be found below](#upgrading-from-omniti-released-r151022)
 
+## r151022k (2017-07-31)
+
+Weekly release for w/c 31st of July 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
+> This is a non-reboot update other than for systems using the `mr_sas` HBA driver.
+
+### Security fixes
+
+* `ncurses` updated to fix 
+  * [CVE-2017-10684](https://www.cvedetails.com/cve/CVE-2017-10684/)
+  * [CVE-2017-10685](https://www.cvedetails.com/cve/CVE-2017-10685/)
+  * [CVE-2017-11112](https://www.cvedetails.com/cve/CVE-2017-11112/)
+  * [CVE-2017-11113](https://www.cvedetails.com/cve/CVE-2017-11113/)
+
+### Bug fixes
+
+* [8395](https://www.illumos.org/issues/8395) mr_sas: sizeof on array function parameter will return size of pointer
+
+### Other changes
+
+* Update `/etc/release` to include release version suffix and OmniOSce copyright
+* Update `/etc/notices/LICENSE` and `/etc/notices/COPYRIGHT` to include OmniOSce copyright
+
+<br>
+
+----  
+
 ## r151022i (2017-07-17)
 
 Weekly release for w/c 17th of July 2017, uname -a shows `omnios-r151022-5e982daae6`
