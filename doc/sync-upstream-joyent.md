@@ -3,7 +3,8 @@
 
 ## Check out the upstream\_joyent branch
 
-NOTE: make sure you did all the steps in _sync-upstream.md_ before!
+NOTE: make sure you have done all of the steps in _sync-upstream.md_ before
+proceeding!
 
 ```shell
 $ git checkout upstream_joyent
@@ -42,8 +43,7 @@ _joyent-merge/YYYYMMDDnn_ where _nn_ starts at 01 and is incremented in
 the case that there is more than one merge in the same day.
 
 ```shell
-$ git checkout master
-$ git checkout -b joyent-merge/2017070501
+$ git checkout -b joyent-merge/2017070501 master
 Switched to a new branch 'joyent-merge/2017070501'
 ```
 

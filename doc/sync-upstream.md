@@ -6,13 +6,13 @@
 Fork the _omniosorg/illumos-omnios_ repository to your personal GitHub profile.
 Then clone it to your development machine.
 
-```shell
+```
 $ git clone git@github.com:<github_name>/illumos-omnios.git
 ```
 
 Set-up remote repositories.
 
-```shell
+```
 $ git remote add upstream git@github.com:omniosorg/illumos-omnios.git
 $ git remote add -t master upstream_gate https://github.com/illumos/illumos-gate.git
 $ git remote add -t master upstream_joyent https://github.com/joyent/illumos-joyent.git
@@ -31,7 +31,7 @@ upstream_joyent https://github.com/joyent/illumos-joyent.git (push)
 
 Update your local repository.
 
-```shell
+```
 $ git checkout master
 $ git pull upstream master
 
@@ -47,12 +47,17 @@ result in a clean working tree.
 
 Push the upstream branches to the remote repositories.
 
-```shell
-$ git push -u upstream upstream_gate
-$ git push -u upstream upstream_joyent
-
+```
 $ git push -u origin upstream_gate
 $ git push -u origin upstream_joyent
+```
+
+Optionally, if you have write access to the `omniosorg/illumos-omnios`
+repository, put the upstream branches to there too:
+
+```
+$ git push -u upstream upstream_gate
+$ git push -u upstream upstream_joyent
 ```
 
 ## Merge upstream changes into new branch
@@ -62,7 +67,7 @@ to create a pull request. The branch name should be
 _upstream-merge/YYYYMMDDnn_ where _nn_ starts at 01 and is incremented in
 the case that there is more than one merge in the same day.
 
-```shell
+```
 $ git checkout -b upstream-merge/2017070301 master
 ```
 
@@ -73,7 +78,7 @@ accompanying infrastructure.
 
 ### Process for a successful merge
 
-```shell
+```
 $ git merge upstream_gate
 
 $ git status
@@ -83,7 +88,7 @@ nothing to commit, working tree clean
 
 ### Process for a failed merge
 
-```shell
+```
 $ git merge upstream_gate
 Auto-merging usr/src/uts/intel/sys/ucontext.h
 ... additional output deleted ...
@@ -100,7 +105,7 @@ Unmerged paths:
 Once you have manually resolved the conflicts, add the files and commit
 the change.
 
-```shell
+```
 $ git add usr/src/head/lastlog.h
 $ git add usr/src/man/man1m/zonecfg.1m
 $ git commit
@@ -108,16 +113,26 @@ $ git commit
 
 ## Perform a test build
 
-```shell
+```
 $ nightly /path/to/omnios.env
 ```
 
 If the build is unsuccessful, resolve this before moving on to the next
 step.
 
+## ONU to the new build
+
+```
+# onu -t 20170703 -d */path/to/illumos-omnios/packages/i386/nightly-nd
+...
+# init 6
+```
+
+Confirm that the system boots.
+
 ## Push the merged branch
 
-```shell
+```
 $ git push -u origin upstream-merge/2017070301
 Counting objects: 1224, done.
 Delta compression using up to 40 threads.
@@ -141,5 +156,15 @@ are backport candidates in the description of the PR. If there are none
 state that too;
 * Assign reviewers and the _upstream-merge_ tag.
 
-As soon as your PR has been merged, head over to
-[_sync-upstream-joyent.md_.](sync-upstream-joyent.md)
+## Update master branch
+
+As soon as your PR has been merged, update your master branch:
+
+```
+$ git checkout master
+$ git pull upstream master
+$ git push
+```
+
+and head over to [_sync-upstream-joyent.md_.](sync-upstream-joyent.md)
+
