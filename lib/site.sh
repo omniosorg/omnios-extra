@@ -5,28 +5,12 @@
 # To create a on-disk repo in the top level of your checkout
 # and publish there instead of the URI specified above.
 #
-omniosorg=/data/omnios-build/omniosorg
-PKGSRVR=file://$omniosorg/_repo
-TMPDIR=$omniosorg/_build
-DTMPDIR=$TMPDIR
-
-MIRROR=$omniosorg/mirror
-
-case `uname -n` in
-	build)
-		#SKIP_KAYAK_KERNEL=1
-		KAYAK_SUDO_BUILD=1
-		KAYAK_IMG_DSET=data/zone/build/export/kayak_image
-		;;
-	bloody|omniosce)
-		KAYAK_SUDO_BUILD=1
-		;;
-esac
+#PKGSRVR=file://$MYDIR/../tmp.repo/
 
 # Uncommenting this line will use a pre-built illumos-omnios, instead of having
 # us build it.  NOTE: A build of illumos-omnios can be launched concurrently in
 # conjunction with setting this variable. See functions.sh:wait_for_prebuilt().
-PREBUILT_ILLUMOS=/data/omnios-build/omniosorg/omnios.bloody
+#PREBUILT_ILLUMOS=$HOME/build/prebuild
 
 # These two should be uncommented and set to specific git changeset IDs
 # if illumos-kvm and illumos-kvm-cmd get too far ahead of illumos-{gate,omnios}.
