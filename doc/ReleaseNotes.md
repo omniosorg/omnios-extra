@@ -7,7 +7,7 @@
 ## r151022k (2017-07-31)
 
 Weekly release for w/c 31st of July 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
-> This is a non-reboot update other than for systems using the `mr_sas` HBA driver.
+> This is a non-reboot update.
 
 ### Security fixes
 
@@ -16,10 +16,6 @@ Weekly release for w/c 31st of July 2017, uname -a shows `omnios-r151022-5e982da
   * [CVE-2017-10685](https://www.cvedetails.com/cve/CVE-2017-10685/)
   * [CVE-2017-11112](https://www.cvedetails.com/cve/CVE-2017-11112/)
   * [CVE-2017-11113](https://www.cvedetails.com/cve/CVE-2017-11113/)
-
-### Bug fixes
-
-* [8395](https://www.illumos.org/issues/8395) mr_sas: sizeof on array function parameter will return size of pointer
 
 ### Other changes
 
