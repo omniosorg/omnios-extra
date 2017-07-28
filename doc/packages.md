@@ -41,7 +41,7 @@
 | library/security/openssl		| 1.0.2l		| https://www.openssl.org/source/
 | library/unixodbc			| 2.3.4			| http://www.unixodbc.org/download.html
 | library/zlib				| 1.2.11		| http://www.zlib.net/
-| network/dns/bind			| 9.10.5P3		| http://www.isc.org/downloads/bind/
+| network/dns/bind			| 9.10.6		| http://www.isc.org/downloads/bind/
 | network/rsync				| 3.1.2			| https://rsync.samba.org/
 | network/service/isc-dhcp		| 4.3.5			| https://www.isc.org/downloads/dhcp/
 | network/test/iperf			| 3.1.3			| https://iperf.fr/iperf-download.php#source

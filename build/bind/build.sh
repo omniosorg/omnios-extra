@@ -28,11 +28,14 @@
 . ../../lib/functions.sh
 
 PROG=bind
-VER=9.10.5-P3
+VER=9.10.6
 VERHUMAN=$VER
 PKG=network/dns/bind
 SUMMARY="BIND DNS tools"
 DESC="$SUMMARY ($VER)"
+
+# skip tests when in batch mode
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 DEPENDS_IPS="library/libxml2 library/security/openssl library/zlib
              system/library system/library/gcc-5-runtime system/library/math"
@@ -62,6 +65,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite test-force
 make_isa_stub
 VER=${VER//-P/.}
 VER=${VER//-W/.}

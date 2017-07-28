@@ -1,0 +1,1325 @@
+S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/atomic/.libs/t_atomic:Saturday 29 July 00:37:58 2017
+T:test_atomic_xadd:1:A
+A:ensure that isc_atomic_xadd() works.
+I:32-bit counter 320000000, expected 320000000
+R:PASS
+T:test_atomic_store:1:A
+A:ensure that isc_atomic_store() works.
+I:32-bit store 0x1a1a1a1a, expected 0x1a1a1a1a
+R:PASS
+E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/atomic/.libs/t_atomic:Saturday 29 July 00:38:09 2017
+S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/db/.libs/t_db:Saturday 29 July 00:38:09 2017
+T:dns_db_load:1:A
+A:A call to dns_db_load(db, filename) loads the contents of the database in filename into db.
+I:testing using file dns_db_load_1.data and name a.
+R:PASS
+T:dns_db_iscache:2:A
+A:When the database db has cache semantics, a call to dns_db_iscache(db) returns ISC_TRUE.
+I:testing using file dns_db_iscache_1.data
+R:PASS
+T:dns_db_iscache:3:A
+A:When the database db has zone semantics, a call to dns_db_iscache(db) returns ISC_FALSE.
+I:testing using file dns_db_iscache_2.data
+R:PASS
+T:dns_db_iszone:4:A
+A:When the database db has zone semantics, a call to dns_db_iszone(db) returns ISC_TRUE.
+I:testing using file dns_db_iszone_1.data
+R:PASS
+T:dns_db_iszone:5:A
+A:When the database db has cache semantics, a call to dns_db_iszone(db) returns ISC_FALSE.
+I:testing using file dns_db_iszone_2.data
+R:PASS
+T:dns_db_origin:6:A
+A:A call to dns_db_origin(db) returns the origin of the database.
+I:testing with database dns_db_origin_1.data and origin .
+I:testing with database dns_db_origin_1.data and origin vix.com.
+R:PASS
+T:dns_db_class:7:A
+A:A call to dns_db_class(db) returns the class of the database.
+I:testing with database dns_db_class_1.data and class in
+R:PASS
+T:dns_db_currentversion:8:A
+A:A call to dns_db_currentversion() opens the current version for reading.
+I:testing using file dns_db_currentversion.data and name a.b.c.vix.com.
+R:PASS
+T:dns_db_newversion:9:A
+A:A call to dns_db_newversion() opens a new version for reading and writing.
+I:testing using file dns_db_newversion.data and name a.b.c.vix.com.
+R:PASS
+T:dns_db_closeversion:10:A
+A:When versionp points to a read-write version and commit is ISC_TRUE, a call to dns_db_closeversion(db, versionp, commit) causes all changes made in the version to take effect, and returns ISC_R_SUCCESS.
+I:testing using file dns_db_closeversion_1.data and name a.b.c.vix.com.
+R:PASS
+T:dns_db_closeversion:11:A
+A:When versionp points to a read-write version and commit is ISC_FALSE, a call to dns_db_closeversion(db, versionp, commit) causes all changes made in the version to to be rolled back, and returns ISC_R_SUCCESS.
+I:testing using file dns_db_closeversion_1.data and name a.b.c.vix.com.
+R:PASS
+T:dns_db_expirenode:12:A
+A:A call to dns_db_expirenode() marks as stale all records at node  which expire at or before 'now'. If 'now' is zero, then the current  time will be used.
+I:testing using file dns_db_expirenode.data and name a.vix.com.
+R:PASS
+T:dns_db_findnode:13:A
+A:If the node name exists, then a call to dns_db_findnode(db, name, ISC_FALSE, nodep) initializes nodep to point to the node and returns ISC_R_SUCCESS, otherwise it returns ISC_R_NOTFOUND.
+I:testing using file dns_db_findnode_1.data and name a.vix.com.
+I:testing using file dns_db_findnode_1.data and name b.vix.com.
+I:testing using file dns_db_findnode_1.data and name c.vix.com.
+R:PASS
+T:dns_db_findnode:14:A
+A:If the node name does not exist and create is ISC_TRUE, then a call to dns_db_findnode(db, name, create, nodep) creates the node, initializes nodep to point to the node, and returns ISC_R_SUCCESS.
+I:testing using file dns_db_findnode_2.data and name a.b.c.vix.com.
+I:dns_db_findnode success
+R:PASS
+T:dns_db_find:15:A
+A:A call to dns_db_find(db, name, version, type, options, now, ...)  finds the best match for 'name' and 'type' in version 'version' of 'db'.
+I:testing using dns_db_find_1.data, name a.b.c.vix.com., type NS
+R:PASS
+T:dns_db_find:16:A
+A:When the desired node and type were found, but are glue, and the DNS_DBFIND_GLUEOK option is set, a call to dns_db_find(db, name, version, type, options, now, ...)  returns DNS_R_GLUE.
+I:testing using dns_db_find_2.data, name a.fx.vix.com., type A
+I:testing using dns_db_find_2.data, name fx.vix.com., type NS
+I:testing using dns_db_find_2.data, name a.fx.vix.com., type NS
+R:PASS
+T:dns_db_find:17:A
+A:A call to dns_db_find() returns DNS_R_DELEGATION when the data requested is beneath a zone cut.
+I:testing using dns_db_find_3.data, name a.b.c.vix.com., type NS
+I:testing using dns_db_find_3.data, name a.a.b.c.vix.com., type NS
+I:testing using dns_db_find_3.data, name a.a.b.c.vix.com., type A
+R:PASS
+T:dns_db_find:18:A
+A:A call to dns_db_find() returns DNS_R_DELEGATION when type is dns_rdatatype_any and the desired node is a zone cut.
+I:testing using dns_db_find_4.data, name a.b.c.vix.com., type ANY
+R:PASS
+T:dns_db_find:19:A
+A:A call to dns_db_find() returns DNS_R_DNAME when the data requested is beneath a DNAME.
+I:testing using dns_db_find_5.data, name x.a.b.c.vix.com., type ANY
+I:testing using dns_db_find_5.data, name a.a.b.c.vix.com., type ANY
+R:PASS
+T:dns_db_find:20:A
+A:A call to dns_db_find() returns DNS_R_CNAME when the requested rdataset was not found but there is a CNAME at the desired name.
+I:testing using dns_db_find_6.data, name exploder.vix.com., type A
+I:testing using dns_db_find_6.data, name exploder.vix.com., type ANY
+R:PASS
+T:dns_db_find:21:A
+A:A call to dns_db_find() returns DNS_R_NXDOMAIN when name does not exist.
+I:testing using dns_db_find_7.data, name a.b.c.vix.com., type ANY
+R:PASS
+T:dns_db_find:22:A
+A:A call to dns_db_find() returns DNS_R_NXRRSET when the desired name exists, but the desired type does not.
+I:testing using dns_db_find_8.data, name a.b.c.vix.com., type NS
+R:PASS
+T:dns_db_find:23:A
+A:When db is a cache database, a call to dns_db_find() returns ISC_R_NOTFOUND when the desired name does not exist, and no delegation could be found.
+I:testing using dns_db_find_9.data, name a.b.c.vix.com., type NS
+R:PASS
+T:dns_db_find:24:A
+A:When db is a cache database, an rdataset will be found only if at least one rdataset at the found node expires after 'now'.
+I:testing using dns_db_find_10.data, name a.b.c.vix.com., type NS
+I:testing using dns_db_find_10.data, name a.b.c.vix.com., type NS
+R:PASS
+T:dns_db_load:25:A
+A:A call to dns_db_load(db, filename) returns DNS_R_NOTZONETOP when the zone data contains a SOA not at the zone apex.
+I:testing using file dns_db_load_25.data and name a.
+R:PASS
+E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/db/.libs/t_db:Saturday 29 July 00:38:09 2017
+S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/dst/.libs/t_dst:Saturday 29 July 00:38:09 2017
+T:dst:1:A
+A:the dst module provides the capability to generate, store and retrieve public and private keys, sign and verify data using the RSA, DSA and MD5 algorithms, and compute Diffie-Hellman shared secrets.
+I:testing use of stored keys [1]
+I:testing use of stored keys [2]
+I:testing use of stored keys [3]
+I:testing use of stored keys [4]
+I:testing use of generated keys
+R:PASS
+T:dst:2:A
+A:the dst module provides the capability to verify data signed with the RSA and DSA algorithms
+I:testing t2_data_1, t2_dsasig, test., 23616, DST_ALG_DSA, ISC_R_SUCCESS
+I:testing t2_data_1, t2_rsasig, test., 54622, DST_ALG_RSAMD5, ISC_R_SUCCESS
+I:testing t2_data_1, t2_dsasig, test., 54622, DST_ALG_RSAMD5, !ISC_R_SUCCESS
+I:testing t2_data_2, t2_dsasig, test., 23616, DST_ALG_DSA, !ISC_R_SUCCESS
+R:PASS
+E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/dst/.libs/t_dst:Saturday 29 July 00:38:09 2017
+S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/master/.libs/t_master:Saturday 29 July 00:38:09 2017
+T:dns_master_loadfile:1:A
+A:dns_master_loadfile loads a valid master file and returns ISC_R_SUCCESS
+R:PASS
+T:dns_master_loadfile:2:A
+A:dns_master_loadfile returns ISC_R_UNEXPECTEDEND when the masterfile input ends unexpectedly
+dns_rdata_fromtext: master2.data:8: unexpected end of input
+R:PASS
+T:dns_master_loadfile:3:A
+A:dns_master_loadfile returns DNS_R_NOOWNER when the an ownername is not specified
+master3.data:2: no current owner name
+R:PASS
+T:dns_master_loadfile:4:A
+A:dns_master_loadfile accepts broken zone files where the first record has an undefined TTL, as long as it is a SOA
+master4.data:2: no TTL specified; using SOA MINTTL instead
+R:PASS
+T:dns_master_loadfile:5:A
+A:dns_master_loadfile returns DNS_R_BADCLASS when the the record class did not match the zone class
+master5.data:8: class 'ANY' != zone class 'IN'
+R:PASS
+T:dns_master_loadfile:6:A
+A:dns_master_loadfile understands DNSKEY RR specifications containing key material
+R:PASS
+T:dns_master_loadfile:7:A
+A:dns_master_loadfile understands DNSKEY RR specifications containing no key material
+R:PASS
+T:dns_master_loadfile:8:A
+A:dns_master_loadfile understands $INCLUDE
+R:PASS
+T:dns_master_loadfile:9:A
+A:dns_master_loadfile understands $INCLUDE with failure
+master5.data:8: class 'ANY' != zone class 'IN'
+R:PASS
+T:dns_master_loadfile:10:A
+A:dns_master_loadfile non-empty blank lines
+R:PASS
+T:dns_master_loadfile:11:A
+A:dns_master_loadfile allow leading zeros in SOA
+R:PASS
+E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/master/.libs/t_master:Saturday 29 July 00:38:10 2017
+S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/mem/.libs/t_mem:Saturday 29 July 00:38:10 2017
+T:mem:1:A
+A:the memory module supports the creation of memory contexts and the management of memory pools.
+I:setting freemax to 10
+I:setting fillcount to 10
+I:setting maxalloc to 30
+I:setting freemax to 25
+I:setting fillcount to 25
+I:exercising the memory pool
+I:...
+I:...
+I:...
+I:...
+I:...
+I:...
+I:...
+I:...
+I:...
+I:...
+R:PASS
+E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/mem/.libs/t_mem:Saturday 29 July 00:38:16 2017
+S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/hashes/.libs/t_hashes:Saturday 29 July 00:38:16 2017
+R:PASS
+E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/hashes/.libs/t_hashes:Saturday 29 July 00:38:16 2017
+S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/names/.libs/t_names:Saturday 29 July 00:38:16 2017
+T:dns_name_init:1:A
+A:dns_name_init initializes 'name' to the empty name
+R:PASS
+T:dns_name_invalidate:1:A
+A:dns_name_invalidate invalidates 'name'
+R:PASS
+T:dns_name_setbuffer:1:A
+A:dns_name_setbuffer dedicates a buffer for use with 'name'
+R:PASS
+T:dns_name_hasbuffer:1:A
+A:dns_name_hasbuffer returns ISC_TRUE if 'name' has a dedicated buffer, otherwise it returns ISC_FALSE
+R:PASS
+T:dns_name_isabsolute:1:A
+A:dns_name_isabsolute returns ISC_TRUE if 'name' ends in the root label
+I:testing name x.
+R:PASS
+I:testing name a.b.c.d
+R:PASS
+I:testing name x.z.
+R:PASS
+T:dns_name_hash:1:A
+A:dns_name_hash(name, case_sensitive) returns a hash of 'name' which is case_sensitive if case_sensitive is true
+I:testing names a.b.c.d and A.B.C.D
+R:PASS
+T:dns_name_fullcompare:1:A
+A:dns_name_fullcompare(name1, name2, orderp, nlabelsp) returns the DNSSEC ordering relationship between name1 and name2, sets orderp to -1 if name1 < name2, to 0 if name1 == name2, or to 1 if name1 > name2, sets nlabelsp to the number of labels name1 and name2 have in common, and sets nbitsp to the number of bits name1 and name2 have in common
+I:testing names c.d and a.b.c.d for relation contains
+R:PASS
+I:testing names a.b.c.d and c.d for relation subdomain
+R:PASS
+T:dns_name_compare:1:A
+A:dns_name_compare(name1, name2) returns information about the relative ordering under the DNSSEC ordering relationship of name1 and name2
+I:testing c.d < a.b.c.d
+R:PASS
+I:testing a.b.c.d > c.d
+R:PASS
+I:testing a.b.c == a.b.c
+R:PASS
+T:dns_name_rdatacompare:1:A
+A:dns_name_rdatacompare(name1, name2) returns information about the relative ordering of name1 and name2 as if they are part of rdata in DNSSEC canonical form
+I:testing c.d. > a.b.c.d.
+R:PASS
+I:testing a.b.c.d. < c.d.
+R:PASS
+I:testing a.b.c. == a.b.c.
+R:PASS
+T:dns_name_issubdomain:1:A
+A:when name1 is a subdomain of name2, dns_name_issubdomain(name1, name2) returns true, otherwise it returns false.
+I:testing c.d is not a subdomain of a.b.c.d
+R:PASS
+I:testing a.b.c.d is a subdomain of c.d
+R:PASS
+I:testing a.b.c. is a subdomain of a.b.c.
+R:PASS
+T:dns_name_countlabels:1:A
+A:dns_name_countlabels(name) returns the number of labels in name
+I:testing c.d
+R:PASS
+I:testing c.d.
+R:PASS
+I:testing a.b.c.d
+R:PASS
+I:testing a.b.c
+R:PASS
+I:testing .
+R:PASS
+T:dns_name_getlabel:1:A
+A:when n is less than the number of labels in name, dns_name_getlabel(name, n, labelp) initializes labelp to point to the nth label in name
+I:testing with c.d and a.b.c.d
+R:PASS
+I:testing with a.b.c.d and c.d
+R:PASS
+I:testing with a.b.c. and a.b.c.
+R:PASS
+T:dns_name_getlabelsequence:1:A
+A:when source contains at least first + n labels, dns_name_getlabelsequence(source, first, n, target) initializes target to point to the n label sequence of labels in source starting with first
+I:testing c.d a.b.c.d
+R:PASS
+I:testing a.b.c.d.e c.d
+R:PASS
+I:testing a.b.c a.b.c
+R:PASS
+T:dns_name_fromregion:1:A
+A:dns_name_fromregion(name, region) converts a DNS name from a region representation to a name representation
+I:testing a.b.c.d.
+R:PASS
+I:testing a.b.c.d.[A].[aaa.
+R:PASS
+I:testing Ba\x\aa.b.c\[\[o\\.Z
+R:PASS
+I:testing Ba\x\aa.b.c\[\[o\\\..\.Z
+R:PASS
+T:dns_name_toregion:1:A
+A:dns_name_toregion(name, region) converts a DNS name from a region representation to a name representation
+I:testing a.b.c.d.
+R:PASS
+I:testing a.b.c.d.[A].[aaa.
+R:PASS
+I:testing Ba\x\aa.b.c\[\[o\\.Z
+R:PASS
+T:dns_name_fromwire:1:A
+A:dns_name_fromwire(name, source, dctx, downcase, target) converts the possibly compressed DNS name 'name' in wire format to canonicalized form at target, performing upper to lower case conversion if downcase is true, and returns ISC_R_SUCCESS
+I:testing using wire_test1.data
+R:PASS
+T:dns_name_fromwire:4:A
+A:when a name length is invalid, dns_name_fromwire() returns DNS_R_FORMERR
+I:testing using wire_test4.data
+R:PASS
+T:dns_name_fromwire:5:A
+A:when a compression type is invalid, dns_name_fromwire() returns DNS_R_DISALLOWED
+I:testing using wire_test5.data
+R:PASS
+T:dns_name_fromwire:6:A
+A:when a bad compression pointer is encountered, dns_name_fromwire() returns DNS_R_BADPOINTER
+I:testing using wire_test6.data
+R:PASS
+T:dns_name_fromwire:7:A
+A:when input ends unexpected, dns_name_fromwire() returns ISC_R_UNEXPECTEDEND
+I:testing using wire_test7.data
+R:PASS
+T:dns_name_fromwire:9:A
+A:when there is not enough space in target, dns_name_fromwire(name, source, dcts, downcase, target) returns ISC_R_NOSPACE
+I:testing using wire_test8.data
+R:PASS
+T:dns_name_towire:1:A
+A:dns_name_towire(name, cctx, target) converts the DNS name 'name' into wire format, compresses it as specified by the compression context cctx, stores the result in target and returns DNS_SUCCESS
+I:testing using a.vix.com.
+R:PASS
+T:dns_name_towire:2:A
+A:when not enough space exists in target, dns_name_towire(name, cctx, target) returns ISC_R_NOSPACE
+I:testing using a.vix.com
+R:PASS
+T:dns_name_fromtext:1:A
+A:dns_name_fromtext(name, source, origin, downcase, target) converts the textual representation of a DNS name at source into uncompressed wire form at target, appending origin to the converted name if origin is non-NULL and converting upper case to lower case during conversion if downcase is true.
+I:testing a.b a.b.c.d C.d
+R:PASS
+I:testing a.b a.b.c.d C.d
+R:PASS
+I:testing a.b a.b.C.d C.d
+R:PASS
+I:testing a.b. a.b. C.d
+R:PASS
+T:dns_name_totext:1:A
+A:dns_name_totext(name, omit_final_dot, target) converts the DNS name 'name' in wire format to textual format at target, and adds a final '.' to the name if omit_final_dot is false
+I:testing a.b.c.d
+R:PASS
+I:testing a.\\[\[.c.d
+R:PASS
+I:testing a.b.C.d
+R:PASS
+I:testing a.b.
+R:PASS
+E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/names/.libs/t_names:Saturday 29 July 00:38:16 2017
+S:net:Saturday 29 July 00:38:16 2017
+T:isc_netaddr_ismulticast:1:A
+A:Checking to see if multicast addresses are detected properly
+I:1.2.3.4 is not multicast (PASSED)
+I:4.3.2.1 is not multicast (PASSED)
+I:224.1.1.1 is multicast (PASSED)
+I:1.1.1.244 is not multicast (PASSED)
+I:::1 is not multicast (PASSED)
+I:ff02::1 is multicast (PASSED)
+R:PASS
+T:isc_sockaddr_ismulticast:2:A
+A:Checking to see if multicast addresses are detected properly
+R:PASS
+E:net:Saturday 29 July 00:38:16 2017
+S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/rbt/.libs/t_rbt:Saturday 29 July 00:38:16 2017
+T:dns_rbt_create:1:A
+A:dns_rbt_create creates a rbt and returns ISC_R_SUCCESS on success
+R:PASS
+T:dns_rbt_addname:2:A
+A:dns_rbt_addname adds a name to a database and returns ISC_R_SUCCESS on success
+I:testing using name new.name
+R:PASS
+T:dns_rbt_addname:3:A
+A:when name already exists, dns_rbt_addname() returns ISC_R_EXISTS
+I:testing using name a.vix.com
+R:PASS
+T:dns_rbt_deletename:4:A
+A:when name exists, dns_rbt_deletename() returns ISC_R_SUCCESS
+I:testing using name a.vix.com
+R:PASS
+T:dns_rbt_deletename:5:A
+A:when name does not exist, dns_rbt_deletename() returns ISC_R_NOTFOUND
+I:testing using name new.name
+R:PASS
+T:dns_rbt_findname:6:A
+A:when name exists and exactly matches the search name dns_rbt_findname() returns ISC_R_SUCCESS
+I:testing using name a.vix.com
+R:PASS
+T:dns_rbt_findname:7:A
+A:when a name does not exist, dns_rbt_findname returns ISC_R_NOTFOUND
+I:testing using name not.used.here
+R:PASS
+T:dns_rbt_findname:8:A
+A:when a superdomain is found with data matching name, dns_rbt_findname returns DNS_R_PARTIALMATCH
+I:testing using name a.b.vix.com
+R:PASS
+T:dns_rbtnodechain_init:9:A
+A:a call to dns_rbtnodechain_init(chain, mctx) initializes chain
+I:checking for next name of a and new origin of b.vix.com.
+I:checking for DNS_R_NEWORIGIN
+I:checking for previous name of b and new origin of a.vix.com.
+I:checking for DNS_R_NEWORIGIN
+I:checking for first name of @ and new origin of .
+I:checking for DNS_R_NEWORIGIN
+I:checking for last name of isc.org
+I:checking for DNS_R_NEWORIGIN
+I:checking node ordering
+I:first name:	<@>
+I:first origin:	<.>
+I:next name:	<vix.com>
+I:next origin:	<.>
+I:comparing	<.>
+I:	with	<vix.com.>
+I:next name:	<a>
+I:next origin:	<vix.com.>
+I:comparing	<vix.com.>
+I:	with	<a.vix.com.>
+I:next name:	<a>
+I:next origin:	<a.vix.com.>
+I:comparing	<a.vix.com.>
+I:	with	<a.a.vix.com.>
+I:next name:	<b>
+I:next origin:	<a.vix.com.>
+I:comparing	<a.a.vix.com.>
+I:	with	<b.a.vix.com.>
+I:next name:	<b>
+I:next origin:	<vix.com.>
+I:comparing	<b.a.vix.com.>
+I:	with	<b.vix.com.>
+I:next name:	<a>
+I:next origin:	<b.vix.com.>
+I:comparing	<b.vix.com.>
+I:	with	<a.b.vix.com.>
+I:next name:	<b>
+I:next origin:	<b.vix.com.>
+I:comparing	<a.b.vix.com.>
+I:	with	<b.b.vix.com.>
+I:next name:	<c>
+I:next origin:	<vix.com.>
+I:comparing	<b.b.vix.com.>
+I:	with	<c.vix.com.>
+I:next name:	<a>
+I:next origin:	<c.vix.com.>
+I:comparing	<c.vix.com.>
+I:	with	<a.c.vix.com.>
+I:next name:	<b>
+I:next origin:	<c.vix.com.>
+I:comparing	<a.c.vix.com.>
+I:	with	<b.c.vix.com.>
+I:next name:	<iengines.net>
+I:next origin:	<.>
+I:comparing	<b.c.vix.com.>
+I:	with	<iengines.net.>
+I:next name:	<isc.org>
+I:next origin:	<.>
+I:comparing	<iengines.net.>
+I:	with	<isc.org.>
+R:PASS
+T:dns_rbtnodechain_first:10:A
+A:a call to dns_rbtnodechain_first(chain, rbt, name, origin) sets name to point to the root of the tree, origin to point to the origin, and returns DNS_R_NEWORIGIN
+I:testing for first name of @, origin of .
+I:checking for DNS_R_NEWORIGIN
+I:testing for next name of com, origin of .
+I:checking for DNS_R_NEWORIGIN
+I:testing for first name of @, origin of .
+I:checking for DNS_R_NEWORIGIN
+I:testing for next name of vix.com, origin of .
+I:checking for DNS_R_NEWORIGIN
+R:PASS
+T:dns_rbtnodechain_last:11:A
+A:a call to dns_rbtnodechain_last(chain, rbt, name, origin) sets name to point to the last node of the megatree, origin to the name of the level above it, and returns DNS_R_NEWORIGIN
+I:testing for last name of isc.org, origin of .
+I:checking for DNS_R_NEWORIGIN
+I:testing for previous name of iengines.net, origin of .
+I:checking for DNS_R_NEWORIGIN
+I:testing for last name of isc.org, origin of .
+I:checking for DNS_R_NEWORIGIN
+I:testing for previous name of b, origin of c.vix.com.
+I:checking for DNS_R_NEWORIGIN
+R:PASS
+T:dns_rbtnodechain_next:12:A
+A:a call to dns_rbtnodechain_next(chain, name, origin) sets name to point to the next node of the tree and returns ISC_R_SUCCESS or DNS_R_NEWORIGIN on success
+I:checking for next name of a and new origin of c.vix.com.
+I:checking for DNS_R_NEWORIGIN
+R:PASS
+T:dns_rbtnodechain_prev:13:A
+A:a call to dns_rbtnodechain_prev(chain, name, origin) sets name to point to the previous node of the tree and returns ISC_R_SUCCESS or DNS_R_NEWORIGIN on success
+I:checking for next name of b and new origin of vix.com.
+I:checking for DNS_R_NEWORIGIN
+R:PASS
+E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/rbt/.libs/t_rbt:Saturday 29 July 00:38:16 2017
+S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/resolver/.libs/t_resolver:Saturday 29 July 00:38:16 2017
+T:test_dns_resolver_create:1:A
+A:a resolver can be created successfully
+R:PASS
+T:test_dns_resolver_settimeout:1:A
+A:_settimeout() can change the timeout to a non-default
+I:The default timeout is 10 seconds
+I:The new timeout is 11 seconds
+R:PASS
+T:test_dns_resolver_gettimeout:1:A
+A:The default timeout is returned from _gettimeout()
+I:The default timeout is 10 seconds
+R:PASS
+T:test_dns_resolver_settimeout_to_default:1:A
+A:_settimeout() can change the timeout back to a default value by specifying 0 as the timeout.
+I:The default timeout is 10 seconds
+I:The new timeout is 10 seconds
+R:PASS
+T:test_dns_resolver_settimeout_over_maximum:1:A
+A:_settimeout() cannot set the value larger than the maximum.
+I:The new timeout is 30 seconds
+R:PASS
+E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/resolver/.libs/t_resolver:Saturday 29 July 00:38:16 2017
+S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/sockaddr/.libs/t_sockaddr:Saturday 29 July 00:38:16 2017
+T:isc_sockaddr_eqaddrprefix:1:A
+A:isc_sockaddr_eqaddrprefix() returns ISC_TRUE when prefixes of a and b are equal, and ISC_FALSE when they are not equal
+R:PASS
+T:isc_netaddr_masktoprefixlen:1:A
+A:isc_netaddr_masktoprefixlen() calculates correct prefix lengths 
+R:PASS
+E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/sockaddr/.libs/t_sockaddr:Saturday 29 July 00:38:16 2017
+S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/tasks/.libs/t_tasks:Saturday 29 July 00:38:16 2017
+T:tasks:1:A
+A:The task subsystem can create and manage tasks
+I:tick
+I:tock
+I:task 1
+I:task 2
+I:task 1
+I:task 2
+I:task 1
+I:task 3
+I:task 1
+I:task 3
+I:shutdown 3
+I:task 1
+I:tock
+I:task 4
+I:task 4
+I:shutdown 4
+I:task 1
+I:task 1
+I:task 1
+I:task 1
+I:tick
+I:tick
+I:tock
+I:tick
+I:tock
+I:tick
+I:tock
+I:tick
+I:tock
+I:tick
+I:tock
+I:tick
+I:tock
+I:tick
+I:tock
+I:tick
+I:tock
+I:tick
+I:tock
+I:shutdown 1
+I:shutdown 2
+R:PASS
+T:tasks:2:A
+A:The task subsystem can create ISC_TASKS_MIN tasks
+I:Testing with 10000 tasks
+R:PASS
+T:tasks:3:A
+A:When isc_task_shutdown() is called, any shutdown events that have been requested via prior isc_task_onshutdown() calls are posted in LIFO order.
+R:PASS
+T:tasks:4:A
+A:After isc_task_shutdown() has been called, any call to isc_task_onshutdown() will return ISC_R_SHUTTINGDOWN.
+R:PASS
+T:tasks:7:A
+A:A call to isc_task_create() creates a task that can receive events.
+R:PASS
+T:tasks:10:A
+A:A call to isc_task_purge(task, sender, type, tag) purges all events of type 'type' and with tag 'tag' not marked as unpurgable from sender from the task's queue and returns the number of events purged.
+I:testing purge on 2,4,8 expecting 1
+I:testing purge on 0,4,8 expecting 3
+I:testing purge on 0,4,0 expecting 15
+I:testing purge on 0,99,8 expecting 0
+I:testing purge on 0,5,0 expecting 5
+R:PASS
+T:tasks:11:A
+A:When the event is marked as purgable, a call to isc_task_purgeevent(task, event) purges the event 'event' from the task's queue and returns ISC_TRUE.
+R:PASS
+T:tasks:12:A
+A:When the event is not marked as purgable, a call to isc_task_purgeevent(task, event) does not purge the event 'event' from the task's queue and returns ISC_FALSE.
+R:PASS
+T:tasks:13:A
+A:A call to isc_event_purgerange(task, sender, first, last, tag) purges all events not marked unpurgable from sender 'sender' and of type within the range 'first' to 'last' inclusive from the task's event queue and returns the number of tasks purged.
+I:testing purge on 2,4,8 expecting 1
+I:testing purge on 0,4,8 expecting 3
+I:testing purge on 0,4,0 expecting 15
+I:testing purge on 0,99,8 expecting 0
+I:testing purge on 3,5,0 expecting 5
+I:testing purgerange on 2,4-5,8 expecting 2
+I:event 806903c,5,8 matched but was not purgable
+I:testing purge on 0,4-5,8 expecting 5
+I:event 806903c,5,8 matched but was not purgable
+I:testing purge on 0,5-6,0 expecting 28
+I:event 806903c,5,8 matched but was not purgable
+I:event 806903c,5,a matched but was not purgable
+I:testing purge on 0,99-101,8 expecting 0
+I:testing purge on 3,5-6,0 expecting 10
+R:PASS
+T:tasks:14:A
+A:isc_task_beginexclusive() gets exclusive access
+I:task enter 0
+I:task enter 1
+I:task enter 2
+I:task enter 3
+I:task exit 0
+I:task enter 0
+I:task exit 1
+I:task enter 1
+I:task exit 3
+I:task enter 3
+I:task exit 2
+I:task enter 2
+I:task exit 1
+I:task enter 1
+I:task exit 0
+I:task enter 0
+I:task exit 3
+I:task enter 3
+I:task exit 2
+I:task enter 2
+I:task exit 1
+I:task enter 1
+I:task exit 0
+I:task enter 0
+I:task exit 3
+I:task enter 3
+I:task exit 2
+I:task enter 2
+I:task exit 1
+I:task enter 1
+I:task exit 0
+I:task enter 0
+I:task exit 3
+I:task enter 3
+I:task exit 2
+I:task enter 2
+I:task exit 1
+I:task enter 4
+I:task exit 0
+I:task enter 5
+I:task exit 3
+I:task enter 6
+I:task exit 2
+I:task exit 4
+I:task enter 4
+I:task exit 5
+I:task enter 5
+I:task exit 4
+I:task enter 4
+I:task exit 5
+I:task enter 5
+I:task exit 4
+I:task enter 4
+I:task exit 5
+I:task enter 5
+I:task exit 4
+I:task enter 4
+I:task exit 5
+I:task enter 5
+I:task exit 4
+I:task exit 5
+I:task 6 got exclusive access
+I:task 0 state 0
+I:task 1 state 0
+I:task 2 state 0
+I:task 3 state 0
+I:task 4 state 0
+I:task 5 state 0
+I:task 6 state 0
+I:task 7 state 0
+I:task 8 state 0
+I:task 9 state 0
+I:task exit 6
+I:task enter 7
+I:task enter 8
+I:task enter 1
+I:task enter 9
+I:task exit 9
+I:task enter 0
+I:task exit 7
+I:task enter 3
+I:task exit 8
+I:task enter 2
+I:task exit 1
+I:task enter 4
+I:task exit 0
+I:task enter 5
+I:task exit 3
+I:task exit 2
+I:task exit 4
+I:task exit 5
+R:PASS
+E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/tasks/.libs/t_tasks:Saturday 29 July 00:38:28 2017
+S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/timers/.libs/t_timers:Saturday 29 July 00:38:28 2017
+T:isc_timer_create:1:A
+A:When type is isc_timertype_ticker, a call to isc_timer_create() creates a timer that posts an ISC_TIMEREVENT_TICK event to the specified task every 'interval' seconds and returns ISC_R_SUCCESS.
+I:tick 1
+I:tick 2
+I:tick 3
+I:tick 4
+I:tick 5
+I:tick 6
+I:tick 7
+I:tick 8
+I:tick 9
+I:tick 10
+I:tick 11
+I:tick 12
+R:PASS
+T:isc_timer_create:2:A
+A:When type is isc_timertype_once, a call to isc_timer_create() creates a timer that posts an ISC_TIMEEVENT_LIFE event to the specified task when the current time reaches or exceeds the time specified by 'expires'.
+I:tick 1
+R:PASS
+T:isc_timer_create:3:A
+A:When type is isc_timertype_once, a call to isc_timer_create() creates a timer that posts an ISC_TIMEEVENT_IDLE event to the specified task when the timer has been idle for 'interval' seconds.
+I:tick 1
+R:PASS
+T:isc_timer_reset:4:A
+A:A call to isc_timer_reset() changes the timer's type, expires and interval values to the given values.
+I:tick 1
+I:tick 2
+I:tick 3
+R:PASS
+T:isc_timer_reset:5:A
+A:When 'purge' is TRUE, a call to isc_timer_reset() purges any pending events from 'timer' from the task's event queue.
+I:t5_start_event
+I:t5_once_event
+I:t5_tick_event 1
+I:t5_shutdown_event
+R:PASS
+E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/timers/.libs/t_timers:Saturday 29 July 00:39:29 2017
+making all in /omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/system/dlzexternal
+making all in /omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/system/lwresd
+making all in /omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/system/rsabigexponent
+making all in /omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/system/tkey
+S:acl:Sat Jul 29 00:39:29 CEST 2017
+T:acl:1:A
+A:System test acl
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:acl:Sat Jul 29 00:39:29 CEST 2017
+S:additional:Sat Jul 29 00:39:29 CEST 2017
+T:additional:1:A
+A:System test additional
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:additional:Sat Jul 29 00:39:30 CEST 2017
+S:allow_query:Sat Jul 29 00:39:30 CEST 2017
+T:allow_query:1:A
+A:System test allow_query
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:allow_query:Sat Jul 29 00:39:30 CEST 2017
+S:addzone:Sat Jul 29 00:39:30 CEST 2017
+T:addzone:1:A
+A:System test addzone
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:addzone:Sat Jul 29 00:39:30 CEST 2017
+S:autosign:Sat Jul 29 00:39:30 CEST 2017
+T:autosign:1:A
+A:System test autosign
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:autosign:Sat Jul 29 00:39:30 CEST 2017
+S:builtin:Sat Jul 29 00:39:30 CEST 2017
+T:builtin:1:A
+A:System test builtin
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:builtin:Sat Jul 29 00:39:30 CEST 2017
+S:cacheclean:Sat Jul 29 00:39:30 CEST 2017
+T:cacheclean:1:A
+A:System test cacheclean
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:cacheclean:Sat Jul 29 00:39:30 CEST 2017
+S:case:Sat Jul 29 00:39:30 CEST 2017
+T:case:1:A
+A:System test case
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:case:Sat Jul 29 00:39:30 CEST 2017
+S:chain:Sat Jul 29 00:39:30 CEST 2017
+T:chain:1:A
+A:System test chain
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:chain:Sat Jul 29 00:39:30 CEST 2017
+S:checkconf:Sat Jul 29 00:39:30 CEST 2017
+T:checkconf:1:A
+A:System test checkconf
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:checkconf:Sat Jul 29 00:39:30 CEST 2017
+S:checkds:Sat Jul 29 00:39:30 CEST 2017
+T:checkds:1:A
+A:System test checkds
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:checkds:Sat Jul 29 00:39:30 CEST 2017
+S:checknames:Sat Jul 29 00:39:30 CEST 2017
+T:checknames:1:A
+A:System test checknames
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:checknames:Sat Jul 29 00:39:30 CEST 2017
+S:checkzone:Sat Jul 29 00:39:30 CEST 2017
+T:checkzone:1:A
+A:System test checkzone
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:checkzone:Sat Jul 29 00:39:30 CEST 2017
+S:cookie:Sat Jul 29 00:39:30 CEST 2017
+T:cookie:1:A
+A:System test cookie
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:cookie:Sat Jul 29 00:39:30 CEST 2017
+S:coverage:Sat Jul 29 00:39:30 CEST 2017
+T:coverage:1:A
+A:System test coverage
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:coverage:Sat Jul 29 00:39:30 CEST 2017
+S:database:Sat Jul 29 00:39:30 CEST 2017
+T:database:1:A
+A:System test database
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:database:Sat Jul 29 00:39:30 CEST 2017
+run.sh: delv: no such test
+S:digdelv:Sat Jul 29 00:39:30 CEST 2017
+T:digdelv:1:A
+A:System test digdelv
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:digdelv:Sat Jul 29 00:39:30 CEST 2017
+S:dlv:Sat Jul 29 00:39:30 CEST 2017
+T:dlv:1:A
+A:System test dlv
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:dlv:Sat Jul 29 00:39:30 CEST 2017
+S:dlvauto:Sat Jul 29 00:39:30 CEST 2017
+T:dlvauto:1:A
+A:System test dlvauto
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:dlvauto:Sat Jul 29 00:39:30 CEST 2017
+S:dlz:Sat Jul 29 00:39:30 CEST 2017
+T:dlz:1:A
+A:System test dlz
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:dlz:Sat Jul 29 00:39:30 CEST 2017
+S:dlzexternal:Sat Jul 29 00:39:30 CEST 2017
+T:dlzexternal:1:A
+A:System test dlzexternal
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:dlzexternal:Sat Jul 29 00:39:30 CEST 2017
+S:dlzredir:Sat Jul 29 00:39:30 CEST 2017
+T:dlzredir:1:A
+A:System test dlzredir
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:dlzredir:Sat Jul 29 00:39:30 CEST 2017
+S:dns64:Sat Jul 29 00:39:30 CEST 2017
+T:dns64:1:A
+A:System test dns64
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:dns64:Sat Jul 29 00:39:30 CEST 2017
+S:dnssec:Sat Jul 29 00:39:30 CEST 2017
+T:dnssec:1:A
+A:System test dnssec
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:dnssec:Sat Jul 29 00:39:30 CEST 2017
+S:dsdigest:Sat Jul 29 00:39:30 CEST 2017
+T:dsdigest:1:A
+A:System test dsdigest
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:dsdigest:Sat Jul 29 00:39:30 CEST 2017
+S:dscp:Sat Jul 29 00:39:30 CEST 2017
+T:dscp:1:A
+A:System test dscp
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:dscp:Sat Jul 29 00:39:30 CEST 2017
+S:ecdsa:Sat Jul 29 00:39:30 CEST 2017
+T:ecdsa:1:A
+A:System test ecdsa
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:ecdsa:Sat Jul 29 00:39:30 CEST 2017
+S:ednscompliance:Sat Jul 29 00:39:30 CEST 2017
+T:ednscompliance:1:A
+A:System test ednscompliance
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:ednscompliance:Sat Jul 29 00:39:30 CEST 2017
+S:emptyzones:Sat Jul 29 00:39:30 CEST 2017
+T:emptyzones:1:A
+A:System test emptyzones
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:emptyzones:Sat Jul 29 00:39:30 CEST 2017
+S:fetchlimit:Sat Jul 29 00:39:30 CEST 2017
+T:fetchlimit:1:A
+A:System test fetchlimit
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:fetchlimit:Sat Jul 29 00:39:30 CEST 2017
+S:filter-aaaa:Sat Jul 29 00:39:30 CEST 2017
+T:filter-aaaa:1:A
+A:System test filter-aaaa
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:filter-aaaa:Sat Jul 29 00:39:30 CEST 2017
+S:formerr:Sat Jul 29 00:39:30 CEST 2017
+T:formerr:1:A
+A:System test formerr
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:formerr:Sat Jul 29 00:39:30 CEST 2017
+S:forward:Sat Jul 29 00:39:30 CEST 2017
+T:forward:1:A
+A:System test forward
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:forward:Sat Jul 29 00:39:30 CEST 2017
+S:geoip:Sat Jul 29 00:39:30 CEST 2017
+T:geoip:1:A
+A:System test geoip
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:geoip:Sat Jul 29 00:39:30 CEST 2017
+S:glue:Sat Jul 29 00:39:30 CEST 2017
+T:glue:1:A
+A:System test glue
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:glue:Sat Jul 29 00:39:30 CEST 2017
+S:gost:Sat Jul 29 00:39:30 CEST 2017
+T:gost:1:A
+A:System test gost
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:gost:Sat Jul 29 00:39:30 CEST 2017
+S:ixfr:Sat Jul 29 00:39:30 CEST 2017
+T:ixfr:1:A
+A:System test ixfr
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:ixfr:Sat Jul 29 00:39:30 CEST 2017
+S:inline:Sat Jul 29 00:39:30 CEST 2017
+T:inline:1:A
+A:System test inline
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:inline:Sat Jul 29 00:39:30 CEST 2017
+S:integrity:Sat Jul 29 00:39:30 CEST 2017
+T:integrity:1:A
+A:System test integrity
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:integrity:Sat Jul 29 00:39:30 CEST 2017
+S:legacy:Sat Jul 29 00:39:30 CEST 2017
+T:legacy:1:A
+A:System test legacy
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:legacy:Sat Jul 29 00:39:30 CEST 2017
+S:limits:Sat Jul 29 00:39:30 CEST 2017
+T:limits:1:A
+A:System test limits
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:limits:Sat Jul 29 00:39:31 CEST 2017
+S:logfileconfig:Sat Jul 29 00:39:31 CEST 2017
+T:logfileconfig:1:A
+A:System test logfileconfig
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:logfileconfig:Sat Jul 29 00:39:31 CEST 2017
+S:lwresd:Sat Jul 29 00:39:31 CEST 2017
+T:lwresd:1:A
+A:System test lwresd
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:lwresd:Sat Jul 29 00:39:31 CEST 2017
+S:masterfile:Sat Jul 29 00:39:31 CEST 2017
+T:masterfile:1:A
+A:System test masterfile
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:masterfile:Sat Jul 29 00:39:31 CEST 2017
+S:masterformat:Sat Jul 29 00:39:31 CEST 2017
+T:masterformat:1:A
+A:System test masterformat
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:masterformat:Sat Jul 29 00:39:31 CEST 2017
+S:metadata:Sat Jul 29 00:39:31 CEST 2017
+T:metadata:1:A
+A:System test metadata
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:metadata:Sat Jul 29 00:39:31 CEST 2017
+S:notify:Sat Jul 29 00:39:31 CEST 2017
+T:notify:1:A
+A:System test notify
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:notify:Sat Jul 29 00:39:31 CEST 2017
+S:nslookup:Sat Jul 29 00:39:31 CEST 2017
+T:nslookup:1:A
+A:System test nslookup
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:nslookup:Sat Jul 29 00:39:31 CEST 2017
+S:nsupdate:Sat Jul 29 00:39:31 CEST 2017
+T:nsupdate:1:A
+A:System test nsupdate
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:nsupdate:Sat Jul 29 00:39:31 CEST 2017
+S:pending:Sat Jul 29 00:39:31 CEST 2017
+T:pending:1:A
+A:System test pending
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:pending:Sat Jul 29 00:39:31 CEST 2017
+S:reclimit:Sat Jul 29 00:39:31 CEST 2017
+T:reclimit:1:A
+A:System test reclimit
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:reclimit:Sat Jul 29 00:39:31 CEST 2017
+S:redirect:Sat Jul 29 00:39:31 CEST 2017
+T:redirect:1:A
+A:System test redirect
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:redirect:Sat Jul 29 00:39:31 CEST 2017
+S:resolver:Sat Jul 29 00:39:31 CEST 2017
+T:resolver:1:A
+A:System test resolver
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:resolver:Sat Jul 29 00:39:31 CEST 2017
+S:rndc:Sat Jul 29 00:39:31 CEST 2017
+T:rndc:1:A
+A:System test rndc
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:rndc:Sat Jul 29 00:39:31 CEST 2017
+S:rpz:Sat Jul 29 00:39:31 CEST 2017
+T:rpz:1:A
+A:System test rpz
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:rpz:Sat Jul 29 00:39:31 CEST 2017
+S:rpzrecurse:Sat Jul 29 00:39:31 CEST 2017
+T:rpzrecurse:1:A
+A:System test rpzrecurse
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:rpzrecurse:Sat Jul 29 00:39:31 CEST 2017
+S:rrl:Sat Jul 29 00:39:31 CEST 2017
+T:rrl:1:A
+A:System test rrl
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:rrl:Sat Jul 29 00:39:31 CEST 2017
+S:rrchecker:Sat Jul 29 00:39:31 CEST 2017
+T:rrchecker:1:A
+A:System test rrchecker
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:rrchecker:Sat Jul 29 00:39:31 CEST 2017
+S:rrsetorder:Sat Jul 29 00:39:31 CEST 2017
+T:rrsetorder:1:A
+A:System test rrsetorder
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:rrsetorder:Sat Jul 29 00:39:31 CEST 2017
+S:rsabigexponent:Sat Jul 29 00:39:31 CEST 2017
+T:rsabigexponent:1:A
+A:System test rsabigexponent
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:rsabigexponent:Sat Jul 29 00:39:31 CEST 2017
+S:smartsign:Sat Jul 29 00:39:31 CEST 2017
+T:smartsign:1:A
+A:System test smartsign
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:smartsign:Sat Jul 29 00:39:31 CEST 2017
+S:sortlist:Sat Jul 29 00:39:31 CEST 2017
+T:sortlist:1:A
+A:System test sortlist
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:sortlist:Sat Jul 29 00:39:31 CEST 2017
+S:spf:Sat Jul 29 00:39:31 CEST 2017
+T:spf:1:A
+A:System test spf
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:spf:Sat Jul 29 00:39:31 CEST 2017
+S:staticstub:Sat Jul 29 00:39:31 CEST 2017
+T:staticstub:1:A
+A:System test staticstub
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:staticstub:Sat Jul 29 00:39:31 CEST 2017
+S:statistics:Sat Jul 29 00:39:31 CEST 2017
+T:statistics:1:A
+A:System test statistics
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:statistics:Sat Jul 29 00:39:31 CEST 2017
+S:statschannel:Sat Jul 29 00:39:31 CEST 2017
+T:statschannel:1:A
+A:System test statschannel
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:statschannel:Sat Jul 29 00:39:31 CEST 2017
+S:stub:Sat Jul 29 00:39:31 CEST 2017
+T:stub:1:A
+A:System test stub
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:stub:Sat Jul 29 00:39:31 CEST 2017
+S:tcp:Sat Jul 29 00:39:31 CEST 2017
+T:tcp:1:A
+A:System test tcp
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:tcp:Sat Jul 29 00:39:31 CEST 2017
+S:tkey:Sat Jul 29 00:39:31 CEST 2017
+T:tkey:1:A
+A:System test tkey
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:tkey:Sat Jul 29 00:39:31 CEST 2017
+S:tsig:Sat Jul 29 00:39:31 CEST 2017
+T:tsig:1:A
+A:System test tsig
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:tsig:Sat Jul 29 00:39:31 CEST 2017
+S:tsiggss:Sat Jul 29 00:39:31 CEST 2017
+T:tsiggss:1:A
+A:System test tsiggss
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:tsiggss:Sat Jul 29 00:39:31 CEST 2017
+S:unknown:Sat Jul 29 00:39:31 CEST 2017
+T:unknown:1:A
+A:System test unknown
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:unknown:Sat Jul 29 00:39:31 CEST 2017
+S:upforwd:Sat Jul 29 00:39:31 CEST 2017
+T:upforwd:1:A
+A:System test upforwd
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:upforwd:Sat Jul 29 00:39:31 CEST 2017
+S:verify:Sat Jul 29 00:39:31 CEST 2017
+T:verify:1:A
+A:System test verify
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:verify:Sat Jul 29 00:39:31 CEST 2017
+S:views:Sat Jul 29 00:39:31 CEST 2017
+T:views:1:A
+A:System test views
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:views:Sat Jul 29 00:39:31 CEST 2017
+S:wildcard:Sat Jul 29 00:39:31 CEST 2017
+T:wildcard:1:A
+A:System test wildcard
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:wildcard:Sat Jul 29 00:39:31 CEST 2017
+S:xfer:Sat Jul 29 00:39:31 CEST 2017
+T:xfer:1:A
+A:System test xfer
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:xfer:Sat Jul 29 00:39:31 CEST 2017
+S:xferquota:Sat Jul 29 00:39:31 CEST 2017
+T:xferquota:1:A
+A:System test xferquota
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:xferquota:Sat Jul 29 00:39:31 CEST 2017
+S:zero:Sat Jul 29 00:39:31 CEST 2017
+T:zero:1:A
+A:System test zero
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:zero:Sat Jul 29 00:39:31 CEST 2017
+S:zonechecks:Sat Jul 29 00:39:31 CEST 2017
+T:zonechecks:1:A
+A:System test zonechecks
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+E:zonechecks:Sat Jul 29 00:39:31 CEST 2017
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:
+I:NOTE: System tests were skipped because they require that the
+I:      IP addresses 10.53.0.1 through 10.53.0.8 be configured
+I:      as alias addresses on the loopback interface.  Please run
+I:      "bin/tests/system/ifconfig.sh up" as root to configure them.
+I:System test result summary:
+I:   80 UNTESTED
