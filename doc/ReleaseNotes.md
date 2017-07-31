@@ -4,6 +4,31 @@
 
 [instructions for updating from OmniTI OmniOS r151022 to the community edition can be found below](#upgrading-from-omniti-released-r151022)
 
+## r151022l (2017-08-07)
+
+Weekly release for w/c 7th of August 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
+> This release requires a reboot.
+
+### Security fixes
+
+### Bug fixes
+
+* [8395](https://www.illumos.org/issues/8395) mr\_sas: sizeof on array function parameter will return size of pointer
+* [8543](https://www.illumos.org/issues/8543) nss\_ldap crashes handling a group with no gidnumber attribute 
+
+### LX zones
+
+* OS-6238 panic in lxpr\_access
+
+### Other changes
+
+* Update `archiver/gnu-tar` manifest to include runtime dependencies
+* Update `/etc/release` to include release version suffix
+
+<br>
+
+----  
+
 ## r151022k (2017-07-31)
 
 Weekly release for w/c 31st of July 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
