@@ -4,6 +4,27 @@
 
 [instructions for updating from OmniTI OmniOS r151022 to the community edition can be found below](#upgrading-from-omniti-released-r151022)
 
+## r151022m (2017-08-11)
+
+Early weekly release for w/c 14th of August 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
+> This is a non-reboot update.
+
+### Security fixes
+
+* `git` updated to version 2.13.5
+  * CVE-2017-1000117
+* `mercurial` updated to version 4.2.3
+  * CVE-2017-1000116
+  * CVE-2017-1000115
+
+### Other changes
+
+* Update `/etc/release` to include release version suffix
+
+<br>
+
+----
+
 ## r151022l (2017-08-07)
 
 Weekly release for w/c 7th of August 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
