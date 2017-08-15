@@ -33,6 +33,8 @@ PKG=archiver/gnu-tar
 SUMMARY="gtar - GNU tar"
 DESC="GNU tar - A utility used to store, backup, and transport files (gtar) $VER"
 
+RUN_DEPENDS_IPS="system/extended-system-utilities compress/gzip compress/bzip2 compress/xz"
+
 BUILDARCH=32
 # GNU tar doesn't like to be configured by root.  This var ignores those errors
 export FORCE_UNSAFE_CONFIGURE=1
