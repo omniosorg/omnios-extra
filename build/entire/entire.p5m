@@ -288,7 +288,6 @@ depend fmri=service/network/smtp/sendmail@8.14.4,5.11-@PVER@ type=group
 depend fmri=service/network/ssh@0.5.11,5.11-@PVER@ fmri=network/openssh-server type=require-any
 depend fmri=service/network/ssh-common@0.5.11,5.11-@PVER@ fmri=network/openssh-server type=require-any
 depend fmri=service/picl@0.5.11,5.11-@PVER@ type=require
-depend fmri=service/resource-pools/poold@0.5.11,5.11-@PVER@ type=require
 depend fmri=service/resource-pools@0.5.11,5.11-@PVER@ type=require
 depend fmri=service/storage/removable-media@0.5.11,5.11-@PVER@ type=require
 depend fmri=shell/bash@4.4,5.11-@PVER@ type=require
