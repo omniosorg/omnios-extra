@@ -69,7 +69,7 @@
 | text/gnu-sed				| 4.4			| http://savannah.gnu.org/news/?group=sed
 | text/groff				| 1.22.3		| https://ftp.gnu.org/gnu/groff/
 | text/less				| 487			| https://ftp.gnu.org/gnu/less/
-| web/curl				| 7.54.1		| https://curl.haxx.se/download.html
+| web/curl				| 7.55.1		| https://curl.haxx.se/download.html
 | web/wget				| 1.19.1		| https://savannah.gnu.org/news/?group=wget
 | library/glib2				| 2.34.3		| https://www.gtk.org/download/linux.php | 2.50 had possible problem
 | developer/gnu-binutils		| 2.25			| https://www.gnu.org/software/binutils/ | On hold pending illumos fix https://www.illumos.org/issues/6653
