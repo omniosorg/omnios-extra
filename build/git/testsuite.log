@@ -139,4 +139,4 @@ ok 42 - re-init from a linked worktree
 1..42
 gmake[2]: *** [Makefile:49: t0001-init.sh] Error 1
 gmake[1]: *** [Makefile:36: test] Error 2
-gmake: *** [Makefile:2322: test] Error 2
+gmake: *** [Makefile:2415: test] Error 2
