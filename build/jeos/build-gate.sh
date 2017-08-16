@@ -57,7 +57,7 @@ add_constraints()
 		if (i) ver = substr(ver, 1, i - 1)
 		printf("depend fmri=%s@%s,5.11-@PVER@ type=incorporate\n",
 		    pkg, ver)
-	  }' >> $mf
+	  }' | fgrep -v -f $SRCDIR/illumos-gate.exclude >> $mf
     fi
 }
 
