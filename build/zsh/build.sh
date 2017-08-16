@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=zsh
-VER=5.3.1
+VER=5.4.1
 VERHUMAN=$VER
 PKG=shell/zsh
 SUMMARY="Z shell"
@@ -60,6 +60,8 @@ install_license() {
   iconv -f 8859-1 -t utf-8 $TMPDIR/$BUILDDIR/LICENCE > $TMPDIR/$BUILDDIR/LICENSE
 }
 
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
+
 init
 download_source $PROG $PROG $VER
 patch_source
@@ -68,6 +70,8 @@ build
 install_zshrc
 install_license
 make_isa_stub
+sed -i 's/diff -a/g&/' $TMPDIR/$BUILDDIR/Test/ztst.zsh
+run_testsuite
 make_package
 clean_up
 

@@ -1,0 +1,132 @@
+./A01grammar.ztst: starting.
+This test hangs the shell when it fails...
+Test ./A01grammar.ztst failed: bad status 127, expected 0 from:
+  mkdir test_path_script
+  print "#!/bin/sh\necho Found the script." >test_path_script/myscript
+  chmod u+x test_path_script/myscript
+  path=($PWD/test_path_script $path)
+  export PATH
+  $ZTST_testdir/../Src/zsh -f -o pathscript myscript
+Error output:
+/data/omnios-build/omniosorg/_build/zsh-5.4.1/Test/../Src/zsh: can't open input file: myscript
+Was testing: PATHSCRIPT option
+./A01grammar.ztst: test failed.
+./A02alias.ztst: starting.
+This test hangs the shell when it fails...
+./A02alias.ztst: all tests successful.
+./A03quoting.ztst: starting.
+./A03quoting.ztst: all tests successful.
+./A04redirect.ztst: starting.
+./A04redirect.ztst: all tests successful.
+./A05execution.ztst: starting.
+This test takes 5 seconds to fail...
+This test takes 3 seconds and hangs the shell when it fails...
+./A05execution.ztst: all tests successful.
+./A06assign.ztst: starting.
+./A06assign.ztst: all tests successful.
+./A07control.ztst: starting.
+./A07control.ztst: all tests successful.
+./B01cd.ztst: starting.
+./B01cd.ztst: all tests successful.
+./B02typeset.ztst: starting.
+./B02typeset.ztst: all tests successful.
+./B03print.ztst: starting.
+./B03print.ztst: all tests successful.
+./B04read.ztst: starting.
+./B04read.ztst: all tests successful.
+./B05eval.ztst: starting.
+./B05eval.ztst: all tests successful.
+./B06fc.ztst: starting.
+./B06fc.ztst: all tests successful.
+./B07emulate.ztst: starting.
+./B07emulate.ztst: all tests successful.
+./B08shift.ztst: starting.
+./B08shift.ztst: all tests successful.
+./B09hash.ztst: starting.
+./B09hash.ztst: all tests successful.
+./C01arith.ztst: starting.
+./C01arith.ztst: all tests successful.
+./C02cond.ztst: starting.
+This test takes up to 60 seconds...
+Warning: not testing [[ -e /dev/fd/0 ]] (/dev/fd not supported)
+Warning: not testing [[ -O /dev/fd/0 ]] (/dev/fd not supported)
+./C02cond.ztst: all tests successful.
+./C03traps.ztst: starting.
+This test takes at least three seconds...
+This test, too, takes at least three seconds...
+Another test that takes three seconds
+./C03traps.ztst: all tests successful.
+./C04funcdef.ztst: starting.
+./C04funcdef.ztst: all tests successful.
+./C05debug.ztst: starting.
+./C05debug.ztst: all tests successful.
+./D01prompt.ztst: starting.
+./D01prompt.ztst: all tests successful.
+./D02glob.ztst: starting.
+./D02glob.ztst: all tests successful.
+./D03procsubst.ztst: starting.
+./D03procsubst.ztst: all tests successful.
+./D04parameter.ztst: starting.
+./D04parameter.ztst: all tests successful.
+./D05array.ztst: starting.
+./D05array.ztst: all tests successful.
+./D06subscript.ztst: starting.
+./D06subscript.ztst: all tests successful.
+./D07multibyte.ztst: starting.
+Testing multibyte with locale en_US.UTF-8
+./D07multibyte.ztst: all tests successful.
+./D08cmdsubst.ztst: starting.
+./D08cmdsubst.ztst: all tests successful.
+./D09brace.ztst: starting.
+./D09brace.ztst: all tests successful.
+./E01options.ztst: starting.
+This test hangs the shell when it fails...
+./E01options.ztst: all tests successful.
+./E02xtrace.ztst: starting.
+./E02xtrace.ztst: all tests successful.
+./V01zmodload.ztst: starting.
+./V01zmodload.ztst: all tests successful.
+./V02zregexparse.ztst: starting.
+./V02zregexparse.ztst: all tests successful.
+./V03mathfunc.ztst: starting.
+./V03mathfunc.ztst: all tests successful.
+./V04features.ztst: starting.
+./V04features.ztst: all tests successful.
+./V05styles.ztst: starting.
+./V05styles.ztst: all tests successful.
+./V06parameter.ztst: starting.
+./V06parameter.ztst: all tests successful.
+./V07pcre.ztst: starting.
+Testing PCRE multibyte with locale en_US.UTF-8
+./V07pcre.ztst: all tests successful.
+./V08zpty.ztst: starting.
+./V08zpty.ztst: all tests successful.
+./V09datetime.ztst: starting.
+Test case skipped: strftime extensions not supported
+Test case skipped: strftime extensions not supported
+./V09datetime.ztst: all tests successful.
+./V10private.ztst: starting.
+./V10private.ztst: all tests successful.
+./V11db_gdbm.ztst: starting.
+./V11db_gdbm.ztst: skipped (can't load zsh/db/gdbm module for testing)
+./W01history.ztst: starting.
+History tests write to /dev/tty
+./W01history.ztst: all tests successful.
+./X02zlevi.ztst: starting.
+This test may hang the shell when it fails...
+./X02zlevi.ztst: all tests successful.
+./X03zlebindkey.ztst: starting.
+Test case skipped: multibyte not available for bindkey test
+Test case skipped: multibyte not available for bindkey test
+./X03zlebindkey.ztst: all tests successful.
+./Y01completion.ztst: starting.
+./Y01completion.ztst: all tests successful.
+./Y02compmatch.ztst: starting.
+./Y02compmatch.ztst: all tests successful.
+./Y03arguments.ztst: starting.
+./Y03arguments.ztst: all tests successful.
+**************************************
+47 successful test scripts, 1 failure, 1 skipped
+**************************************
+gmake[1]: *** [Makefile:188: check] Error 1
+gmake: *** [Makefile:263: test] Error 2
