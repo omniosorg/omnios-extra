@@ -53,7 +53,7 @@
 | shell/bash				| 4.4.12		| https://ftp.gnu.org/gnu/bash/
 | shell/pipe-viewer			| 1.6.6			| http://www.ivarch.com/programs/pv.shtml
 | shell/tcsh				| 6.20.0		| http://www.tcsh.org/
-| shell/zsh				| 5.3.1			| http://zsh.sourceforge.net/News/
+| shell/zsh				| 5.4.1			| http://zsh.sourceforge.net/News/
 | system/library/dbus			| 1.11.14		| https://www.freedesktop.org/wiki/Software/dbus/#index5h1
 | system/library/pcap			| 1.8.1			| http://www.tcpdump.org/#latest-releases
 | system/management/ipmitool		| 1.8.18		| https://sourceforge.net/projects/ipmitool/
