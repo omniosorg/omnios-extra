@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=expat
-VER=2.2.2
+VER=2.2.3
 PKG=library/expat
 SUMMARY="libexpat - XML parser library"
 DESC="$SUMMARY"
