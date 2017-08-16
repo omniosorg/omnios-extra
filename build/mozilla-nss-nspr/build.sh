@@ -27,10 +27,12 @@
 # Load support functions
 . ../../lib/functions.sh
 
+# NOTE: Keep this in sync with ca-bundle NSS version
+
 PROG=nss
-VER=3.30.2
+VER=3.32
 # Include NSPR version since we're downloading a combined tarball.
-NSPRVER=4.14
+NSPRVER=4.16
 # But set BUILDDIR to just be the NSS version.
 BUILDDIR=$PROG-$VER
 VERHUMAN=$VER
