@@ -20,8 +20,26 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
-<transform dir path=usr/ssl/man/.* -> edit path usr/ssl/man usr/share/man>
-<transform file path=usr/ssl/man/.* -> edit path usr/ssl/man usr/share/man>
-<transform link path=usr/ssl/man/.* -> edit path usr/ssl/man usr/share/man>
+
+<transform dir file link path=usr/ssl/man/.* -> \
+    edit path usr/ssl/man usr/share/man>
+
+# Replace usr/ssl/certs with a relative link to etc/ssl/certs
+<transform dir path=usr/ssl/certs -> drop>
+link path=usr/ssl/certs target=../../etc/ssl/certs
+
+# Create symlinks in /usr/lib
+link path=usr/lib/libssl.so target=../../lib/libssl.so.1.0.0
+link path=usr/lib/libssl.so.1.0.0 target=../../lib/libssl.so.1.0.0
+link path=usr/lib/amd64/libssl.so target=../../../lib/amd64/libssl.so.1.0.0
+link path=usr/lib/amd64/libssl.so.1.0.0 target=../../../lib/amd64/libssl.so.1.0.0
+
+link path=usr/lib/libcrypto.so target=../../lib/libcrypto.so.1.0.0
+link path=usr/lib/libcrypto.so.1.0.0 target=../../lib/libcrypto.so.1.0.0
+link path=usr/lib/amd64/libcrypto.so target=../../../lib/amd64/libcrypto.so.1.0.0
+link path=usr/lib/amd64/libcrypto.so.1.0.0 target=../../../lib/amd64/libcrypto.so.1.0.0
+
 license LICENSE license=OpenSSL
+
