@@ -99,7 +99,7 @@ make_install() {
 install_pkcs11()
 {
     logmsg "--- installing pkcs11 engine"
-    pushd $SRCDIR/pkcs11 > /dev/null
+    pushd $SRCDIR/engine_pkcs11 > /dev/null
     find . | cpio -pvmud $TMPDIR/$BUILDDIR/crypto/engine/
     popd > /dev/null
 }
