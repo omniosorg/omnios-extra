@@ -180,6 +180,7 @@ state that too;
 ```
 $ cd $PORT_DATA
 $ mkdir 2017/Jul05
+$ rm ij-GATE-commits
 $ mv ij-* 2017/Jul05
 $ git add 2017/Jul05
 $ git commit -m 'Updated LX port data for Jul05'
