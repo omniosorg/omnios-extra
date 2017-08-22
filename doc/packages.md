@@ -16,6 +16,7 @@
 | developer/build/gnu-make		| 4.2.1			| http://savannah.gnu.org/news/?group=make
 | developer/build/libtool		| 2.4.6			| https://www.gnu.org/software/libtool/
 | developer/gcc51			| 5.1.0			| https://www.gnu.org/software/gcc/
+| developer/java/jdk			| 1.7.0\_141-b02	| http://hg.openjdk.java.net/jdk7u/jdk7u/tags
 | developer/lexer/flex			| 2.6.4			| https://github.com/westes/flex/releases
 | developer/macro/gnu-m4		| 1.4.18		| http://savannah.gnu.org/news/?group=m4
 | developer/parser/bison		| 3.0.4			| https://savannah.gnu.org/news/?group=bison
