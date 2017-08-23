@@ -1,10 +1,53 @@
+The openssl package contains both OpenSSL 1.0.x and 1.1.x versions.
+OpenSSL 1.0.2 will not reach end-of-life until the end of 2019 but the
+journey starts now.
 
-The openssl package contains both OpenSSL 1.0.x and 1.1.x versions,
-separated by mediators but with the runtime libraries for both always
-present.
+The libraries for both are always present in /lib and /usr/lib so software
+linked against a specific version will work but the other components such as
+binaries, header file and man pages are switched in and out using an IPS
+mediator. The default version is 1.0 and version 1.1 must be manually selected
+if required. Having version 1.1 available now allows us to test and fix
+problems over the next two years before 1.0.2 reaches end-of-support.
 
-OpenSSL 1.0.2 will not reach end-of-life until the end of 2019.
+* It is possible to switch to v1.1 and build some software which will
+  benefit from it (a good example being nginx) and then switch back to v1.0
+  afterwards.
+* OmniOS itself will continue to be built with v1.0.2 in
+  the medium term and a check has been added to the build process for
+  this.
+* There are currently a handful of OmniOS userland packages which
+  do not build with openssl 1.1, and illumos-omnios itself does not
+  build with openssl 1.1. The list of those packages is being maintained
+  in this file and will be updated as upstream packages are
+  migrated to v1.
+* Our OpenSSL v1.1 does not currently include the
+  pkcs11 engine from Oracle (whereas v1.0 does). If this engine is
+  required going forwards (and there seems to be some doubt that anyone
+  cares) then it will need to be integrated later.
+* I've also gone through the packages which had a hard-coded runtime
+  dependency on openssl@1.0.2 and removed that if the dependency is
+  automatically determined. For the packages where I did this, I also
+  removed other redundant dependencies.
+* The man page sections patch has gone and is now handled through the .mog
+  file. Man pages are still installed in SSL sections.
 
+bloody% pkg mediator -a openssl
+MEDIATOR VER. SRC. VERSION IMPL. SRC. IMPLEMENTATION
+openssl  vendor    1.0     vendor
+openssl  system    1.1     system
+bloody% openssl version
+OpenSSL 1.0.2l  25 May 2017
+bloody% ls -l /lib/libcrypto.so
+lrwxrwxrwx   1 root     root          18 Aug 23 13:05 /lib/libcrypto.so -> libcrypto.so.1.0.0*
+
+bloody% sudo pkg set-mediator -V 1.1 openssl
+
+bloody% openssl version
+OpenSSL 1.1.0f  25 May 2017
+bloody% ls -l /lib/libcrypto.so
+lrwxrwxrwx   1 root     root          16 Aug 23 13:11 /lib/libcrypto.so -> libcrypto.so.1.1*
+
+######################################################################
 The following packages do not yet build with openssl 1.1
 
 * illumos-omnios
