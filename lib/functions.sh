@@ -383,23 +383,25 @@ verify_depends() {
 }
 
 #############################################################################
-# People that need this should call it explicitly
+# People that need these should call them explicitly
 #############################################################################
-run_autoconf() {
-    logmsg "Running autoconf"
+run_inbuild() {
+    logmsg "Running $*"
     pushd $TMPDIR/$BUILDDIR > /dev/null
-    logcmd autoconf || logerr "Failed to run autoconf"
+    logcmd "$@" || logerr "Failed to run $*"
     popd > /dev/null
 }
 
-#############################################################################
-# People that need this should call it explicitly
-#############################################################################
+run_autoconf() {
+    run_inbuild autoconf
+}
+
 run_automake() {
-    logmsg "Running automake"
-    pushd $TMPDIR/$BUILDDIR > /dev/null
-    logcmd automake || logerr "Failed to run automake"
-    popd > /dev/null
+    run_inbuild automake
+}
+
+run_aclocal() {
+    run_inbuild aclocal
 }
 
 #############################################################################

@@ -101,6 +101,14 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
+
+# The patch for CVE-2017-9049 & CVE-2017-9050 modifies Makefile.am
+# so it is necessary to re-run automake. Since automake in bloody is newer
+# than that originally used for packaging libxml2, aclocal is also required.
+# Once libxml2 is updated and the patch is no longer necessary, the following
+# line can be removed.
+run_aclocal; run_automake
+
 build
 make_lintlibs xml2 /usr/lib /usr/include/libxml2 "libxml/*.h"
 fix_python_install
