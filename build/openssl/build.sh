@@ -185,7 +185,7 @@ oDESTDIR=$DESTDIR
 oPKG=$PKG
 oPKGE=$PKGE
 
-PKG=${PKG}_legacy	# Use different directory for build
+PKG=${PKG}_legacy	##IGNORE## Use different directory for build
 OPENSSL_CONFIG_OPTS="$base_OPENSSL_CONFIG_OPTS"
 OPENSSL_CONFIG_OPTS+=" --pk11-libname=/usr/lib/libpkcs11.so.1"
 BUILDDIR=$PROG-$LVER
@@ -208,7 +208,7 @@ move_libs
 make_lintlibs crypto /lib /usr/include "openssl/!(ssl*|*tls*).h"
 make_lintlibs ssl /lib /usr/include "openssl/{ssl,*tls}*.h"
 
-PKG=$oPKG
+PKG=$oPKG ##IGNORE##
 PKGE=$oPKGE
 LDESTDIR="$DESTDIR"
 DESTDIR="$oDESTDIR"
