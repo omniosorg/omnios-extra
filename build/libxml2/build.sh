@@ -110,6 +110,7 @@ prep_build
 run_aclocal; run_automake
 
 build
+run_testsuite check
 make_lintlibs xml2 /usr/lib /usr/include/libxml2 "libxml/*.h"
 fix_python_install
 make_isa_stub
