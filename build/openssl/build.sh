@@ -29,22 +29,18 @@
 . ../../lib/functions.sh
 
 PROG=openssl
-VER=1.0.2l
+VER=1.1.0f
+LVER=1.0.2l
 VERHUMAN=$VER
-PKG=library/security/openssl # Package name (without prefix)
-SUMMARY="$PROG - A toolkit for Secure Sockets Layer (SSL v2/v3) and Transport Layer (TLS v1) protocols and general purpose cryptographic library"
+PKG=library/security/openssl
+SUMMARY="$PROG - A toolkit for Secure Sockets Layer and Transport Layer protocols and general purpose cryptographic library"
 DESC="$SUMMARY"
 
 DEPENDS_IPS="SUNWcs system/library system/library/gcc-5-runtime library/zlib"
 BUILD_DEPENDS_IPS="$DEPENDS_IPS developer/sunstudio12.1"
 
 # Generic configure optons for both 32 and 64bit variants
-OPENSSL_CONFIG_OPTS="
-		--pk11-libname=/usr/lib/libpkcs11.so.1 
-		shared
-		threads
-		zlib
-		enable-ssl2"
+base_OPENSSL_CONFIG_OPTS="shared threads zlib enable-ssl2 enable-ssl3"
 
 # Configure options specific to a 32bit build
 OPENSSL_CONFIG_32_OPTS=""
@@ -73,7 +69,7 @@ configure32() {
 	${OPENSSL_CONFIG_OPTS} \
 	${OPENSSL_CONFIG_32_OPTS} \
         || logerr "Failed to run configure"
-    SHARED_LDFLAGS="-shared -Wl,-z,text"
+    SHARED_LDFLAGS="-shared -Wl,-z,text -Wl,-z,aslr"
 }
 
 configure64() {
@@ -87,13 +83,7 @@ configure64() {
 	${OPENSSL_CONFIG_OPTS} \
 	${OPENSSL_CONFIG_64_OPTS} \
         || logerr "Failed to run configure"
-    SHARED_LDFLAGS="-m64 -shared -Wl,-z,text"
-}
-
-make_install() {
-    logmsg "--- make install"
-    logcmd make INSTALL_PREFIX=$DESTDIR install ||
-        logerr "Failed to make install"
+    SHARED_LDFLAGS="-m64 -shared -Wl,-z,text,-z,aslr"
 }
 
 install_pkcs11()
@@ -114,7 +104,7 @@ ord26() {
 
 save_function make_package make_package_orig
 make_package() {
-    if [[ -n "`echo $VER | grep [a-z]`" ]]; then
+    if echo $VER | egrep -s '[a-z]'; then
         NUMVER=${VER::$((${#VER} -1))}
         ALPHAVER=${VER:$((${#VER} -1))}
         VER=${NUMVER}.$(ord26 ${ALPHAVER})
@@ -134,22 +124,101 @@ move_libs() {
         logerr "Failed to move libs (64-bit)"
 }
 
+version_files() {
+	ver=$2
+	[ -d "$1~" ] || cp -rp "$1" "$1~"
+	pushd $1
+	mv usr/include/openssl usr/include/openssl-$ver
+	for f in usr/bin/*; do
+		mv $f $f-$ver
+	done
+	[ -d usr/share/man ] && mv usr/share/man usr/ssl/man
+
+	mkdir usr/ssl/lib usr/ssl/lib/amd64
+	mv usr/lib/pkgconfig usr/ssl/lib/pkgconfig
+	mv usr/lib/amd64/pkgconfig usr/ssl/lib/amd64/pkgconfig
+	mv lib/llib* lib/lib*.a usr/ssl/lib
+	mv lib/amd64/llib* lib/amd64/lib*.a usr/ssl/lib/amd64
+
+	rm -f lib/lib{crypto,ssl}.so
+	rm -f lib/amd64/lib{crypto,ssl}.so
+
+	[ -d usr/ssl/certs ] && rm -rf usr/ssl/certs
+	(cd usr/ssl; ln -s ../../etc/ssl/certs)
+
+	mv usr/ssl usr/ssl-$ver
+	popd
+}
+
+merge_package() {
+	version_files $DESTDIR `echo $VER | cut -d. -f1-2`
+	version_files $LDESTDIR `echo $LVER | cut -d. -f1-2`
+
+	( cd $LDESTDIR; find . | cpio -pvmud $DESTDIR )
+}
+
 ######################################################################
 
 init
 
-### Openssl 1.0.x build
+######################################################################
+### OpenSSL 1.1.x build
+
+note "Building OpenSSL $VER"
+
+OPENSSL_CONFIG_OPTS="$base_OPENSSL_CONFIG_OPTS --api=1.0.0"
 download_source $PROG $PROG $VER
 patch_source
-install_pkcs11
 prep_build
 build
 run_testsuite
 move_libs
+make_lintlibs crypto /lib /usr/include "openssl/!(asn1_mac|ssl*|*tls*).h"
+make_lintlibs ssl /lib /usr/include "openssl/{ssl,*tls}*.h"
 
+######################################################################
+### OpenSSL 1.0.x build
+
+note "Building OpenSSL $LVER"
+
+oDESTDIR=$DESTDIR
+oPKG=$PKG
+oPKGE=$PKGE
+
+PKG=${PKG}_legacy	# Use different directory for build
+OPENSSL_CONFIG_OPTS="$base_OPENSSL_CONFIG_OPTS"
+OPENSSL_CONFIG_OPTS+=" --pk11-libname=/usr/lib/libpkcs11.so.1"
+BUILDDIR=$PROG-$LVER
+
+# OpenSSL uses INSTALL_PREFIX= instead of DESTDIR=
+make_install() {
+    logmsg "--- make install"
+    logcmd make INSTALL_PREFIX=$DESTDIR install ||
+        logerr "Failed to make install"
+}
+
+PATCHDIR=patches-1.0
+download_source $PROG $PROG $LVER
+patch_source
+install_pkcs11
+prep_build
+build
+run_testsuite test "" testsuite.1.0.log
+move_libs
 make_lintlibs crypto /lib /usr/include "openssl/!(ssl*|*tls*).h"
 make_lintlibs ssl /lib /usr/include "openssl/{ssl,*tls}*.h"
-make_isa_stub
+
+PKG=$oPKG
+PKGE=$oPKGE
+LDESTDIR="$DESTDIR"
+DESTDIR="$oDESTDIR"
+
+######################################################################
+### Packaging
+
+merge_package
+# Use legacy version for the package as long as it's the default mediator
+VER=$LVER
 make_package
 clean_up
 

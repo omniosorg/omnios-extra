@@ -1,0 +1,23 @@
+
+The openssl package contains both OpenSSL 1.0.x and 1.1.x versions,
+separated by mediators but with the runtime libraries for both always
+present.
+
+OpenSSL 1.0.2 will not reach end-of-life until the end of 2019.
+
+The following packages do not yet build with openssl 1.1
+
+* illumos-omnios
+* developer/versioning/git
+* library/python-2/m2crypto-27
+* library/python-2/pyopenssl-27
+* library/security/trousers
+* network/dns/bind
+* network/openssh
+* network/openssh-server
+* service/network/ntp
+* system/management/ipmitool
+* terminal/tmux
+* web/curl
+* web/wget
+

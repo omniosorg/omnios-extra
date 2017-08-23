@@ -33,10 +33,7 @@ PKG=developer/versioning/mercurial
 SUMMARY="$PROG - a free and open source, distributed version control system"
 DESC="$SUMMARY"
 
-DEPENDS_IPS="runtime/python-27 \
-             web/curl \
-             library/security/openssl@1.0.2
-             library/zlib"
+DEPENDS_IPS="web/curl library/security/openssl"
 
 # For inet_ntop which isn't detected properly in the configure script
 CONFIGURE_OPTS=""
