@@ -22,33 +22,30 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
+. $SRCDIR/common.sh
 
-PROG=mpfr
-VER=3.1.2
+PROG=mpc
+VER=1.0.3
 VERHUMAN=$VER
-PKG=developer/gcc51/libmpfr-gcc51
-SUMMARY="gcc51 - private libmpfr"
+PKG=developer/gcc5/libmpc-gcc5
+SUMMARY="$PKGV - private libmpc"
 DESC="$SUMMARY"
-DEPENDS_IPS="developer/gcc51/libgmp-gcc51"
+
+DEPENDS_IPS="developer/$PKGV/libgmp-$PKGV developer/$PKGV/libmpfr-$PKGV"
 
 # This stuff is in its own domain
 PKGPREFIX=""
 
 [[ "$BUILDARCH" == "both" ]] && BUILDARCH=32
-GCCVER=5.1.0
-PREFIX=/opt/gcc-${GCCVER}
+PREFIX=$OPT
 CC=gcc
-CONFIGURE_OPTS="--with-gmp=/opt/gcc-${GCCVER}"
-LDFLAGS="-R/opt/gcc-${GCCVER}/lib -L/opt/gcc-${GCCVER}/lib"
-
-make_install32() {
-    make_install
-    logcmd rm -rf $DESTDIR/opt/gcc-${GCCVER}/share/info
-}
+CONFIGURE_OPTS="--with-gmp=$OPT --with-mpfr=$OPT"
+LDFLAGS="-R$OPT/lib -L$OPT/lib"
 
 reset_configure_opts
 init
@@ -56,5 +53,5 @@ download_source $PROG $PROG $VER
 prep_build
 build
 make_isa_stub
-make_package libmpfr.mog
+make_package libmpc.mog
 clean_up

@@ -22,41 +22,35 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
+. $SRCDIR/common.sh
 
-PROG=libgcc_s
-VER=5.1.0
+PROG=mpfr
+VER=3.1.5
 VERHUMAN=$VER
-PKG=system/library/gcc-5-runtime
-SUMMARY="gcc 5.1.0 runtime"
+PKG=developer/gcc5/libmpfr-gcc5
+SUMMARY="$PKGV - private libmpfr"
 DESC="$SUMMARY"
-
-PATH=/opt/gcc-${VER}/bin:$PATH
-export LD_LIBRARY_PATH=/opt/gcc-{$VER}/lib
-
-BUILD_DEPENDS_IPS="gcc51"
+DEPENDS_IPS="developer/$PKGV/libgmp-$PKGV"
 
 # This stuff is in its own domain
 PKGPREFIX=""
 
-PREFIX=/opt/gcc-${VER}
+[[ "$BUILDARCH" == "both" ]] && BUILDARCH=32
+PREFIX=$OPT
+CC=gcc
+CONFIGURE_OPTS="--with-gmp=$OPT"
+LDFLAGS="-R$OPT/lib -L$OPT/lib"
 
+reset_configure_opts
 init
+download_source $PROG $PROG $VER
 prep_build
-mkdir -p $TMPDIR/$BUILDDIR
-for license in COPYING.RUNTIME COPYING.LIB COPYING3.LIB
-do
-    logcmd cp $SRCDIR/files/$license $TMPDIR/$BUILDDIR/$license || \
-        logerr "Cannot copy licnese: $license"
-done
-mkdir -p $DESTDIR/usr/lib
-cp /opt/gcc-${VER}/lib/libgcc_s.so.1 $DESTDIR/usr/lib/libgcc_s.so.1
-ln -s libgcc_s.so.1 $DESTDIR/usr/lib/libgcc_s.so
-mkdir -p $DESTDIR/usr/lib/amd64
-cp /opt/gcc-${VER}/lib/amd64/libgcc_s.so.1 $DESTDIR/usr/lib/amd64/libgcc_s.so.1
-ln -s libgcc_s.so.1 $DESTDIR/usr/lib/amd64/libgcc_s.so
-make_package runtime.mog
+build
+make_isa_stub
+make_package libmpfr.mog
 clean_up
