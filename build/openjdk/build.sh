@@ -30,8 +30,8 @@
 
 PROG=openjdk
 VER=1.7.0
-UPDATE=101
-BUILD=00
+UPDATE=141
+BUILD=02
 VERHUMAN="jdk7u${UPDATE}-b${BUILD}"
 
 # Taken from illumos...
@@ -40,9 +40,9 @@ VERHUMAN="jdk7u${UPDATE}-b${BUILD}"
 export SUNW_NO_UPDATE_NOTIFY='1'
 export UT_NO_USAGE_TRACKING='1'
 
-# Mercurial hash from jdk7u repo marking the desired update/build
-# taken from http://hg.openjdk.java.net/jdk7u/jdk7u/file/tip/.hgtags
-HGREV=12491db47c7ccffcc3e881df68f4c2f727b44e5d
+# Mercurial tag from jdk7u repo marking the desired update/build
+# taken from http://hg.openjdk.java.net/jdk7u/jdk7u/tags
+HGREV=jdk7u${UPDATE}-b${BUILD}
 
 PKG=
 SUMMARY="x"
@@ -123,6 +123,8 @@ fetch_source() {
 		logerr "--- get_source failed after $i tries"
 	fi
     done
+    # Check out the mercurial tag of jdk7u sub-repos marking the desired update/build
+    logcmd sh ./make/scripts/hgforest.sh checkout $HGREV
     popd > /dev/null
 }
 

@@ -19,9 +19,92 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
-<transform dir path=usr/ssl/man/.* -> edit path usr/ssl/man usr/share/man>
-<transform file path=usr/ssl/man/.* -> edit path usr/ssl/man usr/share/man>
-<transform link path=usr/ssl/man/.* -> edit path usr/ssl/man usr/share/man>
+
+# Drop HTML docs
+<transform dir file path=usr/share/doc -> drop>
+
+# Create symlinks in /usr/lib
+link path=usr/lib/libssl.so.1.0.0 target=../../lib/libssl.so.1.0.0
+link path=usr/lib/libcrypto.so.1.0.0 target=../../lib/libcrypto.so.1.0.0
+link path=usr/lib/amd64/libssl.so.1.0.0 target=../../../lib/amd64/libssl.so.1.0.0
+link path=usr/lib/amd64/libcrypto.so.1.0.0 target=../../../lib/amd64/libcrypto.so.1.0.0
+
+link path=usr/lib/libssl.so.1.1 target=../../lib/libssl.so.1.1
+link path=usr/lib/libcrypto.so.1.1 target=../../lib/libcrypto.so.1.1
+link path=usr/lib/amd64/libssl.so.1.1 target=../../../lib/amd64/libssl.so.1.1
+link path=usr/lib/amd64/libcrypto.so.1.1 target=../../../lib/amd64/libcrypto.so.1.1
+
+# Mediated libraries
+
+# .. /lib
+<transform file path=lib/(lib[^.]+.so).(\d\.\d)(.*) -> emit \
+    link path=lib/%<1> target=%<1>.%<2>%<3> \
+    mediator=openssl mediator-version=%<2> >
+
+<transform file path=lib/amd64/(lib[^.]+.so).(\d\.\d)(.*) -> emit \
+    link path=lib/amd64/%<1> target=%<1>.%<2>%<3> \
+    mediator=openssl mediator-version=%<2> >
+
+# .. /usr/lib
+<transform file path=lib/(lib[^.]+.so).(\d\.\d)(.*) -> emit \
+    link path=usr/lib/%<1> target=%<1>.%<2>%<3> \
+    mediator=openssl mediator-version=%<2> >
+
+<transform file path=lib/amd64/(lib[^.]+.so).(\d\.\d)(.*) -> emit \
+    link path=usr/lib/amd64/%<1> target=%<1>.%<2>%<3> \
+    mediator=openssl mediator-version=%<2> >
+
+# Mediated binaries
+
+<transform file path=usr/bin/([^-]+)-(.*) -> emit \
+    link path=usr/bin/%<1> target=%<1>-%<2> \
+    mediator=openssl mediator-version=%<2> >
+
+# Static libraries
+
+<transform file path=usr/ssl-([^/]+)/lib/(lib.*\.a) -> emit \
+    link path=lib/%<2> target=../%(path) \
+    mediator=openssl mediator-version=%<1> >
+
+# lint libraries
+
+<transform file path=usr/ssl-([^/]+)/lib/(llib.*) -> emit \
+    link path=lib/%<2> target=../%(path) \
+    mediator=openssl mediator-version=%<1> >
+
+# pkgconfig
+
+<transform file path=usr/ssl-([^/]+)/lib/pkgconfig/(.*) -> emit \
+    link path=usr/libpkgconfig/%<2> target=../../../%(path) \
+    mediator=openssl mediator-version=%<1> >
+
+<transform file path=usr/ssl-([^/]+)/lib/amd64/pkgconfig/(.*) -> emit \
+    link path=usr/lib/amd64/pkgconfig/%<2> target=../../../../%(path) \
+    mediator=openssl mediator-version=%<1> >
+
+# Mediated include files
+
+<transform dir path=usr/include/openssl-(...)$ -> emit \
+    link path=usr/include/openssl target=openssl-%<1> \
+    mediator=openssl mediator-version=%<1> >
+
+# Mediated ssl directory
+
+<transform dir path=usr/ssl-(...)$ -> emit \
+    link path=usr/ssl target=ssl-%<1> \
+    mediator=openssl mediator-version=%<1> >
+
+# Mediated man pages
+
+<transform file path=usr/ssl-([^/]+)/man/(man\d)/(.*) -> emit \
+    link path=usr/share/man/%<2>ssl/%<3> target=/%(path) \
+    mediator=openssl mediator-version=%<1> >
+
+# Make version 1.0 the default
+
+<transform link mediator-version=1.0 -> set mediator-priority vendor>
+
 license LICENSE license=OpenSSL
+

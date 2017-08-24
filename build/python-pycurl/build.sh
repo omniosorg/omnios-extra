@@ -37,7 +37,6 @@ DESC="PycURL provides a thin layer of Python bindings on top of libcurl."
 # The only way buildctl detects packages is by grepping for PKG assignment.
 XFORM_ARGS="-D PYTHONPKGVER=$PYTHONPKGVER"
 PKG=library/python-2/pycurl-27
-RUN_DEPENDS_IPS="runtime/python-27 library/security/openssl@1.0.2 web/curl"
 init
 download_source $PROG $PROG $VER
 patch_source

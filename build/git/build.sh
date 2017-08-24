@@ -36,11 +36,6 @@ DESC="$SUMMARY"
 
 BUILD_DEPENDS_IPS="compatibility/ucb developer/build/autoconf archiver/gnu-tar"
 
-DEPENDS_IPS="runtime/python-27 \
-             web/curl \
-             library/security/openssl@1.0.2 \
-             library/zlib"
-
 TAR=gtar
 
 # For inet_ntop which isn't detected properly in the configure script

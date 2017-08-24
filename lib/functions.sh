@@ -139,6 +139,12 @@ logerr() {
         exit 1
     fi
 }
+note() {
+    logmsg ""
+    logmsg "***"
+    logmsg "*** $@"
+    logmsg "***"
+}
 ask_to_continue_() {
     MSG=$2
     STR=$3
@@ -270,6 +276,20 @@ if [[ "$UID" = "0" ]]; then
     fi
 fi
 
+
+#############################################################################
+# Check the OpenSSL mediator
+#############################################################################
+
+opensslver=`pkg mediator -H openssl 2>/dev/null| awk '{print $3}'`
+if [ -n "$opensslver" -a "$opensslver" != "1.0" ]; then
+    if [ -n "$OPENSSL_TEST" ]; then
+        logmsg "--- OpenSSL version $opensslver but OPENSSL_TEST is set"
+    else
+        logerr "--- OpenSSL version $opensslver cannot be used for build"
+    fi
+fi
+
 #############################################################################
 # Print startup message
 #############################################################################
@@ -383,23 +403,25 @@ verify_depends() {
 }
 
 #############################################################################
-# People that need this should call it explicitly
+# People that need these should call them explicitly
 #############################################################################
-run_autoconf() {
-    logmsg "Running autoconf"
+run_inbuild() {
+    logmsg "Running $*"
     pushd $TMPDIR/$BUILDDIR > /dev/null
-    logcmd autoconf || logerr "Failed to run autoconf"
+    logcmd "$@" || logerr "Failed to run $*"
     popd > /dev/null
 }
 
-#############################################################################
-# People that need this should call it explicitly
-#############################################################################
+run_autoconf() {
+    run_inbuild autoconf
+}
+
 run_automake() {
-    logmsg "Running automake"
-    pushd $TMPDIR/$BUILDDIR > /dev/null
-    logcmd automake || logerr "Failed to run automake"
-    popd > /dev/null
+    run_inbuild automake
+}
+
+run_aclocal() {
+    run_inbuild aclocal
 }
 
 #############################################################################
@@ -714,6 +736,8 @@ make_package() {
         $PKGDEPEND generate -md $DESTDIR $P5M_INT2 > $P5M_INT3
         $PKGDEPEND resolve -m $P5M_INT3
     ) || logerr "--- Dependency resolution failed"
+    logmsg "--- Detected dependencies"
+    logmsg `grep '^depend ' $P5M_INT3.res`
     echo > "$MANUAL_DEPS"
     if [[ -n "$RUN_DEPENDS_IPS" ]]; then
         logmsg "------ Adding manual dependencies"
@@ -768,7 +792,7 @@ make_package() {
     fi
     $PKGMOGRIFY "${P5M_INT3}.res" "$MANUAL_DEPS" $FINAL_MOG_FILE | \
         $PKGFMT -u > $P5M_FINAL
-    if [[ -z $SKIP_PKGLINT ]] && ( [[ -n $BATCH ]] ||  ask_to_pkglint ); then
+    if [[ -z $SKIP_PKGLINT ]] && ( [[ -n $BATCH ]] || ask_to_pkglint ); then
         $PKGLINT -c $TMPDIR/lint-cache -r $PKGSRVR $P5M_FINAL || \
             logerr "----- pkglint failed"
     fi
@@ -1038,10 +1062,11 @@ build64() {
 run_testsuite() {
     local target="${1:-test}"
     local dir="$2"
+    local output="${3:-testsuite.log}"
     if [ -z "$SKIP_TESTSUITE" ] && ( [ -n "$BATCH" ] || ask_to_testsuite ); then
         pushd $TMPDIR/$BUILDDIR/$dir > /dev/null
         logmsg "Running testsuite"
-        gmake --quiet $target 2>&1 | tee $SRCDIR/testsuite.log
+        gmake --quiet $target 2>&1 | tee $SRCDIR/$output
         popd > /dev/null
     fi
 }

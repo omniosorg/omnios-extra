@@ -1,1 +1,2 @@
 Makefile.patch -p1
+CVE-2016-3189.patch
