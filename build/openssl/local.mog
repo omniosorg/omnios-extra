@@ -77,7 +77,7 @@ link path=usr/lib/amd64/libcrypto.so.1.1 target=../../../lib/amd64/libcrypto.so.
 # pkgconfig
 
 <transform file path=usr/ssl-([^/]+)/lib/pkgconfig/(.*) -> emit \
-    link path=usr/libpkgconfig/%<2> target=../../../%(path) \
+    link path=usr/lib/pkgconfig/%<2> target=../../../%(path) \
     mediator=openssl mediator-version=%<1> >
 
 <transform file path=usr/ssl-([^/]+)/lib/amd64/pkgconfig/(.*) -> emit \
