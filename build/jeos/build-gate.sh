@@ -93,6 +93,7 @@ create_manifest_header $manifest
 add_constraints $manifest $pkgrepo
 
 if [ -z "$BATCH" ]; then
+    logmsg "Manifest: $manifest"
     logmsg "Intentional pause: Last chance to sanity-check before publication!"
     ask_to_continue
 fi

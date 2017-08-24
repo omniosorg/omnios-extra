@@ -23,6 +23,7 @@
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 # Copyright (c) 2014 by Delphix. All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 #
 # Make all directories usable
 <transform dir -> default mode 0755>
@@ -48,7 +49,7 @@
 <transform file path=.*/lib/.*\.la$ -> drop>
 
 # Other upper-level directories to fix
-<transform dir  path=etc/security.* -> drop>
+<transform dir path=etc/security.* -> drop>
 <transform dir path=etc/skel$ -> set group sys>
 <transform dir path=usr/share$ -> drop>
 <transform dir path=usr/share/doc$ -> set group other>
@@ -100,6 +101,27 @@
 <transform dir path=usr/sfw/share/man$ -> drop>
 <transform dir path=usr/sfw/share/src$ -> drop>
 
-# If you ship an SMF manifest, it should be imported upon pkg install
+# SMF manifests should be imported upon pkg install
 <transform file path=(var|lib)/svc/manifest/.*\.xml -> \
     add restart_fmri svc:/system/manifest-import:default>
+
+# Set the doc.man facet on man pages
+<transform dir file link hardlink path=usr/.+/man(/.+)? -> \
+    default facet.doc.man true>
+
+# Transforms to set facet.devel on files useful to developers only.
+
+# header files
+<transform dir file link hardlink path=usr.*/include(/.+){0,1} -> \
+    default facet.devel true>
+
+# archive libraries
+<transform file path=.*lib/.+\.a$ -> default facet.devel true>
+
+# lint libraries
+<transform file link hardlink path=.*/lib/llib-.* -> default facet.devel true>
+
+# pkg-config data
+<transform dir file link hardlink path=.*/pkgconfig(/.+\.pc){0,1}$ -> \
+    default facet.devel true>
+
