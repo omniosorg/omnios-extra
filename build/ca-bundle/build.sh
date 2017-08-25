@@ -30,7 +30,8 @@
 PROG=cabundle   # App name
 VER=5.11        # App version
 VERHUMAN=$VER   # Human-readable version
-NSSVER=3.32     # Keep this in sync with the version of system/library/mozilla-nss
+NSSVER=`grep '^VER=' \
+    $SRCDIR/../mozilla-nss-nspr/build.sh | head -1 | cut -d= -f2`
 PKG=web/ca-bundle  # Package name (without prefix)
 SUMMARY="$PROG - Bundle of SSL Root CA certificates"
 DESC="SSL Root CA certificates extracted from mozilla-nss $NSSVER source, plus OmniOSce CA cert."
@@ -79,7 +80,7 @@ install_pem() {
 }
 
 # Install the OmniOSce CA cert separately, to be used by pkg(1)
-install_omniti_cacert() {
+install_omnios_cacert() {
   logmsg "Installing OmniOSce CA certs for pkg(1) use"
   logcmd mkdir -p $DESTDIR/etc/ssl/pkg
 
@@ -105,6 +106,6 @@ init
 prep_build
 build_pem
 install_pem
-install_omniti_cacert
+install_omnios_cacert
 make_package
 clean_up
