@@ -10,7 +10,7 @@
 | compress/zip				| 3.0			| http://www.info-zip.org/Zip.html
 | data/iso-codes			| 3.75			| http://pkg-isocodes.alioth.debian.org/downloads/
 | database/sqlite-3			| 3.20.0		| https://www.sqlite.org/
-| developer/bmake			| 20160926		| http://www.crufty.net/ftp/pub/sjg/
+| developer/bmake			| 20170812		| http://www.crufty.net/ftp/pub/sjg/
 | developer/build/autoconf		| 2.69			| https://savannah.gnu.org/news/?group=autoconf
 | developer/build/automake		| 1.15.1		| https://savannah.gnu.org/news/?group=automake
 | developer/build/gnu-make		| 4.2.1			| http://savannah.gnu.org/news/?group=make
