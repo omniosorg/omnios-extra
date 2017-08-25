@@ -45,7 +45,7 @@
 | library/zlib				| 1.2.11		| http://www.zlib.net/
 | network/dns/bind			| 9.10.6		| http://www.isc.org/downloads/bind/
 | network/rsync				| 3.1.2			| https://rsync.samba.org/
-| network/service/isc-dhcp		| 4.3.5			| https://www.isc.org/downloads/dhcp/
+| network/service/isc-dhcp		| 4.3.6			| https://www.isc.org/downloads/dhcp/
 | network/test/iperf			| 3.1.3			| https://iperf.fr/iperf-download.php#source
 | network/test/netperf			| 2.7.0			| https://hewlettpackard.github.io/netperf/
 | security/sudo				| 1.8.20p2		| https://www.sudo.ws/
