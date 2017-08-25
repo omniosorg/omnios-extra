@@ -214,10 +214,11 @@ url_encode() {
 #############################################################################
 # Set the LANG to C as the assembler will freak out on unicode in headers
 LANG=C
-export LANG
+GCCPATH=/opt/gcc-5
 # Set the path - This can be overriden/extended in the build script
-PATH="/opt/gcc-5.1.0/bin:/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin"
-export PATH
+PATH="$GCCPATH/bin:/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin"
+export LANG GCCPATH PATH
+
 # The dir where this file is located - used for sourcing further files
 MYDIR=$PWD/`dirname $BASH_SOURCE[0]`
 # The dir where this file was sourced from - this will be the directory of the
@@ -241,7 +242,7 @@ shift $((OPTIND - 1))
 
 BasicRequirements(){
     local needed=""
-    [[ -x /opt/gcc-5.1.0/bin/gcc ]] || needed+=" developer/gcc51"
+    [[ -x $GCCPATH/bin/gcc ]] || needed+=" developer/gcc5"
     [[ -x /usr/bin/ar ]] || needed+=" developer/object-file"
     [[ -x /usr/bin/ld ]] || needed+=" developer/linker"
     [[ -f /usr/lib/crt1.o ]] || needed+=" developer/library/lint"

@@ -47,7 +47,7 @@ configure32() {
 
     logmsg "Patching Makefile to make mpfr/gmp static"
     pushd $TMPDIR/$BUILDDIR > /dev/null
-    logcmd gsed -i -e 's#-lmpfr -lgmp#/opt/gcc-5.1.0/lib/libmpfr.a /opt/gcc-5.1.0/lib/libgmp.a#' Makefile
+    logcmd gsed -i -e "s#-lmpfr -lgmp#$GCCPATH/lib/libmpfr.a $GCCPATH/lib/libgmp.a#" Makefile
     popd > /dev/null
 }
 

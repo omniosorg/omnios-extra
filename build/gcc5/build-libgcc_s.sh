@@ -22,44 +22,44 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
+. $SRCDIR/common.sh
 
-GCCVER=5.1.0
-PATH=/opt/gcc-${GCCVER}/bin:$PATH
-export LD_LIBRARY_PATH=/opt/gcc-${GCCVER}/lib
+PROG=libgcc_s
+VER=$GCCVER
+VERHUMAN=$VER
+PKG=system/library/gcc-5-runtime
+SUMMARY="gcc $VER runtime"
+DESC="$SUMMARY"
 
-PROG=gmp         # App name
-VER=6.0.0        # App version
-VERHUMAN=$VER    # Human-readable version
-PKG=developer/gcc51/libgmp-gcc51 # Package name (without prefix)
-SUMMARY="gcc51 - private libgmp"
-DESC="$SUMMARY" # Longer description
+PATH=$OPT/bin:$PATH
+export LD_LIBRARY_PATH=$OPT/lib
+
+BUILD_DEPENDS_IPS="$PKGV"
 
 # This stuff is in its own domain
 PKGPREFIX=""
 
-[[ "$BUILDARCH" == "both" ]] && BUILDARCH=32
-PREFIX=/opt/gcc-${GCCVER}
-CC=gcc
-CONFIGURE_OPTS="--enable-cxx --disable-assembly"
-CFLAGS="-fexceptions"
-ABI=32
-export ABI
+PREFIX=$OPT
 
-make_install32() {
-    logcmd mkdir -p $DESTDIR/opt/gcc-${GCCVER}/share/info
-    make_install
-    logcmd rm -rf $DESTDIR/opt/gcc-${GCCVER}/share/info
-}
-
-reset_configure_opts
 init
-download_source $PROG $PROG $VER
 prep_build
-build
-make_isa_stub
-make_package libgmp.mog libgmp-final.mog
+mkdir -p $TMPDIR/$BUILDDIR
+for license in COPYING.RUNTIME COPYING.LIB COPYING3.LIB
+do
+    logcmd cp $SRCDIR/files/$license $TMPDIR/$BUILDDIR/$license || \
+        logerr "Cannot copy licence: $license"
+done
+mkdir -p $DESTDIR/usr/lib
+cp $OPT/lib/libgcc_s.so.1 $DESTDIR/usr/lib/libgcc_s.so.1
+ln -s libgcc_s.so.1 $DESTDIR/usr/lib/libgcc_s.so
+mkdir -p $DESTDIR/usr/lib/amd64
+cp $OPT/lib/amd64/libgcc_s.so.1 $DESTDIR/usr/lib/amd64/libgcc_s.so.1
+ln -s libgcc_s.so.1 $DESTDIR/usr/lib/amd64/libgcc_s.so
+make_package runtime.mog
 clean_up
+

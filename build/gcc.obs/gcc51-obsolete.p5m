@@ -1,0 +1,3 @@
+set name=pkg.fmri value=developer/gcc51@5.1.0-@PVER@
+set name=pkg.renamed value=true
+depend type=require fmri=developer/gcc5
