@@ -1,0 +1,131 @@
+Making check in sigc++
+Making check in tests
+  CXX      test_accum_iter.o
+  CXX      testutilities.o
+  CXXLD    test_accum_iter
+  CXX      test_accumulated.o
+  CXXLD    test_accumulated
+  CXX      test_bind.o
+  CXXLD    test_bind
+  CXX      test_bind_as_slot.o
+  CXXLD    test_bind_as_slot
+  CXX      test_bind_ref.o
+  CXXLD    test_bind_ref
+  CXX      test_bind_refptr.o
+  CXXLD    test_bind_refptr
+  CXX      test_bind_return.o
+  CXXLD    test_bind_return
+  CXX      test_compose.o
+  CXXLD    test_compose
+  CXX      test_copy_invalid_slot.o
+  CXXLD    test_copy_invalid_slot
+  CXX      test_cpp11_lambda.o
+  CXXLD    test_cpp11_lambda
+  CXX      test_custom.o
+  CXXLD    test_custom
+  CXX      test_disconnect.o
+  CXXLD    test_disconnect
+  CXX      test_disconnect_during_emit.o
+  CXXLD    test_disconnect_during_emit
+  CXX      test_exception_catch.o
+  CXXLD    test_exception_catch
+  CXX      test_hide.o
+  CXXLD    test_hide
+  CXX      test_limit_reference.o
+  CXXLD    test_limit_reference
+  CXX      test_member_method_trait.o
+  CXXLD    test_member_method_trait
+  CXX      test_mem_fun.o
+  CXXLD    test_mem_fun
+  CXX      test_ptr_fun.o
+  CXXLD    test_ptr_fun
+  CXX      test_retype.o
+  CXXLD    test_retype
+  CXX      test_retype_return.o
+  CXXLD    test_retype_return
+  CXX      test_signal.o
+  CXXLD    test_signal
+  CXX      test_signal_move.o
+  CXXLD    test_signal_move
+  CXX      test_size.o
+  CXXLD    test_size
+  CXX      test_slot.o
+  CXXLD    test_slot
+  CXX      test_slot_disconnect.o
+  CXXLD    test_slot_disconnect
+  CXX      test_slot_move.o
+  CXXLD    test_slot_move
+  CXX      test_trackable.o
+  CXXLD    test_trackable
+  CXX      test_trackable_move.o
+  CXXLD    test_trackable_move
+  CXX      test_track_obj.o
+  CXXLD    test_track_obj
+  CXX      test_tuple_cdr.o
+  CXXLD    test_tuple_cdr
+  CXX      test_tuple_end.o
+  CXXLD    test_tuple_end
+  CXX      test_tuple_for_each.o
+  CXXLD    test_tuple_for_each
+  CXX      test_tuple_start.o
+  CXXLD    test_tuple_start
+  CXX      test_tuple_transform_each.o
+  CXXLD    test_tuple_transform_each
+  CXX      test_visit_each.o
+  CXXLD    test_visit_each
+  CXX      test_visit_each_trackable.o
+  CXXLD    test_visit_each_trackable
+  CXX      test_weak_raw_ptr.o
+  CXXLD    test_weak_raw_ptr
+PASS: test_accum_iter
+PASS: test_accumulated
+PASS: test_bind
+PASS: test_bind_as_slot
+PASS: test_bind_ref
+PASS: test_bind_refptr
+PASS: test_bind_return
+PASS: test_compose
+PASS: test_copy_invalid_slot
+PASS: test_cpp11_lambda
+PASS: test_custom
+PASS: test_disconnect
+PASS: test_disconnect_during_emit
+PASS: test_exception_catch
+PASS: test_hide
+PASS: test_limit_reference
+PASS: test_member_method_trait
+PASS: test_mem_fun
+PASS: test_ptr_fun
+PASS: test_retype
+PASS: test_retype_return
+PASS: test_signal
+PASS: test_signal_move
+PASS: test_size
+PASS: test_slot
+PASS: test_slot_disconnect
+PASS: test_slot_move
+PASS: test_trackable
+PASS: test_trackable_move
+PASS: test_track_obj
+PASS: test_tuple_cdr
+PASS: test_tuple_end
+PASS: test_tuple_for_each
+PASS: test_tuple_start
+PASS: test_tuple_transform_each
+PASS: test_visit_each
+PASS: test_visit_each_trackable
+PASS: test_weak_raw_ptr
+============================================================================
+Testsuite summary for libsigc++ 2.99.9
+============================================================================
+# TOTAL: 38
+# PASS:  38
+# SKIP:  0
+# XFAIL: 0
+# FAIL:  0
+# XPASS: 0
+# ERROR: 0
+============================================================================
+Making check in examples
+Making check in cmake
+Making check in docs

@@ -27,7 +27,7 @@
 | editor/vim				| 8.0.586		| http://www.vim.org/download.php
 | file/gnu-coreutils			| 8.27			| https://savannah.gnu.org/news/?group=coreutils
 | file/gnu-findutils			| 4.6.0			| https://ftp.gnu.org/pub/gnu/findutils/
-| library/c++/sigcpp			| 2.99.8		| https://download.gnome.org/sources/libsigc++/
+| library/c++/sigcpp			| 2.99.9		| https://download.gnome.org/sources/libsigc++/
 | library/expat				| 2.2.3			| https://libexpat.github.io/
 | library/gmp				| 6.1.2			| https://gmplib.org/
 | library/idnkit			| 1.0			| https://jprs.co.jp/idn/index-e.html
