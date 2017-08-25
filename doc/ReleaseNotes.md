@@ -12,16 +12,16 @@ Weekly release for w/c 28th of August 2017, uname -a shows `omnios-r151022-5e982
 ### Security fixes
 
 * `libxml2` fixes for:
-  * CVE-2016-4658
-  * CVE-2016-5131
-  * CVE-2017-0663
-  * CVE-2017-5969
-  * CVE-2017-9047
-  * CVE-2017-9048
-  * CVE-2017-9049
-  * CVE-2017-9050
+  * [CVE-2016-4658](https://www.cvedetails.com/cve/CVE-2016-4658/)
+  * [CVE-2016-5131](https://www.cvedetails.com/cve/CVE-2016-5131/)
+  * [CVE-2017-0663](https://www.cvedetails.com/cve/CVE-2017-0663/)
+  * [CVE-2017-5969](https://www.cvedetails.com/cve/CVE-2017-5969/)
+  * [CVE-2017-9047](https://www.cvedetails.com/cve/CVE-2017-9047/)
+  * [CVE-2017-9048](https://www.cvedetails.com/cve/CVE-2017-9048/)
+  * [CVE-2017-9049](https://www.cvedetails.com/cve/CVE-2017-9049/)
+  * [CVE-2017-9050](https://www.cvedetails.com/cve/CVE-2017-9050/)
 * `bzip2` fix for:
-  * CVE-2016-3189
+  * [CVE-2016-3189](https://www.cvedetails.com/cve/CVE-2016-3189/)
 
 ### Other changes
 
