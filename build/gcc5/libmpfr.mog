@@ -1,0 +1,8 @@
+
+<transform file dir link path=.*/share/(doc|info) -> drop>
+
+<transform depend type=require-any -> drop>
+
+license COPYING license=GPLv3
+license COPYING.LESSER license=LGPLv3
+

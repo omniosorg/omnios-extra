@@ -22,34 +22,33 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
+. $SRCDIR/common.sh
 
-PROG=mpc
-VER=1.0.3
-VERHUMAN=$VER
-PKG=developer/gcc51/libmpc-gcc51
-SUMMARY="gcc51 - private libmpc"
-DESC="$SUMMARY"
+PATH=$OPT/bin:$PATH
+export LD_LIBRARY_PATH=$OPT/lib
 
-DEPENDS_IPS="developer/gcc51/libgmp-gcc51 developer/gcc51/libmpfr-gcc51"
+PROG=gmp         # App name
+VER=6.1.2        # App version
+VERHUMAN=$VER    # Human-readable version
+PKG=developer/gcc5/libgmp-gcc5
+SUMMARY="$PKGV - private libgmp"
+DESC="$SUMMARY" # Longer description
 
 # This stuff is in its own domain
 PKGPREFIX=""
 
 [[ "$BUILDARCH" == "both" ]] && BUILDARCH=32
-GCCVER=5.1.0
-PREFIX=/opt/gcc-${GCCVER}
+PREFIX=$OPT
 CC=gcc
-CONFIGURE_OPTS="--with-gmp=/opt/gcc-${GCCVER} --with-mpfr=/opt/gcc-${GCCVER}"
-LDFLAGS="-R/opt/gcc-${GCCVER}/lib -L/opt/gcc-${GCCVER}/lib"
-
-make_install32() {
-    make_install
-    logcmd rm -rf $DESTDIR/opt/gcc-${GCCVER}/share/info
-}
+CONFIGURE_OPTS="--enable-cxx --disable-assembly"
+CFLAGS="-fexceptions"
+ABI=32
+export ABI
 
 reset_configure_opts
 init
@@ -57,5 +56,5 @@ download_source $PROG $PROG $VER
 prep_build
 build
 make_isa_stub
-make_package libmpc.mog
+make_package libgmp.mog libgmp-final.mog
 clean_up

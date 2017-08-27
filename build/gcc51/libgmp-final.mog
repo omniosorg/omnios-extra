@@ -1,6 +1,0 @@
-
-<transform depend type=require-any -> drop>
-
-depend type=require fmri=system/library/g++-5-runtime
-depend type=require fmri=system/library/gcc-5-runtime
-

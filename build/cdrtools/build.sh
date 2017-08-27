@@ -50,7 +50,7 @@ make_install() {
     mkdir -p $DESTDIR/etc/security/exec_attr.d
     mkdir -p $DESTDIR/usr/bin
     mkdir -p $DESTDIR/usr/share/man/man1
-    cp $SRCDIR/files/exec_attr $DESTDIR/etc/security/exec_attr.d
+    cp $SRCDIR/files/exec_attr $DESTDIR/etc/security/exec_attr.d/cdrecord
     cp $TMPDIR/$BUILDDIR/mkisofs/OBJ/i386-sunos5-gcc/mkisofs $DESTDIR/usr/bin/mkisofs
     mkdir -p $DESTDIR/usr/share/man/man8
     cp $TMPDIR/$BUILDDIR/mkisofs/mkisofs.8 $DESTDIR/usr/share/man/man8/mkisofs.8

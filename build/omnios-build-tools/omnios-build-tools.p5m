@@ -3,8 +3,7 @@ set name=pkg.depend.install-hold value=core-os.omnios
 set name=pkg.summary value="Single meta-package containing required tools to build omnios."
 set name=pkg.description value="Single meta-package containing required tools to build omnios."
 
-depend fmri=developer/gcc51 type=require
-depend fmri=developer/gcc51/libgmp-gcc51 type=require
+depend fmri=developer/gcc5 type=require
 depend fmri=developer/build/gnu-make type=require
 depend fmri=archiver/gnu-tar type=require
 depend fmri=compatibility/ucb type=require
@@ -43,7 +42,6 @@ depend fmri=service/network/tftp type=require
 depend fmri=developer/swig type=require
 depend fmri=system/header/header-audio type=require
 depend fmri=system/library type=require
-depend fmri=system/library/gcc-5-runtime type=require
 depend fmri=system/library/math type=require
 depend fmri=system/zones/internal type=require
 depend fmri=text/gnu-sed type=require
