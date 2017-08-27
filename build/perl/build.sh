@@ -35,7 +35,7 @@ export SHELL
 
 case $DEPVER in
     "")
-	DEPVER=5.24.1
+	DEPVER=5.24.2
         logmsg "no version specified, using $DEPVER"
         ;;
 esac
@@ -43,7 +43,7 @@ esac
 PROG=perl
 VER=$DEPVER
 NODOTVER=$(echo $DEPVER| sed -e's/\.//g;')
-PKG=runtime/perl-$NODOTVER
+PKG=runtime/perl-$NODOTVER ##IGNORE##
 SUMMARY="Perl $VER Programming Language"
 DESC="$SUMMARY"
 PREFIX=/usr/perl5/${VER}
@@ -70,31 +70,55 @@ PERL_BUILD_OPTS_COMMON="-des \
         -Dld=/usr/ccs/bin/ld \
         -Doptimize=-O3"
 
-catalog() {
+filelist() {
     pushd $DESTDIR > /dev/null
-    logmsg "Creating catalog file"
+    logmsg "Creating file list"
 
-    find . | cut -c3- > $TMPDIR/$1
+    find . | cut -c3- | sed '/^$/d' | sort > $TMPDIR/$1
     popd > /dev/null
 }
+
+mkmog() {
+    while read f; do
+	echo "<transform file dir link hardlink path=^$f\$ -> drop>"
+    done
+}
+
 build_mogs() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
     logmsg "Building MOG files"
 
-    logcmd ./miniperl $SRCDIR/make_mog.pl $TMPDIR $DESTDIR
-    cat $TMPDIR/nodocs.mog $TMPDIR/no64.mog > $TMPDIR/perl.mog
-    cat $TMPDIR/no32.mog $TMPDIR/no64.mog > $TMPDIR/perl-docs.mog
-    cat $TMPDIR/no32.mog $TMPDIR/nodocs.mog > $TMPDIR/perl-64.mog
+    # perl.32.bit
+    # perl.all.bit
+
+    # 64-bit-only files
+    comm -13 $TMPDIR/perl.32.bit $TMPDIR/perl.all.bit > $TMPDIR/files.64
+
+    # man/pod files
+    egrep '/man/|\.pod$' $TMPDIR/perl.32.bit > $TMPDIR/files.doc
+
+    # 32-bit only files (remove docs)
+    fgrep -vf $TMPDIR/files.doc $TMPDIR/perl.32.bit > $TMPDIR/files.32
+
+    # Perl package (no docs, no 64-bit)
+    cat $TMPDIR/files.{64,doc} | mkmog > $TMPDIR/perl.mog
+
+    # Doc package (docs only)
+    cat $TMPDIR/files.{32,64} | mkmog > $TMPDIR/perl-docs.mog
+
+    # 64-bit package
+    cat $TMPDIR/files.{32,doc} | mkmog > $TMPDIR/perl-64.mog
+
     popd > /dev/null
 }
+
 links() {
     logmsg "Creating symlinks"
     logcmd mkdir -p $DESTDIR/usr/bin
     logcmd mkdir -p $DESTDIR/usr/perl5/bin
 
-    perlexe=$(find ${PREFIX}/bin -maxdepth 1 -type f -perm -o+x)
-
-    for path in $perlexe; do
+    find $DESTDIR/$PREFIX/bin -maxdepth 1 -type f -perm -o+x | while read path
+    do
         file=$(basename $path)
 
         logcmd ln -s \
@@ -143,10 +167,13 @@ build32() {
     logcmd gmake install DESTDIR=${DESTDIR} || \
         logerr "--- Make install failed"
 
-    # We make the isastubs after 32bit so we can seem them in the catalog
+    # We make the isastubs after 32bit so we can seem them in the file list
     make_isa_stub
 
-    catalog perl.32.bit || logerr "Failed to catalog 32bit install"
+    # Similarly for the links to usr/bin etc.
+    links
+
+    filelist perl.32.bit
     popd > /dev/null
 }
 
@@ -203,9 +230,8 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-links
 build
-catalog perl.all.bit || logerr "Failed to catalog full install"
+filelist perl.all.bit
 build_mogs
 
 PKG=runtime/perl
@@ -217,13 +243,13 @@ make_package $TMPDIR/perl.mog
 PKG=runtime/perl/manual
 SUMMARY="Perl $VER Programming Language Docs"
 DESC="$SUMMARY"
-DEPENDS_IPS="=runtime/perl@${VER},5.11-${PVER} runtime/perl@${VER},5.11-${PVER}"
+DEPENDS_IPS="=runtime/perl@${VER},${SUNOSVER}-${PVER} runtime/perl@${VER},${SUNOSVER}-${PVER}"
 make_package $TMPDIR/perl-docs.mog
 
 PKG=runtime/perl-64
 SUMMARY="Perl $VER Programming Language (64-bit)"
 DESC="$SUMMARY"
-DEPENDS_IPS="=runtime/perl@${VER},5.11-${PVER} runtime/perl@${VER},5.11-${PVER}"
+DEPENDS_IPS="=runtime/perl@${VER},${SUNOSVER}-${PVER} runtime/perl@${VER},${SUNOSVER}-${PVER}"
 make_package $TMPDIR/perl-64.mog
 
 clean_up

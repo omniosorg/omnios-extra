@@ -43,7 +43,7 @@ reset_configure_opts
 NO_PARALLEL_MAKE=1
 
 # Only 5.24.1 and later will get individual module builds
-PERLVER=5.24.1
+PERLVER=5.24.2
 
 # Add any additional deps here; perl runtime added below
 #BUILD_DEPENDS_IPS=
@@ -51,7 +51,7 @@ PERLVER=5.24.1
 
 # We require a Perl version to use for this build and there is no default
 case $DEPVER in
-    5.24.1)
+    5.24.2)
         RUN_DEPENDS_IPS="$RUN_DEPENDS_IPS runtime/perl"
         ;;
     "")
