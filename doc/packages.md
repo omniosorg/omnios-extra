@@ -9,7 +9,7 @@
 | compress/xz				| 5.2.3			| https://tukaani.org/xz/
 | compress/zip				| 3.0			| http://www.info-zip.org/Zip.html
 | data/iso-codes			| 3.75			| http://pkg-isocodes.alioth.debian.org/downloads/
-| database/sqlite-3			| 3.20.0		| https://www.sqlite.org/
+| database/sqlite-3			| 3.20.1		| https://www.sqlite.org/
 | developer/bmake			| 20170812		| http://www.crufty.net/ftp/pub/sjg/
 | developer/build/autoconf		| 2.69			| https://savannah.gnu.org/news/?group=autoconf
 | developer/build/automake		| 1.15.1		| https://savannah.gnu.org/news/?group=automake
@@ -56,6 +56,7 @@
 | shell/tcsh				| 6.20.0		| http://www.tcsh.org/
 | shell/zsh				| 5.4.1			| http://zsh.sourceforge.net/News/
 | system/library/dbus			| 1.11.14		| https://www.freedesktop.org/wiki/Software/dbus/#index5h1
+| system/library/libdbus-glib		| 0.108			| https://dbus.freedesktop.org/releases/dbus-glib/
 | system/library/pcap			| 1.8.1			| http://www.tcpdump.org/#latest-releases
 | system/management/ipmitool		| 1.8.18		| https://sourceforge.net/projects/ipmitool/
 | system/management/snmp/net-snmp	| 5.7.3			| http://www.net-snmp.org/download.html
