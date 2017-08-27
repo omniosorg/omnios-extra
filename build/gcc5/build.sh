@@ -22,29 +22,32 @@
 #
 #
 # Copyright 2014 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
+. $SRCDIR/common.sh
 
 PROG=gcc
-VER=5.1.0
+VER=$GCCVER
 VERHUMAN=$VER
-PKG=developer/gcc51
+PKG=developer/gcc5
 SUMMARY="gcc ${VER}"
 DESC="$SUMMARY"
 
-export LD_LIBRARY_PATH=/opt/gcc-${VER}/lib
+export LD_LIBRARY_PATH=$OPT/lib
 PATH=/usr/perl5/${PERLVER}/bin:$PATH
 export PATH
 
-DEPENDS_IPS="developer/gcc51/libgmp-gcc51 developer/gcc51/libmpfr-gcc51 developer/gcc51/libmpc-gcc51 developer/gnu-binutils developer/library/lint developer/linker system/library/gcc-5-runtime"
+DEPENDS_IPS="developer/$PKGV/libgmp-$PKGV developer/$PKGV/libmpfr-$PKGV developer/$PKGV/libmpc-$PKGV developer/gnu-binutils developer/library/lint developer/linker system/library/gcc-$GCCMAJOR-runtime"
 
 # This stuff is in its own domain
 PKGPREFIX=""
 
 [[ "$BUILDARCH" == "both" ]] && BUILDARCH=32
-PREFIX=/opt/gcc-${VER}
+PREFIX=$OPT
+
 reset_configure_opts
 CC=gcc
 
@@ -55,13 +58,20 @@ export LD_FOR_HOST
 LD=/bin/ld
 export LD
 
-CONFIGURE_OPTS_32="--prefix=/opt/gcc-${VER}"
-CONFIGURE_OPTS="--host i386-pc-solaris2.11 --build i386-pc-solaris2.11 --target i386-pc-solaris2.11 \
-	--with-boot-ldflags=-R/opt/gcc-${VER}/lib \
-	--with-gmp=/opt/gcc-${VER} --with-mpfr=/opt/gcc-${VER} --with-mpc=/opt/gcc-${VER} \
-	--enable-languages=c,c++,fortran,lto --without-gnu-ld --with-ld=/bin/ld \
-	--with-as=/usr/bin/gas --with-gnu-as --with-build-time-tools=/usr/gnu/i386-pc-solaris2.11/bin"
-LDFLAGS32="-R/opt/gcc-${VER}/lib"
+CONFIGURE_OPTS_32="--prefix=$OPT"
+CONFIGURE_OPTS="\
+	--host i386-pc-solaris2.11 \
+	--build i386-pc-solaris2.11 \
+	--target i386-pc-solaris2.11 \
+	--with-boot-ldflags=-R$OPT/lib \
+	--with-gmp=$OPT \
+	--with-mpfr=$OPT \
+	--with-mpc=$OPT \
+	--enable-languages=c,c++,fortran,lto \
+	--without-gnu-ld --with-ld=/bin/ld \
+	--with-as=/usr/bin/gas --with-gnu-as \
+	--with-build-time-tools=/usr/gnu/i386-pc-solaris2.11/bin"
+LDFLAGS32="-R$OPT/lib"
 export LD_OPTIONS="-zignore -zcombreloc -i"
 
 init
@@ -71,3 +81,4 @@ prep_build
 build
 make_package gcc.mog
 clean_up
+

@@ -105,6 +105,7 @@ download_source $PROG ${PROG}_${SRCVER}
 patch_source
 prep_build
 build
+run_testsuite test
 install_sh_wrapper
 make_isa_stub
 make_package

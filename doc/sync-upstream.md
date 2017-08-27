@@ -123,7 +123,7 @@ step.
 ## ONU to the new build
 
 ```
-# onu -t 20170703 -d */path/to/illumos-omnios/packages/i386/nightly-nd
+# onu -t 20170703 -d */path/to/illumos-omnios/packages/i386/nightly-nd*
 ...
 # init 6
 ```

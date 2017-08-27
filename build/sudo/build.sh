@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=sudo
-VER=1.8.20p2
+VER=1.8.21
 VERHUMAN=$VER
 PKG=security/sudo
 SUMMARY="$PROG - authority delegation tool"
@@ -70,6 +70,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_isa_stub
 VER=${VER//p/.}
 make_package

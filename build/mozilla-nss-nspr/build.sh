@@ -27,8 +27,6 @@
 # Load support functions
 . ../../lib/functions.sh
 
-# NOTE: Keep this in sync with ca-bundle NSS version
-
 PROG=nss
 VER=3.32
 # Include NSPR version since we're downloading a combined tarball.
