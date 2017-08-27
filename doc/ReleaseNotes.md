@@ -2,7 +2,35 @@
 
 # Release Notes for OmniOSce v11 r151022
 
-[instructions for updating from OmniTI OmniOS r151022 to the community edition can be found below](#upgrading-from-omniti-released-r151022)
+[Instructions for updating from OmniTI OmniOS r151022 are available on our web site](http://www.omniosce.org/setup/switch)
+
+## r151022o (2017-08-28)
+
+Weekly release for w/c 28th of August 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
+> This is a non-reboot update.
+
+### Security fixes
+
+* `libxml2` fixes for:
+  * [CVE-2016-4658](https://www.cvedetails.com/cve/CVE-2016-4658/)
+  * [CVE-2016-5131](https://www.cvedetails.com/cve/CVE-2016-5131/)
+  * [CVE-2017-0663](https://www.cvedetails.com/cve/CVE-2017-0663/)
+  * [CVE-2017-5969](https://www.cvedetails.com/cve/CVE-2017-5969/)
+  * [CVE-2017-9047](https://www.cvedetails.com/cve/CVE-2017-9047/)
+  * [CVE-2017-9048](https://www.cvedetails.com/cve/CVE-2017-9048/)
+  * [CVE-2017-9049](https://www.cvedetails.com/cve/CVE-2017-9049/)
+  * [CVE-2017-9050](https://www.cvedetails.com/cve/CVE-2017-9050/)
+* `bzip2` fix for:
+  * [CVE-2016-3189](https://www.cvedetails.com/cve/CVE-2016-3189/)
+
+### Other changes
+
+* Update `java` to OpenJDK 1.7.0\_141-b02
+* Update `/etc/release` to include release version suffix
+
+<br>
+
+----
 
 ## r151022m (2017-08-11)
 
@@ -126,57 +154,4 @@ This is the initial OmniOSce release.
 
 * openssl updated to version 1.0.2l
 * web/ca-bundle updated to include OmniOSce Certificate Authority certificate
-
-<br>
-
-----  
-
-### Upgrading from OmniTI-released r151022
-
-All OmniOS packages are signed and the pkg installer is configured to only
-allow trusted sources for the core packages. In order to upgrade to the new
-OmniOS community edition, you have to let your box know that the updates will
-be coming from a new trusted source. This means you will have to import our CA
-certificate into your system.
-
-Get a copy of the new certificate
-```
-# /usr/bin/wget -P /etc/ssl/pkg https://downloads.omniosce.org/ssl/omniosce-ca.cert.pem 
-```
-Check the certificate fingerprint
-```
-# /usr/bin/openssl x509 -fingerprint  -in /etc/ssl/pkg/omniosce-ca.cert.pem -noout 
-8D:CD:F9:D0:76:CD:AF:C1:62:AF:89:51:AF:8A:0E:35:24:4C:66:6D
-```
-
-Change the publisher to our new repository:
-
-```
-# /usr/bin/pkg set-publisher -P \
-  -G https://pkg.omniti.com/omnios/r151022/ \
-  -g https://pkg.omniosce.org/r151022/core/ omnios 
-```
-
-For each native zone (if you have any), run
-
-```
-# /usr/bin/pkg -R <zone_root> set-publisher -P \
-   -G https://pkg.omniti.com/omnios/r151022/ \
-   -g https://pkg.omniosce.org/r151022/core/ omnios 
-```
-> (get a list of all your zones by running zoneadm list -cv for the
-> <zone_root>, add /root to the PATH given in the list.)
-
-Install the new ca-bundle containing our new CA
-```
-# /usr/bin/pkg update -rv web/ca-bundle 
-```
-Remove the CA file imported by hand
-```
-# rm /etc/ssl/pkg/omniosce-ca.cert.pem 
-```
-Finally update as usual
-```
-# /usr/bin/pkg update -rv 
-```
 
