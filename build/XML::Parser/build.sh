@@ -3,9 +3,7 @@
 # Load support functions
 . ../../lib/functions.sh
 
-if [ -z "$DEPVER" ]; then
-    DEPVER=5.24.1
-fi
+[ -z "$DEPVER" ] && DEPVER=$PERLVER
 
 AUTHORID=TODDR
 PROG=XML-Parser
