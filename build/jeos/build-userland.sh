@@ -26,7 +26,7 @@ create_manifest_header()
     cat << EOM > $mf
 set name=pkg.fmri value=pkg://@PKGPUBLISHER@/incorporation/jeos/omnios-userland@11,5.11-@PVER@
 set name=pkg.depend.install-hold value=core-os.omnios
-set name=pkg.summary value=""Incorporation to constrain OmniOS userland packages to same build"
+set name=pkg.summary value="Incorporation to constrain OmniOS userland packages to same build"
 set name=pkg.description value="This package constrains OmniOS userland packages to the same build as osnet-incorporation."
 EOM
 }
