@@ -315,6 +315,19 @@ libtool_nostdlib() {
 #############################################################################
 # Initialization function
 #############################################################################
+
+init_repo() {
+    if [[ "$PKGSRVR" == file:/* ]]; then
+        RPATH="`echo $PKGSRVR | sed 's^file:/*^/^'`"
+        if [ ! -d "$RPATH" ]; then
+            logmsg "-- Initialising local repo at $RPATH"
+            pkgrepo create $RPATH || logerr "Could not create local repo"
+            pkgrepo add-publisher -s $RPATH $PKGPUBLISHER || \
+                logerr "Could not set publisher on local repo"
+        fi
+    fi
+}
+
 init() {
     # Print out current settings
     logmsg "Package name: $PKG"
@@ -354,15 +367,7 @@ init() {
         BUILDDIR=$PROG-$VER
     fi
 
-    RPATH=`echo $PKGSRVR | sed -e 's/^file:\/*/\//'`
-    if [[ "$RPATH" != "$PKGSRVR" ]]; then
-        if [[ ! -d $RPATH ]]; then
-            pkgrepo create $RPATH || \
-                logerr "Could not local repo"
-            pkgrepo add-publisher -s $RPATH $PKGPUBLISHER || \
-                logerr "Could not set publisher on repo"
-        fi
-    fi
+    init_repo
     pkgrepo get -s $PKGSRVR > /dev/null 2>&1 || \
         logerr "The PKGSRVR ($PKGSRVR) isn't available. All is doomed."
     verify_depends
