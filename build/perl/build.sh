@@ -43,10 +43,11 @@ esac
 PROG=perl
 VER=$DEPVER
 NODOTVER=$(echo $DEPVER| sed -e's/\.//g;')
+SVER=${VER%.*}
 PKG=runtime/perl-$NODOTVER ##IGNORE##
 SUMMARY="Perl $VER Programming Language"
 DESC="$SUMMARY"
-PREFIX=/usr/perl5/${VER}
+PREFIX=/usr/perl5/${SVER}
 
 BUILD_DEPENDS_IPS="text/gnu-sed"
 
@@ -121,10 +122,11 @@ links() {
     do
         file=$(basename $path)
 
+	[ "$file" = "perl$VER" ] && lfile=perl$SVER || lfile=$file
         logcmd ln -s \
-            ../perl5/${VER}/bin/$file $DESTDIR/usr/bin/$file
+            ../perl5/${SVER}/bin/$file $DESTDIR/usr/bin/$lfile
         logcmd ln -s \
-            ../${VER}/bin/$file $DESTDIR/usr/perl5/bin/$file
+            ../${SVER}/bin/$file $DESTDIR/usr/perl5/bin/$lfile
     done
 }
 
@@ -148,8 +150,8 @@ build32() {
         -Dsitescript=${PREFIX}/bin \
         -Dvendorscript=${PREFIX}/bin \
         -Dprivlib=${PREFIX}/lib \
-        -Dsitelib=/usr/perl5/site_perl/${VER} \
-        -Dvendorlib=/usr/perl5/vendor_perl/${VER} \
+        -Dsitelib=/usr/perl5/site_perl/${SVER} \
+        -Dvendorlib=/usr/perl5/vendor_perl/${SVER} \
 	|| \
     logerr "--- Configure failed"
     logcmd gsed -i 's/-fstack-protector-strong//g;' config.sh
@@ -198,10 +200,9 @@ build64() {
         -Dsitescript=${PREFIX}/bin \
         -Dvendorscript=${PREFIX}/bin \
         -Dprivlib=${PREFIX}/lib \
-        -Dsitelib=/usr/perl5/site_perl/${VER} \
-        -Dvendorlib=/usr/perl5/vendor_perl/${VER} \
-        || \
-    logerr "--- Configure failed"
+        -Dsitelib=/usr/perl5/site_perl/${SVER} \
+        -Dvendorlib=/usr/perl5/vendor_perl/${SVER} \
+        || logerr "--- Configure failed"
     logcmd gsed -i 's/-fstack-protector-strong//g;' config.sh
     logcmd gsed -i 's/mydomain="\.undef"/mydomain="undef"/g;' config.sh
     logcmd gsed -i -e '/^lddlflags/{s/-G -m64//;}' config.sh
@@ -220,7 +221,7 @@ build64() {
         logerr "--- Make install failed"
 
     pushd $DESTDIR/$PREFIX/bin > /dev/null
-    logcmd gsed -i "s:usr/perl5/${VER}/bin/amd64:usr/perl5/${VER}/bin:g" \
+    logcmd gsed -i "s:usr/perl5/${SVER}/bin/amd64:usr/perl5/${SVER}/bin:g" \
         `find . -type f | xargs file | grep script | cut -f1 -d:`
     popd > /dev/null
     popd > /dev/null
