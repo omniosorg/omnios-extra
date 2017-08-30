@@ -78,8 +78,8 @@ FFIVERS=`pkg list -H libffi | awk '{print $(NF-1)}' | cut -d- -f1`
 PERLVER=5.24.2
 
 # Full paths to bins
-PERL32=/usr/perl5/$PERLVER/bin/$ISAPART/perl
-PERL64=/usr/perl5/$PERLVER/bin/$ISAPART64/perl
+PERL32=/usr/perl5/${PERLVER%.*}/bin/$ISAPART/perl
+PERL64=/usr/perl5/${PERLVER%.*}/bin/$ISAPART64/perl
 
 # Default Makefile.PL options
 PERL_MAKEFILE_OPTS="INSTALLSITEBIN=$PREFIX/bin/_ARCHBIN_ \

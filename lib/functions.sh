@@ -1126,10 +1126,9 @@ python_build() {
 # Detects whether to use Build.PL or Makefile.PL
 # Note: Build.PL probably needs Module::Build installed
 #############################################################################
-vendorizeperl() {
-    logcmd mv $DESTDIR/usr/perl5/lib/site_perl $DESTDIR/usr/perl5/vendor_perl || logerr "can't move to vendor_perl"
-    logcmd mkdir -p $DESTDIR/usr/perl5/${DEPVER}
-    logcmd mv $DESTDIR/usr/perl5/man $DESTDIR/usr/perl5/${DEPVER}/man || logerr "can't move perl man"
+siteperl_to_vendor() {
+    logcmd mv $DESTDIR/usr/perl5/site_perl $DESTDIR/usr/perl5/vendor_perl \
+        || logerr "can't move to vendor_perl"
 }
 
 buildperl() {
@@ -1202,14 +1201,12 @@ buildperl64() {
 
 makefilepl32() {
     logmsg "--- Makefile.PL 32-bit"
-    logcmd $PERL32 Makefile.PL PREFIX=$PREFIX $@ ||
-        logerr "Failed to run Makefile.PL"
+    logcmd $PERL32 Makefile.PL $@ || logerr "Failed to run Makefile.PL"
 }
 
 makefilepl64() {
     logmsg "--- Makefile.PL 64-bit"
-    logcmd $PERL64 Makefile.PL PREFIX=$PREFIX $@ ||
-        logerr "Failed to run Makefile.PL"
+    logcmd $PERL64 Makefile.PL $@ || logerr "Failed to run Makefile.PL"
 }
 
 buildpl32() {
