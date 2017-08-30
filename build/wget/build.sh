@@ -37,7 +37,11 @@ DESC="$SUMMARY"
 BUILD_DEPENDS_IPS="developer/lexer/flex"
 DEPENDS_IPS="library/libidn web/ca-bundle"
 
-CONFIGURE_OPTS="--with-ssl=openssl --mandir=$PREFIX/share/man POD2MAN=/usr/perl5/${PERLVER}/bin/pod2man"
+CONFIGURE_OPTS="
+	--with-ssl=openssl
+	--mandir=$PREFIX/share/man
+	POD2MAN=/usr/perl5/bin/pod2man
+"
 
 # Use old gcc4 standards level for this.
 CFLAGS="$CFLAGS -std=gnu89"
