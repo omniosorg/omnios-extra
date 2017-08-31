@@ -51,35 +51,28 @@ push_pkgs() {
         ask_to_continue
     fi
 
-    # Before, we used to just send out the non-DEBUG illumos packages.
-    #logcmd pkgrecv -s packages/i386/nightly-nd/repo.redist/ -d $PKGSRVR 'pkg:/*'
-    # NOW, however, we use pkgmerge to set pkg(5) variants for non-DEBUG *and*
-    # DEBUG.  The idea is, if someone wants to shift their illumos from
+    # Use pkgmerge to set pkg(5) variants for non-DEBUG and DEBUG.
+    # The idea is, if someone wants to shift their illumos from
     # non-DEBUG (default) to DEBUG, they can simply utter:
     #
     #      pkg change-variant debug.illumos=true
     #
     # and a new BE with DEBUG bits appears.
 
-    [ -d $TMPDIR/$BUILDDIR ] || mkdir -p $TMPDIR/$BUILDDIR
-    STAGE_REPO=$TMPDIR/$BUILDDIR
-    [ -d $STAGE_REPO ] && rm -rf $STAGE_REPO
-    logmsg "Creating staging repo at $STAGE_REPO"
-    pkgrepo create $STAGE_REPO || logerr "Could not create staging repo"
-    pkgrepo add-publisher -s $STAGE_REPO $PKGPUBLISHER || \
-	logerr "Could not set publisher on staging repo"
+    # A particular package or pattern can be specified using the -f argument
+    # to this build script which sets $FLAVOR
 
-    logmsg "Staging illumos packages to $STAGE_REPO"
-    logcmd pkgmerge -d $STAGE_REPO \
-	-s debug.illumos=false,packages/i386/nightly-nd/repo.redist/ \
-	-s debug.illumos=true,packages/i386/nightly/repo.redist/ \
+    ndrepo=packages/i386/nightly-nd/repo.redist
+    drepo=packages/i386/nightly/repo.redist
+
+    logmsg "Repository information"
+    pkgrepo -s $ndrepo info
+    echo
+
+    pkgmerge -d $PKGSRVR \
+	-s debug.illumos=false,$ndrepo/ \
+	-s debug.illumos=true,$drepo/ \
 	$FLAVOR
-
-    logmsg "Staging repository information"
-    pkgrepo -s $STAGE_REPO info
-    pkgrepo -s $STAGE_REPO list | sed 1d | awk '{print $2}' > $SRCDIR/pkg.list
-
-    republish_packages $STAGE_REPO
 
     logmsg "Leaving $CODEMGR_WS"
     popd > /dev/null
