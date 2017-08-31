@@ -79,6 +79,6 @@ download_source $PROG/releases/$PROG-$VER $PROG $VER
 patch_source
 prep_build
 build
-make_package gcc.mog
+make_package gcc.mog gcc-final.mog
 clean_up
 
