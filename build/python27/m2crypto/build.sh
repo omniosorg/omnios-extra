@@ -25,20 +25,19 @@
 # Use is subject to license terms.
 #
 # Load support functions
-. ../../lib/functions.sh
+. ../../../lib/functions.sh
 
+PKG=library/python-2/m2crypto-27
 PROG=M2Crypto
-VER=0.24.0
+VER=0.26.0
 SUMMARY="Python interface for openssl"
 DESC="M2Crypto provides a python interface to the openssl library."
 
 BUILD_DEPENDS_IPS="swig"
 
-# In the future when we upgrade python again, be sure to wrap the following
-# around with set_python_version and reassign PKG and RUN_DEPENDS_IPS.
-# The only way buildctl detects packages is by grepping for PKG assignment.
-XFORM_ARGS="-D PYTHONVER=$PYTHONVER"
-PKG=library/python-2/m2crypto-27
+. $SRCDIR/../common.sh
+
+RUN_DEPENDS_IPS+="library/python-2/typing-27"
 
 init
 download_source $PROG $PROG $VER
