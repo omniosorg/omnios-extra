@@ -25,18 +25,16 @@
 # Use is subject to license terms.
 #
 # Load support functions
-. ../../lib/functions.sh
+. ../../../lib/functions.sh
 
+PKG=library/python-2/pycurl-27
 PROG=pycurl
 VER=7.43.0
 SUMMARY="Python bindings for libcurl"
 DESC="PycURL provides a thin layer of Python bindings on top of libcurl."
 
-# In the future when we upgrade python again, be sure to wrap the following
-# around with set_python_version and reassign PKG and RUN_DEPENDS_IPS.
-# The only way buildctl detects packages is by grepping for PKG assignment.
-XFORM_ARGS="-D PYTHONPKGVER=$PYTHONPKGVER"
-PKG=library/python-2/pycurl-27
+. $SRCDIR/../common.sh
+
 init
 download_source $PROG $PROG $VER
 patch_source
