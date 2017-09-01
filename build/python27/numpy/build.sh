@@ -25,13 +25,15 @@
 # Use is subject to license terms.
 #
 # Load support functions
-. ../../lib/functions.sh
+. ../../../lib/functions.sh
 
+PKG=library/python-2/numpy-27
 PROG=numpy
-VER=1.12.1
+VER=1.13.1
 SUMMARY="numpy - package for scientific computing with Python"
 DESC="$SUMMARY"
 
+. $SRCDIR/../common.sh
 
 # This builds leaves uncleanable crud behind.  See pre_python_64() below for
 # more details.
@@ -46,12 +48,6 @@ pre_python_64() {
 
 save_function clean_up clean_up_orig
 
-# In the future when we upgrade python again, be sure to wrap the following
-# around with set_python_version and reassign PKG and RUN_DEPENDS_IPS.
-# The only way buildctl detects packages is by grepping for PKG assignment.
-XFORM_ARGS="-D PYTHONVER=$PYTHONVER"
-PKG=library/python-2/numpy-27
-RUN_DEPENDS_IPS="runtime/python-27"
 init
 download_source $PROG $PROG $VER
 patch_source
