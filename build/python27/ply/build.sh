@@ -25,25 +25,22 @@
 # Use is subject to license terms.
 #
 # Load support functions
-. ../../lib/functions.sh
+. ../../../lib/functions.sh
 
+PKG=library/python-2/ply-27
 PROG=ply
 VER=3.10
 SUMMARY="ply - Python lex and yacc"
 DESC="$SUMMARY"
 
+. $SRCDIR/../common.sh
+
 make_license() {
-    # Sigh. People. put the license in a standalong file!
+    # Sigh. People. put the license in a standalone file!
     awk '/Copyright/,/DAMAGE.$/{print}' $TMPDIR/$BUILDDIR/README.md > \
         $TMPDIR/$BUILDDIR/LICENSE
 }
 
-# In the future when we upgrade python again, be sure to wrap the following
-# around with set_python_version and reassign PKG and RUN_DEPENDS_IPS.
-# The only way buildctl detects packages is by grepping for PKG assignment.
-XFORM_ARGS="-D PYTHONVER=$PYTHONVER"
-PKG=library/python-2/ply-27
-RUN_DEPENDS_IPS="runtime/python-27"
 init
 download_source $PROG $PROG $VER
 patch_source
