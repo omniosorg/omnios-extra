@@ -25,19 +25,18 @@
 # Use is subject to license terms.
 #
 # Load support functions
-. ../../lib/functions.sh
+. ../../../lib/functions.sh
 
+PKG=library/python-2/lxml-27
 PROG=lxml
-VER=3.7.2
+VER=3.8.0
 SUMMARY="lxml - Powerful and Pythonic XML processing library"
 DESC="$SUMMARY"
 
-# In the future when we upgrade python again, be sure to wrap the following
-# around with set_python_version and reassign PKG and RUN_DEPENDS_IPS.
-# The only way buildctl detects packages is by grepping for PKG assignment.
-XFORM_ARGS="-D PYTHONVER=$PYTHONVER"
-PKG=library/python-2/lxml-27
-RUN_DEPENDS_IPS="runtime/python-27 library/libxml2 library/libxslt"
+. $SRCDIR/../common.sh
+
+RUN_DEPENDS_IPS+="library/libxml2 library/libxslt"
+
 init
 download_source $PROG $PROG $VER
 patch_source
