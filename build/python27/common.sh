@@ -1,0 +1,4 @@
+
+RUN_DEPENDS_IPS="runtime/python-27 "
+XFORM_ARGS="-D PYTHONVER=$PYTHONVER"
+
