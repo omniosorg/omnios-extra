@@ -25,19 +25,16 @@
 # Use is subject to license terms.
 #
 # Load support functions
-. ../../lib/functions.sh
+. ../../../lib/functions.sh
 
+PKG=library/python-2/coverage-27
 PROG=coverage
-VER=4.3.4
+VER=4.4.1
 SUMMARY="Code coverage measurement for Python"
 DESC="$SUMMARY"
 
-# In the future when we upgrade python again, be sure to wrap the following
-# around with set_python_version and reassign PKG and RUN_DEPENDS_IPS.
-# The only way buildctl detects packages is by grepping for PKG assignment.
-XFORM_ARGS="-D PYTHONVER=$PYTHONVER"
-RUN_DEPENDS_IPS="runtime/python-27"
-PKG=library/python-2/coverage-27
+. $SRCDIR/../common.sh
+
 init
 download_source $PROG $PROG $VER
 patch_source
