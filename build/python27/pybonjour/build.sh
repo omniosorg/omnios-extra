@@ -25,24 +25,21 @@
 # Use is subject to license terms.
 #
 # Load support functions
-. ../../lib/functions.sh
+. ../../../lib/functions.sh
 
+PKG=library/python-2/pybonjour-27
 PROG=pybonjour
 VER=1.1.1
 SUMMARY="pure-Python interface bonjour/DNS-SD implementation"
 DESC="$SUMMARY"
+
+. $SRCDIR/../common.sh
 
 make_license() {
     head -25 $TMPDIR/$BUILDDIR/build/lib/pybonjour.py > \
         $TMPDIR/$BUILDDIR/LICENSE
 }
 
-# In the future when we upgrade python again, be sure to wrap the following
-# around with set_python_version and reassign PKG and RUN_DEPENDS_IPS.
-# The only way buildctl detects packages is by grepping for PKG assignment.
-XFORM_ARGS="-D PYTHONVER=$PYTHONVER"
-PKG=library/python-2/pybonjour-27
-RUN_DEPENDS_IPS="runtime/python-27"
 init
 download_source $PROG $PROG $VER
 patch_source
