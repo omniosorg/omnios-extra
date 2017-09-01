@@ -99,16 +99,20 @@ buildorder() {
     done
 }
 
-list() {
+list_backend() {
     PAT=${1-.}
     for target in "${!fulltargets[@]}"
     do
         if [[ "$PAT" = "." ]]; then
-            echo " * $target"
+            echo $target
         elif [[ -n $(echo "$target" | grep "$PAT") ]]; then
-            echo " * $target"
+            echo $target
         fi
     done | sort
+}
+
+list() {
+    list_backend "${1-.}" | sed 's/^/ * /'
 }
 
 list_build() {
@@ -299,8 +303,10 @@ case "$1" in
 			build $tgt
 		done
 	else
-		for tgt in $tobuild; do
-			build $tgt
+		for tgtpatt in $tobuild; do
+            for tgt in `list_backend "$tgtpatt"`; do
+                build $tgt
+            done
 		done
 	fi
         exit
