@@ -25,19 +25,16 @@
 # Use is subject to license terms.
 #
 # Load support functions
-. ../../lib/functions.sh
+. ../../../lib/functions.sh
 
+PKG=library/python-2/jsonschema-27
 PROG=jsonschema
-VER=2.5.1
+VER=2.6.0
 SUMMARY="An implementation of JSON Schema validation for Python"
 DESC="$SUMMARY"
 
-# In the future when we upgrade python again, be sure to wrap the following     
-# around with set_python_version and reassign PKG and RUN_DEPENDS_IPS.          
-# The only way buildctl detects packages is by grepping for PKG assignment.
-XFORM_ARGS="-D PYTHONVER=$PYTHONVER"
-PKG=library/python-2/jsonschema-27
-RUN_DEPENDS_IPS="runtime/python-27"
+. $SRCDIR/../common.sh
+
 init
 download_source $PROG $PROG $VER
 patch_source
