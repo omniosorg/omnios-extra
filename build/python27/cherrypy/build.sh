@@ -25,19 +25,23 @@
 # Use is subject to license terms.
 #
 # Load support functions
-. ../../lib/functions.sh
+. ../../../lib/functions.sh
 
+PKG=library/python-2/cherrypy-27
 PROG=CherryPy
-VER=3.2.2
+VER=11.0.0
 SUMMARY="cherrypy - A Minimalist Python Web Framework"
 DESC="$SUMMARY"
 
-# In the future when we upgrade python again, be sure to wrap the following
-# around with set_python_version and reassign PKG and RUN_DEPENDS_IPS.
-# The only way buildctl detects packages is by grepping for PKG assignment.
-XFORM_ARGS="-D PYTHONVER=$PYTHONVER"
-PKG=library/python-2/cherrypy-27
-RUN_DEPENDS_IPS="runtime/python-27"
+. $SRCDIR/../common.sh
+
+RUN_DEPENDS_IPS+="
+	library/python-2/tempora-27
+	library/python-2/six-27
+	library/python-2/portend-27
+	library/python-2/cheroot-27
+"
+
 init
 download_source $PROG $PROG $VER
 patch_source
