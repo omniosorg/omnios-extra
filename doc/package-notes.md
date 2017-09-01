@@ -24,21 +24,14 @@ STUCK on 2.34.3 (2.50  HAD POSSIBLE PROBLEM...)
 
 NO UPDATE (There is 2.3 available, but it's "idnkit2".)
 
-### ipmitool
-
-BLOCKED, could be 1.8.17 with work...
-
 ### isc-dhcp
 
-NO UPDATE (NOTE: ISC now has "Kea" DHCP server replacement)
+NOTE: ISC now has "Kea" DHCP server replacement
 
 ### open-vm-tools
 
 STUCK on 9.4.0 (really weird stuff...)
 
-### sudo
-
-STUCK on 1.8.7 (Oracle Solaris-isms, among other things)
 ### swig
 
 STUCK on 2.0.12 (3.0.x breaks M2Crypto, among other things...)
@@ -47,19 +40,7 @@ STUCK on 2.0.12 (3.0.x breaks M2Crypto, among other things...)
 
 STUCK on 0.3.8 (no idea why...)
 
-### python-cherrypy
-
-STUCK on 3.2.2 (breaks IPS on upgrade)
-
 ### python-m2crypto
 
 STUCK ON 0.24.0 (0.25.1 update broke IPS pkgsign)
-
-### python-pyopenssl
-
-STUCK ON 0.11 --> never-ending python package pull to update!
-
-### python-setuptools
-
-STUCK ON 0.6.11 (NO IDEA)
 
