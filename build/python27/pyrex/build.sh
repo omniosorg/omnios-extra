@@ -25,25 +25,21 @@
 # Use is subject to license terms.
 #
 # Load support functions
-. ../../lib/functions.sh
+. ../../../lib/functions.sh
 
+PKG=library/python-2/pyrex-27
 PROG=Pyrex
 VER=0.9.9
 SUMMARY="Pyrex - a Language for Writing Python Extension Modules"
 DESC="$SUMMARY"
 
-# In the future when we upgrade python again, be sure to wrap the following
-# around with set_python_version and reassign PKG and RUN_DEPENDS_IPS.
-# The only way buildctl detects packages is by grepping for PKG assignment.
-PKG=library/python-2/pyrex-27
-RUN_DEPENDS_IPS="runtime/python-27"
+. $SRCDIR/../common.sh
+
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 python_build
-mv $DESTDIR/usr/bin/pyrexc $DESTDIR/usr/bin/pyrexc2.7
-ln -s ./pyrexc2.7 $DESTDIR/usr/bin/pyrexc
 strip_install -x
 make_package
 clean_up
