@@ -52,8 +52,9 @@ BRAND_CFLAGS="-I./gate-include"
 BUILD_DEPENDS_IPS="developer/versioning/git developer/versioning/mercurial system/zones/internal text/intltool"
 DEPENDS_IPS="runtime/python-27"
 
-# Respect an environmental override on this, for development's sake.
-PKG_SOURCE_REPO=${PKG_SOURCE_REPO:-https://github.com/omniosorg/pkg5}
+# Respect environmental overrides for these to ease development.
+: ${PKG_SOURCE_REPO:=https://github.com/omniosorg/pkg5}
+: ${PKG_SOURCE_BRANCH:=r$RELVER}
 
 clone_source(){
     logmsg "pkg -> $TMPDIR/$BUILDDIR/pkg"
@@ -66,7 +67,8 @@ clone_source(){
     fi
     pushd pkg > /dev/null || logerr "no source"
     logcmd $GIT pull || logerr "failed to pull"
-    logcmd $GIT checkout r$RELVER || logmsg "No r$RELVER branch, using master."
+    logcmd $GIT checkout $PKG_SOURCE_BRANCH \
+        || logmsg "No $PKG_SOURCE_BRANCH branch, using master."
     popd > /dev/null
     popd > /dev/null 
 }
