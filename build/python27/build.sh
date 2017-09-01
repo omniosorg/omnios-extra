@@ -40,6 +40,7 @@ BUILD_DEPENDS_IPS="developer/build/autoconf"
 DEPENDS_IPS="system/library/gcc-5-runtime library/zlib library/libffi@$FFIVERS
 	library/readline database/sqlite-3 compress/bzip2 library/libxml2
 	library/ncurses library/security/openssl"
+XFORM_ARGS="-D PYTHONVER=$PYTHONVER"
 
 export CCSHARED="-fPIC"
 CFLAGS="$CFLAGS -std=c99"
@@ -144,12 +145,15 @@ install_license(){
     logcmd cp $TMPDIR/$BUILDDIR/LICENSE $DESTDIR/license
 }
 
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
+
 init
 download_source $PROG $PROG $VER
 patch_source
 preprep_build
 prep_build
 build
+run_testsuite
 make_isa_stub
 strip_install -x
 install_license

@@ -1,0 +1,1298 @@
+building dbm using ndbm
+
+Python build finished, but the necessary bits to build these modules were not found:
+_bsddb             _tkinter           bsddb185        
+dl                 gdbm               imageop         
+linuxaudiodev                                         
+To find the necessary bits, look in setup.py in detect_modules() for the module's name.
+
+== CPython 2.7.13 (default, Sep 1 2017, 10:58:39) [GCC 5.4.0]
+==   Solaris-2.11-i86pc-i386-64bit-ELF little-endian
+==   /data/omnios-build/omniosorg/_build/Python-2.7.13/build/test_python_19743
+Testing with flags: sys.flags(debug=0, py3k_warning=1, division_warning=1, division_new=0, inspect=0, interactive=0, optimize=0, dont_write_bytecode=0, no_user_site=0, no_site=0, ignore_environment=1, tabcheck=2, verbose=0, unicode=0, bytes_warning=0, hash_randomization=0)
+[  1/401] test_grammar
+[  2/401] test_opcodes
+[  3/401] test_dict
+[  4/401] test_builtin
+[  5/401] test_exceptions
+[  6/401] test_types
+[  7/401] test_unittest
+[  8/401] test_doctest
+[  9/401] test_doctest2
+[ 10/401] test_MimeWriter
+[ 11/401] test_SimpleHTTPServer
+[ 12/401] test_StringIO
+[ 13/401] test___all__
+[ 14/401] test___future__
+[ 15/401] test__locale
+[ 16/401] test__osx_support
+[ 17/401] test_abc
+[ 18/401] test_abstract_numbers
+[ 19/401] test_aepack
+test_aepack skipped -- No module named aetypes
+[ 20/401] test_aifc
+[ 21/401] test_al
+test_al skipped -- No module named al
+[ 22/401] test_anydbm
+[ 23/401] test_applesingle
+test_applesingle skipped -- No module named MacOS
+[ 24/401] test_argparse
+[ 25/401] test_array
+[ 26/401] test_ascii_formatd
+[ 27/401] test_ast
+[ 28/401] test_asynchat
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[ 29/401] test_asyncore
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[ 30/401] test_atexit
+[ 31/401] test_audioop
+[ 32/401] test_augassign
+[ 33/401] test_base64
+[ 34/401] test_bastion
+[ 35/401] test_bigaddrspace
+[ 36/401] test_bigmem
+[ 37/401] test_binascii
+[ 38/401] test_binhex
+[ 39/401] test_binop
+[ 40/401] test_bisect
+[ 41/401] test_bool
+[ 42/401] test_bsddb
+test_bsddb skipped -- No module named _bsddb
+[ 43/401] test_bsddb185
+test_bsddb185 skipped -- No module named bsddb185
+[ 44/401] test_bsddb3
+test_bsddb3 skipped -- No module named _bsddb
+[ 45/401] test_buffer
+[ 46/401] test_bufio
+[ 47/401] test_bytes
+[ 48/401] test_bz2
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[ 49/401] test_calendar
+[ 50/401] test_call
+[ 51/401] test_capi
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[ 52/401] test_cd
+test_cd skipped -- No module named cd
+[ 53/401] test_cfgparser
+[ 54/401] test_cgi
+[ 55/401] test_charmapcodec
+[ 56/401] test_cl
+test_cl skipped -- No module named cl
+[ 57/401] test_class
+[ 58/401] test_cmath
+[ 59/401] test_cmd
+[ 60/401] test_cmd_line
+[ 61/401] test_cmd_line_script
+[ 62/401] test_code
+[ 63/401] test_codeccallbacks
+[ 64/401] test_codecencodings_cn
+[ 65/401] test_codecencodings_hk
+[ 66/401] test_codecencodings_iso2022
+[ 67/401] test_codecencodings_jp
+[ 68/401] test_codecencodings_kr
+[ 69/401] test_codecencodings_tw
+[ 70/401] test_codecmaps_cn
+test_codecmaps_cn skipped -- Use of the `urlfetch' resource not enabled
+[ 71/401] test_codecmaps_hk
+test_codecmaps_hk skipped -- Use of the `urlfetch' resource not enabled
+[ 72/401] test_codecmaps_jp
+test_codecmaps_jp skipped -- Use of the `urlfetch' resource not enabled
+[ 73/401] test_codecmaps_kr
+test_codecmaps_kr skipped -- Use of the `urlfetch' resource not enabled
+[ 74/401] test_codecmaps_tw
+test_codecmaps_tw skipped -- Use of the `urlfetch' resource not enabled
+[ 75/401] test_codecs
+[ 76/401] test_codeop
+[ 77/401] test_coercion
+[ 78/401] test_collections
+[ 79/401] test_colorsys
+[ 80/401] test_commands
+[ 81/401] test_compare
+[ 82/401] test_compile
+[ 83/401] test_compileall
+[ 84/401] test_compiler
+[ 85/401] test_complex
+[ 86/401] test_complex_args
+[ 87/401] test_contains
+[ 88/401] test_contextlib
+[ 89/401] test_cookie
+[ 90/401] test_cookielib
+[ 91/401] test_copy
+[ 92/401] test_copy_reg
+[ 93/401] test_cpickle
+[ 94/401] test_cprofile
+[ 95/401] test_crypt
+[ 96/401] test_csv
+[ 97/401] test_ctypes
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[ 98/401] test_curses
+test_curses skipped -- Use of the `curses' resource not enabled
+[ 99/401] test_datetime
+[100/401] test_dbm
+[101/401] test_decimal
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[102/401] test_decorators
+[103/401] test_defaultdict
+[104/401] test_deque
+[105/401] test_descr
+[106/401] test_descrtut
+[107/401] test_dictcomps
+[108/401] test_dictviews
+[109/401] test_difflib
+[110/401] test_dircache
+[111/401] test_dis
+[112/401] test_distutils
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/distutils/command/build_ext.py:686: DeprecationWarning: apply() not supported in 3.x; use func(*args, **kwargs)
+  path = apply(os.path.join, ext_path)
+test test_distutils failed -- multiple errors occurred; run in verbose mode for details
+[113/401/1] test_dl
+test_dl skipped -- No module named dl
+[114/401/1] test_docxmlrpc
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[115/401/1] test_dumbdbm
+[116/401/1] test_dummy_thread
+[117/401/1] test_dummy_threading
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[118/401/1] test_email
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[119/401/1] test_email_codecs
+[120/401/1] test_email_renamed
+[121/401/1] test_ensurepip
+[122/401/1] test_enumerate
+[123/401/1] test_eof
+[124/401/1] test_epoll
+[125/401/1] test_errno
+[126/401/1] test_exception_variations
+[127/401/1] test_extcall
+[128/401/1] test_fcntl
+[129/401/1] test_file
+[130/401/1] test_file2k
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[131/401/1] test_file_eintr
+[132/401/1] test_filecmp
+[133/401/1] test_fileinput
+[134/401/1] test_fileio
+[135/401/1] test_float
+[136/401/1] test_fnmatch
+[137/401/1] test_fork1
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[138/401/1] test_format
+[139/401/1] test_fpformat
+[140/401/1] test_fractions
+[141/401/1] test_frozen
+[142/401/1] test_ftplib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[143/401/1] test_funcattrs
+[144/401/1] test_functools
+[145/401/1] test_future
+[146/401/1] test_future3
+[147/401/1] test_future4
+[148/401/1] test_future5
+[149/401/1] test_future_builtins
+[150/401/1] test_gc
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[151/401/1] test_gdb
+test_gdb skipped -- Couldn't find gdb on the path
+[152/401/1] test_gdbm
+test_gdbm skipped -- No module named gdbm
+[153/401/1] test_generators
+[154/401/1] test_genericpath
+[155/401/1] test_genexps
+[156/401/1] test_getargs
+[157/401/1] test_getargs2
+[158/401/1] test_getopt
+[159/401/1] test_gettext
+[160/401/1] test_gl
+test_gl skipped -- No module named gl
+[161/401/1] test_glob
+[162/401/1] test_global
+[163/401/1] test_grp
+[164/401/1] test_gzip
+[165/401/1] test_hash
+[166/401/1] test_hashlib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[167/401/1] test_heapq
+[168/401/1] test_hmac
+[169/401/1] test_hotshot
+[170/401/1] test_htmllib
+[171/401/1] test_htmlparser
+[172/401/1] test_httplib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[173/401/1] test_httpservers
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[174/401/1] test_idle
+test_idle skipped -- No module named _tkinter
+[175/401/1] test_imageop
+test_imageop skipped -- No module named imageop
+[176/401/1] test_imaplib
+[177/401/1] test_imgfile
+test_imgfile skipped -- No module named imgfile
+[178/401/1] test_imghdr
+[179/401/1] test_imp
+[180/401/1] test_import
+Warning -- sys.path was modified by test_import
+[181/401/1] test_importhooks
+[182/401/1] test_importlib
+[183/401/1] test_index
+[184/401/1] test_inspect
+[185/401/1] test_int
+[186/401/1] test_int_literal
+[187/401/1] test_io
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[188/401/1] test_ioctl
+[189/401/1] test_isinstance
+[190/401/1] test_iter
+[191/401/1] test_iterlen
+[192/401/1] test_itertools
+[193/401/1] test_json
+[194/401/1] test_kqueue
+test_kqueue skipped -- test works only on BSD
+[195/401/1] test_largefile
+[196/401/1] test_lib2to3
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+[197/401/1] test_linecache
+[198/401/1] test_linuxaudiodev
+test_linuxaudiodev skipped -- Use of the `audio' resource not enabled
+[199/401/1] test_list
+[200/401/1] test_locale
+[201/401/1] test_logging
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[202/401/1] test_long
+[203/401/1] test_long_future
+[204/401/1] test_longexp
+[205/401/1] test_macos
+test_macos skipped -- No module named MacOS
+[206/401/1] test_macostools
+test_macostools skipped -- No module named MacOS
+[207/401/1] test_macpath
+[208/401/1] test_macurl2path
+[209/401/1] test_mailbox
+[210/401/1] test_marshal
+[211/401/1] test_math
+[212/401/1] test_md5
+[213/401/1] test_memoryio
+[214/401/1] test_memoryview
+[215/401/1] test_mhlib
+[216/401/1] test_mimetools
+[217/401/1] test_mimetypes
+[218/401/1] test_minidom
+[219/401/1] test_mmap
+[220/401/1] test_module
+[221/401/1] test_modulefinder
+[222/401/1] test_msilib
+test_msilib skipped -- No module named _msi
+[223/401/1] test_multibytecodec
+[224/401/1] test_multibytecodec_support
+[225/401/1] test_multifile
+[226/401/1] test_multiprocessing
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[227/401/1] test_mutants
+[228/401/1] test_mutex
+[229/401/1] test_netrc
+[230/401/1] test_new
+[231/401/1] test_nis
+[232/401/1] test_nntplib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[233/401/1] test_normalization
+[234/401/1] test_ntpath
+[235/401/1] test_old_mailbox
+[236/401/1] test_openpty
+[237/401/1] test_operator
+[238/401/1] test_optparse
+[239/401/1] test_ordered_dict
+[240/401/1] test_os
+[241/401/1] test_ossaudiodev
+test_ossaudiodev skipped -- Use of the `audio' resource not enabled
+[242/401/1] test_parser
+[243/401/1] test_pdb
+[244/401/1] test_peepholer
+[245/401/1] test_pep247
+[246/401/1] test_pep277
+test_pep277 skipped -- only NT+ and systems with Unicode-friendly filesystem encoding
+[247/401/1] test_pep352
+[248/401/1] test_pickle
+[249/401/1] test_pickletools
+[250/401/1] test_pipes
+[251/401/1] test_pkg
+[252/401/1] test_pkgimport
+[253/401/1] test_pkgutil
+[254/401/1] test_platform
+[255/401/1] test_plistlib
+[256/401/1] test_poll
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[257/401/1] test_popen
+[258/401/1] test_popen2
+[259/401/1] test_poplib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[260/401/1] test_posix
+[261/401/1] test_posixpath
+[262/401/1] test_pow
+[263/401/1] test_pprint
+[264/401/1] test_print
+[265/401/1] test_profile
+[266/401/1] test_property
+[267/401/1] test_pstats
+[268/401/1] test_pty
+[269/401/1] test_pwd
+[270/401/1] test_py3kwarn
+[271/401/1] test_py_compile
+[272/401/1] test_pyclbr
+[273/401/1] test_pydoc
+[274/401/1] test_pyexpat
+[275/401/1] test_queue
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[276/401/1] test_quopri
+[277/401/1] test_random
+[278/401/1] test_re
+[279/401/1] test_readline
+[280/401/1] test_repr
+[281/401/1] test_resource
+[282/401/1] test_rfc822
+[283/401/1] test_richcmp
+[284/401/1] test_rlcompleter
+[285/401/1] test_robotparser
+[286/401/1] test_runpy
+[287/401/1] test_sax
+[288/401/1] test_scope
+[289/401/1] test_scriptpackages
+test_scriptpackages skipped -- No module named aetools
+[290/401/1] test_select
+[291/401/1] test_set
+[292/401/1] test_setcomps
+[293/401/1] test_sets
+[294/401/1] test_sgmllib
+[295/401/1] test_sha
+[296/401/1] test_shelve
+[297/401/1] test_shlex
+[298/401/1] test_shutil
+[299/401/1] test_signal
+[300/401/1] test_site
+Warning -- sys.path was modified by test_site
+[301/401/1] test_slice
+[302/401/1] test_smtplib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[303/401/1] test_smtpnet
+test_smtpnet skipped -- Use of the `network' resource not enabled
+[304/401/1] test_socket
+[305/401/1] test_socketserver
+test_socketserver skipped -- Use of the `network' resource not enabled
+[306/401/1] test_softspace
+[307/401/1] test_sort
+[308/401/1] test_source_encoding
+[309/401/1] test_spwd
+[310/401/1] test_sqlite
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[311/401/1] test_ssl
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[312/401/1] test_startfile
+test_startfile skipped -- module os has no attribute startfile
+[313/401/1] test_stat
+[314/401/1] test_str
+[315/401/1] test_strftime
+[316/401/1] test_string
+[317/401/1] test_stringprep
+[318/401/1] test_strop
+[319/401/1] test_strptime
+[320/401/1] test_strtod
+[321/401/1] test_struct
+[322/401/1] test_structmembers
+[323/401/1] test_structseq
+[324/401/1] test_subprocess
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[325/401/1] test_sunau
+[326/401/1] test_sunaudiodev
+test_sunaudiodev skipped -- no audio device found!
+[327/401/1] test_sundry
+[328/401/1] test_symtable
+[329/401/1] test_syntax
+[330/401/1] test_sys
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[331/401/1] test_sys_setprofile
+[332/401/1] test_sys_settrace
+[333/401/1] test_sysconfig
+[334/401/1] test_tarfile
+[335/401/1] test_tcl
+test_tcl skipped -- No module named _tkinter
+[336/401/1] test_telnetlib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[337/401/1] test_tempfile
+[338/401/1] test_textwrap
+[339/401/1] test_thread
+[340/401/1] test_threaded_import
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[341/401/1] test_threadedtempfile
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[342/401/1] test_threading
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[343/401/1] test_threading_local
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[344/401/1] test_threadsignals
+[345/401/1] test_time
+[346/401/1] test_timeit
+[347/401/1] test_timeout
+test_timeout skipped -- Use of the `network' resource not enabled
+[348/401/1] test_tk
+test_tk skipped -- No module named _tkinter
+[349/401/1] test_tokenize
+[350/401/1] test_tools
+recursedown('@test_19743_tmp')
+[351/401/1] test_trace
+[352/401/1] test_traceback
+[353/401/1] test_transformer
+[354/401/1] test_ttk_guionly
+test_ttk_guionly skipped -- No module named _tkinter
+[355/401/1] test_ttk_textonly
+test_ttk_textonly skipped -- No module named _tkinter
+[356/401/1] test_tuple
+[357/401/1] test_turtle
+test_turtle skipped -- No module named _tkinter
+[358/401/1] test_typechecks
+[359/401/1] test_ucn
+[360/401/1] test_unary
+[361/401/1] test_undocumented_details
+[362/401/1] test_unicode
+[363/401/1] test_unicode_file
+test_unicode_file skipped -- No Unicode filesystem semantics on this platform.
+[364/401/1] test_unicodedata
+[365/401/1] test_univnewlines
+[366/401/1] test_univnewlines2k
+[367/401/1] test_unpack
+[368/401/1] test_urllib
+[369/401/1] test_urllib2
+[370/401/1] test_urllib2_localnet
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[371/401/1] test_urllib2net
+test_urllib2net skipped -- Use of the `network' resource not enabled
+[372/401/1] test_urllibnet
+test_urllibnet skipped -- Use of the `network' resource not enabled
+[373/401/1] test_urlparse
+[374/401/1] test_userdict
+[375/401/1] test_userlist
+[376/401/1] test_userstring
+[377/401/1] test_uu
+[378/401/1] test_uuid
+[379/401/1] test_wait3
+[380/401/1] test_wait4
+[381/401/1] test_warnings
+[382/401/1] test_wave
+[383/401/1] test_weakref
+[384/401/1] test_weakset
+[385/401/1] test_whichdb
+[386/401/1] test_winreg
+test_winreg skipped -- No module named _winreg
+[387/401/1] test_winsound
+test_winsound skipped -- Use of the `audio' resource not enabled
+[388/401/1] test_with
+[389/401/1] test_wsgiref
+[390/401/1] test_xdrlib
+[391/401/1] test_xml_etree
+[392/401/1] test_xml_etree_c
+[393/401/1] test_xmllib
+[394/401/1] test_xmlrpc
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[395/401/1] test_xpickle
+[396/401/1] test_xrange
+[397/401/1] test_zipfile
+[398/401/1] test_zipfile64
+test_zipfile64 skipped -- test requires loads of disk-space bytes and a long time to run
+[399/401/1] test_zipimport
+[400/401/1] test_zipimport_support
+[401/401/1] test_zlib
+353 tests OK.
+1 test failed:
+    test_distutils
+2 tests altered the execution environment:
+    test_import test_site
+45 tests skipped:
+    test_aepack test_al test_applesingle test_bsddb test_bsddb185
+    test_bsddb3 test_cd test_cl test_codecmaps_cn test_codecmaps_hk
+    test_codecmaps_jp test_codecmaps_kr test_codecmaps_tw test_curses
+    test_dl test_gdb test_gdbm test_gl test_idle test_imageop
+    test_imgfile test_kqueue test_linuxaudiodev test_macos
+    test_macostools test_msilib test_ossaudiodev test_pep277
+    test_scriptpackages test_smtpnet test_socketserver test_startfile
+    test_sunaudiodev test_tcl test_timeout test_tk test_ttk_guionly
+    test_ttk_textonly test_turtle test_unicode_file test_urllib2net
+    test_urllibnet test_winreg test_winsound test_zipfile64
+10 skips unexpected on sunos5:
+    test_bsddb3 test_dl test_gdb test_idle test_sunaudiodev test_tcl
+    test_tk test_ttk_guionly test_ttk_textonly test_turtle
+== CPython 2.7.13 (default, Sep 1 2017, 10:58:39) [GCC 5.4.0]
+==   Solaris-2.11-i86pc-i386-64bit-ELF little-endian
+==   /data/omnios-build/omniosorg/_build/Python-2.7.13/build/test_python_22745
+Testing with flags: sys.flags(debug=0, py3k_warning=1, division_warning=1, division_new=0, inspect=0, interactive=0, optimize=0, dont_write_bytecode=0, no_user_site=0, no_site=0, ignore_environment=1, tabcheck=2, verbose=0, unicode=0, bytes_warning=0, hash_randomization=0)
+[  1/401] test_grammar
+[  2/401] test_opcodes
+[  3/401] test_dict
+[  4/401] test_builtin
+[  5/401] test_exceptions
+[  6/401] test_types
+[  7/401] test_unittest
+[  8/401] test_doctest
+[  9/401] test_doctest2
+[ 10/401] test_MimeWriter
+[ 11/401] test_SimpleHTTPServer
+[ 12/401] test_StringIO
+[ 13/401] test___all__
+[ 14/401] test___future__
+[ 15/401] test__locale
+[ 16/401] test__osx_support
+[ 17/401] test_abc
+[ 18/401] test_abstract_numbers
+[ 19/401] test_aepack
+test_aepack skipped -- No module named aetypes
+[ 20/401] test_aifc
+[ 21/401] test_al
+test_al skipped -- No module named al
+[ 22/401] test_anydbm
+[ 23/401] test_applesingle
+test_applesingle skipped -- No module named MacOS
+[ 24/401] test_argparse
+[ 25/401] test_array
+[ 26/401] test_ascii_formatd
+[ 27/401] test_ast
+[ 28/401] test_asynchat
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[ 29/401] test_asyncore
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[ 30/401] test_atexit
+[ 31/401] test_audioop
+[ 32/401] test_augassign
+[ 33/401] test_base64
+[ 34/401] test_bastion
+[ 35/401] test_bigaddrspace
+[ 36/401] test_bigmem
+[ 37/401] test_binascii
+[ 38/401] test_binhex
+[ 39/401] test_binop
+[ 40/401] test_bisect
+[ 41/401] test_bool
+[ 42/401] test_bsddb
+test_bsddb skipped -- No module named _bsddb
+[ 43/401] test_bsddb185
+test_bsddb185 skipped -- No module named bsddb185
+[ 44/401] test_bsddb3
+test_bsddb3 skipped -- No module named _bsddb
+[ 45/401] test_buffer
+[ 46/401] test_bufio
+[ 47/401] test_bytes
+[ 48/401] test_bz2
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[ 49/401] test_calendar
+[ 50/401] test_call
+[ 51/401] test_capi
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[ 52/401] test_cd
+test_cd skipped -- No module named cd
+[ 53/401] test_cfgparser
+[ 54/401] test_cgi
+[ 55/401] test_charmapcodec
+[ 56/401] test_cl
+test_cl skipped -- No module named cl
+[ 57/401] test_class
+[ 58/401] test_cmath
+[ 59/401] test_cmd
+[ 60/401] test_cmd_line
+[ 61/401] test_cmd_line_script
+[ 62/401] test_code
+[ 63/401] test_codeccallbacks
+[ 64/401] test_codecencodings_cn
+[ 65/401] test_codecencodings_hk
+[ 66/401] test_codecencodings_iso2022
+[ 67/401] test_codecencodings_jp
+[ 68/401] test_codecencodings_kr
+[ 69/401] test_codecencodings_tw
+[ 70/401] test_codecmaps_cn
+test_codecmaps_cn skipped -- Use of the `urlfetch' resource not enabled
+[ 71/401] test_codecmaps_hk
+test_codecmaps_hk skipped -- Use of the `urlfetch' resource not enabled
+[ 72/401] test_codecmaps_jp
+test_codecmaps_jp skipped -- Use of the `urlfetch' resource not enabled
+[ 73/401] test_codecmaps_kr
+test_codecmaps_kr skipped -- Use of the `urlfetch' resource not enabled
+[ 74/401] test_codecmaps_tw
+test_codecmaps_tw skipped -- Use of the `urlfetch' resource not enabled
+[ 75/401] test_codecs
+[ 76/401] test_codeop
+[ 77/401] test_coercion
+[ 78/401] test_collections
+[ 79/401] test_colorsys
+[ 80/401] test_commands
+[ 81/401] test_compare
+[ 82/401] test_compile
+[ 83/401] test_compileall
+[ 84/401] test_compiler
+[ 85/401] test_complex
+[ 86/401] test_complex_args
+[ 87/401] test_contains
+[ 88/401] test_contextlib
+[ 89/401] test_cookie
+[ 90/401] test_cookielib
+[ 91/401] test_copy
+[ 92/401] test_copy_reg
+[ 93/401] test_cpickle
+[ 94/401] test_cprofile
+[ 95/401] test_crypt
+[ 96/401] test_csv
+[ 97/401] test_ctypes
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[ 98/401] test_curses
+test_curses skipped -- Use of the `curses' resource not enabled
+[ 99/401] test_datetime
+[100/401] test_dbm
+[101/401] test_decimal
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[102/401] test_decorators
+[103/401] test_defaultdict
+[104/401] test_deque
+[105/401] test_descr
+[106/401] test_descrtut
+[107/401] test_dictcomps
+[108/401] test_dictviews
+[109/401] test_difflib
+[110/401] test_dircache
+[111/401] test_dis
+[112/401] test_distutils
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/distutils/command/build_ext.py:686: DeprecationWarning: apply() not supported in 3.x; use func(*args, **kwargs)
+  path = apply(os.path.join, ext_path)
+test test_distutils failed -- multiple errors occurred; run in verbose mode for details
+[113/401/1] test_dl
+test_dl skipped -- No module named dl
+[114/401/1] test_docxmlrpc
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[115/401/1] test_dumbdbm
+[116/401/1] test_dummy_thread
+[117/401/1] test_dummy_threading
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[118/401/1] test_email
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[119/401/1] test_email_codecs
+[120/401/1] test_email_renamed
+[121/401/1] test_ensurepip
+[122/401/1] test_enumerate
+[123/401/1] test_eof
+[124/401/1] test_epoll
+[125/401/1] test_errno
+[126/401/1] test_exception_variations
+[127/401/1] test_extcall
+[128/401/1] test_fcntl
+[129/401/1] test_file
+[130/401/1] test_file2k
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[131/401/1] test_file_eintr
+[132/401/1] test_filecmp
+[133/401/1] test_fileinput
+[134/401/1] test_fileio
+[135/401/1] test_float
+[136/401/1] test_fnmatch
+[137/401/1] test_fork1
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[138/401/1] test_format
+[139/401/1] test_fpformat
+[140/401/1] test_fractions
+[141/401/1] test_frozen
+[142/401/1] test_ftplib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[143/401/1] test_funcattrs
+[144/401/1] test_functools
+[145/401/1] test_future
+[146/401/1] test_future3
+[147/401/1] test_future4
+[148/401/1] test_future5
+[149/401/1] test_future_builtins
+[150/401/1] test_gc
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[151/401/1] test_gdb
+test_gdb skipped -- Couldn't find gdb on the path
+[152/401/1] test_gdbm
+test_gdbm skipped -- No module named gdbm
+[153/401/1] test_generators
+[154/401/1] test_genericpath
+[155/401/1] test_genexps
+[156/401/1] test_getargs
+[157/401/1] test_getargs2
+[158/401/1] test_getopt
+[159/401/1] test_gettext
+[160/401/1] test_gl
+test_gl skipped -- No module named gl
+[161/401/1] test_glob
+[162/401/1] test_global
+[163/401/1] test_grp
+[164/401/1] test_gzip
+[165/401/1] test_hash
+[166/401/1] test_hashlib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[167/401/1] test_heapq
+[168/401/1] test_hmac
+[169/401/1] test_hotshot
+[170/401/1] test_htmllib
+[171/401/1] test_htmlparser
+[172/401/1] test_httplib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[173/401/1] test_httpservers
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[174/401/1] test_idle
+test_idle skipped -- No module named _tkinter
+[175/401/1] test_imageop
+test_imageop skipped -- No module named imageop
+[176/401/1] test_imaplib
+[177/401/1] test_imgfile
+test_imgfile skipped -- No module named imgfile
+[178/401/1] test_imghdr
+[179/401/1] test_imp
+[180/401/1] test_import
+Warning -- sys.path was modified by test_import
+[181/401/1] test_importhooks
+[182/401/1] test_importlib
+[183/401/1] test_index
+[184/401/1] test_inspect
+[185/401/1] test_int
+[186/401/1] test_int_literal
+[187/401/1] test_io
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[188/401/1] test_ioctl
+[189/401/1] test_isinstance
+[190/401/1] test_iter
+[191/401/1] test_iterlen
+[192/401/1] test_itertools
+[193/401/1] test_json
+[194/401/1] test_kqueue
+test_kqueue skipped -- test works only on BSD
+[195/401/1] test_largefile
+[196/401/1] test_lib2to3
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+No differences encountered
+[197/401/1] test_linecache
+[198/401/1] test_linuxaudiodev
+test_linuxaudiodev skipped -- Use of the `audio' resource not enabled
+[199/401/1] test_list
+[200/401/1] test_locale
+[201/401/1] test_logging
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[202/401/1] test_long
+[203/401/1] test_long_future
+[204/401/1] test_longexp
+[205/401/1] test_macos
+test_macos skipped -- No module named MacOS
+[206/401/1] test_macostools
+test_macostools skipped -- No module named MacOS
+[207/401/1] test_macpath
+[208/401/1] test_macurl2path
+[209/401/1] test_mailbox
+[210/401/1] test_marshal
+[211/401/1] test_math
+[212/401/1] test_md5
+[213/401/1] test_memoryio
+[214/401/1] test_memoryview
+[215/401/1] test_mhlib
+[216/401/1] test_mimetools
+[217/401/1] test_mimetypes
+[218/401/1] test_minidom
+[219/401/1] test_mmap
+[220/401/1] test_module
+[221/401/1] test_modulefinder
+[222/401/1] test_msilib
+test_msilib skipped -- No module named _msi
+[223/401/1] test_multibytecodec
+[224/401/1] test_multibytecodec_support
+[225/401/1] test_multifile
+[226/401/1] test_multiprocessing
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[227/401/1] test_mutants
+[228/401/1] test_mutex
+[229/401/1] test_netrc
+[230/401/1] test_new
+[231/401/1] test_nis
+[232/401/1] test_nntplib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[233/401/1] test_normalization
+[234/401/1] test_ntpath
+[235/401/1] test_old_mailbox
+[236/401/1] test_openpty
+[237/401/1] test_operator
+[238/401/1] test_optparse
+[239/401/1] test_ordered_dict
+[240/401/1] test_os
+[241/401/1] test_ossaudiodev
+test_ossaudiodev skipped -- Use of the `audio' resource not enabled
+[242/401/1] test_parser
+[243/401/1] test_pdb
+[244/401/1] test_peepholer
+[245/401/1] test_pep247
+[246/401/1] test_pep277
+test_pep277 skipped -- only NT+ and systems with Unicode-friendly filesystem encoding
+[247/401/1] test_pep352
+[248/401/1] test_pickle
+[249/401/1] test_pickletools
+[250/401/1] test_pipes
+[251/401/1] test_pkg
+[252/401/1] test_pkgimport
+[253/401/1] test_pkgutil
+[254/401/1] test_platform
+[255/401/1] test_plistlib
+[256/401/1] test_poll
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[257/401/1] test_popen
+[258/401/1] test_popen2
+[259/401/1] test_poplib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[260/401/1] test_posix
+[261/401/1] test_posixpath
+[262/401/1] test_pow
+[263/401/1] test_pprint
+[264/401/1] test_print
+[265/401/1] test_profile
+[266/401/1] test_property
+[267/401/1] test_pstats
+[268/401/1] test_pty
+[269/401/1] test_pwd
+[270/401/1] test_py3kwarn
+[271/401/1] test_py_compile
+[272/401/1] test_pyclbr
+[273/401/1] test_pydoc
+[274/401/1] test_pyexpat
+[275/401/1] test_queue
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[276/401/1] test_quopri
+[277/401/1] test_random
+[278/401/1] test_re
+[279/401/1] test_readline
+[280/401/1] test_repr
+[281/401/1] test_resource
+[282/401/1] test_rfc822
+[283/401/1] test_richcmp
+[284/401/1] test_rlcompleter
+[285/401/1] test_robotparser
+[286/401/1] test_runpy
+[287/401/1] test_sax
+[288/401/1] test_scope
+[289/401/1] test_scriptpackages
+test_scriptpackages skipped -- No module named aetools
+[290/401/1] test_select
+[291/401/1] test_set
+[292/401/1] test_setcomps
+[293/401/1] test_sets
+[294/401/1] test_sgmllib
+[295/401/1] test_sha
+[296/401/1] test_shelve
+[297/401/1] test_shlex
+[298/401/1] test_shutil
+[299/401/1] test_signal
+[300/401/1] test_site
+[301/401/1] test_slice
+[302/401/1] test_smtplib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[303/401/1] test_smtpnet
+test_smtpnet skipped -- Use of the `network' resource not enabled
+[304/401/1] test_socket
+[305/401/1] test_socketserver
+test_socketserver skipped -- Use of the `network' resource not enabled
+[306/401/1] test_softspace
+[307/401/1] test_sort
+[308/401/1] test_source_encoding
+[309/401/1] test_spwd
+[310/401/1] test_sqlite
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[311/401/1] test_ssl
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[312/401/1] test_startfile
+test_startfile skipped -- module os has no attribute startfile
+[313/401/1] test_stat
+[314/401/1] test_str
+[315/401/1] test_strftime
+[316/401/1] test_string
+[317/401/1] test_stringprep
+[318/401/1] test_strop
+[319/401/1] test_strptime
+[320/401/1] test_strtod
+[321/401/1] test_struct
+[322/401/1] test_structmembers
+[323/401/1] test_structseq
+[324/401/1] test_subprocess
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[325/401/1] test_sunau
+[326/401/1] test_sunaudiodev
+test_sunaudiodev skipped -- no audio device found!
+[327/401/1] test_sundry
+[328/401/1] test_symtable
+[329/401/1] test_syntax
+[330/401/1] test_sys
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[331/401/1] test_sys_setprofile
+[332/401/1] test_sys_settrace
+[333/401/1] test_sysconfig
+[334/401/1] test_tarfile
+[335/401/1] test_tcl
+test_tcl skipped -- No module named _tkinter
+[336/401/1] test_telnetlib
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[337/401/1] test_tempfile
+[338/401/1] test_textwrap
+[339/401/1] test_thread
+[340/401/1] test_threaded_import
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[341/401/1] test_threadedtempfile
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[342/401/1] test_threading
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[343/401/1] test_threading_local
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[344/401/1] test_threadsignals
+[345/401/1] test_time
+[346/401/1] test_timeit
+[347/401/1] test_timeout
+test_timeout skipped -- Use of the `network' resource not enabled
+[348/401/1] test_tk
+test_tk skipped -- No module named _tkinter
+[349/401/1] test_tokenize
+[350/401/1] test_tools
+recursedown('@test_22745_tmp')
+[351/401/1] test_trace
+[352/401/1] test_traceback
+[353/401/1] test_transformer
+[354/401/1] test_ttk_guionly
+test_ttk_guionly skipped -- No module named _tkinter
+[355/401/1] test_ttk_textonly
+test_ttk_textonly skipped -- No module named _tkinter
+[356/401/1] test_tuple
+[357/401/1] test_turtle
+test_turtle skipped -- No module named _tkinter
+[358/401/1] test_typechecks
+[359/401/1] test_ucn
+[360/401/1] test_unary
+[361/401/1] test_undocumented_details
+[362/401/1] test_unicode
+[363/401/1] test_unicode_file
+test_unicode_file skipped -- No Unicode filesystem semantics on this platform.
+[364/401/1] test_unicodedata
+[365/401/1] test_univnewlines
+[366/401/1] test_univnewlines2k
+[367/401/1] test_unpack
+[368/401/1] test_urllib
+[369/401/1] test_urllib2
+[370/401/1] test_urllib2_localnet
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[371/401/1] test_urllib2net
+test_urllib2net skipped -- Use of the `network' resource not enabled
+[372/401/1] test_urllibnet
+test_urllibnet skipped -- Use of the `network' resource not enabled
+[373/401/1] test_urlparse
+[374/401/1] test_userdict
+[375/401/1] test_userlist
+[376/401/1] test_userstring
+[377/401/1] test_uu
+[378/401/1] test_uuid
+[379/401/1] test_wait3
+[380/401/1] test_wait4
+[381/401/1] test_warnings
+[382/401/1] test_wave
+[383/401/1] test_weakref
+[384/401/1] test_weakset
+[385/401/1] test_whichdb
+[386/401/1] test_winreg
+test_winreg skipped -- No module named _winreg
+[387/401/1] test_winsound
+test_winsound skipped -- Use of the `audio' resource not enabled
+[388/401/1] test_with
+[389/401/1] test_wsgiref
+[390/401/1] test_xdrlib
+[391/401/1] test_xml_etree
+[392/401/1] test_xml_etree_c
+[393/401/1] test_xmllib
+[394/401/1] test_xmlrpc
+/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+[395/401/1] test_xpickle
+[396/401/1] test_xrange
+[397/401/1] test_zipfile
+[398/401/1] test_zipfile64
+test_zipfile64 skipped -- test requires loads of disk-space bytes and a long time to run
+[399/401/1] test_zipimport
+[400/401/1] test_zipimport_support
+[401/401/1] test_zlib
+354 tests OK.
+1 test failed:
+    test_distutils
+1 test altered the execution environment:
+    test_import
+45 tests skipped:
+    test_aepack test_al test_applesingle test_bsddb test_bsddb185
+    test_bsddb3 test_cd test_cl test_codecmaps_cn test_codecmaps_hk
+    test_codecmaps_jp test_codecmaps_kr test_codecmaps_tw test_curses
+    test_dl test_gdb test_gdbm test_gl test_idle test_imageop
+    test_imgfile test_kqueue test_linuxaudiodev test_macos
+    test_macostools test_msilib test_ossaudiodev test_pep277
+    test_scriptpackages test_smtpnet test_socketserver test_startfile
+    test_sunaudiodev test_tcl test_timeout test_tk test_ttk_guionly
+    test_ttk_textonly test_turtle test_unicode_file test_urllib2net
+    test_urllibnet test_winreg test_winsound test_zipfile64
+10 skips unexpected on sunos5:
+    test_bsddb3 test_dl test_gdb test_idle test_sunaudiodev test_tcl
+    test_tk test_ttk_guionly test_ttk_textonly test_turtle
+gmake: *** [Makefile:901: test] Error 1
