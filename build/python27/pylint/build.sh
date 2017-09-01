@@ -25,19 +25,16 @@
 # Use is subject to license terms.
 #
 # Load support functions
-. ../../lib/functions.sh
+. ../../../lib/functions.sh
 
+PKG=library/python-2/pylint-27
 PROG=pylint
-VER=1.7.1
+VER=1.7.2
 SUMMARY="python code static checker"
 DESC="$SUMMARY"
 
-# In the future when we upgrade python again, be sure to wrap the following
-# around with set_python_version and reassign PKG and RUN_DEPENDS_IPS.
-# The only way buildctl detects packages is by grepping for PKG assignment.
-XFORM_ARGS="-D PYTHONPKGVER=$PYTHONPKGVER"
-PKG=library/python-2/pylint-27
-RUN_DEPENDS_IPS="runtime/python-27"
+. $SRCDIR/../common.sh
+
 init
 download_source $PROG $PROG $VER
 patch_source
