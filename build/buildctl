@@ -19,22 +19,22 @@ declare -A fulltargets
 declare -A already_built
 
 add_target() {
-	local pkg=$1
-	local build=$2
-	[[ -n ${fulltargets[$pkg]} ]] && \
-	    logerr "Target $pkg specified by ${fulltargets[$pkg]} and $build."
-	fulltargets+=([$pkg]=$build)
+    local pkg=$1
+    local build=$2
+    [[ -n ${fulltargets[$pkg]} ]] && \
+        logerr "Target $pkg specified by ${fulltargets[$pkg]} and $build."
+    fulltargets+=([$pkg]=$build)
 
-	#
-	# Repeatedly strip off leading components to generate all valid
-	# names for this package. If more than one package has the same
-	# abbreviated name, the first one wins.
-	#
-	[[ -n ${targets[$pkg]} ]] || targets+=([$pkg]=$build)
-	while [[ $pkg =~ '/' ]]; do
-		pkg=${pkg#*/}
-		[[ -n ${targets[$pkg]} ]] || targets+=([$pkg]=$build)
-	done
+    #
+    # Repeatedly strip off leading components to generate all valid
+    # names for this package. If more than one package has the same
+    # abbreviated name, the first one wins.
+    #
+    [[ -n ${targets[$pkg]} ]] || targets+=([$pkg]=$build)
+    while [[ $pkg =~ '/' ]]; do
+        pkg=${pkg#*/}
+        [[ -n ${targets[$pkg]} ]] || targets+=([$pkg]=$build)
+    done
 }
 
 declare -A licenses
@@ -54,7 +54,7 @@ for build in `find . -name build\*.sh | cut -c3-`; do
             TCNT=$(($TCNT + 1))
             print -f "."
         else
-		add_target $PKG $build
+            add_target $PKG $build
         fi
     done
 done
@@ -97,16 +97,20 @@ buildorder() {
     done
 }
 
-list() {
+list_backend() {
     PAT=${1-.}
     for target in "${!fulltargets[@]}"
     do
         if [[ "$PAT" = "." ]]; then
-            echo " * $target"
+            echo $target
         elif [[ -n $(echo "$target" | grep "$PAT") ]]; then
-            echo " * $target"
+            echo $target
         fi
     done | sort
+}
+
+list() {
+    list_backend "${1-.}" | sed 's/^/ * /'
 }
 
 list_build() {
@@ -122,8 +126,8 @@ list_build() {
 }
 
 record_built() {
-	already_built+=([$1]=1)
-	echo $1 >> "$BUILT_CACHE"
+    already_built+=([$1]=1)
+    echo $1 >> "$BUILT_CACHE"
 }
 
 clear_built() {
@@ -160,10 +164,10 @@ build() {
         bail "Unknown package: $1"
     fi
     if [[ "${already_built[$1]}" = "1" ]]; then
-	logmsg "--- Package $1 was already built."
+        logmsg "--- Package $1 was already built."
     else
-    DIR=$(dirname ${targets[$1]})
-    pushd $DIR > /dev/null || bail "Cannot chdir to $DIR"
+        DIR=$(dirname ${targets[$1]})
+        pushd $DIR > /dev/null || bail "Cannot chdir to $DIR"
         PKGSRVR=$DEFAULT_PKGSRVR
         PKGPUBLISHER=$DEFAULT_PKGPUBLISHER
         PKGROOT=`pwd`/root
@@ -202,7 +206,7 @@ build() {
                 logerr "Unable to run $SCRIPT"
             built_packages_sh $SCRIPT
         fi
-    popd >/dev/null
+        popd >/dev/null
     fi
 }
 
@@ -244,69 +248,72 @@ fi
 
 case "$1" in
     list)
-	list $2
-	exit
-	;;
+        list $2
+        exit
+        ;;
 
     list-build)
-	list_build $2
-	exit
-	;;
+        list_build $2
+        exit
+        ;;
 
     licenses)
-	licenses
-	exit
-	;;
+        licenses
+        exit
+        ;;
 
     build)
-	shift
-	tobuild="$*"
+        shift
+        tobuild="$*"
 
-    skipuntil=
-    if [ "$tobuild" = "continue" ]; then
-		tobuild=all
-        restore_built
-	elif [[ "$tobuild" = from\ * ]]; then
-		skipuntil=${tobuild#from }
-		tobuild=all
-        restore_built
-    elif [ -z "$tobuild" -o "$tobuild" = all ]; then
-        if [ -f "$BUILT_CACHE" -a -z "$BATCH" ]; then
-            ask_to_continue_ "" \
-              "Built package cache will be cleared, continue?" "y/n" "[yYnN]"
-            [ "$REPLY" == "y" -o "$REPLY" == "Y" ] || exit 1
+        skipuntil=
+        if [ "$tobuild" = "continue" ]; then
+            tobuild=all
+            restore_built
+        elif [[ "$tobuild" = from\ * ]]; then
+            skipuntil=${tobuild#from }
+            tobuild=all
+            restore_built
+        elif [ -z "$tobuild" -o "$tobuild" = all ]; then
+            if [ -f "$BUILT_CACHE" -a -z "$BATCH" ]; then
+                ask_to_continue_ "" \
+                  "Built package cache will be cleared, continue?" \
+                  "y/n" "[yYnN]"
+                [ "$REPLY" == "y" -o "$REPLY" == "Y" ] || exit 1
+            fi
+            clear_built
         fi
-        clear_built
-	fi
 
-	if [ -z "$tobuild" ] || [ "$tobuild" == "all" ]; then
-		batch_flag="-b"
+        if [ -z "$tobuild" ] || [ "$tobuild" == "all" ]; then
+            batch_flag="-b"
 
-		pkgcount=${#fulltargets[@]}
-		pkgnum=0
-        for tgt in `buildorder`; do
-			((pkgnum = pkgnum + 1))
+            pkgcount=${#fulltargets[@]}
+            pkgnum=0
+            for tgt in `buildorder`; do
+                ((pkgnum = pkgnum + 1))
 
-			[ -n "$skipuntil" -a "$skipuntil" != $tgt ] \
-			    && continue || skipuntil=
+                [ -n "$skipuntil" -a "$skipuntil" != $tgt ] \
+                    && continue || skipuntil=
 
-			echo "\n"
-			echo "***********"
-			echo "*********** ($pkgnum/$pkgcount) Building $tgt"
-			echo "***********\n"
-			build $tgt
-		done
-	else
-		for tgt in $tobuild; do
-			build $tgt
-		done
-	fi
+                echo "\n"
+                echo "***********"
+                echo "*********** ($pkgnum/$pkgcount) Building $tgt"
+                echo "***********\n"
+                build $tgt
+            done
+        else
+            for tgtpatt in $tobuild; do
+                for tgt in `list_backend "$tgtpatt"`; do
+                    build $tgt
+                done
+            done
+        fi
         exit
-	;;
+        ;;
 
     *)
-	usage
-	;;
+        usage
+        ;;
 esac
 
 # Vim hints
