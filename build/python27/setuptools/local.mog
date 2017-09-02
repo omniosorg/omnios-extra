@@ -1,0 +1,7 @@
+license files/PSL license=Python
+license files/ZPL license=ZPL
+
+<transform file path=usr/lib -> set pkg.depend.bypass-generate .*>
+<transform file dir path=usr/bin -> \
+    edit path usr/bin usr/lib/python$(PYTHONVER)/bin >
+

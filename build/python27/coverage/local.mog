@@ -1,0 +1,6 @@
+license PKG-INFO license=BSD
+
+<transform file path=usr/bin -> set pkg.depend.bypass-generate .* >
+<transform file path=usr/bin \
+    -> edit path usr/bin usr/lib/python$(PYTHONVER)/bin>
+

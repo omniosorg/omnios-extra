@@ -81,4 +81,33 @@
 | system/virtualization/open-vm-tools	| 9.4.0			| https://sourceforge.net/projects/open-vm-tools/ | Stuck on 9.4.0
 | developer/swig			| 2.0.12		| http://www.swig.org/download.html | Stuck on 2.0.12 (3.0.x breaks M2Crypto, among other things)
 | library/security/trousers		| 0.3.8			| https://sourceforge.net/projects/trousers/ | Stuck on 0.3.8 (no idea wht)
+| library/python-2/asn1crypto-27	| 0.22.0		| https://pypi.python.org/pypi/asn1crypto
+| library/python-2/cffi-27		| 1.10.0		| https://pypi.python.org/pypi/cffi
+| library/python-2/cheroot-27		| 5.8.3			| https://pypi.python.org/pypi/cheroot
+| library/python-2/cherrypy-27		| 11.0.0		| https://pypi.python.org/pypi/cherrypy
+| library/python-2/coverage-27		| 4.4.1			| https://pypi.python.org/pypi/coverage
+| library/python-2/cryptography-27	| 2.0.3			| https://pypi.python.org/pypi/cryptography
+| library/python-2/enum-27		| 0.4.6			| https://pypi.python.org/pypi/enum
+| library/python-2/functools32-27	| 3.2.3-2		| https://pypi.python.org/pypi/functools32
+| library/python-2/idna-27		| 2.6			| https://pypi.python.org/pypi/idna
+| library/python-2/ipaddress-27		| 1.0.18		| https://pypi.python.org/pypi/ipaddress
+| library/python-2/jsonrpclib-27	| 0.1.7			| https://pypi.python.org/pypi/jsonrpclib
+| library/python-2/jsonschema-27	| 2.6.0			| https://pypi.python.org/pypi/jsonschema
+| library/python-2/lxml-27		| 3.8.0			| https://pypi.python.org/pypi/lxml/
+| library/python-2/m2crypto-27		| 0.26.0		| https://pypi.python.org/pypi/M2Crypto
+| library/python-2/mako-27		| 1.0.7			| https://pypi.python.org/pypi/Mako
+| library/python-2/numpy-27		| 1.13.1		| https://pypi.python.org/pypi/numpy
+| library/python-2/ply-27		| 3.10			| https://pypi.python.org/pypi/ply
+| library/python-2/portend-27		| 2.1.2			| https://pypi.python.org/pypi/portend
+| library/python-2/pybonjour-27		| 1.1.1			| https://pypi.python.org/pypi/pybonjour
+| library/python-2/pycurl-27		| 7.43.0		| https://pypi.python.org/pypi/pycurl
+| library/python-2/pylint-27		| 1.7.2			| https://pypi.python.org/pypi/pylint
+| library/python-2/pyopenssl-27		| 17.2.0		| https://pypi.python.org/pypi/pyOpenSSL
+| library/python-2/pyrex-27		| 0.9.9			| http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
+| library/python-2/pytz-27		| 2017.2		| https://pypi.python.org/pypi/pytz
+| library/python-2/setuptools-27	| 36.3.0		| https://pypi.python.org/pypi/setuptools
+| library/python-2/simplejson-27	| 3.11.1		| https://pypi.python.org/pypi/simplejson
+| library/python-2/six-27		| 1.10.0		| https://pypi.python.org/pypi/six
+| library/python-2/tempora-27		| 1.9			| https://pypi.python.org/pypi/tempora
+| library/python-2/typing-27		| 3.6.2			| https://pypi.python.org/pypi/typing
 

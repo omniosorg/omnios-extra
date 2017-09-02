@@ -1,6 +1,0 @@
-license files/PSL license=Python
-license files/ZPL license=ZPL
-
-# Prevents pkgdepend from freaking out.
-<transform file path=usr/lib/python$(PYTHONVER)/vendor-packages/easy_install -> set pkg.depend.bypass-generate .*>
-<transform file path=usr/lib/python$(PYTHONVER)/vendor-packages/easy_install-$(PYTHONVER) -> set pkg.depend.bypass-generate .*>

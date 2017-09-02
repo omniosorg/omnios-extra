@@ -1,0 +1,5 @@
+license LICENSE.txt license=Apache2
+
+<transform file path=usr/bin/pyrexc -> edit path pyrexc pyrexc2.7 >
+link path=usr/bin/pyrexc target=pyrexc2.7
+
