@@ -12,11 +12,8 @@ libtool: compile:  gcc -c -I../../include -I../.. -I. -I../.. "-D_PATH_SUDO_CONF
 libtool: link: gcc -o .libs/strsplit_test .libs/strsplit_test.o -Wl,-z -Wl,aslr -fstack-protector-strong -m64  ./.libs/libsudo_util.so -R/usr/lib/sudo/amd64/sudo
 libtool: compile:  gcc -c -I../../include -I../.. -I. -I../.. "-D_PATH_SUDO_CONF=\"/etc/sudo.conf\"" -D_FORTIFY_SOURCE=2 -fno-stack-protector -m64 -fvisibility=hidden -fstack-protector-strong ./regress/parse_gids/parse_gids_test.c  -fPIC -DPIC -o .libs/parse_gids_test.o
 libtool: link: gcc -o .libs/parse_gids_test .libs/parse_gids_test.o -Wl,-z -Wl,aslr -fstack-protector-strong -m64  ./.libs/libsudo_util.so -R/usr/lib/sudo/amd64/sudo
-libtool: compile:  gcc -c -I../../include -I../.. -I. -I../.. "-D_PATH_SUDO_CONF=\"/etc/sudo.conf\"" -D_FORTIFY_SOURCE=2 -fno-stack-protector -m64 -fvisibility=hidden -fstack-protector-strong ./regress/fnmatch/fnm_test.c  -fPIC -DPIC -o .libs/fnm_test.o
-libtool: link: gcc -o .libs/fnm_test .libs/fnm_test.o -Wl,-z -Wl,aslr -fstack-protector-strong -m64  ./.libs/libsudo_util.so -R/usr/lib/sudo/amd64/sudo
 parse_gids_test: 6 tests run, 0 errors, 100% success rate
 strsplit_test: 29 tests run, 0 errors, 100% success rate
-fnmatch: 6 tests run, 0 errors, 100% success rate
 atofoo_test: 23 tests run, 0 errors, 100% success rate
 hltq_test: 19 tests run, 0 errors, 100% success rate
 sudo_conf/test1: OK
@@ -142,7 +139,7 @@ visudo/test9: OK
 visudo: 13/13 tests passed; 0/13 tests failed
 libtool: link: gcc -o .libs/check_ttyname check_ttyname.o ttyname.o -m64 -Wl,-z -Wl,aslr -fstack-protector-strong  ../lib/util/.libs/libsudo_util.so -R/usr/lib/sudo/amd64/sudo
 libtool: link: gcc -o .libs/check_noexec check_noexec.o exec_common.o -m64 -Wl,-z -Wl,aslr -fstack-protector-strong  ../lib/util/.libs/libsudo_util.so -R/usr/lib/sudo/amd64/sudo
-check_ttyname: OK (/dev/pts/13)
+check_ttyname: OK (/dev/pts/1)
 check_noexec: OK (execl)
 check_noexec: OK (system)
 check_noexec: OK (wordexp) [2]
