@@ -68,6 +68,7 @@ CONFIGURE_OPTS="\
 	--with-mpfr=$OPT \
 	--with-mpc=$OPT \
 	--enable-languages=c,c++,fortran,lto \
+	--enable-__cxa_atexit \
 	--without-gnu-ld --with-ld=/bin/ld \
 	--with-as=/usr/bin/gas --with-gnu-as \
 	--with-build-time-tools=/usr/gnu/i386-pc-solaris2.11/bin"

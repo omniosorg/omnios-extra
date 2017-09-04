@@ -1,5 +1,5 @@
 built.cache
 build.log
-build.log.1
+build.log.*
 tmp.repo/
 *.p5m.final
