@@ -36,6 +36,8 @@ PKG=system/library/g++-5-runtime
 SUMMARY="g++ runtime dependencies libstc++/libssp"
 DESC="$SUMMARY"
 
+LOGFILE+=".$PROG"
+
 PATH=$OPT/bin:$PATH
 export LD_LIBRARY_PATH=$OPT/lib
 

@@ -36,6 +36,8 @@ PKG=system/library/gcc-5-runtime
 SUMMARY="gcc $VER runtime"
 DESC="$SUMMARY"
 
+LOGFILE+=".$PROG"
+
 PATH=$OPT/bin:$PATH
 export LD_LIBRARY_PATH=$OPT/lib
 

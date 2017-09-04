@@ -39,6 +39,8 @@ PKG=developer/gcc5/libgmp-gcc5
 SUMMARY="$PKGV - private libgmp"
 DESC="$SUMMARY" # Longer description
 
+LOGFILE+=".$PROG"
+
 # This stuff is in its own domain
 PKGPREFIX=""
 

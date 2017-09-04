@@ -36,6 +36,8 @@ PKG=developer/gcc5/libmpc-gcc5
 SUMMARY="$PKGV - private libmpc"
 DESC="$SUMMARY"
 
+LOGFILE+=".$PROG"
+
 DEPENDS_IPS="developer/$PKGV/libgmp-$PKGV developer/$PKGV/libmpfr-$PKGV"
 
 # This stuff is in its own domain

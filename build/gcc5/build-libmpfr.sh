@@ -37,6 +37,8 @@ SUMMARY="$PKGV - private libmpfr"
 DESC="$SUMMARY"
 DEPENDS_IPS="developer/$PKGV/libgmp-$PKGV"
 
+LOGFILE+=".$PROG"
+
 # This stuff is in its own domain
 PKGPREFIX=""
 
