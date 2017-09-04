@@ -9,19 +9,19 @@ if [ "${BATCH}" = 1 ]; then
 fi
 . ../lib/functions.sh
 
-[ "${1}" == "licenses" ] && AUDIT_LICENSE=1
-
-# targets maps any valid package name to its build script.
+# targets maps any valid package name to its full package name.
 declare -A targets
 # fulltargets maps full package names to their build script.
 declare -A fulltargets
 # list of packages already built.
 declare -A already_built
+# list of licenses
+declare -A licenses
 
 add_target() {
     local pkg=$1
     local build=$2
-    [[ -n ${fulltargets[$pkg]} ]] && \
+    [ -n "${fulltargets[$pkg]}" ] && \
         logerr "Target $pkg specified by ${fulltargets[$pkg]} and $build."
     fulltargets+=([$pkg]=$build)
 
@@ -30,42 +30,77 @@ add_target() {
     # names for this package. If more than one package has the same
     # abbreviated name, the first one wins.
     #
-    [[ -n ${targets[$pkg]} ]] || targets+=([$pkg]=$build)
+    fpkg=$pkg
+    [ -n "${targets[$pkg]}" ] || targets+=([$pkg]=$fpkg)
     while [[ $pkg =~ '/' ]]; do
         pkg=${pkg#*/}
-        [[ -n ${targets[$pkg]} ]] || targets+=([$pkg]=$build)
+        [ -n "${targets[$pkg]}" ] || targets+=([$pkg]=$fpkg)
     done
 }
 
-declare -A licenses
-TCNT=0
-for build in `find . -name build\*.sh | cut -c3-`; do
-    for PKG in $(grep -v '##IGNORE##' $build | sed -e 's/^ +//' -e 's/ +#.+//' -e 's/=/ /g' -e 's/^.+make_package/make_package/g' | awk '{if($1=="PKG"){PKG=$2; print $2;} if($1=="make_package"){print PKG"="$2;}}')
-    do
-        if [ -n "`echo ${PKG} | grep '.='`" ] ; then
-            [ -z "${AUDIT_LICENSE}" ] && continue
-            MOG=`echo ${PKG} | sed -e 's/^.*=//'`
-            PKG=`echo ${PKG} | sed -e 's/=.*$//'`
-            LOCALMOG=`echo ${build} | sed -e 's:/.*$:/local.mog:'`
+extract_manifest_name() {
+        nawk '/^set name=pkg.fmri/ {print $3}' $1 | sed -e '
+            s/value=//
+            s:.*//[^/]*/::g
+            s/@.*//
+        '
+}
+
+add_manifests() {
+    for manifest in `find . -name \*.p5m | cut -c3-`; do
+        for PKG in `extract_manifest_name $manifest`; do
+            add_target $PKG $manifest
+        done
+    done
+}
+
+extract_pkgs() {
+    grep 'PKG=' $1 | grep -v '##IGNORE##' | sed -e '
+        s/^ +//
+        s/ +#.+//
+        s/=/ /g
+    ' | nawk '$1 == "PKG" { print $2 }'
+}
+
+add_buildscripts() {
+    for build in `find . -name build\*.sh | cut -c3-`; do
+        for PKG in `extract_pkgs $build`; do
+            add_target $PKG $build
+        done
+    done
+}
+
+add_targets() {
+    add_manifests
+    add_buildscripts
+}
+
+detect_licenses() {
+    for build in `find . -name build\*.sh | cut -c3-`; do
+        for PKG in $(grep -v '##IGNORE##' $build | \
+            sed -e '
+                s/^ +//
+                s/ +#.+//
+                s/=/ /g
+                s/^.+make_package/make_package/g
+      ' | nawk '
+            $1 == "PKG" { PKG=$2 }
+            $1 == "make_package" { print PKG"="$2 }
+      '); do
+            MOG=${PKG#*=}
+            PKG=${PKG%=*}
+            LOCALMOG="`dirname $build`/local.mog"
             [ -f $MOG ] || MOG=""
             [ -f $LOCALMOG ] || LOCALMOG=""
-            LICENSE=`nawk -F "[ =]" '/"/{gsub("\"", "")} /^license/ {print $3;}' $MOG $LOCALMOG /dev/null | xargs`
+            LICENSE=`nawk '
+                /"/ { gsub("\"", "") }
+                /^license/ { print $3 }
+                ' $MOG $LOCALMOG /dev/null | xargs`
             licenses+=([$PKG]=$LICENSE)
-            TCNT=$(($TCNT + 1))
             print -f "."
-        else
-            add_target $PKG $build
-        fi
+        done
     done
-done
-[ -n "${AUDIT_LICENSE}" ] && echo
-
-for manifest in `find . -name \*.p5m | cut -c3-`; do
-    for PKG in $(awk '/^set name=pkg.fmri/ {print $3;}' $manifest | sed -e 's/value=//' -e 's/.*\/\/[^\/]*\///g' -e 's/@.*//')
-    do
-        add_target $PKG $manifest
-    done
-done
+}
 
 : ${BUILT_CACHE:="`pwd`/built.cache"}
 
@@ -99,12 +134,11 @@ buildorder() {
 
 list_backend() {
     PAT=${1-.}
-    for target in "${!fulltargets[@]}"
-    do
-        if [[ "$PAT" = "." ]]; then
+    for target in "${!fulltargets[@]}"; do
+        if [ "$PAT" = "." ]; then
             echo $target
-        elif [[ -n $(echo "$target" | grep "$PAT") ]]; then
-            echo $target
+        else
+            echo "$target" | egrep "$PAT"
         fi
     done | sort
 }
@@ -117,10 +151,10 @@ list_build() {
     PAT=${1-.}
 
     buildorder | while read target; do
-        if [[ "$PAT" = "." ]]; then
+        if [ "$PAT" = "." ]; then
             echo " * $target"
-        elif [[ -n $(echo "$target" | grep "$PAT") ]]; then
-            echo " * $target"
+        else
+            echo "$target" | egrep "$PAT"
         fi
     done
 }
@@ -142,45 +176,49 @@ restore_built() {
 }
 
 built_packages_p5m() {
-    for PKG in $(awk '/^set name=pkg.fmri/ {print $3;}' $1 | sed -e 's/value=//' -e 's/.*\/\/[^\/]*\///g' -e 's/@.*//')
-    do
+    for PKG in `extract_manifest_name $1`; do
         record_built $PKG
     done
 }
 
 built_packages_sh() {
-    for PKG in $(grep -v '##IGNORE##' $1 | sed -e 's/^ +//' -e 's/ +#.+//' -e 's/=/ /g' -e 's/^.+make_package/make_package/g' | awk '{if($1=="PKG"){PKG=$2; print $2;} if($1=="make_package"){print PKG"="$2;}}')
-    do
-        if [ -n "`echo ${PKG} | grep '.='`" ]; then
-            echo "NOP" >/dev/null
-        else
-            record_built $PKG
-        fi
+    for PKG in `extract_pkgs $1`; do
+        record_built $PKG
     done
 }
 
 build() {
-    if [[ -z "${targets[$1]}" ]]; then
+    if [ -n "${fulltargets[$1]}" ]; then
+        buildtgt=$1
+    elif [ -n "${targets[$1]}" ]; then
+        buildtgt="${targets[$1]}"
+        logmsg "--- $1 -> $buildtgt"
+    else
         bail "Unknown package: $1"
     fi
-    if [[ "${already_built[$1]}" = "1" ]]; then
+    if [[ "${already_built[$buildtgt]}" = "1" ]]; then
         logmsg "--- Package $1 was already built."
     else
-        DIR=$(dirname ${targets[$1]})
+        BUILD=${fulltargets[$buildtgt]}
+        DIR="`dirname $BUILD`"
+        SCRIPT="`basename $BUILD`"
         pushd $DIR > /dev/null || bail "Cannot chdir to $DIR"
         PKGSRVR=$DEFAULT_PKGSRVR
         PKGPUBLISHER=$DEFAULT_PKGPUBLISHER
         PKGROOT=`pwd`/root
-        if [[ -f environment ]]; then
+        if [ -f environment ]; then
             logmsg "--- Setting new environment"
             . environment
         fi
-        SCRIPT=$(basename ${targets[$1]})
         if [[ "$SCRIPT" = *.p5m ]]; then
             init_repo
             echo "Found a manifest file. Preparing it for publishing."
-            sed -e "s/@PKGPUBLISHER@/$PKGPUBLISHER/g; s/@RELVER@/$RELVER/g; s/@PVER@/$PVER/g;" < $SCRIPT > $SCRIPT.final
-            if [[ -f root.tar.bz2 ]]; then
+            sed -e "
+                    s/@PKGPUBLISHER@/$PKGPUBLISHER/g
+                    s/@RELVER@/$RELVER/g
+                    s/@PVER@/$PVER/g
+                " < $SCRIPT > $SCRIPT.final
+            if [ -f root.tar.bz2 ]; then
                 echo "File archive found. Extracting..."
                 bzip2 -dc root.tar.bz2 | tar xf - || \
                     bail "Failed to extract root.tar.bz2"
@@ -188,13 +226,13 @@ build() {
                 pkgsend -s $PKGSRVR publish -d $PKGROOT $SCRIPT.final || \
                     bail "pkgsend failed"
                 rm -rf $PKGROOT
-            # In case we just have a tree of files and not a tarball
-            elif [[ -d $PKGROOT ]]; then
+            elif [ -d "$PKGROOT" ]; then
+                # In case we just have a tree of files and not a tarball
                 echo "Publishing from $SCRIPT.final"
                 pkgsend -s $PKGSRVR publish -d $PKGROOT $SCRIPT.final || \
                     bail "pkgsend failed"
-            # Else we just have a manifest to import
             else
+                # Else we just have a manifest to import
                 echo "Simple manifest to import... importing to $PKGSRVR"
                 pkgsend -s $PKGSRVR publish $SCRIPT.final || \
                     bail "pkgsend failed"
@@ -211,24 +249,22 @@ build() {
 }
 
 licenses() {
-    LCNT=0
+    detect_licenses
+    echo
     for target in "${!licenses[@]}"
     do
-        if [[ -n "${licenses[$target]}" ]]; then
+        if [ -n "${licenses[$target]}" ]; then
             echo " * $target     -> ${licenses[$target]}"
-            LCNT=$(($LCNT + 1))
         fi
     done | sort
-    if [ $LCNT -ne $TCNT ]; then
-        echo
-        echo "=== Packages missing license information ==="
-        for target in "${!licenses[@]}"
-        do
-            if [[ -z "${licenses[$target]}" ]]; then
-                echo " * $target"
-            fi
-        done | sort
-    fi
+    echo
+    echo "=== Packages missing license information ==="
+    for target in "${!licenses[@]}"
+    do
+        if [ -z "${licenses[$target]}" ]; then
+            echo " * $target"
+        fi
+    done | sort
 }
 
 DEFAULT_PKGSRVR=$PKGSRVR
@@ -248,11 +284,13 @@ fi
 
 case "$1" in
     list)
+        add_targets
         list $2
         exit
         ;;
 
     list-build)
+        add_targets
         list_build $2
         exit
         ;;
@@ -263,6 +301,7 @@ case "$1" in
         ;;
 
     build)
+        add_targets
         shift
         tobuild="$*"
 
@@ -295,18 +334,23 @@ case "$1" in
                 [ -n "$skipuntil" -a "$skipuntil" != $tgt ] \
                     && continue || skipuntil=
 
-                echo "\n"
-                echo "***********"
-                echo "*********** ($pkgnum/$pkgcount) Building $tgt"
-                echo "***********\n"
+                note "($pkgnum/$pkgcount) Building $tgt"
                 build $tgt
             done
         else
-            for tgtpatt in $tobuild; do
-                for tgt in `list_backend "$tgtpatt"`; do
+            if [[ $tobuild = *\** ]]; then
+                for tgtpatt in $tobuild; do
+                    for tgt in `list_backend "$tgtpatt"`; do
+                        note "Building $tgt"
+                        build $tgt
+                    done
+                done
+            else
+                for tgt in $tobuild; do
+                    note "Building $tgt"
                     build $tgt
                 done
-            done
+            fi
         fi
         exit
         ;;
