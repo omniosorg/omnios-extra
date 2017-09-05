@@ -2,3 +2,4 @@ gold-fallocate.patch
 x86ld64so.patch
 bfd_config.patch
 stdio-limit.diff
+CVE-2017-14129.patch
