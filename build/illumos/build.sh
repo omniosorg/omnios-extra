@@ -200,14 +200,10 @@ push_pkgs() {
 	-s debug.illumos=false,packages/i386/nightly-nd/repo.redist/ \
 	-s debug.illumos=true,packages/i386/nightly/repo.redist/
 
-    pkgrepo -s $STAGE_REPO info
-
     republish_packages $STAGE_REPO
 
     logmsg "Leaving $CODEMGR_WS"
     popd > /dev/null
-
-    pkgrepo -s $STAGE_REPO list > pkglist
 }
 
 init
