@@ -4,6 +4,20 @@
 
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](http://www.omniosce.org/setup/switch)
 
+## r151022q (2017-09-11)
+
+Weekly release for w/c 11th of September 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
+> This is a non-reboot update.
+
+### Security fixes
+
+* `gnu-binutils` fix for:
+  * [CVE-2017-14129](https://www.cvedetails.com/cve/CVE-2017-14129/)
+
+<br>
+
+----
+
 ## r151022o (2017-08-28)
 
 Weekly release for w/c 28th of August 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
