@@ -1,0 +1,4 @@
+license LICENCE license=CDDL
+
+link path=$(PREFIX)/bin/omni target=../omni/bin/omni
+
