@@ -112,18 +112,10 @@ package(){
     popd > /dev/null
 }
 
-cleanup(){
-    logmsg "--- cleaning up"
-    if [[ "$PKGSRVR" = file:* ]]; then
-        logcmd pkgrepo remove-publisher -s $PKGSRVR pkg5-localizable
-    fi
-}
-
 init
 clone_source
 build
 package
-cleanup
 
 # Vim hints
 # vim:ts=4:sw=4:et:
