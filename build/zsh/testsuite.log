@@ -1,16 +1,6 @@
 ./A01grammar.ztst: starting.
 This test hangs the shell when it fails...
-Test ./A01grammar.ztst failed: bad status 127, expected 0 from:
-  mkdir test_path_script
-  print "#!/bin/sh\necho Found the script." >test_path_script/myscript
-  chmod u+x test_path_script/myscript
-  path=($PWD/test_path_script $path)
-  export PATH
-  $ZTST_testdir/../Src/zsh -f -o pathscript myscript
-Error output:
-/data/omnios-build/omniosorg/_build/zsh-5.4.1/Test/../Src/zsh: can't open input file: myscript
-Was testing: PATHSCRIPT option
-./A01grammar.ztst: test failed.
+./A01grammar.ztst: all tests successful.
 ./A02alias.ztst: starting.
 This test hangs the shell when it fails...
 ./A02alias.ztst: all tests successful.
@@ -126,7 +116,5 @@ Test case skipped: multibyte not available for bindkey test
 ./Y03arguments.ztst: starting.
 ./Y03arguments.ztst: all tests successful.
 **************************************
-47 successful test scripts, 1 failure, 1 skipped
+48 successful test scripts, 0 failures, 1 skipped
 **************************************
-gmake[1]: *** [Makefile:188: check] Error 1
-gmake: *** [Makefile:263: test] Error 2
