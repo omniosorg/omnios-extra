@@ -1,6 +1,6 @@
 
 | Package | Version | Link | Notes |
-| ------- | ------- | ---- | ----- |
+| :------ | :------ | :--- | :---- |
 | archiver/gnu-tar			| 1.29			| http://savannah.gnu.org/news/?group=tar
 | compress/bzip2			| 1.0.6			| http://www.bzip.org/
 | compress/gzip				| 1.8			| http://savannah.gnu.org/news/?group=gzip
