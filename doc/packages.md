@@ -32,7 +32,7 @@
 | library/gmp				| 6.1.2			| https://gmplib.org/
 | library/idnkit			| 1.0			| https://jprs.co.jp/idn/index-e.html
 | library/libffi			| 3.2.1			| https://sourceware.org/libffi/
-| library/libxml2			| 2.9.4			| http://xmlsoft.org/news.html
+| library/libxml2			| 2.9.5			| http://xmlsoft.org/news.html
 | library/libxslt			| 1.1.30		| http://xmlsoft.org/libxslt/news.html
 | library/ncurses			| 6.0.20170722		| https://ftp.gnu.org/gnu/ncurses/ http://invisible-mirror.net/archives/ncurses/current/
 | library/nghttp2			| 1.25.0		| https://nghttp2.org/blog/

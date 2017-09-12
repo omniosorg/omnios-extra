@@ -10,6 +10,42 @@ Making all in xstc
 Making all in python
 Making all in .
 Making all in tests
+  CC       runtest.o
+  CCLD     runtest
+  CC       testrecurse.o
+  CCLD     testrecurse
+  CC       testapi.o
+testapi.c:18112:25: warning: 'gen_xmlSchematronPtr' defined but not used [-Wunused-function]
+ static xmlSchematronPtr gen_xmlSchematronPtr(int no ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+                         ^
+testapi.c:18115:13: warning: 'des_xmlSchematronPtr' defined but not used [-Wunused-function]
+ static void des_xmlSchematronPtr(int no ATTRIBUTE_UNUSED, xmlSchematronPtr val ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+             ^
+testapi.c:18132:35: warning: 'gen_xmlSchematronParserCtxtPtr' defined but not used [-Wunused-function]
+ static xmlSchematronParserCtxtPtr gen_xmlSchematronParserCtxtPtr(int no ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+                                   ^
+testapi.c:18135:13: warning: 'des_xmlSchematronParserCtxtPtr' defined but not used [-Wunused-function]
+ static void des_xmlSchematronParserCtxtPtr(int no ATTRIBUTE_UNUSED, xmlSchematronParserCtxtPtr val ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+             ^
+testapi.c:18630:18: warning: 'gen_const_xmlBufPtr' defined but not used [-Wunused-function]
+ static xmlBufPtr gen_const_xmlBufPtr(int no ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+                  ^
+testapi.c:18633:13: warning: 'des_const_xmlBufPtr' defined but not used [-Wunused-function]
+ static void des_const_xmlBufPtr(int no ATTRIBUTE_UNUSED, const xmlBufPtr val ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+             ^
+testapi.c:34629:27: warning: 'gen_xmlSAXHandlerPtr_ptr' defined but not used [-Wunused-function]
+ static xmlSAXHandlerPtr * gen_xmlSAXHandlerPtr_ptr(int no ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+                           ^
+testapi.c:34632:13: warning: 'des_xmlSAXHandlerPtr_ptr' defined but not used [-Wunused-function]
+ static void des_xmlSAXHandlerPtr_ptr(int no ATTRIBUTE_UNUSED, xmlSAXHandlerPtr * val ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+             ^
+  CCLD     testapi
+  CC       testchar.o
+  CCLD     testchar
+  CC       testdict.o
+  CCLD     testdict
+  CC       runxmlconf.o
+  CCLD     runxmlconf
 ## XML regression tests
 ## XML regression tests on memory
 ## XML entity subst regression tests
@@ -23,6 +59,7 @@ Making all in tests
 ## Walker regression tests
 ## SAX1 callbacks regression tests
 ## SAX2 callbacks regression tests
+## SAX2 callbacks regression tests with entity substitution
 ## XML push regression tests
 ## HTML regression tests
 ## Push HTML regression tests
@@ -52,4 +89,135 @@ Making all in tests
 ## C14N exclusive without comments regression tests
 ## C14N 1.1 without comments regression tests
 ## Catalog and Threads regression tests
-Total 2983 tests, no errors
+Total 3146 tests, no errors
+.........
+## Parsing recursive test cases
+## Parsing non-recursive test cases
+## Parsing non-recursive huge case
+Total 9 tests, no errors
+Testing HTMLparser : 32 of 38 functions ...
+Testing HTMLtree : 18 of 18 functions ...
+Testing SAX2 : 38 of 38 functions ...
+Testing c14n : 3 of 4 functions ...
+Testing catalog : 27 of 36 functions ...
+Testing chvalid : 9 of 9 functions ...
+Testing debugXML : 25 of 28 functions ...
+Testing dict : 10 of 13 functions ...
+Testing encoding : 16 of 19 functions ...
+Testing entities : 13 of 17 functions ...
+Testing hash : 16 of 24 functions ...
+Testing list : 19 of 26 functions ...
+Testing nanoftp : 14 of 22 functions ...
+Testing nanohttp : 13 of 17 functions ...
+Testing parser : 61 of 70 functions ...
+Testing parserInternals : 33 of 90 functions ...
+Testing pattern : 10 of 15 functions ...
+Testing relaxng : 14 of 24 functions ...
+Testing schemasInternals : 0 of 2 functions ...
+Testing schematron : 1 of 10 functions ...
+Testing tree : 142 of 164 functions ...
+Testing uri : 10 of 15 functions ...
+Testing valid : 50 of 70 functions ...
+Testing xinclude : 8 of 10 functions ...
+Testing xmlIO : 40 of 50 functions ...
+Testing xmlautomata : 3 of 19 functions ...
+Testing xmlerror : 7 of 15 functions ...
+Testing xmlmodule : 2 of 4 functions ...
+Testing xmlreader : 76 of 86 functions ...
+Testing xmlregexp : 16 of 30 functions ...
+Testing xmlsave : 4 of 10 functions ...
+Testing xmlschemas : 16 of 27 functions ...
+Testing xmlschemastypes : 26 of 34 functions ...
+Testing xmlstring : 26 of 30 functions ...
+Testing xmlunicode : 166 of 166 functions ...
+Testing xmlwriter : 52 of 80 functions ...
+Testing xpath : 32 of 40 functions ...
+Testing xpathInternals : 106 of 117 functions ...
+Testing xpointer : 17 of 21 functions ...
+Total: 1171 functions, 280918 tests, 0 errors
+testing char range: 1 2 3 4 done
+testing 1 byte char in document: 1 2 3 4 done
+testing 2 byte char in document: 1 2 3 4 done
+dictionary tests succeeded 20000 strings
+xmlconf/xmlconf.xml is missing 
+  you need to fetch and extract the
+  latest XML Conformance Test Suites
+  http://www.w3.org/XML/Test/xmlts20080827.tar.gz
+  see http://www.w3.org/XML/Test/ for informations
+Ran 0 tests, no errors
+Total 0 tests, no errors
+Making all in .
+Making all in tests
+## running Python regression tests
+Making check in include
+Making check in libxml
+Making check in .
+  CC       testSchemas.o
+  CCLD     testSchemas
+  CC       testRelax.o
+  CCLD     testRelax
+  CC       testSAX.o
+  CCLD     testSAX
+  CC       testHTML.o
+  CCLD     testHTML
+  CC       testXPath.o
+  CCLD     testXPath
+  CC       testURI.o
+  CCLD     testURI
+  CC       testThreads.o
+  CCLD     testThreads
+  CC       testC14N.o
+  CCLD     testC14N
+  CC       testAutomata.o
+  CCLD     testAutomata
+  CC       testRegexp.o
+  CCLD     testRegexp
+  CC       testReader.o
+  CCLD     testReader
+  CC       testModule.o
+  CCLD     testModule
+  CC       runsuite.o
+  CCLD     runsuite
+  CC       testlimits.o
+  CCLD     testlimits
+Making check in doc
+Making check in .
+Making check in devhelp
+Making check in examples
+  CC       io1.o
+  CCLD     io1
+  CC       io2.o
+  CCLD     io2
+  CC       parse1.o
+  CCLD     parse1
+  CC       parse2.o
+  CCLD     parse2
+  CC       parse3.o
+  CCLD     parse3
+  CC       parse4.o
+  CCLD     parse4
+  CC       reader1.o
+  CCLD     reader1
+  CC       reader2.o
+  CCLD     reader2
+  CC       reader3.o
+  CCLD     reader3
+  CC       reader4.o
+  CCLD     reader4
+  CC       testWriter.o
+  CCLD     testWriter
+  CC       tree1.o
+  CCLD     tree1
+  CC       tree2.o
+  CCLD     tree2
+  CC       xpath1.o
+  CCLD     xpath1
+  CC       xpath2.o
+  CCLD     xpath2
+Making check in example
+  CC       gjobread.o
+  CCLD     gjobread
+Making check in xstc
+Making check in python
+Making check in .
+Making check in tests
