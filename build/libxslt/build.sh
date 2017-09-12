@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=libxslt
-VER=1.1.29
+VER=1.1.30
 PKG=library/libxslt
 SUMMARY="The XSLT library"
 DESC="$SUMMARY"
