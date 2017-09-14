@@ -326,6 +326,13 @@ $ git log master..joyent-merge/2017070501
 
 ## Perform a test build
 
+Following merge, perform a full test nightly build including both debug
+and non-debug components
+
+![#f03c15](https://placehold.it/15/1589f0/000000?text=+) `omni build_illumos`
+
+Which runs nightly:
+
 ```shell
 $ nightly /path/to/omnios.env
 ```
