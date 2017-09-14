@@ -30,7 +30,7 @@
 
 PKG=library/python-2/pyopenssl-27
 PROG=pyOpenSSL
-VER=17.2.0
+VER=17.3.0
 SUMMARY="pyOpenSSL - Python interface to the OpenSSL library"
 DESC="$SUMMARY"
 

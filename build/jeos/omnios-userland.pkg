@@ -76,7 +76,7 @@ library/python-2/portend-27		2.1
 library/python-2/pybonjour-27		1.1.1
 library/python-2/pycurl-27		7.43
 library/python-2/pylint-27		1.7
-library/python-2/pyopenssl-27		17.2
+library/python-2/pyopenssl-27		17.3
 library/python-2/pyrex-27		0.9.9
 library/python-2/pytz-27		2017
 library/python-2/setuptools-27		36
