@@ -340,6 +340,16 @@ $ nightly /path/to/omnios.env
 If the build is unsuccessful, resolve this before moving on to the next
 step.
 
+## ONU to the new build
+
+```
+# onu -t joyent-20170703 -d */path/to/illumos-omnios/packages/i386/nightly-nd*
+...
+# init 6
+```
+
+Confirm that the system boots.
+
 ## Push the merged branch
 
 ```shell
