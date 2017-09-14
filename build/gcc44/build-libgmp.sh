@@ -60,5 +60,5 @@ download_source $PROG $PROG $VER
 prep_build
 build
 make_isa_stub
-make_package libgmp.mog
+make_package libgmp.mog depends.mog
 clean_up

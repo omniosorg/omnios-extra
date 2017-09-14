@@ -60,5 +60,5 @@ download_source $PROG $PROG $VER
 prep_build
 build
 make_isa_stub
-make_package libmpc.mog
+make_package libmpc.mog depends.mog
 clean_up

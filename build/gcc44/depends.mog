@@ -1,0 +1,24 @@
+
+# Replace detected require-any dependencies with specific dependencies on
+# relevant packages
+
+# depend fmri=pkg:/system/library/g++-5-runtime@5.4.0-0.151023
+#        fmri=pkg:/developer/gcc44@4.4.4-0.151023
+#        fmri=pkg:/system/library/g++-6-runtime@6.4.0-0.151023 type=require-any
+
+# depend fmri=pkg:/system/library/gcc-6-runtime@6.4.0-0.151023
+#        fmri=pkg:/system/library/gcc-5-runtime@5.4.0-0.151023
+#        fmri=pkg:/developer/gcc44@4.4.4-0.151023 type=require-any
+
+# depend fmri=pkg:/system/library/gcc-6-runtime@6.4.0-0.151023
+#        fmri=pkg:/system/library/gcc-5-runtime@5.4.0-0.151023 type=require-any
+
+
+<transform depend type=require-any fmri=.*(gcc-\d-runtime|gcc\d+@) -> \
+    emit depend type=require fmri=system/library/gcc-5-runtime>
+<transform depend type=require-any fmri=.*(gcc-\d-runtime|gcc\d+@) -> drop>
+
+<transform depend type=require-any fmri=.*(g\+\+-\d-runtime|gcc\d+@) -> \
+    emit depend type=require fmri=system/library/g++-5-runtime>
+<transform depend type=require-any fmri=.*(g\+\+-\d-runtime|gcc\d+@) -> drop>
+

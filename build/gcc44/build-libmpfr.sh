@@ -59,5 +59,5 @@ download_source $PROG $PROG $VER
 prep_build
 build
 make_isa_stub
-make_package libmpfr.mog
+make_package libmpfr.mog depends.mog
 clean_up
