@@ -30,11 +30,11 @@ diff -ru M2Crypto-0.26.0/M2Crypto/X509.py M2Crypto-0.26.0.patched/M2Crypto/X509.
 +
 +    def get_last_update(self):
 +        assert m2.x509_CRL_type_check(self.crl), "'x509_CRL' type error"
-+        return ASN1.ASN1_UTCTIME(m2.x509_CRL_get_last_update(self.crl))
++        return ASN1.ASN1_TIME(m2.x509_CRL_get_last_update(self.crl))
 +
 +    def get_next_update(self):
 +        assert m2.x509_CRL_type_check(self.crl), "'x509_CRL' type error"
-+        return ASN1.ASN1_UTCTIME(m2.x509_CRL_get_next_update(self.crl))
++        return ASN1.ASN1_TIME(m2.x509_CRL_get_next_update(self.crl))
 +
 +    def verify(self, pkey):
 +        assert m2.x509_CRL_type_check(self.crl), "'x509_CRL' type error"
@@ -157,12 +157,12 @@ diff -ru M2Crypto-0.26.0/SWIG/_x509.i M2Crypto-0.26.0.patched/SWIG/_x509.i
  }
  
 +/* X509_CRL_get_lastUpdate() is a macro. */
-+ASN1_UTCTIME *x509_CRL_get_last_update(X509_CRL *x) {
++ASN1_TIME *x509_CRL_get_last_update(X509_CRL *x) {
 +    return X509_CRL_get_lastUpdate(x);
 +}
 +
 +/* X509_CRL_get_nextUpdate() is a macro. */
-+ASN1_UTCTIME *x509_CRL_get_next_update(X509_CRL *x) {
++ASN1_TIME *x509_CRL_get_next_update(X509_CRL *x) {
 +    return X509_CRL_get_nextUpdate(x);
 +}
 +
