@@ -43,9 +43,6 @@ CONFIGURE_OPTS="
 	POD2MAN=/usr/perl5/bin/pod2man
 "
 
-# Use old gcc4 standards level for this.
-CFLAGS="$CFLAGS -std=gnu89"
-
 BUILDARCH=32
 
 make_sfw_links() {

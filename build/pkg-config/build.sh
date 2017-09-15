@@ -38,9 +38,6 @@ DESC="pkg-config is a helper tool used when compiling applications and libraries
 BUILD_DEPENDS_IPS=
 RUN_DEPENDS_IPS=
 
-# Use old gcc4 standards level for this.
-CFLAGS="$CFLAGS -std=gnu89"
-
 init
 download_source $PROG $PROG $VER
 prep_build
