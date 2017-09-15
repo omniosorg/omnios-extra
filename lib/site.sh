@@ -6,8 +6,8 @@
 # and publish there instead of the URI specified above.
 #
 omniosorg=/data/omnios-build/omniosorg
-PKGSRVR=file://$omniosorg/_repo_22
-TMPDIR=$omniosorg/_build_22
+PKGSRVR=file://$omniosorg/r151022/_repo
+TMPDIR=$omniosorg/r151022/_build
 DTMPDIR=$TMPDIR
 
 MIRROR=$omniosorg/mirror
