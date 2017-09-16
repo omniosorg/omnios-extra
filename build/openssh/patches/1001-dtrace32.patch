@@ -17,9 +17,9 @@ index 5e973f1..7d5d93c 100644
  SSH_PKCS11_HELPER=$(libexecdir)/ssh-pkcs11-helper
 -ROOTDLIBDIR64=$(DESTDIR)/usr/lib/dtrace/64
 +ROOTDLIBDIR=$(DESTDIR)/usr/lib/dtrace
- SMFMETHODDIR=$(DESTDIR)/lib/svc/method
- SMFNETMANIDIR=$(DESTDIR)/lib/svc/manifest/network
  PRIVSEP_PATH=@PRIVSEP_PATH@
+ SSH_PRIVSEP_USER=@SSH_PRIVSEP_USER@
+ STRIP_OPT=@STRIP_OPT@
 @@ -238,7 +238,7 @@ sftp_provider.h: $(srcdir)/sftp_provider.d
  	    -o $(srcdir)/sftp_provider.h
  
@@ -35,9 +35,9 @@ index 5e973f1..7d5d93c 100644
  	$(INSTALL) -m 644 ssh-pkcs11-helper.1m.out $(DESTDIR)$(mandir)/$(mansubdir)1m/ssh-pkcs11-helper.1m
 -	mkdir -p $(ROOTDLIBDIR64) && cp $(srcdir)/sftp64.d $(ROOTDLIBDIR64)/sftp64.d
 +	mkdir -p $(ROOTDLIBDIR) && cp $(srcdir)/sftp64.d $(ROOTDLIBDIR)/sftp.d
- 	$(srcdir)/mkinstalldirs $(SMFMETHODDIR)
- 	$(srcdir)/mkinstalldirs $(SMFNETMANIDIR)
- 	$(INSTALL) -m 555 smf/method.sh $(SMFMETHODDIR)/sshd
+	mkdir -p $(DESTDIR)$(keydir)
+	$(srcdir)/mkinstalldirs $(DESTDIR)$(modulidir)
+	$(INSTALL) -m 644 moduli.out $(DESTDIR)$(modulidir)/moduli
 -- 
 2.5.4 (Apple Git-61)
 

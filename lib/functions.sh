@@ -857,6 +857,37 @@ EOM
 }
 
 #############################################################################
+# Install an SMF service
+#############################################################################
+
+install_smf() {
+    mtype="${1:?type}"
+    manifest="${2:?manifest}"
+    method="$3"
+
+    pushd $DESTDIR > /dev/null
+    logmsg "-- Installing SMF service ($mtype / $manifest / $method)"
+
+    # Manifest
+    logcmd mkdir -p lib/svc/manifest/$mtype \
+        || logerr "mkdir of $DESTDIR/lib/svc/manifest/$mtype failed"
+    logcmd cp $SRCDIR/files/$manifest lib/svc/manifest/$mtype/ \
+        || logerr "Cannot copy SMF manifest"
+    logcmd chmod 0444 lib/svc/manifest/$mtype/$manifest
+
+    # Method
+    if [ -n "$method" ]; then
+        logcmd mkdir -p lib/svc/method \
+            || logerr "mkdir of $DESTDIR/lib/svc/method failed"
+        logcmd cp $SRCDIR/files/$method lib/svc/method/ \
+            || logerr "Cannot install SMF method"
+        logcmd chmod 0555 lib/svc/method/$method
+    fi
+
+    popd > /dev/null
+}
+
+#############################################################################
 # Make isaexec stub binaries
 #############################################################################
 make_isa_stub() {

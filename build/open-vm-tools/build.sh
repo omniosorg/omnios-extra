@@ -39,14 +39,6 @@ DESC="The Open Virtual Machine Tools project aims to provide a suite of open sou
 BUILD_DEPENDS_IPS='developer/pkg-config'
 RUN_DEPENDS_IPS='library/glib2 system/library/gcc-5-runtime'
 
-install_smf() {
-	logmsg "Installing SMF components"
-	logcmd mkdir -p $DESTDIR/lib/svc/manifest/system/virtualization || \
-		logerr "--- Failed to create manifest directory"
-	logcmd cp $SRCDIR/open-vm-tools.xml $DESTDIR/lib/svc/manifest/system/virtualization/ || \
-		logerr "--- Failed to copy manifest file"
-}
-
 CFLAGS="-std=gnu89 -Wno-logical-not-parentheses -Wno-bool-compare -Wno-deprecated-declarations -Wno-unused-local-typedefs"
 CONFIGURE_OPTS="
 	--without-kernel-modules
@@ -64,7 +56,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-install_smf
+install_smf system/virtualization open-vm-tools.xml
 make_isa_stub
 make_package
 clean_up

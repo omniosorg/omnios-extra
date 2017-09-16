@@ -75,14 +75,6 @@ auto_reconf() {
         popd
 }
 
-copy_smf() {
-    mkdir -p $TMPDIR/$BUILDDIR/smf
-    cp $SRCDIR/files/sshd-method $TMPDIR/$BUILDDIR/smf/method.sh ||
-        logerr 'method script copy failed'
-    cp $SRCDIR/files/ssh.xml $TMPDIR/$BUILDDIR/smf/manifest.xml ||
-        logerr 'manifest copy failed'
-}
-
 move_manpage() {
     local page=$1
     local old=$2
@@ -120,11 +112,11 @@ init
 download_source $PROG $PROG $VER
 move_manpages
 patch_source
-copy_smf
 auto_reconf
 prep_build
 run_autoconf
 build
+install_smf network ssh.xml sshd
 run_testsuite tests
 
 # Remove the letter from VER for packaging
