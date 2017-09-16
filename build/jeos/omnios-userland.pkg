@@ -49,7 +49,7 @@ library/libffi				3.2
 library/libidn				1.33
 library/libtool/libltdl			2.4
 library/libxml2				2.9
-library/libxslt				1.1.29
+library/libxslt				1.1
 library/ncurses				6
 library/nghttp2				1.25
 library/nspr/header-nspr		4.16
