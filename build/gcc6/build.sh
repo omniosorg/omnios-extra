@@ -80,6 +80,12 @@ CONFIGURE_OPTS="\
 LDFLAGS32="-R$OPT/lib"
 export LD_OPTIONS="-zignore -zcombreloc -i"
 
+make_install() {
+    logmsg "--- make install"
+    logcmd $MAKE DESTDIR=${DESTDIR} install-strip || \
+        logerr "--- Make install failed"
+}
+
 init
 download_source $PROG/releases/$PROG-$VER $PROG $VER
 patch_source
