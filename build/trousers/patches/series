@@ -1,1 +1,16 @@
-illumos.patch -p1
+01-tss-user.patch
+02-manapge.patch
+03-readme.patch
+70-dilos.patch
+dist_tcsd.conf.in.patch
+iconv.patch
+include_tss_tss_defines.h.patch
+man_man5_tcsd.conf.5.in.patch
+tcs_rpc_tcstp_rpc.c.patch
+tcs_rpc_tcstp_rpc_ps.c.patch
+tcs_tcs_caps.c.patch
+tddl_tddl.c.patch
+trspi_crypto_openssl_hash.c.patch
+tspi_context.c.patch
+tspi_ps_tspps.c.patch
+tspi_tsp_policy.c.patch
