@@ -4,6 +4,26 @@
 
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](http://www.omniosce.org/setup/switch)
 
+## r151022r (2017-09-18)
+
+Weekly release for w/c 18th of September 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
+> This is a non-reboot update.
+
+### Security fixes
+
+* `libxml2` updated to version 2.9.5
+* `python` updated to version 2.7.14
+
+### Other changes
+
+* Mozilla NSS updated to version 4.16
+* Mozilla NSPR updated to version 3.32.1
+* Web CA certificates updated
+
+<br>
+
+----
+
 ## r151022q (2017-09-11)
 
 Weekly release for w/c 11th of September 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
