@@ -8,7 +8,7 @@ compress/p7zip				16
 compress/unzip				6.0
 compress/xz				5.2
 compress/zip				3.0
-data/iso-codes				3.75
+data/iso-codes				3.76
 database/sqlite-3			3.20
 developer/as				0.5.11
 developer/build/autoconf		2.69
