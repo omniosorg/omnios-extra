@@ -40,9 +40,9 @@ index 1ab8bc90..3a2a840d 100644
  	-e 's|/etc/moduli|$(sysconfdir)/moduli|g' \
  	-e 's|/etc/ssh/moduli|$(sysconfdir)/moduli|g' \
 @@ -370,6 +371,7 @@ install-files:
- 	$(srcdir)/mkinstalldirs $(SMFNETMANIDIR)
- 	$(INSTALL) -m 555 smf/method.sh $(SMFMETHODDIR)/sshd
- 	$(INSTALL) -m 444 smf/manifest.xml $(SMFNETMANIDIR)/ssh.xml
+	$(INSTALL) -m 644 ssh-keysign.1m.out $(DESTDIR)$(mandir)/$(mansubdir)1m/ssh-keysign.1m
+	$(INSTALL) -m 644 ssh-pkcs11-helper.1m.out $(DESTDIR)$(mandir)/$(mansubdir)1m/ssh-pkcs11-helper.1m
+	mkdir -p $(ROOTDLIBDIR64) && cp $(srcdir)/sftp64.d $(ROOTDLIBDIR64)/sftp64.d
 +	mkdir -p $(DESTDIR)$(keydir)
  
  install-sysconf:

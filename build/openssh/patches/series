@@ -20,7 +20,6 @@ sshd_config.patch
 0019-PubKeyPlugin-support.patch
 0020-Compatibility-fix-for-ListenAddress.patch
 0021-Try-to-create-privsep-chroot-dir-if-it-doesn-t-exist.patch
-0022-Add-SMF-manifest-and-method-and-install-them.patch
 0024-Add-with-key-dir-configure-option-to-place-SSH-host-.patch
 0026-Don-t-use-krb5-config-to-check-for-GSSAPI-on-Illumos.patch
 0027-Set-default-sshd-options-based-on-etc-default-login.patch

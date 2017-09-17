@@ -99,23 +99,12 @@ configure64() {
     perl -pi -e 's#^^(archive_cmds=.*)"$#$1 -nostdlib"#g;' libtool
 }
 
-# Jam in some SMF files
-place_smf_files() {
-    logmsg "Installing SMF files"
-    for dir in lib/svc/manifest/application/management lib/svc/method; do
-        logcmd mkdir -p $DESTDIR/$dir || \
-            logerr "--- Failed to create directory $DESTDIR/$dir"
-    done
-    logcmd cp $SRCDIR/files/net-snmp.xml $DESTDIR/lib/svc/manifest/application/management/
-    logcmd cp $SRCDIR/files/svc-net-snmp $DESTDIR/lib/svc/method/
-    logcmd chmod +x $DESTDIR/lib/svc/method/svc-net-snmp
-}
-
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+install_smf application/management net-snmp.xml svc-net-snmp
 place_smf_files
 strip_install
 make_package

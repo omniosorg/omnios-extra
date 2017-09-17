@@ -42,15 +42,12 @@ drop_files() {
         logerr "Could not make dir ${DESTDIR}${PREFIX}/bin"
     logcmd cp -p $SRCDIR/files/install-ec2-credential ${DESTDIR}${PREFIX}/bin/ || \
         logerr "Failed to copy install-ec2-credential"
-    logcmd mkdir -p ${DESTDIR}/lib/svc/manifest/system || \
-        logerr "Could not make dir ${DESTDIR}/lib/svc/manifest/system"
-    logcmd cp -p $SRCDIR/files/ec2-credential.xml ${DESTDIR}/lib/svc/manifest/system/ || \
-        logerr "Failed to copy ec2-credential.xml"
 }
 
 init
 prep_build
 drop_files
+install_smf system ec2-credential.xml
 make_isa_stub
 make_package
 clean_up

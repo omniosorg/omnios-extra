@@ -64,12 +64,6 @@ make_prog32() {
 }
 
 post_install() {
-    mkdir -p $DESTDIR/var/svc/manifest/system
-    cp files/dbus.xml $DESTDIR/var/svc/manifest/system/dbus.xml
-    chmod 444 $DESTDIR/var/svc/manifest/system/dbus.xml
-    mkdir -p $DESTDIR/lib/svc/method
-    cp files/svc-dbus $DESTDIR/lib/svc/method/svc-dbus
-    chmod 555 $DESTDIR/lib/svc/method/svc-dbus
     mkdir -p $DESTDIR/etc/security/auth_attr.d
     mkdir -p $DESTDIR/etc/security/prof_attr.d
     cp files/auth-system%2Flibrary%2Fdbus $DESTDIR/etc/security/auth_attr.d/system%2Flibrary%2Fdbus
@@ -83,6 +77,7 @@ prep_build
 build
 run_testsuite check
 make_isa_stub
+install_smf system dbus.xml svc-dbus
 post_install
 
 PKG=system/library/dbus
