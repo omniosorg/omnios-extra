@@ -23,6 +23,7 @@
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 #
-<transform dir  path=usr/include/amd64.* -> drop>
-<transform file path=usr/include/amd64.* -> drop>
 license COPYING license=MIT
+<transform file dir path=usr/include/amd64 -> drop>
+<transform file dir path=usr/share/doc -> drop>
+

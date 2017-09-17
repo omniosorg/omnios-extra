@@ -39,11 +39,23 @@ CFLAGS32="$CFLAGS32 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
 CFLAGS64="$CFLAGS64 -D_LARGEFILE_SOURCE"
 LDFLAGS="-lpthread"
 
-CONFIGURE_OPTS="--disable-static --with-pic --with-threads --without-crypto"
-CONFIGURE_OPTS_32="$CONFIGURE_OPTS_32 --with-python=/usr/bin/$ISAPART/python2.7"
-CONFIGURE_OPTS_64="$CONFIGURE_OPTS_64 --with-python=/usr/bin/$ISAPART64/python2.7"
+# Without --with-libxml-prefix, configure does not find /usr/bin/xml2-config!
+CONFIGURE_OPTS="
+	--disable-static
+	--with-pic
+	--without-crypto
+	--with-libxml-prefix=/usr
+"
+CONFIGURE_OPTS_32+=" --with-python=/usr/bin/$ISAPART/python2.7"
+CONFIGURE_OPTS_64+=" --with-python=/usr/bin/$ISAPART64/python2.7"
 
 NO_PARALLEL_MAKE="true"
+
+# Make clean removes the man page (xsltproc.1) so it is preserved and
+# restored between flavours (see below). However, this makes the tree
+# end up with this file missing. Force removal of any previous extracted
+# source trees to start from a clean slate.
+REMOVE_PREVIOUS=1
 
 backup_man() {
     logmsg "making a backup of xsltproc.1"
@@ -70,6 +82,12 @@ make_prog32() {
     make_prog32_orig
 }
 
+tests() {
+	logmsg "-- running tests"
+	[ `$DESTDIR/usr/bin/xslt-config --cflags` = "-I/usr/include/libxml2" ] \
+	    || logerr "xslt-config --cflags not working"
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
@@ -77,5 +95,6 @@ backup_man
 prep_build
 build
 make_isa_stub
+tests
 make_package
 clean_up
