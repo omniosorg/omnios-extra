@@ -140,7 +140,7 @@ depend fmri=library/libtool/libltdl@2.4,5.11-@PVER@ type=require
 depend fmri=library/libxml2@2.9,5.11-@PVER@ type=require
 depend fmri=library/libxslt@1.1,5.11-@PVER@ type=require
 depend fmri=library/ncurses@6,5.11-@PVER@ type=require
-depend fmri=library/nghttp2@1.24,5.11-@PVER@ type=require
+depend fmri=library/nghttp2@1.25,5.11-@PVER@ type=require
 depend fmri=library/nspr@4.16,5.11-@PVER@ type=require
 depend fmri=library/pcre@8.41,5.11-@PVER@ type=require
 depend fmri=library/python-2/cherrypy-27@11,5.11-@PVER@ type=require
@@ -267,14 +267,14 @@ depend fmri=network/ftp@0.5.11,5.11-@PVER@ type=require
 depend fmri=network/ipfilter@0.5.11,5.11-@PVER@ type=require
 depend fmri=network/iscsi/initiator@0.5.11,5.11-@PVER@ type=require
 depend fmri=network/iscsi/iser@0.5.11,5.11-@PVER@ type=require
-depend fmri=network/ssh/ssh-key@0.5.11,5.11-@PVER@ fmri=network/openssh type=require-any
-depend fmri=network/ssh@0.5.11,5.11-@PVER@ fmri=network/openssh type=require-any
+depend fmri=network/openssh@7.5,5.11-@PVER@ type=require
+depend fmri=network/openssh-server@7.5,5.11-@PVER@ type=require
 depend fmri=network/telnet@0.5.11,5.11-@PVER@ type=require
 depend fmri=package/pkg@0.5.11,5.11-@PVER@ type=require
 depend fmri=release/name@0.5.11,5.11-@PVER@ type=require
 depend fmri=release/notices@0.5.11,5.11-@PVER@ type=require
 depend fmri=runtime/perl@5.24,5.11-@PVER@ type=require
-depend fmri=runtime/perl/manual@5.24.1,5.11-@PVER@ type=require
+depend fmri=runtime/perl/manual@5.24,5.11-@PVER@ type=require
 depend fmri=runtime/perl/module/sun-solaris@0.5.11,5.11-@PVER@ type=require
 depend fmri=runtime/python-27@2.7,5.11-@PVER@ type=require
 depend fmri=security/sudo@1.8,5.11-@PVER@ type=require
@@ -285,8 +285,6 @@ depend fmri=service/hal@0.5.11,5.11-@PVER@ type=require
 depend fmri=service/network/network-clients@0.5.11,5.11-@PVER@ type=require
 depend fmri=service/network/ntp@4.2.8,5.11-@PVER@ type=require
 depend fmri=service/network/smtp/sendmail@8.14.4,5.11-@PVER@ type=group
-depend fmri=service/network/ssh@0.5.11,5.11-@PVER@ fmri=network/openssh-server type=require-any
-depend fmri=service/network/ssh-common@0.5.11,5.11-@PVER@ fmri=network/openssh-server type=require-any
 depend fmri=service/picl@0.5.11,5.11-@PVER@ type=require
 depend fmri=service/resource-pools@0.5.11,5.11-@PVER@ type=require
 depend fmri=service/storage/removable-media@0.5.11,5.11-@PVER@ type=require
@@ -369,7 +367,7 @@ depend fmri=text/gnu-gettext@0.19.8,5.11-@PVER@ type=require
 depend fmri=text/gnu-grep@3.1,5.11-@PVER@ type=require
 depend fmri=text/gnu-patch@2.7,5.11-@PVER@ type=require
 depend fmri=text/gnu-sed@4.4,5.11-@PVER@ type=require
-depend fmri=text/groff@1.21,5.11-@PVER@ type=require
+depend fmri=text/groff@1.22,5.11-@PVER@ type=require
 depend fmri=text/less@487,5.11-@PVER@ type=require
 depend fmri=text/locale@0.5.11,5.11-@PVER@ type=require
 depend fmri=web/ca-bundle@2.0,5.11-@PVER@ type=require
