@@ -57,7 +57,7 @@ library/nspr				4.16
 library/pcre				8.41
 library/perl-5/xml-parser		2.44
 library/python-2/asn1crypto-27		0.22
-library/python-2/cffi-27		1.10
+library/python-2/cffi-27		1.11
 library/python-2/cheroot-27		5.8
 library/python-2/cherrypy-27		11
 library/python-2/coverage-27		4.4
@@ -67,7 +67,7 @@ library/python-2/functools32-27		3.2
 library/python-2/idna-27		2.6
 library/python-2/ipaddress-27		1.0
 library/python-2/jsonschema-27		2.6
-library/python-2/lxml-27		3.8
+library/python-2/lxml-27		4.0
 library/python-2/m2crypto-27		0.26
 library/python-2/mako-27		1.0
 library/python-2/numpy-27		1.13

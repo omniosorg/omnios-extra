@@ -30,7 +30,7 @@
 
 PKG=library/python-2/lxml-27
 PROG=lxml
-VER=3.8.0
+VER=4.0.0
 SUMMARY="lxml - Powerful and Pythonic XML processing library"
 DESC="$SUMMARY"
 
