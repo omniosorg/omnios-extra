@@ -1,2 +1,4 @@
 no-glib-main-loop-unref.patch -p0
 ucontext.patch -p0
+lock.patch
+nicInfo.patch
