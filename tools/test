@@ -80,6 +80,11 @@ add_target()
 				targets[$pkg]=$ver
 				pkg=service/network/ssh
 				;;
+			terminal/tmux:*)
+				_ver="`grep '^LIBEVENT_VER=' $build \
+				    | cut -d= -f2`"
+				targets["library/event"]=$_ver
+				;;
 			# Skip GCC runtime packages.
 			*gcc-?-runtime:*)	return ;;
 			*g++-?-runtime:*)	return ;;
