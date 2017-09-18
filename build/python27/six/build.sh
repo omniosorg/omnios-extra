@@ -29,7 +29,7 @@
 
 PKG=library/python-2/six-27
 PROG=six
-VER=1.10.0
+VER=1.11.0
 SUMMARY="six - a Python 2 and 3 compatibility library"
 DESC="$SUMMARY"
 
