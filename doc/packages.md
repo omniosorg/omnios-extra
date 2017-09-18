@@ -83,7 +83,7 @@
 | developer/gnu-binutils		| 2.25			| https://ftp.gnu.org/gnu/binutils | On hold pending illumos fix https://www.illumos.org/issues/6653
 | media/cdrtools			| 3.01			| https://sourceforge.net/projects/cdrtools/files
 | system/virtualization/open-vm-tools	| 9.4.0			| https://sourceforge.net/projects/open-vm-tools/files/open-vm-tools/stable-9.4.x/ | Stuck on 9.4.0
-| developer/swig			| 2.0.12		| http://www.swig.org/download.html | Stuck on 2.0.12 (3.0.x breaks M2Crypto, among other things)
+| developer/swig			| 3.0.12		| http://www.swig.org/download.html
 | library/security/trousers		| 0.3.14		| https://sourceforge.net/projects/trousers/files/trousers
 | library/python-2/asn1crypto-27	| 0.22.0		| https://pypi.python.org/pypi/asn1crypto
 | library/python-2/cffi-27		| 1.11.0		| https://pypi.python.org/pypi/cffi
