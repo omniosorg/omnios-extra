@@ -81,7 +81,7 @@
 | web/wget				| 1.19.1		| https://git.savannah.gnu.org/cgit/wget.git/refs/tags
 | library/glib2				| 2.34.3		| https://download.gnome.org/sources/glib/cache.json | 2.50 had possible problem
 | developer/gnu-binutils		| 2.25			| https://ftp.gnu.org/gnu/binutils | On hold pending illumos fix https://www.illumos.org/issues/6653
-| media/cdrtools			| 3.00			| https://sourceforge.net/projects/cdrtools/files | Not worth cost of investigating 3.01?
+| media/cdrtools			| 3.01			| https://sourceforge.net/projects/cdrtools/files
 | system/virtualization/open-vm-tools	| 9.4.0			| https://sourceforge.net/projects/open-vm-tools/files/open-vm-tools/stable-9.4.x/ | Stuck on 9.4.0
 | developer/swig			| 2.0.12		| http://www.swig.org/download.html | Stuck on 2.0.12 (3.0.x breaks M2Crypto, among other things)
 | library/security/trousers		| 0.3.8			| https://sourceforge.net/projects/trousers/files/trousers | Stuck on 0.3.8 (no idea wht)
