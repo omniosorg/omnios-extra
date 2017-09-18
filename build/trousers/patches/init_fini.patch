@@ -1,0 +1,50 @@
+This is based on a patch taken from Dilos.
+
+# Copyright (c) 2012-2013, Igor Kozhukhov <ikozhukhov@gmail.com>.
+# All rights reserved.
+
+diff -ru trousers-0.3.14~/src/tspi/rpc/hosttable.c trousers-0.3.14/src/tspi/rpc/hosttable.c
+--- trousers-0.3.14~/src/tspi/rpc/hosttable.c	2014-11-03 19:31:55.000000000 +0000
++++ trousers-0.3.14/src/tspi/rpc/hosttable.c	2017-09-18 09:06:33.203787931 +0000
+@@ -36,8 +36,7 @@
+ }
+ 
+ #ifdef SOLARIS
+-#pragma init(_init)
+-void _init(void)
++static void my_init(void)
+ #else
+ static void __attribute__ ((constructor)) my_init(void)
+ #endif
+@@ -51,6 +50,9 @@
+ {
+ 	struct host_table_entry *hte, *next = NULL;
+ 
++	if (!ht)
++		return;
++
+ 	MUTEX_LOCK(ht->lock);
+ 
+ 	for (hte = ht->entries; hte; hte = next) {
+@@ -70,8 +72,7 @@
+ }
+ 
+ #ifdef SOLARIS
+-#pragma fini(_fini)
+-void _fini(void)
++static void my_fini(void)
+ #else
+ static void __attribute__ ((destructor)) my_fini(void)
+ #endif
+@@ -79,6 +80,11 @@
+ 	host_table_final();
+ }
+ 
++#ifdef SOLARIS
++#pragma init(my_init)
++#pragma fini(my_fini)
++#endif
++
+ TSS_RESULT
+ __tspi_add_table_entry(TSS_HCONTEXT tspContext, BYTE *host, int type, struct host_table_entry **ret)
+ {

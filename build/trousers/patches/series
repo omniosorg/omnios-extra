@@ -1,1 +1,7 @@
-illumos.patch -p1
+HOST_NAME_MAX.patch
+init_fini.patch
+tddl.patch
+paths.patch
+dropprivs.patch
+mlock.patch
+tspi_ps_tspps.c.patch

@@ -1,0 +1,48 @@
+This is based on a patch taken from Dilos.
+
+# Copyright (c) 2012-2013, Igor Kozhukhov <ikozhukhov@gmail.com>.
+# All rights reserved.
+
+diff -ru trousers-0.3.14.manual/src/include/tcsd.h trousers-0.3.14/src/include/tcsd.h
+--- trousers-0.3.14.manual/src/include/tcsd.h	2016-09-01 02:44:20.000000000 +0000
++++ trousers-0.3.14/src/include/tcsd.h	2017-09-18 13:00:50.385091225 +0000
+@@ -50,15 +50,24 @@
+ 	int disable_ipv6;
+ };
+ 
++#ifdef SOLARIS
++#define TCSD_DEFAULT_CONFIG_FILE	"/etc/security/tcsd.conf"
++#else
+ #define TCSD_DEFAULT_CONFIG_FILE	ETC_PREFIX "/tcsd.conf"
++#endif
+ extern char *tcsd_config_file;
+ 
+ #define TSS_USER_NAME		"tss"
+ #define TSS_GROUP_NAME		"tss"
+ 
+ #define TCSD_DEFAULT_MAX_THREADS	10
++#ifdef SOLARIS
++#define TCSD_DEFAULT_SYSTEM_PS_DIR  "/var/tpm/system"
++#define TCSD_DEFAULT_SYSTEM_PS_FILE TCSD_DEFAULT_SYSTEM_PS_DIR "/system.data"
++#else
+ #define TCSD_DEFAULT_SYSTEM_PS_FILE	VAR_PREFIX "/lib/tpm/system.data"
+ #define TCSD_DEFAULT_SYSTEM_PS_DIR	VAR_PREFIX "/lib/tpm"
++#endif
+ #define TCSD_DEFAULT_FIRMWARE_LOG_FILE	"/sys/kernel/security/tpm0/binary_bios_measurements"
+ #define TCSD_DEFAULT_KERNEL_LOG_FILE	"/sys/kernel/security/ima/binary_runtime_measurements"
+ #define TCSD_DEFAULT_FIRMWARE_PCRS	0x00000000
+diff -ru trousers-0.3.14.manual/src/include/tspps.h trousers-0.3.14/src/include/tspps.h
+--- trousers-0.3.14.manual/src/include/tspps.h	2014-07-23 19:42:44.000000000 +0000
++++ trousers-0.3.14/src/include/tspps.h	2017-09-18 10:57:01.797711705 +0000
+@@ -13,7 +13,11 @@
+ 
+ #define PASSWD_BUFSIZE		4096
+ 
++#ifdef SOLARIS
++#define TSS_USER_PS_FIE		"/var/user/"
++#else
+ #define TSS_USER_PS_DIR		".trousers"
++#endif
+ #define TSS_USER_PS_FILE	"user.data"
+ 
+ TSS_RESULT	   get_file(int *);

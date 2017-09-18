@@ -1,2 +1,4 @@
-<transform file path=license$ -> drop>
-license LICENSE license=CPL
+license LICENSE license=BSD
+
+<transform file path=etc/tcsd -> edit path etc etc/security>
+

@@ -22,48 +22,37 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
 
-PROG=trousers   # App name
-VER=0.3.8       # App version
-VERHUMAN=$VER   # Human-readable version
-PKG=library/security/trousers  # Package name (without prefix)
+PROG=trousers
+VER=0.3.14
+VERHUMAN=$VER
+PKG=library/security/trousers
 SUMMARY="trousers - TCG Software Stack - software for accessing a TPM device"
 DESC="$SUMMARY ($VER)"
 
-BUILD_DEPENDS_IPS="developer/build/libtool developer/build/automake developer/build/autoconf developer/sunstudio12.1"
-DEPENDS_IPS="system/library/gcc-5-runtime"
+# For lint lib creation
+BUILD_DEPENDS_IPS="developer/sunstudio12.1"
 
 LIBS="-lbsm -lnsl -lsocket -lgen -lscf -lresolv"
 
-preprep_build() {
-  pushd $TMPDIR/$BUILDDIR > /dev/null || logerr "Cannot change to build directory"
-  for f in `ls src/include/tss/*.h` ; do
-    /usr/bin/dos2unix $f $f
-  done
-  for f in `ls src/include/trousers/*.h` ; do
-    /usr/bin/dos2unix $f $f
-  done
-  for f in `ls src/include/*.h` ; do
-    /usr/bin/dos2unix $f $f
-  done
-  logcmd libtoolize -f || logerr "libtoolize failed"
-  logcmd aclocal || logerr "aclocal failed"
-  logcmd automake --add-missing || logerr "automake --add-missing failed"
-  logcmd automake src/tspi/Makefile || logerr "automake failed"
-  logcmd autoreconf -vi 2>&1 > /dev/null
-  logcmd autoreconf -vi || logerr "autoreconf failed"
-  popd > /dev/null
-}
+CONFIGURE_OPTS+="
+	--sysconfdir=/etc/security
+	--disable-usercheck
+"
+#CONFIGURE_OPTS+=" --enable-debug"
 
-cleanup_configure() {
-    for makefile in src/trspi/Makefile src/tspi/Makefile; do
-        mv $makefile $makefile.unneeded
-        cat $makefile.unneeded | sed -e 's/LIBS = .*/LIBS = -lnsl -lsocket -lgen/;' > $makefile
-    done
+fix_headers() {
+	pushd $TMPDIR/$BUILDDIR > /dev/null \
+	    || logerr "Cannot change to build directory"
+
+	find src/include -type f -name \*.h -exec dos2unix {} {} \;
+
+	popd > /dev/null
 }
 
 configure32() {
@@ -77,7 +66,6 @@ configure32() {
     logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_32 \
     $CONFIGURE_OPTS || \
         logerr "--- Configure failed"
-    cleanup_configure
 }
 
 configure64() {
@@ -91,21 +79,16 @@ configure64() {
     logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_64 \
     $CONFIGURE_OPTS || \
         logerr "--- Configure failed"
-    cleanup_configure
-}
-
-install_license() {
-    cp $TMPDIR/$BUILDDIR/LICENSE $DESTDIR/license
 }
 
 init
 download_source $PROG $PROG $VER
 patch_source
-preprep_build
+fix_headers
 prep_build
 build
 make_lintlibs tspi /usr/lib /usr/include "{tss,trousers}/*.h"
 make_isa_stub
-install_license
+install_smf application/security tcsd.xml tcsd
 make_package
 clean_up
