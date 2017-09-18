@@ -23,7 +23,7 @@
 | developer/parser/bison		| 3.0.4			| https://git.savannah.gnu.org/cgit/bison.git/refs/tags
 | developer/pkg-config			| 0.29.2		| https://pkg-config.freedesktop.org/releases
 | developer/versioning/git		| 2.14.1		| https://www.kernel.org/pub/software/scm/git
-| developer/versioning/mercurial	| 4.3.1			| https://www.mercurial-scm.org/release/?M=D
+| developer/versioning/mercurial	| 4.3.2			| https://www.mercurial-scm.org/release/?M=D
 | driver/tuntap				| 1.3.3			| https://github.com/kaizawa/tuntap/releases
 | editor/vim				| 8.0.586		| http://ftp.vim.org/pub/vim/unix
 | file/gnu-coreutils			| 8.28			| https://git.savannah.gnu.org/cgit/coreutils.git/refs/tags
