@@ -41,7 +41,7 @@ tcsd_start() 	{
 }
 	
 tcsd_stop()	{
-	/usr/bin/pkill -x tcsd >/dev/null 2>&1
+	/usr/bin/pkill -f $TCSD >/dev/null 2>&1
 }
 
 case "$1" in

@@ -29,24 +29,31 @@
 . ../../lib/functions.sh
 
 PROG=trousers
-VER=0.3.11.2
+VER=0.3.14
 VERHUMAN=$VER
 PKG=library/security/trousers
 SUMMARY="trousers - TCG Software Stack - software for accessing a TPM device"
 DESC="$SUMMARY ($VER)"
 
-BUILD_DEPENDS_IPS="
-	developer/build/libtool
-	developer/build/automake
-	developer/build/autoconf
-	developer/sunstudio12.1
-"
-RUN_DEPENDS_IPS="system/library/gcc-5-runtime"
+# For lint lib creation
+BUILD_DEPENDS_IPS="developer/sunstudio12.1"
 
 LIBS="-lbsm -lnsl -lsocket -lgen -lscf -lresolv"
-CFLAGS="-DSOLARIS -DBI_OPENSSL -D_REENTRANT"
 
-#CONFIGURE_OPTS+=" --disable-usercheck"
+CONFIGURE_OPTS+="
+	--sysconfdir=/etc/security
+	--disable-usercheck
+"
+#CONFIGURE_OPTS+=" --enable-debug"
+
+fix_headers() {
+	pushd $TMPDIR/$BUILDDIR > /dev/null \
+	    || logerr "Cannot change to build directory"
+
+	find src/include -type f -name \*.h -exec dos2unix {} {} \;
+
+	popd > /dev/null
+}
 
 configure32() {
     logmsg "--- configure (32-bit)"
@@ -74,24 +81,10 @@ configure64() {
         logerr "--- Configure failed"
 }
 
-preprep_build() {
-    pushd $TMPDIR/$BUILDDIR > /dev/null \
-        || logerr "Cannot change to build directory"
-
-    find src/include -type f -name \*.h -exec dos2unix {} {} \;
-    logcmd libtoolize -f || logerr "libtoolize failed"
-    logcmd aclocal || logerr "aclocal failed"
-    logcmd automake --add-missing || logerr "automake --add-missing failed"
-    logcmd automake src/tspi/Makefile || logerr "automake failed"
-    logcmd autoreconf -vi 2>&1 > /dev/null
-    logcmd autoreconf -vi || logerr "autoreconf failed"
-    popd > /dev/null
-}
-
 init
 download_source $PROG $PROG $VER
 patch_source
-preprep_build
+fix_headers
 prep_build
 build
 make_lintlibs tspi /usr/lib /usr/include "{tss,trousers}/*.h"

@@ -1,5 +1,11 @@
---- a/src/tddl/tddl.c	Mon Apr 12 22:24:21 2010
-+++ b/src/tddl/tddl.c.new	Thu Sep 22 12:28:25 2011
+This is based on a patch taken from Dilos.
+
+# Copyright (c) 2012-2013, Igor Kozhukhov <ikozhukhov@gmail.com>.
+# All rights reserved.
+
+diff -ru trousers-0.3.14~/src/tddl/tddl.c trousers-0.3.14/src/tddl/tddl.c
+--- trousers-0.3.14~/src/tddl/tddl.c	2014-07-23 19:42:44.000000000 +0000
++++ trousers-0.3.14/src/tddl/tddl.c	2017-09-18 09:12:45.086015474 +0000
 @@ -18,13 +18,17 @@
  
  #include "trousers/tss.h"
@@ -26,7 +32,7 @@
 +int
 +get_device_fd()
 +{
-+	return (opened_device->fd);
++       return (opened_device->fd);
 +}
 +#endif
  
@@ -41,27 +47,17 @@
  			struct hostent *host = gethostbyname(tcp_device_hostname);
  			if (host != NULL) {   
  				struct sockaddr_in addr;
-@@ -105,12 +116,16 @@
- 		/* tpm_device_paths is filled out in tddl.h */
- 		for (i = 0; tpm_device_nodes[i].path != NULL; i++) {
+@@ -107,6 +118,9 @@
  			errno = 0;
--			if ((fd = open(tpm_device_nodes[i].path, O_RDWR)) >= 0)
-+			if ((fd = open(tpm_device_nodes[i].path, O_RDWR)) >= 0) {
+ 			if ((fd = open(tpm_device_nodes[i].path, O_RDWR)) >= 0)
  				break;
-+			} else {
++			else
 +				fprintf(stderr, "Error opening %s: %s\n",
 +				    tpm_device_nodes[i].path, strerror(errno));
-+			}
  		}
  	}
--	
--	if (fd > 0) {
-+
-+	if (fd >= 0) {
- 		opened_device = &(tpm_device_nodes[i]);
- 		tpm_device_nodes[i].fd = fd;
- 	}
-@@ -181,11 +196,13 @@
+ 	
+@@ -181,11 +195,13 @@
  			/* fall through */
  		case TDDL_TRANSMIT_IOCTL:
  			errno = 0;
@@ -75,7 +71,7 @@
  			LogInfo("Falling back to Read/Write device support.");
  			/* fall through */
  		case TDDL_TRANSMIT_RW:
-@@ -255,6 +272,7 @@
+@@ -255,6 +271,7 @@
  
  TSS_RESULT Tddli_Cancel(void)
  {
@@ -83,11 +79,11 @@
  	int rc;
  
  	if (opened_device->transmit == TDDL_TRANSMIT_IOCTL) {
-@@ -270,4 +288,7 @@
+@@ -270,4 +287,7 @@
  	} else {
  		return TDDLERR(TSS_E_NOTIMPL);
  	}
 +#else
 +	return TDDLERR(TSS_E_NOTIMPL);
-+#endif /* SOLARIS */
++#endif
  }

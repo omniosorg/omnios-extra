@@ -1,0 +1,82 @@
+This is based on a patch taken from Dilos.
+
+# Copyright (c) 2012-2013, Igor Kozhukhov <ikozhukhov@gmail.com>.
+# All rights reserved.
+
+diff -ru trousers-0.3.14.manual/src/tcsd/svrside.c trousers-0.3.14/src/tcsd/svrside.c
+--- trousers-0.3.14.manual/src/tcsd/svrside.c	2014-12-20 02:37:46.000000000 +0000
++++ trousers-0.3.14/src/tcsd/svrside.c	2017-09-18 10:59:42.580662573 +0000
+@@ -27,6 +27,10 @@
+ #include <arpa/inet.h>
+ #include <errno.h>
+ #include <getopt.h>
++#ifdef SOLARIS
++#include <priv.h>
++#include <fcntl.h>
++#endif
+ #include <sys/select.h>
+ #include "trousers/tss.h"
+ #include "trousers_types.h"
+@@ -408,6 +408,49 @@
+ 	}
+ }
+ 
++#ifdef SOLARIS
++/*
++ * For Solaris, make the tcsd privilege aware and drop
++ * risky privileges if they are not needed.
++ */
++static int
++drop_privs(void)
++{
++	priv_set_t *myprivs;
++	int rv;
++
++	/*
++	 * Drop unneeded privs such as fork/exec.
++	 *
++	 * Get "basic" privs and remove the ones we don't want.
++	 */
++	if ((myprivs = priv_str_to_set("basic", ",", NULL)) == NULL) {
++		LogError("priv_str_to_set failed: %s", strerror(errno));
++		return (1);
++	} else {
++		(void) priv_delset(myprivs, PRIV_PROC_EXEC);
++		(void) priv_delset(myprivs, PRIV_PROC_FORK);
++		(void) priv_delset(myprivs, PRIV_FILE_LINK_ANY);
++		(void) priv_delset(myprivs, PRIV_PROC_INFO);
++		(void) priv_delset(myprivs, PRIV_PROC_SESSION);
++		(void) priv_delset(myprivs, PRIV_PROC_SETID);
++
++		/* for auditing */
++		(void) priv_addset(myprivs, PRIV_PROC_AUDIT);
++
++		if ((rv = setppriv(PRIV_SET, PRIV_PERMITTED, myprivs)))
++			return (rv);
++		if ((rv = setppriv(PRIV_SET, PRIV_LIMIT, myprivs)))
++			return (rv);
++		if ((rv = setppriv(PRIV_SET, PRIV_INHERITABLE, myprivs)))
++			return (rv);
++
++		(void) priv_freeset(myprivs);
++	}
++	return (0);
++}
++#endif /* SOLARIS */
++
+ int
+ main(int argc, char **argv)
+ {
+@@ -490,6 +533,12 @@
+ 		}
+ 	}
+ 
++#ifdef SOLARIS
++	/* For Solaris, drop privileges for security. */
++	if ((rv = drop_privs()))
++		return (rv);
++#endif /* SOLARIS */
++
+ 	LogInfo("%s: TCSD up and running.", PACKAGE_STRING);
+ 
+ 	sigemptyset(&sigmask);

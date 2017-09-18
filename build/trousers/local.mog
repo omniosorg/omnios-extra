@@ -1,4 +1,4 @@
 license LICENSE license=BSD
 
-<transform file path=etc/tcsd.conf -> edit path etc etc/security>
+<transform file path=etc/tcsd -> edit path etc etc/security>
 

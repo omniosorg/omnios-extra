@@ -84,7 +84,7 @@
 | media/cdrtools			| 3.00			| https://sourceforge.net/projects/cdrtools/files | Not worth cost of investigating 3.01?
 | system/virtualization/open-vm-tools	| 9.4.0			| https://sourceforge.net/projects/open-vm-tools/files/open-vm-tools/stable-9.4.x/ | Stuck on 9.4.0
 | developer/swig			| 2.0.12		| http://www.swig.org/download.html | Stuck on 2.0.12 (3.0.x breaks M2Crypto, among other things)
-| library/security/trousers		| 0.3.8			| https://sourceforge.net/projects/trousers/files/trousers | Stuck on 0.3.8 (no idea wht)
+| library/security/trousers		| 0.3.14		| https://sourceforge.net/projects/trousers/files/trousers
 | library/python-2/asn1crypto-27	| 0.22.0		| https://pypi.python.org/pypi/asn1crypto
 | library/python-2/cffi-27		| 1.11.0		| https://pypi.python.org/pypi/cffi
 | library/python-2/cheroot-27		| 5.8.3			| https://pypi.python.org/pypi/cheroot
