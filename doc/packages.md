@@ -29,6 +29,7 @@
 | file/gnu-coreutils			| 8.28			| https://git.savannah.gnu.org/cgit/coreutils.git/refs/tags
 | file/gnu-findutils			| 4.6.0			| https://ftp.gnu.org/pub/gnu/findutils/
 | library/c++/sigcpp			| 2.99.9		| https://download.gnome.org/sources/libsigc++/cache.json
+| library/event				| 2.0.22		| https://github.com/libevent/libevent/releases | Used solely by tmux
 | library/expat				| 2.2.4			| https://sourceforge.net/projects/expat/files/expat
 | library/gmp				| 6.1.2			| https://gmplib.org/
 | library/idnkit			| 1.0			| https://jprs.co.jp/idn/index-e.html
@@ -37,7 +38,7 @@
 | library/libxslt			| 1.1.30		| http://xmlsoft.org/libxslt/news.html
 | library/ncurses			| 6.0.20170916		| http://invisible-mirror.net/archives/ncurses/current/ https://ftp.gnu.org/gnu/ncurses/
 | library/nghttp2			| 1.25.0		| https://github.com/nghttp2/nghttp2/releases
-| library/nss				| 3.32.1			| https://ftp.mozilla.org/pub/security/nss/releases/
+| library/nss				| 3.32.1		| https://ftp.mozilla.org/pub/security/nss/releases/
 | library/nspr				| 4.16			| http://archive.mozilla.org/pub/nspr/releases/
 | library/pcre				| 8.41			| https://ftp.pcre.org/pub/pcre/
 | library/readline			| 7.0			| https://ftp.gnu.org/gnu/readline/
