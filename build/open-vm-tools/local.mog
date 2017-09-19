@@ -24,12 +24,15 @@
 #
 
 license COPYING license="LGPLv2"
-set name=info.classification value="org.opensolaris.category.2008:System/Virtualization"
-<transform dir path=lib/svc/manifest/system$ -> edit group bin sys>
+set name=info.classification \
+    value="org.opensolaris.category.2008:System/Virtualization"
+
 <transform link path=sbin/mount.vmblock$ -> drop>
 <transform file path=usr/sbin/mount.vmblock$ -> drop>
 <transform dir path=etc/pam.d$ -> drop>
 <transform file path=etc/pam.d/vmtoolsd$ -> drop>
+
+<transform file path=etc/vmware-tools/tools.conf -> set preserve true>
 
 #
 # Were we to support kernel modules, we would need to use something like
