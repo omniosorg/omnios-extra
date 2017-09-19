@@ -23,12 +23,13 @@
 | developer/parser/bison		| 3.0.4			| https://git.savannah.gnu.org/cgit/bison.git/refs/tags
 | developer/pkg-config			| 0.29.2		| https://pkg-config.freedesktop.org/releases
 | developer/versioning/git		| 2.14.1		| https://www.kernel.org/pub/software/scm/git
-| developer/versioning/mercurial	| 4.3.1			| https://www.mercurial-scm.org/release/?M=D
+| developer/versioning/mercurial	| 4.3.2			| https://www.mercurial-scm.org/release/?M=D
 | driver/tuntap				| 1.3.3			| https://github.com/kaizawa/tuntap/releases
 | editor/vim				| 8.0.586		| http://ftp.vim.org/pub/vim/unix
 | file/gnu-coreutils			| 8.28			| https://git.savannah.gnu.org/cgit/coreutils.git/refs/tags
 | file/gnu-findutils			| 4.6.0			| https://ftp.gnu.org/pub/gnu/findutils/
 | library/c++/sigcpp			| 2.99.9		| https://download.gnome.org/sources/libsigc++/cache.json
+| library/libevent			| 2.0.22		| https://github.com/libevent/libevent/releases | Used solely by tmux
 | library/expat				| 2.2.4			| https://sourceforge.net/projects/expat/files/expat
 | library/gmp				| 6.1.2			| https://gmplib.org/
 | library/idnkit			| 1.0			| https://jprs.co.jp/idn/index-e.html
@@ -37,7 +38,7 @@
 | library/libxslt			| 1.1.30		| http://xmlsoft.org/libxslt/news.html
 | library/ncurses			| 6.0.20170916		| http://invisible-mirror.net/archives/ncurses/current/ https://ftp.gnu.org/gnu/ncurses/
 | library/nghttp2			| 1.25.0		| https://github.com/nghttp2/nghttp2/releases
-| library/nss				| 3.32.1			| https://ftp.mozilla.org/pub/security/nss/releases/
+| library/nss				| 3.32.1		| https://ftp.mozilla.org/pub/security/nss/releases/
 | library/nspr				| 4.16			| http://archive.mozilla.org/pub/nspr/releases/
 | library/pcre				| 8.41			| https://ftp.pcre.org/pub/pcre/
 | library/readline			| 7.0			| https://ftp.gnu.org/gnu/readline/
@@ -79,7 +80,7 @@
 | text/less				| 487			| https://ftp.gnu.org/gnu/less/
 | web/curl				| 7.55.1		| https://curl.haxx.se/download.html
 | web/wget				| 1.19.1		| https://git.savannah.gnu.org/cgit/wget.git/refs/tags
-| library/glib2				| 2.34.3		| https://download.gnome.org/sources/glib/cache.json | 2.50 had possible problem
+| library/glib2				| 2.54.0		| https://download.gnome.org/sources/glib/cache.json
 | developer/gnu-binutils		| 2.25			| https://ftp.gnu.org/gnu/binutils | On hold pending illumos fix https://www.illumos.org/issues/6653
 | media/cdrtools			| 3.01			| https://sourceforge.net/projects/cdrtools/files
 | system/virtualization/open-vm-tools	| 10.1.10		| https://github.com/vmware/open-vm-tools/releases

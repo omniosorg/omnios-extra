@@ -28,53 +28,24 @@
 . ../../lib/functions.sh
 
 PROG=glib
-VER=2.34.3
+VER=2.54.0
 PKG=library/glib2
 SUMMARY="$PROG - GNOME GLib utility library"
 DESC="$SUMMARY"
 
-DEPENDS_IPS="SUNWcs library/libffi@$FFIVERS library/zlib system/library
-	system/library/gcc-5-runtime runtime/perl"
+DEPENDS_IPS="
+	runtime/python-27
+	runtime/perl
+"
 
 # Use old gcc4 standards level for this.
-export CFLAGS="$CFLAGS -std=gnu89"
+CFLAGS+=" -std=gnu89"
 
-CONFIGURE_OPTS="--disable-fam --disable-dtrace --with-threads=posix"
-
-save_function configure32 configure32_orig
-save_function configure64 configure64_orig
-configure32() {
-    LIBFFI_CFLAGS=-I/usr/lib/libffi-$FFIVERS/include
-    export LIBFFI_CFLAGS
-    LIBFFI_LIBS=-lffi
-    export LIBFFI_LIBS
-    configure32_orig
-
-    logcmd perl -pi -e 's#(\$CC.*\$compiler_flags)#$1 -nostdlib -lc#g;' libtool ||
-        logerr "libtool patch failed"
-    # one file here requires c99 compilation and most others prohibit it
-    # it is a test, so no runtime issues will be present
-    pushd glib/tests > /dev/null
-    logmsg " one off strfuncs.o c99 compile"
-    logcmd make CFLAGS="-std=c99" strfuncs.o
-    popd > /dev/null
-}
-configure64() {
-    LIBFFI_CFLAGS=-I/usr/lib/amd64/libffi-$FFIVERS/include
-    export LIBFFI_CFLAGS
-    LIBFFI_LIBS=-lffi
-    export LIBFFI_LIBS
-    configure64_orig
-
-    logcmd perl -pi -e 's#(\$CC.*\$compiler_flags)#$1 -nostdlib -lc#g;' libtool ||
-        logerr "libtool patch failed"
-    # one file here requires c99 compilation and most others prohibit it
-    # it is a test, so no runtime issues will be present
-    pushd glib/tests > /dev/null
-    logmsg " one off strfuncs.o c99 compile"
-    logcmd make CFLAGS="-m64 -std=c99" strfuncs.o
-    popd > /dev/null
-}
+CONFIGURE_OPTS="
+	--disable-fam
+	--disable-dtrace
+	--with-threads=posix
+"
 
 init
 download_source $PROG $PROG $VER

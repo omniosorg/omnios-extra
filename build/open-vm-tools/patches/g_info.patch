@@ -1,0 +1,13 @@
+--- a/lib/include/vmware/tools/log.h~	2017-09-18 23:18:28.680002645 +0000
++++ b/lib/include/vmware/tools/log.h	2017-09-18 23:18:56.941816172 +0000
+@@ -134,7 +134,10 @@
+  *******************************************************************************
+  */
+ 
++/* g_info exists in recent glib2 */
++#ifndef g_info
+ #define g_info(fmt, ...) g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO, fmt, ## __VA_ARGS__)
++#endif
+ 
+ 
+ /*
