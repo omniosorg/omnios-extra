@@ -80,7 +80,7 @@
 | text/less				| 487			| https://ftp.gnu.org/gnu/less/
 | web/curl				| 7.55.1		| https://curl.haxx.se/download.html
 | web/wget				| 1.19.1		| https://git.savannah.gnu.org/cgit/wget.git/refs/tags
-| library/glib2				| 2.34.3		| https://download.gnome.org/sources/glib/cache.json | 2.50 had possible problem
+| library/glib2				| 2.54.0		| https://download.gnome.org/sources/glib/cache.json
 | developer/gnu-binutils		| 2.25			| https://ftp.gnu.org/gnu/binutils | On hold pending illumos fix https://www.illumos.org/issues/6653
 | media/cdrtools			| 3.01			| https://sourceforge.net/projects/cdrtools/files
 | system/virtualization/open-vm-tools	| 9.4.0			| https://sourceforge.net/projects/open-vm-tools/files/open-vm-tools/stable-9.4.x/ | Stuck on 9.4.0
