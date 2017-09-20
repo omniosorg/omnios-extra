@@ -44,7 +44,7 @@
 # drop GNU info dir files
 <transform file path=.*/share/info/dir$ -> drop>
 
-# Libtool archives can suck it
+# We don't want any libtool archives packaging
 <transform file path=.*/lib/.*\.la$ -> drop>
 
 # Other upper-level directories to fix
@@ -99,6 +99,9 @@
 <transform dir path=usr/sfw/share/info$ -> drop>
 <transform dir path=usr/sfw/share/man$ -> drop>
 <transform dir path=usr/sfw/share/src$ -> drop>
+
+# Drop everything under /var/run since it's tmpfs
+<transform file dir link hardlink path=var/run/ -> drop>
 
 # If you ship an SMF manifest, it should be imported upon pkg install
 <transform file path=(var|lib)/svc/manifest/.*\.xml -> \
