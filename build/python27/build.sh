@@ -157,5 +157,5 @@ run_testsuite
 make_isa_stub
 strip_install -x
 install_license
-make_package
+make_package local.mog final.mog
 clean_up

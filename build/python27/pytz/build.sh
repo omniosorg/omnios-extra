@@ -41,5 +41,5 @@ patch_source
 prep_build
 python_build
 strip_install -x
-make_package
+make_package local.mog ../final.mog
 clean_up

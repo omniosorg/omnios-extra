@@ -48,5 +48,5 @@ patch_source
 prep_build
 python_build
 make_license
-make_package
+make_package local.mog ../final.mog
 clean_up

@@ -44,5 +44,5 @@ prep_build
 #NOTE: Uncomment these IFF we have a version w/o -X on it...
 VER=${VER//-/.}
 python_build
-make_package
+make_package ../final.mog
 clean_up
