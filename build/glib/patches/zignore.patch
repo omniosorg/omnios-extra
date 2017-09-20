@@ -1,0 +1,30 @@
+diff -ru glib-2.54.0~/configure glib-2.54.0/configure
+--- glib-2.54.0~/configure	2017-09-11 00:18:49.000000000 +0000
++++ glib-2.54.0/configure	2017-09-20 12:30:03.725642407 +0000
+@@ -14729,9 +14729,9 @@
+       no_undefined_flag=' -z defs'
+       if test yes = "$GCC"; then
+ 	wlarc='$wl'
+-	archive_cmds='$CC -shared $pic_flag $wl-z ${wl}text $wl-h $wl$soname -o $lib $libobjs $deplibs $compiler_flags'
++	archive_cmds='$CC -shared $pic_flag $wl-z ${wl}text $wl-z ${wl}ignore $wl-h $wl$soname -o $lib $libobjs $deplibs $compiler_flags'
+ 	archive_expsym_cmds='echo "{ global:" > $lib.exp~cat $export_symbols | $SED -e "s/\(.*\)/\1;/" >> $lib.exp~echo "local: *; };" >> $lib.exp~
+-          $CC -shared $pic_flag $wl-z ${wl}text $wl-M $wl$lib.exp $wl-h $wl$soname -o $lib $libobjs $deplibs $compiler_flags~$RM $lib.exp'
++          $CC -shared $pic_flag $wl-z ${wl}text $wl-z ${wl}ignore $wl-M $wl$lib.exp $wl-h $wl$soname -o $lib $libobjs $deplibs $compiler_flags~$RM $lib.exp'
+       else
+ 	case `$CC -V 2>&1` in
+ 	*"Compilers 5.0"*)
+diff -ru glib-2.54.0~/m4macros/libtool.m4 glib-2.54.0/m4macros/libtool.m4
+--- glib-2.54.0~/m4macros/libtool.m4	2017-09-11 00:18:43.000000000 +0000
++++ glib-2.54.0/m4macros/libtool.m4	2017-09-20 12:30:13.686428249 +0000
+@@ -5901,9 +5901,9 @@
+       _LT_TAGVAR(no_undefined_flag, $1)=' -z defs'
+       if test yes = "$GCC"; then
+ 	wlarc='$wl'
+-	_LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $wl-z ${wl}text $wl-h $wl$soname -o $lib $libobjs $deplibs $compiler_flags'
++	_LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $wl-z ${wl}text $wl-z ${wl}ignore $wl-h $wl$soname -o $lib $libobjs $deplibs $compiler_flags'
+ 	_LT_TAGVAR(archive_expsym_cmds, $1)='echo "{ global:" > $lib.exp~cat $export_symbols | $SED -e "s/\(.*\)/\1;/" >> $lib.exp~echo "local: *; };" >> $lib.exp~
+-          $CC -shared $pic_flag $wl-z ${wl}text $wl-M $wl$lib.exp $wl-h $wl$soname -o $lib $libobjs $deplibs $compiler_flags~$RM $lib.exp'
++          $CC -shared $pic_flag $wl-z ${wl}text $wl-z ${wl}ignore $wl-M $wl$lib.exp $wl-h $wl$soname -o $lib $libobjs $deplibs $compiler_flags~$RM $lib.exp'
+       else
+ 	case `$CC -V 2>&1` in
+ 	*"Compilers 5.0"*)

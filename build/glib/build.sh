@@ -41,6 +41,8 @@ DEPENDS_IPS="
 # Use old gcc4 standards level for this.
 CFLAGS+=" -std=gnu89"
 
+LDFLAGS+=" -Wl,-z,ignore"
+
 CONFIGURE_OPTS="
 	--disable-fam
 	--disable-dtrace

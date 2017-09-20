@@ -39,4 +39,6 @@
 <transform dir path=usr/lib/gdbus-2.0$ -> drop>
 <transform dir path=usr/lib/glib-2.0$ -> drop>
 
+<transform dir file path=usr/share/gdb -> drop>
+
 license COPYING license=LGPLv2
