@@ -32,7 +32,8 @@
 | library/libevent			| 2.1.8			| https://github.com/libevent/libevent/releases | Used solely by tmux
 | library/expat				| 2.2.4			| https://sourceforge.net/projects/expat/files/expat
 | library/gmp				| 6.1.2			| https://gmplib.org/
-| library/idnkit			| 1.0			| https://jprs.co.jp/idn/index-e.html
+| library/idnkit			| 2.3			| https://jprs.co.jp/idn/index-e.html
+| library/libidn			| 1.33			| http://git.savannah.gnu.org/cgit/libidn.git/refs/tags
 | library/libffi			| 3.2.1			| https://sourceware.org/libffi/
 | library/libxml2			| 2.9.5			| http://xmlsoft.org/news.html
 | library/libxslt			| 1.1.30		| http://xmlsoft.org/libxslt/news.html

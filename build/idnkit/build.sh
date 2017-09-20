@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=idnkit
-VER=1.0-src
+VER=2.3
 VERHUMAN=$VER
 PKG=library/idnkit
 SUMMARY="Internationalized Domain Name kit (idnkit/JPNIC)"
@@ -40,15 +40,25 @@ CONFIGURE_OPTS="--disable-static --mandir=/usr/share/man"
 LIBTOOL_NOSTDLIB=libtool
 LIBTOOL_NOSTDLIB_EXTRAS=-lc
 
+install_legacy()
+{
+    # Include libraries from idnkit1
+    ver=1.0.2
+    for lib in idnkit idnkitlite; do
+        logcmd cp /usr/lib/lib$lib.so.$ver $DESTDIR/usr/lib/
+        logcmd cp /usr/lib/amd64/lib$lib.so.$ver $DESTDIR/usr/lib/amd64/
+        logcmd ln -s lib$lib.so.$ver $DESTDIR/usr/lib/lib$lib.so.1
+        logcmd ln -s lib$lib.so.$ver $DESTDIR/usr/lib/amd64/lib$lib.so.1
+    done
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
 make_isa_stub
-
-VER=${VER//-src/}
-
+install_legacy
 make_package lib.mog
 
 PKG=library/idnkit/header-idnkit
