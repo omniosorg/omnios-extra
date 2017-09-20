@@ -1,0 +1,24 @@
+diff -ru glib~/configure glib/configure
+--- glib~/configure	2017-09-11 00:18:49.000000000 +0000
++++ glib/configure	2017-09-20 09:09:36.556218408 +0000
+@@ -26928,7 +26928,7 @@
+       # Sun Studio expands -mt to -D_REENTRANT and -lthread
+       # gcc expands -pthreads to -D_REENTRANT -D_PTHREADS -lpthread
+       G_THREAD_CFLAGS="-D_REENTRANT -D_PTHREADS"
+-      G_THREAD_LIBS="-lpthread -lthread"
++      G_THREAD_LIBS=""
+       ;;
+     *)
+       for flag in pthread pthreads mt; do
+diff -ru glib~/configure.ac glib/configure.ac
+--- glib~/configure.ac	2017-09-11 00:17:54.000000000 +0000
++++ glib/configure.ac	2017-09-20 09:09:41.067395474 +0000
+@@ -1927,7 +1927,7 @@
+       # Sun Studio expands -mt to -D_REENTRANT and -lthread
+       # gcc expands -pthreads to -D_REENTRANT -D_PTHREADS -lpthread
+       G_THREAD_CFLAGS="-D_REENTRANT -D_PTHREADS"
+-      G_THREAD_LIBS="-lpthread -lthread"
++      G_THREAD_LIBS=""
+       ;;
+     *)
+       for flag in pthread pthreads mt; do
