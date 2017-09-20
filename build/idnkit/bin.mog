@@ -21,12 +21,14 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-<transform dir path=usr/share/man.* -> drop>
-<transform file path=usr/share/man.* -> drop>
-<transform dir path=usr/include.* -> drop>
-<transform file path=usr/include.* -> drop>
-<transform dir path=usr/lib.* -> drop>
-<transform file path=usr/lib.* -> drop>
-<transform link path=usr/lib.* -> drop>
+<transform file dir link path=usr/share -> drop>
+<transform file dir link path=usr/include -> drop>
+<transform file dir link path=usr/lib -> drop>
+
+link path=usr/bin/idnconv target=idnconv2
+link path=usr/bin/i386/idnconv target=idnconv2
+link path=usr/bin/amd64/idnconv target=idnconv2
+
