@@ -52,8 +52,8 @@ library/libxml2				2.9
 library/libxslt				1.1
 library/ncurses				6
 library/nghttp2				1.25
-library/nspr/header-nspr		4.16
-library/nspr				4.16
+library/nspr/header-nspr		4.17
+library/nspr				4.17
 library/pcre				8.41
 library/perl-5/xml-parser		2.44
 library/python-2/asn1crypto-27		0.22
@@ -124,8 +124,8 @@ system/library/iconv/utf-8		0.5.11
 system/library/iconv/xsh4/latin		0.5.11
 system/library/libdbus-glib		0.108
 system/library/libdbus			1.11
-system/library/mozilla-nss/header-nss	3.32
-system/library/mozilla-nss		3.32
+system/library/mozilla-nss/header-nss	3.33
+system/library/mozilla-nss		3.33
 system/library/mtsk			0.5.11
 system/library/pcap			1.8.1
 system/management/ec2-api-tools		1.7.5

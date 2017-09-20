@@ -1,2 +1,3 @@
 nss-modernize.patch
 nss-makefile.patch
+endian.patch
