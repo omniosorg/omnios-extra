@@ -68,12 +68,12 @@ diff -ru M2Crypto-0.26.0/M2Crypto/X509.py M2Crypto-0.26.0.patched/M2Crypto/X509.
      """
      Load CRL from file.
  
-     @param file: Name of file containing CRL in PEM format.
+     :param file: Name of file containing CRL in PEM format.
  
 +    @type format: int, either FORMAT_PEM or FORMAT_DER
 +    @param format: Describes the format of the file to be loaded, either PEM or DER.
 +
-     @return: M2Crypto.X509.CRL object.
+     :return: M2Crypto.X509.CRL object.
      """
      with BIO.openfile(file) as f:
 -        cptr = m2.x509_crl_read_pem(f.bio_ptr())
