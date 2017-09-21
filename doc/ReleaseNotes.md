@@ -4,6 +4,34 @@
 
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](http://www.omniosce.org/setup/switch)
 
+## r151022s (2017-09-21)
+
+Early weekly release for w/c 25th of September 2017,
+uname -a shows `omnios-r151022-eb9d5cb557`
+> This update requires a reboot.
+
+### Security fixes
+
+* Security updates for in-kernel CIFS client & server
+  * [8662](https://www.illumos.org/issues/8662) SMB server ioctls should be appropriately sized
+  * [8663](https://www.illumos.org/issues/8663) SMB client assumes serialized ioctls
+* Perl fixes:
+  * [CVE-2017-12837](https://www.cvedetails.com/cve/CVE-2017-12837/)
+  * [CVE-2017-12883](https://www.cvedetails.com/cve/CVE-2017-12883/)
+
+### Other changes
+
+* [8651](https://www.illumos.org/issues/8651) loader: fix problem where
+  `No rootfs module provided, aborting` could appear on some systems.
+* IPsec observability improvements.
+
+Due to the fix to the loader, new release media will be built for this
+release.
+
+<br>
+
+----
+
 ## r151022r (2017-09-18)
 
 Weekly release for w/c 18th of September 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
