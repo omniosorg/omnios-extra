@@ -1,3 +1,5 @@
 t_op_getppid.t.patch -p0
 1000_largefiles.patch
 dtrace.patch
+CVE-2017-12837.patch
+CVE-2017-12883.patch
