@@ -169,18 +169,18 @@ ask_to_continue() {
 ask_to_install() {
     PKG=$1
     MSG=$2
-    if [[ -n "$AUTOINSTALL" ]]; then
+    if [ -n "$AUTOINSTALL" ]; then
         logmsg "Auto-installing $PKG..."
-        logcmd sudo pkg install $PKG || logerr "pkg install $PKG failed"
+        logcmd $PFEXEC pkg install $PKG || logerr "pkg install $PKG failed"
         return
     fi
-    if [[ -n "$BATCH" ]]; then
+    if [ -n "$BATCH" ]; then
         logmsg "===== Build aborted ====="
         exit 1
     fi
     ask_to_continue_ "$MSG " "Install/Abort?" "i/a" "[iIaA]"
     if [[ "$REPLY" == "i" || "$REPLY" == "I" ]]; then
-        logcmd sudo pkg install $PKG || logerr "pkg install failed"
+        logcmd $PFEXEC pkg install $PKG || logerr "pkg install failed"
     else
         logmsg "===== Build aborted ====="
         exit 1
@@ -257,8 +257,8 @@ BasicRequirements(){
         logmsg "You appear to be missing some basic build requirements."
         logmsg "To fix this run:"
         logmsg " "
-        logmsg "  sudo pkg install$needed"
-        if [[ -n "$BATCH" ]]; then
+        logmsg "  $PFEXEC pkg install$needed"
+        if [ -n "$BATCH" ]; then
             logmsg "===== Build aborted ====="
             exit 1
         fi
