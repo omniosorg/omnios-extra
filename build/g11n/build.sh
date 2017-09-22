@@ -57,10 +57,15 @@ clone_source(){
     logmsg "g11n -> $TMPDIR/$BUILDDIR/g11n"
     logcmd mkdir -p $TMPDIR/$BUILDDIR
     pushd $TMPDIR/$BUILDDIR > /dev/null 
-    if [[ ! -d g11n ]]; then
-        logcmd  $GIT clone -b omni https://github.com/omniosorg/g11n.git
+    if [ ! -d g11n ]; then
+	if [ -n "$G11N_CLONE" -a -d "$G11N_CLONE" ]; then
+		logmsg "-- pulling g11n from local clone"
+		logcmd rsync -ar $G11N_CLONE/ g11n/
+	else
+		logcmd $GIT clone -b omni https://github.com/omniosorg/g11n.git
+	fi
     fi
-    logcmd  cd g11n || logerr "g11n inaccessible"
+    logcmd cd g11n || logerr "g11n inaccessible"
     SRC=$TMPDIR/$BUILDDIR/g11n
     export SRC
     PKGARCHIVE=$SRC
@@ -71,15 +76,16 @@ clone_source(){
 build(){
     pushd $TMPDIR/$BUILDDIR/g11n > /dev/null || logerr "Cannot change to src dir"
     logmsg "--- toplevel build"
-    logcmd $DMAKE # once for fun
-    logcmd $DMAKE # once for glory
-    logcmd $DMAKE # once for shame
-    logcmd $DMAKE # once to piss me off
+    # Why do we run this four times?
+    for i in `seq 0 3`; do
+	logcmd $DMAKE
+    done
     logcmd $DMAKE || logerr "$DMAKE failed"
     logmsg "--- proto install"
     logcmd $DMAKE install || logerr "proto install failed"
     popd > /dev/null
 }
+
 install_man(){
     logmsg "--- installing man page"
     logcmd mkdir -p $SRC/proto/i386/fileroot/usr/share/man/man5/ || \
@@ -88,6 +94,7 @@ install_man(){
         $SRC/proto/i386/fileroot/usr/share/man/man5/iconv_en_US.UTF-8.5 || \
         logerr "could not copy man page"
 }
+
 package(){
     pushd $TMPDIR/$BUILDDIR/g11n/pkg > /dev/null
     logmsg "--- packaging"
