@@ -76,17 +76,8 @@ publish_pkg()
 
 init
 prep_build
-if [ -d ${PREBUILT_ILLUMOS:-/dev/null} ]; then
-    wait_for_prebuilt
-    if [ ! -d $PREBUILT_ILLUMOS/packages/i386/nightly-nd/repo.redist ]; then
-        logerr "--- PREBUILT_ILLUMOS does not contain packages."
-    else
-        logmsg "Using illumos-omnios pre-compiled at $PREBUILT_ILLUMOS"
-        pkgrepo=$PREBUILT_ILLUMOS/packages/i386/nightly-nd/repo.redist
-    fi
-else
-    logerr "--- PREBUILT_ILLUMOS is required."
-fi
+check_for_prebuilt 'packages/i386/nightly-nd/repo.redist/'
+pkgrepo=$PREBUILT_ILLUMOS/packages/i386/nightly-nd/repo.redist
 
 manifest=$TMPDIR/$PKGE.p5m
 create_manifest_header $manifest

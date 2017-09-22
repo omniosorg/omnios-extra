@@ -30,25 +30,15 @@
 PROG=pci.ids
 FORMAT=2.2
 
-PCIIDS_PATH=usr/src/data/hwdata/${PROG}
-LOCAL_PCIIDS=${PREBUILT_ILLUMOS}/${PCIIDS_PATH}
-BRANCH=$(git branch | fgrep \* | awk '{print $2}')
-GITHUB_PREFIX=https://github.com/omniosorg/illumos-omnios/raw
-GITHUB_PCIIDS=${GITHUB_PREFIX}/${BRANCH}/${PCIIDS_PATH}
+PCIIDS=usr/src/data/hwdata/$PROG
+check_for_prebuilt $PCIIDS
+logcmd cp $PREBUILT_ILLUMOS/$PCIIDS $SRCDIR/$PROG
 
-# We should grab the pci.ids from $PREBUILT_ILLUMOS so we match the illumos
-# version.  If we aren't building with PREBUILT_ILLUMOS (and these days, we
-# should be), grab it from the illumos-omnios branch we're in.
-if [ -d ${PREBUILT_ILLUMOS:-/dev/null} ]; then
-    logmsg "-- Getting pci.ids from $LOCAL_PCIIDS"
-    logcmd cp $LOCAL_PCIIDS $SRCDIR/$PROG
-else
-    logmsg "-- Getting pci.ids from $GITHUB_PCIIDS"
-    logcmd wget -O $SRCDIR/$PROG $GITHUB_PCIIDS 
-fi
-
-
-SNAPDATE=`gawk '$2 == "Version:" { ver = $3; gsub(/\./, "", ver); print ver }' $SRCDIR/$PROG`
+SNAPDATE=`nawk '
+    $2 == "Version:" {
+        gsub(/\./, "")
+        print $3
+    }' $SRCDIR/$PROG`
 VER=${FORMAT}.${SNAPDATE}
 VERHUMAN="v$FORMAT snapshot from $SNAPDATE"
 PKG=system/pciutils/pci.ids

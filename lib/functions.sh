@@ -1356,33 +1356,40 @@ save_function() {
 }
 
 # Called by builds that need a PREBUILT_ILLUMOS actually finished.
+
 wait_for_prebuilt() {
     if [ ! -d ${PREBUILT_ILLUMOS:-/dev/null} ]; then
-	logmsg "wait_for_prebuilt() called w/o PREBUILT_ILLUMOS. Bailing."
-	clean_up
-	exit 1
+        logerr "wait_for_prebuilt() called w/o PREBUILT_ILLUMOS. Aborting."
+        exit 1
     fi
 
     # -h means symbolic link. That's what nightly does.
     if [ ! -h $PREBUILT_ILLUMOS/log/nightly.lock ]; then
-	logmsg "$PREBUILT_ILLUMOS already built (no nightly.lock present...)"
-	return
+        logmsg "$PREBUILT_ILLUMOS already built (no nightly.lock present...)"
+        return
     fi
 
     # NOTE -> if the nightly finishes between the above check and now, we
     # can produce confusing output since nightly_pid will be empty.
-    nightly_pid=`ls -lt $PREBUILT_ILLUMOS/log/nightly.lock | awk -F. '{print $4}'`
+    nightly_pid="`readlink $PREBUILT_ILLUMOS/log/nightly.lock | cut -d. -f3`"
     # Wait for nightly to be finished if it's running.
     logmsg "Waiting for illumos nightly build $nightly_pid to be finished."
     logmsg "Time spent waiting via time(1) printed below."
     logcmd "`/bin/time pwait $nightly_pid`"
     if [ -h $PREBUILT_ILLUMOS/log/nightly.lock ]; then
-        logmsg "Nightly lock present, but build not running.  Bailing."
-        if [[ -z $BATCH ]]; then
-            ask_to_continue
-        fi
-        clean_up
-        exit 1
+        logerr "Nightly lock present, but build not running. Aborting."
+    fi
+}
+
+check_for_prebuilt() {
+    key="${1:-proto/root_i386/kernel/amd64/genunix}"
+
+    wait_for_prebuilt
+
+    if [ -f "$PREBUILT_ILLUMOS/$key" -o -d "$PREBUILT_ILLUMOS/$key" ]; then
+        logmsg "-- using pre-built illumos at $PREBUILT_ILLUMOS"
+    else
+        logerr "Prebuilt illumos not present, aborting."
     fi
 }
 
