@@ -40,7 +40,7 @@ OpenSSL 1.0.2l  25 May 2017
 bloody% ls -l /lib/libcrypto.so
 lrwxrwxrwx   1 root     root          18 Aug 23 13:05 /lib/libcrypto.so -> libcrypto.so.1.0.0*
 
-bloody% sudo pkg set-mediator -V 1.1 openssl
+bloody% pfexec pkg set-mediator -V 1.1 openssl
 
 bloody% openssl version
 OpenSSL 1.1.0f  25 May 2017
