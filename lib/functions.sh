@@ -83,15 +83,14 @@ process_opts() {
                 BUILDARCH=$OPTARG
                 OLDBUILDARCH=$OPTARG # Used to see if the script overrides the
                                      # BUILDARCH variable
-                if [[ "$BUILDARCH" != "32" && "$BUILDARCH" != "64" &&
-                      "$BUILDARCH" != "both" ]]; then
+                if [[ ! "$BUILDARCH" =~ ^(32|64|both)$ ]]; then
                     echo "Invalid build architecture specified: $BUILDARCH"
                     show_usage
                     exit 2
                 fi
-		;;
+                ;;
             d)
-	        DEPVER=$OPTARG
+                DEPVER=$OPTARG
                 ;;
         esac
     done
@@ -117,7 +116,7 @@ show_usage() {
 # Log output of a command to a file
 #############################################################################
 logcmd() {
-    if [[ -z "$SCREENOUT" ]]; then
+    if [ -z "$SCREENOUT" ]; then
         echo Running: "$@" >> $LOGFILE
         "$@" >> $LOGFILE 2>&1
     else
@@ -126,25 +125,29 @@ logcmd() {
         return ${PIPESTATUS[0]}
     fi
 }
+
 logmsg() {
     echo "$@" >> $LOGFILE
     echo "$@"
 }
+
 logerr() {
     # Print an error message and ask the user if they wish to continue
     logmsg $@
-    if [[ -z $BATCH ]]; then
+    if [ -z "$BATCH" ]; then
         ask_to_continue "An Error occured in the build. "
     else
         exit 1
     fi
 }
+
 note() {
     logmsg ""
     logmsg "***"
     logmsg "*** $@"
     logmsg "***"
 }
+
 ask_to_continue_() {
     MSG=$2
     STR=$3
@@ -157,6 +160,7 @@ ask_to_continue_() {
         read
     done
 }
+
 ask_to_continue() {
     ask_to_continue_ "${1}" "Do you wish to continue anyway?" "y/n" "[yYnN]"
     if [[ "$REPLY" == "n" || "$REPLY" == "N" ]]; then
@@ -202,11 +206,13 @@ ask_to_testsuite() {
 #############################################################################
 # This isn't real URL encoding, just a couple of common substitutions
 url_encode() {
-    [ $# -lt 1 ] && logerr "Not enough arguments to url_encode().  Expecting a string to encode."
+    [ $# -lt 1 ] && logerr "Not enough arguments to url_encode()"
     local encoded="$1";
-    encoded=`echo $encoded | sed -e 's!/!%2F!g' -e 's!+!%2B!g'`
-    encoded=`echo $encoded | sed -e 's/%../_/g;'`
-    echo $encoded
+    echo $* | sed -e '
+        s!/!%2F!g
+        s!+!%2B!g
+        s/%../_/g
+    '
 }
 
 #############################################################################
@@ -235,25 +241,23 @@ SRCDIR=$PWD/`dirname $0`
 # Platform information
 SUNOSVER=`uname -r` # e.g. 5.11
 
-if [[ -f $LOGFILE ]]; then
-    mv $LOGFILE $LOGFILE.1
-fi
+[ -f "$LOGFILE" ] && mv $LOGFILE $LOGFILE.1
 process_opts $@
 shift $((OPTIND - 1))
 
-BasicRequirements(){
+BasicRequirements() {
     local needed=""
-    [[ -x $GCCPATH/bin/gcc ]] || needed+=" developer/gcc5"
+    [ -x $GCCPATH/bin/gcc ] || needed+=" developer/gcc5"
     # Require gcc6 too in order to build the gcc6 packages and to ensure a
     # consistent set of package dependencies between builds.
-    [[ -x $GCC6PATH/bin/gcc ]] || needed+=" developer/gcc6"
-    [[ -x /usr/bin/ar ]] || needed+=" developer/object-file"
-    [[ -x /usr/bin/ld ]] || needed+=" developer/linker"
-    [[ -f /usr/lib/crt1.o ]] || needed+=" developer/library/lint"
-    [[ -x /usr/bin/gmake ]] || needed+=" developer/build/gnu-make"
-    [[ -f /usr/include/sys/types.h ]] || needed+=" system/header"
-    [[ -f /usr/include/math.h ]] || needed+=" system/library/math"
-    if [[ -n "$needed" ]]; then
+    [ -x $GCC6PATH/bin/gcc ] || needed+=" developer/gcc6"
+    [ -x /usr/bin/ar ] || needed+=" developer/object-file"
+    [ -x /usr/bin/ld ] || needed+=" developer/linker"
+    [ -f /usr/lib/crt1.o ] || needed+=" developer/library/lint"
+    [ -x /usr/bin/gmake ] || needed+=" developer/build/gnu-make"
+    [ -f /usr/include/sys/types.h ] || needed+=" system/header"
+    [ -f /usr/include/math.h ] || needed+=" system/library/math"
+    if [ -n "$needed" ]; then
         logmsg "You appear to be missing some basic build requirements."
         logmsg "To fix this run:"
         logmsg " "
@@ -273,14 +277,13 @@ BasicRequirements
 #############################################################################
 # Running as root is not safe
 #############################################################################
-if [[ "$UID" = "0" ]]; then
-    if [[ -n "$ROOT_OK" ]]; then
+if [ "$UID" = "0" ]; then
+    if [ -n "$ROOT_OK" ]; then
         logmsg "--- Running as root, but ROOT_OK is set; continuing"
     else
         logerr "--- You cannot run this as root"
     fi
 fi
-
 
 #############################################################################
 # Check the OpenSSL mediator
@@ -298,17 +301,19 @@ fi
 #############################################################################
 # Print startup message
 #############################################################################
-[[ -z "$NOBANNER" ]] && logmsg "===== Build started at `date` ====="
+[ -z "$NOBANNER" ] && logmsg "===== Build started at `date` ====="
 
 build_start=`date +%s`
-trap 'logmsg Time: $PKG - $((`date +%s` - build_start))' EXIT
-
+trap '[ -n "$build_start" ] && \
+    logmsg Time: $PKG - $((`date +%s` - build_start)) && \
+    build_start=' EXIT
 
 #############################################################################
 # Libtool -nostdlib hacking
 # libtool doesn't put -nostdlib in the shared archive creation command
 # we need it sometimes.
 #############################################################################
+
 libtool_nostdlib() {
     FILE=$1
     EXTRAS=$2
@@ -336,40 +341,38 @@ init() {
     # Print out current settings
     logmsg "Package name: $PKG"
     # Selected flavor
-    if [[ -z "$FLAVOR" ]]; then
+    if [ -z "$FLAVOR" ]; then
         logmsg "Selected flavor: None (use -f to specify a flavor)"
     else
         logmsg "Selected Flavor: $FLAVOR"
     fi
-    if [[ -n "$OLDFLAVOR" && "$OLDFLAVOR" != "$FLAVOR" ]]; then
+    if [ -n "$OLDFLAVOR" -a "$OLDFLAVOR" != "$FLAVOR" ]; then
         logmsg "NOTICE - The flavor was overridden by the build script."
         logmsg "The flavor specified on the command line was: $OLDFLAVOR"
     fi
     # Build arch
     logmsg "Selected build arch: $BUILDARCH"
-    if [[ -n "$OLDBUILDARCH" && "$OLDBUILDARCH" != "$BUILDARCH" ]]; then
+    if [ -n "$OLDBUILDARCH" -a "$OLDBUILDARCH" != "$BUILDARCH" ]; then
         logmsg "NOTICE - The build arch was overridden by the build script."
         logmsg "The build arch specified on the command line was: $OLDFLAVOR"
     fi
     # Extra dependency version
-    if [[ -z "$DEPVER" ]]; then
-	logmsg "Extra dependency: None (use -d to specify a version)"
+    if [ -z "$DEPVER" ]; then
+        logmsg "Extra dependency: None (use -d to specify a version)"
     else
         logmsg "Extra dependency: $DEPVER"
     fi
     # Ensure SUMMARY and DESC are non-empty
-    if [[ -z "$SUMMARY" ]]; then
+    if [ -z "$SUMMARY" ]; then
         logerr "SUMMARY may not be empty. Please update your build script"
-    elif [[ -z "$DESC" ]]; then
+    elif [ -z "$DESC" ]; then
         logerr "DESC may not be empty. Please update your build script"
     fi
 
     # BUILDDIR can be used to manually specify what directory the program is
     # built in (i.e. what the tarball extracts to). This defaults to the name
     # and version of the program, which works in most cases.
-    if [[ -z $BUILDDIR ]]; then
-        BUILDDIR=$PROG-$VER
-    fi
+    [ -z "$BUILDDIR" ] && BUILDDIR=$PROG-$VER
 
     init_repo
     pkgrepo get -s $PKGSRVR > /dev/null 2>&1 || \
@@ -380,17 +383,18 @@ init() {
 #############################################################################
 # Verify any dependencies
 #############################################################################
+
 verify_depends() {
     logmsg "Verifying dependencies"
     # Support old-style runtime deps
-    if [[ -n "$DEPENDS_IPS" && -n "$RUN_DEPENDS_IPS" ]]; then
+    if [ -n "$DEPENDS_IPS" -a -n "$RUN_DEPENDS_IPS" ]; then
         # Either old way or new, not both.
         logerr "DEPENDS_IPS is deprecated. Please list all runtime dependencies in RUN_DEPENDS_IPS."
-    elif [[ -n "$DEPENDS_IPS" && -z "$RUN_DEPENDS_IPS" ]]; then
+    elif [ -n "$DEPENDS_IPS" -a -z "$RUN_DEPENDS_IPS" ]; then
         RUN_DEPENDS_IPS=$DEPENDS_IPS
     fi
     # If only DEPENDS_IPS is used, assume the deps are build-time as well
-    if [[ -z "$BUILD_DEPENDS_IPS" && -n "$DEPENDS_IPS" ]]; then
+    if [ -z "$BUILD_DEPENDS_IPS" -a -n "$DEPENDS_IPS" ]; then
         BUILD_DEPENDS_IPS=$DEPENDS_IPS
     fi
     for i in $BUILD_DEPENDS_IPS; do
@@ -400,10 +404,11 @@ verify_depends() {
                 i=${i:1}
                 ;;
             \-)
-                # If it's an exclude, we should error if it's installed rather than missing
+                # If it's an exclude, we should error if it's installed rather
+                # than missing
                 i=${i:1}
-                pkg info $i > /dev/null 2<&1 &&
-                    logerr "--- $i cannot be installed while building this package."
+                pkg info $i > /dev/null 2<&1 && \
+                    logerr "--- $i cannot be installed during build."
                 continue
                 ;;
         esac
@@ -415,6 +420,7 @@ verify_depends() {
 #############################################################################
 # People that need these should call them explicitly
 #############################################################################
+
 run_inbuild() {
     logmsg "Running $*"
     pushd $TMPDIR/$BUILDDIR > /dev/null
@@ -437,6 +443,7 @@ run_aclocal() {
 #############################################################################
 # Stuff that needs to be done/set before we start building
 #############################################################################
+
 prep_build() {
     logmsg "Preparing for build"
 
@@ -449,7 +456,7 @@ prep_build() {
     # For DESTDIR the '%' can cause problems for some install scripts
     PKGD=${PKGE//%/_}
     DESTDIR=$DTMPDIR/${PKGD}_pkg
-    if [[ -z $DONT_REMOVE_INSTALL_DIR ]]; then
+    if [ -z "$DONT_REMOVE_INSTALL_DIR" ]; then
         logcmd chmod -R u+w $DESTDIR > /dev/null 2>&1
         logcmd rm -rf $DESTDIR || \
             logerr "Failed to remove old temporary install dir"
@@ -461,17 +468,18 @@ prep_build() {
 #############################################################################
 # Applies patches contained in $PATCHDIR (default patches/)
 #############################################################################
+
 check_for_patches() {
-    if [[ -z $1 ]]; then
+    if [ -z "$1" ]; then
         logmsg "Checking for patches in $PATCHDIR/"
     else
         logmsg "Checking for patches in $PATCHDIR/ ($1)"
     fi
-    if [[ ! -d $SRCDIR/$PATCHDIR ]]; then
+    if [ ! -d "$SRCDIR/$PATCHDIR" ]; then
         logmsg "--- No patches directory found"
         return 1
     fi
-    if [[ ! -f $SRCDIR/$PATCHDIR/series ]]; then
+    if [ ! -f "$SRCDIR/$PATCHDIR/series" ]; then
         logmsg "--- No series file (list of patches) found"
         return 1
     fi
@@ -499,7 +507,7 @@ patch_file() {
     FILENAME=$1
     shift
     ARGS=$@
-    if [[ ! -f $SRCDIR/$PATCHDIR/$FILENAME ]]; then
+    if [ ! -f $SRCDIR/$PATCHDIR/$FILENAME ]; then
         logmsg "--- Patch file $FILENAME not found. Skipping patch."
         return
     fi
@@ -550,35 +558,38 @@ download_source() {
     local PROG=$2
     local VER=$3
     local TARGETDIR=$4
-    if [[ -z $VER ]]; then
+    if [ -z "$VER" ]; then
         local ARCHIVEPREFIX=$PROG
     else
         local ARCHIVEPREFIX=$PROG-$VER
     fi
-    if [[ -z $TARGETDIR ]]; then
+    if [ -z "$TARGETDIR" ]; then
         # Default to $TMPDIR if no output dir specified
         TARGETDIR=$TMPDIR
     fi
     # Create TARGETDIR if it doesn't exist
-    if [[ ! -d $TARGETDIR ]]; then
-        logmsg "Specified target directory $TARGETDIR does not exist.  Creating it now."
+    if [ ! -d "$TARGETDIR" ]; then
+        logmsg "Creating target directory $TARGETDIR"
         logcmd mkdir -p $TARGETDIR
     fi
 
     pushd $TARGETDIR > /dev/null
     logmsg "Checking for source directory"
-    if [ -d $BUILDDIR ]; then
+    if [ -d "$BUILDDIR" ]; then
         logmsg "--- Source directory found"
         if [ -n "$REMOVE_PREVIOUS" ]; then
-            logmsg "--- Removing previously extracted source directory (REMOVE_PREVIOUS=$REMOVE_PREVIOUS)"
+            logmsg "--- Removing old source directory"\
+                "(REMOVE_PREVIOUS=$REMOVE_PREVIOUS)"
             logcmd rm -rf $BUILDDIR || \
                 logerr "Failed to remove source directory"
-        elif check_for_patches "to see if we need to remove the source dir"; then
+        elif check_for_patches "to see if we need to remove the source dir"
+        then
             logmsg "--- Patches are present, removing source directory"
             logcmd rm -rf $BUILDDIR || \
                 logerr "Failed to remove source directory"
         else
-            logmsg "--- Patches are not present and REMOVE_PREVIOUS is not set, keeping source directory"
+            logmsg "--- Patches are not present and REMOVE_PREVIOUS is not"\
+                "set, keeping source directory"
             popd > /dev/null
             return
         fi
@@ -590,7 +601,7 @@ download_source() {
     # was removed due to patches being present.
     logmsg "Checking for $PROG source archive"
     find_archive $ARCHIVEPREFIX FILENAME
-    if [[ "$FILENAME" == "" ]]; then
+    if [ -z "$FILENAME" ]; then
         # Try all possible archive names
         logmsg "--- Archive not found."
         logmsg "Downloading archive"
@@ -603,7 +614,7 @@ download_source() {
             get_resource $DLDIR/$ARCHIVEPREFIX.zip || \
             logerr "--- Failed to download file"
         find_archive $ARCHIVEPREFIX FILENAME
-        if [[ "$FILENAME" == "" ]]; then
+        if [ -z "$FILENAME" ]; then
             logerr "Unable to find downloaded file."
         fi
     else
@@ -615,7 +626,7 @@ download_source() {
         logerr "--- Unable to extract archive."
     fi
     # Make sure the archive actually extracted some source where we expect
-    if [[ ! -d $BUILDDIR ]]; then
+    if [ ! -d "$BUILDDIR" ]; then
         logerr "--- Extracted source is not in the expected location" \
             " ($BUILDDIR)"
     fi
@@ -635,15 +646,15 @@ find_archive() {
 
 # Extracts an archive regardless of its extension
 extract_archive() {
-    if [[ ${1: -7} == ".tar.gz" || ${1: -4} == ".tgz" ]]; then
+    if [[ $1 =~ .tar.gz|.tgz ]]; then
         $GZIP -dc $1 | $TAR xvf -
-    elif [[ ${1: -8} == ".tar.bz2" || ${1: -4} == ".tbz" ]]; then
+    elif [[ $1 =~ .tar.bz2|.tbz ]]; then
         $BUNZIP2 -dc $1 | $TAR xvf -
-    elif [[ ${1: -7} == ".tar.xz" ]]; then
+    elif [[ $1 = *.tar.xz ]]; then
         $XZCAT $1 | $TAR xvf -
-    elif [[ ${1: -4} == ".tar" ]]; then
+    elif [[ $1 = *.tar ]]; then
         $TAR xvf $1
-    elif [[ ${1: -4} == ".zip" ]]; then
+    elif [[ $1 = *.zip ]]; then
         $UNZIP $1
     else
         return 1
@@ -653,6 +664,7 @@ extract_archive() {
 #############################################################################
 # Make the package
 #############################################################################
+
 make_package() {
     logmsg "Making package"
     case $BUILDARCH in
@@ -676,7 +688,7 @@ make_package() {
             ;;
     esac
     DESCSTR="$DESC"
-    if [[ -n "$FLAVORSTR" ]]; then
+    if [ -n "$FLAVORSTR" ]; then
         DESCSTR="$DESCSTR ($FLAVOR)"
     fi
     PKGSEND=/usr/bin/pkgsend
@@ -712,13 +724,13 @@ make_package() {
 
     ## Strip leading zeros in version components.
     VER=`echo $VER | sed -e 's/\.0*\([1-9]\)/.\1/g;'`
-    if [[ -n "$FLAVOR" ]]; then
+    if [ -n "$FLAVOR" ]; then
         # We use FLAVOR instead of FLAVORSTR as we don't want the trailing dash
         FMRI="${PKG}-${FLAVOR}@${VER},${SUNOSVER}-${PVER}"
     else
         FMRI="${PKG}@${VER},${SUNOSVER}-${PVER}"
     fi
-    if [[ -n "$DESTDIR" ]]; then
+    if [ -n "$DESTDIR" ]; then
         logmsg "--- Generating package manifest from $DESTDIR"
         logmsg "------ Running: $PKGSEND generate $DESTDIR > $P5M_INT"
         $PKGSEND generate $DESTDIR > $P5M_INT || \
@@ -731,7 +743,7 @@ make_package() {
     logmsg "--- Generating package metadata"
     echo "set name=pkg.fmri value=$FMRI" > $MY_MOG_FILE
     # Set human-readable version, if it exists
-    if [[ -n "$VERHUMAN" ]]; then
+    if [ -n "$VERHUMAN" ]; then
         logmsg "------ Setting human-readable version"
         echo "set name=pkg.human-version value=\"$VERHUMAN\"" >> $MY_MOG_FILE
     fi
@@ -739,7 +751,14 @@ make_package() {
     echo "set name=pkg.descr value=\"$DESCSTR\"" >> $MY_MOG_FILE
     echo "set name=publisher value=\"sa@omniosce.org\"" >> $MY_MOG_FILE
     logmsg "--- Applying transforms"
-    $PKGMOGRIFY $XFORM_ARGS $P5M_INT $MY_MOG_FILE $GLOBAL_MOG_FILE $LOCAL_MOG_FILE $EXTRA_MOG_FILE | $PKGFMT -u > $P5M_INT2
+    $PKGMOGRIFY \
+        $XFORM_ARGS \
+        $P5M_INT \
+        $MY_MOG_FILE \
+        $GLOBAL_MOG_FILE \
+        $LOCAL_MOG_FILE \
+        $EXTRA_MOG_FILE \
+        | $PKGFMT -u > $P5M_INT2
     logmsg "--- Resolving dependencies"
     (
         set -e
@@ -751,7 +770,7 @@ make_package() {
         logmsg "$line"
     done
     echo > "$MANUAL_DEPS"
-    if [[ -n "$RUN_DEPENDS_IPS" ]]; then
+    if [ -n "$RUN_DEPENDS_IPS" ]; then
         logmsg "------ Adding manual dependencies"
         for i in $RUN_DEPENDS_IPS; do
             # IPS dependencies have multiple types, of which we care about four:
@@ -802,8 +821,8 @@ make_package() {
             fi
         done
     fi
-    $PKGMOGRIFY $XFORM_ARGS "${P5M_INT3}.res" "$MANUAL_DEPS" $FINAL_MOG_FILE | \
-        $PKGFMT -u > $P5M_FINAL
+    $PKGMOGRIFY $XFORM_ARGS "${P5M_INT3}.res" "$MANUAL_DEPS" $FINAL_MOG_FILE \
+        | $PKGFMT -u > $P5M_FINAL
     logmsg "--- Final dependencies"
     grep '^depend ' $P5M_FINAL | while read line; do
         logmsg "$line"
@@ -813,16 +832,17 @@ make_package() {
             logerr "----- pkglint failed"
     fi
     logmsg "--- Publishing package to $PKGSRVR"
-    if [[ -z $BATCH ]]; then
+    if [ -z "$BATCH" ]; then
         logmsg "Intentional pause: Last chance to sanity-check before publication!"
         ask_to_continue
     fi
-    if [[ -n "$DESTDIR" ]]; then
+    if [ -n "$DESTDIR" ]; then
         logcmd $PKGSEND -s $PKGSRVR publish -d $DESTDIR -d $TMPDIR/$BUILDDIR \
             -d $SRCDIR -T \*.py $P5M_FINAL || \
-	    logerr "------ Failed to publish package"
+        logerr "------ Failed to publish package"
     else
-        # If we're a metapackage (no DESTDIR) then there are no directories to check
+        # If we're a metapackage (no DESTDIR) then there are no directories
+        # to check
         logcmd $PKGSEND -s $PKGSRVR publish $P5M_FINAL || \
             logerr "------ Failed to publish package"
     fi
@@ -832,6 +852,7 @@ make_package() {
 #############################################################################
 # Re-publish packages from one repository to another, changing the publisher
 #############################################################################
+
 republish_packages() {
     REPUBLISH_SRC="$1"
     logmsg "Republishing packages from $REPUBLISH_SRC"
@@ -890,11 +911,12 @@ install_smf() {
 #############################################################################
 # Make isaexec stub binaries
 #############################################################################
+
 make_isa_stub() {
     logmsg "Making isaexec stub binaries"
-    [[ -z $ISAEXEC_DIRS ]] && ISAEXEC_DIRS="bin sbin"
+    [ -z "$ISAEXEC_DIRS" ] && ISAEXEC_DIRS="bin sbin"
     for DIR in $ISAEXEC_DIRS; do
-        if [[ -d $DESTDIR$PREFIX/$DIR ]]; then
+        if [ -d $DESTDIR$PREFIX/$DIR ]; then
             logmsg "--- $DIR"
             pushd $DESTDIR$PREFIX/$DIR > /dev/null
             make_isaexec_stub_arch $ISAPART
@@ -906,7 +928,7 @@ make_isa_stub() {
 
 make_isaexec_stub_arch() {
     for file in $1/*; do
-        [[ -f $file ]] || continue # Deals with empty dirs & non-files
+        [ -f "$file" ] || continue # Deals with empty dirs & non-files
         # Check to make sure we don't have a script
         read -n 4 < $file
         file=`echo $file | sed -e "s/$1\///;"`
@@ -918,7 +940,7 @@ make_isaexec_stub_arch() {
             continue
         fi
         # Skip if we already made a stub for this file
-        [[ -f $file ]] && continue
+        [ -f "$file" ] && continue
         logmsg "------ $file"
         # Run the makeisa.sh script
         CC=$CC \
@@ -945,6 +967,7 @@ make_isaexec_stub_arch() {
 #     function itself can be overriden if the build process doesn't fit into a
 #     configure, make, make install pattern.
 #############################################################################
+
 make_clean() {
     logmsg "--- make (dist)clean"
     logcmd $MAKE distclean || \
@@ -955,35 +978,34 @@ make_clean() {
 configure32() {
     logmsg "--- configure (32-bit)"
     CFLAGS="$CFLAGS $CFLAGS32" \
-    CXXFLAGS="$CXXFLAGS $CXXFLAGS32" \
-    CPPFLAGS="$CPPFLAGS $CPPFLAGS32" \
-    LDFLAGS="$LDFLAGS $LDFLAGS32" \
-    CC=$CC CXX=$CXX \
-    logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_32 \
-    $CONFIGURE_OPTS || \
+        CXXFLAGS="$CXXFLAGS $CXXFLAGS32" \
+        CPPFLAGS="$CPPFLAGS $CPPFLAGS32" \
+        LDFLAGS="$LDFLAGS $LDFLAGS32" \
+        CC=$CC CXX=$CXX \
+        logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_32 \
+        $CONFIGURE_OPTS || \
         logerr "--- Configure failed"
 }
 
 configure64() {
     logmsg "--- configure (64-bit)"
     CFLAGS="$CFLAGS $CFLAGS64" \
-    CXXFLAGS="$CXXFLAGS $CXXFLAGS64" \
-    CPPFLAGS="$CPPFLAGS $CPPFLAGS64" \
-    LDFLAGS="$LDFLAGS $LDFLAGS64" \
-    CC=$CC CXX=$CXX \
-    logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_64 \
-    $CONFIGURE_OPTS || \
+        CXXFLAGS="$CXXFLAGS $CXXFLAGS64" \
+        CPPFLAGS="$CPPFLAGS $CPPFLAGS64" \
+        LDFLAGS="$LDFLAGS $LDFLAGS64" \
+        CC=$CC CXX=$CXX \
+        logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_64 \
+        $CONFIGURE_OPTS || \
         logerr "--- Configure failed"
 }
 
 make_prog() {
-    [[ -n $NO_PARALLEL_MAKE ]] && MAKE_JOBS=""
-    if [[ -n $LIBTOOL_NOSTDLIB ]]; then
+    [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
+    if [ -n "$LIBTOOL_NOSTDLIB" ]; then
         libtool_nostdlib $LIBTOOL_NOSTDLIB $LIBTOOL_NOSTDLIB_EXTRAS
     fi
     logmsg "--- make"
-    logcmd $MAKE $MAKE_JOBS || \
-        logerr "--- Make failed"
+    logcmd $MAKE $MAKE_JOBS || logerr "--- Make failed"
 }
 
 make_prog32() {
@@ -1023,8 +1045,8 @@ make_param() {
 
 # Helper function that can be called by build scripts to make in a specific dir
 make_in() {
-    [[ -z $1 ]] && logerr "------ Make in dir failed - no dir specified"
-    [[ -n $NO_PARALLEL_MAKE ]] && MAKE_JOBS=""
+    [ -z "$1" ] && logerr "------ Make in dir failed - no dir specified"
+    [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
     logmsg "------ make in $1"
     logcmd $MAKE $MAKE_JOBS -C $1 || \
         logerr "------ Make in $1 failed"
@@ -1033,7 +1055,7 @@ make_in() {
 # Helper function that can be called by build scripts to install in a specific
 # dir
 make_install_in() {
-    [[ -z $1 ]] && logerr "--- Make install in dir failed - no dir specified"
+    [ -z "$1" ] && logerr "--- Make install in dir failed - no dir specified"
     logmsg "------ make install in $1"
     logcmd $MAKE -C $1 DESTDIR=${DESTDIR} install || \
         logerr "------ Make install in $1 failed"
@@ -1047,8 +1069,8 @@ make_lintlibs() {
     LINTINCDIR=$3
     LINTINCFILES=$4
 
-    [[ -z ${LINTLIB} ]] && logerr "not lint library specified"
-    [[ -z ${LINTINCFILES} ]] && LINTINCFILES="*.h"
+    [ -z "$LINTLIB" ] && logerr "not lint library specified"
+    [ -z $"LINTINCFILES" ] && LINTINCFILES="*.h"
 
     cat <<EOF > ${DTMPDIR}/${PKGD}_llib-l${LINTLIB}
 /* LINTLIBRARY */
@@ -1057,30 +1079,26 @@ make_lintlibs() {
 #undef _LARGEFILE_SOURCE
 EOF
     pushd ${DESTDIR}${LINTINCDIR} > /dev/null
-	sh -c "eval /usr/gnu/bin/ls -U ${LINTINCFILES}" | \
-	    sed -e 's/\(.*\)/#include <\1>/' >> ${DTMPDIR}/${PKGD}_llib-l${LINTLIB}
+    sh -c "eval /usr/gnu/bin/ls -U ${LINTINCFILES}" | \
+        sed -e 's/\(.*\)/#include <\1>/' >> ${DTMPDIR}/${PKGD}_llib-l${LINTLIB}
     popd > /dev/null
 
     pushd ${DESTDIR}${LINTLIBDIR} > /dev/null
     logcmd /opt/sunstudio12.1/bin/lint -nsvx -I${DESTDIR}${LINTINCDIR} \
-	    -o ${LINTLIB} ${DTMPDIR}/${PKGD}_llib-l${LINTLIB} || \
-	    logerr "failed to generate 32bit lint library ${LINTLIB}"
+        -o ${LINTLIB} ${DTMPDIR}/${PKGD}_llib-l${LINTLIB} || \
+        logerr "failed to generate 32bit lint library ${LINTLIB}"
     popd > /dev/null
 
     pushd ${DESTDIR}${LINTLIBDIR}/amd64 > /dev/null
     logcmd /opt/sunstudio12.1/bin/lint -nsvx -I${DESTDIR}${LINTINCDIR} -m64 \
-	    -o ${LINTLIB} ${DTMPDIR}/${PKGD}_llib-l${LINTLIB} || \
-	    logerr "failed to generate 64bit lint library ${LINTLIB}"
+        -o ${LINTLIB} ${DTMPDIR}/${PKGD}_llib-l${LINTLIB} || \
+        logerr "failed to generate 64bit lint library ${LINTLIB}"
     popd > /dev/null
 }
 
 build() {
-    if [[ $BUILDARCH == "32" || $BUILDARCH == "both" ]]; then
-        build32
-    fi
-    if [[ $BUILDARCH == "64" || $BUILDARCH == "both" ]]; then
-        build64
-    fi
+    [[ $BUILDARCH =~ ^(32|both)$ ]] && build32
+    [[ $BUILDARCH =~ ^(64|both)$ ]] && build64
 }
 
 build32() {
@@ -1121,16 +1139,19 @@ run_testsuite() {
 #############################################################################
 # Build function for python programs
 #############################################################################
+
 pre_python_32() {
     logmsg "prepping 32bit python build"
 }
+
 pre_python_64() {
     logmsg "prepping 64bit python build"
 }
+
 python_build() {
-    if [[ -z "$PYTHON" ]]; then logerr "PYTHON not set"; fi
-    if [[ -z "$PYTHONPATH" ]]; then logerr "PYTHONPATH not set"; fi
-    if [[ -z "$PYTHONLIB" ]]; then logerr "PYTHONLIB not set"; fi
+    [ -z "$PYTHON" ] && logerr "PYTHON not set"
+    [ -z "$PYTHONPATH" ] && logerr "PYTHONPATH not set"
+    [ -z "$PYTHONLIB" ] && logerr "PYTHONLIB not set"
     logmsg "Building using python setup.py"
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
@@ -1157,7 +1178,8 @@ python_build() {
         logerr "--- install failed"
     popd > /dev/null
 
-    mv $DESTDIR/usr/lib/python$PYTHONVER/site-packages $DESTDIR/usr/lib/python$PYTHONVER/vendor-packages ||
+    mv $DESTDIR/usr/lib/python$PYTHONVER/site-packages \
+        $DESTDIR/usr/lib/python$PYTHONVER/vendor-packages ||
         logerr "Cannot move from site-packages to vendor-packages"
 }
 
@@ -1167,26 +1189,23 @@ python_build() {
 # Detects whether to use Build.PL or Makefile.PL
 # Note: Build.PL probably needs Module::Build installed
 #############################################################################
+
 siteperl_to_vendor() {
     logcmd mv $DESTDIR/usr/perl5/site_perl $DESTDIR/usr/perl5/vendor_perl \
         || logerr "can't move to vendor_perl"
 }
 
 buildperl() {
-    if [[ -f $SRCDIR/${PROG}-${VER}.env ]]; then
+    if [ -f "$SRCDIR/${PROG}-${VER}.env" ]; then
         logmsg "Sourcing environment file: $SRCDIR/${PROG}-${VER}.env"
         source $SRCDIR/${PROG}-${VER}.env
     fi
-    if [[ $BUILDARCH == "32" || $BUILDARCH == "both" ]]; then
-        buildperl32
-    fi
-    if [[ $BUILDARCH == "64" || $BUILDARCH == "both" ]]; then
-        buildperl64
-    fi
+    [[ $BUILDARCH =~ ^(32|both)$ ]] && buildperl32
+    [[ $BUILDARCH =~ ^(64|both)$ ]] && buildperl64
 }
 
 buildperl32() {
-    if [[ -f $SRCDIR/${PROG}-${VER}.env32 ]]; then
+    if [ -f "$SRCDIR/${PROG}-${VER}.env32" ]; then
         logmsg "Sourcing environment file: $SRCDIR/${PROG}-${VER}.env32"
         source $SRCDIR/${PROG}-${VER}.env32
     fi
@@ -1196,17 +1215,17 @@ buildperl32() {
     local OPTS
     OPTS=${MAKEFILE_OPTS//_ARCH_/}
     OPTS=${OPTS//_ARCHBIN_/$ISAPART}
-    if [[ -f Makefile.PL ]]; then
+    if [ -f Makefile.PL ]; then
         make_clean
         makefilepl32 $OPTS
         make_prog
-        [[ -n $PERL_MAKE_TEST ]] && make_param test
+        [ -n "$PERL_MAKE_TEST" ] && make_param test
         make_pure_install
-    elif [[ -f Build.PL ]]; then
+    elif [ -f Build.PL ]; then
         build_clean
         buildpl32 $OPTS
         build_prog
-        [[ -n $PERL_MAKE_TEST ]] && build_test
+        [ -n "$PERL_MAKE_TEST" ] && build_test
         build_install
     fi
     popd > /dev/null
@@ -1215,7 +1234,7 @@ buildperl32() {
 }
 
 buildperl64() {
-    if [[ -f $SRCDIR/${PROG}-${VER}.env64 ]]; then
+    if [ -f "$SRCDIR/${PROG}-${VER}.env64" ]; then
         logmsg "Sourcing environment file: $SRCDIR/${PROG}-${VER}.env64"
         source $SRCDIR/${PROG}-${VER}.env64
     fi
@@ -1224,17 +1243,17 @@ buildperl64() {
     local OPTS
     OPTS=${MAKEFILE_OPTS//_ARCH_/$ISAPART64}
     OPTS=${OPTS//_ARCHBIN_/$ISAPART64}
-    if [[ -f Makefile.PL ]]; then
+    if [ -f Makefile.PL ]; then
         make_clean
         makefilepl64 $OPTS
         make_prog
-        [[ -n $PERL_MAKE_TEST ]] && make_param test
+        [ -n "$PERL_MAKE_TEST" ] && make_param test
         make_pure_install
-    elif [[ -f Build.PL ]]; then
+    elif [ -f Build.PL ]; then
         build_clean
         buildpl64 $OPTS
         build_prog
-        [[ -n $PERL_MAKE_TEST ]] && build_test
+        [ -n "$PERL_MAKE_TEST" ] && build_test
         build_install
     fi
     popd > /dev/null
@@ -1307,22 +1326,22 @@ test_if_core() {
 #############################################################################
 # Scan the destination install and strip the non-stipped ELF objects
 #############################################################################
+
 strip_install() {
     logmsg "Stripping installation"
-    pushd $DESTDIR > /dev/null || logerr "Cannot change to installation directory"
-    while read file
-    do
-        if [[ "$1" = "-x" ]]; then
+    pushd $DESTDIR > /dev/null || logerr "Cannot change to $DESTDIR"
+    while read file; do
+        if [ "$1" = "-x" ]; then
             ACTION=$(file $file | grep ELF | egrep -v "(, stripped|debugging)")
         else
             ACTION=$(file $file | grep ELF | grep "not stripped")
         fi
-        if [[ -n "$ACTION" ]]; then
-          logmsg "------ stripping $file"
-          MODE=$(stat -c %a "$file")
-          logcmd chmod 644 "$file" || logerr "chmod failed: $file"
-          logcmd strip $* "$file" || logerr "strip failed: $file"
-          logcmd chmod $MODE "$file" || logerr "chmod failed: $file"
+        if [ -n "$ACTION" ]; then
+            logmsg "------ stripping $file"
+            MODE=$(stat -c %a "$file")
+            logcmd chmod 644 "$file" || logerr "chmod failed: $file"
+            logcmd strip $* "$file" || logerr "strip failed: $file"
+            logcmd chmod $MODE "$file" || logerr "chmod failed: $file"
         fi
     done < <(find . -depth -type f)
     popd > /dev/null
@@ -1331,15 +1350,17 @@ strip_install() {
 #############################################################################
 # Clean up and print Done message
 #############################################################################
+
 clean_up() {
     logmsg "Cleaning up"
-    if [[ -z $DONT_REMOVE_INSTALL_DIR ]]; then
+    if [ -z "$DONT_REMOVE_INSTALL_DIR" ]; then
         logmsg "--- Removing temporary install directory $DESTDIR"
         logcmd chmod -R u+w $DESTDIR > /dev/null 2>&1
         logcmd rm -rf $DESTDIR || \
             logerr "Failed to remove temporary install directory"
         logmsg "--- Cleaning up temporary manifest and transform files"
-        logcmd rm -f $P5M_INT $P5M_INT2 $P5M_INT3 $P5M_FINAL $MY_MOG_FILE $MANUAL_DEPS || \
+        logcmd rm -f $P5M_INT $P5M_INT2 $P5M_INT3 $P5M_FINAL \
+            $MY_MOG_FILE $MANUAL_DEPS || \
             logerr "Failed to remove temporary manifest and transform files"
         logmsg "Done."
     fi
@@ -1349,6 +1370,7 @@ clean_up() {
 # Helper function that will let you save a predefined function so you can
 # override it and call it later
 #############################################################################
+
 save_function() {
     local ORIG_FUNC=$(declare -f $1)
     local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
