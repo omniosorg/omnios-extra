@@ -198,7 +198,8 @@ push_pkgs() {
     logmsg "Staging illumos packages to $STAGE_REPO"
     logcmd pkgmerge -d $STAGE_REPO \
 	-s debug.illumos=false,packages/i386/nightly-nd/repo.redist/ \
-	-s debug.illumos=true,packages/i386/nightly/repo.redist/
+	-s debug.illumos=true,packages/i386/nightly/repo.redist/ \
+	$FLAVOR
 
     republish_packages $STAGE_REPO
 
