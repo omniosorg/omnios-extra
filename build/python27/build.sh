@@ -37,7 +37,7 @@ SUMMARY="$PROG"
 DESC="$SUMMARY"
 
 BUILD_DEPENDS_IPS="developer/build/autoconf"
-DEPENDS_IPS="system/library/gcc-5-runtime library/zlib library/libffi@$FFIVERS
+DEPENDS_IPS="system/library/gcc-5-runtime library/zlib library/libffi
 	library/readline database/sqlite-3 compress/bzip2 library/libxml2
 	library/ncurses library/security/openssl"
 XFORM_ARGS="-D PYTHONVER=$PYTHONVER"
@@ -47,25 +47,28 @@ CFLAGS="$CFLAGS -std=c99"
 LDFLAGS32="-L/usr/gnu/lib -R/usr/gnu/lib"
 LDFLAGS64="-L/usr/gnu/lib/amd64 -R/usr/gnu/lib/amd64"
 CPPFLAGS="$CPPFLAGS -I/usr/include/ncurses -D_LARGEFILE64_SOURCE"
-CPPFLAGS32="-I/usr/lib/libffi-$FFIVERS/include"
-CPPFLAGS64="-I/usr/lib/amd64/libffi-$FFIVERS/include"
-CONFIGURE_OPTS="--enable-shared
+CPPFLAGS64="`pkg-config --cflags libffi`"
+CPPFLAGS32="${CPPFLAGS64/amd64?/}"
+CONFIGURE_OPTS="
+	--enable-shared
+	--with-dtrace
 	--with-system-ffi
 	ac_cv_opt_olimit_ok=no
-	ac_cv_olimit_ok=no"
+	ac_cv_olimit_ok=no
+"
 
 preprep_build() {
-    pushd $TMPDIR/$BUILDDIR > /dev/null || logerr "Cannot change to build directory"
-    /usr/bin/autoheader || logerr "autoheaer failed"
-    /usr/bin/autoconf || logerr "autoreconf failed"
-    popd > /dev/null
+    run_autoheader
+    run_autoconf
 }
 
 post_config() {
-    pushd $TMPDIR/$BUILDDIR > /dev/null || logerr "Cannot change to build directory"
+    pushd $TMPDIR/$BUILDDIR > /dev/null \
+        || logerr "Cannot change to build directory"
     perl -pi -e 's/(^\#define _POSIX_C_SOURCE.*)/\/* $$1 *\//' pyconfig.h
     perl -pi -e 's/^(\#define _XOPEN_SOURCE.*)/\/* $$1 *\//' pyconfig.h
     perl -pi -e 's/^(\#define _XOPEN_SOURCE_EXTENDED.*)/\/* $$1 *\//' pyconfig.h
+    [ -f Include/pydtrace_offsets.sh ] && chmod +x Include/pydtrace_offsets.sh
     popd > /dev/null
 }
 
@@ -83,7 +86,7 @@ configure64() {
 
 make_prog32() {
     post_config
-    [[ -n $NO_PARALLEL_MAKE ]] && MAKE_JOBS=""
+    [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
     logmsg "--- make"
     logcmd $MAKE $MAKE_JOBS DFLAGS=-32 || \
         logerr "--- Make failed"
@@ -91,9 +94,10 @@ make_prog32() {
 
 make_prog64() {
     post_config
-    [[ -n $NO_PARALLEL_MAKE ]] && MAKE_JOBS=""
+    [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
     logmsg "--- make"
-    logcmd $MAKE $MAKE_JOBS DFLAGS=-64 DESTSHARED=/usr/lib/python2.7/lib-dynload || \
+    logcmd $MAKE $MAKE_JOBS DFLAGS=-64 \
+        DESTSHARED=/usr/lib/python2.7/lib-dynload || \
         logerr "--- Make failed"
 }
 
@@ -104,21 +108,25 @@ make_install32() {
     sed 's/^/    /g' < $DESTDIR/usr/lib/python2.7/_sysconfigdata.py > \
 	    /tmp/_sysconfigdata-32-$$.py
 
-
     # Move pyconfig.h header to 32-bit-specific version.
     mv $DESTDIR/usr/include/python2.7/pyconfig.h \
     	$DESTDIR/usr/include/python2.7/pyconfig-32.h
 }
+
 make_install64() {
     logmsg "--- make install"
-    logcmd $MAKE DESTDIR=${DESTDIR} install DESTSHARED=/usr/lib/python2.7/lib-dynload || \
+    logcmd $MAKE DESTDIR=${DESTDIR} install \
+        DESTSHARED=/usr/lib/python2.7/lib-dynload || \
         logerr "--- Make install failed"
-    rm $DESTDIR/usr/bin/amd64/python || logerr "--- cannot remove arch hardlink"
-    rm $DESTDIR/usr/lib/python2.7/config/libpython2.7.a || logerr "--- cannot remove static lib"
-    (cd $DESTDIR/usr/bin && ln -s python2.7 python) ||  logerr "--- could not setup python softlink"
+    rm $DESTDIR/usr/bin/amd64/python \
+        || logerr "--- cannot remove arch hardlink"
+    rm $DESTDIR/usr/lib/python2.7/config/libpython2.7.a \
+        || logerr "--- cannot remove static lib"
+    (cd $DESTDIR/usr/bin && ln -s python2.7 python) \
+        || logerr "--- could not setup python softlink"
     # Copy off _sysconfigdata.py
-    sed 's/^/    /g' < $DESTDIR/usr/lib/python2.7/_sysconfigdata.py > \
-	    /tmp/_sysconfigdata-64-$$.py
+    sed 's/^/    /g' < $DESTDIR/usr/lib/python2.7/_sysconfigdata.py \
+	    > /tmp/_sysconfigdata-64-$$.py
     # Generate 32/64-bit agile _sysconfigdata.py
     echo "import sys" > $DESTDIR/usr/lib/python2.7/_sysconfigdata.py
     echo "" >> $DESTDIR/usr/lib/python2.7/_sysconfigdata.py
@@ -138,7 +146,8 @@ make_install64() {
     mv $DESTDIR/usr/include/python2.7/pyconfig.h \
     	$DESTDIR/usr/include/python2.7/pyconfig-64.h
 
-    logcmd cp $SRCDIR/files/pyconfig.h $DESTDIR/usr/include/python2.7/pyconfig.h
+    logcmd cp $SRCDIR/files/pyconfig.h \
+        $DESTDIR/usr/include/python2.7/pyconfig.h
 }
 
 install_license(){

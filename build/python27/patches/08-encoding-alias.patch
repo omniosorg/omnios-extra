@@ -1,6 +1,7 @@
---- Python-2.7.6/Lib/encodings/aliases.py.~1~	2013-11-09 23:36:40.000000000 -0800
-+++ Python-2.7.6/Lib/encodings/aliases.py	2014-05-14 13:12:20.046910463 -0700
-@@ -73,6 +73,7 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Lib/encodings/aliases.py Python-2.7.14/Lib/encodings/aliases.py
+--- Python-2.7.14~/Lib/encodings/aliases.py	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Lib/encodings/aliases.py	2017-09-23 22:33:31.352277636 +0000
+@@ -73,6 +73,7 @@ aliases = {
  
      # cp1251 codec
      '1251'               : 'cp1251',
@@ -8,7 +9,7 @@
      'windows_1251'       : 'cp1251',
  
      # cp1252 codec
-@@ -222,6 +223,7 @@
+@@ -222,6 +223,7 @@ aliases = {
      'u_jis'              : 'euc_jp',
  
      # euc_kr codec
@@ -16,7 +17,7 @@
      'euckr'              : 'euc_kr',
      'korean'             : 'euc_kr',
      'ksc5601'            : 'euc_kr',
-@@ -462,6 +464,7 @@
+@@ -462,6 +464,7 @@ aliases = {
      'shiftjis'           : 'shift_jis',
      'sjis'               : 'shift_jis',
      's_jis'              : 'shift_jis',
@@ -24,7 +25,7 @@
  
      # shift_jis_2004 codec
      'shiftjis2004'       : 'shift_jis_2004',
-@@ -481,6 +484,7 @@
+@@ -481,6 +484,7 @@ aliases = {
      'tis_620_0'          : 'tis_620',
      'tis_620_2529_0'     : 'tis_620',
      'tis_620_2529_1'     : 'tis_620',

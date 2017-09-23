@@ -2,8 +2,58 @@ This patch provides Python ucred support.
 
 diff --git Python-2.6.4/Modules/ucred.c Python-2.6.4/Modules/ucred.c
 new file mode 100644
---- /dev/null
-+++ Python-2.6.4/Modules/ucred.c
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Lib/test/ucredtest.py Python-2.7.14/Lib/test/ucredtest.py
+--- Python-2.7.14~/Lib/test/ucredtest.py	1970-01-01 00:00:00.000000000 +0000
++++ Python-2.7.14/Lib/test/ucredtest.py	2017-09-23 22:33:30.481128584 +0000
+@@ -0,0 +1,45 @@
++#!/usr/bin/python2.7
++
++import ucred
++import os
++
++uc = ucred.get(os.getpid())
++
++print "pid = %d" % uc.getpid()
++print "euid = %d" % uc.geteuid()
++print "ruid = %d" % uc.getruid()
++print "suid = %d" % uc.getsuid()
++print "egid = %d" % uc.getegid()
++print "rgid = %d" % uc.getrgid()
++print "sgid = %d" % uc.getsgid()
++print "zoneid = %d" % uc.getzoneid()
++print "projid = %d" % uc.getprojid()
++print "groups = %s" % uc.getgroups()
++print "label = %s" % uc.getlabel()
++
++print "getpflags(0x1) = %d" % uc.getpflags(0x1)
++print "getpflags(0x2) = %d" % uc.getpflags(0x2)
++print "has_priv(Effective, proc_fork) = %d" % uc.has_priv("Effective", "proc_fork")
++print "has_priv(Permitted, proc_fork) = %d" % uc.has_priv("Permitted", "proc_fork")
++print "has_priv(Inheritable, proc_fork) = %d" % uc.has_priv("Inheritable", "proc_fork")
++print "has_priv(Limit, file_setid) = %d" % uc.has_priv("Limit", "file_setid")
++print "has_priv(Effective, file_setid) = %d" % uc.has_priv("Effective", "file_setid")
++try:
++    uc.has_priv("Effective", "proc_bork")
++except OSError, e:
++    print e
++try:
++    uc.has_priv("Defective", "proc_fork")
++except OSError, e:
++    print e
++try:
++    uc.has_priv("Defective", "proc_bork")
++except OSError, e:
++    print e
++
++del uc
++uc = ucred.ucred()
++try:
++    uc.getpid()
++except OSError, e:
++    print e
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Modules/ucred.c Python-2.7.14/Modules/ucred.c
+--- Python-2.7.14~/Modules/ucred.c	1970-01-01 00:00:00.000000000 +0000
++++ Python-2.7.14/Modules/ucred.c	2017-09-23 22:33:30.481391123 +0000
 @@ -0,0 +1,390 @@
 +/*
 + * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -395,13 +445,14 @@ new file mode 100644
 +
 +	PyModule_AddObject(m, "ucred", (PyObject *)&pyucred_type);
 +}
---- Python-2.7.6/setup.py.~2~	2014-05-14 13:07:52.803164982 -0700
-+++ Python-2.7.6/setup.py	2014-05-14 13:07:52.917214713 -0700
-@@ -1536,6 +1536,13 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/setup.py Python-2.7.14/setup.py
+--- Python-2.7.14~/setup.py	2017-09-23 22:33:28.700380145 +0000
++++ Python-2.7.14/setup.py	2017-09-23 22:33:30.481978327 +0000
+@@ -1568,6 +1568,13 @@ class PyBuildExt(build_ext):
          else:
              missing.append('dl')
  
-+        # ucred module (Solaris)
++        # ucred module (OmniOS)
 +        ucred_inc = find_file('ucred.h', [], inc_dirs)
 +        tsol_inc = find_file('tsol/label.h', [], inc_dirs)
 +        if ucred_inc is not None and tsol_inc is not None:
@@ -411,51 +462,3 @@ new file mode 100644
          # Thomas Heller's _ctypes module
          self.detect_ctypes(inc_dirs, lib_dirs)
  
---- /dev/null	2011-02-12 03:14:16.000000000 -0600
-+++ Python-2.6.4/Lib/test/ucredtest.py	2011-01-20 13:52:42.945657919 -0600
-@@ -0,0 +1,45 @@
-+#!/usr/bin/python2.7
-+
-+import ucred
-+import os
-+
-+uc = ucred.get(os.getpid())
-+
-+print "pid = %d" % uc.getpid()
-+print "euid = %d" % uc.geteuid()
-+print "ruid = %d" % uc.getruid()
-+print "suid = %d" % uc.getsuid()
-+print "egid = %d" % uc.getegid()
-+print "rgid = %d" % uc.getrgid()
-+print "sgid = %d" % uc.getsgid()
-+print "zoneid = %d" % uc.getzoneid()
-+print "projid = %d" % uc.getprojid()
-+print "groups = %s" % uc.getgroups()
-+print "label = %s" % uc.getlabel()
-+
-+print "getpflags(0x1) = %d" % uc.getpflags(0x1)
-+print "getpflags(0x2) = %d" % uc.getpflags(0x2)
-+print "has_priv(Effective, proc_fork) = %d" % uc.has_priv("Effective", "proc_fork")
-+print "has_priv(Permitted, proc_fork) = %d" % uc.has_priv("Permitted", "proc_fork")
-+print "has_priv(Inheritable, proc_fork) = %d" % uc.has_priv("Inheritable", "proc_fork")
-+print "has_priv(Limit, file_setid) = %d" % uc.has_priv("Limit", "file_setid")
-+print "has_priv(Effective, file_setid) = %d" % uc.has_priv("Effective", "file_setid")
-+try:
-+    uc.has_priv("Effective", "proc_bork")
-+except OSError, e:
-+    print e
-+try:
-+    uc.has_priv("Defective", "proc_fork")
-+except OSError, e:
-+    print e
-+try:
-+    uc.has_priv("Defective", "proc_bork")
-+except OSError, e:
-+    print e
-+
-+del uc
-+uc = ucred.ucred()
-+try:
-+    uc.getpid()
-+except OSError, e:
-+    print e

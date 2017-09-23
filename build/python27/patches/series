@@ -3,7 +3,7 @@
 02-setup.patch 
 03-vendor-packages.patch 
 04-solaris-64-bit.patch 
-05-dtrace.patch 
+05-dtrace.patch
 06-ucred.patch 
 07-dlpi.patch 
 08-encoding-alias.patch 

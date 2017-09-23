@@ -1,6 +1,7 @@
---- Python-2.7.8/setup.py.~7~	2014-07-09 10:01:47.977524330 +0400
-+++ Python-2.7.8/setup.py	2014-07-09 10:06:22.690906040 +0400
-@@ -1349,20 +1349,37 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/setup.py Python-2.7.14/setup.py
+--- Python-2.7.14~/setup.py	2017-09-23 22:33:36.173762596 +0000
++++ Python-2.7.14/setup.py	2017-09-23 22:33:36.609931190 +0000
+@@ -1371,20 +1371,37 @@ class PyBuildExt(build_ext):
  
          # Curses support, requiring the System V version of curses, often
          # provided by the ncurses library.
@@ -8,7 +9,7 @@
 +        curses_inc_dirs = []
 +        curses_incs = []
 +        if host_platform == 'sunos5':
-+            # look for ncurses in /usr/gnu on Solaris
++            # look for ncurses in /usr/gnu on OmniOS
 +            curses_inc_dirs.append('/usr/include/ncurses')
 +            curses_lib_dirs.append('/usr/gnu/lib')
 +            if os.path.exists('/usr/gnu/lib/sparcv9'):
@@ -46,7 +47,7 @@
                  # OSX has an old Berkeley curses, not good enough for
                  # the _curses module.
              if (self.compiler.find_library_file(lib_dirs, 'terminfo')):
-@@ -1379,10 +1396,12 @@
+@@ -1401,10 +1418,12 @@ class PyBuildExt(build_ext):
  
          # If the curses module is enabled, check for the panel module
          if (module_enabled(exts, '_curses') and

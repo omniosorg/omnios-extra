@@ -1,6 +1,7 @@
---- Python-2.7.6/configure.ac.~2~	2014-05-14 13:20:24.767295632 -0700
-+++ Python-2.7.6/configure.ac	2014-05-14 13:20:25.052695991 -0700
-@@ -1083,7 +1083,7 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/configure.ac Python-2.7.14/configure.ac
+--- Python-2.7.14~/configure.ac	2017-09-23 22:33:27.770433096 +0000
++++ Python-2.7.14/configure.ac	2017-09-23 22:33:32.227425851 +0000
+@@ -1091,7 +1091,7 @@ then
  	;;
  
      *)
