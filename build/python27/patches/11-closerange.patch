@@ -1,6 +1,7 @@
---- Python-2.7.6/Modules/posixmodule.c.~1~	2013-11-09 23:36:41.000000000 -0800
-+++ Python-2.7.6/Modules/posixmodule.c	2014-05-14 13:22:52.461187524 -0700
-@@ -6603,16 +6603,34 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Modules/posixmodule.c Python-2.7.14/Modules/posixmodule.c
+--- Python-2.7.14~/Modules/posixmodule.c	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Modules/posixmodule.c	2017-09-23 22:33:33.108838327 +0000
+@@ -6663,16 +6663,34 @@ PyDoc_STRVAR(posix_closerange__doc__,
  "closerange(fd_low, fd_high)\n\n\
  Closes all file descriptors in [fd_low, fd_high), ignoring errors.");
  

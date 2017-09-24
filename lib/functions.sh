@@ -49,7 +49,8 @@ process_opts() {
     AUTOINSTALL=
     DEPVER=
     SKIP_PKGLINT=
-    while getopts "bipf:ha:d:lr:" opt; do
+    REBASE_PATCHES=
+    while getopts "biPpf:ha:d:lr:" opt; do
         case $opt in
             h)
                 show_usage
@@ -64,6 +65,9 @@ process_opts() {
                 ;;
             p)
                 SCREENOUT=1
+                ;;
+            P)
+                REBASE_PATCHES=1
                 ;;
             b)
                 BATCH=1 # Batch mode - exit on error
@@ -104,6 +108,7 @@ show_usage() {
     echo "  -b        : batch mode (exit on errors without asking)"
     echo "  -i        : autoinstall mode (install build deps)"
     echo "  -p        : output all commands to the screen as well as log file"
+    echo "  -P        : re-base patches on latest source"
     echo "  -l        : skip pkglint check"
     echo "  -f FLAVOR : build a specific package flavor"
     echo "  -h        : print this help text"
@@ -428,6 +433,10 @@ run_inbuild() {
     popd > /dev/null
 }
 
+run_autoheader() {
+    run_inbuild autoheader
+}
+
 run_autoconf() {
     run_inbuild autoconf
 }
@@ -486,23 +495,6 @@ check_for_patches() {
     return 0
 }
 
-patch_source() {
-    if ! check_for_patches "in order to apply them"; then
-        logmsg "--- Not applying any patches"
-    else
-        logmsg "Applying patches"
-        # Read the series file for patch filenames
-        exec 3<"$SRCDIR/$PATCHDIR/series" # Open the series file with handle 3
-        pushd $TMPDIR/$BUILDDIR > /dev/null
-        while read LINE <&3 ; do
-            # Split Line into filename+args
-            patch_file $LINE
-        done
-        popd > /dev/null
-        exec 3<&- # Close the file
-    fi
-}
-
 patch_file() {
     FILENAME=$1
     shift
@@ -520,6 +512,57 @@ patch_file() {
     else
         logmsg "--- Applied patch $FILENAME"
     fi
+}
+
+apply_patches() {
+    if ! check_for_patches "in order to apply them"; then
+        logmsg "--- Not applying any patches"
+    else
+        logmsg "Applying patches"
+        # Read the series file for patch filenames
+        exec 3<"$SRCDIR/$PATCHDIR/series" # Open the series file with handle 3
+        pushd $TMPDIR/$BUILDDIR > /dev/null
+        while read LINE <&3 ; do
+            # Split Line into filename+args
+            patch_file $LINE
+        done
+        popd > /dev/null
+        exec 3<&- # Close the file
+    fi
+}
+
+rebase_patches() {
+    if ! check_for_patches "in order to re-base them"; then
+        logerr "--- No patches to re-base"
+    fi
+
+    logmsg "Re-basing patches"
+    # Read the series file for patch filenames
+    exec 3<"$SRCDIR/$PATCHDIR/series"
+    pushd $TMPDIR > /dev/null
+    while read LINE <&3 ; do
+        patchfile="$SRCDIR/$PATCHDIR/`echo $LINE | awk '{print $1}'`"
+        rsync -a --delete $BUILDDIR/ $BUILDDIR~/
+        (
+            cd $BUILDDIR
+            patch_file $LINE
+        )
+        mv $patchfile $patchfile~
+        # Extract the original patch header text
+        sed -n '
+            /^---/q
+            /^diff -pruN/q
+            p
+            ' < $patchfile~ > $patchfile
+        gdiff -pruN --exclude='*.orig' $BUILDDIR~ $BUILDDIR >> $patchfile
+        rm -f $patchfile~
+    done
+    popd > /dev/null
+    exec 3<&- # Close the file
+}
+
+patch_source() {
+    [ -n "$REBASE_PATCHES" ] && rebase_patches || apply_patches
 }
 
 #############################################################################

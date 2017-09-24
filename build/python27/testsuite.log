@@ -6,266 +6,269 @@ dl                 gdbm               imageop
 linuxaudiodev                                         
 To find the necessary bits, look in setup.py in detect_modules() for the module's name.
 
-== CPython 2.7.13 (default, Sep 1 2017, 10:58:39) [GCC 5.4.0]
+== CPython 2.7.14 (default, Sep 23 2017, 16:34:57) [GCC 5.4.0]
 ==   Solaris-2.11-i86pc-i386-64bit-ELF little-endian
-==   /data/omnios-build/omniosorg/_build/Python-2.7.13/build/test_python_19743
-Testing with flags: sys.flags(debug=0, py3k_warning=1, division_warning=1, division_new=0, inspect=0, interactive=0, optimize=0, dont_write_bytecode=0, no_user_site=0, no_site=0, ignore_environment=1, tabcheck=2, verbose=0, unicode=0, bytes_warning=0, hash_randomization=0)
-[  1/401] test_grammar
-[  2/401] test_opcodes
-[  3/401] test_dict
-[  4/401] test_builtin
-[  5/401] test_exceptions
-[  6/401] test_types
-[  7/401] test_unittest
-[  8/401] test_doctest
-[  9/401] test_doctest2
-[ 10/401] test_MimeWriter
-[ 11/401] test_SimpleHTTPServer
-[ 12/401] test_StringIO
-[ 13/401] test___all__
-[ 14/401] test___future__
-[ 15/401] test__locale
-[ 16/401] test__osx_support
-[ 17/401] test_abc
-[ 18/401] test_abstract_numbers
-[ 19/401] test_aepack
+==   /data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/build/test_python_5316
+== CPU count: 8
+Run tests sequentially
+0:00:00 load avg: 0.00 [  1/403] test_grammar
+0:00:00 load avg: 0.00 [  2/403] test_opcodes
+0:00:00 load avg: 0.00 [  3/403] test_dict
+0:00:00 load avg: 0.00 [  4/403] test_builtin
+0:00:00 load avg: 0.00 [  5/403] test_exceptions
+0:00:00 load avg: 0.00 [  6/403] test_types
+0:00:00 load avg: 0.00 [  7/403] test_unittest
+0:00:00 load avg: 0.00 [  8/403] test_doctest
+0:00:00 load avg: 0.00 [  9/403] test_doctest2
+0:00:00 load avg: 0.00 [ 10/403] test_MimeWriter
+0:00:00 load avg: 0.00 [ 11/403] test_SimpleHTTPServer
+0:00:00 load avg: 0.00 [ 12/403] test_StringIO
+0:00:01 load avg: 0.00 [ 13/403] test___all__
+0:00:02 load avg: 0.00 [ 14/403] test___future__
+0:00:02 load avg: 0.00 [ 15/403] test__locale
+0:00:02 load avg: 0.00 [ 16/403] test__osx_support
+0:00:02 load avg: 0.00 [ 17/403] test_abc
+0:00:02 load avg: 0.00 [ 18/403] test_abstract_numbers
+0:00:02 load avg: 0.00 [ 19/403] test_aepack
 test_aepack skipped -- No module named aetypes
-[ 20/401] test_aifc
-[ 21/401] test_al
+0:00:02 load avg: 0.00 [ 20/403] test_aifc -- test_aepack skipped
+0:00:02 load avg: 0.00 [ 21/403] test_al
 test_al skipped -- No module named al
-[ 22/401] test_anydbm
-[ 23/401] test_applesingle
+0:00:02 load avg: 0.00 [ 22/403] test_anydbm -- test_al skipped
+0:00:02 load avg: 0.00 [ 23/403] test_applesingle
 test_applesingle skipped -- No module named MacOS
-[ 24/401] test_argparse
-[ 25/401] test_array
-[ 26/401] test_ascii_formatd
-[ 27/401] test_ast
-[ 28/401] test_asynchat
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:02 load avg: 0.00 [ 24/403] test_argparse -- test_applesingle skipped
+0:00:03 load avg: 0.01 [ 25/403] test_array
+0:00:04 load avg: 0.02 [ 26/403] test_ascii_formatd
+0:00:04 load avg: 0.02 [ 27/403] test_ast
+0:00:04 load avg: 0.02 [ 28/403] test_asynchat
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[ 29/401] test_asyncore
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:12 load avg: 0.07 [ 29/403] test_asyncore
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[ 30/401] test_atexit
-[ 31/401] test_audioop
-[ 32/401] test_augassign
-[ 33/401] test_base64
-[ 34/401] test_bastion
-[ 35/401] test_bigaddrspace
-[ 36/401] test_bigmem
-[ 37/401] test_binascii
-[ 38/401] test_binhex
-[ 39/401] test_binop
-[ 40/401] test_bisect
-[ 41/401] test_bool
-[ 42/401] test_bsddb
+0:00:13 load avg: 0.07 [ 30/403] test_atexit
+0:00:13 load avg: 0.07 [ 31/403] test_audioop
+0:00:13 load avg: 0.07 [ 32/403] test_augassign
+0:00:13 load avg: 0.07 [ 33/403] test_base64
+0:00:14 load avg: 0.07 [ 34/403] test_bastion
+0:00:14 load avg: 0.07 [ 35/403] test_bigaddrspace
+0:00:14 load avg: 0.07 [ 36/403] test_bigmem
+0:00:14 load avg: 0.07 [ 37/403] test_binascii
+0:00:14 load avg: 0.07 [ 38/403] test_binhex
+0:00:14 load avg: 0.07 [ 39/403] test_binop
+0:00:14 load avg: 0.07 [ 40/403] test_bisect
+0:00:14 load avg: 0.07 [ 41/403] test_bool
+0:00:14 load avg: 0.07 [ 42/403] test_bsddb
 test_bsddb skipped -- No module named _bsddb
-[ 43/401] test_bsddb185
+0:00:14 load avg: 0.07 [ 43/403] test_bsddb185 -- test_bsddb skipped
 test_bsddb185 skipped -- No module named bsddb185
-[ 44/401] test_bsddb3
+0:00:14 load avg: 0.07 [ 44/403] test_bsddb3 -- test_bsddb185 skipped
 test_bsddb3 skipped -- No module named _bsddb
-[ 45/401] test_buffer
-[ 46/401] test_bufio
-[ 47/401] test_bytes
-[ 48/401] test_bz2
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:14 load avg: 0.07 [ 45/403] test_buffer -- test_bsddb3 skipped
+0:00:14 load avg: 0.07 [ 46/403] test_bufio
+0:00:15 load avg: 0.08 [ 47/403] test_bytes
+0:00:16 load avg: 0.08 [ 48/403] test_bz2
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[ 49/401] test_calendar
-[ 50/401] test_call
-[ 51/401] test_capi
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:16 load avg: 0.08 [ 49/403] test_calendar
+0:00:19 load avg: 0.10 [ 50/403] test_call
+0:00:19 load avg: 0.10 [ 51/403] test_capi
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[ 52/401] test_cd
+0:00:22 load avg: 0.12 [ 52/403] test_cd
 test_cd skipped -- No module named cd
-[ 53/401] test_cfgparser
-[ 54/401] test_cgi
-[ 55/401] test_charmapcodec
-[ 56/401] test_cl
+0:00:22 load avg: 0.12 [ 53/403] test_cfgparser -- test_cd skipped
+0:00:22 load avg: 0.12 [ 54/403] test_cgi
+0:00:22 load avg: 0.12 [ 55/403] test_charmapcodec
+0:00:22 load avg: 0.12 [ 56/403] test_cl
 test_cl skipped -- No module named cl
-[ 57/401] test_class
-[ 58/401] test_cmath
-[ 59/401] test_cmd
-[ 60/401] test_cmd_line
-[ 61/401] test_cmd_line_script
-[ 62/401] test_code
-[ 63/401] test_codeccallbacks
-[ 64/401] test_codecencodings_cn
-[ 65/401] test_codecencodings_hk
-[ 66/401] test_codecencodings_iso2022
-[ 67/401] test_codecencodings_jp
-[ 68/401] test_codecencodings_kr
-[ 69/401] test_codecencodings_tw
-[ 70/401] test_codecmaps_cn
+0:00:22 load avg: 0.12 [ 57/403] test_class -- test_cl skipped
+0:00:22 load avg: 0.12 [ 58/403] test_cmath
+0:00:22 load avg: 0.12 [ 59/403] test_cmd
+0:00:22 load avg: 0.12 [ 60/403] test_cmd_line
+0:00:23 load avg: 0.13 [ 61/403] test_cmd_line_script
+0:00:24 load avg: 0.14 [ 62/403] test_code
+0:00:24 load avg: 0.14 [ 63/403] test_codeccallbacks
+0:00:24 load avg: 0.14 [ 64/403] test_codecencodings_cn
+0:00:24 load avg: 0.14 [ 65/403] test_codecencodings_hk
+0:00:24 load avg: 0.14 [ 66/403] test_codecencodings_iso2022
+0:00:25 load avg: 0.15 [ 67/403] test_codecencodings_jp
+0:00:25 load avg: 0.15 [ 68/403] test_codecencodings_kr
+0:00:25 load avg: 0.15 [ 69/403] test_codecencodings_tw
+0:00:25 load avg: 0.15 [ 70/403] test_codecmaps_cn
 test_codecmaps_cn skipped -- Use of the `urlfetch' resource not enabled
-[ 71/401] test_codecmaps_hk
+0:00:25 load avg: 0.15 [ 71/403] test_codecmaps_hk -- test_codecmaps_cn skipped (resource denied)
 test_codecmaps_hk skipped -- Use of the `urlfetch' resource not enabled
-[ 72/401] test_codecmaps_jp
+0:00:25 load avg: 0.15 [ 72/403] test_codecmaps_jp -- test_codecmaps_hk skipped (resource denied)
 test_codecmaps_jp skipped -- Use of the `urlfetch' resource not enabled
-[ 73/401] test_codecmaps_kr
+0:00:25 load avg: 0.15 [ 73/403] test_codecmaps_kr -- test_codecmaps_jp skipped (resource denied)
 test_codecmaps_kr skipped -- Use of the `urlfetch' resource not enabled
-[ 74/401] test_codecmaps_tw
+0:00:26 load avg: 0.15 [ 74/403] test_codecmaps_tw -- test_codecmaps_kr skipped (resource denied)
 test_codecmaps_tw skipped -- Use of the `urlfetch' resource not enabled
-[ 75/401] test_codecs
-[ 76/401] test_codeop
-[ 77/401] test_coercion
-[ 78/401] test_collections
-[ 79/401] test_colorsys
-[ 80/401] test_commands
-[ 81/401] test_compare
-[ 82/401] test_compile
-[ 83/401] test_compileall
-[ 84/401] test_compiler
-[ 85/401] test_complex
-[ 86/401] test_complex_args
-[ 87/401] test_contains
-[ 88/401] test_contextlib
-[ 89/401] test_cookie
-[ 90/401] test_cookielib
-[ 91/401] test_copy
-[ 92/401] test_copy_reg
-[ 93/401] test_cpickle
-[ 94/401] test_cprofile
-[ 95/401] test_crypt
-[ 96/401] test_csv
-[ 97/401] test_ctypes
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:26 load avg: 0.16 [ 75/403] test_codecs -- test_codecmaps_tw skipped (resource denied)
+0:00:27 load avg: 0.17 [ 76/403] test_codeop
+0:00:27 load avg: 0.17 [ 77/403] test_coercion
+0:00:27 load avg: 0.17 [ 78/403] test_collections
+0:00:27 load avg: 0.17 [ 79/403] test_colorsys
+0:00:27 load avg: 0.17 [ 80/403] test_commands
+0:00:27 load avg: 0.17 [ 81/403] test_compare
+0:00:27 load avg: 0.17 [ 82/403] test_compile
+0:00:27 load avg: 0.17 [ 83/403] test_compileall
+0:00:27 load avg: 0.17 [ 84/403] test_compiler
+0:00:28 load avg: 0.17 [ 85/403] test_complex
+0:00:28 load avg: 0.18 [ 86/403] test_complex_args
+0:00:28 load avg: 0.18 [ 87/403] test_contains
+0:00:28 load avg: 0.18 [ 88/403] test_contextlib
+0:00:28 load avg: 0.18 [ 89/403] test_cookie
+0:00:28 load avg: 0.18 [ 90/403] test_cookielib
+0:00:28 load avg: 0.18 [ 91/403] test_copy
+0:00:28 load avg: 0.18 [ 92/403] test_copy_reg
+0:00:28 load avg: 0.18 [ 93/403] test_cpickle
+0:00:30 load avg: 0.20 [ 94/403] test_cprofile
+0:00:30 load avg: 0.20 [ 95/403] test_crypt
+0:00:30 load avg: 0.20 [ 96/403] test_csv
+0:00:30 load avg: 0.20 [ 97/403] test_ctypes
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[ 98/401] test_curses
+0:00:31 load avg: 0.21 [ 98/403] test_curses
 test_curses skipped -- Use of the `curses' resource not enabled
-[ 99/401] test_datetime
-[100/401] test_dbm
-[101/401] test_decimal
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:31 load avg: 0.21 [ 99/403] test_datetime -- test_curses skipped (resource denied)
+0:00:32 load avg: 0.23 [100/403] test_dbm
+0:00:32 load avg: 0.23 [101/403] test_decimal
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[102/401] test_decorators
-[103/401] test_defaultdict
-[104/401] test_deque
-[105/401] test_descr
-[106/401] test_descrtut
-[107/401] test_dictcomps
-[108/401] test_dictviews
-[109/401] test_difflib
-[110/401] test_dircache
-[111/401] test_dis
-[112/401] test_distutils
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/distutils/command/build_ext.py:686: DeprecationWarning: apply() not supported in 3.x; use func(*args, **kwargs)
+0:00:33 load avg: 0.24 [102/403] test_decorators
+0:00:33 load avg: 0.24 [103/403] test_defaultdict
+0:00:33 load avg: 0.24 [104/403] test_deque
+0:00:35 load avg: 0.26 [105/403] test_descr
+0:00:36 load avg: 0.27 [106/403] test_descrtut
+0:00:36 load avg: 0.27 [107/403] test_dictcomps
+0:00:36 load avg: 0.27 [108/403] test_dictviews
+0:00:36 load avg: 0.27 [109/403] test_difflib
+0:00:37 load avg: 0.29 [110/403] test_dircache
+0:00:38 load avg: 0.30 [111/403] test_dis
+0:00:38 load avg: 0.30 [112/403] test_distutils
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/distutils/command/build_ext.py:686: DeprecationWarning: apply() not supported in 3.x; use func(*args, **kwargs)
   path = apply(os.path.join, ext_path)
 test test_distutils failed -- multiple errors occurred; run in verbose mode for details
-[113/401/1] test_dl
+0:00:39 load avg: 0.30 [113/403/1] test_dl -- test_distutils failed
 test_dl skipped -- No module named dl
-[114/401/1] test_docxmlrpc
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:39 load avg: 0.30 [114/403/1] test_docxmlrpc -- test_dl skipped
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[115/401/1] test_dumbdbm
-[116/401/1] test_dummy_thread
-[117/401/1] test_dummy_threading
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:42 load avg: 0.33 [115/403/1] test_dumbdbm
+0:00:43 load avg: 0.33 [116/403/1] test_dummy_thread
+0:00:43 load avg: 0.33 [117/403/1] test_dummy_threading
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[118/401/1] test_email
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:43 load avg: 0.33 [118/403/1] test_email
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[119/401/1] test_email_codecs
-[120/401/1] test_email_renamed
-[121/401/1] test_ensurepip
-[122/401/1] test_enumerate
-[123/401/1] test_eof
-[124/401/1] test_epoll
-[125/401/1] test_errno
-[126/401/1] test_exception_variations
-[127/401/1] test_extcall
-[128/401/1] test_fcntl
-[129/401/1] test_file
-[130/401/1] test_file2k
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:46 load avg: 0.36 [119/403/1] test_email_codecs
+0:00:46 load avg: 0.36 [120/403/1] test_email_renamed
+0:00:47 load avg: 0.38 [121/403/1] test_ensurepip
+0:00:47 load avg: 0.38 [122/403/1] test_enumerate
+0:00:47 load avg: 0.38 [123/403/1] test_eof
+0:00:47 load avg: 0.38 [124/403/1] test_epoll
+0:00:49 load avg: 0.41 [125/403/1] test_errno
+0:00:49 load avg: 0.41 [126/403/1] test_exception_variations
+0:00:49 load avg: 0.41 [127/403/1] test_extcall
+0:00:49 load avg: 0.41 [128/403/1] test_fcntl
+0:00:49 load avg: 0.41 [129/403/1] test_file
+0:00:49 load avg: 0.41 [130/403/1] test_file2k
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[131/401/1] test_file_eintr
-[132/401/1] test_filecmp
-[133/401/1] test_fileinput
-[134/401/1] test_fileio
-[135/401/1] test_float
-[136/401/1] test_fnmatch
-[137/401/1] test_fork1
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:57 load avg: 0.59 [131/403/1] test_file_eintr
+0:00:58 load avg: 0.61 [132/403/1] test_filecmp
+0:00:58 load avg: 0.61 [133/403/1] test_fileinput
+0:00:58 load avg: 0.61 [134/403/1] test_fileio
+0:00:58 load avg: 0.61 [135/403/1] test_float
+0:00:58 load avg: 0.61 [136/403/1] test_fnmatch
+0:00:58 load avg: 0.61 [137/403/1] test_fork1
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[138/401/1] test_format
-[139/401/1] test_fpformat
-[140/401/1] test_fractions
-[141/401/1] test_frozen
-[142/401/1] test_ftplib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:01:05 load avg: 0.64 [138/403/1] test_format
+0:01:06 load avg: 0.64 [139/403/1] test_fpformat
+0:01:06 load avg: 0.64 [140/403/1] test_fractions
+0:01:06 load avg: 0.64 [141/403/1] test_frozen
+0:01:06 load avg: 0.64 [142/403/1] test_ftplib
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[143/401/1] test_funcattrs
-[144/401/1] test_functools
-[145/401/1] test_future
-[146/401/1] test_future3
-[147/401/1] test_future4
-[148/401/1] test_future5
-[149/401/1] test_future_builtins
-[150/401/1] test_gc
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:01:07 load avg: 0.63 [143/403/1] test_funcattrs
+0:01:07 load avg: 0.63 [144/403/1] test_functools
+0:01:07 load avg: 0.63 [145/403/1] test_future
+0:01:07 load avg: 0.63 [146/403/1] test_future3
+0:01:07 load avg: 0.63 [147/403/1] test_future4
+0:01:07 load avg: 0.63 [148/403/1] test_future5
+0:01:07 load avg: 0.63 [149/403/1] test_future_builtins
+0:01:07 load avg: 0.63 [150/403/1] test_gc
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[151/401/1] test_gdb
+0:01:09 load avg: 0.62 [151/403/1] test_gdb
 test_gdb skipped -- Couldn't find gdb on the path
-[152/401/1] test_gdbm
+0:01:09 load avg: 0.62 [152/403/1] test_gdbm -- test_gdb skipped
 test_gdbm skipped -- No module named gdbm
-[153/401/1] test_generators
-[154/401/1] test_genericpath
-[155/401/1] test_genexps
-[156/401/1] test_getargs
-[157/401/1] test_getargs2
-[158/401/1] test_getopt
-[159/401/1] test_gettext
-[160/401/1] test_gl
+0:01:10 load avg: 0.62 [153/403/1] test_generators -- test_gdbm skipped
+0:01:10 load avg: 0.62 [154/403/1] test_genericpath
+0:01:10 load avg: 0.62 [155/403/1] test_genexps
+0:01:10 load avg: 0.62 [156/403/1] test_getargs
+0:01:10 load avg: 0.62 [157/403/1] test_getargs2
+0:01:10 load avg: 0.62 [158/403/1] test_getopt
+0:01:10 load avg: 0.62 [159/403/1] test_gettext
+0:01:10 load avg: 0.62 [160/403/1] test_gl
 test_gl skipped -- No module named gl
-[161/401/1] test_glob
-[162/401/1] test_global
-[163/401/1] test_grp
-[164/401/1] test_gzip
-[165/401/1] test_hash
-[166/401/1] test_hashlib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:01:10 load avg: 0.62 [161/403/1] test_glob -- test_gl skipped
+0:01:10 load avg: 0.62 [162/403/1] test_global
+0:01:10 load avg: 0.62 [163/403/1] test_grp
+0:01:10 load avg: 0.62 [164/403/1] test_gzip
+0:01:12 load avg: 0.61 [165/403/1] test_hash
+0:01:13 load avg: 0.61 [166/403/1] test_hashlib
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[167/401/1] test_heapq
-[168/401/1] test_hmac
-[169/401/1] test_hotshot
-[170/401/1] test_htmllib
-[171/401/1] test_htmlparser
-[172/401/1] test_httplib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:01:13 load avg: 0.61 [167/403/1] test_heapq
+0:01:14 load avg: 0.61 [168/403/1] test_hmac
+0:01:14 load avg: 0.61 [169/403/1] test_hotshot
+0:01:14 load avg: 0.61 [170/403/1] test_htmllib
+0:01:14 load avg: 0.61 [171/403/1] test_htmlparser
+0:01:14 load avg: 0.61 [172/403/1] test_httplib
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[173/401/1] test_httpservers
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:01:14 load avg: 0.61 [173/403/1] test_httpservers
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[174/401/1] test_idle
+0:01:17 load avg: 0.61 [174/403/1] test_idle
 test_idle skipped -- No module named _tkinter
-[175/401/1] test_imageop
+0:01:17 load avg: 0.61 [175/403/1] test_imageop -- test_idle skipped
 test_imageop skipped -- No module named imageop
-[176/401/1] test_imaplib
-[177/401/1] test_imgfile
+0:01:17 load avg: 0.61 [176/403/1] test_imaplib -- test_imageop skipped
+0:01:17 load avg: 0.61 [177/403/1] test_imgfile
 test_imgfile skipped -- No module named imgfile
-[178/401/1] test_imghdr
-[179/401/1] test_imp
-[180/401/1] test_import
-Warning -- sys.path was modified by test_import
-[181/401/1] test_importhooks
-[182/401/1] test_importlib
-[183/401/1] test_index
-[184/401/1] test_inspect
-[185/401/1] test_int
-[186/401/1] test_int_literal
-[187/401/1] test_io
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:01:17 load avg: 0.61 [178/403/1] test_imghdr -- test_imgfile skipped
+0:01:17 load avg: 0.61 [179/403/1] test_imp
+0:01:17 load avg: 0.61 [180/403/1] test_import
+0:01:18 load avg: 0.61 [181/403/1] test_import_magic
+0:01:18 load avg: 0.61 [182/403/1] test_importhooks
+0:01:18 load avg: 0.61 [183/403/1] test_importlib
+0:01:18 load avg: 0.61 [184/403/1] test_index
+0:01:18 load avg: 0.61 [185/403/1] test_inspect
+0:01:18 load avg: 0.61 [186/403/1] test_int
+0:01:19 load avg: 0.61 [187/403/1] test_int_literal
+0:01:19 load avg: 0.61 [188/403/1] test_io
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[188/401/1] test_ioctl
-[189/401/1] test_isinstance
-[190/401/1] test_iter
-[191/401/1] test_iterlen
-[192/401/1] test_itertools
-[193/401/1] test_json
-[194/401/1] test_kqueue
+0:01:53 load avg: 0.50 [189/403/1] test_ioctl -- test_io passed in 34 sec
+0:01:53 load avg: 0.50 [190/403/1] test_isinstance
+0:01:53 load avg: 0.50 [191/403/1] test_iter
+0:01:54 load avg: 0.49 [192/403/1] test_iterlen
+0:01:54 load avg: 0.49 [193/403/1] test_itertools
+0:01:57 load avg: 0.48 [194/403/1] test_json
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/json/tests/test_speedups.py:6: DeprecationWarning: classic int division
+  1/0
+0:01:59 load avg: 0.48 [195/403/1] test_kqueue
 test_kqueue skipped -- test works only on BSD
-[195/401/1] test_largefile
-[196/401/1] test_lib2to3
+0:01:59 load avg: 0.48 [196/403/1] test_largefile -- test_kqueue skipped
+0:02:02 load avg: 0.49 [197/403/1] test_lib2to3
 No differences encountered
 No differences encountered
 No differences encountered
@@ -364,279 +367,281 @@ No differences encountered
 No differences encountered
 No differences encountered
 No differences encountered
-[197/401/1] test_linecache
-[198/401/1] test_linuxaudiodev
+0:02:20 load avg: 0.59 [198/403/1] test_linecache
+0:02:20 load avg: 0.59 [199/403/1] test_linuxaudiodev
 test_linuxaudiodev skipped -- Use of the `audio' resource not enabled
-[199/401/1] test_list
-[200/401/1] test_locale
-[201/401/1] test_logging
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:02:20 load avg: 0.59 [200/403/1] test_list -- test_linuxaudiodev skipped (resource denied)
+0:02:20 load avg: 0.59 [201/403/1] test_locale
+0:02:20 load avg: 0.59 [202/403/1] test_logging
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[202/401/1] test_long
-[203/401/1] test_long_future
-[204/401/1] test_longexp
-[205/401/1] test_macos
+0:02:32 load avg: 0.56 [203/403/1] test_long
+0:02:33 load avg: 0.55 [204/403/1] test_long_future
+0:02:35 load avg: 0.54 [205/403/1] test_longexp
+0:02:35 load avg: 0.54 [206/403/1] test_macos
 test_macos skipped -- No module named MacOS
-[206/401/1] test_macostools
+0:02:35 load avg: 0.54 [207/403/1] test_macostools -- test_macos skipped
 test_macostools skipped -- No module named MacOS
-[207/401/1] test_macpath
-[208/401/1] test_macurl2path
-[209/401/1] test_mailbox
-[210/401/1] test_marshal
-[211/401/1] test_math
-[212/401/1] test_md5
-[213/401/1] test_memoryio
-[214/401/1] test_memoryview
-[215/401/1] test_mhlib
-[216/401/1] test_mimetools
-[217/401/1] test_mimetypes
-[218/401/1] test_minidom
-[219/401/1] test_mmap
-[220/401/1] test_module
-[221/401/1] test_modulefinder
-[222/401/1] test_msilib
+0:02:35 load avg: 0.54 [208/403/1] test_macpath -- test_macostools skipped
+0:02:35 load avg: 0.54 [209/403/1] test_macurl2path
+0:02:35 load avg: 0.54 [210/403/1] test_mailbox
+0:02:46 load avg: 0.50 [211/403/1] test_marshal
+0:02:46 load avg: 0.50 [212/403/1] test_math
+0:02:47 load avg: 0.49 [213/403/1] test_md5
+0:02:47 load avg: 0.49 [214/403/1] test_memoryio
+0:02:47 load avg: 0.49 [215/403/1] test_memoryview
+0:02:47 load avg: 0.49 [216/403/1] test_mhlib
+0:02:48 load avg: 0.48 [217/403/1] test_mimetools
+0:02:48 load avg: 0.48 [218/403/1] test_mimetypes
+0:02:48 load avg: 0.48 [219/403/1] test_minidom
+0:02:48 load avg: 0.48 [220/403/1] test_mmap
+0:02:51 load avg: 0.47 [221/403/1] test_module
+0:02:51 load avg: 0.47 [222/403/1] test_modulefinder
+0:02:51 load avg: 0.47 [223/403/1] test_msilib
 test_msilib skipped -- No module named _msi
-[223/401/1] test_multibytecodec
-[224/401/1] test_multibytecodec_support
-[225/401/1] test_multifile
-[226/401/1] test_multiprocessing
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:02:51 load avg: 0.47 [224/403/1] test_multibytecodec -- test_msilib skipped
+0:02:53 load avg: 0.47 [225/403/1] test_multifile
+0:02:53 load avg: 0.47 [226/403/1] test_multiprocessing
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[227/401/1] test_mutants
-[228/401/1] test_mutex
-[229/401/1] test_netrc
-[230/401/1] test_new
-[231/401/1] test_nis
-[232/401/1] test_nntplib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:03:23 load avg: 0.53 [227/403/1] test_mutants -- test_multiprocessing passed in 30 sec
+0:03:23 load avg: 0.53 [228/403/1] test_mutex
+0:03:23 load avg: 0.53 [229/403/1] test_netrc
+0:03:24 load avg: 0.53 [230/403/1] test_new
+0:03:24 load avg: 0.53 [231/403/1] test_nis
+0:03:24 load avg: 0.53 [232/403/1] test_nntplib
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[233/401/1] test_normalization
-[234/401/1] test_ntpath
-[235/401/1] test_old_mailbox
-[236/401/1] test_openpty
-[237/401/1] test_operator
-[238/401/1] test_optparse
-[239/401/1] test_ordered_dict
-[240/401/1] test_os
-[241/401/1] test_ossaudiodev
+0:03:24 load avg: 0.53 [233/403/1] test_normalization
+0:03:24 load avg: 0.53 [234/403/1] test_ntpath
+0:03:24 load avg: 0.53 [235/403/1] test_old_mailbox
+0:03:24 load avg: 0.53 [236/403/1] test_openpty
+0:03:24 load avg: 0.53 [237/403/1] test_operator
+0:03:24 load avg: 0.53 [238/403/1] test_optparse
+0:03:25 load avg: 0.53 [239/403/1] test_ordered_dict
+0:03:25 load avg: 0.53 [240/403/1] test_os
+0:03:26 load avg: 0.54 [241/403/1] test_ossaudiodev
 test_ossaudiodev skipped -- Use of the `audio' resource not enabled
-[242/401/1] test_parser
-[243/401/1] test_pdb
-[244/401/1] test_peepholer
-[245/401/1] test_pep247
-[246/401/1] test_pep277
+0:03:26 load avg: 0.54 [242/403/1] test_parser -- test_ossaudiodev skipped (resource denied)
+0:03:26 load avg: 0.54 [243/403/1] test_pdb
+0:03:27 load avg: 0.54 [244/403/1] test_peepholer
+0:03:27 load avg: 0.54 [245/403/1] test_pep247
+0:03:27 load avg: 0.54 [246/403/1] test_pep277
 test_pep277 skipped -- only NT+ and systems with Unicode-friendly filesystem encoding
-[247/401/1] test_pep352
-[248/401/1] test_pickle
-[249/401/1] test_pickletools
-[250/401/1] test_pipes
-[251/401/1] test_pkg
-[252/401/1] test_pkgimport
-[253/401/1] test_pkgutil
-[254/401/1] test_platform
-[255/401/1] test_plistlib
-[256/401/1] test_poll
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:03:27 load avg: 0.54 [247/403/1] test_pep352 -- test_pep277 skipped
+0:03:27 load avg: 0.54 [248/403/1] test_pickle
+0:03:28 load avg: 0.54 [249/403/1] test_pickletools
+0:03:28 load avg: 0.54 [250/403/1] test_pipes
+0:03:29 load avg: 0.55 [251/403/1] test_pkg
+0:03:29 load avg: 0.55 [252/403/1] test_pkgimport
+0:03:29 load avg: 0.55 [253/403/1] test_pkgutil
+0:03:29 load avg: 0.55 [254/403/1] test_platform
+0:03:29 load avg: 0.55 [255/403/1] test_plistlib
+0:03:29 load avg: 0.55 [256/403/1] test_poll
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[257/401/1] test_popen
-[258/401/1] test_popen2
-[259/401/1] test_poplib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:03:40 load avg: 0.53 [257/403/1] test_popen
+0:03:40 load avg: 0.53 [258/403/1] test_popen2
+0:03:41 load avg: 0.52 [259/403/1] test_poplib
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[260/401/1] test_posix
-[261/401/1] test_posixpath
-[262/401/1] test_pow
-[263/401/1] test_pprint
-[264/401/1] test_print
-[265/401/1] test_profile
-[266/401/1] test_property
-[267/401/1] test_pstats
-[268/401/1] test_pty
-[269/401/1] test_pwd
-[270/401/1] test_py3kwarn
-[271/401/1] test_py_compile
-[272/401/1] test_pyclbr
-[273/401/1] test_pydoc
-[274/401/1] test_pyexpat
-[275/401/1] test_queue
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:03:42 load avg: 0.52 [260/403/1] test_posix
+0:03:42 load avg: 0.52 [261/403/1] test_posixpath
+0:03:42 load avg: 0.52 [262/403/1] test_pow
+0:03:42 load avg: 0.52 [263/403/1] test_pprint
+0:03:42 load avg: 0.52 [264/403/1] test_print
+0:03:43 load avg: 0.51 [265/403/1] test_profile
+0:03:43 load avg: 0.51 [266/403/1] test_property
+0:03:43 load avg: 0.51 [267/403/1] test_pstats
+0:03:43 load avg: 0.51 [268/403/1] test_pty
+0:03:43 load avg: 0.51 [269/403/1] test_pwd
+0:03:43 load avg: 0.51 [270/403/1] test_py3kwarn
+0:03:43 load avg: 0.51 [271/403/1] test_py_compile
+0:03:43 load avg: 0.51 [272/403/1] test_pyclbr
+0:03:44 load avg: 0.50 [273/403/1] test_pydoc
+0:03:45 load avg: 0.50 [274/403/1] test_pyexpat
+0:03:45 load avg: 0.50 [275/403/1] test_queue
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[276/401/1] test_quopri
-[277/401/1] test_random
-[278/401/1] test_re
-[279/401/1] test_readline
-[280/401/1] test_repr
-[281/401/1] test_resource
-[282/401/1] test_rfc822
-[283/401/1] test_richcmp
-[284/401/1] test_rlcompleter
-[285/401/1] test_robotparser
-[286/401/1] test_runpy
-[287/401/1] test_sax
-[288/401/1] test_scope
-[289/401/1] test_scriptpackages
+0:03:49 load avg: 0.50 [276/403/1] test_quopri
+0:03:49 load avg: 0.50 [277/403/1] test_random
+0:03:50 load avg: 0.50 [278/403/1] test_re
+0:03:50 load avg: 0.50 [279/403/1] test_readline
+0:03:51 load avg: 0.50 [280/403/1] test_regrtest
+0:03:54 load avg: 0.50 [281/403/1] test_repr
+0:03:55 load avg: 0.50 [282/403/1] test_resource
+0:03:55 load avg: 0.50 [283/403/1] test_rfc822
+0:03:55 load avg: 0.50 [284/403/1] test_richcmp
+0:03:55 load avg: 0.50 [285/403/1] test_rlcompleter
+0:03:55 load avg: 0.50 [286/403/1] test_robotparser
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+0:03:55 load avg: 0.50 [287/403/1] test_runpy
+0:03:57 load avg: 0.51 [288/403/1] test_sax
+0:03:57 load avg: 0.51 [289/403/1] test_scope
+0:03:57 load avg: 0.51 [290/403/1] test_scriptpackages
 test_scriptpackages skipped -- No module named aetools
-[290/401/1] test_select
-[291/401/1] test_set
-[292/401/1] test_setcomps
-[293/401/1] test_sets
-[294/401/1] test_sgmllib
-[295/401/1] test_sha
-[296/401/1] test_shelve
-[297/401/1] test_shlex
-[298/401/1] test_shutil
-[299/401/1] test_signal
-[300/401/1] test_site
-Warning -- sys.path was modified by test_site
-[301/401/1] test_slice
-[302/401/1] test_smtplib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:03:58 load avg: 0.52 [291/403/1] test_select -- test_scriptpackages skipped
+0:04:09 load avg: 0.50 [292/403/1] test_set
+0:04:09 load avg: 0.50 [293/403/1] test_setcomps
+0:04:09 load avg: 0.50 [294/403/1] test_sets
+0:04:10 load avg: 0.50 [295/403/1] test_sgmllib
+0:04:10 load avg: 0.50 [296/403/1] test_sha
+0:04:10 load avg: 0.50 [297/403/1] test_shelve
+0:04:10 load avg: 0.50 [298/403/1] test_shlex
+0:04:10 load avg: 0.50 [299/403/1] test_shutil
+0:04:10 load avg: 0.50 [300/403/1] test_signal
+0:04:18 load avg: 0.46 [301/403/1] test_site
+0:04:19 load avg: 0.46 [302/403/1] test_slice
+0:04:19 load avg: 0.46 [303/403/1] test_smtplib
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[303/401/1] test_smtpnet
+0:04:19 load avg: 0.46 [304/403/1] test_smtpnet
 test_smtpnet skipped -- Use of the `network' resource not enabled
-[304/401/1] test_socket
-[305/401/1] test_socketserver
+0:04:19 load avg: 0.46 [305/403/1] test_socket -- test_smtpnet skipped (resource denied)
+0:04:35 load avg: 0.39 [306/403/1] test_socketserver
 test_socketserver skipped -- Use of the `network' resource not enabled
-[306/401/1] test_softspace
-[307/401/1] test_sort
-[308/401/1] test_source_encoding
-[309/401/1] test_spwd
-[310/401/1] test_sqlite
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:04:35 load avg: 0.39 [307/403/1] test_softspace -- test_socketserver skipped (resource denied)
+0:04:36 load avg: 0.38 [308/403/1] test_sort
+0:04:36 load avg: 0.38 [309/403/1] test_source_encoding
+0:04:36 load avg: 0.38 [310/403/1] test_spwd
+0:04:36 load avg: 0.38 [311/403/1] test_sqlite
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[311/401/1] test_ssl
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:04:38 load avg: 0.37 [312/403/1] test_ssl
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[312/401/1] test_startfile
-test_startfile skipped -- module os has no attribute startfile
-[313/401/1] test_stat
-[314/401/1] test_str
-[315/401/1] test_strftime
-[316/401/1] test_string
-[317/401/1] test_stringprep
-[318/401/1] test_strop
-[319/401/1] test_strptime
-[320/401/1] test_strtod
-[321/401/1] test_struct
-[322/401/1] test_structmembers
-[323/401/1] test_structseq
-[324/401/1] test_subprocess
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:04:39 load avg: 0.37 [313/403/1] test_startfile
+test_startfile skipped -- module 'os' has no attribute 'startfile'
+0:04:39 load avg: 0.37 [314/403/1] test_stat -- test_startfile skipped
+0:04:39 load avg: 0.37 [315/403/1] test_str
+0:04:40 load avg: 0.37 [316/403/1] test_strftime
+0:04:41 load avg: 0.37 [317/403/1] test_string
+0:04:41 load avg: 0.37 [318/403/1] test_stringprep
+0:04:41 load avg: 0.37 [319/403/1] test_strop
+0:04:41 load avg: 0.37 [320/403/1] test_strptime
+0:04:41 load avg: 0.37 [321/403/1] test_strtod
+0:04:42 load avg: 0.37 [322/403/1] test_struct
+0:04:43 load avg: 0.38 [323/403/1] test_structmembers
+0:04:43 load avg: 0.38 [324/403/1] test_structseq
+0:04:43 load avg: 0.38 [325/403/1] test_subprocess
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[325/401/1] test_sunau
-[326/401/1] test_sunaudiodev
+0:06:38 load avg: 0.87 [326/403/1] test_sunau -- test_subprocess passed in 1 min 55 sec
+0:06:38 load avg: 0.87 [327/403/1] test_sunaudiodev
 test_sunaudiodev skipped -- no audio device found!
-[327/401/1] test_sundry
-[328/401/1] test_symtable
-[329/401/1] test_syntax
-[330/401/1] test_sys
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:06:38 load avg: 0.87 [328/403/1] test_sundry -- test_sunaudiodev skipped
+0:06:38 load avg: 0.87 [329/403/1] test_symtable
+0:06:38 load avg: 0.87 [330/403/1] test_syntax
+0:06:38 load avg: 0.87 [331/403/1] test_sys
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[331/401/1] test_sys_setprofile
-[332/401/1] test_sys_settrace
-[333/401/1] test_sysconfig
-[334/401/1] test_tarfile
-[335/401/1] test_tcl
+0:06:39 load avg: 0.87 [332/403/1] test_sys_setprofile
+0:06:39 load avg: 0.87 [333/403/1] test_sys_settrace
+0:06:39 load avg: 0.87 [334/403/1] test_sysconfig
+0:06:39 load avg: 0.87 [335/403/1] test_tarfile
+0:06:41 load avg: 0.86 [336/403/1] test_tcl
 test_tcl skipped -- No module named _tkinter
-[336/401/1] test_telnetlib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:06:41 load avg: 0.86 [337/403/1] test_telnetlib -- test_tcl skipped
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[337/401/1] test_tempfile
-[338/401/1] test_textwrap
-[339/401/1] test_thread
-[340/401/1] test_threaded_import
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:06:46 load avg: 0.84 [338/403/1] test_tempfile
+0:06:47 load avg: 0.84 [339/403/1] test_test_support
+0:06:47 load avg: 0.84 [340/403/1] test_textwrap
+0:06:47 load avg: 0.84 [341/403/1] test_thread
+0:06:47 load avg: 0.84 [342/403/1] test_threaded_import
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[341/401/1] test_threadedtempfile
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:06:48 load avg: 0.84 [343/403/1] test_threadedtempfile
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[342/401/1] test_threading
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:06:48 load avg: 0.84 [344/403/1] test_threading
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[343/401/1] test_threading_local
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:06:53 load avg: 0.81 [345/403/1] test_threading_local
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[344/401/1] test_threadsignals
-[345/401/1] test_time
-[346/401/1] test_timeit
-[347/401/1] test_timeout
+0:06:54 load avg: 0.80 [346/403/1] test_threadsignals
+0:06:54 load avg: 0.80 [347/403/1] test_time
+0:06:55 load avg: 0.80 [348/403/1] test_timeit
+0:06:55 load avg: 0.80 [349/403/1] test_timeout
 test_timeout skipped -- Use of the `network' resource not enabled
-[348/401/1] test_tk
+0:06:55 load avg: 0.80 [350/403/1] test_tk -- test_timeout skipped (resource denied)
 test_tk skipped -- No module named _tkinter
-[349/401/1] test_tokenize
-[350/401/1] test_tools
-recursedown('@test_19743_tmp')
-[351/401/1] test_trace
-[352/401/1] test_traceback
-[353/401/1] test_transformer
-[354/401/1] test_ttk_guionly
+0:06:56 load avg: 0.80 [351/403/1] test_tokenize -- test_tk skipped
+0:06:56 load avg: 0.80 [352/403/1] test_tools
+recursedown('@test_5316_tmp')
+0:06:58 load avg: 0.80 [353/403/1] test_trace
+0:07:00 load avg: 0.79 [354/403/1] test_traceback
+0:07:04 load avg: 0.79 [355/403/1] test_transformer
+0:07:04 load avg: 0.79 [356/403/1] test_ttk_guionly
 test_ttk_guionly skipped -- No module named _tkinter
-[355/401/1] test_ttk_textonly
+0:07:04 load avg: 0.79 [357/403/1] test_ttk_textonly -- test_ttk_guionly skipped
 test_ttk_textonly skipped -- No module named _tkinter
-[356/401/1] test_tuple
-[357/401/1] test_turtle
+0:07:04 load avg: 0.79 [358/403/1] test_tuple -- test_ttk_textonly skipped
+0:07:09 load avg: 0.77 [359/403/1] test_turtle
 test_turtle skipped -- No module named _tkinter
-[358/401/1] test_typechecks
-[359/401/1] test_ucn
-[360/401/1] test_unary
-[361/401/1] test_undocumented_details
-[362/401/1] test_unicode
-[363/401/1] test_unicode_file
+0:07:10 load avg: 0.77 [360/403/1] test_typechecks -- test_turtle skipped
+0:07:10 load avg: 0.77 [361/403/1] test_ucn
+0:07:10 load avg: 0.77 [362/403/1] test_unary
+0:07:10 load avg: 0.77 [363/403/1] test_undocumented_details
+0:07:10 load avg: 0.77 [364/403/1] test_unicode
+0:07:12 load avg: 0.77 [365/403/1] test_unicode_file
 test_unicode_file skipped -- No Unicode filesystem semantics on this platform.
-[364/401/1] test_unicodedata
-[365/401/1] test_univnewlines
-[366/401/1] test_univnewlines2k
-[367/401/1] test_unpack
-[368/401/1] test_urllib
-[369/401/1] test_urllib2
-[370/401/1] test_urllib2_localnet
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:07:12 load avg: 0.77 [366/403/1] test_unicodedata -- test_unicode_file skipped
+0:07:13 load avg: 0.77 [367/403/1] test_univnewlines
+0:07:13 load avg: 0.77 [368/403/1] test_univnewlines2k
+0:07:13 load avg: 0.77 [369/403/1] test_unpack
+0:07:13 load avg: 0.77 [370/403/1] test_urllib
+0:07:13 load avg: 0.77 [371/403/1] test_urllib2
+0:07:14 load avg: 0.77 [372/403/1] test_urllib2_localnet
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[371/401/1] test_urllib2net
+0:07:14 load avg: 0.77 [373/403/1] test_urllib2net
 test_urllib2net skipped -- Use of the `network' resource not enabled
-[372/401/1] test_urllibnet
+0:07:14 load avg: 0.77 [374/403/1] test_urllibnet -- test_urllib2net skipped (resource denied)
 test_urllibnet skipped -- Use of the `network' resource not enabled
-[373/401/1] test_urlparse
-[374/401/1] test_userdict
-[375/401/1] test_userlist
-[376/401/1] test_userstring
-[377/401/1] test_uu
-[378/401/1] test_uuid
-[379/401/1] test_wait3
-[380/401/1] test_wait4
-[381/401/1] test_warnings
-[382/401/1] test_wave
-[383/401/1] test_weakref
-[384/401/1] test_weakset
-[385/401/1] test_whichdb
-[386/401/1] test_winreg
-test_winreg skipped -- No module named _winreg
-[387/401/1] test_winsound
-test_winsound skipped -- Use of the `audio' resource not enabled
-[388/401/1] test_with
-[389/401/1] test_wsgiref
-[390/401/1] test_xdrlib
-[391/401/1] test_xml_etree
-[392/401/1] test_xml_etree_c
-[393/401/1] test_xmllib
-[394/401/1] test_xmlrpc
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:07:15 load avg: 0.77 [375/403/1] test_urlparse -- test_urllibnet skipped (resource denied)
+0:07:15 load avg: 0.77 [376/403/1] test_userdict
+0:07:15 load avg: 0.77 [377/403/1] test_userlist
+0:07:15 load avg: 0.77 [378/403/1] test_userstring
+0:07:18 load avg: 0.78 [379/403/1] test_uu
+0:07:18 load avg: 0.78 [380/403/1] test_uuid
+0:07:19 load avg: 0.78 [381/403/1] test_wait3
+0:07:25 load avg: 0.76 [382/403/1] test_wait4
+0:07:31 load avg: 0.70 [383/403/1] test_warnings
+0:07:32 load avg: 0.69 [384/403/1] test_wave
+0:07:32 load avg: 0.69 [385/403/1] test_weakref
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[395/401/1] test_xpickle
-[396/401/1] test_xrange
-[397/401/1] test_zipfile
-[398/401/1] test_zipfile64
+0:07:39 load avg: 0.67 [386/403/1] test_weakset
+0:07:39 load avg: 0.67 [387/403/1] test_whichdb
+0:07:39 load avg: 0.67 [388/403/1] test_winreg
+test_winreg skipped -- No module named _winreg
+0:07:40 load avg: 0.67 [389/403/1] test_winsound -- test_winreg skipped
+test_winsound skipped -- Use of the `audio' resource not enabled
+0:07:40 load avg: 0.67 [390/403/1] test_with -- test_winsound skipped (resource denied)
+0:07:40 load avg: 0.67 [391/403/1] test_wsgiref
+0:07:40 load avg: 0.67 [392/403/1] test_xdrlib
+0:07:40 load avg: 0.67 [393/403/1] test_xml_etree
+0:07:40 load avg: 0.67 [394/403/1] test_xml_etree_c
+0:07:41 load avg: 0.68 [395/403/1] test_xmllib
+0:07:41 load avg: 0.68 [396/403/1] test_xmlrpc
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+0:07:44 load avg: 0.69 [397/403/1] test_xpickle
+0:07:45 load avg: 0.69 [398/403/1] test_xrange
+0:07:45 load avg: 0.69 [399/403/1] test_zipfile
+0:07:48 load avg: 0.69 [400/403/1] test_zipfile64
 test_zipfile64 skipped -- test requires loads of disk-space bytes and a long time to run
-[399/401/1] test_zipimport
-[400/401/1] test_zipimport_support
-[401/401/1] test_zlib
-353 tests OK.
+0:07:48 load avg: 0.69 [401/403/1] test_zipimport -- test_zipfile64 skipped (resource denied)
+0:07:48 load avg: 0.69 [402/403/1] test_zipimport_support
+0:07:49 load avg: 0.69 [403/403/1] test_zlib
+357 tests OK.
 1 test failed:
     test_distutils
-2 tests altered the execution environment:
-    test_import test_site
 45 tests skipped:
     test_aepack test_al test_applesingle test_bsddb test_bsddb185
     test_bsddb3 test_cd test_cl test_codecmaps_cn test_codecmaps_hk
@@ -651,266 +656,272 @@ test_zipfile64 skipped -- test requires loads of disk-space bytes and a long tim
 10 skips unexpected on sunos5:
     test_bsddb3 test_dl test_gdb test_idle test_sunaudiodev test_tcl
     test_tk test_ttk_guionly test_ttk_textonly test_turtle
-== CPython 2.7.13 (default, Sep 1 2017, 10:58:39) [GCC 5.4.0]
+
+Total duration: 7 min 52 sec
+Tests result: FAILURE
+== CPython 2.7.14 (default, Sep 23 2017, 16:34:57) [GCC 5.4.0]
 ==   Solaris-2.11-i86pc-i386-64bit-ELF little-endian
-==   /data/omnios-build/omniosorg/_build/Python-2.7.13/build/test_python_22745
-Testing with flags: sys.flags(debug=0, py3k_warning=1, division_warning=1, division_new=0, inspect=0, interactive=0, optimize=0, dont_write_bytecode=0, no_user_site=0, no_site=0, ignore_environment=1, tabcheck=2, verbose=0, unicode=0, bytes_warning=0, hash_randomization=0)
-[  1/401] test_grammar
-[  2/401] test_opcodes
-[  3/401] test_dict
-[  4/401] test_builtin
-[  5/401] test_exceptions
-[  6/401] test_types
-[  7/401] test_unittest
-[  8/401] test_doctest
-[  9/401] test_doctest2
-[ 10/401] test_MimeWriter
-[ 11/401] test_SimpleHTTPServer
-[ 12/401] test_StringIO
-[ 13/401] test___all__
-[ 14/401] test___future__
-[ 15/401] test__locale
-[ 16/401] test__osx_support
-[ 17/401] test_abc
-[ 18/401] test_abstract_numbers
-[ 19/401] test_aepack
+==   /data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/build/test_python_8241
+== CPU count: 8
+Run tests sequentially
+0:00:00 load avg: 0.69 [  1/403] test_grammar
+0:00:00 load avg: 0.69 [  2/403] test_opcodes
+0:00:00 load avg: 0.69 [  3/403] test_dict
+0:00:00 load avg: 0.69 [  4/403] test_builtin
+0:00:00 load avg: 0.69 [  5/403] test_exceptions
+0:00:00 load avg: 0.69 [  6/403] test_types
+0:00:00 load avg: 0.69 [  7/403] test_unittest
+0:00:00 load avg: 0.69 [  8/403] test_doctest
+0:00:00 load avg: 0.69 [  9/403] test_doctest2
+0:00:00 load avg: 0.69 [ 10/403] test_MimeWriter
+0:00:00 load avg: 0.69 [ 11/403] test_SimpleHTTPServer
+0:00:00 load avg: 0.69 [ 12/403] test_StringIO
+0:00:00 load avg: 0.69 [ 13/403] test___all__
+0:00:01 load avg: 0.70 [ 14/403] test___future__
+0:00:01 load avg: 0.70 [ 15/403] test__locale
+0:00:01 load avg: 0.70 [ 16/403] test__osx_support
+0:00:01 load avg: 0.70 [ 17/403] test_abc
+0:00:01 load avg: 0.70 [ 18/403] test_abstract_numbers
+0:00:01 load avg: 0.70 [ 19/403] test_aepack
 test_aepack skipped -- No module named aetypes
-[ 20/401] test_aifc
-[ 21/401] test_al
+0:00:01 load avg: 0.70 [ 20/403] test_aifc -- test_aepack skipped
+0:00:01 load avg: 0.70 [ 21/403] test_al
 test_al skipped -- No module named al
-[ 22/401] test_anydbm
-[ 23/401] test_applesingle
+0:00:01 load avg: 0.70 [ 22/403] test_anydbm -- test_al skipped
+0:00:01 load avg: 0.70 [ 23/403] test_applesingle
 test_applesingle skipped -- No module named MacOS
-[ 24/401] test_argparse
-[ 25/401] test_array
-[ 26/401] test_ascii_formatd
-[ 27/401] test_ast
-[ 28/401] test_asynchat
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:01 load avg: 0.70 [ 24/403] test_argparse -- test_applesingle skipped
+0:00:02 load avg: 0.70 [ 25/403] test_array
+0:00:03 load avg: 0.70 [ 26/403] test_ascii_formatd
+0:00:03 load avg: 0.70 [ 27/403] test_ast
+0:00:03 load avg: 0.70 [ 28/403] test_asynchat
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[ 29/401] test_asyncore
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:11 load avg: 0.69 [ 29/403] test_asyncore
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[ 30/401] test_atexit
-[ 31/401] test_audioop
-[ 32/401] test_augassign
-[ 33/401] test_base64
-[ 34/401] test_bastion
-[ 35/401] test_bigaddrspace
-[ 36/401] test_bigmem
-[ 37/401] test_binascii
-[ 38/401] test_binhex
-[ 39/401] test_binop
-[ 40/401] test_bisect
-[ 41/401] test_bool
-[ 42/401] test_bsddb
+0:00:12 load avg: 0.68 [ 30/403] test_atexit
+0:00:12 load avg: 0.68 [ 31/403] test_audioop
+0:00:12 load avg: 0.67 [ 32/403] test_augassign
+0:00:12 load avg: 0.67 [ 33/403] test_base64
+0:00:12 load avg: 0.67 [ 34/403] test_bastion
+0:00:13 load avg: 0.67 [ 35/403] test_bigaddrspace
+0:00:13 load avg: 0.67 [ 36/403] test_bigmem
+0:00:13 load avg: 0.67 [ 37/403] test_binascii
+0:00:13 load avg: 0.67 [ 38/403] test_binhex
+0:00:13 load avg: 0.67 [ 39/403] test_binop
+0:00:13 load avg: 0.67 [ 40/403] test_bisect
+0:00:13 load avg: 0.67 [ 41/403] test_bool
+0:00:13 load avg: 0.67 [ 42/403] test_bsddb
 test_bsddb skipped -- No module named _bsddb
-[ 43/401] test_bsddb185
+0:00:13 load avg: 0.67 [ 43/403] test_bsddb185 -- test_bsddb skipped
 test_bsddb185 skipped -- No module named bsddb185
-[ 44/401] test_bsddb3
+0:00:13 load avg: 0.67 [ 44/403] test_bsddb3 -- test_bsddb185 skipped
 test_bsddb3 skipped -- No module named _bsddb
-[ 45/401] test_buffer
-[ 46/401] test_bufio
-[ 47/401] test_bytes
-[ 48/401] test_bz2
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:13 load avg: 0.67 [ 45/403] test_buffer -- test_bsddb3 skipped
+0:00:13 load avg: 0.67 [ 46/403] test_bufio
+0:00:14 load avg: 0.66 [ 47/403] test_bytes
+0:00:14 load avg: 0.66 [ 48/403] test_bz2
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[ 49/401] test_calendar
-[ 50/401] test_call
-[ 51/401] test_capi
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:15 load avg: 0.66 [ 49/403] test_calendar
+0:00:18 load avg: 0.64 [ 50/403] test_call
+0:00:18 load avg: 0.64 [ 51/403] test_capi
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[ 52/401] test_cd
+0:00:21 load avg: 0.64 [ 52/403] test_cd
 test_cd skipped -- No module named cd
-[ 53/401] test_cfgparser
-[ 54/401] test_cgi
-[ 55/401] test_charmapcodec
-[ 56/401] test_cl
+0:00:21 load avg: 0.64 [ 53/403] test_cfgparser -- test_cd skipped
+0:00:22 load avg: 0.64 [ 54/403] test_cgi
+0:00:22 load avg: 0.64 [ 55/403] test_charmapcodec
+0:00:22 load avg: 0.64 [ 56/403] test_cl
 test_cl skipped -- No module named cl
-[ 57/401] test_class
-[ 58/401] test_cmath
-[ 59/401] test_cmd
-[ 60/401] test_cmd_line
-[ 61/401] test_cmd_line_script
-[ 62/401] test_code
-[ 63/401] test_codeccallbacks
-[ 64/401] test_codecencodings_cn
-[ 65/401] test_codecencodings_hk
-[ 66/401] test_codecencodings_iso2022
-[ 67/401] test_codecencodings_jp
-[ 68/401] test_codecencodings_kr
-[ 69/401] test_codecencodings_tw
-[ 70/401] test_codecmaps_cn
+0:00:22 load avg: 0.64 [ 57/403] test_class -- test_cl skipped
+0:00:22 load avg: 0.64 [ 58/403] test_cmath
+0:00:22 load avg: 0.64 [ 59/403] test_cmd
+0:00:22 load avg: 0.64 [ 60/403] test_cmd_line
+0:00:23 load avg: 0.64 [ 61/403] test_cmd_line_script
+0:00:24 load avg: 0.64 [ 62/403] test_code
+0:00:24 load avg: 0.64 [ 63/403] test_codeccallbacks
+0:00:24 load avg: 0.64 [ 64/403] test_codecencodings_cn
+0:00:24 load avg: 0.64 [ 65/403] test_codecencodings_hk
+0:00:24 load avg: 0.64 [ 66/403] test_codecencodings_iso2022
+0:00:24 load avg: 0.64 [ 67/403] test_codecencodings_jp
+0:00:25 load avg: 0.64 [ 68/403] test_codecencodings_kr
+0:00:25 load avg: 0.64 [ 69/403] test_codecencodings_tw
+0:00:25 load avg: 0.64 [ 70/403] test_codecmaps_cn
 test_codecmaps_cn skipped -- Use of the `urlfetch' resource not enabled
-[ 71/401] test_codecmaps_hk
+0:00:25 load avg: 0.64 [ 71/403] test_codecmaps_hk -- test_codecmaps_cn skipped (resource denied)
 test_codecmaps_hk skipped -- Use of the `urlfetch' resource not enabled
-[ 72/401] test_codecmaps_jp
+0:00:25 load avg: 0.64 [ 72/403] test_codecmaps_jp -- test_codecmaps_hk skipped (resource denied)
 test_codecmaps_jp skipped -- Use of the `urlfetch' resource not enabled
-[ 73/401] test_codecmaps_kr
+0:00:25 load avg: 0.64 [ 73/403] test_codecmaps_kr -- test_codecmaps_jp skipped (resource denied)
 test_codecmaps_kr skipped -- Use of the `urlfetch' resource not enabled
-[ 74/401] test_codecmaps_tw
+0:00:25 load avg: 0.64 [ 74/403] test_codecmaps_tw -- test_codecmaps_kr skipped (resource denied)
 test_codecmaps_tw skipped -- Use of the `urlfetch' resource not enabled
-[ 75/401] test_codecs
-[ 76/401] test_codeop
-[ 77/401] test_coercion
-[ 78/401] test_collections
-[ 79/401] test_colorsys
-[ 80/401] test_commands
-[ 81/401] test_compare
-[ 82/401] test_compile
-[ 83/401] test_compileall
-[ 84/401] test_compiler
-[ 85/401] test_complex
-[ 86/401] test_complex_args
-[ 87/401] test_contains
-[ 88/401] test_contextlib
-[ 89/401] test_cookie
-[ 90/401] test_cookielib
-[ 91/401] test_copy
-[ 92/401] test_copy_reg
-[ 93/401] test_cpickle
-[ 94/401] test_cprofile
-[ 95/401] test_crypt
-[ 96/401] test_csv
-[ 97/401] test_ctypes
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:25 load avg: 0.64 [ 75/403] test_codecs -- test_codecmaps_tw skipped (resource denied)
+0:00:26 load avg: 0.64 [ 76/403] test_codeop
+0:00:26 load avg: 0.64 [ 77/403] test_coercion
+0:00:26 load avg: 0.64 [ 78/403] test_collections
+0:00:27 load avg: 0.64 [ 79/403] test_colorsys
+0:00:27 load avg: 0.64 [ 80/403] test_commands
+0:00:27 load avg: 0.64 [ 81/403] test_compare
+0:00:27 load avg: 0.64 [ 82/403] test_compile
+0:00:27 load avg: 0.64 [ 83/403] test_compileall
+0:00:27 load avg: 0.64 [ 84/403] test_compiler
+0:00:27 load avg: 0.64 [ 85/403] test_complex
+0:00:27 load avg: 0.64 [ 86/403] test_complex_args
+0:00:27 load avg: 0.64 [ 87/403] test_contains
+0:00:27 load avg: 0.64 [ 88/403] test_contextlib
+0:00:28 load avg: 0.64 [ 89/403] test_cookie
+0:00:28 load avg: 0.64 [ 90/403] test_cookielib
+0:00:28 load avg: 0.64 [ 91/403] test_copy
+0:00:28 load avg: 0.64 [ 92/403] test_copy_reg
+0:00:28 load avg: 0.64 [ 93/403] test_cpickle
+0:00:29 load avg: 0.64 [ 94/403] test_cprofile
+0:00:29 load avg: 0.64 [ 95/403] test_crypt
+0:00:29 load avg: 0.64 [ 96/403] test_csv
+0:00:29 load avg: 0.64 [ 97/403] test_ctypes
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[ 98/401] test_curses
+0:00:31 load avg: 0.65 [ 98/403] test_curses
 test_curses skipped -- Use of the `curses' resource not enabled
-[ 99/401] test_datetime
-[100/401] test_dbm
-[101/401] test_decimal
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:31 load avg: 0.65 [ 99/403] test_datetime -- test_curses skipped (resource denied)
+0:00:31 load avg: 0.65 [100/403] test_dbm
+0:00:31 load avg: 0.65 [101/403] test_decimal
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[102/401] test_decorators
-[103/401] test_defaultdict
-[104/401] test_deque
-[105/401] test_descr
-[106/401] test_descrtut
-[107/401] test_dictcomps
-[108/401] test_dictviews
-[109/401] test_difflib
-[110/401] test_dircache
-[111/401] test_dis
-[112/401] test_distutils
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/distutils/command/build_ext.py:686: DeprecationWarning: apply() not supported in 3.x; use func(*args, **kwargs)
+0:00:33 load avg: 0.66 [102/403] test_decorators
+0:00:33 load avg: 0.66 [103/403] test_defaultdict
+0:00:33 load avg: 0.66 [104/403] test_deque
+0:00:34 load avg: 0.67 [105/403] test_descr
+0:00:35 load avg: 0.67 [106/403] test_descrtut
+0:00:35 load avg: 0.68 [107/403] test_dictcomps
+0:00:35 load avg: 0.68 [108/403] test_dictviews
+0:00:36 load avg: 0.68 [109/403] test_difflib
+0:00:36 load avg: 0.68 [110/403] test_dircache
+0:00:37 load avg: 0.68 [111/403] test_dis
+0:00:37 load avg: 0.68 [112/403] test_distutils
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/distutils/command/build_ext.py:686: DeprecationWarning: apply() not supported in 3.x; use func(*args, **kwargs)
   path = apply(os.path.join, ext_path)
 test test_distutils failed -- multiple errors occurred; run in verbose mode for details
-[113/401/1] test_dl
+0:00:38 load avg: 0.68 [113/403/1] test_dl -- test_distutils failed
 test_dl skipped -- No module named dl
-[114/401/1] test_docxmlrpc
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:38 load avg: 0.68 [114/403/1] test_docxmlrpc -- test_dl skipped
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[115/401/1] test_dumbdbm
-[116/401/1] test_dummy_thread
-[117/401/1] test_dummy_threading
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:41 load avg: 0.68 [115/403/1] test_dumbdbm
+0:00:41 load avg: 0.68 [116/403/1] test_dummy_thread
+0:00:41 load avg: 0.68 [117/403/1] test_dummy_threading
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[118/401/1] test_email
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:42 load avg: 0.68 [118/403/1] test_email
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[119/401/1] test_email_codecs
-[120/401/1] test_email_renamed
-[121/401/1] test_ensurepip
-[122/401/1] test_enumerate
-[123/401/1] test_eof
-[124/401/1] test_epoll
-[125/401/1] test_errno
-[126/401/1] test_exception_variations
-[127/401/1] test_extcall
-[128/401/1] test_fcntl
-[129/401/1] test_file
-[130/401/1] test_file2k
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:45 load avg: 0.70 [119/403/1] test_email_codecs
+0:00:45 load avg: 0.70 [120/403/1] test_email_renamed
+0:00:45 load avg: 0.70 [121/403/1] test_ensurepip
+0:00:45 load avg: 0.70 [122/403/1] test_enumerate
+0:00:45 load avg: 0.71 [123/403/1] test_eof
+0:00:45 load avg: 0.71 [124/403/1] test_epoll
+0:00:48 load avg: 0.73 [125/403/1] test_errno
+0:00:48 load avg: 0.73 [126/403/1] test_exception_variations
+0:00:48 load avg: 0.73 [127/403/1] test_extcall
+0:00:48 load avg: 0.73 [128/403/1] test_fcntl
+0:00:48 load avg: 0.73 [129/403/1] test_file
+0:00:48 load avg: 0.73 [130/403/1] test_file2k
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[131/401/1] test_file_eintr
-[132/401/1] test_filecmp
-[133/401/1] test_fileinput
-[134/401/1] test_fileio
-[135/401/1] test_float
-[136/401/1] test_fnmatch
-[137/401/1] test_fork1
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:00:55 load avg: 0.87 [131/403/1] test_file_eintr
+0:00:57 load avg: 0.89 [132/403/1] test_filecmp
+0:00:57 load avg: 0.89 [133/403/1] test_fileinput
+0:00:57 load avg: 0.89 [134/403/1] test_fileio
+0:00:57 load avg: 0.89 [135/403/1] test_float
+0:00:57 load avg: 0.89 [136/403/1] test_fnmatch
+0:00:57 load avg: 0.89 [137/403/1] test_fork1
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[138/401/1] test_format
-[139/401/1] test_fpformat
-[140/401/1] test_fractions
-[141/401/1] test_frozen
-[142/401/1] test_ftplib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:01:04 load avg: 0.89 [138/403/1] test_format
+0:01:04 load avg: 0.89 [139/403/1] test_fpformat
+0:01:04 load avg: 0.89 [140/403/1] test_fractions
+0:01:04 load avg: 0.89 [141/403/1] test_frozen
+0:01:04 load avg: 0.89 [142/403/1] test_ftplib
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[143/401/1] test_funcattrs
-[144/401/1] test_functools
-[145/401/1] test_future
-[146/401/1] test_future3
-[147/401/1] test_future4
-[148/401/1] test_future5
-[149/401/1] test_future_builtins
-[150/401/1] test_gc
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:01:05 load avg: 0.88 [143/403/1] test_funcattrs
+0:01:05 load avg: 0.88 [144/403/1] test_functools
+0:01:05 load avg: 0.88 [145/403/1] test_future
+0:01:05 load avg: 0.88 [146/403/1] test_future3
+0:01:05 load avg: 0.88 [147/403/1] test_future4
+0:01:05 load avg: 0.88 [148/403/1] test_future5
+0:01:05 load avg: 0.88 [149/403/1] test_future_builtins
+0:01:05 load avg: 0.88 [150/403/1] test_gc
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[151/401/1] test_gdb
+0:01:08 load avg: 0.85 [151/403/1] test_gdb
 test_gdb skipped -- Couldn't find gdb on the path
-[152/401/1] test_gdbm
+0:01:08 load avg: 0.85 [152/403/1] test_gdbm -- test_gdb skipped
 test_gdbm skipped -- No module named gdbm
-[153/401/1] test_generators
-[154/401/1] test_genericpath
-[155/401/1] test_genexps
-[156/401/1] test_getargs
-[157/401/1] test_getargs2
-[158/401/1] test_getopt
-[159/401/1] test_gettext
-[160/401/1] test_gl
+0:01:08 load avg: 0.85 [153/403/1] test_generators -- test_gdbm skipped
+0:01:08 load avg: 0.85 [154/403/1] test_genericpath
+0:01:08 load avg: 0.85 [155/403/1] test_genexps
+0:01:08 load avg: 0.85 [156/403/1] test_getargs
+0:01:08 load avg: 0.85 [157/403/1] test_getargs2
+0:01:08 load avg: 0.85 [158/403/1] test_getopt
+0:01:08 load avg: 0.85 [159/403/1] test_gettext
+0:01:08 load avg: 0.85 [160/403/1] test_gl
 test_gl skipped -- No module named gl
-[161/401/1] test_glob
-[162/401/1] test_global
-[163/401/1] test_grp
-[164/401/1] test_gzip
-[165/401/1] test_hash
-[166/401/1] test_hashlib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:01:08 load avg: 0.84 [161/403/1] test_glob -- test_gl skipped
+0:01:09 load avg: 0.84 [162/403/1] test_global
+0:01:09 load avg: 0.84 [163/403/1] test_grp
+0:01:09 load avg: 0.84 [164/403/1] test_gzip
+0:01:09 load avg: 0.83 [165/403/1] test_hash
+0:01:11 load avg: 0.83 [166/403/1] test_hashlib
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[167/401/1] test_heapq
-[168/401/1] test_hmac
-[169/401/1] test_hotshot
-[170/401/1] test_htmllib
-[171/401/1] test_htmlparser
-[172/401/1] test_httplib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:01:11 load avg: 0.83 [167/403/1] test_heapq
+0:01:11 load avg: 0.83 [168/403/1] test_hmac
+0:01:11 load avg: 0.83 [169/403/1] test_hotshot
+0:01:11 load avg: 0.82 [170/403/1] test_htmllib
+0:01:12 load avg: 0.82 [171/403/1] test_htmlparser
+0:01:12 load avg: 0.82 [172/403/1] test_httplib
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[173/401/1] test_httpservers
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:01:12 load avg: 0.82 [173/403/1] test_httpservers
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[174/401/1] test_idle
+0:01:15 load avg: 0.81 [174/403/1] test_idle
 test_idle skipped -- No module named _tkinter
-[175/401/1] test_imageop
+0:01:15 load avg: 0.81 [175/403/1] test_imageop -- test_idle skipped
 test_imageop skipped -- No module named imageop
-[176/401/1] test_imaplib
-[177/401/1] test_imgfile
+0:01:15 load avg: 0.81 [176/403/1] test_imaplib -- test_imageop skipped
+0:01:15 load avg: 0.81 [177/403/1] test_imgfile
 test_imgfile skipped -- No module named imgfile
-[178/401/1] test_imghdr
-[179/401/1] test_imp
-[180/401/1] test_import
-Warning -- sys.path was modified by test_import
-[181/401/1] test_importhooks
-[182/401/1] test_importlib
-[183/401/1] test_index
-[184/401/1] test_inspect
-[185/401/1] test_int
-[186/401/1] test_int_literal
-[187/401/1] test_io
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:01:15 load avg: 0.81 [178/403/1] test_imghdr -- test_imgfile skipped
+0:01:15 load avg: 0.81 [179/403/1] test_imp
+0:01:15 load avg: 0.81 [180/403/1] test_import
+0:01:15 load avg: 0.81 [181/403/1] test_import_magic
+0:01:15 load avg: 0.81 [182/403/1] test_importhooks
+0:01:15 load avg: 0.81 [183/403/1] test_importlib
+0:01:15 load avg: 0.81 [184/403/1] test_index
+0:01:16 load avg: 0.81 [185/403/1] test_inspect
+0:01:16 load avg: 0.81 [186/403/1] test_int
+0:01:16 load avg: 0.81 [187/403/1] test_int_literal
+0:01:16 load avg: 0.81 [188/403/1] test_io
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[188/401/1] test_ioctl
-[189/401/1] test_isinstance
-[190/401/1] test_iter
-[191/401/1] test_iterlen
-[192/401/1] test_itertools
-[193/401/1] test_json
-[194/401/1] test_kqueue
+0:01:51 load avg: 0.61 [189/403/1] test_ioctl -- test_io passed in 34 sec
+0:01:51 load avg: 0.61 [190/403/1] test_isinstance
+0:01:51 load avg: 0.61 [191/403/1] test_iter
+0:01:51 load avg: 0.61 [192/403/1] test_iterlen
+0:01:51 load avg: 0.61 [193/403/1] test_itertools
+0:01:55 load avg: 0.59 [194/403/1] test_json
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/json/tests/test_speedups.py:6: DeprecationWarning: classic int division
+  1/0
+0:01:57 load avg: 0.58 [195/403/1] test_kqueue
 test_kqueue skipped -- test works only on BSD
-[195/401/1] test_largefile
-[196/401/1] test_lib2to3
+0:01:57 load avg: 0.58 [196/403/1] test_largefile -- test_kqueue skipped
+0:02:02 load avg: 0.59 [197/403/1] test_lib2to3
 No differences encountered
 No differences encountered
 No differences encountered
@@ -1009,278 +1020,281 @@ No differences encountered
 No differences encountered
 No differences encountered
 No differences encountered
-[197/401/1] test_linecache
-[198/401/1] test_linuxaudiodev
+0:02:19 load avg: 0.64 [198/403/1] test_linecache
+0:02:19 load avg: 0.64 [199/403/1] test_linuxaudiodev
 test_linuxaudiodev skipped -- Use of the `audio' resource not enabled
-[199/401/1] test_list
-[200/401/1] test_locale
-[201/401/1] test_logging
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:02:19 load avg: 0.65 [200/403/1] test_list -- test_linuxaudiodev skipped (resource denied)
+0:02:20 load avg: 0.65 [201/403/1] test_locale
+0:02:20 load avg: 0.65 [202/403/1] test_logging
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[202/401/1] test_long
-[203/401/1] test_long_future
-[204/401/1] test_longexp
-[205/401/1] test_macos
+0:02:32 load avg: 0.60 [203/403/1] test_long
+0:02:33 load avg: 0.59 [204/403/1] test_long_future
+0:02:35 load avg: 0.58 [205/403/1] test_longexp
+0:02:35 load avg: 0.58 [206/403/1] test_macos
 test_macos skipped -- No module named MacOS
-[206/401/1] test_macostools
+0:02:35 load avg: 0.58 [207/403/1] test_macostools -- test_macos skipped
 test_macostools skipped -- No module named MacOS
-[207/401/1] test_macpath
-[208/401/1] test_macurl2path
-[209/401/1] test_mailbox
-[210/401/1] test_marshal
-[211/401/1] test_math
-[212/401/1] test_md5
-[213/401/1] test_memoryio
-[214/401/1] test_memoryview
-[215/401/1] test_mhlib
-[216/401/1] test_mimetools
-[217/401/1] test_mimetypes
-[218/401/1] test_minidom
-[219/401/1] test_mmap
-[220/401/1] test_module
-[221/401/1] test_modulefinder
-[222/401/1] test_msilib
+0:02:35 load avg: 0.58 [208/403/1] test_macpath -- test_macostools skipped
+0:02:35 load avg: 0.58 [209/403/1] test_macurl2path
+0:02:35 load avg: 0.58 [210/403/1] test_mailbox
+0:02:44 load avg: 0.54 [211/403/1] test_marshal
+0:02:44 load avg: 0.54 [212/403/1] test_math
+0:02:45 load avg: 0.54 [213/403/1] test_md5
+0:02:45 load avg: 0.54 [214/403/1] test_memoryio
+0:02:45 load avg: 0.53 [215/403/1] test_memoryview
+0:02:46 load avg: 0.53 [216/403/1] test_mhlib
+0:02:46 load avg: 0.53 [217/403/1] test_mimetools
+0:02:46 load avg: 0.53 [218/403/1] test_mimetypes
+0:02:46 load avg: 0.53 [219/403/1] test_minidom
+0:02:46 load avg: 0.53 [220/403/1] test_mmap
+0:02:50 load avg: 0.52 [221/403/1] test_module
+0:02:50 load avg: 0.52 [222/403/1] test_modulefinder
+0:02:51 load avg: 0.51 [223/403/1] test_msilib
 test_msilib skipped -- No module named _msi
-[223/401/1] test_multibytecodec
-[224/401/1] test_multibytecodec_support
-[225/401/1] test_multifile
-[226/401/1] test_multiprocessing
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:02:51 load avg: 0.51 [224/403/1] test_multibytecodec -- test_msilib skipped
+0:02:52 load avg: 0.51 [225/403/1] test_multifile
+0:02:52 load avg: 0.51 [226/403/1] test_multiprocessing
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[227/401/1] test_mutants
-[228/401/1] test_mutex
-[229/401/1] test_netrc
-[230/401/1] test_new
-[231/401/1] test_nis
-[232/401/1] test_nntplib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:03:20 load avg: 0.56 [227/403/1] test_mutants
+0:03:20 load avg: 0.56 [228/403/1] test_mutex
+0:03:20 load avg: 0.56 [229/403/1] test_netrc
+0:03:20 load avg: 0.56 [230/403/1] test_new
+0:03:20 load avg: 0.56 [231/403/1] test_nis
+0:03:20 load avg: 0.56 [232/403/1] test_nntplib
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[233/401/1] test_normalization
-[234/401/1] test_ntpath
-[235/401/1] test_old_mailbox
-[236/401/1] test_openpty
-[237/401/1] test_operator
-[238/401/1] test_optparse
-[239/401/1] test_ordered_dict
-[240/401/1] test_os
-[241/401/1] test_ossaudiodev
+0:03:20 load avg: 0.56 [233/403/1] test_normalization
+0:03:21 load avg: 0.56 [234/403/1] test_ntpath
+0:03:21 load avg: 0.56 [235/403/1] test_old_mailbox
+0:03:21 load avg: 0.56 [236/403/1] test_openpty
+0:03:21 load avg: 0.56 [237/403/1] test_operator
+0:03:21 load avg: 0.56 [238/403/1] test_optparse
+0:03:21 load avg: 0.56 [239/403/1] test_ordered_dict
+0:03:21 load avg: 0.56 [240/403/1] test_os
+0:03:22 load avg: 0.56 [241/403/1] test_ossaudiodev
 test_ossaudiodev skipped -- Use of the `audio' resource not enabled
-[242/401/1] test_parser
-[243/401/1] test_pdb
-[244/401/1] test_peepholer
-[245/401/1] test_pep247
-[246/401/1] test_pep277
+0:03:22 load avg: 0.56 [242/403/1] test_parser -- test_ossaudiodev skipped (resource denied)
+0:03:22 load avg: 0.56 [243/403/1] test_pdb
+0:03:23 load avg: 0.56 [244/403/1] test_peepholer
+0:03:23 load avg: 0.56 [245/403/1] test_pep247
+0:03:23 load avg: 0.56 [246/403/1] test_pep277
 test_pep277 skipped -- only NT+ and systems with Unicode-friendly filesystem encoding
-[247/401/1] test_pep352
-[248/401/1] test_pickle
-[249/401/1] test_pickletools
-[250/401/1] test_pipes
-[251/401/1] test_pkg
-[252/401/1] test_pkgimport
-[253/401/1] test_pkgutil
-[254/401/1] test_platform
-[255/401/1] test_plistlib
-[256/401/1] test_poll
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:03:23 load avg: 0.56 [247/403/1] test_pep352 -- test_pep277 skipped
+0:03:23 load avg: 0.56 [248/403/1] test_pickle
+0:03:24 load avg: 0.57 [249/403/1] test_pickletools
+0:03:25 load avg: 0.57 [250/403/1] test_pipes
+0:03:25 load avg: 0.57 [251/403/1] test_pkg
+0:03:25 load avg: 0.57 [252/403/1] test_pkgimport
+0:03:25 load avg: 0.57 [253/403/1] test_pkgutil
+0:03:25 load avg: 0.57 [254/403/1] test_platform
+0:03:25 load avg: 0.57 [255/403/1] test_plistlib
+0:03:25 load avg: 0.57 [256/403/1] test_poll
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[257/401/1] test_popen
-[258/401/1] test_popen2
-[259/401/1] test_poplib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:03:36 load avg: 0.55 [257/403/1] test_popen
+0:03:36 load avg: 0.55 [258/403/1] test_popen2
+0:03:37 load avg: 0.54 [259/403/1] test_poplib
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[260/401/1] test_posix
-[261/401/1] test_posixpath
-[262/401/1] test_pow
-[263/401/1] test_pprint
-[264/401/1] test_print
-[265/401/1] test_profile
-[266/401/1] test_property
-[267/401/1] test_pstats
-[268/401/1] test_pty
-[269/401/1] test_pwd
-[270/401/1] test_py3kwarn
-[271/401/1] test_py_compile
-[272/401/1] test_pyclbr
-[273/401/1] test_pydoc
-[274/401/1] test_pyexpat
-[275/401/1] test_queue
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:03:38 load avg: 0.53 [260/403/1] test_posix
+0:03:38 load avg: 0.53 [261/403/1] test_posixpath
+0:03:38 load avg: 0.53 [262/403/1] test_pow
+0:03:38 load avg: 0.53 [263/403/1] test_pprint
+0:03:39 load avg: 0.53 [264/403/1] test_print
+0:03:39 load avg: 0.53 [265/403/1] test_profile
+0:03:39 load avg: 0.53 [266/403/1] test_property
+0:03:39 load avg: 0.53 [267/403/1] test_pstats
+0:03:39 load avg: 0.53 [268/403/1] test_pty
+0:03:39 load avg: 0.53 [269/403/1] test_pwd
+0:03:39 load avg: 0.53 [270/403/1] test_py3kwarn
+0:03:39 load avg: 0.53 [271/403/1] test_py_compile
+0:03:39 load avg: 0.53 [272/403/1] test_pyclbr
+0:03:40 load avg: 0.52 [273/403/1] test_pydoc
+0:03:41 load avg: 0.52 [274/403/1] test_pyexpat
+0:03:41 load avg: 0.52 [275/403/1] test_queue
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[276/401/1] test_quopri
-[277/401/1] test_random
-[278/401/1] test_re
-[279/401/1] test_readline
-[280/401/1] test_repr
-[281/401/1] test_resource
-[282/401/1] test_rfc822
-[283/401/1] test_richcmp
-[284/401/1] test_rlcompleter
-[285/401/1] test_robotparser
-[286/401/1] test_runpy
-[287/401/1] test_sax
-[288/401/1] test_scope
-[289/401/1] test_scriptpackages
+0:03:45 load avg: 0.51 [276/403/1] test_quopri
+0:03:45 load avg: 0.51 [277/403/1] test_random
+0:03:45 load avg: 0.51 [278/403/1] test_re
+0:03:46 load avg: 0.51 [279/403/1] test_readline
+0:03:46 load avg: 0.51 [280/403/1] test_regrtest
+0:03:50 load avg: 0.51 [281/403/1] test_repr
+0:03:50 load avg: 0.51 [282/403/1] test_resource
+0:03:50 load avg: 0.51 [283/403/1] test_rfc822
+0:03:50 load avg: 0.51 [284/403/1] test_richcmp
+0:03:51 load avg: 0.52 [285/403/1] test_rlcompleter
+0:03:51 load avg: 0.52 [286/403/1] test_robotparser
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+0:03:51 load avg: 0.52 [287/403/1] test_runpy
+0:03:53 load avg: 0.52 [288/403/1] test_sax
+0:03:53 load avg: 0.52 [289/403/1] test_scope
+0:03:53 load avg: 0.52 [290/403/1] test_scriptpackages
 test_scriptpackages skipped -- No module named aetools
-[290/401/1] test_select
-[291/401/1] test_set
-[292/401/1] test_setcomps
-[293/401/1] test_sets
-[294/401/1] test_sgmllib
-[295/401/1] test_sha
-[296/401/1] test_shelve
-[297/401/1] test_shlex
-[298/401/1] test_shutil
-[299/401/1] test_signal
-[300/401/1] test_site
-[301/401/1] test_slice
-[302/401/1] test_smtplib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:03:53 load avg: 0.52 [291/403/1] test_select -- test_scriptpackages skipped
+0:04:04 load avg: 0.51 [292/403/1] test_set
+0:04:05 load avg: 0.50 [293/403/1] test_setcomps
+0:04:05 load avg: 0.50 [294/403/1] test_sets
+0:04:05 load avg: 0.50 [295/403/1] test_sgmllib
+0:04:05 load avg: 0.50 [296/403/1] test_sha
+0:04:05 load avg: 0.50 [297/403/1] test_shelve
+0:04:05 load avg: 0.50 [298/403/1] test_shlex
+0:04:05 load avg: 0.50 [299/403/1] test_shutil
+0:04:06 load avg: 0.50 [300/403/1] test_signal
+0:04:14 load avg: 0.46 [301/403/1] test_site
+0:04:14 load avg: 0.46 [302/403/1] test_slice
+0:04:14 load avg: 0.46 [303/403/1] test_smtplib
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[303/401/1] test_smtpnet
+0:04:15 load avg: 0.46 [304/403/1] test_smtpnet
 test_smtpnet skipped -- Use of the `network' resource not enabled
-[304/401/1] test_socket
-[305/401/1] test_socketserver
+0:04:15 load avg: 0.46 [305/403/1] test_socket -- test_smtpnet skipped (resource denied)
+0:04:31 load avg: 0.39 [306/403/1] test_socketserver
 test_socketserver skipped -- Use of the `network' resource not enabled
-[306/401/1] test_softspace
-[307/401/1] test_sort
-[308/401/1] test_source_encoding
-[309/401/1] test_spwd
-[310/401/1] test_sqlite
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:04:31 load avg: 0.39 [307/403/1] test_softspace -- test_socketserver skipped (resource denied)
+0:04:31 load avg: 0.39 [308/403/1] test_sort
+0:04:31 load avg: 0.39 [309/403/1] test_source_encoding
+0:04:32 load avg: 0.38 [310/403/1] test_spwd
+0:04:32 load avg: 0.38 [311/403/1] test_sqlite
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[311/401/1] test_ssl
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:04:33 load avg: 0.38 [312/403/1] test_ssl
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[312/401/1] test_startfile
-test_startfile skipped -- module os has no attribute startfile
-[313/401/1] test_stat
-[314/401/1] test_str
-[315/401/1] test_strftime
-[316/401/1] test_string
-[317/401/1] test_stringprep
-[318/401/1] test_strop
-[319/401/1] test_strptime
-[320/401/1] test_strtod
-[321/401/1] test_struct
-[322/401/1] test_structmembers
-[323/401/1] test_structseq
-[324/401/1] test_subprocess
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:04:34 load avg: 0.38 [313/403/1] test_startfile
+test_startfile skipped -- module 'os' has no attribute 'startfile'
+0:04:34 load avg: 0.38 [314/403/1] test_stat -- test_startfile skipped
+0:04:35 load avg: 0.38 [315/403/1] test_str
+0:04:35 load avg: 0.38 [316/403/1] test_strftime
+0:04:36 load avg: 0.38 [317/403/1] test_string
+0:04:37 load avg: 0.38 [318/403/1] test_stringprep
+0:04:37 load avg: 0.38 [319/403/1] test_strop
+0:04:37 load avg: 0.38 [320/403/1] test_strptime
+0:04:37 load avg: 0.38 [321/403/1] test_strtod
+0:04:38 load avg: 0.38 [322/403/1] test_struct
+0:04:38 load avg: 0.38 [323/403/1] test_structmembers
+0:04:38 load avg: 0.38 [324/403/1] test_structseq
+0:04:38 load avg: 0.38 [325/403/1] test_subprocess
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[325/401/1] test_sunau
-[326/401/1] test_sunaudiodev
+0:06:34 load avg: 0.88 [326/403/1] test_sunau -- test_subprocess passed in 1 min 55 sec
+0:06:34 load avg: 0.88 [327/403/1] test_sunaudiodev
 test_sunaudiodev skipped -- no audio device found!
-[327/401/1] test_sundry
-[328/401/1] test_symtable
-[329/401/1] test_syntax
-[330/401/1] test_sys
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:06:34 load avg: 0.88 [328/403/1] test_sundry -- test_sunaudiodev skipped
+0:06:34 load avg: 0.88 [329/403/1] test_symtable
+0:06:34 load avg: 0.88 [330/403/1] test_syntax
+0:06:34 load avg: 0.88 [331/403/1] test_sys
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[331/401/1] test_sys_setprofile
-[332/401/1] test_sys_settrace
-[333/401/1] test_sysconfig
-[334/401/1] test_tarfile
-[335/401/1] test_tcl
+0:06:35 load avg: 0.87 [332/403/1] test_sys_setprofile
+0:06:35 load avg: 0.87 [333/403/1] test_sys_settrace
+0:06:35 load avg: 0.87 [334/403/1] test_sysconfig
+0:06:36 load avg: 0.87 [335/403/1] test_tarfile
+0:06:37 load avg: 0.87 [336/403/1] test_tcl
 test_tcl skipped -- No module named _tkinter
-[336/401/1] test_telnetlib
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:06:38 load avg: 0.87 [337/403/1] test_telnetlib -- test_tcl skipped
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[337/401/1] test_tempfile
-[338/401/1] test_textwrap
-[339/401/1] test_thread
-[340/401/1] test_threaded_import
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:06:43 load avg: 0.84 [338/403/1] test_tempfile
+0:06:43 load avg: 0.84 [339/403/1] test_test_support
+0:06:43 load avg: 0.84 [340/403/1] test_textwrap
+0:06:43 load avg: 0.84 [341/403/1] test_thread
+0:06:44 load avg: 0.84 [342/403/1] test_threaded_import
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[341/401/1] test_threadedtempfile
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:06:44 load avg: 0.84 [343/403/1] test_threadedtempfile
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[342/401/1] test_threading
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:06:44 load avg: 0.84 [344/403/1] test_threading
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[343/401/1] test_threading_local
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:06:49 load avg: 0.81 [345/403/1] test_threading_local
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[344/401/1] test_threadsignals
-[345/401/1] test_time
-[346/401/1] test_timeit
-[347/401/1] test_timeout
+0:06:50 load avg: 0.81 [346/403/1] test_threadsignals
+0:06:50 load avg: 0.81 [347/403/1] test_time
+0:06:51 load avg: 0.80 [348/403/1] test_timeit
+0:06:51 load avg: 0.80 [349/403/1] test_timeout
 test_timeout skipped -- Use of the `network' resource not enabled
-[348/401/1] test_tk
+0:06:51 load avg: 0.80 [350/403/1] test_tk -- test_timeout skipped (resource denied)
 test_tk skipped -- No module named _tkinter
-[349/401/1] test_tokenize
-[350/401/1] test_tools
-recursedown('@test_22745_tmp')
-[351/401/1] test_trace
-[352/401/1] test_traceback
-[353/401/1] test_transformer
-[354/401/1] test_ttk_guionly
+0:06:51 load avg: 0.80 [351/403/1] test_tokenize -- test_tk skipped
+0:06:52 load avg: 0.80 [352/403/1] test_tools
+recursedown('@test_8241_tmp')
+0:06:54 load avg: 0.80 [353/403/1] test_trace
+0:06:55 load avg: 0.80 [354/403/1] test_traceback
+0:06:59 load avg: 0.79 [355/403/1] test_transformer
+0:07:00 load avg: 0.79 [356/403/1] test_ttk_guionly
 test_ttk_guionly skipped -- No module named _tkinter
-[355/401/1] test_ttk_textonly
+0:07:00 load avg: 0.79 [357/403/1] test_ttk_textonly -- test_ttk_guionly skipped
 test_ttk_textonly skipped -- No module named _tkinter
-[356/401/1] test_tuple
-[357/401/1] test_turtle
+0:07:00 load avg: 0.79 [358/403/1] test_tuple -- test_ttk_textonly skipped
+0:07:05 load avg: 0.77 [359/403/1] test_turtle
 test_turtle skipped -- No module named _tkinter
-[358/401/1] test_typechecks
-[359/401/1] test_ucn
-[360/401/1] test_unary
-[361/401/1] test_undocumented_details
-[362/401/1] test_unicode
-[363/401/1] test_unicode_file
+0:07:05 load avg: 0.77 [360/403/1] test_typechecks -- test_turtle skipped
+0:07:05 load avg: 0.77 [361/403/1] test_ucn
+0:07:06 load avg: 0.77 [362/403/1] test_unary
+0:07:06 load avg: 0.77 [363/403/1] test_undocumented_details
+0:07:06 load avg: 0.77 [364/403/1] test_unicode
+0:07:07 load avg: 0.76 [365/403/1] test_unicode_file
 test_unicode_file skipped -- No Unicode filesystem semantics on this platform.
-[364/401/1] test_unicodedata
-[365/401/1] test_univnewlines
-[366/401/1] test_univnewlines2k
-[367/401/1] test_unpack
-[368/401/1] test_urllib
-[369/401/1] test_urllib2
-[370/401/1] test_urllib2_localnet
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:07:07 load avg: 0.76 [366/403/1] test_unicodedata -- test_unicode_file skipped
+0:07:09 load avg: 0.77 [367/403/1] test_univnewlines
+0:07:09 load avg: 0.77 [368/403/1] test_univnewlines2k
+0:07:09 load avg: 0.77 [369/403/1] test_unpack
+0:07:09 load avg: 0.77 [370/403/1] test_urllib
+0:07:09 load avg: 0.77 [371/403/1] test_urllib2
+0:07:09 load avg: 0.77 [372/403/1] test_urllib2_localnet
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[371/401/1] test_urllib2net
+0:07:10 load avg: 0.77 [373/403/1] test_urllib2net
 test_urllib2net skipped -- Use of the `network' resource not enabled
-[372/401/1] test_urllibnet
+0:07:11 load avg: 0.77 [374/403/1] test_urllibnet -- test_urllib2net skipped (resource denied)
 test_urllibnet skipped -- Use of the `network' resource not enabled
-[373/401/1] test_urlparse
-[374/401/1] test_userdict
-[375/401/1] test_userlist
-[376/401/1] test_userstring
-[377/401/1] test_uu
-[378/401/1] test_uuid
-[379/401/1] test_wait3
-[380/401/1] test_wait4
-[381/401/1] test_warnings
-[382/401/1] test_wave
-[383/401/1] test_weakref
-[384/401/1] test_weakset
-[385/401/1] test_whichdb
-[386/401/1] test_winreg
-test_winreg skipped -- No module named _winreg
-[387/401/1] test_winsound
-test_winsound skipped -- Use of the `audio' resource not enabled
-[388/401/1] test_with
-[389/401/1] test_wsgiref
-[390/401/1] test_xdrlib
-[391/401/1] test_xml_etree
-[392/401/1] test_xml_etree_c
-[393/401/1] test_xmllib
-[394/401/1] test_xmlrpc
-/data/omnios-build/omniosorg/_build/Python-2.7.13/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+0:07:11 load avg: 0.77 [375/403/1] test_urlparse -- test_urllibnet skipped (resource denied)
+0:07:11 load avg: 0.77 [376/403/1] test_userdict
+0:07:11 load avg: 0.77 [377/403/1] test_userlist
+0:07:11 load avg: 0.77 [378/403/1] test_userstring
+0:07:14 load avg: 0.78 [379/403/1] test_uu
+0:07:14 load avg: 0.78 [380/403/1] test_uuid
+0:07:14 load avg: 0.78 [381/403/1] test_wait3
+0:07:20 load avg: 0.77 [382/403/1] test_wait4
+0:07:26 load avg: 0.71 [383/403/1] test_warnings
+0:07:27 load avg: 0.70 [384/403/1] test_wave
+0:07:27 load avg: 0.70 [385/403/1] test_weakref
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
   self.__exc_clear()
-[395/401/1] test_xpickle
-[396/401/1] test_xrange
-[397/401/1] test_zipfile
-[398/401/1] test_zipfile64
+0:07:34 load avg: 0.67 [386/403/1] test_weakset
+0:07:34 load avg: 0.67 [387/403/1] test_whichdb
+0:07:35 load avg: 0.67 [388/403/1] test_winreg
+test_winreg skipped -- No module named _winreg
+0:07:35 load avg: 0.67 [389/403/1] test_winsound -- test_winreg skipped
+test_winsound skipped -- Use of the `audio' resource not enabled
+0:07:35 load avg: 0.67 [390/403/1] test_with -- test_winsound skipped (resource denied)
+0:07:35 load avg: 0.67 [391/403/1] test_wsgiref
+0:07:35 load avg: 0.67 [392/403/1] test_xdrlib
+0:07:35 load avg: 0.67 [393/403/1] test_xml_etree
+0:07:35 load avg: 0.67 [394/403/1] test_xml_etree_c
+0:07:35 load avg: 0.68 [395/403/1] test_xmllib
+0:07:36 load avg: 0.68 [396/403/1] test_xmlrpc
+/data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/Lib/threading.py:846: DeprecationWarning: sys.exc_clear() not supported in 3.x; use except clauses
+  self.__exc_clear()
+0:07:39 load avg: 0.69 [397/403/1] test_xpickle
+0:07:40 load avg: 0.69 [398/403/1] test_xrange
+0:07:40 load avg: 0.69 [399/403/1] test_zipfile
+0:07:43 load avg: 0.69 [400/403/1] test_zipfile64
 test_zipfile64 skipped -- test requires loads of disk-space bytes and a long time to run
-[399/401/1] test_zipimport
-[400/401/1] test_zipimport_support
-[401/401/1] test_zlib
-354 tests OK.
+0:07:43 load avg: 0.69 [401/403/1] test_zipimport -- test_zipfile64 skipped (resource denied)
+0:07:43 load avg: 0.69 [402/403/1] test_zipimport_support
+0:07:44 load avg: 0.69 [403/403/1] test_zlib
+357 tests OK.
 1 test failed:
     test_distutils
-1 test altered the execution environment:
-    test_import
 45 tests skipped:
     test_aepack test_al test_applesingle test_bsddb test_bsddb185
     test_bsddb3 test_cd test_cl test_codecmaps_cn test_codecmaps_hk
@@ -1295,4 +1309,7 @@ test_zipfile64 skipped -- test requires loads of disk-space bytes and a long tim
 10 skips unexpected on sunos5:
     test_bsddb3 test_dl test_gdb test_idle test_sunaudiodev test_tcl
     test_tk test_ttk_guionly test_ttk_textonly test_turtle
-gmake: *** [Makefile:901: test] Error 1
+
+Total duration: 7 min 47 sec
+Tests result: FAILURE
+gmake: *** [Makefile:891: test] Error 2

@@ -1,7 +1,8 @@
---- Python-2.7.1/Modules/python.c.orig	Tue Jun 21 21:35:45 2011
-+++ Python-2.7.1/Modules/python.c	Tue Jun 21 21:39:29 2011
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Modules/python.c Python-2.7.14/Modules/python.c
+--- Python-2.7.14~/Modules/python.c	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Modules/python.c	2017-09-23 22:33:28.270473428 +0000
 @@ -6,6 +6,13 @@
- #include <floatingpoint.h>
+ #include <fenv.h>
  #endif
  
 +#if defined(sun) && defined(__SVR4) && !defined(_LP64)
@@ -14,13 +15,13 @@
  int
  main(int argc, char **argv)
  {
-@@ -20,5 +27,18 @@
- 	m = fpgetmask();
- 	fpsetmask(m & ~FP_X_OFL);
+@@ -17,5 +24,18 @@ main(int argc, char **argv)
+ #ifdef __FreeBSD__
+ 	fedisableexcept(FE_OVERFLOW);
  #endif
 +#ifdef USE_EXTENDED_FILE_STDIO
 +	/*
-+	 * enable extended FILE facility on Solaris so that Python
++	 * enable extended FILE facility on OmniOS so that Python
 +	 * apps can keep more than 256 file descriptors open
 +	 */
 +	struct rlimit rlp;

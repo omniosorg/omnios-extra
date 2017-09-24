@@ -1,9 +1,10 @@
 This patch adds Python debugger support.  It may be contributed upstream at
 some point, but the suitability (or lack thereof) has not yet been determined.
 
---- Python-2.7.13/Makefile.pre.in.~2~	2016-12-19 19:45:55.359307641 +0300
-+++ Python-2.7.13/Makefile.pre.in	2016-12-19 19:46:55.550550819 +0300
-@@ -431,7 +431,7 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Makefile.pre.in Python-2.7.14/Makefile.pre.in
+--- Python-2.7.14~/Makefile.pre.in	2017-09-23 22:33:30.033406887 +0000
++++ Python-2.7.14/Makefile.pre.in	2017-09-23 22:33:33.975232643 +0000
+@@ -403,7 +403,7 @@ LIBRARY_OBJS=	\
  
  # Default target
  all:		@DEF_MAKE_ALL_RULE@
@@ -12,7 +13,7 @@ some point, but the suitability (or lack thereof) has not yet been determined.
  
  # Compile a binary with profile guided optimization.
  profile-opt:
-@@ -856,6 +856,15 @@
+@@ -844,6 +844,15 @@ PYTHON_HEADERS= \
  
  $(LIBRARY_OBJS) $(MODOBJS) Modules/python.o: $(PYTHON_HEADERS)
  
@@ -28,7 +29,7 @@ some point, but the suitability (or lack thereof) has not yet been determined.
  
  ######################################################################
  
-@@ -920,7 +929,7 @@
+@@ -913,7 +922,7 @@ memtest:	@DEF_MAKE_RULE@ platform
  		$(TESTPYTHON) $(TESTPROG) $(MEMTESTOPTS)
  
  # Install everything
@@ -37,8 +38,9 @@ some point, but the suitability (or lack thereof) has not yet been determined.
  	if test "x$(ENSUREPIP)" != "xno"  ; then \
  		case $(ENSUREPIP) in \
  			upgrade) ensurepip="--upgrade" ;; \
---- /dev/null
-+++ Python-2.7.1/py_db/libpython27_db.c
+diff -pruN '--exclude=*.orig' Python-2.7.14~/py_db/libpython27_db.c Python-2.7.14/py_db/libpython27_db.c
+--- Python-2.7.14~/py_db/libpython27_db.c	1970-01-01 00:00:00.000000000 +0000
++++ Python-2.7.14/py_db/libpython27_db.c	2017-09-23 22:33:33.975781153 +0000
 @@ -0,0 +1,654 @@
 +/*
 + * CDDL HEADER START
@@ -694,10 +696,9 @@ some point, but the suitability (or lack thereof) has not yet been determined.
 +
 +	free(iter);
 +}
-diff --git Python-2.7.1/py_db/libpython27_db.h Python-2.7.1/py_db/libpython27_db.h
-new file mode 100644
---- /dev/null
-+++ Python-2.7.1/py_db/libpython27_db.h
+diff -pruN '--exclude=*.orig' Python-2.7.14~/py_db/libpython27_db.h Python-2.7.14/py_db/libpython27_db.h
+--- Python-2.7.14~/py_db/libpython27_db.h	1970-01-01 00:00:00.000000000 +0000
++++ Python-2.7.14/py_db/libpython27_db.h	2017-09-23 22:33:33.975886274 +0000
 @@ -0,0 +1,73 @@
 +/*
 + * CDDL HEADER START
@@ -772,10 +773,9 @@ new file mode 100644
 +#endif
 +
 +#endif	/* _LIBPYTHON27_DB_H */
-diff --git Python-2.7.1/py_db/libpython27_db_32.h Python-2.7.1/py_db/libpython27_db_32.h
-new file mode 100644
---- /dev/null
-+++ Python-2.7.1/py_db/libpython27_db_32.h
+diff -pruN '--exclude=*.orig' Python-2.7.14~/py_db/libpython27_db_32.h Python-2.7.14/py_db/libpython27_db_32.h
+--- Python-2.7.14~/py_db/libpython27_db_32.h	1970-01-01 00:00:00.000000000 +0000
++++ Python-2.7.14/py_db/libpython27_db_32.h	2017-09-23 22:33:33.975993171 +0000
 @@ -0,0 +1,121 @@
 +/*
 + * CDDL HEADER START
@@ -898,10 +898,9 @@ new file mode 100644
 +#endif
 +
 +#endif	/* _LIBPYTHON27_DB_32_H */
-diff --git Python-2.7.1/py_db/mapfile-vers Python-2.7.1/py_db/mapfile-vers
-new file mode 100644
---- /dev/null
-+++ Python-2.7.1/py_db/mapfile-vers
+diff -pruN '--exclude=*.orig' Python-2.7.14~/py_db/mapfile-vers Python-2.7.14/py_db/mapfile-vers
+--- Python-2.7.14~/py_db/mapfile-vers	1970-01-01 00:00:00.000000000 +0000
++++ Python-2.7.14/py_db/mapfile-vers	2017-09-23 22:33:33.976071285 +0000
 @@ -0,0 +1,39 @@
 +#
 +# CDDL HEADER START

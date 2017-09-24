@@ -1,6 +1,7 @@
---- Python-2.7.6/setup.py.~1~	2013-11-10 11:36:41.000000000 +0400
-+++ Python-2.7.6/setup.py	2014-06-04 10:11:58.356029565 +0400
-@@ -437,9 +437,9 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/setup.py Python-2.7.14/setup.py
+--- Python-2.7.14~/setup.py	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/setup.py	2017-09-23 22:33:28.700380145 +0000
+@@ -455,9 +455,9 @@ class PyBuildExt(build_ext):
  
      def detect_modules(self):
          # Ensure that /usr/local is always used
@@ -13,7 +14,7 @@
          if cross_compiling:
              self.add_gcc_paths()
          self.add_multiarch_paths()
-@@ -761,6 +761,13 @@
+@@ -785,6 +785,13 @@ class PyBuildExt(build_ext):
                                                       ['/usr/lib/termcap'],
                                                       'termcap'):
                  readline_libs.append('termcap')
@@ -27,7 +28,7 @@
              exts.append( Extension('readline', ['readline.c'],
                                     library_dirs=['/usr/lib/termcap'],
                                     extra_link_args=readline_extra_link_args,
-@@ -780,9 +787,10 @@
+@@ -804,9 +811,10 @@ class PyBuildExt(build_ext):
          exts.append( Extension('_csv', ['_csv.c']) )
  
          # socket(2)
@@ -39,7 +40,7 @@
          # Detect SSL support for the socket module (via _ssl)
          search_for_ssl_incs_in = [
                                '/usr/local/ssl/include',
-@@ -1579,9 +1587,14 @@
+@@ -1610,9 +1618,14 @@ class PyBuildExt(build_ext):
                  sysconfig.get_config_var('POSIX_SEMAPHORES_NOT_ENABLED')):
                  multiprocessing_srcs.append('_multiprocessing/semaphore.c')
  
@@ -54,7 +55,7 @@
                                      include_dirs=["Modules/_multiprocessing"]))
          else:
              missing.append('_multiprocessing')
-@@ -2075,7 +2088,8 @@
+@@ -2106,7 +2119,8 @@ class PyBuildExt(build_ext):
              # this option. If you want to compile ctypes with the Sun
              # compiler, please research a proper solution, instead of
              # finding some -z option for the Sun compiler.

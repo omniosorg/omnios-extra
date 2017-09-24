@@ -2,17 +2,41 @@ This patch adds Python dtrace support.  Note it is necessary to modify
 test_sys.py to add an integer to the frameobject structure size since this
 patch adds "int f_calllineno" to the structure, so this test does not fail.
 
---- Python-2.7.6/Makefile.pre.in.~1~	2013-11-09 23:36:41.000000000 -0800
-+++ Python-2.7.6/Makefile.pre.in	2014-05-14 12:54:43.824219677 -0700
-@@ -218,6 +218,7 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Include/frameobject.h Python-2.7.14/Include/frameobject.h
+--- Python-2.7.14~/Include/frameobject.h	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Include/frameobject.h	2017-09-23 22:33:30.033721692 +0000
+@@ -44,6 +44,7 @@ typedef struct _frame {
+        PyCode_Addr2Line to calculate the line from the current
+        bytecode index. */
+     int f_lineno;		/* Current line number */
++    int f_calllineno;		/* line number of call site */
+     int f_iblock;		/* index in f_blockstack */
+     PyTryBlock f_blockstack[CO_MAXBLOCKS]; /* for try and loop blocks */
+     PyObject *f_localsplus[1];	/* locals+stack, dynamically sized */
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Lib/test/test_sys.py Python-2.7.14/Lib/test/test_sys.py
+--- Python-2.7.14~/Lib/test/test_sys.py	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Lib/test/test_sys.py	2017-09-23 22:33:30.036032504 +0000
+@@ -646,7 +646,7 @@ class SizeofTest(unittest.TestCase):
+         nfrees = len(x.f_code.co_freevars)
+         extras = x.f_code.co_stacksize + x.f_code.co_nlocals +\
+                  ncells + nfrees - 1
+-        check(x, vsize('12P3i' + CO_MAXBLOCKS*'3i' + 'P' + extras*'P'))
++        check(x, vsize('12P4i' + CO_MAXBLOCKS*'3i' + 'P' + extras*'P'))
+         # function
+         def func(): pass
+         check(func, size('9P'))
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Makefile.pre.in Python-2.7.14/Makefile.pre.in
+--- Python-2.7.14~/Makefile.pre.in	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Makefile.pre.in	2017-09-23 22:33:30.033406887 +0000
+@@ -232,6 +232,7 @@ MODULE_OBJS=	\
  # Used of signalmodule.o is not available
  SIGNAL_OBJS=	@SIGNAL_OBJS@
  
 +DTRACE_OBJS=Python/dtrace.o Python/phelper.o
  
  ##########################################################################
- # Grammar
-@@ -341,6 +342,7 @@
+ 
+@@ -337,6 +338,7 @@ PYTHON_OBJS=	\
  		Python/formatter_unicode.o \
  		Python/formatter_string.o \
  		Python/$(DYNLOADFILE) \
@@ -20,7 +44,7 @@ patch adds "int f_calllineno" to the structure, so this test does not fail.
  		$(LIBOBJS) \
  		$(MACHDEP_OBJS) \
  		$(THREADOBJ)
-@@ -664,6 +666,18 @@
+@@ -739,6 +741,18 @@ Python/formatter_unicode.o: $(srcdir)/Py
  Python/formatter_string.o: $(srcdir)/Python/formatter_string.c \
  				$(STRINGLIB_HEADERS)
  
@@ -39,19 +63,10 @@ patch adds "int f_calllineno" to the structure, so this test does not fail.
  ############################################################################
  # Header files
  
---- Python-2.7.6/Include/frameobject.h.~1~	2013-11-09 23:36:39.000000000 -0800
-+++ Python-2.7.6/Include/frameobject.h	2014-05-14 13:03:19.938777249 -0700
-@@ -44,6 +44,7 @@
-        PyCode_Addr2Line to calculate the line from the current
-        bytecode index. */
-     int f_lineno;		/* Current line number */
-+    int f_calllineno;		/* line number of call site */
-     int f_iblock;		/* index in f_blockstack */
-     PyTryBlock f_blockstack[CO_MAXBLOCKS]; /* for try and loop blocks */
-     PyObject *f_localsplus[1];	/* locals+stack, dynamically sized */
---- Python-2.7.6/Objects/frameobject.c.~1~	2013-11-09 23:36:41.000000000 -0800
-+++ Python-2.7.6/Objects/frameobject.c	2014-05-14 12:56:06.970076859 -0700
-@@ -738,6 +738,7 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Objects/frameobject.c Python-2.7.14/Objects/frameobject.c
+--- Python-2.7.14~/Objects/frameobject.c	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Objects/frameobject.c	2017-09-23 22:33:30.033987579 +0000
+@@ -736,6 +736,7 @@ PyFrame_New(PyThreadState *tstate, PyCod
      f->f_tstate = tstate;
  
      f->f_lasti = -1;
@@ -59,8 +74,9 @@ patch adds "int f_calllineno" to the structure, so this test does not fail.
      f->f_lineno = code->co_firstlineno;
      f->f_iblock = 0;
  
---- Python-2.7.6/Python/ceval.c.~1~	2013-11-09 23:36:41.000000000 -0800
-+++ Python-2.7.6/Python/ceval.c	2014-05-14 13:04:01.334853206 -0700
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Python/ceval.c Python-2.7.14/Python/ceval.c
+--- Python-2.7.14~/Python/ceval.c	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Python/ceval.c	2017-09-23 22:33:30.035564841 +0000
 @@ -19,6 +19,11 @@
  
  #include <ctype.h>
@@ -73,7 +89,7 @@ patch adds "int f_calllineno" to the structure, so this test does not fail.
  #ifndef WITH_TSC
  
  #define READ_TIMESTAMP(var)
-@@ -672,6 +677,55 @@
+@@ -674,6 +679,55 @@ PyEval_EvalCode(PyCodeObject *co, PyObje
                        NULL);
  }
  
@@ -129,7 +145,7 @@ patch adds "int f_calllineno" to the structure, so this test does not fail.
  
  /* Interpreter main loop */
  
-@@ -683,9 +737,84 @@
+@@ -685,9 +739,84 @@ PyEval_EvalFrame(PyFrameObject *f) {
      return PyEval_EvalFrameEx(f, 0);
  }
  
@@ -212,9 +228,9 @@ patch adds "int f_calllineno" to the structure, so this test does not fail.
 +#endif /* HAVE_DTRACE */
 +
  #ifdef DYNAMIC_EXECUTION_PROFILE
-     #undef USE_COMPUTED_GOTOS
+   #undef USE_COMPUTED_GOTOS
  #endif
-@@ -910,6 +1039,11 @@
+@@ -1009,6 +1138,11 @@ PyEval_EvalFrameEx(PyFrameObject *f, int
          }
      }
  
@@ -226,7 +242,7 @@ patch adds "int f_calllineno" to the structure, so this test does not fail.
      co = f->f_code;
      names = co->co_names;
      consts = co->co_consts;
-@@ -2660,6 +2794,9 @@
+@@ -2988,6 +3122,9 @@ PyEval_EvalFrameEx(PyFrameObject *f, int
              PyObject **sp;
              PCALL(PCALL_ALL);
              sp = stack_pointer;
@@ -236,7 +252,7 @@ patch adds "int f_calllineno" to the structure, so this test does not fail.
  #ifdef WITH_TSC
              x = call_function(&sp, oparg, &intr0, &intr1);
  #else
-@@ -2701,6 +2838,9 @@
+@@ -3029,6 +3166,9 @@ PyEval_EvalFrameEx(PyFrameObject *f, int
              } else
                  Py_INCREF(func);
              sp = stack_pointer;
@@ -246,7 +262,7 @@ patch adds "int f_calllineno" to the structure, so this test does not fail.
              READ_TIMESTAMP(intr0);
              x = ext_do_call(func, &sp, flags, na, nk);
              READ_TIMESTAMP(intr1);
-@@ -3001,6 +3141,10 @@
+@@ -3338,6 +3478,10 @@ fast_yield:
  
      /* pop frame */
  exit_eval_frame:
@@ -257,8 +273,9 @@ patch adds "int f_calllineno" to the structure, so this test does not fail.
      Py_LeaveRecursiveCall();
      tstate->frame = f->f_back;
  
---- /dev/null
-+++ Python-2.6.4/Python/phelper.d
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Python/phelper.d Python-2.7.14/Python/phelper.d
+--- Python-2.7.14~/Python/phelper.d	1970-01-01 00:00:00.000000000 +0000
++++ Python-2.7.14/Python/phelper.d	2017-09-23 22:33:30.035717637 +0000
 @@ -0,0 +1,139 @@
 +
 +/*
@@ -399,10 +416,9 @@ patch adds "int f_calllineno" to the structure, so this test does not fail.
 +{
 +	NULL;
 +}
-diff --git Python-2.6.4/Python/python.d Python-2.6.4/Python/python.d
-new file mode 100644
---- /dev/null
-+++ Python-2.6.4/Python/python.d
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Python/python.d Python-2.7.14/Python/python.d
+--- Python-2.7.14~/Python/python.d	1970-01-01 00:00:00.000000000 +0000
++++ Python-2.7.14/Python/python.d	2017-09-23 22:33:30.035788757 +0000
 @@ -0,0 +1,10 @@
 +provider python {
 +	probe function__entry(const char *, const char *, int);
@@ -414,14 +430,3 @@ new file mode 100644
 +#pragma D attributes Private/Private/Common provider python function
 +#pragma D attributes Evolving/Evolving/Common provider python name
 +#pragma D attributes Evolving/Evolving/Common provider python args
---- Python-2.7.6/Lib/test/test_sys.py.~1~	2013-11-09 23:36:40.000000000 -0800
-+++ Python-2.7.6/Lib/test/test_sys.py	2014-05-14 13:07:05.332748121 -0700
-@@ -612,7 +612,7 @@
-         nfrees = len(x.f_code.co_freevars)
-         extras = x.f_code.co_stacksize + x.f_code.co_nlocals +\
-                  ncells + nfrees - 1
--        check(x, vsize('12P3i' + CO_MAXBLOCKS*'3i' + 'P' + extras*'P'))
-+        check(x, vsize('12P4i' + CO_MAXBLOCKS*'3i' + 'P' + extras*'P'))
-         # function
-         def func(): pass
-         check(func, size('9P'))

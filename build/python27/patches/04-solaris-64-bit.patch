@@ -1,17 +1,18 @@
---- Python-2.7.6/Lib/distutils/command/build_ext.py.~1~	2013-11-09 23:36:40.000000000 -0800
-+++ Python-2.7.6/Lib/distutils/command/build_ext.py	2014-05-14 12:47:04.342901439 -0700
-@@ -634,6 +634,10 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Lib/distutils/command/build_ext.py Python-2.7.14/Lib/distutils/command/build_ext.py
+--- Python-2.7.14~/Lib/distutils/command/build_ext.py	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Lib/distutils/command/build_ext.py	2017-09-23 22:33:29.574160778 +0000
+@@ -637,6 +637,10 @@ class build_ext (Command):
          filename = self.get_ext_filename(ext_name)
          filename = os.path.split(filename)[-1]
  
-+        # on Solaris we put 64-bit python objects under .../64
++        # on OmniOS we put 64-bit python objects under .../64
 +        if sys.maxint != 2147483647L:
 +            filename = os.path.join("64", filename)
 +
          if not self.inplace:
              # no further work needed
              # returning :
-@@ -674,7 +678,14 @@
+@@ -677,7 +681,14 @@ class build_ext (Command):
          so_ext = get_config_var('SO')
          if os.name == 'nt' and self.debug:
              return os.path.join(*ext_path) + '_d' + so_ext
@@ -27,9 +28,10 @@
  
      def get_export_symbols (self, ext):
          """Return the list of symbols that a shared extension has to
---- Python-2.7.6/Python/import.c.~1~	2013-11-09 23:36:41.000000000 -0800
-+++ Python-2.7.6/Python/import.c	2014-05-14 12:53:34.233016586 -0700
-@@ -1288,6 +1288,57 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Python/import.c Python-2.7.14/Python/import.c
+--- Python-2.7.14~/Python/import.c	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Python/import.c	2017-09-23 22:33:29.574956629 +0000
+@@ -1310,6 +1310,57 @@ static int case_ok(char *, Py_ssize_t, P
  static int find_init_module(char *); /* Forward */
  static struct filedescr importhookdescr = {"", "", IMP_HOOK};
  
@@ -87,7 +89,7 @@
  static struct filedescr *
  find_module(char *fullname, char *subname, PyObject *path, char *buf,
              size_t buflen, FILE **p_fp, PyObject **p_loader)
-@@ -1302,11 +1353,10 @@
+@@ -1324,11 +1375,10 @@ find_module(char *fullname, char *subnam
      static struct filedescr fd_builtin = {"", "", C_BUILTIN};
      static struct filedescr fd_package = {"", "", PKG_DIRECTORY};
      char *name;
@@ -100,7 +102,7 @@
      if (p_loader != NULL)
          *p_loader = NULL;
  
-@@ -1513,15 +1563,17 @@
+@@ -1535,15 +1585,17 @@ find_module(char *fullname, char *subnam
                  }
              }
          }
@@ -120,7 +122,7 @@
  #if defined(PYOS_OS2) && defined(HAVE_DYNAMIC_LOADING)
              /* OS/2 limits DLLs to 8 character names (w/o
                 extension)
-@@ -1562,21 +1614,20 @@
+@@ -1584,21 +1636,20 @@ find_module(char *fullname, char *subnam
                      fp = NULL;
                  }
              }
@@ -145,9 +147,10 @@
          Py_XDECREF(copy);
          if (fp != NULL)
              break;
---- Python-2.7.1/Python/importdl.h.orig	Fri Jul 15 15:48:16 2011
-+++ Python-2.7.1/Python/importdl.h	Fri Jul 15 15:49:10 2011
-@@ -31,8 +31,9 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Python/importdl.h Python-2.7.14/Python/importdl.h
+--- Python-2.7.14~/Python/importdl.h	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Python/importdl.h	2017-09-23 22:33:29.575072640 +0000
+@@ -31,8 +31,9 @@ extern const struct filedescr _PyImport_
  extern PyObject *_PyImport_LoadDynamicModule(char *name, char *pathname,
                                               FILE *);
  
