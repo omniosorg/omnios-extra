@@ -87,7 +87,7 @@
 | system/virtualization/open-vm-tools	| 10.1.10		| https://github.com/vmware/open-vm-tools/releases
 | developer/swig			| 3.0.12		| http://www.swig.org/download.html
 | library/security/trousers		| 0.3.14		| https://sourceforge.net/projects/trousers/files/trousers
-| library/python-2/asn1crypto-27	| 0.22.0		| https://pypi.python.org/pypi/asn1crypto
+| library/python-2/asn1crypto-27	| 0.23.0		| https://pypi.python.org/pypi/asn1crypto
 | library/python-2/cffi-27		| 1.11.0		| https://pypi.python.org/pypi/cffi
 | library/python-2/cheroot-27		| 5.8.3			| https://pypi.python.org/pypi/cheroot
 | library/python-2/cherrypy-27		| 11.0.0		| https://pypi.python.org/pypi/cherrypy
@@ -100,7 +100,7 @@
 | library/python-2/jsonrpclib-27	| 0.1.7			| https://pypi.python.org/pypi/jsonrpclib
 | library/python-2/jsonschema-27	| 2.6.0			| https://pypi.python.org/pypi/jsonschema
 | library/python-2/lxml-27		| 4.0.0			| https://pypi.python.org/pypi/lxml/
-| library/python-2/m2crypto-27		| 0.26.2		| https://pypi.python.org/pypi/M2Crypto
+| library/python-2/m2crypto-27		| 0.26.3		| https://pypi.python.org/pypi/M2Crypto
 | library/python-2/mako-27		| 1.0.7			| https://pypi.python.org/pypi/Mako
 | library/python-2/numpy-27		| 1.13.1		| https://pypi.python.org/pypi/numpy
 | library/python-2/ply-27		| 3.10			| https://pypi.python.org/pypi/ply

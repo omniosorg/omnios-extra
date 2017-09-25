@@ -1,7 +1,10 @@
-diff -ru M2Crypto-0.26.0/M2Crypto/X509.py M2Crypto-0.26.0.patched/M2Crypto/X509.py
---- M2Crypto-0.26.0/M2Crypto/X509.py	2017-03-17 09:33:00.000000000 +0000
-+++ M2Crypto-0.26.0.patched/M2Crypto/X509.py	2017-09-01 15:48:38.919619897 +0000
-@@ -611,10 +611,10 @@
+pkg(5) needs to be able to retrieve information about the CRL
+add some new functions to enable this.
+
+diff -pruN '--exclude=*.orig' M2Crypto-0.26.3~/M2Crypto/X509.py M2Crypto-0.26.3/M2Crypto/X509.py
+--- M2Crypto-0.26.3~/M2Crypto/X509.py	2017-09-21 20:34:15.000000000 +0000
++++ M2Crypto-0.26.3/M2Crypto/X509.py	2017-09-25 13:07:10.396520447 +0000
+@@ -616,10 +616,10 @@ class X509:
                  ''')
          return out
  
@@ -14,7 +17,7 @@ diff -ru M2Crypto-0.26.0/M2Crypto/X509.py M2Crypto-0.26.0.patched/M2Crypto/X509.
  
      def set_pubkey(self, pkey):
          # type: (EVP.PKey) -> int
-@@ -1344,6 +1344,7 @@
+@@ -1375,6 +1375,7 @@ class CRL:
          else:
              self.crl = m2.x509_crl_new()
              self._pyfree = 1
@@ -22,7 +25,7 @@ diff -ru M2Crypto-0.26.0/M2Crypto/X509.py M2Crypto-0.26.0.patched/M2Crypto/X509.
  
      def __del__(self):
          # type: () -> None
-@@ -1362,18 +1363,65 @@
+@@ -1393,18 +1394,65 @@ class CRL:
          return util.py3str(buf.read_all())
  
  
@@ -93,10 +96,10 @@ diff -ru M2Crypto-0.26.0/M2Crypto/X509.py M2Crypto-0.26.0.patched/M2Crypto/X509.
 -    if cptr is None:
 -        raise X509Error(Err.get_error())
 -    return CRL(cptr, 1)
-diff -ru M2Crypto-0.26.0/SWIG/_x509.i M2Crypto-0.26.0.patched/SWIG/_x509.i
---- M2Crypto-0.26.0/SWIG/_x509.i	2017-03-14 12:09:31.000000000 +0000
-+++ M2Crypto-0.26.0.patched/SWIG/_x509.i	2017-09-01 15:41:59.577145968 +0000
-@@ -64,6 +64,9 @@
+diff -pruN '--exclude=*.orig' M2Crypto-0.26.3~/SWIG/_x509.i M2Crypto-0.26.3/SWIG/_x509.i
+--- M2Crypto-0.26.3~/SWIG/_x509.i	2017-09-21 11:29:46.000000000 +0000
++++ M2Crypto-0.26.3/SWIG/_x509.i	2017-09-25 13:07:10.397024120 +0000
+@@ -75,6 +75,9 @@ extern int X509_set_subject_name(X509 *,
  %rename(x509_cmp_current_time) X509_cmp_current_time;
  extern int X509_cmp_current_time(ASN1_TIME *);
  
@@ -106,7 +109,7 @@ diff -ru M2Crypto-0.26.0/SWIG/_x509.i M2Crypto-0.26.0.patched/SWIG/_x509.i
                              
  /* From x509.h */
  /* standard trust ids */
-@@ -111,6 +114,9 @@
+@@ -122,6 +125,9 @@ extern int X509_verify(X509 *a, EVP_PKEY
  %rename(x509_get_verify_error) X509_verify_cert_error_string;
  extern const char *X509_verify_cert_error_string(long);
  
@@ -116,7 +119,7 @@ diff -ru M2Crypto-0.26.0/SWIG/_x509.i M2Crypto-0.26.0.patched/SWIG/_x509.i
  %constant long X509V3_EXT_UNKNOWN_MASK         = (0xfL << 16);
  %constant long X509V3_EXT_DEFAULT              = 0;
  %constant long X509V3_EXT_ERROR_UNKNOWN        = (1L << 16);
-@@ -127,6 +133,13 @@
+@@ -138,6 +144,13 @@ extern X509_EXTENSION *X509_get_ext(X509
  %threadallow X509V3_EXT_print;
  extern int X509V3_EXT_print(BIO *, X509_EXTENSION *, unsigned long, int);
  
@@ -130,7 +133,7 @@ diff -ru M2Crypto-0.26.0/SWIG/_x509.i M2Crypto-0.26.0.patched/SWIG/_x509.i
  %rename(x509_name_new) X509_NAME_new;
  extern X509_NAME *X509_NAME_new( void );
  %rename(x509_name_free) X509_NAME_free;
-@@ -347,6 +360,7 @@
+@@ -357,6 +370,7 @@ X509 *x509_read_pem(BIO *bio) {
  }
  %}
  
@@ -138,7 +141,7 @@ diff -ru M2Crypto-0.26.0/SWIG/_x509.i M2Crypto-0.26.0.patched/SWIG/_x509.i
  %threadallow d2i_x509;
  %inline %{
  X509 *d2i_x509(BIO *bio) {
-@@ -354,6 +368,13 @@
+@@ -364,6 +378,13 @@ X509 *d2i_x509(BIO *bio) {
  }
  %}
  
@@ -152,7 +155,7 @@ diff -ru M2Crypto-0.26.0/SWIG/_x509.i M2Crypto-0.26.0.patched/SWIG/_x509.i
  %threadallow d2i_x509_req;
  %inline %{
  X509_REQ *d2i_x509_req(BIO *bio) {
-@@ -433,6 +454,33 @@
+@@ -443,6 +464,33 @@ ASN1_TIME *x509_get_not_after(X509 *x) {
      return X509_get_notAfter(x);
  }
  
@@ -186,7 +189,7 @@ diff -ru M2Crypto-0.26.0/SWIG/_x509.i M2Crypto-0.26.0.patched/SWIG/_x509.i
  int x509_sign(X509 *x, EVP_PKEY *pkey, EVP_MD *md) {
      return X509_sign(x, pkey, md);
  }
-@@ -519,6 +567,10 @@
+@@ -535,6 +583,10 @@ int x509_type_check(X509 *x509) {
      return 1;
  }
  
