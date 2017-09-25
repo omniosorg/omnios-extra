@@ -29,7 +29,7 @@
 
 PKG=library/python-2/asn1crypto-27
 PROG=asn1crypto
-VER=0.22.0
+VER=0.23.0
 SUMMARY="asn1crypto - Fast ASN.1 parser..."
 DESC="$SUMMARY"
 
