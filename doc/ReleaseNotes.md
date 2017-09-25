@@ -101,7 +101,7 @@ r151024 release repository: https://pkg.omniosce.org/r151024/core
   can be found on
   [the gcc web site](https://gcc.gnu.org/gcc-6/changes.html).
 
-* Perl has been upgraded to 5.24.2 and the components have been renamed to
+* Perl has been upgraded to 5.24.3 and the components have been renamed to
   remove the minor version from paths. This means that modules no longer
   have to be rebuilt/moved following minor perl upgrades. The version of perl
   shipped with OmniOS is for internal system use and should not be relied on
