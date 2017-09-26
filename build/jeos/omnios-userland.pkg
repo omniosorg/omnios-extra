@@ -72,7 +72,7 @@ library/python-2/m2crypto-27		0.26
 library/python-2/mako-27		1.0
 library/python-2/numpy-27		1.13
 library/python-2/ply-27			3.10
-library/python-2/portend-27		2.1
+library/python-2/portend-27		2.2
 library/python-2/pybonjour-27		1.1.1
 library/python-2/pycurl-27		7.43
 library/python-2/pylint-27		1.7

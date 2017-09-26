@@ -104,7 +104,7 @@
 | library/python-2/mako-27		| 1.0.7			| https://pypi.python.org/pypi/Mako
 | library/python-2/numpy-27		| 1.13.1		| https://pypi.python.org/pypi/numpy
 | library/python-2/ply-27		| 3.10			| https://pypi.python.org/pypi/ply
-| library/python-2/portend-27		| 2.1.2			| https://pypi.python.org/pypi/portend
+| library/python-2/portend-27		| 2.2			| https://pypi.python.org/pypi/portend
 | library/python-2/pybonjour-27		| 1.1.1			| https://pypi.python.org/pypi/pybonjour
 | library/python-2/pycurl-27		| 7.43.0		| https://pypi.python.org/pypi/pycurl
 | library/python-2/pylint-27		| 1.7.2			| https://pypi.python.org/pypi/pylint

@@ -29,7 +29,7 @@
 
 PKG=library/python-2/portend-27
 PROG=portend
-VER=2.1.2
+VER=2.2
 SUMMARY="portend - TCP port monitoring utilities"
 DESC="$SUMMARY"
 
