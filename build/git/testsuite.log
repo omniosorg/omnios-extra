@@ -113,30 +113,2718 @@ ok 30 - init notices EPERM
 ok 31 - init creates a new bare directory with global --bare
 ok 32 - init prefers command line to GIT_DIR
 ok 33 - init with separate gitdir
-not ok 34 - init in long base path
+ok 34 - init in long base path
+ok 35 # skip init in long restricted base path (missing GETCWD_IGNORES_PERMS)
+ok 36 - re-init on .git file
+ok 37 - re-init to update git link
+ok 38 - re-init to move gitdir
+ok 39 - re-init to move gitdir symlink
+ok 40 # skip .git hidden (missing MINGW)
+ok 41 # skip bare git dir not hidden (missing MINGW)
+ok 42 - remote init from does not use config from cwd
+ok 43 - re-init from a linked worktree
+# passed all 43 test(s)
+1..43
+*** t0002-gitfile.sh ***
+ok 1 - initial setup
+ok 2 - bad setup: invalid .git file format
+ok 3 - bad setup: invalid .git file path
+ok 4 - final setup + check rev-parse --git-dir
+ok 5 - check hash-object
+ok 6 - check cat-file
+ok 7 - check update-index
+ok 8 - check write-tree
+ok 9 - check commit-tree
+ok 10 - check rev-list
+ok 11 - setup_git_dir twice in subdir
+ok 12 - enter_repo non-strict mode
+ok 13 - enter_repo linked checkout
+ok 14 - enter_repo strict mode
+# passed all 14 test(s)
+1..14
+*** t0003-attributes.sh ***
+ok 1 - open-quoted pathname
+ok 2 - setup
+ok 3 - command line checks
+ok 4 - attribute test
+ok 5 - attribute matching is case sensitive when core.ignorecase=0
+ok 6 - attribute matching is case insensitive when core.ignorecase=1
+ok 7 # skip additional case insensitivity tests (missing CASE_INSENSITIVE_FS)
+ok 8 - unnormalized paths
+ok 9 - relative paths
+ok 10 - prefixes are not confused with leading directories
+ok 11 - core.attributesfile
+ok 12 - attribute test: read paths from stdin
+ok 13 - attribute test: --all option
+ok 14 - attribute test: --cached option
+ok 15 - root subdir attribute test
+ok 16 - negative patterns
+ok 17 - patterns starting with exclamation
+ok 18 - "**" test
+ok 19 - "**" with no slashes test
+ok 20 - using --git-dir and --work-tree
+ok 21 - setup bare
+ok 22 - bare repository: check that .gitattribute is ignored
+ok 23 - bare repository: check that --cached honors index
+ok 24 - bare repository: test info/attributes
+# passed all 24 test(s)
+1..24
+*** t0004-unwritable.sh ***
+ok 1 - setup
+ok 2 - write-tree should notice unwritable repository
+ok 3 - commit should notice unwritable repository
+ok 4 - update-index should notice unwritable repository
+ok 5 - add should notice unwritable repository
+# passed all 5 test(s)
+1..5
+*** t0005-signals.sh ***
+ok 1 - sigchain works
+ok 2 - signals are propagated using shell convention
+ok 3 - create blob
+ok 4 - a constipated git dies with SIGPIPE
+ok 5 - a constipated git dies with SIGPIPE even if parent ignores it
+# passed all 5 test(s)
+1..5
+*** t0006-date.sh ***
+ok 1 - relative date (5 seconds ago)
+ok 2 - relative date (5 minutes ago)
+ok 3 - relative date (5 hours ago)
+ok 4 - relative date (5 days ago)
+ok 5 - relative date (3 weeks ago)
+ok 6 - relative date (5 months ago)
+ok 7 - relative date (1 year, 2 months ago)
+ok 8 - relative date (1 year, 9 months ago)
+ok 9 - relative date (20 years ago)
+ok 10 - relative date (12 months ago)
+ok 11 - relative date (2 years ago)
+ok 12 - show date (iso8601:1466000000 +0200)
+ok 13 - show date (iso8601-strict:1466000000 +0200)
+ok 14 - show date (rfc2822:1466000000 +0200)
+ok 15 - show date (short:1466000000 +0200)
+ok 16 - show date (default:1466000000 +0200)
+ok 17 - show date (raw:1466000000 +0200)
+ok 18 - show date (unix:1466000000 +0200)
+ok 19 - show date (iso-local:1466000000 +0200)
+ok 20 - show date (raw-local:1466000000 +0200)
+ok 21 - show date (unix-local:1466000000 +0200)
+ok 22 - show date (format:%z:1466000000 +0200)
+ok 23 - show date (format-local:%z:1466000000 +0200)
+ok 24 - show date (format:%Z:1466000000 +0200)
+ok 25 - show date (format-local:%Z:1466000000 +0200)
+ok 26 - show date (format:%%z:1466000000 +0200)
+ok 27 - show date (format-local:%%z:1466000000 +0200)
+ok 28 - show date (format:%Y-%m-%d %H:%M:%S:1466000000 +0200)
+ok 29 - show date (format-local:%Y-%m-%d %H:%M:%S:1466000000 +0200)
+ok 30 - show date (iso:5758122296 -0400)
+ok 31 - show date (iso-local:5758122296 -0400)
+ok 32 - parse date (2008)
+ok 33 - parse date (2008-02)
+ok 34 - parse date (2008-02-14)
+ok 35 - parse date (2008-02-14 20:30:45)
+ok 36 - parse date (2008-02-14 20:30:45 -0500)
+ok 37 - parse date (2008-02-14 20:30:45 -0015)
+ok 38 - parse date (2008-02-14 20:30:45 -5)
+ok 39 - parse date (2008-02-14 20:30:45 -5:)
+ok 40 - parse date (2008-02-14 20:30:45 -05)
+ok 41 - parse date (2008-02-14 20:30:45 -:30)
+ok 42 - parse date (2008-02-14 20:30:45 -05:00)
+ok 43 - parse date (2008-02-14 20:30:45 TZ=EST5)
+ok 44 - parse approxidate (now)
+ok 45 - parse approxidate (5 seconds ago)
+ok 46 - parse approxidate (5.seconds.ago)
+ok 47 - parse approxidate (10.minutes.ago)
+ok 48 - parse approxidate (yesterday)
+ok 49 - parse approxidate (3.days.ago)
+ok 50 - parse approxidate (3.weeks.ago)
+ok 51 - parse approxidate (3.months.ago)
+ok 52 - parse approxidate (2.years.3.months.ago)
+ok 53 - parse approxidate (6am yesterday)
+ok 54 - parse approxidate (6pm yesterday)
+ok 55 - parse approxidate (3:00)
+ok 56 - parse approxidate (15:00)
+ok 57 - parse approxidate (noon today)
+ok 58 - parse approxidate (noon yesterday)
+ok 59 - parse approxidate (last tuesday)
+ok 60 - parse approxidate (July 5th)
+ok 61 - parse approxidate (06/05/2009)
+ok 62 - parse approxidate (06.05.2009)
+ok 63 - parse approxidate (Jun 6, 5AM)
+ok 64 - parse approxidate (5AM Jun 6)
+ok 65 - parse approxidate (6AM, June 7, 2009)
+ok 66 - parse approxidate (2008-12-01)
+ok 67 - parse approxidate (2009-12-01)
+# passed all 67 test(s)
+1..67
+*** t0007-git-var.sh ***
+ok 1 - get GIT_AUTHOR_IDENT
+ok 2 - get GIT_COMMITTER_IDENT
+ok 3 - requested identites are strict
+ok 4 - git var -l lists variables
+ok 5 - git var -l lists config
+ok 6 - listing and asking for variables are exclusive
+# passed all 6 test(s)
+1..6
+*** t0008-ignores.sh ***
+ok 1 - setup
+ok 2 - . corner-case
+ok 3 - . corner-case with -q
+ok 4 - . corner-case with --quiet
+ok 5 - . corner-case with -v
+ok 6 - . corner-case with -v -n
+ok 7 - . corner-case with -v --non-matching
+ok 8 - . corner-case with --verbose
+ok 9 - . corner-case with --verbose -n
+ok 10 - . corner-case with --verbose --non-matching
+ok 11 - empty command line
+ok 12 - empty command line with -q
+ok 13 - empty command line with --quiet
+ok 14 - empty command line with -v
+ok 15 - empty command line with -v -n
+ok 16 - empty command line with -v --non-matching
+ok 17 - empty command line with --verbose
+ok 18 - empty command line with --verbose -n
+ok 19 - empty command line with --verbose --non-matching
+ok 20 - --stdin with empty STDIN
+ok 21 - --stdin with empty STDIN with -q
+ok 22 - --stdin with empty STDIN with --quiet
+ok 23 - --stdin with empty STDIN with -v
+ok 24 - --stdin with empty STDIN with -v -n
+ok 25 - --stdin with empty STDIN with -v --non-matching
+ok 26 - --stdin with empty STDIN with --verbose
+ok 27 - --stdin with empty STDIN with --verbose -n
+ok 28 - --stdin with empty STDIN with --verbose --non-matching
+ok 29 - -q with multiple args
+ok 30 - --quiet with multiple args
+ok 31 - -q -v
+ok 32 - --quiet -v
+ok 33 - -q --verbose
+ok 34 - --quiet --verbose
+ok 35 - --quiet with multiple args
+ok 36 - erroneous use of --
+ok 37 - erroneous use of -- with -q
+ok 38 - erroneous use of -- with --quiet
+ok 39 - erroneous use of -- with -v
+ok 40 - erroneous use of -- with -v -n
+ok 41 - erroneous use of -- with -v --non-matching
+ok 42 - erroneous use of -- with --verbose
+ok 43 - erroneous use of -- with --verbose -n
+ok 44 - erroneous use of -- with --verbose --non-matching
+ok 45 - --stdin with superfluous arg
+ok 46 - --stdin with superfluous arg with -q
+ok 47 - --stdin with superfluous arg with --quiet
+ok 48 - --stdin with superfluous arg with -v
+ok 49 - --stdin with superfluous arg with -v -n
+ok 50 - --stdin with superfluous arg with -v --non-matching
+ok 51 - --stdin with superfluous arg with --verbose
+ok 52 - --stdin with superfluous arg with --verbose -n
+ok 53 - --stdin with superfluous arg with --verbose --non-matching
+ok 54 - --stdin -z with superfluous arg
+ok 55 - --stdin -z with superfluous arg with -q
+ok 56 - --stdin -z with superfluous arg with --quiet
+ok 57 - --stdin -z with superfluous arg with -v
+ok 58 - --stdin -z with superfluous arg with -v -n
+ok 59 - --stdin -z with superfluous arg with -v --non-matching
+ok 60 - --stdin -z with superfluous arg with --verbose
+ok 61 - --stdin -z with superfluous arg with --verbose -n
+ok 62 - --stdin -z with superfluous arg with --verbose --non-matching
+ok 63 - -z without --stdin
+ok 64 - -z without --stdin with -q
+ok 65 - -z without --stdin with --quiet
+ok 66 - -z without --stdin with -v
+ok 67 - -z without --stdin with -v -n
+ok 68 - -z without --stdin with -v --non-matching
+ok 69 - -z without --stdin with --verbose
+ok 70 - -z without --stdin with --verbose -n
+ok 71 - -z without --stdin with --verbose --non-matching
+ok 72 - -z without --stdin and superfluous arg
+ok 73 - -z without --stdin and superfluous arg with -q
+ok 74 - -z without --stdin and superfluous arg with --quiet
+ok 75 - -z without --stdin and superfluous arg with -v
+ok 76 - -z without --stdin and superfluous arg with -v -n
+ok 77 - -z without --stdin and superfluous arg with -v --non-matching
+ok 78 - -z without --stdin and superfluous arg with --verbose
+ok 79 - -z without --stdin and superfluous arg with --verbose -n
+ok 80 - -z without --stdin and superfluous arg with --verbose --non-matching
+ok 81 - needs work tree
+ok 82 - needs work tree with -q
+ok 83 - needs work tree with --quiet
+ok 84 - needs work tree with -v
+ok 85 - needs work tree with -v -n
+ok 86 - needs work tree with -v --non-matching
+ok 87 - needs work tree with --verbose
+ok 88 - needs work tree with --verbose -n
+ok 89 - needs work tree with --verbose --non-matching
+ok 90 - non-existent file at top-level not ignored
+ok 91 - non-existent file at top-level not ignored with -q
+ok 92 - non-existent file at top-level not ignored with --quiet
+ok 93 - non-existent file at top-level not ignored with -v
+ok 94 - non-existent file at top-level not ignored with -v -n
+ok 95 - non-existent file at top-level not ignored with -v --non-matching
+ok 96 - non-existent file at top-level not ignored with --verbose
+ok 97 - non-existent file at top-level not ignored with --verbose -n
+ok 98 - non-existent file at top-level not ignored with --verbose --non-matching
+ok 99 - non-existent file at top-level not ignored with --no-index
+ok 100 - non-existent file at top-level not ignored with --no-index -q
+ok 101 - non-existent file at top-level not ignored with --no-index --quiet
+ok 102 - non-existent file at top-level not ignored with --no-index -v
+ok 103 - non-existent file at top-level not ignored with --no-index -v -n
+ok 104 - non-existent file at top-level not ignored with --no-index -v --non-matching
+ok 105 - non-existent file at top-level not ignored with --no-index --verbose
+ok 106 - non-existent file at top-level not ignored with --no-index --verbose -n
+ok 107 - non-existent file at top-level not ignored with --no-index --verbose --non-matching
+ok 108 - non-existent file at top-level ignored
+ok 109 - non-existent file at top-level ignored with -q
+ok 110 - non-existent file at top-level ignored with --quiet
+ok 111 - non-existent file at top-level ignored with -v
+ok 112 - non-existent file at top-level ignored with -v -n
+ok 113 - non-existent file at top-level ignored with -v --non-matching
+ok 114 - non-existent file at top-level ignored with --verbose
+ok 115 - non-existent file at top-level ignored with --verbose -n
+ok 116 - non-existent file at top-level ignored with --verbose --non-matching
+ok 117 - non-existent file at top-level ignored with --no-index
+ok 118 - non-existent file at top-level ignored with --no-index -q
+ok 119 - non-existent file at top-level ignored with --no-index --quiet
+ok 120 - non-existent file at top-level ignored with --no-index -v
+ok 121 - non-existent file at top-level ignored with --no-index -v -n
+ok 122 - non-existent file at top-level ignored with --no-index -v --non-matching
+ok 123 - non-existent file at top-level ignored with --no-index --verbose
+ok 124 - non-existent file at top-level ignored with --no-index --verbose -n
+ok 125 - non-existent file at top-level ignored with --no-index --verbose --non-matching
+ok 126 - existing untracked file at top-level not ignored
+ok 127 - existing untracked file at top-level not ignored with -q
+ok 128 - existing untracked file at top-level not ignored with --quiet
+ok 129 - existing untracked file at top-level not ignored with -v
+ok 130 - existing untracked file at top-level not ignored with -v -n
+ok 131 - existing untracked file at top-level not ignored with -v --non-matching
+ok 132 - existing untracked file at top-level not ignored with --verbose
+ok 133 - existing untracked file at top-level not ignored with --verbose -n
+ok 134 - existing untracked file at top-level not ignored with --verbose --non-matching
+ok 135 - existing untracked file at top-level not ignored with --no-index
+ok 136 - existing untracked file at top-level not ignored with --no-index -q
+ok 137 - existing untracked file at top-level not ignored with --no-index --quiet
+ok 138 - existing untracked file at top-level not ignored with --no-index -v
+ok 139 - existing untracked file at top-level not ignored with --no-index -v -n
+ok 140 - existing untracked file at top-level not ignored with --no-index -v --non-matching
+ok 141 - existing untracked file at top-level not ignored with --no-index --verbose
+ok 142 - existing untracked file at top-level not ignored with --no-index --verbose -n
+ok 143 - existing untracked file at top-level not ignored with --no-index --verbose --non-matching
+ok 144 - existing tracked file at top-level not ignored
+ok 145 - existing tracked file at top-level not ignored with -q
+ok 146 - existing tracked file at top-level not ignored with --quiet
+ok 147 - existing tracked file at top-level not ignored with -v
+ok 148 - existing tracked file at top-level not ignored with -v -n
+ok 149 - existing tracked file at top-level not ignored with -v --non-matching
+ok 150 - existing tracked file at top-level not ignored with --verbose
+ok 151 - existing tracked file at top-level not ignored with --verbose -n
+ok 152 - existing tracked file at top-level not ignored with --verbose --non-matching
+ok 153 - existing tracked file at top-level shown as ignored with --no-index
+ok 154 - existing tracked file at top-level shown as ignored with --no-index -q
+ok 155 - existing tracked file at top-level shown as ignored with --no-index --quiet
+ok 156 - existing tracked file at top-level shown as ignored with --no-index -v
+ok 157 - existing tracked file at top-level shown as ignored with --no-index -v -n
+ok 158 - existing tracked file at top-level shown as ignored with --no-index -v --non-matching
+ok 159 - existing tracked file at top-level shown as ignored with --no-index --verbose
+ok 160 - existing tracked file at top-level shown as ignored with --no-index --verbose -n
+ok 161 - existing tracked file at top-level shown as ignored with --no-index --verbose --non-matching
+ok 162 - existing untracked file at top-level ignored
+ok 163 - existing untracked file at top-level ignored with -q
+ok 164 - existing untracked file at top-level ignored with --quiet
+ok 165 - existing untracked file at top-level ignored with -v
+ok 166 - existing untracked file at top-level ignored with -v -n
+ok 167 - existing untracked file at top-level ignored with -v --non-matching
+ok 168 - existing untracked file at top-level ignored with --verbose
+ok 169 - existing untracked file at top-level ignored with --verbose -n
+ok 170 - existing untracked file at top-level ignored with --verbose --non-matching
+ok 171 - existing untracked file at top-level ignored with --no-index
+ok 172 - existing untracked file at top-level ignored with --no-index -q
+ok 173 - existing untracked file at top-level ignored with --no-index --quiet
+ok 174 - existing untracked file at top-level ignored with --no-index -v
+ok 175 - existing untracked file at top-level ignored with --no-index -v -n
+ok 176 - existing untracked file at top-level ignored with --no-index -v --non-matching
+ok 177 - existing untracked file at top-level ignored with --no-index --verbose
+ok 178 - existing untracked file at top-level ignored with --no-index --verbose -n
+ok 179 - existing untracked file at top-level ignored with --no-index --verbose --non-matching
+ok 180 - mix of file types at top-level
+ok 181 - mix of file types at top-level with -v
+ok 182 - mix of file types at top-level with -v -n
+ok 183 - mix of file types at top-level with -v --non-matching
+ok 184 - mix of file types at top-level with --verbose
+ok 185 - mix of file types at top-level with --verbose -n
+ok 186 - mix of file types at top-level with --verbose --non-matching
+ok 187 - mix of file types at top-level with --no-index
+ok 188 - mix of file types at top-level with --no-index -v
+ok 189 - mix of file types at top-level with --no-index -v -n
+ok 190 - mix of file types at top-level with --no-index -v --non-matching
+ok 191 - mix of file types at top-level with --no-index --verbose
+ok 192 - mix of file types at top-level with --no-index --verbose -n
+ok 193 - mix of file types at top-level with --no-index --verbose --non-matching
+ok 194 - non-existent file in subdir a/ not ignored
+ok 195 - non-existent file in subdir a/ not ignored with -q
+ok 196 - non-existent file in subdir a/ not ignored with --quiet
+ok 197 - non-existent file in subdir a/ not ignored with -v
+ok 198 - non-existent file in subdir a/ not ignored with -v -n
+ok 199 - non-existent file in subdir a/ not ignored with -v --non-matching
+ok 200 - non-existent file in subdir a/ not ignored with --verbose
+ok 201 - non-existent file in subdir a/ not ignored with --verbose -n
+ok 202 - non-existent file in subdir a/ not ignored with --verbose --non-matching
+ok 203 - non-existent file in subdir a/ not ignored with --no-index
+ok 204 - non-existent file in subdir a/ not ignored with --no-index -q
+ok 205 - non-existent file in subdir a/ not ignored with --no-index --quiet
+ok 206 - non-existent file in subdir a/ not ignored with --no-index -v
+ok 207 - non-existent file in subdir a/ not ignored with --no-index -v -n
+ok 208 - non-existent file in subdir a/ not ignored with --no-index -v --non-matching
+ok 209 - non-existent file in subdir a/ not ignored with --no-index --verbose
+ok 210 - non-existent file in subdir a/ not ignored with --no-index --verbose -n
+ok 211 - non-existent file in subdir a/ not ignored with --no-index --verbose --non-matching
+ok 212 - non-existent file in subdir a/ ignored
+ok 213 - non-existent file in subdir a/ ignored with -q
+ok 214 - non-existent file in subdir a/ ignored with --quiet
+ok 215 - non-existent file in subdir a/ ignored with -v
+ok 216 - non-existent file in subdir a/ ignored with -v -n
+ok 217 - non-existent file in subdir a/ ignored with -v --non-matching
+ok 218 - non-existent file in subdir a/ ignored with --verbose
+ok 219 - non-existent file in subdir a/ ignored with --verbose -n
+ok 220 - non-existent file in subdir a/ ignored with --verbose --non-matching
+ok 221 - non-existent file in subdir a/ ignored with --no-index
+ok 222 - non-existent file in subdir a/ ignored with --no-index -q
+ok 223 - non-existent file in subdir a/ ignored with --no-index --quiet
+ok 224 - non-existent file in subdir a/ ignored with --no-index -v
+ok 225 - non-existent file in subdir a/ ignored with --no-index -v -n
+ok 226 - non-existent file in subdir a/ ignored with --no-index -v --non-matching
+ok 227 - non-existent file in subdir a/ ignored with --no-index --verbose
+ok 228 - non-existent file in subdir a/ ignored with --no-index --verbose -n
+ok 229 - non-existent file in subdir a/ ignored with --no-index --verbose --non-matching
+ok 230 - existing untracked file in subdir a/ not ignored
+ok 231 - existing untracked file in subdir a/ not ignored with -q
+ok 232 - existing untracked file in subdir a/ not ignored with --quiet
+ok 233 - existing untracked file in subdir a/ not ignored with -v
+ok 234 - existing untracked file in subdir a/ not ignored with -v -n
+ok 235 - existing untracked file in subdir a/ not ignored with -v --non-matching
+ok 236 - existing untracked file in subdir a/ not ignored with --verbose
+ok 237 - existing untracked file in subdir a/ not ignored with --verbose -n
+ok 238 - existing untracked file in subdir a/ not ignored with --verbose --non-matching
+ok 239 - existing untracked file in subdir a/ not ignored with --no-index
+ok 240 - existing untracked file in subdir a/ not ignored with --no-index -q
+ok 241 - existing untracked file in subdir a/ not ignored with --no-index --quiet
+ok 242 - existing untracked file in subdir a/ not ignored with --no-index -v
+ok 243 - existing untracked file in subdir a/ not ignored with --no-index -v -n
+ok 244 - existing untracked file in subdir a/ not ignored with --no-index -v --non-matching
+ok 245 - existing untracked file in subdir a/ not ignored with --no-index --verbose
+ok 246 - existing untracked file in subdir a/ not ignored with --no-index --verbose -n
+ok 247 - existing untracked file in subdir a/ not ignored with --no-index --verbose --non-matching
+ok 248 - existing tracked file in subdir a/ not ignored
+ok 249 - existing tracked file in subdir a/ not ignored with -q
+ok 250 - existing tracked file in subdir a/ not ignored with --quiet
+ok 251 - existing tracked file in subdir a/ not ignored with -v
+ok 252 - existing tracked file in subdir a/ not ignored with -v -n
+ok 253 - existing tracked file in subdir a/ not ignored with -v --non-matching
+ok 254 - existing tracked file in subdir a/ not ignored with --verbose
+ok 255 - existing tracked file in subdir a/ not ignored with --verbose -n
+ok 256 - existing tracked file in subdir a/ not ignored with --verbose --non-matching
+ok 257 - existing tracked file in subdir a/ shown as ignored with --no-index
+ok 258 - existing tracked file in subdir a/ shown as ignored with --no-index -q
+ok 259 - existing tracked file in subdir a/ shown as ignored with --no-index --quiet
+ok 260 - existing tracked file in subdir a/ shown as ignored with --no-index -v
+ok 261 - existing tracked file in subdir a/ shown as ignored with --no-index -v -n
+ok 262 - existing tracked file in subdir a/ shown as ignored with --no-index -v --non-matching
+ok 263 - existing tracked file in subdir a/ shown as ignored with --no-index --verbose
+ok 264 - existing tracked file in subdir a/ shown as ignored with --no-index --verbose -n
+ok 265 - existing tracked file in subdir a/ shown as ignored with --no-index --verbose --non-matching
+ok 266 - existing untracked file in subdir a/ ignored
+ok 267 - existing untracked file in subdir a/ ignored with -q
+ok 268 - existing untracked file in subdir a/ ignored with --quiet
+ok 269 - existing untracked file in subdir a/ ignored with -v
+ok 270 - existing untracked file in subdir a/ ignored with -v -n
+ok 271 - existing untracked file in subdir a/ ignored with -v --non-matching
+ok 272 - existing untracked file in subdir a/ ignored with --verbose
+ok 273 - existing untracked file in subdir a/ ignored with --verbose -n
+ok 274 - existing untracked file in subdir a/ ignored with --verbose --non-matching
+ok 275 - existing untracked file in subdir a/ ignored with --no-index
+ok 276 - existing untracked file in subdir a/ ignored with --no-index -q
+ok 277 - existing untracked file in subdir a/ ignored with --no-index --quiet
+ok 278 - existing untracked file in subdir a/ ignored with --no-index -v
+ok 279 - existing untracked file in subdir a/ ignored with --no-index -v -n
+ok 280 - existing untracked file in subdir a/ ignored with --no-index -v --non-matching
+ok 281 - existing untracked file in subdir a/ ignored with --no-index --verbose
+ok 282 - existing untracked file in subdir a/ ignored with --no-index --verbose -n
+ok 283 - existing untracked file in subdir a/ ignored with --no-index --verbose --non-matching
+ok 284 - mix of file types in subdir a/
+ok 285 - mix of file types in subdir a/ with -v
+ok 286 - mix of file types in subdir a/ with -v -n
+ok 287 - mix of file types in subdir a/ with -v --non-matching
+ok 288 - mix of file types in subdir a/ with --verbose
+ok 289 - mix of file types in subdir a/ with --verbose -n
+ok 290 - mix of file types in subdir a/ with --verbose --non-matching
+ok 291 - mix of file types in subdir a/ with --no-index
+ok 292 - mix of file types in subdir a/ with --no-index -v
+ok 293 - mix of file types in subdir a/ with --no-index -v -n
+ok 294 - mix of file types in subdir a/ with --no-index -v --non-matching
+ok 295 - mix of file types in subdir a/ with --no-index --verbose
+ok 296 - mix of file types in subdir a/ with --no-index --verbose -n
+ok 297 - mix of file types in subdir a/ with --no-index --verbose --non-matching
+ok 298 - sub-directory local ignore
+ok 299 - sub-directory local ignore with --verbose
+ok 300 - local ignore inside a sub-directory
+ok 301 - local ignore inside a sub-directory with --verbose
+ok 302 - nested include
+ok 303 - nested include with -q
+ok 304 - nested include with --quiet
+ok 305 - nested include with -v
+ok 306 - nested include with -v -n
+ok 307 - nested include with -v --non-matching
+ok 308 - nested include with --verbose
+ok 309 - nested include with --verbose -n
+ok 310 - nested include with --verbose --non-matching
+ok 311 - ignored sub-directory
+ok 312 - ignored sub-directory with -q
+ok 313 - ignored sub-directory with --quiet
+ok 314 - ignored sub-directory with -v
+ok 315 - ignored sub-directory with -v -n
+ok 316 - ignored sub-directory with -v --non-matching
+ok 317 - ignored sub-directory with --verbose
+ok 318 - ignored sub-directory with --verbose -n
+ok 319 - ignored sub-directory with --verbose --non-matching
+ok 320 - multiple files inside ignored sub-directory
+ok 321 - multiple files inside ignored sub-directory with -v
+ok 322 - cd to ignored sub-directory
+ok 323 - cd to ignored sub-directory with -v
+ok 324 - symlink
+ok 325 - symlink with -q
+ok 326 - symlink with --quiet
+ok 327 - symlink with -v
+ok 328 - symlink with -v -n
+ok 329 - symlink with -v --non-matching
+ok 330 - symlink with --verbose
+ok 331 - symlink with --verbose -n
+ok 332 - symlink with --verbose --non-matching
+ok 333 - beyond a symlink
+ok 334 - beyond a symlink with -q
+ok 335 - beyond a symlink with --quiet
+ok 336 - beyond a symlink with -v
+ok 337 - beyond a symlink with -v -n
+ok 338 - beyond a symlink with -v --non-matching
+ok 339 - beyond a symlink with --verbose
+ok 340 - beyond a symlink with --verbose -n
+ok 341 - beyond a symlink with --verbose --non-matching
+ok 342 - beyond a symlink from subdirectory
+ok 343 - beyond a symlink from subdirectory with -q
+ok 344 - beyond a symlink from subdirectory with --quiet
+ok 345 - beyond a symlink from subdirectory with -v
+ok 346 - beyond a symlink from subdirectory with -v -n
+ok 347 - beyond a symlink from subdirectory with -v --non-matching
+ok 348 - beyond a symlink from subdirectory with --verbose
+ok 349 - beyond a symlink from subdirectory with --verbose -n
+ok 350 - beyond a symlink from subdirectory with --verbose --non-matching
+ok 351 - submodule
+ok 352 - submodule with -q
+ok 353 - submodule with --quiet
+ok 354 - submodule with -v
+ok 355 - submodule with -v -n
+ok 356 - submodule with -v --non-matching
+ok 357 - submodule with --verbose
+ok 358 - submodule with --verbose -n
+ok 359 - submodule with --verbose --non-matching
+ok 360 - submodule from subdirectory
+ok 361 - submodule from subdirectory with -q
+ok 362 - submodule from subdirectory with --quiet
+ok 363 - submodule from subdirectory with -v
+ok 364 - submodule from subdirectory with -v -n
+ok 365 - submodule from subdirectory with -v --non-matching
+ok 366 - submodule from subdirectory with --verbose
+ok 367 - submodule from subdirectory with --verbose -n
+ok 368 - submodule from subdirectory with --verbose --non-matching
+ok 369 - global ignore not yet enabled
+ok 370 - global ignore
+ok 371 - global ignore with -v
+ok 372 - --stdin
+ok 373 - --stdin -q
+ok 374 - --stdin -v
+ok 375 - --stdin -z
+ok 376 - --stdin -z -q
+ok 377 - --stdin -z -v
+ok 378 - -z --stdin
+ok 379 - -z --stdin -q
+ok 380 - -z --stdin -v
+ok 381 - --stdin from subdirectory
+ok 382 - --stdin from subdirectory with -v
+ok 383 - --stdin from subdirectory with -v -n
+ok 384 - --stdin -z from subdirectory
+ok 385 - --stdin -z from subdirectory with -v
+ok 386 - -z --stdin from subdirectory
+ok 387 - -z --stdin from subdirectory with -v
+ok 388 - streaming support for --stdin
+ok 389 - trailing whitespace is ignored
+ok 390 - quoting allows trailing whitespace
+ok 391 - correct handling of backslashes
+ok 392 - info/exclude trumps core.excludesfile
+# passed all 392 test(s)
+1..392
+*** t0009-prio-queue.sh ***
+ok 1 - basic ordering
+ok 2 - mixed put and get
+ok 3 - notice empty queue
+# passed all 3 test(s)
+1..3
+*** t0010-racy-git.sh ***
+ok 1 - Racy GIT trial #0 part A
+ok 2 - Racy GIT trial #0 part B
+ok 3 - Racy GIT trial #1 part A
+ok 4 - Racy GIT trial #1 part B
+ok 5 - Racy GIT trial #2 part A
+ok 6 - Racy GIT trial #2 part B
+ok 7 - Racy GIT trial #3 part A
+ok 8 - Racy GIT trial #3 part B
+ok 9 - Racy GIT trial #4 part A
+ok 10 - Racy GIT trial #4 part B
+# passed all 10 test(s)
+1..10
+*** t0011-hashmap.sh ***
+ok 1 - hash functions
+ok 2 - put
+ok 3 - put (case insensitive)
+ok 4 - replace
+ok 5 - replace (case insensitive)
+ok 6 - get
+ok 7 - get (case insensitive)
+ok 8 - add
+ok 9 - add (case insensitive)
+ok 10 - remove
+ok 11 - remove (case insensitive)
+ok 12 - iterate
+ok 13 - iterate (case insensitive)
+ok 14 - grow / shrink
+ok 15 - string interning
+# passed all 15 test(s)
+1..15
+*** t0012-help.sh ***
+ok 1 - setup
+ok 2 - works for commands and guides by default
+ok 3 - --exclude-guides does not work for guides
+ok 4 - --help does not work for guides
+ok 5 - generate builtin list
+ok 6 - add can handle -h
+ok 7 - am can handle -h
+ok 8 - annotate can handle -h
+ok 9 - apply can handle -h
+ok 10 - archive can handle -h
+ok 11 - bisect--helper can handle -h
+ok 12 - blame can handle -h
+ok 13 - branch can handle -h
+ok 14 - bundle can handle -h
+ok 15 - cat-file can handle -h
+ok 16 - check-attr can handle -h
+ok 17 - check-ignore can handle -h
+ok 18 - check-mailmap can handle -h
+ok 19 - check-ref-format can handle -h
+ok 20 - checkout can handle -h
+ok 21 - checkout-index can handle -h
+ok 22 - cherry can handle -h
+ok 23 - cherry-pick can handle -h
+ok 24 - clean can handle -h
+ok 25 - clone can handle -h
+ok 26 - column can handle -h
+ok 27 - commit can handle -h
+ok 28 - commit-tree can handle -h
+ok 29 - config can handle -h
+ok 30 - count-objects can handle -h
+ok 31 - credential can handle -h
+ok 32 - describe can handle -h
+ok 33 - diff can handle -h
+ok 34 - diff-files can handle -h
+ok 35 - diff-index can handle -h
+ok 36 - diff-tree can handle -h
+ok 37 - difftool can handle -h
+ok 38 - fast-export can handle -h
+ok 39 - fetch can handle -h
+ok 40 - fetch-pack can handle -h
+ok 41 - fmt-merge-msg can handle -h
+ok 42 - for-each-ref can handle -h
+ok 43 - format-patch can handle -h
+ok 44 - fsck can handle -h
+ok 45 - fsck-objects can handle -h
+ok 46 - gc can handle -h
+ok 47 - get-tar-commit-id can handle -h
+ok 48 - grep can handle -h
+ok 49 - hash-object can handle -h
+ok 50 - help can handle -h
+ok 51 - index-pack can handle -h
+ok 52 - init can handle -h
+ok 53 - init-db can handle -h
+ok 54 - interpret-trailers can handle -h
+ok 55 - log can handle -h
+ok 56 - ls-files can handle -h
+ok 57 - ls-remote can handle -h
+ok 58 - ls-tree can handle -h
+ok 59 - mailinfo can handle -h
+ok 60 - mailsplit can handle -h
+ok 61 - merge can handle -h
+ok 62 - merge-base can handle -h
+ok 63 - merge-file can handle -h
+ok 64 - merge-index can handle -h
+ok 65 - merge-ours can handle -h
+ok 66 - merge-recursive can handle -h
+ok 67 - merge-recursive-ours can handle -h
+ok 68 - merge-recursive-theirs can handle -h
+ok 69 - merge-subtree can handle -h
+ok 70 - merge-tree can handle -h
+ok 71 - mktag can handle -h
+ok 72 - mktree can handle -h
+ok 73 - mv can handle -h
+ok 74 - name-rev can handle -h
+ok 75 - notes can handle -h
+ok 76 - pack-objects can handle -h
+ok 77 - pack-redundant can handle -h
+ok 78 - pack-refs can handle -h
+ok 79 - patch-id can handle -h
+ok 80 - pickaxe can handle -h
+ok 81 - prune can handle -h
+ok 82 - prune-packed can handle -h
+ok 83 - pull can handle -h
+ok 84 - push can handle -h
+ok 85 - read-tree can handle -h
+ok 86 - rebase--helper can handle -h
+ok 87 - receive-pack can handle -h
+ok 88 - reflog can handle -h
+ok 89 - remote can handle -h
+ok 90 - remote-ext can handle -h
+ok 91 - remote-fd can handle -h
+ok 92 - repack can handle -h
+ok 93 - replace can handle -h
+ok 94 - rerere can handle -h
+ok 95 - reset can handle -h
+ok 96 - rev-list can handle -h
+ok 97 - rev-parse can handle -h
+ok 98 - revert can handle -h
+ok 99 - rm can handle -h
+ok 100 - send-pack can handle -h
+ok 101 - shortlog can handle -h
+ok 102 - show can handle -h
+ok 103 - show-branch can handle -h
+ok 104 - show-ref can handle -h
+ok 105 - stage can handle -h
+ok 106 - status can handle -h
+ok 107 - stripspace can handle -h
+ok 108 - submodule--helper can handle -h
+ok 109 - symbolic-ref can handle -h
+ok 110 - tag can handle -h
+ok 111 - unpack-file can handle -h
+ok 112 - unpack-objects can handle -h
+ok 113 - update-index can handle -h
+ok 114 - update-ref can handle -h
+ok 115 - update-server-info can handle -h
+ok 116 - upload-archive can handle -h
+ok 117 - upload-archive--writer can handle -h
+ok 118 - var can handle -h
+ok 119 - verify-commit can handle -h
+ok 120 - verify-pack can handle -h
+ok 121 - verify-tag can handle -h
+ok 122 - version can handle -h
+ok 123 - whatchanged can handle -h
+ok 124 - worktree can handle -h
+ok 125 - write-tree can handle -h
+# passed all 125 test(s)
+1..125
+*** t0013-sha1dc.sh ***
+ok 1 - test-sha1 detects shattered pdf
+# passed all 1 test(s)
+1..1
+*** t0020-crlf.sh ***
+ok 1 - setup
+ok 2 - safecrlf: autocrlf=input, all CRLF
+ok 3 - safecrlf: autocrlf=input, mixed LF/CRLF
+ok 4 - safecrlf: autocrlf=true, all LF
+ok 5 - safecrlf: autocrlf=true mixed LF/CRLF
+ok 6 - safecrlf: print warning only once
+ok 7 - safecrlf: git diff demotes safecrlf=true to warn
+ok 8 - switch off autocrlf, safecrlf, reset HEAD
+ok 9 - update with autocrlf=input
+ok 10 - update with autocrlf=true
+ok 11 - checkout with autocrlf=true
+ok 12 - checkout with autocrlf=input
+ok 13 - apply patch (autocrlf=input)
+ok 14 - apply patch --cached (autocrlf=input)
+ok 15 - apply patch --index (autocrlf=input)
+ok 16 - apply patch (autocrlf=true)
+ok 17 - apply patch --cached (autocrlf=true)
+ok 18 - apply patch --index (autocrlf=true)
+ok 19 - .gitattributes says two is binary
+ok 20 - .gitattributes says two is input
+ok 21 - .gitattributes says two and three are text
+ok 22 - in-tree .gitattributes (1)
+ok 23 - in-tree .gitattributes (2)
+ok 24 - in-tree .gitattributes (3)
+ok 25 - in-tree .gitattributes (4)
+ok 26 - checkout with existing .gitattributes
+ok 27 - checkout when deleting .gitattributes
+ok 28 - invalid .gitattributes (must not crash)
+ok 29 - setting up for new autocrlf tests
+ok 30 - report no change after setting autocrlf
+ok 31 - files are clean after checkout
+ok 32 - LF only file gets CRLF with autocrlf
+ok 33 - Mixed file is still mixed with autocrlf
+ok 34 - CRLF only file has CRLF with autocrlf
+ok 35 - New CRLF file gets LF in repo
+# passed all 35 test(s)
+1..35
+*** t0021-conversion.sh ***
+ok 1 - setup
+ok 2 - check
+ok 3 - expanded_in_repo
+ok 4 - filter shell-escaped filenames
+ok 5 - required filter should filter data
+ok 6 - required filter smudge failure
+ok 7 - required filter clean failure
+ok 8 - filtering large input to small output should use little memory
+ok 9 - filter that does not read is fine
+ok 10 # skip filter large file (missing EXPENSIVE)
+ok 11 - filter: clean empty file
+ok 12 - filter: smudge empty file
+ok 13 - disable filter with empty override
+ok 14 - diff does not reuse worktree files that need cleaning
+ok 15 - required process filter should filter data
+ok 16 - required process filter takes precedence
+ok 17 - required process filter should be used only for "clean" operation only
+ok 18 - required process filter should process multiple packets
+ok 19 - required process filter with clean error should fail
+ok 20 - process filter should restart after unexpected write failure
+ok 21 - process filter should not be restarted if it signals an error
+ok 22 - process filter abort stops processing of all further files
+ok 23 - invalid process filter must fail (and not hang!)
+ok 24 - delayed checkout in process filter
+ok 25 - missing file in delayed checkout
+ok 26 - invalid file in delayed checkout
+# passed all 26 test(s)
+1..26
+*** t0022-crlf-rename.sh ***
+ok 1 - setup
+ok 2 - diff -M
+# passed all 2 test(s)
+1..2
+*** t0023-crlf-am.sh ***
+ok 1 - setup
+ok 2 - am
+# passed all 2 test(s)
+1..2
+*** t0024-crlf-archive.sh ***
+ok 1 - setup
+ok 2 - tar archive
+ok 3 - zip archive
+# passed all 3 test(s)
+1..3
+*** t0026-eol-config.sh ***
+ok 1 - setup
+ok 2 - eol=lf puts LFs in normalized file
+ok 3 - eol=crlf puts CRLFs in normalized file
+ok 4 - autocrlf=true overrides eol=lf
+ok 5 - autocrlf=true overrides unset eol
+ok 6 # skip eol native is crlf (missing NATIVE_CRLF)
+# passed all 6 test(s)
+1..6
+*** t0027-auto-crlf.sh ***
+ok 1 - ls-files --eol -o Text/Binary
+ok 2 - setup master
+ok 3 - commit files empty attr
+ok 4 - commit files attr=auto
+ok 5 - commit files attr=text
+ok 6 - commit files attr=-text
+ok 7 - commit files attr=lf
+ok 8 - commit files attr=crlf
+ok 9 - commit NNO files crlf=false attr= LF
+ok 10 - commit NNO files attr= aeol= crlf=false CRLF
+ok 11 - commit NNO files attr= aeol= crlf=false CRLF_mix_LF
+ok 12 - commit NNO files attr= aeol= crlf=false LF_mix_cr
+ok 13 - commit NNO files attr= aeol= crlf=false CRLF_nul
+ok 14 - commit NNO files crlf=true attr= LF
+ok 15 - commit NNO files attr= aeol= crlf=true CRLF
+ok 16 - commit NNO files attr= aeol= crlf=true CRLF_mix_LF
+ok 17 - commit NNO files attr= aeol= crlf=true LF_mix_cr
+ok 18 - commit NNO files attr= aeol= crlf=true CRLF_nul
+ok 19 - commit NNO files crlf=input attr= LF
+ok 20 - commit NNO files attr= aeol= crlf=input CRLF
+ok 21 - commit NNO files attr= aeol= crlf=input CRLF_mix_LF
+ok 22 - commit NNO files attr= aeol= crlf=input LF_mix_cr
+ok 23 - commit NNO files attr= aeol= crlf=input CRLF_nul
+ok 24 - commit NNO files crlf=false attr=auto LF
+ok 25 - commit NNO files attr=auto aeol= crlf=false CRLF
+ok 26 - commit NNO files attr=auto aeol= crlf=false CRLF_mix_LF
+ok 27 - commit NNO files attr=auto aeol= crlf=false LF_mix_cr
+ok 28 - commit NNO files attr=auto aeol= crlf=false CRLF_nul
+ok 29 - commit NNO files crlf=true attr=auto LF
+ok 30 - commit NNO files attr=auto aeol= crlf=true CRLF
+ok 31 - commit NNO files attr=auto aeol= crlf=true CRLF_mix_LF
+ok 32 - commit NNO files attr=auto aeol= crlf=true LF_mix_cr
+ok 33 - commit NNO files attr=auto aeol= crlf=true CRLF_nul
+ok 34 - commit NNO files crlf=input attr=auto LF
+ok 35 - commit NNO files attr=auto aeol= crlf=input CRLF
+ok 36 - commit NNO files attr=auto aeol= crlf=input CRLF_mix_LF
+ok 37 - commit NNO files attr=auto aeol= crlf=input LF_mix_cr
+ok 38 - commit NNO files attr=auto aeol= crlf=input CRLF_nul
+ok 39 - commit NNO files crlf=true attr=-text LF
+ok 40 - commit NNO files attr=-text aeol= crlf=true CRLF
+ok 41 - commit NNO files attr=-text aeol= crlf=true CRLF_mix_LF
+ok 42 - commit NNO files attr=-text aeol= crlf=true LF_mix_cr
+ok 43 - commit NNO files attr=-text aeol= crlf=true CRLF_nul
+ok 44 - commit NNO files crlf=true attr=-text LF
+ok 45 - commit NNO files attr=-text aeol=lf crlf=true CRLF
+ok 46 - commit NNO files attr=-text aeol=lf crlf=true CRLF_mix_LF
+ok 47 - commit NNO files attr=-text aeol=lf crlf=true LF_mix_cr
+ok 48 - commit NNO files attr=-text aeol=lf crlf=true CRLF_nul
+ok 49 - commit NNO files crlf=true attr=-text LF
+ok 50 - commit NNO files attr=-text aeol=crlf crlf=true CRLF
+ok 51 - commit NNO files attr=-text aeol=crlf crlf=true CRLF_mix_LF
+ok 52 - commit NNO files attr=-text aeol=crlf crlf=true LF_mix_cr
+ok 53 - commit NNO files attr=-text aeol=crlf crlf=true CRLF_nul
+ok 54 - commit NNO files crlf=true attr= LF
+ok 55 - commit NNO files attr= aeol=lf crlf=true CRLF
+ok 56 - commit NNO files attr= aeol=lf crlf=true CRLF_mix_LF
+ok 57 - commit NNO files attr= aeol=lf crlf=true LF_mix_cr
+ok 58 - commit NNO files attr= aeol=lf crlf=true CRLF_nul
+ok 59 - commit NNO files crlf=true attr= LF
+ok 60 - commit NNO files attr= aeol=crlf crlf=true CRLF
+ok 61 - commit NNO files attr= aeol=crlf crlf=true CRLF_mix_LF
+ok 62 - commit NNO files attr= aeol=crlf crlf=true LF_mix_cr
+ok 63 - commit NNO files attr= aeol=crlf crlf=true CRLF_nul
+ok 64 - commit NNO files crlf=true attr=auto LF
+ok 65 - commit NNO files attr=auto aeol=lf crlf=true CRLF
+ok 66 - commit NNO files attr=auto aeol=lf crlf=true CRLF_mix_LF
+ok 67 - commit NNO files attr=auto aeol=lf crlf=true LF_mix_cr
+ok 68 - commit NNO files attr=auto aeol=lf crlf=true CRLF_nul
+ok 69 - commit NNO files crlf=true attr=auto LF
+ok 70 - commit NNO files attr=auto aeol=crlf crlf=true CRLF
+ok 71 - commit NNO files attr=auto aeol=crlf crlf=true CRLF_mix_LF
+ok 72 - commit NNO files attr=auto aeol=crlf crlf=true LF_mix_cr
+ok 73 - commit NNO files attr=auto aeol=crlf crlf=true CRLF_nul
+ok 74 - commit NNO files crlf=true attr=text LF
+ok 75 - commit NNO files attr=text aeol=lf crlf=true CRLF
+ok 76 - commit NNO files attr=text aeol=lf crlf=true CRLF_mix_LF
+ok 77 - commit NNO files attr=text aeol=lf crlf=true LF_mix_cr
+ok 78 - commit NNO files attr=text aeol=lf crlf=true CRLF_nul
+ok 79 - commit NNO files crlf=true attr=text LF
+ok 80 - commit NNO files attr=text aeol=crlf crlf=true CRLF
+ok 81 - commit NNO files attr=text aeol=crlf crlf=true CRLF_mix_LF
+ok 82 - commit NNO files attr=text aeol=crlf crlf=true LF_mix_cr
+ok 83 - commit NNO files attr=text aeol=crlf crlf=true CRLF_nul
+ok 84 - commit NNO files crlf=false attr=-text LF
+ok 85 - commit NNO files attr=-text aeol= crlf=false CRLF
+ok 86 - commit NNO files attr=-text aeol= crlf=false CRLF_mix_LF
+ok 87 - commit NNO files attr=-text aeol= crlf=false LF_mix_cr
+ok 88 - commit NNO files attr=-text aeol= crlf=false CRLF_nul
+ok 89 - commit NNO files crlf=false attr=-text LF
+ok 90 - commit NNO files attr=-text aeol=lf crlf=false CRLF
+ok 91 - commit NNO files attr=-text aeol=lf crlf=false CRLF_mix_LF
+ok 92 - commit NNO files attr=-text aeol=lf crlf=false LF_mix_cr
+ok 93 - commit NNO files attr=-text aeol=lf crlf=false CRLF_nul
+ok 94 - commit NNO files crlf=false attr=-text LF
+ok 95 - commit NNO files attr=-text aeol=crlf crlf=false CRLF
+ok 96 - commit NNO files attr=-text aeol=crlf crlf=false CRLF_mix_LF
+ok 97 - commit NNO files attr=-text aeol=crlf crlf=false LF_mix_cr
+ok 98 - commit NNO files attr=-text aeol=crlf crlf=false CRLF_nul
+ok 99 - commit NNO files crlf=false attr= LF
+ok 100 - commit NNO files attr= aeol=lf crlf=false CRLF
+ok 101 - commit NNO files attr= aeol=lf crlf=false CRLF_mix_LF
+ok 102 - commit NNO files attr= aeol=lf crlf=false LF_mix_cr
+ok 103 - commit NNO files attr= aeol=lf crlf=false CRLF_nul
+ok 104 - commit NNO files crlf=false attr= LF
+ok 105 - commit NNO files attr= aeol=crlf crlf=false CRLF
+ok 106 - commit NNO files attr= aeol=crlf crlf=false CRLF_mix_LF
+ok 107 - commit NNO files attr= aeol=crlf crlf=false LF_mix_cr
+ok 108 - commit NNO files attr= aeol=crlf crlf=false CRLF_nul
+ok 109 - commit NNO files crlf=false attr=auto LF
+ok 110 - commit NNO files attr=auto aeol=lf crlf=false CRLF
+ok 111 - commit NNO files attr=auto aeol=lf crlf=false CRLF_mix_LF
+ok 112 - commit NNO files attr=auto aeol=lf crlf=false LF_mix_cr
+ok 113 - commit NNO files attr=auto aeol=lf crlf=false CRLF_nul
+ok 114 - commit NNO files crlf=false attr=auto LF
+ok 115 - commit NNO files attr=auto aeol=crlf crlf=false CRLF
+ok 116 - commit NNO files attr=auto aeol=crlf crlf=false CRLF_mix_LF
+ok 117 - commit NNO files attr=auto aeol=crlf crlf=false LF_mix_cr
+ok 118 - commit NNO files attr=auto aeol=crlf crlf=false CRLF_nul
+ok 119 - commit NNO files crlf=false attr=text LF
+ok 120 - commit NNO files attr=text aeol=lf crlf=false CRLF
+ok 121 - commit NNO files attr=text aeol=lf crlf=false CRLF_mix_LF
+ok 122 - commit NNO files attr=text aeol=lf crlf=false LF_mix_cr
+ok 123 - commit NNO files attr=text aeol=lf crlf=false CRLF_nul
+ok 124 - commit NNO files crlf=false attr=text LF
+ok 125 - commit NNO files attr=text aeol=crlf crlf=false CRLF
+ok 126 - commit NNO files attr=text aeol=crlf crlf=false CRLF_mix_LF
+ok 127 - commit NNO files attr=text aeol=crlf crlf=false LF_mix_cr
+ok 128 - commit NNO files attr=text aeol=crlf crlf=false CRLF_nul
+ok 129 - commit NNO files crlf=input attr=-text LF
+ok 130 - commit NNO files attr=-text aeol= crlf=input CRLF
+ok 131 - commit NNO files attr=-text aeol= crlf=input CRLF_mix_LF
+ok 132 - commit NNO files attr=-text aeol= crlf=input LF_mix_cr
+ok 133 - commit NNO files attr=-text aeol= crlf=input CRLF_nul
+ok 134 - commit NNO files crlf=input attr=-text LF
+ok 135 - commit NNO files attr=-text aeol=lf crlf=input CRLF
+ok 136 - commit NNO files attr=-text aeol=lf crlf=input CRLF_mix_LF
+ok 137 - commit NNO files attr=-text aeol=lf crlf=input LF_mix_cr
+ok 138 - commit NNO files attr=-text aeol=lf crlf=input CRLF_nul
+ok 139 - commit NNO files crlf=input attr=-text LF
+ok 140 - commit NNO files attr=-text aeol=crlf crlf=input CRLF
+ok 141 - commit NNO files attr=-text aeol=crlf crlf=input CRLF_mix_LF
+ok 142 - commit NNO files attr=-text aeol=crlf crlf=input LF_mix_cr
+ok 143 - commit NNO files attr=-text aeol=crlf crlf=input CRLF_nul
+ok 144 - commit NNO files crlf=input attr= LF
+ok 145 - commit NNO files attr= aeol=lf crlf=input CRLF
+ok 146 - commit NNO files attr= aeol=lf crlf=input CRLF_mix_LF
+ok 147 - commit NNO files attr= aeol=lf crlf=input LF_mix_cr
+ok 148 - commit NNO files attr= aeol=lf crlf=input CRLF_nul
+ok 149 - commit NNO files crlf=input attr= LF
+ok 150 - commit NNO files attr= aeol=crlf crlf=input CRLF
+ok 151 - commit NNO files attr= aeol=crlf crlf=input CRLF_mix_LF
+ok 152 - commit NNO files attr= aeol=crlf crlf=input LF_mix_cr
+ok 153 - commit NNO files attr= aeol=crlf crlf=input CRLF_nul
+ok 154 - commit NNO files crlf=input attr=auto LF
+ok 155 - commit NNO files attr=auto aeol=lf crlf=input CRLF
+ok 156 - commit NNO files attr=auto aeol=lf crlf=input CRLF_mix_LF
+ok 157 - commit NNO files attr=auto aeol=lf crlf=input LF_mix_cr
+ok 158 - commit NNO files attr=auto aeol=lf crlf=input CRLF_nul
+ok 159 - commit NNO files crlf=input attr=auto LF
+ok 160 - commit NNO files attr=auto aeol=crlf crlf=input CRLF
+ok 161 - commit NNO files attr=auto aeol=crlf crlf=input CRLF_mix_LF
+ok 162 - commit NNO files attr=auto aeol=crlf crlf=input LF_mix_cr
+ok 163 - commit NNO files attr=auto aeol=crlf crlf=input CRLF_nul
+ok 164 - commit NNO files crlf=input attr=text LF
+ok 165 - commit NNO files attr=text aeol=lf crlf=input CRLF
+ok 166 - commit NNO files attr=text aeol=lf crlf=input CRLF_mix_LF
+ok 167 - commit NNO files attr=text aeol=lf crlf=input LF_mix_cr
+ok 168 - commit NNO files attr=text aeol=lf crlf=input CRLF_nul
+ok 169 - commit NNO files crlf=input attr=text LF
+ok 170 - commit NNO files attr=text aeol=crlf crlf=input CRLF
+ok 171 - commit NNO files attr=text aeol=crlf crlf=input CRLF_mix_LF
+ok 172 - commit NNO files attr=text aeol=crlf crlf=input LF_mix_cr
+ok 173 - commit NNO files attr=text aeol=crlf crlf=input CRLF_nul
+ok 174 - commit NNO files crlf=false attr=text LF
+ok 175 - commit NNO files attr=text aeol= crlf=false CRLF
+ok 176 - commit NNO files attr=text aeol= crlf=false CRLF_mix_LF
+ok 177 - commit NNO files attr=text aeol= crlf=false LF_mix_cr
+ok 178 - commit NNO files attr=text aeol= crlf=false CRLF_nul
+ok 179 - commit NNO files crlf=true attr=text LF
+ok 180 - commit NNO files attr=text aeol= crlf=true CRLF
+ok 181 - commit NNO files attr=text aeol= crlf=true CRLF_mix_LF
+ok 182 - commit NNO files attr=text aeol= crlf=true LF_mix_cr
+ok 183 - commit NNO files attr=text aeol= crlf=true CRLF_nul
+ok 184 - commit NNO files crlf=input attr=text LF
+ok 185 - commit NNO files attr=text aeol= crlf=input CRLF
+ok 186 - commit NNO files attr=text aeol= crlf=input CRLF_mix_LF
+ok 187 - commit NNO files attr=text aeol= crlf=input LF_mix_cr
+ok 188 - commit NNO files attr=text aeol= crlf=input CRLF_nul
+ok 189 - commit NNO and cleanup
+ok 190 - commit empty gitattribues
+ok 191 - commit text=auto
+ok 192 - commit text
+ok 193 - commit -text
+ok 194 - compare_files LF NNO_attr__aeol__true_LF.txt
+ok 195 - compare_files CRLF NNO_attr__aeol__true_CRLF.txt
+ok 196 - compare_files CRLF_mix_LF NNO_attr__aeol__true_CRLF_mix_LF.txt
+ok 197 - compare_files LF_mix_CR NNO_attr__aeol__true_LF_mix_CR.txt
+ok 198 - compare_files CRLF_nul NNO_attr__aeol__true_CRLF_nul.txt
+ok 199 - compare_files LF NNO_attr_-text_aeol__true_LF.txt
+ok 200 - compare_files CRLF NNO_attr_-text_aeol__true_CRLF.txt
+ok 201 - compare_files CRLF_mix_LF NNO_attr_-text_aeol__true_CRLF_mix_LF.txt
+ok 202 - compare_files LF_mix_CR NNO_attr_-text_aeol__true_LF_mix_CR.txt
+ok 203 - compare_files CRLF_nul NNO_attr_-text_aeol__true_CRLF_nul.txt
+ok 204 - compare_files LF NNO_attr_-text_aeol_lf_true_LF.txt
+ok 205 - compare_files CRLF NNO_attr_-text_aeol_lf_true_CRLF.txt
+ok 206 - compare_files CRLF_mix_LF NNO_attr_-text_aeol_lf_true_CRLF_mix_LF.txt
+ok 207 - compare_files LF_mix_CR NNO_attr_-text_aeol_lf_true_LF_mix_CR.txt
+ok 208 - compare_files CRLF_nul NNO_attr_-text_aeol_lf_true_CRLF_nul.txt
+ok 209 - compare_files LF NNO_attr_-text_aeol_crlf_true_LF.txt
+ok 210 - compare_files CRLF NNO_attr_-text_aeol_crlf_true_CRLF.txt
+ok 211 - compare_files CRLF_mix_LF NNO_attr_-text_aeol_crlf_true_CRLF_mix_LF.txt
+ok 212 - compare_files LF_mix_CR NNO_attr_-text_aeol_crlf_true_LF_mix_CR.txt
+ok 213 - compare_files CRLF_nul NNO_attr_-text_aeol_crlf_true_CRLF_nul.txt
+ok 214 - compare_files LF NNO_attr_auto_aeol__true_LF.txt
+ok 215 - compare_files CRLF NNO_attr_auto_aeol__true_CRLF.txt
+ok 216 - compare_files CRLF_mix_LF NNO_attr_auto_aeol__true_CRLF_mix_LF.txt
+ok 217 - compare_files LF_mix_CR NNO_attr_auto_aeol__true_LF_mix_CR.txt
+ok 218 - compare_files CRLF_nul NNO_attr_auto_aeol__true_CRLF_nul.txt
+ok 219 - compare_files LF NNO_attr_auto_aeol_lf_true_LF.txt
+ok 220 - compare_files CRLF NNO_attr_auto_aeol_lf_true_CRLF.txt
+ok 221 - compare_files CRLF_mix_LF NNO_attr_auto_aeol_lf_true_CRLF_mix_LF.txt
+ok 222 - compare_files LF_mix_CR NNO_attr_auto_aeol_lf_true_LF_mix_CR.txt
+ok 223 - compare_files CRLF_nul NNO_attr_auto_aeol_lf_true_CRLF_nul.txt
+ok 224 - compare_files LF NNO_attr_auto_aeol_crlf_true_LF.txt
+ok 225 - compare_files CRLF NNO_attr_auto_aeol_crlf_true_CRLF.txt
+ok 226 - compare_files CRLF_mix_LF NNO_attr_auto_aeol_crlf_true_CRLF_mix_LF.txt
+ok 227 - compare_files LF_mix_CR NNO_attr_auto_aeol_crlf_true_LF_mix_CR.txt
+ok 228 - compare_files CRLF_nul NNO_attr_auto_aeol_crlf_true_CRLF_nul.txt
+ok 229 - compare_files LF NNO_attr_text_aeol__true_LF.txt
+ok 230 - compare_files LF NNO_attr_text_aeol__true_CRLF.txt
+ok 231 - compare_files LF NNO_attr_text_aeol__true_CRLF_mix_LF.txt
+ok 232 - compare_files LF_mix_CR NNO_attr_text_aeol__true_LF_mix_CR.txt
+ok 233 - compare_files LF_nul NNO_attr_text_aeol__true_CRLF_nul.txt
+ok 234 - compare_files LF NNO_attr_text_aeol_lf_true_LF.txt
+ok 235 - compare_files LF NNO_attr_text_aeol_lf_true_CRLF.txt
+ok 236 - compare_files LF NNO_attr_text_aeol_lf_true_CRLF_mix_LF.txt
+ok 237 - compare_files LF_mix_CR NNO_attr_text_aeol_lf_true_LF_mix_CR.txt
+ok 238 - compare_files LF_nul NNO_attr_text_aeol_lf_true_CRLF_nul.txt
+ok 239 - compare_files LF NNO_attr_text_aeol_crlf_true_LF.txt
+ok 240 - compare_files LF NNO_attr_text_aeol_crlf_true_CRLF.txt
+ok 241 - compare_files LF NNO_attr_text_aeol_crlf_true_CRLF_mix_LF.txt
+ok 242 - compare_files LF_mix_CR NNO_attr_text_aeol_crlf_true_LF_mix_CR.txt
+ok 243 - compare_files LF_nul NNO_attr_text_aeol_crlf_true_CRLF_nul.txt
+ok 244 - compare_files LF NNO_attr__aeol__false_LF.txt
+ok 245 - compare_files CRLF NNO_attr__aeol__false_CRLF.txt
+ok 246 - compare_files CRLF_mix_LF NNO_attr__aeol__false_CRLF_mix_LF.txt
+ok 247 - compare_files LF_mix_CR NNO_attr__aeol__false_LF_mix_CR.txt
+ok 248 - compare_files CRLF_nul NNO_attr__aeol__false_CRLF_nul.txt
+ok 249 - compare_files LF NNO_attr_-text_aeol__false_LF.txt
+ok 250 - compare_files CRLF NNO_attr_-text_aeol__false_CRLF.txt
+ok 251 - compare_files CRLF_mix_LF NNO_attr_-text_aeol__false_CRLF_mix_LF.txt
+ok 252 - compare_files LF_mix_CR NNO_attr_-text_aeol__false_LF_mix_CR.txt
+ok 253 - compare_files CRLF_nul NNO_attr_-text_aeol__false_CRLF_nul.txt
+ok 254 - compare_files LF NNO_attr_-text_aeol_lf_false_LF.txt
+ok 255 - compare_files CRLF NNO_attr_-text_aeol_lf_false_CRLF.txt
+ok 256 - compare_files CRLF_mix_LF NNO_attr_-text_aeol_lf_false_CRLF_mix_LF.txt
+ok 257 - compare_files LF_mix_CR NNO_attr_-text_aeol_lf_false_LF_mix_CR.txt
+ok 258 - compare_files CRLF_nul NNO_attr_-text_aeol_lf_false_CRLF_nul.txt
+ok 259 - compare_files LF NNO_attr_-text_aeol_crlf_false_LF.txt
+ok 260 - compare_files CRLF NNO_attr_-text_aeol_crlf_false_CRLF.txt
+ok 261 - compare_files CRLF_mix_LF NNO_attr_-text_aeol_crlf_false_CRLF_mix_LF.txt
+ok 262 - compare_files LF_mix_CR NNO_attr_-text_aeol_crlf_false_LF_mix_CR.txt
+ok 263 - compare_files CRLF_nul NNO_attr_-text_aeol_crlf_false_CRLF_nul.txt
+ok 264 - compare_files LF NNO_attr_auto_aeol__false_LF.txt
+ok 265 - compare_files CRLF NNO_attr_auto_aeol__false_CRLF.txt
+ok 266 - compare_files CRLF_mix_LF NNO_attr_auto_aeol__false_CRLF_mix_LF.txt
+ok 267 - compare_files LF_mix_CR NNO_attr_auto_aeol__false_LF_mix_CR.txt
+ok 268 - compare_files CRLF_nul NNO_attr_auto_aeol__false_CRLF_nul.txt
+ok 269 - compare_files LF NNO_attr_auto_aeol_lf_false_LF.txt
+ok 270 - compare_files CRLF NNO_attr_auto_aeol_lf_false_CRLF.txt
+ok 271 - compare_files CRLF_mix_LF NNO_attr_auto_aeol_lf_false_CRLF_mix_LF.txt
+ok 272 - compare_files LF_mix_CR NNO_attr_auto_aeol_lf_false_LF_mix_CR.txt
+ok 273 - compare_files CRLF_nul NNO_attr_auto_aeol_lf_false_CRLF_nul.txt
+ok 274 - compare_files LF NNO_attr_auto_aeol_crlf_false_LF.txt
+ok 275 - compare_files CRLF NNO_attr_auto_aeol_crlf_false_CRLF.txt
+ok 276 - compare_files CRLF_mix_LF NNO_attr_auto_aeol_crlf_false_CRLF_mix_LF.txt
+ok 277 - compare_files LF_mix_CR NNO_attr_auto_aeol_crlf_false_LF_mix_CR.txt
+ok 278 - compare_files CRLF_nul NNO_attr_auto_aeol_crlf_false_CRLF_nul.txt
+ok 279 - compare_files LF NNO_attr_text_aeol__false_LF.txt
+ok 280 - compare_files LF NNO_attr_text_aeol__false_CRLF.txt
+ok 281 - compare_files LF NNO_attr_text_aeol__false_CRLF_mix_LF.txt
+ok 282 - compare_files LF_mix_CR NNO_attr_text_aeol__false_LF_mix_CR.txt
+ok 283 - compare_files LF_nul NNO_attr_text_aeol__false_CRLF_nul.txt
+ok 284 - compare_files LF NNO_attr_text_aeol_lf_false_LF.txt
+ok 285 - compare_files LF NNO_attr_text_aeol_lf_false_CRLF.txt
+ok 286 - compare_files LF NNO_attr_text_aeol_lf_false_CRLF_mix_LF.txt
+ok 287 - compare_files LF_mix_CR NNO_attr_text_aeol_lf_false_LF_mix_CR.txt
+ok 288 - compare_files LF_nul NNO_attr_text_aeol_lf_false_CRLF_nul.txt
+ok 289 - compare_files LF NNO_attr_text_aeol_crlf_false_LF.txt
+ok 290 - compare_files LF NNO_attr_text_aeol_crlf_false_CRLF.txt
+ok 291 - compare_files LF NNO_attr_text_aeol_crlf_false_CRLF_mix_LF.txt
+ok 292 - compare_files LF_mix_CR NNO_attr_text_aeol_crlf_false_LF_mix_CR.txt
+ok 293 - compare_files LF_nul NNO_attr_text_aeol_crlf_false_CRLF_nul.txt
+ok 294 - compare_files LF NNO_attr__aeol__input_LF.txt
+ok 295 - compare_files CRLF NNO_attr__aeol__input_CRLF.txt
+ok 296 - compare_files CRLF_mix_LF NNO_attr__aeol__input_CRLF_mix_LF.txt
+ok 297 - compare_files LF_mix_CR NNO_attr__aeol__input_LF_mix_CR.txt
+ok 298 - compare_files CRLF_nul NNO_attr__aeol__input_CRLF_nul.txt
+ok 299 - compare_files LF NNO_attr_-text_aeol__input_LF.txt
+ok 300 - compare_files CRLF NNO_attr_-text_aeol__input_CRLF.txt
+ok 301 - compare_files CRLF_mix_LF NNO_attr_-text_aeol__input_CRLF_mix_LF.txt
+ok 302 - compare_files LF_mix_CR NNO_attr_-text_aeol__input_LF_mix_CR.txt
+ok 303 - compare_files CRLF_nul NNO_attr_-text_aeol__input_CRLF_nul.txt
+ok 304 - compare_files LF NNO_attr_-text_aeol_lf_input_LF.txt
+ok 305 - compare_files CRLF NNO_attr_-text_aeol_lf_input_CRLF.txt
+ok 306 - compare_files CRLF_mix_LF NNO_attr_-text_aeol_lf_input_CRLF_mix_LF.txt
+ok 307 - compare_files LF_mix_CR NNO_attr_-text_aeol_lf_input_LF_mix_CR.txt
+ok 308 - compare_files CRLF_nul NNO_attr_-text_aeol_lf_input_CRLF_nul.txt
+ok 309 - compare_files LF NNO_attr_-text_aeol_crlf_input_LF.txt
+ok 310 - compare_files CRLF NNO_attr_-text_aeol_crlf_input_CRLF.txt
+ok 311 - compare_files CRLF_mix_LF NNO_attr_-text_aeol_crlf_input_CRLF_mix_LF.txt
+ok 312 - compare_files LF_mix_CR NNO_attr_-text_aeol_crlf_input_LF_mix_CR.txt
+ok 313 - compare_files CRLF_nul NNO_attr_-text_aeol_crlf_input_CRLF_nul.txt
+ok 314 - compare_files LF NNO_attr_auto_aeol__input_LF.txt
+ok 315 - compare_files CRLF NNO_attr_auto_aeol__input_CRLF.txt
+ok 316 - compare_files CRLF_mix_LF NNO_attr_auto_aeol__input_CRLF_mix_LF.txt
+ok 317 - compare_files LF_mix_CR NNO_attr_auto_aeol__input_LF_mix_CR.txt
+ok 318 - compare_files CRLF_nul NNO_attr_auto_aeol__input_CRLF_nul.txt
+ok 319 - compare_files LF NNO_attr_auto_aeol_lf_input_LF.txt
+ok 320 - compare_files CRLF NNO_attr_auto_aeol_lf_input_CRLF.txt
+ok 321 - compare_files CRLF_mix_LF NNO_attr_auto_aeol_lf_input_CRLF_mix_LF.txt
+ok 322 - compare_files LF_mix_CR NNO_attr_auto_aeol_lf_input_LF_mix_CR.txt
+ok 323 - compare_files CRLF_nul NNO_attr_auto_aeol_lf_input_CRLF_nul.txt
+ok 324 - compare_files LF NNO_attr_auto_aeol_crlf_input_LF.txt
+ok 325 - compare_files CRLF NNO_attr_auto_aeol_crlf_input_CRLF.txt
+ok 326 - compare_files CRLF_mix_LF NNO_attr_auto_aeol_crlf_input_CRLF_mix_LF.txt
+ok 327 - compare_files LF_mix_CR NNO_attr_auto_aeol_crlf_input_LF_mix_CR.txt
+ok 328 - compare_files CRLF_nul NNO_attr_auto_aeol_crlf_input_CRLF_nul.txt
+ok 329 - compare_files LF NNO_attr_text_aeol__input_LF.txt
+ok 330 - compare_files LF NNO_attr_text_aeol__input_CRLF.txt
+ok 331 - compare_files LF NNO_attr_text_aeol__input_CRLF_mix_LF.txt
+ok 332 - compare_files LF_mix_CR NNO_attr_text_aeol__input_LF_mix_CR.txt
+ok 333 - compare_files LF_nul NNO_attr_text_aeol__input_CRLF_nul.txt
+ok 334 - compare_files LF NNO_attr_text_aeol_lf_input_LF.txt
+ok 335 - compare_files LF NNO_attr_text_aeol_lf_input_CRLF.txt
+ok 336 - compare_files LF NNO_attr_text_aeol_lf_input_CRLF_mix_LF.txt
+ok 337 - compare_files LF_mix_CR NNO_attr_text_aeol_lf_input_LF_mix_CR.txt
+ok 338 - compare_files LF_nul NNO_attr_text_aeol_lf_input_CRLF_nul.txt
+ok 339 - compare_files LF NNO_attr_text_aeol_crlf_input_LF.txt
+ok 340 - compare_files LF NNO_attr_text_aeol_crlf_input_CRLF.txt
+ok 341 - compare_files LF NNO_attr_text_aeol_crlf_input_CRLF_mix_LF.txt
+ok 342 - compare_files LF_mix_CR NNO_attr_text_aeol_crlf_input_LF_mix_CR.txt
+ok 343 - compare_files LF_nul NNO_attr_text_aeol_crlf_input_CRLF_nul.txt
+ok 344 - ls-files --eol attr=-text  aeol= core.autocrlf=true core.eol=lf
+ok 345 - checkout attr=-text  aeol= core.autocrlf=true core.eol=lf file=LF
+ok 346 - checkout attr=-text  aeol= core.autocrlf=true core.eol=lf file=CRLF
+ok 347 - checkout attr=-text  aeol= core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 348 - checkout attr=-text  aeol= core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 349 - checkout attr=-text  aeol= core.autocrlf=true core.eol=lf file=LF_nul
+ok 350 - ls-files --eol attr=-text  aeol=lf core.autocrlf=true core.eol=lf
+ok 351 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=lf file=LF
+ok 352 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=lf file=CRLF
+ok 353 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 354 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 355 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=lf file=LF_nul
+ok 356 - ls-files --eol attr=-text  aeol=crlf core.autocrlf=true core.eol=lf
+ok 357 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=lf file=LF
+ok 358 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=lf file=CRLF
+ok 359 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 360 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 361 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=lf file=LF_nul
+ok 362 - ls-files --eol attr=text  aeol=lf core.autocrlf=true core.eol=lf
+ok 363 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=lf file=LF
+ok 364 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=lf file=CRLF
+ok 365 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 366 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 367 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=lf file=LF_nul
+ok 368 - ls-files --eol attr=text  aeol=crlf core.autocrlf=true core.eol=lf
+ok 369 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=lf file=LF
+ok 370 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=lf file=CRLF
+ok 371 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 372 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 373 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=lf file=LF_nul
+ok 374 - ls-files --eol attr=auto  aeol=lf core.autocrlf=true core.eol=lf
+ok 375 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=lf file=LF
+ok 376 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=lf file=CRLF
+ok 377 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 378 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 379 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=lf file=LF_nul
+ok 380 - ls-files --eol attr=auto  aeol=crlf core.autocrlf=true core.eol=lf
+ok 381 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=lf file=LF
+ok 382 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=lf file=CRLF
+ok 383 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 384 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 385 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=lf file=LF_nul
+ok 386 - ls-files --eol attr=-text  aeol= core.autocrlf=false core.eol=lf
+ok 387 - checkout attr=-text  aeol= core.autocrlf=false core.eol=lf file=LF
+ok 388 - checkout attr=-text  aeol= core.autocrlf=false core.eol=lf file=CRLF
+ok 389 - checkout attr=-text  aeol= core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 390 - checkout attr=-text  aeol= core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 391 - checkout attr=-text  aeol= core.autocrlf=false core.eol=lf file=LF_nul
+ok 392 - ls-files --eol attr=-text  aeol=lf core.autocrlf=false core.eol=lf
+ok 393 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=lf file=LF
+ok 394 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=lf file=CRLF
+ok 395 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 396 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 397 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=lf file=LF_nul
+ok 398 - ls-files --eol attr=-text  aeol=crlf core.autocrlf=false core.eol=lf
+ok 399 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=lf file=LF
+ok 400 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=lf file=CRLF
+ok 401 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 402 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 403 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=lf file=LF_nul
+ok 404 - ls-files --eol attr=text  aeol=lf core.autocrlf=false core.eol=lf
+ok 405 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=lf file=LF
+ok 406 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=lf file=CRLF
+ok 407 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 408 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 409 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=lf file=LF_nul
+ok 410 - ls-files --eol attr=text  aeol=crlf core.autocrlf=false core.eol=lf
+ok 411 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=lf file=LF
+ok 412 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=lf file=CRLF
+ok 413 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 414 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 415 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=lf file=LF_nul
+ok 416 - ls-files --eol attr=auto  aeol=lf core.autocrlf=false core.eol=lf
+ok 417 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=lf file=LF
+ok 418 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=lf file=CRLF
+ok 419 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 420 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 421 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=lf file=LF_nul
+ok 422 - ls-files --eol attr=auto  aeol=crlf core.autocrlf=false core.eol=lf
+ok 423 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=lf file=LF
+ok 424 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=lf file=CRLF
+ok 425 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 426 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 427 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=lf file=LF_nul
+ok 428 - ls-files --eol attr=-text  aeol= core.autocrlf=input core.eol=lf
+ok 429 - checkout attr=-text  aeol= core.autocrlf=input core.eol=lf file=LF
+ok 430 - checkout attr=-text  aeol= core.autocrlf=input core.eol=lf file=CRLF
+ok 431 - checkout attr=-text  aeol= core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 432 - checkout attr=-text  aeol= core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 433 - checkout attr=-text  aeol= core.autocrlf=input core.eol=lf file=LF_nul
+ok 434 - ls-files --eol attr=-text  aeol=lf core.autocrlf=input core.eol=lf
+ok 435 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=lf file=LF
+ok 436 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=lf file=CRLF
+ok 437 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 438 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 439 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=lf file=LF_nul
+ok 440 - ls-files --eol attr=-text  aeol=crlf core.autocrlf=input core.eol=lf
+ok 441 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=lf file=LF
+ok 442 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=lf file=CRLF
+ok 443 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 444 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 445 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=lf file=LF_nul
+ok 446 - ls-files --eol attr=text  aeol=lf core.autocrlf=input core.eol=lf
+ok 447 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=lf file=LF
+ok 448 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=lf file=CRLF
+ok 449 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 450 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 451 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=lf file=LF_nul
+ok 452 - ls-files --eol attr=text  aeol=crlf core.autocrlf=input core.eol=lf
+ok 453 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=lf file=LF
+ok 454 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=lf file=CRLF
+ok 455 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 456 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 457 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=lf file=LF_nul
+ok 458 - ls-files --eol attr=auto  aeol=lf core.autocrlf=input core.eol=lf
+ok 459 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=lf file=LF
+ok 460 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=lf file=CRLF
+ok 461 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 462 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 463 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=lf file=LF_nul
+ok 464 - ls-files --eol attr=auto  aeol=crlf core.autocrlf=input core.eol=lf
+ok 465 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=lf file=LF
+ok 466 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=lf file=CRLF
+ok 467 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 468 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 469 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=lf file=LF_nul
+ok 470 - ls-files --eol attr=  aeol= core.autocrlf=false core.eol=lf
+ok 471 - checkout attr=  aeol= core.autocrlf=false core.eol=lf file=LF
+ok 472 - checkout attr=  aeol= core.autocrlf=false core.eol=lf file=CRLF
+ok 473 - checkout attr=  aeol= core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 474 - checkout attr=  aeol= core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 475 - checkout attr=  aeol= core.autocrlf=false core.eol=lf file=LF_nul
+ok 476 - ls-files --eol attr=  aeol= core.autocrlf=true core.eol=lf
+ok 477 - checkout attr=  aeol= core.autocrlf=true core.eol=lf file=LF
+ok 478 - checkout attr=  aeol= core.autocrlf=true core.eol=lf file=CRLF
+ok 479 - checkout attr=  aeol= core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 480 - checkout attr=  aeol= core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 481 - checkout attr=  aeol= core.autocrlf=true core.eol=lf file=LF_nul
+ok 482 - ls-files --eol attr=auto  aeol= core.autocrlf=true core.eol=lf
+ok 483 - checkout attr=auto  aeol= core.autocrlf=true core.eol=lf file=LF
+ok 484 - checkout attr=auto  aeol= core.autocrlf=true core.eol=lf file=CRLF
+ok 485 - checkout attr=auto  aeol= core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 486 - checkout attr=auto  aeol= core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 487 - checkout attr=auto  aeol= core.autocrlf=true core.eol=lf file=LF_nul
+ok 488 - ls-files --eol attr=text  aeol= core.autocrlf=true core.eol=lf
+ok 489 - checkout attr=text  aeol= core.autocrlf=true core.eol=lf file=LF
+ok 490 - checkout attr=text  aeol= core.autocrlf=true core.eol=lf file=CRLF
+ok 491 - checkout attr=text  aeol= core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 492 - checkout attr=text  aeol= core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 493 - checkout attr=text  aeol= core.autocrlf=true core.eol=lf file=LF_nul
+ok 494 - ls-files --eol attr=text  aeol= core.autocrlf=input core.eol=lf
+ok 495 - checkout attr=text  aeol= core.autocrlf=input core.eol=lf file=LF
+ok 496 - checkout attr=text  aeol= core.autocrlf=input core.eol=lf file=CRLF
+ok 497 - checkout attr=text  aeol= core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 498 - checkout attr=text  aeol= core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 499 - checkout attr=text  aeol= core.autocrlf=input core.eol=lf file=LF_nul
+ok 500 - ls-files --eol attr=auto  aeol= core.autocrlf=input core.eol=lf
+ok 501 - checkout attr=auto  aeol= core.autocrlf=input core.eol=lf file=LF
+ok 502 - checkout attr=auto  aeol= core.autocrlf=input core.eol=lf file=CRLF
+ok 503 - checkout attr=auto  aeol= core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 504 - checkout attr=auto  aeol= core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 505 - checkout attr=auto  aeol= core.autocrlf=input core.eol=lf file=LF_nul
+ok 506 - ls-files --eol attr=-text  aeol= core.autocrlf=true core.eol=crlf
+ok 507 - checkout attr=-text  aeol= core.autocrlf=true core.eol=crlf file=LF
+ok 508 - checkout attr=-text  aeol= core.autocrlf=true core.eol=crlf file=CRLF
+ok 509 - checkout attr=-text  aeol= core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 510 - checkout attr=-text  aeol= core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 511 - checkout attr=-text  aeol= core.autocrlf=true core.eol=crlf file=LF_nul
+ok 512 - ls-files --eol attr=-text  aeol=lf core.autocrlf=true core.eol=crlf
+ok 513 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=crlf file=LF
+ok 514 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=crlf file=CRLF
+ok 515 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 516 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 517 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=crlf file=LF_nul
+ok 518 - ls-files --eol attr=-text  aeol=crlf core.autocrlf=true core.eol=crlf
+ok 519 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=crlf file=LF
+ok 520 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=crlf file=CRLF
+ok 521 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 522 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 523 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=crlf file=LF_nul
+ok 524 - ls-files --eol attr=text  aeol=lf core.autocrlf=true core.eol=crlf
+ok 525 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=crlf file=LF
+ok 526 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=crlf file=CRLF
+ok 527 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 528 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 529 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=crlf file=LF_nul
+ok 530 - ls-files --eol attr=text  aeol=crlf core.autocrlf=true core.eol=crlf
+ok 531 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=crlf file=LF
+ok 532 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=crlf file=CRLF
+ok 533 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 534 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 535 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=crlf file=LF_nul
+ok 536 - ls-files --eol attr=auto  aeol=lf core.autocrlf=true core.eol=crlf
+ok 537 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=crlf file=LF
+ok 538 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=crlf file=CRLF
+ok 539 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 540 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 541 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=crlf file=LF_nul
+ok 542 - ls-files --eol attr=auto  aeol=crlf core.autocrlf=true core.eol=crlf
+ok 543 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=crlf file=LF
+ok 544 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=crlf file=CRLF
+ok 545 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 546 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 547 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=crlf file=LF_nul
+ok 548 - ls-files --eol attr=-text  aeol= core.autocrlf=false core.eol=crlf
+ok 549 - checkout attr=-text  aeol= core.autocrlf=false core.eol=crlf file=LF
+ok 550 - checkout attr=-text  aeol= core.autocrlf=false core.eol=crlf file=CRLF
+ok 551 - checkout attr=-text  aeol= core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 552 - checkout attr=-text  aeol= core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 553 - checkout attr=-text  aeol= core.autocrlf=false core.eol=crlf file=LF_nul
+ok 554 - ls-files --eol attr=-text  aeol=lf core.autocrlf=false core.eol=crlf
+ok 555 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=crlf file=LF
+ok 556 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=crlf file=CRLF
+ok 557 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 558 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 559 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=crlf file=LF_nul
+ok 560 - ls-files --eol attr=-text  aeol=crlf core.autocrlf=false core.eol=crlf
+ok 561 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=crlf file=LF
+ok 562 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=crlf file=CRLF
+ok 563 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 564 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 565 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=crlf file=LF_nul
+ok 566 - ls-files --eol attr=text  aeol=lf core.autocrlf=false core.eol=crlf
+ok 567 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=crlf file=LF
+ok 568 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=crlf file=CRLF
+ok 569 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 570 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 571 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=crlf file=LF_nul
+ok 572 - ls-files --eol attr=text  aeol=crlf core.autocrlf=false core.eol=crlf
+ok 573 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=crlf file=LF
+ok 574 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=crlf file=CRLF
+ok 575 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 576 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 577 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=crlf file=LF_nul
+ok 578 - ls-files --eol attr=auto  aeol=lf core.autocrlf=false core.eol=crlf
+ok 579 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=crlf file=LF
+ok 580 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=crlf file=CRLF
+ok 581 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 582 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 583 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=crlf file=LF_nul
+ok 584 - ls-files --eol attr=auto  aeol=crlf core.autocrlf=false core.eol=crlf
+ok 585 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=crlf file=LF
+ok 586 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=crlf file=CRLF
+ok 587 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 588 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 589 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=crlf file=LF_nul
+ok 590 - ls-files --eol attr=-text  aeol= core.autocrlf=input core.eol=crlf
+ok 591 - checkout attr=-text  aeol= core.autocrlf=input core.eol=crlf file=LF
+ok 592 - checkout attr=-text  aeol= core.autocrlf=input core.eol=crlf file=CRLF
+ok 593 - checkout attr=-text  aeol= core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 594 - checkout attr=-text  aeol= core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 595 - checkout attr=-text  aeol= core.autocrlf=input core.eol=crlf file=LF_nul
+ok 596 - ls-files --eol attr=-text  aeol=lf core.autocrlf=input core.eol=crlf
+ok 597 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=crlf file=LF
+ok 598 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=crlf file=CRLF
+ok 599 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 600 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 601 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=crlf file=LF_nul
+ok 602 - ls-files --eol attr=-text  aeol=crlf core.autocrlf=input core.eol=crlf
+ok 603 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=crlf file=LF
+ok 604 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=crlf file=CRLF
+ok 605 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 606 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 607 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=crlf file=LF_nul
+ok 608 - ls-files --eol attr=text  aeol=lf core.autocrlf=input core.eol=crlf
+ok 609 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=crlf file=LF
+ok 610 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=crlf file=CRLF
+ok 611 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 612 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 613 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=crlf file=LF_nul
+ok 614 - ls-files --eol attr=text  aeol=crlf core.autocrlf=input core.eol=crlf
+ok 615 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=crlf file=LF
+ok 616 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=crlf file=CRLF
+ok 617 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 618 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 619 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=crlf file=LF_nul
+ok 620 - ls-files --eol attr=auto  aeol=lf core.autocrlf=input core.eol=crlf
+ok 621 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=crlf file=LF
+ok 622 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=crlf file=CRLF
+ok 623 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 624 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 625 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=crlf file=LF_nul
+ok 626 - ls-files --eol attr=auto  aeol=crlf core.autocrlf=input core.eol=crlf
+ok 627 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=crlf file=LF
+ok 628 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=crlf file=CRLF
+ok 629 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 630 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 631 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=crlf file=LF_nul
+ok 632 - ls-files --eol attr=  aeol= core.autocrlf=false core.eol=crlf
+ok 633 - checkout attr=  aeol= core.autocrlf=false core.eol=crlf file=LF
+ok 634 - checkout attr=  aeol= core.autocrlf=false core.eol=crlf file=CRLF
+ok 635 - checkout attr=  aeol= core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 636 - checkout attr=  aeol= core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 637 - checkout attr=  aeol= core.autocrlf=false core.eol=crlf file=LF_nul
+ok 638 - ls-files --eol attr=  aeol= core.autocrlf=true core.eol=crlf
+ok 639 - checkout attr=  aeol= core.autocrlf=true core.eol=crlf file=LF
+ok 640 - checkout attr=  aeol= core.autocrlf=true core.eol=crlf file=CRLF
+ok 641 - checkout attr=  aeol= core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 642 - checkout attr=  aeol= core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 643 - checkout attr=  aeol= core.autocrlf=true core.eol=crlf file=LF_nul
+ok 644 - ls-files --eol attr=auto  aeol= core.autocrlf=true core.eol=crlf
+ok 645 - checkout attr=auto  aeol= core.autocrlf=true core.eol=crlf file=LF
+ok 646 - checkout attr=auto  aeol= core.autocrlf=true core.eol=crlf file=CRLF
+ok 647 - checkout attr=auto  aeol= core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 648 - checkout attr=auto  aeol= core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 649 - checkout attr=auto  aeol= core.autocrlf=true core.eol=crlf file=LF_nul
+ok 650 - ls-files --eol attr=text  aeol= core.autocrlf=true core.eol=crlf
+ok 651 - checkout attr=text  aeol= core.autocrlf=true core.eol=crlf file=LF
+ok 652 - checkout attr=text  aeol= core.autocrlf=true core.eol=crlf file=CRLF
+ok 653 - checkout attr=text  aeol= core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 654 - checkout attr=text  aeol= core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 655 - checkout attr=text  aeol= core.autocrlf=true core.eol=crlf file=LF_nul
+ok 656 - ls-files --eol attr=text  aeol= core.autocrlf=input core.eol=crlf
+ok 657 - checkout attr=text  aeol= core.autocrlf=input core.eol=crlf file=LF
+ok 658 - checkout attr=text  aeol= core.autocrlf=input core.eol=crlf file=CRLF
+ok 659 - checkout attr=text  aeol= core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 660 - checkout attr=text  aeol= core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 661 - checkout attr=text  aeol= core.autocrlf=input core.eol=crlf file=LF_nul
+ok 662 - ls-files --eol attr=auto  aeol= core.autocrlf=input core.eol=crlf
+ok 663 - checkout attr=auto  aeol= core.autocrlf=input core.eol=crlf file=LF
+ok 664 - checkout attr=auto  aeol= core.autocrlf=input core.eol=crlf file=CRLF
+ok 665 - checkout attr=auto  aeol= core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 666 - checkout attr=auto  aeol= core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 667 - checkout attr=auto  aeol= core.autocrlf=input core.eol=crlf file=LF_nul
+ok 668 - ls-files --eol attr=-text  aeol= core.autocrlf=true core.eol=native
+ok 669 - checkout attr=-text  aeol= core.autocrlf=true core.eol=native file=LF
+ok 670 - checkout attr=-text  aeol= core.autocrlf=true core.eol=native file=CRLF
+ok 671 - checkout attr=-text  aeol= core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 672 - checkout attr=-text  aeol= core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 673 - checkout attr=-text  aeol= core.autocrlf=true core.eol=native file=LF_nul
+ok 674 - ls-files --eol attr=-text  aeol=lf core.autocrlf=true core.eol=native
+ok 675 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=native file=LF
+ok 676 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=native file=CRLF
+ok 677 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 678 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 679 - checkout attr=-text  aeol=lf core.autocrlf=true core.eol=native file=LF_nul
+ok 680 - ls-files --eol attr=-text  aeol=crlf core.autocrlf=true core.eol=native
+ok 681 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=native file=LF
+ok 682 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=native file=CRLF
+ok 683 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 684 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 685 - checkout attr=-text  aeol=crlf core.autocrlf=true core.eol=native file=LF_nul
+ok 686 - ls-files --eol attr=text  aeol=lf core.autocrlf=true core.eol=native
+ok 687 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=native file=LF
+ok 688 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=native file=CRLF
+ok 689 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 690 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 691 - checkout attr=text  aeol=lf core.autocrlf=true core.eol=native file=LF_nul
+ok 692 - ls-files --eol attr=text  aeol=crlf core.autocrlf=true core.eol=native
+ok 693 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=native file=LF
+ok 694 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=native file=CRLF
+ok 695 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 696 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 697 - checkout attr=text  aeol=crlf core.autocrlf=true core.eol=native file=LF_nul
+ok 698 - ls-files --eol attr=auto  aeol=lf core.autocrlf=true core.eol=native
+ok 699 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=native file=LF
+ok 700 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=native file=CRLF
+ok 701 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 702 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 703 - checkout attr=auto  aeol=lf core.autocrlf=true core.eol=native file=LF_nul
+ok 704 - ls-files --eol attr=auto  aeol=crlf core.autocrlf=true core.eol=native
+ok 705 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=native file=LF
+ok 706 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=native file=CRLF
+ok 707 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 708 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 709 - checkout attr=auto  aeol=crlf core.autocrlf=true core.eol=native file=LF_nul
+ok 710 - ls-files --eol attr=-text  aeol= core.autocrlf=false core.eol=native
+ok 711 - checkout attr=-text  aeol= core.autocrlf=false core.eol=native file=LF
+ok 712 - checkout attr=-text  aeol= core.autocrlf=false core.eol=native file=CRLF
+ok 713 - checkout attr=-text  aeol= core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 714 - checkout attr=-text  aeol= core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 715 - checkout attr=-text  aeol= core.autocrlf=false core.eol=native file=LF_nul
+ok 716 - ls-files --eol attr=-text  aeol=lf core.autocrlf=false core.eol=native
+ok 717 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=native file=LF
+ok 718 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=native file=CRLF
+ok 719 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 720 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 721 - checkout attr=-text  aeol=lf core.autocrlf=false core.eol=native file=LF_nul
+ok 722 - ls-files --eol attr=-text  aeol=crlf core.autocrlf=false core.eol=native
+ok 723 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=native file=LF
+ok 724 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=native file=CRLF
+ok 725 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 726 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 727 - checkout attr=-text  aeol=crlf core.autocrlf=false core.eol=native file=LF_nul
+ok 728 - ls-files --eol attr=text  aeol=lf core.autocrlf=false core.eol=native
+ok 729 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=native file=LF
+ok 730 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=native file=CRLF
+ok 731 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 732 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 733 - checkout attr=text  aeol=lf core.autocrlf=false core.eol=native file=LF_nul
+ok 734 - ls-files --eol attr=text  aeol=crlf core.autocrlf=false core.eol=native
+ok 735 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=native file=LF
+ok 736 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=native file=CRLF
+ok 737 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 738 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 739 - checkout attr=text  aeol=crlf core.autocrlf=false core.eol=native file=LF_nul
+ok 740 - ls-files --eol attr=auto  aeol=lf core.autocrlf=false core.eol=native
+ok 741 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=native file=LF
+ok 742 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=native file=CRLF
+ok 743 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 744 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 745 - checkout attr=auto  aeol=lf core.autocrlf=false core.eol=native file=LF_nul
+ok 746 - ls-files --eol attr=auto  aeol=crlf core.autocrlf=false core.eol=native
+ok 747 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=native file=LF
+ok 748 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=native file=CRLF
+ok 749 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 750 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 751 - checkout attr=auto  aeol=crlf core.autocrlf=false core.eol=native file=LF_nul
+ok 752 - ls-files --eol attr=-text  aeol= core.autocrlf=input core.eol=native
+ok 753 - checkout attr=-text  aeol= core.autocrlf=input core.eol=native file=LF
+ok 754 - checkout attr=-text  aeol= core.autocrlf=input core.eol=native file=CRLF
+ok 755 - checkout attr=-text  aeol= core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 756 - checkout attr=-text  aeol= core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 757 - checkout attr=-text  aeol= core.autocrlf=input core.eol=native file=LF_nul
+ok 758 - ls-files --eol attr=-text  aeol=lf core.autocrlf=input core.eol=native
+ok 759 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=native file=LF
+ok 760 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=native file=CRLF
+ok 761 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 762 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 763 - checkout attr=-text  aeol=lf core.autocrlf=input core.eol=native file=LF_nul
+ok 764 - ls-files --eol attr=-text  aeol=crlf core.autocrlf=input core.eol=native
+ok 765 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=native file=LF
+ok 766 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=native file=CRLF
+ok 767 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 768 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 769 - checkout attr=-text  aeol=crlf core.autocrlf=input core.eol=native file=LF_nul
+ok 770 - ls-files --eol attr=text  aeol=lf core.autocrlf=input core.eol=native
+ok 771 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=native file=LF
+ok 772 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=native file=CRLF
+ok 773 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 774 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 775 - checkout attr=text  aeol=lf core.autocrlf=input core.eol=native file=LF_nul
+ok 776 - ls-files --eol attr=text  aeol=crlf core.autocrlf=input core.eol=native
+ok 777 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=native file=LF
+ok 778 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=native file=CRLF
+ok 779 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 780 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 781 - checkout attr=text  aeol=crlf core.autocrlf=input core.eol=native file=LF_nul
+ok 782 - ls-files --eol attr=auto  aeol=lf core.autocrlf=input core.eol=native
+ok 783 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=native file=LF
+ok 784 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=native file=CRLF
+ok 785 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 786 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 787 - checkout attr=auto  aeol=lf core.autocrlf=input core.eol=native file=LF_nul
+ok 788 - ls-files --eol attr=auto  aeol=crlf core.autocrlf=input core.eol=native
+ok 789 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=native file=LF
+ok 790 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=native file=CRLF
+ok 791 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 792 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 793 - checkout attr=auto  aeol=crlf core.autocrlf=input core.eol=native file=LF_nul
+ok 794 - ls-files --eol attr=  aeol= core.autocrlf=false core.eol=native
+ok 795 - checkout attr=  aeol= core.autocrlf=false core.eol=native file=LF
+ok 796 - checkout attr=  aeol= core.autocrlf=false core.eol=native file=CRLF
+ok 797 - checkout attr=  aeol= core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 798 - checkout attr=  aeol= core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 799 - checkout attr=  aeol= core.autocrlf=false core.eol=native file=LF_nul
+ok 800 - ls-files --eol attr=  aeol= core.autocrlf=true core.eol=native
+ok 801 - checkout attr=  aeol= core.autocrlf=true core.eol=native file=LF
+ok 802 - checkout attr=  aeol= core.autocrlf=true core.eol=native file=CRLF
+ok 803 - checkout attr=  aeol= core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 804 - checkout attr=  aeol= core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 805 - checkout attr=  aeol= core.autocrlf=true core.eol=native file=LF_nul
+ok 806 - ls-files --eol attr=auto  aeol= core.autocrlf=true core.eol=native
+ok 807 - checkout attr=auto  aeol= core.autocrlf=true core.eol=native file=LF
+ok 808 - checkout attr=auto  aeol= core.autocrlf=true core.eol=native file=CRLF
+ok 809 - checkout attr=auto  aeol= core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 810 - checkout attr=auto  aeol= core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 811 - checkout attr=auto  aeol= core.autocrlf=true core.eol=native file=LF_nul
+ok 812 - ls-files --eol attr=text  aeol= core.autocrlf=true core.eol=native
+ok 813 - checkout attr=text  aeol= core.autocrlf=true core.eol=native file=LF
+ok 814 - checkout attr=text  aeol= core.autocrlf=true core.eol=native file=CRLF
+ok 815 - checkout attr=text  aeol= core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 816 - checkout attr=text  aeol= core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 817 - checkout attr=text  aeol= core.autocrlf=true core.eol=native file=LF_nul
+ok 818 - ls-files --eol attr=text  aeol= core.autocrlf=input core.eol=native
+ok 819 - checkout attr=text  aeol= core.autocrlf=input core.eol=native file=LF
+ok 820 - checkout attr=text  aeol= core.autocrlf=input core.eol=native file=CRLF
+ok 821 - checkout attr=text  aeol= core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 822 - checkout attr=text  aeol= core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 823 - checkout attr=text  aeol= core.autocrlf=input core.eol=native file=LF_nul
+ok 824 - ls-files --eol attr=auto  aeol= core.autocrlf=input core.eol=native
+ok 825 - checkout attr=auto  aeol= core.autocrlf=input core.eol=native file=LF
+ok 826 - checkout attr=auto  aeol= core.autocrlf=input core.eol=native file=CRLF
+ok 827 - checkout attr=auto  aeol= core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 828 - checkout attr=auto  aeol= core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 829 - checkout attr=auto  aeol= core.autocrlf=input core.eol=native file=LF_nul
+ok 830 - ls-files --eol attr=text  aeol= core.autocrlf=false core.eol=crlf
+ok 831 - checkout attr=text  aeol= core.autocrlf=false core.eol=crlf file=LF
+ok 832 - checkout attr=text  aeol= core.autocrlf=false core.eol=crlf file=CRLF
+ok 833 - checkout attr=text  aeol= core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 834 - checkout attr=text  aeol= core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 835 - checkout attr=text  aeol= core.autocrlf=false core.eol=crlf file=LF_nul
+ok 836 - ls-files --eol attr=text  aeol= core.autocrlf=false core.eol=lf
+ok 837 - checkout attr=text  aeol= core.autocrlf=false core.eol=lf file=LF
+ok 838 - checkout attr=text  aeol= core.autocrlf=false core.eol=lf file=CRLF
+ok 839 - checkout attr=text  aeol= core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 840 - checkout attr=text  aeol= core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 841 - checkout attr=text  aeol= core.autocrlf=false core.eol=lf file=LF_nul
+ok 842 - ls-files --eol attr=text  aeol= core.autocrlf=false core.eol=
+ok 843 - checkout attr=text  aeol= core.autocrlf=false core.eol= file=LF
+ok 844 - checkout attr=text  aeol= core.autocrlf=false core.eol= file=CRLF
+ok 845 - checkout attr=text  aeol= core.autocrlf=false core.eol= file=CRLF_mix_LF
+ok 846 - checkout attr=text  aeol= core.autocrlf=false core.eol= file=LF_mix_CR
+ok 847 - checkout attr=text  aeol= core.autocrlf=false core.eol= file=LF_nul
+ok 848 - ls-files --eol attr=text  aeol= core.autocrlf=false core.eol=native
+ok 849 - checkout attr=text  aeol= core.autocrlf=false core.eol=native file=LF
+ok 850 - checkout attr=text  aeol= core.autocrlf=false core.eol=native file=CRLF
+ok 851 - checkout attr=text  aeol= core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 852 - checkout attr=text  aeol= core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 853 - checkout attr=text  aeol= core.autocrlf=false core.eol=native file=LF_nul
+ok 854 - ls-files --eol attr=auto  aeol= core.autocrlf=false core.eol=
+ok 855 - checkout attr=auto  aeol= core.autocrlf=false core.eol= file=LF
+ok 856 - checkout attr=auto  aeol= core.autocrlf=false core.eol= file=CRLF
+ok 857 - checkout attr=auto  aeol= core.autocrlf=false core.eol= file=CRLF_mix_LF
+ok 858 - checkout attr=auto  aeol= core.autocrlf=false core.eol= file=LF_mix_CR
+ok 859 - checkout attr=auto  aeol= core.autocrlf=false core.eol= file=LF_nul
+ok 860 - ls-files --eol attr=auto  aeol= core.autocrlf=false core.eol=native
+ok 861 - checkout attr=auto  aeol= core.autocrlf=false core.eol=native file=LF
+ok 862 - checkout attr=auto  aeol= core.autocrlf=false core.eol=native file=CRLF
+ok 863 - checkout attr=auto  aeol= core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 864 - checkout attr=auto  aeol= core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 865 - checkout attr=auto  aeol= core.autocrlf=false core.eol=native file=LF_nul
+ok 866 - ls-files --eol attr=-text ident aeol= core.autocrlf=true core.eol=lf
+ok 867 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=lf file=LF
+ok 868 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=lf file=CRLF
+ok 869 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 870 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 871 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=lf file=LF_nul
+ok 872 - ls-files --eol attr=-text ident aeol=lf core.autocrlf=true core.eol=lf
+ok 873 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=lf file=LF
+ok 874 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=lf file=CRLF
+ok 875 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 876 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 877 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=lf file=LF_nul
+ok 878 - ls-files --eol attr=-text ident aeol=crlf core.autocrlf=true core.eol=lf
+ok 879 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=lf file=LF
+ok 880 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=lf file=CRLF
+ok 881 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 882 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 883 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=lf file=LF_nul
+ok 884 - ls-files --eol attr=text ident aeol=lf core.autocrlf=true core.eol=lf
+ok 885 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=lf file=LF
+ok 886 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=lf file=CRLF
+ok 887 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 888 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 889 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=lf file=LF_nul
+ok 890 - ls-files --eol attr=text ident aeol=crlf core.autocrlf=true core.eol=lf
+ok 891 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=lf file=LF
+ok 892 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=lf file=CRLF
+ok 893 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 894 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 895 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=lf file=LF_nul
+ok 896 - ls-files --eol attr=auto ident aeol=lf core.autocrlf=true core.eol=lf
+ok 897 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=lf file=LF
+ok 898 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=lf file=CRLF
+ok 899 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 900 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 901 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=lf file=LF_nul
+ok 902 - ls-files --eol attr=auto ident aeol=crlf core.autocrlf=true core.eol=lf
+ok 903 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=lf file=LF
+ok 904 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=lf file=CRLF
+ok 905 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 906 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 907 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=lf file=LF_nul
+ok 908 - ls-files --eol attr=-text ident aeol= core.autocrlf=false core.eol=lf
+ok 909 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=lf file=LF
+ok 910 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=lf file=CRLF
+ok 911 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 912 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 913 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=lf file=LF_nul
+ok 914 - ls-files --eol attr=-text ident aeol=lf core.autocrlf=false core.eol=lf
+ok 915 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=lf file=LF
+ok 916 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=lf file=CRLF
+ok 917 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 918 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 919 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=lf file=LF_nul
+ok 920 - ls-files --eol attr=-text ident aeol=crlf core.autocrlf=false core.eol=lf
+ok 921 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=lf file=LF
+ok 922 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=lf file=CRLF
+ok 923 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 924 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 925 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=lf file=LF_nul
+ok 926 - ls-files --eol attr=text ident aeol=lf core.autocrlf=false core.eol=lf
+ok 927 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=lf file=LF
+ok 928 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=lf file=CRLF
+ok 929 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 930 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 931 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=lf file=LF_nul
+ok 932 - ls-files --eol attr=text ident aeol=crlf core.autocrlf=false core.eol=lf
+ok 933 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=lf file=LF
+ok 934 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=lf file=CRLF
+ok 935 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 936 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 937 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=lf file=LF_nul
+ok 938 - ls-files --eol attr=auto ident aeol=lf core.autocrlf=false core.eol=lf
+ok 939 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=lf file=LF
+ok 940 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=lf file=CRLF
+ok 941 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 942 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 943 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=lf file=LF_nul
+ok 944 - ls-files --eol attr=auto ident aeol=crlf core.autocrlf=false core.eol=lf
+ok 945 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=lf file=LF
+ok 946 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=lf file=CRLF
+ok 947 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 948 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 949 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=lf file=LF_nul
+ok 950 - ls-files --eol attr=-text ident aeol= core.autocrlf=input core.eol=lf
+ok 951 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=lf file=LF
+ok 952 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=lf file=CRLF
+ok 953 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 954 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 955 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=lf file=LF_nul
+ok 956 - ls-files --eol attr=-text ident aeol=lf core.autocrlf=input core.eol=lf
+ok 957 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=lf file=LF
+ok 958 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=lf file=CRLF
+ok 959 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 960 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 961 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=lf file=LF_nul
+ok 962 - ls-files --eol attr=-text ident aeol=crlf core.autocrlf=input core.eol=lf
+ok 963 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=lf file=LF
+ok 964 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=lf file=CRLF
+ok 965 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 966 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 967 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=lf file=LF_nul
+ok 968 - ls-files --eol attr=text ident aeol=lf core.autocrlf=input core.eol=lf
+ok 969 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=lf file=LF
+ok 970 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=lf file=CRLF
+ok 971 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 972 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 973 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=lf file=LF_nul
+ok 974 - ls-files --eol attr=text ident aeol=crlf core.autocrlf=input core.eol=lf
+ok 975 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=lf file=LF
+ok 976 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=lf file=CRLF
+ok 977 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 978 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 979 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=lf file=LF_nul
+ok 980 - ls-files --eol attr=auto ident aeol=lf core.autocrlf=input core.eol=lf
+ok 981 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=lf file=LF
+ok 982 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=lf file=CRLF
+ok 983 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 984 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 985 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=lf file=LF_nul
+ok 986 - ls-files --eol attr=auto ident aeol=crlf core.autocrlf=input core.eol=lf
+ok 987 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=lf file=LF
+ok 988 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=lf file=CRLF
+ok 989 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 990 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 991 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=lf file=LF_nul
+ok 992 - ls-files --eol attr= ident aeol= core.autocrlf=false core.eol=lf
+ok 993 - checkout attr= ident aeol= core.autocrlf=false core.eol=lf file=LF
+ok 994 - checkout attr= ident aeol= core.autocrlf=false core.eol=lf file=CRLF
+ok 995 - checkout attr= ident aeol= core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 996 - checkout attr= ident aeol= core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 997 - checkout attr= ident aeol= core.autocrlf=false core.eol=lf file=LF_nul
+ok 998 - ls-files --eol attr= ident aeol= core.autocrlf=true core.eol=lf
+ok 999 - checkout attr= ident aeol= core.autocrlf=true core.eol=lf file=LF
+ok 1000 - checkout attr= ident aeol= core.autocrlf=true core.eol=lf file=CRLF
+ok 1001 - checkout attr= ident aeol= core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 1002 - checkout attr= ident aeol= core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 1003 - checkout attr= ident aeol= core.autocrlf=true core.eol=lf file=LF_nul
+ok 1004 - ls-files --eol attr=auto ident aeol= core.autocrlf=true core.eol=lf
+ok 1005 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=lf file=LF
+ok 1006 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=lf file=CRLF
+ok 1007 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 1008 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 1009 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=lf file=LF_nul
+ok 1010 - ls-files --eol attr=text ident aeol= core.autocrlf=true core.eol=lf
+ok 1011 - checkout attr=text ident aeol= core.autocrlf=true core.eol=lf file=LF
+ok 1012 - checkout attr=text ident aeol= core.autocrlf=true core.eol=lf file=CRLF
+ok 1013 - checkout attr=text ident aeol= core.autocrlf=true core.eol=lf file=CRLF_mix_LF
+ok 1014 - checkout attr=text ident aeol= core.autocrlf=true core.eol=lf file=LF_mix_CR
+ok 1015 - checkout attr=text ident aeol= core.autocrlf=true core.eol=lf file=LF_nul
+ok 1016 - ls-files --eol attr=text ident aeol= core.autocrlf=input core.eol=lf
+ok 1017 - checkout attr=text ident aeol= core.autocrlf=input core.eol=lf file=LF
+ok 1018 - checkout attr=text ident aeol= core.autocrlf=input core.eol=lf file=CRLF
+ok 1019 - checkout attr=text ident aeol= core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 1020 - checkout attr=text ident aeol= core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 1021 - checkout attr=text ident aeol= core.autocrlf=input core.eol=lf file=LF_nul
+ok 1022 - ls-files --eol attr=auto ident aeol= core.autocrlf=input core.eol=lf
+ok 1023 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=lf file=LF
+ok 1024 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=lf file=CRLF
+ok 1025 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=lf file=CRLF_mix_LF
+ok 1026 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=lf file=LF_mix_CR
+ok 1027 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=lf file=LF_nul
+ok 1028 - ls-files --eol attr=-text ident aeol= core.autocrlf=true core.eol=crlf
+ok 1029 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=crlf file=LF
+ok 1030 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=crlf file=CRLF
+ok 1031 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 1032 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 1033 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=crlf file=LF_nul
+ok 1034 - ls-files --eol attr=-text ident aeol=lf core.autocrlf=true core.eol=crlf
+ok 1035 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=crlf file=LF
+ok 1036 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=crlf file=CRLF
+ok 1037 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 1038 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 1039 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=crlf file=LF_nul
+ok 1040 - ls-files --eol attr=-text ident aeol=crlf core.autocrlf=true core.eol=crlf
+ok 1041 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=crlf file=LF
+ok 1042 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=crlf file=CRLF
+ok 1043 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 1044 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 1045 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=crlf file=LF_nul
+ok 1046 - ls-files --eol attr=text ident aeol=lf core.autocrlf=true core.eol=crlf
+ok 1047 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=crlf file=LF
+ok 1048 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=crlf file=CRLF
+ok 1049 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 1050 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 1051 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=crlf file=LF_nul
+ok 1052 - ls-files --eol attr=text ident aeol=crlf core.autocrlf=true core.eol=crlf
+ok 1053 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=crlf file=LF
+ok 1054 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=crlf file=CRLF
+ok 1055 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 1056 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 1057 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=crlf file=LF_nul
+ok 1058 - ls-files --eol attr=auto ident aeol=lf core.autocrlf=true core.eol=crlf
+ok 1059 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=crlf file=LF
+ok 1060 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=crlf file=CRLF
+ok 1061 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 1062 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 1063 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=crlf file=LF_nul
+ok 1064 - ls-files --eol attr=auto ident aeol=crlf core.autocrlf=true core.eol=crlf
+ok 1065 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=crlf file=LF
+ok 1066 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=crlf file=CRLF
+ok 1067 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 1068 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 1069 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=crlf file=LF_nul
+ok 1070 - ls-files --eol attr=-text ident aeol= core.autocrlf=false core.eol=crlf
+ok 1071 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=crlf file=LF
+ok 1072 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=crlf file=CRLF
+ok 1073 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 1074 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 1075 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=crlf file=LF_nul
+ok 1076 - ls-files --eol attr=-text ident aeol=lf core.autocrlf=false core.eol=crlf
+ok 1077 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=crlf file=LF
+ok 1078 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=crlf file=CRLF
+ok 1079 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 1080 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 1081 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=crlf file=LF_nul
+ok 1082 - ls-files --eol attr=-text ident aeol=crlf core.autocrlf=false core.eol=crlf
+ok 1083 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=crlf file=LF
+ok 1084 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=crlf file=CRLF
+ok 1085 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 1086 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 1087 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=crlf file=LF_nul
+ok 1088 - ls-files --eol attr=text ident aeol=lf core.autocrlf=false core.eol=crlf
+ok 1089 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=crlf file=LF
+ok 1090 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=crlf file=CRLF
+ok 1091 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 1092 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 1093 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=crlf file=LF_nul
+ok 1094 - ls-files --eol attr=text ident aeol=crlf core.autocrlf=false core.eol=crlf
+ok 1095 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=crlf file=LF
+ok 1096 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=crlf file=CRLF
+ok 1097 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 1098 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 1099 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=crlf file=LF_nul
+ok 1100 - ls-files --eol attr=auto ident aeol=lf core.autocrlf=false core.eol=crlf
+ok 1101 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=crlf file=LF
+ok 1102 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=crlf file=CRLF
+ok 1103 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 1104 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 1105 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=crlf file=LF_nul
+ok 1106 - ls-files --eol attr=auto ident aeol=crlf core.autocrlf=false core.eol=crlf
+ok 1107 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=crlf file=LF
+ok 1108 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=crlf file=CRLF
+ok 1109 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 1110 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 1111 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=crlf file=LF_nul
+ok 1112 - ls-files --eol attr=-text ident aeol= core.autocrlf=input core.eol=crlf
+ok 1113 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=crlf file=LF
+ok 1114 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=crlf file=CRLF
+ok 1115 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 1116 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 1117 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=crlf file=LF_nul
+ok 1118 - ls-files --eol attr=-text ident aeol=lf core.autocrlf=input core.eol=crlf
+ok 1119 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=crlf file=LF
+ok 1120 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=crlf file=CRLF
+ok 1121 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 1122 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 1123 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=crlf file=LF_nul
+ok 1124 - ls-files --eol attr=-text ident aeol=crlf core.autocrlf=input core.eol=crlf
+ok 1125 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=crlf file=LF
+ok 1126 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=crlf file=CRLF
+ok 1127 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 1128 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 1129 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=crlf file=LF_nul
+ok 1130 - ls-files --eol attr=text ident aeol=lf core.autocrlf=input core.eol=crlf
+ok 1131 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=crlf file=LF
+ok 1132 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=crlf file=CRLF
+ok 1133 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 1134 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 1135 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=crlf file=LF_nul
+ok 1136 - ls-files --eol attr=text ident aeol=crlf core.autocrlf=input core.eol=crlf
+ok 1137 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=crlf file=LF
+ok 1138 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=crlf file=CRLF
+ok 1139 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 1140 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 1141 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=crlf file=LF_nul
+ok 1142 - ls-files --eol attr=auto ident aeol=lf core.autocrlf=input core.eol=crlf
+ok 1143 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=crlf file=LF
+ok 1144 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=crlf file=CRLF
+ok 1145 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 1146 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 1147 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=crlf file=LF_nul
+ok 1148 - ls-files --eol attr=auto ident aeol=crlf core.autocrlf=input core.eol=crlf
+ok 1149 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=crlf file=LF
+ok 1150 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=crlf file=CRLF
+ok 1151 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 1152 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 1153 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=crlf file=LF_nul
+ok 1154 - ls-files --eol attr= ident aeol= core.autocrlf=false core.eol=crlf
+ok 1155 - checkout attr= ident aeol= core.autocrlf=false core.eol=crlf file=LF
+ok 1156 - checkout attr= ident aeol= core.autocrlf=false core.eol=crlf file=CRLF
+ok 1157 - checkout attr= ident aeol= core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 1158 - checkout attr= ident aeol= core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 1159 - checkout attr= ident aeol= core.autocrlf=false core.eol=crlf file=LF_nul
+ok 1160 - ls-files --eol attr= ident aeol= core.autocrlf=true core.eol=crlf
+ok 1161 - checkout attr= ident aeol= core.autocrlf=true core.eol=crlf file=LF
+ok 1162 - checkout attr= ident aeol= core.autocrlf=true core.eol=crlf file=CRLF
+ok 1163 - checkout attr= ident aeol= core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 1164 - checkout attr= ident aeol= core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 1165 - checkout attr= ident aeol= core.autocrlf=true core.eol=crlf file=LF_nul
+ok 1166 - ls-files --eol attr=auto ident aeol= core.autocrlf=true core.eol=crlf
+ok 1167 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=crlf file=LF
+ok 1168 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=crlf file=CRLF
+ok 1169 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 1170 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 1171 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=crlf file=LF_nul
+ok 1172 - ls-files --eol attr=text ident aeol= core.autocrlf=true core.eol=crlf
+ok 1173 - checkout attr=text ident aeol= core.autocrlf=true core.eol=crlf file=LF
+ok 1174 - checkout attr=text ident aeol= core.autocrlf=true core.eol=crlf file=CRLF
+ok 1175 - checkout attr=text ident aeol= core.autocrlf=true core.eol=crlf file=CRLF_mix_LF
+ok 1176 - checkout attr=text ident aeol= core.autocrlf=true core.eol=crlf file=LF_mix_CR
+ok 1177 - checkout attr=text ident aeol= core.autocrlf=true core.eol=crlf file=LF_nul
+ok 1178 - ls-files --eol attr=text ident aeol= core.autocrlf=input core.eol=crlf
+ok 1179 - checkout attr=text ident aeol= core.autocrlf=input core.eol=crlf file=LF
+ok 1180 - checkout attr=text ident aeol= core.autocrlf=input core.eol=crlf file=CRLF
+ok 1181 - checkout attr=text ident aeol= core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 1182 - checkout attr=text ident aeol= core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 1183 - checkout attr=text ident aeol= core.autocrlf=input core.eol=crlf file=LF_nul
+ok 1184 - ls-files --eol attr=auto ident aeol= core.autocrlf=input core.eol=crlf
+ok 1185 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=crlf file=LF
+ok 1186 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=crlf file=CRLF
+ok 1187 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=crlf file=CRLF_mix_LF
+ok 1188 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=crlf file=LF_mix_CR
+ok 1189 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=crlf file=LF_nul
+ok 1190 - ls-files --eol attr=-text ident aeol= core.autocrlf=true core.eol=native
+ok 1191 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=native file=LF
+ok 1192 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=native file=CRLF
+ok 1193 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 1194 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 1195 - checkout attr=-text ident aeol= core.autocrlf=true core.eol=native file=LF_nul
+ok 1196 - ls-files --eol attr=-text ident aeol=lf core.autocrlf=true core.eol=native
+ok 1197 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=native file=LF
+ok 1198 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=native file=CRLF
+ok 1199 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 1200 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 1201 - checkout attr=-text ident aeol=lf core.autocrlf=true core.eol=native file=LF_nul
+ok 1202 - ls-files --eol attr=-text ident aeol=crlf core.autocrlf=true core.eol=native
+ok 1203 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=native file=LF
+ok 1204 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=native file=CRLF
+ok 1205 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 1206 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 1207 - checkout attr=-text ident aeol=crlf core.autocrlf=true core.eol=native file=LF_nul
+ok 1208 - ls-files --eol attr=text ident aeol=lf core.autocrlf=true core.eol=native
+ok 1209 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=native file=LF
+ok 1210 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=native file=CRLF
+ok 1211 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 1212 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 1213 - checkout attr=text ident aeol=lf core.autocrlf=true core.eol=native file=LF_nul
+ok 1214 - ls-files --eol attr=text ident aeol=crlf core.autocrlf=true core.eol=native
+ok 1215 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=native file=LF
+ok 1216 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=native file=CRLF
+ok 1217 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 1218 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 1219 - checkout attr=text ident aeol=crlf core.autocrlf=true core.eol=native file=LF_nul
+ok 1220 - ls-files --eol attr=auto ident aeol=lf core.autocrlf=true core.eol=native
+ok 1221 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=native file=LF
+ok 1222 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=native file=CRLF
+ok 1223 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 1224 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 1225 - checkout attr=auto ident aeol=lf core.autocrlf=true core.eol=native file=LF_nul
+ok 1226 - ls-files --eol attr=auto ident aeol=crlf core.autocrlf=true core.eol=native
+ok 1227 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=native file=LF
+ok 1228 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=native file=CRLF
+ok 1229 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 1230 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 1231 - checkout attr=auto ident aeol=crlf core.autocrlf=true core.eol=native file=LF_nul
+ok 1232 - ls-files --eol attr=-text ident aeol= core.autocrlf=false core.eol=native
+ok 1233 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=native file=LF
+ok 1234 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=native file=CRLF
+ok 1235 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 1236 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 1237 - checkout attr=-text ident aeol= core.autocrlf=false core.eol=native file=LF_nul
+ok 1238 - ls-files --eol attr=-text ident aeol=lf core.autocrlf=false core.eol=native
+ok 1239 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=native file=LF
+ok 1240 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=native file=CRLF
+ok 1241 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 1242 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 1243 - checkout attr=-text ident aeol=lf core.autocrlf=false core.eol=native file=LF_nul
+ok 1244 - ls-files --eol attr=-text ident aeol=crlf core.autocrlf=false core.eol=native
+ok 1245 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=native file=LF
+ok 1246 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=native file=CRLF
+ok 1247 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 1248 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 1249 - checkout attr=-text ident aeol=crlf core.autocrlf=false core.eol=native file=LF_nul
+ok 1250 - ls-files --eol attr=text ident aeol=lf core.autocrlf=false core.eol=native
+ok 1251 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=native file=LF
+ok 1252 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=native file=CRLF
+ok 1253 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 1254 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 1255 - checkout attr=text ident aeol=lf core.autocrlf=false core.eol=native file=LF_nul
+ok 1256 - ls-files --eol attr=text ident aeol=crlf core.autocrlf=false core.eol=native
+ok 1257 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=native file=LF
+ok 1258 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=native file=CRLF
+ok 1259 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 1260 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 1261 - checkout attr=text ident aeol=crlf core.autocrlf=false core.eol=native file=LF_nul
+ok 1262 - ls-files --eol attr=auto ident aeol=lf core.autocrlf=false core.eol=native
+ok 1263 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=native file=LF
+ok 1264 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=native file=CRLF
+ok 1265 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 1266 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 1267 - checkout attr=auto ident aeol=lf core.autocrlf=false core.eol=native file=LF_nul
+ok 1268 - ls-files --eol attr=auto ident aeol=crlf core.autocrlf=false core.eol=native
+ok 1269 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=native file=LF
+ok 1270 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=native file=CRLF
+ok 1271 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 1272 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 1273 - checkout attr=auto ident aeol=crlf core.autocrlf=false core.eol=native file=LF_nul
+ok 1274 - ls-files --eol attr=-text ident aeol= core.autocrlf=input core.eol=native
+ok 1275 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=native file=LF
+ok 1276 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=native file=CRLF
+ok 1277 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 1278 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 1279 - checkout attr=-text ident aeol= core.autocrlf=input core.eol=native file=LF_nul
+ok 1280 - ls-files --eol attr=-text ident aeol=lf core.autocrlf=input core.eol=native
+ok 1281 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=native file=LF
+ok 1282 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=native file=CRLF
+ok 1283 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 1284 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 1285 - checkout attr=-text ident aeol=lf core.autocrlf=input core.eol=native file=LF_nul
+ok 1286 - ls-files --eol attr=-text ident aeol=crlf core.autocrlf=input core.eol=native
+ok 1287 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=native file=LF
+ok 1288 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=native file=CRLF
+ok 1289 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 1290 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 1291 - checkout attr=-text ident aeol=crlf core.autocrlf=input core.eol=native file=LF_nul
+ok 1292 - ls-files --eol attr=text ident aeol=lf core.autocrlf=input core.eol=native
+ok 1293 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=native file=LF
+ok 1294 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=native file=CRLF
+ok 1295 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 1296 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 1297 - checkout attr=text ident aeol=lf core.autocrlf=input core.eol=native file=LF_nul
+ok 1298 - ls-files --eol attr=text ident aeol=crlf core.autocrlf=input core.eol=native
+ok 1299 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=native file=LF
+ok 1300 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=native file=CRLF
+ok 1301 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 1302 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 1303 - checkout attr=text ident aeol=crlf core.autocrlf=input core.eol=native file=LF_nul
+ok 1304 - ls-files --eol attr=auto ident aeol=lf core.autocrlf=input core.eol=native
+ok 1305 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=native file=LF
+ok 1306 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=native file=CRLF
+ok 1307 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 1308 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 1309 - checkout attr=auto ident aeol=lf core.autocrlf=input core.eol=native file=LF_nul
+ok 1310 - ls-files --eol attr=auto ident aeol=crlf core.autocrlf=input core.eol=native
+ok 1311 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=native file=LF
+ok 1312 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=native file=CRLF
+ok 1313 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 1314 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 1315 - checkout attr=auto ident aeol=crlf core.autocrlf=input core.eol=native file=LF_nul
+ok 1316 - ls-files --eol attr= ident aeol= core.autocrlf=false core.eol=native
+ok 1317 - checkout attr= ident aeol= core.autocrlf=false core.eol=native file=LF
+ok 1318 - checkout attr= ident aeol= core.autocrlf=false core.eol=native file=CRLF
+ok 1319 - checkout attr= ident aeol= core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 1320 - checkout attr= ident aeol= core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 1321 - checkout attr= ident aeol= core.autocrlf=false core.eol=native file=LF_nul
+ok 1322 - ls-files --eol attr= ident aeol= core.autocrlf=true core.eol=native
+ok 1323 - checkout attr= ident aeol= core.autocrlf=true core.eol=native file=LF
+ok 1324 - checkout attr= ident aeol= core.autocrlf=true core.eol=native file=CRLF
+ok 1325 - checkout attr= ident aeol= core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 1326 - checkout attr= ident aeol= core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 1327 - checkout attr= ident aeol= core.autocrlf=true core.eol=native file=LF_nul
+ok 1328 - ls-files --eol attr=auto ident aeol= core.autocrlf=true core.eol=native
+ok 1329 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=native file=LF
+ok 1330 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=native file=CRLF
+ok 1331 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 1332 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 1333 - checkout attr=auto ident aeol= core.autocrlf=true core.eol=native file=LF_nul
+ok 1334 - ls-files --eol attr=text ident aeol= core.autocrlf=true core.eol=native
+ok 1335 - checkout attr=text ident aeol= core.autocrlf=true core.eol=native file=LF
+ok 1336 - checkout attr=text ident aeol= core.autocrlf=true core.eol=native file=CRLF
+ok 1337 - checkout attr=text ident aeol= core.autocrlf=true core.eol=native file=CRLF_mix_LF
+ok 1338 - checkout attr=text ident aeol= core.autocrlf=true core.eol=native file=LF_mix_CR
+ok 1339 - checkout attr=text ident aeol= core.autocrlf=true core.eol=native file=LF_nul
+ok 1340 - ls-files --eol attr=text ident aeol= core.autocrlf=input core.eol=native
+ok 1341 - checkout attr=text ident aeol= core.autocrlf=input core.eol=native file=LF
+ok 1342 - checkout attr=text ident aeol= core.autocrlf=input core.eol=native file=CRLF
+ok 1343 - checkout attr=text ident aeol= core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 1344 - checkout attr=text ident aeol= core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 1345 - checkout attr=text ident aeol= core.autocrlf=input core.eol=native file=LF_nul
+ok 1346 - ls-files --eol attr=auto ident aeol= core.autocrlf=input core.eol=native
+ok 1347 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=native file=LF
+ok 1348 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=native file=CRLF
+ok 1349 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=native file=CRLF_mix_LF
+ok 1350 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=native file=LF_mix_CR
+ok 1351 - checkout attr=auto ident aeol= core.autocrlf=input core.eol=native file=LF_nul
+ok 1352 - ls-files --eol attr=text ident aeol= core.autocrlf=false core.eol=crlf
+ok 1353 - checkout attr=text ident aeol= core.autocrlf=false core.eol=crlf file=LF
+ok 1354 - checkout attr=text ident aeol= core.autocrlf=false core.eol=crlf file=CRLF
+ok 1355 - checkout attr=text ident aeol= core.autocrlf=false core.eol=crlf file=CRLF_mix_LF
+ok 1356 - checkout attr=text ident aeol= core.autocrlf=false core.eol=crlf file=LF_mix_CR
+ok 1357 - checkout attr=text ident aeol= core.autocrlf=false core.eol=crlf file=LF_nul
+ok 1358 - ls-files --eol attr=text ident aeol= core.autocrlf=false core.eol=lf
+ok 1359 - checkout attr=text ident aeol= core.autocrlf=false core.eol=lf file=LF
+ok 1360 - checkout attr=text ident aeol= core.autocrlf=false core.eol=lf file=CRLF
+ok 1361 - checkout attr=text ident aeol= core.autocrlf=false core.eol=lf file=CRLF_mix_LF
+ok 1362 - checkout attr=text ident aeol= core.autocrlf=false core.eol=lf file=LF_mix_CR
+ok 1363 - checkout attr=text ident aeol= core.autocrlf=false core.eol=lf file=LF_nul
+ok 1364 - ls-files --eol attr=text ident aeol= core.autocrlf=false core.eol=
+ok 1365 - checkout attr=text ident aeol= core.autocrlf=false core.eol= file=LF
+ok 1366 - checkout attr=text ident aeol= core.autocrlf=false core.eol= file=CRLF
+ok 1367 - checkout attr=text ident aeol= core.autocrlf=false core.eol= file=CRLF_mix_LF
+ok 1368 - checkout attr=text ident aeol= core.autocrlf=false core.eol= file=LF_mix_CR
+ok 1369 - checkout attr=text ident aeol= core.autocrlf=false core.eol= file=LF_nul
+ok 1370 - ls-files --eol attr=text ident aeol= core.autocrlf=false core.eol=native
+ok 1371 - checkout attr=text ident aeol= core.autocrlf=false core.eol=native file=LF
+ok 1372 - checkout attr=text ident aeol= core.autocrlf=false core.eol=native file=CRLF
+ok 1373 - checkout attr=text ident aeol= core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 1374 - checkout attr=text ident aeol= core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 1375 - checkout attr=text ident aeol= core.autocrlf=false core.eol=native file=LF_nul
+ok 1376 - ls-files --eol attr=auto ident aeol= core.autocrlf=false core.eol=
+ok 1377 - checkout attr=auto ident aeol= core.autocrlf=false core.eol= file=LF
+ok 1378 - checkout attr=auto ident aeol= core.autocrlf=false core.eol= file=CRLF
+ok 1379 - checkout attr=auto ident aeol= core.autocrlf=false core.eol= file=CRLF_mix_LF
+ok 1380 - checkout attr=auto ident aeol= core.autocrlf=false core.eol= file=LF_mix_CR
+ok 1381 - checkout attr=auto ident aeol= core.autocrlf=false core.eol= file=LF_nul
+ok 1382 - ls-files --eol attr=auto ident aeol= core.autocrlf=false core.eol=native
+ok 1383 - checkout attr=auto ident aeol= core.autocrlf=false core.eol=native file=LF
+ok 1384 - checkout attr=auto ident aeol= core.autocrlf=false core.eol=native file=CRLF
+ok 1385 - checkout attr=auto ident aeol= core.autocrlf=false core.eol=native file=CRLF_mix_LF
+ok 1386 - checkout attr=auto ident aeol= core.autocrlf=false core.eol=native file=LF_mix_CR
+ok 1387 - checkout attr=auto ident aeol= core.autocrlf=false core.eol=native file=LF_nul
+ok 1388 - ls-files --eol -d -z
+# passed all 1388 test(s)
+1..1388
+*** t0030-stripspace.sh ***
+ok 1 - long lines without spaces should be unchanged
+ok 2 - lines with spaces at the beginning should be unchanged
+ok 3 - lines with intermediate spaces should be unchanged
+ok 4 - consecutive blank lines should be unified
+ok 5 - only consecutive blank lines should be completely removed
+ok 6 - consecutive blank lines at the beginning should be removed
+ok 7 - consecutive blank lines at the end should be removed
+ok 8 - text without newline at end should end with newline
+ok 9 - text plus spaces without newline at end should end with newline
+ok 10 - text plus spaces without newline at end should not show spaces
+ok 11 - text plus spaces without newline should show the correct lines
+ok 12 - text plus spaces at end should not show spaces
+ok 13 - text plus spaces at end should be cleaned and newline must remain
+ok 14 - spaces with newline at end should be replaced with empty string
+ok 15 - spaces without newline at end should not show spaces
+ok 16 - spaces without newline at end should be replaced with empty string
+ok 17 - consecutive text lines should be unchanged
+ok 18 - strip comments, too
+ok 19 - strip comments with changed comment char
+ok 20 - -c with single line
+ok 21 - -c with single line followed by empty line
+ok 22 - -c with newline only
+ok 23 - --comment-lines with single line
+ok 24 - -c with changed comment char
+ok 25 - -c with comment char defined in .git/config
+ok 26 - avoid SP-HT sequence in commented line
+# passed all 26 test(s)
+1..26
+*** t0040-parse-options.sh ***
+ok 1 - test help
+ok 2 - OPT_BOOL() #1
+ok 3 - OPT_BOOL() #2
+ok 4 - OPT_BOOL() #3
+ok 5 - OPT_BOOL() #4
+ok 6 - OPT_BOOL() #5
+ok 7 - OPT_BOOL() is idempotent #1
+ok 8 - OPT_BOOL() is idempotent #2
+ok 9 - OPT_BOOL() negation #1
+ok 10 - OPT_BOOL() negation #2
+ok 11 - OPT_BOOL() no negation #1
+ok 12 - OPT_BOOL() no negation #2
+ok 13 - OPT_BOOL() positivation
+ok 14 - OPT_INT() negative
+ok 15 - OPT_MAGNITUDE() simple
+ok 16 - OPT_MAGNITUDE() kilo
+ok 17 - OPT_MAGNITUDE() mega
+ok 18 - OPT_MAGNITUDE() giga
+ok 19 - OPT_MAGNITUDE() 3giga
+ok 20 - short options
+ok 21 - long options
+ok 22 - missing required value
+ok 23 - intermingled arguments
+ok 24 - unambiguously abbreviated option
+ok 25 - unambiguously abbreviated option with "="
+ok 26 - ambiguously abbreviated option
+ok 27 - non ambiguous option (after two options it abbreviates)
+ok 28 - detect possible typos
+ok 29 - detect possible typos
+ok 30 - keep some options as arguments
+ok 31 - OPT_DATE() works
+ok 32 - OPT_CALLBACK() and OPT_BIT() work
+ok 33 - OPT_CALLBACK() and callback errors work
+ok 34 - OPT_BIT() and OPT_SET_INT() work
+ok 35 - OPT_NEGBIT() and OPT_SET_INT() work
+ok 36 - OPT_BIT() works
+ok 37 - OPT_NEGBIT() works
+ok 38 - OPT_COUNTUP() with PARSE_OPT_NODASH works
+ok 39 - OPT_NUMBER_CALLBACK() works
+ok 40 - negation of OPT_NONEG flags is not ambiguous
+ok 41 - --list keeps list of strings
+ok 42 - --no-list resets list
+ok 43 - multiple quiet levels
+ok 44 - multiple verbose levels
+ok 45 - --no-quiet sets --quiet to 0
+ok 46 - --no-quiet resets multiple -q to 0
+ok 47 - --no-verbose sets verbose to 0
+ok 48 - --no-verbose resets multiple verbose to 0
+# passed all 48 test(s)
+1..48
+*** t0050-filesystem.sh ***
+ok 1 - detection of case insensitive filesystem during repo init
+ok 2 - detection of filesystem w/o symlink support during repo init
+ok 3 - setup case tests
+ok 4 - rename (case change)
+ok 5 - merge (case change)
+ok 6 # skip add (with different case) (missing CASE_INSENSITIVE_FS)
+ok 7 - setup unicode normalization tests
+ok 8 - rename (silent unicode normalization)
+ok 9 - merge (silent unicode normalization)
+# passed all 9 test(s)
+1..9
+*** t0055-beyond-symlinks.sh ***
+ok 1 - setup
+ok 2 - update-index --add beyond symlinks
+ok 3 - add beyond symlinks
+# passed all 3 test(s)
+1..3
+*** t0056-git-C.sh ***
+ok 1 - "git -C <path>" runs git from the directory <path>
+ok 2 - "git -C <path>" with an empty <path> is a no-op
+ok 3 - Multiple -C options: "-C dir1 -C dir2" is equivalent to "-C dir1/dir2"
+ok 4 - Effect on --git-dir option: "-C c --git-dir=a.git" is equivalent to "--git-dir c/a.git"
+ok 5 - Order should not matter: "--git-dir=a.git -C c" is equivalent to "-C c --git-dir=a.git"
+ok 6 - Effect on --work-tree option: "-C c/a.git --work-tree=../a"  is equivalent to "--work-tree=c/a --git-dir=c/a.git"
+ok 7 - Order should not matter: "--work-tree=../a -C c/a.git" is equivalent to "-C c/a.git --work-tree=../a"
+ok 8 - Effect on --git-dir and --work-tree options - "-C c --git-dir=a.git --work-tree=a" is equivalent to "--git-dir=c/a.git --work-tree=c/a"
+ok 9 - Order should not matter: "-C c --git-dir=a.git --work-tree=a" is equivalent to "--git-dir=a.git -C c --work-tree=a"
+ok 10 - Order should not matter: "-C c --git-dir=a.git --work-tree=a" is equivalent to "--git-dir=a.git --work-tree=a -C c"
+ok 11 - Relative followed by fullpath: "-C ./here -C /there" is equivalent to "-C /there"
+# passed all 11 test(s)
+1..11
+*** t0060-path-utils.sh ***
+ok 1 - basename
+ok 2 - dirname
+ok 3 - normalize path:  => 
+ok 4 - normalize path: . => 
+ok 5 - normalize path: ./ => 
+ok 6 - normalize path: ./. => 
+ok 7 - normalize path: ./.. => ++failed++
+ok 8 - normalize path: ../. => ++failed++
+ok 9 - normalize path: ./../.// => ++failed++
+ok 10 - normalize path: dir/.. => 
+ok 11 - normalize path: dir/sub/../.. => 
+ok 12 - normalize path: dir/sub/../../.. => ++failed++
+ok 13 - normalize path: dir => dir
+ok 14 - normalize path: dir// => dir/
+ok 15 - normalize path: ./dir => dir
+ok 16 - normalize path: dir/. => dir/
+ok 17 - normalize path: dir///./ => dir/
+ok 18 - normalize path: dir//sub/.. => dir/
+ok 19 - normalize path: dir/sub/../ => dir/
+ok 20 - normalize path: dir/sub/../. => dir/
+ok 21 - normalize path: dir/s1/../s2/ => dir/s2/
+ok 22 - normalize path: d1/s1///s2/..//../s3/ => d1/s3/
+ok 23 - normalize path: d1/s1//../s2/../../d2 => d2
+ok 24 - normalize path: d1/.../d2 => d1/.../d2
+ok 25 - normalize path: d1/..././../d2 => d1/d2
+ok 26 - normalize path: / => /
+ok 27 - normalize path: // => /
+ok 28 - normalize path: /// => /
+ok 29 - normalize path: /. => /
+ok 30 - normalize path: /./ => /
+ok 31 - normalize path: /./.. => ++failed++
+ok 32 - normalize path: /../. => ++failed++
+ok 33 - normalize path: /./../.// => ++failed++
+ok 34 - normalize path: /dir/.. => /
+ok 35 - normalize path: /dir/sub/../.. => /
+ok 36 - normalize path: /dir/sub/../../.. => ++failed++
+ok 37 - normalize path: /dir => /dir
+ok 38 - normalize path: /dir// => /dir/
+ok 39 - normalize path: /./dir => /dir
+ok 40 - normalize path: /dir/. => /dir/
+ok 41 - normalize path: /dir///./ => /dir/
+ok 42 - normalize path: /dir//sub/.. => /dir/
+ok 43 - normalize path: /dir/sub/../ => /dir/
+ok 44 - normalize path: //dir/sub/../. => /dir/
+ok 45 - normalize path: /dir/s1/../s2/ => /dir/s2/
+ok 46 - normalize path: /d1/s1///s2/..//../s3/ => /d1/s3/
+ok 47 - normalize path: /d1/s1//../s2/../../d2 => /d2
+ok 48 - normalize path: /d1/.../d2 => /d1/.../d2
+ok 49 - normalize path: /d1/..././../d2 => /d1/d2
+ok 50 - longest ancestor: / / => -1
+ok 51 - longest ancestor: /foo / => 0
+ok 52 - longest ancestor: /foo /fo => -1
+ok 53 - longest ancestor: /foo /foo => -1
+ok 54 - longest ancestor: /foo /bar => -1
+ok 55 - longest ancestor: /foo /foo/bar => -1
+ok 56 - longest ancestor: /foo /foo:/bar => -1
+ok 57 - longest ancestor: /foo /:/foo:/bar => 0
+ok 58 - longest ancestor: /foo /foo:/:/bar => 0
+ok 59 - longest ancestor: /foo /:/bar:/foo => 0
+ok 60 - longest ancestor: /foo/bar / => 0
+ok 61 - longest ancestor: /foo/bar /fo => -1
+ok 62 - longest ancestor: /foo/bar /foo => 4
+ok 63 - longest ancestor: /foo/bar /foo/ba => -1
+ok 64 - longest ancestor: /foo/bar /:/fo => 0
+ok 65 - longest ancestor: /foo/bar /foo:/foo/ba => 4
+ok 66 - longest ancestor: /foo/bar /bar => -1
+ok 67 - longest ancestor: /foo/bar /fo => -1
+ok 68 - longest ancestor: /foo/bar /foo:/bar => 4
+ok 69 - longest ancestor: /foo/bar /:/foo:/bar => 4
+ok 70 - longest ancestor: /foo/bar /foo:/:/bar => 4
+ok 71 - longest ancestor: /foo/bar /:/bar:/fo => 0
+ok 72 - longest ancestor: /foo/bar /:/bar => 0
+ok 73 - longest ancestor: /foo/bar /foo => 4
+ok 74 - longest ancestor: /foo/bar /foo:/bar => 4
+ok 75 - longest ancestor: /foo/bar /bar => -1
+ok 76 - strip_path_suffix
+ok 77 - absolute path rejects the empty string
+ok 78 - real path rejects the empty string
+ok 79 - real path works on absolute paths 1
+ok 80 - real path works on absolute paths 2
+ok 81 - real path removes extra leading slashes
+ok 82 - real path removes other extra slashes
+ok 83 - real path works on symlinks
+ok 84 - prefix_path works with absolute paths to work tree symlinks
+ok 85 - prefix_path works with only absolute path to work tree
+ok 86 - prefix_path rejects absolute path to dir with same beginning as work tree
+ok 87 - prefix_path works with absolute path to a symlink to work tree having  same beginning as work tree
+ok 88 - relative path: /foo/a/b/c/ /foo/a/b/ => c/
+ok 89 - relative path: /foo/a/b/c/ /foo/a/b => c/
+ok 90 - relative path: /foo/a//b//c/ ///foo/a/b// => c/
+ok 91 - relative path: /foo/a/b /foo/a/b => ./
+ok 92 - relative path: /foo/a/b/ /foo/a/b => ./
+ok 93 - relative path: /foo/a /foo/a/b => ../
+ok 94 - relative path: / /foo/a/b/ => ../../../
+ok 95 - relative path: /foo/a/c /foo/a/b/ => ../c
+ok 96 - relative path: /foo/a/c /foo/a/b => ../c
+ok 97 - relative path: /foo/x/y /foo/a/b/ => ../../x/y
+ok 98 - relative path: /foo/a/b <empty> => /foo/a/b
+ok 99 - relative path: /foo/a/b <null> => /foo/a/b
+ok 100 - relative path: foo/a/b/c/ foo/a/b/ => c/
+ok 101 - relative path: foo/a/b/c/ foo/a/b => c/
+ok 102 - relative path: foo/a/b//c foo/a//b => c
+ok 103 - relative path: foo/a/b/ foo/a/b/ => ./
+ok 104 - relative path: foo/a/b/ foo/a/b => ./
+ok 105 - relative path: foo/a foo/a/b => ../
+ok 106 - relative path: foo/x/y foo/a/b => ../../x/y
+ok 107 - relative path: foo/a/c foo/a/b => ../c
+ok 108 - relative path: foo/a/b /foo/x/y => foo/a/b
+ok 109 - relative path: /foo/a/b foo/x/y => /foo/a/b
+ok 110 # skip relative path: d:/a/b D:/a/c => ../b (missing MINGW)
+ok 111 # skip relative path: C:/a/b D:/a/c => C:/a/b (missing MINGW)
+ok 112 - relative path: foo/a/b <empty> => foo/a/b
+ok 113 - relative path: foo/a/b <null> => foo/a/b
+ok 114 - relative path: <empty> /foo/a/b => ./
+ok 115 - relative path: <empty> <empty> => ./
+ok 116 - relative path: <empty> <null> => ./
+ok 117 - relative path: <null> <empty> => ./
+ok 118 - relative path: <null> <null> => ./
+ok 119 - relative path: <null> /foo/a/b => ./
+ok 120 - git-path A=B info/grafts => .git/info/grafts
+ok 121 - git-path GIT_GRAFT_FILE=foo info/grafts => foo
+ok 122 - git-path GIT_GRAFT_FILE=foo info/////grafts => foo
+ok 123 - git-path GIT_INDEX_FILE=foo index => foo
+ok 124 - git-path GIT_INDEX_FILE=foo index/foo => .git/index/foo
+ok 125 - git-path GIT_INDEX_FILE=foo index2 => .git/index2
+ok 126 - setup fake objects directory foo
+ok 127 - git-path GIT_OBJECT_DIRECTORY=foo objects => foo
+ok 128 - git-path GIT_OBJECT_DIRECTORY=foo objects/foo => foo/foo
+ok 129 - git-path GIT_OBJECT_DIRECTORY=foo objects2 => .git/objects2
+ok 130 - setup common repository
+ok 131 - git-path GIT_COMMON_DIR=bar index => .git/index
+ok 132 - git-path GIT_COMMON_DIR=bar HEAD => .git/HEAD
+ok 133 - git-path GIT_COMMON_DIR=bar logs/HEAD => .git/logs/HEAD
+ok 134 - git-path GIT_COMMON_DIR=bar logs/refs/bisect/foo => .git/logs/refs/bisect/foo
+ok 135 - git-path GIT_COMMON_DIR=bar logs/refs/bisec/foo => bar/logs/refs/bisec/foo
+ok 136 - git-path GIT_COMMON_DIR=bar logs/refs/bisec => bar/logs/refs/bisec
+ok 137 - git-path GIT_COMMON_DIR=bar logs/refs/bisectfoo => bar/logs/refs/bisectfoo
+ok 138 - git-path GIT_COMMON_DIR=bar objects => bar/objects
+ok 139 - git-path GIT_COMMON_DIR=bar objects/bar => bar/objects/bar
+ok 140 - git-path GIT_COMMON_DIR=bar info/exclude => bar/info/exclude
+ok 141 - git-path GIT_COMMON_DIR=bar info/grafts => bar/info/grafts
+ok 142 - git-path GIT_COMMON_DIR=bar info/sparse-checkout => .git/info/sparse-checkout
+ok 143 - git-path GIT_COMMON_DIR=bar info//sparse-checkout => .git/info//sparse-checkout
+ok 144 - git-path GIT_COMMON_DIR=bar remotes/bar => bar/remotes/bar
+ok 145 - git-path GIT_COMMON_DIR=bar branches/bar => bar/branches/bar
+ok 146 - git-path GIT_COMMON_DIR=bar logs/refs/heads/master => bar/logs/refs/heads/master
+ok 147 - git-path GIT_COMMON_DIR=bar refs/heads/master => bar/refs/heads/master
+ok 148 - git-path GIT_COMMON_DIR=bar refs/bisect/foo => .git/refs/bisect/foo
+ok 149 - git-path GIT_COMMON_DIR=bar hooks/me => bar/hooks/me
+ok 150 - git-path GIT_COMMON_DIR=bar config => bar/config
+ok 151 - git-path GIT_COMMON_DIR=bar packed-refs => bar/packed-refs
+ok 152 - git-path GIT_COMMON_DIR=bar shallow => bar/shallow
+ok 153 - test_submodule_relative_url: ../ ../foo ../submodule => ../../submodule
+ok 154 - test_submodule_relative_url: ../ ../foo/bar ../submodule => ../../foo/submodule
+ok 155 - test_submodule_relative_url: ../ ../foo/submodule ../submodule => ../../foo/submodule
+ok 156 - test_submodule_relative_url: ../ ./foo ../submodule => ../submodule
+ok 157 - test_submodule_relative_url: ../ ./foo/bar ../submodule => ../foo/submodule
+ok 158 - test_submodule_relative_url: ../../../ ../foo/bar ../sub/a/b/c => ../../../../foo/sub/a/b/c
+ok 159 - test_submodule_relative_url: ../ /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/addtest ../repo => /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/repo
+ok 160 - test_submodule_relative_url: ../ foo/bar ../submodule => ../foo/submodule
+ok 161 - test_submodule_relative_url: ../ foo ../submodule => ../submodule
+ok 162 - test_submodule_relative_url: (null) ../foo/bar ../sub/a/b/c => ../foo/sub/a/b/c
+ok 163 - test_submodule_relative_url: (null) ../foo/bar ../sub/a/b/c/ => ../foo/sub/a/b/c
+ok 164 - test_submodule_relative_url: (null) ../foo/bar/ ../sub/a/b/c => ../foo/sub/a/b/c
+ok 165 - test_submodule_relative_url: (null) ../foo/bar ../submodule => ../foo/submodule
+ok 166 - test_submodule_relative_url: (null) ../foo/submodule ../submodule => ../foo/submodule
+ok 167 - test_submodule_relative_url: (null) ../foo ../submodule => ../submodule
+ok 168 - test_submodule_relative_url: (null) ./foo/bar ../submodule => foo/submodule
+ok 169 - test_submodule_relative_url: (null) ./foo ../submodule => submodule
+ok 170 - test_submodule_relative_url: (null) //somewhere else/repo ../subrepo => //somewhere else/subrepo
+ok 171 - test_submodule_relative_url: (null) /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/subsuper_update_r ../subsubsuper_update_r => /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/subsubsuper_update_r
+ok 172 - test_submodule_relative_url: (null) /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/super_update_r2 ../subsuper_update_r => /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/subsuper_update_r
+ok 173 - test_submodule_relative_url: (null) /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/. ../. => /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/.
+ok 174 - test_submodule_relative_url: (null) /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils ./. => /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/.
+ok 175 - test_submodule_relative_url: (null) /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/addtest ../repo => /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/repo
+ok 176 - test_submodule_relative_url: (null) /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils ./å äö => /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/å äö
+ok 177 - test_submodule_relative_url: (null) /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/. ../submodule => /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/submodule
+ok 178 - test_submodule_relative_url: (null) /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/submodule ../submodule => /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/submodule
+ok 179 - test_submodule_relative_url: (null) /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/home2/../remote ../bundle1 => /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/home2/../bundle1
+ok 180 - test_submodule_relative_url: (null) /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/submodule_update_repo ./. => /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/trash directory.t0060-path-utils/submodule_update_repo/.
+ok 181 - test_submodule_relative_url: (null) file:///tmp/repo ../subrepo => file:///tmp/subrepo
+ok 182 - test_submodule_relative_url: (null) foo/bar ../submodule => foo/submodule
+ok 183 - test_submodule_relative_url: (null) foo ../submodule => submodule
+ok 184 - test_submodule_relative_url: (null) helper:://hostname/repo ../subrepo => helper:://hostname/subrepo
+ok 185 - test_submodule_relative_url: (null) ssh://hostname/repo ../subrepo => ssh://hostname/subrepo
+ok 186 - test_submodule_relative_url: (null) ssh://hostname:22/repo ../subrepo => ssh://hostname:22/subrepo
+ok 187 - test_submodule_relative_url: (null) user@host:path/to/repo ../subrepo => user@host:path/to/subrepo
+ok 188 - test_submodule_relative_url: (null) user@host:repo ../subrepo => user@host:subrepo
+# passed all 188 test(s)
+1..188
+*** t0061-run-command.sh ***
+ok 1 - start_command reports ENOENT
+ok 2 - run_command can run a command
+ok 3 - run_command can run a script without a #! line
+ok 4 - run_command does not try to execute a directory
+ok 5 - run_command passes over non-executable file
+ok 6 - run_command reports EACCES
+ok 7 - unreadable directory in PATH
+ok 8 - run_command runs in parallel with more jobs available than tasks
+ok 9 - run_command runs in parallel with as many jobs as tasks
+ok 10 - run_command runs in parallel with more tasks than jobs available
+ok 11 - run_command is asked to abort gracefully
+ok 12 - run_command outputs 
+# passed all 12 test(s)
+1..12
+*** t0062-revision-walking.sh ***
+ok 1 - setup
+ok 2 - revision walking can be done twice
+# passed all 2 test(s)
+1..2
+*** t0063-string-list.sh ***
+ok 1 - split foo:bar:baz at :, max -1
+ok 2 - split foo:bar:baz at :, max 0
+ok 3 - split foo:bar:baz at :, max 1
+ok 4 - split foo:bar:baz at :, max 2
+ok 5 - split foo:bar: at :, max -1
+ok 6 - split  at :, max -1
+ok 7 - split : at :, max -1
+ok 8 - test filter_string_list
+ok 9 - test remove_duplicates
+# passed all 9 test(s)
+1..9
+*** t0064-sha1-array.sh ***
+ok 1 - ordered enumeration
+ok 2 - ordered enumeration with duplicate suppression
+ok 3 - lookup
+ok 4 - lookup non-existing entry
+ok 5 - lookup with duplicates
+ok 6 - lookup non-existing entry with duplicates
+ok 7 - lookup with almost duplicate values
+ok 8 - lookup with single duplicate value
+# passed all 8 test(s)
+1..8
+*** t0065-strcmp-offset.sh ***
+ok 1 - strcmp_offset(abc, abc)
+ok 2 - strcmp_offset(abc, def)
+ok 3 - strcmp_offset(abc, abz)
+ok 4 - strcmp_offset(abc, abcdef)
+# passed all 4 test(s)
+1..4
+*** t0070-fundamental.sh ***
+ok 1 - character classes (isspace, isalpha etc.)
+ok 2 - mktemp to nonexistent directory prints filename
+ok 3 - mktemp to unwritable directory prints filename
+ok 4 - git_mkstemps_mode does not fail if fd 0 is not open
+ok 5 - check for a bug in the regex routines
+# passed all 5 test(s)
+1..5
+*** t0081-line-buffer.sh ***
+ok 1 - hello world
+ok 2 - 0-length read, send along greeting
+ok 3 - read from file descriptor
+ok 4 - skip, copy null byte
+ok 5 - read null byte
+ok 6 - long reads are truncated
+ok 7 - long copies are truncated
+ok 8 - long binary reads are truncated
+# passed all 8 test(s)
+1..8
+*** t0090-cache-tree.sh ***
+ok 1 - initial commit has cache-tree
+ok 2 - read-tree HEAD establishes cache-tree
+ok 3 - git-add invalidates cache-tree
+ok 4 - git-add in subdir invalidates cache-tree
+ok 5 - git-add in subdir does not invalidate sibling cache-tree
+ok 6 - update-index invalidates cache-tree
+ok 7 - write-tree establishes cache-tree
+ok 8 - test-scrap-cache-tree works
+ok 9 - second commit has cache-tree
+ok 10 - commit --interactive gives cache-tree on partial commit
+ok 11 - commit in child dir has cache-tree
+ok 12 - reset --hard gives cache-tree
+ok 13 - reset --hard without index gives cache-tree
+ok 14 - checkout gives cache-tree
+ok 15 - checkout -b gives cache-tree
+ok 16 - checkout -B gives cache-tree
+ok 17 - merge --ff-only maintains cache-tree
+ok 18 - merge maintains cache-tree
+ok 19 - partial commit gives cache-tree
+ok 20 - no phantom error when switching trees
+ok 21 - switching trees does not invalidate shared index
+# passed all 21 test(s)
+1..21
+*** t0100-previous.sh ***
+ok 1 - branch -d @{-1}
+ok 2 - branch -d @{-12} when there is not enough switches yet
+ok 3 - merge @{-1}
+ok 4 - merge @{-1}~1
+ok 5 - merge @{-100} before checking out that many branches yet
+ok 6 - log -g @{-1}
+# passed all 6 test(s)
+1..6
+*** t0101-at-syntax.sh ***
+ok 1 - setup
+ok 2 - @{0} shows current
+ok 3 - @{1} shows old
+ok 4 - @{now} shows current
+ok 5 - @{2001-09-17} (before the first commit) shows old
+ok 6 - silly approxidates work
+ok 7 - notice misspelled upstream
+ok 8 - complain about total nonsense
+# passed all 8 test(s)
+1..8
+*** t0110-urlmatch-normalization.sh ***
+ok 1 - url scheme
+ok 2 - url authority
+ok 3 - url port checks
+ok 4 - url port normalization
+ok 5 - url general escapes
+ok 6 - url high-bit escapes
+ok 7 - url utf-8 escapes
+ok 8 - url username/password escapes
+ok 9 - url normalized lengths
+ok 10 - url . and .. segments
+ok 11 - url equivalents
+# passed all 11 test(s)
+1..11
+*** t0200-gettext-basic.sh ***
+# lib-gettext: Found 'is_IS.UTF-8' as an is_IS UTF-8 locale
+# lib-gettext: Found 'is_IS.ISO8859-1' as an is_IS ISO-8859-1 locale
+ok 1 - sanity: $GIT_INTERNAL_GETTEXT_SH_SCHEME is set (to gnu)
+ok 2 - sanity: $TEXTDOMAIN is git
+ok 3 - xgettext sanity: Perl _() strings are not extracted
+ok 4 - xgettext sanity: Comment extraction with --add-comments
+ok 5 - xgettext sanity: Comment extraction with --add-comments stops at statements
+ok 6 - sanity: $TEXTDOMAINDIR exists without NO_GETTEXT=YesPlease
+ok 7 - sanity: Icelandic locale was compiled
+ok 8 - sanity: gettext("") metadata is OK
+ok 9 - sanity: gettext(unknown) is passed through
+ok 10 - xgettext: C extraction of _() and N_() strings
+ok 11 - xgettext: C extraction with %s
+ok 12 - xgettext: Shell extraction
+ok 13 - xgettext: Shell extraction with $variable
+ok 14 - xgettext: Perl extraction
+ok 15 - xgettext: Perl extraction with %s
+ok 16 - sanity: Some gettext("") data for real locale
+# passed all 16 test(s)
+1..16
+*** t0201-gettext-fallbacks.sh ***
+# lib-gettext: No is_IS UTF-8 locale available
+# lib-gettext: No is_IS ISO-8859-1 locale available
+ok 1 - sanity: $GIT_INTERNAL_GETTEXT_SH_SCHEME is set (to fallthrough)
+ok 2 - sanity: $GIT_INTERNAL_GETTEXT_TEST_FALLBACKS is set
+ok 3 - sanity: $GIT_INTERNAL_GETTEXT_SH_SCHEME" is fallthrough
+ok 4 - gettext: our gettext() fallback has pass-through semantics
+ok 5 - eval_gettext: our eval_gettext() fallback has pass-through semantics
+ok 6 - eval_gettext: our eval_gettext() fallback can interpolate variables
+ok 7 - eval_gettext: our eval_gettext() fallback can interpolate variables with spaces
+ok 8 - eval_gettext: our eval_gettext() fallback can interpolate variables with spaces and quotes
+# passed all 8 test(s)
+1..8
+*** t0202-gettext-perl.sh ***
+# lib-gettext: Found 'is_IS.UTF-8' as an is_IS UTF-8 locale
+# lib-gettext: Found 'is_IS.ISO8859-1' as an is_IS ISO-8859-1 locale
+# run 0: Perl Git::I18N API (perl /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/t0202/test.pl)
+1..13
+ok 1 - Testing Git::I18N with NO Perl gettext library
+ok 2 - Git::I18N is located at /data/omnios-build/omniosorg/bloody/_build/git-2.14.2/t/../perl/blib/lib/Git/I18N.pm
+ok 3 - sanity: Git::I18N has 3 export(s)
+ok 4 - sanity: Git::I18N exports everything by default
+ok 5 - sanity: __n has a $$$ prototype
+ok 6 - sanity: __ has a $ prototype
+ok 7 - sanity: N__ has a $ prototype
+ok 8 - Passing a string through __() in the C locale works
+ok 9 - Get singular string through __n() in C locale
+ok 10 - Get plural string through __n() in C locale
+ok 11 - Passing a string through N__() in the C locale works
+ok 12 - Without a gettext library + <C> locale <TEST: A Perl test string> turns into <TEST: A Perl test string>
+ok 13 - Without a gettext library + <is> locale <TEST: A Perl test string> turns into <TEST: A Perl test string>
+# test_external test Perl Git::I18N API was ok
+# test_external_without_stderr test no stderr: Perl Git::I18N API was ok
+*** t0203-gettext-setlocale-sanity.sh ***
+# lib-gettext: Found 'is_IS.UTF-8' as an is_IS UTF-8 locale
+# lib-gettext: Found 'is_IS.ISO8859-1' as an is_IS ISO-8859-1 locale
+ok 1 - git show a ISO-8859-1 commit under C locale
+ok 2 - git show a ISO-8859-1 commit under a UTF-8 locale
+# passed all 2 test(s)
+1..2
+*** t0204-gettext-reencode-sanity.sh ***
+# lib-gettext: Found 'is_IS.UTF-8' as an is_IS UTF-8 locale
+# lib-gettext: Found 'is_IS.ISO8859-1' as an is_IS ISO-8859-1 locale
+ok 1 - gettext: Emitting UTF-8 from our UTF-8 *.mo files / Icelandic
+ok 2 - gettext: Emitting UTF-8 from our UTF-8 *.mo files / Runes
+ok 3 - gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files / Icelandic
+ok 4 - gettext: impossible ISO-8859-1 output
+not ok 5 - gettext: Fetching a UTF-8 msgid -> UTF-8
 #	
-#		# exceed initial buffer size of strbuf_getcwd()
-#		component=123456789abcdef &&
-#		test_when_finished "chmod 0700 $component; rm -rf $component" &&
-#		p31=$component/$component &&
-#		p127=$p31/$p31/$p31/$p31 &&
-#		mkdir -p $p127 &&
-#		chmod 0111 $component &&
-#		(
-#			cd $p127 &&
-#			git init newdir
-#		)
+#	    printf "TILRAUN: ‚einfaldar‘ og „tvöfaldar“ gæsalappir" >expect &&
+#	    LANGUAGE=is LC_ALL="$is_IS_locale" gettext "TEST: ‘single’ and “double” quotes" >actual &&
+#	    test_cmp expect actual
 #	
-ok 35 - re-init on .git file
-ok 36 - re-init to update git link
-ok 37 - re-init to move gitdir
-ok 38 - re-init to move gitdir symlink
-ok 39 # skip .git hidden (missing MINGW)
-ok 40 # skip bare git dir not hidden (missing MINGW)
-ok 41 - remote init from does not use config from cwd
-ok 42 - re-init from a linked worktree
-# failed 1 among 42 test(s)
-1..42
-gmake[2]: *** [Makefile:49: t0001-init.sh] Error 1
+not ok 6 - gettext: Fetching a UTF-8 msgid -> ISO-8859-1
+#	
+#	    LANGUAGE=is LC_ALL="$is_IS_iso_locale" gettext "TEST: ‘single’ and “double” quotes" >actual &&
+#	    grep "einfaldar" actual &&
+#	    grep "$(echo tvöfaldar | iconv -f UTF-8 -t ISO8859-1)" actual
+#	
+ok 7 - gettext.c: git init UTF-8 -> UTF-8
+ok 8 - gettext.c: git init UTF-8 -> ISO-8859-1
+# failed 2 among 8 test(s)
+1..8
+gmake[2]: *** [Makefile:49: t0204-gettext-reencode-sanity.sh] Error 1
 gmake[1]: *** [Makefile:36: test] Error 2
-gmake: *** [Makefile:2415: test] Error 2
+gmake: *** [Makefile:2414: test] Error 2
