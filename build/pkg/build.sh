@@ -63,13 +63,18 @@ clone_source(){
     # Even though our default is "pkg5" now, still call the directory 
     # "pkg" for now due to the hideous number of places "pkg" occurs here.
     if [ ! -d pkg ]; then
-        logcmd $GIT clone $PKG_SOURCE_REPO pkg
+        if [ -n "$PKG5_CLONE" -a -d "$PKG5_CLONE" ]; then
+            logmsg "-- pulling pkg5 from local clone"
+            logcmd rsync -ar $PKG5_CLONE/ pkg/
+        else
+            logcmd $GIT clone $PKG_SOURCE_REPO pkg
+        fi
     fi
-    pushd pkg > /dev/null || logerr "no source"
-    logcmd $GIT pull || logerr "failed to pull"
-    logcmd $GIT checkout $PKG_SOURCE_BRANCH \
+    if [ -z "$PKG5_CLONE" ]; then
+        logcmd $GIT -C pkg pull || logerr "failed to pull"
+    fi
+    logcmd $GIT -C pkg checkout $PKG_SOURCE_BRANCH \
         || logmsg "No $PKG_SOURCE_BRANCH branch, using master."
-    popd > /dev/null
     popd > /dev/null 
 }
 
