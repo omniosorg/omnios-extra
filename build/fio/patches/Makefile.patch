@@ -1,8 +1,9 @@
---- fio-2.12.pristine/Makefile	Mon Jun 13 21:42:44 2016
-+++ fio-2.12/Makefile	Wed Jul 20 19:16:13 2016
-@@ -281,16 +281,19 @@
+diff -pruN '--exclude=*.orig' fio-fio-3.1~/Makefile fio-fio-3.1/Makefile
+--- fio-fio-3.1~/Makefile	2017-09-28 12:23:20.000000000 +0000
++++ fio-fio-3.1/Makefile	2017-09-28 14:05:26.435439450 +0000
+@@ -295,16 +295,19 @@ endif
  endif
-
+ 
  ifeq ($(CONFIG_TARGET_OS), SunOS)
 -	INSTALL = ginstall
 +	INSTALL = /usr/gnu/bin/install
