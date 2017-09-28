@@ -126,6 +126,10 @@ step.**
 
 ## ONU to the new build
 
+![#f03c15](https://placehold.it/15/1589f0/000000?text=+) `omni onu`
+
+or run `onu` by hand.
+
 ```
 # onu -t 20170703 -d */path/to/illumos-omnios/packages/i386/nightly-nd*
 ...
