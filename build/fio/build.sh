@@ -30,7 +30,7 @@
 . ../../lib/functions.sh
 
 PROG=fio        # App name
-VER=3.0        # App version
+VER=3.1        # App version
 VERHUMAN=$VER   # Human-readable version
 #PVER=          # Branch (set in config.sh, override here if needed)
 PKG=system/test/fio # Package name (e.g. library/foo)
