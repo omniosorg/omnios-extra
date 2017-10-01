@@ -26,3 +26,5 @@ license LICENSE license=GPLv3
 link path=$(PREFIX)/bin/kvmadm target=../kvmadm/bin/kvmadm
 link path=$(PREFIX)/share/man/man1/kvmadm.1 target=../../../kvmadm/share/man/man1/kvmadm.1
 
+# kvmadm shall only be installed in the GZ
+set name=variant.opensolaris.zone value=global
