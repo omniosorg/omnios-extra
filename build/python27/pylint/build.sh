@@ -30,7 +30,7 @@
 
 PKG=library/python-2/pylint-27
 PROG=pylint
-VER=1.7.2
+VER=1.7.4
 SUMMARY="python code static checker"
 DESC="$SUMMARY"
 
