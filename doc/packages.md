@@ -102,7 +102,7 @@
 | library/python-2/lxml-27		| 4.0.0			| https://pypi.python.org/pypi/lxml/
 | library/python-2/m2crypto-27		| 0.26.4		| https://pypi.python.org/pypi/M2Crypto
 | library/python-2/mako-27		| 1.0.7			| https://pypi.python.org/pypi/Mako
-| library/python-2/numpy-27		| 1.13.2		| https://pypi.python.org/pypi/numpy
+| library/python-2/numpy-27		| 1.13.3		| https://pypi.python.org/pypi/numpy
 | library/python-2/ply-27		| 3.10			| https://pypi.python.org/pypi/ply
 | library/python-2/portend-27		| 2.2			| https://pypi.python.org/pypi/portend
 | library/python-2/pybonjour-27		| 1.1.1			| https://pypi.python.org/pypi/pybonjour

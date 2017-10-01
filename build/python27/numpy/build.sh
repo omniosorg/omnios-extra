@@ -30,7 +30,7 @@
 
 PKG=library/python-2/numpy-27
 PROG=numpy
-VER=1.13.2
+VER=1.13.3
 SUMMARY="numpy - package for scientific computing with Python"
 DESC="$SUMMARY"
 
