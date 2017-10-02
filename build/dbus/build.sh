@@ -28,46 +28,40 @@
 . ../../lib/functions.sh
 
 PROG=dbus
-VER=1.11.16
+VER=1.11.18
 PKG=dbus ##IGNORE##
 SUMMARY="$PROG - IPC-based message notifications"
 DESC="$SUMMARY"
 
-DEPENDS_IPS="SUNWcs"
-
 # Use old gcc4 standards level for this.
-CFLAGS="$CFLAGS -std=gnu89"
-CPPFLAGS="$CPPFLAGS -D__EXTENSIONS__ -D_REENTRANT"
-CONFIGURE_OPTS="--with-x=no --with-dbus-user=root --disable-static --with-dbus-daemondir=/usr/lib
-	--bindir=/usr/bin --localstatedir=/var --libexecdir=/usr/libexec"
+CFLAGS+="-std=gnu89"
+CPPFLAGS+="-D__EXTENSIONS__ -D_REENTRANT"
+CONFIGURE_OPTS="
+	--with-dbus-daemondir=/usr/lib
+	--bindir=/usr/bin
+	--localstatedir=/var
+	--libexecdir=/usr/libexec
+	--with-x=no
+	--with-dbus-user=root
+	--disable-static
+"
 
-# We build backwards here on purpose so that 32bit binaries win (for install collisions).
+LIBTOOL_NOSTDLIB=libtool
+
+# We build backwards here on purpose so that 32bit binaries win
+# (for install collisions).
 build() {
-    if [[ $BUILDARCH == "64" || $BUILDARCH == "both" ]]; then
-        build64
-    fi
-    if [[ $BUILDARCH == "32" || $BUILDARCH == "both" ]]; then
-        build32
-    fi
-}
-
-make_prog64() {
-    logcmd perl -pi -e 's#(\$CC.*\$compiler_flags)#$1 -nostdlib#g;' libtool ||
-        logerr "libtool patch failed"
-    logcmd gmake || logerr "Make failed"
-}
-
-make_prog32() {
-    logcmd perl -pi -e 's#(\$CC.*\$compiler_flags)#$1 -nostdlib#g;' libtool ||
-        logerr "libtool patch failed"
-    logcmd gmake || logerr "Make failed"
+    [[ $BUILDARCH =~ ^(64|both)$ ]] && build64
+    [[ $BUILDARCH =~ ^(32|both)$ ]] && build32
 }
 
 post_install() {
     mkdir -p $DESTDIR/etc/security/auth_attr.d
     mkdir -p $DESTDIR/etc/security/prof_attr.d
-    cp files/auth-system%2Flibrary%2Fdbus $DESTDIR/etc/security/auth_attr.d/system%2Flibrary%2Fdbus
-    cp files/prof-system%2Flibrary%2Fdbus $DESTDIR/etc/security/prof_attr.d/system%2Flibrary%2Fdbus
+    cp files/auth-system%2Flibrary%2Fdbus \
+        $DESTDIR/etc/security/auth_attr.d/system%2Flibrary%2Fdbus
+    cp files/prof-system%2Flibrary%2Fdbus \
+        $DESTDIR/etc/security/prof_attr.d/system%2Flibrary%2Fdbus
 }
 
 init
@@ -90,4 +84,4 @@ SUMMARY="Simple IPC library based on messages - client libraries"
 DESC="Simple IPC library based on messages - client libraries"
 make_package libdbus.mog
 
-#clean_up
+clean_up
