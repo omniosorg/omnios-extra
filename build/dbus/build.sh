@@ -62,14 +62,6 @@ post_install() {
         $DESTDIR/etc/security/auth_attr.d/system%2Flibrary%2Fdbus
     cp files/prof-system%2Flibrary%2Fdbus \
         $DESTDIR/etc/security/prof_attr.d/system%2Flibrary%2Fdbus
-
-    # One of the consumers of dbus is illumos which is currently built
-    # using GCC 4.4 and -fno-inline-functions.
-    # Therefore need to convert the small inline functions defined in
-    # header files since 1.11.18 to non-inline.
-    find $DESTDIR/usr/include -name \*.h | while read f; do
-	sed -i 's/static inline void/static void/' $f
-    done
 }
 
 init
