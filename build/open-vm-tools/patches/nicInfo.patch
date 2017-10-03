@@ -1,5 +1,6 @@
---- open-vm-tools-10.1.10-6082533/lib/nicInfo/nicInfoPosix.c	2017-07-28 22:19:20.000000000 +0000
-+++ l/lib/nicInfo/nicInfoPosix.c	2017-09-18 19:31:27.588587527 +0000
+diff -pruN '--exclude=*.orig' open-vm-tools-10.1.15~/lib/nicInfo/nicInfoPosix.c open-vm-tools-10.1.15/lib/nicInfo/nicInfoPosix.c
+--- open-vm-tools-10.1.15~/lib/nicInfo/nicInfoPosix.c	2017-09-29 21:15:57.000000000 +0000
++++ open-vm-tools-10.1.15/lib/nicInfo/nicInfoPosix.c	2017-10-03 09:31:21.952732216 +0000
 @@ -34,11 +34,8 @@
  #include <sys/socket.h>
  #include <sys/stat.h>
@@ -12,7 +13,7 @@
  #ifndef NO_DNET
  # ifdef DNET_IS_DUMBNET
  #  include <dumbnet.h>
-@@ -168,7 +168,7 @@
+@@ -171,7 +168,7 @@ GuestInfoGetFqdn(int outBufLen,    // IN
  }
  
  
@@ -21,7 +22,7 @@
  /*
   ******************************************************************************
   * CountNetmaskBits --                                                   */ /**
-@@ -256,7 +256,7 @@
+@@ -259,7 +256,7 @@ GuestInfoGetNicInfo(NicInfoV3 *nicInfo)
     }
  
     return TRUE;
@@ -30,7 +31,7 @@
     struct ifaddrs *ifaddrs = NULL;
  
     if (getifaddrs(&ifaddrs) == 0 && ifaddrs != NULL) {
-@@ -348,7 +345,7 @@
+@@ -348,7 +345,7 @@ GuestInfoGetNicInfo(NicInfoV3 *nicInfo)
   *
   ******************************************************************************
   */

@@ -84,7 +84,7 @@
 | library/glib2				| 2.54.0		| https://download.gnome.org/sources/glib/cache.json
 | developer/gnu-binutils		| 2.25			| https://ftp.gnu.org/gnu/binutils | On hold pending illumos fix https://www.illumos.org/issues/6653
 | media/cdrtools			| 3.01			| https://sourceforge.net/projects/cdrtools/files
-| system/virtualization/open-vm-tools	| 10.1.10		| https://github.com/vmware/open-vm-tools/releases
+| system/virtualization/open-vm-tools	| 10.1.15		| https://github.com/vmware/open-vm-tools/releases
 | developer/swig			| 3.0.12		| http://www.swig.org/download.html
 | library/security/trousers		| 0.3.14		| https://sourceforge.net/projects/trousers/files/trousers
 | library/python-2/asn1crypto-27	| 0.23.0		| https://pypi.python.org/pypi/asn1crypto

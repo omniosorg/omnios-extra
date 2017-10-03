@@ -1,6 +1,7 @@
---- services/vmtoolsd/mainLoop.c.orig	Tue Oct  7 15:00:06 2014
-+++ services/vmtoolsd/mainLoop.c	Tue Oct  7 15:00:27 2014
-@@ -64,7 +64,15 @@
+diff -pruN '--exclude=*.orig' open-vm-tools-10.1.15~/services/vmtoolsd/mainLoop.c open-vm-tools-10.1.15/services/vmtoolsd/mainLoop.c
+--- open-vm-tools-10.1.15~/services/vmtoolsd/mainLoop.c	2017-09-29 21:15:57.000000000 +0000
++++ open-vm-tools-10.1.15/services/vmtoolsd/mainLoop.c	2017-10-03 09:31:21.147907737 +0000
+@@ -71,7 +71,15 @@ ToolsCoreCleanup(ToolsServiceState *stat
        state->ctx.rpc = NULL;
     }
     g_key_file_free(state->ctx.config);

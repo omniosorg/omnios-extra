@@ -1,5 +1,6 @@
---- open-vm-tools-10.1.10-6082533~/lib/file/fileLockPrimitive.c	2017-07-28 22:19:20.000000000 +0000
-+++ open-vm-tools-10.1.10-6082533/lib/file/fileLockPrimitive.c	2017-09-18 16:58:04.385144884 +0000
+diff -pruN '--exclude=*.orig' open-vm-tools-10.1.15~/lib/file/fileLockPrimitive.c open-vm-tools-10.1.15/lib/file/fileLockPrimitive.c
+--- open-vm-tools-10.1.15~/lib/file/fileLockPrimitive.c	2017-09-29 21:15:57.000000000 +0000
++++ open-vm-tools-10.1.15/lib/file/fileLockPrimitive.c	2017-10-03 09:31:21.681628379 +0000
 @@ -60,8 +60,8 @@
  #define LOGLEVEL_MODULE main
  #include "loglevel_user.h"
@@ -11,7 +12,7 @@
  #define FILELOCK_PROGRESS_DEARTH 8000 // Dearth of progress time in msec
  #define FILELOCK_PROGRESS_SAMPLE 200  // Progress sampling time in msec
  
-@@ -472,8 +472,8 @@
+@@ -472,8 +472,8 @@ fixedUp:
        goto corrupt;
     }
  
@@ -22,7 +23,7 @@
        goto corrupt;
     }
  
-@@ -1096,8 +1096,8 @@
+@@ -1096,8 +1096,8 @@ FileLockWaitForPossession(const char *lo
         ((memberValues->lamportNumber == myValues->lamportNumber) &&
            (Unicode_Compare(memberValues->memberName,
                             myValues->memberName) < 0))) &&
@@ -33,7 +34,7 @@
        char *path;
        uint32 loopCount;
        Bool   thisMachine;
-@@ -1675,7 +1675,7 @@
+@@ -1675,7 +1675,7 @@ FileLockIntrinsicPortable(const char *pa
            */
  
           Warning(LGPFX" %s implicit %s lock succeeded on '%s'.\n",
@@ -42,7 +43,7 @@
  
           *err = 0;
           memberFilePath = &implicitReadToken;
-@@ -1838,7 +1838,7 @@
+@@ -1838,7 +1838,7 @@ FileLockIntrinsic(const char *pathName,
     /* Construct the locking directory path */
     lockBase = Unicode_Append(pathName, FILELOCK_SUFFIX);
  
