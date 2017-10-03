@@ -21,14 +21,12 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-<transform dir path=usr/lib$ -> drop>
-<transform dir path=usr/lib/.* -> drop>
-<transform file path=usr/lib/.*dbus-1.* -> drop>
-<transform link path=usr/lib/.*dbus-1.* -> drop>
+<transform dir path=usr/lib -> drop>
+<transform file link path=usr/lib/.*dbus-1 -> drop>
 
-<transform dir path=usr/include.* -> drop>
-<transform file path=usr/include.* -> drop>
-<transform link path=usr/include.* -> drop>
+<transform file dir link path=usr/include -> drop>
+<transform file dir link path=usr/share/doc -> drop>
 

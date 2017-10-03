@@ -21,27 +21,16 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-<transform dir path=etc.* -> drop>
-<transform file path=etc.* -> drop>
-<transform link path=etc.* -> drop>
-<transform dir path=var.* -> drop>
-<transform file path=var.* -> drop>
-<transform link path=var.* -> drop>
-<transform dir path=lib.* -> drop>
-<transform file path=lib.* -> drop>
-<transform link path=lib.* -> drop>
+<transform file dir link path=etc -> drop>
+<transform file dir link path=var -> drop>
+<transform file dir link path=lib -> drop>
 
-<transform dir path=usr/bin.* -> drop>
-<transform file path=usr/bin.* -> drop>
-<transform link path=usr/bin.* -> drop>
-<transform dir path=usr/libexec.* -> drop>
-<transform file path=usr/libexec.* -> drop>
-<transform link path=usr/libexec.* -> drop>
-<transform dir path=usr/share.* -> drop>
-<transform file path=usr/share.* -> drop>
-<transform link path=usr/share.* -> drop>
+<transform file dir link path=usr/bin -> drop>
+<transform file dir link path=usr/libexec -> drop>
+<transform file dir link path=usr/share -> drop>
 
 <transform file path=usr/lib/dbus-daemon$ -> drop>
 <transform file path=usr/lib/cmake/DBus1/DBus1Config.cmake$ -> drop>
