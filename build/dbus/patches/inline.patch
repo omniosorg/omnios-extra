@@ -1,0 +1,92 @@
+diff -ru dbus-1.11.20~/dbus/dbus-address.h dbus-1.11.20/dbus/dbus-address.h
+--- dbus-1.11.20~/dbus/dbus-address.h	2017-09-25 16:00:11.000000000 +0000
++++ dbus-1.11.20/dbus/dbus-address.h	2017-10-03 19:18:23.609279401 +0000
+@@ -71,12 +71,9 @@
+  * pointer_to_entries must not be #NULL, but *pointer_to_entries
+  * may be #NULL.
+  */
+-static inline void
+-dbus_clear_address_entries (DBusAddressEntry ***pointer_to_entries)
+-{
+-  _dbus_clear_pointer_impl (DBusAddressEntry *, pointer_to_entries,
+-                            dbus_address_entries_free);
+-}
++#define dbus_clear_address_entries(pointer) \
++	_dbus_clear_pointer_impl(DBusAddressEntry *, \
++	(pointer), dbus_address_entries_free)
+ 
+ /** @} */
+ 
+diff -ru dbus-1.11.20~/dbus/dbus-connection.h dbus-1.11.20/dbus/dbus-connection.h
+--- dbus-1.11.20~/dbus/dbus-connection.h	2017-09-25 16:00:11.000000000 +0000
++++ dbus-1.11.20/dbus/dbus-connection.h	2017-10-03 19:21:01.461972513 +0000
+@@ -461,12 +461,9 @@
+  * pointer_to_connection must not be #NULL, but *pointer_to_connection
+  * may be #NULL.
+  */
+-static inline void
+-dbus_clear_connection (DBusConnection **pointer_to_connection)
+-{
+-  _dbus_clear_pointer_impl (DBusConnection, pointer_to_connection,
+-                            dbus_connection_unref);
+-}
++#define dbus_clear_connection(pointer) \
++	_dbus_clear_pointer_impl(DBusConnection, \
++	(pointer), dbus_connection_unref)
+ 
+ /** @} */
+ 
+diff -ru dbus-1.11.20~/dbus/dbus-message.h dbus-1.11.20/dbus/dbus-message.h
+--- dbus-1.11.20~/dbus/dbus-message.h	2017-09-25 16:00:11.000000000 +0000
++++ dbus-1.11.20/dbus/dbus-message.h	2017-10-03 19:19:57.553991741 +0000
+@@ -363,12 +363,8 @@
+  * pointer_to_message must not be #NULL, but *pointer_to_message
+  * may be #NULL.
+  */
+-static inline void
+-dbus_clear_message (DBusMessage **pointer_to_message)
+-{
+-  _dbus_clear_pointer_impl (DBusMessage, pointer_to_message,
+-                            dbus_message_unref);
+-}
++#define dbus_clear_message(pointer) \
++	_dbus_clear_pointer_impl(DBusMessage, (pointer), dbus_message_unref)
+ 
+ /** @} */
+ 
+diff -ru dbus-1.11.20~/dbus/dbus-pending-call.h dbus-1.11.20/dbus/dbus-pending-call.h
+--- dbus-1.11.20~/dbus/dbus-pending-call.h	2017-09-25 16:00:11.000000000 +0000
++++ dbus-1.11.20/dbus/dbus-pending-call.h	2017-10-03 19:20:25.004700360 +0000
+@@ -84,12 +84,9 @@
+  * pointer_to_pending_call must not be #NULL, but *pointer_to_pending_call
+  * may be #NULL.
+  */
+-static inline void
+-dbus_clear_pending_call (DBusPendingCall **pointer_to_pending_call)
+-{
+-  _dbus_clear_pointer_impl (DBusPendingCall, pointer_to_pending_call,
+-                            dbus_pending_call_unref);
+-}
++#define dbus_clear_pending_call(pointer) \
++	_dbus_clear_pointer_impl(DBusPendingCall, (pointer), \
++	dbus_pending_call_unref)
+ 
+ /** @} */
+ 
+diff -ru dbus-1.11.20~/dbus/dbus-server.h dbus-1.11.20/dbus/dbus-server.h
+--- dbus-1.11.20~/dbus/dbus-server.h	2017-09-25 16:00:11.000000000 +0000
++++ dbus-1.11.20/dbus/dbus-server.h	2017-10-03 19:20:40.870000899 +0000
+@@ -112,11 +112,8 @@
+  * pointer_to_server must not be #NULL, but *pointer_to_server
+  * may be #NULL.
+  */
+-static inline void
+-dbus_clear_server (DBusServer **pointer_to_server)
+-{
+-  _dbus_clear_pointer_impl (DBusServer, pointer_to_server, dbus_server_unref);
+-}
++#define dbus_clear_server(pointer) \
++	_dbus_clear_pointer_impl(DBusServer, (pointer), dbus_server_unref)
+ 
+ /** @} */
+ 
