@@ -1,5 +1,6 @@
---- lib/include/sigPosixRegs.h.orig	Tue Dec  8 07:30:06 2015
-+++ lib/include/sigPosixRegs.h	Tue Dec  8 07:30:15 2015
+diff -pruN '--exclude=*.orig' open-vm-tools-10.1.15~/lib/include/sigPosixRegs.h open-vm-tools-10.1.15/lib/include/sigPosixRegs.h
+--- open-vm-tools-10.1.15~/lib/include/sigPosixRegs.h	2017-09-29 21:15:57.000000000 +0000
++++ open-vm-tools-10.1.15/lib/include/sigPosixRegs.h	2017-10-03 09:31:21.409516608 +0000
 @@ -70,7 +70,7 @@
  
  #include <signal.h>
