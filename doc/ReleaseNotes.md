@@ -79,6 +79,9 @@ r151024 release repository: https://pkg.omniosce.org/r151024/core
 * `last` has a new option `-l` to show longer dates and times, including
   the current year.
 
+* `svcadm` now handles multiple partial FMRI arguments as long as each
+  is unambiguous.
+
 ### Developer Features
 
 * `ld` now handles arguments of the form `-Wl,-z,aslr` (two commas).
