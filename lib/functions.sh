@@ -1174,7 +1174,14 @@ run_testsuite() {
     if [ -z "$SKIP_TESTSUITE" ] && ( [ -n "$BATCH" ] || ask_to_testsuite ); then
         pushd $TMPDIR/$BUILDDIR/$dir > /dev/null
         logmsg "Running testsuite"
-        gmake --quiet $target 2>&1 | tee $SRCDIR/$output
+        op=`mktemp`
+        gmake --quiet $target 2>&1 | tee $op
+        if [ -n "$TESTSUITE_FILTER" ]; then
+            egrep "$TESTSUITE_FILTER" $op > $SRCDIR/$output
+        else
+            cp $op $SRCDIR/$output
+        fi
+        rm -f $op
         popd > /dev/null
     fi
 }
