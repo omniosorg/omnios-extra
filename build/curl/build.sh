@@ -40,6 +40,7 @@ CONFIGURE_OPTS="--enable-thread --with-ca-bundle=/etc/ssl/cacert.pem"
 CONFIGURE_OPTS_64="$CONFIGURE_OPTS_64 --includedir=$PREFIX/include/amd64"
 
 LIBTOOL_NOSTDLIB=libtool
+TESTSUITE_FILTER="^TEST[A-Z]"
 
 # Skip tests when in batch mode as they take a long time
 [ -n "$BATCH" ] && SKIP_TESTSUITE=1
