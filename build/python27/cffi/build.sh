@@ -30,7 +30,7 @@
 
 PKG=library/python-2/cffi-27
 PROG=cffi
-VER=1.11.0
+VER=1.11.1
 SUMMARY="cffi - Foreign Function Interface for Python calling C code"
 DESC="$SUMMARY"
 
