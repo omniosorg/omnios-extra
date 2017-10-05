@@ -1,6 +1,7 @@
---- tmux-1.6.orig/tmux.h	Mon Jan 23 12:24:01 2012
-+++ tmux-1.6/tmux.h	Thu Apr 19 01:39:30 2012
-@@ -26,6 +26,12 @@
+diff -pruN '--exclude=*.orig' tmux-2.6~/tmux.h tmux-2.6/tmux.h
+--- tmux-2.6~/tmux.h	2017-08-30 20:23:42.000000000 +0000
++++ tmux-2.6/tmux.h	2017-10-05 14:06:39.104418928 +0000
+@@ -25,6 +25,12 @@
  #include <sys/uio.h>
  
  #include <event.h>
@@ -11,5 +12,5 @@
 +#include <bufferevent_struct.h>
 +#include <buffer_compat.h>
  #include <limits.h>
- #include <signal.h>
  #include <stdarg.h>
+ #include <stdio.h>
