@@ -37,8 +37,6 @@ DESC="pkgtree takes package information from the running system, caches it, then
 BUILD_DEPENDS_IPS="network/rsync runtime/perl/manual"
 RUN_DEPENDS_IPS="runtime/perl"
 
-TAR=gtar
-
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
 

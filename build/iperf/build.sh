@@ -34,9 +34,6 @@ PKG=network/test/iperf
 SUMMARY="iperf network testing tool"
 DESC="$SUMMARY $VER"
 
-# As of 3.1.2, iperf depends on GNU tar specific crud.
-TAR=gtar
-
 DEPENDS_IPS="system/library"
 
 BUILDARCH=64
