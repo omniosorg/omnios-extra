@@ -36,8 +36,6 @@ DESC="$SUMMARY"
 
 BUILD_DEPENDS_IPS="compatibility/ucb developer/build/autoconf archiver/gnu-tar"
 
-TAR=gtar
-
 # For inet_ntop which isn't detected properly in the configure script
 LDFLAGS="-lnsl"
 CFLAGS64="$CFLAGS64 -I/usr/include/amd64"

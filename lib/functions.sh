@@ -690,13 +690,13 @@ find_archive() {
 # Extracts an archive regardless of its extension
 extract_archive() {
     if [[ $1 =~ .tar.gz|.tgz ]]; then
-        $GZIP -dc $1 | $TAR xvf -
+        $GZIP -dc $1 | $TAR -xvf -
     elif [[ $1 =~ .tar.bz2|.tbz ]]; then
-        $BUNZIP2 -dc $1 | $TAR xvf -
+        $BUNZIP2 -dc $1 | $TAR -xvf -
     elif [[ $1 = *.tar.xz ]]; then
-        $XZCAT $1 | $TAR xvf -
+        $XZCAT $1 | $TAR -xvf -
     elif [[ $1 = *.tar ]]; then
-        $TAR xvf $1
+        $TAR -xvf $1
     elif [[ $1 = *.zip ]]; then
         $UNZIP $1
     else

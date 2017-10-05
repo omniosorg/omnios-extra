@@ -36,8 +36,6 @@ VERHUMAN=$VER   # Human-readable version
 PKG=system/test/fio # Package name (e.g. library/foo)
 SUMMARY="Flexible IO Tester" # One-liner, must be filled in
 DESC="Flexible IO Tester" # Longer description, must be filled in
-# The source will only unpack using GNU tar
-TAR=gtar
 NOSCRIPTSTUB=1  # Don't make isa wrappers for scripts
 BUILDDIR=$PROG-$PROG-$VER
 

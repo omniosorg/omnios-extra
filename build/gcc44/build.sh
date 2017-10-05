@@ -60,7 +60,6 @@ BUILDARCH=32
 PREFIX=/opt/gcc-${VER}
 reset_configure_opts
 CC=gcc
-TAR=gtar
 
 LD_FOR_TARGET=/bin/ld
 export LD_FOR_TARGET

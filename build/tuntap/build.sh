@@ -34,9 +34,6 @@ VERHUMAN=$VER
 SUMMARY="TUN/TAP driver for OmniOS"
 DESC="TUN/TAP driver for OmniOS based on the Universal TUN/TAP Driver"
 
-# tuntap needs GNU tar.
-TAR=gtar
-
 # do not build 64bit objects when compiling for 32bit objects
 CONFIGURE_OPTS_32="--disable-64bit"
 
