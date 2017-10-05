@@ -1,6 +1,7 @@
---- tmux-1.8.orig/server-client.c	Sun Mar 31 01:28:36 2013
-+++ tmux-1.8/server-client.c	Sun Mar 31 01:28:38 2013
-@@ -25,6 +25,7 @@
+diff -pruN '--exclude=*.orig' tmux-2.6~/server-client.c tmux-2.6/server-client.c
+--- tmux-2.6~/server-client.c	2017-08-30 20:23:42.000000000 +0000
++++ tmux-2.6/server-client.c	2017-10-05 14:06:39.373957422 +0000
+@@ -27,6 +27,7 @@
  #include <string.h>
  #include <time.h>
  #include <unistd.h>
