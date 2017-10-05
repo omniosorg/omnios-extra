@@ -4,6 +4,29 @@
 
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](http://www.omniosce.org/setup/switch)
 
+## r151022u (2017-10-09)
+
+Weekly release for w/c 9th of October 2017,
+uname -a shows `omnios-r151022-eb9d5cb557` (no change from previous release)
+> This is a non-reboot update.
+
+### Security fixes
+
+* `curl` updated to 7.56.0
+  * [CVE-2017-1000254](https://www.cvedetails.com/cve/CVE-2017-1000254/)
+* `OpenSSH` - sftp-server users with read-only access could create
+  zero-length files.
+
+### Other changes
+
+* `SUNWcs` partially updated to deliver new `/etc/motd` file matching
+  the kernel version. This update was published to the repository last
+  week.
+
+<br>
+
+----
+
 ## r151022s (2017-09-21)
 
 Early weekly release for w/c 25th of September 2017,
