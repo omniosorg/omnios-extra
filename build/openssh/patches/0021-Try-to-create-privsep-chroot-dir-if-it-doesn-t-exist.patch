@@ -4,15 +4,10 @@ Date: Wed, 5 Aug 2015 12:25:15 -0700
 Subject: [PATCH 21/34] Try to create privsep chroot dir if it doesn't exist
  yet
 
----
- sshd.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
-
-diff --git a/sshd.c b/sshd.c
-index e460c238..67171704 100644
---- a/sshd.c
-+++ b/sshd.c
-@@ -1762,11 +1762,30 @@ main(int ac, char **av)
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
+--- openssh-7.5p1~/sshd.c	2017-10-06 12:34:44.922304665 +0000
++++ openssh-7.5p1/sshd.c	2017-10-06 12:34:45.278528289 +0000
+@@ -1776,11 +1776,30 @@ main(int ac, char **av)
  
  	if (use_privsep) {
  		struct stat st;
@@ -46,6 +41,3 @@ index e460c238..67171704 100644
  
  #ifdef HAVE_CYGWIN
  		if (check_ntsec(_PATH_PRIVSEP_CHROOT_DIR) &&
--- 
-2.11.0
-

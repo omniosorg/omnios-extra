@@ -3,20 +3,10 @@ From: oracle <solaris@oracle.com>
 Date: Mon, 3 Aug 2015 14:38:19 -0700
 Subject: [PATCH 15/34] Enable login to a role if PAM is ok with it
 
----
- auth-pam.c        | 14 ++++++++++++++
- auth-pam.h        |  4 ++++
- auth.h            |  3 +++
- auth2-hostbased.c | 10 ++++++++++
- auth2.c           |  8 ++++++++
- monitor.c         | 15 ++++++++++++++-
- 6 files changed, 53 insertions(+), 1 deletion(-)
-
-diff --git a/auth-pam.c b/auth-pam.c
-index 70a25c19..46bf722e 100644
---- a/auth-pam.c
-+++ b/auth-pam.c
-@@ -1069,6 +1069,20 @@ do_pam_account(void)
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth-pam.c openssh-7.5p1/auth-pam.c
+--- openssh-7.5p1~/auth-pam.c	2017-10-06 12:34:44.705025561 +0000
++++ openssh-7.5p1/auth-pam.c	2017-10-06 12:34:44.987230847 +0000
+@@ -1071,6 +1071,20 @@ do_pam_account(void)
  	return (sshpam_account_status);
  }
  
@@ -37,10 +27,9 @@ index 70a25c19..46bf722e 100644
  void
  do_pam_setcred(int init)
  {
-diff --git a/auth-pam.h b/auth-pam.h
-index c47b442e..892a27bc 100644
---- a/auth-pam.h
-+++ b/auth-pam.h
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth-pam.h openssh-7.5p1/auth-pam.h
+--- openssh-7.5p1~/auth-pam.h	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/auth-pam.h	2017-10-06 12:34:44.987515678 +0000
 @@ -29,6 +29,10 @@ void start_pam(Authctxt *);
  void finish_pam(void);
  u_int do_pam_account(void);
@@ -52,10 +41,9 @@ index c47b442e..892a27bc 100644
  void do_pam_setcred(int );
  void do_pam_chauthtok(void);
  int do_pam_putenv(char *, char *);
-diff --git a/auth.h b/auth.h
-index 4a7f2c1f..b4efc255 100644
---- a/auth.h
-+++ b/auth.h
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth.h openssh-7.5p1/auth.h
+--- openssh-7.5p1~/auth.h	2017-10-06 12:34:44.705125374 +0000
++++ openssh-7.5p1/auth.h	2017-10-06 12:34:44.987596386 +0000
 @@ -84,6 +84,9 @@ struct Authctxt {
  #ifdef PAM_ENHANCEMENT
  	char		*authmethod_name;
@@ -66,10 +54,9 @@ index 4a7f2c1f..b4efc255 100644
  };
  /*
   * Every authentication method has to handle authentication requests for
-diff --git a/auth2-hostbased.c b/auth2-hostbased.c
-index 1b3c3b20..2c51bd2b 100644
---- a/auth2-hostbased.c
-+++ b/auth2-hostbased.c
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-hostbased.c openssh-7.5p1/auth2-hostbased.c
+--- openssh-7.5p1~/auth2-hostbased.c	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/auth2-hostbased.c	2017-10-06 12:34:44.987705791 +0000
 @@ -85,6 +85,9 @@ userauth_hostbased(Authctxt *authctxt)
  	buffer_dump(&b);
  	buffer_free(&b);
@@ -94,11 +81,10 @@ index 1b3c3b20..2c51bd2b 100644
  	buffer_free(&b);
  done:
  	debug2("userauth_hostbased: authenticated %d", authenticated);
-diff --git a/auth2.c b/auth2.c
-index 6a9f936b..e68aa6d3 100644
---- a/auth2.c
-+++ b/auth2.c
-@@ -339,6 +339,14 @@ userauth_finish(Authctxt *authctxt, int authenticated, const char *method,
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2.c openssh-7.5p1/auth2.c
+--- openssh-7.5p1~/auth2.c	2017-10-06 12:34:44.914808161 +0000
++++ openssh-7.5p1/auth2.c	2017-10-06 12:34:44.987833997 +0000
+@@ -344,6 +344,14 @@ userauth_finish(Authctxt *authctxt, int
  #endif
  	}
  
@@ -113,11 +99,10 @@ index 6a9f936b..e68aa6d3 100644
  	if (authenticated && options.num_auth_methods != 0) {
  
  #if defined(USE_PAM) && defined(PAM_ENHANCEMENT)
-diff --git a/monitor.c b/monitor.c
-index b0c9b4f4..d2ad5425 100644
---- a/monitor.c
-+++ b/monitor.c
-@@ -404,6 +404,12 @@ monitor_child_preauth(Authctxt *_authctxt, struct monitor *pmonitor)
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
+--- openssh-7.5p1~/monitor.c	2017-10-06 12:34:44.917851167 +0000
++++ openssh-7.5p1/monitor.c	2017-10-06 12:34:44.988175924 +0000
+@@ -405,6 +405,12 @@ monitor_child_preauth(Authctxt *_authctx
  		}
  	}
  
@@ -130,7 +115,7 @@ index b0c9b4f4..d2ad5425 100644
  	if (!authctxt->valid)
  		fatal("%s: authenticated invalid user", __func__);
  	if (strcmp(auth_method, "unknown") == 0)
-@@ -603,12 +609,14 @@ monitor_reset_key_state(void)
+@@ -605,12 +611,14 @@ monitor_reset_key_state(void)
  {
  	/* reset state */
  	free(key_blob);
@@ -146,7 +131,7 @@ index b0c9b4f4..d2ad5425 100644
  	hostbased_chost = NULL;
  }
  
-@@ -1066,6 +1074,11 @@ mm_answer_pam_account(int sock, Buffer *m)
+@@ -1071,6 +1079,11 @@ mm_answer_pam_account(int sock, Buffer *
  	if (!options.use_pam)
  		fatal("%s: PAM not enabled", __func__);
  
@@ -158,6 +143,3 @@ index b0c9b4f4..d2ad5425 100644
  	ret = do_pam_account();
  
  	buffer_put_int(m, ret);
--- 
-2.11.0
-

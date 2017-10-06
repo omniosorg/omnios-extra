@@ -5,17 +5,10 @@ Subject: [PATCH 31/34] Restore tcpwrappers/libwrap support
 
 This reverts commit f9696566fb41320820f3b257ab564fa321bb3751
 and commit f2719b7c2b8a3b14d778d8a6d8dc729b5174b054.
----
- configure.ac | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- sshd.1m      |  7 +++++++
- sshd.c       | 29 +++++++++++++++++++++++++++++
- 3 files changed, 93 insertions(+)
-
-diff --git a/configure.ac b/configure.ac
-index 5e64db3b..bf9c5449 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -1494,6 +1494,62 @@ AC_ARG_WITH([skey],
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/configure.ac openssh-7.5p1/configure.ac
+--- openssh-7.5p1~/configure.ac	2017-10-06 12:34:45.377471723 +0000
++++ openssh-7.5p1/configure.ac	2017-10-06 12:34:45.622501723 +0000
+@@ -1497,6 +1497,62 @@ AC_ARG_WITH([skey],
  	]
  )
  
@@ -78,19 +71,18 @@ index 5e64db3b..bf9c5449 100644
  # Check whether user wants to use ldns
  LDNS_MSG="no"
  AC_ARG_WITH(ldns,
-@@ -5136,6 +5192,7 @@ echo "                 KerberosV support: $KRB5_MSG"
+@@ -5148,6 +5204,7 @@ echo "                 KerberosV support
  echo "                   SELinux support: $SELINUX_MSG"
  echo "                 Smartcard support: $SCARD_MSG"
  echo "                     S/KEY support: $SKEY_MSG"
 +echo "              TCP Wrappers support: $TCPW_MSG"
  echo "              MD5 password support: $MD5_MSG"
  echo "                   libedit support: $LIBEDIT_MSG"
- echo "  Solaris process contract support: $SPC_MSG"
-diff --git a/sshd.1m b/sshd.1m
-index 387ea69e..55cf3f0d 100644
---- a/sshd.1m
-+++ b/sshd.1m
-@@ -825,6 +825,12 @@ the user's home directory becomes accessible.
+ echo "                   libldns support: $LDNS_MSG"
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.1m openssh-7.5p1/sshd.1m
+--- openssh-7.5p1~/sshd.1m	2017-10-06 12:34:44.706646264 +0000
++++ openssh-7.5p1/sshd.1m	2017-10-06 12:34:45.622698705 +0000
+@@ -825,6 +825,12 @@ the user's home directory becomes access
  This file should be writable only by the user, and need not be
  readable by anyone else.
  .Pp
@@ -103,18 +95,17 @@ index 387ea69e..55cf3f0d 100644
  .It Pa /etc/hosts.equiv
  This file is for host-based authentication (see
  .Xr ssh 1 ) .
-@@ -956,6 +962,7 @@ Each SSHv2 userauth type has its own PAM service name:
+@@ -956,6 +962,7 @@ Each SSHv2 userauth type has its own PAM
  .Xr ssh-keygen 1 ,
  .Xr ssh-keyscan 1 ,
  .Xr chroot 2 ,
 +.Xr hosts_access 5 ,
  .Xr login.conf 5 ,
- .Xr moduli 4 ,
- .Xr sshd_config 4 ,
-diff --git a/sshd.c b/sshd.c
-index 67171704..75da16b7 100644
---- a/sshd.c
-+++ b/sshd.c
+ .Xr moduli 5 ,
+ .Xr sshd_config 5 ,
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
+--- openssh-7.5p1~/sshd.c	2017-10-06 12:34:45.278528289 +0000
++++ openssh-7.5p1/sshd.c	2017-10-06 12:34:45.622996300 +0000
 @@ -127,6 +127,17 @@
  #include <Security/AuthSession.h>
  #endif
@@ -133,7 +124,7 @@ index 67171704..75da16b7 100644
  /* Re-exec fds */
  #define REEXEC_DEVCRYPTO_RESERVED_FD	(STDERR_FILENO + 1)
  #define REEXEC_STARTUP_PIPE_FD		(STDERR_FILENO + 2)
-@@ -1997,6 +2008,24 @@ main(int ac, char **av)
+@@ -2011,6 +2022,24 @@ main(int ac, char **av)
  #ifdef SSH_AUDIT_EVENTS
  	audit_connection_from(remote_ip, remote_port);
  #endif
@@ -158,6 +149,3 @@ index 67171704..75da16b7 100644
  
  	/* Log the connection. */
  	laddr = get_local_ipaddr(sock_in);
--- 
-2.11.0
-
