@@ -1,0 +1,10 @@
+--- M2Crypto-0.27.0~/setup.py	Thu Oct  5 20:55:05 2017
++++ M2Crypto-0.27.0/setup.py	Fri Oct  6 09:25:11 2017
+@@ -153,6 +153,7 @@
+         if _openssl and os.path.isdir(_openssl):
+             self.openssl = _openssl
+ 
++	self.include_dirs.append('/usr/include')
+         log.debug('self.include_dirs = %s', self.include_dirs)
+         log.debug('self.openssl = %s', self.openssl)
+         openssl_library_dir = os.path.join(self.openssl, 'lib')
