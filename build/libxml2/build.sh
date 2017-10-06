@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=libxml2        # App name
-VER=2.9.5           # App version
+VER=2.9.6           # App version
 PKG=library/libxml2 # Package name (without prefix)
 SUMMARY="$PROG - XML C parser and toolkit"
 DESC="$SUMMARY"
@@ -44,10 +44,6 @@ fix_python_install() {
     logcmd rm -f $DESTDIR/usr/lib/python2.7/vendor-packages/64/drv_libxml2.py
     logcmd rm -rf $DESTDIR/usr/lib/python2.7/site-packages || logerr "failed removing bad python install"
     logcmd rm -rf $DESTDIR/usr/include/amd64 || logerr "failed removing bad includes install"
-}
-
-install_license(){
-    logcmd cp $TMPDIR/$BUILDDIR/COPYING $DESTDIR/license
 }
 
 make_prog64() {
@@ -101,20 +97,11 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-
-# The patch for CVE-2017-9049 & CVE-2017-9050 modifies Makefile.am
-# so it is necessary to re-run automake. Since automake in bloody is newer
-# than that originally used for packaging libxml2, aclocal is also required.
-# Once libxml2 is updated and the patch is no longer necessary, the following
-# line can be removed.
-run_aclocal; run_automake
-
 build
 run_testsuite check
 make_lintlibs xml2 /usr/lib /usr/include/libxml2 "libxml/*.h"
 fix_python_install
 make_isa_stub
-install_license
 move_libs
 make_package
 clean_up
