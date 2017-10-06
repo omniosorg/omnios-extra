@@ -1,0 +1,29 @@
+From 4d827f0d75a53d3952288ab882efbddea7ffadfe Mon Sep 17 00:00:00 2001
+From: "djm@openbsd.org" <djm@openbsd.org>
+Date: Tue, 4 Apr 2017 00:24:56 +0000
+Subject: [PATCH] upstream commit
+
+disallow creation (of empty files) in read-only mode;
+reported by Michal Zalewski, feedback & ok deraadt@
+
+Upstream-ID: 5d9c8f2fa8511d4ecf95322994ffe73e9283899b
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/sftp-server.c openssh-7.5p1/sftp-server.c
+--- openssh-7.5p1~/sftp-server.c	2017-10-06 12:34:44.562482749 +0000
++++ openssh-7.5p1/sftp-server.c	2017-10-06 12:34:45.778540141 +0000
+@@ -1,4 +1,4 @@
+-/* $OpenBSD: sftp-server.c,v 1.110 2016/09/12 01:22:38 deraadt Exp $ */
++/* $OpenBSD: sftp-server.c,v 1.111 2017/04/04 00:24:56 djm Exp $ */
+ /*
+  * Copyright (c) 2000-2004 Markus Friedl.  All rights reserved.
+  *
+@@ -694,8 +694,8 @@ process_open(u_int32_t id)
+ 	logit("open \"%s\" flags %s mode 0%o",
+ 	    name, string_from_portable(pflags), mode);
+ 	if (readonly &&
+-	    ((flags & O_ACCMODE) == O_WRONLY ||
+-	    (flags & O_ACCMODE) == O_RDWR)) {
++	    ((flags & O_ACCMODE) != O_RDONLY ||
++	    (flags & (O_CREAT|O_TRUNC)) != 0)) {
+ 		verbose("Refusing open request in read-only mode");
+ 		status = SSH2_FX_PERMISSION_DENIED;
+ 	} else {

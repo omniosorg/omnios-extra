@@ -3,17 +3,9 @@ From: oracle <solaris@oracle.com>
 Date: Mon, 3 Aug 2015 14:36:00 -0700
 Subject: [PATCH 08/34] Add DisableBanner option
 
----
- readconf.c    | 31 +++++++++++++++++++++++++++++++
- readconf.h    |  9 +++++++++
- ssh_config.4  |  8 ++++++++
- sshconnect2.c | 31 +++++++++++++++++++++++++++----
- 4 files changed, 75 insertions(+), 4 deletions(-)
-
-diff --git a/readconf.c b/readconf.c
-index e11a928d..b8c40291 100644
---- a/readconf.c
-+++ b/readconf.c
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
+--- openssh-7.5p1~/readconf.c	2017-10-06 12:34:44.463408803 +0000
++++ openssh-7.5p1/readconf.c	2017-10-06 12:34:44.609720429 +0000
 @@ -163,6 +163,9 @@ typedef enum {
  	oServerAliveInterval, oServerAliveCountMax, oIdentitiesOnly,
  	oSendEnv, oControlPath, oControlMaster, oControlPersist,
@@ -24,7 +16,7 @@ index e11a928d..b8c40291 100644
  	oTunnel, oTunnelDevice, oLocalCommand, oPermitLocalCommand,
  	oVisualHostKey,
  	oKexAlgorithms, oIPQoS, oRequestTTY, oIgnoreUnknown, oProxyUseFdpass,
-@@ -272,6 +275,9 @@ static struct {
+@@ -285,6 +288,9 @@ static struct {
  	{ "controlpersist", oControlPersist },
  	{ "hashknownhosts", oHashKnownHosts },
  	{ "include", oInclude },
@@ -34,7 +26,7 @@ index e11a928d..b8c40291 100644
  	{ "tunnel", oTunnel },
  	{ "tunneldevice", oTunnelDevice },
  	{ "localcommand", oLocalCommand },
-@@ -812,6 +818,17 @@ static const struct multistate multistate_canonicalizehostname[] = {
+@@ -824,6 +830,17 @@ static const struct multistate multistat
  	{ NULL, -1 }
  };
  
@@ -52,7 +44,7 @@ index e11a928d..b8c40291 100644
  /*
   * Processes a single option line as used in the configuration files. This
   * only sets those values that have not already been set.
-@@ -1674,6 +1691,13 @@ parse_keytypes:
+@@ -1694,6 +1711,13 @@ parse_keytypes:
  		charptr = &options->identity_agent;
  		goto parse_string;
  
@@ -66,7 +58,7 @@ index e11a928d..b8c40291 100644
  	case oDeprecated:
  		debug("%s line %d: Deprecated option \"%s\"",
  		    filename, linenum, keyword);
-@@ -1864,6 +1888,9 @@ initialize_options(Options * options)
+@@ -1886,6 +1910,9 @@ initialize_options(Options * options)
  	options->ip_qos_bulk = -1;
  	options->request_tty = -1;
  	options->proxy_use_fdpass = -1;
@@ -76,7 +68,7 @@ index e11a928d..b8c40291 100644
  	options->ignored_unknown = NULL;
  	options->num_canonical_domains = 0;
  	options->num_permitted_cnames = 0;
-@@ -2058,6 +2085,10 @@ fill_default_options(Options * options)
+@@ -2080,6 +2107,10 @@ fill_default_options(Options * options)
  		options->canonicalize_fallback_local = 1;
  	if (options->canonicalize_hostname == -1)
  		options->canonicalize_hostname = SSH_CANONICALISE_NO;
@@ -87,10 +79,9 @@ index e11a928d..b8c40291 100644
  	if (options->fingerprint_hash == -1)
  		options->fingerprint_hash = SSH_FP_HASH_DEFAULT;
  	if (options->update_hostkeys == -1)
-diff --git a/readconf.h b/readconf.h
-index cef55f71..8005ebdd 100644
---- a/readconf.h
-+++ b/readconf.h
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.h openssh-7.5p1/readconf.h
+--- openssh-7.5p1~/readconf.h	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/readconf.h	2017-10-06 12:34:44.609835612 +0000
 @@ -169,6 +169,9 @@ typedef struct {
  	char   *jump_extra;
  
@@ -114,11 +105,10 @@ index cef55f71..8005ebdd 100644
  void     initialize_options(Options *);
  void     fill_default_options(Options *);
  void	 fill_default_options_for_canonicalization(Options *);
-diff --git a/ssh_config.4 b/ssh_config.4
-index ff5dc74b..6b790fb7 100644
---- a/ssh_config.4
-+++ b/ssh_config.4
-@@ -572,6 +572,14 @@ If set to a time in seconds, or a time in any of the formats documented in
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh_config.4 openssh-7.5p1/ssh_config.4
+--- openssh-7.5p1~/ssh_config.4	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/ssh_config.4	2017-10-06 12:34:44.610652786 +0000
+@@ -576,6 +576,14 @@ If set to a time in seconds, or a time i
  then the backgrounded master connection will automatically terminate
  after it has remained idle (with no client connections) for the
  specified time.
@@ -133,10 +123,9 @@ index ff5dc74b..6b790fb7 100644
  .It Cm DynamicForward
  Specifies that a TCP port on the local machine be forwarded
  over the secure channel, and the application
-diff --git a/sshconnect2.c b/sshconnect2.c
-index 103a2b36..56942ca7 100644
---- a/sshconnect2.c
-+++ b/sshconnect2.c
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshconnect2.c openssh-7.5p1/sshconnect2.c
+--- openssh-7.5p1~/sshconnect2.c	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/sshconnect2.c	2017-10-06 12:34:44.610914892 +0000
 @@ -82,6 +82,10 @@ extern char *client_version_string;
  extern char *server_version_string;
  extern Options options;
@@ -148,7 +137,7 @@ index 103a2b36..56942ca7 100644
  /*
   * SSH2 key exchange
   */
-@@ -499,15 +503,34 @@ input_userauth_error(int type, u_int32_t seq, void *ctxt)
+@@ -499,15 +503,34 @@ input_userauth_error(int type, u_int32_t
  int
  input_userauth_banner(int type, u_int32_t seq, void *ctxt)
  {
@@ -187,6 +176,3 @@ index 103a2b36..56942ca7 100644
  	free(lang);
  	return 0;
  }
--- 
-2.11.0
-

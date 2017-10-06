@@ -10,15 +10,10 @@ Subject: [PATCH 02/34] PAM Support
 #
 
 *** orig/servconf.c	Mon Dec  5 17:23:03 2011
----
- servconf.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/servconf.c b/servconf.c
-index 795ddbab..409d4800 100644
---- a/servconf.c
-+++ b/servconf.c
-@@ -194,7 +194,12 @@ fill_default_server_options(ServerOptions *options)
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
+--- openssh-7.5p1~/servconf.c	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/servconf.c	2017-10-06 12:34:44.317091811 +0000
+@@ -194,7 +194,12 @@ fill_default_server_options(ServerOption
  
  	/* Portable-specific options */
  	if (options->use_pam == -1)
@@ -31,7 +26,7 @@ index 795ddbab..409d4800 100644
  
  	/* Standard Options */
  	if (options->num_host_key_files == 0) {
-@@ -998,8 +1003,17 @@ process_server_config_line(ServerOptions *options, char *line,
+@@ -1007,8 +1012,17 @@ process_server_config_line(ServerOptions
  	switch (opcode) {
  	/* Portable-specific options */
  	case sUsePAM:
@@ -49,6 +44,3 @@ index 795ddbab..409d4800 100644
  
  	/* Standard Options */
  	case sBadOption:
--- 
-2.11.0
-

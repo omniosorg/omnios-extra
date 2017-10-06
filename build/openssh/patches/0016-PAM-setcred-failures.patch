@@ -15,15 +15,10 @@ Subject: [PATCH 16/34] PAM setcred failures
 # In the future, if these bug fixes are accepted by the upsteam in a later
 # release, we will remove this patch when we upgrade to that release.
 #
----
- auth-pam.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/auth-pam.c b/auth-pam.c
-index 46bf722e..dcd0f208 100644
---- a/auth-pam.c
-+++ b/auth-pam.c
-@@ -1102,12 +1102,19 @@ do_pam_setcred(int init)
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth-pam.c openssh-7.5p1/auth-pam.c
+--- openssh-7.5p1~/auth-pam.c	2017-10-06 12:34:44.987230847 +0000
++++ openssh-7.5p1/auth-pam.c	2017-10-06 12:34:45.036937766 +0000
+@@ -1104,12 +1104,19 @@ do_pam_setcred(int init)
  		sshpam_cred_established = 1;
  		return;
  	}
@@ -43,7 +38,7 @@ index 46bf722e..dcd0f208 100644
  }
  
  static int
-@@ -1200,10 +1207,16 @@ do_pam_session(void)
+@@ -1202,10 +1209,16 @@ do_pam_session(void)
  	if (sshpam_err == PAM_SUCCESS)
  		sshpam_session_open = 1;
  	else {
@@ -60,6 +55,3 @@ index 46bf722e..dcd0f208 100644
  	}
  
  }
--- 
-2.11.0
-

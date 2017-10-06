@@ -6,16 +6,9 @@ Subject: [PATCH 19/34] PubKeyPlugin support
 This adds the PubKeyPlugin directive and associated code from
 SunSSH, allowing an in-process shared library to be called
 into to check public keys for authentication.
----
- auth2-pubkey.c | 139 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- servconf.c     |  15 +++++++
- servconf.h     |   1 +
- 3 files changed, 155 insertions(+)
-
-diff --git a/auth2-pubkey.c b/auth2-pubkey.c
-index 20f3309e..01daef4a 100644
---- a/auth2-pubkey.c
-+++ b/auth2-pubkey.c
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-pubkey.c openssh-7.5p1/auth2-pubkey.c
+--- openssh-7.5p1~/auth2-pubkey.c	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/auth2-pubkey.c	2017-10-06 12:34:45.178507079 +0000
 @@ -22,6 +22,11 @@
   * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
   * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
@@ -58,7 +51,7 @@ index 20f3309e..01daef4a 100644
  static int
  userauth_pubkey(Authctxt *authctxt)
  {
-@@ -1071,6 +1087,125 @@ user_key_command_allowed2(struct passwd *user_pw, Key *key)
+@@ -1084,6 +1100,125 @@ user_key_command_allowed2(struct passwd
  	return found_key;
  }
  
@@ -184,7 +177,7 @@ index 20f3309e..01daef4a 100644
  /*
   * Check whether key authenticates and authorises the user.
   */
-@@ -1089,6 +1224,10 @@ user_key_allowed(struct passwd *pw, Key *key, int auth_attempt)
+@@ -1102,6 +1237,10 @@ user_key_allowed(struct passwd *pw, Key
  	if (success)
  		return success;
  
@@ -195,11 +188,10 @@ index 20f3309e..01daef4a 100644
  	success = user_key_command_allowed2(pw, key);
  	if (success > 0)
  		return success;
-diff --git a/servconf.c b/servconf.c
-index 881edd95..b492f32b 100644
---- a/servconf.c
-+++ b/servconf.c
-@@ -178,6 +178,7 @@ initialize_server_options(ServerOptions *options)
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
+--- openssh-7.5p1~/servconf.c	2017-10-06 12:34:44.919037973 +0000
++++ openssh-7.5p1/servconf.c	2017-10-06 12:34:45.179771853 +0000
+@@ -178,6 +178,7 @@ initialize_server_options(ServerOptions
  	 */
  	options->pam_service_per_authmethod = 1;
  #endif
@@ -223,7 +215,7 @@ index 881edd95..b492f32b 100644
  	{ NULL, sBadOption, 0 }
  };
  
-@@ -1964,6 +1967,18 @@ process_server_config_line(ServerOptions *options, char *line,
+@@ -1970,6 +1973,18 @@ process_server_config_line(ServerOptions
  		}
  		break;
  
@@ -242,10 +234,9 @@ index 881edd95..b492f32b 100644
  	case sDeprecated:
  	case sIgnore:
  	case sUnsupported:
-diff --git a/servconf.h b/servconf.h
-index 729819e7..4197ffde 100644
---- a/servconf.h
-+++ b/servconf.h
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.h openssh-7.5p1/servconf.h
+--- openssh-7.5p1~/servconf.h	2017-10-06 12:34:44.920699352 +0000
++++ openssh-7.5p1/servconf.h	2017-10-06 12:34:45.179876726 +0000
 @@ -201,6 +201,7 @@ typedef struct {
  #endif
  
@@ -254,6 +245,3 @@ index 729819e7..4197ffde 100644
  }       ServerOptions;
  
  /* Information about the incoming connection as used by Match */
--- 
-2.11.0
-

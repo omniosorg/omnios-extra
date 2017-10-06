@@ -4,23 +4,10 @@ Date: Mon, 3 Aug 2015 14:34:55 -0700
 Subject: [PATCH 04/34] Reorganise man pages into Illumos numbering, adjust
  text
 
----
- Makefile.in           |   22 +-
- contrib/ssh-copy-id.1 |    4 +-
- scp.1                 |    8 +-
- sftp.1                |   14 +-
- ssh-add.1             |    4 +-
- ssh-agent.1           |    8 +-
- ssh-keygen.1          |   20 +-
- ssh-keyscan.1         |    2 +-
- ssh.1                 |   50 +-
- 23 files changed, 4911 insertions(+), 4913 deletions(-)
-
-diff --git a/Makefile.in b/Makefile.in
-index 4bbfb736..6541b3bb 100644
---- a/Makefile.in
-+++ b/Makefile.in
-@@ -112,8 +112,8 @@ SSHDOBJS=sshd.o auth-rhosts.o auth-passwd.o \
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/Makefile.in openssh-7.5p1/Makefile.in
+--- openssh-7.5p1~/Makefile.in	2017-10-06 12:34:44.264425265 +0000
++++ openssh-7.5p1/Makefile.in	2017-10-06 12:34:44.412028093 +0000
+@@ -112,8 +112,8 @@ SSHDOBJS=sshd.o auth-rhosts.o auth-passw
  	sandbox-seccomp-filter.o sandbox-capsicum.o sandbox-pledge.o \
  	sandbox-solaris.o
  
@@ -31,7 +18,7 @@ index 4bbfb736..6541b3bb 100644
  MANTYPE		= @MANTYPE@
  
  CONFIGFILES=sshd_config.out ssh_config.out moduli.out
-@@ -318,8 +318,8 @@ install-files:
+@@ -322,8 +322,8 @@ install-files:
  	$(srcdir)/mkinstalldirs $(DESTDIR)$(sbindir)
  	$(srcdir)/mkinstalldirs $(DESTDIR)$(mandir)
  	$(srcdir)/mkinstalldirs $(DESTDIR)$(mandir)/$(mansubdir)1
@@ -42,7 +29,7 @@ index 4bbfb736..6541b3bb 100644
  	$(srcdir)/mkinstalldirs $(DESTDIR)$(libexecdir)
  	(umask 022 ; $(srcdir)/mkinstalldirs $(DESTDIR)$(PRIVSEP_PATH))
  	$(INSTALL) -m 0755 $(STRIP_OPT) ssh$(EXEEXT) $(DESTDIR)$(bindir)/ssh$(EXEEXT)
-@@ -339,14 +339,14 @@ install-files:
+@@ -343,14 +343,14 @@ install-files:
  	$(INSTALL) -m 644 ssh-agent.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-agent.1
  	$(INSTALL) -m 644 ssh-keygen.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-keygen.1
  	$(INSTALL) -m 644 ssh-keyscan.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-keyscan.1
@@ -64,10 +51,9 @@ index 4bbfb736..6541b3bb 100644
  
  install-sysconf:
  	if [ ! -d $(DESTDIR)$(sysconfdir) ]; then \
-diff --git a/contrib/ssh-copy-id.1 b/contrib/ssh-copy-id.1
-index 8850cced..270e13ef 100644
---- a/contrib/ssh-copy-id.1
-+++ b/contrib/ssh-copy-id.1
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/contrib/ssh-copy-id.1 openssh-7.5p1/contrib/ssh-copy-id.1
+--- openssh-7.5p1~/contrib/ssh-copy-id.1	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/contrib/ssh-copy-id.1	2017-10-06 12:34:44.412230917 +0000
 @@ -95,7 +95,7 @@ options, respectively.
  Rather than specifying these as command line options, it is often better to use (per-host) settings in
  .Xr ssh 1 Ns 's
@@ -83,11 +69,10 @@ index 8850cced..270e13ef 100644
  .Xr ssh-agent 1 ,
 -.Xr sshd 8
 +.Xr sshd 1M
-diff --git a/scp.1 b/scp.1
-index 4ae87775..515fa400 100644
---- a/scp.1
-+++ b/scp.1
-@@ -116,13 +116,13 @@ Limits the used bandwidth, specified in Kbit/s.
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/scp.1 openssh-7.5p1/scp.1
+--- openssh-7.5p1~/scp.1	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/scp.1	2017-10-06 12:34:44.412338458 +0000
+@@ -116,13 +116,13 @@ Limits the used bandwidth, specified in
  Can be used to pass options to
  .Nm ssh
  in the format used in
@@ -103,7 +88,7 @@ index 4ae87775..515fa400 100644
  .Pp
  .Bl -tag -width Ds -offset indent -compact
  .It AddressFamily
-@@ -233,8 +233,8 @@ debugging connection, authentication, and configuration problems.
+@@ -233,8 +233,8 @@ debugging connection, authentication, an
  .Xr ssh-add 1 ,
  .Xr ssh-agent 1 ,
  .Xr ssh-keygen 1 ,
@@ -114,11 +99,10 @@ index 4ae87775..515fa400 100644
  .Sh HISTORY
  .Nm
  is based on the rcp program in
-diff --git a/sftp.1 b/sftp.1
-index fbdd00a1..a281ebcd 100644
---- a/sftp.1
-+++ b/sftp.1
-@@ -85,7 +85,7 @@ The final usage format allows for automated sessions using the
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/sftp.1 openssh-7.5p1/sftp.1
+--- openssh-7.5p1~/sftp.1	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/sftp.1	2017-10-06 12:34:44.412497731 +0000
+@@ -85,7 +85,7 @@ The final usage format allows for automa
  option.
  In such cases, it is necessary to configure non-interactive authentication
  to obviate the need to enter a password at connection time (see
@@ -127,7 +111,7 @@ index fbdd00a1..a281ebcd 100644
  and
  .Xr ssh-keygen 1
  for details).
-@@ -179,7 +179,7 @@ Limits the used bandwidth, specified in Kbit/s.
+@@ -179,7 +179,7 @@ Limits the used bandwidth, specified in
  Can be used to pass options to
  .Nm ssh
  in the format used in
@@ -167,11 +151,10 @@ index fbdd00a1..a281ebcd 100644
  .Rs
  .%A T. Ylonen
  .%A S. Lehtinen
-diff --git a/ssh-add.1 b/ssh-add.1
-index f02b595d..b4d7c8f8 100644
---- a/ssh-add.1
-+++ b/ssh-add.1
-@@ -134,7 +134,7 @@ Add keys provided by the PKCS#11 shared library
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh-add.1 openssh-7.5p1/ssh-add.1
+--- openssh-7.5p1~/ssh-add.1	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/ssh-add.1	2017-10-06 12:34:44.412593181 +0000
+@@ -134,7 +134,7 @@ Add keys provided by the PKCS#11 shared
  Set a maximum lifetime when adding identities to an agent.
  The lifetime may be specified in seconds or in a time format
  specified in
@@ -180,7 +163,7 @@ index f02b595d..b4d7c8f8 100644
  .It Fl X
  Unlock the agent.
  .It Fl x
-@@ -200,7 +200,7 @@ is unable to contact the authentication agent.
+@@ -200,7 +200,7 @@ is unable to contact the authentication
  .Xr ssh-agent 1 ,
  .Xr ssh-askpass 1 ,
  .Xr ssh-keygen 1 ,
@@ -189,10 +172,9 @@ index f02b595d..b4d7c8f8 100644
  .Sh AUTHORS
  OpenSSH is a derivative of the original and free
  ssh 1.2.12 release by Tatu Ylonen.
-diff --git a/ssh-agent.1 b/ssh-agent.1
-index 83b2b41c..d2cad7e8 100644
---- a/ssh-agent.1
-+++ b/ssh-agent.1
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh-agent.1 openssh-7.5p1/ssh-agent.1
+--- openssh-7.5p1~/ssh-agent.1	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/ssh-agent.1	2017-10-06 12:34:44.412707116 +0000
 @@ -71,7 +71,7 @@ Keys are added using
  (see
  .Cm AddKeysToAgent
@@ -202,7 +184,7 @@ index 83b2b41c..d2cad7e8 100644
  for details)
  or
  .Xr ssh-add 1 .
-@@ -132,7 +132,7 @@ The default is to allow loading PKCS#11 libraries from
+@@ -132,7 +132,7 @@ The default is to allow loading PKCS#11
  .Dq /usr/lib/*,/usr/local/lib/* .
  PKCS#11 libraries that do not match the whitelist will be refused.
  See PATTERNS in
@@ -211,7 +193,7 @@ index 83b2b41c..d2cad7e8 100644
  for a description of pattern-list syntax.
  .It Fl s
  Generate Bourne shell commands on
-@@ -143,7 +143,7 @@ does not look like it's a csh style of shell.
+@@ -143,7 +143,7 @@ does not look like it's a csh style of s
  .It Fl t Ar life
  Set a default value for the maximum lifetime of identities added to the agent.
  The lifetime may be specified in seconds or in a time format specified in
@@ -220,7 +202,7 @@ index 83b2b41c..d2cad7e8 100644
  A lifetime specified for an identity with
  .Xr ssh-add 1
  overrides this value.
-@@ -218,7 +218,7 @@ The sockets should get automatically removed when the agent exits.
+@@ -218,7 +218,7 @@ The sockets should get automatically rem
  .Xr ssh 1 ,
  .Xr ssh-add 1 ,
  .Xr ssh-keygen 1 ,
@@ -229,10 +211,9 @@ index 83b2b41c..d2cad7e8 100644
  .Sh AUTHORS
  .An -nosplit
  OpenSSH is a derivative of the original and free ssh 1.2.12 release by
-diff --git a/ssh-keygen.1 b/ssh-keygen.1
-index ce2213c7..f0824509 100644
---- a/ssh-keygen.1
-+++ b/ssh-keygen.1
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh-keygen.1 openssh-7.5p1/ssh-keygen.1
+--- openssh-7.5p1~/ssh-keygen.1	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/ssh-keygen.1	2017-10-06 12:34:44.412933265 +0000
 @@ -178,9 +178,7 @@ key in
  .Pa ~/.ssh/id_ed25519
  or
@@ -253,7 +234,7 @@ index ce2213c7..f0824509 100644
  to generate new host keys.
  .It Fl a Ar rounds
  When saving a new-format private key (i.e. an ed25519 key or any SSH protocol
-@@ -449,7 +447,7 @@ Disable PTY allocation (permitted by default).
+@@ -449,7 +447,7 @@ Disable PTY allocation (permitted by def
  Disable execution of
  .Pa ~/.ssh/rc
  by
@@ -271,7 +252,7 @@ index ce2213c7..f0824509 100644
  .It Ic permit-x11-forwarding
  Allows X11 forwarding.
  .It Ic source-address Ns = Ns Ar address_list
-@@ -556,7 +554,7 @@ The start time may be specified as a date in YYYYMMDD format, a time
+@@ -556,7 +554,7 @@ The start time may be specified as a dat
  in YYYYMMDDHHMMSS format or a relative time (to the current time) consisting
  of a minus sign followed by a relative time in the format described in the
  TIME FORMATS section of
@@ -289,7 +270,7 @@ index ce2213c7..f0824509 100644
  or
  .Xr ssh 1 .
  Please refer to those manual pages for details.
-@@ -846,14 +844,14 @@ There is no need to keep the contents of this file secret.
+@@ -846,14 +844,14 @@ There is no need to keep the contents of
  .It Pa /etc/moduli
  Contains Diffie-Hellman groups used for DH-GEX.
  The file format is described in
@@ -307,11 +288,10 @@ index ce2213c7..f0824509 100644
  .Rs
  .%R RFC 4716
  .%T "The Secure Shell (SSH) Public Key File Format"
-diff --git a/ssh-keyscan.1 b/ssh-keyscan.1
-index d29d9d90..17a69770 100644
---- a/ssh-keyscan.1
-+++ b/ssh-keyscan.1
-@@ -166,7 +166,7 @@ $ ssh-keyscan -t rsa,dsa,ecdsa,ed25519 -f ssh_hosts | \e
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh-keyscan.1 openssh-7.5p1/ssh-keyscan.1
+--- openssh-7.5p1~/ssh-keyscan.1	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/ssh-keyscan.1	2017-10-06 12:34:44.413038258 +0000
+@@ -166,7 +166,7 @@ $ ssh-keyscan -t rsa,dsa,ecdsa,ed25519 -
  .Ed
  .Sh SEE ALSO
  .Xr ssh 1 ,
@@ -320,10 +300,9 @@ index d29d9d90..17a69770 100644
  .Sh AUTHORS
  .An -nosplit
  .An David Mazieres Aq Mt dm@lcs.mit.edu
-diff --git a/ssh.1 b/ssh.1
-index 4011c65a..df81563e 100644
---- a/ssh.1
-+++ b/ssh.1
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh.1 openssh-7.5p1/ssh.1
+--- openssh-7.5p1~/ssh.1	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/ssh.1	2017-10-06 12:34:44.415186344 +0000
 @@ -173,7 +173,7 @@ listed in order of preference.
  See the
  .Cm Ciphers
@@ -333,7 +312,7 @@ index 4011c65a..df81563e 100644
  for more information.
  .Pp
  .It Fl D Xo
-@@ -417,7 +417,7 @@ mode with confirmation required before slave connections are accepted.
+@@ -417,7 +417,7 @@ mode with confirmation required before s
  Refer to the description of
  .Cm ControlMaster
  in
@@ -342,7 +321,7 @@ index 4011c65a..df81563e 100644
  for details.
  .Pp
  .It Fl m Ar mac_spec
-@@ -476,7 +476,7 @@ Can be used to give options in the format used in the configuration file.
+@@ -476,7 +476,7 @@ Can be used to give options in the forma
  This is useful for specifying options for which there is no separate
  command-line flag.
  For full details of the options listed below, and their possible values, see
@@ -387,7 +366,7 @@ index 4011c65a..df81563e 100644
  for more information.
  .Pp
  .It Fl x
-@@ -804,14 +804,14 @@ By default this information is sent to stderr.
+@@ -804,14 +804,14 @@ By default this information is sent to s
  may additionally obtain configuration data from
  a per-user configuration file and a system-wide configuration file.
  The file format and configuration options are described in
@@ -422,7 +401,7 @@ index 4011c65a..df81563e 100644
  Basic help is available, using the
  .Fl h
  option.
-@@ -1280,7 +1280,7 @@ Are you sure you want to continue connecting (yes/no)?
+@@ -1280,7 +1280,7 @@ Are you sure you want to continue connec
  See the
  .Cm VerifyHostKeyDNS
  option in
@@ -449,7 +428,7 @@ index 4011c65a..df81563e 100644
  .Sh FILES
  .Bl -tag -width Ds -compact
  .It Pa ~/.rhosts
-@@ -1448,7 +1448,7 @@ This file is used for host-based authentication (see above).
+@@ -1448,7 +1448,7 @@ This file is used for host-based authent
  On some machines this file may need to be
  world-readable if the user's home directory is on an NFS partition,
  because
@@ -467,7 +446,7 @@ index 4011c65a..df81563e 100644
  manual page.
  This file is not highly sensitive, but the recommended
  permissions are read/write for the user, and not accessible by others.
-@@ -1481,7 +1481,7 @@ permissions are read/write for the user, and not accessible by others.
+@@ -1481,7 +1481,7 @@ permissions are read/write for the user,
  .It Pa ~/.ssh/config
  This is the per-user configuration file.
  The file format and configuration options are described in
@@ -476,7 +455,7 @@ index 4011c65a..df81563e 100644
  Because of the potential for abuse, this file must have strict permissions:
  read/write for the user, and not writable by others.
  .Pp
-@@ -1518,7 +1518,7 @@ sensitive and can (but need not) be readable by anyone.
+@@ -1518,7 +1518,7 @@ sensitive and can (but need not) be read
  Contains a list of host keys for all hosts the user has logged into
  that are not already in the systemwide list of known host keys.
  See
@@ -503,7 +482,7 @@ index 4011c65a..df81563e 100644
  .Pp
  .It Pa /etc/ssh/ssh_host_key
  .It Pa /etc/ssh/ssh_host_dsa_key
-@@ -1560,7 +1560,7 @@ system administrator to contain the public host keys of all machines in the
+@@ -1560,7 +1560,7 @@ system administrator to contain the publ
  organization.
  It should be world-readable.
  See

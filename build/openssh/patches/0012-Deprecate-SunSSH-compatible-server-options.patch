@@ -18,14 +18,9 @@ Subject: [PATCH 12/34] Deprecate SunSSH compatible server options
 # This is a Solaris specific change to ease the transition and will not be
 # offered upstream.
 #
----
- servconf.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
-
-diff --git a/servconf.c b/servconf.c
-index 6f11010a..c0aba508 100644
---- a/servconf.c
-+++ b/servconf.c
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
+--- openssh-7.5p1~/servconf.c	2017-10-06 12:34:44.764037862 +0000
++++ openssh-7.5p1/servconf.c	2017-10-06 12:34:44.812538966 +0000
 @@ -587,6 +587,29 @@ static struct {
  	{ "pamserviceprefix", sPAMServicePrefix, SSHCFG_GLOBAL },
  	{ "pamservicename", sPAMServiceName, SSHCFG_GLOBAL },
@@ -56,6 +51,3 @@ index 6f11010a..c0aba508 100644
  	{ "revokedkeys", sRevokedKeys, SSHCFG_ALL },
  	{ "trustedusercakeys", sTrustedUserCAKeys, SSHCFG_ALL },
  	{ "authorizedprincipalsfile", sAuthorizedPrincipalsFile, SSHCFG_ALL },
--- 
-2.11.0
-

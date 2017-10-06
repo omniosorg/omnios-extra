@@ -10,15 +10,10 @@ dh-group14 and -group1 algorithms.
 
 Without this, an old SunSSH client cannot connect to our
 new daemon.
----
- compat.c | 31 ++++++++++++++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
-
-diff --git a/compat.c b/compat.c
-index 69a104fb..55fb3d93 100644
---- a/compat.c
-+++ b/compat.c
-@@ -93,7 +93,9 @@
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/compat.c openssh-7.5p1/compat.c
+--- openssh-7.5p1~/compat.c	2017-03-20 03:39:27.000000000 +0000
++++ openssh-7.5p1/compat.c	2017-10-06 12:34:45.475286605 +0000
+@@ -93,7 +93,9 @@ compat_datafellows(const char *version)
  		  "OpenSSH_3.0*,"
  		  "OpenSSH_3.1*",	SSH_BUG_EXTEOF|SSH_OLD_FORWARD_ADDR},
  		{ "OpenSSH_3.*",	SSH_OLD_FORWARD_ADDR },
@@ -29,7 +24,7 @@ index 69a104fb..55fb3d93 100644
  		{ "OpenSSH_4*",		0 },
  		{ "OpenSSH_5*",		SSH_NEW_OPENSSH|SSH_BUG_DYNAMIC_RPORT},
  		{ "OpenSSH_6.6.1*",	SSH_NEW_OPENSSH},
-@@ -279,6 +281,31 @@
+@@ -279,6 +281,31 @@ compat_pkalg_proposal(char *pkalg_prop)
  	return pkalg_prop;
  }
  
@@ -61,7 +56,7 @@ index 69a104fb..55fb3d93 100644
  char *
  compat_kex_proposal(char *p)
  {
-@@ -294,6 +321,8 @@
+@@ -294,6 +321,8 @@ compat_kex_proposal(char *p)
  		    "diffie-hellman-group-exchange-sha256,"
  		    "diffie-hellman-group-exchange-sha1")) == NULL)
  			fatal("match_filter_list failed");
@@ -70,6 +65,3 @@ index 69a104fb..55fb3d93 100644
  	}
  	debug2("%s: compat KEX proposal: %s", __func__, p);
  	if (*p == '\0')
--- 
-2.11.0
-

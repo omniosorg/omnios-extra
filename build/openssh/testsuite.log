@@ -16,10 +16,9 @@ test_conversion: . 1 tests ok
 test_kex: ................................................................................................................................................................................................................................................................................................................................................................ 352 tests ok
 test_hostkeys: .................. 18 tests ok
 test_match: ...... 6 tests ok
-test_utf8: ..................
-regress/unittests/utf8/tests.c:27 test #19 "utf8_badarg"
-ASSERT_INT_EQ(len, -1) failed:
-         len = 1
-          -1 = -1
-gmake[1]: *** [Makefile:217: unit] Abort (core dumped)
-gmake: *** [Makefile:612: tests] Error 2
+test_utf8: .................................. 34 tests ok
+run test connect.sh ...
+ssh connect with protocol 2 failed
+failed simple connect
+gmake[1]: *** [Makefile:199: t-exec] Error 1
+gmake: *** [Makefile:606: tests] Error 2

@@ -3,16 +3,9 @@ From: Alex Wilson <alex.wilson@joyent.com>
 Date: Mon, 24 Aug 2015 18:57:27 -0700
 Subject: [PATCH 27/34] Set default sshd options based on /etc/default/login
 
----
- pathnames.h   |  1 +
- servconf.c    | 61 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- sshd_config.4 | 17 +++++++++++++++--
- 3 files changed, 77 insertions(+), 2 deletions(-)
-
-diff --git a/pathnames.h b/pathnames.h
-index 7915c405..40284a1f 100644
---- a/pathnames.h
-+++ b/pathnames.h
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/pathnames.h openssh-7.5p1/pathnames.h
+--- openssh-7.5p1~/pathnames.h	2017-10-06 12:34:45.329253327 +0000
++++ openssh-7.5p1/pathnames.h	2017-10-06 12:34:45.427083648 +0000
 @@ -47,6 +47,7 @@
  #define _PATH_HOST_ED25519_KEY_FILE	SSHKEYDIR "/ssh_host_ed25519_key"
  #define _PATH_HOST_RSA_KEY_FILE		SSHKEYDIR "/ssh_host_rsa_key"
@@ -21,10 +14,9 @@ index 7915c405..40284a1f 100644
  /* Backwards compatibility */
  #define _PATH_DH_PRIMES			SSHDIR "/primes"
  
-diff --git a/servconf.c b/servconf.c
-index 1501af6a..91f8c942 100644
---- a/servconf.c
-+++ b/servconf.c
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
+--- openssh-7.5p1~/servconf.c	2017-10-06 12:34:45.232461367 +0000
++++ openssh-7.5p1/servconf.c	2017-10-06 12:34:45.427489973 +0000
 @@ -30,6 +30,7 @@
  #include <unistd.h>
  #include <limits.h>
@@ -98,7 +90,7 @@ index 1501af6a..91f8c942 100644
  static void
  assemble_algorithms(ServerOptions *o)
  {
-@@ -216,6 +275,8 @@ fill_default_server_options(ServerOptions *options)
+@@ -216,6 +275,8 @@ fill_default_server_options(ServerOption
  		options->use_pam = 0;
  #endif
  
@@ -107,11 +99,10 @@ index 1501af6a..91f8c942 100644
  	/* Standard Options */
  	if (options->num_host_key_files == 0) {
  		/* fill default hostkeys for protocols */
-diff --git a/sshd_config.4 b/sshd_config.4
-index 6a6f940b..0b2393dd 100644
---- a/sshd_config.4
-+++ b/sshd_config.4
-@@ -1099,7 +1099,13 @@ Specifies the maximum number of authentication attempts permitted per
+diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config.4 openssh-7.5p1/sshd_config.4
+--- openssh-7.5p1~/sshd_config.4	2017-10-06 12:34:44.922628030 +0000
++++ openssh-7.5p1/sshd_config.4	2017-10-06 12:34:45.427736167 +0000
+@@ -1115,7 +1115,13 @@ Specifies the maximum number of authenti
  connection.
  Once the number of failures reaches half this value,
  additional failures are logged.
@@ -126,7 +117,7 @@ index 6a6f940b..0b2393dd 100644
  .It Cm MaxSessions
  Specifies the maximum number of open shell, login or subsystem (e.g. sftp)
  sessions permitted per network connection.
-@@ -1150,7 +1156,14 @@ The default is
+@@ -1166,7 +1172,14 @@ The default is
  When password authentication is allowed, it specifies whether the
  server allows login to accounts with empty password strings.
  The default is
@@ -142,6 +133,3 @@ index 6a6f940b..0b2393dd 100644
  .It Cm PermitOpen
  Specifies the destinations to which TCP port forwarding is permitted.
  The forwarding specification must be one of the following forms:
--- 
-2.11.0
-
