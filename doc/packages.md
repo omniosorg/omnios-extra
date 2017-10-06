@@ -35,7 +35,7 @@
 | library/idnkit			| 2.3			| https://jprs.co.jp/idn/index-e.html
 | library/libidn			| 1.33			| http://git.savannah.gnu.org/cgit/libidn.git/refs/tags
 | library/libffi			| 3.2.1			| https://sourceware.org/libffi/
-| library/libxml2			| 2.9.5			| http://xmlsoft.org/news.html
+| library/libxml2			| 2.9.6			| http://xmlsoft.org/news.html
 | library/libxslt			| 1.1.30		| http://xmlsoft.org/libxslt/news.html
 | library/ncurses			| 6.0.20170930		| http://invisible-mirror.net/archives/ncurses/current/ https://ftp.gnu.org/gnu/ncurses/
 | library/nghttp2			| 1.26.0		| https://github.com/nghttp2/nghttp2/releases
