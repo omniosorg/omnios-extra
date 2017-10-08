@@ -1,2 +1,0 @@
-set name=pkg.fmri value=library/python-2/ply-26@3.9-@PVER@
-set name=pkg.obsolete value=true

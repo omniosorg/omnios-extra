@@ -1,2 +1,0 @@
-set name=pkg.fmri value=library/python-2/jsonrpclib-26@0.1.7-@PVER@
-set name=pkg.obsolete value=true

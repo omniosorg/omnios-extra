@@ -1,3 +1,0 @@
-All of these manifests are for now-obsoleted Caiman packages. They were
-taken from Caiman's usr/src/pkg/manifests/, and massaged accordingly to make
-them obsolete, AND buildable in the omnios-build way.

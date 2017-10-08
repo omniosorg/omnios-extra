@@ -1,2 +1,0 @@
-set name=pkg.fmri value=library/python-2/simplejson-26@3.8.2-@PVER@
-set name=pkg.obsolete value=true

@@ -1,2 +1,0 @@
-set name=pkg.fmri value=library/python-2/pycurl-26@7.43.0-@PVER@
-set name=pkg.obsolete value=true
