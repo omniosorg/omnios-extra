@@ -1,2 +1,0 @@
-set name=pkg.fmri value=library/python-2/m2crypto-26@0.24.0-@PVER@
-set name=pkg.obsolete value=true

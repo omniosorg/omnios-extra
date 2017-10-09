@@ -1,2 +1,0 @@
-set name=pkg.fmri value=library/python-2/pylint-26@1.6.4-@PVER@
-set name=pkg.obsolete value=true
