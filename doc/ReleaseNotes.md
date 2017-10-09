@@ -81,6 +81,9 @@ r151024 release repository: https://pkg.omniosce.org/r151024/core
 
 * `svcadm` now handles multiple partial FMRI arguments as long as each
   is unambiguous.
+  
+* `tail` now properly supports `-[cb] <num>` as an alternative syntax
+  for `-<num>[cb]`.
 
 ### Developer Features
 
