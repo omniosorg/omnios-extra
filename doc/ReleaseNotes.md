@@ -16,6 +16,8 @@ uname -a shows `omnios-r151022-eb9d5cb557` (no change from previous release)
   * [CVE-2017-1000254](https://www.cvedetails.com/cve/CVE-2017-1000254/)
 * `OpenSSH` - sftp-server users with read-only access could create
   zero-length files.
+* `sudo` update to 1.8.21p2
+  * [CVE-2017-1000368](https://nvd.nist.gov/vuln/detail/CVE-2017-1000368)
 
 ### Other changes
 

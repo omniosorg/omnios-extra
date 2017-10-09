@@ -1,0 +1,14 @@
+--- sudo-1.8.20p2/src/sudo_edit.c	Sat Jan 14 05:30:15 2017
++++ sudo-1.8.20p2/src/sudo_edit.c	Sun Jul  9 15:19:35 2017
+@@ -377,9 +377,9 @@
+  * Directory open flags for use with openat(2).
+  * Use O_SEARCH/O_PATH and/or O_DIRECTORY where possible.
+  */
+-#if defined(O_SEARCH)
++#if defined(O_SEARCH) && defined(O_DIRECTORY)
+ # define DIR_OPEN_FLAGS	(O_SEARCH|O_DIRECTORY)
+-#elif defined(O_PATH)
++#elif defined(O_PATH) && defined(O_DIRECTORY)
+ # define DIR_OPEN_FLAGS	(O_PATH|O_DIRECTORY)
+ #elif defined(O_DIRECTORY)
+ # define DIR_OPEN_FLAGS	(O_RDONLY|O_DIRECTORY)
