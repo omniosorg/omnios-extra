@@ -132,8 +132,8 @@ logcmd() {
 }
 
 logmsg() {
-    echo "$@" >> $LOGFILE
-    echo "$@"
+    echo "$logprefix$@" >> $LOGFILE
+    echo "$logprefix$@"
 }
 
 logerr() {
