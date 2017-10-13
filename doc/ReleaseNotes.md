@@ -15,6 +15,15 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 ### System Features
 
+* `libdiskmgt` and therefore `diskinfo` now recognises nvme, sata and xen
+  controllers
+
+### LX zones
+
+* Report that `/proc/sys` is writable to keep systemd happy.
+
+* Emulate a userspace clock of 100Hz to accommodate some broken applications.
+
 ### Hardware Support
 
 ### Commands and Command Options
