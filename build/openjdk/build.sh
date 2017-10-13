@@ -69,17 +69,15 @@ J2RE_INSTALLTMP=
 J2SDK_INSTALLTMP=
 
 download_hg() {
-    if [[ ! -d $TMPDIR ]]; then
-	mkdir $TMPDIR
-    fi
+    [ ! -d $TMPDIR ] && mkdir $TMPDIR
     pushd $TMPDIR > /dev/null
-    if [[ -d $BUILDDIR ]]; then
+    if [ -d $BUILDDIR ]; then
         logmsg "Removing existing checkout"
         logcmd rm -rf $BUILDDIR
     fi
     logmsg "Checking code out from $REPO"
     logcmd hg clone $REPO $BUILDDIR
-    if [[ -n "$HGREV" ]]; then
+    if [ -n "$HGREV" ]; then
         logmsg "--- updating to $HGREV"
         pushd $BUILDDIR > /dev/null
         logcmd hg checkout $HGREV
@@ -90,9 +88,9 @@ download_hg() {
 install_cups_headers() {
     logmsg "Installing CUPS headers for build"
     pushd $TMPDIR > /dev/null
-    get_resource cups/cups-headers.tar.gz || \
+    logcmd get_resource cups/cups-headers.tar.gz || \
         logerr "--- Failed to download cups-headers tarball"
-    extract_archive cups-headers.tar.gz || \
+    logcmd extract_archive cups-headers.tar.gz || \
         logerr "--- Failed to extract cups-headers tarball"
     popd > /dev/null
 }
@@ -100,9 +98,9 @@ install_cups_headers() {
 install_x11_headers() {
     logmsg "Installing openwin bits for build"
     pushd $TMPDIR > /dev/null
-    get_resource Xstuff/openwin.tar.gz || \
+    logcmd get_resource Xstuff/openwin.tar.gz || \
         logerr "--- Failed to download openwin tarball"
-    extract_archive openwin.tar.gz || \
+    logcmd extract_archive openwin.tar.gz || \
         logerr "--- Failed to extract openwin tarball"
     popd > /dev/null
 }
@@ -113,18 +111,25 @@ fetch_source() {
     i=0
     # Make sure this list of directories is current with your OpenJDK
     # get_source.sh/README.
-    while [[ ! -d corba || ! -d langtools || ! -d hotspot || ! -d jaxp || ! -d jdk || ! -d jaxws ]]; do
-	i=`expr $i + 1`
-	logmsg "Running get_source (try $i)"
-	logcmd sh ./get_source.sh
-	# Limit to 10 tries
-	if [[ $i == 10 ]]; then
-		logmsg "Mercurial problems with OpenJDK source. Got directories:"
-		logcmd ls -Fd corba langtools hotspot jaxp jaxws jdk
-		logerr "--- get_source failed after $i tries"
-	fi
+    dirs="jdk hotspot langtools corba jaxws jaxp"
+    while :; do
+        ok=1
+        for d in $dirs; do
+            [ ! -d "$d" ] && ok=0 && break
+        done
+        [ $ok -eq 1 ] && break
+        ((i = i + 1))
+        logmsg "Running get_source (try $i)"
+        logcmd sh ./get_source.sh
+        # Limit to 10 tries
+        if [ "$i" -ge 10 ]; then
+                logmsg "Mercurial problems with OpenJDK source. Got:"
+                ls -Fd $dirs
+                logerr "--- get_source failed after $i tries"
+        fi
     done
-    # Check out the mercurial tag of jdk7u sub-repos marking the desired update/build
+    # Check out the mercurial tag of jdk7u sub-repos marking the desired
+    # update/build
     logcmd sh ./make/scripts/hgforest.sh checkout $HGREV
     popd > /dev/null
 }
@@ -133,41 +138,30 @@ build32() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
     logmsg "Building 32-bit"
     export ISALIST="$ISAPART"
-    $MAKE sanity \
-        MILESTONE="fcs" \
-        BUILD_NUMBER=b$BUILD \
-        JDK_UPDATE_VERSION=$UPDATE \
-        ARCH_DATA_MODEL=32 \
-        BUILD_HEADLESS_ONLY=true \
-        BUILD_HEADLESS=true \
-        FULL_DEBUG_SYMBOLS=0 \
-        ENABLE_FULL_DEBUG_SYMBOLS=0 \
-        ALT_BOOTDIR=$ALT_BOOTDIR \
-        ALT_COMPILER_PATH=$ALT_COMPILER_PATH \
-        ALT_CUPS_HEADERS_PATH=$ALT_CUPS_HEADERS_PATH \
-        ALT_UNIXCCS_PATH=/usr/bin \
-        ALT_FREETYPE_HEADERS_PATH=/opt/ooce/include \
-        ALT_FREETYPE_LIB_PATH=/opt/ooce/lib \
-        ALT_OPENWIN_HOME=$ALT_OPENWIN_HOME || \
-            logerr "--- make sanity failed"
 
-    $MAKE all \
-        MILESTONE="fcs" \
-        BUILD_NUMBER=b$BUILD \
-        JDK_UPDATE_VERSION=$UPDATE \
-        ARCH_DATA_MODEL=32 \
-        BUILD_HEADLESS_ONLY=true \
-        BUILD_HEADLESS=true \
-        FULL_DEBUG_SYMBOLS=0 \
-        ENABLE_FULL_DEBUG_SYMBOLS=0 \
-        ALT_BOOTDIR=$ALT_BOOTDIR \
-        ALT_COMPILER_PATH=$ALT_COMPILER_PATH \
-        ALT_CUPS_HEADERS_PATH=$ALT_CUPS_HEADERS_PATH \
-        ALT_UNIXCCS_PATH=/usr/bin \
-        ALT_FREETYPE_HEADERS_PATH=/opt/ooce/include \
-        ALT_FREETYPE_LIB_PATH=/opt/ooce/lib \
-        ALT_OPENWIN_HOME=$ALT_OPENWIN_HOME || \
-            logerr "--- make failed"
+    for type in sanity all; do
+        logmsg "-- Performing build ($type)..."
+        logcmd $MAKE $type \
+            MILESTONE="fcs" \
+            BUILD_NUMBER=b$BUILD \
+            JDK_UPDATE_VERSION=$UPDATE \
+            ARCH_DATA_MODEL=32 \
+            BUILD_HEADLESS_ONLY=true \
+            BUILD_HEADLESS=true \
+            FULL_DEBUG_SYMBOLS=0 \
+            ENABLE_FULL_DEBUG_SYMBOLS=0 \
+            PARALLEL_COMPILE_JOBS=$MJOBS \
+            NO_DOCS=1 \
+            ALT_BOOTDIR=$ALT_BOOTDIR \
+            ALT_COMPILER_PATH=$ALT_COMPILER_PATH \
+            ALT_CUPS_HEADERS_PATH=$ALT_CUPS_HEADERS_PATH \
+            ALT_UNIXCCS_PATH=/usr/bin \
+            ALT_FREETYPE_HEADERS_PATH=/opt/ooce/include \
+            ALT_FREETYPE_LIB_PATH=/opt/ooce/lib \
+            ALT_OPENWIN_HOME=$ALT_OPENWIN_HOME || \
+                logerr "--- make $type failed"
+    done
+
     popd > /dev/null
     unset ISALIST
     export ISALIST
@@ -217,7 +211,7 @@ make_install_j2re() {
 
     # copy in our JRE files
     pushd $TMPDIR/$BUILDDIR/build/solaris-i586/j2re-image > /dev/null
-    tar cf - . | (cd $JAVA_INSTALL_ROOT && tar xvf -)
+    tar cf - . | (cd $JAVA_INSTALL_ROOT && tar xf -)
     popd > /dev/null
 
     # set up /usr/java symlink
@@ -232,10 +226,7 @@ make_install_j2re() {
 
     # set up java symlinks into /usr/share/man
     pushd $J2RE_INSTALLTMP/usr/share/man > /dev/null
-    cd man1 && logcmd ln -s ../../../java/man/man1/* . && cd ..
-    cd ja/man1 && logcmd ln -s ../../../../java/man/ja/man1/* . && cd ../..
-    cd ja_JP.PCK/man1 && logcmd ln -s ../../../../java/man/ja_JP.PCK/man1/* . && cd ../..
-    cd ja_JP.UTF-8/man1 && logcmd ln -s ../../../../java/man/ja_JP.UTF-8/man1/* . && cd ../..
+    ( cd man1; logcmd ln -s ../../../java/man/man1/* . )
     popd > /dev/null
 }
 
@@ -255,7 +246,7 @@ make_install_j2sdk() {
 
     # copy in our SDK files
     pushd $TMPDIR/$BUILDDIR/build/solaris-i586/j2sdk-image > /dev/null
-    tar cf - . | (cd $JAVA_INSTALL_ROOT && tar xvf -)
+    tar cf - . | (cd $JAVA_INSTALL_ROOT && tar xf -)
     popd > /dev/null
 
     # kill off duplicate files
@@ -265,7 +256,7 @@ make_install_j2sdk() {
     if [ -f $DUPS_LIST ]; then
         logmsg "Removing duplicate files from the SDK"
         for i in `cat $DUPS_LIST`; do
-            rm -f $i
+            logcmd rm -f $i
         done
     else
         logerr "--- No duplicates list found. This is a problem."
@@ -281,10 +272,7 @@ make_install_j2sdk() {
 
     # set up java symlinks into /usr/share/man
     pushd $J2SDK_INSTALLTMP/usr/share/man > /dev/null
-    cd man1 && logcmd ln -s ../../../java/man/man1/* . && cd ..
-    cd ja/man1 && logcmd ln -s ../../../../java/man/ja/man1/* . && cd ../..
-    cd ja_JP.PCK/man1 && logcmd ln -s ../../../../java/man/ja_JP.PCK/man1/* . && cd ../..
-    cd ja_JP.UTF-8/man1 && logcmd ln -s ../../../../java/man/ja_JP.UTF-8/man1/* . && cd ../..
+    ( cd man1;  logcmd ln -s ../../../java/man/man1/* . )
     popd > /dev/null
 }
 
@@ -302,7 +290,6 @@ init
 download_hg
 fetch_source
 patch_source
-#prep_build
 install_cups_headers
 install_x11_headers
 build
