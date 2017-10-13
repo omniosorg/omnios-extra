@@ -125,8 +125,8 @@ logcmd() {
         echo Running: "$@" >> $LOGFILE
         "$@" >> $LOGFILE 2>&1
     else
-        echo Running: "$@" | tee $LOGFILE
-        "$@" | tee $LOGFILE 2>&1
+        echo Running: "$@" | tee -a $LOGFILE
+        "$@" | tee -a $LOGFILE 2>&1
         return ${PIPESTATUS[0]}
     fi
 }
