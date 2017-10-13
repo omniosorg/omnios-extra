@@ -136,7 +136,92 @@ r151024 release repository: https://pkg.omniosce.org/r151024/core
 * The `audiovia97` driver has been removed.
 * GCC version 5 will be removed in the next stable version of OmniOS, r151026.
 
-### Package changes ([+] Added, [-] Removed, [\*] Changed)
+### Package changes
 
-XXX
-
+| Package | Old Version | New Version |
+| :------ | :---------- | :---------- |
+| data/iso-codes | 3.74 | 3.76
+| database/sqlite-3 | 3.18.0 | 3.20.1
+| developer/bmake | 20160926 | 20170812
+| developer/build/automake | 1.15 | 1.15.1
+| developer/gcc5 | 5.1.0 | 5.5.0
+| developer/gcc5/libgmp-gcc5 | 6.0.0 | 6.1.2
+| developer/gcc5/libmpfr-gcc5 | 3.1.2 | 3.1.5
+| **developer/gcc6** | _New_ | 6.4.0
+| **developer/gcc6/libgmp-gcc6** | _New_ | 6.1.2
+| **developer/gcc6/libmpc-gcc6** | _New_ | 1.0.3
+| **developer/gcc6/libmpfr-gcc6** | _New_ | 3.1.5
+| developer/java/jdk | 1.7.0.141.2 | 1.7.0.151.1
+| developer/lexer/flex | 2.6.0 | 2.6.4
+| developer/swig | 2.0.12 | 3.0.12
+| developer/versioning/git | 2.13.5 | 2.14.2
+| developer/versioning/mercurial | 4.2.3 | 4.3.3
+| editor/vim | 8.0.567 | 8.0.586
+| file/gnu-coreutils | 8.27 | 8.28
+| library/c++/sigcpp | 2.99.8 | 2.99.9
+| library/expat | 2.2.2 | 2.2.4
+| library/glib2 | 2.34.3 | 2.54.0
+| library/idnkit | 1.0 | 2.3
+| library/idnkit/header-idnkit | 1.0 | 2.3
+| library/libxml2 | 2.9.5 | 2.9.6
+| library/libxslt | 1.1.29 | 1.1.30
+| library/ncurses | 6.0.20170722 | 6.0.20170930
+| library/nghttp2 | 1.21.1 | 1.26.0
+| library/nspr | 4.16 | 4.17
+| library/nspr/header-nspr | 4.16 | 4.17
+| library/pcre | 8.40 | 8.41
+| **library/python-2/asn1crypto-27** | _New_ | 0.23.0
+| **library/python-2/cffi-27** | _New_ | 1.11.1
+| **library/python-2/cheroot-27** | _New_ | 5.8.3
+| library/python-2/cherrypy-27 | 3.2.2 | 11.0.0
+| library/python-2/coverage-27 | 4.3.4 | 4.4.1
+| **library/python-2/cryptography-27** | _New_ | 2.0.3
+| **library/python-2/enum-27** | _New_ | 0.4.6
+| **library/python-2/idna-27** | _New_ | 2.6
+| **library/python-2/ipaddress-27** | _New_ | 1.0.18
+| library/python-2/jsonschema-27 | 2.5.1 | 2.6.0
+| library/python-2/lxml-27 | 3.7.2 | 4.0.0
+| library/python-2/m2crypto-27 | 0.24.0 | 0.27.0
+| library/python-2/mako-27 | 1.0.6 | 1.0.7
+| library/python-2/numpy-27 | 1.12.1 | 1.13.3
+| **library/python-2/portend-27** | _New_ | 2.2
+| library/python-2/pylint-27 | 1.7.1 | 1.7.4
+| library/python-2/pyopenssl-27 | 0.11 | 17.3.0
+| **library/python-2/pytz-27** | _New_ | 2017.2
+| library/python-2/setuptools-27 | 0.6.11 | 36.5.0
+| library/python-2/simplejson-27 | 3.10.0 | 3.11.1
+| **library/python-2/six-27** | _New_ | 1.11.0
+| **library/python-2/tempora-27** | _New_ | 1.9
+| **library/python-2/typing-27** | _New_ | 3.6.2
+| library/security/trousers | 0.3.8 | 0.3.14
+| media/cdrtools | 3.0 | 3.1
+| network/dns/idnconv | 1.0 | 2.3
+| network/openssh | 7.4.1 | 7.5.1
+| network/openssh-server | 7.4.1 | 7.5.1
+| network/service/isc-dhcp | 4.3.5 | 4.3.6
+| ~~package/pkg/depot~~ | 0.5.11 | _Removed_
+| ~~package/pkg/system-repository~~ | 0.5.11 | _Removed_
+| runtime/java | 1.7.0.141.2 | 1.7.0.151.1
+| runtime/perl | 5.24.1 | 5.24.3
+| runtime/perl-64 | 5.24.1 | 5.24.3
+| runtime/perl/manual | 5.24.1 | 5.24.3
+| shell/pipe-viewer | 1.6.0 | 1.6.6
+| shell/zsh | 5.3.1 | 5.4.2
+| **system/data/console/fonts** | _New_ | 0.5.11
+| ~~system/library/boot-management~~ | 0.5.11 | _Removed_
+| system/library/dbus | 1.11.12 | 1.11.20
+| system/library/g++-5-runtime | 5.1.0 | 5.4.0
+| **system/library/g++-6-runtime** | _New_ | 6.4.0
+| system/library/gcc-5-runtime | 5.1.0 | 5.4.0
+| **system/library/gcc-6-runtime** | _New_ | 6.4.0
+| system/library/libdbus | 1.11.12 | 1.11.20
+| system/library/mozilla-nss | 3.32.1 | 3.33
+| system/library/mozilla-nss/header-nss | 3.32.1 | 3.33
+| system/management/ipmitool | 1.8.16 | 1.8.18
+| system/pciutils | 3.5.4 | 3.5.5
+| system/test/fio | 2.12 | 3.1
+| system/virtualization/open-vm-tools | 9.4.0 | 10.1.15
+| terminal/screen | 4.5.1 | 4.6.1
+| terminal/tmux | 2.3 | 2.6
+| text/gnu-diffutils | 3.5 | 3.6
+| text/gnu-grep | 3.0 | 3.1
