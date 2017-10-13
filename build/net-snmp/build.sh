@@ -105,7 +105,6 @@ patch_source
 prep_build
 build
 install_smf application/management net-snmp.xml svc-net-snmp
-place_smf_files
 strip_install
 make_package
 clean_up
