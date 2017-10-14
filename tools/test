@@ -177,6 +177,7 @@ check_packages_md()
 		# Skip some packages, tweak others
 		case $pkg in
 			shell/bash-patchlvl)	continue ;;
+			shell/bash)		continue ;;
 		esac
 
 		if [ -n "${targets[$pkg]}" ]; then

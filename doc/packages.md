@@ -57,7 +57,7 @@
 | security/sudo				| 1.8.21p2		| https://www.sudo.ws/
 | service/network/ntp			| 4.2.8p10		| http://www.ntp.org/downloads.html
 | service/network/ssh			| 7.5p1			| https://mirrors.evowise.com/pub/OpenBSD/OpenSSH/portable/
-| shell/bash				| 4.4			| https://ftp.gnu.org/gnu/bash/
+| shell/bash				| 4.4.12		| https://ftp.gnu.org/gnu/bash/
 | shell/bash-patchlvl			| 012			| https://ftp.gnu.org/gnu/bash/bash-4.4-patches
 | shell/pipe-viewer			| 1.6.6			| http://www.ivarch.com/programs/pv.shtml
 | shell/tcsh				| 6.20.00		| https://github.com/tcsh-org/tcsh/releases
