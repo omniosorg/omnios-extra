@@ -1,0 +1,23 @@
+Although a true xterm has supported the ECMA-48 REP (repeat character) control
+since January 1997, many other terminal emulators that claim to be xterm do
+not support this. (For example, VTE, konsole, PuTTY, iTerm2).
+
+For least surprise, remove this capability from
+the xterm terminal definition in OmniOS.
+
+See also http://invisible-island.net/ncurses/ncurses.faq.html#xterm_generic
+
+--- ncurses-6.0-20170729/misc/terminfo.src	2017-07-30 00:10:59.000000000 +0000
++++ ncurses-6.0-20170722/misc/terminfo.src	2017-05-14 01:32:04.000000000 +0000
+@@ -4180,9 +4180,8 @@
+ xterm-new|modern xterm terminal emulator,
+ 	npc,
+ 	indn=\E[%p1%dS, kb2=\EOE, kcbt=\E[Z, kent=\EOM,
+-	rin=\E[%p1%dT, use=ansi+rep, use=ansi+enq,
+-	use=xterm+pcfkeys, use=xterm+tmux, use=ecma+strikeout,
+-	use=xterm-basic,
++	rin=\E[%p1%dT, use=ansi+enq, use=xterm+pcfkeys,
++	use=xterm+tmux, use=ecma+strikeout, use=xterm-basic,
+ 
+ # This fragment is for people who cannot agree on what the backspace key
+ # should send.
