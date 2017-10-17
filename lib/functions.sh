@@ -837,6 +837,11 @@ make_package() {
                     ;;
             esac
             case $i in
+                *@)
+                    depname=${i%@}
+                    i=${i::-1}
+                    explicit_ver=true
+                    ;;
                 *@*)
                     depname=${i%@*}
                     explicit_ver=true
