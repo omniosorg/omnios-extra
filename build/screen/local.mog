@@ -21,7 +21,13 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
+
+<transform link path=usr/bin/screen -> drop>
+<transform file path=usr/bin/screen-.* -> set path usr/bin/screen>
+<transform file dir link path=usr/man -> edit path usr/man usr/share/man>
+
 <transform file path=etc/screenrc$ -> set preserve renamenew>
 license COPYING license=GPLv2

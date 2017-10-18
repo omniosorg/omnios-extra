@@ -1,5 +1,6 @@
---- screen-4.6.1/socket.c	Mon Jul 10 19:26:25 2017
-+++ screen-4.6.1.patched/socket.c	Sat Jul 15 20:03:50 2017
+diff -pruN '--exclude=*.orig' screen-4.6.1~/socket.c screen-4.6.1/socket.c
+--- screen-4.6.1~/socket.c	2017-07-10 19:26:25.000000000 +0000
++++ screen-4.6.1/socket.c	2017-10-18 10:04:34.059604565 +0000
 @@ -33,7 +33,9 @@
  #include <sys/types.h>
  #include <sys/stat.h>
