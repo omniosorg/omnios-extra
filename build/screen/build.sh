@@ -22,6 +22,7 @@
 #
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -34,22 +35,29 @@ SUMMARY="GNU Screen terminal multiplexer"
 DESC="$SUMMARY"
 
 BUILDARCH=32
-CONFIGURE_OPTS_32="$CONFIGURE_OPTS_32 --bindir=/usr/bin --with-sys-screenrc=/etc/screenrc --enable-colors256 LDFLAGS=-lxnet"
-gnu_cleanup() {
-    logcmd rm $DESTDIR/usr/bin/screen
-    logcmd mv $DESTDIR/usr/bin/screen-${VER} $DESTDIR/usr/bin/screen
-    logcmd mv $DESTDIR/usr/man $DESTDIR/usr/share/
-    logcmd mv $DESTDIR/usr/info $DESTDIR/usr/share/
-}
+CONFIGURE_OPTS+="
+	--bindir=/usr/bin
+	--with-sys-screenrc=/etc/screenrc
+	--enable-colors256
+	LDFLAGS=-lxnet
+"
 
 save_function make_install make_install_orig
 make_install() {
     make_install_orig
-    logmsg "Installing etc/screenrc"
-    logcmd mkdir $DESTDIR/etc || \
-    	logerr "--- Failed to mkdir $DESTDIR/etc"
-    logcmd cp etc/screenrc $DESTDIR/etc/ || \
-    	logerr "--- Failed to copy screenrc"
+    logmsg "Installing /etc/screenrc"
+    logcmd mkdir $DESTDIR/etc || logerr "-- Failed to mkdir $DESTDIR/etc"
+    sed '
+	# Remove header that says it is an example that should be installed
+	# in /etc
+	1,/^$/ {
+		/^#/d
+	}
+	/^#autodetach off/c\
+autodetach on\
+defscrollback 1000
+	/^#startup_message off/s/#//
+    ' < etc/etcscreenrc > $DESTDIR/etc/screenrc
 }
 
 init
@@ -57,8 +65,6 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-gnu_cleanup
 strip_install
-make_isa_stub
 make_package
 clean_up

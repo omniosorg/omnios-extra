@@ -18,6 +18,12 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 * `libdiskmgt` and therefore `diskinfo` now recognises nvme, sata and xen
   controllers
 
+* The `/etc/screenrc` file delivered by the `screen` package is now based on
+  the recommended global template as delivered by the authors; you may wish
+  to check that it still meets your needs. If you have previously customised
+  this file then it will not be updated but the new template file will be
+  installed as `/etc/screenrc.new`.
+
 ### LX zones
 
 * Report that `/proc/sys` is writable to keep systemd happy.
