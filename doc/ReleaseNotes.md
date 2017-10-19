@@ -17,6 +17,10 @@ r151024 release repository: https://pkg.omniosce.org/r151024/core
 
 * Support for SuSE linux images within lx zones, courtesy of Joyent.
 
+* Better support for `systemd` within lx zones.
+
+* Improvements to zone RSS tracking and speed of memory usage determination.
+
 * Loader can now handle disks with native 4k sectors.
 
 * `svcs -Z` no longer emits an error message for zones which do not have SMF.
@@ -56,6 +60,12 @@ r151024 release repository: https://pkg.omniosce.org/r151024/core
 
 * Support for Chelsio T6 Ethernet devices.
 
+* Support for the LSI 9305-24i controller.
+
+* Support for the Intel X722 Ethernet controller.
+
+* Fixes for panic/hang on Xen 4.x
+
 * The `audiovia97` driver has been removed.
 
 ### Commands and Command Options
@@ -92,7 +102,7 @@ r151024 release repository: https://pkg.omniosce.org/r151024/core
   with `-z aslr` but some buggy build systems pass it directly to the
   linker.
 
-* GCC 5 has been upgraded to 5.4.0 and **moved to `/opt/gcc-5`** to reflect
+* GCC 5 has been upgraded to 5.5.0 and **moved to `/opt/gcc-5`** to reflect
   the new numbering scheme used from version 5 onwards. The mediated symlinks
   in /usr/bin are still the best way to invoke GCC but you may need to update
   your `$PATH` or scripts if you have previously explicitly used
@@ -165,7 +175,7 @@ r151024 release repository: https://pkg.omniosce.org/r151024/core
 | library/idnkit/header-idnkit | 1.0 | 2.3
 | library/libxml2 | 2.9.5 | 2.9.6
 | library/libxslt | 1.1.29 | 1.1.30
-| library/ncurses | 6.0.20170722 | 6.0.20170930
+| library/ncurses | 6.0.20170722 | 6.0.20171014
 | library/nghttp2 | 1.21.1 | 1.26.0
 | library/nspr | 4.16 | 4.17
 | library/nspr/header-nspr | 4.16 | 4.17
@@ -210,9 +220,9 @@ r151024 release repository: https://pkg.omniosce.org/r151024/core
 | **system/data/console/fonts** | _New_ | 0.5.11
 | ~~system/library/boot-management~~ | 0.5.11 | _Removed_
 | system/library/dbus | 1.11.12 | 1.11.20
-| system/library/g++-5-runtime | 5.1.0 | 5.4.0
+| system/library/g++-5-runtime | 5.1.0 | 5.5.0
 | **system/library/g++-6-runtime** | _New_ | 6.4.0
-| system/library/gcc-5-runtime | 5.1.0 | 5.4.0
+| system/library/gcc-5-runtime | 5.1.0 | 5.5.0
 | **system/library/gcc-6-runtime** | _New_ | 6.4.0
 | system/library/libdbus | 1.11.12 | 1.11.20
 | system/library/mozilla-nss | 3.32.1 | 3.33
