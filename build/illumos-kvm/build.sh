@@ -27,6 +27,13 @@
 # Load support functions
 . ../../lib/functions.sh
 
+# Unless building with HEAD from joyent/illumos-kvm[-cmd], specify the
+# revision to use.
+# KVM uses an opt-in HVM exclusion lock introduced in OS-6400 - we don't have
+# that in OmniOS r151022
+KVM_ROLLBACK=a8befd521c7e673749c64f118585814009fe4b73
+KVM_CMD_ROLLBACK=
+
 # First we build the kernel module
 PROG=illumos-kvm
 # This is pretty meaningless, and should be "0.5.11" but we messed that up
@@ -41,7 +48,7 @@ if [ -d ${PREBUILT_ILLUMOS:-/dev/null} ]; then
     wait_for_prebuilt
     KERNEL_SOURCE=$PREBUILT_ILLUMOS
 else
-    KERNEL_SOURCE=/code/$USER-omnios-$RELVER/illumos-omnios
+    logerr "PRE-BUILT illumos required."
 fi
 PROTO_AREA=$KERNEL_SOURCE/proto/root_i386
 PATCHDIR=patches.$PROG
