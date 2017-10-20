@@ -37,6 +37,11 @@ PROTO_AREA=$KERNEL_SOURCE/proto/root_i386
 SUMMARY="placeholder; reset below"
 DESC="$SUMMARY"
 
+# Unless building with HEAD from joyent/illumos-kvm[-cmd], specify the
+# revision to use.
+KVM_ROLLBACK=
+KVM_CMD_ROLLBACK=
+
 # These are the dependencies for both the module and the cmds
 BUILD_DEPENDS_IPS="
     archiver/gnu-tar
