@@ -551,7 +551,7 @@ rebase_patches() {
         # Extract the original patch header text
         sed -n '
             /^---/q
-            /^diff -pruN/q
+            /^diff -/q
             p
             ' < $patchfile~ > $patchfile
         gdiff -pruN --exclude='*.orig' $BUILDDIR~ $BUILDDIR >> $patchfile
