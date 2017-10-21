@@ -34,6 +34,8 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 ### Commands and Command Options
 
+* `/usr/gnu/bin/uname -o` reports `illumos` as the operating system.
+
 ### Developer Features
 
 * GCC version 7 is now available - `pkg install developer/gcc7` - and can be
