@@ -1,6 +1,7 @@
---- coreutils-8.5/src/who.c.orig	Thu Nov 10 07:54:27 2011
-+++ coreutils-8.5/src/who.c	Thu Nov 10 07:55:13 2011
-@@ -524,8 +524,8 @@
+diff -pruN '--exclude=*.orig' coreutils-8.28~/src/who.c coreutils-8.28/src/who.c
+--- coreutils-8.28~/src/who.c	2017-09-01 07:11:03.000000000 +0000
++++ coreutils-8.28/src/who.c	2017-10-21 11:40:17.230504468 +0000
+@@ -517,8 +517,8 @@ print_runlevel (const STRUCT_UTMP *utmp_
    unsigned char curr = UT_PID (utmp_ent) % 256;
  
    if (!runlevline)

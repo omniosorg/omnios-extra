@@ -1,54 +1,61 @@
---- coreutils-8.21/man/mkfifo.x.orig	2011-08-23 13:44:01.000000000 +0000
-+++ coreutils-8.21/man/mkfifo.x	2013-09-23 17:21:38.168189790 +0000
-@@ -3,4 +3,4 @@
+diff -pruN '--exclude=*.orig' coreutils-8.28~/man/mkfifo.x coreutils-8.28/man/mkfifo.x
+--- coreutils-8.28~/man/mkfifo.x	2017-09-01 07:11:03.000000000 +0000
++++ coreutils-8.28/man/mkfifo.x	2017-10-21 11:40:16.373199566 +0000
+@@ -3,4 +3,4 @@ mkfifo \- make FIFOs (named pipes)
  [DESCRIPTION]
  .\" Add any additional description here
  [SEE ALSO]
 -mkfifo(3)
 +mkfifo(3C)
---- coreutils-8.21/man/mktemp.x.orig	2011-08-23 13:44:01.000000000 +0000
-+++ coreutils-8.21/man/mktemp.x	2013-09-23 17:21:57.897138693 +0000
-@@ -3,4 +3,4 @@
+diff -pruN '--exclude=*.orig' coreutils-8.28~/man/mktemp.x coreutils-8.28/man/mktemp.x
+--- coreutils-8.28~/man/mktemp.x	2017-09-01 07:11:03.000000000 +0000
++++ coreutils-8.28/man/mktemp.x	2017-10-21 11:40:16.373579431 +0000
+@@ -3,4 +3,4 @@ mktemp \- create a temporary file or dir
  [DESCRIPTION]
  .\" Add any additional description here
  [SEE ALSO]
 -mkstemp(3), mkdtemp(3), mktemp(3)
 +mkstemp(3C), mkdtemp(3C), mktemp(3C)
---- coreutils-8.21/man/printf.x.orig	2012-05-28 08:02:48.000000000 +0000
-+++ coreutils-8.21/man/printf.x	2013-09-23 17:22:09.736987075 +0000
-@@ -3,4 +3,4 @@
+diff -pruN '--exclude=*.orig' coreutils-8.28~/man/printf.x coreutils-8.28/man/printf.x
+--- coreutils-8.28~/man/printf.x	2017-09-01 07:11:03.000000000 +0000
++++ coreutils-8.28/man/printf.x	2017-10-21 11:40:16.373855076 +0000
+@@ -3,4 +3,4 @@ printf \- format and print data
  [DESCRIPTION]
  .\" Add any additional description here
  [SEE ALSO]
 -printf(3)
 +printf(3C)
---- coreutils-8.21/man/pwd.x.orig	2011-08-23 13:44:01.000000000 +0000
-+++ coreutils-8.21/man/pwd.x	2013-09-23 17:23:11.996352035 +0000
-@@ -3,4 +3,4 @@
+diff -pruN '--exclude=*.orig' coreutils-8.28~/man/pwd.x coreutils-8.28/man/pwd.x
+--- coreutils-8.28~/man/pwd.x	2017-09-01 07:11:03.000000000 +0000
++++ coreutils-8.28/man/pwd.x	2017-10-21 11:40:16.374133469 +0000
+@@ -3,4 +3,4 @@ pwd \- print name of current/working dir
  [DESCRIPTION]
  .\" Add any additional description here
  [SEE ALSO]
 -getcwd(3)
 +getcwd(3C)
---- coreutils-8.21/man/rm.x.orig	2013-01-31 00:46:24.000000000 +0000
-+++ coreutils-8.21/man/rm.x	2013-09-23 17:23:44.283395367 +0000
-@@ -28,4 +28,4 @@
+diff -pruN '--exclude=*.orig' coreutils-8.28~/man/rm.x coreutils-8.28/man/rm.x
+--- coreutils-8.28~/man/rm.x	2017-09-01 07:11:03.000000000 +0000
++++ coreutils-8.28/man/rm.x	2017-10-21 11:40:16.374438082 +0000
+@@ -28,4 +28,4 @@ prompts the user for whether to remove t
  not affirmative, the file is skipped.
  .SH OPTIONS
  [SEE ALSO]
 -unlink(1), unlink(2), chattr(1), shred(1)
 +unlink(1), unlink(2), shred(1)
---- coreutils-8.21/man/sleep.x.orig	2011-08-23 13:44:01.000000000 +0000
-+++ coreutils-8.21/man/sleep.x	2013-09-23 17:24:54.044935177 +0000
-@@ -3,4 +3,4 @@
+diff -pruN '--exclude=*.orig' coreutils-8.28~/man/sleep.x coreutils-8.28/man/sleep.x
+--- coreutils-8.28~/man/sleep.x	2017-09-01 07:11:03.000000000 +0000
++++ coreutils-8.28/man/sleep.x	2017-10-21 11:40:16.374750727 +0000
+@@ -3,4 +3,4 @@ sleep \- delay for a specified amount of
  [DESCRIPTION]
  .\" Add any additional description here
  [SEE ALSO]
 -sleep(3)
 +sleep(3C)
---- coreutils-8.21/man/truncate.x.orig	2012-05-28 08:02:48.000000000 +0000
-+++ coreutils-8.21/man/truncate.x	2013-09-23 17:30:10.902130179 +0000
-@@ -3,4 +3,4 @@
+diff -pruN '--exclude=*.orig' coreutils-8.28~/man/truncate.x coreutils-8.28/man/truncate.x
+--- coreutils-8.28~/man/truncate.x	2017-09-01 07:11:03.000000000 +0000
++++ coreutils-8.28/man/truncate.x	2017-10-21 11:40:16.429724260 +0000
+@@ -3,4 +3,4 @@ truncate \- shrink or extend the size of
  [DESCRIPTION]
  .\" Add any additional description here
  [SEE ALSO]
