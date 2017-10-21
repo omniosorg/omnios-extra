@@ -34,7 +34,6 @@ PKG=file/gnu-coreutils  # Package name (without prefix)
 SUMMARY="coreutils - GNU core utilities"
 DESC="GNU core utilities ($VER)"
 
-#NO_PARALLEL_MAKE=1
 BUILD_DEPENDS_IPS="compress/xz library/gmp"
 
 CPPFLAGS="-I/usr/include/gmp"
@@ -49,11 +48,15 @@ export ac_cv_func_inotify_init=no
 # OS as reported by `uname -o`
 export gl_cv_host_operating_system=illumos
 
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
+
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_package
 clean_up
 
