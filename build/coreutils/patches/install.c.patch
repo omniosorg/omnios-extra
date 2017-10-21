@@ -1,6 +1,7 @@
---- coreutils-8.21/src/install.c.orig	2013-02-07 09:37:05.000000000 +0000
-+++ coreutils-8.21/src/install.c	2013-09-23 16:24:18.730351203 +0000
-@@ -602,8 +602,8 @@
+diff -pruN '--exclude=*.orig' coreutils-8.28~/src/install.c coreutils-8.28/src/install.c
+--- coreutils-8.28~/src/install.c	2017-09-01 07:11:03.000000000 +0000
++++ coreutils-8.28/src/install.c	2017-10-21 11:40:15.887970444 +0000
+@@ -635,8 +635,8 @@ Usage: %s [OPTION]... [-T] SOURCE DEST\n
  \n\
  This install program copies files (often just compiled) into destination\n\
  locations you choose.  If you want to download and install a ready-to-use\n\

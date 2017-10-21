@@ -1,6 +1,7 @@
---- coreutils-8.27/lib/mountlist.c.orig	Mon Apr 17 13:44:32 2017
-+++ coreutils-8.27/lib/mountlist.c	Mon Apr 17 13:46:28 2017
-@@ -222,11 +222,11 @@
+diff -pruN '--exclude=*.orig' coreutils-8.28~/lib/mountlist.c coreutils-8.28/lib/mountlist.c
+--- coreutils-8.28~/lib/mountlist.c	2017-09-01 07:12:43.000000000 +0000
++++ coreutils-8.28/lib/mountlist.c	2017-10-21 11:40:16.923015710 +0000
+@@ -222,11 +222,11 @@ me_remote (char const *fs_name, char con
  #endif
  
  #ifndef ME_REMOTE

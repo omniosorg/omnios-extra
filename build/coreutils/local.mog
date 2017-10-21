@@ -23,9 +23,36 @@
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 #
-<transform dir path=^usr/gnu/bin/amd64 -> drop>
-<transform file path=^usr/gnu/bin/amd64.* -> drop>
-<transform file path=^usr/gnu/bin/uname -> drop>
-<transform file path=^usr/gnu/share/man/man1/uname.1 -> drop>
-<transform file path=^license -> drop>
+<transform file dir path=usr/gnu/bin/amd64 -> drop>
+<transform file path=license -> drop>
+<transform file dir link path=usr/gnu/share/info -> drop>
 license COPYING license=GPLv3
+
+hardlink path=usr/bin/[			target=../gnu/bin/[
+hardlink path=usr/bin/base64		target=../gnu/bin/base64
+hardlink path=usr/bin/dir		target=../gnu/bin/dir
+hardlink path=usr/bin/dircolors		target=../gnu/bin/dircolors
+hardlink path=usr/bin/install		target=../gnu/bin/install
+hardlink path=usr/bin/md5sum		target=../gnu/bin/md5sum
+hardlink path=usr/bin/nproc		target=../gnu/bin/nproc
+hardlink path=usr/bin/pinky		target=../gnu/bin/pinky
+hardlink path=usr/bin/printenv		target=../gnu/bin/printenv
+hardlink path=usr/bin/ptx		target=../gnu/bin/ptx
+hardlink path=usr/bin/readlink		target=../gnu/bin/readlink
+hardlink path=usr/bin/seq		target=../gnu/bin/seq
+hardlink path=usr/bin/sha1sum		target=../gnu/bin/sha1sum
+hardlink path=usr/bin/sha224sum		target=../gnu/bin/sha224sum
+hardlink path=usr/bin/sha256sum		target=../gnu/bin/sha256sum
+hardlink path=usr/bin/sha384sum		target=../gnu/bin/sha384sum
+hardlink path=usr/bin/sha512sum		target=../gnu/bin/sha512sum
+hardlink path=usr/bin/shred		target=../gnu/bin/shred
+hardlink path=usr/bin/shuf		target=../gnu/bin/shuf
+hardlink path=usr/bin/stat		target=../gnu/bin/stat
+hardlink path=usr/bin/stdbuf		target=../gnu/bin/stdbuf
+hardlink path=usr/bin/tac		target=../gnu/bin/tac
+hardlink path=usr/bin/timeout		target=../gnu/bin/timeout
+hardlink path=usr/bin/truncate		target=../gnu/bin/truncate
+hardlink path=usr/bin/users		target=../gnu/bin/users
+hardlink path=usr/bin/vdir		target=../gnu/bin/vdir
+hardlink path=usr/bin/whoami		target=../gnu/bin/whoami
+

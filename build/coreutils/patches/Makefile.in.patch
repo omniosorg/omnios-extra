@@ -1,7 +1,7 @@
-diff -ru coreutils-8.20.orig/Makefile.in coreutils-8.20/Makefile.in
---- coreutils-8.20.orig/Makefile.in	Tue Oct 23 16:26:32 2012
-+++ coreutils-8.20/Makefile.in	Wed Oct 31 14:34:05 2012
-@@ -1253,7 +1253,7 @@
+diff -pruN '--exclude=*.orig' coreutils-8.28~/Makefile.in coreutils-8.28/Makefile.in
+--- coreutils-8.28~/Makefile.in	2017-09-02 02:25:09.000000000 +0000
++++ coreutils-8.28/Makefile.in	2017-10-21 11:40:17.540512941 +0000
+@@ -2644,7 +2644,7 @@ distuninstallcheck_listfiles = find . -t
  am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
    | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
  distcleancheck_listfiles = find . -type f -print
@@ -10,10 +10,10 @@ diff -ru coreutils-8.20.orig/Makefile.in coreutils-8.20/Makefile.in
  
  # Use 'ginstall' in the definition of PROGRAMS and in dependencies to avoid
  # confusion with the 'install' target.  The install rule transforms 'ginstall'
-diff -ru coreutils-8.20.orig/gnulib-tests/Makefile.in coreutils-8.20/gnulib-tests/Makefile.in
---- coreutils-8.20.orig/gnulib-tests/Makefile.in	Tue Oct 23 14:22:00 2012
-+++ coreutils-8.20/gnulib-tests/Makefile.in	Wed Oct 31 14:34:05 2012
-@@ -2255,7 +2255,7 @@
+diff -pruN '--exclude=*.orig' coreutils-8.28~/gnulib-tests/Makefile.in coreutils-8.28/gnulib-tests/Makefile.in
+--- coreutils-8.28~/gnulib-tests/Makefile.in	2017-09-01 07:17:11.000000000 +0000
++++ coreutils-8.28/gnulib-tests/Makefile.in	2017-10-21 11:40:17.542048931 +0000
+@@ -2404,7 +2404,7 @@ am__relativize = \
      dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
    done; \
    reldir="$$dir2"

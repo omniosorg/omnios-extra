@@ -22,6 +22,7 @@
 #
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -33,37 +34,29 @@ PKG=file/gnu-coreutils  # Package name (without prefix)
 SUMMARY="coreutils - GNU core utilities"
 DESC="GNU core utilities ($VER)"
 
-NO_PARALLEL_MAKE=1
-BUILD_DEPENDS_IPS="compress/xz"
-DEPENDS_IPS="library/gmp system/library"
+BUILD_DEPENDS_IPS="compress/xz library/gmp"
 
 CPPFLAGS="-I/usr/include/gmp"
 PREFIX=/usr/gnu
 reset_configure_opts
-CONFIGURE_OPTS="$CONFIGURE_OPTS --with-openssl=auto"
-CONFIGURE_OPTS_32="$CONFIGURE_OPTS_32 --libexecdir=/usr/lib --bindir=/usr/gnu/bin"
-CONFIGURE_OPTS_64="$CONFIGURE_OPTS_64 --libexecdir=/usr/lib/$ISAPART64"
+CONFIGURE_OPTS+=" --with-openssl=auto"
+CONFIGURE_OPTS_32+=" --libexecdir=/usr/lib --bindir=/usr/gnu/bin"
+CONFIGURE_OPTS_64+=" --libexecdir=/usr/lib/$ISAPART64"
 
+# coreutils incorrectly detects inotify support
 export ac_cv_func_inotify_init=no
+# OS as reported by `uname -o`
+export gl_cv_host_operating_system=illumos
 
-link_in_usr_bin() {
-    logmsg "Making links to /usr/bin"
-    logcmd mkdir -p $DESTDIR/usr/bin
-    for cmd in [ base64 dir dircolors install md5sum nproc pinky printenv \
-	ptx readlink seq sha1sum sha224sum sha256sum sha384sum sha512sum \
-	shred shuf stat stdbuf tac timeout truncate users vdir whoami 
-    do
-        logcmd ln $DESTDIR/usr/gnu/bin/$cmd $DESTDIR/usr/bin/$cmd
-    done
-}
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-make_isa_stub
-link_in_usr_bin
+run_testsuite check
 make_package
 clean_up
 
