@@ -1,0 +1,44 @@
+  GEN      public-submodule-commit
+Making check in po
+Making check in runtime-po
+Making check in .
+  GEN      doc/bison.help
+  YACC     examples/calc++/calc++-parser.stamp
+  CXX      examples/calc++/examples_calc___calc__-calc++-driver.o
+  LEX      examples/calc++/calc++-scanner.cc
+  CXX      examples/calc++/examples_calc___calc__-calc++-scanner.o
+  CXX      examples/calc++/examples_calc___calc__-calc++.o
+  CXX      examples/calc++/examples_calc___calc__-calc++-parser.o
+  CXXLD    examples/calc++/calc++
+  YACC     examples/mfcalc/mfcalc.c
+updating examples/mfcalc/mfcalc.output
+updating examples/mfcalc/mfcalc.h
+  CC       examples/mfcalc/examples_mfcalc_mfcalc-mfcalc.o
+  CCLD     examples/mfcalc/mfcalc
+  YACC     examples/rpcalc/rpcalc.c
+updating examples/rpcalc/rpcalc.output
+updating examples/rpcalc/rpcalc.h
+  CC       examples/rpcalc/examples_rpcalc_rpcalc-rpcalc.o
+  CCLD     examples/rpcalc/rpcalc
+FAIL: examples/calc++/calc++.test
+PASS: examples/mfcalc/mfcalc.test
+PASS: examples/rpcalc/rpcalc.test
+============================================================================
+Testsuite summary for GNU Bison 3.0.4
+============================================================================
+# TOTAL: 3
+# PASS:  2
+# SKIP:  0
+# XFAIL: 0
+# FAIL:  1
+# XPASS: 0
+# ERROR: 0
+============================================================================
+See ./test-suite.log
+Please report to bug-bison@gnu.org
+============================================================================
+gmake[4]: *** [Makefile:4637: test-suite.log] Error 1
+gmake[3]: *** [Makefile:4745: check-TESTS] Error 2
+gmake[2]: *** [Makefile:4975: check-am] Error 2
+gmake[1]: *** [Makefile:4522: check-recursive] Error 1
+gmake: *** [Makefile:4977: check] Error 2
