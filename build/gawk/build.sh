@@ -22,6 +22,7 @@
 #
 #
 # Copyright 2011-2015 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -35,7 +36,7 @@ SUMMARY="gawk - GNU implementation of awk"
 DESC="$SUMMARY"
 
 BUILDARCH=32
-CONFIGURE_OPTS_32="$CONFIGURE_OPTS_32 --bindir=/usr/bin"
+CONFIGURE_OPTS_32+=" --bindir=/usr/bin"
 # Use old gcc4 standards level for this.
 CFLAGS="$CFLAGS -std=gnu89"
 
@@ -47,25 +48,17 @@ configure32() {
 
     logmsg "Patching Makefile to make mpfr/gmp static"
     pushd $TMPDIR/$BUILDDIR > /dev/null
-    logcmd gsed -i -e "s#-lmpfr -lgmp#$GCCPATH/lib/libmpfr.a $GCCPATH/lib/libgmp.a#" Makefile
+    logcmd gsed -i -e \
+        "s#-lmpfr -lgmp#$GCCPATH/lib/libmpfr.a $GCCPATH/lib/libgmp.a#" Makefile
     popd > /dev/null
 }
 
-gnu_cleanup() {
-    logmsg "Cleaning up install root"
-    logcmd mkdir -p $DESTDIR/usr/gnu/bin
-    logcmd mkdir -p $DESTDIR/usr/gnu/share/man/man1
-    logcmd ln -s ../../bin/gawk $DESTDIR/usr/gnu/bin/awk
-    logcmd ln -s ../../../../share/man/man1/gawk.1 $DESTDIR/usr/gnu/share/man/man1/awk.1
-    logcmd rm -f $DESTDIR/usr/bin/awk || logerr "--- Unable to clean up $DESTDIR/usr/bin"
-    logcmd rm -rf $DESTDIR/usr/libexec || logerr "--- unable to clean up libexec dir"
-}
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-gnu_cleanup
+run_testsuite check
 make_isa_stub
 make_package
 clean_up
