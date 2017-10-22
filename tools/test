@@ -190,6 +190,45 @@ check_packages_md()
 	done
 }
 
+check_baseline()
+{
+	echo "Checking doc/baseline..."
+	nawk < doc/baseline '
+		# Skip obsolete/renamed
+		NF == 3 {
+			sub(/-.*/, "", $NF)
+			print $2, $3
+		}
+	' | while read pkg ver; do
+		case $pkg in
+			system/zones/brand/*)		continue ;;
+			package/pkg)			continue ;;
+			system/library/mtsk)		continue ;;
+			library/security/openssl)	continue ;;
+			runtime/java)			continue ;;
+			shell/bash)			continue ;;
+		esac
+		if [ -n "${targets[$pkg]}" ]; then
+			pver="${targets[$pkg]}"
+			[ "$pver" = "$ver" ] && continue
+			# 16.02 -> 16.2 (e.g. p7zip)
+			[ "${pver//.0/.}" = "$ver" ] && continue
+			# x.0 -> x (e.g. gcc)
+			[ "$pver" = "${ver/.0/}" ] && continue
+			# b/p -> . (e.g. sudo)
+			[ "${pver/[-bp]/.}" = "$ver" ] && continue
+
+			# sqlite3 baseline=3.20.1, build=3200100
+			[ "${pver//0/}" = "${ver//[0\.]/}" ] && continue
+
+			# openjdk
+			jver="${pver/_/.}"
+			[ "${jver/-b0/.}" = "$ver" ] && continue
+			problem "$pkg - baseline=$ver, build=${targets[$pkg]}"
+		fi
+	done
+}
+
 check_constraints()
 {
 	comp="$1"
@@ -275,6 +314,7 @@ add_targets
 check_packages_md
 check_userland
 check_entire
+check_baseline
 
 exit $err
 
