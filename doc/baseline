@@ -556,7 +556,6 @@ omnios system/kernel/ultra-wideband o 0.5.11-0.151024
 omnios system/kvm 1.0.5.11-0.151024
 omnios system/library 0.5.11-0.151024
 omnios system/library/c++/sunpro 0.5.11-0.151024
-omnios system/library/c-runtime 0.5.11-0.151024
 omnios system/library/dbus 1.11.20-0.151024
 omnios system/library/g++-4-runtime r 4.8.1-0.151024
 omnios system/library/g++-5-runtime 5.5.0-0.151024
