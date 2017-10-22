@@ -110,6 +110,7 @@ usage() {
     echo "    build parallel <threads>  (start/continue parallel build)"
     echo "    build continue            (continue interrupted build)"
     echo "    build from <pkg>          (build <pkg> then those after)"
+    echo "    baseline [create]         (check or create pkg baseline)"
     exit
 }
 
@@ -309,6 +310,41 @@ licenses() {
     done | sort
 }
 
+baseline() {
+    mode="${1:-check}"
+
+    if [ $mode != create -a $mode != check ]; then
+        echo "Unknown baseline mode - $mode"
+        exit 1
+    fi
+
+    [ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
+
+    # PUBLISHER NAME                 O VERSION
+    # omnios    developer/macro/gnu-m4 1.4.18-0.151023:20171022T080105Z
+    pkgrepo -s $PKGSRVR list | nawk '
+        $1 == "PUBLISHER" { next }
+        $2 in seen { next }
+        {
+            seen[$2] = 1
+            # Remove package timestamp, NF as there can be 3/4 fields
+            sub(/:.*/, "", $NF)
+            print
+        }
+    ' | sort > $TMPDIR/baseline.$$
+
+    if [ $mode = create ]; then
+        mv $TMPDIR/baseline.$$ $MYDIR/../doc/baseline
+        echo "Created baseline in doc/baseline"
+        return
+    fi
+    note "Checking baseline"
+    if ! diff -U0 $MYDIR/../doc/baseline $TMPDIR/baseline.$$; then
+        logerr "Package list does not match baseline"
+    fi
+    rm -f $TMPDIR/baseline.$$
+}
+
 parallel_build() {
     local threads=$1
     export batch_flag="-b"
@@ -454,6 +490,11 @@ case "$1" in
         exit
         ;;
 
+    baseline)
+        baseline $2
+        exit
+        ;;
+
     build)
         add_targets
         shift
@@ -492,9 +533,11 @@ case "$1" in
                 note "($pkgnum/$pkgcount) Building $tgt"
                 build $tgt
             done
+            baseline check
         elif [[ "$tobuild" = parallel\ * ]]; then
             restore_built
             parallel_build "${tobuild#* }"
+            baseline check
         else
             if [[ $tobuild = *\** ]]; then
                 for tgtpatt in $tobuild; do
