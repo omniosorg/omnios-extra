@@ -22,6 +22,7 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -31,40 +32,31 @@ PROG=tar
 VER=1.29
 PKG=archiver/gnu-tar
 SUMMARY="gtar - GNU tar"
-DESC="GNU tar - A utility used to store, backup, and transport files (gtar) $VER"
+DESC="GNU tar - A utility used to store, backup, and transport files (gtar)"
 
-RUN_DEPENDS_IPS="system/extended-system-utilities compress/gzip compress/bzip2 compress/xz"
+RUN_DEPENDS_IPS="
+    system/extended-system-utilities
+    compress/gzip
+    compress/bzip2
+    compress/xz
+"
 
 BUILDARCH=32
-# GNU tar doesn't like to be configured by root.  This var ignores those errors
-export FORCE_UNSAFE_CONFIGURE=1
 
 CONFIGURE_OPTS="--program-prefix=g --with-rmt=/usr/sbin/rmt"
-CONFIGURE_OPTS_32="$CONFIGURE_OPTS_32 --bindir=/usr/bin"
+CONFIGURE_OPTS_32+=" --bindir=/usr/bin"
 
-make_sym_links() {
-    logmsg "Creating necessary symlinks"
-    logmsg "--- usr/sfw/bin/gtar"
-    logcmd mkdir -p $DESTDIR/usr/sfw/bin
-    pushd $DESTDIR/usr/sfw/bin > /dev/null
-    logcmd ln -s ../../bin/gtar gtar || \
-            logerr "Failed to create link for usr/sfw/bin/gtar"
-    popd > /dev/null
-    logmsg "--- usr/gnu/bin/tar"
-    logcmd mkdir -p $DESTDIR/usr/gnu/bin
-    pushd $DESTDIR/usr/gnu/bin > /dev/null
-    logcmd ln -s ../../bin/gtar tar || \
-            logerr "Failed to create link for usr/bin/gtar"
-    popd > /dev/null
-}
-
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_isa_stub
-make_sym_links
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:
