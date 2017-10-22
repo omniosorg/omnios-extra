@@ -1,1 +1,10 @@
 license COPYING license=GPLv3
+
+<transform file dir path=usr/share/info -> drop>
+
+dir group=bin mode=0755 owner=root path=usr/sfw/bin
+dir group=bin mode=0755 owner=root path=usr/share/man/man1
+link path=usr/bin/gm4 target=../gnu/bin/m4
+link path=usr/sfw/bin/gm4 target=../../gnu/bin/m4
+link path=usr/share/man/man1/gm4.1 target=../../../gnu/share/man/man1/m4.1
+

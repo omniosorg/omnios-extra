@@ -22,6 +22,7 @@
 #
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -34,39 +35,23 @@ SUMMARY="GNU m4"
 DESC="GNU m4 - A macro processor (gm4)"
 
 PREFIX=/usr/gnu
+
 reset_configure_opts
-
 BUILDARCH=32
-CONFIGURE_OPTS="--infodir=/usr/share/info"
+CONFIGURE_OPTS+=" --infodir=/usr/share/info"
 
-make_sym_links() {
-    logmsg "Creating various symlinks"
-    logmsg "--- usr/sfw/bin/gm4"
-    logcmd mkdir -p $DESTDIR/usr/sfw/bin
-    pushd $DESTDIR/usr/sfw/bin > /dev/null
-    logcmd ln -s ../../gnu/bin/m4 gm4 || \
-            logerr "Failed to create link for usr/sfw/bin/gm4"
-    popd > /dev/null
-    logmsg "--- usr/bin/gm4"
-    logcmd mkdir -p $DESTDIR/usr/bin
-    pushd $DESTDIR/usr/bin > /dev/null
-    logcmd ln -s ../gnu/bin/m4 gm4 || \
-            logerr "Failed to create link for usr/bin/gm4"
-    popd > /dev/null
-    logmsg "--- usr/share/man/man1/gm4.1"
-    logcmd mkdir -p $DESTDIR/usr/share/man/man1
-    pushd $DESTDIR/usr/share/man/man1 > /dev/null
-    logcmd ln -s ../../../gnu/share/man/man1/m4.1 gm4.1 || \
-            logerr "Failed to create link for usr/share/man/man1/gm4.1"
-    popd > /dev/null
-}
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_isa_stub
-make_sym_links
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:
