@@ -24,7 +24,6 @@
 # Use is subject to license terms.
 #
 
-<transform file path=usr/share/info/standards.info -> drop>
 license COPYING license=GPL
 license COPYING.EXCEPTION license=GPL.EXCEPTION
 license COPYINGv3 license=GPLv3
