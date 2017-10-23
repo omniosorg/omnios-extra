@@ -4,6 +4,21 @@
 
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](http://www.omniosce.org/setup/switch)
 
+## r151022w (2017-10-23)
+
+Weekly release for w/c 23rd of October 2017,
+uname -a shows `omnios-r151022-eb9d5cb557` (no change from previous release)
+> This is a non-reboot update.
+
+### Security fixes
+
+* `curl` updated to 7.56.1
+  * [CVE-2017-1000257](https://curl.haxx.se/docs/adv_20171023.html)
+
+<br>
+
+----
+
 ## r151022u (2017-10-09)
 
 Weekly release for w/c 9th of October 2017,
