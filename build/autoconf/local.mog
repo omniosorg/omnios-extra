@@ -19,11 +19,20 @@
 #
 # CDDL HEADER END
 #
-#
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 
 license COPYING license=GPL
 license COPYING.EXCEPTION license=GPL.EXCEPTION
 license COPYINGv3 license=GPLv3
+
+link path=usr/sfw/bin/autoconf		target=../../bin/autoconf
+link path=usr/sfw/bin/autoheader	target=../../bin/autoheader
+link path=usr/sfw/bin/autom4te		target=../../bin/autom4te
+link path=usr/sfw/bin/autoreconf	target=../../bin/autoreconf
+link path=usr/sfw/bin/autoscan		target=../../bin/autoscan
+link path=usr/sfw/bin/autoupdate	target=../../bin/autoupdate
+link path=usr/sfw/bin/ifnames		target=../../bin/ifnames
+
