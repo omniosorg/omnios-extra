@@ -22,6 +22,7 @@
 #
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -33,35 +34,31 @@ PKG=text/gnu-sed
 SUMMARY="gsed - GNU implementation of sed, the Unix stream editor"
 DESC="$SUMMARY"
 
-DEPENDS_IPS="SUNWcs"
-
 BUILDARCH=32
-CONFIGURE_OPTS_32="--prefix=$PREFIX
-        --sysconfdir=/etc
-        --includedir=$PREFIX/include
-        --bindir=$PREFIX/bin
-        --sbindir=$PREFIX/sbin
-        --libdir=$PREFIX/lib
-        --libexecdir=$PREFIX/libexec
-	--program-prefix=g"
+CONFIGURE_OPTS_32="
+    --prefix=$PREFIX
+    --sysconfdir=/etc
+    --includedir=$PREFIX/include
+    --bindir=$PREFIX/bin
+    --sbindir=$PREFIX/sbin
+    --libdir=$PREFIX/lib
+    --libexecdir=$PREFIX/libexec
+    --program-prefix=g
+"
 
-link_up_gnu_sfw() {
-    logmsg "Making links in /usr/gnu and /usr/sfw"
-    logcmd mkdir -p $DESTDIR/usr/gnu/bin
-    logcmd mkdir -p $DESTDIR/usr/gnu/share/man/man1
-    for cmd in sed
-    do
-        logcmd ln -s ../../bin/g$cmd $DESTDIR/usr/gnu/bin/$cmd
-        logcmd ln -s ../../../../share/man/man1/g$cmd.1 $DESTDIR/usr/gnu/share/man/man1/$cmd.1
-    done
-}
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
+
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_isa_stub
 strip_install
-link_up_gnu_sfw
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:
