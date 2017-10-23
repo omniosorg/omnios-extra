@@ -3,12 +3,8 @@ license COPYING license=GPLv3
 <transform link path=usr/bin/awk -> drop>
 <transform dir file path=usr/libexec -> drop>
 
-dir group=bin mode=0755 owner=root path=usr/gnu
-dir group=bin mode=0755 owner=root path=usr/gnu/bin
 link path=usr/gnu/bin/awk target=../../bin/gawk
 
-dir group=sys mode=0755 owner=root path=usr/gnu/share
-dir group=bin mode=0755 owner=root path=usr/gnu/share/man
 dir group=bin mode=0755 owner=root path=usr/gnu/share/man/man1
 link path=usr/gnu/share/man/man1/awk.1 target=../../../../share/man/man1/gawk.1
 

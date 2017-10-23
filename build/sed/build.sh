@@ -34,6 +34,8 @@ PKG=text/gnu-sed
 SUMMARY="gsed - GNU implementation of sed, the Unix stream editor"
 DESC="$SUMMARY"
 
+RUN_DEPENDS_IPS="prerequisite/gnu"
+
 BUILDARCH=32
 CONFIGURE_OPTS_32="
     --prefix=$PREFIX

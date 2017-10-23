@@ -33,6 +33,8 @@ PKG=file/gnu-findutils
 SUMMARY="GNU utilities find and xargs"
 DESC="$SUMMARY"
 
+RUN_DEPENDS_IPS="prerequisite/gnu"
+
 BUILDARCH=32
 CONFIGURE_OPTS_32="--prefix=$PREFIX
         --sysconfdir=/etc

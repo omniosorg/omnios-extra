@@ -35,6 +35,7 @@ SUMMARY="gtar - GNU tar"
 DESC="GNU tar - A utility used to store, backup, and transport files (gtar)"
 
 RUN_DEPENDS_IPS="
+    prerequisite/gnu
     system/extended-system-utilities
     compress/gzip
     compress/bzip2

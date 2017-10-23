@@ -33,10 +33,6 @@ license COPYING license=GPLv3
 <transform dir path=usr/var$ -> drop>
 <transform dir path=usr/libexec -> drop>
 
-dir group=bin mode=0755 owner=root path=usr/gnu
-dir group=bin mode=0755 owner=root path=usr/gnu/bin
-dir group=sys mode=0755 owner=root path=usr/gnu/share
-dir group=bin mode=0755 owner=root path=usr/gnu/share/man
 dir group=bin mode=0755 owner=root path=usr/gnu/share/man/man1
 
 link path=usr/gnu/bin/find target=../../bin/gfind

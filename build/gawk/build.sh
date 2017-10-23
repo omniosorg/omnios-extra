@@ -35,6 +35,8 @@ PKG=text/gawk
 SUMMARY="gawk - GNU implementation of awk"
 DESC="$SUMMARY"
 
+RUN_DEPENDS_IPS="prerequisite/gnu"
+
 BUILDARCH=32
 CONFIGURE_OPTS_32+=" --bindir=/usr/bin"
 # Use old gcc4 standards level for this.

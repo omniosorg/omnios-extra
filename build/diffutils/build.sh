@@ -33,6 +33,8 @@ PKG=text/gnu-diffutils
 SUMMARY="GNU diffutils - Finds differences between and among files"
 DESC="$SUMMARY"
 
+RUN_DEPENDS_IPS="prerequisite/gnu"
+
 BUILDARCH=32
 CONFIGURE_OPTS_32="--prefix=$PREFIX
         --sysconfdir=/etc
