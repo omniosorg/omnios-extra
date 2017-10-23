@@ -534,6 +534,9 @@ case "$1" in
         if [ "$tobuild" = "all" ]; then
             batch_flag="-b"
 
+            # Skip all testsuites when building everything
+            export SKIP_TESTSUITE=1
+
             pkgcount=${#fulltargets[@]}
             pkgnum=0
             for tgt in `buildorder`; do
