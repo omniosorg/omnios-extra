@@ -22,6 +22,7 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -35,12 +36,14 @@ DESC="$SUMMARY"
 
 BUILD_DEPENDS_IPS="developer/macro/gnu-m4"
 
-CONFIGURE_OPTS="--mandir=$PREFIX/share/man
-	--infodir=$PREFIX/share/info"
-CONFIGURE_OPTS_64="$CONFIGURE_OPTS_64 --includedir=/usr/include"
+CONFIGURE_OPTS="
+	--mandir=$PREFIX/share/man
+	--infodir=$PREFIX/share/info
+"
+CONFIGURE_OPTS_64+=" --includedir=/usr/include"
 
 make_prog() {
-    [[ -n $NO_PARALLEL_MAKE ]] && MAKE_JOBS=""
+    [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
     logmsg "--- make"
     logcmd $MAKE dist_doc_DATA="" $MAKE_JOBS || \
         logerr "--- Make failed"
@@ -52,15 +55,6 @@ make_install() {
         logerr "--- Make install failed"
 }
 
-make_sfw_links() {
-    logmsg "Creating SFW symlinks"
-    logcmd mkdir -p $DESTDIR/usr/sfw/bin
-    pushd $DESTDIR/usr/sfw/bin > /dev/null
-    logcmd ln -s ../../bin/flex flex || \
-            logerr "Failed to create link for flex"
-    popd > /dev/null
-}
-
 init
 download_source $PROG $PROG $VER
 patch_source
@@ -68,6 +62,8 @@ prep_build
 build
 run_testsuite check tests
 make_isa_stub
-make_sfw_links
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:
