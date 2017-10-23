@@ -25,7 +25,6 @@
 #
 <transform file dir path=usr/gnu/bin/amd64 -> drop>
 <transform file path=license -> drop>
-<transform file dir link path=usr/gnu/share/info -> drop>
 license COPYING license=GPLv3
 
 hardlink path=usr/bin/[			target=../gnu/bin/[
