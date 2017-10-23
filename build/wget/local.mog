@@ -1,1 +1,5 @@
 license COPYING license=GPLv3
+
+dir group=bin mode=0755 owner=root path=usr/sfw/bin
+link path=usr/sfw/bin/wget target=../../bin/wget
+
