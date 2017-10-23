@@ -674,5 +674,5 @@ omnios text/intltool 0.51.0-0.151023
 omnios text/less 487-0.151023
 omnios text/locale 0.5.11-0.151023
 omnios web/ca-bundle 5.11-0.151023
-omnios web/curl 7.56.0-0.151023
+omnios web/curl 7.56.1-0.151023
 omnios web/wget 1.19.1-0.151023
