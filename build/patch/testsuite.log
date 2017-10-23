@@ -1,0 +1,54 @@
+  GEN      public-submodule-commit
+Making check in lib
+Making check in src
+Making check in tests
+PASS: asymmetric-hunks
+PASS: backup-prefix-suffix
+PASS: bad-filenames
+PASS: bad-usage
+PASS: concat-git-diff
+PASS: copy-rename
+PASS: corrupt-reject-files
+PASS: create-delete
+PASS: create-directory
+PASS: criss-cross
+SKIP: crlf-handling
+XFAIL: dash-o-append
+PASS: empty-files
+PASS: fifo
+PASS: file-modes
+PASS: filename-choice
+PASS: git-binary-diff
+PASS: garbage
+PASS: global-reject-files
+PASS: inname
+PASS: line-numbers
+SKIP: merge
+PASS: mangled-numbers-abort
+PASS: mixed-patch-types
+PASS: munged-context-format
+PASS: need-filename
+PASS: no-mode-change-git-diff
+PASS: no-newline-triggers-assert
+SKIP: preserve-c-function-names
+PASS: preserve-mode-and-timestamp
+PASS: quoted-filenames
+PASS: read-only-files
+SKIP: reject-format
+PASS: remember-backup-files
+PASS: remember-reject-files
+PASS: remove-directories
+PASS: symlinks
+PASS: unmodified-files
+PASS: deep-directories
+============================================================================
+Testsuite summary for GNU patch 2.7.5
+============================================================================
+# TOTAL: 39
+# PASS:  34
+# SKIP:  4
+# XFAIL: 1
+# FAIL:  0
+# XPASS: 0
+# ERROR: 0
+============================================================================

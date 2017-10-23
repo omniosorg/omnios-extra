@@ -1,1 +1,10 @@
 license COPYING license=GPLv3
+
+dir group=bin mode=0755 owner=root path=usr/gnu/share/man/man1
+
+link path=usr/bin/patch target=gpatch
+link path=usr/gnu/bin/patch target=../../bin/gpatch
+link path=usr/gnu/share/man/man1/patch.1 \
+    target=../../../../share/man/man1/gpatch.1
+link path=usr/share/man/man1/patch.1 target=gpatch.1
+
