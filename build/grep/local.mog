@@ -23,7 +23,24 @@
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 #
+license COPYING license=GPLv3
+
 <transform file link dir path=usr/share/doc -> drop>
 
-<transform file path=license$ -> drop>
-license license license=GPLv3
+link path=usr/gnu/bin/egrep target=../../bin/gegrep
+link path=usr/gnu/bin/fgrep target=../../bin/gfgrep
+link path=usr/gnu/bin/grep target=../../bin/ggrep
+
+link path=usr/sfw/bin/gegrep target=../../bin/gegrep
+link path=usr/sfw/bin/gfgrep target=../../bin/gfgrep
+link path=usr/sfw/bin/ggrep target=../../bin/ggrep
+
+dir group=bin mode=0755 owner=root path=usr/gnu/share/man/man1
+
+link path=usr/gnu/share/man/man1/egrep.1 \
+    target=../../../../share/man/man1/gegrep.1
+link path=usr/gnu/share/man/man1/fgrep.1 \
+    target=../../../../share/man/man1/gfgrep.1
+link path=usr/gnu/share/man/man1/grep.1 \
+    target=../../../../share/man/man1/ggrep.1
+
