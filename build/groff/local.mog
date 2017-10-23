@@ -23,7 +23,17 @@
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 #
+license COPYING license=GPLv3
+
 <transform file dir link path=usr/share/doc -> drop>
 
-<transform file path=license$ -> drop>
-license license license=GPLv3
+link path=usr/gnu/bin/diffmk	target=../../bin/gdiffmk
+link path=usr/gnu/bin/eqn	target=../../bin/geqn
+link path=usr/gnu/bin/grn	target=../../bin/ggrn
+link path=usr/gnu/bin/indxbib	target=../../bin/gindxbib
+link path=usr/gnu/bin/neqn	target=../../bin/gneqn
+link path=usr/gnu/bin/nroff	target=../../bin/gnroff
+link path=usr/gnu/bin/pic	target=../../bin/gpic
+link path=usr/gnu/bin/refer	target=../../bin/grefer
+link path=usr/gnu/bin/soelim	target=../../bin/gsoelim
+
