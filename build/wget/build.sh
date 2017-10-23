@@ -37,29 +37,25 @@ DESC="$SUMMARY"
 BUILD_DEPENDS_IPS="developer/lexer/flex"
 DEPENDS_IPS="library/libidn web/ca-bundle"
 
+BUILDARCH=32
 CONFIGURE_OPTS="
-	--with-ssl=openssl
-	--mandir=$PREFIX/share/man
-	POD2MAN=/usr/perl5/bin/pod2man
+    --with-ssl=openssl
+    --mandir=$PREFIX/share/man
+    POD2MAN=/usr/perl5/bin/pod2man
 "
 
-BUILDARCH=32
-
-make_sfw_links() {
-    logmsg "Creating SFW symlinks"
-    logcmd mkdir -p $DESTDIR/$PREFIX/sfw/bin
-    pushd $DESTDIR/$PREFIX/sfw/bin > /dev/null
-    logcmd ln -s ../../bin/wget wget || \
-            logerr "Failed to create link for wget"
-    popd > /dev/null
-}
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_isa_stub
-make_sfw_links
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:

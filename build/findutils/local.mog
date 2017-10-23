@@ -23,6 +23,8 @@
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 #
+license COPYING license=GPLv3
+
 <transform file path=.*locate.* -> drop>
 <transform file path=.*oldfind.* -> drop>
 <transform file path=.*update.* -> drop>
@@ -30,4 +32,13 @@
 <transform dir path=usr/share/man/man5$ -> drop>
 <transform dir path=usr/var$ -> drop>
 <transform dir path=usr/libexec -> drop>
-license COPYING license=GPLv3
+
+dir group=bin mode=0755 owner=root path=usr/gnu/share/man/man1
+
+link path=usr/gnu/bin/find target=../../bin/gfind
+link path=usr/gnu/bin/xargs target=../../bin/gxargs
+link path=usr/gnu/share/man/man1/find.1 \
+	target=../../../../share/man/man1/gfind.1
+link path=usr/gnu/share/man/man1/xargs.1 \
+	target=../../../../share/man/man1/gxargs.1
+

@@ -20,8 +20,8 @@
 #
 # CDDL HEADER END
 #
-#
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -31,33 +31,23 @@ PROG=autoconf                 # App name
 VER=2.69                      # App version
 PKG=developer/build/autoconf  # Package name (without prefix)
 SUMMARY="autoconf - GNU autoconf utility"
-DESC="GNU autoconf - GNU autoconf utility ($VER)"
+DESC="$SUMMARY"
+
+RUN_DEPENDS_IPS="prerequisite/gnu developer/macro/gnu-m4"
 
 NO_PARALLEL_MAKE=1
 BUILDARCH=32
-
-DEPENDS_IPS="developer/macro/gnu-m4 runtime/perl"
-
 CONFIGURE_OPTS="--infodir=$PREFIX/share/info --bindir=$PREFIX/bin"
 
-make_sfw_links() {
-    logmsg "Creating SFW symlinks"
-    logcmd mkdir -p $DESTDIR/$PREFIX/sfw/bin
-    pushd $DESTDIR/$PREFIX/sfw/bin > /dev/null
-    for file in autoscan autoheader autom4te ifnames autoconf autoreconf autoupdate
-        do logcmd ln -s ../../bin/$file $file || \
-            logerr "Failed to create link for $file"
-        done
-    popd > /dev/null
-}
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_isa_stub
-make_sfw_links
 make_package
 clean_up
 

@@ -22,6 +22,7 @@
 #
 #
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -31,53 +32,35 @@ PROG=grep       # App name
 VER=3.1         # App version
 PKG=text/gnu-grep    # Package name (without prefix)
 SUMMARY="ggrep - GNU grep utilities"
-DESC="$SUMMARY $VER"
+DESC="$SUMMARY"
 
-DEPENDS_IPS="SUNWcs library/pcre"
+DEPENDS_IPS="prerequisite/gnu library/pcre"
 
 BUILDARCH=32
-CONFIGURE_OPTS_32="--prefix=$PREFIX
-        --sysconfdir=/etc
-        --includedir=$PREFIX/include
-        --bindir=$PREFIX/bin
-        --sbindir=$PREFIX/sbin
-        --libdir=$PREFIX/lib
-        --libexecdir=$PREFIX/libexec
-	--program-prefix=g"
+CONFIGURE_OPTS_32="
+    --prefix=$PREFIX
+    --sysconfdir=/etc
+    --includedir=$PREFIX/include
+    --bindir=$PREFIX/bin
+    --sbindir=$PREFIX/sbin
+    --libdir=$PREFIX/lib
+    --libexecdir=$PREFIX/libexec
+    --program-prefix=g
+"
 
-install_license() {
-    local LICENSE_FILE
-    LICENSE_FILE=$TMPDIR/$BUILDDIR/$1
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
-    if [ -f "$LICENSE_FILE" ]; then
-        logmsg "Using $LICENSE_FILE as package license"
-        logcmd cp $LICENSE_FILE $DESTDIR/license
-    else
-        logerr "-- $LICENSE_FILE not found!"
-        exit 255
-    fi
-}
-
-link_up_gnu_sfw() {
-    logmsg "Making links in /usr/gnu and /usr/sfw"
-    logcmd mkdir -p $DESTDIR/usr/gnu/bin
-    logcmd mkdir -p $DESTDIR/usr/gnu/share/man/man1
-    logcmd mkdir -p $DESTDIR/usr/sfw/bin
-    for cmd in grep egrep fgrep
-    do
-        logcmd ln -s ../../bin/g$cmd $DESTDIR/usr/gnu/bin/$cmd
-        logcmd ln -s ../../../../share/man/man1/g$cmd.1 $DESTDIR/usr/gnu/share/man/man1/$cmd.1
-        logcmd ln -s ../../bin/g$cmd $DESTDIR/usr/sfw/bin/g$cmd
-    done
-}
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-install_license COPYING
+run_testsuite check
 make_isa_stub
 strip_install
-link_up_gnu_sfw
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:

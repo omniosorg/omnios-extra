@@ -35,30 +35,22 @@ SUMMARY="$PROG -  a collection of binary tools"
 DESC="$SUMMARY"
 
 BUILD_DEPENDS_IPS="gcc44"
-[[ "$BUILDARCH" == "both" ]] && BUILDARCH=32
+[ "$BUILDARCH" = "both" ] && BUILDARCH=32
 
-CONFIGURE_OPTS="--enable-gold=yes --exec-prefix=/usr/gnu --program-prefix=g"
+CONFIGURE_OPTS="
+	--enable-gold=yes
+	--exec-prefix=/usr/gnu
+	--program-prefix=g
+"
 
 # Use old gcc4 standards level for this.
 CFLAGS="$CFLAGS -std=gnu89"
 
 make_prog() {
-    [[ -n $NO_PARALLEL_MAKE ]] && MAKE_JOBS=""
+    [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
     logmsg "--- make"
     logcmd $MAKE SHELL=/bin/bash $MAKE_JOBS || \
         logerr "--- Make failed"
-}
-
-make_sfw_links() {
-    logmsg "Creating SFW symlinks"
-    logcmd mkdir -p $DESTDIR/$PREFIX/sfw/bin
-    pushd $DESTDIR/$PREFIX/sfw/bin > /dev/null
-    for file in gaddr2line gar gas gc++filt gelfedit ggprof gld gnm \
-                gobjcopy gobjdump granlib greadelf gsize gstrings gstrip
-        do logcmd ln -s ../../bin/$file $file || \
-            logerr "Failed to create link for $file"
-        done
-    popd > /dev/null
 }
 
 init
@@ -67,6 +59,8 @@ patch_source
 prep_build
 build
 make_isa_stub
-make_sfw_links
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:

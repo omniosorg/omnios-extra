@@ -33,7 +33,7 @@ PKG=file/gnu-findutils
 SUMMARY="GNU utilities find and xargs"
 DESC="$SUMMARY"
 
-DEPENDS_IPS="SUNWcs"
+RUN_DEPENDS_IPS="prerequisite/gnu"
 
 BUILDARCH=32
 CONFIGURE_OPTS_32="--prefix=$PREFIX
@@ -45,23 +45,19 @@ CONFIGURE_OPTS_32="--prefix=$PREFIX
         --libexecdir=$PREFIX/libexec
 	--program-prefix=g"
 
-link_up_gnu_sfw() {
-    logmsg "Making links in /usr/gnu and /usr/sfw"
-    logcmd mkdir -p $DESTDIR/usr/gnu/bin
-    logcmd mkdir -p $DESTDIR/usr/gnu/share/man/man1
-    for cmd in find xargs
-    do
-        logcmd ln -s ../../bin/g$cmd $DESTDIR/usr/gnu/bin/$cmd
-        logcmd ln -s ../../../../share/man/man1/g$cmd.1 $DESTDIR/usr/gnu/share/man/man1/$cmd.1
-    done
-}
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
+
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_isa_stub
 strip_install
-link_up_gnu_sfw
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:

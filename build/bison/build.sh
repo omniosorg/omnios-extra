@@ -46,17 +46,12 @@ CONFIGURE_OPTS="--disable-yacc"
 M4=/usr/bin/gm4
 export M4
 
-make_links() {
-    logcmd mkdir -p $DESTDIR/usr/sfw/bin
-    logcmd ln -s ../../bin/bison $DESTDIR/usr/sfw/bin/bison
-}
-
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-make_links
+run_testsuite check
 make_isa_stub
 make_package
 clean_up

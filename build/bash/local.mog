@@ -21,8 +21,14 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
+license COPYING license=GPL3
+
 <transform dir  path=etc/bash -> set group sys>
 <transform dir  path=usr/share/bash -> set group other>
-license COPYING license=GPL3
+
+link path=usr/bin/rbash target=bash
+link path=usr/gnu/bin/sh target=../../bin/bash
+

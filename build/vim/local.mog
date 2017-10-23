@@ -1,3 +1,7 @@
 license files/license license="VIM LICENSE"
 <transform file path=usr/share/vim/vim80/tools/demoserver.py -> set pkg.depend.bypass-generate .*>
 <transform dir path=usr/share/applications -> set group other>
+
+# The build doesn't supply a 'vi' symlink so we make one
+link path=usr/bin/vi target=vim
+

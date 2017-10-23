@@ -22,6 +22,7 @@
 #
 #
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -31,13 +32,11 @@ PROG=vim
 VER=8.0.586
 PKG=editor/vim
 SUMMARY="Vi IMproved"
-DESC="$SUMMARY version $VER"
+DESC="$SUMMARY"
 
 #BUILDDIR=${PROG}${VER/./}     # Location of extracted source
 BUILDDIR=vim80
 BUILDARCH=32
-
-DEPENDS_IPS="system/extended-system-utilities system/library system/library/math"
 
 # VIM 8.0 source exposes either a bug in illumos msgfmt(1), OR it contains
 # a GNU-ism we are strict about.  Either way, use GNU msgfmt for now.
@@ -53,18 +52,11 @@ CONFIGURE_OPTS="
 "
 reset_configure_opts
 
-# The build doesn't supply a 'vi' symlink so we make one
-link_vi() {
-    logmsg "Creating symlink for $PREFIX/bin/vi"
-    logcmd ln -s vim $DESTDIR$PREFIX/bin/vi
-}
-
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-link_vi
 make_isa_stub
 make_package
 clean_up

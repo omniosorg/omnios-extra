@@ -20,8 +20,8 @@
 #
 # CDDL HEADER END
 #
-#
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -31,12 +31,12 @@ PROG=gettext                  # App name
 VER=0.19.8.1                  # App version
 PKG=text/gnu-gettext          # Package name (without prefix)
 SUMMARY="gettext - GNU gettext utility"
-DESC="GNU gettext - GNU gettext utility ($VER)"
+DESC="GNU gettext - GNU gettext utility"
 
 NO_PARALLEL_MAKE=1
 BUILDARCH=32
 
-DEPENDS_IPS="developer/macro/gnu-m4"
+DEPENDS_IPS="prerequisite/gnu developer/macro/gnu-m4"
 
 CONFIGURE_OPTS="--infodir=$PREFIX/share/info
 	--disable-java
@@ -47,40 +47,17 @@ CONFIGURE_OPTS="--infodir=$PREFIX/share/info
 	--disable-shared
 	--bindir=/usr/bin"
 
-install_license() {
-    local LICENSE_FILE
-    LICENSE_FILE=$TMPDIR/$BUILDDIR/$1
-
-    if [ -f "$LICENSE_FILE" ]; then
-        logmsg "Using $LICENSE_FILE as package license"
-        logcmd cp $LICENSE_FILE $DESTDIR/license
-    else
-        logerr "-- $LICENSE_FILE not found!"
-        exit 255
-    fi
-}
-
-make_links() {
-    logmsg "Creating GNU symlinks"
-    logcmd mkdir -p $DESTDIR/$PREFIX/gnu/bin
-    logcmd mkdir -p $DESTDIR/$PREFIX/gnu/share/man/man1
-    for file in gettext msgfmt xgettext
-    do
-        logcmd mv $DESTDIR/$PREFIX/bin/$file $DESTDIR/$PREFIX/bin/g$file
-        logcmd mv $DESTDIR/$PREFIX/share/man/man1/$file.1 $DESTDIR/$PREFIX/share/man/man1/g$file.1
-        logcmd ln -s ../../bin/g$file $DESTDIR/$PREFIX/gnu/bin/$file
-        logcmd ln -s ../../../../share/man/man1/g$file.1 $DESTDIR/$PREFIX/gnu/share/man/man1/$file
-    done
-}
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
+[ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 install_license COPYING
 make_isa_stub
-make_links
 make_package
 clean_up
 

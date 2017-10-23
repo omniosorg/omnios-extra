@@ -1,1 +1,12 @@
 license COPYING license=GPLv3
+
+dir group=bin mode=0755 owner=root path=usr/sfw/share/man/man1
+dir group=bin mode=0755 owner=root path=usr/gnu/share/man/man1
+
+link path=usr/gnu/bin/make target=../../bin/gmake
+link path=usr/sfw/bin/gmake target=../../bin/gmake
+link path=usr/gnu/share/man/man1/make.1 \
+    target=../../../../share/man/man1/gmake.1
+link path=usr/sfw/share/man/man1/gmake.1 \
+    target=../../../../share/man/man1/gmake.1
+

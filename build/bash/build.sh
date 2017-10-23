@@ -20,36 +20,25 @@
 #
 # CDDL HEADER END
 #
-
 #
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
-#
-
-#
 # Copyright (c) 2013 by Delphix. All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 #
 
 # Load support functions
 . ../../lib/functions.sh
 
-# Patches are synced from gnu.org, e.g.
-#   rsync -a --exclude=*.sig rsync://ftp.gnu.org/ftp/bash/bash-4.4-patches/ patches/bash-4.4-patches/
-#   cd patches
-#   ls bash-4.4-patches/* | sed -e 's/\([0-9]\)$/\1 -p0/' > series
-# Then set PATCHLEVEL to the highest patch number in the updated list
-#
-# NOTE: patches will obviously have to be checked often.
-
 PROG=bash       # App name
 VER=4.4         # App version
 PATCHLEVEL=12   # Patch level
-VERHUMAN="$VER patchlevel $PATCHLEVEL"
+VERHUMAN="$VER.$PATCHLEVEL"
 PKG=shell/bash  # Package name (without prefix)
 SUMMARY="GNU Bourne-Again shell (bash)"
-DESC="$SUMMARY version $VER"
+DESC="$SUMMARY"
 
-DEPENDS_IPS="system/library system/library/gcc-5-runtime"
+RUN_DEPENDS_IPS="prerequisite/gnu system/library system/library/gcc-5-runtime"
 
 BUILDARCH=32
 NO_PARALLEL_MAKE=1
@@ -106,23 +95,10 @@ CONFIGURE_OPTS="
 "
 reset_configure_opts
 
-# Files pilfered from upstream userland-gate
+# Files taken from upstream userland-gate
 install_files() {
     logmsg "Installing extra files"
-    logcmd cp $MYDIR/files/rbash.1 $DESTDIR$PREFIX/share/man/man1/
-    logcmd mkdir -p $DESTDIR/etc/bash
-    logcmd mkdir -p $DESTDIR/etc/skel
-    logcmd cp $MYDIR/files/etc.bash.bash_completion $DESTDIR/etc/bash/bash_completion
-    logcmd cp $MYDIR/files/etc.bash.bashrc $DESTDIR/etc/bash/bashrc.example
-    logcmd cp $MYDIR/files/etc.bash.inputrc $DESTDIR/etc/bash/inputrc.example
-    logcmd cp $MYDIR/files/etc.skel.bashrc $DESTDIR/etc/skel/.bashrc
-}
-
-make_symlink() {
-    logmsg "Setting up symlinks"
-    logcmd ln -s ./bash $DESTDIR$PREFIX/bin/rbash
-    logcmd mkdir -p $DESTDIR$PREFIX/gnu/bin
-    logcmd ln -s ../../bin/bash $DESTDIR$PREFIX/gnu/bin/sh
+    logcmd rsync -a $SRCDIR/files/ $DESTDIR/ || logerr "Extra files failed."
 }
 
 init
@@ -132,7 +108,6 @@ prep_build
 build
 make_isa_stub
 install_files
-make_symlink
 VER=${VER}.$PATCHLEVEL
 make_package
 clean_up

@@ -19,12 +19,30 @@
 #
 # CDDL HEADER END
 #
-#
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-<transform file path=usr/lib/lib.* -> drop>
-<transform dir  path=usr/include$ -> drop>
-<transform file path=usr/include/.* -> drop>
-<transform file path=license$ -> drop>
-license license license=GPLv3
+license COPYING license=GPLv3
+<transform file path=usr/lib/lib -> drop>
+<transform file dir  path=usr/include -> drop>
+
+<transform file path=usr/bin/gettext$ -> edit path usr/bin/ usr/bin/g>
+<transform file path=usr/bin/msgfmt$ -> edit path usr/bin/ usr/bin/g>
+<transform file path=usr/bin/xgettext$ -> edit path usr/bin/ usr/bin/g>
+
+<transform file path=usr/share/man/man1/gettext.1$ -> edit path man1/ man1/g>
+<transform file path=usr/share/man/man1/msgfmt.1$ -> edit path man1/ man1/g>
+<transform file path=usr/share/man/man1/xgettext.1$ -> edit path man1/ man1/g>
+
+link path=usr/gnu/bin/gettext	target=../../bin/ggettext
+link path=usr/gnu/bin/msgfmt	target=../../bin/gmsgfmt
+link path=usr/gnu/bin/xgettext	target=../../bin/gxgettext
+
+link path=usr/gnu/share/man/man1/gettext \
+    target=../../../../share/man/man1/ggettext.1
+link path=usr/gnu/share/man/man1/msgfmt \
+    target=../../../../share/man/man1/gmsgfmt.1
+link path=usr/gnu/share/man/man1/xgettext \
+    target=../../../../share/man/man1/gxgettext.1
+
