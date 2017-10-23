@@ -13,7 +13,7 @@ uname -a shows `omnios-r151022-eb9d5cb557` (no change from previous release)
 ### Security fixes
 
 * `curl` updated to 7.56.1
-  * [CVE-2017-1000257](https://www.cvedetails.com/cve/CVE-2017-1000257/)
+  * [CVE-2017-1000257](https://curl.haxx.se/docs/adv_20171023.html)
 
 <br>
 
