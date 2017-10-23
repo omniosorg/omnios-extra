@@ -33,8 +33,6 @@ license COPYING license=GPLv3
 <transform dir path=usr/var$ -> drop>
 <transform dir path=usr/libexec -> drop>
 
-<transform dir file path=usr/share/info -> drop>
-
 dir group=bin mode=0755 owner=root path=usr/gnu
 dir group=bin mode=0755 owner=root path=usr/gnu/bin
 dir group=sys mode=0755 owner=root path=usr/gnu/share

@@ -2,7 +2,6 @@ license COPYING license=GPLv3
 
 <transform link path=usr/bin/awk -> drop>
 <transform dir file path=usr/libexec -> drop>
-<transform file dir path=usr/share/info -> drop>
 
 dir group=bin mode=0755 owner=root path=usr/gnu
 dir group=bin mode=0755 owner=root path=usr/gnu/bin
