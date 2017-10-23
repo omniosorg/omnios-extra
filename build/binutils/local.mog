@@ -2,3 +2,21 @@ license COPYING license=GPL
 license COPYING.LIB license=LGPL
 license COPYING3 license=GPLv3
 license COPYING3.LIB license=LGPLv3
+
+dir group=bin mode=0755 owner=root path=usr/sfw/bin
+link path=usr/sfw/bin/gaddr2line	target=../../bin/gaddr2line
+link path=usr/sfw/bin/gar		target=../../bin/gar
+link path=usr/sfw/bin/gas		target=../../bin/gas
+link path=usr/sfw/bin/gc++filt		target=../../bin/gc++filt
+link path=usr/sfw/bin/gelfedit		target=../../bin/gelfedit
+link path=usr/sfw/bin/ggprof		target=../../bin/ggprof
+link path=usr/sfw/bin/gld		target=../../bin/gld
+link path=usr/sfw/bin/gnm		target=../../bin/gnm
+link path=usr/sfw/bin/gobjcopy		target=../../bin/gobjcopy
+link path=usr/sfw/bin/gobjdump		target=../../bin/gobjdump
+link path=usr/sfw/bin/granlib		target=../../bin/granlib
+link path=usr/sfw/bin/greadelf		target=../../bin/greadelf
+link path=usr/sfw/bin/gsize		target=../../bin/gsize
+link path=usr/sfw/bin/gstrings		target=../../bin/gstrings
+link path=usr/sfw/bin/gstrip		target=../../bin/gstrip
+
