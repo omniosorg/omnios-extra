@@ -424,6 +424,18 @@ parallel_build() {
                 logmsg "######################################################"
                 logmsg "-- Job status --"
                 now=`date +%s`
+
+                # If nightly is running, include that status too
+                nightly=$PREBUILT_ILLUMOS/log/nightly.lock
+                if [ -h "$nightly" ]; then
+                    nightly_pid="`readlink $nightly | cut -d. -f3`"
+                    if kill -0 $nightly_pid; then
+                        # Nightly running
+                        msg=`grep '^===' ${nightly/lock/log} | tail -1`
+                        logmsg "`printf "    [=] %8d -  nightly %s\n" \
+                            "$nightly_pid" "${msg:0:50}"`"
+                    fi
+                fi
                 for i in `seq 0 $threads`; do
                     [ -n "${slots[$i]}" ] || continue
                     ((tm = now - ${slotstart[$i]}))
