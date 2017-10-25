@@ -1,0 +1,10 @@
+--- nss-3.33~/nss/lib/freebl/verified/kremlib.h	2017-09-20 06:47:27.000000000 +0000
++++ nss-3.33/nss/lib/freebl/verified/kremlib.h	2017-09-20 13:38:53.908505774 +0000
+@@ -17,6 +17,7 @@
+ 
+ #include <inttypes.h>
+ #include <stdlib.h>
++#include <endian.h>
+ 
+ #include <stdbool.h>
+ #include <stdio.h>
