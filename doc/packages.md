@@ -69,7 +69,7 @@
 | system/management/snmp/net-snmp	| 5.7.3			| https://sourceforge.net/projects/net-snmp/files/net-snmp
 | system/pciutils			| 3.5.5			| https://www.kernel.org/pub/software/utils/pciutils/
 | system/test/fio			| 3.1			| https://github.com/axboe/fio/releases
-| terminal/screen			| 4.6.1			| http://git.savannah.gnu.org/cgit/screen.git/refs/tags
+| terminal/screen			| 4.6.2			| http://git.savannah.gnu.org/cgit/screen.git/refs/tags
 | terminal/tmux				| 2.6			| https://github.com/tmux/tmux/releases
 | text/gawk				| 4.1.4			| https://ftp.gnu.org/gnu/gawk/
 | text/gnu-diffutils			| 3.6			| http://git.savannah.gnu.org/cgit/diffutils.git/refs/tags

@@ -29,7 +29,7 @@
 . ../../lib/functions.sh
 
 PROG=screen
-VER=4.6.1
+VER=4.6.2
 PKG=terminal/screen
 SUMMARY="GNU Screen terminal multiplexer"
 DESC="$SUMMARY"
@@ -60,11 +60,21 @@ defscrollback 1000
     ' < etc/etcscreenrc > $DESTDIR/etc/screenrc
 }
 
+tests() {
+    curses=`ldd $DESTDIR/$PREFIX/bin/screen | nawk '/curses/ { print $1}'`
+    [ "$curses" = "libncurses.so.6" ] || \
+        logerr "Wrong curses version linked ($curses)"
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+tests
 strip_install
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:

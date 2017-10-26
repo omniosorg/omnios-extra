@@ -659,7 +659,7 @@ omnios system/zones/brand/lx 0.5.11-0.151023
 omnios system/zones/brand/s10 0.5.11-0.151023
 omnios system/zones/brand/sn1 0.5.11-0.151023
 omnios system/zones/internal 0.5.11-0.151023
-omnios terminal/screen 4.6.1-0.151023
+omnios terminal/screen 4.6.2-0.151023
 omnios terminal/tmux 2.6-0.151023
 omnios text/auto_ef 0.5.11-0.151023
 omnios text/doctools 0.5.11-0.151023
