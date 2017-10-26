@@ -21,16 +21,13 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-<transform dir path=usr/bin.* -> drop>
+
+<transform file dir link path=usr/bin -> drop>
+<transform file dir link path=usr/share -> drop>
 <transform dir path=usr/lib$ -> drop>
-<transform dir path=usr/lib/mps$ -> drop>
-<transform dir path=usr/share.* -> drop>
-<transform file path=usr/bin.* -> drop>
-<transform file path=usr/lib/mps* -> drop>
-<transform file path=usr/share.* -> drop>
-<transform link path=usr/bin.* -> drop>
-<transform link path=usr/lib/mps/.* -> drop>
-<transform link path=usr/share.* -> drop>
+<transform file dir link path=usr/lib/mps -> drop>
 <transform file path=usr/lib/pkgconfig/nss\.pc -> set mode 0444>
+
