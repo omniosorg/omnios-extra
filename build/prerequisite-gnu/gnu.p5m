@@ -19,7 +19,7 @@ dir group=bin mode=0755 owner=root path=usr/gnu
 dir group=bin mode=0755 owner=root path=usr/gnu/bin
 dir group=bin mode=0755 owner=root path=usr/gnu/bin/i386
 dir group=bin mode=0755 owner=root path=usr/gnu/lib
-dir group=bin mode=0755 owner=root path=usr/gnu/share
+dir group=sys mode=0755 owner=root path=usr/gnu/share
 dir group=bin mode=0755 owner=root path=usr/gnu/share/man
 
 link path=usr/sfw/doc target=share/doc

@@ -33,7 +33,7 @@ PKG=developer/build/autoconf  # Package name (without prefix)
 SUMMARY="autoconf - GNU autoconf utility"
 DESC="$SUMMARY"
 
-RUN_DEPENDS_IPS="prerequisite/gnu developer/macro/gnu-m4"
+RUN_DEPENDS_IPS="system/prerequisite/gnu developer/macro/gnu-m4"
 
 NO_PARALLEL_MAKE=1
 BUILDARCH=32

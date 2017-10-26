@@ -37,7 +37,7 @@ DESC="$SUMMARY"
 # As of 1.22.3, parallel gmake breaks.
 NO_PARALLEL_MAKE=1
 
-RUN_DEPENDS_IPS="prerequisite/gnu"
+RUN_DEPENDS_IPS="system/prerequisite/gnu"
 
 BUILDARCH=32
 CONFIGURE_OPTS_32="
