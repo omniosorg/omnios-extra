@@ -1,7 +1,11 @@
 license COPYING license=GPLv3
 
+# Don't want this as usr/bin/awk
 <transform link path=usr/bin/awk -> drop>
-<transform dir file path=usr/libexec -> drop>
+# Drop libexec
+<transform file dir path=usr/libexec -> drop>
+# gawk tries to install files in /etc/profile.d
+<transform dir file path=etc -> drop>
 
 link path=usr/gnu/bin/awk target=../../bin/gawk
 
