@@ -9,7 +9,7 @@
 | compress/xz				| 5.2.3			| https://tukaani.org/xz/
 | compress/zip				| 3.0			| http://www.info-zip.org/Zip.html
 | data/iso-codes			| 3.76			| http://pkg-isocodes.alioth.debian.org/downloads/
-| database/sqlite-3			| 3200100		| https://www.sqlite.org/download.html
+| database/sqlite-3			| 3210000		| https://www.sqlite.org/download.html
 | developer/bmake			| 20170812		| http://www.crufty.net/ftp/pub/sjg/
 | developer/build/autoconf		| 2.69			| https://git.savannah.gnu.org/cgit/autoconf.git/refs/tags
 | developer/build/automake		| 1.15.1		| https://git.savannah.gnu.org/cgit/automake.git/refs/tags
