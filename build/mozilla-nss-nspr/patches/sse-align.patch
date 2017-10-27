@@ -1,0 +1,45 @@
+
+GCC optimises the memcpy() instruction in this function to use SSE
+instructions - in particular it introduces movaps which requires
+16-byte aligned arguments..
+
+However, in 32-bit, the stack is only 8-byte aligned so there is no
+guarantee that the local newIV variable will be properly aligned.
+
+This was causing crashes in /usr/sbin/nscd with ldap enabled in
+nsswitch.conf with the following stack trace:
+
+	libfreebl3.so`rijndael_decryptCBC+0x23
+	libfreebl3.so`AES_Decrypt+0x5b
+	libsoftokn3.so`AES_Decrypt+0x37
+	libsoftokn3.so`NSC_DecryptUpdate+0xce
+	libnss3.so`PK11_CipherOp+0x15a
+	libssl3.so`ssl3_HandleRecord+0x89f
+	libssl3.so`ssl3_GatherCompleteHandshake+0x263
+	libssl3.so`ssl3_GatherAppDataRecord+0x34
+	libssl3.so`ssl_SecureRecv+0x2a3
+	libssl3.so`ssl_Recv+0x57
+	libnspr4.so`PR_Recv+0x1b
+	libldap.so.5`prldap_read+0x33
+	... elided ...
+
+From GCC documentation:
+
+	force_align_arg_pointer
+
+	On x86 targets, the force_align_arg_pointer attribute may be applied
+	to individual function definitions, generating an alternate prologue
+	and epilogue that realigns the run-time stack if necessary. This
+	supports mixing legacy codes that run with a 4-byte aligned stack with
+	modern codes that keep a 16-byte stack for SSE compatibility.
+
+--- nss-3.33~/nss/lib/freebl/rijndael.c	2017-09-20 06:47:27.000000000 +0000
++++ nss-3.33/nss/lib/freebl/rijndael.c	2017-10-25 09:34:34.628062306 +0000
+@@ -968,6 +968,7 @@
+     return SECSuccess;
+ }
+ 
++__attribute__((force_align_arg_pointer))
+ static SECStatus
+ rijndael_decryptCBC(AESContext *cx, unsigned char *output,
+                     unsigned int *outputLen, unsigned int maxOutputLen,
