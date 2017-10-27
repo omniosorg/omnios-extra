@@ -38,7 +38,7 @@ PKG=shell/bash  # Package name (without prefix)
 SUMMARY="GNU Bourne-Again shell (bash)"
 DESC="$SUMMARY"
 
-RUN_DEPENDS_IPS="prerequisite/gnu system/library system/library/gcc-5-runtime"
+RUN_DEPENDS_IPS="system/prerequisite/gnu system/library"
 
 BUILDARCH=32
 NO_PARALLEL_MAKE=1

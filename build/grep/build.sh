@@ -34,7 +34,7 @@ PKG=text/gnu-grep    # Package name (without prefix)
 SUMMARY="ggrep - GNU grep utilities"
 DESC="$SUMMARY"
 
-DEPENDS_IPS="prerequisite/gnu library/pcre"
+DEPENDS_IPS="system/prerequisite/gnu library/pcre"
 
 BUILDARCH=32
 CONFIGURE_OPTS_32="

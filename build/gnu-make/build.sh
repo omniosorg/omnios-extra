@@ -35,7 +35,7 @@ PKG=developer/build/gnu-make
 SUMMARY="gmake - GNU make"
 DESC="GNU make - A utility used to build software (gmake)"
 
-RUN_DEPENDS_IPS="prerequisite/gnu"
+RUN_DEPENDS_IPS="system/prerequisite/gnu"
 
 BUILDARCH=32
 CONFIGURE_OPTS="--bindir=$PREFIX/bin --program-prefix=g"

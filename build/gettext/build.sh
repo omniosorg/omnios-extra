@@ -36,7 +36,7 @@ DESC="GNU gettext - GNU gettext utility"
 NO_PARALLEL_MAKE=1
 BUILDARCH=32
 
-DEPENDS_IPS="prerequisite/gnu developer/macro/gnu-m4"
+DEPENDS_IPS="system/prerequisite/gnu developer/macro/gnu-m4"
 
 CONFIGURE_OPTS="--infodir=$PREFIX/share/info
 	--disable-java
