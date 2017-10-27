@@ -117,6 +117,25 @@ show_usage() {
     echo "  -r REPO   : specify the IPS repo to use (default: $PKGSRVR)"
 }
 
+print_config() {
+    cat << EOM
+
+MYDIR:                  $MYDIR
+LIBDIR:                 $LIBDIR
+ROOTDIR:                $ROOTDIR
+TMPDIR:                 $TMPDIR
+DTMPDIR:                $DTMPDIR
+
+Mirror:                 $MIRROR
+Publisher:              $PKGPUBLISHER
+Production IPS Repo:    $IPS_REPO
+Repository:             $PKGSRVR
+Pre-built illumos:      ${PREBUILT_ILLUMOS:-"<Not configured>"}
+Privilege Escalation:   $PFEXEC
+
+EOM
+}
+
 #############################################################################
 # Log output of a command to a file
 #############################################################################
@@ -233,6 +252,8 @@ export LANG GCCPATH PATH
 
 # The dir where this file is located - used for sourcing further files
 MYDIR=$PWD/`dirname $BASH_SOURCE[0]`
+LIBDIR="`realpath $MYDIR`"
+ROOTDIR="`dirname $LIBDIR`"
 # The dir where this file was sourced from - this will be the directory of the
 # build script
 SRCDIR=$PWD/`dirname $0`
@@ -241,7 +262,7 @@ SRCDIR=$PWD/`dirname $0`
 # Load configuration options
 #############################################################################
 . $MYDIR/config.sh
-. $MYDIR/site.sh
+[ -f $MYDIR/site.sh ] && . $MYDIR/site.sh
 
 # Platform information
 SUNOSVER=`uname -r` # e.g. 5.11

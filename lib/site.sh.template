@@ -1,0 +1,43 @@
+#
+# This is an example site.sh file for the OmniOS build system.
+# Copy it to lib/site.sh and customise as necessary.
+#
+# To view current configuration, 'cd build; ./buildctl config'
+#
+
+# The web server or local directory from which source files are fetched.
+#MIRROR=https://mirrors.omniosce.org
+
+# Package publisher
+#PKGPUBLISHER=omnios
+
+# Repository in which built packages are placed
+# ROOTDIR is the root of the omnios-build checkout.
+#PKGSRVR=file://$ROOTDIR/tmp.repo/
+
+# Location of a pre-built illumos tree; this is required to build some packages
+#PREBUILT_ILLUMOS=$HOME/build/prebuild
+
+# The production IPS repository for this branch; used for package contents diff
+#IPS_REPO=https://pkg.omniosce.org/r$RELVER/core
+
+# TMPDIR is used for source archives and build directories
+# DTMPDIR is used for constructing package file trees for publication
+#TMPDIR=/tmp/build_$USER
+#DTMPDIR=$TMPDIR
+
+# Command used for privilege escalation (defaults to 'sudo')
+#PFEXEC=pfexec
+
+# If you want to build as root (not recommended), set these:
+#ROOT_OK=1
+#export FORCE_UNSAFE_CONFIGURE=1
+
+# To avoid building the kayak-kernel package (requires privilege escalation)
+# uncomment the following line.
+#SKIP_KAYAK_KERNEL=1
+
+# To use a proxy for source code retrieval.
+#export http_proxy=http://192.168.1.1:8080/
+#export https_proxy=http://192.168.1.1:8080/
+

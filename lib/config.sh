@@ -31,6 +31,12 @@
 RELVER=151023
 PVER=0.$RELVER
 
+# Default package publisher
+PKGPUBLISHER=omnios
+
+# Default repository
+PKGSRVR=file://$ROOTDIR/tmp.repo/
+
 # set locale to C
 export LC_ALL=C
 
@@ -123,7 +129,7 @@ BUNZIP2=bunzip2
 XZCAT=xzcat
 UNZIP=unzip
 AWK=gawk
-# Command for privilege escalation. Can be overriden in site.sh
+# Command for privilege escalation. Can be overridden in site.sh
 PFEXEC=sudo
 
 # Figure out number of logical CPUs for use with parallel gmake jobs (-j)
