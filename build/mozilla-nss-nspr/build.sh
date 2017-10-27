@@ -45,7 +45,13 @@ DIST64=SunOS5.11_i86pc_gcc_64_OPT.OBJ
 
 BUILD_DEPENDS_IPS="library/nspr/header-nspr"
 
-MAKE_OPTS="BUILD_OPT=1 NS_USE_GCC=1 NO_MDUPDATE=1 NSDISTMODE=copy"
+MAKE_OPTS="
+    BUILD_OPT=1
+    NS_USE_GCC=1
+    NO_MDUPDATE=1
+    NSDISTMODE=copy
+    XCFLAGS=-g
+"
 
 NSS_LIBS="libfreebl3.so libnss3.so
 	libnssckbi.so libnssdbm3.so
