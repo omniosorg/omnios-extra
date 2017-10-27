@@ -38,6 +38,10 @@ export LC_ALL=C
 # If $MIRROR begins with a '/', it is treated as a local directory.
 MIRROR=https://mirrors.omniosce.org
 
+# The production IPS repository for this branch (may be overriden in site.sh)
+# Used for package contents diffing.
+IPS_REPO=https://pkg.omniosce.org/bloody/core
+
 # Default prefix for packages (may be overridden)
 PREFIX=/usr
 
