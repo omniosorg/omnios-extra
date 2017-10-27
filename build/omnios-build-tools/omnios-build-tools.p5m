@@ -51,4 +51,5 @@ depend fmri=text/gnu-sed type=require
 depend fmri=text/intltool type=require
 depend fmri=library/idnkit/header-idnkit type=require
 depend fmri=system/pciutils/pci.ids type=require
+depend fmri=library/python-2/vcversioner-27 type=require
 
