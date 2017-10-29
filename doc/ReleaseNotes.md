@@ -4,10 +4,31 @@
 
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](http://www.omniosce.org/setup/switch)
 
+## r151022x (2017-10-30)
+
+Weekly release for w/c 30th of October 2017.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `wget` updated to 1.19.2
+  * [CVE-2017-13089](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-13089)
+  * [CVE-2017-13090](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-13090)
+
+### Other Changes
+
+* Mozilla `nss/nspr` updated to 3.33/4.17
+* Fix crash in `nscd` when ldap maps are used and the connection to the LDAP
+  server is protected with AES encryption.
+* Add `library/python-2/vcversioner-27` package which is now required to
+  build OmniOS r151022.
+
+<br>
+
+----
 ## r151022w (2017-10-23)
 
-Weekly release for w/c 23rd of October 2017,
-uname -a shows `omnios-r151022-eb9d5cb557` (no change from previous release)
+Weekly release for w/c 23rd of October 2017.
 > This is a non-reboot update.
 
 ### Security fixes
@@ -21,8 +42,7 @@ uname -a shows `omnios-r151022-eb9d5cb557` (no change from previous release)
 
 ## r151022u (2017-10-09)
 
-Weekly release for w/c 9th of October 2017,
-uname -a shows `omnios-r151022-eb9d5cb557` (no change from previous release)
+Weekly release for w/c 9th of October 2017.
 > This is a non-reboot update.
 
 ### Security fixes
@@ -31,6 +51,7 @@ uname -a shows `omnios-r151022-eb9d5cb557` (no change from previous release)
   * [CVE-2017-1000254](https://www.cvedetails.com/cve/CVE-2017-1000254/)
 * `OpenSSH` - sftp-server users with read-only access could create
   zero-length files.
+  * [CVE-2017-15906](https://www.cvedetails.com/cve/CVE-2017-15906/)
 * `sudo` update to 1.8.21p2
   * [CVE-2017-1000368](https://nvd.nist.gov/vuln/detail/CVE-2017-1000368)
 
@@ -74,7 +95,7 @@ release.
 
 ## r151022r (2017-09-18)
 
-Weekly release for w/c 18th of September 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
+Weekly release for w/c 18th of September 2017.
 > This is a non-reboot update.
 
 ### Security fixes
@@ -94,7 +115,7 @@ Weekly release for w/c 18th of September 2017, uname -a shows `omnios-r151022-5e
 
 ## r151022q (2017-09-11)
 
-Weekly release for w/c 11th of September 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
+Weekly release for w/c 11th of September 2017.
 > This is a non-reboot update.
 
 ### Security fixes
@@ -108,7 +129,7 @@ Weekly release for w/c 11th of September 2017, uname -a shows `omnios-r151022-5e
 
 ## r151022o (2017-08-28)
 
-Weekly release for w/c 28th of August 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
+Weekly release for w/c 28th of August 2017.
 > This is a non-reboot update.
 
 ### Security fixes
@@ -136,7 +157,7 @@ Weekly release for w/c 28th of August 2017, uname -a shows `omnios-r151022-5e982
 
 ## r151022m (2017-08-11)
 
-Early weekly release for w/c 14th of August 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
+Early weekly release for w/c 14th of August 2017
 > This is a non-reboot update.
 
 ### Security fixes
@@ -157,7 +178,7 @@ Early weekly release for w/c 14th of August 2017, uname -a shows `omnios-r151022
 
 ## r151022l (2017-08-07)
 
-Weekly release for w/c 7th of August 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
+Weekly release for w/c 7th of August 2017.
 > This release requires a reboot.
 
 ### Security fixes
@@ -182,7 +203,7 @@ Weekly release for w/c 7th of August 2017, uname -a shows `omnios-r151022-5e982d
 
 ## r151022k (2017-07-31)
 
-Weekly release for w/c 31st of July 2017, uname -a shows `omnios-r151022-5e982daae6` (no change from previous release)
+Weekly release for w/c 31st of July 2017.
 > This is a non-reboot update.
 
 ### Security fixes
@@ -205,7 +226,8 @@ Weekly release for w/c 31st of July 2017, uname -a shows `omnios-r151022-5e982da
 
 ## r151022i (2017-07-17)
 
-Weekly release for w/c 17th of July 2017, uname -a shows `omnios-r151022-5e982daae6`
+Weekly release for w/c 17th of July 2017,
+uname -a shows `omnios-r151022-5e982daae6`.
 > This release requires a reboot.
 
 ### Security fixes
@@ -242,7 +264,8 @@ Weekly release for w/c 17th of July 2017, uname -a shows `omnios-r151022-5e982da
 
 ## r151022h (2017-07-12)
 
-Weekly release for w/c 10th of July 2017, uname -a shows `omnios-r151022-f9693432c2` (no change from previous release)
+Weekly release for w/c 10th of July 2017,
+uname -a shows `omnios-r151022-f9693432c2`.
 This is the initial OmniOSce release.
 
 ### Security fixes
