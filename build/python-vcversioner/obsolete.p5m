@@ -1,0 +1,2 @@
+set name=pkg.fmri value=library/python-2/vcversioner-27@2.16.0.0-@PVER@
+set name=pkg.obsolete value=true
