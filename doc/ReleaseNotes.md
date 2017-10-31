@@ -1,13 +1,30 @@
-<img src="http://www.omniosce.org/OmniOSce_logo.svg" height="128">
+<a href="https://omniosce.org">
+<img src="https://omniosce.org/OmniOSce_logo.svg" height="128">
+</a>
 
 # Release Notes for OmniOSce v11 r151024
 
 Stable Release, 6th of November 2017
+
 `uname -a` shows `omnios-r151024-c2a1589567`
 
 r151024 release repository: https://pkg.omniosce.org/r151024/core
 
-Upgrade instructions - <https://www.omniosce.org/upgrade>
+Upgrade instructions - <https://omniosce.org/upgrade>
+
+## Help wanted
+
+<a href="https://omniosce.org/patron">
+<img src="https://omniosce.org/support.png" align="left">
+</a>
+
+OmniOS Community Edition has no major company behind it, just a small team of
+people who spend their precious spare time keeping it up-to-date. If you rely
+on OmniOS for fun or business please consider supporting us via a donation.
+More information can be found on our
+[patronage page](https://omniosce.org/patron).
+Alternatively, if you have some time and would like to help with development,
+please get in touch via [the lobby](https://gitter.im/omniosorg/Lobby). 
 
 ## New features since r151022
 
