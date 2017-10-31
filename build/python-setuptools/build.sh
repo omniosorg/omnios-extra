@@ -21,29 +21,26 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
 
+PKG=library/python-2/setuptools-27
 PROG=setuptools
-VER=0.6.11
-SUMMARY="setuptools - yet another python packaging requirement"
+VER=36.5.0
+SUMMARY="setuptools - Easily download, build, install, upgrade, and uninstall Python packages"
 DESC="$SUMMARY"
 
-# In the future when we upgrade python again, be sure to wrap the following
-# around with set_python_version and reassign PKG and RUN_DEPENDS_IPS.
-# The only way buildctl detects packages is by grepping for PKG assignment.
+RUN_DEPENDS_IPS="runtime/python-27 "
 XFORM_ARGS="-D PYTHONVER=$PYTHONVER"
-RUN_DEPENDS_IPS="runtime/python-27"
-PKG=library/python-2/setuptools-27
+
 init
+download_source $PROG $PROG $VER
+patch_source
 prep_build
-mkdir -p $DESTDIR/usr/lib/python2.7/vendor-packages
-PYTHONPATH=$DESTDIR/usr/lib/python2.7/vendor-packages \
-    python2.7 ez_setup.py --always-copy \
-        --install-dir $DESTDIR/usr/lib/python2.7/vendor-packages/ \
-        setuptools
-make_package
+python_build
+make_package local.mog
 clean_up
