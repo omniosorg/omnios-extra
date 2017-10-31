@@ -16,7 +16,7 @@ omnios consolidation/osnet/osnet-message-files 0.5.11-0.151023
 omnios consolidation/osnet/osnet-redistributable 0.5.11-0.151023
 omnios consolidation/sunpro/sunpro-incorporation 0.5.11-0.151023
 omnios data/iso-codes 3.76-0.151023
-omnios database/sqlite-3 3.20.1-0.151023
+omnios database/sqlite-3 3.21.0-0.151023
 omnios developer/acpi 0.5.11-0.151023
 omnios developer/appcert 0.5.11-0.151023
 omnios developer/apptrace 0.5.11-0.151023
