@@ -1,15 +1,13 @@
 <img src="http://www.omniosce.org/OmniOSce_logo.svg" height="128">
 
 # Release Notes for OmniOSce v11 r151024
-![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ** These are DRAFT release notes ** ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
 
-Stable Release, TBC of November 2017
-
-illumos-omnios branch r151024 at XXX
-
-`uname -a` shows `omnios-r151024-XXX`
+Stable Release, 6th of November 2017
+`uname -a` shows `omnios-r151024-c2a1589567`
 
 r151024 release repository: https://pkg.omniosce.org/r151024/core
+
+Upgrade instructions - <https://www.omniosce.org/upgrade>
 
 ## New features since r151022
 
@@ -177,8 +175,6 @@ r151024 release repository: https://pkg.omniosce.org/r151024/core
 | library/libxslt | 1.1.29 | 1.1.30
 | library/ncurses | 6.0.20170722 | 6.0.20171014
 | library/nghttp2 | 1.21.1 | 1.26.0
-| library/nspr | 4.16 | 4.17
-| library/nspr/header-nspr | 4.16 | 4.17
 | library/pcre | 8.40 | 8.41
 | **library/python-2/asn1crypto-27** | _New_ | 0.23.0
 | **library/python-2/cffi-27** | _New_ | 1.11.1
@@ -225,8 +221,6 @@ r151024 release repository: https://pkg.omniosce.org/r151024/core
 | system/library/gcc-5-runtime | 5.1.0 | 5.5.0
 | **system/library/gcc-6-runtime** | _New_ | 6.4.0
 | system/library/libdbus | 1.11.12 | 1.11.20
-| system/library/mozilla-nss | 3.32.1 | 3.33
-| system/library/mozilla-nss/header-nss | 3.32.1 | 3.33
 | system/management/ipmitool | 1.8.16 | 1.8.18
 | system/pciutils | 3.5.4 | 3.5.5
 | system/test/fio | 2.12 | 3.1
