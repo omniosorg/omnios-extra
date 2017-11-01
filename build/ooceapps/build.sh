@@ -36,7 +36,7 @@ SUMMARY="Mattermost integrations for OmniOSce" # One-liner, must be filled in
 DESC=$SUMMARY   # Longer description, must be filled in
 BUILDARCH=64    # or 64 or both ... for libraries we want both for tools 32 bit only
 PREFIX=/opt/ooce
-MIRROR="https://github.com/hadfl/$PROG/releases/download"
+MIRROR="https://github.com/hadfl/$PROG/archive"
 
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX/$PROG
