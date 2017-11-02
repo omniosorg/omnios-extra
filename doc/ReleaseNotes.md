@@ -15,7 +15,7 @@ Upgrade instructions - <https://omniosce.org/upgrade>
 ## Help wanted
 
 <a href="https://omniosce.org/patron">
-<img src="https://omniosce.org/support.png" align="left">
+<img src="https://omniosce.org/assets/images/support.png" align="left">
 </a>
 
 OmniOS Community Edition has no major company behind it, just a small team of
