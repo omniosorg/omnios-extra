@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=ooceapps   # App name
-VER=0.1.4       # App version
+VER=0.2.2       # App version
 VERHUMAN=$VER   # Human-readable version
 #PVER=          # Branch (set in config.sh, override here if needed)
 PKG=ooce/ooceapps # Package name (e.g. library/foo)
@@ -36,7 +36,7 @@ SUMMARY="Mattermost integrations for OmniOSce" # One-liner, must be filled in
 DESC=$SUMMARY   # Longer description, must be filled in
 BUILDARCH=32    # or 64 or both ... for libraries we want both for tools 32 bit only
 PREFIX=/opt/ooce
-MIRROR="https://github.com/hadfl/$PROG/releases/download"
+MIRROR="https://github.com/omniosorg/$PROG/releases/download"
 
 CONFIGURE_OPTS_32="
     --prefix=$PREFIX/$PROG
