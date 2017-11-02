@@ -94,5 +94,5 @@
 ../test/recipes/90-test_threads.t .......... ok
 ../test/recipes/90-test_v3name.t ........... ok
 All tests successful.
-Files=95, Tests=549, 58 wallclock secs ( 0.26 usr  0.18 sys + 23.10 cusr  2.51 csys = 26.05 CPU)
+Files=95, Tests=556, 78 wallclock secs ( 0.41 usr  0.28 sys + 26.74 cusr  3.51 csys = 30.94 CPU)
 Result: PASS
