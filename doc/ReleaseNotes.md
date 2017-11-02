@@ -1,8 +1,39 @@
-<img src="http://www.omniosce.org/OmniOSce_logo.svg" height="128">
+<a href="https://omniosce.org">
+<img src="https://omniosce.org/OmniOSce_logo.svg" height="128">
+</a>
 
 # Release Notes for OmniOSce v11 r151022
 
-[Instructions for updating from OmniTI OmniOS r151022 are available on our web site](http://www.omniosce.org/setup/switch)
+[Instructions for updating from OmniTI OmniOS r151022 are available on our web site](https://omniosce.org/setup/switch)
+
+## r151022y (2017-11-06)
+
+Weekly release for w/c 6th of November 2017.
+> This update requires a reboot.
+
+### Security fixes
+
+* `openssl` updated to 1.0.2m
+  * [CVE-2017-3735](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-3735)
+  * [CVE-2017-3736](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-3736)
+
+### Other Changes
+
+* Fixes for potential iSCSI-related crashes.
+
+* [8648](https://www.illumos.org/issues/8648) Fix range locking in ZIL commit codepath.
+
+* `library/python-2/setuptools-27` upgraded to latest version. The previous
+  version can no longer automatically download build-time dependencies
+  from _pypi.python.org_ as that site now enforces HTTPS which is not supported
+  by the old package.
+
+* Removal of `library/python-2/vcversioner-27` package. No longer required
+  with above setuptools update.
+
+<br>
+
+----
 
 ## r151022x (2017-10-30)
 
