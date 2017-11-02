@@ -300,7 +300,7 @@ omnios library/python-2/six-27 1.11.0-0.151024
 omnios library/python-2/tempora-27 1.9-0.151024
 omnios library/python-2/typing-27 3.6.2-0.151024
 omnios library/readline 7.0-0.151024
-omnios library/security/openssl 1.0.2.12-0.151024
+omnios library/security/openssl 1.0.2.13-0.151024
 omnios library/security/tcp-wrapper 7.6-0.151024
 omnios library/security/trousers 0.3.14-0.151024
 omnios library/unixodbc 2.3.4-0.151024
