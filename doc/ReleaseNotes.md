@@ -24,11 +24,15 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   this file then it will not be updated but the new template file will be
   installed as `/etc/screenrc.new`.
 
+* FMA event for SSD wearout
+
 ### LX zones
 
 * Report that `/proc/sys` is writable to keep systemd happy.
 
 * Emulate a userspace clock of 100Hz to accommodate some broken applications.
+
+* support for joining multicast group
 
 ### Hardware Support
 
