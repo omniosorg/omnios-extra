@@ -6,9 +6,9 @@
 
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](https://omniosce.org/setup/switch)
 
-## r151022y (2017-11-06)
+## r151022y (2017-11-03)
 
-Weekly release for w/c 6th of November 2017.
+Early weekly release for w/c 6th of November 2017.
 > This update requires a reboot.
 
 ### Security fixes
@@ -19,7 +19,7 @@ Weekly release for w/c 6th of November 2017.
 
 ### Other Changes
 
-* Fixes for potential iSCSI-related crashes.
+* [8742](https://www.illumos.org/issues/8742) Fixes for potential iSCSI-related crashes.
 
 * [8648](https://www.illumos.org/issues/8648) Fix range locking in ZIL commit codepath.
 
