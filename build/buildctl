@@ -253,6 +253,11 @@ if [ "${SKIP_PKGLINT}" = 1 ]; then
 fi
 
 case "$1" in
+    config)
+        print_config
+        exit
+        ;;
+
     list)
 	list $2
 	exit
