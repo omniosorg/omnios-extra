@@ -1,6 +1,6 @@
-diff -pruN '--exclude=*.orig' fio-fio-3.1~/Makefile fio-fio-3.1/Makefile
---- fio-fio-3.1~/Makefile	2017-09-28 12:23:20.000000000 +0000
-+++ fio-fio-3.1/Makefile	2017-09-28 14:05:26.435439450 +0000
+diff -pruN '--exclude=*.orig' fio-fio-3.2~/Makefile fio-fio-3.2/Makefile
+--- fio-fio-3.2~/Makefile	2017-11-03 22:23:49.000000000 +0000
++++ fio-fio-3.2/Makefile	2017-11-07 17:01:05.421241318 +0000
 @@ -295,16 +295,19 @@ endif
  endif
  

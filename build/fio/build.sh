@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,8 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
@@ -30,7 +29,7 @@
 . ../../lib/functions.sh
 
 PROG=fio        # App name
-VER=3.1        # App version
+VER=3.2        # App version
 VERHUMAN=$VER   # Human-readable version
 #PVER=          # Branch (set in config.sh, override here if needed)
 PKG=system/test/fio # Package name (e.g. library/foo)
@@ -47,13 +46,13 @@ CONFIGURE_OPTS_32=
 CONFIGURE_OPTS_64="--extra-cflags=-m64"
 
 make_install32() {
-	logcmd $MAKE DESTDIR=${DESTDIR} bindir="/usr/bin/i386" install || \
-	    logerr "--- Make install failed"
+    logcmd $MAKE DESTDIR=${DESTDIR} bindir="/usr/bin/i386" install || \
+        logerr "--- Make install failed"
 }
 
 make_install64() {
-	logcmd $MAKE DESTDIR=${DESTDIR} bindir="/usr/bin/amd64" install || \
-	    logerr "--- Make install failed"
+    logcmd $MAKE DESTDIR=${DESTDIR} bindir="/usr/bin/amd64" install || \
+        logerr "--- Make install failed"
 }
 
 init
@@ -66,4 +65,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
