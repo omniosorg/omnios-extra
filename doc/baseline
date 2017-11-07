@@ -270,7 +270,7 @@ omnios library/print/open-printing 0.5.11-0.151025
 omnios library/print/open-printing/ipp 0.5.11-0.151025
 omnios library/print/open-printing/lpd 0.5.11-0.151025
 omnios library/python-2/asn1crypto-27 0.23.0-0.151025
-omnios library/python-2/cffi-27 1.11.1-0.151025
+omnios library/python-2/cffi-27 1.11.2-0.151025
 omnios library/python-2/cheroot-27 5.8.3-0.151025
 omnios library/python-2/cherrypy-27 11.0.0-0.151025
 omnios library/python-2/coverage-27 4.4.1-0.151025
