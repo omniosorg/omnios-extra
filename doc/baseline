@@ -71,7 +71,7 @@ omnios developer/sunstudio12.1 12.1-0.151025
 omnios developer/swig 3.0.12-0.151025
 omnios developer/tnf 0.5.11-0.151025
 omnios developer/versioning/git 2.14.3-0.151025
-omnios developer/versioning/mercurial 4.3.3-0.151025
+omnios developer/versioning/mercurial 4.4-0.151025
 omnios developer/versioning/sccs 0.5.11-0.151025
 omnios diagnostic/cpu-counters 0.5.11-0.151025
 omnios diagnostic/diskinfo 0.5.11-0.151025
