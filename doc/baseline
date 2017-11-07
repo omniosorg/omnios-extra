@@ -261,7 +261,7 @@ omnios library/libtool/libltdl 2.4.6-0.151025
 omnios library/libxml2 2.9.6-0.151025
 omnios library/libxslt 1.1.30-0.151025
 omnios library/ncurses 6.0.20171104-0.151025
-omnios library/nghttp2 1.26.0-0.151025
+omnios library/nghttp2 1.27.0-0.151025
 omnios library/nspr 4.17-0.151025
 omnios library/nspr/header-nspr 4.17-0.151025
 omnios library/pcre 8.41-0.151025
