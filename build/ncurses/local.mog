@@ -1,1 +1,12 @@
 license AUTHORS license=MIT
+
+link path=usr/gnu/bin/captoinfo target=../../bin/gcaptoinfo
+link path=usr/gnu/bin/clear target=../../bin/gclear
+link path=usr/gnu/bin/infocmp target=../../bin/ginfocmp
+link path=usr/gnu/bin/infotocap target=../../bin/ginfotocap
+link path=usr/gnu/bin/reset target=../../bin/greset
+link path=usr/gnu/bin/tic target=../../bin/gtic
+link path=usr/gnu/bin/toe target=../../bin/gtoe
+link path=usr/gnu/bin/tput target=../../bin/gtput
+link path=usr/gnu/bin/tset target=../../bin/gtset
+

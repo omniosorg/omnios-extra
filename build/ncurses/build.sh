@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,8 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
@@ -28,7 +27,7 @@
 . ../../lib/functions.sh
 
 PROG=ncurses
-VER=6.0-20171014
+VER=6.0-20171104
 VERHUMAN=$VER
 BUILDDIR=$PROG-$VER
 VER=${VER/-/.}
@@ -64,14 +63,12 @@ CONFIGURE_OPTS_64="
     --libdir=$GPREFIX/lib/$ISAPART64"
 
 gnu_links() {
-    mkdir -p $DESTDIR/$GPREFIX/bin
-    for cmd in captoinfo clear infocmp infotocap reset tic toe tput tset ; do
-        ln -s ../../bin/g$cmd $DESTDIR/$GPREFIX/bin/$cmd
-    done
-    # put libncurses* in PREFIX/lib so other programs don't need to link with rpath
+    # put libncurses* in PREFIX/lib so other programs don't need to link
+    # with rpath
     mkdir -p $DESTDIR/$PREFIX/lib/$ISAPART64
     mv $DESTDIR/$GPREFIX/lib/libncurses* $DESTDIR/$PREFIX/lib
-    mv $DESTDIR/$GPREFIX/lib/$ISAPART64/libncurses* $DESTDIR/$PREFIX/lib/$ISAPART64
+    mv $DESTDIR/$GPREFIX/lib/$ISAPART64/libncurses* \
+       $DESTDIR/$PREFIX/lib/$ISAPART64
 }
 
 save_function make_install make_install_orig
@@ -105,4 +102,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
