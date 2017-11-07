@@ -293,7 +293,7 @@ omnios library/python-2/pylint-27 1.7.4-0.151025
 omnios library/python-2/pyopenssl-27 17.3.0-0.151025
 omnios library/python-2/pyrex-27 0.9.9-0.151025
 omnios library/python-2/python-extra-27 0.5.11-0.151025
-omnios library/python-2/pytz-27 2017.2-0.151025
+omnios library/python-2/pytz-27 2017.3-0.151025
 omnios library/python-2/setuptools-27 36.5.0-0.151025
 omnios library/python-2/simplejson-27 3.11.1-0.151025
 omnios library/python-2/six-27 1.11.0-0.151025

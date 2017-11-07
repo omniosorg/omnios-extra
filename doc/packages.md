@@ -112,7 +112,7 @@
 | library/python-2/pylint-27		| 1.7.4			| https://pypi.python.org/pypi/pylint
 | library/python-2/pyopenssl-27		| 17.3.0		| https://pypi.python.org/pypi/pyOpenSSL
 | library/python-2/pyrex-27		| 0.9.9			| http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
-| library/python-2/pytz-27		| 2017.2		| https://pypi.python.org/pypi/pytz
+| library/python-2/pytz-27		| 2017.3		| https://pypi.python.org/pypi/pytz
 | library/python-2/setuptools-27	| 36.5.0		| https://pypi.python.org/pypi/setuptools
 | library/python-2/simplejson-27	| 3.11.1		| https://pypi.python.org/pypi/simplejson
 | library/python-2/six-27		| 1.11.0		| https://pypi.python.org/pypi/six
