@@ -23,7 +23,7 @@ omnios developer/apptrace 0.5.11-0.151025
 omnios developer/apptrace/ucblib 0.5.11-0.151025
 omnios developer/as 0.5.11-0.151025
 omnios developer/astdev 0.5.11-0.151025
-omnios developer/bmake 20170812-0.151025
+omnios developer/bmake 20171028-0.151025
 omnios developer/build/autoconf 2.69-0.151025
 omnios developer/build/automake 1.15.1-0.151025
 omnios developer/build/gnu-make 4.2.1-0.151025
