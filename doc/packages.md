@@ -95,13 +95,13 @@
 | library/python-2/cherrypy-27		| 11.0.0		| https://pypi.python.org/pypi/cherrypy
 | library/python-2/coverage-27		| 4.4.2			| https://pypi.python.org/pypi/coverage
 | library/python-2/cryptography-27	| 2.1.3			| https://pypi.python.org/pypi/cryptography
-| library/python-2/enum-27		| 0.4.6			| https://pypi.python.org/pypi/enum
+| library/python-2/enum-27		| 0.4.6			| https://pypi.python.org/pypi/enum34
 | library/python-2/functools32-27	| 3.2.3-2		| https://pypi.python.org/pypi/functools32
 | library/python-2/idna-27		| 2.6			| https://pypi.python.org/pypi/idna
 | library/python-2/ipaddress-27		| 1.0.18		| https://pypi.python.org/pypi/ipaddress
 | library/python-2/jsonrpclib-27	| 0.1.7			| https://pypi.python.org/pypi/jsonrpclib
 | library/python-2/jsonschema-27	| 2.6.0			| https://pypi.python.org/pypi/jsonschema
-| library/python-2/lxml-27		| 4.0.0			| https://pypi.python.org/pypi/lxml/
+| library/python-2/lxml-27		| 4.1.1			| https://pypi.python.org/pypi/lxml/
 | library/python-2/m2crypto-27		| 0.27.0		| https://pypi.python.org/pypi/M2Crypto
 | library/python-2/mako-27		| 1.0.7			| https://pypi.python.org/pypi/Mako
 | library/python-2/numpy-27		| 1.13.3		| https://pypi.python.org/pypi/numpy

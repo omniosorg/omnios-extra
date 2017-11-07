@@ -281,7 +281,7 @@ omnios library/python-2/idna-27 2.6-0.151025
 omnios library/python-2/ipaddress-27 1.0.18-0.151025
 omnios library/python-2/jsonrpclib-27 0.1.7-0.151025
 omnios library/python-2/jsonschema-27 2.6.0-0.151025
-omnios library/python-2/lxml-27 4.0.0-0.151025
+omnios library/python-2/lxml-27 4.1.1-0.151025
 omnios library/python-2/m2crypto-27 0.27.0-0.151025
 omnios library/python-2/mako-27 1.0.7-0.151025
 omnios library/python-2/numpy-27 1.13.3-0.151025
