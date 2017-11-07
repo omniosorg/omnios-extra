@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,8 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
@@ -30,7 +29,7 @@
 
 PKG=library/python-2/simplejson-27
 PROG=simplejson
-VER=3.11.1
+VER=3.12.0
 SUMMARY="simplejson - Python interface to JSON for Python 2.7"
 DESC="$SUMMARY"
 
@@ -43,3 +42,6 @@ prep_build
 python_build
 make_package local.mog ../final.mog
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker
