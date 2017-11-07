@@ -639,7 +639,7 @@ omnios system/storage/fibre-channel/port-utility 0.5.11-0.151025
 omnios system/storage/luxadm 0.5.11-0.151025
 omnios system/storage/parted o 1.8.8-0.151025
 omnios system/storage/sasinfo 0.5.11-0.151025
-omnios system/test/fio 3.1-0.151025
+omnios system/test/fio 3.2-0.151025
 omnios system/test/libctest 0.5.11-0.151025
 omnios system/test/ostest 0.5.11-0.151025
 omnios system/test/testrunner 0.5.11-0.151025
