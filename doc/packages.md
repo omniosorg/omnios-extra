@@ -92,7 +92,7 @@
 | library/python-2/asn1crypto-27	| 0.23.0		| https://pypi.python.org/pypi/asn1crypto
 | library/python-2/cffi-27		| 1.11.2		| https://pypi.python.org/pypi/cffi
 | library/python-2/cheroot-27		| 5.8.3			| https://pypi.python.org/pypi/cheroot
-| library/python-2/cherrypy-27		| 11.0.0		| https://pypi.python.org/pypi/cherrypy
+| library/python-2/cherrypy-27		| 11.0.0		| https://pypi.python.org/pypi/cherrypy | On hold as 11.1.0 introduces a new dependency (jaraco.classes)
 | library/python-2/coverage-27		| 4.4.2			| https://pypi.python.org/pypi/coverage
 | library/python-2/cryptography-27	| 2.1.3			| https://pypi.python.org/pypi/cryptography
 | library/python-2/enum-27		| 1.1.6			| https://pypi.python.org/pypi/enum34
