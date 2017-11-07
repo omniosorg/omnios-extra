@@ -939,6 +939,8 @@ pkgitems() {
         s/ elfhash=[^ ]+//
         # Remove file sizes
         s/ pkg.[c]?size=[0-9]+//g
+        # Remove timestamps
+        s/ timestamp=[^ ]+//
     ' | pkgfmt
 }
 
