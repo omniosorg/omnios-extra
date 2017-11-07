@@ -73,7 +73,7 @@
 | system/test/fio			| 3.2			| https://github.com/axboe/fio/releases
 | terminal/screen			| 4.6.2			| http://git.savannah.gnu.org/cgit/screen.git/refs/tags
 | terminal/tmux				| 2.6			| https://github.com/tmux/tmux/releases
-| text/gawk				| 4.1.4			| https://ftp.gnu.org/gnu/gawk/
+| text/gawk				| 4.2.0			| https://ftp.gnu.org/gnu/gawk/
 | text/gnu-diffutils			| 3.6			| http://git.savannah.gnu.org/cgit/diffutils.git/refs/tags
 | text/gnu-gettext			| 0.19.8.1		| http://git.savannah.gnu.org/cgit/gettext.git/refs/tags
 | text/gnu-grep				| 3.1			| http://git.savannah.gnu.org/cgit/grep.git/refs/tags

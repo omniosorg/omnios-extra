@@ -663,7 +663,7 @@ omnios terminal/screen 4.6.2-0.151025
 omnios terminal/tmux 2.6-0.151025
 omnios text/auto_ef 0.5.11-0.151025
 omnios text/doctools 0.5.11-0.151025
-omnios text/gawk 4.1.4-0.151025
+omnios text/gawk 4.2.0-0.151025
 omnios text/gnu-diffutils 3.6-0.151025
 omnios text/gnu-gettext 0.19.8.1-0.151025
 omnios text/gnu-grep 3.1-0.151025

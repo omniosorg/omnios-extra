@@ -135,7 +135,7 @@ system/virtualization/open-vm-tools	10.1
 terminal/screen				4.6
 terminal/tmux				2.6
 text/auto_ef				0.5.11
-text/gawk				4.1
+text/gawk				4.2
 text/gnu-diffutils			3.6
 text/gnu-gettext			0.19.8
 text/gnu-grep				3.1

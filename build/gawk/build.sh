@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,8 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2015 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
@@ -29,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=gawk
-VER=4.1.4
+VER=4.2.0
 VERHUMAN=$VER
 PKG=text/gawk
 SUMMARY="gawk - GNU implementation of awk"
@@ -39,21 +38,8 @@ RUN_DEPENDS_IPS="system/prerequisite/gnu"
 
 BUILDARCH=32
 CONFIGURE_OPTS_32+=" --bindir=/usr/bin"
-# Use old gcc4 standards level for this.
-CFLAGS="$CFLAGS -std=gnu89"
-
-# as of 4.1, gawk now supports arbitrary precision numbers.
-# build in MPFR/GMP support rather than dynamically linking it.
-save_function configure32 configure32_orig
-configure32() {
-    configure32_orig
-
-    logmsg "Patching Makefile to make mpfr/gmp static"
-    pushd $TMPDIR/$BUILDDIR > /dev/null
-    logcmd gsed -i -e \
-        "s#-lmpfr -lgmp#$GCCPATH/lib/libmpfr.a $GCCPATH/lib/libgmp.a#" Makefile
-    popd > /dev/null
-}
+CPPFLAGS+=" -I/usr/include/gmp"
+CFLAGS+=" -D_XPG6"
 
 init
 download_source $PROG $PROG $VER
@@ -66,4 +52,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
