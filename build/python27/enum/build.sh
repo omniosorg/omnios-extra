@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,8 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
@@ -29,11 +28,14 @@
 
 PKG=library/python-2/enum-27
 PROG=enum
-VER=0.4.6
+VER=1.1.6
 SUMMARY="enum - Robust enumerated type support in Python"
 DESC="$SUMMARY"
 
 . $SRCDIR/../common.sh
+
+# workaround as we are using enum34 backported to 27
+BUILDDIR="${PROG}34-$VER"
 
 init
 download_source $PROG $PROG $VER
@@ -43,3 +45,6 @@ python_build
 strip_install -x
 make_package local.mog ../final.mog
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker

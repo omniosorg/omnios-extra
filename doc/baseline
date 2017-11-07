@@ -275,7 +275,7 @@ omnios library/python-2/cheroot-27 5.8.3-0.151025
 omnios library/python-2/cherrypy-27 11.0.0-0.151025
 omnios library/python-2/coverage-27 4.4.2-0.151025
 omnios library/python-2/cryptography-27 2.1.3-0.151025
-omnios library/python-2/enum-27 0.4.6-0.151025
+omnios library/python-2/enum-27 1.1.6-0.151025
 omnios library/python-2/functools32-27 3.2.3.2-0.151025
 omnios library/python-2/idna-27 2.6-0.151025
 omnios library/python-2/ipaddress-27 1.0.18-0.151025

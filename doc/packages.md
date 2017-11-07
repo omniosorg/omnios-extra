@@ -95,7 +95,7 @@
 | library/python-2/cherrypy-27		| 11.0.0		| https://pypi.python.org/pypi/cherrypy
 | library/python-2/coverage-27		| 4.4.2			| https://pypi.python.org/pypi/coverage
 | library/python-2/cryptography-27	| 2.1.3			| https://pypi.python.org/pypi/cryptography
-| library/python-2/enum-27		| 0.4.6			| https://pypi.python.org/pypi/enum34
+| library/python-2/enum-27		| 1.1.6			| https://pypi.python.org/pypi/enum34
 | library/python-2/functools32-27	| 3.2.3-2		| https://pypi.python.org/pypi/functools32
 | library/python-2/idna-27		| 2.6			| https://pypi.python.org/pypi/idna
 | library/python-2/ipaddress-27		| 1.0.18		| https://pypi.python.org/pypi/ipaddress
