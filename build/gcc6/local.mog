@@ -5,9 +5,9 @@ license COPYING3 license=GPLv3
 license COPYING3.LIB license=LGPLv3
 
 # Mediated symlinks
-<transform link path=usr/bin/.* -> default mediator gcc>
-<transform link path=usr/share/man/.* -> default mediator gcc>
-<transform link target=$(OPT)/.* -> default mediator-version $(MAJOR)>
+<transform link path=usr/bin/ -> default mediator gcc>
+<transform link path=usr/share/man/ -> default mediator gcc>
+<transform link target=$(OPT)/ -> default mediator-version $(MAJOR)>
 
 link path=usr/bin/g++      target=$(OPT)/bin/g++
 link path=usr/bin/gcc      target=$(OPT)/bin/gcc

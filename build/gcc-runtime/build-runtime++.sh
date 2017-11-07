@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,8 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
@@ -27,36 +26,23 @@
 #
 # Load support functions
 . ../../lib/functions.sh
-. $SRCDIR/common.sh
 
+PKG=system/library/g++-runtime
 PROG=libstdc++
-VER=$GCCVER
+VER=6
 VERHUMAN=$VER
-PKG=system/library/g++-6-runtime
 SUMMARY="g++ runtime dependencies libstc++/libssp"
 DESC="$SUMMARY"
 
-LOGFILE+=".$PROG"
-
-BUILD_DEPENDS_IPS="$PKGV"
-
-RUN_DEPENDS_IPS="system/library/gcc-$GCCMAJOR-runtime"
-
-# For now, g++-5-runtime carries the legacy versions of the stdc++ library.
-RUN_DEPENDS_IPS+=" system/library/g++-5-runtime"
-
-# This stuff is in its own domain
-PKGPREFIX=""
-
-PREFIX=$OPT
+OPT=/opt/gcc-$VER
 
 init
 prep_build
+
 mkdir -p $TMPDIR/$BUILDDIR
-for license in COPYING.RUNTIME COPYING.LIB COPYING3.LIB
-do
-    logcmd cp $SRCDIR/files/$license $TMPDIR/$BUILDDIR/$license || \
-        logerr "Cannot copy licence: $license"
+for lic in COPYING.RUNTIME COPYING.LIB COPYING3.LIB; do
+    logcmd cp $SRCDIR/files/$lic $TMPDIR/$BUILDDIR/$lic || \
+        logerr "Cannot copy licence: $lic"
 done
 
 mkdir -p $DESTDIR/usr/lib
@@ -69,22 +55,19 @@ XFORM_ARGS+=" -DSTDCVER=$LIBVER"
 
 # Copy in legacy library versions
 
-# Currently delivered by g++-5-runtime.
-# Once GCC6 is the primary compiler, g++-6-runtime will obsolete g++-5-runtime
-# and incorporate the legacy libraries.
-#for v in 6.0.13 6.0.16 6.0.17 6.0.18; do
-#	if [ -f /usr/lib/$LIB.$v ]; then
-#		cp /usr/lib/$LIB.$v $DESTDIR/usr/lib/$LIB.$v
-#	else
-#		logerr "/usr/lib/libstdc++.so.$v not found"
-#	fi
-#
-#	if [ -f /usr/lib/amd64/$LIB.$v ]; then
-#		cp /usr/lib/amd64/$LIB.$v $DESTDIR/usr/lib/amd64/$LIB.$v
-#	else
-#		logerr "/usr/lib/amd64/libstdc++.so.$v not found"
-#	fi
-#done
+for v in 6.0.13 6.0.16 6.0.17 6.0.18 6.0.21; do
+	if [ -f /usr/lib/$LIB.$v ]; then
+		cp /usr/lib/$LIB.$v $DESTDIR/usr/lib/$LIB.$v
+	else
+		logerr "/usr/lib/libstdc++.so.$v not found"
+	fi
+
+	if [ -f /usr/lib/amd64/$LIB.$v ]; then
+		cp /usr/lib/amd64/$LIB.$v $DESTDIR/usr/lib/amd64/$LIB.$v
+	else
+		logerr "/usr/lib/amd64/libstdc++.so.$v not found"
+	fi
+done
 
 # and current version
 cp $OPT/lib/$LIB.$LIBVER $DESTDIR/usr/lib/$LIB.$LIBVER \
@@ -95,9 +78,11 @@ cp $OPT/lib/amd64/$LIB.$LIBVER $DESTDIR/usr/lib/amd64/$LIB.$LIBVER \
 ##################################################################
 LIB=libssp.so
 LIBVER=0.0.0
-cp $OPT/lib/$LIB.$LIBVER $DESTDIR/usr/lib/$LIB.$LIBVER.gcc$GCCMAJOR
-cp $OPT/lib/amd64/$LIB.$LIBVER $DESTDIR/usr/lib/amd64/$LIB.$LIBVER.gcc$GCCMAJOR
+cp $OPT/lib/$LIB.$LIBVER $DESTDIR/usr/lib/$LIB.$LIBVER
+cp $OPT/lib/amd64/$LIB.$LIBVER $DESTDIR/usr/lib/amd64/$LIB.$LIBVER
 
-make_package runtime++.mog depends.mog
+make_package runtime++.mog
 clean_up
 
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker

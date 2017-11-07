@@ -36,7 +36,7 @@ PKG=library/security/openssl
 SUMMARY="$PROG - A toolkit for Secure Sockets Layer and Transport Layer protocols and general purpose cryptographic library"
 DESC="$SUMMARY"
 
-DEPENDS_IPS="SUNWcs system/library system/library/gcc-5-runtime library/zlib"
+DEPENDS_IPS="SUNWcs system/library system/library/gcc-runtime library/zlib"
 BUILD_DEPENDS_IPS="$DEPENDS_IPS developer/sunstudio12.1"
 
 # Generic configure optons for both 32 and 64bit variants

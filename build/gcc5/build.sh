@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,8 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2014 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
@@ -27,27 +26,33 @@
 #
 # Load support functions
 . ../../lib/functions.sh
-. $SRCDIR/common.sh
 
-PROG=gcc
-VER=$GCCVER
-VERHUMAN=$VER
 PKG=developer/gcc5
+PROG=gcc
+VER=5.5.0
+VERHUMAN=$VER
 SUMMARY="gcc ${VER}"
 DESC="$SUMMARY"
 
-DEPENDS_IPS="
-	developer/$PKGV/libgmp-$PKGV
-	developer/$PKGV/libmpfr-$PKGV
-	developer/$PKGV/libmpc-$PKGV
-	developer/gnu-binutils
-	developer/library/lint
-	developer/linker
-	system/library/gcc-$GCCMAJOR-runtime
-"
+GCCMAJOR=${VER%%.*}
+OPT=/opt/gcc-$GCCMAJOR
 
-# This stuff is in its own domain
-PKGPREFIX=""
+XFORM_ARGS="-D MAJOR=$GCCMAJOR -D OPT=$OPT -D GCCVER=$VER"
+
+# Build gcc with itself
+export LD_LIBRARY_PATH=$OPT/lib
+export PATH=/usr/perl5/$PERLVER/bin:$OPT/bin:$PATH
+
+# Use a dedicated temporary directory
+# (avoids conflicts with other gcc versions during parallel builds)
+export TMPDIR=$TMPDIR/gcc-$GCCMAJOR
+export DTMPDIR=$TMPDIR
+
+DEPENDS_IPS="
+    developer/library/lint
+    developer/linker
+    developer/gnu-binutils
+"
 
 [ "$BUILDARCH" = "both" ] && BUILDARCH=32
 PREFIX=$OPT
@@ -55,27 +60,23 @@ PREFIX=$OPT
 reset_configure_opts
 CC=gcc
 
-LD_FOR_TARGET=/bin/ld
-export LD_FOR_TARGET
-LD_FOR_HOST=/bin/ld
-export LD_FOR_HOST
 LD=/bin/ld
-export LD
+LD_FOR_HOST=/bin/ld
+LD_FOR_TARGET=/bin/ld
+export LD LD_FOR_HOST LD_FOR_TARGET
 
 CONFIGURE_OPTS_32="--prefix=$OPT"
 CONFIGURE_OPTS="\
-	--host i386-pc-solaris2.11 \
-	--build i386-pc-solaris2.11 \
-	--target i386-pc-solaris2.11 \
-	--with-boot-ldflags=-R$OPT/lib \
-	--with-gmp=$OPT \
-	--with-mpfr=$OPT \
-	--with-mpc=$OPT \
-	--enable-languages=c,c++,fortran,lto \
-	--enable-__cxa_atexit \
-	--without-gnu-ld --with-ld=/bin/ld \
-	--with-as=/usr/bin/gas --with-gnu-as \
-	--with-build-time-tools=/usr/gnu/i386-pc-solaris2.11/bin"
+    --host i386-pc-solaris2.11 \
+    --build i386-pc-solaris2.11 \
+    --target i386-pc-solaris2.11 \
+    --with-boot-ldflags=-R$OPT/lib \
+    --with-gmp-include=/usr/include/gmp \
+    --enable-languages=c,c++,fortran,lto \
+    --enable-__cxa_atexit \
+    --without-gnu-ld --with-ld=/bin/ld \
+    --with-as=/usr/bin/gas --with-gnu-as \
+    --with-build-time-tools=/usr/gnu/i386-pc-solaris2.11/bin"
 LDFLAGS32="-R$OPT/lib"
 export LD_OPTIONS="-zignore -zcombreloc -i"
 
@@ -90,6 +91,8 @@ download_source $PROG/releases/$PROG-$VER $PROG $VER
 patch_source
 prep_build
 build
-make_package gcc.mog depends.mog
+make_package
 clean_up
 
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker

@@ -38,7 +38,7 @@ DESC="$SUMMARY ($VER)"
 [ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 DEPENDS_IPS="library/libxml2 library/security/openssl library/zlib
-             system/library system/library/gcc-5-runtime system/library/math"
+             system/library system/library/gcc-runtime system/library/math"
 
 BUILDARCH=32
 

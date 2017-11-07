@@ -41,10 +41,7 @@ add_target()
 				q
 			}'`"
 		case $pkg:$ver in
-			# For GCC main package, extract the ver from common.sh
-			*/gcc?:\$GCCVER)
-				ver="`grep '^GCCVER=' $dir/common.sh \
-				    | cut -d= -f2`"
+			*/gcc?:*)
 				ver=${ver/%.0/}
 				;;
 			runtime/perl:\$DEPVER)

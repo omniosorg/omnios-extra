@@ -1,3 +1,2 @@
 set name=pkg.fmri value=developer/gcc51/libmpc-gcc51@1.0.3-@PVER@
-set name=pkg.renamed value=true
-depend type=require fmri=developer/gcc5/libmpc-gcc5
+set name=pkg.obsolete value=true
