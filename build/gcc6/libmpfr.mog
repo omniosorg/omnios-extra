@@ -1,6 +1,0 @@
-
-<transform file dir link path=.*/share/(doc|info) -> drop>
-
-license COPYING license=GPLv3
-license COPYING.LESSER license=LGPLv3
-

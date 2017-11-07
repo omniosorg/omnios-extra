@@ -1,0 +1,2 @@
+set name=pkg.fmri value=developer/gcc5/libgmp-gcc5@6.1.2-@PVER@
+set name=pkg.obsolete value=true

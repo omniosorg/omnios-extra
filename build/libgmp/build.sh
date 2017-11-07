@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,42 +18,66 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
+# CDDL HEADER END }}}
 #
-#
-# Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
-. $SRCDIR/common.sh
 
-PROG=gmp         # App name
-VER=6.1.2        # App version
-VERHUMAN=$VER    # Human-readable version
-PKG=developer/gcc5/libgmp-gcc5
-SUMMARY="$PKGV - private libgmp"
-DESC="$SUMMARY" # Longer description
+PROG=gmp
+VER=6.1.2
+VERHUMAN=$VER
+PKG=library/gmp
+SUMMARY="GNU MP $VER"
+DESC="The GNU Multiple Precision (Bignum) Library"
 
-LOGFILE+=".$PROG"
+# Cribbed from upstream, used to set MPN_PATH during configure
+MPN32="x86/pentium x86 generic"
+MPN64="x86_64/pentium4 x86_64 generic"
+export MPN32 MPN64
 
-# This stuff is in its own domain
-PKGPREFIX=""
+BUILD_DEPENDS_IPS=developer/build/libtool
 
-[ "$BUILDARCH" = "both" ] && BUILDARCH=32
-PREFIX=$OPT
-CC=gcc
-CONFIGURE_OPTS="--enable-cxx --disable-assembly"
 CFLAGS="-fexceptions"
-ABI=32
-export ABI
+CONFIGURE_OPTS="
+    --includedir=$PREFIX/include/gmp
+    --localstatedir=/var 
+    --enable-shared 
+    --disable-static
+    --disable-libtool-lock
+    --disable-alloca
+    --enable-cxx
+    --enable-fft
+    --enable-mpbsd
+    --disable-fat
+    --with-pic
+"
 
-reset_configure_opts
+save_function configure32 _configure32
+configure32() {
+    export ABI=32
+    export MPNPATH="$MPN32"
+    _configure32
+}
+
+save_function configure64 _configure64
+configure64() {
+    export ABI=64
+    export MPNPATH="$MPN64"
+    _configure64
+}
+
 init
 download_source $PROG $PROG $VER
+patch_source
 prep_build
 build
 make_isa_stub
-make_package libgmp.mog depends.mog
+make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker

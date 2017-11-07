@@ -1,0 +1,7 @@
+license COPYING.LIB license=LGPLv2.1
+license COPYING.RUNTIME license="GCC runtime license"
+license COPYING3.LIB license=LGPLv3
+
+link path=usr/lib/libgcc_s.so target=libgcc_s.so.1
+link path=usr/lib/amd64/libgcc_s.so target=libgcc_s.so.1
+

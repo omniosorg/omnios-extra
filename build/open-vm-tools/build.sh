@@ -38,7 +38,7 @@ DESC="The Open Virtual Machine Tools project aims to provide a suite of open sou
 PATH=/usr/gnu/bin:$PATH export PATH
 
 BUILD_DEPENDS_IPS='developer/pkg-config'
-RUN_DEPENDS_IPS='system/library/gcc-5-runtime'
+RUN_DEPENDS_IPS='system/library/gcc-runtime'
 
 # _FILE_OFFSET_BITS=64 - Large file interface is required
 # _XPG4_2 - Need cmsg from UNIX95
