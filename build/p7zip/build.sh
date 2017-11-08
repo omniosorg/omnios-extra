@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,8 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
@@ -38,7 +37,11 @@ SRCVER="${VER}_src_all"
 BUILDDIR=${PROG}_${VER}
 BUILDARCH=32
 
-DEPENDS_IPS="system/library/g++-runtime system/library/gcc-runtime shell/bash"
+RUN_DEPENDS_IPS="
+    system/library/g++-runtime
+    system/library/gcc-runtime
+    shell/bash
+"
 
 configure32() {
     DEST_HOME=$PREFIX
@@ -58,7 +61,9 @@ make_prog() {
     DEST_SHARE=$DEST_HOME/lib/amd64
     export DEST_BIN DEST_SHARE
     logmsg "Installing 64 bit version"
-    logcmd $MAKE $MAKE_JOBS OPTFLAGS="-D_LARGEFILE64_SOURCE -m64" install DEST_DIR="$DESTDIR" || logerr "--- 64bit make install failed"
+    logcmd $MAKE $MAKE_JOBS OPTFLAGS="-D_LARGEFILE64_SOURCE -m64" \
+        install DEST_DIR="$DESTDIR" || \
+        logerr "--- 64bit make install failed"
 
     logmsg "--- make clean"
     logcmd $MAKE clean
@@ -72,7 +77,8 @@ make_prog() {
     DEST_SHARE=$DEST_HOME/lib
     export DEST_BIN DEST_SHARE
     logmsg "Installing 32 bit version"
-    logcmd $MAKE $MAKE_JOBS install DEST_DIR="$DESTDIR" || logerr "--- 32bit make install failed"
+    logcmd $MAKE $MAKE_JOBS install DEST_DIR="$DESTDIR" || \
+        logerr "--- 32bit make install failed"
 }
 
 build32() {
@@ -94,7 +100,6 @@ install_sh_wrapper() {
     logmsg "Installing p7zip shell wrapper"
     logcmd cp p7zip $DESTDIR/usr/bin/ || \
         logerr "--- Failed: unable to copy p7zip script"
-    logcmd chmod 555 $DESTDIR/usr/bin/p7zip
     logcmd cp man1/p7zip.1 $DESTDIR/$DEST_MAN/man1/ || \
         logerr "--- Failed: unable to copy p7zip man page"
     popd > /dev/null
@@ -113,4 +118,4 @@ chmod -R u+w $DESTDIR
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
