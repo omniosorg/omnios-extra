@@ -249,7 +249,7 @@ omnios install/beadm 0.5.11-0.151025
 omnios library/c++/sigcpp 2.99.9-0.151025
 omnios library/demo/audio-samples 0.5.11-0.151025
 omnios library/expat 2.2.5-0.151025
-omnios library/glib2 2.54.0-0.151025
+omnios library/glib2 2.54.2-0.151025
 omnios library/gmp 6.1.2-0.151025
 omnios library/idnkit 2.3-0.151025
 omnios library/idnkit/header-idnkit 2.3-0.151025
