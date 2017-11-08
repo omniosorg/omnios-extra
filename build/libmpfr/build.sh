@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=mpfr
-VER=3.1.5
+VER=3.1.6
 VERHUMAN=$VER
 PKG=library/mpfr
 SUMMARY="The GNU multiple-precision floating-point computation library"
@@ -28,10 +28,13 @@ CONFIGURE_OPTS+="
     --with-gmp-include=$PREFIX/include/gmp
 "
 
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
+
 init
 download_source $PROG $PROG $VER
 prep_build
 build
+run_testsuite check
 make_isa_stub
 make_package
 clean_up
