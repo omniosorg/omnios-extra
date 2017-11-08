@@ -28,15 +28,12 @@
 . ../../lib/functions.sh
 
 PROG=mercurial
-VER=4.4
+VER=4.4.1
 PKG=developer/versioning/mercurial
 SUMMARY="$PROG - a free and open source, distributed version control system"
 DESC="$SUMMARY"
 
 DEPENDS_IPS="web/curl library/security/openssl"
-
-# For inet_ntop which isn't detected properly in the configure script
-CONFIGURE_OPTS=""
 
 PYTHONPATH=/usr
 PYTHON=$PYTHONPATH/bin/python2.7
