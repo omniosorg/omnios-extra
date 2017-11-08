@@ -1,3 +1,8 @@
+
 license DOC/License.txt license=7-Zip
 license DOC/copying.txt license=LGPLv2
 license DOC/unRarLicense.txt license=unRar
+
+<transform file path=usr/bin/p7zip -> set mode 0755>
+<transform file dir path=usr/share/doc -> drop>
+
