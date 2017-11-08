@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,42 +18,46 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
 
 PROG=glib
-VER=2.54.0
+VER=2.54.2
 PKG=library/glib2
 SUMMARY="$PROG - GNOME GLib utility library"
 DESC="$SUMMARY"
 
 DEPENDS_IPS="
-	runtime/python-27
-	runtime/perl
+    runtime/python-27
+    runtime/perl
 "
 
-# Use old gcc4 standards level for this.
-CFLAGS+=" -std=gnu89"
-
+CFLAGS+=" -D_XPG6"
 LDFLAGS+=" -Wl,-z,ignore"
 
 CONFIGURE_OPTS="
-	--disable-fam
-	--disable-dtrace
-	--with-threads=posix
+    --disable-fam
+    --disable-dtrace
+    --with-threads=posix
 "
+
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_isa_stub
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker
