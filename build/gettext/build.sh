@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,7 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
+# CDDL HEADER END }}}
 #
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
@@ -27,9 +27,9 @@
 # Load support functions
 . ../../lib/functions.sh
 
-PROG=gettext                  # App name
-VER=0.19.8.1                  # App version
-PKG=text/gnu-gettext          # Package name (without prefix)
+PROG=gettext
+VER=0.19.8.1
+PKG=text/gnu-gettext
 SUMMARY="gettext - GNU gettext utility"
 DESC="GNU gettext - GNU gettext utility"
 
@@ -56,10 +56,9 @@ patch_source
 prep_build
 build
 run_testsuite check
-install_license COPYING
 make_isa_stub
 make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
