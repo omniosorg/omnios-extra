@@ -561,6 +561,7 @@ rebase_patches() {
     # Read the series file for patch filenames
     exec 3<"$SRCDIR/$PATCHDIR/series"
     pushd $TMPDIR > /dev/null
+    rsync -a --delete $BUILDDIR/ $BUILDDIR.unpatched/
     while read LINE <&3 ; do
         patchfile="$SRCDIR/$PATCHDIR/`echo $LINE | awk '{print $1}'`"
         rsync -a --delete $BUILDDIR/ $BUILDDIR~/
@@ -578,12 +579,16 @@ rebase_patches() {
         gdiff -pruN --exclude='*.orig' $BUILDDIR~ $BUILDDIR >> $patchfile
         rm -f $patchfile~
     done
+    rsync -a --delete $BUILDDIR.unpatched/ $BUILDDIR/
     popd > /dev/null
     exec 3<&- # Close the file
+    # Now the patches have been re-based, -pX is no longer required.
+    sed -i 's/ -p.*//' "$SRCDIR/$PATCHDIR/series"
 }
 
 patch_source() {
-    [ -n "$REBASE_PATCHES" ] && rebase_patches || apply_patches
+    [ -n "$REBASE_PATCHES" ] && rebase_patches
+    apply_patches
 }
 
 #############################################################################
