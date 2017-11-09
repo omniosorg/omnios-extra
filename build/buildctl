@@ -323,8 +323,8 @@ baseline() {
         $2 in seen { next }
         {
             seen[$2] = 1
-            # Remove package timestamp, NF as there can be 3/4 fields
-            sub(/:.*/, "", $NF)
+            # Remove package version, NF as there can be 3 or 4 fields
+            $(NF--) = ""
             print
         }
     ' | sort > $TMPDIR/baseline.$$
