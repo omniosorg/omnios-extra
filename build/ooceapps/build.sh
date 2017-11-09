@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,8 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
@@ -34,11 +33,11 @@ VERHUMAN=$VER   # Human-readable version
 PKG=ooce/ooceapps # Package name (e.g. library/foo)
 SUMMARY="Mattermost integrations for OmniOSce" # One-liner, must be filled in
 DESC=$SUMMARY   # Longer description, must be filled in
-BUILDARCH=64    # or 64 or both ... for libraries we want both for tools 32 bit only
+BUILDARCH=32    # or 64 or both ... for libraries we want both for tools 32 bit only
 PREFIX=/opt/ooce
 MIRROR="https://github.com/omniosorg/$PROG/releases/download"
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS_32="
     --prefix=$PREFIX/$PROG
     --sysconfdir=/etc$PREFIX/$PROG
     --localstatedir=/var$PREFIX/$PROG"
@@ -63,4 +62,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
