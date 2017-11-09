@@ -191,9 +191,7 @@ start_built_listener() {
         if read line <$built_pipe; then
             [ $line = "quit" ] && break
             already_built+=([$line]=1)
-            [ -f "$BUILT_CACHE" ] && cp "$BUILT_CACHE" "${BUILT_CACHE}.$$"
-            echo $line >> "${BUILT_CACHE}.$$"
-            mv "${BUILT_CACHE}.$$" "${BUILT_CACHE}"
+            echo $line >> "$BUILT_CACHE"
         fi
     done &
 }
@@ -204,11 +202,9 @@ stop_built_listener() {
 
 restore_built() {
     [ -f "$BUILT_CACHE" ] || return
-    cp "$BUILT_CACHE" "${BUILT_CACHE}.$$"
-    for pkg in `cat "${BUILT_CACHE}.$$"`; do
+    for pkg in `cat "$BUILT_CACHE"`; do
         [ -n "${already_built[$pkg]}" ] || already_built+=([$pkg]=1)
     done
-    rm -f "${BUILT_CACHE}.$$"
 }
 
 is_built() {
