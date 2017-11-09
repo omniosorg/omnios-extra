@@ -318,6 +318,7 @@ baseline() {
 
     # PUBLISHER NAME                 O VERSION
     # omnios    developer/macro/gnu-m4 1.4.18-0.151023:20171022T080105Z
+    pkgrepo -s $PKGSRVR rebuild
     pkgrepo -s $PKGSRVR list | nawk '
         $1 == "PUBLISHER" { next }
         $2 in seen { next }
