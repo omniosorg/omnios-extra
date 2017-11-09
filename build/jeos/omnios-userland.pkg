@@ -95,9 +95,9 @@ network/test/netperf			2.7
 release/name				0.5.11
 release/notices				0.5.11
 runtime/java				1.7.0
-runtime/perl-64				5.24
-runtime/perl/manual			5.24
-runtime/perl				5.24
+runtime/perl-64				5.26
+runtime/perl/manual			5.26
+runtime/perl				5.26
 runtime/python-27			2.7
 security/sudo				1.8
 service/network/ntp			4.2.8
