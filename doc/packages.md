@@ -54,7 +54,7 @@
 | network/service/isc-dhcp		| 4.3.6			| https://www.isc.org/downloads/dhcp/
 | network/test/iperf			| 3.1.3			| https://iperf.fr/iperf-download.php#source
 | network/test/netperf			| 2.7.0			| https://github.com/HewlettPackard/netperf/releases
-| runtime/perl				| 5.24.3		| http://www.cpan.org/src/README.html
+| runtime/perl				| 5.26.1		| http://www.cpan.org/src/README.html
 | runtime/python-27			| 2.7.14		| https://www.python.org/downloads/source/
 | security/sudo				| 1.8.21p2		| https://www.sudo.ws/
 | service/network/ntp			| 4.2.8p10		| http://www.ntp.org/downloads.html

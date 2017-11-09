@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,10 +18,10 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # We need this for the Sun assembler
@@ -35,7 +35,7 @@ export SHELL
 
 case $DEPVER in
     "")
-	DEPVER=5.24.3
+        DEPVER=5.26.1
         logmsg "no version specified, using $DEPVER"
         ;;
 esac
@@ -56,20 +56,20 @@ BUILD_DEPENDS_IPS="text/gnu-sed"
 # of the 32 and 64 bit variants.
 #
 PERL_BUILD_OPTS_COMMON="-des \
-        -Dusethreads \
-        -Duseshrplib \
-        -Dusedtrace \
-        -Dusemultiplicity \
-        -Duselargefiles \
-        -Duse64bitint \
-        -Dmyhostname=localhost \
-        -Umydomain \
-        -Umyuname \
-        -Dcf_by=omnios-builder \
-        -Dcf_email=omnios-builder@omniosce.org \
-        -Dcc=gcc \
-        -Dld=/usr/ccs/bin/ld \
-        -Doptimize=-O3"
+    -Dusethreads \
+    -Duseshrplib \
+    -Dusedtrace \
+    -Dusemultiplicity \
+    -Duselargefiles \
+    -Duse64bitint \
+    -Dmyhostname=localhost \
+    -Umydomain \
+    -Umyuname \
+    -Dcf_by=omnios-builder \
+    -Dcf_email=sa@omniosce.org \
+    -Dcc=gcc \
+    -Dld=/usr/ccs/bin/ld \
+    -Doptimize=-O3"
 
 filelist() {
     pushd $DESTDIR > /dev/null
@@ -81,7 +81,7 @@ filelist() {
 
 mkmog() {
     while read f; do
-	echo "<transform file dir link hardlink path=^$f\$ -> drop>"
+        echo "<transform file dir link hardlink path=^$f\$ -> drop>"
     done
 }
 
@@ -122,7 +122,7 @@ links() {
     do
         file=$(basename $path)
 
-	[ "$file" = "perl$VER" ] && lfile=perl$SVER || lfile=$file
+        [ "$file" = "perl$VER" ] && lfile=perl$SVER || lfile=$file
         logcmd ln -s \
             ../perl5/${SVER}/bin/$file $DESTDIR/usr/bin/$lfile
         logcmd ln -s \
@@ -140,7 +140,7 @@ build32() {
 
     logmsg "--- configure (32-bit)"
     logcmd $SHELL Configure ${PERL_BUILD_OPTS_COMMON} \
-	-Dccflags="-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_TS_ERRNO" \
+        -Dccflags="-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_TS_ERRNO" \
         -Dprefix=${PREFIX} \
         -Dvendorprefix=${PREFIX} \
         -Dbin=${PREFIX}/bin/${ISAPART} \
@@ -152,8 +152,7 @@ build32() {
         -Dprivlib=${PREFIX}/lib \
         -Dsitelib=/usr/perl5/site_perl/${SVER} \
         -Dvendorlib=/usr/perl5/vendor_perl/${SVER} \
-	|| \
-    logerr "--- Configure failed"
+        || logerr "--- Configure failed"
     logcmd gsed -i 's/-fstack-protector-strong//g;' config.sh
 
     logmsg "--- make"
@@ -161,15 +160,13 @@ build32() {
     logcmd gmake || \
         logerr "--- Make failed"
 
-    #logmsg "--- make test"
-    #logcmd gmake test || \
-    #    logerr "--- Make test failed"
+    run_testsuite test
 
     logmsg "--- make install"
     logcmd gmake install DESTDIR=${DESTDIR} || \
         logerr "--- Make install failed"
 
-    # We make the isastubs after 32bit so we can seem them in the file list
+    # We make the isastubs after 32bit so we can see them in the file list
     make_isa_stub
 
     # Similarly for the links to usr/bin etc.
@@ -212,9 +209,7 @@ build64() {
     logcmd gmake || \
         logerr "--- Make failed"
 
-    #logmsg "--- make test"
-    #logcmd gmake test || \
-    #    logerr "--- Make test failed"
+    run_testsuite test "" "testsuite64.log"
 
     logmsg "--- make install"
     logcmd gmake install DESTDIR=${DESTDIR} || \
@@ -254,3 +249,6 @@ DEPENDS_IPS="=runtime/perl@${VER},${SUNOSVER}-${PVER} runtime/perl@${VER},${SUNO
 make_package $TMPDIR/perl-64.mog
 
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker
