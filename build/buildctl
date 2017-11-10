@@ -322,13 +322,14 @@ baseline() {
 
     # PUBLISHER NAME                 O VERSION
     # omnios    developer/macro/gnu-m4 1.4.18-0.151023:20171022T080105Z
+    pkgrepo -s $PKGSRVR rebuild
     pkgrepo -s $PKGSRVR list | nawk '
         $1 == "PUBLISHER" { next }
         $2 in seen { next }
         {
             seen[$2] = 1
-            # Remove package timestamp, NF as there can be 3/4 fields
-            sub(/:.*/, "", $NF)
+            # Remove package version, NF as there can be 3 or 4 fields
+            $(NF--) = ""
             print
         }
     ' | sort > $TMPDIR/baseline.$$
