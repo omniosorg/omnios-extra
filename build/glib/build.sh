@@ -49,6 +49,11 @@ CONFIGURE_OPTS="
 
 TESTSUITE_FILTER='^[A-Z#][A-Z ]'
 
+# With gcc 6, -Werror_format=2 produces errors like:
+#   error: format not a string literal, arguments not checked
+# Tell configure that this flag doesn't exist for the compiler.
+export cc_cv_CFLAGS__Werror_format_2=no
+
 init
 download_source $PROG $PROG $VER
 patch_source

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,13 +18,12 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
+# CDDL HEADER END }}}
 #
-#
-# Copyright 2015 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Use is subject to license terms.
 # Copyright (c) 2014 by Delphix. All rights reserved.
+# Copyright 2015 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Use is subject to license terms.
 #
 
 umask 022
@@ -244,8 +243,8 @@ url_encode() {
 #############################################################################
 # Set the LANG to C as the assembler will freak out on unicode in headers
 LANG=C
-GCCPATH=/opt/gcc-5
-GCC6PATH=/opt/gcc-6
+GCCVER=6
+GCCPATH=/opt/gcc-$GCCVER
 # Set the path - This can be overriden/extended in the build script
 PATH="$GCCPATH/bin:/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin"
 export LANG GCCPATH PATH
@@ -264,8 +263,8 @@ SRCDIR=$PWD/`dirname $0`
 . $MYDIR/config.sh
 [ -f $MYDIR/site.sh ] && . $MYDIR/site.sh
 
-# Platform information
-SUNOSVER=`uname -r` # e.g. 5.11
+# Platform information, e.g. 5.11
+SUNOSVER=`uname -r`
 
 [ -f "$LOGFILE" ] && mv $LOGFILE $LOGFILE.1
 process_opts $@
@@ -273,10 +272,7 @@ shift $((OPTIND - 1))
 
 BasicRequirements() {
     local needed=""
-    [ -x $GCCPATH/bin/gcc ] || needed+=" developer/gcc5"
-    # Require gcc6 too in order to build the gcc6 packages and to ensure a
-    # consistent set of package dependencies between builds.
-    [ -x $GCC6PATH/bin/gcc ] || needed+=" developer/gcc6"
+    [ -x $GCCPATH/bin/gcc ] || needed+=" developer/gcc$GCCVER"
     [ -x /usr/bin/ar ] || needed+=" developer/object-file"
     [ -x /usr/bin/ld ] || needed+=" developer/linker"
     [ -f /usr/lib/crt1.o ] || needed+=" developer/library/lint"
@@ -1550,4 +1546,4 @@ set_python_version() {
 }
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
