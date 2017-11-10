@@ -1,0 +1,49 @@
+Fix unescaped braces that are treated as problems with newer perl versions.
+Patch taken from:
+
+https://code.launchpad.net/~dobey/intltool/regex-fix
+
+diff -pruN '--exclude=*.orig' intltool-0.51.0~/intltool-update.in intltool-0.51.0/intltool-update.in
+--- intltool-0.51.0~/intltool-update.in	2015-03-09 01:39:54.000000000 +0000
++++ intltool-0.51.0/intltool-update.in	2017-11-10 09:47:19.979256659 +0000
+@@ -1062,7 +1062,7 @@ sub SubstituteVariable
+ 	}
+     }
+ 
+-    if ($str =~ /^(.*)\${?([A-Z_]+)}?(.*)$/)
++    if ($str =~ /^(.*)\$\{?([A-Z_]+)}?(.*)$/)
+     {
+ 	my $rest = $3;
+ 	my $untouched = $1;
+@@ -1190,10 +1190,10 @@ sub FindPackageName
+ 	$name    =~ s/\(+$//g;
+ 	$version =~ s/\(+$//g;
+ 
+-	$varhash{"PACKAGE_NAME"} = $name if (not $name =~ /\${?AC_PACKAGE_NAME}?/);
+-	$varhash{"PACKAGE"} = $name if (not $name =~ /\${?PACKAGE}?/);
+-	$varhash{"PACKAGE_VERSION"} = $version if (not $name =~ /\${?AC_PACKAGE_VERSION}?/);
+-	$varhash{"VERSION"} = $version if (not $name =~ /\${?VERSION}?/);
++	$varhash{"PACKAGE_NAME"} = $name if (not $name =~ /\$\{?AC_PACKAGE_NAME}?/);
++	$varhash{"PACKAGE"} = $name if (not $name =~ /\$\{?PACKAGE}?/);
++	$varhash{"PACKAGE_VERSION"} = $version if (not $name =~ /\$\{?AC_PACKAGE_VERSION}?/);
++	$varhash{"VERSION"} = $version if (not $name =~ /\$\{?VERSION}?/);
+     }
+ 
+     if ($conf_source =~ /^AC_INIT\(([^,\)]+),([^,\)]+)[,]?([^,\)]+)?/m)
+@@ -1219,11 +1219,11 @@ sub FindPackageName
+ 	$version =~ s/\(+$//g;
+         $bugurl  =~ s/\(+$//g if (defined $bugurl);
+ 
+-	$varhash{"PACKAGE_NAME"} = $name if (not $name =~ /\${?AC_PACKAGE_NAME}?/);
+-	$varhash{"PACKAGE"} = $name if (not $name =~ /\${?PACKAGE}?/);
+-	$varhash{"PACKAGE_VERSION"} = $version if (not $name =~ /\${?AC_PACKAGE_VERSION}?/);
+-	$varhash{"VERSION"} = $version if (not $name =~ /\${?VERSION}?/);
+-        $varhash{"PACKAGE_BUGREPORT"} = $bugurl if (defined $bugurl and not $bugurl =~ /\${?\w+}?/);
++	$varhash{"PACKAGE_NAME"} = $name if (not $name =~ /\$\{?AC_PACKAGE_NAME}?/);
++	$varhash{"PACKAGE"} = $name if (not $name =~ /\$\{?PACKAGE}?/);
++	$varhash{"PACKAGE_VERSION"} = $version if (not $name =~ /\$\{?AC_PACKAGE_VERSION}?/);
++	$varhash{"VERSION"} = $version if (not $name =~ /\$\{?VERSION}?/);
++        $varhash{"PACKAGE_BUGREPORT"} = $bugurl if (defined $bugurl and not $bugurl =~ /\$\{?\w+}?/);
+     }
+ 
+     # \s makes this not work, why?
