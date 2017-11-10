@@ -154,7 +154,7 @@ merge_package() {
 	version_files $DESTDIR `echo $VER | cut -d. -f1-2`
 	version_files $LDESTDIR `echo $LVER | cut -d. -f1-2`
 
-	( cd $LDESTDIR; find . | cpio -pvmud $DESTDIR )
+	( cd $LDESTDIR; find . | cpio -pmud $DESTDIR )
 }
 
 ######################################################################
