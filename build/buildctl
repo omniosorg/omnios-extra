@@ -342,8 +342,33 @@ baseline() {
     rm -f $TMPDIR/baseline.$$
 }
 
+job_status() {
+    logmsg "######################################################"
+    logmsg "-- Job status $*--"
+    now=`date +%s`
+
+    # If nightly is running, include that status too
+    nightly=$PREBUILT_ILLUMOS/log/nightly.lock
+    if [ -h "$nightly" ]; then
+        nightly_pid="`readlink $nightly | cut -d. -f3`"
+        if kill -0 $nightly_pid; then
+            # Nightly running
+            msg=`grep '^===' ${nightly/lock/log} | tail -1`
+            logmsg "`printf "    [=] %8d -  nightly %s\n" \
+                "$nightly_pid" "${msg:0:50}"`"
+        fi
+    fi
+    for i in `seq 0 $threads`; do
+        [ -n "${slots[$i]}" ] || continue
+        ((tm = now - ${slotstart[$i]}))
+        logmsg "`printf "    [%d] %8d - (%5ds) %s\n" \
+            "$i" "${slots[$i]}" "$tm" "${slotdesc[$i]}"`"
+    done
+    logmsg "######################################################"
+}
+
 parallel_build() {
-    local threads=$1
+    threads=$1
     export batch_flag="-b"
     export BATCH=1
 
@@ -397,7 +422,7 @@ parallel_build() {
                   ! kill -0 "${slots[$i]}" 2>/dev/null; then
                     # Reap terminated job
                     if [ -n "${slots[$i]}" ]; then
-                        logmsg "-- waiting for job $i (${slots[$i]})..."
+                        #logmsg "-- waiting for job $i (${slots[$i]})..."
                         wait "${slots[$i]}"
                         s=$?
                         logmsg "-- Job $i terminated with status $s"
@@ -417,49 +442,40 @@ parallel_build() {
                 fi
             done
             # Print status summary each minute (approx.)
-            if [ `date +%S` -eq 0 ]; then
-                logmsg "######################################################"
-                logmsg "-- Job status --"
-                now=`date +%s`
-
-                # If nightly is running, include that status too
-                nightly=$PREBUILT_ILLUMOS/log/nightly.lock
-                if [ -h "$nightly" ]; then
-                    nightly_pid="`readlink $nightly | cut -d. -f3`"
-                    if kill -0 $nightly_pid; then
-                        # Nightly running
-                        msg=`grep '^===' ${nightly/lock/log} | tail -1`
-                        logmsg "`printf "    [=] %8d -  nightly %s\n" \
-                            "$nightly_pid" "${msg:0:50}"`"
-                    fi
-                fi
-                for i in `seq 0 $threads`; do
-                    [ -n "${slots[$i]}" ] || continue
-                    ((tm = now - ${slotstart[$i]}))
-                    logmsg "`printf "    [%d] %8d - (%5ds) %s\n" \
-                        "$i" "${slots[$i]}" "$tm" "${slotdesc[$i]}"`"
-                done
-                logmsg "######################################################"
-            fi
+            [ `date +%S` -eq 0 ] && job_status
             sleep 1
         done
     done
 
-    # Wait for all slots to finish
-    logmsg "-- waiting for jobs to finish"
-    for i in `seq 0 $threads`; do
-        [ -n "${slots[$i]}" ] || continue
-        if [ $err -eq 0 ]; then
-            wait "${slots[$i]}"
-        else
-            kill "${slots[$i]}"
-        fi
-    done
+    if [ $err -ne 0 ]; then
+        logmsg "-- error encountered, killing jobs"
+        for i in `seq 0 $threads`; do
+            [ -n "${slots[$i]}" ] && kill "${slots[$i]}"
+        done
+    else
+        logmsg "-- waiting for jobs to finish"
+        while :; do
+            running=0
+            for i in `seq 0 $threads`; do
+                [ -n "${slots[$i]}" ] || continue
+                if ! kill -0 "${slots[$i]}" 2>/dev/null; then
+                    # Job has finished
+                    wait "${slots[$i]}"
+                    slots[$i]=
+                else
+                    ((running = running + 1))
+                fi
+            done
+            [ "$running" -eq 0 ] && break
+            [ `date +%S` -eq 0 ] && job_status "(draining) "
+            sleep 1
+        done
 
-    if [ $err -eq 0 -a -z "$SKIP_KAYAK_KERNEL" ]; then
-        # Build this one last
-        note "($pkgcount/$pkgcount) Building system/install/kayak-kernel"
-        build system/install/kayak-kernel
+        if [ -z "$SKIP_KAYAK_KERNEL" ]; then
+            # Build this one last
+            note "($pkgcount/$pkgcount) Building system/install/kayak-kernel"
+            build system/install/kayak-kernel
+        fi
     fi
 
     stop_built_listener
