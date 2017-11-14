@@ -308,6 +308,8 @@ licenses() {
 
 baseline() {
     mode="${1:-check}"
+    repo="$2"
+    [ -z "$repo" ] && repo="$PKGSRVR"
 
     if [ $mode != create -a $mode != check ]; then
         echo "Unknown baseline mode - $mode"
@@ -318,8 +320,8 @@ baseline() {
 
     # PUBLISHER NAME                 O VERSION
     # omnios    developer/macro/gnu-m4 1.4.18-0.151023:20171022T080105Z
-    pkgrepo -s $PKGSRVR rebuild
-    pkgrepo -s $PKGSRVR list | nawk '
+    pkgrepo -s $repo rebuild
+    pkgrepo -s $repo list | nawk '
         $1 == "PUBLISHER" { next }
         $2 in seen { next }
         {
@@ -328,7 +330,7 @@ baseline() {
             $(NF--) = ""
             print
         }
-    ' | sort > $TMPDIR/baseline.$$
+    ' | sed 's/ *$//' | sort > $TMPDIR/baseline.$$
 
     if [ $mode = create ]; then
         mv $TMPDIR/baseline.$$ $MYDIR/../doc/baseline
@@ -521,7 +523,8 @@ case "$1" in
         ;;
 
     baseline)
-        baseline $2
+        shift
+        baseline "$@"
         exit
         ;;
 
