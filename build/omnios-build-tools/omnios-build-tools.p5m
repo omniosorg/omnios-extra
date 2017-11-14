@@ -5,6 +5,7 @@ set name=pkg.description value="Single meta-package containing required tools to
 
 depend fmri=developer/gcc5 type=require
 depend fmri=developer/gcc6 type=require
+depend fmri=developer/gcc7 type=require
 depend fmri=developer/build/gnu-make type=require
 depend fmri=archiver/gnu-tar type=require
 depend fmri=compatibility/ucb type=require

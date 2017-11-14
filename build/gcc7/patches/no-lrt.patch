@@ -1,0 +1,12 @@
+diff -pruN '--exclude=*.orig' gcc-7.2.0~/libstdc++-v3/configure gcc-7.2.0/libstdc++-v3/configure
+--- gcc-7.2.0~/libstdc++-v3/configure	2017-06-21 08:55:52.630537000 +0000
++++ gcc-7.2.0/libstdc++-v3/configure	2017-11-14 10:33:52.378607805 +0000
+@@ -20576,7 +20576,7 @@ $as_echo "$glibcxx_glibc217" >&6; }
+         ac_has_nanosleep=yes
+         ;;
+       solaris*)
+-        GLIBCXX_LIBS="$GLIBCXX_LIBS -lrt"
++#        GLIBCXX_LIBS="$GLIBCXX_LIBS -lrt"
+         ac_has_clock_monotonic=yes
+         ac_has_clock_realtime=yes
+         ac_has_nanosleep=yes

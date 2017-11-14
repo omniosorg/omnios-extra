@@ -29,7 +29,7 @@
 
 PKG=system/library/gcc-runtime
 PROG=libgcc_s
-VER=6
+VER=7
 VERHUMAN=$VER
 SUMMARY="gcc runtime"
 DESC="$SUMMARY"

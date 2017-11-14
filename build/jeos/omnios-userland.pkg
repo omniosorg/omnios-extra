@@ -18,6 +18,7 @@ developer/build/libtool			2.4
 developer/dtrace/toolkit		0.99
 developer/gcc5				5
 developer/gcc6				6
+developer/gcc7				7
 developer/gnu-binutils			2.25
 developer/lexer/flex			2.6
 developer/macro/cpp			0.5.11
@@ -110,8 +111,8 @@ system/install/kayak			1.1
 system/kvm				1.0
 system/library/c++/sunpro		0.5.11
 system/library/dbus			1.12
-system/library/g++-runtime		6
-system/library/gcc-runtime		6
+system/library/g++-runtime		7
+system/library/gcc-runtime		7
 system/library/iconv/unicode		0.5.11
 system/library/iconv/utf-8/manual	0.5.11
 system/library/iconv/utf-8		0.5.11
