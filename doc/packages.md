@@ -64,7 +64,7 @@
 | shell/pipe-viewer			| 1.6.6			| http://www.ivarch.com/programs/pv.shtml
 | shell/tcsh				| 6.20.00		| https://github.com/tcsh-org/tcsh/releases
 | shell/zsh				| 5.4.2			| https://sourceforge.net/projects/zsh/files/zsh
-| system/library/dbus			| 1.12.0		| https://dbus.freedesktop.org/releases/dbus
+| system/library/dbus			| 1.12.2		| https://dbus.freedesktop.org/releases/dbus
 | system/library/libdbus-glib		| 0.108			| https://dbus.freedesktop.org/releases/dbus-glib/
 | system/library/pcap			| 1.8.1			| http://www.tcpdump.org/#latest-releases
 | system/management/ipmitool		| 1.8.18		| https://sourceforge.net/projects/ipmitool/files/ipmitool
