@@ -449,7 +449,7 @@ parallel_build() {
         done
     done
 
-    if [ $err -ne 0 ]; then
+    if [ $err -ne 0 -a -z "$NOKILL_ON_ERROR" ]; then
         logmsg "-- error encountered, killing jobs"
         for i in `seq 0 $threads`; do
             [ -n "${slots[$i]}" ] && kill "${slots[$i]}"
@@ -472,12 +472,12 @@ parallel_build() {
             [ `date +%S` -eq 0 ] && job_status "(draining) "
             sleep 1
         done
+    fi
 
-        if [ -z "$SKIP_KAYAK_KERNEL" ]; then
-            # Build this one last
-            note "($pkgcount/$pkgcount) Building system/install/kayak-kernel"
-            build system/install/kayak-kernel
-        fi
+    if [ $err -eq 0 -a -z "$SKIP_KAYAK_KERNEL" ]; then
+        # Build this one last
+        note "($pkgcount/$pkgcount) Building system/install/kayak-kernel"
+        build system/install/kayak-kernel
     fi
 
     stop_built_listener

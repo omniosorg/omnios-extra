@@ -37,6 +37,10 @@
 # uncomment the following line.
 #SKIP_KAYAK_KERNEL=1
 
+# If you want other running jobs to be allowed to continue to completion when
+# a build error is detected, set this.
+#NOKILL_ON_ERROR=1
+
 # To use a proxy for source code retrieval.
 #export http_proxy=http://192.168.1.1:8080/
 #export https_proxy=http://192.168.1.1:8080/
