@@ -40,6 +40,9 @@ PKGSRVR=file://$ROOTDIR/tmp.repo/
 # set locale to C
 export LC_ALL=C
 
+# Use bash for subshells and commands launched by python setuptools
+export SHELL=/usr/bin/bash
+
 # Which server to fetch files from.
 # If $MIRROR begins with a '/', it is treated as a local directory.
 MIRROR=https://mirrors.omniosce.org
