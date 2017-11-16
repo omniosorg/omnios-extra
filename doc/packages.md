@@ -103,7 +103,6 @@
 | library/python-2/jsonrpclib-27	| 0.1.7			| https://pypi.python.org/pypi/jsonrpclib
 | library/python-2/jsonschema-27	| 2.6.0			| https://pypi.python.org/pypi/jsonschema
 | library/python-2/lxml-27		| 4.1.1			| https://pypi.python.org/pypi/lxml/
-| library/python-2/m2crypto-27		| 0.27.0		| https://pypi.python.org/pypi/M2Crypto
 | library/python-2/mako-27		| 1.0.7			| https://pypi.python.org/pypi/Mako
 | library/python-2/numpy-27		| 1.13.3		| https://pypi.python.org/pypi/numpy
 | library/python-2/ply-27		| 3.10			| https://pypi.python.org/pypi/ply
@@ -118,5 +117,4 @@
 | library/python-2/simplejson-27	| 3.12.0		| https://pypi.python.org/pypi/simplejson
 | library/python-2/six-27		| 1.11.0		| https://pypi.python.org/pypi/six
 | library/python-2/tempora-27		| 1.9			| https://pypi.python.org/pypi/tempora
-| library/python-2/typing-27		| 3.6.2			| https://pypi.python.org/pypi/typing
 

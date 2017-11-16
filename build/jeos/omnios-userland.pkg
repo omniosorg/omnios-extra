@@ -65,7 +65,6 @@ library/python-2/idna-27		2.6
 library/python-2/ipaddress-27		1.0
 library/python-2/jsonschema-27		2.6
 library/python-2/lxml-27		4.1
-library/python-2/m2crypto-27		0.27
 library/python-2/mako-27		1.0
 library/python-2/numpy-27		1.13
 library/python-2/ply-27			3.10
@@ -80,7 +79,6 @@ library/python-2/setuptools-27		36
 library/python-2/simplejson-27		3.12
 library/python-2/six-27			1.11
 library/python-2/tempora-27		1.9
-library/python-2/typing-27		3.6
 library/readline			7.0
 library/security/openssl		1.0.2
 library/security/trousers		0.3
