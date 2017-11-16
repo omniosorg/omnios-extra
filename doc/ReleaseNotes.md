@@ -26,6 +26,8 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 * FMA event for SSD wearout
 
+* IPv6 default address selection table updated for RFC6724
+
 ### LX zones
 
 * Report that `/proc/sys` is writable to keep systemd happy.
@@ -39,6 +41,8 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 ### Commands and Command Options
 
 * `/usr/gnu/bin/uname -o` reports `illumos` as the operating system.
+
+* grep now supports context options (-A, -B, -C)
 
 ### Developer Features
 
