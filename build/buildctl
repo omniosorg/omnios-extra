@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
 NOBANNER=1
+BUILD_EXPENSIVE=0
 batch_flag=""
 lint_flag=""
 if [ "${BATCH}" = 1 ]; then
@@ -101,16 +102,24 @@ detect_licenses() {
 }
 
 usage() {
-    echo $0
-    echo "    list [grep pattern]       (sorted alphabetically)"
-    echo "    list-build [grep pattern] (sorted in build order)"
-    echo "    licenses                  (audit licenses)"
-    echo "    build <pkg>"
-    echo "    build all"
-    echo "    build parallel <threads>  (start/continue parallel build)"
-    echo "    build continue            (continue interrupted build)"
-    echo "    build from <pkg>          (build <pkg> then those after)"
-    echo "    baseline [create]         (check or create pkg baseline)"
+    cat << EOM
+$0
+    list [grep pattern]            - sorted alphabetically
+    list-build [grep pattern]      - sorted in build order
+    licenses                       - audit licenses
+    build <pkg>
+    build [-e] all
+    build [-e] parallel <threads>  - start/continue parallel build
+    build continue                 - continue interrupted build
+    build from <pkg>               - build <pkg> then those after
+    baseline [create [repo]]       - check or create pkg baseline
+
+Options:
+
+    -e                             - also build packages flagged as expensive
+
+EOM
+
     exit
 }
 
@@ -164,8 +173,18 @@ list_build() {
 declare -A already_built
 built_pipe="$TMPDIR/built.ipc"
 
+# Record all expensive packages as already built
+record_expensive() {
+    if [ -n "$EXPENSIVE" -a "$BUILD_EXPENSIVE" -eq 0 ]; then
+        for pkg in $EXPENSIVE; do
+            record_built $pkg
+        done
+    fi
+}
+
 clear_built() {
     [ -f "$BUILT_CACHE" ] && rm -f "$BUILT_CACHE"
+    record_expensive
 }
 
 record_built() {
@@ -174,6 +193,7 @@ record_built() {
         echo "$*" >> $built_pipe
     else
         already_built+=([$1]=1)
+        [ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
         echo $1 >> "$BUILT_CACHE"
     fi
 }
@@ -201,7 +221,8 @@ stop_built_listener() {
 }
 
 restore_built() {
-    [ -f "$BUILT_CACHE" ] || return
+    [ -f "$BUILT_CACHE" ] || record_expensive
+
     for pkg in `cat "$BUILT_CACHE"`; do
         [ -n "${already_built[$pkg]}" ] || already_built+=([$pkg]=1)
     done
@@ -531,6 +552,7 @@ case "$1" in
     build)
         add_targets
         shift
+        [ "$1" = "-e" ] && BUILD_EXPENSIVE=1 && shift
         tobuild="$@"
         [ -z "$tobuild" ] && tobuild=all
 

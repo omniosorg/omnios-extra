@@ -45,3 +45,17 @@
 #export http_proxy=http://192.168.1.1:8080/
 #export https_proxy=http://192.168.1.1:8080/
 
+# To flag packages as expensive to avoid building them by default:
+#EXPENSIVE="
+# 	developer/sunstudio12.1
+# 	developer/gcc44
+# 	developer/gcc44/libgmp-gcc44
+#	developer/gcc44/libmpc-gcc44
+#	developer/gcc44/libmpfr-gcc44
+#	developer/gcc5
+#	developer/gcc6
+#	developer/gcc7
+#	developer/java/jdk
+#	runtime/java        
+#"
+
