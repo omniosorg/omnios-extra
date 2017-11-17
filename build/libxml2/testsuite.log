@@ -15,30 +15,30 @@ Making all in tests
   CC       testrecurse.o
   CCLD     testrecurse
   CC       testapi.o
-testapi.c:18112:25: warning: 'gen_xmlSchematronPtr' defined but not used [-Wunused-function]
- static xmlSchematronPtr gen_xmlSchematronPtr(int no ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
-                         ^
-testapi.c:18115:13: warning: 'des_xmlSchematronPtr' defined but not used [-Wunused-function]
- static void des_xmlSchematronPtr(int no ATTRIBUTE_UNUSED, xmlSchematronPtr val ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
-             ^
-testapi.c:18132:35: warning: 'gen_xmlSchematronParserCtxtPtr' defined but not used [-Wunused-function]
- static xmlSchematronParserCtxtPtr gen_xmlSchematronParserCtxtPtr(int no ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
-                                   ^
-testapi.c:18135:13: warning: 'des_xmlSchematronParserCtxtPtr' defined but not used [-Wunused-function]
- static void des_xmlSchematronParserCtxtPtr(int no ATTRIBUTE_UNUSED, xmlSchematronParserCtxtPtr val ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
-             ^
-testapi.c:18630:18: warning: 'gen_const_xmlBufPtr' defined but not used [-Wunused-function]
- static xmlBufPtr gen_const_xmlBufPtr(int no ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
-                  ^
-testapi.c:18633:13: warning: 'des_const_xmlBufPtr' defined but not used [-Wunused-function]
- static void des_const_xmlBufPtr(int no ATTRIBUTE_UNUSED, const xmlBufPtr val ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
-             ^
-testapi.c:34629:27: warning: 'gen_xmlSAXHandlerPtr_ptr' defined but not used [-Wunused-function]
- static xmlSAXHandlerPtr * gen_xmlSAXHandlerPtr_ptr(int no ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
-                           ^
 testapi.c:34632:13: warning: 'des_xmlSAXHandlerPtr_ptr' defined but not used [-Wunused-function]
  static void des_xmlSAXHandlerPtr_ptr(int no ATTRIBUTE_UNUSED, xmlSAXHandlerPtr * val ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
-             ^
+             ^~~~~~~~~~~~~~~~~~~~~~~~
+testapi.c:34629:27: warning: 'gen_xmlSAXHandlerPtr_ptr' defined but not used [-Wunused-function]
+ static xmlSAXHandlerPtr * gen_xmlSAXHandlerPtr_ptr(int no ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+                           ^~~~~~~~~~~~~~~~~~~~~~~~
+testapi.c:18633:13: warning: 'des_const_xmlBufPtr' defined but not used [-Wunused-function]
+ static void des_const_xmlBufPtr(int no ATTRIBUTE_UNUSED, const xmlBufPtr val ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+             ^~~~~~~~~~~~~~~~~~~
+testapi.c:18630:18: warning: 'gen_const_xmlBufPtr' defined but not used [-Wunused-function]
+ static xmlBufPtr gen_const_xmlBufPtr(int no ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+                  ^~~~~~~~~~~~~~~~~~~
+testapi.c:18135:13: warning: 'des_xmlSchematronParserCtxtPtr' defined but not used [-Wunused-function]
+ static void des_xmlSchematronParserCtxtPtr(int no ATTRIBUTE_UNUSED, xmlSchematronParserCtxtPtr val ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+testapi.c:18132:35: warning: 'gen_xmlSchematronParserCtxtPtr' defined but not used [-Wunused-function]
+ static xmlSchematronParserCtxtPtr gen_xmlSchematronParserCtxtPtr(int no ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+testapi.c:18115:13: warning: 'des_xmlSchematronPtr' defined but not used [-Wunused-function]
+ static void des_xmlSchematronPtr(int no ATTRIBUTE_UNUSED, xmlSchematronPtr val ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+             ^~~~~~~~~~~~~~~~~~~~
+testapi.c:18112:25: warning: 'gen_xmlSchematronPtr' defined but not used [-Wunused-function]
+ static xmlSchematronPtr gen_xmlSchematronPtr(int no ATTRIBUTE_UNUSED, int nr ATTRIBUTE_UNUSED) {
+                         ^~~~~~~~~~~~~~~~~~~~
   CCLD     testapi
   CC       testchar.o
   CCLD     testchar
@@ -89,7 +89,7 @@ testapi.c:34632:13: warning: 'des_xmlSAXHandlerPtr_ptr' defined but not used [-W
 ## C14N exclusive without comments regression tests
 ## C14N 1.1 without comments regression tests
 ## Catalog and Threads regression tests
-Total 3146 tests, no errors
+Total 3147 tests, no errors
 .........
 ## Parsing recursive test cases
 ## Parsing non-recursive test cases
