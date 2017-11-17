@@ -1,4 +1,6 @@
-<img src="http://www.omniosce.org/OmniOSce_logo.svg" height="128">
+<a href="https://omniosce.org">
+<img src="https://omniosce.org/OmniOSce_logo.svg" height="128">
+</a>
 
 # Release Notes for OmniOSce v11 r151026
 ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ** These are DRAFT release notes ** ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
@@ -15,7 +17,7 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 ### System Features
 
-* `libdiskmgt` and therefore `diskinfo` now recognises nvme, sata and xen
+* `libdiskmgt` (and therefore `diskinfo`) now recognises nvme, sata and xen
   controllers
 
 * The `/etc/screenrc` file delivered by the `screen` package is now based on
@@ -24,7 +26,12 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   this file then it will not be updated but the new template file will be
   installed as `/etc/screenrc.new`.
 
-* FMA event for SSD wearout
+* `screen` is now linked against ncurses in order to support more terminal
+  types (e.g. iterm)
+
+* New fault management (FMA) event for an SSD that is nearing its end-of-life
+  as projected by the manufacturer (SSD wearout, see
+  [illumos Issue 8074](https://www.illumos.org/issues/8074))
 
 * IPv6 default address selection table updated for RFC6724
 
@@ -61,7 +68,8 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 ### Deprecated features
 
-* GCC version 6 will be removed in the next stable version of OmniOS, r151028.
+* The python `m2crypto` and `typing` modules have been removed as they are no
+  longer required by core OmniOS packages.
 
 ### Package changes ([+] Added, [-] Removed, [\*] Changed)
 

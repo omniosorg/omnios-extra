@@ -285,7 +285,6 @@ omnios library/python-2/ipaddress-27
 omnios library/python-2/jsonrpclib-27
 omnios library/python-2/jsonschema-27
 omnios library/python-2/lxml-27
-omnios library/python-2/m2crypto-27
 omnios library/python-2/mako-27
 omnios library/python-2/numpy-27
 omnios library/python-2/ply-27
@@ -301,7 +300,6 @@ omnios library/python-2/setuptools-27
 omnios library/python-2/simplejson-27
 omnios library/python-2/six-27
 omnios library/python-2/tempora-27
-omnios library/python-2/typing-27
 omnios library/readline
 omnios library/security/openssl
 omnios library/security/tcp-wrapper

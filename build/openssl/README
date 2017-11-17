@@ -52,7 +52,6 @@ The following packages do not yet build with openssl 1.1
 
 * illumos-omnios
 * developer/versioning/git
-* library/python-2/m2crypto-27
 * library/python-2/pyopenssl-27
 * library/security/trousers
 * network/dns/bind

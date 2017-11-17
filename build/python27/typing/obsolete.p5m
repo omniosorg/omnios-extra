@@ -1,0 +1,4 @@
+set name=pkg.fmri value=library/python-2/typing-27@3.6.2-0.@RELVER@
+set name=pkg.summary value="typing - Type Hints for Python"
+set name=pkg.descr value="typing - Type Hints for Python"
+set name=pkg.obsolete value=true

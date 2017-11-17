@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,8 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
@@ -44,17 +43,17 @@ if [ -z "$PKGPUBLISHER" ]; then
     exit
 fi
 
-GIT=/usr/bin/git
-# On a running system, these are in /usr/include/.
-HEADERS="libbrand.h libuutil.h libzonecfg.h"
-BRAND_CFLAGS="-I./gate-include"
-
-BUILD_DEPENDS_IPS="developer/versioning/git developer/versioning/mercurial system/zones/internal text/intltool"
-DEPENDS_IPS="runtime/python-27"
+BUILD_DEPENDS_IPS="
+    developer/versioning/git
+    system/zones/internal
+    text/intltool
+"
+RUN_DEPENDS_IPS="runtime/python-27"
 
 # Respect environmental overrides for these to ease development.
 : ${PKG_SOURCE_REPO:=https://github.com/omniosorg/pkg5}
 : ${PKG_SOURCE_BRANCH:=r$RELVER}
+VER+="-$PKG_SOURCE_BRANCH"
 
 clone_source(){
     logmsg "pkg -> $TMPDIR/$BUILDDIR/pkg"
@@ -86,16 +85,16 @@ build(){
     pushd $TMPDIR/$BUILDDIR/pkg/src/brand > /dev/null
     logmsg "--- brand subbuild"
     logcmd make clean
-    ISALIST=i386 CC=gcc CFLAGS="$BRAND_CFLAGS" logcmd make \
-        CODE_WS=$TMPDIR/$BUILDDIR/pkg || logerr "brand make failed"
+    ISALIST=i386 CC=gcc logcmd make CODE_WS=$TMPDIR/$BUILDDIR/pkg \
+        || logerr "brand make failed"
     popd
     logmsg "--- toplevel build"
     logcmd make clean
-    ISALIST=i386 CC=gcc logcmd make \
-        CODE_WS=$TMPDIR/$BUILDDIR/pkg || logerr "toplevel make failed"
+    ISALIST=i386 CC=gcc logcmd make CODE_WS=$TMPDIR/$BUILDDIR/pkg \
+        || logerr "toplevel make failed"
     logmsg "--- proto install"
-    ISALIST=i386 CC=gcc logcmd make install \
-        CODE_WS=$TMPDIR/$BUILDDIR/pkg || logerr "proto install failed"
+    ISALIST=i386 CC=gcc logcmd make install CODE_WS=$TMPDIR/$BUILDDIR/pkg \
+        || logerr "proto install failed"
     popd > /dev/null
 }
 
@@ -123,4 +122,4 @@ build
 package
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker

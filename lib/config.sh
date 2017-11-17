@@ -121,6 +121,7 @@ BUNZIP2=bunzip2
 XZCAT=xzcat
 UNZIP=unzip
 AWK=gawk
+GIT=git
 # Command for privilege escalation. Can be overridden in site.sh
 PFEXEC=sudo
 
