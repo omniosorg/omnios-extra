@@ -4,6 +4,21 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024c (2017-11-20)
+
+Weekly release for w/c 20th of November 2017.
+> This update requires a reboot.
+
+### Changes
+
+* Fix crash in prctl() within an lx zone.
+
+<br>
+
+----
+
+## r151024 (2017-11-06)
+
 Stable Release, 6th of November 2017
 
 `uname -a` shows `omnios-r151024-c2a1589567`
