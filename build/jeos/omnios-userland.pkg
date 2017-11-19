@@ -117,8 +117,8 @@ system/library/iconv/utf-8		0.5.11
 system/library/iconv/xsh4/latin		0.5.11
 system/library/libdbus-glib		0.108
 system/library/libdbus			1.12
-system/library/mozilla-nss/header-nss	3.33
-system/library/mozilla-nss		3.33
+system/library/mozilla-nss/header-nss	3.34
+system/library/mozilla-nss		3.34
 system/library/mtsk			0.5.11
 system/library/pcap			1.8.1
 system/management/ec2-api-tools		1.7.5
