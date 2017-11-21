@@ -1095,7 +1095,7 @@ configure32() {
         CXXFLAGS="$CXXFLAGS $CXXFLAGS32" \
         CPPFLAGS="$CPPFLAGS $CPPFLAGS32" \
         LDFLAGS="$LDFLAGS $LDFLAGS32" \
-        CC=$CC CXX=$CXX \
+        CC="$CC" CXX="$CXX" \
         logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_32 \
         $CONFIGURE_OPTS || \
         logerr "--- Configure failed"
@@ -1107,7 +1107,7 @@ configure64() {
         CXXFLAGS="$CXXFLAGS $CXXFLAGS64" \
         CPPFLAGS="$CPPFLAGS $CPPFLAGS64" \
         LDFLAGS="$LDFLAGS $LDFLAGS64" \
-        CC=$CC CXX=$CXX \
+        CC="$CC" CXX="$CXX" \
         logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_64 \
         $CONFIGURE_OPTS || \
         logerr "--- Configure failed"
@@ -1247,7 +1247,9 @@ run_testsuite() {
         logmsg "Running testsuite"
         op=`mktemp`
         gmake --quiet $target 2>&1 | tee $op
-        if [ -n "$TESTSUITE_FILTER" ]; then
+        if [ -n "$TESTSUITE_SED" ]; then
+            sed "$TESTSUITE_SED" $op > $SRCDIR/$output
+        elif [ -n "$TESTSUITE_FILTER" ]; then
             egrep "$TESTSUITE_FILTER" $op > $SRCDIR/$output
         else
             cp $op $SRCDIR/$output
