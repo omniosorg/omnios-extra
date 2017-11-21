@@ -49,18 +49,18 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 * `/usr/gnu/bin/uname -o` reports `illumos` as the operating system.
 
-* grep now supports context options (-A, -B, -C)
+* `grep` now supports context options (-A, -B, -C)
+
+* `pkgsign` has gained `--dkey` and `--dcert` options to enable use of an
+  SSL client certificate when signing packages in a remote HTTPS repository.
+
+* `pkg install` now permits package downgrades.
 
 ### Developer Features
 
 * GCC version 7 is now available - `pkg install developer/gcc7` - and can be
   found in `/opt/gcc-7`.
-  xxx check xxx
-  Note that GCC 7's default standard for C++ is `-std=gnu++14`. This is a
-  change from GCC 5 which used `-std=gnu++98`. Some software may assume
-  gnu++98 and to compile it with GCC 7 you will need to specify
-  `--std=gnu++98` or update the software. More detail on the changes in GCC 7
-  can be found on
+  Details of the changes in GCC 7 can be found on
   [the gcc web site](https://gcc.gnu.org/gcc-7/changes.html).
 
 * Perl has been upgraded to 5.26.X. The version of perl shipped with OmniOS
