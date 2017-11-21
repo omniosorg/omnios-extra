@@ -154,6 +154,13 @@ install_license(){
     logcmd cp $TMPDIR/$BUILDDIR/LICENSE $DESTDIR/license
 }
 
+TESTSUITE_SED="
+    s/.*load avg: .*\] /  /
+    /DeprecationWarning.*exc_clear/d
+    s/ passed in [0-9].*//
+    /No differences encountered/d
+"
+
 [ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 init
