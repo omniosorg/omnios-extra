@@ -85,7 +85,7 @@ nothing to commit, working tree clean
 ### Process for a failed merge
 
 Sometimes the merge will fail and produce conflicts which require manual
-intervention.Conflicts will be due to OmniOS-specific changes or because
+intervention. Conflicts will be due to OmniOS-specific changes or because
 of the incorporation of LX Zones and accompanying infrastructure.
 
 ```
@@ -140,20 +140,14 @@ Confirm that the system boots.
 
 ## Push the merged branch
 
-```
-$ git push -u origin upstream-merge/2017070301
-Counting objects: 1224, done.
-Delta compression using up to 40 threads.
-Compressing objects: 100% (352/352), done.
-Writing objects: 100% (1224/1224), 401.27 KiB | 0 bytes/s, done.
-Total 1224 (delta 1017), reused 1022 (delta 826)
-remote: Resolving deltas: 100% (1017/1017), completed with 742 local objects.
-To https://github.com/<github_name>/illumos-omnios.git
- * [new branch]            upstream-merge/2017070301 -> upstream-merge/2017070301
-Branch upstream-merge/2017070301 set up to track remote branch upstream-merge/2017070301 from origin.
-```
+![#f03c15](https://placehold.it/15/1589f0/000000?text=+) `omni pull_request`
 
 ## Create a pull request
+
+> If you have stored an authentication token in your local git configuration
+> then the above `pull_request` command will give you the option to create
+> the template pull request automatically. Otherwise use the following
+> process:
 
 Use the Github web-interface to create a pull request from the new
 upstream-merge branch to the master.

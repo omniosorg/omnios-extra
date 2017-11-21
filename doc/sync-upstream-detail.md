@@ -136,7 +136,7 @@ nothing to commit, working tree clean
 ### Process for a failed merge
 
 Sometimes the merge will fail and produce conflicts which require manual
-intervention.Conflicts will be due to OmniOS-specific changes or because
+intervention. Conflicts will be due to OmniOS-specific changes or because
 of the incorporation of LX Zones and accompanying infrastructure.
 
 ```
