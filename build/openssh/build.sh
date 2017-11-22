@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,17 +18,17 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2015 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
 
 PROG=openssh
-VER=7.5p1
+VER=7.6p1
 VERHUMAN=$VER
 PKG=network/openssh
 SUMMARY="OpenSSH Client and utilities"
@@ -44,7 +44,7 @@ CONFIGURE_OPTS_32="
     --sbindir=$PREFIX/sbin
     --libdir=$PREFIX/lib
     --libexecdir=$PREFIX/libexec
-    "
+"
 # Feature choices
 CONFIGURE_OPTS="
     --with-audit=solaris
@@ -61,7 +61,7 @@ CONFIGURE_OPTS="
     --with-privsep-user=daemon
     --with-ssl-engine
     --with-solaris-projects
-    "
+"
 
 CFLAGS+="-O2 "
 CFLAGS+="-DPAM_ENHANCEMENT -DSET_USE_PAM -DPAM_BUGFIX -DDTRACE_SFTP "
@@ -83,6 +83,9 @@ move_manpage() {
     logmsg "-- Move manpage $page.$old -> $page.$new"
     if [ -f $page.$old ]; then
         mv $page.$old $page.$new
+        # change manpage header
+        uc=`echo $new | tr '[:lower:]' '[:upper:]'`
+        sed -E -i "s/^(\.Dt +[^ ]+).*$/\1 $uc/" $page.$new
     elif [ -f $page.$new ]; then
         logmsg "---- Was already moved"
     else
@@ -105,9 +108,6 @@ move_manpages() {
     popd
 }
 
-# Skip tests when in batch mode as they take a long time
-[ -n "$BATCH" ] && SKIP_TESTSUITE=1
-
 init
 download_source $PROG $PROG $VER
 move_manpages
@@ -123,7 +123,6 @@ run_testsuite tests
 VER=${VER//p/.}
 
 # Client package
-RUN_DEPENDS_IPS="-pkg:/network/ssh -pkg:/network/ssh/ssh-key"
 make_package client.mog
 
 # Server package
@@ -131,10 +130,10 @@ PKG=network/openssh-server
 PKGE=$(url_encode $PKG)
 SUMMARY="OpenSSH Server"
 DESC="OpenSSH Secure Shell protocol Server"
-RUN_DEPENDS_IPS="-pkg:/service/network/ssh pkg:/network/openssh@$VER"
+RUN_DEPENDS_IPS="pkg:/network/openssh@$VER"
 make_package server.mog
 
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker

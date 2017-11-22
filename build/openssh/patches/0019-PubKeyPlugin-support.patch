@@ -6,9 +6,9 @@ Subject: [PATCH 19/34] PubKeyPlugin support
 This adds the PubKeyPlugin directive and associated code from
 SunSSH, allowing an in-process shared library to be called
 into to check public keys for authentication.
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-pubkey.c openssh-7.5p1/auth2-pubkey.c
---- openssh-7.5p1~/auth2-pubkey.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/auth2-pubkey.c	2017-10-06 12:34:45.178507079 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/auth2-pubkey.c openssh-7.6p1/auth2-pubkey.c
+--- openssh-7.6p1~/auth2-pubkey.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/auth2-pubkey.c	2017-11-22 12:16:10.880787872 +0000
 @@ -22,6 +22,11 @@
   * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
   * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
@@ -21,7 +21,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-pubkey.c openssh-7.5p1/auth2-
  
  #include "includes.h"
  
-@@ -42,11 +47,13 @@
+@@ -41,11 +46,13 @@
  #include <time.h>
  #include <unistd.h>
  #include <limits.h>
@@ -35,7 +35,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-pubkey.c openssh-7.5p1/auth2-
  #include "buffer.h"
  #include "log.h"
  #include "misc.h"
-@@ -74,6 +81,15 @@ extern ServerOptions options;
+@@ -73,6 +80,15 @@ extern ServerOptions options;
  extern u_char *session_id2;
  extern u_int session_id2_len;
  
@@ -49,9 +49,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-pubkey.c openssh-7.5p1/auth2-
 +    const u_char *, size_t);
 +
  static int
- userauth_pubkey(Authctxt *authctxt)
+ userauth_pubkey(struct ssh *ssh)
  {
-@@ -1084,6 +1100,125 @@ user_key_command_allowed2(struct passwd
+@@ -788,6 +804,124 @@ user_key_command_allowed2(struct passwd
  	return found_key;
  }
  
@@ -69,7 +69,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-pubkey.c openssh-7.5p1/auth2-
 + * it keeps this code minimally invasive.
 + */
 +static int
-+user_key_allowed_from_plugin(struct passwd *pw, Key *key)
++user_key_allowed_from_plugin(struct passwd *pw, struct sshkey *key)
 +{
 +	RSA_SYM rsa_sym = NULL;
 +	ECDSA_SYM ecdsa_sym = NULL;
@@ -80,7 +80,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-pubkey.c openssh-7.5p1/auth2-
 +	int success = 0;
 +
 +	if (options.pubkey_plugin == NULL || pw == NULL || key == NULL ||
-+	    (key->type != KEY_RSA && key->type != KEY_RSA1 &&
++	    (key->type != KEY_RSA &&
 +	    key->type != KEY_DSA && key->type != KEY_ECDSA))
 +		return success;
 +
@@ -125,7 +125,6 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-pubkey.c openssh-7.5p1/auth2-
 +	argfp = fp + 4;
 +
 +	switch (key->type) {
-+	case KEY_RSA1:
 +	case KEY_RSA:
 +		rsa_sym = (RSA_SYM)dlsym(handle, RSA_SYM_NAME);
 +		if (rsa_sym == NULL) {
@@ -164,7 +163,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-pubkey.c openssh-7.5p1/auth2-
 +	}
 +
 +	if (success)
-+		verbose("Found matching %s key: %s", key_type(key), fp);
++		verbose("Found matching %s key: %s", sshkey_type(key), fp);
 +
 +	if (fp != NULL) {
 +		free(fp);
@@ -177,7 +176,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-pubkey.c openssh-7.5p1/auth2-
  /*
   * Check whether key authenticates and authorises the user.
   */
-@@ -1102,6 +1237,10 @@ user_key_allowed(struct passwd *pw, Key
+@@ -807,6 +941,10 @@ user_key_allowed(struct passwd *pw, stru
  	if (success)
  		return success;
  
@@ -188,10 +187,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-pubkey.c openssh-7.5p1/auth2-
  	success = user_key_command_allowed2(pw, key);
  	if (success > 0)
  		return success;
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
---- openssh-7.5p1~/servconf.c	2017-10-06 12:34:44.919037973 +0000
-+++ openssh-7.5p1/servconf.c	2017-10-06 12:34:45.179771853 +0000
-@@ -178,6 +178,7 @@ initialize_server_options(ServerOptions
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.c openssh-7.6p1/servconf.c
+--- openssh-7.6p1~/servconf.c	2017-11-22 12:16:10.610619472 +0000
++++ openssh-7.6p1/servconf.c	2017-11-22 12:16:10.881359013 +0000
+@@ -179,6 +179,7 @@ initialize_server_options(ServerOptions
  	 */
  	options->pam_service_per_authmethod = 1;
  #endif
@@ -199,23 +198,23 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  }
  
  /* Returns 1 if a string option is unset or set to "none" or 0 otherwise. */
-@@ -459,6 +460,7 @@ typedef enum {
- 	sAuthenticationMethods, sHostKeyAgent, sPermitUserRC,
+@@ -463,6 +464,7 @@ typedef enum {
  	sStreamLocalBindMask, sStreamLocalBindUnlink,
  	sAllowStreamLocalForwarding, sFingerprintHash, sDisableForwarding,
+ 	sExposeAuthInfo,
 +	sPubKeyPlugin,
  	sDeprecated, sIgnore, sUnsupported
  } ServerOpCodes;
  
-@@ -641,6 +643,7 @@ static struct {
- 	{ "allowstreamlocalforwarding", sAllowStreamLocalForwarding, SSHCFG_ALL },
+@@ -646,6 +648,7 @@ static struct {
  	{ "fingerprinthash", sFingerprintHash, SSHCFG_GLOBAL },
  	{ "disableforwarding", sDisableForwarding, SSHCFG_ALL },
+ 	{ "exposeauthinfo", sExposeAuthInfo, SSHCFG_ALL },
 +	{ "pubkeyplugin", sPubKeyPlugin, SSHCFG_ALL },
  	{ NULL, sBadOption, 0 }
  };
  
-@@ -1970,6 +1973,18 @@ process_server_config_line(ServerOptions
+@@ -2011,6 +2014,18 @@ process_server_config_line(ServerOptions
  		}
  		break;
  
@@ -234,13 +233,13 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	case sDeprecated:
  	case sIgnore:
  	case sUnsupported:
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.h openssh-7.5p1/servconf.h
---- openssh-7.5p1~/servconf.h	2017-10-06 12:34:44.920699352 +0000
-+++ openssh-7.5p1/servconf.h	2017-10-06 12:34:45.179876726 +0000
-@@ -201,6 +201,7 @@ typedef struct {
- #endif
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.h openssh-7.6p1/servconf.h
+--- openssh-7.6p1~/servconf.h	2017-11-22 12:16:10.610816905 +0000
++++ openssh-7.6p1/servconf.h	2017-11-22 12:16:10.881562195 +0000
+@@ -210,6 +210,7 @@ typedef struct {
  
  	int	fingerprint_hash;
+ 	int	expose_userauth_info;
 +	char   *pubkey_plugin;
  }       ServerOptions;
  

@@ -4,10 +4,10 @@ Date: Mon, 3 Aug 2015 14:34:41 -0700
 Subject: [PATCH 03/34] lastlogin
 
 *** old/servconf.c Wed Sep 17 02:54:26 2014
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config.4 openssh-7.5p1/sshd_config.4
---- openssh-7.5p1~/sshd_config.4	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/sshd_config.4	2017-10-06 12:34:44.364608462 +0000
-@@ -1276,8 +1276,8 @@ Specifies whether
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd_config.4 openssh-7.6p1/sshd_config.4
+--- openssh-7.6p1~/sshd_config.4	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/sshd_config.4	2017-11-22 12:16:10.057264258 +0000
+@@ -1283,8 +1283,8 @@ Specifies whether
  .Xr sshd 8
  should print the date and time of the last user login when a user logs
  in interactively.
@@ -18,7 +18,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config.4 openssh-7.5p1/sshd_co
  .It Cm PrintMotd
  Specifies whether
  .Xr sshd 8
-@@ -1665,7 +1665,8 @@ This file should be writable by root onl
+@@ -1672,7 +1672,8 @@ This file should be writable by root onl
  .El
  .Sh SEE ALSO
  .Xr sftp-server 8 ,

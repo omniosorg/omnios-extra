@@ -3,14 +3,14 @@ From: oracle <solaris@oracle.com>
 Date: Mon, 3 Aug 2015 14:37:01 -0700
 Subject: [PATCH 13/34] Solaris Auditing support
 
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/INSTALL openssh-7.5p1/INSTALL
---- openssh-7.5p1~/INSTALL	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/INSTALL	2017-10-06 12:34:44.859386383 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/INSTALL openssh-7.6p1/INSTALL
+--- openssh-7.6p1~/INSTALL	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/INSTALL	2017-11-22 12:16:10.550988254 +0000
 @@ -99,9 +99,13 @@ http://www.gnu.org/software/autoconf/
  
  Basic Security Module (BSM):
  
--Native BSM support is know to exist in Solaris from at least 2.5.1,
+-Native BSM support is known to exist in Solaris from at least 2.5.1,
 -FreeBSD 6.1 and OS X.  Alternatively, you may use the OpenBSM
 -implementation (http://www.openbsm.org).
 +Native BSM support is known to exist in Solaris from at least 2.5.1
@@ -35,11 +35,11 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/INSTALL openssh-7.5p1/INSTALL
  
  --with-pam enables PAM support. If PAM support is compiled in, it must
  also be enabled in sshd_config (refer to the UsePAM directive).
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/Makefile.in openssh-7.5p1/Makefile.in
---- openssh-7.5p1~/Makefile.in	2017-10-06 12:34:44.562196133 +0000
-+++ openssh-7.5p1/Makefile.in	2017-10-06 12:34:44.859552781 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/Makefile.in openssh-7.6p1/Makefile.in
+--- openssh-7.6p1~/Makefile.in	2017-11-22 12:16:10.251178522 +0000
++++ openssh-7.6p1/Makefile.in	2017-11-22 12:16:10.551213561 +0000
 @@ -100,7 +100,7 @@ SSHOBJS= ssh.o readconf.o clientloop.o s
- 	sshconnect.o sshconnect1.o sshconnect2.o mux.o
+ 	sshconnect.o sshconnect2.o mux.o
  
  SSHDOBJS=sshd.o auth-rhosts.o auth-passwd.o \
 -	audit.o audit-bsm.o audit-linux.o platform.o \
@@ -47,9 +47,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/Makefile.in openssh-7.5p1/Makefile.
  	sshpty.o sshlogin.o servconf.o serverloop.o \
  	auth.o auth2.o auth-options.o session.o \
  	auth2-chall.o groupaccess.o \
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/README.platform openssh-7.5p1/README.platform
---- openssh-7.5p1~/README.platform	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/README.platform	2017-10-06 12:34:44.859653439 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/README.platform openssh-7.6p1/README.platform
+--- openssh-7.6p1~/README.platform	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/README.platform	2017-11-22 12:16:10.551464598 +0000
 @@ -71,8 +71,8 @@ zlib-devel and pam-devel, on Debian base
  libssl-dev, libz-dev and libpam-dev.
  
@@ -71,9 +71,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/README.platform openssh-7.5p1/READM
  
  Platforms using PAM
  -------------------
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/audit-solaris.c openssh-7.5p1/audit-solaris.c
---- openssh-7.5p1~/audit-solaris.c	1970-01-01 01:00:00.000000000 +0000
-+++ openssh-7.5p1/audit-solaris.c	2017-10-06 12:34:44.859848968 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/audit-solaris.c openssh-7.6p1/audit-solaris.c
+--- openssh-7.6p1~/audit-solaris.c	1970-01-01 01:00:00.000000000 +0000
++++ openssh-7.6p1/audit-solaris.c	2017-11-22 12:16:10.551693710 +0000
 @@ -0,0 +1,574 @@
 +/*
 + * CDDL HEADER START
@@ -649,10 +649,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/audit-solaris.c openssh-7.5p1/audit
 +	(void) adt_end_session(ah);
 +}
 +#endif	/* USE_SOLARIS_AUDIT */
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/configure.ac openssh-7.5p1/configure.ac
---- openssh-7.5p1~/configure.ac	2017-10-06 12:34:44.509877706 +0000
-+++ openssh-7.5p1/configure.ac	2017-10-06 12:34:44.860506010 +0000
-@@ -1575,7 +1575,7 @@ AC_ARG_WITH([libedit],
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/configure.ac openssh-7.6p1/configure.ac
+--- openssh-7.6p1~/configure.ac	2017-11-22 12:16:10.201343820 +0000
++++ openssh-7.6p1/configure.ac	2017-11-22 12:16:10.552324952 +0000
+@@ -1585,7 +1585,7 @@ AC_ARG_WITH([libedit],
  
  AUDIT_MODULE=none
  AC_ARG_WITH([audit],
@@ -661,7 +661,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/configure.ac openssh-7.5p1/configur
  	[
  	  AC_MSG_CHECKING([for supported audit module])
  	  case "$withval" in
-@@ -1612,6 +1612,13 @@ AC_ARG_WITH([audit],
+@@ -1622,6 +1622,13 @@ AC_ARG_WITH([audit],
  		SSHDLIBS="$SSHDLIBS -laudit"
  		AC_DEFINE([USE_LINUX_AUDIT], [1], [Use Linux audit module])
  		;;
@@ -675,10 +675,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/configure.ac openssh-7.5p1/configur
  	  debug)
  		AUDIT_MODULE=debug
  		AC_MSG_RESULT([debug])
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/defines.h openssh-7.5p1/defines.h
---- openssh-7.5p1~/defines.h	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/defines.h	2017-10-06 12:34:44.860655565 +0000
-@@ -645,6 +645,11 @@ struct winsize {
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/defines.h openssh-7.6p1/defines.h
+--- openssh-7.6p1~/defines.h	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/defines.h	2017-11-22 12:16:10.552699204 +0000
+@@ -674,6 +674,11 @@ struct winsize {
  # define CUSTOM_SSH_AUDIT_EVENTS
  #endif
  
@@ -690,10 +690,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/defines.h openssh-7.5p1/defines.h
  #if !defined(HAVE___func__) && defined(HAVE___FUNCTION__)
  #  define __func__ __FUNCTION__
  #elif !defined(HAVE___func__)
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
---- openssh-7.5p1~/sshd.c	2017-10-06 12:34:44.510656257 +0000
-+++ openssh-7.5p1/sshd.c	2017-10-06 12:34:44.860941468 +0000
-@@ -2057,7 +2057,9 @@ main(int ac, char **av)
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd.c openssh-7.6p1/sshd.c
+--- openssh-7.6p1~/sshd.c	2017-11-22 12:16:10.202371036 +0000
++++ openssh-7.6p1/sshd.c	2017-11-22 12:16:10.553034563 +0000
+@@ -2053,7 +2053,9 @@ main(int ac, char **av)
  	}
  
  #ifdef SSH_AUDIT_EVENTS
@@ -703,7 +703,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
  #endif
  
  #ifdef GSSAPI
-@@ -2087,6 +2089,10 @@ main(int ac, char **av)
+@@ -2083,6 +2085,10 @@ main(int ac, char **av)
  		do_pam_session();
  	}
  #endif

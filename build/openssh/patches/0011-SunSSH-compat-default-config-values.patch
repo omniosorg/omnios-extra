@@ -13,10 +13,10 @@ values for the following options to be as same as those in SunSSH.
 
 This is for Solaris only, we will not contribute back these changes to the
 upstream.
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
---- openssh-7.5p1~/readconf.c	2017-10-06 12:34:44.609720429 +0000
-+++ openssh-7.5p1/readconf.c	2017-10-06 12:34:44.763714825 +0000
-@@ -1953,7 +1953,11 @@ fill_default_options(Options * options)
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/readconf.c openssh-7.6p1/readconf.c
+--- openssh-7.6p1~/readconf.c	2017-11-22 12:16:10.301355379 +0000
++++ openssh-7.6p1/readconf.c	2017-11-22 12:16:10.453047087 +0000
+@@ -1943,7 +1943,11 @@ fill_default_options(Options * options)
  	if (options->forward_x11 == -1)
  		options->forward_x11 = 0;
  	if (options->forward_x11_trusted == -1)
@@ -28,7 +28,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
  	if (options->forward_x11_timeout == -1)
  		options->forward_x11_timeout = 1200;
  	/*
-@@ -1986,7 +1990,11 @@ fill_default_options(Options * options)
+@@ -1974,7 +1978,11 @@ fill_default_options(Options * options)
  	if (options->challenge_response_authentication == -1)
  		options->challenge_response_authentication = 1;
  	if (options->gss_authentication == -1)
@@ -40,10 +40,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
  	if (options->gss_deleg_creds == -1)
  		options->gss_deleg_creds = 0;
  	if (options->password_authentication == -1)
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
---- openssh-7.5p1~/servconf.c	2017-10-06 12:34:44.706373579 +0000
-+++ openssh-7.5p1/servconf.c	2017-10-06 12:34:44.764037862 +0000
-@@ -249,7 +249,11 @@ fill_default_server_options(ServerOption
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.c openssh-7.6p1/servconf.c
+--- openssh-7.6p1~/servconf.c	2017-11-22 12:16:10.399575201 +0000
++++ openssh-7.6p1/servconf.c	2017-11-22 12:16:10.453491815 +0000
+@@ -250,7 +250,11 @@ fill_default_server_options(ServerOption
  	if (options->print_lastlog == -1)
  		options->print_lastlog = 1;
  	if (options->x11_forwarding == -1)
@@ -55,7 +55,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	if (options->x11_display_offset == -1)
  		options->x11_display_offset = 10;
  	if (options->x11_use_localhost == -1)
-@@ -283,7 +287,11 @@ fill_default_server_options(ServerOption
+@@ -284,7 +288,11 @@ fill_default_server_options(ServerOption
  	if (options->kerberos_get_afs_token == -1)
  		options->kerberos_get_afs_token = 0;
  	if (options->gss_authentication == -1)
@@ -67,10 +67,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	if (options->gss_cleanup_creds == -1)
  		options->gss_cleanup_creds = 1;
  	if (options->gss_strict_acceptor == -1)
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh_config.4 openssh-7.5p1/ssh_config.4
---- openssh-7.5p1~/ssh_config.4	2017-10-06 12:34:44.610652786 +0000
-+++ openssh-7.5p1/ssh_config.4	2017-10-06 12:34:44.764299993 +0000
-@@ -732,6 +732,9 @@ Furthermore, the
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/ssh_config.4 openssh-7.6p1/ssh_config.4
+--- openssh-7.6p1~/ssh_config.4	2017-11-22 12:16:10.301942637 +0000
++++ openssh-7.6p1/ssh_config.4	2017-11-22 12:16:10.453828311 +0000
+@@ -700,6 +700,9 @@ Furthermore, the
  token used for the session will be set to expire after 20 minutes.
  Remote clients will be refused access after this time.
  .Pp
@@ -80,7 +80,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh_config.4 openssh-7.5p1/ssh_conf
  See the X11 SECURITY extension specification for full details on
  the restrictions imposed on untrusted clients.
  .It Cm GatewayPorts
-@@ -758,8 +761,8 @@ The default is
+@@ -726,8 +729,8 @@ The default is
  .Pa /etc/ssh/ssh_known_hosts2 .
  .It Cm GSSAPIAuthentication
  Specifies whether user authentication based on GSSAPI is allowed.
@@ -91,10 +91,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh_config.4 openssh-7.5p1/ssh_conf
  .It Cm GSSAPIDelegateCredentials
  Forward (delegate) credentials to the server.
  The default is
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config.4 openssh-7.5p1/sshd_config.4
---- openssh-7.5p1~/sshd_config.4	2017-10-06 12:34:44.706917129 +0000
-+++ openssh-7.5p1/sshd_config.4	2017-10-06 12:34:44.764541314 +0000
-@@ -625,8 +625,8 @@ The default is
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd_config.4 openssh-7.6p1/sshd_config.4
+--- openssh-7.6p1~/sshd_config.4	2017-11-22 12:16:10.400406131 +0000
++++ openssh-7.6p1/sshd_config.4	2017-11-22 12:16:10.454144989 +0000
+@@ -633,8 +633,8 @@ The default is
  .Cm no .
  .It Cm GSSAPIAuthentication
  Specifies whether user authentication based on GSSAPI is allowed.
@@ -105,7 +105,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config.4 openssh-7.5p1/sshd_co
  .It Cm GSSAPICleanupCredentials
  Specifies whether to automatically destroy the user's credentials cache
  on logout.
-@@ -1525,8 +1525,8 @@ The argument must be
+@@ -1532,8 +1532,8 @@ The argument must be
  .Cm yes
  or
  .Cm no .

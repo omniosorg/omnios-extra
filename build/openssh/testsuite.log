@@ -4,13 +4,13 @@
               ^
 ./regress/netcat.c:711:9: warning: unused variable 'ret' [-Wunused-variable]
   int s, ret, x = 1;
-         ^
+         ^~~
 ar: creating regress/unittests/test_helper/libtest_helper.a
 ar: writing regress/unittests/test_helper/libtest_helper.a
 a - regress/unittests/test_helper/test_helper.o
 a - regress/unittests/test_helper/fuzz.o
 test_sshbuf: .................................................................................................... 101 tests ok
-test_sshkey: ........................................................................................... 91 tests ok
+test_sshkey: .......................................................................................... 90 tests ok
 test_bitmap: .. 2 tests ok
 test_conversion: . 1 tests ok
 test_kex: ................................................................................................................................................................................................................................................................................................................................................................ 352 tests ok
@@ -18,7 +18,7 @@ test_hostkeys: .................. 18 tests ok
 test_match: ...... 6 tests ok
 test_utf8: .................................. 34 tests ok
 run test connect.sh ...
-ssh connect with protocol 2 failed
+ssh connect with failed
 failed simple connect
-gmake[1]: *** [Makefile:199: t-exec] Error 1
-gmake: *** [Makefile:606: tests] Error 2
+gmake[1]: *** [Makefile:203: t-exec] Error 1
+gmake: *** [Makefile:607: tests] Error 2

@@ -51,6 +51,7 @@
 | library/unixodbc			| 2.3.4			| http://www.unixodbc.org/download.html
 | library/zlib				| 1.2.11		| http://www.zlib.net/
 | network/dns/bind			| 9.10.6		| https://www.isc.org/downloads/
+| network/openssh			| 7.6p1			| https://mirrors.evowise.com/pub/OpenBSD/OpenSSH/portable/
 | network/rsync				| 3.1.2			| https://rsync.samba.org/
 | network/service/isc-dhcp		| 4.3.6			| https://www.isc.org/downloads/
 | network/test/iperf			| 3.1.3			| https://iperf.fr/iperf-download.php#source
@@ -59,7 +60,6 @@
 | runtime/python-27			| 2.7.14		| https://www.python.org/downloads/source/
 | security/sudo				| 1.8.21p2		| https://www.sudo.ws/
 | service/network/ntp			| 4.2.8p10		| http://www.ntp.org/downloads.html
-| service/network/ssh			| 7.5p1			| https://mirrors.evowise.com/pub/OpenBSD/OpenSSH/portable/
 | shell/bash				| 4.4.12		| https://ftp.gnu.org/gnu/bash/
 | shell/bash-patchlvl			| 012			| https://ftp.gnu.org/gnu/bash/bash-4.4-patches
 | shell/pipe-viewer			| 1.6.6			| http://www.ivarch.com/programs/pv.shtml
