@@ -83,6 +83,9 @@ move_manpage() {
     logmsg "-- Move manpage $page.$old -> $page.$new"
     if [ -f $page.$old ]; then
         mv $page.$old $page.$new
+        # change manpage header
+        uc=`echo $new | tr '[:lower:]' '[:upper:]'`
+        sed -E -i "s/^(\.Dt +[^ ]+).*$/\1 $uc/" $page.$new
     elif [ -f $page.$new ]; then
         logmsg "---- Was already moved"
     else
