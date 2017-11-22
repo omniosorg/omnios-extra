@@ -1,1 +1,5 @@
 license COPYING license=LGPLv2.1
+
+# Upstream doesn't ship any of the translations, so we won't either
+<transform file dir link path=usr/share/locale -> drop>
+
