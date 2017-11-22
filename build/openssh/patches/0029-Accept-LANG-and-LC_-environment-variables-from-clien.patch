@@ -6,9 +6,9 @@ Subject: [PATCH 29/34] Accept LANG and LC_* environment variables from clients
 
 This preserves most of the old SunSSH locale negotiation
 behaviour (at least the parts that are most commonly used).
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
---- openssh-7.5p1~/servconf.c	2017-10-06 12:34:45.427489973 +0000
-+++ openssh-7.5p1/servconf.c	2017-10-06 12:34:45.521996421 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.c openssh-7.6p1/servconf.c
+--- openssh-7.6p1~/servconf.c	2017-11-22 12:16:11.124233172 +0000
++++ openssh-7.6p1/servconf.c	2017-11-22 12:16:11.219312670 +0000
 @@ -150,7 +150,7 @@ initialize_server_options(ServerOptions
  	options->client_alive_interval = -1;
  	options->client_alive_count_max = -1;
@@ -16,9 +16,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
 -	options->num_accept_env = 0;
 +	options->num_accept_env = -1;
  	options->permit_tun = -1;
- 	options->num_permitted_opens = -1;
+ 	options->permitted_opens = NULL;
  	options->adm_forced_command = NULL;
-@@ -400,6 +400,25 @@ fill_default_server_options(ServerOption
+@@ -401,6 +401,25 @@ fill_default_server_options(ServerOption
  		options->max_sessions = DEFAULT_SESSIONS_MAX;
  	if (options->use_dns == -1)
  		options->use_dns = 0;
@@ -44,7 +44,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	if (options->client_alive_interval == -1)
  		options->client_alive_interval = 0;
  	if (options->client_alive_count_max == -1)
-@@ -1754,11 +1773,15 @@ process_server_config_line(ServerOptions
+@@ -1790,11 +1809,15 @@ process_server_config_line(ServerOptions
  			if (strchr(arg, '=') != NULL)
  				fatal("%s line %d: Invalid environment name.",
  				    filename, linenum);
@@ -60,7 +60,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  			options->accept_env[options->num_accept_env++] =
  			    xstrdup(arg);
  		}
-@@ -2230,7 +2253,7 @@ copy_set_server_options(ServerOptions *d
+@@ -2273,7 +2296,7 @@ copy_set_server_options(ServerOptions *d
  	} \
  } while(0)
  #define M_CP_STRARRAYOPT(n, num_n) do {\
@@ -69,10 +69,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  		for (dst->num_n = 0; dst->num_n < src->num_n; dst->num_n++) \
  			dst->n[dst->num_n] = xstrdup(src->n[dst->num_n]); \
  	} \
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/session.c openssh-7.5p1/session.c
---- openssh-7.5p1~/session.c	2017-10-06 12:34:45.131205136 +0000
-+++ openssh-7.5p1/session.c	2017-10-06 12:34:45.522310521 +0000
-@@ -860,6 +860,18 @@ child_set_env(char ***envp, u_int *envsi
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/session.c openssh-7.6p1/session.c
+--- openssh-7.6p1~/session.c	2017-11-22 12:16:10.832297861 +0000
++++ openssh-7.6p1/session.c	2017-11-22 12:16:11.219794728 +0000
+@@ -832,6 +832,18 @@ check_quietlogin(Session *s, const char
  }
  
  /*
@@ -91,7 +91,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/session.c openssh-7.5p1/session.c
   * Reads environment variables from the given file and adds/overrides them
   * into the environment.  If the file does not exist, this does nothing.
   * Otherwise, it must consist of empty lines, comments (line starts with '#')
-@@ -1022,6 +1034,16 @@ do_setup_env(Session *s, const char *she
+@@ -1003,6 +1015,16 @@ do_setup_env(struct ssh *ssh, Session *s
  	ssh_gssapi_do_child(&env, &envsize);
  #endif
  
@@ -108,7 +108,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/session.c openssh-7.5p1/session.c
  	/* Set basic environment. */
  	for (i = 0; i < s->num_env; i++)
  		child_set_env(&env, &envsize, s->env[i].name, s->env[i].val);
-@@ -1062,8 +1084,7 @@ do_setup_env(Session *s, const char *she
+@@ -1043,8 +1065,7 @@ do_setup_env(struct ssh *ssh, Session *s
  	/* Normal systems set SHELL by default. */
  	child_set_env(&env, &envsize, "SHELL", shell);
  
@@ -118,9 +118,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/session.c openssh-7.5p1/session.c
  
  #ifdef PER_SESSION_XAUTHFILE
          if (s->auth_file != NULL)
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config openssh-7.5p1/sshd_config
---- openssh-7.5p1~/sshd_config	2017-10-06 12:34:44.922385596 +0000
-+++ openssh-7.5p1/sshd_config	2017-10-06 12:34:45.522417407 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd_config openssh-7.6p1/sshd_config
+--- openssh-7.6p1~/sshd_config	2017-11-22 12:16:10.612671326 +0000
++++ openssh-7.6p1/sshd_config	2017-11-22 12:16:11.219968504 +0000
 @@ -27,6 +27,10 @@
  #SyslogFacility AUTH
  #LogLevel INFO
@@ -132,10 +132,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config openssh-7.5p1/sshd_conf
  # Authentication:
  
  #LoginGraceTime 2m
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config.4 openssh-7.5p1/sshd_config.4
---- openssh-7.5p1~/sshd_config.4	2017-10-06 12:34:45.427736167 +0000
-+++ openssh-7.5p1/sshd_config.4	2017-10-06 12:34:45.522716286 +0000
-@@ -85,7 +85,18 @@ directives.
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd_config.4 openssh-7.6p1/sshd_config.4
+--- openssh-7.6p1~/sshd_config.4	2017-11-22 12:16:11.124578070 +0000
++++ openssh-7.6p1/sshd_config.4	2017-11-22 12:16:11.220220964 +0000
+@@ -83,7 +83,18 @@ directives.
  Be warned that some environment variables could be used to bypass restricted
  user environments.
  For this reason, care should be taken in the use of this directive.

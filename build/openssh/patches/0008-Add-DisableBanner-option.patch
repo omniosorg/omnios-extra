@@ -3,9 +3,9 @@ From: oracle <solaris@oracle.com>
 Date: Mon, 3 Aug 2015 14:36:00 -0700
 Subject: [PATCH 08/34] Add DisableBanner option
 
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
---- openssh-7.5p1~/readconf.c	2017-10-06 12:34:44.463408803 +0000
-+++ openssh-7.5p1/readconf.c	2017-10-06 12:34:44.609720429 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/readconf.c openssh-7.6p1/readconf.c
+--- openssh-7.6p1~/readconf.c	2017-11-22 12:16:10.154588432 +0000
++++ openssh-7.6p1/readconf.c	2017-11-22 12:16:10.301355379 +0000
 @@ -163,6 +163,9 @@ typedef enum {
  	oServerAliveInterval, oServerAliveCountMax, oIdentitiesOnly,
  	oSendEnv, oControlPath, oControlMaster, oControlPersist,
@@ -13,10 +13,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
 +#ifdef DISABLE_BANNER
 +	oDisableBanner,
 +#endif
- 	oTunnel, oTunnelDevice, oLocalCommand, oPermitLocalCommand,
+ 	oTunnel, oTunnelDevice,
+ 	oLocalCommand, oPermitLocalCommand, oRemoteCommand,
  	oVisualHostKey,
- 	oKexAlgorithms, oIPQoS, oRequestTTY, oIgnoreUnknown, oProxyUseFdpass,
-@@ -285,6 +288,9 @@ static struct {
+@@ -281,6 +284,9 @@ static struct {
  	{ "controlpersist", oControlPersist },
  	{ "hashknownhosts", oHashKnownHosts },
  	{ "include", oInclude },
@@ -26,7 +26,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
  	{ "tunnel", oTunnel },
  	{ "tunneldevice", oTunnelDevice },
  	{ "localcommand", oLocalCommand },
-@@ -824,6 +830,17 @@ static const struct multistate multistat
+@@ -831,6 +837,17 @@ static const struct multistate multistat
  	{ NULL, -1 }
  };
  
@@ -44,7 +44,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
  /*
   * Processes a single option line as used in the configuration files. This
   * only sets those values that have not already been set.
-@@ -1694,6 +1711,13 @@ parse_keytypes:
+@@ -1687,6 +1704,13 @@ parse_keytypes:
  		charptr = &options->identity_agent;
  		goto parse_string;
  
@@ -58,7 +58,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
  	case oDeprecated:
  		debug("%s line %d: Deprecated option \"%s\"",
  		    filename, linenum, keyword);
-@@ -1886,6 +1910,9 @@ initialize_options(Options * options)
+@@ -1876,6 +1900,9 @@ initialize_options(Options * options)
  	options->ip_qos_bulk = -1;
  	options->request_tty = -1;
  	options->proxy_use_fdpass = -1;
@@ -68,7 +68,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
  	options->ignored_unknown = NULL;
  	options->num_canonical_domains = 0;
  	options->num_permitted_cnames = 0;
-@@ -2080,6 +2107,10 @@ fill_default_options(Options * options)
+@@ -2052,6 +2079,10 @@ fill_default_options(Options * options)
  		options->canonicalize_fallback_local = 1;
  	if (options->canonicalize_hostname == -1)
  		options->canonicalize_hostname = SSH_CANONICALISE_NO;
@@ -79,10 +79,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
  	if (options->fingerprint_hash == -1)
  		options->fingerprint_hash = SSH_FP_HASH_DEFAULT;
  	if (options->update_hostkeys == -1)
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.h openssh-7.5p1/readconf.h
---- openssh-7.5p1~/readconf.h	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/readconf.h	2017-10-06 12:34:44.609835612 +0000
-@@ -169,6 +169,9 @@ typedef struct {
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/readconf.h openssh-7.6p1/readconf.h
+--- openssh-7.6p1~/readconf.h	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/readconf.h	2017-11-22 12:16:10.301636260 +0000
+@@ -164,6 +164,9 @@ typedef struct {
  	char   *jump_extra;
  
  	char	*ignored_unknown; /* Pattern list of unknown tokens to ignore */
@@ -93,8 +93,8 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.h openssh-7.5p1/readconf.h
  
  #define SSH_CANONICALISE_NO	0
 @@ -195,6 +198,12 @@ typedef struct {
- #define SSH_UPDATE_HOSTKEYS_YES	1
- #define SSH_UPDATE_HOSTKEYS_ASK	2
+ #define SSH_STRICT_HOSTKEY_YES	2
+ #define SSH_STRICT_HOSTKEY_ASK	3
  
 +#ifdef DISABLE_BANNER
 +#define SSH_DISABLEBANNER_NO		0
@@ -105,10 +105,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.h openssh-7.5p1/readconf.h
  void     initialize_options(Options *);
  void     fill_default_options(Options *);
  void	 fill_default_options_for_canonicalization(Options *);
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh_config.4 openssh-7.5p1/ssh_config.4
---- openssh-7.5p1~/ssh_config.4	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/ssh_config.4	2017-10-06 12:34:44.610652786 +0000
-@@ -576,6 +576,14 @@ If set to a time in seconds, or a time i
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/ssh_config.4 openssh-7.6p1/ssh_config.4
+--- openssh-7.6p1~/ssh_config.4	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/ssh_config.4	2017-11-22 12:16:10.301942637 +0000
+@@ -544,6 +544,14 @@ If set to a time in seconds, or a time i
  then the backgrounded master connection will automatically terminate
  after it has remained idle (with no client connections) for the
  specified time.
@@ -123,9 +123,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh_config.4 openssh-7.5p1/ssh_conf
  .It Cm DynamicForward
  Specifies that a TCP port on the local machine be forwarded
  over the secure channel, and the application
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshconnect2.c openssh-7.5p1/sshconnect2.c
---- openssh-7.5p1~/sshconnect2.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/sshconnect2.c	2017-10-06 12:34:44.610914892 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshconnect2.c openssh-7.6p1/sshconnect2.c
+--- openssh-7.6p1~/sshconnect2.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/sshconnect2.c	2017-11-22 12:16:10.302373607 +0000
 @@ -82,6 +82,10 @@ extern char *client_version_string;
  extern char *server_version_string;
  extern Options options;
@@ -137,9 +137,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshconnect2.c openssh-7.5p1/sshconn
  /*
   * SSH2 key exchange
   */
-@@ -499,15 +503,34 @@ input_userauth_error(int type, u_int32_t
+@@ -501,15 +505,34 @@ input_userauth_error(int type, u_int32_t
  int
- input_userauth_banner(int type, u_int32_t seq, void *ctxt)
+ input_userauth_banner(int type, u_int32_t seq, struct ssh *ssh)
  {
 -	char *msg, *lang;
 +	char *msg, *lang, *raw;

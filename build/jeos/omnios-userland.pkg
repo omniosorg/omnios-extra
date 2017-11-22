@@ -87,6 +87,8 @@ library/zlib				1.2.11
 media/cdrtools				3
 network/dns/bind			9.10
 network/dns/idnconv			2.3
+network/openssh-server			7.6
+network/openssh				7.6
 network/rsync				3.1
 network/service/isc-dhcp		4.3
 network/test/iperf			3

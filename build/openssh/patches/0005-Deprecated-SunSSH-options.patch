@@ -11,10 +11,10 @@ Subject: [PATCH 05/34] Deprecated SunSSH options
 # changed from deprecated to supported. Since this is for Solaris only, we will
 # not contribute back this change to the upstream community.
 #
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
---- openssh-7.5p1~/readconf.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/readconf.c	2017-10-06 12:34:44.463408803 +0000
-@@ -309,6 +309,24 @@ static struct {
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/readconf.c openssh-7.6p1/readconf.c
+--- openssh-7.6p1~/readconf.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/readconf.c	2017-11-22 12:16:10.154588432 +0000
+@@ -306,6 +306,24 @@ static struct {
  	{ "ignoreunknown", oIgnoreUnknown },
  	{ "proxyjump", oProxyJump },
  

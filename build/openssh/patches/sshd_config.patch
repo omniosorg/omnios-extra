@@ -1,7 +1,6 @@
-diff -ru openssh-7.1p1.orig/sshd_config openssh-7.1p1/sshd_config
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config openssh-7.5p1/sshd_config
---- openssh-7.5p1~/sshd_config	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/sshd_config	2017-10-06 12:34:44.215245761 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd_config openssh-7.6p1/sshd_config
+--- openssh-7.6p1~/sshd_config	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/sshd_config	2017-11-22 12:16:09.917318071 +0000
 @@ -30,7 +30,7 @@
  # Authentication:
  

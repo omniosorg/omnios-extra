@@ -3,9 +3,9 @@ From: Alex Wilson <alex.wilson@joyent.com>
 Date: Tue, 22 Dec 2015 14:30:19 -0800
 Subject: [PATCH 1/2] SmartOS local: make dtrace lib 32-bit
 
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/Makefile.in openssh-7.5p1/Makefile.in
---- openssh-7.5p1~/Makefile.in	2017-10-06 12:34:45.673819660 +0000
-+++ openssh-7.5p1/Makefile.in	2017-10-06 12:34:45.722447995 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/Makefile.in openssh-7.6p1/Makefile.in
+--- openssh-7.6p1~/Makefile.in	2017-11-22 12:16:11.368076480 +0000
++++ openssh-7.6p1/Makefile.in	2017-11-22 12:16:11.416977394 +0000
 @@ -28,7 +28,7 @@ ASKPASS_PROGRAM=$(libexecdir)/ssh-askpas
  SFTP_SERVER=$(libexecdir)/sftp-server
  SSH_KEYSIGN=$(libexecdir)/ssh-keysign
@@ -24,7 +24,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/Makefile.in openssh-7.5p1/Makefile.
  	    sftp-server.o -o sftp_provider.o
  
  # special case for sftp-server.o, it includes sftp_provider.h
-@@ -369,7 +369,7 @@ install-files:
+@@ -370,7 +370,7 @@ install-files:
  	$(INSTALL) -m 644 sftp-server.1m.out $(DESTDIR)$(mandir)/$(mansubdir)1m/sftp-server.1m
  	$(INSTALL) -m 644 ssh-keysign.1m.out $(DESTDIR)$(mandir)/$(mansubdir)1m/ssh-keysign.1m
  	$(INSTALL) -m 644 ssh-pkcs11-helper.1m.out $(DESTDIR)$(mandir)/$(mansubdir)1m/ssh-pkcs11-helper.1m

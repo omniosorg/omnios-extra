@@ -1,16 +1,16 @@
 From 1a9462ad1d73af0c20e31258bd501f5320ca01df Mon Sep 17 00:00:00 2001
 From: Alex Wilson <alex.wilson@joyent.com>
 Date: Fri, 21 Aug 2015 18:47:46 -0700
-Subject: [PATCH 26/34] Don't use krb5-config to check for GSSAPI on Illumos
+Subject: [PATCH 26/34] Don't use krb5-config to check for GSSAPI on illumos
 
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/configure.ac openssh-7.5p1/configure.ac
---- openssh-7.5p1~/configure.ac	2017-10-06 12:34:45.329111247 +0000
-+++ openssh-7.5p1/configure.ac	2017-10-06 12:34:45.377471723 +0000
-@@ -4219,6 +4219,11 @@ AC_ARG_WITH([kerberos5],
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/configure.ac openssh-7.6p1/configure.ac
+--- openssh-7.6p1~/configure.ac	2017-11-22 12:16:11.028306604 +0000
++++ openssh-7.6p1/configure.ac	2017-11-22 12:16:11.077276144 +0000
+@@ -4232,6 +4232,11 @@ AC_ARG_WITH([kerberos5],
  		AC_PATH_TOOL([KRB5CONF], [krb5-config],
  			     [$KRB5ROOT/bin/krb5-config],
  			     [$KRB5ROOT/bin:$PATH])
-+		# Illumos has GSS but krb5-config doesn't talk about it
++		# illumos has GSS but krb5-config doesn't talk about it
 +		# Fall back to regular probing for libs
 +		if uname -rs | grep 'SunOS 5.11' ; then
 +			KRB5CONF=nonexistent
@@ -18,7 +18,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/configure.ac openssh-7.5p1/configur
  		if test -x $KRB5CONF ; then
  			K5CFLAGS="`$KRB5CONF --cflags`"
  			K5LIBS="`$KRB5CONF --libs`"
-@@ -4260,7 +4265,7 @@ AC_ARG_WITH([kerberos5],
+@@ -4273,7 +4278,7 @@ AC_ARG_WITH([kerberos5],
  					 AC_CHECK_LIB([des], [des_cbc_encrypt],
  					   [K5LIBS="$K5LIBS -ldes"])
  				       ], [ AC_MSG_RESULT([no])

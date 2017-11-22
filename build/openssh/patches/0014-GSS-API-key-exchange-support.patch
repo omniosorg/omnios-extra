@@ -3,9 +3,9 @@ From: Simon Wilkinson <simon@sxw.org.uk>
 Date: Fri, 27 Jan 2017 16:46:31 -0800
 Subject: [PATCH 14/34] GSS-API key exchange support
 
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/ChangeLog.gssapi openssh-7.5p1/ChangeLog.gssapi
---- openssh-7.5p1~/ChangeLog.gssapi	1970-01-01 01:00:00.000000000 +0000
-+++ openssh-7.5p1/ChangeLog.gssapi	2017-10-06 12:34:44.912910386 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/ChangeLog.gssapi openssh-7.6p1/ChangeLog.gssapi
+--- openssh-7.6p1~/ChangeLog.gssapi	1970-01-01 01:00:00.000000000 +0000
++++ openssh-7.6p1/ChangeLog.gssapi	2017-11-22 12:16:10.604013863 +0000
 @@ -0,0 +1,113 @@
 +20110101
 +  - Finally update for OpenSSH 5.6p1
@@ -120,15 +120,15 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/ChangeLog.gssapi openssh-7.5p1/Chan
 +    add support for GssapiTrustDns option for gssapi-with-mic
 +    (from jbasney AT ncsa.uiuc.edu)
 +    <gssapi-with-mic support is Bugzilla #1008>
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/Makefile.in openssh-7.5p1/Makefile.in
---- openssh-7.5p1~/Makefile.in	2017-10-06 12:34:44.859552781 +0000
-+++ openssh-7.5p1/Makefile.in	2017-10-06 12:34:44.914159718 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/Makefile.in openssh-7.6p1/Makefile.in
+--- openssh-7.6p1~/Makefile.in	2017-11-22 12:16:10.551213561 +0000
++++ openssh-7.6p1/Makefile.in	2017-11-22 12:16:10.604222642 +0000
 @@ -94,6 +94,7 @@ LIBSSH_OBJS=${LIBOPENSSH_OBJS} \
  	kex.o kexdh.o kexgex.o kexecdh.o kexc25519.o \
  	kexdhc.o kexgexc.o kexecdhc.o kexc25519c.o \
  	kexdhs.o kexgexs.o kexecdhs.o kexc25519s.o \
 +	kexgssc.o \
- 	platform-pledge.o platform-tracing.o
+ 	platform-pledge.o platform-tracing.o platform-misc.o
  
  SSHOBJS= ssh.o readconf.o clientloop.o sshtty.o \
 @@ -107,7 +108,7 @@ SSHDOBJS=sshd.o auth-rhosts.o auth-passw
@@ -140,9 +140,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/Makefile.in openssh-7.5p1/Makefile.
  	loginrec.o auth-pam.o auth-shadow.o auth-sia.o md5crypt.o \
  	sftp-server.o sftp-common.o \
  	sandbox-null.o sandbox-rlimit.o sandbox-systrace.o sandbox-darwin.o \
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth-krb5.c openssh-7.5p1/auth-krb5.c
---- openssh-7.5p1~/auth-krb5.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/auth-krb5.c	2017-10-06 12:34:44.914308066 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/auth-krb5.c openssh-7.6p1/auth-krb5.c
+--- openssh-7.6p1~/auth-krb5.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/auth-krb5.c	2017-11-22 12:16:10.604398242 +0000
 @@ -182,8 +182,13 @@ auth_krb5_password(Authctxt *authctxt, c
  
  	len = strlen(authctxt->krb5_ticket_file) + 6;
@@ -190,10 +190,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth-krb5.c openssh-7.5p1/auth-krb5
  
  	return (krb5_cc_resolve(ctx, ccname, ccache));
  }
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth.c openssh-7.5p1/auth.c
---- openssh-7.5p1~/auth.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/auth.c	2017-10-06 12:34:44.914493393 +0000
-@@ -372,7 +372,8 @@ auth_root_allowed(const char *method)
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/auth.c openssh-7.6p1/auth.c
+--- openssh-7.6p1~/auth.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/auth.c	2017-11-22 12:16:10.604632036 +0000
+@@ -395,7 +395,8 @@ auth_root_allowed(const char *method)
  	case PERMIT_NO_PASSWD:
  		if (strcmp(method, "publickey") == 0 ||
  		    strcmp(method, "hostbased") == 0 ||
@@ -203,7 +203,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth.c openssh-7.5p1/auth.c
  			return 1;
  		break;
  	case PERMIT_FORCED_ONLY:
-@@ -795,99 +796,6 @@ fakepw(void)
+@@ -728,99 +729,6 @@ fakepw(void)
  }
  
  /*
@@ -303,11 +303,11 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth.c openssh-7.5p1/auth.c
   * Return the canonical name of the host in the other side of the current
   * connection.  The host name is cached, so it is efficient to call this
   * several times.
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-gss.c openssh-7.5p1/auth2-gss.c
---- openssh-7.5p1~/auth2-gss.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/auth2-gss.c	2017-10-06 12:34:44.914662894 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/auth2-gss.c openssh-7.6p1/auth2-gss.c
+--- openssh-7.6p1~/auth2-gss.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/auth2-gss.c	2017-11-22 12:16:10.605039230 +0000
 @@ -1,7 +1,7 @@
- /* $OpenBSD: auth2-gss.c,v 1.22 2015/01/19 20:07:45 markus Exp $ */
+ /* $OpenBSD: auth2-gss.c,v 1.26 2017/06/24 06:34:38 djm Exp $ */
  
  /*
 - * Copyright (c) 2001-2003 Simon Wilkinson. All rights reserved.
@@ -316,8 +316,8 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-gss.c openssh-7.5p1/auth2-gss
   * Redistribution and use in source and binary forms, with or without
   * modification, are permitted provided that the following conditions
 @@ -53,6 +53,40 @@ static int input_gssapi_mic(int type, u_
- static int input_gssapi_exchange_complete(int type, u_int32_t plen, void *ctxt);
- static int input_gssapi_errtok(int, u_int32_t, void *);
+ static int input_gssapi_exchange_complete(int type, u_int32_t plen, struct ssh *ssh);
+ static int input_gssapi_errtok(int, u_int32_t, struct ssh *);
  
 +/* 
 + * The 'gssapi_keyex' userauth mechanism.
@@ -356,7 +356,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-gss.c openssh-7.5p1/auth2-gss
  /*
   * We only support those mechanisms that we know about (ie ones that we know
   * how to check local user kuserok and the like)
-@@ -238,7 +272,8 @@ input_gssapi_exchange_complete(int type,
+@@ -240,7 +274,8 @@ input_gssapi_exchange_complete(int type,
  
  	packet_check_eom();
  
@@ -364,9 +364,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-gss.c openssh-7.5p1/auth2-gss
 +	authenticated = PRIVSEP(ssh_gssapi_userok(authctxt->user,
 +	    authctxt->pw));
  
- 	authctxt->postponed = 0;
- 	dispatch_set(SSH2_MSG_USERAUTH_GSSAPI_TOKEN, NULL);
-@@ -274,7 +309,8 @@ input_gssapi_mic(int type, u_int32_t ple
+ 	if ((!use_privsep || mm_is_monitor()) &&
+ 	    (displayname = ssh_gssapi_displayname()) != NULL)
+@@ -281,7 +316,8 @@ input_gssapi_mic(int type, u_int32_t ple
  	gssbuf.length = buffer_len(&b);
  
  	if (!GSS_ERROR(PRIVSEP(ssh_gssapi_checkmic(gssctxt, &gssbuf, &mic))))
@@ -376,7 +376,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-gss.c openssh-7.5p1/auth2-gss
  	else
  		logit("GSSAPI MIC check failed");
  
-@@ -290,6 +326,12 @@ input_gssapi_mic(int type, u_int32_t ple
+@@ -301,6 +337,12 @@ input_gssapi_mic(int type, u_int32_t ple
  	return 0;
  }
  
@@ -389,10 +389,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2-gss.c openssh-7.5p1/auth2-gss
  Authmethod method_gssapi = {
  	"gssapi-with-mic",
  	userauth_gssapi,
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2.c openssh-7.5p1/auth2.c
---- openssh-7.5p1~/auth2.c	2017-10-06 12:34:44.705371598 +0000
-+++ openssh-7.5p1/auth2.c	2017-10-06 12:34:44.914808161 +0000
-@@ -70,6 +70,7 @@ extern Authmethod method_passwd;
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/auth2.c openssh-7.6p1/auth2.c
+--- openssh-7.6p1~/auth2.c	2017-11-22 12:16:10.398240448 +0000
++++ openssh-7.6p1/auth2.c	2017-11-22 12:16:10.605300714 +0000
+@@ -72,6 +72,7 @@ extern Authmethod method_passwd;
  extern Authmethod method_kbdint;
  extern Authmethod method_hostbased;
  #ifdef GSSAPI
@@ -400,7 +400,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2.c openssh-7.5p1/auth2.c
  extern Authmethod method_gssapi;
  #endif
  
-@@ -77,6 +78,7 @@ Authmethod *authmethods[] = {
+@@ -79,6 +80,7 @@ Authmethod *authmethods[] = {
  	&method_none,
  	&method_pubkey,
  #ifdef GSSAPI
@@ -408,9 +408,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2.c openssh-7.5p1/auth2.c
  	&method_gssapi,
  #endif
  	&method_passwd,
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/canohost.c openssh-7.5p1/canohost.c
---- openssh-7.5p1~/canohost.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/canohost.c	2017-10-06 12:34:44.914926018 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/canohost.c openssh-7.6p1/canohost.c
+--- openssh-7.6p1~/canohost.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/canohost.c	2017-11-22 12:16:10.605522005 +0000
 @@ -35,6 +35,99 @@
  #include "canohost.h"
  #include "misc.h"
@@ -511,9 +511,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/canohost.c openssh-7.5p1/canohost.c
  void
  ipv64_normalise_mapped(struct sockaddr_storage *addr, socklen_t *len)
  {
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/canohost.h openssh-7.5p1/canohost.h
---- openssh-7.5p1~/canohost.h	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/canohost.h	2017-10-06 12:34:44.915003253 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/canohost.h openssh-7.6p1/canohost.h
+--- openssh-7.6p1~/canohost.h	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/canohost.h	2017-11-22 12:16:10.605640011 +0000
 @@ -15,6 +15,9 @@
  #ifndef _CANOHOST_H
  #define _CANOHOST_H
@@ -524,10 +524,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/canohost.h openssh-7.5p1/canohost.h
  char		*get_peer_ipaddr(int);
  int		 get_peer_port(int);
  char		*get_local_ipaddr(int);
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/clientloop.c openssh-7.5p1/clientloop.c
---- openssh-7.5p1~/clientloop.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/clientloop.c	2017-10-06 12:34:44.915378005 +0000
-@@ -113,6 +113,10 @@
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/clientloop.c openssh-7.6p1/clientloop.c
+--- openssh-7.6p1~/clientloop.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/clientloop.c	2017-11-22 12:16:10.606016251 +0000
+@@ -112,6 +112,10 @@
  #include "ssherr.h"
  #include "hostfile.h"
  
@@ -538,13 +538,13 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/clientloop.c openssh-7.5p1/clientlo
  /* import options */
  extern Options options;
  
-@@ -1664,9 +1668,18 @@ client_loop(int have_pty, int escape_cha
+@@ -1349,9 +1353,18 @@ client_loop(struct ssh *ssh, int have_pt
  			break;
  
  		/* Do channel operations unless rekeying in progress. */
--		if (!ssh_packet_is_rekeying(active_state))
-+		if (!ssh_packet_is_rekeying(active_state)) {
- 			channel_after_select(readset, writeset);
+-		if (!ssh_packet_is_rekeying(ssh))
++		if (!ssh_packet_is_rekeying(ssh)) {
+ 			channel_after_select(ssh, readset, writeset);
  
 +#ifdef GSSAPI
 +			if (options.gss_renewal_rekey &&
@@ -558,10 +558,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/clientloop.c openssh-7.5p1/clientlo
  		/* Buffer input from the connection.  */
  		client_process_net_input(readset);
  
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/configure.ac openssh-7.5p1/configure.ac
---- openssh-7.5p1~/configure.ac	2017-10-06 12:34:44.860506010 +0000
-+++ openssh-7.5p1/configure.ac	2017-10-06 12:34:44.916058487 +0000
-@@ -623,6 +623,30 @@ main() { if (NSVersionOfRunTimeLibrary("
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/configure.ac openssh-7.6p1/configure.ac
+--- openssh-7.6p1~/configure.ac	2017-11-22 12:16:10.552324952 +0000
++++ openssh-7.6p1/configure.ac	2017-11-22 12:16:10.606702611 +0000
+@@ -621,6 +621,30 @@ main() { if (NSVersionOfRunTimeLibrary("
  	    [Use tunnel device compatibility to OpenBSD])
  	AC_DEFINE([SSH_TUN_PREPEND_AF], [1],
  	    [Prepend the address family to IP tunnel traffic])
@@ -592,9 +592,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/configure.ac openssh-7.5p1/configur
  	m4_pattern_allow([AU_IPv])
  	AC_CHECK_DECL([AU_IPv4], [],
  	    AC_DEFINE([AU_IPv4], [0], [System only supports IPv4 audit records])
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/gss-genr.c openssh-7.5p1/gss-genr.c
---- openssh-7.5p1~/gss-genr.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/gss-genr.c	2017-10-06 12:34:44.916319312 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/gss-genr.c openssh-7.6p1/gss-genr.c
+--- openssh-7.6p1~/gss-genr.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/gss-genr.c	2017-11-22 12:16:10.607108619 +0000
 @@ -1,7 +1,7 @@
  /* $OpenBSD: gss-genr.c,v 1.24 2016/09/12 01:22:38 deraadt Exp $ */
  
@@ -941,9 +941,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/gss-genr.c openssh-7.5p1/gss-genr.c
 +}
 +
  #endif /* GSSAPI */
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/gss-serv-krb5.c openssh-7.5p1/gss-serv-krb5.c
---- openssh-7.5p1~/gss-serv-krb5.c	2017-10-06 12:34:44.509992163 +0000
-+++ openssh-7.5p1/gss-serv-krb5.c	2017-10-06 12:34:44.916484549 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/gss-serv-krb5.c openssh-7.6p1/gss-serv-krb5.c
+--- openssh-7.6p1~/gss-serv-krb5.c	2017-11-22 12:16:10.201590708 +0000
++++ openssh-7.6p1/gss-serv-krb5.c	2017-11-22 12:16:10.607298370 +0000
 @@ -1,7 +1,7 @@
  /* $OpenBSD: gss-serv-krb5.c,v 1.8 2013/07/20 01:55:13 djm Exp $ */
  
@@ -1070,11 +1070,11 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/gss-serv-krb5.c openssh-7.5p1/gss-s
  #endif
  };
  
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/gss-serv.c openssh-7.5p1/gss-serv.c
---- openssh-7.5p1~/gss-serv.c	2017-10-06 12:34:44.510106068 +0000
-+++ openssh-7.5p1/gss-serv.c	2017-10-06 12:34:44.916771004 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/gss-serv.c openssh-7.6p1/gss-serv.c
+--- openssh-7.6p1~/gss-serv.c	2017-11-22 12:16:10.201727859 +0000
++++ openssh-7.6p1/gss-serv.c	2017-11-22 12:16:10.607663497 +0000
 @@ -1,7 +1,7 @@
- /* $OpenBSD: gss-serv.c,v 1.29 2015/05/22 03:50:02 djm Exp $ */
+ /* $OpenBSD: gss-serv.c,v 1.30 2017/06/24 06:34:38 djm Exp $ */
  
  /*
 - * Copyright (c) 2001-2003 Simon Wilkinson. All rights reserved.
@@ -1379,10 +1379,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/gss-serv.c openssh-7.5p1/gss-serv.c
 +#endif	/* #ifdef USE_GSS_STORE_CRED */
  }
  
- #endif
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/kex.c openssh-7.5p1/kex.c
---- openssh-7.5p1~/kex.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/kex.c	2017-10-06 12:34:44.916975994 +0000
+ /* Privileged */
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/kex.c openssh-7.6p1/kex.c
+--- openssh-7.6p1~/kex.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/kex.c	2017-11-22 12:16:10.607966302 +0000
 @@ -54,6 +54,10 @@
  #include "sshbuf.h"
  #include "digest.h"
@@ -1391,10 +1391,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/kex.c openssh-7.5p1/kex.c
 +#include "ssh-gss.h"
 +#endif
 +
- #if OPENSSL_VERSION_NUMBER >= 0x00907000L
- # if defined(HAVE_EVP_SHA256)
- # define evp_ssh_sha256 EVP_sha256
-@@ -113,6 +117,14 @@ static const struct kexalg kexalgs[] = {
+ /* prototype */
+ static int kex_choose_conf(struct ssh *);
+ static int kex_input_newkeys(int, u_int32_t, struct ssh *);
+@@ -105,6 +109,14 @@ static const struct kexalg kexalgs[] = {
  #endif /* HAVE_EVP_SHA256 || !WITH_OPENSSL */
  	{ NULL, -1, -1, -1},
  };
@@ -1409,7 +1409,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/kex.c openssh-7.5p1/kex.c
  
  char *
  kex_alg_list(char sep)
-@@ -145,6 +157,10 @@ kex_alg_by_name(const char *name)
+@@ -137,6 +149,10 @@ kex_alg_by_name(const char *name)
  		if (strcmp(k->name, name) == 0)
  			return k;
  	}
@@ -1420,7 +1420,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/kex.c openssh-7.5p1/kex.c
  	return NULL;
  }
  
-@@ -605,6 +621,9 @@ kex_free(struct kex *kex)
+@@ -601,6 +617,9 @@ kex_free(struct kex *kex)
  	sshbuf_free(kex->peer);
  	sshbuf_free(kex->my);
  	free(kex->session_id);
@@ -1430,9 +1430,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/kex.c openssh-7.5p1/kex.c
  	free(kex->client_version_string);
  	free(kex->server_version_string);
  	free(kex->failed_choice);
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/kex.h openssh-7.5p1/kex.h
---- openssh-7.5p1~/kex.h	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/kex.h	2017-10-06 12:34:44.917098053 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/kex.h openssh-7.6p1/kex.h
+--- openssh-7.6p1~/kex.h	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/kex.h	2017-11-22 12:16:10.608168773 +0000
 @@ -99,6 +99,9 @@ enum kex_exchange {
  	KEX_DH_GEX_SHA256,
  	KEX_ECDH_SHA2,
@@ -1468,9 +1468,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/kex.h openssh-7.5p1/kex.h
  int	 kex_dh_hash(int, const char *, const char *,
      const u_char *, size_t, const u_char *, size_t, const u_char *, size_t,
      const BIGNUM *, const BIGNUM *, const BIGNUM *, u_char *, size_t *);
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/kexgssc.c openssh-7.5p1/kexgssc.c
---- openssh-7.5p1~/kexgssc.c	1970-01-01 01:00:00.000000000 +0000
-+++ openssh-7.5p1/kexgssc.c	2017-10-06 12:34:44.917247424 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/kexgssc.c openssh-7.6p1/kexgssc.c
+--- openssh-7.6p1~/kexgssc.c	1970-01-01 01:00:00.000000000 +0000
++++ openssh-7.6p1/kexgssc.c	2017-11-22 12:16:10.608338247 +0000
 @@ -0,0 +1,339 @@
 +/*
 + * Copyright (c) 2001-2009 Simon Wilkinson. All rights reserved.
@@ -1811,9 +1811,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/kexgssc.c openssh-7.5p1/kexgssc.c
 +}
 +
 +#endif /* GSSAPI */
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/kexgsss.c openssh-7.5p1/kexgsss.c
---- openssh-7.5p1~/kexgsss.c	1970-01-01 01:00:00.000000000 +0000
-+++ openssh-7.5p1/kexgsss.c	2017-10-06 12:34:44.917400975 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/kexgsss.c openssh-7.6p1/kexgsss.c
+--- openssh-7.6p1~/kexgsss.c	1970-01-01 01:00:00.000000000 +0000
++++ openssh-7.6p1/kexgsss.c	2017-11-22 12:16:10.608476360 +0000
 @@ -0,0 +1,296 @@
 +/*
 + * Copyright (c) 2001-2009 Simon Wilkinson. All rights reserved.
@@ -2111,9 +2111,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/kexgsss.c openssh-7.5p1/kexgsss.c
 +	return 0;
 +}
 +#endif /* GSSAPI */
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
---- openssh-7.5p1~/monitor.c	2017-10-06 12:34:44.705762546 +0000
-+++ openssh-7.5p1/monitor.c	2017-10-06 12:34:44.917851167 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/monitor.c openssh-7.6p1/monitor.c
+--- openssh-7.6p1~/monitor.c	2017-11-22 12:16:10.398683899 +0000
++++ openssh-7.6p1/monitor.c	2017-11-22 12:16:10.608914795 +0000
 @@ -160,6 +160,8 @@ int mm_answer_gss_setup_ctx(int, Buffer
  int mm_answer_gss_accept_ctx(int, Buffer *);
  int mm_answer_gss_userok(int, Buffer *);
@@ -2153,7 +2153,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
  
  	/* The first few requests do not require asynchronous access */
  	while (!authenticated) {
-@@ -444,6 +457,10 @@ monitor_child_postauth(struct monitor *p
+@@ -450,6 +463,10 @@ monitor_child_postauth(struct monitor *p
  	monitor_permit(mon_dispatch, MONITOR_REQ_MODULI, 1);
  	monitor_permit(mon_dispatch, MONITOR_REQ_SIGN, 1);
  	monitor_permit(mon_dispatch, MONITOR_REQ_TERM, 1);
@@ -2164,7 +2164,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
  
  	if (!no_pty_flag) {
  		monitor_permit(mon_dispatch, MONITOR_REQ_PTY, 1);
-@@ -1671,6 +1688,13 @@ monitor_apply_keystate(struct monitor *p
+@@ -1691,6 +1708,13 @@ monitor_apply_keystate(struct monitor *p
  # endif
  #endif /* WITH_OPENSSL */
  		kex->kex[KEX_C25519_SHA256] = kexc25519_server;
@@ -2178,7 +2178,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
  		kex->load_host_public_key=&get_hostkey_public_by_type;
  		kex->load_host_private_key=&get_hostkey_private_by_type;
  		kex->host_key_index=&get_hostkey_index;
-@@ -1750,8 +1774,8 @@ mm_answer_gss_setup_ctx(int sock, Buffer
+@@ -1779,8 +1803,8 @@ mm_answer_gss_setup_ctx(int sock, Buffer
  	OM_uint32 major;
  	u_int len;
  
@@ -2189,7 +2189,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
  
  	goid.elements = buffer_get_string(m, &len);
  	goid.length = len;
-@@ -1780,8 +1804,8 @@ mm_answer_gss_accept_ctx(int sock, Buffe
+@@ -1809,8 +1833,8 @@ mm_answer_gss_accept_ctx(int sock, Buffe
  	OM_uint32 flags = 0; /* GSI needs this */
  	u_int len;
  
@@ -2200,7 +2200,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
  
  	in.value = buffer_get_string(m, &len);
  	in.length = len;
-@@ -1800,6 +1824,7 @@ mm_answer_gss_accept_ctx(int sock, Buffe
+@@ -1829,6 +1853,7 @@ mm_answer_gss_accept_ctx(int sock, Buffe
  		monitor_permit(mon_dispatch, MONITOR_REQ_GSSSTEP, 0);
  		monitor_permit(mon_dispatch, MONITOR_REQ_GSSUSEROK, 1);
  		monitor_permit(mon_dispatch, MONITOR_REQ_GSSCHECKMIC, 1);
@@ -2208,7 +2208,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
  	}
  	return (0);
  }
-@@ -1811,8 +1836,8 @@ mm_answer_gss_checkmic(int sock, Buffer
+@@ -1840,8 +1865,8 @@ mm_answer_gss_checkmic(int sock, Buffer
  	OM_uint32 ret;
  	u_int len;
  
@@ -2219,9 +2219,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
  
  	gssbuf.value = buffer_get_string(m, &len);
  	gssbuf.length = len;
-@@ -1840,10 +1865,11 @@ mm_answer_gss_userok(int sock, Buffer *m
- {
+@@ -1870,10 +1895,11 @@ mm_answer_gss_userok(int sock, Buffer *m
  	int authenticated;
+ 	const char *displayname;
  
 -	if (!options.gss_authentication)
 -		fatal("%s: GSSAPI authentication not enabled", __func__);
@@ -2234,7 +2234,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
  
  	buffer_clear(m);
  	buffer_put_int(m, authenticated);
-@@ -1856,5 +1882,76 @@ mm_answer_gss_userok(int sock, Buffer *m
+@@ -1889,5 +1915,76 @@ mm_answer_gss_userok(int sock, Buffer *m
  	/* Monitor loop will terminate if authenticated */
  	return (authenticated);
  }
@@ -2311,9 +2311,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
 +
  #endif /* GSSAPI */
  
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.h openssh-7.5p1/monitor.h
---- openssh-7.5p1~/monitor.h	2017-10-06 12:34:44.705846682 +0000
-+++ openssh-7.5p1/monitor.h	2017-10-06 12:34:44.917933803 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/monitor.h openssh-7.6p1/monitor.h
+--- openssh-7.6p1~/monitor.h	2017-11-22 12:16:10.398840195 +0000
++++ openssh-7.6p1/monitor.h	2017-11-22 12:16:10.609094072 +0000
 @@ -68,6 +68,8 @@ enum monitor_reqtype {
  #ifdef PAM_ENHANCEMENT
  	MONITOR_REQ_AUTHMETHOD = 114,
@@ -2323,10 +2323,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.h openssh-7.5p1/monitor.h
  };
  
  struct monitor {
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor_wrap.c openssh-7.5p1/monitor_wrap.c
---- openssh-7.5p1~/monitor_wrap.c	2017-10-06 12:34:44.705989906 +0000
-+++ openssh-7.5p1/monitor_wrap.c	2017-10-06 12:34:44.918100396 +0000
-@@ -942,7 +942,7 @@ mm_ssh_gssapi_checkmic(Gssctxt *ctx, gss
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/monitor_wrap.c openssh-7.6p1/monitor_wrap.c
+--- openssh-7.6p1~/monitor_wrap.c	2017-11-22 12:16:10.399017853 +0000
++++ openssh-7.6p1/monitor_wrap.c	2017-11-22 12:16:10.609293385 +0000
+@@ -955,7 +955,7 @@ mm_ssh_gssapi_checkmic(Gssctxt *ctx, gss
  }
  
  int
@@ -2335,7 +2335,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor_wrap.c openssh-7.5p1/monito
  {
  	Buffer m;
  	int authenticated = 0;
-@@ -959,5 +959,50 @@ mm_ssh_gssapi_userok(char *user)
+@@ -972,5 +972,50 @@ mm_ssh_gssapi_userok(char *user)
  	debug3("%s: user %sauthenticated",__func__, authenticated ? "" : "not ");
  	return (authenticated);
  }
@@ -2386,10 +2386,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor_wrap.c openssh-7.5p1/monito
 +
  #endif /* GSSAPI */
  
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor_wrap.h openssh-7.5p1/monitor_wrap.h
---- openssh-7.5p1~/monitor_wrap.h	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/monitor_wrap.h	2017-10-06 12:34:44.918187394 +0000
-@@ -55,8 +55,10 @@ int mm_key_verify(Key *, u_char *, u_int
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/monitor_wrap.h openssh-7.6p1/monitor_wrap.h
+--- openssh-7.6p1~/monitor_wrap.h	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/monitor_wrap.h	2017-11-22 12:16:10.609473888 +0000
+@@ -57,8 +57,10 @@ int mm_sshkey_verify(const struct sshkey
  OM_uint32 mm_ssh_gssapi_server_ctx(Gssctxt **, gss_OID);
  OM_uint32 mm_ssh_gssapi_accept_ctx(Gssctxt *,
     gss_buffer_desc *, gss_buffer_desc *, OM_uint32 *);
@@ -2401,9 +2401,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor_wrap.h openssh-7.5p1/monito
  #endif
  
  #ifdef USE_PAM
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
---- openssh-7.5p1~/readconf.c	2017-10-06 12:34:44.763714825 +0000
-+++ openssh-7.5p1/readconf.c	2017-10-06 12:34:44.918551128 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/readconf.c openssh-7.6p1/readconf.c
+--- openssh-7.6p1~/readconf.c	2017-11-22 12:16:10.453047087 +0000
++++ openssh-7.6p1/readconf.c	2017-11-22 12:16:10.609934910 +0000
 @@ -160,6 +160,8 @@ typedef enum {
  	oClearAllForwardings, oNoHostAuthenticationForLocalhost,
  	oEnableSSHKeysign, oRekeyLimit, oVerifyHostKeyDNS, oConnectTimeout,
@@ -2413,7 +2413,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
  	oServerAliveInterval, oServerAliveCountMax, oIdentitiesOnly,
  	oSendEnv, oControlPath, oControlMaster, oControlPersist,
  	oHashKnownHosts,
-@@ -199,10 +201,19 @@ static struct {
+@@ -202,10 +204,19 @@ static struct {
  	/* Sometimes-unsupported options */
  #if defined(GSSAPI)
  	{ "gssapiauthentication", oGssAuthentication },
@@ -2433,7 +2433,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
  #endif
  #ifdef ENABLE_PKCS11
  	{ "smartcarddevice", oPKCS11Provider },
-@@ -1008,10 +1019,30 @@ parse_time:
+@@ -1011,10 +1022,30 @@ parse_time:
  		intptr = &options->gss_authentication;
  		goto parse_flag;
  
@@ -2464,7 +2464,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
  	case oBatchMode:
  		intptr = &options->batch_mode;
  		goto parse_flag;
-@@ -1840,7 +1871,12 @@ initialize_options(Options * options)
+@@ -1832,7 +1863,12 @@ initialize_options(Options * options)
  	options->pubkey_authentication = -1;
  	options->challenge_response_authentication = -1;
  	options->gss_authentication = -1;
@@ -2477,7 +2477,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
  	options->password_authentication = -1;
  	options->kbd_interactive_authentication = -1;
  	options->kbd_interactive_devices = NULL;
-@@ -1995,8 +2031,14 @@ fill_default_options(Options * options)
+@@ -1983,8 +2019,14 @@ fill_default_options(Options * options)
  #else
  		options->gss_authentication = 0;
  #endif
@@ -2492,10 +2492,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.c openssh-7.5p1/readconf.c
  	if (options->password_authentication == -1)
  		options->password_authentication = 1;
  	if (options->kbd_interactive_authentication == -1)
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.h openssh-7.5p1/readconf.h
---- openssh-7.5p1~/readconf.h	2017-10-06 12:34:44.609835612 +0000
-+++ openssh-7.5p1/readconf.h	2017-10-06 12:34:44.918654507 +0000
-@@ -45,7 +45,12 @@ typedef struct {
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/readconf.h openssh-7.6p1/readconf.h
+--- openssh-7.6p1~/readconf.h	2017-11-22 12:16:10.301636260 +0000
++++ openssh-7.6p1/readconf.h	2017-11-22 12:16:10.610135855 +0000
+@@ -42,7 +42,12 @@ typedef struct {
  	int     challenge_response_authentication;
  					/* Try S/Key or TIS, authentication. */
  	int     gss_authentication;	/* Try GSS authentication */
@@ -2508,9 +2508,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/readconf.h openssh-7.5p1/readconf.h
  	int     password_authentication;	/* Try password
  						 * authentication. */
  	int     kbd_interactive_authentication; /* Try keyboard-interactive auth. */
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
---- openssh-7.5p1~/servconf.c	2017-10-06 12:34:44.812538966 +0000
-+++ openssh-7.5p1/servconf.c	2017-10-06 12:34:44.919037973 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.c openssh-7.6p1/servconf.c
+--- openssh-7.6p1~/servconf.c	2017-11-22 12:16:10.503295269 +0000
++++ openssh-7.6p1/servconf.c	2017-11-22 12:16:10.610619472 +0000
 @@ -113,8 +113,10 @@ initialize_server_options(ServerOptions
  	options->kerberos_ticket_cleanup = -1;
  	options->kerberos_get_afs_token = -1;
@@ -2522,7 +2522,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	options->password_authentication = -1;
  	options->kbd_interactive_authentication = -1;
  	options->challenge_response_authentication = -1;
-@@ -292,10 +294,14 @@ fill_default_server_options(ServerOption
+@@ -293,10 +295,14 @@ fill_default_server_options(ServerOption
  #else
  		options->gss_authentication = 0;
  #endif
@@ -2537,7 +2537,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	if (options->password_authentication == -1)
  		options->password_authentication = 1;
  	if (options->kbd_interactive_authentication == -1)
-@@ -438,6 +444,7 @@ typedef enum {
+@@ -441,6 +447,7 @@ typedef enum {
  	sHostKeyAlgorithms,
  	sClientAliveInterval, sClientAliveCountMax, sAuthorizedKeysFile,
  	sGssAuthentication, sGssCleanupCreds, sGssStrictAcceptor,
@@ -2545,7 +2545,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	sAcceptEnv, sPermitTunnel,
  	sMatch, sPermitOpen, sForceCommand, sChrootDirectory,
  	sUsePrivilegeSeparation, sAllowAgentForwarding,
-@@ -518,12 +525,20 @@ static struct {
+@@ -522,12 +529,20 @@ static struct {
  #else /* USE_GSS_STORE_CRED */
  	{ "gssapicleanupcredentials", sGssCleanupCreds, SSHCFG_GLOBAL },
  #endif /* USE_GSS_STORE_CRED */
@@ -2566,7 +2566,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	{ "passwordauthentication", sPasswordAuthentication, SSHCFG_ALL },
  	{ "kbdinteractiveauthentication", sKbdInteractiveAuthentication, SSHCFG_ALL },
  	{ "challengeresponseauthentication", sChallengeResponseAuthentication, SSHCFG_GLOBAL },
-@@ -1291,6 +1306,10 @@ process_server_config_line(ServerOptions
+@@ -1327,6 +1342,10 @@ process_server_config_line(ServerOptions
  		intptr = &options->gss_authentication;
  		goto parse_flag;
  
@@ -2577,7 +2577,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	case sGssCleanupCreds:
  		intptr = &options->gss_cleanup_creds;
  		goto parse_flag;
-@@ -1299,6 +1318,10 @@ process_server_config_line(ServerOptions
+@@ -1335,6 +1354,10 @@ process_server_config_line(ServerOptions
  		intptr = &options->gss_strict_acceptor;
  		goto parse_flag;
  
@@ -2588,7 +2588,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	case sPasswordAuthentication:
  		intptr = &options->password_authentication;
  		goto parse_flag;
-@@ -2355,7 +2378,10 @@ dump_config(ServerOptions *o)
+@@ -2406,7 +2429,10 @@ dump_config(ServerOptions *o)
  #endif
  #ifdef GSSAPI
  	dump_cfg_fmtint(sGssAuthentication, o->gss_authentication);
@@ -2599,10 +2599,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  #endif
  	dump_cfg_fmtint(sPasswordAuthentication, o->password_authentication);
  	dump_cfg_fmtint(sKbdInteractiveAuthentication,
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.h openssh-7.5p1/servconf.h
---- openssh-7.5p1~/servconf.h	2017-10-06 12:34:44.706473218 +0000
-+++ openssh-7.5p1/servconf.h	2017-10-06 12:34:44.920699352 +0000
-@@ -116,8 +116,10 @@ typedef struct {
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.h openssh-7.6p1/servconf.h
+--- openssh-7.6p1~/servconf.h	2017-11-22 12:16:10.399826855 +0000
++++ openssh-7.6p1/servconf.h	2017-11-22 12:16:10.610816905 +0000
+@@ -123,8 +123,10 @@ typedef struct {
  	int     kerberos_get_afs_token;		/* If true, try to get AFS token if
  						 * authenticated with Kerberos. */
  	int     gss_authentication;	/* If true, permit GSSAPI authentication */
@@ -2613,11 +2613,11 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.h openssh-7.5p1/servconf.h
  	int     password_authentication;	/* If true, permit password
  						 * authentication. */
  	int     kbd_interactive_authentication;	/* If true, permit */
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh-gss.h openssh-7.5p1/ssh-gss.h
---- openssh-7.5p1~/ssh-gss.h	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/ssh-gss.h	2017-10-06 12:34:44.920962910 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/ssh-gss.h openssh-7.6p1/ssh-gss.h
+--- openssh-7.6p1~/ssh-gss.h	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/ssh-gss.h	2017-11-22 12:16:10.611075816 +0000
 @@ -1,6 +1,6 @@
- /* $OpenBSD: ssh-gss.h,v 1.11 2014/02/26 20:28:44 djm Exp $ */
+ /* $OpenBSD: ssh-gss.h,v 1.12 2017/06/24 06:34:38 djm Exp $ */
  /*
 - * Copyright (c) 2001-2003 Simon Wilkinson. All rights reserved.
 + * Copyright (c) 2001-2009 Simon Wilkinson. All rights reserved.
@@ -2680,7 +2680,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh-gss.h openssh-7.5p1/ssh-gss.h
  
  int  ssh_gssapi_check_oid(Gssctxt *, void *, size_t);
  void ssh_gssapi_set_oid_data(Gssctxt *, void *, size_t);
-@@ -119,16 +136,32 @@ void ssh_gssapi_build_ctx(Gssctxt **);
+@@ -119,17 +136,33 @@ void ssh_gssapi_build_ctx(Gssctxt **);
  void ssh_gssapi_delete_ctx(Gssctxt **);
  OM_uint32 ssh_gssapi_sign(Gssctxt *, gss_buffer_t, gss_buffer_t);
  void ssh_gssapi_buildmic(Buffer *, const char *, const char *, const char *);
@@ -2690,13 +2690,13 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh-gss.h openssh-7.5p1/ssh-gss.h
 +int ssh_gssapi_credentials_updated(Gssctxt *);
  
  /* In the server */
-+typedef int ssh_gssapi_check_fn(Gssctxt **, gss_OID, const char *, 
++typedef int ssh_gssapi_check_fn(Gssctxt **, gss_OID, const char *,
 +    const char *);
 +char *ssh_gssapi_client_mechanisms(const char *, const char *);
 +char *ssh_gssapi_kex_mechs(gss_OID_set, ssh_gssapi_check_fn *, const char *,
 +    const char *);
 +gss_OID ssh_gssapi_id_kex(Gssctxt *, char *, int);
-+int ssh_gssapi_server_check_mech(Gssctxt **,gss_OID, const char *, 
++int ssh_gssapi_server_check_mech(Gssctxt **,gss_OID, const char *,
 +    const char *);
  OM_uint32 ssh_gssapi_server_ctx(Gssctxt **, gss_OID);
 -int ssh_gssapi_userok(char *name);
@@ -2705,6 +2705,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh-gss.h openssh-7.5p1/ssh-gss.h
  void ssh_gssapi_do_child(char ***, u_int *);
  void ssh_gssapi_cleanup_creds(void);
  void ssh_gssapi_storecreds(void);
+ const char *ssh_gssapi_displayname(void);
  
 +char *ssh_gssapi_server_mechanisms(void);
 +int ssh_gssapi_oid_table_ok(void);
@@ -2715,10 +2716,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh-gss.h openssh-7.5p1/ssh-gss.h
  #endif /* GSSAPI */
  
  #endif /* _SSH_GSS_H */
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh_config openssh-7.5p1/ssh_config
---- openssh-7.5p1~/ssh_config	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/ssh_config	2017-10-06 12:34:44.921108527 +0000
-@@ -26,6 +26,8 @@
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/ssh_config openssh-7.6p1/ssh_config
+--- openssh-7.6p1~/ssh_config	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/ssh_config	2017-11-22 12:16:10.611239396 +0000
+@@ -24,6 +24,8 @@
  #   HostbasedAuthentication no
  #   GSSAPIAuthentication no
  #   GSSAPIDelegateCredentials no
@@ -2727,10 +2728,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh_config openssh-7.5p1/ssh_config
  #   BatchMode no
  #   CheckHostIP yes
  #   AddressFamily any
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh_config.4 openssh-7.5p1/ssh_config.4
---- openssh-7.5p1~/ssh_config.4	2017-10-06 12:34:44.764299993 +0000
-+++ openssh-7.5p1/ssh_config.4	2017-10-06 12:34:44.921474638 +0000
-@@ -763,10 +763,42 @@ The default is
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/ssh_config.4 openssh-7.6p1/ssh_config.4
+--- openssh-7.6p1~/ssh_config.4	2017-11-22 12:16:10.453828311 +0000
++++ openssh-7.6p1/ssh_config.4	2017-11-22 12:16:10.611552021 +0000
+@@ -731,10 +731,42 @@ The default is
  Specifies whether user authentication based on GSSAPI is allowed.
  The default on OmniOS is
  .Dq yes .
@@ -2773,9 +2774,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/ssh_config.4 openssh-7.5p1/ssh_conf
  .It Cm HashKnownHosts
  Indicates that
  .Xr ssh 1
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshconnect2.c openssh-7.5p1/sshconnect2.c
---- openssh-7.5p1~/sshconnect2.c	2017-10-06 12:34:44.610914892 +0000
-+++ openssh-7.5p1/sshconnect2.c	2017-10-06 12:34:44.921927563 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshconnect2.c openssh-7.6p1/sshconnect2.c
+--- openssh-7.6p1~/sshconnect2.c	2017-11-22 12:16:10.302373607 +0000
++++ openssh-7.6p1/sshconnect2.c	2017-11-22 12:16:10.612046063 +0000
 @@ -166,6 +166,11 @@ ssh_kex2(char *host, struct sockaddr *ho
  	struct kex *kex;
  	int r;
@@ -2848,7 +2849,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshconnect2.c openssh-7.5p1/sshconn
 +	}
 +#endif
 +
- 	dispatch_run(DISPATCH_BLOCK, &kex->done, active_state);
+ 	ssh_dispatch_run_fatal(active_state, DISPATCH_BLOCK, &kex->done);
  
  	/* remove ext-info from the KEX proposals for rekeying */
  	myproposal[PROPOSAL_KEX_ALGS] =
@@ -2867,9 +2868,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshconnect2.c openssh-7.5p1/sshconn
  		fatal("kex_prop2buf: %s", ssh_err(r));
  
 @@ -315,6 +375,7 @@ int	input_gssapi_token(int type, u_int32
- int	input_gssapi_hash(int type, u_int32_t, void *);
- int	input_gssapi_error(int, u_int32_t, void *);
- int	input_gssapi_errtok(int, u_int32_t, void *);
+ int	input_gssapi_hash(int type, u_int32_t, struct ssh *);
+ int	input_gssapi_error(int, u_int32_t, struct ssh *);
+ int	input_gssapi_errtok(int, u_int32_t, struct ssh *);
 +int	userauth_gsskeyex(Authctxt *authctxt);
  #endif
  
@@ -2886,7 +2887,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshconnect2.c openssh-7.5p1/sshconn
  	{"gssapi-with-mic",
  		userauth_gssapi,
  		NULL,
-@@ -675,25 +741,40 @@ userauth_gssapi(Authctxt *authctxt)
+@@ -677,25 +743,40 @@ userauth_gssapi(Authctxt *authctxt)
  	static u_int mech = 0;
  	OM_uint32 min;
  	int ok = 0;
@@ -2929,9 +2930,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshconnect2.c openssh-7.5p1/sshconn
  	if (!ok)
  		return 0;
  
-@@ -784,8 +865,8 @@ input_gssapi_response(int type, u_int32_
+@@ -786,8 +867,8 @@ input_gssapi_response(int type, u_int32_
  {
- 	Authctxt *authctxt = ctxt;
+ 	Authctxt *authctxt = ssh->authctxt;
  	Gssctxt *gssctxt;
 -	int oidlen;
 -	char *oidv;
@@ -2940,7 +2941,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshconnect2.c openssh-7.5p1/sshconn
  
  	if (authctxt == NULL)
  		fatal("input_gssapi_response: no authentication context");
-@@ -898,6 +979,48 @@ input_gssapi_error(int type, u_int32_t p
+@@ -900,6 +981,48 @@ input_gssapi_error(int type, u_int32_t p
  	free(lang);
  	return 0;
  }
@@ -2989,10 +2990,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshconnect2.c openssh-7.5p1/sshconn
  #endif /* GSSAPI */
  
  int
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
---- openssh-7.5p1~/sshd.c	2017-10-06 12:34:44.860941468 +0000
-+++ openssh-7.5p1/sshd.c	2017-10-06 12:34:44.922304665 +0000
-@@ -123,6 +123,10 @@
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd.c openssh-7.6p1/sshd.c
+--- openssh-7.6p1~/sshd.c	2017-11-22 12:16:10.553034563 +0000
++++ openssh-7.6p1/sshd.c	2017-11-22 12:16:10.612502138 +0000
+@@ -122,6 +122,10 @@
  #include "version.h"
  #include "ssherr.h"
  
@@ -3003,7 +3004,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
  /* Re-exec fds */
  #define REEXEC_DEVCRYPTO_RESERVED_FD	(STDERR_FILENO + 1)
  #define REEXEC_STARTUP_PIPE_FD		(STDERR_FILENO + 2)
-@@ -531,7 +535,7 @@ privsep_preauth_child(void)
+@@ -529,7 +533,7 @@ privsep_preauth_child(void)
  
  #ifdef GSSAPI
  	/* Cache supported mechanism OIDs for later use */
@@ -3012,7 +3013,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
  		ssh_gssapi_prepare_supported_oids();
  #endif
  
-@@ -1719,10 +1723,13 @@ main(int ac, char **av)
+@@ -1708,10 +1712,13 @@ main(int ac, char **av)
  		    key ? "private" : "agent", i, sshkey_ssh_name(pubkey), fp);
  		free(fp);
  	}
@@ -3026,7 +3027,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
  
  	/*
  	 * Load certificates. They are stored in an array at identical
-@@ -1992,6 +1999,60 @@ main(int ac, char **av)
+@@ -1987,6 +1994,60 @@ main(int ac, char **av)
  	    remote_ip, remote_port, laddr,  ssh_local_port(ssh));
  	free(laddr);
  
@@ -3087,7 +3088,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
  	/*
  	 * We don't want to listen forever unless the other side
  	 * successfully authenticates itself.  So we set up an alarm which is
-@@ -2193,6 +2254,48 @@ do_ssh2_kex(void)
+@@ -2190,6 +2251,48 @@ do_ssh2_kex(void)
  	myproposal[PROPOSAL_SERVER_HOST_KEY_ALGS] = compat_pkalg_proposal(
  	    list_hostkey_types());
  
@@ -3136,7 +3137,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
  	/* start key exchange */
  	if ((r = kex_setup(active_state, myproposal)) != 0)
  		fatal("kex_setup: %s", ssh_err(r));
-@@ -2210,6 +2313,13 @@ do_ssh2_kex(void)
+@@ -2207,6 +2310,13 @@ do_ssh2_kex(void)
  # endif
  #endif
  	kex->kex[KEX_C25519_SHA256] = kexc25519_server;
@@ -3150,9 +3151,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
  	kex->server = 1;
  	kex->client_version_string=client_version_string;
  	kex->server_version_string=server_version_string;
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config openssh-7.5p1/sshd_config
---- openssh-7.5p1~/sshd_config	2017-10-06 12:34:44.215245761 +0000
-+++ openssh-7.5p1/sshd_config	2017-10-06 12:34:44.922385596 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd_config openssh-7.6p1/sshd_config
+--- openssh-7.6p1~/sshd_config	2017-11-22 12:16:09.917318071 +0000
++++ openssh-7.6p1/sshd_config	2017-11-22 12:16:10.612671326 +0000
 @@ -70,6 +70,8 @@ AuthorizedKeysFile	.ssh/authorized_keys
  # GSSAPI options
  #GSSAPIAuthentication no
@@ -3162,10 +3163,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config openssh-7.5p1/sshd_conf
  
  # Set this to 'yes' to enable PAM authentication, account processing,
  # and session processing. If this is enabled, PAM authentication will
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config.4 openssh-7.5p1/sshd_config.4
---- openssh-7.5p1~/sshd_config.4	2017-10-06 12:34:44.764541314 +0000
-+++ openssh-7.5p1/sshd_config.4	2017-10-06 12:34:44.922628030 +0000
-@@ -627,6 +627,11 @@ The default is
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd_config.4 openssh-7.6p1/sshd_config.4
+--- openssh-7.6p1~/sshd_config.4	2017-11-22 12:16:10.454144989 +0000
++++ openssh-7.6p1/sshd_config.4	2017-11-22 12:16:10.612918576 +0000
+@@ -635,6 +635,11 @@ The default is
  Specifies whether user authentication based on GSSAPI is allowed.
  The default on OmniOS is
  .Cm yes .
@@ -3177,7 +3178,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config.4 openssh-7.5p1/sshd_co
  .It Cm GSSAPICleanupCredentials
  Specifies whether to automatically destroy the user's credentials cache
  on logout.
-@@ -646,6 +651,11 @@ machine's default store.
+@@ -654,6 +659,11 @@ machine's default store.
  This facility is provided to assist with operation on multi homed machines.
  The default is
  .Cm yes .
@@ -3189,10 +3190,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config.4 openssh-7.5p1/sshd_co
  .It Cm HostbasedAcceptedKeyTypes
  Specifies the key types that will be accepted for hostbased authentication
  as a comma-separated pattern list.
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshkey.c openssh-7.5p1/sshkey.c
---- openssh-7.5p1~/sshkey.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/sshkey.c	2017-10-06 12:34:44.923223797 +0000
-@@ -116,6 +116,7 @@ static const struct keytype keytypes[] =
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshkey.c openssh-7.6p1/sshkey.c
+--- openssh-7.6p1~/sshkey.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/sshkey.c	2017-11-22 12:16:10.613362477 +0000
+@@ -112,6 +112,7 @@ static const struct keytype keytypes[] =
  #  endif /* OPENSSL_HAS_NISTP521 */
  # endif /* OPENSSL_HAS_ECC */
  #endif /* WITH_OPENSSL */
@@ -3200,7 +3201,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshkey.c openssh-7.5p1/sshkey.c
  	{ NULL, NULL, -1, -1, 0, 0 }
  };
  
-@@ -204,7 +205,7 @@ sshkey_alg_list(int certs_only, int plai
+@@ -200,7 +201,7 @@ sshkey_alg_list(int certs_only, int plai
  	const struct keytype *kt;
  
  	for (kt = keytypes; kt->type != -1; kt++) {
@@ -3209,10 +3210,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshkey.c openssh-7.5p1/sshkey.c
  			continue;
  		if (!include_sigonly && kt->sigonly)
  			continue;
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshkey.h openssh-7.5p1/sshkey.h
---- openssh-7.5p1~/sshkey.h	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/sshkey.h	2017-10-06 12:34:44.923315178 +0000
-@@ -62,6 +62,7 @@ enum sshkey_types {
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshkey.h openssh-7.6p1/sshkey.h
+--- openssh-7.6p1~/sshkey.h	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/sshkey.h	2017-11-22 12:16:10.613549340 +0000
+@@ -61,6 +61,7 @@ enum sshkey_types {
  	KEY_DSA_CERT,
  	KEY_ECDSA_CERT,
  	KEY_ED25519_CERT,

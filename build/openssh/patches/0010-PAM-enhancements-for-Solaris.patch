@@ -3,10 +3,10 @@ From: oracle <solaris@oracle.com>
 Date: Mon, 3 Aug 2015 14:36:19 -0700
 Subject: [PATCH 10/34] PAM enhancements for Solaris
 
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth-pam.c openssh-7.5p1/auth-pam.c
---- openssh-7.5p1~/auth-pam.c	2017-10-06 12:34:44.659092555 +0000
-+++ openssh-7.5p1/auth-pam.c	2017-10-06 12:34:44.705025561 +0000
-@@ -617,6 +617,72 @@ sshpam_cleanup(void)
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/auth-pam.c openssh-7.6p1/auth-pam.c
+--- openssh-7.6p1~/auth-pam.c	2017-11-22 12:16:10.351605031 +0000
++++ openssh-7.6p1/auth-pam.c	2017-11-22 12:16:10.397628429 +0000
+@@ -614,6 +614,66 @@ sshpam_cleanup(void)
  	sshpam_handle = NULL;
  }
  
@@ -25,52 +25,46 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth-pam.c openssh-7.5p1/auth-pam.c
 +		return (svcname);
 +	}
 +
-+	if (compat20) {
-+		char *method_name = authctxt->authmethod_name;
++	char *method_name = authctxt->authmethod_name;
 +
-+		if (!method_name)
-+			fatal("Userauth method unknown while starting PAM");
++	if (!method_name)
++		fatal("Userauth method unknown while starting PAM");
 +
++	/*
++	 * For SSHv2 we use "sshd-<userauth name>
++	 * The "sshd" prefix can be changed via the PAMServicePrefix
++	 * sshd_config option.
++	 */
++	if (strcmp(method_name, "none") == 0) {
++		snprintf(svcname, BUFSIZ, "%s-none",
++		    options.pam_service_prefix);
++	}
++	if (strcmp(method_name, "password") == 0) {
++		snprintf(svcname, BUFSIZ, "%s-password",
++		    options.pam_service_prefix);
++	}
++	if (strcmp(method_name, "keyboard-interactive") == 0) {
++		/* "keyboard-interactive" is too long, shorten it */
++		snprintf(svcname, BUFSIZ, "%s-kbdint",
++		    options.pam_service_prefix);
++	}
++	if (strcmp(method_name, "publickey") == 0) {
++		/* "publickey" is too long, shorten it */
++		snprintf(svcname, BUFSIZ, "%s-pubkey",
++		    options.pam_service_prefix);
++	}
++	if (strcmp(method_name, "hostbased") == 0) {
++		snprintf(svcname, BUFSIZ, "%s-hostbased",
++		    options.pam_service_prefix);
++	}
++	if (strncmp(method_name, "gssapi-", 7) == 0) {
 +		/*
-+		 * For SSHv2 we use "sshd-<userauth name>
-+		 * The "sshd" prefix can be changed via the PAMServicePrefix
-+		 * sshd_config option.
++		 * Although OpenSSH only supports "gssapi-with-mic"
++		 * for now. We will still map any userauth method
++		 * prefixed with "gssapi-" to the gssapi PAM service.
 +		 */
-+		if (strcmp(method_name, "none") == 0) {
-+			snprintf(svcname, BUFSIZ, "%s-none",
-+			    options.pam_service_prefix);
-+		}
-+		if (strcmp(method_name, "password") == 0) {
-+			snprintf(svcname, BUFSIZ, "%s-password",
-+			    options.pam_service_prefix);
-+		}
-+		if (strcmp(method_name, "keyboard-interactive") == 0) {
-+			/* "keyboard-interactive" is too long, shorten it */
-+			snprintf(svcname, BUFSIZ, "%s-kbdint",
-+			    options.pam_service_prefix);
-+		}
-+		if (strcmp(method_name, "publickey") == 0) {
-+			/* "publickey" is too long, shorten it */
-+			snprintf(svcname, BUFSIZ, "%s-pubkey",
-+			    options.pam_service_prefix);
-+		}
-+		if (strcmp(method_name, "hostbased") == 0) {
-+			snprintf(svcname, BUFSIZ, "%s-hostbased",
-+			    options.pam_service_prefix);
-+		}
-+		if (strncmp(method_name, "gssapi-", 7) == 0) {
-+		        /*
-+			 * Although OpenSSH only supports "gssapi-with-mic"
-+			 * for now. We will still map any userauth method
-+                         * prefixed with "gssapi-" to the gssapi PAM service.
-+			 */
-+			snprintf(svcname, BUFSIZ, "%s-gssapi",
-+			    options.pam_service_prefix);
-+		}
-+		return svcname;
-+	} else {
-+		/* SSHv1 doesn't get to be so cool */
-+		snprintf(svcname, BUFSIZ, "sshd-v1");
++		snprintf(svcname, BUFSIZ, "%s-gssapi",
++		    options.pam_service_prefix);
 +	}
 +	return svcname;
 +}
@@ -79,7 +73,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth-pam.c openssh-7.5p1/auth-pam.c
  static int
  sshpam_init(Authctxt *authctxt)
  {
-@@ -624,18 +690,71 @@ sshpam_init(Authctxt *authctxt)
+@@ -621,18 +681,71 @@ sshpam_init(Authctxt *authctxt)
  	const char **ptr_pam_user = &pam_user;
  	struct ssh *ssh = active_state; /* XXX */
  
@@ -151,23 +145,23 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth-pam.c openssh-7.5p1/auth-pam.c
  	sshpam_authctxt = authctxt;
  
  	if (sshpam_err != PAM_SUCCESS) {
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth.h openssh-7.5p1/auth.h
---- openssh-7.5p1~/auth.h	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/auth.h	2017-10-06 12:34:44.705125374 +0000
-@@ -81,6 +81,9 @@ struct Authctxt {
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/auth.h openssh-7.6p1/auth.h
+--- openssh-7.6p1~/auth.h	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/auth.h	2017-11-22 12:16:10.397903086 +0000
+@@ -93,6 +93,9 @@ struct Authctxt {
  
- 	struct sshkey	**prev_userkeys;
- 	u_int		 nprev_userkeys;
+ 	/* Information exposed to session */
+ 	struct sshbuf	*session_info;	/* Auth info for environment */
 +#ifdef PAM_ENHANCEMENT
 +	char		*authmethod_name;
 +#endif
  };
+ 
  /*
-  * Every authentication method has to handle authentication requests for
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2.c openssh-7.5p1/auth2.c
---- openssh-7.5p1~/auth2.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/auth2.c	2017-10-06 12:34:44.705371598 +0000
-@@ -245,10 +245,21 @@ input_userauth_request(int type, u_int32
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/auth2.c openssh-7.6p1/auth2.c
+--- openssh-7.6p1~/auth2.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/auth2.c	2017-11-22 12:16:10.398240448 +0000
+@@ -249,10 +249,21 @@ input_userauth_request(int type, u_int32
  			PRIVSEP(audit_event(SSH_INVALID_USER));
  #endif
  		}
@@ -189,7 +183,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2.c openssh-7.5p1/auth2.c
  		ssh_packet_set_log_preamble(ssh, "%suser %s",
  		    authctxt->valid ? "authenticating " : "invalid ", user);
  		setproctitle("%s%s", authctxt->valid ? user : "unknown",
-@@ -281,6 +292,18 @@ input_userauth_request(int type, u_int32
+@@ -286,6 +297,18 @@ input_userauth_request(int type, u_int32
  	/* try to authenticate user */
  	m = authmethod_lookup(authctxt, method);
  	if (m != NULL && authctxt->failures < options.max_authtries) {
@@ -206,9 +200,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2.c openssh-7.5p1/auth2.c
 +		}
 +#endif
  		debug2("input_userauth_request: try method %s", method);
- 		authenticated =	m->userauth(authctxt);
+ 		authenticated =	m->userauth(ssh);
  	}
-@@ -300,6 +323,10 @@ userauth_finish(Authctxt *authctxt, int
+@@ -305,6 +328,10 @@ userauth_finish(struct ssh *ssh, int aut
  	char *methods;
  	int partial = 0;
  
@@ -219,7 +213,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2.c openssh-7.5p1/auth2.c
  	if (!authctxt->valid && authenticated)
  		fatal("INTERNAL ERROR: authenticated invalid user %s",
  		    authctxt->user);
-@@ -316,6 +343,25 @@ userauth_finish(Authctxt *authctxt, int
+@@ -321,6 +348,25 @@ userauth_finish(struct ssh *ssh, int aut
  	}
  
  	if (authenticated && options.num_auth_methods != 0) {
@@ -245,7 +239,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2.c openssh-7.5p1/auth2.c
  		if (!auth2_update_methods_lists(authctxt, method, submethod)) {
  			authenticated = 0;
  			partial = 1;
-@@ -329,7 +375,20 @@ userauth_finish(Authctxt *authctxt, int
+@@ -338,7 +384,20 @@ userauth_finish(struct ssh *ssh, int aut
  		return;
  
  #ifdef USE_PAM
@@ -266,15 +260,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/auth2.c openssh-7.5p1/auth2.c
  		if (!PRIVSEP(do_pam_account())) {
  			/* if PAM returned a message, send it to the user */
  			if (buffer_len(&loginmsg) > 0) {
-@@ -621,5 +680,3 @@ auth2_update_methods_lists(Authctxt *aut
- 		fatal("%s: method not in AuthenticationMethods", __func__);
- 	return 0;
- }
--
--
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
---- openssh-7.5p1~/monitor.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/monitor.c	2017-10-06 12:34:44.705762546 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/monitor.c openssh-7.6p1/monitor.c
+--- openssh-7.6p1~/monitor.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/monitor.c	2017-11-22 12:16:10.398683899 +0000
 @@ -127,6 +127,9 @@ int mm_answer_sign(int, Buffer *);
  int mm_answer_pwnamallow(int, Buffer *);
  int mm_answer_auth2_read_banner(int, Buffer *);
@@ -303,7 +291,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
      {MONITOR_REQ_PAM_ACCOUNT, 0, mm_answer_pam_account},
      {MONITOR_REQ_PAM_INIT_CTX, MON_ONCE, mm_answer_pam_init_ctx},
      {MONITOR_REQ_PAM_QUERY, 0, mm_answer_pam_query},
-@@ -312,6 +322,25 @@ monitor_child_preauth(Authctxt *_authctx
+@@ -314,6 +324,25 @@ monitor_child_preauth(Authctxt *_authctx
  
  		/* Special handling for multiple required authentications */
  		if (options.num_auth_methods != 0) {
@@ -329,7 +317,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
  			if (authenticated &&
  			    !auth2_update_methods_lists(authctxt,
  			    auth_method, auth_submethod)) {
-@@ -330,8 +359,21 @@ monitor_child_preauth(Authctxt *_authctx
+@@ -332,8 +361,21 @@ monitor_child_preauth(Authctxt *_authctx
  			    !auth_root_allowed(auth_method))
  				authenticated = 0;
  #ifdef USE_PAM
@@ -351,7 +339,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
  				Buffer m;
  
  				buffer_init(&m);
-@@ -776,6 +818,11 @@ mm_answer_pwnamallow(int sock, Buffer *m
+@@ -784,6 +826,11 @@ mm_answer_pwnamallow(int sock, Buffer *m
  	monitor_permit(mon_dispatch, MONITOR_REQ_AUTHSERV, 1);
  	monitor_permit(mon_dispatch, MONITOR_REQ_AUTH2_READ_BANNER, 1);
  
@@ -363,7 +351,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
  #ifdef USE_PAM
  	if (options.use_pam)
  		monitor_permit(mon_dispatch, MONITOR_REQ_PAM_START, 1);
-@@ -815,6 +862,24 @@ mm_answer_authserv(int sock, Buffer *m)
+@@ -823,6 +870,24 @@ mm_answer_authserv(int sock, Buffer *m)
  	return (0);
  }
  
@@ -388,9 +376,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.c openssh-7.5p1/monitor.c
  int
  mm_answer_authpassword(int sock, Buffer *m)
  {
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.h openssh-7.5p1/monitor.h
---- openssh-7.5p1~/monitor.h	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/monitor.h	2017-10-06 12:34:44.705846682 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/monitor.h openssh-7.6p1/monitor.h
+--- openssh-7.6p1~/monitor.h	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/monitor.h	2017-11-22 12:16:10.398840195 +0000
 @@ -65,6 +65,9 @@ enum monitor_reqtype {
  	MONITOR_REQ_PAM_FREE_CTX = 110, MONITOR_ANS_PAM_FREE_CTX = 111,
  	MONITOR_REQ_AUDIT_EVENT = 112, MONITOR_REQ_AUDIT_COMMAND = 113,
@@ -401,10 +389,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor.h openssh-7.5p1/monitor.h
  };
  
  struct monitor {
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor_wrap.c openssh-7.5p1/monitor_wrap.c
---- openssh-7.5p1~/monitor_wrap.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/monitor_wrap.c	2017-10-06 12:34:44.705989906 +0000
-@@ -345,6 +345,24 @@ mm_inform_authserv(char *service, char *
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/monitor_wrap.c openssh-7.6p1/monitor_wrap.c
+--- openssh-7.6p1~/monitor_wrap.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/monitor_wrap.c	2017-11-22 12:16:10.399017853 +0000
+@@ -354,6 +354,24 @@ mm_inform_authserv(char *service, char *
  	buffer_free(&m);
  }
  
@@ -429,21 +417,21 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/monitor_wrap.c openssh-7.5p1/monito
  /* Do the password authentication */
  int
  mm_auth_password(Authctxt *authctxt, char *password)
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
---- openssh-7.5p1~/servconf.c	2017-10-06 12:34:44.510387478 +0000
-+++ openssh-7.5p1/servconf.c	2017-10-06 12:34:44.706373579 +0000
-@@ -164,6 +164,18 @@ initialize_server_options(ServerOptions
- 	options->version_addendum = NULL;
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.c openssh-7.6p1/servconf.c
+--- openssh-7.6p1~/servconf.c	2017-11-22 12:16:10.202026592 +0000
++++ openssh-7.6p1/servconf.c	2017-11-22 12:16:10.399575201 +0000
+@@ -165,6 +165,18 @@ initialize_server_options(ServerOptions
  	options->fingerprint_hash = -1;
  	options->disable_forwarding = -1;
+ 	options->expose_userauth_info = -1;
 +#ifdef PAM_ENHANCEMENT
 +	options->pam_service_name = NULL;
 +	options->pam_service_prefix = NULL;
 +
 +	/*
 +	 * Each user method will have its own PAM service by default.
-+	 * However, if PAMServiceName is specified or the protocal version
-+	 * is not compat20, then there will be only one PAM service for the
++	 * However, if PAMServiceName is specified
++	 * then there will be only one PAM service for the
 +	 * entire user authentication.
 +	 */
 +	options->pam_service_per_authmethod = 1;
@@ -451,7 +439,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  }
  
  /* Returns 1 if a string option is unset or set to "none" or 0 otherwise. */
-@@ -330,6 +342,12 @@ fill_default_server_options(ServerOption
+@@ -331,6 +343,12 @@ fill_default_server_options(ServerOption
  		options->ip_qos_bulk = IPTOS_THROUGHPUT;
  	if (options->version_addendum == NULL)
  		options->version_addendum = xstrdup("");
@@ -464,7 +452,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	if (options->fwd_opts.streamlocal_bind_mask == (mode_t)-1)
  		options->fwd_opts.streamlocal_bind_mask = 0177;
  	if (options->fwd_opts.streamlocal_bind_unlink == -1)
-@@ -416,6 +434,9 @@ typedef enum {
+@@ -419,6 +437,9 @@ typedef enum {
  	sMatch, sPermitOpen, sForceCommand, sChrootDirectory,
  	sUsePrivilegeSeparation, sAllowAgentForwarding,
  	sHostCertificate,
@@ -474,7 +462,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	sRevokedKeys, sTrustedUserCAKeys, sAuthorizedPrincipalsFile,
  	sAuthorizedPrincipalsCommand, sAuthorizedPrincipalsCommandUser,
  	sKexAlgorithms, sIPQoS, sVersionAddendum,
-@@ -554,6 +575,10 @@ static struct {
+@@ -558,6 +579,10 @@ static struct {
  	{ "forcecommand", sForceCommand, SSHCFG_ALL },
  	{ "chrootdirectory", sChrootDirectory, SSHCFG_ALL },
  	{ "hostcertificate", sHostCertificate, SSHCFG_GLOBAL },
@@ -485,9 +473,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	{ "revokedkeys", sRevokedKeys, SSHCFG_ALL },
  	{ "trustedusercakeys", sTrustedUserCAKeys, SSHCFG_ALL },
  	{ "authorizedprincipalsfile", sAuthorizedPrincipalsFile, SSHCFG_ALL },
-@@ -1860,6 +1885,37 @@ process_server_config_line(ServerOptions
- 			options->fingerprint_hash = value;
- 		break;
+@@ -1901,6 +1926,37 @@ process_server_config_line(ServerOptions
+ 		intptr = &options->expose_userauth_info;
+ 		goto parse_flag;
  
 +	case sPAMServicePrefix:
 +		arg = strdelim(&cp);
@@ -523,12 +511,12 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
  	case sDeprecated:
  	case sIgnore:
  	case sUnsupported:
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.h openssh-7.5p1/servconf.h
---- openssh-7.5p1~/servconf.h	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/servconf.h	2017-10-06 12:34:44.706473218 +0000
-@@ -54,6 +54,10 @@
- /* Magic name for internal sftp-server */
- #define INTERNAL_SFTP_NAME	"internal-sftp"
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.h openssh-7.6p1/servconf.h
+--- openssh-7.6p1~/servconf.h	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/servconf.h	2017-11-22 12:16:10.399826855 +0000
+@@ -61,6 +61,10 @@
+ struct ssh;
+ struct fwd_perm_list;
  
 +#ifdef PAM_ENHANCEMENT
 +#define _SSH_PAM_SERVICE_PREFIX "sshd"
@@ -537,7 +525,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.h openssh-7.5p1/servconf.h
  typedef struct {
  	u_int	num_ports;
  	u_int	ports_from_cmdline;
-@@ -188,6 +192,12 @@ typedef struct {
+@@ -196,6 +200,12 @@ typedef struct {
  	u_int	num_auth_methods;
  	char   *auth_methods[MAX_AUTH_METHODS];
  
@@ -548,12 +536,12 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.h openssh-7.5p1/servconf.h
 +#endif
 +
  	int	fingerprint_hash;
+ 	int	expose_userauth_info;
  }       ServerOptions;
- 
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.1m openssh-7.5p1/sshd.1m
---- openssh-7.5p1~/sshd.1m	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/sshd.1m	2017-10-06 12:34:44.706646264 +0000
-@@ -920,6 +920,33 @@ concurrently for different ports, this c
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd.1m openssh-7.6p1/sshd.1m
+--- openssh-7.6p1~/sshd.1m	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/sshd.1m	2017-11-22 12:16:10.400071999 +0000
+@@ -934,6 +934,33 @@ concurrently for different ports, this c
  started last).
  The content of this file is not sensitive; it can be world-readable.
  .El
@@ -587,10 +575,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.1m openssh-7.5p1/sshd.1m
  .Sh SEE ALSO
  .Xr scp 1 ,
  .Xr sftp 1 ,
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config.4 openssh-7.5p1/sshd_config.4
---- openssh-7.5p1~/sshd_config.4	2017-10-06 12:34:44.364608462 +0000
-+++ openssh-7.5p1/sshd_config.4	2017-10-06 12:34:44.706917129 +0000
-@@ -1133,6 +1133,21 @@ will refuse connection attempts with a p
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd_config.4 openssh-7.6p1/sshd_config.4
+--- openssh-7.6p1~/sshd_config.4	2017-11-22 12:16:10.057264258 +0000
++++ openssh-7.6p1/sshd_config.4	2017-11-22 12:16:10.400406131 +0000
+@@ -1140,6 +1140,21 @@ will refuse connection attempts with a p
  if there are currently start (10) unauthenticated connections.
  The probability increases linearly and all connection attempts
  are refused if the number of unauthenticated connections reaches full (60).
@@ -612,7 +600,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd_config.4 openssh-7.5p1/sshd_co
  .It Cm PasswordAuthentication
  Specifies whether password authentication is allowed.
  The default is
-@@ -1492,8 +1507,7 @@ If
+@@ -1499,8 +1514,7 @@ If
  is enabled, you will not be able to run
  .Xr sshd 8
  as a non-root user.

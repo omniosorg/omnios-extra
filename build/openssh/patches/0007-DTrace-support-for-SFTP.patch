@@ -3,9 +3,9 @@ From: oracle <solaris@oracle.com>
 Date: Mon, 3 Aug 2015 14:35:43 -0700
 Subject: [PATCH 07/34] DTrace support for SFTP
 
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/Makefile.in openssh-7.5p1/Makefile.in
---- openssh-7.5p1~/Makefile.in	2017-10-06 12:34:44.412028093 +0000
-+++ openssh-7.5p1/Makefile.in	2017-10-06 12:34:44.562196133 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/Makefile.in openssh-7.6p1/Makefile.in
+--- openssh-7.6p1~/Makefile.in	2017-11-22 12:16:10.104049412 +0000
++++ openssh-7.6p1/Makefile.in	2017-11-22 12:16:10.251178522 +0000
 @@ -26,6 +26,7 @@ ASKPASS_PROGRAM=$(libexecdir)/ssh-askpas
  SFTP_SERVER=$(libexecdir)/sftp-server
  SSH_KEYSIGN=$(libexecdir)/ssh-keysign
@@ -63,10 +63,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/Makefile.in openssh-7.5p1/Makefile.
  	rm -f *.o *.a $(TARGETS) logintest config.cache config.log
 -	rm -f *.out core survey
 +	rm -f *.out core survey sftp_provider.h
+ 	rm -f regress/check-perm$(EXEEXT)
  	rm -f regress/unittests/test_helper/*.a
  	rm -f regress/unittests/test_helper/*.o
- 	rm -f regress/unittests/sshbuf/*.o
-@@ -351,6 +366,7 @@ install-files:
+@@ -352,6 +367,7 @@ install-files:
  	$(INSTALL) -m 644 sftp-server.1m.out $(DESTDIR)$(mandir)/$(mansubdir)1m/sftp-server.1m
  	$(INSTALL) -m 644 ssh-keysign.1m.out $(DESTDIR)$(mandir)/$(mansubdir)1m/ssh-keysign.1m
  	$(INSTALL) -m 644 ssh-pkcs11-helper.1m.out $(DESTDIR)$(mandir)/$(mansubdir)1m/ssh-pkcs11-helper.1m
@@ -74,9 +74,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/Makefile.in openssh-7.5p1/Makefile.
  
  install-sysconf:
  	if [ ! -d $(DESTDIR)$(sysconfdir) ]; then \
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sftp-server.c openssh-7.5p1/sftp-server.c
---- openssh-7.5p1~/sftp-server.c	2017-03-20 03:39:27.000000000 +0000
-+++ openssh-7.5p1/sftp-server.c	2017-10-06 12:34:44.562482749 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sftp-server.c openssh-7.6p1/sftp-server.c
+--- openssh-7.6p1~/sftp-server.c	2017-10-02 21:34:26.000000000 +0000
++++ openssh-7.6p1/sftp-server.c	2017-11-22 12:16:10.251610412 +0000
 @@ -50,6 +50,9 @@
  
  #include "sftp.h"
@@ -153,9 +153,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sftp-server.c openssh-7.5p1/sftp-se
  			if (ret < 0) {
  				error("process_write: write failed");
  				status = errno_to_portable(errno);
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sftp64.d openssh-7.5p1/sftp64.d
---- openssh-7.5p1~/sftp64.d	1970-01-01 01:00:00.000000000 +0000
-+++ openssh-7.5p1/sftp64.d	2017-10-06 12:34:44.562594719 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sftp64.d openssh-7.6p1/sftp64.d
+--- openssh-7.6p1~/sftp64.d	1970-01-01 01:00:00.000000000 +0000
++++ openssh-7.6p1/sftp64.d	2017-11-22 12:16:10.251714491 +0000
 @@ -0,0 +1,56 @@
 +/*
 + * Copyright (c) 2009, 2015, Oracle and/or its affiliates. All rights reserved.
@@ -213,9 +213,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sftp64.d openssh-7.5p1/sftp64.d
 +	sfi_pathname = copyinstr((uintptr_t)*(uint64_t *)copyin(
 +	    (uintptr_t)&s->sftp_pathname, sizeof (uint64_t)));
 +};
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sftp_provider.d openssh-7.5p1/sftp_provider.d
---- openssh-7.5p1~/sftp_provider.d	1970-01-01 01:00:00.000000000 +0000
-+++ openssh-7.5p1/sftp_provider.d	2017-10-06 12:34:44.562678800 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sftp_provider.d openssh-7.6p1/sftp_provider.d
+--- openssh-7.6p1~/sftp_provider.d	1970-01-01 01:00:00.000000000 +0000
++++ openssh-7.6p1/sftp_provider.d	2017-11-22 12:16:10.251797041 +0000
 @@ -0,0 +1,61 @@
 +/*
 + * CDDL HEADER START
@@ -278,9 +278,9 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sftp_provider.d openssh-7.5p1/sftp_
 +#pragma D attributes Private/Private/Unknown provider sftp function
 +#pragma D attributes Private/Private/ISA provider sftp name
 +#pragma D attributes Evolving/Evolving/ISA provider sftp args
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sftp_provider_impl.h openssh-7.5p1/sftp_provider_impl.h
---- openssh-7.5p1~/sftp_provider_impl.h	1970-01-01 01:00:00.000000000 +0000
-+++ openssh-7.5p1/sftp_provider_impl.h	2017-10-06 12:34:44.562761122 +0000
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sftp_provider_impl.h openssh-7.6p1/sftp_provider_impl.h
+--- openssh-7.6p1~/sftp_provider_impl.h	1970-01-01 01:00:00.000000000 +0000
++++ openssh-7.6p1/sftp_provider_impl.h	2017-11-22 12:16:10.251876818 +0000
 @@ -0,0 +1,73 @@
 +/*
 + * CDDL HEADER START

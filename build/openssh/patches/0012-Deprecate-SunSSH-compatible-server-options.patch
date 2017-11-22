@@ -18,10 +18,10 @@ Subject: [PATCH 12/34] Deprecate SunSSH compatible server options
 # This is a Solaris specific change to ease the transition and will not be
 # offered upstream.
 #
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/servconf.c openssh-7.5p1/servconf.c
---- openssh-7.5p1~/servconf.c	2017-10-06 12:34:44.764037862 +0000
-+++ openssh-7.5p1/servconf.c	2017-10-06 12:34:44.812538966 +0000
-@@ -587,6 +587,29 @@ static struct {
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.c openssh-7.6p1/servconf.c
+--- openssh-7.6p1~/servconf.c	2017-11-22 12:16:10.453491815 +0000
++++ openssh-7.6p1/servconf.c	2017-11-22 12:16:10.503295269 +0000
+@@ -591,6 +591,29 @@ static struct {
  	{ "pamserviceprefix", sPAMServicePrefix, SSHCFG_GLOBAL },
  	{ "pamservicename", sPAMServiceName, SSHCFG_GLOBAL },
  #endif

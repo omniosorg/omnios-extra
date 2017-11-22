@@ -5,10 +5,10 @@ Subject: [PATCH 31/34] Restore tcpwrappers/libwrap support
 
 This reverts commit f9696566fb41320820f3b257ab564fa321bb3751
 and commit f2719b7c2b8a3b14d778d8a6d8dc729b5174b054.
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/configure.ac openssh-7.5p1/configure.ac
---- openssh-7.5p1~/configure.ac	2017-10-06 12:34:45.377471723 +0000
-+++ openssh-7.5p1/configure.ac	2017-10-06 12:34:45.622501723 +0000
-@@ -1497,6 +1497,62 @@ AC_ARG_WITH([skey],
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/configure.ac openssh-7.6p1/configure.ac
+--- openssh-7.6p1~/configure.ac	2017-11-22 12:16:11.077276144 +0000
++++ openssh-7.6p1/configure.ac	2017-11-22 12:16:11.317749462 +0000
+@@ -1506,6 +1506,62 @@ AC_ARG_WITH([skey],
  	]
  )
  
@@ -71,7 +71,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/configure.ac openssh-7.5p1/configur
  # Check whether user wants to use ldns
  LDNS_MSG="no"
  AC_ARG_WITH(ldns,
-@@ -5148,6 +5204,7 @@ echo "                 KerberosV support
+@@ -5164,6 +5220,7 @@ echo "                 KerberosV support
  echo "                   SELinux support: $SELINUX_MSG"
  echo "                 Smartcard support: $SCARD_MSG"
  echo "                     S/KEY support: $SKEY_MSG"
@@ -79,10 +79,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/configure.ac openssh-7.5p1/configur
  echo "              MD5 password support: $MD5_MSG"
  echo "                   libedit support: $LIBEDIT_MSG"
  echo "                   libldns support: $LDNS_MSG"
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.1m openssh-7.5p1/sshd.1m
---- openssh-7.5p1~/sshd.1m	2017-10-06 12:34:44.706646264 +0000
-+++ openssh-7.5p1/sshd.1m	2017-10-06 12:34:45.622698705 +0000
-@@ -825,6 +825,12 @@ the user's home directory becomes access
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd.1m openssh-7.6p1/sshd.1m
+--- openssh-7.6p1~/sshd.1m	2017-11-22 12:16:10.400071999 +0000
++++ openssh-7.6p1/sshd.1m	2017-11-22 12:16:11.318125331 +0000
+@@ -839,6 +839,12 @@ the user's home directory becomes access
  This file should be writable only by the user, and need not be
  readable by anyone else.
  .Pp
@@ -95,7 +95,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.1m openssh-7.5p1/sshd.1m
  .It Pa /etc/hosts.equiv
  This file is for host-based authentication (see
  .Xr ssh 1 ) .
-@@ -956,6 +962,7 @@ Each SSHv2 userauth type has its own PAM
+@@ -970,6 +976,7 @@ Each SSHv2 userauth type has its own PAM
  .Xr ssh-keygen 1 ,
  .Xr ssh-keyscan 1 ,
  .Xr chroot 2 ,
@@ -103,10 +103,10 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.1m openssh-7.5p1/sshd.1m
  .Xr login.conf 5 ,
  .Xr moduli 5 ,
  .Xr sshd_config 5 ,
-diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
---- openssh-7.5p1~/sshd.c	2017-10-06 12:34:45.278528289 +0000
-+++ openssh-7.5p1/sshd.c	2017-10-06 12:34:45.622996300 +0000
-@@ -127,6 +127,17 @@
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/sshd.c openssh-7.6p1/sshd.c
+--- openssh-7.6p1~/sshd.c	2017-11-22 12:16:10.979174407 +0000
++++ openssh-7.6p1/sshd.c	2017-11-22 12:16:11.318510816 +0000
+@@ -126,6 +126,17 @@
  #include <Security/AuthSession.h>
  #endif
  
@@ -124,7 +124,7 @@ diff -pruN '--exclude=*.orig' openssh-7.5p1~/sshd.c openssh-7.5p1/sshd.c
  /* Re-exec fds */
  #define REEXEC_DEVCRYPTO_RESERVED_FD	(STDERR_FILENO + 1)
  #define REEXEC_STARTUP_PIPE_FD		(STDERR_FILENO + 2)
-@@ -2011,6 +2022,24 @@ main(int ac, char **av)
+@@ -2006,6 +2017,24 @@ main(int ac, char **av)
  #ifdef SSH_AUDIT_EVENTS
  	audit_connection_from(remote_ip, remote_port);
  #endif
