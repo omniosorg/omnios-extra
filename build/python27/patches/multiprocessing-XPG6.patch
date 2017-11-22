@@ -1,11 +1,16 @@
+Required to avoid:
+
+	Compiler or options invalid for pre-UNIX 03 X/Open applications and
+	pre-2001 POSIX applications
+
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Modules/_multiprocessing/multiprocessing.h Python-2.7.14/Modules/_multiprocessing/multiprocessing.h
 --- Python-2.7.14~/Modules/_multiprocessing/multiprocessing.h	2017-09-16 17:38:35.000000000 +0000
-+++ Python-2.7.14/Modules/_multiprocessing/multiprocessing.h	2017-09-23 22:33:37.051074204 +0000
++++ Python-2.7.14/Modules/_multiprocessing/multiprocessing.h	2017-11-22 10:36:34.658827690 +0000
 @@ -7,6 +7,7 @@
  /* The control message API is only available on Solaris 
     if XPG 4.2 or later is requested. */
  #define _XOPEN_SOURCE 500
-+#define _XPG6 /* Evil hack that Python2.6 for OmniOS also needed. */
++#define _XPG6
  #endif
  
  #include "Python.h"

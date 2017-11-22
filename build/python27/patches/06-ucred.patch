@@ -1,10 +1,9 @@
-This patch provides Python ucred support.  
+This patch provides Python ucred support.  It may be contributed upstream at
+some point, but the suitability (or lack thereof) has not yet been determined.
 
-diff --git Python-2.6.4/Modules/ucred.c Python-2.6.4/Modules/ucred.c
-new file mode 100644
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Lib/test/ucredtest.py Python-2.7.14/Lib/test/ucredtest.py
 --- Python-2.7.14~/Lib/test/ucredtest.py	1970-01-01 00:00:00.000000000 +0000
-+++ Python-2.7.14/Lib/test/ucredtest.py	2017-09-23 22:33:30.481128584 +0000
++++ Python-2.7.14/Lib/test/ucredtest.py	2017-11-22 10:36:24.965764106 +0000
 @@ -0,0 +1,45 @@
 +#!/usr/bin/python2.7
 +
@@ -53,7 +52,7 @@ diff -pruN '--exclude=*.orig' Python-2.7.14~/Lib/test/ucredtest.py Python-2.7.14
 +    print e
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Modules/ucred.c Python-2.7.14/Modules/ucred.c
 --- Python-2.7.14~/Modules/ucred.c	1970-01-01 00:00:00.000000000 +0000
-+++ Python-2.7.14/Modules/ucred.c	2017-09-23 22:33:30.481391123 +0000
++++ Python-2.7.14/Modules/ucred.c	2017-11-22 10:36:24.966111971 +0000
 @@ -0,0 +1,390 @@
 +/*
 + * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -446,9 +445,9 @@ diff -pruN '--exclude=*.orig' Python-2.7.14~/Modules/ucred.c Python-2.7.14/Modul
 +	PyModule_AddObject(m, "ucred", (PyObject *)&pyucred_type);
 +}
 diff -pruN '--exclude=*.orig' Python-2.7.14~/setup.py Python-2.7.14/setup.py
---- Python-2.7.14~/setup.py	2017-09-23 22:33:28.700380145 +0000
-+++ Python-2.7.14/setup.py	2017-09-23 22:33:30.481978327 +0000
-@@ -1568,6 +1568,13 @@ class PyBuildExt(build_ext):
+--- Python-2.7.14~/setup.py	2017-11-22 10:36:22.700725426 +0000
++++ Python-2.7.14/setup.py	2017-11-22 10:36:24.966802013 +0000
+@@ -1589,6 +1589,13 @@ class PyBuildExt(build_ext):
          else:
              missing.append('dl')
  

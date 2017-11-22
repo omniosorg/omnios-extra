@@ -2,13 +2,12 @@ building dbm using ndbm
 
 Python build finished, but the necessary bits to build these modules were not found:
 _bsddb             _tkinter           bsddb185        
-dl                 gdbm               imageop         
-linuxaudiodev                                         
+gdbm               linuxaudiodev                      
 To find the necessary bits, look in setup.py in detect_modules() for the module's name.
 
-== CPython 2.7.14 (default, Nov 22 2017, 12:34:54) [GCC 6.4.0]
-==   Solaris-2.11-i86pc-i386-64bit-ELF little-endian
-==   /data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/build/test_python_24355
+== CPython 2.7.14 (default, Nov 22 2017, 12:18:06) [GCC 6.4.0]
+==   Solaris-2.11-i86pc-i386-32bit-ELF little-endian
+==   /data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/build/test_python_1484
 == CPU count: 40
 Run tests sequentially
   test_grammar
@@ -144,8 +143,7 @@ test_curses skipped -- Use of the `curses' resource not enabled
   test_dis
   test_distutils
   test_dl
-test_dl skipped -- No module named dl
-  test_docxmlrpc -- test_dl skipped
+  test_docxmlrpc
   self.__exc_clear()
   test_dtrace
 test_dtrace skipped -- dtrace seems not to be working. Please, check your privileges. Result: 'dtrace: failed to initialize dtrace: DTrace requires additional privileges\n'
@@ -223,8 +221,7 @@ test_gl skipped -- No module named gl
   test_idle
 test_idle skipped -- No module named _tkinter
   test_imageop -- test_idle skipped
-test_imageop skipped -- No module named imageop
-  test_imaplib -- test_imageop skipped
+  test_imaplib
   test_imgfile
 test_imgfile skipped -- No module named imgfile
   test_imghdr -- test_imgfile skipped
@@ -438,7 +435,7 @@ test_timeout skipped -- Use of the `network' resource not enabled
 test_tk skipped -- No module named _tkinter
   test_tokenize -- test_tk skipped
   test_tools
-recursedown('@test_24355_tmp')
+recursedown('@test_1484_tmp')
   test_trace
   test_traceback
   test_transformer
@@ -502,29 +499,27 @@ test_zipfile64 skipped -- test requires loads of disk-space bytes and a long tim
   test_zipimport -- test_zipfile64 skipped (resource denied)
   test_zipimport_support
   test_zlib
-358 tests OK.
-46 tests skipped:
+360 tests OK.
+44 tests skipped:
     test_aepack test_al test_applesingle test_bsddb test_bsddb185
     test_bsddb3 test_cd test_cl test_codecmaps_cn test_codecmaps_hk
     test_codecmaps_jp test_codecmaps_kr test_codecmaps_tw test_curses
-    test_dl test_dtrace test_gdb test_gdbm test_gl test_idle
-    test_imageop test_imgfile test_kqueue test_linuxaudiodev
-    test_macos test_macostools test_msilib test_ossaudiodev
-    test_pep277 test_scriptpackages test_smtpnet test_socketserver
-    test_startfile test_sunaudiodev test_tcl test_timeout test_tk
-    test_ttk_guionly test_ttk_textonly test_turtle test_unicode_file
-    test_urllib2net test_urllibnet test_winreg test_winsound
-    test_zipfile64
-11 skips unexpected on sunos5:
-    test_bsddb3 test_dl test_dtrace test_gdb test_idle
-    test_sunaudiodev test_tcl test_tk test_ttk_guionly
-    test_ttk_textonly test_turtle
+    test_dtrace test_gdb test_gdbm test_gl test_idle test_imgfile
+    test_kqueue test_linuxaudiodev test_macos test_macostools
+    test_msilib test_ossaudiodev test_pep277 test_scriptpackages
+    test_smtpnet test_socketserver test_startfile test_sunaudiodev
+    test_tcl test_timeout test_tk test_ttk_guionly test_ttk_textonly
+    test_turtle test_unicode_file test_urllib2net test_urllibnet
+    test_winreg test_winsound test_zipfile64
+10 skips unexpected on sunos5:
+    test_bsddb3 test_dtrace test_gdb test_idle test_sunaudiodev
+    test_tcl test_tk test_ttk_guionly test_ttk_textonly test_turtle
 
-Total duration: 8 min 22 sec
+Total duration: 7 min 26 sec
 Tests result: SUCCESS
-== CPython 2.7.14 (default, Nov 22 2017, 12:34:54) [GCC 6.4.0]
-==   Solaris-2.11-i86pc-i386-64bit-ELF little-endian
-==   /data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/build/test_python_29461
+== CPython 2.7.14 (default, Nov 22 2017, 12:18:06) [GCC 6.4.0]
+==   Solaris-2.11-i86pc-i386-32bit-ELF little-endian
+==   /data/omnios-build/omniosorg/bloody/_build/Python-2.7.14/build/test_python_6735
 == CPU count: 40
 Run tests sequentially
   test_grammar
@@ -660,8 +655,7 @@ test_curses skipped -- Use of the `curses' resource not enabled
   test_dis
   test_distutils
   test_dl
-test_dl skipped -- No module named dl
-  test_docxmlrpc -- test_dl skipped
+  test_docxmlrpc
   self.__exc_clear()
   test_dtrace
 test_dtrace skipped -- dtrace seems not to be working. Please, check your privileges. Result: 'dtrace: failed to initialize dtrace: DTrace requires additional privileges\n'
@@ -739,8 +733,7 @@ test_gl skipped -- No module named gl
   test_idle
 test_idle skipped -- No module named _tkinter
   test_imageop -- test_idle skipped
-test_imageop skipped -- No module named imageop
-  test_imaplib -- test_imageop skipped
+  test_imaplib
   test_imgfile
 test_imgfile skipped -- No module named imgfile
   test_imghdr -- test_imgfile skipped
@@ -954,7 +947,7 @@ test_timeout skipped -- Use of the `network' resource not enabled
 test_tk skipped -- No module named _tkinter
   test_tokenize -- test_tk skipped
   test_tools
-recursedown('@test_29461_tmp')
+recursedown('@test_6735_tmp')
   test_trace
   test_traceback
   test_transformer
@@ -1018,23 +1011,21 @@ test_zipfile64 skipped -- test requires loads of disk-space bytes and a long tim
   test_zipimport -- test_zipfile64 skipped (resource denied)
   test_zipimport_support
   test_zlib
-358 tests OK.
-46 tests skipped:
+360 tests OK.
+44 tests skipped:
     test_aepack test_al test_applesingle test_bsddb test_bsddb185
     test_bsddb3 test_cd test_cl test_codecmaps_cn test_codecmaps_hk
     test_codecmaps_jp test_codecmaps_kr test_codecmaps_tw test_curses
-    test_dl test_dtrace test_gdb test_gdbm test_gl test_idle
-    test_imageop test_imgfile test_kqueue test_linuxaudiodev
-    test_macos test_macostools test_msilib test_ossaudiodev
-    test_pep277 test_scriptpackages test_smtpnet test_socketserver
-    test_startfile test_sunaudiodev test_tcl test_timeout test_tk
-    test_ttk_guionly test_ttk_textonly test_turtle test_unicode_file
-    test_urllib2net test_urllibnet test_winreg test_winsound
-    test_zipfile64
-11 skips unexpected on sunos5:
-    test_bsddb3 test_dl test_dtrace test_gdb test_idle
-    test_sunaudiodev test_tcl test_tk test_ttk_guionly
-    test_ttk_textonly test_turtle
+    test_dtrace test_gdb test_gdbm test_gl test_idle test_imgfile
+    test_kqueue test_linuxaudiodev test_macos test_macostools
+    test_msilib test_ossaudiodev test_pep277 test_scriptpackages
+    test_smtpnet test_socketserver test_startfile test_sunaudiodev
+    test_tcl test_timeout test_tk test_ttk_guionly test_ttk_textonly
+    test_turtle test_unicode_file test_urllib2net test_urllibnet
+    test_winreg test_winsound test_zipfile64
+10 skips unexpected on sunos5:
+    test_bsddb3 test_dtrace test_gdb test_idle test_sunaudiodev
+    test_tcl test_tk test_ttk_guionly test_ttk_textonly test_turtle
 
-Total duration: 8 min 5 sec
+Total duration: 7 min 44 sec
 Tests result: SUCCESS

@@ -1,6 +1,7 @@
-diff --git Python-2.7.1/Lib/site-packages/vendor-packages.pth Python2.7.1/Lib/site-packages/vendor-packages.pth
+This patch makes Python support the vendor-packages directory.
+
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Lib/site-packages/vendor-packages.pth Python-2.7.14/Lib/site-packages/vendor-packages.pth
 --- Python-2.7.14~/Lib/site-packages/vendor-packages.pth	1970-01-01 00:00:00.000000000 +0000
-+++ Python-2.7.14/Lib/site-packages/vendor-packages.pth	2017-09-23 22:33:29.135584766 +0000
++++ Python-2.7.14/Lib/site-packages/vendor-packages.pth	2017-11-22 10:36:23.198170941 +0000
 @@ -0,0 +1 @@
 +import site; site.addsitedir('/usr/lib/python2.7/vendor-packages')

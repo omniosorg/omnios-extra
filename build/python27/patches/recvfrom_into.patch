@@ -2,7 +2,7 @@
 
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Modules/socketmodule.c Python-2.7.14/Modules/socketmodule.c
 --- Python-2.7.14~/Modules/socketmodule.c	2017-09-16 17:38:35.000000000 +0000
-+++ Python-2.7.14/Modules/socketmodule.c	2017-09-23 22:33:35.732989166 +0000
++++ Python-2.7.14/Modules/socketmodule.c	2017-11-22 10:36:35.301195508 +0000
 @@ -2768,6 +2768,13 @@ sock_recvfrom_into(PySocketSockObject *s
          goto error;
      }

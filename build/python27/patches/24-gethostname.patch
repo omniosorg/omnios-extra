@@ -1,7 +1,9 @@
-diff --git Python-2.6.4/Include/pyport.h Python-2.6.4/Include/pyport.h
+This patch was adapted from a 2.6 patch which came from upstream:
+http://bugs.python.org/issue19561
+
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Include/pyport.h Python-2.7.14/Include/pyport.h
 --- Python-2.7.14~/Include/pyport.h	2017-09-16 17:38:35.000000000 +0000
-+++ Python-2.7.14/Include/pyport.h	2017-09-23 22:33:32.666006639 +0000
++++ Python-2.7.14/Include/pyport.h	2017-11-22 10:36:32.079607709 +0000
 @@ -640,11 +640,6 @@ Please be conservative with adding new o
  in platform-specific #ifdefs.
  **************************************************************************/
