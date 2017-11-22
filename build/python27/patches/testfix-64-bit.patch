@@ -1,0 +1,109 @@
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Lib/distutils/tests/test_build_ext.py Python-2.7.14/Lib/distutils/tests/test_build_ext.py
+--- Python-2.7.14~/Lib/distutils/tests/test_build_ext.py	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Lib/distutils/tests/test_build_ext.py	2017-11-22 10:36:24.315015592 +0000
+@@ -298,6 +298,8 @@ class BuildExtTestCase(support.TempdirMa
+         self.assertEqual(os.path.splitext(so_file)[-1],
+                          sysconfig.get_config_var('SO'))
+         so_dir = os.path.dirname(so_file)
++        if sys.maxint != 2147483647L:
++                so_dir = os.path.dirname(so_dir)
+         self.assertEqual(so_dir, other_tmp_dir)
+         cmd.compiler = None
+         cmd.inplace = 0
+@@ -307,6 +309,8 @@ class BuildExtTestCase(support.TempdirMa
+         self.assertEqual(os.path.splitext(so_file)[-1],
+                          sysconfig.get_config_var('SO'))
+         so_dir = os.path.dirname(so_file)
++        if sys.maxint != 2147483647L:
++                so_dir = os.path.dirname(so_dir)
+         self.assertEqual(so_dir, cmd.build_lib)
+ 
+         # inplace = 0, cmd.package = 'bar'
+@@ -315,6 +319,8 @@ class BuildExtTestCase(support.TempdirMa
+         path = cmd.get_ext_fullpath('foo')
+         # checking that the last directory is the build_dir
+         path = os.path.split(path)[0]
++        if sys.maxint != 2147483647L:
++                path = os.path.dirname(path)
+         self.assertEqual(path, cmd.build_lib)
+ 
+         # inplace = 1, cmd.package = 'bar'
+@@ -328,6 +334,8 @@ class BuildExtTestCase(support.TempdirMa
+             os.chdir(old_wd)
+         # checking that the last directory is bar
+         path = os.path.split(path)[0]
++        if sys.maxint != 2147483647L:
++                path = os.path.dirname(path)
+         lastdir = os.path.split(path)[-1]
+         self.assertEqual(lastdir, 'bar')
+ 
+@@ -339,14 +347,20 @@ class BuildExtTestCase(support.TempdirMa
+         cmd.distribution.package_dir = {'': 'src'}
+         cmd.distribution.packages = ['lxml', 'lxml.html']
+         curdir = os.getcwd()
+-        wanted = os.path.join(curdir, 'src', 'lxml', 'etree' + ext)
++        wanted = os.path.join(curdir, 'src', 'lxml')
++        if sys.maxint != 2147483647L:
++                wanted = os.path.join(wanted, '64')
++        wanted = os.path.join(wanted, 'etree' + ext)
+         path = cmd.get_ext_fullpath('lxml.etree')
+         self.assertEqual(wanted, path)
+ 
+         # building lxml.etree not inplace
+         cmd.inplace = 0
+         cmd.build_lib = os.path.join(curdir, 'tmpdir')
+-        wanted = os.path.join(curdir, 'tmpdir', 'lxml', 'etree' + ext)
++        wanted = os.path.join(curdir, 'tmpdir', 'lxml')
++        if sys.maxint != 2147483647L:
++                wanted = os.path.join(wanted, '64')
++        wanted = os.path.join(wanted, 'etree' + ext)
+         path = cmd.get_ext_fullpath('lxml.etree')
+         self.assertEqual(wanted, path)
+ 
+@@ -355,14 +369,19 @@ class BuildExtTestCase(support.TempdirMa
+         build_py.package_dir = {}
+         cmd.distribution.packages = ['twisted', 'twisted.runner.portmap']
+         path = cmd.get_ext_fullpath('twisted.runner.portmap')
+-        wanted = os.path.join(curdir, 'tmpdir', 'twisted', 'runner',
+-                              'portmap' + ext)
++        wanted = os.path.join(curdir, 'tmpdir', 'twisted', 'runner')
++        if sys.maxint != 2147483647L:
++                wanted = os.path.join(wanted, '64')
++        wanted = os.path.join(wanted, 'portmap' + ext)
+         self.assertEqual(wanted, path)
+ 
+         # building twisted.runner.portmap inplace
+         cmd.inplace = 1
+         path = cmd.get_ext_fullpath('twisted.runner.portmap')
+-        wanted = os.path.join(curdir, 'twisted', 'runner', 'portmap' + ext)
++        wanted = os.path.join(curdir, 'twisted', 'runner')
++        if sys.maxint != 2147483647L:
++                wanted = os.path.join(wanted, '64')
++        wanted = os.path.join(wanted, 'portmap' + ext)
+         self.assertEqual(wanted, path)
+ 
+     def test_build_ext_inplace(self):
+@@ -376,7 +395,10 @@ class BuildExtTestCase(support.TempdirMa
+         cmd.distribution.packages = ['lxml', 'lxml.html']
+         curdir = os.getcwd()
+         ext = sysconfig.get_config_var("SO")
+-        wanted = os.path.join(curdir, 'src', 'lxml', 'etree' + ext)
++        wanted = os.path.join(curdir, 'src', 'lxml');
++        if sys.maxint != 2147483647L:
++                wanted = os.path.join(wanted, '64')
++        wanted = os.path.join(wanted, 'etree' + ext)
+         path = cmd.get_ext_fullpath('lxml.etree')
+         self.assertEqual(wanted, path)
+ 
+@@ -417,7 +439,10 @@ class BuildExtTestCase(support.TempdirMa
+         ext = sysconfig.get_config_var("SO")
+         ext_name = os.path.join('UpdateManager', 'fdsend')
+         ext_path = cmd.get_ext_fullpath(ext_name)
+-        wanted = os.path.join(cmd.build_lib, 'UpdateManager', 'fdsend' + ext)
++        wanted = os.path.join(cmd.build_lib, 'UpdateManager')
++        if sys.maxint != 2147483647L:
++                wanted = os.path.join(wanted, '64')
++        wanted = os.path.join(wanted, 'fdsend' + ext)
+         self.assertEqual(ext_path, wanted)
+ 
+     @unittest.skipUnless(sys.platform == 'win32', 'these tests require Windows')

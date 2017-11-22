@@ -2,9 +2,9 @@ This patch adds Python debugger support.  It may be contributed upstream at
 some point, but the suitability (or lack thereof) has not yet been determined.
 
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Makefile.pre.in Python-2.7.14/Makefile.pre.in
---- Python-2.7.14~/Makefile.pre.in	2017-09-23 22:33:30.033406887 +0000
-+++ Python-2.7.14/Makefile.pre.in	2017-09-23 22:33:33.975232643 +0000
-@@ -403,7 +403,7 @@ LIBRARY_OBJS=	\
+--- Python-2.7.14~/Makefile.pre.in	2017-11-22 10:36:21.124643250 +0000
++++ Python-2.7.14/Makefile.pre.in	2017-11-22 10:36:28.201779164 +0000
+@@ -408,7 +408,7 @@ LIBRARY_OBJS=	\
  
  # Default target
  all:		@DEF_MAKE_ALL_RULE@
@@ -13,7 +13,7 @@ diff -pruN '--exclude=*.orig' Python-2.7.14~/Makefile.pre.in Python-2.7.14/Makef
  
  # Compile a binary with profile guided optimization.
  profile-opt:
-@@ -844,6 +844,15 @@ PYTHON_HEADERS= \
+@@ -889,6 +889,15 @@ PYTHON_HEADERS= \
  
  $(LIBRARY_OBJS) $(MODOBJS) Modules/python.o: $(PYTHON_HEADERS)
  
@@ -29,7 +29,7 @@ diff -pruN '--exclude=*.orig' Python-2.7.14~/Makefile.pre.in Python-2.7.14/Makef
  
  ######################################################################
  
-@@ -913,7 +922,7 @@ memtest:	@DEF_MAKE_RULE@ platform
+@@ -958,7 +967,7 @@ memtest:	@DEF_MAKE_RULE@ platform
  		$(TESTPYTHON) $(TESTPROG) $(MEMTESTOPTS)
  
  # Install everything
@@ -40,7 +40,7 @@ diff -pruN '--exclude=*.orig' Python-2.7.14~/Makefile.pre.in Python-2.7.14/Makef
  			upgrade) ensurepip="--upgrade" ;; \
 diff -pruN '--exclude=*.orig' Python-2.7.14~/py_db/libpython27_db.c Python-2.7.14/py_db/libpython27_db.c
 --- Python-2.7.14~/py_db/libpython27_db.c	1970-01-01 00:00:00.000000000 +0000
-+++ Python-2.7.14/py_db/libpython27_db.c	2017-09-23 22:33:33.975781153 +0000
++++ Python-2.7.14/py_db/libpython27_db.c	2017-11-22 10:36:28.202393966 +0000
 @@ -0,0 +1,654 @@
 +/*
 + * CDDL HEADER START
@@ -698,7 +698,7 @@ diff -pruN '--exclude=*.orig' Python-2.7.14~/py_db/libpython27_db.c Python-2.7.1
 +}
 diff -pruN '--exclude=*.orig' Python-2.7.14~/py_db/libpython27_db.h Python-2.7.14/py_db/libpython27_db.h
 --- Python-2.7.14~/py_db/libpython27_db.h	1970-01-01 00:00:00.000000000 +0000
-+++ Python-2.7.14/py_db/libpython27_db.h	2017-09-23 22:33:33.975886274 +0000
++++ Python-2.7.14/py_db/libpython27_db.h	2017-11-22 10:36:28.202550716 +0000
 @@ -0,0 +1,73 @@
 +/*
 + * CDDL HEADER START
@@ -775,7 +775,7 @@ diff -pruN '--exclude=*.orig' Python-2.7.14~/py_db/libpython27_db.h Python-2.7.1
 +#endif	/* _LIBPYTHON27_DB_H */
 diff -pruN '--exclude=*.orig' Python-2.7.14~/py_db/libpython27_db_32.h Python-2.7.14/py_db/libpython27_db_32.h
 --- Python-2.7.14~/py_db/libpython27_db_32.h	1970-01-01 00:00:00.000000000 +0000
-+++ Python-2.7.14/py_db/libpython27_db_32.h	2017-09-23 22:33:33.975993171 +0000
++++ Python-2.7.14/py_db/libpython27_db_32.h	2017-11-22 10:36:28.202702637 +0000
 @@ -0,0 +1,121 @@
 +/*
 + * CDDL HEADER START
@@ -900,7 +900,7 @@ diff -pruN '--exclude=*.orig' Python-2.7.14~/py_db/libpython27_db_32.h Python-2.
 +#endif	/* _LIBPYTHON27_DB_32_H */
 diff -pruN '--exclude=*.orig' Python-2.7.14~/py_db/mapfile-vers Python-2.7.14/py_db/mapfile-vers
 --- Python-2.7.14~/py_db/mapfile-vers	1970-01-01 00:00:00.000000000 +0000
-+++ Python-2.7.14/py_db/mapfile-vers	2017-09-23 22:33:33.976071285 +0000
++++ Python-2.7.14/py_db/mapfile-vers	2017-11-22 10:36:28.202823297 +0000
 @@ -0,0 +1,39 @@
 +#
 +# CDDL HEADER START

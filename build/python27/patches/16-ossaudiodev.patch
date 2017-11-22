@@ -1,9 +1,9 @@
 This patch is needed to make Python understand it can build the OSS plugin.  
-Some OSS ioctls are not supported on OmniOS, so they are commented out.
+Some OSS ioctls are not supported on OmniOS, so they are ifdef'f out.
 
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Modules/ossaudiodev.c Python-2.7.14/Modules/ossaudiodev.c
 --- Python-2.7.14~/Modules/ossaudiodev.c	2017-09-16 17:38:35.000000000 +0000
-+++ Python-2.7.14/Modules/ossaudiodev.c	2017-09-23 22:33:34.850335424 +0000
++++ Python-2.7.14/Modules/ossaudiodev.c	2017-11-22 10:36:29.492013912 +0000
 @@ -1037,6 +1037,7 @@ initossaudiodev(void)
      _EXPORT_INT(m, SOUND_MIXER_MONITOR);
  #endif
@@ -48,9 +48,9 @@ diff -pruN '--exclude=*.orig' Python-2.7.14~/Modules/ossaudiodev.c Python-2.7.14
 +#endif
  }
 diff -pruN '--exclude=*.orig' Python-2.7.14~/setup.py Python-2.7.14/setup.py
---- Python-2.7.14~/setup.py	2017-09-23 22:33:31.783529834 +0000
-+++ Python-2.7.14/setup.py	2017-09-23 22:33:34.850956604 +0000
-@@ -1669,8 +1669,8 @@ class PyBuildExt(build_ext):
+--- Python-2.7.14~/setup.py	2017-11-22 10:36:26.898736785 +0000
++++ Python-2.7.14/setup.py	2017-11-22 10:36:29.492737738 +0000
+@@ -1690,8 +1690,8 @@ class PyBuildExt(build_ext):
          else:
              missing.append('linuxaudiodev')
  

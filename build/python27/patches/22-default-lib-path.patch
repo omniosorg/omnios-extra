@@ -1,0 +1,58 @@
+This patch was developed in-house.  It has been submitted upstream:
+http://bugs.python.org/issue23287
+
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Lib/ctypes/util.py Python-2.7.14/Lib/ctypes/util.py
+--- Python-2.7.14~/Lib/ctypes/util.py	2017-09-16 17:38:35.000000000 +0000
++++ Python-2.7.14/Lib/ctypes/util.py	2017-11-22 10:36:31.447142810 +0000
+@@ -188,39 +188,15 @@ elif os.name == "posix":
+ 
+     elif sys.platform == "sunos5":
+ 
+-        def _findLib_crle(name, is64):
+-            if not os.path.exists('/usr/bin/crle'):
+-                return None
++        def _findLib_path(name, is64):
+ 
+             env = dict(os.environ)
+             env['LC_ALL'] = 'C'
+ 
+             if is64:
+-                args = ('/usr/bin/crle', '-64')
++                paths = "/lib/64:/usr/lib/64"
+             else:
+-                args = ('/usr/bin/crle',)
+-
+-            paths = None
+-            null = open(os.devnull, 'wb')
+-            try:
+-                with null:
+-                    proc = subprocess.Popen(args,
+-                                            stdout=subprocess.PIPE,
+-                                            stderr=null,
+-                                            env=env)
+-            except OSError:  # E.g. bad executable
+-                return None
+-            try:
+-                for line in proc.stdout:
+-                    line = line.strip()
+-                    if line.startswith(b'Default Library Path (ELF):'):
+-                        paths = line.split()[4]
+-            finally:
+-                proc.stdout.close()
+-                proc.wait()
+-
+-            if not paths:
+-                return None
++                paths = "/lib:/usr/lib"
+ 
+             for dir in paths.split(":"):
+                 libfile = os.path.join(dir, "lib%s.so" % name)
+@@ -230,7 +206,7 @@ elif os.name == "posix":
+             return None
+ 
+         def find_library(name, is64 = False):
+-            return _get_soname(_findLib_crle(name, is64) or _findLib_gcc(name))
++            return _get_soname(_findLib_path(name, is64) or _findLib_gcc(name))
+ 
+     else:
+ 

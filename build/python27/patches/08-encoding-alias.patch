@@ -1,6 +1,9 @@
+Add missing encoding aliases.  It may be contributed upstream at some point,
+but the suitability (or lack thereof) has not yet been determined.
+
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Lib/encodings/aliases.py Python-2.7.14/Lib/encodings/aliases.py
 --- Python-2.7.14~/Lib/encodings/aliases.py	2017-09-16 17:38:35.000000000 +0000
-+++ Python-2.7.14/Lib/encodings/aliases.py	2017-09-23 22:33:31.352277636 +0000
++++ Python-2.7.14/Lib/encodings/aliases.py	2017-11-22 10:36:26.265743783 +0000
 @@ -73,6 +73,7 @@ aliases = {
  
      # cp1251 codec

@@ -1,4 +1,4 @@
 
 # Drop compiled python files
-<transform file path=.*\.pyc$ -> drop>
+<transform file path=.*\.py[co]$ -> drop>
 

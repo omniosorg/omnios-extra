@@ -1,6 +1,10 @@
+This patch adds wget_wch support to the curses module.  It may be contributed
+upstream at some point, but the suitability (or lack thereof) has not yet
+been determined.
+
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Modules/_cursesmodule.c Python-2.7.14/Modules/_cursesmodule.c
 --- Python-2.7.14~/Modules/_cursesmodule.c	2017-09-16 17:38:35.000000000 +0000
-+++ Python-2.7.14/Modules/_cursesmodule.c	2017-09-23 22:33:34.410720954 +0000
++++ Python-2.7.14/Modules/_cursesmodule.c	2017-11-22 10:36:28.848609014 +0000
 @@ -863,6 +863,37 @@ PyCursesWindow_GetCh(PyCursesWindowObjec
  }
  

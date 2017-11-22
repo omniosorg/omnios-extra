@@ -1,0 +1,45 @@
+
+There are three problems with the dtrace function offset detection code in
+the upstream dtrace patch.
+
+1. It identifies an OmniOS system as 'OTHER' and not 'SOLARIS'.
+   This means that is assumes that /usr/bin/nm is the GNU version.
+   To fix this, we make it run 'gnm' instead.
+
+2. In 32-bit, it generates an offset macro with an empty right-hand-side
+   which causes the dtrace compiler to abort with an error. This is fixed by
+   just adding the string "main" if the result would be empty.
+
+3. Offset macros are generated with leading spaces. This upsets the dtrace
+   pre-processing stage on OmniOS.
+
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Include/pydtrace_offsets.c Python-2.7.14/Include/pydtrace_offsets.c
+--- Python-2.7.14~/Include/pydtrace_offsets.c	2017-11-22 10:36:21.123108475 +0000
++++ Python-2.7.14/Include/pydtrace_offsets.c	2017-11-22 10:36:21.710188577 +0000
+@@ -12,8 +12,8 @@ int main(int argc, const char* argv[]) {
+     printf("#ifndef PYDTRACE_OFFSETS_H\n");
+     printf("#define PYDTRACE_OFFSETS_H\n");
+     printf("\n");
+-    printf("#define AFTER_PyEval_EvalFrameEx      %s\n", argv[1]);
+-    printf("#define AFTER_PyEval_EvalFrameExReal  %s\n", argv[2]);
++    printf("#define AFTER_PyEval_EvalFrameEx %s\n", strlen(argv[1]) ? argv[1] : "main");
++    printf("#define AFTER_PyEval_EvalFrameExReal %s\n", strlen(argv[2]) ? argv[2] : "main");
+     printf("\n");
+     printf("#endif\n");
+     return 0;
+diff -pruN '--exclude=*.orig' Python-2.7.14~/Include/pydtrace_offsets.sh Python-2.7.14/Include/pydtrace_offsets.sh
+--- Python-2.7.14~/Include/pydtrace_offsets.sh	2017-11-22 10:36:21.123254322 +0000
++++ Python-2.7.14/Include/pydtrace_offsets.sh	2017-11-22 10:36:21.710382231 +0000
+@@ -5,10 +5,10 @@ CEVAL_O=$2
+ PYDTRACE_OFFSETS=$3
+ if test "$DTRACE_NM" = "OTHER" ; then
+     $PYDTRACE_OFFSETS \
+-		"`nm -n $CEVAL_O | grep \" T \" | \
++		"`gnm -n $CEVAL_O | grep \" T \" | \
+ 		sed -n \"/ T PyEval_EvalFrameEx$/{n;p;}\" | \
+ 		sed \"s/.* T \(.*\)$/\1/\"`" \
+-		"`nm -n $CEVAL_O | grep \" T \" | \
++		"`gnm -n $CEVAL_O | grep \" T \" | \
+ 		sed -n \"/ T PyEval_EvalFrameExReal$/{n;p;}\" | \
+ 		sed \"s/.* T \(.*\)$/\1/\"`"
+ fi

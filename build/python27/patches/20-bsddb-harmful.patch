@@ -4,9 +4,9 @@ dump core.  So skip it.  The module is removed in Python 3, so this patch
 is not being submitted upstream.
 
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Makefile.pre.in Python-2.7.14/Makefile.pre.in
---- Python-2.7.14~/Makefile.pre.in	2017-09-23 22:33:33.975232643 +0000
-+++ Python-2.7.14/Makefile.pre.in	2017-09-23 22:33:36.173108438 +0000
-@@ -1067,7 +1067,7 @@ LIBSUBDIRS=	lib-tk lib-tk/test lib-tk/te
+--- Python-2.7.14~/Makefile.pre.in	2017-11-22 10:36:28.201779164 +0000
++++ Python-2.7.14/Makefile.pre.in	2017-11-22 10:36:30.796679254 +0000
+@@ -1112,7 +1112,7 @@ LIBSUBDIRS=	lib-tk lib-tk/test lib-tk/te
  		ensurepip ensurepip/_bundled \
  		json json/tests \
  		sqlite3 sqlite3/test \
@@ -16,9 +16,9 @@ diff -pruN '--exclude=*.orig' Python-2.7.14~/Makefile.pre.in Python-2.7.14/Makef
  		lib2to3/tests/data lib2to3/tests/data/fixers lib2to3/tests/data/fixers/myfixes \
  		ctypes ctypes/test ctypes/macholib \
 diff -pruN '--exclude=*.orig' Python-2.7.14~/setup.py Python-2.7.14/setup.py
---- Python-2.7.14~/setup.py	2017-09-23 22:33:34.850956604 +0000
-+++ Python-2.7.14/setup.py	2017-09-23 22:33:36.173762596 +0000
-@@ -1090,7 +1090,8 @@ class PyBuildExt(build_ext):
+--- Python-2.7.14~/setup.py	2017-11-22 10:36:29.492737738 +0000
++++ Python-2.7.14/setup.py	2017-11-22 10:36:30.797417028 +0000
+@@ -1096,7 +1096,8 @@ class PyBuildExt(build_ext):
                                      db_dirs_to_check + lib_dirs, dblib )
                      if dblib_file:
                          dblib_dir = [ os.path.abspath(os.path.dirname(dblib_file)) ]

@@ -1,5 +1,11 @@
-<transform file path=license$ -> drop>
-license license license=PSF
+license LICENSE license=PSF
+
+# Remove the isaexec stub for /usr/bin/python and replace with link
+<transform file path=usr/bin/python$ -> drop>
+link path=usr/bin/python target=python$(PYTHONVER)
+
+# Drop static library
+<transform file path=.*\.a$ -> drop>
 
 # Remove idle
 <transform file path=usr/bin(/.*)?/idle -> drop >

@@ -1,10 +1,8 @@
 This patch provides Python dlpi support.
 
-diff --git Python-2.6.4/Modules/dlpimodule.c Python-2.6.4/Modules/dlpimodule.c
-new file mode 100644
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Lib/test/dlpitest.py Python-2.7.14/Lib/test/dlpitest.py
 --- Python-2.7.14~/Lib/test/dlpitest.py	1970-01-01 00:00:00.000000000 +0000
-+++ Python-2.7.14/Lib/test/dlpitest.py	2017-09-23 22:33:30.916663897 +0000
++++ Python-2.7.14/Lib/test/dlpitest.py	2017-11-22 10:36:25.618288268 +0000
 @@ -0,0 +1,96 @@
 +#!/usr/bin/python2.7
 +
@@ -104,7 +102,7 @@ diff -pruN '--exclude=*.orig' Python-2.7.14~/Lib/test/dlpitest.py Python-2.7.14/
 +print "state is: %d"  % testlink.get_state()
 diff -pruN '--exclude=*.orig' Python-2.7.14~/Modules/dlpimodule.c Python-2.7.14/Modules/dlpimodule.c
 --- Python-2.7.14~/Modules/dlpimodule.c	1970-01-01 00:00:00.000000000 +0000
-+++ Python-2.7.14/Modules/dlpimodule.c	2017-09-23 22:33:30.917289705 +0000
++++ Python-2.7.14/Modules/dlpimodule.c	2017-11-22 10:36:25.618993793 +0000
 @@ -0,0 +1,1205 @@
 +/*
 + * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -1312,9 +1310,9 @@ diff -pruN '--exclude=*.orig' Python-2.7.14~/Modules/dlpimodule.c Python-2.7.14/
 +	PyModule_AddIntConstant(mod, "SYSERR", DL_SYSERR);
 +}
 diff -pruN '--exclude=*.orig' Python-2.7.14~/setup.py Python-2.7.14/setup.py
---- Python-2.7.14~/setup.py	2017-09-23 22:33:30.481978327 +0000
-+++ Python-2.7.14/setup.py	2017-09-23 22:33:30.917896422 +0000
-@@ -1575,6 +1575,12 @@ class PyBuildExt(build_ext):
+--- Python-2.7.14~/setup.py	2017-11-22 10:36:24.966802013 +0000
++++ Python-2.7.14/setup.py	2017-11-22 10:36:25.619750979 +0000
+@@ -1596,6 +1596,12 @@ class PyBuildExt(build_ext):
              exts.append( Extension('ucred', ['ucred.c'],
                                     libraries = ['tsol']) )
  
