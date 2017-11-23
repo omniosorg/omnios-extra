@@ -92,7 +92,7 @@
 | library/security/trousers		| 0.3.14		| https://sourceforge.net/projects/trousers/files/trousers
 | library/python-2/asn1crypto-27	| 0.23.0		| https://pypi.python.org/pypi/asn1crypto
 | library/python-2/cffi-27		| 1.11.2		| https://pypi.python.org/pypi/cffi
-| library/python-2/cheroot-27		| 5.8.3			| https://pypi.python.org/pypi/cheroot
+| library/python-2/cheroot-27		| 5.9.1			| https://pypi.python.org/pypi/cheroot
 | library/python-2/cherrypy-27		| 11.0.0		| https://pypi.python.org/pypi/cherrypy | On hold as 11.1.0 introduces a new dependency (jaraco.classes)
 | library/python-2/coverage-27		| 4.4.2			| https://pypi.python.org/pypi/coverage
 | library/python-2/cryptography-27	| 2.1.3			| https://pypi.python.org/pypi/cryptography
@@ -110,10 +110,10 @@
 | library/python-2/pybonjour-27		| 1.1.1			| https://pypi.python.org/pypi/pybonjour
 | library/python-2/pycurl-27		| 7.43.0		| https://pypi.python.org/pypi/pycurl
 | library/python-2/pylint-27		| 1.7.4			| https://pypi.python.org/pypi/pylint
-| library/python-2/pyopenssl-27		| 17.3.0		| https://pypi.python.org/pypi/pyOpenSSL
+| library/python-2/pyopenssl-27		| 17.4.0		| https://pypi.python.org/pypi/pyOpenSSL
 | library/python-2/pyrex-27		| 0.9.9			| http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
 | library/python-2/pytz-27		| 2017.3		| https://pypi.python.org/pypi/pytz
-| library/python-2/setuptools-27	| 36.6.0		| https://pypi.python.org/pypi/setuptools
+| library/python-2/setuptools-27	| 37.0.0		| https://pypi.python.org/pypi/setuptools
 | library/python-2/simplejson-27	| 3.12.0		| https://pypi.python.org/pypi/simplejson
 | library/python-2/six-27		| 1.11.0		| https://pypi.python.org/pypi/six
 | library/python-2/tempora-27		| 1.9			| https://pypi.python.org/pypi/tempora
