@@ -17,6 +17,17 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 ### System Features
 
+* A number of system components now enable Address Space Layout Randomisation
+  (ASLR) by default:
+    * openssh daemon
+    * TBC...
+
+* `openssh` has been upgraded to 7.6p1. This version drops support for
+  SSH protocol version 1, RSA keys under 1024 bits in length and a number
+  of old ciphers and MACs. Refer to
+  [the release notes](https://www.openssh.com/txt/release-7.6) for more
+  details.
+
 * `libdiskmgt` (and therefore `diskinfo`) now recognises nvme, sata and xen
   controllers
 
