@@ -1,0 +1,20 @@
+
+0030-Temporarily-set-ssh-keygen-and-ssh-add-to-old-FP-for.patch
+changes the default fingerprint format back to the old MD5 format.
+
+Update the principals-command script to specify the exact format required.
+
+diff -pruN '--exclude=*.orig' openssh-7.6p1~/regress/principals-command.sh openssh-7.6p1/regress/principals-command.sh
+--- openssh-7.6p1~/regress/principals-command.sh	2017-10-02 19:34:26.000000000 +0000
++++ openssh-7.6p1/regress/principals-command.sh	2017-11-24 15:08:26.775017481 +0000
+@@ -25,8 +25,8 @@ ${SSHKEYGEN} -q -s $OBJ/user_ca_key -I "
+ 
+ CERT_BODY=`cat $OBJ/cert_user_key-cert.pub | awk '{ print $2 }'`
+ CA_BODY=`cat $OBJ/user_ca_key.pub | awk '{ print $2 }'`
+-CERT_FP=`${SSHKEYGEN} -lf $OBJ/cert_user_key-cert.pub | awk '{ print $2 }'`
+-CA_FP=`${SSHKEYGEN} -lf $OBJ/user_ca_key.pub | awk '{ print $2 }'`
++CERT_FP=`${SSHKEYGEN} -lESHA256 -f $OBJ/cert_user_key-cert.pub | awk '{ print $2 }'`
++CA_FP=`${SSHKEYGEN} -lESHA256 -f $OBJ/user_ca_key.pub | awk '{ print $2 }'`
+ 
+ # Establish a AuthorizedPrincipalsCommand in /var/run where it will have
+ # acceptable directory permissions.

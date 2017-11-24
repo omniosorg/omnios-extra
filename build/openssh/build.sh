@@ -117,7 +117,14 @@ prep_build
 run_autoconf
 build
 install_smf network ssh.xml sshd
-run_testsuite tests
+
+export TESTSUITE_FILTER='^ok |^test_|failed|^all tests'
+(
+    # The test SSH daemon needs root privileges to properly access PAM
+    # on OmniOS. Sudo does not work well enough so use pfexec here.
+    export SUDO=pfexec
+    run_testsuite tests
+)
 
 # Remove the letter from VER for packaging
 VER=${VER//p/.}

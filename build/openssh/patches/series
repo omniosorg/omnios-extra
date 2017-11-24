@@ -29,3 +29,4 @@ sshd_config.patch
 0031-Restore-tcpwrappers-libwrap-support.patch
 0032-Let-us-put-a-fallback-copy-of-DH-moduli-in-a-system-.patch
 1001-dtrace32.patch
+principals-test.patch
