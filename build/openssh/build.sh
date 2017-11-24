@@ -34,9 +34,9 @@ PKG=network/openssh
 SUMMARY="OpenSSH Client and utilities"
 DESC="OpenSSH Secure Shell protocol Client and associated Utilities"
 
-BUILDARCH=32
-# Since we're only building 32-bit, don't bother with isaexec subdirs
-CONFIGURE_OPTS_32="
+BUILDARCH=64
+# Since we're only building 64-bit, don't bother with isaexec subdirs
+CONFIGURE_OPTS_64="
     --prefix=$PREFIX
     --sysconfdir=/etc/ssh
     --includedir=$PREFIX/include
@@ -63,17 +63,10 @@ CONFIGURE_OPTS="
     --with-solaris-projects
 "
 
-CFLAGS+="-O2 "
+CFLAGS+="-O2 -g -fstack-check "
 CFLAGS+="-DPAM_ENHANCEMENT -DSET_USE_PAM -DPAM_BUGFIX -DDTRACE_SFTP "
 CFLAGS+="-I/usr/include/kerberosv5 -DKRB5_BUILD_FIX -DDISABLE_BANNER "
 CFLAGS+="-DDEPRECATE_SUNSSH_OPT -DOPTION_DEFAULT_VALUE -DSANDBOX_SOLARIS"
-
-auto_reconf() {
-        # This package needs a whack upside the head post-patches!
-        pushd $TMPDIR/$BUILDDIR >/dev/null
-        autoreconf -fi
-        popd
-}
 
 move_manpage() {
     local page=$1
@@ -112,7 +105,7 @@ init
 download_source $PROG $PROG $VER
 move_manpages
 patch_source
-auto_reconf
+run_inbuild autoreconf -fi
 prep_build
 run_autoconf
 build
