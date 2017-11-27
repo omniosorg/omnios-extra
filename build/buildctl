@@ -1,13 +1,7 @@
 #!/usr/bin/bash
 
-NOBANNER=1
 BUILD_EXPENSIVE=0
-batch_flag=""
-lint_flag=""
-if [ "${BATCH}" = 1 ]; then
-    echo "Enabling batch mode."
-    batch_flag="-b"
-fi
+build_flags=
 . ../lib/functions.sh
 
 # targets maps any valid package name to its full package name.
@@ -300,7 +294,7 @@ build() {
             fi
             built_packages_p5m $SCRIPT
         else
-            PATH=$PATH:. $SCRIPT -r $PKGSRVR $batch_flag $lint_flag || \
+            PATH=$PATH:. $SCRIPT -r $PKGSRVR $build_flags || \
                 logerr "Unable to run $SCRIPT"
             built_packages_sh $SCRIPT
         fi
@@ -392,12 +386,9 @@ job_status() {
 
 parallel_build() {
     threads=$1
-    export batch_flag="-b"
-    export BATCH=1
-
-    # Lint is not thread-safe
-    export lint_flag="-l"
-    export SKIP_PKGLINT=1
+    # Lint is not thread-safe and skip test-suite in parallel build mode.
+    build_flags="-b -t -l"
+    export BATCH=1  # So logerr() exits without prompting
 
     note "Starting parallel build with $threads thread(s)"
 
@@ -414,9 +405,6 @@ parallel_build() {
     declare -A slottgt
     declare -A slotdesc
     declare -A slotstart
-
-    # Skip all testsuites in parallel mode
-    export SKIP_TESTSUITE=1
 
     for tgt in `buildorder`; do
         ((pkgnum = pkgnum + 1))
@@ -437,7 +425,7 @@ parallel_build() {
 
         logmsg "-- Waiting for spare job slot for $tgt"
 
-        err=0
+        err=
         while :; do
             for i in `seq 0 $threads`; do
                 # Idle slot?
@@ -450,8 +438,8 @@ parallel_build() {
                         s=$?
                         logmsg "-- Job $i terminated with status $s"
                         if [ $s -ne 0 ]; then
-                            note "***** BUILD ERROR *****"
-                            err=1
+                            err="${slottgt[$i]}"
+                            note "***** BUILD ERROR ***** ($err)"
                             break 3
                         fi
                     fi
@@ -470,7 +458,7 @@ parallel_build() {
         done
     done
 
-    if [ $err -ne 0 -a -z "$NOKILL_ON_ERROR" ]; then
+    if [ -n "$err" -a -z "$NOKILL_ON_ERROR" ]; then
         logmsg "-- error encountered, killing jobs"
         for i in `seq 0 $threads`; do
             [ -n "${slots[$i]}" ] && kill "${slots[$i]}"
@@ -495,10 +483,16 @@ parallel_build() {
         done
     fi
 
-    if [ $err -eq 0 -a -z "$SKIP_KAYAK_KERNEL" ]; then
+    if [ -z "$err" -a -z "$SKIP_KAYAK_KERNEL" ]; then
         # Build this one last
         note "($pkgcount/$pkgcount) Building system/install/kayak-kernel"
         build system/install/kayak-kernel
+    fi
+
+    if [ -n "$err" ]; then
+        note "***** BUILD ERROR ***** ($err)"
+    else
+        baseline check
     fi
 
     stop_built_listener
@@ -508,17 +502,13 @@ parallel_build() {
 DEFAULT_PKGSRVR=$PKGSRVR
 DEFAULT_PKGPUBLISHER=$PKGPUBLISHER
 
-# When we get here, honor any -l or -b flags from the buildctl command line,
-# or even the environment.
-
-if [ "${BATCH}" = 1 ]; then
-    logmsg "Enabling batch mode."
-    batch_flag="-b"
-fi
-if [ "${SKIP_PKGLINT}" = 1 ]; then
-    logmsg "Disabling pkglint."
-    lint_flag="-l"
-fi
+# Any flag options on the command line will have been consumed by
+# process_opts() in lib/functions.sh and environment variables will have
+# been set.
+# Construct the arguments to be passed to child build.sh scripts.
+[ -n "$BATCH" ] && build_flags+="-b "
+[ -n "$SKIP_PKGLINT" ] && build_flags+="-l "
+[ -n "$SKIP_TESTSUITE" ] && build_flags+="-t "
 
 case "$1" in
     config)
@@ -575,10 +565,8 @@ case "$1" in
         fi
 
         if [ "$tobuild" = "all" ]; then
-            batch_flag="-b"
-
-            # Skip all testsuites when building everything
-            export SKIP_TESTSUITE=1
+            build_flags="-b -t -l"
+            export BATCH=1  # So logerr() exits without prompting
 
             pkgcount=${#fulltargets[@]}
             pkgnum=0
@@ -595,7 +583,6 @@ case "$1" in
         elif [[ "$tobuild" = parallel\ * ]]; then
             restore_built
             parallel_build "${tobuild#* }"
-            baseline check
         else
             if [[ $tobuild = *\** ]]; then
                 for tgtpatt in $tobuild; do

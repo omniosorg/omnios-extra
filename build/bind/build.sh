@@ -34,9 +34,6 @@ PKG=network/dns/bind
 SUMMARY="BIND DNS tools"
 DESC="$SUMMARY ($VER)"
 
-# skip tests when in batch mode
-[ -n "$BATCH" ] && SKIP_TESTSUITE=1
-
 DEPENDS_IPS="library/libxml2 library/security/openssl library/zlib
              system/library system/library/gcc-runtime system/library/math"
 

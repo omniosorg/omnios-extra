@@ -49,7 +49,6 @@ CONFIGURE_OPTS_32="
 "
 
 TESTSUITE_FILTER='^[A-Z#][A-Z ]'
-[ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 init
 download_source $PROG $PROG $VER

@@ -38,8 +38,6 @@ MAKE=/bin/gmake
 export MAKE
 CONFIGURE_OPTS="--includedir=/usr/include"
 
-[ -n "$BATCH" ] && SKIP_TESTSUITE=1
-
 init
 download_source $PROG $PROG $VER
 patch_source

@@ -39,8 +39,6 @@ NO_PARALLEL_MAKE=1
 BUILDARCH=32
 CONFIGURE_OPTS="--infodir=$PREFIX/share/info --bindir=$PREFIX/bin"
 
-[ -n "$BATCH" ] && SKIP_TESTSUITE=1
-
 init
 download_source $PROG $PROG $VER
 patch_source
