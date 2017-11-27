@@ -41,7 +41,6 @@ BUILDARCH=32
 CONFIGURE_OPTS+=" --infodir=/usr/share/info"
 
 TESTSUITE_FILTER='^[A-Z#][A-Z ]'
-[ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 init
 download_source $PROG $PROG $VER

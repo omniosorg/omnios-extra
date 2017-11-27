@@ -49,7 +49,8 @@ process_opts() {
     DEPVER=
     SKIP_PKGLINT=
     REBASE_PATCHES=
-    while getopts "biPpf:ha:d:lr:" opt; do
+    SKIP_TESTSUITE=
+    while getopts "biPptf:ha:d:lr:" opt; do
         case $opt in
             h)
                 show_usage
@@ -73,6 +74,9 @@ process_opts() {
                 ;;
             i)
                 AUTOINSTALL=1
+                ;;
+            t)
+                SKIP_TESTSUITE=1
                 ;;
             f)
                 FLAVOR=$OPTARG
@@ -103,17 +107,23 @@ process_opts() {
 # Show usage information
 #############################################################################
 show_usage() {
-    echo "Usage: $0 [-b] [-p] [-f FLAVOR] [-h] [-a 32|64|both] [-d DEPVER]"
-    echo "  -b        : batch mode (exit on errors without asking)"
-    echo "  -i        : autoinstall mode (install build deps)"
-    echo "  -p        : output all commands to the screen as well as log file"
-    echo "  -P        : re-base patches on latest source"
-    echo "  -l        : skip pkglint check"
-    echo "  -f FLAVOR : build a specific package flavor"
-    echo "  -h        : print this help text"
-    echo "  -a ARCH   : build 32/64 bit only, or both (default: both)"
-    echo "  -d DEPVER : specify an extra dependency version (no default)"
-    echo "  -r REPO   : specify the IPS repo to use (default: $PKGSRVR)"
+cat << EOM
+
+Usage: $0 [-blt] [-f FLAVOR] [-h] [-a 32|64|both] [-d DEPVER]
+  -a ARCH   : build 32/64 bit only, or both (default: both)
+  -b        : batch mode (exit on errors without asking)
+  -d DEPVER : specify an extra dependency version (no default)
+  -f FLAVOR : build a specific package flavor
+  -h        : print this help text
+  -i        : autoinstall mode (install build deps)
+  -l        : skip pkglint check
+  -p        : output all commands to the screen as well as log file
+  -P        : re-base patches on latest source
+  -r REPO   : specify the IPS repo to use
+              (default: $PKGSRVR)
+  -t        : skip test suite
+
+EOM
 }
 
 print_config() {
@@ -323,7 +333,8 @@ fi
 #############################################################################
 # Print startup message
 #############################################################################
-[ -z "$NOBANNER" ] && logmsg "===== Build started at `date` ====="
+
+logmsg "===== Build started at `date` ====="
 
 build_start=`date +%s`
 trap '[ -n "$build_start" ] && \

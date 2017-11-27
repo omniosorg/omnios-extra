@@ -49,7 +49,6 @@ export ac_cv_func_inotify_init=no
 export gl_cv_host_operating_system=illumos
 
 TESTSUITE_FILTER='^[A-Z#][A-Z ]'
-[ -n "$BATCH" ] && SKIP_TESTSUITE=1
 
 init
 download_source $PROG $PROG $VER

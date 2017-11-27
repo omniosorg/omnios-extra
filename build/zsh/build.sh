@@ -60,8 +60,6 @@ install_license() {
   iconv -f 8859-1 -t utf-8 $TMPDIR/$BUILDDIR/LICENCE > $TMPDIR/$BUILDDIR/LICENSE
 }
 
-[ -n "$BATCH" ] && SKIP_TESTSUITE=1
-
 init
 download_source $PROG $PROG $VER
 patch_source

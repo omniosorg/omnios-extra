@@ -40,8 +40,6 @@ RUN_DEPENDS_IPS="system/prerequisite/gnu"
 BUILDARCH=32
 CONFIGURE_OPTS="--bindir=$PREFIX/bin --program-prefix=g"
 
-[ -n "$BATCH" ] && SKIP_TESTSUITE=1
-
 init
 download_source $PROG $PROG $VER
 patch_source

@@ -47,8 +47,6 @@ BUILDARCH=32
 CONFIGURE_OPTS="--program-prefix=g --with-rmt=/usr/sbin/rmt"
 CONFIGURE_OPTS_32+=" --bindir=/usr/bin"
 
-[ -n "$BATCH" ] && SKIP_TESTSUITE=1
-
 init
 download_source $PROG $PROG $VER
 patch_source

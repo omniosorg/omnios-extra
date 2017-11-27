@@ -34,9 +34,6 @@ PKG=developer/build/automake
 SUMMARY="GNU Automake $VER"
 DESC="GNU Automake - A Makefile generator ($VER)"
 
-# skip tests when in batch mode as they take 1h+
-[ -n "$BATCH" ] && SKIP_TESTSUITE=1
-
 BUILDARCH=32
 BUILD_DEPENDS_IPS="compress/xz developer/build/autoconf"
 DEPENDS_IPS="developer/macro/gnu-m4 runtime/perl"
