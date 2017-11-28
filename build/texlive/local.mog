@@ -1,0 +1,3 @@
+license LICENSE.TL license=TeXLive
+<transform file path=opt/ooce/texlive/share/texmf-var/.*\.log$ -> drop>
+<transform file path=opt/ooce/texlive/share/texmf-dist/(doc|scripts|asymptote|source) -> set pkg.depend.bypass-generate .*>
