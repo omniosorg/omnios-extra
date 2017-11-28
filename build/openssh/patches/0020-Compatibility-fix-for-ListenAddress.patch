@@ -8,7 +8,15 @@ fact will listen on both IPv4 and IPv6.
 diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.c openssh-7.6p1/servconf.c
 --- openssh-7.6p1~/servconf.c	2017-11-22 12:16:10.881359013 +0000
 +++ openssh-7.6p1/servconf.c	2017-11-22 12:16:10.931424966 +0000
-@@ -768,11 +768,22 @@ process_queued_listen_addrs(ServerOption
+@@ -678,6 +841,7 @@
+ process_queued_listen_addrs(ServerOptions *options)
+ {
+ 	u_int i;
++	int v4port = 0;
+ 
+ 	if (options->num_ports == 0)
+ 		options->ports[options->num_ports++] = SSH_DEFAULT_PORT;
+@@ -685,11 +849,25 @@
  		options->address_family = AF_UNSPEC;
  
  	for (i = 0; i < options->num_queued_listens; i++) {
@@ -19,7 +27,10 @@ diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.c openssh-7.6p1/servconf.c
 +		 * on :: into a listener of unspecified AF (so it listens on
 +		 * v4 too)
 +		 */
-+		if (strcmp(options->queued_listen_addrs[i], "::") == 0) {
++		if (!strcmp(options->queued_listen_addrs[i], "0.0.0.0"))
++			v4port = options->queued_listen_ports[i];
++		if (!strcmp(options->queued_listen_addrs[i], "::") &&
++		    options->queued_listen_ports[i] != v4port) {
 +			add_listen_addr(options, NULL,
 +			    options->queued_listen_ports[i]);
 +		} else {

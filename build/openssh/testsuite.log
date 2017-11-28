@@ -1,14 +1,3 @@
-./regress/netcat.c: In function 'local_listen':
-./regress/netcat.c:711:14: warning: unused variable 'x' [-Wunused-variable]
-  int s, ret, x = 1;
-              ^
-./regress/netcat.c:711:9: warning: unused variable 'ret' [-Wunused-variable]
-  int s, ret, x = 1;
-         ^~~
-ar: creating regress/unittests/test_helper/libtest_helper.a
-ar: writing regress/unittests/test_helper/libtest_helper.a
-a - regress/unittests/test_helper/test_helper.o
-a - regress/unittests/test_helper/fuzz.o
 test_sshbuf: .................................................................................................... 101 tests ok
 test_sshkey: .......................................................................................... 90 tests ok
 test_bitmap: .. 2 tests ok
@@ -17,8 +6,67 @@ test_kex: ......................................................................
 test_hostkeys: .................. 18 tests ok
 test_match: ...... 6 tests ok
 test_utf8: .................................. 34 tests ok
-run test connect.sh ...
-ssh connect with failed
-failed simple connect
-gmake[1]: *** [Makefile:203: t-exec] Error 1
-gmake: *** [Makefile:607: tests] Error 2
+ok simple connect
+ok proxy connect
+ok proxy connect with privsep
+ok sshd version with different protocol combinations
+ok protocol version mismatch
+ok remote exit status
+ok environment passing
+ok transfer data
+ok banner
+ok rekey
+ok stderr data transfer
+ok stderr data after eof
+ok broken pipe test
+ok try ciphers
+ok yes pipe head
+ok connect after login grace timeout
+ok simple agent test
+ok agent timeout test
+ok keyscan
+ok change passphrase for key
+ok convert keys
+ok keygen moduli
+ok key options
+scp: skipped file after scp -p with failed chown+utimes
+ok scp
+ok basic sftp put/get
+ok sftp in chroot
+ok sftp commands
+ok sftp invalid commands
+ok sftp batchfile
+ok sftp glob
+ok sftp permissions
+ok simple connect after reconfigure
+ok local and remote forwarding
+ok connection multiplexing
+ok reexec tests
+ok broken keys
+ok ssh config parse
+ok sshd config parse
+ok sshd_config match
+ok address match
+ok localcommand
+ok forced command
+ok port number parsing
+ok login with different key types
+ok login with different key exchange algorithms
+ok certified host keys
+ok certified user keys
+ok expand %h and %n
+ok authorized keys from command
+ok sshd control of local and remote forwarding
+ok integrity
+ok key revocation lists
+ok multiple pubkey
+ok restrict pubkey type
+ok hostkey agent
+ok ssh-keygen known_hosts
+ok hostkey rotate
+ok authorized principals command
+ok ssh with certificates
+ok config include
+ok AllowUsers/DenyUsers
+ok authinfo
+all tests passed

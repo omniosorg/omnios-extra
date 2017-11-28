@@ -9,7 +9,7 @@ Subject: [PATCH 12/34] Deprecate SunSSH compatible server options
 # server config (sshd_config) options. In internal testing we have discovered,
 # that this would bring too much trouble to the said administrators.
 # The probability of these options appearing in existing sshd_config files
-# is higher than initially though, because some of the options have been in
+# is higher than initially thought, because some of the options have been in
 # default sshd_config file for very long time. Also the consequence of
 # unknown server option is harsh - ssh service goes to maintenance mode
 # possible rendering the instance not accessible. For this reason we will

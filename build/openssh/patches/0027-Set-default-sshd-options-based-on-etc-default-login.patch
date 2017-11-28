@@ -7,13 +7,13 @@ diff -pruN '--exclude=*.orig' openssh-7.6p1~/pathnames.h openssh-7.6p1/pathnames
 --- openssh-7.6p1~/pathnames.h	2017-11-22 12:16:11.028564589 +0000
 +++ openssh-7.6p1/pathnames.h	2017-11-22 12:16:11.123678066 +0000
 @@ -46,6 +46,7 @@
- #define _PATH_HOST_ED25519_KEY_FILE	SSHKEYDIR "/ssh_host_ed25519_key"
- #define _PATH_HOST_RSA_KEY_FILE		SSHKEYDIR "/ssh_host_rsa_key"
- #define _PATH_DH_MODULI			SSHKEYDIR "/moduli"
+ #define _PATH_HOST_ED25519_KEY_FILE	SSHDIR "/ssh_host_ed25519_key"
+ #define _PATH_HOST_RSA_KEY_FILE		SSHDIR "/ssh_host_rsa_key"
+ #define _PATH_DH_MODULI			SSHDIR "/moduli"
 +#define _PATH_DEFAULT_LOGIN		ETCDIR "/default/login"
- /* Backwards compatibility */
- #define _PATH_DH_PRIMES			SSHDIR "/primes"
  
+ #ifndef _PATH_SSH_PROGRAM
+ #define _PATH_SSH_PROGRAM               "/usr/bin/ssh"
 diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.c openssh-7.6p1/servconf.c
 --- openssh-7.6p1~/servconf.c	2017-11-22 12:16:10.931424966 +0000
 +++ openssh-7.6p1/servconf.c	2017-11-22 12:16:11.124233172 +0000
