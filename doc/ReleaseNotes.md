@@ -4,6 +4,22 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024d (2017-11-29)
+
+Weekly release for w/c 27th of November 2017.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `curl` updated to 7.57.0
+  * [CVE-2017-8816](https://curl.haxx.se/docs/adv_2017-11e7.html)
+  * [CVE-2017-8817](https://curl.haxx.se/docs/adv_2017-ae72.html)
+  * [CVE-2017-8818](https://curl.haxx.se/docs/adv_2017-af0a.html)
+
+<br>
+
+----
+
 ## r151024c (2017-11-20)
 
 Weekly release for w/c 20th of November 2017.
