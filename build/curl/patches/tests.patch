@@ -1,0 +1,43 @@
+
+Curl's tests run from perl which invokes curl commands via system().
+Perls's system() uses /bin/sh which on OmniOS is a link to the 32-bit
+version of ksh93
+ksh ends up removing the empty parameter to --[no]proxy without this patch.
+
+Only in curl-7.57.0.patch/tests/data: Makefile
+diff -ru curl-7.57.0/tests/data/test1004 curl-7.57.0.patch/tests/data/test1004
+--- curl-7.57.0/tests/data/test1004	2017-11-09 22:40:31.000000000 +0000
++++ curl-7.57.0.patch/tests/data/test1004	2017-11-29 15:07:54.375245273 +0000
+@@ -36,7 +36,7 @@
+ HTTP GET with empty proxy
+  </name>
+  <command>
+-http://%HOSTIP:%HTTPPORT/1004 --proxy ""
++http://%HOSTIP:%HTTPPORT/1004 --proxy "''"
+ </command>
+ </client>
+ 
+diff -ru curl-7.57.0/tests/data/test1254 curl-7.57.0.patch/tests/data/test1254
+--- curl-7.57.0/tests/data/test1254	2017-11-09 22:40:36.000000000 +0000
++++ curl-7.57.0.patch/tests/data/test1254	2017-11-29 15:07:34.738745881 +0000
+@@ -33,7 +33,7 @@
+ NO_PROXY=example.com
+ </setenv>
+ <command>
+-http://somewhere.example.com/1254 --proxy http://%HOSTIP:%HTTPPORT --noproxy ""
++http://somewhere.example.com/1254 --proxy http://%HOSTIP:%HTTPPORT --noproxy "''"
+ </command>
+ </client>
+ 
+diff -ru curl-7.57.0/tests/data/test1257 curl-7.57.0.patch/tests/data/test1257
+--- curl-7.57.0/tests/data/test1257	2017-11-09 22:40:36.000000000 +0000
++++ curl-7.57.0.patch/tests/data/test1257	2017-11-29 15:06:40.559644485 +0000
+@@ -34,7 +34,7 @@
+ NO_PROXY=example.com
+ </setenv>
+ <command>
+-http://somewhere.example.com/1257 --noproxy ""
++http://somewhere.example.com/1257 --noproxy "''"
+ </command>
+ </client>
+ 
