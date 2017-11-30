@@ -28,22 +28,21 @@
 . ../../lib/functions.sh
 
 PROG=git
-VER=2.15.0
+VER=2.15.1
 PKG=developer/versioning/git
-SUMMARY="$PROG - a free and open source, distributed version control system"
+SUMMARY="$PROG - distributed version control system"
 DESC="$SUMMARY"
 
 BUILD_DEPENDS_IPS="compatibility/ucb developer/build/autoconf archiver/gnu-tar"
 
 # For inet_ntop which isn't detected properly in the configure script
 LDFLAGS="-lnsl"
-CFLAGS64="$CFLAGS64 -I/usr/include/amd64"
-# Explicitly call out python version to make future python version bumps
-# smoother.
-CONFIGURE_OPTS="--without-tcltk
-    --with-python=/usr/bin/python2.7
+CFLAGS64+=" -I/usr/include/amd64"
+CONFIGURE_OPTS="
+    --without-tcltk
     --with-curl=/usr
-    --with-openssl=/usr"
+    --with-openssl=/usr
+"
 
 save_function configure32 configure32_orig
 configure32() {
@@ -59,7 +58,7 @@ configure64() {
 
 install_man() {
     logmsg "Fetching and installing pre-built man pages"
-    if [[ ! -f ${TMPDIR}/${PROG}-manpages-${VER}.tar.xz ]]; then
+    if [ ! -f ${TMPDIR}/${PROG}-manpages-${VER}.tar.xz ]; then
         pushd $TMPDIR > /dev/null
         get_resource $PROG/${PROG}-manpages-${VER}.tar.xz || \
             logerr "--- Failed to fetch tarball"
@@ -71,6 +70,11 @@ install_man() {
         logerr "--- Error extracting archive"
     popd > /dev/null
 }
+
+TESTSUITE_SED="
+    /test_submodule/s/:.*//
+    /I18N/s/I18N .*/I18N/
+"
 
 init
 download_source $PROG $PROG $VER
