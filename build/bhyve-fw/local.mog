@@ -9,7 +9,9 @@
 
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 
-license LICENSE license=BSD
+license LICENCE license=Intel
+<transform file path=LICENCE -> drop>
 
+<transform file -> set mode 0755>
 link path=usr/share/bhyve/firmware/BHYVE.fd target=BHYVE_RELEASE.fd
 

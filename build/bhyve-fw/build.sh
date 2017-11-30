@@ -23,9 +23,6 @@ BUILD_DEPENDS_IPS="
     developer/nasm
 "
 
-# XXX
-BUILD_DEPENDS_IPS=
-
 PROG=uefi-edk2
 PKG=system/bhyve/firmware
 VER=20160525
@@ -66,16 +63,26 @@ clone_source(){
 build() {
     pushd $TMPDIR/$BUILDDIR/$PROG >/dev/null || logerr "pushd"
 
-    logmsg "-- Cleaning source tree..."
+    MAKE_ARGS="
+            AS=/usr/bin/gas
+            AR=/usr/bin/gar
+            LD=/usr/bin/gld
+            OBJCOPY=/usr/bin/gobjcopy
+            CC=${OOGCC_BIN}gcc
+            CXX=${OOGCC_BIN}g++
+    "
 
-    logcmd gmake -C BaseTools clean
+    logmsg "-- Cleaning source tree"
+
+    logcmd gmake $MAKE_ARGS -C BaseTools clean
     rm -f Build Conf/{target,build_rule,tools_def}.txt Conf/.cache 2>/dev/null
 
-    logmsg "-- Building tools..."
+    logmsg "-- Building tools"
 
     # First build the tools. The code isn't able to detect the build
     # architecture - it doesn't expect `uname -m` to return `i86pc`
-    logcmd gmake -C BaseTools ARCH=X64 || logerr "BaseTools build failed"
+    logcmd gmake $MAKE_ARGS ARCH=X64 -C BaseTools \
+        || logerr "BaseTools build failed"
 
     BUILD_ARGS="-DDEBUG_ON_SERIAL_PORT=TRUE -DFD_SIZE_2MB -DCSM_ENABLE=TRUE"
 
@@ -86,22 +93,16 @@ build() {
         export NASM_PREFIX=/usr/bin/i386/
         source edksetup.sh
 
-        logmsg "-- Building compatibility support module (CSM)..."
-        logcmd gmake \
-            AS=/usr/bin/gas \
-            AR=/usr/bin/gar \
-            LD=/usr/bin/gld \
-            OBJCOPY=/usr/bin/gobjcopy \
-            CC=${OOGCC_BIN}gcc \
-            CXX=${OOGCC_BIN}g++ \
-            -C BhyvePkg/Csm/BhyveCsm16/
+        logmsg "-- Building compatibility support module (CSM)"
+        logcmd gmake $MAKE_ARGS -C BhyvePkg/Csm/BhyveCsm16/ \
+            || logerr "CSM build failed"
 
         for mode in RELEASE DEBUG; do
-            logmsg "-- Building $mode Firmware..."
+            logmsg "-- Building $mode firmware"
             logcmd `which build` \
                 -t OOGCC -a X64 -b $mode \
                 -p BhyvePkg/BhyvePkgX64.dsc \
-                $BUILD_ARGS
+                $BUILD_ARGS || logerr "$mode build failed"
         done
     ) || logerr "failed"
 
@@ -111,6 +112,7 @@ build() {
 install() {
     pushd $TMPDIR/$BUILDDIR/$PROG >/dev/null || logerr "pushd"
     logcmd mkdir -p $DESTDIR/usr/share/bhyve/firmware
+    cp OvmfPkg/License.txt $DESTDIR/LICENCE
     for mode in RELEASE DEBUG; do
         logcmd cp Build/BhyveX64/${mode}_OOGCC/FV/BHYVE.fd \
             $DESTDIR/usr/share/bhyve/firmware/BHYVE_$mode.fd
@@ -119,9 +121,12 @@ install() {
 }
 
 init
+prep_build
 clone_source
 build
 install
+# Reset version for package creation
+VER=$VERHUMAN
 make_package
 clean_up
 
