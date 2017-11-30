@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=ooceapps   # App name
-VER=0.2.2       # App version
+VER=0.2.3       # App version
 VERHUMAN=$VER   # Human-readable version
 #PVER=          # Branch (set in config.sh, override here if needed)
 PKG=ooce/ooceapps # Package name (e.g. library/foo)
