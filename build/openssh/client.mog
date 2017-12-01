@@ -3,8 +3,7 @@
 <transform file dir path=lib/svc/manifest/network -> drop>
 <transform file dir path=lib/svc/method -> drop>
 <transform file path=usr/libexec/sftp-server -> drop>
-<transform dir path=usr/lib/dtrace -> drop>
-<transform file path=usr/lib/dtrace/sftp.d -> drop>
+<transform file dir path=usr/lib/dtrace -> drop>
 <transform dir path=usr/sbin -> drop>
 <transform file path=usr/sbin/sshd -> drop>
 <transform file path=usr/share/man/man4/moduli.4 -> drop>
