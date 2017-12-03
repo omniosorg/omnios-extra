@@ -204,11 +204,12 @@ ask_to_continue() {
 }
 
 ask_to_install() {
-    PKG=$1
+    ati_PKG=$1
     MSG=$2
     if [ -n "$AUTOINSTALL" ]; then
-        logmsg "Auto-installing $PKG..."
-        logcmd $PFEXEC pkg install $PKG || logerr "pkg install $PKG failed"
+        logmsg "Auto-installing $ati_PKG..."
+        logcmd $PFEXEC pkg install $ati_PKG || \
+            logerr "pkg install $ati_PKG failed"
         return
     fi
     if [ -n "$BATCH" ]; then
@@ -217,7 +218,7 @@ ask_to_install() {
     fi
     ask_to_continue_ "$MSG " "Install/Abort?" "i/a" "[iIaA]"
     if [[ "$REPLY" == "i" || "$REPLY" == "I" ]]; then
-        logcmd $PFEXEC pkg install $PKG || logerr "pkg install failed"
+        logcmd $PFEXEC pkg install $ati_PKG || logerr "pkg install failed"
     else
         logmsg "===== Build aborted ====="
         exit 1
