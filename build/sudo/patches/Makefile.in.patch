@@ -1,6 +1,7 @@
---- sudo-1.8.20p2/Makefile.in	Wed May 10 17:38:43 2017
-+++ sudo-1.8.20p2/Makefile.in	Sun Jul  9 17:06:55 2017
-@@ -63,7 +63,6 @@
+diff -pruN '--exclude=*.orig' sudo-1.8.21p2~/Makefile.in sudo-1.8.21p2/Makefile.in
+--- sudo-1.8.21p2~/Makefile.in	2017-08-23 20:07:28.000000000 +0000
++++ sudo-1.8.21p2/Makefile.in	2017-12-03 17:16:12.659692940 +0000
+@@ -63,7 +63,6 @@ SHELL = @SHELL@
  SED = @SED@
  
  INSTALL = $(SHELL) $(top_srcdir)/install-sh -c
