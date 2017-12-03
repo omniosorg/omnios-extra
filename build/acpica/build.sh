@@ -44,7 +44,8 @@ configure32() {
 
 make_prog32() {
     # Build expects m4 to be the GNU version
-    PATH=/usr/gnu/bin:$PATH logcmd $MAKE CC=$CC iasl || logerr "Build failed"
+    PATH=/usr/gnu/bin:$PATH logcmd $MAKE CC=$CC iasl \
+        || logerr "--- Build failed"
 }
 
 

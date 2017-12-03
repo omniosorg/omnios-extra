@@ -48,33 +48,33 @@ clone_source(){
             logcmd rsync -ar $EDK2_CLONE/ $PROG/
         else
             logmsg "-- cloning $PKG_SOURCE_REPO"
-            logcmd $GIT clone --depth 1 $PKG_SOURCE_REPO $PROG
+            logcmd $GIT clone --depth 1 -b $PKG_SOURCE_BRANCH \
+                $PKG_SOURCE_REPO $PROG
         fi
     fi
     if [ -z "$EDK2_CLONE" ]; then
-        logcmd $GIT -C $PROG pull || logerr "failed to pull"
+        logcmd $GIT -C $PROG pull || logerr "--- Failed to pull repo"
     fi
-    logmsg "-- Checking out $PKG_SOURCE_BRANCH branch"
-    logcmd $GIT -C $PROG checkout $PKG_SOURCE_BRANCH \
-        || logerr "Could not check-out branch."
     popd > /dev/null 
 }
 
 build() {
-    pushd $TMPDIR/$BUILDDIR/$PROG >/dev/null || logerr "pushd"
+    pushd $TMPDIR/$BUILDDIR/$PROG >/dev/null || logerr "--- chdir failed"
+
+    export GCCPATH=/opt/gcc-4.4.4
 
     MAKE_ARGS="
             AS=/usr/bin/gas
             AR=/usr/bin/gar
             LD=/usr/bin/gld
             OBJCOPY=/usr/bin/gobjcopy
-            CC=${OOGCC_BIN}gcc
-            CXX=${OOGCC_BIN}g++
+            CC=${GCCPATH}/bin/gcc
+            CXX=${GCCPATH}/bin/g++
     "
 
     logmsg "-- Cleaning source tree"
 
-    logcmd gmake $MAKE_ARGS -C BaseTools clean
+    logcmd gmake $MAKE_ARGS ARCH=X64 -C BaseTools clean
     rm -f Build Conf/{target,build_rule,tools_def}.txt Conf/.cache 2>/dev/null
 
     logmsg "-- Building tools"
@@ -82,12 +82,11 @@ build() {
     # First build the tools. The code isn't able to detect the build
     # architecture - it doesn't expect `uname -m` to return `i86pc`
     logcmd gmake $MAKE_ARGS ARCH=X64 -C BaseTools \
-        || logerr "BaseTools build failed"
+        || logerr "--- BaseTools build failed"
 
     BUILD_ARGS="-DDEBUG_ON_SERIAL_PORT=TRUE -DFD_SIZE_2MB -DCSM_ENABLE=TRUE"
 
     (
-        export GCCPATH=/opt/gcc-4.4.4
         export OOGCC_BIN=$GCCPATH/bin/
         export IASL_PREFIX=/usr/sbin/
         export NASM_PREFIX=/usr/bin/i386/
@@ -95,22 +94,22 @@ build() {
 
         logmsg "-- Building compatibility support module (CSM)"
         logcmd gmake $MAKE_ARGS -C BhyvePkg/Csm/BhyveCsm16/ \
-            || logerr "CSM build failed"
+            || logerr "--- CSM build failed"
 
         for mode in RELEASE DEBUG; do
             logmsg "-- Building $mode firmware"
             logcmd `which build` \
                 -t OOGCC -a X64 -b $mode \
                 -p BhyvePkg/BhyvePkgX64.dsc \
-                $BUILD_ARGS || logerr "$mode build failed"
+                $BUILD_ARGS || logerr "--- $mode build failed"
         done
-    ) || logerr "failed"
+    ) || logerr "--- Build failed"
 
     popd >/dev/null
 }
 
 install() {
-    pushd $TMPDIR/$BUILDDIR/$PROG >/dev/null || logerr "pushd"
+    pushd $TMPDIR/$BUILDDIR/$PROG >/dev/null || logerr "--- chdir failed"
     logcmd mkdir -p $DESTDIR/usr/share/bhyve/firmware
     cp OvmfPkg/License.txt $DESTDIR/LICENCE
     for mode in RELEASE DEBUG; do
