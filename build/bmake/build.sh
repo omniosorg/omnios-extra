@@ -27,7 +27,7 @@
 . ../../lib/functions.sh
 
 PROG=bmake
-VER=20171118
+VER=20171126
 VERHUMAN=$VER
 PKG=developer/bmake
 SUMMARY="portable version of NetBSD make(1)"
