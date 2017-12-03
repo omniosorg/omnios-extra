@@ -6,6 +6,24 @@
 
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](https://omniosce.org/upgrade)
 
+## r151022ac (2017-12-04)
+
+Weekly release for w/c 4th of December 2017.
+> This update requires a reboot.
+
+### Security fixes
+
+* `vim` updated to fix:
+  * [CVE-2017-17087](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-17087)
+
+### Other changes
+
+* [8880](https://www.illumos.org/issues/8880) Improve DTrace error checking
+
+<br>
+
+----
+
 ## r151022ab (2017-11-29)
 
 Weekly release for w/c 27th of November 2017.
