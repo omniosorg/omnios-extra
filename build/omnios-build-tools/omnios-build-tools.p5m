@@ -10,6 +10,7 @@ depend fmri=developer/build/gnu-make type=require
 depend fmri=archiver/gnu-tar type=require
 depend fmri=compatibility/ucb type=require
 depend fmri=compress/xz type=require
+depend fmri=developer/acpi/compiler type=require
 depend fmri=developer/build/autoconf type=require
 depend fmri=developer/build/automake type=require
 depend fmri=developer/build/libtool type=require
@@ -17,6 +18,7 @@ depend fmri=developer/dtrace type=require
 depend fmri=developer/illumos-tools type=require
 depend fmri=developer/lexer/flex type=require
 depend fmri=developer/macro/gnu-m4 type=require
+depend fmri=developer/nasm type=require
 depend fmri=developer/parser/bison type=require
 depend fmri=developer/pkg-config type=require
 depend fmri=developer/sunstudio12.1 type=require
