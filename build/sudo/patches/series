@@ -1,5 +1,3 @@
 audit-event.patch
-printflike.patch
-gettext.patch
 sudo_edit.c.patch
 Makefile.in.patch
