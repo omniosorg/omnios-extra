@@ -4,6 +4,24 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024e (2017-12-04)
+
+Weekly release for w/c 4th of December 2017.
+> This update requires a reboot.
+
+### Security fixes
+
+* `vim` updated to fix:
+  * [CVE-2017-17087](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-17087)
+
+### Other changes
+
+* [8880](https://www.illumos.org/issues/8880) Improve DTrace error checking
+
+<br>
+
+----
+
 ## r151024d (2017-11-29)
 
 Weekly release for w/c 27th of November 2017.
