@@ -10,6 +10,7 @@
 | compress/zip				| 3.0			| http://www.info-zip.org/Zip.html
 | data/iso-codes			| 3.77			| http://pkg-isocodes.alioth.debian.org/downloads/
 | database/sqlite-3			| 3210000		| https://www.sqlite.org/download.html
+| developer/acpi/compiler		| 20171110		| https://www.acpica.org/downloads/
 | developer/bmake			| 20171126		| http://www.crufty.net/ftp/pub/sjg/
 | developer/build/autoconf		| 2.69			| https://git.savannah.gnu.org/cgit/autoconf.git/refs/tags
 | developer/build/automake		| 1.15.1		| https://git.savannah.gnu.org/cgit/automake.git/refs/tags
@@ -21,6 +22,7 @@
 | developer/java/jdk			| 1.7.0_151-b01		| http://hg.openjdk.java.net/jdk7u/jdk7u/tags
 | developer/lexer/flex			| 2.6.4			| https://github.com/westes/flex/releases
 | developer/macro/gnu-m4		| 1.4.18		| http://git.savannah.gnu.org/cgit/m4.git/refs/tags
+| developer/nasm			| 2.13.02		| http://www.nasm.us/pub/nasm/releasebuilds
 | developer/parser/bison		| 3.0.4			| https://git.savannah.gnu.org/cgit/bison.git/refs/tags
 | developer/pkg-config			| 0.29.2		| https://pkg-config.freedesktop.org/releases
 | developer/versioning/git		| 2.15.1		| https://www.kernel.org/pub/software/scm/git
