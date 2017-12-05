@@ -94,29 +94,31 @@
 | library/security/trousers		| 0.3.14		| https://sourceforge.net/projects/trousers/files/trousers
 | library/python-2/asn1crypto-27	| 0.23.0		| https://pypi.python.org/pypi/asn1crypto
 | library/python-2/cffi-27		| 1.11.2		| https://pypi.python.org/pypi/cffi
-| library/python-2/cheroot-27		| 5.9.1			| https://pypi.python.org/pypi/cheroot
-| library/python-2/cherrypy-27		| 11.0.0		| https://pypi.python.org/pypi/cherrypy | On hold as 11.1.0 introduces a new dependency (jaraco.classes)
+| library/python-2/cheroot-27		| 6.0.0			| https://pypi.python.org/pypi/cheroot
+| library/python-2/cherrypy-27		| 13.0.0		| https://pypi.python.org/pypi/cherrypy
 | library/python-2/coverage-27		| 4.4.2			| https://pypi.python.org/pypi/coverage
-| library/python-2/cryptography-27	| 2.1.3			| https://pypi.python.org/pypi/cryptography
+| library/python-2/cryptography-27	| 2.1.4			| https://pypi.python.org/pypi/cryptography
 | library/python-2/enum-27		| 1.1.6			| https://pypi.python.org/pypi/enum34
 | library/python-2/functools32-27	| 3.2.3-2		| https://pypi.python.org/pypi/functools32
 | library/python-2/idna-27		| 2.6			| https://pypi.python.org/pypi/idna
 | library/python-2/ipaddress-27		| 1.0.18		| https://pypi.python.org/pypi/ipaddress
+| library/python-2/jaraco.classes-27	| 1.4.3			| https://pypi.python.org/pypi/jaraco.classes
 | library/python-2/jsonrpclib-27	| 0.1.7			| https://pypi.python.org/pypi/jsonrpclib
 | library/python-2/jsonschema-27	| 2.6.0			| https://pypi.python.org/pypi/jsonschema
 | library/python-2/lxml-27		| 4.1.1			| https://pypi.python.org/pypi/lxml/
 | library/python-2/mako-27		| 1.0.7			| https://pypi.python.org/pypi/Mako
+| library/python-2/more-itertools-27	| 4.0.1			| https://pypi.python.org/pypi/more-itertools
 | library/python-2/numpy-27		| 1.13.3		| https://pypi.python.org/pypi/numpy
 | library/python-2/ply-27		| 3.10			| https://pypi.python.org/pypi/ply
 | library/python-2/portend-27		| 2.2			| https://pypi.python.org/pypi/portend
 | library/python-2/pybonjour-27		| 1.1.1			| https://pypi.python.org/pypi/pybonjour
 | library/python-2/pycurl-27		| 7.43.0		| https://pypi.python.org/pypi/pycurl
 | library/python-2/pylint-27		| 1.7.4			| https://pypi.python.org/pypi/pylint
-| library/python-2/pyopenssl-27		| 17.4.0		| https://pypi.python.org/pypi/pyOpenSSL
+| library/python-2/pyopenssl-27		| 17.5.0		| https://pypi.python.org/pypi/pyOpenSSL
 | library/python-2/pyrex-27		| 0.9.9			| http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
 | library/python-2/pytz-27		| 2017.3		| https://pypi.python.org/pypi/pytz
-| library/python-2/setuptools-27	| 37.0.0		| https://pypi.python.org/pypi/setuptools
-| library/python-2/simplejson-27	| 3.12.0		| https://pypi.python.org/pypi/simplejson
+| library/python-2/setuptools-27	| 38.2.4		| https://pypi.python.org/pypi/setuptools
+| library/python-2/simplejson-27	| 3.13.2		| https://pypi.python.org/pypi/simplejson
 | library/python-2/six-27		| 1.11.0		| https://pypi.python.org/pypi/six
 | library/python-2/tempora-27		| 1.9			| https://pypi.python.org/pypi/tempora
 
