@@ -24,13 +24,12 @@
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../../lib/functions.sh
 
 PKG=library/python-2/simplejson-27
 PROG=simplejson
-VER=3.12.0
-SUMMARY="simplejson - Python interface to JSON for Python 2.7"
+VER=3.13.2
+SUMMARY="simplejson - Python interface to JSON for Python"
 DESC="$SUMMARY"
 
 . $SRCDIR/../common.sh
