@@ -39,6 +39,7 @@ RUN_DEPENDS_IPS+="
 	library/python-2/six-27
 	library/python-2/portend-27
 	library/python-2/cheroot-27
+    library/python-2/jaraco.classes-27
 "
 
 init
