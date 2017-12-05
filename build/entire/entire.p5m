@@ -274,7 +274,7 @@ depend fmri=service/file-system/smb@0.5.11,5.11-@PVER@ type=require
 depend fmri=service/hal@0.5.11,5.11-@PVER@ type=require
 depend fmri=service/network/network-clients@0.5.11,5.11-@PVER@ type=require
 depend fmri=service/network/ntp@4.2.8,5.11-@PVER@ type=require
-depend fmri=service/network/smtp/sendmail@8.14.4,5.11-@PVER@ type=group
+depend fmri=service/network/smtp/dma@0.11,5.11-@PVER@ type=require
 depend fmri=service/picl@0.5.11,5.11-@PVER@ type=require
 depend fmri=service/resource-pools@0.5.11,5.11-@PVER@ type=require
 depend fmri=service/storage/removable-media@0.5.11,5.11-@PVER@ type=require

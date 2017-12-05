@@ -1,0 +1,23 @@
+From bf003f40b4e251df73d4be0c3d8a282ce95f03e1 Mon Sep 17 00:00:00 2001
+From: Andy Fiddaman <omnios@citrus-it.co.uk>
+Date: Wed, 6 Dec 2017 09:36:43 +0000
+Subject: [PATCH] Prefer IPv4 MX records over IPv6
+
+diff -pruN '--exclude=*.orig' dma-0.11~/build/dma/patches/mxpref.patch dma-0.11/build/dma/patches/mxpref.patch
+--- dma-0.11~/build/dma/patches/mxpref.patch	1970-01-01 01:00:00.000000000 +0000
++++ dma-0.11/build/dma/patches/mxpref.patch	2017-12-06 15:52:09.884416787 +0000
+@@ -0,0 +1,14 @@
++diff -ru dma-0.11~/dns.c dma-0.11/dns.c
++--- dma-0.11~/dns.c	2017-12-06 08:58:36.863762284 +0000
+++++ dma-0.11/dns.c	2017-12-06 09:31:35.778547802 +0000
++@@ -60,8 +60,8 @@
++ 	if (v != 0)
++ 		return (v);
++ 
++-	/* sort PF_INET6 before PF_INET */
++-	v = - (ha->ai.ai_family - hb->ai.ai_family);
+++	/* sort PF_INET before PF_INET6 */
+++	v = (ha->ai.ai_family - hb->ai.ai_family);
++ 	return (v);
++ }
++ 
