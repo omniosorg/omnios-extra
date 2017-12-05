@@ -24,12 +24,11 @@
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../../lib/functions.sh
 
 PKG=library/python-2/setuptools-27
 PROG=setuptools
-VER=37.0.0
+VER=38.2.4
 SUMMARY="setuptools - Easily download, build, install, upgrade, and uninstall Python packages"
 DESC="$SUMMARY"
 
