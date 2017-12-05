@@ -23,12 +23,11 @@
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../../lib/functions.sh
 
 PKG=library/python-2/cryptography-27
 PROG=cryptography
-VER=2.1.3
+VER=2.1.4
 SUMMARY="cryptography - cryptographic recipes and primitives"
 DESC="$SUMMARY"
 
