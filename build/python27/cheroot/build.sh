@@ -33,7 +33,7 @@ SUMMARY="cheroot - Highly-optimized, pure-python HTTP server"
 DESC="$SUMMARY"
 
 RUN_DEPENDS_IPS+="
-	library/python-2/more-itertools-27
+    library/python-2/more-itertools-27
 "
 
 . $SRCDIR/../common.sh
