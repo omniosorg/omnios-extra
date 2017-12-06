@@ -1,0 +1,381 @@
+commit a91f6a0d5499d46e0fe0facadd966a88ae3914b8
+Author: Dale Ghent <daleg@omniti.com>
+Date:   Fri Feb 5 17:18:53 2016 -0500
+
+    Port DMA to illumos
+
+diff -pruN '--exclude=*.orig' dma-0.11~/Makefile dma-0.11/Makefile
+--- dma-0.11~/Makefile	2016-02-07 13:41:49.000000000 +0000
++++ dma-0.11/Makefile	2017-12-06 15:52:09.814914221 +0000
+@@ -50,8 +50,8 @@ clean:
+ install: all
+ 	${INSTALL} -d ${DESTDIR}${SBIN}
+ 	${INSTALL} -d ${DESTDIR}${MAN}/man8 ${DESTDIR}${LIBEXEC}
+-	${INSTALL} -m 2755 -o root -g mail dma ${DESTDIR}${SBIN}
+-	${INSTALL} -m 4754 -o root -g mail dma-mbox-create ${DESTDIR}${LIBEXEC}
++	${INSTALL} dma ${DESTDIR}${SBIN}
++	${INSTALL} dma-mbox-create ${DESTDIR}${LIBEXEC}
+ 	${INSTALL} -m 0644 dma.8 ${DESTDIR}${MAN}/man8/
+ 
+ sendmail-link:
+@@ -61,8 +61,8 @@ mailq-link:
+ 	cd ${DESTDIR}${SBIN} && ${LN} ${SYMLINK} dma mailq
+ 
+ install-spool-dirs:
+-	${INSTALL} -d -m 2775 -o root -g mail ${DESTDIR}${DMASPOOL}
+-	${INSTALL} -d -m 2775 -o root -g mail ${DESTDIR}${VARMAIL}
++	${INSTALL} -d -m 775 ${DESTDIR}${DMASPOOL}
++	${INSTALL} -d -m 775 ${DESTDIR}${VARMAIL}
+ 
+ permissions:
+ 	-${CHGRP} mail ${DESTDIR}${VARMAIL}/*
+@@ -74,14 +74,14 @@ install-etc:
+ 	@if [ -e ${DESTDIR}${CONFDIR}/dma.conf ]; then \
+ 		echo "Not overwriting ${DESTDIR}${CONFDIR}/dma.conf."; \
+ 	else \
+-		echo ${INSTALL} -m 644 -o root -g mail dma.conf ${DESTDIR}${CONFDIR}; \
+-		${INSTALL} -m 644 -o root -g mail dma.conf ${DESTDIR}${CONFDIR}; \
++		echo ${INSTALL} -m 644 dma.conf ${DESTDIR}${CONFDIR}; \
++		${INSTALL} -m 644 dma.conf ${DESTDIR}${CONFDIR}; \
+ 	fi
+ 	@if [ -e ${DESTDIR}${CONFDIR}/auth.conf ]; then \
+ 		echo "Not overwriting ${DESTDIR}${CONFDIR}/auth.conf."; \
+ 	else \
+-		echo ${INSTALL} -m 640 -o root -g mail auth.conf ${DESTDIR}${CONFDIR}; \
+-		${INSTALL} -m 640 -o root -g mail auth.conf ${DESTDIR}${CONFDIR}; \
++		echo ${INSTALL} -m 640 auth.conf ${DESTDIR}${CONFDIR}; \
++		${INSTALL} -m 640 auth.conf ${DESTDIR}${CONFDIR}; \
+ 	fi
+ 
+ aliases_parse.c: aliases_parse.y
+diff -pruN '--exclude=*.orig' dma-0.11~/crypto.c dma-0.11/crypto.c
+--- dma-0.11~/crypto.c	2016-02-07 13:41:49.000000000 +0000
++++ dma-0.11/crypto.c	2017-12-06 15:52:09.815066006 +0000
+@@ -221,10 +221,10 @@ hmac_md5(unsigned char *text, int text_l
+          */
+ 
+         /* start out by storing key in pads */
+-        bzero( k_ipad, sizeof k_ipad);
+-        bzero( k_opad, sizeof k_opad);
+-        bcopy( key, k_ipad, key_len);
+-        bcopy( key, k_opad, key_len);
++        memset(k_ipad, 0, sizeof (k_ipad));
++        memset(k_opad, 0, sizeof (k_opad));
++        memmove(k_ipad, key, key_len);
++        memmove(k_opad, key, key_len);
+ 
+         /* XOR key with ipad and opad values */
+         for (i=0; i<64; i++) {
+diff -pruN '--exclude=*.orig' dma-0.11~/dma.8 dma-0.11/dma.8
+--- dma-0.11~/dma.8	2016-02-07 13:41:49.000000000 +0000
++++ dma-0.11/dma.8	2017-12-06 15:52:09.815189707 +0000
+@@ -332,9 +332,7 @@ This value will be overridden when the
+ flag is used.
+ .El
+ .Sh SEE ALSO
+-.Xr mailaddr 7 ,
+ .Xr mailwrapper 8 ,
+-.Xr sendmail 8
+ .Rs
+ .%A "J. B. Postel"
+ .%T "Simple Mail Transfer Protocol"
+@@ -350,11 +348,6 @@ flag is used.
+ .%T "SMTP Service Extension for Secure SMTP over TLS"
+ .%O RFC 2487
+ .Re
+-.Sh HISTORY
+-The
+-.Nm
+-utility first appeared in
+-.Dx 1.11 .
+ .Sh AUTHORS
+ .An -nosplit
+ .Nm
+diff -pruN '--exclude=*.orig' dma-0.11~/dma.c dma-0.11/dma.c
+--- dma-0.11~/dma.c	2016-02-07 13:41:49.000000000 +0000
++++ dma-0.11/dma.c	2017-12-06 15:52:09.815408429 +0000
+@@ -94,7 +94,7 @@ sighup_handler(int signo)
+ }
+ 
+ static char *
+-set_from(struct queue *queue, const char *osender)
++set_from(struct dma_queue *queue, const char *osender)
+ {
+ 	const char *addr;
+ 	char *sender;
+@@ -153,7 +153,7 @@ read_aliases(void)
+ }
+ 
+ static int
+-do_alias(struct queue *queue, const char *addr)
++do_alias(struct dma_queue *queue, const char *addr)
+ {
+ 	struct alias *al;
+         struct stritem *sit;
+@@ -173,7 +173,7 @@ do_alias(struct queue *queue, const char
+ }
+ 
+ int
+-add_recp(struct queue *queue, const char *str, int expand)
++add_recp(struct dma_queue *queue, const char *str, int expand)
+ {
+ 	struct qitem *it, *tit;
+ 	struct passwd *pw;
+@@ -240,7 +240,7 @@ out:
+ }
+ 
+ static struct qitem *
+-go_background(struct queue *queue)
++go_background(struct dma_queue *queue)
+ {
+ 	struct sigaction sa;
+ 	struct qitem *it;
+@@ -252,7 +252,7 @@ go_background(struct queue *queue)
+ 	}
+ 	daemonize = 0;
+ 
+-	bzero(&sa, sizeof(sa));
++	memset(&sa, 0, sizeof (sa));
+ 	sa.sa_handler = SIG_IGN;
+ 	sigaction(SIGCHLD, &sa, NULL);
+ 
+@@ -372,7 +372,7 @@ bounce:
+ }
+ 
+ void
+-run_queue(struct queue *queue)
++run_queue(struct dma_queue *queue)
+ {
+ 	struct qitem *it;
+ 
+@@ -385,7 +385,7 @@ run_queue(struct queue *queue)
+ }
+ 
+ static void
+-show_queue(struct queue *queue)
++show_queue(struct dma_queue *queue)
+ {
+ 	struct qitem *it;
+ 	int locked = 0;	/* XXX */
+@@ -421,7 +421,7 @@ main(int argc, char **argv)
+ {
+ 	struct sigaction act;
+ 	char *sender = NULL;
+-	struct queue queue;
++	struct dma_queue queue;
+ 	int i, ch;
+ 	int nodot = 0, showq = 0, queue_only = 0;
+ 	int recp_from_header = 0;
+@@ -454,7 +454,7 @@ main(int argc, char **argv)
+ 	atexit(deltmp);
+ 	init_random();
+ 
+-	bzero(&queue, sizeof(queue));
++	memset(&queue, 0, sizeof (queue));
+ 	LIST_INIT(&queue.queue);
+ 
+ 	if (strcmp(argv[0], "mailq") == 0) {
+diff -pruN '--exclude=*.orig' dma-0.11~/dma.h dma-0.11/dma.h
+--- dma-0.11~/dma.h	2016-02-07 13:41:49.000000000 +0000
++++ dma-0.11/dma.h	2017-12-06 15:52:09.815542120 +0000
+@@ -81,7 +81,7 @@
+ #define SPOOL_FLUSHFILE	"flush"
+ 
+ #ifndef DMA_ROOT_USER
+-#define DMA_ROOT_USER	"mail"
++#define DMA_ROOT_USER	"dma"
+ #endif
+ #ifndef DMA_GROUP
+ #define DMA_GROUP	"mail"
+@@ -118,7 +118,7 @@ struct qitem {
+ };
+ LIST_HEAD(queueh, qitem);
+ 
+-struct queue {
++struct dma_queue {
+ 	struct queueh queue;
+ 	char *id;
+ 	FILE *mailf;
+@@ -205,16 +205,16 @@ int base64_decode(const char *, void *);
+ /* dma.c */
+ #define EXPAND_ADDR	1
+ #define EXPAND_WILDCARD	2
+-int add_recp(struct queue *, const char *, int);
+-void run_queue(struct queue *);
++int add_recp(struct dma_queue *, const char *, int);
++void run_queue(struct dma_queue *);
+ 
+ /* spool.c */
+-int newspoolf(struct queue *);
+-int linkspool(struct queue *);
+-int load_queue(struct queue *);
++int newspoolf(struct dma_queue *);
++int linkspool(struct dma_queue *);
++int load_queue(struct dma_queue *);
+ void delqueue(struct qitem *);
+ int acquirespool(struct qitem *);
+-void dropspool(struct queue *, struct qitem *);
++void dropspool(struct dma_queue *, struct qitem *);
+ int flushqueue_since(unsigned int);
+ int flushqueue_signal(void);
+ 
+@@ -223,7 +223,7 @@ int deliver_local(struct qitem *);
+ 
+ /* mail.c */
+ void bounce(struct qitem *, const char *);
+-int readmail(struct queue *, int, int);
++int readmail(struct dma_queue *, int, int);
+ 
+ /* util.c */
+ const char *hostname(void);
+diff -pruN '--exclude=*.orig' dma-0.11~/dns.c dma-0.11/dns.c
+--- dma-0.11~/dns.c	2016-02-07 13:41:49.000000000 +0000
++++ dma-0.11/dns.c	2017-12-06 15:52:09.815653796 +0000
+@@ -43,6 +43,10 @@
+ #include <string.h>
+ #include <stdlib.h>
+ 
++#if defined(__sun)
++#include <sys/sysmacros.h>
++#endif
++
+ #include "dma.h"
+ 
+ static int
+@@ -109,7 +113,7 @@ add_host(int pref, const char *host, int
+ 		p->pref = pref;
+ 		p->ai = *res;
+ 		p->ai.ai_addr = NULL;
+-		bcopy(res->ai_addr, &p->sa, p->ai.ai_addrlen);
++		memmove(&p->sa, res->ai_addr, p->ai.ai_addrlen);
+ 
+ 		getnameinfo((struct sockaddr *)&p->sa, p->ai.ai_addrlen,
+ 			    p->addr, sizeof(p->addr),
+diff -pruN '--exclude=*.orig' dma-0.11~/local.c dma-0.11/local.c
+--- dma-0.11~/local.c	2016-02-07 13:41:49.000000000 +0000
++++ dma-0.11/local.c	2017-12-06 15:52:09.815758331 +0000
+@@ -63,7 +63,7 @@ create_mbox(const char *name)
+ 	/*
+ 	 * We need to enable SIGCHLD temporarily so that waitpid works.
+ 	 */
+-	bzero(&sa, sizeof(sa));
++	memset(&sa, 0, sizeof (sa));
+ 	sa.sa_handler = SIG_DFL;
+ 	sigaction(SIGCHLD, &sa, &osa);
+ 
+diff -pruN '--exclude=*.orig' dma-0.11~/mail.c dma-0.11/mail.c
+--- dma-0.11~/mail.c	2016-02-07 13:41:49.000000000 +0000
++++ dma-0.11/mail.c	2017-12-06 15:52:09.815911294 +0000
+@@ -44,7 +44,7 @@
+ void
+ bounce(struct qitem *it, const char *reason)
+ {
+-	struct queue bounceq;
++	struct dma_queue bounceq;
+ 	char line[1000];
+ 	size_t pos;
+ 	int error;
+@@ -55,7 +55,7 @@ bounce(struct qitem *it, const char *rea
+ 		exit(EX_SOFTWARE);
+ 	}
+ 
+-	bzero(&bounceq, sizeof(bounceq));
++	memset(&bounceq, 0, sizeof (bounceq));
+ 	LIST_INIT(&bounceq.queue);
+ 	bounceq.sender = "";
+ 	if (add_recp(&bounceq, it->sender, EXPAND_WILDCARD) != 0)
+@@ -160,7 +160,7 @@ struct parse_state {
+  * XXX local addresses will need treatment
+  */
+ static int
+-parse_addrs(struct parse_state *ps, char *s, struct queue *queue)
++parse_addrs(struct parse_state *ps, char *s, struct dma_queue *queue)
+ {
+ 	char *addr;
+ 
+@@ -171,7 +171,7 @@ again:
+ 
+ 	case START:
+ 		/* init our data */
+-		bzero(ps, sizeof(*ps));
++		memset(ps, 0, sizeof (*ps));
+ 
+ 		/* skip over header name */
+ 		while (*s != ':')
+@@ -342,7 +342,7 @@ newaddr:
+ }
+ 
+ int
+-readmail(struct queue *queue, int nodot, int recp_from_header)
++readmail(struct dma_queue *queue, int nodot, int recp_from_header)
+ {
+ 	struct parse_state parse_state;
+ 	char line[1000];	/* by RFC2822 */
+diff -pruN '--exclude=*.orig' dma-0.11~/spool.c dma-0.11/spool.c
+--- dma-0.11~/spool.c	2016-02-07 13:41:49.000000000 +0000
++++ dma-0.11/spool.c	2017-12-06 15:52:09.816064117 +0000
+@@ -69,7 +69,7 @@
+  */
+ 
+ int
+-newspoolf(struct queue *queue)
++newspoolf(struct dma_queue *queue)
+ {
+ 	char fn[PATH_MAX+1];
+ 	struct stat st;
+@@ -151,16 +151,16 @@ writequeuef(struct qitem *it)
+ }
+ 
+ static struct qitem *
+-readqueuef(struct queue *queue, char *queuefn)
++readqueuef(struct dma_queue *queue, char *queuefn)
+ {
+ 	char line[1000];
+-	struct queue itmqueue;
++	struct dma_queue itmqueue;
+ 	FILE *queuef = NULL;
+ 	char *s;
+ 	char *queueid = NULL, *sender = NULL, *addr = NULL;
+ 	struct qitem *it = NULL;
+ 
+-	bzero(&itmqueue, sizeof(itmqueue));
++	memset(&itmqueue, 0, sizeof (itmqueue));
+ 	LIST_INIT(&itmqueue.queue);
+ 
+ 	queuef = fopen(queuefn, "r");
+@@ -229,7 +229,7 @@ out:
+ }
+ 
+ int
+-linkspool(struct queue *queue)
++linkspool(struct dma_queue *queue)
+ {
+ 	struct stat st;
+ 	struct qitem *it;
+@@ -276,7 +276,7 @@ delfiles:
+ }
+ 
+ int
+-load_queue(struct queue *queue)
++load_queue(struct dma_queue *queue)
+ {
+ 	struct stat sb;
+ 	struct qitem *it;
+@@ -285,7 +285,7 @@ load_queue(struct queue *queue)
+ 	char *queuefn;
+ 	char *mailfn;
+ 
+-	bzero(queue, sizeof(*queue));
++	memset(queue, 0, sizeof (*queue));
+ 	LIST_INIT(&queue->queue);
+ 
+ 	spooldir = opendir(config.spooldir);
+@@ -382,7 +382,7 @@ fail:
+ }
+ 
+ void
+-dropspool(struct queue *queue, struct qitem *keep)
++dropspool(struct dma_queue *queue, struct qitem *keep)
+ {
+ 	struct qitem *it;
+ 

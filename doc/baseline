@@ -466,6 +466,7 @@ omnios service/network/network-servers
 omnios service/network/nis
 omnios service/network/ntp
 omnios service/network/slp
+omnios service/network/smtp/dma
 omnios service/network/smtp/sendmail
 omnios service/network/snmp/mibiisa o
 omnios service/network/telnet

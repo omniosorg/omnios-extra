@@ -22,6 +22,29 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
     * openssh daemon
     * TBC...
 
+* The default mail submission agent is now `Dragonfly Mail Agent (dma)` rather
+  than sendmail. In a default installation, `/usr/lib/sendmail` points to
+  `dma` and can deliver email messages to local users and Internet recipients.
+  Dragonfly supports TLS and SMTP authentication out of the box - see
+  `/etc/dma/dma.conf` and `man dma` for available options.
+  There are now three mediated MTA/MSA packages in OmniOS, `dma`, `sendmail`
+  and `mailwrapper`; only `dma` is installed by default. To switch between
+  them, install the appropriate package and then configure the `mta` mediator
+  implementation, for example:
+    ```
+	# pkg install service/network/smtp/sendmail
+
+	# pkg mediator -a mta
+	MEDIATOR VER. SRC. VERSION IMPL. SRC. IMPLEMENTATION
+	mta      system            system     mailwrapper
+	mta      system            system     sendmail
+	mta      vendor            vendor     dma
+
+	# pkg set-mediator -I sendmail mta
+    ```
+  Mailwrapper is still available to support use of packages from non-IPS
+  repositories such as _pkgsrc_ via `/etc/mailer.conf`
+
 * `openssh` has been upgraded to 7.6p1. This version drops support for
   SSH protocol version 1, RSA keys under 1024 bits in length and a number
   of old ciphers and MACs. Refer to
