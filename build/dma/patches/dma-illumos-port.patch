@@ -6,18 +6,22 @@ Date:   Fri Feb 5 17:18:53 2016 -0500
 
 diff -pruN '--exclude=*.orig' dma-0.11~/Makefile dma-0.11/Makefile
 --- dma-0.11~/Makefile	2016-02-07 13:41:49.000000000 +0000
-+++ dma-0.11/Makefile	2017-12-06 15:52:09.814914221 +0000
-@@ -50,8 +50,8 @@ clean:
++++ dma-0.11/Makefile	2017-12-07 12:39:25.677406076 +0000
+@@ -49,10 +49,10 @@ clean:
+ 
  install: all
  	${INSTALL} -d ${DESTDIR}${SBIN}
- 	${INSTALL} -d ${DESTDIR}${MAN}/man8 ${DESTDIR}${LIBEXEC}
+-	${INSTALL} -d ${DESTDIR}${MAN}/man8 ${DESTDIR}${LIBEXEC}
 -	${INSTALL} -m 2755 -o root -g mail dma ${DESTDIR}${SBIN}
 -	${INSTALL} -m 4754 -o root -g mail dma-mbox-create ${DESTDIR}${LIBEXEC}
+-	${INSTALL} -m 0644 dma.8 ${DESTDIR}${MAN}/man8/
++	${INSTALL} -d ${DESTDIR}${MAN}/man1m ${DESTDIR}${LIBEXEC}
 +	${INSTALL} dma ${DESTDIR}${SBIN}
 +	${INSTALL} dma-mbox-create ${DESTDIR}${LIBEXEC}
- 	${INSTALL} -m 0644 dma.8 ${DESTDIR}${MAN}/man8/
++	${INSTALL} -m 0644 dma.1m ${DESTDIR}${MAN}/man1m/
  
  sendmail-link:
+ 	cd ${DESTDIR}${SBIN} && ${LN} ${SYMLINK} dma sendmail
 @@ -61,8 +61,8 @@ mailq-link:
  	cd ${DESTDIR}${SBIN} && ${LN} ${SYMLINK} dma mailq
  
@@ -50,7 +54,7 @@ diff -pruN '--exclude=*.orig' dma-0.11~/Makefile dma-0.11/Makefile
  aliases_parse.c: aliases_parse.y
 diff -pruN '--exclude=*.orig' dma-0.11~/crypto.c dma-0.11/crypto.c
 --- dma-0.11~/crypto.c	2016-02-07 13:41:49.000000000 +0000
-+++ dma-0.11/crypto.c	2017-12-06 15:52:09.815066006 +0000
++++ dma-0.11/crypto.c	2017-12-07 12:39:25.678060398 +0000
 @@ -221,10 +221,10 @@ hmac_md5(unsigned char *text, int text_l
           */
  
@@ -66,20 +70,22 @@ diff -pruN '--exclude=*.orig' dma-0.11~/crypto.c dma-0.11/crypto.c
  
          /* XOR key with ipad and opad values */
          for (i=0; i<64; i++) {
-diff -pruN '--exclude=*.orig' dma-0.11~/dma.8 dma-0.11/dma.8
---- dma-0.11~/dma.8	2016-02-07 13:41:49.000000000 +0000
-+++ dma-0.11/dma.8	2017-12-06 15:52:09.815189707 +0000
-@@ -332,9 +332,7 @@ This value will be overridden when the
+diff -pruN '--exclude=*.orig' dma-0.11~/dma.1m dma-0.11/dma.1m
+--- dma-0.11~/dma.1m	2017-12-07 12:39:25.649186856 +0000
++++ dma-0.11/dma.1m	2017-12-07 12:39:25.678195452 +0000
+@@ -332,9 +332,8 @@ This value will be overridden when the
  flag is used.
  .El
  .Sh SEE ALSO
 -.Xr mailaddr 7 ,
- .Xr mailwrapper 8 ,
+-.Xr mailwrapper 8 ,
 -.Xr sendmail 8
++.Xr mailwrapper 1M ,
++.Xr sendmail 1M
  .Rs
  .%A "J. B. Postel"
  .%T "Simple Mail Transfer Protocol"
-@@ -350,11 +348,6 @@ flag is used.
+@@ -350,11 +349,6 @@ flag is used.
  .%T "SMTP Service Extension for Secure SMTP over TLS"
  .%O RFC 2487
  .Re
@@ -93,7 +99,7 @@ diff -pruN '--exclude=*.orig' dma-0.11~/dma.8 dma-0.11/dma.8
  .Nm
 diff -pruN '--exclude=*.orig' dma-0.11~/dma.c dma-0.11/dma.c
 --- dma-0.11~/dma.c	2016-02-07 13:41:49.000000000 +0000
-+++ dma-0.11/dma.c	2017-12-06 15:52:09.815408429 +0000
++++ dma-0.11/dma.c	2017-12-07 12:39:25.678416293 +0000
 @@ -94,7 +94,7 @@ sighup_handler(int signo)
  }
  
@@ -177,7 +183,7 @@ diff -pruN '--exclude=*.orig' dma-0.11~/dma.c dma-0.11/dma.c
  	if (strcmp(argv[0], "mailq") == 0) {
 diff -pruN '--exclude=*.orig' dma-0.11~/dma.h dma-0.11/dma.h
 --- dma-0.11~/dma.h	2016-02-07 13:41:49.000000000 +0000
-+++ dma-0.11/dma.h	2017-12-06 15:52:09.815542120 +0000
++++ dma-0.11/dma.h	2017-12-07 12:39:25.678555924 +0000
 @@ -81,7 +81,7 @@
  #define SPOOL_FLUSHFILE	"flush"
  
@@ -230,7 +236,7 @@ diff -pruN '--exclude=*.orig' dma-0.11~/dma.h dma-0.11/dma.h
  const char *hostname(void);
 diff -pruN '--exclude=*.orig' dma-0.11~/dns.c dma-0.11/dns.c
 --- dma-0.11~/dns.c	2016-02-07 13:41:49.000000000 +0000
-+++ dma-0.11/dns.c	2017-12-06 15:52:09.815653796 +0000
++++ dma-0.11/dns.c	2017-12-07 12:39:25.678670624 +0000
 @@ -43,6 +43,10 @@
  #include <string.h>
  #include <stdlib.h>
@@ -253,7 +259,7 @@ diff -pruN '--exclude=*.orig' dma-0.11~/dns.c dma-0.11/dns.c
  			    p->addr, sizeof(p->addr),
 diff -pruN '--exclude=*.orig' dma-0.11~/local.c dma-0.11/local.c
 --- dma-0.11~/local.c	2016-02-07 13:41:49.000000000 +0000
-+++ dma-0.11/local.c	2017-12-06 15:52:09.815758331 +0000
++++ dma-0.11/local.c	2017-12-07 12:39:25.678795340 +0000
 @@ -63,7 +63,7 @@ create_mbox(const char *name)
  	/*
  	 * We need to enable SIGCHLD temporarily so that waitpid works.
@@ -265,7 +271,7 @@ diff -pruN '--exclude=*.orig' dma-0.11~/local.c dma-0.11/local.c
  
 diff -pruN '--exclude=*.orig' dma-0.11~/mail.c dma-0.11/mail.c
 --- dma-0.11~/mail.c	2016-02-07 13:41:49.000000000 +0000
-+++ dma-0.11/mail.c	2017-12-06 15:52:09.815911294 +0000
++++ dma-0.11/mail.c	2017-12-07 12:39:25.678952975 +0000
 @@ -44,7 +44,7 @@
  void
  bounce(struct qitem *it, const char *reason)
@@ -313,7 +319,7 @@ diff -pruN '--exclude=*.orig' dma-0.11~/mail.c dma-0.11/mail.c
  	char line[1000];	/* by RFC2822 */
 diff -pruN '--exclude=*.orig' dma-0.11~/spool.c dma-0.11/spool.c
 --- dma-0.11~/spool.c	2016-02-07 13:41:49.000000000 +0000
-+++ dma-0.11/spool.c	2017-12-06 15:52:09.816064117 +0000
++++ dma-0.11/spool.c	2017-12-07 12:39:25.679141248 +0000
 @@ -69,7 +69,7 @@
   */
  
