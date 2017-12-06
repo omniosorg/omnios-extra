@@ -35,10 +35,25 @@ DESC="$SUMMARY"
 : ${PKG_SOURCE_BRANCH:=bhyve/UDK2014.SP1}
 
 # Extend VER so that the temporary build directory is branch specific.
-# Branches can include '/' so remove them.
+# Branch names can include '/' so remove them.
 VER+="-${PKG_SOURCE_BRANCH//\//_}"
 
-clone_source(){
+export GCCPATH=/opt/gcc-4.4.4
+
+MAKE_ARGS="
+        AS=/usr/bin/gas
+        AR=/usr/bin/gar
+        LD=/usr/bin/gld
+        OBJCOPY=/usr/bin/gobjcopy
+        CC=${GCCPATH}/bin/gcc
+        CXX=${GCCPATH}/bin/g++
+"
+
+export OOGCC_BIN=$GCCPATH/bin/
+export IASL_PREFIX=/usr/sbin/
+export NASM_PREFIX=/usr/bin/i386/
+
+clone_source() {
     logmsg "$PROG -> $TMPDIR/$BUILDDIR/$PROG"
     logcmd mkdir -p $TMPDIR/$BUILDDIR
     pushd $TMPDIR/$BUILDDIR > /dev/null 
@@ -58,72 +73,92 @@ clone_source(){
     popd > /dev/null 
 }
 
-build() {
-    pushd $TMPDIR/$BUILDDIR/$PROG >/dev/null || logerr "--- chdir failed"
+edksetup() {
+    pushd $TMPDIR/$BUILDDIR/$PROG > /dev/null || logerr "--- chdir failed"
+    source edksetup.sh
+    popd > /dev/null
+}
 
-    export GCCPATH=/opt/gcc-4.4.4
-
-    MAKE_ARGS="
-            AS=/usr/bin/gas
-            AR=/usr/bin/gar
-            LD=/usr/bin/gld
-            OBJCOPY=/usr/bin/gobjcopy
-            CC=${GCCPATH}/bin/gcc
-            CXX=${GCCPATH}/bin/g++
-    "
-
+cleanup() {
     logmsg "-- Cleaning source tree"
 
-    logcmd gmake $MAKE_ARGS ARCH=X64 -C BaseTools clean
-    rm -f Build Conf/{target,build_rule,tools_def}.txt Conf/.cache 2>/dev/null
+    pushd $TMPDIR/$BUILDDIR/$PROG > /dev/null || logerr "--- chdir failed"
 
+    logcmd gmake $MAKE_ARGS ARCH=X64 -C BaseTools clean
+    rm -rf Build Conf/{target,build_rule,tools_def}.txt Conf/.cache 2>/dev/null
+
+    popd > /dev/null
+}
+
+build_tools() {
     logmsg "-- Building tools"
 
-    # First build the tools. The code isn't able to detect the build
-    # architecture - it doesn't expect `uname -m` to return `i86pc`
+    pushd $TMPDIR/$BUILDDIR/$PROG > /dev/null || logerr "--- chdir failed"
+
+    # The code isn't able to detect the build architecture - it doesn't
+    # expect `uname -m` to return `i86pc`
     logcmd gmake $MAKE_ARGS ARCH=X64 -C BaseTools \
         || logerr "--- BaseTools build failed"
 
-    BUILD_ARGS="-DDEBUG_ON_SERIAL_PORT=TRUE -DFD_SIZE_2MB -DCSM_ENABLE=TRUE"
+    popd > /dev/null
+}
 
-    (
-        export OOGCC_BIN=$GCCPATH/bin/
-        export IASL_PREFIX=/usr/sbin/
-        export NASM_PREFIX=/usr/bin/i386/
-        source edksetup.sh
+build() {
+    pushd $TMPDIR/$BUILDDIR/$PROG > /dev/null || logerr "--- chdir failed"
 
+    [ "$1" = "-csm" ] && csm=1 || csm=0
+
+    BUILD_ARGS="-DDEBUG_ON_SERIAL_PORT=TRUE -DFD_SIZE_2MB"
+    [ $csm -eq 1 ] && BUILD_ARGS+=" -DCSM_ENABLE=TRUE"
+    export BUILD_ARGS
+
+    if [ $csm -eq 1 ]; then
         logmsg "-- Building compatibility support module (CSM)"
         logcmd gmake $MAKE_ARGS -C BhyvePkg/Csm/BhyveCsm16/ \
             || logerr "--- CSM build failed"
+    fi
 
-        for mode in RELEASE DEBUG; do
-            logmsg "-- Building $mode firmware"
-            logcmd `which build` \
-                -t OOGCC -a X64 -b $mode \
-                -p BhyvePkg/BhyvePkgX64.dsc \
-                $BUILD_ARGS || logerr "--- $mode build failed"
-        done
-    ) || logerr "--- Build failed"
+    for mode in RELEASE DEBUG; do
+        logmsg "-- Building $mode firmware"
+        logcmd `which build` \
+            -t OOGCC -a X64 -b $mode \
+            -p BhyvePkg/BhyvePkgX64.dsc \
+            $BUILD_ARGS || logerr "--- $mode build failed"
+    done
 
-    popd >/dev/null
+    popd > /dev/null
 }
 
 install() {
-    pushd $TMPDIR/$BUILDDIR/$PROG >/dev/null || logerr "--- chdir failed"
+    suffix="$1"
+    pushd $TMPDIR/$BUILDDIR/$PROG > /dev/null || logerr "--- chdir failed"
     logcmd mkdir -p $DESTDIR/usr/share/bhyve/firmware
-    cp OvmfPkg/License.txt $DESTDIR/LICENCE
+    [ -f $DESTDIR/LICENCE ] || cp OvmfPkg/License.txt $DESTDIR/LICENCE
     for mode in RELEASE DEBUG; do
         logcmd cp Build/BhyveX64/${mode}_OOGCC/FV/BHYVE.fd \
-            $DESTDIR/usr/share/bhyve/firmware/BHYVE_$mode.fd
+            $DESTDIR/usr/share/bhyve/firmware/BHYVE_$mode$suffix.fd
     done
-    popd >/dev/null
+    popd > /dev/null
 }
 
 init
 prep_build
 clone_source
+
+cleanup
+build_tools
+edksetup
+
+# Build UEFI firmware
+note "UEFI Firmware"
 build
 install
+
+# Build UEFI+CSM firmware
+note "UEFI+CSM Firmware"
+build -csm
+install _CSM
+
 # Reset version for package creation
 VER=$VERHUMAN
 make_package
