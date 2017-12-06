@@ -105,7 +105,6 @@
 | library/python-2/jaraco.classes-27	| 1.4.3			| https://pypi.python.org/pypi/jaraco.classes
 | library/python-2/jsonrpclib-27	| 0.1.7			| https://pypi.python.org/pypi/jsonrpclib
 | library/python-2/jsonschema-27	| 2.6.0			| https://pypi.python.org/pypi/jsonschema
-| library/python-2/lxml-27		| 4.1.1			| https://pypi.python.org/pypi/lxml/
 | library/python-2/mako-27		| 1.0.7			| https://pypi.python.org/pypi/Mako
 | library/python-2/more-itertools-27	| 4.0.1			| https://pypi.python.org/pypi/more-itertools
 | library/python-2/numpy-27		| 1.13.3		| https://pypi.python.org/pypi/numpy
@@ -115,7 +114,6 @@
 | library/python-2/pycurl-27		| 7.43.0		| https://pypi.python.org/pypi/pycurl
 | library/python-2/pylint-27		| 1.7.4			| https://pypi.python.org/pypi/pylint
 | library/python-2/pyopenssl-27		| 17.5.0		| https://pypi.python.org/pypi/pyOpenSSL
-| library/python-2/pyrex-27		| 0.9.9			| http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
 | library/python-2/pytz-27		| 2017.3		| https://pypi.python.org/pypi/pytz
 | library/python-2/setuptools-27	| 38.2.4		| https://pypi.python.org/pypi/setuptools
 | library/python-2/simplejson-27	| 3.13.2		| https://pypi.python.org/pypi/simplejson
