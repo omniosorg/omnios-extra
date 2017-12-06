@@ -284,7 +284,6 @@ omnios library/python-2/idna-27
 omnios library/python-2/ipaddress-27
 omnios library/python-2/jsonrpclib-27
 omnios library/python-2/jsonschema-27
-omnios library/python-2/lxml-27
 omnios library/python-2/m2crypto-27 o
 omnios library/python-2/mako-27
 omnios library/python-2/numpy-27
@@ -294,8 +293,6 @@ omnios library/python-2/pybonjour-27
 omnios library/python-2/pycurl-27
 omnios library/python-2/pylint-27
 omnios library/python-2/pyopenssl-27
-omnios library/python-2/pyrex-27
-omnios library/python-2/python-extra-27
 omnios library/python-2/pytz-27
 omnios library/python-2/setuptools-27
 omnios library/python-2/simplejson-27

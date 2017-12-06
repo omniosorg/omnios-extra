@@ -143,7 +143,6 @@ depend fmri=library/nghttp2@1.28,5.11-@PVER@ type=require
 depend fmri=library/nspr@4.17,5.11-@PVER@ type=require
 depend fmri=library/pcre@8.41,5.11-@PVER@ type=require
 depend fmri=library/python-2/numpy-27@1.13,5.11-@PVER@ type=require
-depend fmri=library/python-2/pyrex-27@0.9.9,5.11-@PVER@ type=require
 depend fmri=library/python-2/setuptools-27@38,5.11-@PVER@ type=require
 depend fmri=library/readline@7.0,5.11-@PVER@ type=require
 depend fmri=library/security/openssl@1.0.2,5.11-@PVER@ type=require
