@@ -16,6 +16,9 @@ Early weekly release for w/c 11th of December 2017.
 * `openssl` updated to 1.0.2n:
   * [CVE-2017-3737](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-3737)
 
+* `rsync`:
+  * [CVE-2017-17433](http://www.security-database.com/detail.php?alert=CVE-2017-17433)
+
 <br>
 
 ----
