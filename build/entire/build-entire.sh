@@ -35,15 +35,22 @@ EOM
 
 add_constraints()
 {
-	local cmf=$1
-	local src=$2
+    local cmf=$1
+    local src=$2
 
-	egrep -v '^ *$|^#' $src | while read pkg ver typ; do
-		if [ -z "$pkg" -o -z "$ver" -o -z "$typ" ]; then
-			logerr "Bad package line, $pkg/$ver/$typ"
-		fi
-		echo "depend fmri=$pkg@$ver,5.11-@PVER@ type=$typ" >> $cmf
-	done
+    egrep -v '^ *$|^#' $src | while read pkg ver typ flags; do
+        if [ -z "$pkg" -o -z "$ver" -o -z "$typ" ]; then
+            logerr "Bad package line, $pkg/$ver/$typ/$flags"
+        fi
+        (
+            echo "depend\\c"
+            if [[ "$flags" = *F* ]]; then
+                # Add facet
+                echo " facet.entire.$pkg=true\\c"
+            fi
+            echo " fmri=pkg://@PKGPUBLISHER@/$pkg@$ver,5.11-@PVER@ type=$typ"
+        ) >> $cmf
+    done
 }
 
 publish_pkg()
@@ -51,9 +58,9 @@ publish_pkg()
     local pmf=$1
 
     sed -e "
-		s/@PKGPUBLISHER@/$PKGPUBLISHER/g
-		s/@RELVER@/$RELVER/g
-		s/@PVER@/$PVER/g
+        s/@PKGPUBLISHER@/$PKGPUBLISHER/g
+        s/@RELVER@/$RELVER/g
+        s/@PVER@/$PVER/g
         " < $pmf > $pmf.final
 
     pkgsend -s $PKGSRVR publish $pmf.final || bail "pkgsend failed"
