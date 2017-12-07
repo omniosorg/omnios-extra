@@ -32,11 +32,11 @@ VER=6.0.0
 SUMMARY="cheroot - Highly-optimized, pure-python HTTP server"
 DESC="$SUMMARY"
 
+. $SRCDIR/../common.sh
+
 RUN_DEPENDS_IPS+="
     library/python-2/more-itertools-27
 "
-
-. $SRCDIR/../common.sh
 
 init
 download_source $PROG $PROG $VER
