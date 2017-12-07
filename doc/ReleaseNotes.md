@@ -6,6 +6,19 @@
 
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](https://omniosce.org/upgrade)
 
+## r151022ad (2017-12-07)
+
+Early weekly release for w/c 11th of December 2017.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `openssl` updated to 1.0.2n:
+  * [CVE-2017-3737](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-3737)
+
+<br>
+
+----
 ## r151022ac (2017-12-04)
 
 Weekly release for w/c 4th of December 2017.
