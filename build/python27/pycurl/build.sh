@@ -29,12 +29,9 @@
 
 PKG=library/python-2/pycurl-27
 PROG=pycurl
-VER=7.43.0
+VER=7.43.0.1
 SUMMARY="Python bindings for libcurl"
 DESC="PycURL provides a thin layer of Python bindings on top of libcurl."
-
-# Need to export this so it's picked up by setup.py
-export CFLAGS="-std=c99"
 
 . $SRCDIR/../common.sh
 
