@@ -42,6 +42,11 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 	# pkg set-mediator -I sendmail mta
     ```
+
+  Note that `dma` does not support more advanced features such as `.forward`
+  files in home directories. If you need these features you should switch back
+  to `sendmail` as shown above.
+
   Mailwrapper is still available to support use of packages from non-IPS
   repositories such as _pkgsrc_ via `/etc/mailer.conf`
 
