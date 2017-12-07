@@ -4,6 +4,20 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024f (2017-12-07)
+
+Early weekly release for w/c 11th of December 2017.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `openssl` updated to 1.0.2n:
+  * [CVE-2017-3737](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-3737)
+
+<br>
+
+----
+
 ## r151024e (2017-12-04)
 
 Weekly release for w/c 4th of December 2017.
