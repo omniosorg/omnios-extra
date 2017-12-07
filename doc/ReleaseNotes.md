@@ -18,6 +18,7 @@ Early weekly release for w/c 11th of December 2017.
 
 * `rsync`:
   * [CVE-2017-17433](http://www.security-database.com/detail.php?alert=CVE-2017-17433)
+  * [CVE-2017-17434](http://www.security-database.com/detail.php?alert=CVE-2017-17434)
 
 <br>
 
