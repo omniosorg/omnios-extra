@@ -256,10 +256,7 @@ check_userland()
 check_entire()
 {
 	echo "Checking entire..."
-	grep '^depend ' build/entire/entire.p5m | sed '
-		s/.*fmri=//
-		s/@/ /
-		s/,5\.11.*//
+	nawk '{print $1,$2}' < build/entire/entire.pkg | sed '
 		/^locale/d
 		/^driver/d
 		/ca-bundle/d
