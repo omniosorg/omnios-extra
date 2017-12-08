@@ -16,7 +16,7 @@ diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.c openssh-7.6p1/servconf.c
  
  	if (options->num_ports == 0)
  		options->ports[options->num_ports++] = SSH_DEFAULT_PORT;
-@@ -685,11 +849,25 @@
+@@ -685,11 +849,26 @@
  		options->address_family = AF_UNSPEC;
  
  	for (i = 0; i < options->num_queued_listens; i++) {
@@ -31,6 +31,7 @@ diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.c openssh-7.6p1/servconf.c
 +			v4port = options->queued_listen_ports[i];
 +		if (!strcmp(options->queued_listen_addrs[i], "::") &&
 +		    options->queued_listen_ports[i] != v4port) {
++			logit("WARNING: IPv6 listen address specified for ListenAddress.");
 +			add_listen_addr(options, NULL,
 +			    options->queued_listen_ports[i]);
 +		} else {
