@@ -12,7 +12,7 @@ diff -pruN '--exclude=*.orig' openssh-7.6p1~/servconf.c openssh-7.6p1/servconf.c
  process_queued_listen_addrs(ServerOptions *options)
  {
  	u_int i;
-+	int v4port = 0;
++	int v4port = -1;
  
  	if (options->num_ports == 0)
  		options->ports[options->num_ports++] = SSH_DEFAULT_PORT;
