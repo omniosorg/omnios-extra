@@ -26,4 +26,6 @@ user username=ooceapps uid=79 group=ooceapps gcos-field="OOCEapps User" \
     home-dir=/var/opt/ooce/ooceapps password=NP
 <transform file path=etc/opt/ooce/ooceapps/ooceapps.conf$ -> set preserve true>
 <transform dir  path=var/opt/ooce/ooceapps -> set owner ooceapps>
+<transform file path=opt/ooce/ooceapps/(bin|lib)/ \
+    -> set restart_fmri svc:/ooce/ooceapps:default>
 license LICENSE license=GPLv3
