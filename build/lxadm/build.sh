@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,8 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
@@ -28,21 +27,23 @@
 . ../../lib/functions.sh
 
 PROG=lxadm      # App name
-VER=0.1.5      # App version
+VER=0.1.6      # App version
 VERHUMAN=$VER   # Human-readable version
-#PVER=          # Branch (set in config.sh, override here if needed)
 PKG=ooce/lxadm  # Package name (e.g. library/foo)
 SUMMARY="Manage illumos LX zones" # One-liner, must be filled in
 DESC=$SUMMARY   # Longer description, must be filled in
 BUILDARCH=32    # or 64 or both ... for libraries we want both for tools 32 bit only
 PREFIX=/opt/ooce
 MIRROR="https://github.com/hadfl/$PROG/releases/download"
+
 RUN_DEPENDS_IPS="system/zones/brand/lx"
+
 XFORM_ARGS="-D PREFIX=$PREFIX"
 
 CONFIGURE_OPTS_32="
     --prefix=$PREFIX/$PROG
-    --localstatedir=/var$PREFIX/$PROG"
+    --localstatedir=/var$PREFIX/$PROG
+"
 
 init
 download_source "v$VER" $PROG $VER
@@ -53,4 +54,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
