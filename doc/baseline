@@ -661,6 +661,7 @@ omnios system/zones/brand/lipkg
 omnios system/zones/brand/lx
 omnios system/zones/brand/s10
 omnios system/zones/brand/sn1
+omnios system/zones/brand/sparse
 omnios system/zones/internal
 omnios terminal/screen
 omnios terminal/tmux

@@ -27,11 +27,17 @@
 # Load support functions
 . ../../lib/functions.sh
 
-# The following lines let buildctl spot the packages that are actually built
-# by the makefiles in pkg
+# The following lines starting with PKG= let buildctl spot the packages that
+# are actually built by the makefiles in the pkg source. Also build a package
+# list to use later when showing package differences.
 PKG=package/pkg
+PKGLIST=$PKG
 PKG=system/zones/brand/ipkg
+PKGLIST+=" $PKG"
 PKG=system/zones/brand/lipkg
+PKGLIST+=" $PKG"
+PKG=system/zones/brand/sparse
+PKGLIST+=" $PKG"
 SUMMARY="This isn't used, see the makefiles for pkg"
 DESC="This isn't used, see the makefiles for pkg"
 
@@ -120,6 +126,12 @@ init
 clone_source
 build
 package
+
+for pkg in $PKGLIST; do
+    fmri="`pkg list -nvHg $PKGSRVR $pkg | awk '{print $1}'`"
+    logmsg "-- For package $fmri"
+    diff_package $fmri
+done
 
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker
