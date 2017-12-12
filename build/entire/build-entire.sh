@@ -30,6 +30,8 @@ set name=pkg.fmri value=pkg://@PKGPUBLISHER@/entire@11,5.11-@PVER@
 set name=pkg.depend.install-hold value=core-os
 set name=pkg.summary value="Minimal set of core system packages"
 set name=pkg.description value="Minimal set of core system packages"
+set name=variant.opensolaris.zone value=global value=nonglobal
+set name=variant.opensolaris.imagetype value=full value=partial
 EOM
 }
 
@@ -45,8 +47,13 @@ add_constraints()
         (
             echo "depend\\c"
             if [[ "$flags" = *F* ]]; then
-                # Add facet
                 echo " facet.entire.$pkg=true\\c"
+            fi
+            if [[ "$flags" = *Z* ]]; then
+                echo " variant.opensolaris.zone=global\\c"
+            fi
+            if [[ "$flags" = *S* ]]; then
+                echo " variant.opensolaris.imagetype=full\\c"
             fi
             echo " fmri=pkg://@PKGPUBLISHER@/$pkg@$ver,5.11-@PVER@ type=$typ"
         ) >> $cmf
