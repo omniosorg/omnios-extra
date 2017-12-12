@@ -45,6 +45,11 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   Mailwrapper is still available to support use of packages from non-IPS
   repositories such as _pkgsrc_ via `/etc/mailer.conf`
 
+* Experimental support for `sparse` zones. These are linked-ipkg zones that
+  share the `/usr`, `/sbin` and `/lib` directories with the global zone.
+  They are tiny (under 4MiB of installed files) and perfect for isolating
+  VM instances for extra security or to apply more granular resource controls.
+
 * A number of system components now enable Address Space Layout Randomisation
   (ASLR) by default:
     * OpenSSH daemon
