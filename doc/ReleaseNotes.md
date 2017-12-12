@@ -17,11 +17,6 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 ### System Features
 
-* A number of system components now enable Address Space Layout Randomisation
-  (ASLR) by default:
-    * openssh daemon
-    * TBC...
-
 * The default mail submission agent is now `Dragonfly Mail Agent (dma)` rather
   than sendmail. In a default installation, `/usr/lib/sendmail` points to
   `dma` and can deliver email messages to local users and Internet recipients.
@@ -49,6 +44,14 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
   Mailwrapper is still available to support use of packages from non-IPS
   repositories such as _pkgsrc_ via `/etc/mailer.conf`
+
+* A number of system components now enable Address Space Layout Randomisation
+  (ASLR) by default:
+    * OpenSSH daemon
+    * pfexecd
+    * rpcbind
+    * Sendmail
+    * Dragonfly Mail Agent
 
 * `openssh` has been upgraded to 7.6p1. This version drops support for
   SSH protocol version 1, RSA keys under 1024 bits in length and a number
@@ -107,8 +110,8 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 ### Deprecated features
 
-* The python `m2crypto` and `typing` modules have been removed as they are no
-  longer required by core OmniOS packages.
+* The python `m2crypto`, `typing`, `lxml` and `pyrex` modules
+  have been removed as they are no longer required by core OmniOS packages.
 
 ### Package changes ([+] Added, [-] Removed, [\*] Changed)
 
