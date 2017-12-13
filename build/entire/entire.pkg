@@ -280,7 +280,7 @@ service/network/ntp				4.2.8	optional
 service/network/smtp/dma			0.11	require		F
 service/picl					0.5.11	require
 service/resource-pools				0.5.11	require
-service/storage/removable-media			0.5.11	require
+service/storage/removable-media			0.5.11	require		S
 shell/bash					4.4	require
 shell/pipe-viewer				1.6	require
 system/accounting/legacy			0.5.11	require
