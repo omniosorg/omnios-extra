@@ -43,3 +43,13 @@ From GCC documentation:
  static SECStatus
  rijndael_decryptCBC(AESContext *cx, unsigned char *output,
                      unsigned int *outputLen, unsigned int maxOutputLen,
+--- nss-3.33~/nss/lib/freebl/gcm.c	2017-09-20 06:47:27.000000000 +0000
++++ nss-3.33/nss/lib/freebl/gcm.c	2017-10-25 09:34:34.628062306 +0000
+@@ -283,6 +283,7 @@
+ }
+ #endif /* HAVE_INT128_SUPPORT */
+ 
++__attribute__((force_align_arg_pointer))
+ SECStatus
+ gcm_HashMult_hw(gcmHashContext *ghash, const unsigned char *buf,
+                 unsigned int count)
