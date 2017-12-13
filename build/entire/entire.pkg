@@ -272,6 +272,8 @@ runtime/perl/module/sun-solaris			0.5.11	require
 runtime/python-27				2.7	require
 security/sudo					1.8	require
 service/fault-management			0.5.11	require
+service/file-system/nfs				0.5.11	require
+service/file-system/smb				0.5.11	require
 service/hal					0.5.11	require
 service/network/network-clients			0.5.11	require
 service/network/ntp				4.2.8	optional
