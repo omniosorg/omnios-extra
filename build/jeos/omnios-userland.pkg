@@ -77,7 +77,7 @@ library/python-2/pytz-27		2017
 library/python-2/setuptools-27		38
 library/python-2/simplejson-27		3.13
 library/python-2/six-27			1.11
-library/python-2/tempora-27		1.9
+library/python-2/tempora-27		1.10
 library/readline			7.0
 library/security/openssl		1.0.2
 library/security/trousers		0.3

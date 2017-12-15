@@ -118,5 +118,5 @@
 | library/python-2/setuptools-27	| 38.2.4		| https://pypi.python.org/pypi/setuptools
 | library/python-2/simplejson-27	| 3.13.2		| https://pypi.python.org/pypi/simplejson
 | library/python-2/six-27		| 1.11.0		| https://pypi.python.org/pypi/six
-| library/python-2/tempora-27		| 1.9			| https://pypi.python.org/pypi/tempora
+| library/python-2/tempora-27		| 1.10			| https://pypi.python.org/pypi/tempora
 
