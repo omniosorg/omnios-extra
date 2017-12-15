@@ -286,7 +286,6 @@ omnios library/python-2/jsonrpclib-27
 omnios library/python-2/jsonschema-27
 omnios library/python-2/m2crypto-27 o
 omnios library/python-2/mako-27
-omnios library/python-2/numpy-27
 omnios library/python-2/ply-27
 omnios library/python-2/portend-27
 omnios library/python-2/pybonjour-27
