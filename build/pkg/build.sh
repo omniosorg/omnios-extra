@@ -38,6 +38,8 @@ PKG=system/zones/brand/lipkg
 PKGLIST+=" $PKG"
 PKG=system/zones/brand/sparse
 PKGLIST+=" $PKG"
+PKG=system/zones/brand/vm
+PKGLIST+=" $PKG"
 SUMMARY="This isn't used, see the makefiles for pkg"
 DESC="This isn't used, see the makefiles for pkg"
 
@@ -127,11 +129,13 @@ clone_source
 build
 package
 
-for pkg in $PKGLIST; do
-    fmri="`pkg list -nvHg $PKGSRVR $pkg | awk '{print $1}'`"
-    logmsg "-- For package $fmri"
-    diff_package $fmri
-done
+if [ -z "$BATCH" -a -z "$SKIP_PKG_DIFF" ]; then
+    for pkg in $PKGLIST; do
+        fmri="`pkg list -nvHg $PKGSRVR $pkg | awk '{print $1}'`"
+        logmsg "-- For package $fmri"
+        diff_package $fmri
+    done
+fi
 
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker
