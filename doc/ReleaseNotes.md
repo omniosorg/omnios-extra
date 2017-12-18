@@ -6,6 +6,19 @@
 
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](https://omniosce.org/upgrade)
 
+## r151022ae (2017-12-18)
+
+Weekly release for w/c 18th of December 2017.
+> This is a non-reboot update.
+
+### Changes
+
+* Fix crash in `nscd` related to ldap maps and hardware acceleration.
+
+<br>
+
+----
+
 ## r151022ad (2017-12-07)
 
 Early weekly release for w/c 11th of December 2017.
