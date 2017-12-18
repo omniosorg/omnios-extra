@@ -1,0 +1,18 @@
+Fixes regression in GNU tar 1.30 regarding setting/retrieving the program
+name. With an update to the embedded gnulib, the platform getexecname() is
+now used for retrieval, rendering set_program_name() pointless.
+
+Logged upstream as https://savannah.gnu.org/support/index.php?109431
+
+diff -pruN '--exclude=*.orig' tar-1.30~/gnu/error.c tar-1.30/gnu/error.c
+--- tar-1.30~/gnu/error.c	2017-12-16 21:23:33.000000000 +0000
++++ tar-1.30/gnu/error.c	2017-12-18 21:48:28.292106630 +0000
+@@ -119,7 +119,7 @@ int strerror_r (int errnum, char *buf, s
+ #  endif
+ # endif
+ 
+-#define program_name getprogname ()
++extern char *program_name;
+ 
+ # if GNULIB_STRERROR_R_POSIX || HAVE_STRERROR_R || defined strerror_r
+ #  define __strerror_r strerror_r

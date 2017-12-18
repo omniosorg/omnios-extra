@@ -1,7 +1,7 @@
 
 | Package | Version | Link | Notes |
 | :------ | :------ | :--- | :---- |
-| archiver/gnu-tar			| 1.29			| http://git.savannah.gnu.org/cgit/tar.git/refs/tags
+| archiver/gnu-tar			| 1.30			| http://git.savannah.gnu.org/cgit/tar.git/refs/tags
 | compress/bzip2			| 1.0.6			| http://www.bzip.org/downloads.html
 | compress/gzip				| 1.8			| http://git.savannah.gnu.org/cgit/gzip.git/refs/tags
 | compress/p7zip			| 16.02			| https://sourceforge.net/projects/p7zip/files/p7zip
