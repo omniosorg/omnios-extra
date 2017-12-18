@@ -290,7 +290,6 @@ omnios library/python-2/ply-27
 omnios library/python-2/portend-27
 omnios library/python-2/pybonjour-27
 omnios library/python-2/pycurl-27
-omnios library/python-2/pylint-27
 omnios library/python-2/pyopenssl-27
 omnios library/python-2/pytz-27
 omnios library/python-2/setuptools-27
