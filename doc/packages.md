@@ -102,7 +102,7 @@
 | library/python-2/enum-27		| 1.1.6			| https://pypi.python.org/pypi/enum34
 | library/python-2/functools32-27	| 3.2.3-2		| https://pypi.python.org/pypi/functools32
 | library/python-2/idna-27		| 2.6			| https://pypi.python.org/pypi/idna
-| library/python-2/ipaddress-27		| 1.0.18		| https://pypi.python.org/pypi/ipaddress
+| library/python-2/ipaddress-27		| 1.0.19		| https://pypi.python.org/pypi/ipaddress
 | library/python-2/jaraco.classes-27	| 1.4.3			| https://pypi.python.org/pypi/jaraco.classes
 | library/python-2/jsonrpclib-27	| 0.1.7			| https://pypi.python.org/pypi/jsonrpclib
 | library/python-2/jsonschema-27	| 2.6.0			| https://pypi.python.org/pypi/jsonschema
