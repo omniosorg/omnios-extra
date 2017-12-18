@@ -71,7 +71,6 @@ library/python-2/ply-27			3.10
 library/python-2/portend-27		2.2
 library/python-2/pybonjour-27		1.1.1
 library/python-2/pycurl-27		7.43
-library/python-2/pylint-27		1.7
 library/python-2/pyopenssl-27		17
 library/python-2/pytz-27		2017
 library/python-2/setuptools-27		38
