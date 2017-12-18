@@ -4,6 +4,19 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024g (2017-12-18)
+
+Weekly release for w/c 18th of December 2017.
+> This is a non-reboot update.
+
+### Changes
+
+* Fix crash in `nscd` related to ldap maps and hardware acceleration.
+
+<br>
+
+----
+
 ## r151024f (2017-12-07)
 
 Early weekly release for w/c 11th of December 2017.
