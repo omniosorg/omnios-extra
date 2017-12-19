@@ -1,7 +1,7 @@
 # This is the list of OmniOS userland packages and the versions to which
 # they will be constrained by the userland incorporation.
 #
-archiver/gnu-tar			1.29
+archiver/gnu-tar			1.30
 compress/bzip2				1.0.6
 compress/gzip				1.8
 compress/p7zip				16
