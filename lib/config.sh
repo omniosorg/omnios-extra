@@ -1,5 +1,5 @@
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -17,11 +17,11 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
+# CDDL HEADER END }}}
 #
-#
-# Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright (c) 2015 by Delphix. All rights reserved.
+# Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 #
 #############################################################################
 # Configuration for the build system
@@ -31,9 +31,25 @@
 RELVER=151025
 PVER=0.$RELVER
 
+# Default package publisher
+PKGPUBLISHER=extra.omnios
+
+# Default repository
+PKGSRVR=file://$ROOTDIR/tmp.repo/
+
+# set locale to C
+export LC_ALL=C
+
+# Use bash for subshells and commands launched by python setuptools
+export SHELL=/usr/bin/bash
+
 # Which server to fetch files from.
 # If $MIRROR begins with a '/', it is treated as a local directory.
 MIRROR=https://mirrors.omniosce.org
+
+# The production IPS repository for this branch (may be overriden in site.sh)
+# Used for package contents diffing.
+IPS_REPO=https://pkg.omniosce.org/bloody/extra
 
 # Default prefix for packages (may be overridden)
 PREFIX=/opt/ooce
@@ -44,7 +60,7 @@ PREFIX=/opt/ooce
 #    TMPDIR includes a username
 # DTMPDIR is used for constructing the DESTDIR path
 # Let the environment override TMPDIR.
-if [[ -z $TMPDIR ]]; then
+if [ -z "$TMPDIR" ]; then
 	TMPDIR=/tmp/build_$USER
 fi
 DTMPDIR=$TMPDIR
@@ -59,24 +75,16 @@ PATCHDIR=patches
 NOSCRIPTSTUB=
 
 #############################################################################
-# The version of certain software that's *installed* matters.  We don't yet
-# have a sophisticated build-certain-things-first bootstrap for omnios-build.
-# We must sometimes determine or even hardcode things about our build system.
-#############################################################################
-
-# libffi --> use pkg(5) to determine what we're running:
-FFIVERS=`pkg list -H libffi | awk '{print $(NF-1)}' | cut -d- -f1`
-
-#############################################################################
 # Perl stuff
 #############################################################################
 
 # Perl versions we currently build against
-PERLVER=5.24.1
+PERLVER=5.26.1
+SPERLVER=${PERLVER%.*}
 
 # Full paths to bins
-PERL32=/usr/perl5/$PERLVER/bin/$ISAPART/perl
-PERL64=/usr/perl5/$PERLVER/bin/$ISAPART64/perl
+PERL32=/usr/perl5/${SPERLVER}/bin/$ISAPART/perl
+PERL64=/usr/perl5/${SPERLVER}/bin/$ISAPART64/perl
 
 # Default Makefile.PL options
 PERL_MAKEFILE_OPTS="INSTALLSITEBIN=$PREFIX/bin/_ARCHBIN_ \
@@ -92,16 +100,14 @@ export PERL_MM_USE_DEFAULT=true
 # Unset in a build script to skip tests
 PERL_MAKE_TEST=1
 
-
 #############################################################################
 # Python -- NOTE, these can be changed at runtime via set_python_version().
 #############################################################################
 : ${PYTHONVER:=2.7}
-: ${PYTHONPKGVER:=`echo $PYTHONVER | sed 's/\.//g'`}
+: ${PYTHONPKGVER:=${PYTHONVER//./}}
 PYTHONPATH=/usr
 PYTHON=$PYTHONPATH/bin/python$PYTHONVER
 PYTHONLIB=$PYTHONPATH/lib
-
 
 #############################################################################
 # Paths to common tools
@@ -109,12 +115,15 @@ PYTHONLIB=$PYTHONPATH/lib
 WGET=wget
 PATCH=gpatch
 MAKE=gmake
-TAR=tar
+TAR="gtar --no-same-permissions --no-same-owner"
 GZIP=gzip
 BUNZIP2=bunzip2
 XZCAT=xzcat
 UNZIP=unzip
 AWK=gawk
+GIT=git
+# Command for privilege escalation. Can be overridden in site.sh
+PFEXEC=sudo
 
 # Figure out number of logical CPUs for use with parallel gmake jobs (-j)
 # Default to 1.5*nCPUs as we assume the build machine is 100% devoted to
@@ -122,9 +131,7 @@ AWK=gawk
 # A build script may serialize make by setting NO_PARALLEL_MAKE
 LCPUS=`psrinfo | wc -l`
 MJOBS="$[ $LCPUS + ($LCPUS / 2) ]"
-if [ "$MJOBS" == "0" ]; then
-    MJOBS=2
-fi
+[ "$MJOBS" = "0" ] && MJOBS=2
 MAKE_JOBS="-j $MJOBS"
 NO_PARALLEL_MAKE=
 
@@ -148,23 +155,23 @@ CXX=g++
 
 # CFLAGS applies to both builds, 32/64 only gets applied to the respective
 # build
-CFLAGS=""
-CFLAGS32=""
+CFLAGS=
+CFLAGS32=
 CFLAGS64="-m64"
 
 # Linker flags
-LDFLAGS=""
-LDFLAGS32=""
+LDFLAGS=
+LDFLAGS32=
 LDFLAGS64="-m64"
 
 # C pre-processor flags
-CPPFLAGS=""
-CPPFLAGS32=""
-CPPFLAGS64=""
+CPPFLAGS=
+CPPFLAGS32=
+CPPFLAGS64=
 
 # C++ flags
-CXXFLAGS=""
-CXXFLAGS32=""
+CXXFLAGS=
+CXXFLAGS32=
 CXXFLAGS64="-m64"
 
 #############################################################################
@@ -182,7 +189,7 @@ reset_configure_opts() {
     if [[ $PREFIX == "/usr" ]]; then
         SYSCONFDIR=/etc
     else
-        SYSCONFDIR=$PREFIX/etc
+        SYSCONFDIR=/etc$PREFIX
     fi
     CONFIGURE_OPTS_32="--prefix=$PREFIX
         --sysconfdir=$SYSCONFDIR
@@ -204,7 +211,7 @@ reset_configure_opts
 
 # Configure options to apply to both builds - this is the one you usually want
 # to change for things like --enable-feature
-CONFIGURE_OPTS=""
+CONFIGURE_OPTS=
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
