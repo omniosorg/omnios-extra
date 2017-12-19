@@ -1,0 +1,588 @@
+#!/usr/bin/bash
+
+BUILD_EXPENSIVE=0
+build_flags=
+. ../lib/functions.sh
+
+# targets maps any valid package name to its full package name.
+declare -A targets
+# fulltargets maps full package names to their build script.
+declare -A fulltargets
+# list of licenses
+declare -A licenses
+
+add_target() {
+    local pkg=$1
+    local build=$2
+    [ -n "${fulltargets[$pkg]}" ] && \
+        logerr "Target $pkg specified by ${fulltargets[$pkg]} and $build."
+    fulltargets+=([$pkg]=$build)
+
+    #
+    # Repeatedly strip off leading components to generate all valid
+    # names for this package. If more than one package has the same
+    # abbreviated name, the first one wins.
+    #
+    fpkg=$pkg
+    [ -n "${targets[$pkg]}" ] || targets+=([$pkg]=$fpkg)
+    while [[ $pkg =~ '/' ]]; do
+        pkg=${pkg#*/}
+        [ -n "${targets[$pkg]}" ] || targets+=([$pkg]=$fpkg)
+    done
+}
+
+extract_manifest_name() {
+        nawk '/^set name=pkg.fmri/ {print $3}' $1 | sed -e '
+            s/value=//
+            s:.*//[^/]*/::g
+            s/@.*//
+        '
+}
+
+add_manifests() {
+    for manifest in `find . -name \*.p5m | cut -c3-`; do
+        for PKG in `extract_manifest_name $manifest`; do
+            add_target $PKG $manifest
+        done
+    done
+}
+
+extract_pkgs() {
+    grep 'PKG=' $1 | grep -v '##IGNORE##' | sed -e '
+        s/^ +//
+        s/ +#.+//
+        s/=/ /g
+    ' | nawk '$1 == "PKG" { print $2 }'
+}
+
+add_buildscripts() {
+    for build in `find . -name build\*.sh | cut -c3-`; do
+        for PKG in `extract_pkgs $build`; do
+            add_target $PKG $build
+        done
+    done
+}
+
+add_targets() {
+    add_manifests
+    add_buildscripts
+}
+
+detect_licenses() {
+    for build in `find . -name build\*.sh | cut -c3-`; do
+        for PKG in $(grep -v '##IGNORE##' $build | \
+            sed -e '
+                s/^ +//
+                s/ +#.+//
+                s/=/ /g
+                s/^.+make_package/make_package/g
+      ' | nawk '
+            $1 == "PKG" { PKG=$2 }
+            $1 == "make_package" { print PKG"="$2 }
+      '); do
+            MOG=${PKG#*=}
+            PKG=${PKG%=*}
+            LOCALMOG="`dirname $build`/local.mog"
+            [ -f $MOG ] || MOG=""
+            [ -f $LOCALMOG ] || LOCALMOG=""
+            LICENSE=`nawk '
+                /"/ { gsub("\"", "") }
+                /^license/ { print $3 }
+                ' $MOG $LOCALMOG /dev/null | xargs`
+            licenses+=([$PKG]=$LICENSE)
+            print -f "."
+        done
+    done
+}
+
+usage() {
+    cat << EOM
+$0
+    list [grep pattern]            - sorted alphabetically
+    list-build [grep pattern]      - sorted in build order
+    licenses                       - audit licenses
+    build <pkg>
+    build [-e] all
+    build [-e] parallel <threads>  - start/continue parallel build
+    build continue                 - continue interrupted build
+    build from <pkg>               - build <pkg> then those after
+    baseline [create [repo]]       - check or create pkg baseline
+
+Options:
+
+    -e                             - also build packages flagged as expensive
+
+EOM
+
+    exit
+}
+
+bail() {
+    echo $*
+    exit
+}
+
+# Dependencies are limited at the moment. Build everything
+# in alphabetical order.
+buildorder() {
+    mapfile -d '' sorted < <( printf '%s\n' ${!fulltargets[@]} | sort)
+    for target in ${sorted[@]}; do
+        echo $target
+    done
+}
+
+list_backend() {
+    PAT=${1-.}
+    for target in "${!fulltargets[@]}"; do
+        if [ "$PAT" = "." ]; then
+            echo $target
+        else
+            echo "$target" | egrep "$PAT"
+        fi
+    done | sort
+}
+
+list() {
+    list_backend "${1-.}" | sed 's/^/ * /'
+}
+
+list_build() {
+    PAT=${1-.}
+
+    buildorder | while read target; do
+        if [ "$PAT" = "." ]; then
+            echo " * $target"
+        else
+            echo "$target" | egrep "$PAT"
+        fi
+    done
+}
+
+##############################################################################
+# Built package cache management.
+
+: ${BUILT_CACHE:="$TMPDIR/built.cache"}
+declare -A already_built
+built_pipe="$TMPDIR/built.ipc"
+
+# Record all expensive packages as already built
+record_expensive() {
+    if [ -n "$EXPENSIVE" -a "$BUILD_EXPENSIVE" -eq 0 ]; then
+        for pkg in $EXPENSIVE; do
+            record_built $pkg
+        done
+    fi
+}
+
+clear_built() {
+    [ -f "$BUILT_CACHE" ] && rm -f "$BUILT_CACHE"
+    record_expensive
+}
+
+record_built() {
+    if [ -n "$BUILDCTL_PARALLEL" ]; then
+        [ -p "$built_pipe" ] || logerr "Built cache pipe does not exist."
+        echo "$*" >> $built_pipe
+    else
+        already_built+=([$1]=1)
+        [ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
+        echo $1 >> "$BUILT_CACHE"
+    fi
+}
+
+# When running with parallelism, writes to the built cache are synchronised
+# by a central task listening on a named pipe.
+start_built_listener() {
+    if [ ! -p "$built_pipe" ]; then
+        [ -d "`dirname $built_pipe`" ] || mkdir -p "`dirname $built_pipe`"
+        mkfifo "$built_pipe" || logerr "Could not create named pipe."
+    fi
+    export BUILDCTL_PARALLEL=1
+    logmsg "-- Background built package thread started..."
+    while :; do
+        if read line <$built_pipe; then
+            [ $line = "quit" ] && break
+            already_built+=([$line]=1)
+            echo $line >> "$BUILT_CACHE"
+        fi
+    done &
+}
+
+stop_built_listener() {
+        [ -p "$built_pipe" ] && echo "quit" >> $built_pipe
+}
+
+restore_built() {
+    [ -f "$BUILT_CACHE" ] || record_expensive
+
+    for pkg in `cat "$BUILT_CACHE"`; do
+        [ -n "${already_built[$pkg]}" ] || already_built+=([$pkg]=1)
+    done
+}
+
+is_built() {
+    [ -n "$BUILDCTL_PARALLEL" ] && restore_built
+    [ -n "${already_built[$1]}" ]
+}
+
+built_packages_p5m() {
+    for PKG in `extract_manifest_name $1`; do
+        record_built $PKG
+    done
+}
+
+built_packages_sh() {
+    for PKG in `extract_pkgs $1`; do
+        record_built $PKG
+    done
+}
+
+##############################################################################
+
+build() {
+    if [ -n "${fulltargets[$1]}" ]; then
+        buildtgt=$1
+    elif [ -n "${targets[$1]}" ]; then
+        buildtgt="${targets[$1]}"
+        logmsg "--- $1 -> $buildtgt"
+    else
+        bail "Unknown package: $1"
+    fi
+    if is_built $buildtgt; then
+        logmsg "--- Package $1 was already built."
+    else
+        BUILD=${fulltargets[$buildtgt]}
+        DIR="`dirname $BUILD`"
+        SCRIPT="`basename $BUILD`"
+        pushd $DIR > /dev/null || bail "Cannot chdir to $DIR"
+        PKGSRVR=$DEFAULT_PKGSRVR
+        PKGPUBLISHER=$DEFAULT_PKGPUBLISHER
+        PKGROOT=`pwd`/root
+        if [ -f environment ]; then
+            logmsg "--- Setting new environment"
+            . environment
+        fi
+        if [[ "$SCRIPT" = *.p5m ]]; then
+            init_repo
+            echo "Found a manifest file. Preparing it for publishing."
+            sed -e "
+                    s/@PKGPUBLISHER@/$PKGPUBLISHER/g
+                    s/@RELVER@/$RELVER/g
+                    s/@PVER@/$PVER/g
+                " < $SCRIPT > $SCRIPT.final
+            if [ -f root.tar.bz2 ]; then
+                echo "File archive found. Extracting..."
+                bzip2 -dc root.tar.bz2 | tar xf - || \
+                    bail "Failed to extract root.tar.bz2"
+                echo "Publishing from $SCRIPT.final"
+                pkgsend -s $PKGSRVR publish -d $PKGROOT $SCRIPT.final || \
+                    bail "pkgsend failed"
+                rm -rf $PKGROOT
+            elif [ -d "$PKGROOT" ]; then
+                # In case we just have a tree of files and not a tarball
+                echo "Publishing from $SCRIPT.final"
+                pkgsend -s $PKGSRVR publish -d $PKGROOT $SCRIPT.final || \
+                    bail "pkgsend failed"
+            else
+                # Else we just have a manifest to import
+                echo "Simple manifest to import... importing to $PKGSRVR"
+                pkgsend -s $PKGSRVR publish $SCRIPT.final || \
+                    bail "pkgsend failed"
+                rm $SCRIPT.final
+            fi
+            built_packages_p5m $SCRIPT
+        else
+            PATH=$PATH:. $SCRIPT -r $PKGSRVR $build_flags || \
+                logerr "Unable to run $SCRIPT"
+            built_packages_sh $SCRIPT
+        fi
+        popd >/dev/null
+    fi
+}
+
+licenses() {
+    detect_licenses
+    echo
+    for target in "${!licenses[@]}"
+    do
+        if [ -n "${licenses[$target]}" ]; then
+            echo " * $target     -> ${licenses[$target]}"
+        fi
+    done | sort
+    echo
+    echo "=== Packages missing license information ==="
+    for target in "${!licenses[@]}"
+    do
+        if [ -z "${licenses[$target]}" ]; then
+            echo " * $target"
+        fi
+    done | sort
+}
+
+baseline() {
+    mode="${1:-check}"
+    repo="$2"
+    [ -z "$repo" ] && repo="$PKGSRVR"
+
+    if [ $mode != create -a $mode != check ]; then
+        echo "Unknown baseline mode - $mode"
+        exit 1
+    fi
+
+    [ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
+
+    # PUBLISHER NAME                 O VERSION
+    # omnios    developer/macro/gnu-m4 1.4.18-0.151023:20171022T080105Z
+    pkgrepo -s $repo rebuild
+    pkgrepo -s $repo list | nawk '
+        $1 == "PUBLISHER" { next }
+        $2 in seen { next }
+        {
+            seen[$2] = 1
+            # Remove package version, NF as there can be 3 or 4 fields
+            $(NF--) = ""
+            print
+        }
+    ' | sed 's/ *$//' | sort > $TMPDIR/baseline.$$
+
+    if [ $mode = create ]; then
+        mv $TMPDIR/baseline.$$ $MYDIR/../doc/baseline
+        echo "Created baseline in doc/baseline"
+        return
+    fi
+    note "Checking baseline"
+    if ! diff -U0 $MYDIR/../doc/baseline $TMPDIR/baseline.$$; then
+        logerr "Package list does not match baseline"
+    fi
+    rm -f $TMPDIR/baseline.$$
+}
+
+job_status() {
+    logmsg "######################################################"
+    logmsg "-- Job status $*--"
+    now=`date +%s`
+
+    for i in `seq 0 $threads`; do
+        [ -n "${slots[$i]}" ] || continue
+        ((tm = now - ${slotstart[$i]}))
+        logmsg "`printf "    [%d] %8d - (%5ds) %s\n" \
+            "$i" "${slots[$i]}" "$tm" "${slotdesc[$i]}"`"
+    done
+    logmsg "######################################################"
+}
+
+parallel_build() {
+    threads=$1
+    # Lint is not thread-safe and skip test-suite in parallel build mode.
+    build_flags="-b -t -l"
+    export BATCH=1  # So logerr() exits without prompting
+
+    note "Starting parallel build with $threads thread(s)"
+
+    ((threads = threads - 1))
+
+    pkgcount=${#fulltargets[@]}
+    pkgnum=0
+
+    start_built_listener
+    # Do this now to avoid a race in the child tasks
+    init_repo
+
+    declare -A slots
+    declare -A slottgt
+    declare -A slotdesc
+    declare -A slotstart
+
+    for tgt in `buildorder`; do
+        ((pkgnum = pkgnum + 1))
+
+        # If this target belongs to the same script as an already running
+        # job, skip it.
+        _script=${fulltargets[$tgt]}
+        for i in `seq 0 $threads`; do
+            [ -z "${slots[$i]}" ] && continue
+            if [ "${fulltargets[${slottgt[$i]}]}" = "$_script" ]; then
+                logmsg "-- $tgt already being handled in slot $i"
+                continue 2
+            fi
+        done
+
+        logmsg "-- Waiting for spare job slot for $tgt"
+
+        err=
+        while :; do
+            for i in `seq 0 $threads`; do
+                # Idle slot?
+                if [ -z "${slots[$i]}" ] || \
+                  ! kill -0 "${slots[$i]}" 2>/dev/null; then
+                    # Reap terminated job
+                    if [ -n "${slots[$i]}" ]; then
+                        #logmsg "-- waiting for job $i (${slots[$i]})..."
+                        wait "${slots[$i]}"
+                        s=$?
+                        logmsg "-- Job $i terminated with status $s"
+                        if [ $s -ne 0 ]; then
+                            err="${slottgt[$i]}"
+                            note "***** BUILD ERROR ***** ($err)"
+                            break 3
+                        fi
+                    fi
+                    note "($pkgnum/$pkgcount) Building $tgt (slot $i)"
+                    logprefix="[$i] " build $tgt &
+                    slots[$i]=$!
+                    slottgt[$i]=$tgt
+                    slotdesc[$i]="`printf "(%3d/%d) %s" $pkgnum $pkgcount $tgt`"
+                    slotstart[$i]=`date +%s`
+                    break 2
+                fi
+            done
+            # Print status summary each minute (approx.)
+            [ `date +%S` -eq 0 ] && job_status
+            sleep 1
+        done
+    done
+
+    if [ -n "$err" -a -z "$NOKILL_ON_ERROR" ]; then
+        logmsg "-- error encountered, killing jobs"
+        for i in `seq 0 $threads`; do
+            [ -n "${slots[$i]}" ] && kill "${slots[$i]}"
+        done
+    else
+        logmsg "-- waiting for jobs to finish"
+        while :; do
+            running=0
+            for i in `seq 0 $threads`; do
+                [ -n "${slots[$i]}" ] || continue
+                if ! kill -0 "${slots[$i]}" 2>/dev/null; then
+                    # Job has finished
+                    wait "${slots[$i]}"
+                    slots[$i]=
+                else
+                    ((running = running + 1))
+                fi
+            done
+            [ "$running" -eq 0 ] && break
+            [ `date +%S` -eq 0 ] && job_status "(draining) "
+            sleep 1
+        done
+    fi
+
+    if [ -n "$err" ]; then
+        note "***** BUILD ERROR ***** ($err)"
+    else
+        baseline check
+    fi
+
+    stop_built_listener
+    wait
+}
+
+DEFAULT_PKGSRVR=$PKGSRVR
+DEFAULT_PKGPUBLISHER=$PKGPUBLISHER
+
+# Any flag options on the command line will have been consumed by
+# process_opts() in lib/functions.sh and environment variables will have
+# been set.
+# Construct the arguments to be passed to child build.sh scripts.
+[ -n "$BATCH" ] && build_flags+="-b "
+[ -n "$SKIP_PKGLINT" ] && build_flags+="-l "
+[ -n "$SKIP_TESTSUITE" ] && build_flags+="-t "
+
+case "$1" in
+    config)
+        print_config
+        exit
+        ;;
+
+    list)
+        add_targets
+        list $2
+        exit
+        ;;
+
+    list-build)
+        add_targets
+        list_build $2
+        exit
+        ;;
+
+    licenses)
+        licenses
+        exit
+        ;;
+
+    baseline)
+        shift
+        baseline "$@"
+        exit
+        ;;
+
+    build)
+        add_targets
+        shift
+        [ "$1" = "-e" ] && BUILD_EXPENSIVE=1 && shift
+        tobuild="$@"
+        [ -z "$tobuild" ] && tobuild=all
+
+        skipuntil=
+        if [ "$tobuild" = "continue" ]; then
+            tobuild=all
+            restore_built
+        elif [[ "$tobuild" = from\ * ]]; then
+            skipuntil=${tobuild#from }
+            tobuild=all
+            restore_built
+        elif [ -z "$tobuild" -o "$tobuild" = all ]; then
+            if [ -f "$BUILT_CACHE" -a -z "$BATCH" ]; then
+                ask_to_continue_ "" \
+                  "Built package cache will be cleared, continue?" \
+                  "y/n" "[yYnN]"
+                [ "$REPLY" == "y" -o "$REPLY" == "Y" ] || exit 1
+            fi
+            clear_built
+        fi
+
+        if [ "$tobuild" = "all" ]; then
+            build_flags="-b -t -l"
+            export BATCH=1  # So logerr() exits without prompting
+
+            pkgcount=${#fulltargets[@]}
+            pkgnum=0
+            for tgt in `buildorder`; do
+                ((pkgnum = pkgnum + 1))
+
+                [ -n "$skipuntil" -a "$skipuntil" != $tgt ] \
+                    && continue || skipuntil=
+
+                note "($pkgnum/$pkgcount) Building $tgt"
+                build $tgt
+            done
+            baseline check
+        elif [[ "$tobuild" = parallel\ * ]]; then
+            restore_built
+            parallel_build "${tobuild#* }"
+        else
+            if [[ $tobuild = *\** ]]; then
+                for tgtpatt in $tobuild; do
+                    for tgt in `list_backend "$tgtpatt"`; do
+                        note "Building $tgt"
+                        build $tgt
+                    done
+                done
+            else
+                for tgt in $tobuild; do
+                    note "Building $tgt"
+                    build $tgt
+                done
+            fi
+        fi
+        exit
+        ;;
+
+    *)
+        usage
+        ;;
+esac
+
+# Vim hints
+# vim:ts=4:sw=4:et:

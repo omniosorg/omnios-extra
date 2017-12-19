@@ -1,0 +1,169 @@
+#!/bin/ksh -e
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source.  A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+
+__SCRIPTDIR="${0%/*}"
+
+cd $__SCRIPTDIR/..
+
+[ ! -d build -o ! -x build/buildctl ] && echo "Cannot find directory" && exit 1
+
+err=0
+
+problem()
+{
+	echo "********** $*"
+	err=1
+}
+
+typeset -A targets
+
+add_target()
+{
+	typeset pkg=$1
+	typeset build=$2
+	typeset dir="`dirname $build`"
+
+	if [[ $build = *.sh ]]; then
+		ver="`grep ^VER= $build | sed '
+			1 {
+				s/VER=//
+				s/ .*//
+				q
+			}'`"
+		targets[$pkg]=$ver
+	elif [[ $build = *.p5m ]]; then
+		egrep -q 'pkg.obsolete.*true' $build && return
+		egrep -q 'pkg.renamed.*true' $build && return
+		# No manifests of interest currently
+		#echo "P5M:`grep pkg.fmri $build`"
+		:
+	else
+		echo "Unknown target type"
+		exit 1
+	fi
+}
+
+extract_manifest_name()
+{
+	nawk '/^set name=pkg.fmri/ {print $3}' $1 | sed -e '
+		s/value=//
+		s:.*//[^/]*/::g
+		s/@.*//
+	'
+}
+
+add_manifests()
+{
+	for manifest in `find build -name \*.p5m`; do
+		for PKG in `extract_manifest_name $manifest`; do
+			add_target $PKG $manifest
+		done
+	done
+}
+
+extract_pkgs()
+{
+	grep 'PKG=' $1 | grep -v '##IGNORE##' | sed -e '
+		s/^ +//
+		s/ +#.+//
+		s/=/ /g
+	' | nawk '$1 == "PKG" { print $2 }'
+}
+
+add_buildscripts()
+{
+	for build in `find build -name build\*.sh`; do
+		for PKG in `extract_pkgs $build`; do
+			add_target $PKG $build
+		done
+	done
+}
+
+add_targets()
+{
+	echo "Finding build components..."
+	add_manifests
+	add_buildscripts
+}
+
+print_targets()
+{
+	for i in "${!targets[@]}"; do
+		printf "%-40s %s\n" $i ${targets[$i]#*/}
+	done
+}
+
+check_packages_md()
+{
+	echo "Checking doc/packages.md..."
+	nawk -F '|' < doc/packages.md '
+		/\// {
+			gsub(/ */, "")
+			print $2, $3
+		}
+	' | while read pkg ver; do
+		# Skip some packages, tweak others
+		case $pkg in
+			shell/bash-patchlvl)	continue ;;
+			shell/bash)		continue ;;
+		esac
+
+		if [ -n "${targets[$pkg]}" ]; then
+			if [ "${targets[$pkg]}" != "$ver" ]; then
+				problem "$pkg - packages.md=$ver,"\
+				    "build=${targets[$pkg]}"
+			fi
+		else
+			problem "Unknown package $pkg in packages.md"
+		fi
+	done
+}
+
+check_constraints()
+{
+	comp="$1"
+	while read pkg ver; do
+		# Skip some packages, tweak others
+		[ -n "${targets[$pkg]}" ] && bver=${targets[$pkg]} || bver=
+		case $pkg in
+			# placeholder for skipping/tweaking packages
+			# */kvm)				continue ;;
+			# */ntp)				bver=${bver/p/.} ;;
+		esac
+		obver="$bver"
+
+		if [ -n "$bver" ]; then
+			[ "$bver" = "$ver" ] && continue
+			# Try with s/00/0
+			[ "${bver//00/0}" = "$ver" ] && continue
+			# Strip final components in turn and check for
+			# a match.
+			while [[ $bver = *.* ]]; do
+				bver=${bver%.*}
+				[ "$bver" = "$ver" ] && continue 2
+				[ "${bver//00/0}" = "$ver" ] && continue 2
+			done
+			problem "$pkg - $comp=$ver, build=$obver"
+		else
+			[ $comp = entire ] \
+			    || problem "Unknown package $pkg in $comp"
+		fi
+	done
+}
+
+add_targets
+#print_targets
+check_packages_md
+
+exit $err
+
