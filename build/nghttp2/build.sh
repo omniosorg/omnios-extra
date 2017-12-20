@@ -24,11 +24,10 @@
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=nghttp2
-VER=1.28.0
+VER=1.29.0
 VERHUMAN=$VER
 PKG=library/nghttp2
 SUMMARY="Nghttp2: HTTP/2 C Library"

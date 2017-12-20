@@ -145,7 +145,7 @@ library/libtool/libltdl				2.4	require
 library/libxml2					2.9	require
 library/libxslt					1.1	require
 library/ncurses					6	require
-library/nghttp2					1.28	require
+library/nghttp2					1.29	require
 library/nspr					4.17	require
 library/pcre					8.41	require
 library/python-2/setuptools-27			38	require
