@@ -1,12 +1,12 @@
-diff -pruN '--exclude=*.orig' open-vm-tools-10.1.15~/lib/include/sigPosixRegs.h open-vm-tools-10.1.15/lib/include/sigPosixRegs.h
---- open-vm-tools-10.1.15~/lib/include/sigPosixRegs.h	2017-09-29 21:15:57.000000000 +0000
-+++ open-vm-tools-10.1.15/lib/include/sigPosixRegs.h	2017-10-03 09:31:21.409516608 +0000
-@@ -70,7 +70,7 @@
- 
- #include <signal.h>
- #ifndef __ANDROID__
--#include <sys/ucontext.h>
-+#include <ucontext.h>
+diff -pruN '--exclude=*.orig' open-vm-tools-10.2.0-7253323~/lib/include/sigPosixRegs.h open-vm-tools-10.2.0-7253323/lib/include/sigPosixRegs.h
+--- open-vm-tools-10.2.0-7253323~/lib/include/sigPosixRegs.h	2017-12-15 19:09:51.000000000 +0000
++++ open-vm-tools-10.2.0-7253323/lib/include/sigPosixRegs.h	2017-12-20 14:32:34.462286720 +0000
+@@ -72,7 +72,7 @@ extern "C" {
  #endif
  
- #if __linux__
+ #include <signal.h>
+-#include <sys/ucontext.h>
++#include <ucontext.h>
+ 
+ #if __linux__ && !defined __ANDROID__
+ #  if defined(__x86_64__)

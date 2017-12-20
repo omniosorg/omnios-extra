@@ -1,6 +1,6 @@
-diff -pruN '--exclude=*.orig' open-vm-tools-10.1.15~/lib/file/fileLockPrimitive.c open-vm-tools-10.1.15/lib/file/fileLockPrimitive.c
---- open-vm-tools-10.1.15~/lib/file/fileLockPrimitive.c	2017-09-29 21:15:57.000000000 +0000
-+++ open-vm-tools-10.1.15/lib/file/fileLockPrimitive.c	2017-10-03 09:31:21.681628379 +0000
+diff -pruN '--exclude=*.orig' open-vm-tools-10.2.0-7253323~/lib/file/fileLockPrimitive.c open-vm-tools-10.2.0-7253323/lib/file/fileLockPrimitive.c
+--- open-vm-tools-10.2.0-7253323~/lib/file/fileLockPrimitive.c	2017-12-15 19:09:51.000000000 +0000
++++ open-vm-tools-10.2.0-7253323/lib/file/fileLockPrimitive.c	2017-12-20 14:32:34.760771684 +0000
 @@ -60,8 +60,8 @@
  #define LOGLEVEL_MODULE main
  #include "loglevel_user.h"
@@ -9,10 +9,10 @@ diff -pruN '--exclude=*.orig' open-vm-tools-10.1.15~/lib/file/fileLockPrimitive.
 -#define LOCK_EXCLUSIVE  "X"
 +#define __LOCK_SHARED     "S"
 +#define __LOCK_EXCLUSIVE  "X"
- #define FILELOCK_PROGRESS_DEARTH 8000 // Dearth of progress time in msec
- #define FILELOCK_PROGRESS_SAMPLE 200  // Progress sampling time in msec
+ #define FILELOCK_PROGRESS_DEARTH 8000 // Dearth of progress time in milliseconds
+ #define FILELOCK_PROGRESS_SAMPLE 200  // Progress sampling time in milliseconds
  
-@@ -472,8 +472,8 @@ fixedUp:
+@@ -474,8 +474,8 @@ fixedUp:
        goto corrupt;
     }
  
@@ -23,7 +23,7 @@ diff -pruN '--exclude=*.orig' open-vm-tools-10.1.15~/lib/file/fileLockPrimitive.
        goto corrupt;
     }
  
-@@ -1096,8 +1096,8 @@ FileLockWaitForPossession(const char *lo
+@@ -1097,8 +1097,8 @@ FileLockWaitForPossession(const char *lo
         ((memberValues->lamportNumber == myValues->lamportNumber) &&
            (Unicode_Compare(memberValues->memberName,
                             myValues->memberName) < 0))) &&
@@ -32,9 +32,9 @@ diff -pruN '--exclude=*.orig' open-vm-tools-10.1.15~/lib/file/fileLockPrimitive.
 +        ((strcmp(memberValues->lockType, __LOCK_EXCLUSIVE) == 0) ||
 +         (strcmp(myValues->lockType, __LOCK_EXCLUSIVE) == 0))) {
        char *path;
-       uint32 loopCount;
        Bool   thisMachine;
-@@ -1675,7 +1675,7 @@ FileLockIntrinsicPortable(const char *pa
+ 
+@@ -1678,7 +1678,7 @@ FileLockIntrinsicPortable(const char *pa
            */
  
           Warning(LGPFX" %s implicit %s lock succeeded on '%s'.\n",
@@ -43,12 +43,12 @@ diff -pruN '--exclude=*.orig' open-vm-tools-10.1.15~/lib/file/fileLockPrimitive.
  
           *err = 0;
           memberFilePath = &implicitReadToken;
-@@ -1838,7 +1838,7 @@ FileLockIntrinsic(const char *pathName,
+@@ -1841,7 +1841,7 @@ FileLockIntrinsic(const char *pathName,
     /* Construct the locking directory path */
     lockBase = Unicode_Append(pathName, FILELOCK_SUFFIX);
  
 -   myValues.lockType = exclusivity ? LOCK_EXCLUSIVE : LOCK_SHARED;
 +   myValues.lockType = exclusivity ? __LOCK_EXCLUSIVE : __LOCK_SHARED;
     myValues.exclusivity = exclusivity;
-    myValues.waitTime = 0;
-    myValues.msecMaxWaitTime = msecMaxWaitTime;
+    myValues.startTimeMsec = Hostinfo_SystemTimerMS();
+    myValues.maxWaitTimeMsec = maxWaitTimeMsec;

@@ -1,6 +1,6 @@
-diff -pruN '--exclude=*.orig' open-vm-tools-10.1.15~/lib/nicInfo/nicInfoPosix.c open-vm-tools-10.1.15/lib/nicInfo/nicInfoPosix.c
---- open-vm-tools-10.1.15~/lib/nicInfo/nicInfoPosix.c	2017-09-29 21:15:57.000000000 +0000
-+++ open-vm-tools-10.1.15/lib/nicInfo/nicInfoPosix.c	2017-10-03 09:31:21.952732216 +0000
+diff -pruN '--exclude=*.orig' open-vm-tools-10.2.0-7253323~/lib/nicInfo/nicInfoPosix.c open-vm-tools-10.2.0-7253323/lib/nicInfo/nicInfoPosix.c
+--- open-vm-tools-10.2.0-7253323~/lib/nicInfo/nicInfoPosix.c	2017-12-15 19:09:51.000000000 +0000
++++ open-vm-tools-10.2.0-7253323/lib/nicInfo/nicInfoPosix.c	2017-12-20 14:32:35.051752694 +0000
 @@ -34,11 +34,8 @@
  #include <sys/socket.h>
  #include <sys/stat.h>
@@ -13,30 +13,38 @@ diff -pruN '--exclude=*.orig' open-vm-tools-10.1.15~/lib/nicInfo/nicInfoPosix.c 
  #ifndef NO_DNET
  # ifdef DNET_IS_DUMBNET
  #  include <dumbnet.h>
-@@ -171,7 +168,7 @@ GuestInfoGetFqdn(int outBufLen,    // IN
+@@ -186,7 +183,7 @@ GuestInfoGetFqdn(int outBufLen,    // IN
  }
  
  
--#ifdef USERWORLD
-+#if defined(USERWORLD) || defined(sun)
+-#if defined(USERWORLD) || defined(USE_SLASH_PROC) || (defined(__linux__) && defined(NO_DNET))
++#if defined(sun) || defined(USERWORLD) || defined(USE_SLASH_PROC) || (defined(__linux__) && defined(NO_DNET))
  /*
   ******************************************************************************
   * CountNetmaskBits --                                                   */ /**
-@@ -259,7 +256,7 @@ GuestInfoGetNicInfo(NicInfoV3 *nicInfo)
+@@ -225,7 +222,7 @@ CountNetmaskBitsV4(struct sockaddr *netm
+ }
+ #endif
+ 
+-#if defined(USERWORLD) || (defined(__linux__) && defined(NO_DNET))
++#if defined(USERWORLD) || defined(sun) || (defined(__linux__) && defined(NO_DNET))
+ static unsigned
+ CountNetmaskBitsV6(struct sockaddr *netmask)
+ {
+@@ -379,7 +376,7 @@ Bool GuestInfoGetNicInfo(NicInfoV3 *nicI
     }
  
     return TRUE;
--#elif defined(USERWORLD)
-+#elif defined(USERWORLD) || defined(sun)
+-#elif defined(USERWORLD) || defined(__linux__)
++#elif defined(USERWORLD) || defined(__linux__) || defined(sun)
     struct ifaddrs *ifaddrs = NULL;
  
     if (getifaddrs(&ifaddrs) == 0 && ifaddrs != NULL) {
-@@ -348,7 +345,7 @@ GuestInfoGetNicInfo(NicInfoV3 *nicInfo)
-  *
-  ******************************************************************************
+@@ -425,6 +422,7 @@ Bool GuestInfoGetNicInfo(NicInfoV3 *nicI
   */
--#if defined(__FreeBSD__) || defined(__APPLE__) || defined(USERWORLD)
-+#if 1
+ #if defined(__FreeBSD__) || \
+     defined(__APPLE__) || \
++    defined(sun) || \
+     defined(USERWORLD) || \
+     (defined(__linux__) && defined(NO_DNET))
  
- char *
- GuestInfoGetPrimaryIP(void)
