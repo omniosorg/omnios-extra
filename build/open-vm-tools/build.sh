@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,8 +18,7 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 
 #
 # Copyright (c) 2014 by Delphix. All rights reserved.
@@ -30,7 +29,9 @@
 . ../../lib/functions.sh
 
 PROG=open-vm-tools
-VER=10.1.15
+VER=10.2.0
+BUILD=7253323
+BUILDDIR=$PROG-$VER-$BUILD
 PKG=system/virtualization/open-vm-tools
 SUMMARY="Open Virtual Machine Tools"
 DESC="The Open Virtual Machine Tools project aims to provide a suite of open source virtualization utilities and drivers to improve the functionality and user experience of virtualization. The project currently runs in guest operating systems under the VMware hypervisor."
@@ -87,7 +88,7 @@ install_conf() {
 }
 
 init
-download_source $PROG $PROG $VER
+download_source $PROG $PROG $VER-$BUILD
 patch_source
 prep_build
 export LIBS="-lnsl"
@@ -97,3 +98,6 @@ install_conf
 make_isa_stub
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker
