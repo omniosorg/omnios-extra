@@ -23,11 +23,10 @@
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=bmake
-VER=20171126
+VER=20171207
 VERHUMAN=$VER
 PKG=developer/bmake
 SUMMARY="portable version of NetBSD make(1)"
