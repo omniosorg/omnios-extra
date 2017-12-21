@@ -25,21 +25,16 @@
 #
 # Copyright (c) 2014, 2016 by Delphix. All rights reserved.
 #
-# Load support functions
 . ../../lib/functions.sh
 
-PROG=fio        # App name
-VER=3.2        # App version
-VERHUMAN=$VER   # Human-readable version
-#PVER=          # Branch (set in config.sh, override here if needed)
-PKG=system/test/fio # Package name (e.g. library/foo)
-SUMMARY="Flexible IO Tester" # One-liner, must be filled in
-DESC="Flexible IO Tester" # Longer description, must be filled in
-NOSCRIPTSTUB=1  # Don't make isa wrappers for scripts
+PROG=fio
+VER=3.3
+VERHUMAN=$VER
+PKG=system/test/fio
+SUMMARY="Flexible IO Tester"
+DESC="Flexible IO Tester"
+NOSCRIPTSTUB=1
 BUILDDIR=$PROG-$PROG-$VER
-
-BUILD_DEPENDS_IPS=
-RUN_DEPENDS_IPS=
 
 CONFIGURE_OPTS=
 CONFIGURE_OPTS_32=
