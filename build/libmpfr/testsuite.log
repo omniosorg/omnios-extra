@@ -1,4 +1,9 @@
 PASS: tversion
+PASS: tabort_prec_max
+PASS: tassert
+PASS: tabort_defalloc1
+PASS: tabort_defalloc2
+PASS: talloc
 PASS: tinternals
 PASS: tinits
 PASS: tisqrt
@@ -20,11 +25,13 @@ PASS: tadd_d
 PASS: tadd_ui
 PASS: tagm
 PASS: tai
+PASS: talloc-cache
 PASS: tasin
 PASS: tasinh
 PASS: tatan
 PASS: tatanh
 PASS: taway
+PASS: tbeta
 PASS: tbuildopt
 PASS: tcan_round
 PASS: tcbrt
@@ -55,6 +62,8 @@ PASS: tdiv_d
 PASS: tdiv_ui
 PASS: teint
 PASS: teq
+PASS: terandom
+PASS: terandom_chisq
 PASS: terf
 PASS: texp
 PASS: texp10
@@ -63,17 +72,21 @@ PASS: texpm1
 PASS: tfactorial
 PASS: tfits
 PASS: tfma
+PASS: tfmma
 PASS: tfmod
 PASS: tfms
+PASS: tfpif
 PASS: tfprintf
 PASS: tfrac
 PASS: tfrexp
 PASS: tgamma
-PASS: tget_flt
+PASS: tgamma_inc
 PASS: tget_d
 PASS: tget_d_2exp
 PASS: tget_f
+PASS: tget_flt
 PASS: tget_ld_2exp
+PASS: tget_q
 SKIP: tget_set_d64
 PASS: tget_sj
 PASS: tget_str
@@ -94,6 +107,7 @@ PASS: tlog
 PASS: tlog10
 PASS: tlog1p
 PASS: tlog2
+PASS: tlog_ui
 PASS: tmin_prec
 PASS: tminmax
 PASS: tmodf
@@ -102,6 +116,8 @@ PASS: tmul_2exp
 PASS: tmul_d
 PASS: tmul_ui
 PASS: tnext
+PASS: tnrandom
+PASS: tnrandom_chisq
 PASS: tout_str
 PASS: toutimpl
 PASS: tpow
@@ -110,15 +126,19 @@ PASS: tpow_all
 PASS: tpow_z
 PASS: tprintf
 PASS: trandom
+PASS: trandom_deviate
 PASS: trec_sqrt
 PASS: tremquo
 PASS: trint
+PASS: trndna
 PASS: troot
+PASS: trootn_ui
 PASS: tround_prec
 PASS: tsec
 PASS: tsech
 PASS: tset_d
 PASS: tset_f
+PASS: tset_float128
 PASS: tset_ld
 PASS: tset_q
 PASS: tset_si
@@ -158,8 +178,8 @@ PASS: ty1
 PASS: tyn
 PASS: tzeta
 PASS: tzeta_ui
-# TOTAL: 160
-# PASS:  159
+# TOTAL: 180
+# PASS:  179
 # SKIP:  1
 # XFAIL: 0
 # FAIL:  0
