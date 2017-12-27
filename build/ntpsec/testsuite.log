@@ -1,0 +1,285 @@
+BINARY      : /data/omnios-build/omniosorg/bloody/_build/ntpsec-1.0.0/build/main/tests/test_libparse
+RETURN VALUE: 0
+
+*** stdout ***
+Unity test run 1 of 1
+TEST(binio, get_lsb_int160) PASS
+TEST(binio, get_lsb_int161) PASS
+TEST(binio, get_lsb_int162) PASS
+TEST(binio, get_lsb_int163) PASS
+TEST(binio, get_lsb_int164) PASS
+TEST(binio, get_lsb_int320) PASS
+TEST(binio, get_lsb_int321) PASS
+TEST(binio, get_lsb_int322) PASS
+TEST(binio, get_lsb_int323) PASS
+TEST(binio, get_lsb_int324) PASS
+TEST(binio, put_lsb_uint160) PASS
+TEST(binio, put_lsb_uint161) PASS
+TEST(binio, put_lsb_uint162) PASS
+TEST(binio, put_lsb_uint163) PASS
+TEST(binio, put_lsb_uint164) PASS
+TEST(binio, get_lsb_uint160) PASS
+TEST(binio, get_lsb_uint161) PASS
+TEST(binio, get_lsb_uint162) PASS
+TEST(binio, get_lsb_uint163) PASS
+TEST(binio, get_lsb_uint164) PASS
+TEST(binio, get_lsb_uint320) PASS
+TEST(binio, get_lsb_uint321) PASS
+TEST(binio, get_lsb_uint322) PASS
+TEST(binio, get_lsb_uint323) PASS
+TEST(binio, get_lsb_uint324) PASS
+TEST(binio, get_msb_short0) PASS
+TEST(binio, get_msb_short1) PASS
+TEST(binio, get_msb_short2) PASS
+TEST(binio, get_msb_short3) PASS
+TEST(binio, get_msb_short4) PASS
+TEST(binio, getmsb_short0) PASS
+TEST(binio, getmsb_short1) PASS
+TEST(binio, getmsb_short2) PASS
+TEST(binio, getmsb_short3) PASS
+TEST(binio, getmsb_short4) PASS
+TEST(binio, get_msb_ushort0) PASS
+TEST(binio, get_msb_ushort1) PASS
+TEST(binio, get_msb_ushort2) PASS
+TEST(binio, get_msb_ushort3) PASS
+TEST(binio, get_msb_ushort4) PASS
+TEST(gpstolfp, check) PASS
+TEST(ieee754io, test_zero32) PASS
+TEST(ieee754io, test_one32) PASS
+TEST(ieee754io, test_negone32) PASS
+TEST(ieee754io, test_small32) PASS
+TEST(ieee754io, test_nan32) PASS
+TEST(ieee754io, test_max32) PASS
+TEST(ieee754io, test_order32) PASS
+TEST(ieee754io, test_zero64) PASS
+TEST(ieee754io, test_one64) PASS
+TEST(ieee754io, test_negone64) PASS
+TEST(ieee754io, test_small64) PASS
+TEST(ieee754io, test_nan64) PASS
+TEST(ieee754io, test_max64) PASS
+TEST(ieee754io, test_order64) PASS
+
+-----------------------
+55 Tests 0 Failures 0 Ignored 
+OK
+
+*** stderr ***
+
+
+
+BINARY      : /data/omnios-build/omniosorg/bloody/_build/ntpsec-1.0.0/build/main/tests/test_ntpd
+RETURN VALUE: 0
+
+*** stdout ***
+Unity test run 1 of 1
+TEST(leapsec, ValidateGood) PASS
+TEST(leapsec, ValidateNoHash) PASS
+TEST(leapsec, ValidateBad) PASS
+TEST(leapsec, ValidateMalformed) PASS
+TEST(leapsec, ValidateMalformedShort) PASS
+TEST(leapsec, ValidateNoLeadZero) PASS
+TEST(leapsec, tableSelect) PASS
+TEST(leapsec, loadFileExpire) PASS
+TEST(leapsec, loadFileTTL) PASS
+TEST(leapsec, lsQueryPristineState)leap table (0 entries) expires at 1970-01-01:
+ PASS
+TEST(leapsec, ls2009faraway) PASS
+TEST(leapsec, ls2009weekaway) PASS
+TEST(leapsec, ls2009houraway) PASS
+TEST(leapsec, ls2009secaway) PASS
+TEST(leapsec, ls2009onspot) PASS
+TEST(leapsec, ls2009nodata) PASS
+TEST(leapsec, ls2009limdata)leap table (10 entries) expires at 2014-06-01:
+1991-01-01 [-] (1990-12-04) - 26
+1992-07-01 [-] (1992-06-03) - 27
+1993-07-01 [-] (1993-06-03) - 28
+1994-07-01 [-] (1994-06-03) - 29
+1996-01-01 [-] (1995-12-04) - 30
+1997-07-01 [-] (1997-06-03) - 31
+1999-01-01 [-] (1998-12-04) - 32
+2006-01-01 [-] (2005-12-04) - 33
+2009-01-01 [-] (2008-12-04) - 34
+2012-07-01 [-] (2012-06-03) - 35
+ PASS
+TEST(leapsec, addDynamic)leap table (10 entries) expires at 1993-07-01:
+1990-01-01 [-] (1989-12-04) - 25
+1991-01-01 [-] (1990-12-04) - 26
+1992-07-01 [-] (1992-06-03) - 27
+1993-07-01 [-] (1993-06-03) - 28
+1996-01-11 [*] (1995-12-11) - 29
+1997-07-10 [*] (1997-06-10) - 30
+1999-01-11 [*] (1998-12-11) - 31
+2006-01-11 [*] (2005-12-11) - 32
+2009-01-11 [*] (2008-12-11) - 33
+2012-07-10 [*] (2012-06-10) - 34
+ PASS
+TEST(leapsec, addFixed) PASS
+TEST(leapsec, ls2009seqInsElectric) PASS
+TEST(leapsec, ls2009seqInsDumb) PASS
+TEST(leapsec, ls2009seqDelElectric) PASS
+TEST(leapsec, ls2009seqDelDumb) PASS
+TEST(leapsec, ls2012seqInsElectric) PASS
+TEST(leapsec, ls2012seqInsDumb) PASS
+TEST(leapsec, lsEmptyTableDumb) PASS
+TEST(leapsec, lsEmptyTableElectric) PASS
+TEST(hackrestrict, RestrictionsAreEmptyAfterInit) PASS
+TEST(hackrestrict, ReturnsCorrectDefaultRestrictions) PASS
+TEST(hackrestrict, HackingDefaultRestriction) PASS
+TEST(hackrestrict, CantRemoveDefaultEntry) PASS
+TEST(hackrestrict, AddingNewRestriction) PASS
+TEST(hackrestrict, TheMostFittingRestrictionIsMatched) PASS
+TEST(hackrestrict, DeletedRestrictionIsNotMatched) PASS
+TEST(hackrestrict, RestrictUnflagWorks) PASS
+
+-----------------------
+35 Tests 0 Failures 0 Ignored 
+OK
+
+*** stderr ***
+
+
+
+BINARY      : /data/omnios-build/omniosorg/bloody/_build/ntpsec-1.0.0/build/main/tests/test_libntp
+RETURN VALUE: 0
+
+*** stdout ***
+Unity test run 1 of 1
+TEST(authkeys, AddTrustedKeys) PASS
+TEST(authkeys, AddUntrustedKey) PASS
+TEST(authkeys, HaveKeyCorrect) PASS
+TEST(authkeys, HaveKeyIncorrect) PASS
+TEST(calendar, is_leapyear) PASS
+TEST(calendar, julian0) PASS
+TEST(calendar, days_per_year) PASS
+TEST(calendar, parse_to_unixtime) PASS
+TEST(calendar, DaySplitMerge) PASS
+TEST(calendar, SplitYearDays1) PASS
+TEST(calendar, SplitYearDays2) PASS
+TEST(calendar, RataDie1) PASS
+TEST(calendar, LeapYears1) PASS
+TEST(calendar, LeapYears2) PASS
+TEST(calendar, RoundTripDate) PASS
+TEST(clocktime, CurrentYear) PASS
+TEST(clocktime, CurrentYearExplicit) PASS
+TEST(clocktime, CurrentYearFuzz) PASS
+TEST(clocktime, TimeZoneOffset) PASS
+TEST(clocktime, WrongYearStart) PASS
+TEST(clocktime, PreviousYear) PASS
+TEST(clocktime, NextYear) PASS
+TEST(clocktime, NoReasonableConversion) PASS
+TEST(clocktime, AlwaysInLimit) PASS
+TEST(decodenetnum, Services) PASS
+TEST(decodenetnum, IPv4AddressOnly) PASS
+TEST(decodenetnum, IPv4AddressWithPort) PASS
+TEST(decodenetnum, IPv4AddressWithPort2) PASS
+TEST(decodenetnum, IPv6AddressOnly) PASS
+TEST(decodenetnum, IPv6AddressWithPort) PASS
+TEST(decodenetnum, IllegalAddress) PASS
+TEST(decodenetnum, IllegalCharInPort) PASS
+TEST(hextolfp, PositiveInteger) PASS
+TEST(hextolfp, NegativeInteger) PASS
+TEST(hextolfp, PositiveFraction) PASS
+TEST(hextolfp, NegativeFraction) PASS
+TEST(hextolfp, IllegalNumberOfInteger) PASS
+TEST(hextolfp, IllegalChar) PASS
+TEST(humandate, RegularTime) PASS
+TEST(humandate, CurrentTime) PASS
+TEST(lfpfunc, Extraction) PASS
+TEST(lfpfunc, Negation) PASS
+TEST(lfpfunc, Absolute) PASS
+TEST(lfpfunc, FDF_RoundTrip) PASS
+TEST(lfpfunc, SignedRelOps) PASS
+TEST(lfpfunc, UnsignedRelOps) PASS
+TEST(lfptostr, PositiveInteger) PASS
+TEST(lfptostr, NegativeInteger) PASS
+TEST(lfptostr, PositiveIntegerWithFraction) PASS
+TEST(lfptostr, NegativeIntegerWithFraction) PASS
+TEST(lfptostr, RoundingDownToInteger) PASS
+TEST(lfptostr, RoundingMiddleToInteger) PASS
+TEST(lfptostr, RoundingUpToInteger) PASS
+TEST(lfptostr, SingleDecimal) PASS
+TEST(lfptostr, MillisecondsRoundingUp) PASS
+TEST(lfptostr, MillisecondsRoundingDown) PASS
+TEST(lfptostr, UnsignedInteger) PASS
+TEST(macencrypt, Encrypt) PASS
+TEST(macencrypt, DecryptValid) PASS
+TEST(macencrypt, DecryptInvalid) PASS
+TEST(macencrypt, IPv4AddressToRefId) PASS
+TEST(macencrypt, IPv6AddressToRefId) PASS
+TEST(msyslog, msnprintf) PASS
+TEST(msyslog, msnprintfLiteralPercentm) PASS
+TEST(msyslog, msnprintfBackslashLiteralPercentm) PASS
+TEST(msyslog, msnprintfBackslashPercent) PASS
+TEST(msyslog, msnprintfHangingPercent) PASS
+TEST(msyslog, format_errmsgHangingPercent) PASS
+TEST(msyslog, msnprintfNullTarget) PASS
+TEST(msyslog, msnprintfTruncate) PASS
+TEST(netof6, IPv6Address) PASS
+TEST(numtoa, Address) PASS
+TEST(numtoa, Netmask) PASS
+TEST(prettydate, ConstantDate) PASS
+TEST(recvbuff, Initialization) PASS
+TEST(recvbuff, GetAndFree) PASS
+TEST(recvbuff, GetAndFill) PASS
+TEST(refidsmear, Main) PASS
+TEST(socktoa, IPv4AddressWithPort) PASS
+TEST(socktoa, IPv6AddressWithPort) PASS
+TEST(socktoa, ScopedIPv6AddressWithPort) PASS
+TEST(socktoa, HashEqual) PASS
+TEST(socktoa, HashNotEqual) PASS
+TEST(socktoa, IgnoreIPv6Fields) PASS
+TEST(statestr, PeerRestart) PASS
+TEST(statestr, SysUnspecified) PASS
+TEST(statestr, ClockCodeExists) PASS
+TEST(statestr, ClockCodeUnknown) PASS
+TEST(strtolfp, PositiveInteger) PASS
+TEST(strtolfp, NegativeInteger) PASS
+TEST(strtolfp, PositiveFraction) PASS
+TEST(strtolfp, NegativeFraction) PASS
+TEST(strtolfp, PositiveMsFraction) PASS
+TEST(strtolfp, NegativeMsFraction) PASS
+TEST(strtolfp, InvalidChars) PASS
+TEST(timespecops, Helpers1) PASS
+TEST(timespecops, Normalise) PASS
+TEST(timespecops, SignNoFrac) PASS
+TEST(timespecops, SignWithFrac) PASS
+TEST(timespecops, CmpFracEQ) PASS
+TEST(timespecops, CmpFracGT) PASS
+TEST(timespecops, CmpFracLT) PASS
+TEST(timespecops, AddFullNorm) PASS
+TEST(timespecops, AddFullOflow1) PASS
+TEST(timespecops, AddNsecNorm) PASS
+TEST(timespecops, AddNsecOflow1) PASS
+TEST(timespecops, SubFullNorm) PASS
+TEST(timespecops, SubFullOflow) PASS
+TEST(timespecops, SubNsecNorm) PASS
+TEST(timespecops, SubNsecOflow) PASS
+TEST(timespecops, test_Neg) PASS
+TEST(timespecops, test_AbsNoFrac) PASS
+TEST(timespecops, test_AbsWithFrac) PASS
+TEST(timespecops, test_ToLFPbittest) PASS
+TEST(timespecops, test_ToLFPrelPos) PASS
+TEST(timespecops, test_ToLFPrelNeg) PASS
+TEST(timespecops, test_ToLFPabs) PASS
+TEST(timespecops, test_FromLFPbittest) PASS
+TEST(timespecops, test_FromLFPrelPos) PASS
+TEST(timespecops, test_FromLFPrelNeg) PASS
+TEST(timespecops, test_LFProundtrip) PASS
+TEST(timespecops, test_ToString) PASS
+TEST(vi64ops, SetVUI64s_pos) PASS
+TEST(vi64ops, SetVUI64s_neg) PASS
+TEST(vi64ops, SetVUI64u) PASS
+TEST(vi64ops, NegVUI64) PASS
+TEST(ymd2yd, NonLeapYearFebruary) PASS
+TEST(ymd2yd, NonLeapYearJune) PASS
+TEST(ymd2yd, LeapYearFebruary) PASS
+TEST(ymd2yd, LeapYearDecember) PASS
+
+-----------------------
+130 Tests 0 Failures 0 Ignored 
+OK
+
+*** stderr ***
+
+
+

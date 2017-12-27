@@ -1,0 +1,16 @@
+
+Support for position independent executable is detected but then GCC fails
+to link the NTP daemon. Disable the PIE test for now.
+
+diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/wscript ntpsec-1.0.0/wscript
+--- ntpsec-1.0.0~/wscript	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/wscript	2017-12-27 14:20:06.985213252 +0000
+@@ -329,7 +329,7 @@ def configure(ctx):
+     cc_test_flags = [
+         ('f_stack_protector_all', '-fstack-protector-all'),
+         ('PIC', '-fPIC'),
+-        ('PIE', '-pie -fPIE'),
++        #('PIE', '-pie -fPIE'),
+         # this quiets most of macOS warnings on -fpie
+         ('unused', '-Qunused-arguments'),
+         # This is a useless warning on any architecture with a barrel
