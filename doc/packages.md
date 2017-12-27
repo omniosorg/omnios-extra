@@ -10,4 +10,5 @@
 | ooce/ooceapps			| 0.2.4		| https://github.com/hadfl/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/python-36	| 3.6.3		| https://www.python.org/downloads/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.12.1	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/text/asciidoc		| 8.6.9		| http://www.methods.co.nz/asciidoc/
 
