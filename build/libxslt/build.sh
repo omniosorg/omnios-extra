@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,13 +18,12 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=libxslt
@@ -33,10 +32,15 @@ PKG=library/libxslt
 SUMMARY="The XSLT library"
 DESC="$SUMMARY"
 
-DEPENDS_IPS="library/libxml2 library/zlib system/library system/library/math"
+RUN_DEPENDS_IPS="
+	library/libxml2
+	library/zlib
+	system/library
+	system/library/math
+"
 
-CFLAGS32="$CFLAGS32 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
-CFLAGS64="$CFLAGS64 -D_LARGEFILE_SOURCE"
+CFLAGS32+=" -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
+CFLAGS64+=" -D_LARGEFILE_SOURCE"
 LDFLAGS="-lpthread"
 
 # Without --with-libxml-prefix, configure does not find /usr/bin/xml2-config!
@@ -61,6 +65,7 @@ backup_man() {
     logmsg "making a backup of xsltproc.1"
     logcmd cp $TMPDIR/$BUILDDIR/doc/xsltproc.1 $TMPDIR/$BUILDDIR/backup.1
 }
+
 save_function configure64 configure64_orig
 configure64() {
     configure64_orig
@@ -72,13 +77,11 @@ configure64() {
 save_function make_prog64 make_prog64_orig
 save_function make_prog32 make_prog32_orig
 make_prog64() {
-    logcmd perl -pi -e 's#(\$CC.*\$compiler_flags)#$1 -nostdlib#g;' libtool || \
-        logerr "libtool patch failed"
+    libtool_nostdlib libtool
     make_prog64_orig
 }
 make_prog32() {
-    logcmd perl -pi -e 's#(\$CC.*\$compiler_flags)#$1 -nostdlib#g;' libtool || \
-        logerr "libtool patch failed"
+    libtool_nostdlib libtool
     make_prog32_orig
 }
 
@@ -88,13 +91,23 @@ tests() {
 	    || logerr "xslt-config --cflags not working"
 }
 
+python_cleanup() {
+    mv $DESTDIR/usr/lib/python$PYTHONVER/site-packages \
+        $DESTDIR/usr/lib/python$PYTHONVER/vendor-packages \
+        || logerr "Cannot move from site-packages to vendor-packages"
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
 backup_man
 prep_build
 build
+python_cleanup
 make_isa_stub
 tests
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker
