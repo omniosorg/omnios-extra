@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,13 +18,11 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=ntp
@@ -57,10 +55,7 @@ CONFIGURE_OPTS_32="--prefix=/usr
 "
 
 overlay_root() {
-    logcmd rm -f $DESTDIR/usr/sbin/tickadj
-    logcmd ln -s ntpdc $DESTDIR/usr/sbin/xntpdc
     (cd $SRCDIR/root && tar cf - .) | (cd $DESTDIR && tar xf -)
-    logcmd mkdir -p $DESTDIR/var/ntp/ntpstats
 }
 
 init
@@ -77,4 +72,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
