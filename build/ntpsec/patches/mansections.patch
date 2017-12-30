@@ -1,0 +1,209 @@
+diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/ntpd/ntp.conf-man.txt ntpsec-1.0.0/ntpd/ntp.conf-man.txt
+--- ntpsec-1.0.0~/ntpd/ntp.conf-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpd/ntp.conf-man.txt	2017-12-27 14:20:07.139145259 +0000
+@@ -1,4 +1,4 @@
+-= ntp.conf(5) =
++= ntp.conf(4) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/ntpd/ntp.keys-man.txt ntpsec-1.0.0/ntpd/ntp.keys-man.txt
+--- ntpsec-1.0.0~/ntpd/ntp.keys-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpd/ntp.keys-man.txt	2017-12-27 14:20:07.139345620 +0000
+@@ -1,4 +1,4 @@
+-= ntp.keys(5) =
++= ntp.keys(4) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/ntpd/ntpd-man.txt ntpsec-1.0.0/ntpd/ntpd-man.txt
+--- ntpsec-1.0.0~/ntpd/ntpd-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpd/ntpd-man.txt	2017-12-27 14:20:07.139507655 +0000
+@@ -1,4 +1,4 @@
+-= ntpd(8) =
++= ntpd(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/ntpd/wscript ntpsec-1.0.0/ntpd/wscript
+--- ntpsec-1.0.0~/ntpd/wscript	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpd/wscript	2017-12-27 14:20:07.140142787 +0000
+@@ -133,6 +133,6 @@ def build(ctx):
+             "CRYPTO DNS_SD DNS_SD_INCLUDES %s SOCKET NSL SCF" % use_refclock,
+     )
+ 
+-    ctx.manpage(8, "ntpd-man.txt")
+-    ctx.manpage(5, "ntp.conf-man.txt")
+-    ctx.manpage(5, "ntp.keys-man.txt")
++    ctx.manpage("1m", "ntpd-man.txt")
++    ctx.manpage(4, "ntp.conf-man.txt")
++    ctx.manpage(4, "ntp.keys-man.txt")
+diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/wscript ntpsec-1.0.0/wscript
+--- ntpsec-1.0.0~/wscript	2017-12-27 14:20:06.985213252 +0000
++++ ntpsec-1.0.0/wscript	2017-12-27 14:20:07.139949432 +0000
+@@ -1101,17 +1101,17 @@ def build(ctx):
+     if ctx.cmd == 'clean':
+         afterparty(ctx)
+ 
+-    ctx.manpage(1, "ntpclients/ntploggps-man.txt")
+-    ctx.manpage(1, "ntpclients/ntpdig-man.txt")
+-    ctx.manpage(1, "ntpclients/ntpmon-man.txt")
+-    ctx.manpage(1, "ntpclients/ntpq-man.txt")
+-    ctx.manpage(1, "ntpclients/ntpsweep-man.txt")
+-    ctx.manpage(1, "ntpclients/ntptrace-man.txt")
+-    ctx.manpage(1, "ntpclients/ntpviz-man.txt")
+-    ctx.manpage(1, "ntpclients/ntplogtemp-man.txt")
+-    ctx.manpage(8, "ntpclients/ntpkeygen-man.txt")
+-    ctx.manpage(8, "ntpclients/ntpleapfetch-man.txt")
+-    ctx.manpage(8, "ntpclients/ntpwait-man.txt")
++    ctx.manpage("1m", "ntpclients/ntploggps-man.txt")
++    ctx.manpage("1m", "ntpclients/ntpdig-man.txt")
++    ctx.manpage("1m", "ntpclients/ntpmon-man.txt")
++    ctx.manpage("1m", "ntpclients/ntpq-man.txt")
++    ctx.manpage("1m", "ntpclients/ntpsweep-man.txt")
++    ctx.manpage("1m", "ntpclients/ntptrace-man.txt")
++    ctx.manpage("1m", "ntpclients/ntpviz-man.txt")
++    ctx.manpage("1m", "ntpclients/ntplogtemp-man.txt")
++    ctx.manpage("1m", "ntpclients/ntpkeygen-man.txt")
++    ctx.manpage("1m", "ntpclients/ntpleapfetch-man.txt")
++    ctx.manpage("1m", "ntpclients/ntpwait-man.txt")
+ 
+     # Skip running unit tests on a cross compile build
+     if not ctx.env.ENABLE_CROSS:
+diff -ru ntpsec-1.0.0.dist/ntpclients/ntpdig-man.txt ntpsec-1.0.0/ntpclients/ntpdig-man.txt
+--- ntpsec-1.0.0.dist/ntpclients/ntpdig-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpclients/ntpdig-man.txt	2017-12-27 14:27:41.641524630 +0000
+@@ -1,4 +1,4 @@
+-= ntpdig(1) =
++= ntpdig(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -ru ntpsec-1.0.0.dist/ntpclients/ntpkeygen-man.txt ntpsec-1.0.0/ntpclients/ntpkeygen-man.txt
+--- ntpsec-1.0.0.dist/ntpclients/ntpkeygen-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpclients/ntpkeygen-man.txt	2017-12-27 14:27:46.010859598 +0000
+@@ -1,4 +1,4 @@
+-= ntpkeygen(8) =
++= ntpkeygen(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -ru ntpsec-1.0.0.dist/ntpclients/ntpleapfetch-man.txt ntpsec-1.0.0/ntpclients/ntpleapfetch-man.txt
+--- ntpsec-1.0.0.dist/ntpclients/ntpleapfetch-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpclients/ntpleapfetch-man.txt	2017-12-27 14:27:50.226539706 +0000
+@@ -1,4 +1,4 @@
+-= ntpleapfetch(8) =
++= ntpleapfetch(1m) =
+ :doctype: manpage
+ 
+ == NAME == 
+diff -ru ntpsec-1.0.0.dist/ntpclients/ntploggps-man.txt ntpsec-1.0.0/ntpclients/ntploggps-man.txt
+--- ntpsec-1.0.0.dist/ntpclients/ntploggps-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpclients/ntploggps-man.txt	2017-12-27 14:27:53.252447459 +0000
+@@ -1,4 +1,4 @@
+-= ntploggps(1) =
++= ntploggps(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -ru ntpsec-1.0.0.dist/ntpclients/ntplogtemp-man.txt ntpsec-1.0.0/ntpclients/ntplogtemp-man.txt
+--- ntpsec-1.0.0.dist/ntpclients/ntplogtemp-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpclients/ntplogtemp-man.txt	2017-12-27 14:28:03.358470877 +0000
+@@ -1,4 +1,4 @@
+-= ntplogtemp-(1) =
++= ntplogtemp(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -ru ntpsec-1.0.0.dist/ntpclients/ntpmon-man.txt ntpsec-1.0.0/ntpclients/ntpmon-man.txt
+--- ntpsec-1.0.0.dist/ntpclients/ntpmon-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpclients/ntpmon-man.txt	2017-12-27 14:28:06.311128860 +0000
+@@ -1,4 +1,4 @@
+-= ntpmon(1) =
++= ntpmon(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -ru ntpsec-1.0.0.dist/ntpclients/ntpq-man.txt ntpsec-1.0.0/ntpclients/ntpq-man.txt
+--- ntpsec-1.0.0.dist/ntpclients/ntpq-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpclients/ntpq-man.txt	2017-12-27 14:28:09.543157150 +0000
+@@ -1,4 +1,4 @@
+-= ntpq(1) =
++= ntpq(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -ru ntpsec-1.0.0.dist/ntpclients/ntpsweep-man.txt ntpsec-1.0.0/ntpclients/ntpsweep-man.txt
+--- ntpsec-1.0.0.dist/ntpclients/ntpsweep-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpclients/ntpsweep-man.txt	2017-12-27 14:28:11.534964730 +0000
+@@ -1,4 +1,4 @@
+-= ntpsweep(1) =
++= ntpsweep(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -ru ntpsec-1.0.0.dist/ntpclients/ntptrace-man.txt ntpsec-1.0.0/ntpclients/ntptrace-man.txt
+--- ntpsec-1.0.0.dist/ntpclients/ntptrace-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpclients/ntptrace-man.txt	2017-12-27 14:28:13.998988222 +0000
+@@ -1,4 +1,4 @@
+-= ntptrace(1) =
++= ntptrace(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -ru ntpsec-1.0.0.dist/ntpclients/ntpviz-man.txt ntpsec-1.0.0/ntpclients/ntpviz-man.txt
+--- ntpsec-1.0.0.dist/ntpclients/ntpviz-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpclients/ntpviz-man.txt	2017-12-27 14:28:17.747062892 +0000
+@@ -1,4 +1,4 @@
+-= ntpviz(1) =
++= ntpviz(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -ru ntpsec-1.0.0.dist/ntpclients/ntpwait-man.txt ntpsec-1.0.0/ntpclients/ntpwait-man.txt
+--- ntpsec-1.0.0.dist/ntpclients/ntpwait-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpclients/ntpwait-man.txt	2017-12-27 14:28:21.587598592 +0000
+@@ -1,4 +1,4 @@
+-= ntpwait(8) =
++= ntpwait(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -ru ntpsec-1.0.0.dist/ntpfrob/ntpfrob-man.txt ntpsec-1.0.0/ntpfrob/ntpfrob-man.txt
+--- ntpsec-1.0.0.dist/ntpfrob/ntpfrob-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpfrob/ntpfrob-man.txt	2017-12-27 14:45:18.129171208 +0000
+@@ -1,4 +1,4 @@
+-= ntpfrob(8) =
++= ntpfrob(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -ru ntpsec-1.0.0.dist/ntpfrob/wscript ntpsec-1.0.0/ntpfrob/wscript
+--- ntpsec-1.0.0.dist/ntpfrob/wscript	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpfrob/wscript	2017-12-27 14:45:27.158683437 +0000
+@@ -13,4 +13,4 @@
+         use="M RT",
+     )
+ 
+-    ctx.manpage(8, "ntpfrob-man.txt")
++    ctx.manpage("1m", "ntpfrob-man.txt")
+diff -ru ntpsec-1.0.0.dist/ntptime/ntptime-man.txt ntpsec-1.0.0/ntptime/ntptime-man.txt
+--- ntpsec-1.0.0.dist/ntptime/ntptime-man.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntptime/ntptime-man.txt	2017-12-27 14:45:44.477443985 +0000
+@@ -1,4 +1,4 @@
+-= ntptime(8) =
++= ntptime(1m) =
+ :doctype: manpage
+ 
+ == NAME ==
+diff -ru ntpsec-1.0.0.dist/ntptime/wscript ntpsec-1.0.0/ntptime/wscript
+--- ntpsec-1.0.0.dist/ntptime/wscript	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntptime/wscript	2017-12-27 14:45:41.435004843 +0000
+@@ -14,6 +14,6 @@
+             install_path='${BINDIR}',
+         )
+ 
+-    ctx.manpage(8, "ntptime-man.txt")
++    ctx.manpage("1m", "ntptime-man.txt")
+ 
+ # end

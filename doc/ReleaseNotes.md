@@ -45,10 +45,23 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   Mailwrapper is still available to support use of packages from non-IPS
   repositories such as _pkgsrc_ via `/etc/mailer.conf`
 
-* Experimental support for `sparse` zones. These are linked-ipkg zones that
-  share the `/usr`, `/sbin` and `/lib` directories with the global zone.
-  They are tiny (under 4MiB of installed files) and perfect for isolating
-  VM instances for extra security or to apply more granular resource controls.
+* A new `service/network/ntpsec` package is available as an alternative to
+  `service/network/ntp`. NTPsec is a secure, hardened and improved
+  implementation of the Network Time Protocol derived from NTP Classic.
+  NTPsec also runs with stack protection and ASLR out of the box on OmniOS.
+  To switch just record any changes you have made to `/etc/inet/ntp.conf` and
+  the service manifest properties (`svcprop -p config ntp`) and then
+  `pkg uninstall service/network/ntp && pkg install service/network/ntpsec`.
+  Restore any customisations and then start the network/ntp service.
+
+* Experimental support for `sparse` and `vm` branded zones. These are
+  linked-ipkg zones that share most of the `/usr`, `/sbin` and `/lib`
+  directories with the global zone. They are tiny (under 4MiB of installed
+  files) and perfect for isolating small services or VM instances for extra
+  security or to apply more granular resource controls. The only current
+  difference between `sparse` and `vm` zones is the services which are enabled
+  by default. `vm` zones have no services running and are designed specifically
+  for isolating VM instances; they may become more specialised in the future.
 
 * A number of system components now enable Address Space Layout Randomisation
   (ASLR) by default:
@@ -57,6 +70,7 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
     * rpcbind
     * Sendmail
     * Dragonfly Mail Agent
+    * NTPsec
 
 * `openssh` has been upgraded to 7.6p1. This version drops support for
   SSH protocol version 1, RSA keys under 1024 bits in length and a number

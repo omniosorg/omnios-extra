@@ -1,0 +1,96 @@
+
+Re-locate the default configuration file from /etc/ to /etc/inet/
+
+diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/docs/includes/ntp-conf-body.txt ntpsec-1.0.0/docs/includes/ntp-conf-body.txt
+--- ntpsec-1.0.0~/docs/includes/ntp-conf-body.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/docs/includes/ntp-conf-body.txt	2017-12-27 14:20:07.061288869 +0000
+@@ -4,7 +4,7 @@
+ 
+ [[synop]]
+ == SYNOPSIS ==
+-/etc/ntp.conf
++/etc/inet/ntp.conf
+ 
+ [[descr]]
+ == DESCRIPTION ==
+@@ -12,7 +12,7 @@
+ The `ntp.conf` configuration file is read at initial startup by the
+ {ntpdman} daemon in order to specify the synchronization
+ sources, modes and other related information. Usually, it is installed
+-in the `/etc` directory, but could be installed elsewhere (see the
++in the `/etc/inet` directory, but could be installed elsewhere (see the
+ daemon's `-c` command line option).
+ 
+ The file format is similar to other UNIX configuration files. Comments
+@@ -221,7 +221,7 @@ include::../includes/misc-options.txt[]
+ [[files]]
+ == FILES ==
+ 
+-`/etc/ntp.conf`::
++`/etc/inet/ntp.conf`::
+   the default name of the configuration file
+ _ntp.keys_::
+   private MD5 keys
+diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/docs/ntpsec.txt ntpsec-1.0.0/docs/ntpsec.txt
+--- ntpsec-1.0.0~/docs/ntpsec.txt	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/docs/ntpsec.txt	2017-12-27 14:20:07.061587491 +0000
+@@ -195,8 +195,8 @@ codebase has been outright removed, with
+ * The ntpq utility resizes its display to take advantage of wide
+   terminal windows, allowing more space for long peer addresses.
+ 
+-* When running as root, the ntpq utility looks in /etc/ntp.conf and
+-  /usr/local/etc/ntp.keys to find credentials for control requests
++* When running as root, the ntpq utility looks in /etc/inet/ntp.conf and
++  /etc/inet/ntp.keys to find credentials for control requests
+   that require authentication. Thus it will often not be necessary to enter
+   them by hand. Note that your installation's locations for config and
+   key files may differ from these; in that case this convenience
+@@ -247,10 +247,10 @@ codebase has been outright removed, with
+   respect to the current working directory but with respect to the
+   directory name of the last pushed file in the stack.  This means
+   that you can run ntpd from any directory with "includefile foo"
+-  in /etc/ntp.conf finding /etc/foo rather than looking for foo in
++  in /etc/inet/ntp.conf finding /etc/inet/foo rather than looking for foo in
+   your current directory.
+ 
+-* If there is an /etc/ntp.d directory, its subfiles are scanned for
++* If there is an /etc/inet/ntp.d directory, its subfiles are scanned for
+   more configuration declarations. Only files with the extension
+   ".conf" are interpreted; others are ignored.  This feature is
+   intended to make assembling configuration easier for administration
+diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/include/ntp_config.h ntpsec-1.0.0/include/ntp_config.h
+--- ntpsec-1.0.0~/include/ntp_config.h	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/include/ntp_config.h	2017-12-27 14:20:07.061804919 +0000
+@@ -18,7 +18,7 @@
+  * Configuration file name
+  */
+ #ifndef CONFIG_FILE
+-#  define	CONFIG_FILE "/etc/ntp.conf"
++#  define	CONFIG_FILE "/etc/inet/ntp.conf"
+ #endif /* not CONFIG_FILE */
+ #define CONFIG_DIR	"ntp.d"
+ 
+diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/ntpclients/ntpleapfetch ntpsec-1.0.0/ntpclients/ntpleapfetch
+--- ntpsec-1.0.0~/ntpclients/ntpleapfetch	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/ntpclients/ntpleapfetch	2017-12-27 14:20:07.062032656 +0000
+@@ -23,7 +23,7 @@ MAXTRIES=6
+ INTERVAL=10
+ 
+ # Where to find ntp config file
+-NTPCONF=/etc/ntp.conf
++NTPCONF=/etc/inet/ntp.conf
+ 
+ # How long before expiration to get updated file
+ PREFETCH="60 days"
+diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/pylib/packet.py ntpsec-1.0.0/pylib/packet.py
+--- ntpsec-1.0.0~/pylib/packet.py	2017-10-10 03:54:39.000000000 +0000
++++ ntpsec-1.0.0/pylib/packet.py	2017-12-27 14:20:07.062578539 +0000
+@@ -1674,7 +1674,7 @@ class Authenticator:
+                 return (keyid,) + self.passwords[keyid]
+             else:
+                 return (keyid, None, None)
+-        for line in open("/etc/ntp.conf"):
++        for line in open("/etc/inet/ntp.conf"):
+             if line.startswith("control"):
+                 keyid = int(line.split()[1])
+                 (keytype, passwd) = self.passwords[keyid]
