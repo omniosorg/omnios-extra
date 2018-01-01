@@ -20,11 +20,10 @@
 #
 # CDDL HEADER END }}}
 #
-#
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=mercurial
@@ -63,8 +62,7 @@ python_build() {
         logerr "--- install failed"
     popd > /dev/null
 
-    mv $DESTDIR/usr/lib/python2.7/site-packages $DESTDIR/usr/lib/python2.7/vendor-packages ||
-        logerr "Cannot move from site-packages to vendor-packages"
+    python_vendor_relocate
 }
 
 init
