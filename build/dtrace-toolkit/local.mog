@@ -1,1 +1,25 @@
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
 license License license=CDDL
+
+<transform file path=opt/DTT/install -> drop>
+
+<transform file path=opt/DTT/Code/Perl/.*\.pl$ \
+    -> set pkg.depend.bypass-generate .*>
+<transform file path=opt/DTT/Code/Python/.*\.py$ \
+    -> set pkg.depend.bypass-generate .*>
+<transform file path=opt/DTT/Code/Ruby/.*\.rb$ \
+    -> set pkg.depend.bypass-generate .*>
+<transform file path=opt/DTT/Code/Shell/.*\.sh$ \
+    -> set pkg.depend.bypass-generate .*>
+
