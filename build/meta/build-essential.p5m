@@ -1,0 +1,13 @@
+set name=pkg.fmri value=pkg://@PKGPUBLISHER@/developer/build-essential@11,5.11-@PVER@
+set name=pkg.summary value="Meta-package containing common development tools."
+set name=pkg.description value="Meta-package containing common development tools."
+depend fmri=developer/build/autoconf type=require
+depend fmri=developer/build/automake type=require
+depend fmri=developer/build/gnu-make type=require
+depend fmri=developer/build/make type=require
+depend fmri=developer/gcc7 type=require
+depend fmri=developer/lexer/flex type=require
+depend fmri=developer/object-file type=require
+depend fmri=developer/parser/bison type=require
+depend fmri=system/library/math type=require
+
