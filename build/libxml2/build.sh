@@ -21,10 +21,9 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=libxml2
@@ -38,12 +37,6 @@ RUN_DEPENDS_IPS="compress/xz library/zlib"
 BUILD_DEPENDS_IPS="developer/sunstudio12.1"
 
 XFORM_ARGS="-D VER=$VER"
-
-python_cleanup() {
-    mv $DESTDIR/usr/lib/python$PYTHONVER/site-packages \
-        $DESTDIR/usr/lib/python$PYTHONVER/vendor-packages \
-        || logerr "Cannot move from site-packages to vendor-packages"
-}
 
 make_install64() {
     logmsg "--- make install"
@@ -65,7 +58,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-python_cleanup
+python_vendor_relocate
 run_testsuite check
 make_lintlibs xml2 /usr/lib /usr/include/libxml2 "libxml/*.h"
 make_isa_stub

@@ -21,7 +21,7 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
@@ -56,18 +56,12 @@ CONFIGURE_OPTS="
     --disable-static
 "
 
-python_cleanup() {
-    mv $DESTDIR/usr/lib/python$PYTHONVER/site-packages \
-        $DESTDIR/usr/lib/python$PYTHONVER/vendor-packages \
-        || logerr "Cannot move from site-packages to vendor-packages"
-}
-
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-python_cleanup
+python_vendor_relocate
 run_testsuite test-force
 make_isa_stub
 VER=${VER//-P/.}

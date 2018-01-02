@@ -22,7 +22,7 @@
 #
 # Copyright (c) 2014 by Delphix. All rights reserved.
 # Copyright 2015 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 
@@ -1283,6 +1283,12 @@ pre_python_64() {
     logmsg "prepping 64bit python build"
 }
 
+python_vendor_relocate() {
+    mv $DESTDIR/usr/lib/python$PYTHONVER/site-packages \
+        $DESTDIR/usr/lib/python$PYTHONVER/vendor-packages ||
+        logerr "python: cannot move from site-packages to vendor-packages"
+}
+
 python_build() {
     [ -z "$PYTHON" ] && logerr "PYTHON not set"
     [ -z "$PYTHONPATH" ] && logerr "PYTHONPATH not set"
@@ -1313,9 +1319,7 @@ python_build() {
         logerr "--- install failed"
     popd > /dev/null
 
-    mv $DESTDIR/usr/lib/python$PYTHONVER/site-packages \
-        $DESTDIR/usr/lib/python$PYTHONVER/vendor-packages ||
-        logerr "Cannot move from site-packages to vendor-packages"
+    python_vendor_relocate
 }
 
 #############################################################################
