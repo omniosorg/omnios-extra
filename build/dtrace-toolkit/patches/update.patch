@@ -1,0 +1,2811 @@
+
+See https://github.com/opendtrace/toolkit/pull/4
+
+From f33e386eef4f7254fcb3e85161a4714a44c416c1 Mon Sep 17 00:00:00 2001
+From: Adam Thompson <athompso@athompso.net>
+Date: Wed, 8 Jun 2016 12:03:14 -0500
+Subject: [PATCH] Part 1: update existing files to Solaris 11.3 DTT
+
+---
+ Apps/httpdstat.d                 |   9 +-
+ Apps/shellsnoop                  |   4 +-
+ Cpu/intoncpu.d                   |   2 +-
+ Cpu/inttimes.d                   |   2 +-
+ Disk/diskhits                    |   2 +-
+ Docs/Contents                    |   8 +-
+ Docs/Links                       |  11 +-
+ Docs/Who                         |  10 +-
+ Docs/oneliners.txt               |   9 +-
+ Examples/connections_example.txt |  29 +--
+ Examples/dtruss_example.txt      |   5 +
+ Examples/filebyproc_example.txt  |  36 ++--
+ Examples/j_calldist_example.txt  |  15 ++
+ Examples/j_calls_example.txt     |  16 ++
+ Examples/oneliners_examples.txt  |  40 ++--
+ Examples/pfilestat_example.txt   |   2 +-
+ Examples/tcpsnoop_d_example.txt  |  63 +++---
+ Kernel/cpudists                  |   6 +-
+ Kernel/cputimes                  |   6 +-
+ Kernel/priclass.d                |   2 +-
+ Kernel/pridist.d                 |   2 +-
+ Man/man1m/connections.1m         |  30 +--
+ Man/man1m/diskhits.1m            |   2 +-
+ Man/man1m/fddist.1m              |   2 +-
+ Man/man1m/icmpstat.d.1m          |   2 +-
+ Man/man1m/intoncpu.d.1m          |   2 +-
+ Man/man1m/inttimes.d.1m          |   2 +-
+ Man/man1m/lastwords.1m           |   2 +-
+ Man/man1m/priclass.d.1m          |   2 +-
+ Man/man1m/pridist.d.1m           |   2 +-
+ Man/man1m/sampleproc.1m          |   2 +-
+ Man/man1m/sigdist.d.1m           |   2 +-
+ Man/man1m/sysbypid.d.1m          |   2 +-
+ Man/man1m/tcpstat.d.1m           |   2 +-
+ Man/man1m/udpstat.d.1m           |   2 +-
+ Man/man1m/vmbypid.d.1m           |   2 +-
+ Mem/swapinfo.d                   |  29 +--
+ Mem/vmbypid.d                    |   2 +-
+ Mem/vmstat-p.d                   |  15 +-
+ Mem/vmstat.d                     |  15 +-
+ Mem/xvmstat                      |  16 +-
+ Misc/guess.d                     |  24 +--
+ Net/connections                  | 128 +++--------
+ Net/icmpstat.d                   |   2 +-
+ Net/tcpsnoop.d                   | 446 +++++----------------------------------
+ Net/tcpstat.d                    |   2 +-
+ Net/udpstat.d                    |   7 +-
+ Perl/Readme                      |   2 +-
+ Php/Readme                       |   2 +-
+ Proc/creatbyproc.d               |  18 +-
+ Proc/fddist                      |   2 +-
+ Proc/filebyproc.d                |   2 +-
+ Proc/kill.d                      |   2 +-
+ Proc/lastwords                   |   2 +-
+ Proc/pathopens.d                 |  38 ++--
+ Proc/sampleproc                  |   2 +-
+ Proc/sigdist.d                   |   2 +-
+ Proc/sysbypid.d                  |   2 +-
+ Python/Readme                    |   2 +-
+ dexplorer                        |  10 +-
+ dtruss                           | 189 ++++++++++++++---
+ execsnoop                        |   2 +-
+ iosnoop                          |   3 +-
+ iotop                            |   3 +-
+ opensnoop                        |   8 +-
+ statsnoop                        |  70 +++---
+ 66 files changed, 563 insertions(+), 821 deletions(-)
+
+diff --git a/Apps/httpdstat.d b/Apps/httpdstat.d
+index a053482..c93fb3a 100755
+--- a/Apps/httpdstat.d
++++ b/Apps/httpdstat.d
+@@ -23,6 +23,8 @@
+  *
+  * IDEA: Ryan Matteson (who first wrote a solution to this).
+  *
++ * Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
++ *
+  * COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+  *
+  * CDDL HEADER START
+@@ -83,11 +85,11 @@ profile:::tick-1sec
+ syscall::accept:return
+ /execname == "httpd"/
+ {
+-	self->buf = 1;
++	num++;
+ }
+ 
+ syscall::read:entry
+-/self->buf/
++/execname == "httpd"/
+ {
+ 	self->buf = arg1;
+ }
+@@ -98,13 +100,12 @@ syscall::read:entry
+ syscall::read:return
+ /self->buf && arg0/
+ {
+-	this->str = (char *)copyin(self->buf, arg0);
++	this->str = (char *)copyin(self->buf, 5);
+ 	this->str[4] = '\0';
+ 	get  += stringof(this->str) == "GET " ? 1 : 0;
+ 	post += stringof(this->str) == "POST" ? 1 : 0;
+ 	head += stringof(this->str) == "HEAD" ? 1 : 0;
+ 	trac += stringof(this->str) == "TRAC" ? 1 : 0;
+-	num++;
+ 	self->buf = 0;
+ }
+ 
+diff --git a/Apps/shellsnoop b/Apps/shellsnoop
+index 95f42c0..3f1c6ba 100755
+--- a/Apps/shellsnoop
++++ b/Apps/shellsnoop
+@@ -140,7 +140,7 @@ dtrace -n '
+  /*
+   * Remember this PID is a shell child
+   */
+- syscall::exec:entry, syscall::exece:entry
++ syscall::exece:entry
+  /execname == "sh"   || execname == "ksh"  || execname == "csh"  || 
+   execname == "tcsh" || execname == "zsh"  || execname == "bash"/
+  {
+@@ -151,7 +151,7 @@ dtrace -n '
+ 	OPT_debug == 1 ? printf("PID %d CMD %s started. (%s)\n",
+ 	    pid, execname, stringof(this->parent)) : 1;
+  }
+- syscall::exec:entry, syscall::exece:entry
++ syscall::exece:entry
+  /(OPT_pid == 1 && PID != ppid) || (OPT_uid == 1 && UID != uid)/
+  {
+ 	/* forget if filtered */
+diff --git a/Cpu/intoncpu.d b/Cpu/intoncpu.d
+index b32685a..2271c49 100755
+--- a/Cpu/intoncpu.d
++++ b/Cpu/intoncpu.d
+@@ -13,7 +13,7 @@
+  *
+  * BASED ON: /usr/demo/dtrace/intr.d
+  *
+- * SEE ALSO: DTrace Guide "sdt Provider" chapter (docs.sun.com)
++ * SEE ALSO: DTrace Guide "sdt Provider" chapter (docs.oracle.com)
+  *           intrstat(1M)
+  *
+  * PORTIONS: Copyright (c) 2005, 2006 Brendan Gregg.
+diff --git a/Cpu/inttimes.d b/Cpu/inttimes.d
+index 926a566..269877f 100755
+--- a/Cpu/inttimes.d
++++ b/Cpu/inttimes.d
+@@ -14,7 +14,7 @@
+  * BASED ON: /usr/demo/dtrace/intr.d
+  *
+  * SEE ALSO:
+- *          DTrace Guide "sdt Provider" chapter (docs.sun.com)
++ *          DTrace Guide "sdt Provider" chapter (docs.oracle.com)
+  *          intrstat(1M)
+  *
+  * PORTIONS: Copyright (c) 2005 Brendan Gregg.
+diff --git a/Disk/diskhits b/Disk/diskhits
+index 3d72e4a..8e6db6d 100755
+--- a/Disk/diskhits
++++ b/Disk/diskhits
+@@ -20,7 +20,7 @@
+ #
+ # BASED ON: /usr/demo/dtrace/applicat.d
+ #
+-# SEE ALSO: DTrace Guide "io Provider" chapter (docs.sun.com)
++# SEE ALSO: DTrace Guide "io Provider" chapter (docs.oracle.com)
+ #           iosnoop (DTraceToolkit)
+ #
+ # PORTIONS: Copyright (c) 2005, 2006 Brendan Gregg.
+diff --git a/Docs/Contents b/Docs/Contents
+index 525fd05..3b761f4 100644
+--- a/Docs/Contents
++++ b/Docs/Contents
+@@ -91,15 +91,13 @@ DTraceToolkit/
+    Net/
+ 	connections	print inbound TCP connections by process
+ 	icmpstat.d	print ICMP statistics
+-	tcpsnoop	snoop TCP network packets by process, Solaris 10 3/05
+-	tcpsnoop_snv	snoop TCP network packets by process, Solaris Nevada
+ 	tcpsnoop.d	snoop TCP network packets by process, Solaris 10 3/05
+-	tcpsnoop_snv.d	snoop TCP network packets by process, Solaris Nevada
+ 	tcpstat.d	print TCP statistics
+-	tcptop		display top TCP network packets by PID, Solaris 10 3/05
+-	tcptop_snv	display top TCP network packets by PID, Solaris Nevada
++	tcptop.d	display top TCP network packets by PID
+ 	tcpwdist.d	simple TCP write distribution by process
+ 	udpstat.d	print UDP statistics
++	udpsnoop.d	snoop UDP network packets by process
++	udptop.d	display top UDP network packets by process
+    Perl/
+ 	pl_*.d		12 scripts for tracing Perl
+    Php/
+diff --git a/Docs/Links b/Docs/Links
+index 182bb54..fa9b1f7 100644
+--- a/Docs/Links
++++ b/Docs/Links
+@@ -10,19 +10,16 @@ Links - DTrace links
+ 	DTraceToolkit
+ 	DTrace Tools
+ 
+-   http://www.sun.com/bigadmin/content/dtrace
+-	DTrace site on BigAdmin
+-
+-   http://docs.sun.com/db/doc/817-6223
++   http://docs.oracle.com/cd/E23824_01/html/E22973
+ 	DTrace Guide (answerbook)
+ 
+-   http://blogs.sun.com/roller/page/bmc
++   http://blogs.oracle.com/bmc
+ 	Bryan Cantrill's Blog (DTrace Team)
+ 
+-   http://blogs.sun.com/roller/page/ahl
++   http://blogs.oracle.com/ahl
+ 	Adam Leventhal's Blog (DTrace Team)
+ 
+-   http://blogs.sun.com/mws
++   http://blogs.oracle.com/mws
+ 	Mike Shapiro's Blog (DTrace Team)
+ 
+    http://www.solarisinternals.com/si/dtrace/index.php
+diff --git a/Docs/Who b/Docs/Who
+index f1019a9..38e7851 100644
+--- a/Docs/Who
++++ b/Docs/Who
+@@ -8,7 +8,7 @@ In alphabetical first-name order,
+ 
+ Adam Leventhal
+ 	Location: CA, USA
+-	Blog:     http://blogs.sun.com/ahl
++	Blog:     http://blogs.oracle.com/ahl
+ 	wrote DTrace itself
+ 
+ Ben Rockwood
+@@ -26,7 +26,7 @@ Brendan Gregg
+ 
+ Bryan Cantrill
+ 	Location: CA, USA
+-	Blog:     http://blogs.sun.com/bmc
++	Blog:     http://blogs.oracle.com/bmc
+ 	wrote DTrace itself
+ 
+ David Rubio
+@@ -38,12 +38,12 @@ James Dickens
+ 	tool ideas and testing
+ 
+ Jonathan Adams
+-	Blog:     http://blogs.sun.com/jwadams
++	Blog:     http://blogs.oracle.com/jwadams
+ 	wrote stacksize.d
+ 	
+ Mike Shapiro
+ 	Location: CA, USA
+-	Blog:     http://blogs.sun.com/mws
++	Blog:     http://blogs.oracle.com/mws
+ 	wrote DTrace itself
+ 
+ Nathan Kroenert
+@@ -53,7 +53,7 @@ Nathan Kroenert
+ Richard McDougall
+ 	Location: CA, USA
+ 	Website:  http://www.solarisinternals.com
+-	Blog:     http://blogs.sun.com/rmc
++	Blog:     http://blogs.oracle.com/rmc
+ 	wrote pfilestat, vopstat
+ 
+ Ryan Matteson
+diff --git a/Docs/oneliners.txt b/Docs/oneliners.txt
+index fca2aa3..8a787e0 100644
+--- a/Docs/oneliners.txt
++++ b/Docs/oneliners.txt
+@@ -7,12 +7,9 @@ DTrace One Liners,
+ # New processes with arguments,
+ dtrace -n 'proc:::exec-success { trace(curpsinfo->pr_psargs); }'
+  
+-# Files opened by process name,
+-dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
++# Files opened/created by process name,
++dtrace -n 'syscall::openat*:entry { printf("%s %s",execname,copyinstr(arg1)); }'
+ 
+-# Files created using creat() by process name,
+-dtrace -n 'syscall::creat*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
+- 
+ # Syscall count by process name,
+ dtrace -n 'syscall:::entry { @num[execname] = count(); }'
+  
+@@ -72,7 +69,7 @@ dtrace -wn 'syscall::exece:return /execname == "top"/ { raise(9); }'
+ DTrace Longer One Liners,
+ 
+ # New processes with arguments and time,
+-dtrace -qn 'syscall::exec*:return { printf("%Y %s\n",walltimestamp,curpsinfo->pr_psargs); }'
++dtrace -qn 'syscall::exece:return { printf("%Y %s\n",walltimestamp,curpsinfo->pr_psargs); }'
+  
+ # Successful signal details,
+ dtrace -n 'proc:::signal-send /pid/ { printf("%s -%d %d",execname,args[2],args[1]->pr_pid); }'
+diff --git a/Examples/connections_example.txt b/Examples/connections_example.txt
+index e39d063..74ed19b 100644
+--- a/Examples/connections_example.txt
++++ b/Examples/connections_example.txt
+@@ -1,22 +1,25 @@
+ The following is an example of connections. As inbound TCP connections are 
+-established their details are printed out. This includes the UID, PID and
+-CMD of the server process that is listening on that port,
++established their details are printed out. This includes the PID of the
++server process that is listening on that port,
+ 
+-   # connections
+-     UID   PID CMD          TYPE  PORT IP_SOURCE
+-       0   242 inetd         tcp    79 192.168.1.1
+-       0   359 sshd          tcp    22 192.168.1.1
+-     100  1532 Xorg          tcp  6000 192.168.1.1
+-   ^C
++ # ./connections
++ ZONE_ID     PID       IP_SOURCE    PORT
++       0  100504  10.132.145.148      22
++ ^C
+ 
++Here's an example with timestamp (string) and zone printout
++
++ # ./connections -vZ
++ TIMESTR              ZONE        ZONE_ID     PID       IP_SOURCE    PORT
++ 2014 Jul  1 15:01:16 global            0  100504  10.132.145.148      22
++ ^C
+ 
+ In another window snoop was running for comparison,
+ 
+-   # snoop 'tcp[13:1] = 0x02'
+-   Using device /dev/rtls0 (promiscuous mode)
+-           mars -> jupiter      FINGER C port=56760
+-           mars -> jupiter      TCP D=22 S=56761 Syn Seq=3264782212 Len=0 ...
+-           mars -> jupiter      XWIN C port=56763
++ # snoop 'tcp[13:1] = 0x02'
++ Using device net0 (promiscuous mode)
++ mars -> jupiter TCP D=22 S=50263 Syn Seq=372663324 Len=0 Win=8192 Options=<mss 1460,nop,wscale 2,nop,nop,sackOK>
++ ^C
+ 
+ snoop can already tell me that these connections are happening - but does not
+ print out details of the server that accepted the connection.
+diff --git a/Examples/dtruss_example.txt b/Examples/dtruss_example.txt
+index 107fc19..ad78445 100644
+--- a/Examples/dtruss_example.txt
++++ b/Examples/dtruss_example.txt
+@@ -47,6 +47,11 @@ In the following example, syscall elapsed and overhead times are measured.
+ Elapsed times represent the time from syscall start to finish; overhead
+ times measure the time spent on the CPU,
+ 
++Note: In the case that DTrace script size is exceeded, dtrace_dof_maxsize
++can be tuned in /etc/system or "mdb -kw".  In "mdb -kw", running
++"dtrace_dof_maxsize/Z 0t524288" will double the default size.  Run
++"dtrace_dof_maxsize/E" to see current dtrace script size limit.
++
+  # dtruss -eon bash
+  PID/LWP    ELAPSD    CPU SYSCALL(args)           = return
+   3911/1:       41     26 write(0x2, "l\0", 0x1)          = 1 0
+diff --git a/Examples/filebyproc_example.txt b/Examples/filebyproc_example.txt
+index 8267da2..a0024f3 100644
+--- a/Examples/filebyproc_example.txt
++++ b/Examples/filebyproc_example.txt
+@@ -1,25 +1,25 @@
+ The following is an example of the filebyproc.d script,
+ 
+    # filebyproc.d
+-   dtrace: description 'syscall::open*:entry ' matched 2 probes
++   dtrace: description 'syscall::openat*:entry ' matched 2 probes
+    CPU     ID                    FUNCTION:NAME
+-     0     14                       open:entry gnome-netstatus- /dev/kstat
+-     0     14                       open:entry man /var/ld/ld.config
+-     0     14                       open:entry man /lib/libc.so.1
+-     0     14                       open:entry man /usr/share/man/man.cf
+-     0     14                       open:entry man /usr/share/man/windex
+-     0     14                       open:entry man /usr/share/man/man1/ls.1
+-     0     14                       open:entry man /usr/share/man/man1/ls.1
+-     0     14                       open:entry man /tmp/mpqea4RF
+-     0     14                       open:entry sh /var/ld/ld.config
+-     0     14                       open:entry sh /lib/libc.so.1
+-     0     14                       open:entry neqn /var/ld/ld.config
+-     0     14                       open:entry neqn /lib/libc.so.1
+-     0     14                       open:entry neqn /usr/share/lib/pub/eqnchar
+-     0     14                       open:entry tbl /var/ld/ld.config
+-     0     14                       open:entry tbl /lib/libc.so.1
+-     0     14                       open:entry tbl /usr/share/man/man1/ls.1
+-     0     14                       open:entry nroff /var/ld/ld.config
++     0     14                       openat:entry gnome-netstatus- /dev/kstat
++     0     14                       openat:entry man /var/ld/ld.config
++     0     14                       openat:entry man /lib/libc.so.1
++     0     14                       openat:entry man /usr/share/man/man.cf
++     0     14                       openat:entry man /usr/share/man/windex
++     0     14                       openat:entry man /usr/share/man/man1/ls.1
++     0     14                       openat:entry man /usr/share/man/man1/ls.1
++     0     14                       openat:entry man /tmp/mpqea4RF
++     0     14                       openat:entry sh /var/ld/ld.config
++     0     14                       openat:entry sh /lib/libc.so.1
++     0     14                       openat:entry neqn /var/ld/ld.config
++     0     14                       openat:entry neqn /lib/libc.so.1
++     0     14                       openat:entry neqn /usr/share/lib/pub/eqnchar
++     0     14                       openat:entry tbl /var/ld/ld.config
++     0     14                       openat:entry tbl /lib/libc.so.1
++     0     14                       openat:entry tbl /usr/share/man/man1/ls.1
++     0     14                       openat:entry nroff /var/ld/ld.config
+    [...]
+ 
+ In the above example, the command "man ls" was run. Each file that was 
+diff --git a/Examples/j_calldist_example.txt b/Examples/j_calldist_example.txt
+index b659c0a..bccca33 100644
+--- a/Examples/j_calldist_example.txt
++++ b/Examples/j_calldist_example.txt
+@@ -1,3 +1,18 @@
++There are two ways to DTrace Java process via hotspot provider:
++1. Run Java process with '-XX:+ExtendedDTraceProbes' option, and
++also enable hotspot probes lazy loading by Java PID (# dtrace -n
++'hotspot<PID>:::'), one can see all but this j_who.d script
++working.  There still seem to be less probes enabled than making
++the modification as in the lower method.
++2. Modify all DTrace Java scripts to change provider 'hotspot*'
++to 'hotspot$target' or 'hotspot_jni$target' depending on the
++specific probes.  Run the Java process with DTrace (i.e. # dtrace
++-Zs ./j_who_tmp.d -c 'java -XX:+ExtendedDTraceProbes Func_abc')
++Here, 'hotspot*' is changed to 'hotspot_jni$target' in j_who_tmp.d
++script.  'Func_abc' is a simple Java process.
++
++
++
+ This is an example of j_calldist.d showing the elapsed times for different
+ types of Java operations.
+ 
+diff --git a/Examples/j_calls_example.txt b/Examples/j_calls_example.txt
+index 3aacb2c..26f6d58 100644
+--- a/Examples/j_calls_example.txt
++++ b/Examples/j_calls_example.txt
+@@ -1,3 +1,19 @@
++There are two ways to DTrace Java process via hotspot provider:
++1. Run Java process with '-XX:+ExtendedDTraceProbes' option, and
++also enable hotspot probes lazy loading by Java PID (# dtrace -n
++'hotspot<PID>:::'), one can see all but this j_who.d script
++working.  There still seem to be less probes enabled than making
++the modification as in the lower method.
++2. Modify all DTrace Java scripts to change provider 'hotspot*'
++to 'hotspot$target' or 'hotspot_jni$target' depending on the
++specific probes.  Run the Java process with DTrace (i.e. # dtrace
++-Zs ./j_who_tmp.d -c 'java -XX:+ExtendedDTraceProbes Func_abc')
++Here, 'hotspot*' is changed to 'hotspot_jni$target' in j_who_tmp.d
++script.  'Func_abc' is a simple Java process.
++
++
++
++
+ The following are examples of running the j_calls.d script.
+ 
+ This traces activity from all Java processes on the system with hotspot 
+diff --git a/Examples/oneliners_examples.txt b/Examples/oneliners_examples.txt
+index 9ca0fa6..ad29782 100644
+--- a/Examples/oneliners_examples.txt
++++ b/Examples/oneliners_examples.txt
+@@ -21,26 +21,26 @@ CPU     ID                    FUNCTION:NAME
+ 
+ ### Files opened by process,
+  
+-# dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
+-dtrace: description 'syscall::open*:entry ' matched 2 probes
++# dtrace -n 'syscall::openat*:entry { printf("%s %s",execname,copyinstr(arg1)); }'
++dtrace: description 'syscall::openat*:entry ' matched 2 probes
+ CPU     ID                    FUNCTION:NAME
+-  0     14                       open:entry gnome-netstatus- /dev/kstat
+-  0     14                       open:entry man /var/ld/ld.config
+-  0     14                       open:entry man /lib/libc.so.1
+-  0     14                       open:entry man /usr/share/man/man.cf
+-  0     14                       open:entry man /usr/share/man/windex
+-  0     14                       open:entry man /usr/share/man/man1/ls.1
+-  0     14                       open:entry man /usr/share/man/man1/ls.1
+-  0     14                       open:entry man /tmp/mpqea4RF
+-  0     14                       open:entry sh /var/ld/ld.config
+-  0     14                       open:entry sh /lib/libc.so.1
+-  0     14                       open:entry neqn /var/ld/ld.config
+-  0     14                       open:entry neqn /lib/libc.so.1
+-  0     14                       open:entry neqn /usr/share/lib/pub/eqnchar
+-  0     14                       open:entry tbl /var/ld/ld.config
+-  0     14                       open:entry tbl /lib/libc.so.1
+-  0     14                       open:entry tbl /usr/share/man/man1/ls.1
+-  0     14                       open:entry nroff /var/ld/ld.config
++  0     14                       openat:entry gnome-netstatus- /dev/kstat
++  0     14                       openat:entry man /var/ld/ld.config
++  0     14                       openat:entry man /lib/libc.so.1
++  0     14                       openat:entry man /usr/share/man/man.cf
++  0     14                       openat:entry man /usr/share/man/windex
++  0     14                       openat:entry man /usr/share/man/man1/ls.1
++  0     14                       openat:entry man /usr/share/man/man1/ls.1
++  0     14                       openat:entry man /tmp/mpqea4RF
++  0     14                       openat:entry sh /var/ld/ld.config
++  0     14                       openat:entry sh /lib/libc.so.1
++  0     14                       openat:entry neqn /var/ld/ld.config
++  0     14                       openat:entry neqn /lib/libc.so.1
++  0     14                       openat:entry neqn /usr/share/lib/pub/eqnchar
++  0     14                       openat:entry tbl /var/ld/ld.config
++  0     14                       openat:entry tbl /lib/libc.so.1
++  0     14                       openat:entry tbl /usr/share/man/man1/ls.1
++  0     14                       openat:entry nroff /var/ld/ld.config
+ [...]
+ 
+ 
+@@ -253,7 +253,7 @@ dtrace: description 'sdt:::interrupt-start ' matched 1 probe
+ 
+ ### New processes with arguments and time,
+  
+-# dtrace -qn 'syscall::exec*:return { printf("%Y %s\n",walltimestamp,curpsinfo->pr_psargs); }'
++# dtrace -qn 'syscall::exece:return { printf("%Y %s\n",walltimestamp,curpsinfo->pr_psargs); }'
+ 2005 Apr 25 19:15:09 man ls
+ 2005 Apr 25 19:15:09 sh -c cd /usr/share/man; tbl /usr/share/man/man1/ls.1 |...
+ 2005 Apr 25 19:15:09 neqn /usr/share/lib/pub/eqnchar -
+diff --git a/Examples/pfilestat_example.txt b/Examples/pfilestat_example.txt
+index b2c54a0..6624031 100644
+--- a/Examples/pfilestat_example.txt
++++ b/Examples/pfilestat_example.txt
+@@ -79,7 +79,7 @@ statistics: one is a 867 MHz Pentium, and the other a 360 MHz Ultra 5).
+ 
+ The file system cache is faster on 64-bit systems due to the segkpm
+ enhancement in Solaris 10. For details see,
+-http://blogs.sun.com/roller/page/rmc?entry=solaris_10_fast_filesystem_cache
++http://blogs.oracle.com/rmc?entry=solaris_10_fast_filesystem_cache
+ 
+ 
+ 
+diff --git a/Examples/tcpsnoop_d_example.txt b/Examples/tcpsnoop_d_example.txt
+index a0a8cc8..3566278 100644
+--- a/Examples/tcpsnoop_d_example.txt
++++ b/Examples/tcpsnoop_d_example.txt
+@@ -5,37 +5,36 @@ The following is a demonstration of the tcpsnoop script.
+ Here we run tcpsnoop and wait for new TCP connections to be established,
+ 
+    # tcpsnoop.d
+-     UID    PID LADDR           LPORT DR RADDR           RPORT  SIZE CMD
+-     100  20892 192.168.1.5     36398 -> 192.168.1.1        79    54 finger
+-     100  20892 192.168.1.5     36398 <- 192.168.1.1        79    66 finger
+-     100  20892 192.168.1.5     36398 -> 192.168.1.1        79    54 finger
+-     100  20892 192.168.1.5     36398 -> 192.168.1.1        79    56 finger
+-     100  20892 192.168.1.5     36398 <- 192.168.1.1        79    54 finger
+-     100  20892 192.168.1.5     36398 <- 192.168.1.1        79   606 finger
+-     100  20892 192.168.1.5     36398 -> 192.168.1.1        79    54 finger
+-     100  20892 192.168.1.5     36398 <- 192.168.1.1        79    54 finger
+-     100  20892 192.168.1.5     36398 -> 192.168.1.1        79    54 finger
+-     100  20892 192.168.1.5     36398 -> 192.168.1.1        79    54 finger
+-     100  20892 192.168.1.5     36398 <- 192.168.1.1        79    54 finger
+-       0    242 192.168.1.5        23 <- 192.168.1.1     54224    54 inetd
+-       0    242 192.168.1.5        23 -> 192.168.1.1     54224    54 inetd
+-       0    242 192.168.1.5        23 <- 192.168.1.1     54224    54 inetd
+-       0    242 192.168.1.5        23 <- 192.168.1.1     54224    78 inetd
+-       0    242 192.168.1.5        23 -> 192.168.1.1     54224    54 inetd
+-       0  20893 192.168.1.5        23 -> 192.168.1.1     54224    57 in.telnetd
+-       0  20893 192.168.1.5        23 <- 192.168.1.1     54224    54 in.telnetd
+-       0  20893 192.168.1.5        23 -> 192.168.1.1     54224    78 in.telnetd
+-       0  20893 192.168.1.5        23 <- 192.168.1.1     54224    57 in.telnetd
+-       0  20893 192.168.1.5        23 -> 192.168.1.1     54224    54 in.telnetd
+-       0  20893 192.168.1.5        23 <- 192.168.1.1     54224    54 in.telnetd
+-       0  20893 192.168.1.5        23 -> 192.168.1.1     54224    60 in.telnetd
+-       0  20893 192.168.1.5        23 <- 192.168.1.1     54224    63 in.telnetd
+-       0  20893 192.168.1.5        23 -> 192.168.1.1     54224    54 in.telnetd
+-       0  20893 192.168.1.5        23 <- 192.168.1.1     54224    60 in.telnetd
+-       0  20893 192.168.1.5        23 -> 192.168.1.1     54224    60 in.telnetd
+-       0  20893 192.168.1.5        23 <- 192.168.1.1     54224    60 in.telnetd
+-       0  20893 192.168.1.5        23 -> 192.168.1.1     54224    72 in.telnetd
+-   [...]
++  TIME    PID           LADDR:PORT                 RADDR:PORT   BYTES FLAGS
++  256057958984    574    10.134.64.85:22     ->   10.132.145.148:51590    116 (PUSH|ACK)
++  256058057137    574    10.134.64.85:22     ->   10.132.145.148:51590    132 (PUSH|ACK)
++  256058058053    574    10.134.64.85:22     <-   10.132.145.148:51590      0 (ACK)
++  256058156625    574    10.134.64.85:22     ->   10.132.145.148:51590    132 (PUSH|ACK)
++  256058156836    574    10.134.64.85:22     ->   10.132.145.148:51590    132 (PUSH|ACK)
++  256058157681    574    10.134.64.85:22     <-   10.132.145.148:51590      0 (ACK)
++  256058256620    574    10.134.64.85:22     ->   10.132.145.148:51590    228 (PUSH|ACK)
++  256058256793    574    10.134.64.85:22     ->   10.132.145.148:51590    132 (PUSH|ACK)
++  256058258584    574    10.134.64.85:22     <-   10.132.145.148:51590      0 (ACK)
++  256058356664    574    10.134.64.85:22     ->   10.132.145.148:51590    228 (PUSH|ACK)
++  256058356836    574    10.134.64.85:22     ->   10.132.145.148:51590    132 (PUSH|ACK)
++  256058357532    574    10.134.64.85:22     <-   10.132.145.148:51590      0 (ACK)
++  256058456619    574    10.134.64.85:22     ->   10.132.145.148:51590    228 (PUSH|ACK)
++  256058456783    574    10.134.64.85:22     ->   10.132.145.148:51590    132 (PUSH|ACK)
++  256058457352    574    10.134.64.85:22     <-   10.132.145.148:51590      0 (ACK)
++  256058556611    574    10.134.64.85:22     ->   10.132.145.148:51590    228 (PUSH|ACK)
++  256058556781    574    10.134.64.85:22     ->   10.132.145.148:51590    132 (PUSH|ACK)
++  256058557426    574    10.134.64.85:22     <-   10.132.145.148:51590      0 (ACK)
++  256058656585    574    10.134.64.85:22     ->   10.132.145.148:51590    228 (PUSH|ACK)
++  256058656750    574    10.134.64.85:22     ->   10.132.145.148:51590    132 (PUSH|ACK)
++  256058657423    574    10.134.64.85:22     <-   10.132.145.148:51590      0 (ACK)
++  256058756605    574    10.134.64.85:22     ->   10.132.145.148:51590    228 (PUSH|ACK)
++  256058756778    574    10.134.64.85:22     ->   10.132.145.148:51590    132 (PUSH|ACK)
++  256058757443    574    10.134.64.85:22     <-   10.132.145.148:51590      0 (ACK)
++  256058856657    574    10.134.64.85:22     ->   10.132.145.148:51590    228 (PUSH|ACK)
++  256058856827    574    10.134.64.85:22     ->   10.132.145.148:51590    132 (PUSH|ACK)
++  256058857505    574    10.134.64.85:22     <-   10.132.145.148:51590      0 (ACK)
++  256058956612    574    10.134.64.85:22     ->   10.132.145.148:51590    228 (PUSH|ACK)
++  256058956783    574    10.134.64.85:22     ->   10.132.145.148:51590    132 (PUSH|ACK)
+ 
+ As new connections are made, each of the TCP packets are traced along with
+-the UID, PID and command name.
++the PID.
+diff --git a/Kernel/cpudists b/Kernel/cpudists
+index b708216..bb583af 100755
+--- a/Kernel/cpudists
++++ b/Kernel/cpudists
+@@ -28,6 +28,8 @@
+ #
+ # SEE ALSO: cputimes
+ #
++# Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
++#
+ # COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+ #
+ # CDDL HEADER START
+@@ -49,7 +51,7 @@
+ # 27-Apr-2005   Brendan Gregg   Created this.
+ # 22-Sep-2005	   "      "	Fixed key corruption bug.
+ # 22-Sep-2005	   "      "	Last update.
+-#
++# 15-Jan-2014	Melvin Gong	Replaced idle_enter with disp_idle_enter.
+ 
+ 
+ ##############################
+@@ -108,7 +110,7 @@ fi
+  }
+ 
+  /* Flag this thread as idle */
+- sysinfo:unix:idle_enter:idlethread
++ sysinfo:::idlethread
+  {
+ 	idle[cpu] = 1;
+  }
+diff --git a/Kernel/cputimes b/Kernel/cputimes
+index 881bf90..85e78bd 100755
+--- a/Kernel/cputimes
++++ b/Kernel/cputimes
+@@ -37,6 +37,8 @@
+ # SEE ALSO: cpudists
+ #           Heisenberg's uncertainty principle.
+ #
++# Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
++#
+ # COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+ #
+ # CDDL HEADER START
+@@ -58,7 +60,7 @@
+ # 27-Apr-2005   Brendan Gregg   Created this.
+ # 22-Sep-2005      "      "	Fixed a key corruption bug.
+ # 22-Sep-2005      "      "	Last update.
+-#
++# 16-Jan-2014	Melvin Gong	Replaced idle_enter with disp_idle_enter.
+ 
+ 
+ ##############################
+@@ -125,7 +127,7 @@ fi
+  }
+ 
+  /* Flag this thread as idle */
+- sysinfo:unix:idle_enter:idlethread
++ sysinfo:::idlethread
+  {
+ 	idle[cpu] = 1;
+  }
+diff --git a/Kernel/priclass.d b/Kernel/priclass.d
+index 92275dc..253f8d9 100755
+--- a/Kernel/priclass.d
++++ b/Kernel/priclass.d
+@@ -30,7 +30,7 @@
+  *
+  * BASED ON: /usr/demo/dtrace/pri.d
+  *
+- * SEE ALSO: DTrace Guide "profile Provider" chapter (docs.sun.com)
++ * SEE ALSO: DTrace Guide "profile Provider" chapter (docs.oracle.com)
+  *           dispadmin(1M)
+  *
+  * PORTIONS: Copyright (c) 2006 Brendan Gregg.
+diff --git a/Kernel/pridist.d b/Kernel/pridist.d
+index 1b6d3eb..5599444 100755
+--- a/Kernel/pridist.d
++++ b/Kernel/pridist.d
+@@ -25,7 +25,7 @@
+  * BASED ON: /usr/demo/dtrace/profpri.d
+  *
+  * SEE ALSO:
+- *           DTrace Guide "profile Provider" chapter (docs.sun.com)
++ *           DTrace Guide "profile Provider" chapter (docs.oracle.com)
+  *           dispadmin(1M)
+  *
+  * PORTIONS: Copyright (c) 2005 Brendan Gregg.
+diff --git a/Man/man1m/connections.1m b/Man/man1m/connections.1m
+index ea0285c..87204a0 100644
+--- a/Man/man1m/connections.1m
++++ b/Man/man1m/connections.1m
+@@ -3,9 +3,8 @@
+ connections \- print inbound TCP connections by process. Uses DTrace.
+ .SH SYNOPSIS
+ .B connections
+-[\-htvZ]
+ .SH DESCRIPTION
+-This displays the PID and command name of the processes accepting
++This displays the PID of the processes accepting
+ connections, along with the source IP address and destination port number
+ 
+ Since this uses DTrace, only the root user or users with the
+@@ -13,9 +12,7 @@ dtrace_kernel privilege can run this command.
+ .SH OS
+ Solaris
+ .SH STABILITY
+-unstable - this script uses fbt provider probes which may change for
+-future updates of the OS, invalidating this script. Please read
+-Docs/Notes/ALLfbt_notes.txt for further details about these fbt scripts.
++stable - this script uses tcp provider probes, which are stable.
+ .SH OPTIONS
+ .TP
+ \-t
+@@ -32,22 +29,19 @@ print zonename
+ snoop inbound connections
+ # 
+ .B connections
+-.TP
+-snoop connections with time
+-#
+-.B connections
+-\-v
+-.PP
+ .SH FIELDS
+ .TP
+-UID
+-user ID of the server
++ZONE_ID
++zone ID
+ .TP
+ PID
+ process ID of the server
+ .TP
+-CMD
+-server command name
++IP_SOURCE
++source IP of the client
++.TP
++PORT
++server port
+ .TP
+ TIME
+ timestamp, us
+@@ -55,12 +49,6 @@ timestamp, us
+ TIMESTR
+ timestamp, string
+ .TP
+-PORT
+-server port
+-.TP
+-IP_SOURCE
+-source IP of the client, written in IPv4 style
+-.TP
+ ZONE
+ zonename
+ .PP
+diff --git a/Man/man1m/diskhits.1m b/Man/man1m/diskhits.1m
+index e8b9c57..e7c746a 100644
+--- a/Man/man1m/diskhits.1m
++++ b/Man/man1m/diskhits.1m
+@@ -35,7 +35,7 @@ Total disk activity, reads + writes
+ /usr/demo/dtrace/applicat.d
+ .PP
+ .SH DOCUMENTATION
+-DTrace Guide "io Provider" chapter (docs.sun.com)
++DTrace Guide "io Provider" chapter (docs.oracle.com)
+ 
+ See the DTraceToolkit for further documentation under the 
+ Docs directory. The DTraceToolkit docs may include full worked
+diff --git a/Man/man1m/fddist.1m b/Man/man1m/fddist.1m
+index 990d761..27baf77 100644
+--- a/Man/man1m/fddist.1m
++++ b/Man/man1m/fddist.1m
+@@ -51,7 +51,7 @@ number of events
+ /usr/demo/dtrace/lquantize.d
+ .PP
+ .SH DOCUMENTATION
+-DTrace Guide "Aggregations" chapter (docs.sun.com)
++DTrace Guide "Aggregations" chapter (docs.oracle.com)
+ 
+ See the DTraceToolkit for further documentation under the 
+ Docs directory. The DTraceToolkit docs may include full worked
+diff --git a/Man/man1m/icmpstat.d.1m b/Man/man1m/icmpstat.d.1m
+index be4b87a..d17b793 100644
+--- a/Man/man1m/icmpstat.d.1m
++++ b/Man/man1m/icmpstat.d.1m
+@@ -11,7 +11,7 @@ ability to trace ICMP events.
+ The ICMP statistics are documented in the mib2_icmp struct
+ in /usr/include/inet/mib2.h; and also in the mib provider
+ chapter of the DTrace Guide, found at 
+-http://docs.sun.com/db/doc/817-6223.
++http://docs.oracle.com/cd/E23824_01/html/E22973.
+ 
+ Since this uses DTrace, only the root user or users with the
+ dtrace_kernel privilege can run this command.
+diff --git a/Man/man1m/intoncpu.d.1m b/Man/man1m/intoncpu.d.1m
+index ec52b81..17fa703 100644
+--- a/Man/man1m/intoncpu.d.1m
++++ b/Man/man1m/intoncpu.d.1m
+@@ -30,7 +30,7 @@ Number of occurrences of at least this time
+ /usr/demo/dtrace/intr.d
+ .PP
+ .SH DOCUMENTATION
+-DTrace Guide "sdt Provider" chapter (docs.sun.com)
++DTrace Guide "sdt Provider" chapter (docs.oracle.com)
+ 
+ See the DTraceToolkit for further documentation under the 
+ Docs directory. The DTraceToolkit docs may include full worked
+diff --git a/Man/man1m/inttimes.d.1m b/Man/man1m/inttimes.d.1m
+index bc6d989..b113f0b 100644
+--- a/Man/man1m/inttimes.d.1m
++++ b/Man/man1m/inttimes.d.1m
+@@ -31,7 +31,7 @@ sum of time spent servicing interrupt (nanoseconds)
+ /usr/demo/dtrace/intr.d
+ .PP
+ .SH DOCUMENTATION
+-DTrace Guide "sdt Provider" chapter (docs.sun.com)
++DTrace Guide "sdt Provider" chapter (docs.oracle.com)
+ 
+ See the DTraceToolkit for further documentation under the 
+ Docs directory. The DTraceToolkit docs may include full worked
+diff --git a/Man/man1m/lastwords.1m b/Man/man1m/lastwords.1m
+index 024234b..8a158b9 100644
+--- a/Man/man1m/lastwords.1m
++++ b/Man/man1m/lastwords.1m
+@@ -44,7 +44,7 @@ errno for the system call
+ /usr/demo/dtrace/ring.d
+ .PP
+ .SH DOCUMENTATION
+-DTrace Guide "Buffers and Buffering" chapter (docs.sun.com)
++DTrace Guide "Buffers and Buffering" chapter (docs.oracle.com)
+ 
+ See the DTraceToolkit for further documentation under the 
+ Docs directory. The DTraceToolkit docs may include full worked
+diff --git a/Man/man1m/priclass.d.1m b/Man/man1m/priclass.d.1m
+index d726ac2..41a67c5 100644
+--- a/Man/man1m/priclass.d.1m
++++ b/Man/man1m/priclass.d.1m
+@@ -54,7 +54,7 @@ fair share scheduler
+ /usr/demo/dtrace/pri.d
+ .PP
+ .SH DOCUMENTATION
+-DTrace Guide "profile Provider" chapter (docs.sun.com)
++DTrace Guide "profile Provider" chapter (docs.oracle.com)
+ 
+ See the DTraceToolkit for further documentation under the 
+ Docs directory. The DTraceToolkit docs may include full worked
+diff --git a/Man/man1m/pridist.d.1m b/Man/man1m/pridist.d.1m
+index 1e7aba6..064e285 100644
+--- a/Man/man1m/pridist.d.1m
++++ b/Man/man1m/pridist.d.1m
+@@ -43,7 +43,7 @@ number of samples of at least this priority
+ /usr/demo/dtrace/profpri.d
+ .PP
+ .SH DOCUMENTATION
+-DTrace Guide "profile Provider" chapter (docs.sun.com)
++DTrace Guide "profile Provider" chapter (docs.oracle.com)
+ 
+ See the DTraceToolkit for further documentation under the 
+ Docs directory. The DTraceToolkit docs may include full worked
+diff --git a/Man/man1m/sampleproc.1m b/Man/man1m/sampleproc.1m
+index 0ae3a2d..0b5b2dc 100644
+--- a/Man/man1m/sampleproc.1m
++++ b/Man/man1m/sampleproc.1m
+@@ -43,7 +43,7 @@ percent of CPU usage
+ /usr/demo/dtrace/prof.d
+ .PP
+ .SH DOCUMENTATION
+-DTrace Guide "profile Provider" chapter (docs.sun.com)
++DTrace Guide "profile Provider" chapter (docs.oracle.com)
+ 
+ See the DTraceToolkit for further documentation under the 
+ Docs directory. The DTraceToolkit docs may include full worked
+diff --git a/Man/man1m/sigdist.d.1m b/Man/man1m/sigdist.d.1m
+index f9f02fe..d1764ff 100644
+--- a/Man/man1m/sigdist.d.1m
++++ b/Man/man1m/sigdist.d.1m
+@@ -38,7 +38,7 @@ number of signals sent
+ /usr/demo/dtrace/sig.d
+ .PP
+ .SH DOCUMENTATION
+-DTrace Guide "proc Provider" chapter (docs.sun.com)
++DTrace Guide "proc Provider" chapter (docs.oracle.com)
+ 
+ See the DTraceToolkit for further documentation under the 
+ Docs directory. The DTraceToolkit docs may include full worked
+diff --git a/Man/man1m/sysbypid.d.1m b/Man/man1m/sysbypid.d.1m
+index b956f12..2e53fa9 100644
+--- a/Man/man1m/sysbypid.d.1m
++++ b/Man/man1m/sysbypid.d.1m
+@@ -9,7 +9,7 @@ statistics by process.
+ 
+ The system statistics are documented in the cpu_sysinfo struct
+ in the /usr/include/sys/sysinfo.h file; and also in the sysinfo provider
+-chapter of the DTrace Guide, http://docs.sun.com/db/doc/817-6223.
++chapter of the DTrace Guide, http://docs.oracle.com/cd/E23824_01/html/E22973.
+ 
+ Since this uses DTrace, only the root user or users with the
+ dtrace_kernel privilege can run this command.
+diff --git a/Man/man1m/tcpstat.d.1m b/Man/man1m/tcpstat.d.1m
+index 4db577c..5490aeb 100644
+--- a/Man/man1m/tcpstat.d.1m
++++ b/Man/man1m/tcpstat.d.1m
+@@ -13,7 +13,7 @@ interfaces may be, as well as TCP transmission errors.
+ The TCP statistics are documented in the mib2_tcp struct
+ in /usr/include/inet/mib2.h; and also in the mib provider
+ chapter of the DTrace Guide, found at 
+-http://docs.sun.com/db/doc/817-6223.
++http://docs.oracle.com/cd/E23824_01/html/E22973.
+ 
+ Since this uses DTrace, only the root user or users with the
+ dtrace_kernel privilege can run this command.
+diff --git a/Man/man1m/udpstat.d.1m b/Man/man1m/udpstat.d.1m
+index 340f659..43e814e 100644
+--- a/Man/man1m/udpstat.d.1m
++++ b/Man/man1m/udpstat.d.1m
+@@ -10,7 +10,7 @@ retrieved from the MIB provider.
+ The UDP statistics are documented in the mib2_tcp struct
+ in /usr/include/inet/mib2.h; and also in the mib provider
+ chapter of the DTrace Guide, found at 
+-http://docs.sun.com/db/doc/817-6223.
++http://docs.oracle.com/cd/E23824_01/html/E22973.
+ 
+ Since this uses DTrace, only the root user or users with the
+ dtrace_kernel privilege can run this command.
+diff --git a/Man/man1m/vmbypid.d.1m b/Man/man1m/vmbypid.d.1m
+index 3c8b875..d62174d 100644
+--- a/Man/man1m/vmbypid.d.1m
++++ b/Man/man1m/vmbypid.d.1m
+@@ -9,7 +9,7 @@ statistics by process.
+ 
+ The virtual memory statistics are documented in the cpu_vminfo struct
+ in the /usr/include/sys/sysinfo.h file; and also in the vminfo provider
+-chapter of the DTrace Guide, http://docs.sun.com/db/doc/817-6223.
++chapter of the DTrace Guide, http://docs.oracle.com/cd/E23824_01/html/E22973.
+ 
+ Since this uses DTrace, only the root user or users with the
+ dtrace_kernel privilege can run this command.
+diff --git a/Mem/swapinfo.d b/Mem/swapinfo.d
+index 045cd72..aa8b831 100755
+--- a/Mem/swapinfo.d
++++ b/Mem/swapinfo.d
+@@ -33,6 +33,8 @@
+  *           "Solaris Internals", Jim Mauro, Richard McDougall
+  *           /usr/include/vm/anon.h, /usr/include/sys/systm.h
+  *
++ * Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
++ *
+  * COPYRIGHT: Copyright (c) 2005, 2006 Brendan Gregg.
+  *
+  * CDDL HEADER START
+@@ -54,6 +56,7 @@
+  * 11-Jun-2005  Brendan Gregg   Created this.
+  * 24-Apr-2006	   "	  "	Improved disk measurements; changed terms.
+  * 24-Apr-2006	   "	  "	Last update.
++ * 16-Jan-2014	Melvin Gong	Updated kpages_locked and k_anoninfo.
+  */
+ 
+ #pragma D option quiet
+@@ -64,43 +67,43 @@ inline int DEBUG = 0;
+ dtrace:::BEGIN
+ {
+ 	/* Debug stats */
+-	this->ani_max = `k_anoninfo.ani_max;
+-	this->ani_phys_resv = `k_anoninfo.ani_phys_resv;
++	this->ani_phys_max = `k_anoninfo.ani_phys_max;
++	this->ani_phys_avail = `k_anoninfo.ani_phys_avail;
+ 	this->ani_mem_resv = `k_anoninfo.ani_mem_resv;
+-	this->ani_locked = `k_anoninfo.ani_locked_swap;
++	this->ani_locked = `k_anoninfo.ani_mem_locked;
+ 	this->availrmem = `availrmem;
+ 
+ 	/* RAM stats */
+ 	this->ram_total = `physinstalled;
+ 	this->unusable  = `physinstalled - `physmem;
+-	this->locked    = `pages_locked;
++	this->locked    = `kpages_locked;
+ 	this->ram_used  = `availrmem - `freemem;
+ 	this->freemem   = `freemem;
+-	this->kernel    = `physmem - `pages_locked - `availrmem;
++	this->kernel    = `physmem - `kpages_locked - `availrmem;
+ 
+ 	/* Disk stats */
+-	this->disk_total = `k_anoninfo.ani_max;
+-	this->disk_resv = `k_anoninfo.ani_phys_resv;
++	this->disk_total = `k_anoninfo.ani_phys_max;
++	this->disk_resv = `k_anoninfo.ani_phys_avail;
+ 	this->disk_avail = this->disk_total - this->disk_resv;
+ 
+ 	/* Total Swap stats */
+ 	this->minfree = `swapfs_minfree;
+ 	this->reserve = `swapfs_reserve;
+ 	/* this is TOTAL_AVAILABLE_SWAP from /usr/include/vm/anon.h, */
+-	this->swap_total = `k_anoninfo.ani_max +
++	this->swap_total = `k_anoninfo.ani_phys_max +
+ 	    (`availrmem - `swapfs_minfree > 0 ?
+ 	    `availrmem - `swapfs_minfree : 0);
+ 	/* this is CURRENT_TOTAL_AVAILABLE_SWAP from /usr/include/vm/anon.h, */
+-	this->swap_avail = `k_anoninfo.ani_max - `k_anoninfo.ani_phys_resv +
++	this->swap_avail = `k_anoninfo.ani_phys_avail + `Asleep_availrmem +
+ 	    (`availrmem - `swapfs_minfree > 0 ?
+ 	    `availrmem - `swapfs_minfree : 0);
+ 	this->swap_resv = this->swap_total - this->swap_avail;
+ 
+ 	/* Convert to Mbytes */
+-	this->ani_phys_resv *= `_pagesize;  this->ani_phys_resv /= 1048576;
++	this->ani_phys_avail *= `_pagesize;  this->ani_phys_avail /= 1048576;
+ 	this->ani_mem_resv *= `_pagesize;  this->ani_mem_resv /= 1048576;
+ 	this->ani_locked *= `_pagesize;  this->ani_locked /= 1048576;
+-	this->ani_max	*= `_pagesize;  this->ani_max	/= 1048576;
++	this->ani_phys_max	*= `_pagesize;  this->ani_phys_max	/= 1048576;
+ 	this->availrmem	*= `_pagesize;  this->availrmem	/= 1048576;
+ 	this->ram_total	*= `_pagesize;  this->ram_total	/= 1048576;
+ 	this->unusable	*= `_pagesize;  this->unusable	/= 1048576;
+@@ -120,8 +123,8 @@ dtrace:::BEGIN
+ 	/* Print debug */
+ 	DEBUG ? printf("DEBUG   availrmem %5d MB\n", this->availrmem) : 1;
+ 	DEBUG ? printf("DEBUG     freemem %5d MB\n", this->freemem) : 1;
+-	DEBUG ? printf("DEBUG     ani_max %5d MB\n", this->ani_max) : 1;
+-	DEBUG ? printf("DEBUG ani_phys_re %5d MB\n", this->ani_phys_resv) : 1;
++	DEBUG ? printf("DEBUG ani_phy_max %5d MB\n", this->ani_phys_max) : 1;
++	DEBUG ? printf("DEBUG ani_phys_re %5d MB\n", this->ani_phys_avail) : 1;
+ 	DEBUG ? printf("DEBUG  ani_mem_re %5d MB\n", this->ani_mem_resv) : 1;
+ 	DEBUG ? printf("DEBUG  ani_locked %5d MB\n", this->ani_locked) : 1;
+ 	DEBUG ? printf("DEBUG     reserve %5d MB\n", this->reserve) : 1;
+diff --git a/Mem/vmbypid.d b/Mem/vmbypid.d
+index 5160c14..c9ed712 100755
+--- a/Mem/vmbypid.d
++++ b/Mem/vmbypid.d
+@@ -14,7 +14,7 @@
+  *
+  * The virtual memory statistics are documented in the cpu_vminfo struct
+  * in the /usr/include/sys/sysinfo.h file; and also in the vminfo provider
+- * chapter of the DTrace Guide, http://docs.sun.com/db/doc/817-6223.
++ * chapter of the DTrace Guide, http://docs.oracle.com/cd/E23824_01/html/E22973.
+  *
+  * COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+  *
+diff --git a/Mem/vmstat-p.d b/Mem/vmstat-p.d
+index 835a0a6..1be1032 100755
+--- a/Mem/vmstat-p.d
++++ b/Mem/vmstat-p.d
+@@ -35,6 +35,8 @@
+  *
+  * SEE ALSO:	vmstat(1M)
+  *
++ * Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
++ *
+  * COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+  *
+  * CDDL HEADER START
+@@ -53,6 +55,7 @@
+  *
+  * 11-Jun-2005  Brendan Gregg   Created this.
+  * 08-Jan-2006	   "      "	Last update.
++ * 16-Jan-2014	Melvin Gong	Updated k_anoninfo changes.
+  */
+ 
+ #pragma D option quiet
+@@ -112,15 +115,15 @@ profile:::tick-1sec
+ 	this->free = `freemem;
+ 
+ 	/*
+-	 * fetch free swap
++	 * fetch free swap (CURRENT_TOTAL_AVAILABLE_SWAP)
+ 	 *
+ 	 * free swap is described in /usr/include/vm/anon.h as,
+-	 * MAX(ani_max - ani_resv, 0) + (availrmem - swapfs_minfree)
++	 * (k_anoninfo.ani_phys_avail + Asleep_availrmem + \
++	 * MAX((spgcnt_t)(availrmem - swapfs_minfree), 0)
+ 	 */
+-	this->ani_max = `k_anoninfo.ani_max;
+-	this->ani_resv = `k_anoninfo.ani_phys_resv + `k_anoninfo.ani_mem_resv;
+-	this->swap = (this->ani_max - this->ani_resv > 0 ?
+-	    this->ani_max - this->ani_resv : 0) + `availrmem - `swapfs_minfree;
++	this->ani_phys_avail = `k_anoninfo.ani_phys_avail;
++	this->swap = (`availrmem - `swapfs_minfree > 0 ?
++	    `availrmem - `swapfs_minfree : 0) + this->ani_phys_avail + `Asleep_availrmem;
+ 
+ 	/* fetch w */
+ 	this->w = `nswapped;
+diff --git a/Mem/vmstat.d b/Mem/vmstat.d
+index f8e0ead..1d197c9 100755
+--- a/Mem/vmstat.d
++++ b/Mem/vmstat.d
+@@ -33,6 +33,8 @@
+  *
+  * SEE ALSO:	vmstat(1M)
+  *
++ * Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
++ *
+  * COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+  *
+  * CDDL HEADER START
+@@ -51,6 +53,7 @@
+  *
+  * 11-Jun-2005  Brendan Gregg   Created this.
+  * 08-Jan-2006	   "      "	Last update.
++ * 16-Jan-2014	Melvin Gong	Updated k_anoninfo changes.
+  */
+ 
+ #pragma D option quiet
+@@ -103,15 +106,15 @@ profile:::tick-1sec
+ 	this->free = `freemem;
+ 
+ 	/*
+-	 * fetch free swap
++	 * fetch free swap (CURRENT_TOTAL_AVAILABLE_SWAP)
+ 	 *
+ 	 * free swap is described in /usr/include/vm/anon.h as,
+-	 * MAX(ani_max - ani_resv, 0) + (availrmem - swapfs_minfree)
++	 * (k_anoninfo.ani_phys_avail + Asleep_availrmem + \
++	 * MAX((spgcnt_t)(availrmem - swapfs_minfree), 0)
+ 	 */
+-	this->ani_max = `k_anoninfo.ani_max;
+-	this->ani_resv = `k_anoninfo.ani_phys_resv + `k_anoninfo.ani_mem_resv;
+-	this->swap = (this->ani_max - this->ani_resv > 0 ?
+-	    this->ani_max - this->ani_resv : 0) + `availrmem - `swapfs_minfree;
++	this->ani_phys_avail = `k_anoninfo.ani_phys_avail;
++	this->swap = (`availrmem - `swapfs_minfree > 0 ?
++	    `availrmem - `swapfs_minfree : 0) + this->ani_phys_avail + `Asleep_availrmem;
+ 
+ 	/* fetch w */
+ 	this->w = `nswapped;
+diff --git a/Mem/xvmstat b/Mem/xvmstat
+index ce13ce7..a9de7a9 100755
+--- a/Mem/xvmstat
++++ b/Mem/xvmstat
+@@ -38,6 +38,8 @@
+ #
+ # SEE ALSO:	vmstat(1M)
+ #
++# Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
++#
+ # COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+ #
+ # CDDL HEADER START
+@@ -56,7 +58,7 @@
+ #
+ # 12-Jun-2005	Brendan Gregg	Created this.
+ # 01-Mar-2006	   "      "	Last update.
+-#
++# 16-Jan-2014	Melvin Gong	Updated k_anoninfo changes.
+ 
+ ##############################
+ # --- Process Arguments ---
+@@ -165,15 +167,15 @@ fi
+ 	this->free = `freemem;
+ 
+ 	/*
+-	 * fetch free swap
++	 * fetch free swap (CURRENT_TOTAL_AVAILABLE_SWAP)
+ 	 *
+ 	 * free swap is described in /usr/include/vm/anon.h as,
+-	 * MAX(ani_max - ani_resv, 0) + (availrmem - swapfs_minfree)
++	 * (k_anoninfo.ani_phys_avail + Asleep_availrmem + \
++	 * MAX((spgcnt_t)(availrmem - swapfs_minfree), 0)
+ 	 */
+-	this->ani_max = `k_anoninfo.ani_max;
+-	this->ani_resv = `k_anoninfo.ani_phys_resv + `k_anoninfo.ani_mem_resv;
+-	this->swap = (this->ani_max - this->ani_resv > 0 ?
+-	    this->ani_max - this->ani_resv : 0) + `availrmem - `swapfs_minfree;
++	this->ani_phys_avail = `k_anoninfo.ani_phys_avail;
++	this->swap = (`availrmem - `swapfs_minfree > 0 ?
++	    `availrmem - `swapfs_minfree : 0) + this->ani_phys_avail + `Asleep_availrmem;
+ 
+ 	/* fetch w */
+ 	this->w = `nswapped;
+diff --git a/Misc/guess.d b/Misc/guess.d
+index 3ebcd39..d0d68d1 100755
+--- a/Misc/guess.d
++++ b/Misc/guess.d
+@@ -37,7 +37,7 @@ syscall::write:entry
+ }
+ 
+ syscall::read:entry
+-/state == 2 && ppid == $pid && arg0 == 3/
++/state == 2 && ppid == $pid && arg0 == 0/
+ {
+ 	self->inguess = 1;
+ 	self->buf = arg1;
+@@ -53,7 +53,7 @@ syscall::read:return
+ }
+ 
+ syscall::read:return
+-/self->inguess && keys[pos-1] == '\n'/
++/self->inguess && (keys[pos-1] == '\n' || keys[pos-1] == '\r')/
+ {
+ 	pos -= 2;
+ 	fac = 1;
+@@ -80,8 +80,8 @@ syscall::read:return
+ 	printf("Correct! That took %d guesses.\n\n", num);
+ 	self->doneguess = 0;
+ 	state = 3;
+-	printf("Please enter your name: ");
+-	system("/usr/bin/read name");
++	printf("\n Thank you for playing! \n");
++	exit(0);
+ }
+ 
+ syscall::read:return
+@@ -97,22 +97,8 @@ syscall::read:return
+ }
+ 
+ syscall::read:entry
+-/state == 3 && curthread->t_procp->p_parent->p_ppid == $pid && arg0 == 0/
++/state == 3 && curthread->t_procp->p_ppid == $pid && arg0 == 0/
+ {
+ 	self->inname = 1;
+ 	self->buf = arg1;
+ }
+-
+-/* Save high score */
+-syscall::read:return
+-/self->inname/
+-{
+-	self->inname = 0;
+-	name = stringof(copyin(self->buf, arg0 - 1));
+-	system("echo %s %d >> %s", name, num, scorefile);
+-
+-	/* Print high scores */
+-	printf("\nPrevious high scores,\n");
+-	system("cat %s", scorefile);
+-	exit(0);
+-}
+diff --git a/Net/connections b/Net/connections
+index 523b880..c536487 100755
+--- a/Net/connections
++++ b/Net/connections
+@@ -17,17 +17,18 @@
+ #		connections -v	# snoop connections with times
+ #
+ # FIELDS:
+-#		UID		user ID of the server
++#		ZONE_ID		zone ID
+ #		PID		process ID for the server
+-#		CMD		server command name
++#		IP_SOURCE	source IP of the client
++#		PORT		server port
+ #		TIME		timestamp, us
+ #		TIMESTR		timestamp, string
+-#		PORT		server port
+-#		IP_SOURCE	source IP of the client, written in IPv4 style
+ #		ZONE		zonename
+ #
+ # SEE ALSO:	snoop 'tcp[13:1] = 0x02'	# snoop new connections
+ #
++# Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
++#
+ # COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+ #
+ # CDDL HEADER START
+@@ -54,44 +55,32 @@
+ # 20-Apr-2006	   "	  "	Fixed SS_TCP_FAST_ACCEPT bug in build 31+.
+ # 20-Apr-2006	   "	  "	Last update.
+ #
++# 26-Jun-2014	 Melvin Gong	Rewrote, using tcp provider
+ 
+ 
+-##############################
+-# --- Process Arguments ---
+-#
+-
+ ### Default variables
+ opt_time=0; opt_timestr=0; opt_zone=0
+ 
+ ### Process options
+ while getopts htvZ name
+ do
+-	case $name in
+-	t)      opt_time=1 ;;
+-	v)      opt_timestr=1 ;;
+-	Z)      opt_zone=1 ;;
+-	h|?)    cat <<-END >&2
+-		USAGE: connections [-htvZ]
+-			   -t              # print timestamps, us
+-			   -v              # print timestamps, string
+-			   -Z              # print zonename
+-		  eg,
+-		       connections -v      # snoop connections with times
++        case $name in
++        t)      opt_time=1 ;;
++        v)      opt_timestr=1 ;;
++        Z)      opt_zone=1 ;;
++        h|?)    cat <<-END >&2
++                USAGE: connections [-htvZ]
++                        -t              # print timestamps, us
++                        -v              # print timestamps, string
++                        -Z              # print zonename
++                  eg,
++                      connections -v    # snoop connections with times
+ 		END
+-		exit 1
+-	esac
++                exit 1
++        esac
+ done
+ 
+-
+-#################################
+-# --- Main Program, DTrace ---
+-#
+ /usr/sbin/dtrace -C -s <( print -r '
+-#include <sys/file.h>
+-#include <sys/types.h>
+-#include <sys/byteorder.h>
+-#include <sys/socket.h>
+-#include <sys/socketvar.h>
+ 
+  #pragma D option quiet
+  #pragma D option switchrate=10hz
+@@ -103,76 +92,29 @@ done
+  /*
+   * Print header
+   */
+- dtrace:::BEGIN 
++ dtrace:::BEGIN
+  {
+         /* print optional headers */
+-        OPT_time    ? printf("%-14s ", "TIME") : 1;
+-        OPT_timestr ? printf("%-20s ", "TIMESTR") : 1;
+-	OPT_zone    ? printf("%-10s ", "ZONE") : 1;
++        OPT_time        ? printf("%-14s ", "TIME") : 1;
++        OPT_timestr     ? printf("%-20s ", "TIMESTR") : 1;
++        OPT_zone        ? printf("%-10s ", "ZONE") : 1;
+ 
+-	/* print header */
+-	printf("%5s %5s %-12s %4s %5s %s\n",
+-	    "UID", "PID", "CMD", "TYPE", "PORT", "IP_SOURCE");
++        printf("%8s %7s %15s %7s\n",
++            "ZONE_ID", "PID", "IP_SOURCE", "PORT");
+  }
+ 
+  /*
+-  * TCP Process inbound connections
+-  *
+-  * 0x00200000 has been hardcoded. It was SS_TCP_FAST_ACCEPT, but was
+-  * renamed to SS_DIRECT around build 31.
++  * Probe new TCP accepted connections
+   */
+- fbt:sockfs:sotpi_accept:entry
+- /(arg1 & FREAD) && (arg1 & FWRITE) && (args[0]->so_state & 0x00200000)/
+- {
+-	self->sop = args[0];
+- }
+-
+- fbt:sockfs:sotpi_create:return
+- /self->sop/
++ tcp:::accept-established
+  {
+-	self->nsop = (struct sonode *)arg1;
+- }
+-
+-
+- /*
+-  * Probe TCP connections
+-  */
+- fbt:sockfs:sotpi_accept:return
+- /self->nsop/
+- {
+-	/* fetch connection details */
+-	this->tcpp = (tcp_t *)self->nsop->so_priv;
+-	this->connp = (conn_t *)this->tcpp->tcp_connp;
+-
+-#if defined(_BIG_ENDIAN)
+-	this->port0 = this->connp->u_port.tcpu_ports.tcpu_lport;
+-#else
+-	this->port0 = BSWAP_16(this->connp->u_port.tcpu_ports.tcpu_lport);
+-#endif
+-	this->rem12 = 
+-	    (uint8_t)this->connp->connua_v6addr.connua_faddr._S6_un._S6_u8[12];
+-	this->rem13 =
+-	    (uint8_t)this->connp->connua_v6addr.connua_faddr._S6_un._S6_u8[13];
+-	this->rem14 =
+-	    (uint8_t)this->connp->connua_v6addr.connua_faddr._S6_un._S6_u8[14];
+-	this->rem15 =
+-	    (uint8_t)this->connp->connua_v6addr.connua_faddr._S6_un._S6_u8[15];
+-
+-        /* print optional fields */
+-        OPT_time    ? printf("%-14d ", timestamp/1000) : 1;
+-        OPT_timestr ? printf("%-20Y ", walltimestamp) : 1;
+-	OPT_zone    ? printf("%-10s ", zonename) : 1;
+-
+-	/* print output line */
+-	printf("%5d %5d %-12s %4s %5d %d.%d.%d.%d\n",
+-	    uid, pid, execname, "tcp", this->port0, 
+-	    this->rem12, this->rem13, this->rem14, this->rem15);
+- }
+-
+- fbt:sockfs:sotpi_accept:return
+- {
+-	self->nsop = 0;
+-	self->sop = 0;
++         /* print optional fields */
++         OPT_time       ? printf("%-14d ", timestamp/1000) : 1;
++         OPT_timestr    ? printf("%-20Y ", walltimestamp) : 1;
++         OPT_zone       ? printf("%-10s ", zonename) : 1;
++
++         printf("%8d %7d %15s %7d\n",
++             args[1]->cs_zoneid, args[1]->cs_pid,
++             args[2]->ip_saddr, args[4]->tcp_dport);
+  }
+ ')
+-
+diff --git a/Net/icmpstat.d b/Net/icmpstat.d
+index 3df5199..b039625 100755
+--- a/Net/icmpstat.d
++++ b/Net/icmpstat.d
+@@ -15,7 +15,7 @@
+  *
+  * The above ICMP statistics are documented in the mib2_icmp struct
+  * in the /usr/include/inet/mib2.h file; and also in the mib provider
+- * chapter of the DTrace Guide, http://docs.sun.com/db/doc/817-6223.
++ * chapter of the DTrace Guide, http://docs.oracle.com/cd/E23824_01/html/E22973.
+  *
+  * COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+  *
+diff --git a/Net/tcpsnoop.d b/Net/tcpsnoop.d
+index ca01864..9d44519 100755
+--- a/Net/tcpsnoop.d
++++ b/Net/tcpsnoop.d
+@@ -1,424 +1,78 @@
+-#!/usr/sbin/dtrace -Cs
++#!/usr/sbin/dtrace -s
+ /*
+- * tcpsnoop.d - snoop TCP network packets by process.
+- *              Written using DTrace (Solaris 10 3/05)
++ * tcpsnoop - snoop TCP network packets by process.
++ *	Written using DTrace tcp Provider.
+  *
+- * This analyses TCP network packets and prints the responsible PID and UID,
+- * plus standard details such as IP address and port. This captures traffic
+- * of newly created TCP connections that were established while this program
+- * was running. It can help identify which processes is causing TCP traffic.
+- *
+- * WARNING: This script may only work on Solaris 10 3/05, since it uses the
+- * fbt provider to trace the raw operation of a specific version of the kernel.
+- * In the future, a 'stable' network provider should exist which will allow
+- * this to be written for that and subsequent versions of the kernel. In the
+- * meantime, check for other versions of this script in the /Net directory,
+- * and read the Notes/ALLfbt_notes.txt for more background on fbt.
+- *
+- * $Id: tcpsnoop.d 69 2007-10-04 13:40:00Z brendan $
+- *
+- * USAGE:       tcpsnoop.d
+- *
+- * FIELDS:
+- *		UID     	user ID
+- *		PID     	process ID
+- *		CMD     	command
+- *		LADDR		local IP address
+- *		RADDR		remote IP address
+- *		LPORT		local port number
+- *		RPORT		remote port number
+- *		DR      	direction
+- *		SIZE    	packet size, bytes
++ * This analyses TCP network packets and prints the responsible PID plus
++ * standard details such as IP address and port. This captures traffic
++ * from existing and newly created TCP connections. It can help identify
++ * which processes are causing TCP traffic.
+  *
+  * SEE ALSO: snoop -rS
+  *
+- * COPYRIGHT: Copyright (c) 2005, 2006 Brendan Gregg.
+- *
+  * CDDL HEADER START
+  *
+- *  The contents of this file are subject to the terms of the
+- *  Common Development and Distribution License, Version 1.0 only
+- *  (the "License").  You may not use this file except in compliance
+- *  with the License.
+- *
+- *  You can obtain a copy of the license at Docs/cddl1.txt
+- *  or http://www.opensolaris.org/os/licensing.
+- *  See the License for the specific language governing permissions
+- *  and limitations under the License.
++ * The contents of this file are subject to the terms of the
++ * Common Development and Distribution License (the "License").
++ * You may not use this file except in compliance with the License.
+  *
+- * CDDL HEADER END
++ * You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
++ * or http://www.opensolaris.org/os/licensing.
++ * See the License for the specific language governing permissions
++ * and limitations under the License.
+  *
+- * Author: Brendan Gregg  [Sydney, Australia]
++ * When distributing Covered Code, include this CDDL HEADER in each
++ * file and include the License file at usr/src/OPENSOLARIS.LICENSE.
++ * If applicable, add the following below this CDDL HEADER, with the
++ * fields enclosed by brackets "[]" replaced with your own identifying
++ * information: Portions Copyright [yyyy] [name of copyright owner]
+  *
+- * TODO: IPv6
++ * CDDL HEADER END
++ */
++/*
++ * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
+  *
+- * 09-Jul-2004  Brendan Gregg   Created this.
+- * 12-Mar-2005     "      "	Changed probes, size info now printed.
+- * 02-Jul-2005     "      "	Many more probes. Renamed "tcpsnoop.d".
+- * 03-Dec-2005	   "	  "	Fixed tcp_accept_finish bug, now 100% correct
+- *				execname. Thanks Kias Belgaied for expertise.
+- * 20-Apr-2006	   "	  "	Fixed SS_TCP_FAST_ACCEPT bug in build 31+.
+- * 20-Apr-2006	   "	  "	Last update.
++ * Portions Copyright 2010 Brendan Gregg
+  */
+ 
+ #pragma D option quiet
+ #pragma D option switchrate=10hz
+ 
+-#include <sys/file.h>
+-#include <inet/common.h>
+-#include <sys/byteorder.h>
+-
+-/*
+- * Print header
+- */
+ dtrace:::BEGIN
+ {
+-	/* print main headers */
+-	printf("%5s %6s %-15s %5s %2s %-15s %5s %5s %s\n",
+-	    "UID", "PID", "LADDR", "LPORT", "DR", "RADDR", "RPORT",
+-	    "SIZE", "CMD");
+-}
+-
+-/*
+- * TCP Process inbound connections
+- *
+- * 0x00200000 has been hardcoded. It was SS_TCP_FAST_ACCEPT, but was
+- * renamed to SS_DIRECT around build 31.
+- */
+-fbt:sockfs:sotpi_accept:entry
+-/(arg1 & FREAD) && (arg1 & FWRITE) && (args[0]->so_state & 0x00200000)/
+-{
+-	self->sop = args[0];
+-}
+-
+-fbt:sockfs:sotpi_create:return
+-/self->sop/
+-{
+-	self->nsop = (struct sonode *)arg1;
+-}
+-
+-fbt:sockfs:sotpi_accept:return
+-/self->nsop/
+-{
+-	this->tcpp = (tcp_t *)self->nsop->so_priv;
+-	self->connp = (conn_t *)this->tcpp->tcp_connp;
+-	tname[(int)self->connp] = execname;
+-	tpid[(int)self->connp] = pid;
+-	tuid[(int)self->connp] = uid;
+-}
+-
+-fbt:sockfs:sotpi_accept:return
+-{
+-	self->nsop = 0;
+-	self->sop = 0;
+-}
+-
+-/*
+- * TCP Process outbound connections
+- */
+-fbt:ip:tcp_connect:entry
+-{
+-	this->tcpp = (tcp_t *)arg0;
+-	self->connp = (conn_t *)this->tcpp->tcp_connp;
+-	tname[(int)self->connp] = execname;
+-	tpid[(int)self->connp] = pid;
+-	tuid[(int)self->connp] = uid;
+-}
+-
+-/*
+- * TCP Data translations
+- */
+-fbt:sockfs:sotpi_accept:return,
+-fbt:ip:tcp_connect:return
+-/self->connp/
+-{
+-	/* fetch ports */
+-#if defined(_BIG_ENDIAN)
+-	self->lport = self->connp->u_port.tcpu_ports.tcpu_lport;
+-	self->fport = self->connp->u_port.tcpu_ports.tcpu_fport;
+-#else
+-	self->lport = BSWAP_16(self->connp->u_port.tcpu_ports.tcpu_lport);
+-	self->fport = BSWAP_16(self->connp->u_port.tcpu_ports.tcpu_fport);
+-#endif
+-
+-	/* fetch IPv4 addresses */
+-	this->fad12 =
+-	    (int)self->connp->connua_v6addr.connua_faddr._S6_un._S6_u8[12];
+-	this->fad13 =
+-	    (int)self->connp->connua_v6addr.connua_faddr._S6_un._S6_u8[13];
+-	this->fad14 =
+-	    (int)self->connp->connua_v6addr.connua_faddr._S6_un._S6_u8[14];
+-	this->fad15 =
+-	    (int)self->connp->connua_v6addr.connua_faddr._S6_un._S6_u8[15];
+-	this->lad12 =
+-	    (int)self->connp->connua_v6addr.connua_laddr._S6_un._S6_u8[12];
+-	this->lad13 =
+-	    (int)self->connp->connua_v6addr.connua_laddr._S6_un._S6_u8[13];
+-	this->lad14 =
+-	    (int)self->connp->connua_v6addr.connua_laddr._S6_un._S6_u8[14];
+-	this->lad15 =
+-	    (int)self->connp->connua_v6addr.connua_laddr._S6_un._S6_u8[15];
+-
+-	/* convert type for use with lltostr() */
+-	this->fad12 = this->fad12 < 0 ? 256 + this->fad12 : this->fad12;
+-	this->fad13 = this->fad13 < 0 ? 256 + this->fad13 : this->fad13;
+-	this->fad14 = this->fad14 < 0 ? 256 + this->fad14 : this->fad14;
+-	this->fad15 = this->fad15 < 0 ? 256 + this->fad15 : this->fad15;
+-	this->lad12 = this->lad12 < 0 ? 256 + this->lad12 : this->lad12;
+-	this->lad13 = this->lad13 < 0 ? 256 + this->lad13 : this->lad13;
+-	this->lad14 = this->lad14 < 0 ? 256 + this->lad14 : this->lad14;
+-	this->lad15 = this->lad15 < 0 ? 256 + this->lad15 : this->lad15;
+-
+-	/* stringify addresses */
+-	self->faddr = strjoin(lltostr(this->fad12), ".");
+-	self->faddr = strjoin(self->faddr, strjoin(lltostr(this->fad13), "."));
+-	self->faddr = strjoin(self->faddr, strjoin(lltostr(this->fad14), "."));
+-	self->faddr = strjoin(self->faddr, lltostr(this->fad15 + 0));
+-	self->laddr = strjoin(lltostr(this->lad12), ".");
+-	self->laddr = strjoin(self->laddr, strjoin(lltostr(this->lad13), "."));
+-	self->laddr = strjoin(self->laddr, strjoin(lltostr(this->lad14), "."));
+-	self->laddr = strjoin(self->laddr, lltostr(this->lad15 + 0));
+-
+-	/* fix direction and save values */
+-	tladdr[(int)self->connp] = self->laddr;
+-	tfaddr[(int)self->connp] = self->faddr;
+-	tlport[(int)self->connp] = self->lport;
+-	tfport[(int)self->connp] = self->fport;
+-
+-	/* all systems go */
+-	tok[(int)self->connp] = 1;
+-}
+-
+-/*
+- * TCP Clear connp
+- */
+-fbt:ip:tcp_get_conn:return
+-{
+-	/* Q_TO_CONN */
+-	this->connp = (conn_t *)arg1;
+-	tok[(int)this->connp] = 0;
+-	tpid[(int)this->connp] = 0;
+-	tuid[(int)this->connp] = 0;
+-	tname[(int)this->connp] = 0;
+-}
+-
+-/*
+- * TCP Process "port closed"
+- */
+-fbt:ip:tcp_xmit_early_reset:entry
+-{
+-	this->queuep = (queue_t *)`tcp_g_q; /* ` */
+-	this->connp = (conn_t *)this->queuep->q_ptr;
+-	this->tcpp = (tcp_t *)this->connp->conn_tcp;
+-
+-	/* split addresses */
+-	this->ipha = (ipha_t *)args[1]->b_rptr;
+-	this->fad15 = (this->ipha->ipha_src & 0xff000000) >> 24;
+-	this->fad14 = (this->ipha->ipha_src & 0x00ff0000) >> 16;
+-	this->fad13 = (this->ipha->ipha_src & 0x0000ff00) >> 8;
+-	this->fad12 = (this->ipha->ipha_src & 0x000000ff);
+-	this->lad15 = (this->ipha->ipha_dst & 0xff000000) >> 24;
+-	this->lad14 = (this->ipha->ipha_dst & 0x00ff0000) >> 16;
+-	this->lad13 = (this->ipha->ipha_dst & 0x0000ff00) >> 8;
+-	this->lad12 = (this->ipha->ipha_dst & 0x000000ff);
+-
+-	/* stringify addresses */
+-	self->faddr = strjoin(lltostr(this->fad12), ".");
+-	self->faddr = strjoin(self->faddr, strjoin(lltostr(this->fad13), "."));
+-	self->faddr = strjoin(self->faddr, strjoin(lltostr(this->fad14), "."));
+-	self->faddr = strjoin(self->faddr, lltostr(this->fad15 + 0));
+-	self->laddr = strjoin(lltostr(this->lad12), ".");
+-	self->laddr = strjoin(self->laddr, strjoin(lltostr(this->lad13), "."));
+-	self->laddr = strjoin(self->laddr, strjoin(lltostr(this->lad14), "."));
+-	self->laddr = strjoin(self->laddr, lltostr(this->lad15 + 0));
+-
+-	self->reset = 1;
+-}
+-
+-/*
+- * TCP Fetch "port closed" ports
+- */
+-fbt:ip:tcp_xchg:entry
+-/self->reset/
+-{
+-#if defined(_BIG_ENDIAN)
+-	self->lport = (uint16_t)arg0;
+-	self->fport = (uint16_t)arg1;
+-#else
+-	self->lport = BSWAP_16((uint16_t)arg0);
+-	self->fport = BSWAP_16((uint16_t)arg1);
+-#endif
+-	self->lport = BE16_TO_U16(arg0);
+-	self->fport = BE16_TO_U16(arg1);
+-}
+-
+-/*
+- * TCP Print "port closed"
+- */
+-fbt:ip:tcp_xmit_early_reset:return
+-{
+-	self->name = "<closed>";
+-	self->pid = 0;
+-	self->uid = 0;
+-	self->size = 54;	/* should check trailers */
+-	self->dir = "<-";
+-	printf("%5d %6d %-15s %5d %2s %-15s %5d %5d %s\n",
+-	    self->uid, self->pid, self->laddr, self->lport, self->dir,
+-	    self->faddr, self->fport, self->size, self->name);
+-	self->dir = "->";
+-	printf("%5d %6d %-15s %5d %2s %-15s %5d %5d %s\n",
+-	    self->uid, self->pid, self->laddr, self->lport, self->dir,
+-	    self->faddr, self->fport, self->size, self->name);
+-	self->reset = 0;
+-	self->size = 0;
+-	self->name = 0;
+-}
+-
+-/*
+- * TCP Process Write
+- */
+-fbt:ip:tcp_send_data:entry
+-{
+-	self->conn_p = (conn_t *)args[0]->tcp_connp;
+-}
+-
+-fbt:ip:tcp_send_data:entry
+-/tok[(int)self->conn_p]/
+-{
+-	self->dir = "->";
+-	self->size = msgdsize(args[2]) + 14;	/* should check trailers */
+-	self->uid = tuid[(int)self->conn_p];
+-	self->laddr = tladdr[(int)self->conn_p];
+-	self->faddr = tfaddr[(int)self->conn_p];
+-	self->lport = tlport[(int)self->conn_p];
+-	self->fport = tfport[(int)self->conn_p];
+-	self->ok = 2;
+-
+-	/* follow inetd -> in.* transitions */
+-	self->name = pid && (tname[(int)self->conn_p] == "inetd") ?
+-	    execname : tname[(int)self->conn_p];
+-	self->pid = pid && (tname[(int)self->conn_p] == "inetd") ?
+-	    pid : tpid[(int)self->conn_p];
+-	tname[(int)self->conn_p] = self->name;
+-	tpid[(int)self->conn_p] = self->pid;
+-}
+-
+-/*
+- * TCP Process Read
+- */
+-fbt:ip:tcp_rput_data:entry
+-{
+-	self->conn_p = (conn_t *)arg0;
+-	self->size = msgdsize(args[1]) + 14;	/* should check trailers */
++	printf("%6s %6s %15s:%-5s      %15s:%-5s %6s %s\n",
++	    "TIME", "PID", "LADDR", "PORT", "RADDR", "PORT", "BYTES", "FLAGS");
+ }
+ 
+-fbt:ip:tcp_rput_data:entry
+-/tok[(int)self->conn_p]/
++tcp:::send
+ {
+-	self->dir = "<-";
+-	self->uid = tuid[(int)self->conn_p];
+-	self->laddr = tladdr[(int)self->conn_p];
+-	self->faddr = tfaddr[(int)self->conn_p];
+-	self->lport = tlport[(int)self->conn_p];
+-	self->fport = tfport[(int)self->conn_p];
+-	self->ok = 2;
+-
+-	/* follow inetd -> in.* transitions */
+-	self->name = pid && (tname[(int)self->conn_p] == "inetd") ?
+-	    execname : tname[(int)self->conn_p];
+-	self->pid = pid && (tname[(int)self->conn_p] == "inetd") ?
+-	    pid : tpid[(int)self->conn_p];
+-	tname[(int)self->conn_p] = self->name;
+-	tpid[(int)self->conn_p] = self->pid;
++	this->length = args[2]->ip_plength - args[4]->tcp_offset;
++	printf("%6d %6d %15s:%-5d  ->  %15s:%-5d %6d (",
++	    timestamp/1000, args[1]->cs_pid, args[2]->ip_saddr,
++	    args[4]->tcp_sport, args[2]->ip_daddr, args[4]->tcp_dport,
++	    this->length);
+ }
+ 
+-/*
+- * TCP Complete printing outbound handshake
+- */
+-fbt:ip:tcp_connect:return
+-/self->connp/
+-{
+-	self->name = tname[(int)self->connp];
+-	self->pid = tpid[(int)self->connp];
+-	self->uid = tuid[(int)self->connp];
+-	self->size = 54;	/* should check trailers */
+-	self->dir = "->";
+-	/* this packet occured before connp was fully established */
+-	printf("%5d %6d %-15s %5d %2s %-15s %5d %5d %s\n",
+-	    self->uid, self->pid, self->laddr, self->lport, self->dir,
+-	    self->faddr, self->fport, self->size, self->name);
+-}
+-
+-/*
+- * TCP Complete printing inbound handshake
+- */
+-fbt:sockfs:sotpi_accept:return
+-/self->connp/
++tcp:::receive
+ {
+-	self->name = tname[(int)self->connp];
+-	self->pid = tpid[(int)self->connp];
+-	self->uid = tuid[(int)self->connp];
+-	self->size = 54;	/* should check trailers */
+-	/* these packets occured before connp was fully established */
+-	self->dir = "<-";
+-	printf("%5d %6d %-15s %5d %2s %-15s %5d %5d %s\n",
+-	    self->uid, self->pid, self->laddr, self->lport, self->dir,
+-	    self->faddr, self->fport, self->size, self->name);
+-	self->dir = "->";
+-	printf("%5d %6d %-15s %5d %2s %-15s %5d %5d %s\n",
+-	    self->uid, self->pid, self->laddr, self->lport, self->dir,
+-	    self->faddr, self->fport, self->size, self->name);
+-	self->dir = "<-";
+-	printf("%5d %6d %-15s %5d %2s %-15s %5d %5d %s\n",
+-	    self->uid, self->pid, self->laddr, self->lport, self->dir,
+-	    self->faddr, self->fport, self->size, self->name);
++	this->length = args[2]->ip_plength - args[4]->tcp_offset;
++	printf("%6d %6d %15s:%-5d  <-  %15s:%-5d %6d (",
++	    timestamp/1000, args[1]->cs_pid, args[2]->ip_daddr,
++	    args[4]->tcp_dport, args[2]->ip_saddr, args[4]->tcp_sport,
++	    this->length);
+ }
+ 
+-/*
+- * Print output
+- */
+-fbt:ip:tcp_send_data:entry,
+-fbt:ip:tcp_rput_data:entry
+-/self->ok == 2/
+-{
+-	/* print output line */
+-	printf("%5d %6d %-15s %5d %2s %-15s %5d %5d %s\n",
+-	    self->uid, self->pid, self->laddr, self->lport, self->dir,
+-	    self->faddr, self->fport, self->size, self->name);
+-}
+-
+-/*
+- * TCP Clear connect variables
+- */
+-fbt:sockfs:sotpi_accept:return,
+-fbt:ip:tcp_connect:return
+-/self->connp/
+-{
+-	self->faddr = 0;
+-	self->laddr = 0;
+-	self->fport = 0;
+-	self->lport = 0;
+-	self->connp = 0;
+-	self->name = 0;
+-	self->pid = 0;
+-	self->uid = 0;
+-}
+-
+-/*
+- * TCP Clear r/w variables
+- */
+-fbt:ip:tcp_send_data:entry,
+-fbt:ip:tcp_rput_data:entry
++tcp:::send,
++tcp:::receive
+ {
+-	self->ok = 0;
+-	self->dir = 0;
+-	self->uid = 0;
+-	self->pid = 0;
+-	self->size = 0;
+-	self->name = 0;
+-	self->lport = 0;
+-	self->fport = 0;
+-	self->laddr = 0;
+-	self->faddr = 0;
+-	self->conn_p = 0;
++	printf("%s", args[4]->tcp_flags & TH_FIN ? "FIN|" : "");
++	printf("%s", args[4]->tcp_flags & TH_SYN ? "SYN|" : "");
++	printf("%s", args[4]->tcp_flags & TH_RST ? "RST|" : "");
++	printf("%s", args[4]->tcp_flags & TH_PUSH ? "PUSH|" : "");
++	printf("%s", args[4]->tcp_flags & TH_ACK ? "ACK|" : "");
++	printf("%s", args[4]->tcp_flags & TH_URG ? "URG|" : "");
++	printf("%s", args[4]->tcp_flags & TH_ECE ? "ECE|" : "");
++	printf("%s", args[4]->tcp_flags & TH_CWR ? "CWR|" : "");
++	printf("%s", args[4]->tcp_flags == 0 ? "null " : "");
++	printf("\b)\n");
+ }
+diff --git a/Net/tcpstat.d b/Net/tcpstat.d
+index 1fe4004..c8cf3a6 100755
+--- a/Net/tcpstat.d
++++ b/Net/tcpstat.d
+@@ -17,7 +17,7 @@
+  *
+  * The above TCP statistics are documented in the mib2_tcp struct
+  * in the /usr/include/inet/mib2.h file; and also in the mib provider
+- * chapter of the DTrace Guide, http://docs.sun.com/db/doc/817-6223.
++ * chapter of the DTrace Guide, http://docs.oracle.com/cd/E23824_01/html/E22973.
+  *
+  * COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+  *
+diff --git a/Net/udpstat.d b/Net/udpstat.d
+index 7b27e4e..bb117d0 100755
+--- a/Net/udpstat.d
++++ b/Net/udpstat.d
+@@ -17,7 +17,7 @@
+  *
+  * The above UDP statistics are documented in the mib2_udp struct
+  * in the /usr/include/inet/mib2.h file; and also in the mib provider
+- * chapter of the DTrace Guide, http://docs.sun.com/db/doc/817-6223.
++ * chapter of the DTrace Guide, http://docs.oracle.com/cd/E23824_01/html/E22973.
+  *
+  * COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+  *
+@@ -37,6 +37,7 @@
+  *
+  * 25-Jul-2005  Brendan Gregg   Created this.
+  * 25-Jul-2005	   "      "	Last update.
++ * 29-Apr-2014  Melvin Gong	Minor update on udp probe names.
+  */
+ 
+ #pragma D option quiet
+@@ -71,9 +72,9 @@ profile:::tick-1sec
+ mib:::udp*InDatagrams	{ UDP_in += arg0;	}
+ mib:::udp*OutDatagrams	{ UDP_out += arg0;	}
+ mib:::udpInErrors	{ UDP_inErr += arg0;	}
+-mib:::udpInCksumErrs	{ UDP_inErr += arg0;	}
++mib:::udp*InCksumErrs	{ UDP_inErr += arg0;	}
+ mib:::udpOutErrors	{ UDP_outErr += arg0;	}
+-mib:::udpNoPorts	{ UDP_noPort += arg0;	}
++mib:::udp*NoPorts	{ UDP_noPort += arg0;	}
+ 
+ /*
+  * Print Output
+diff --git a/Perl/Readme b/Perl/Readme
+index 36fcab5..d094542 100644
+--- a/Perl/Readme
++++ b/Perl/Readme
+@@ -8,7 +8,7 @@ Perl - DTracing Perl
+    with Richard's patch to perl, which can be found in the comments on
+    Alan's original blog entry,
+ 
+-	http://blogs.sun.com/alanbur/entry/dtrace_and_perl
++	http://blogs.oracle.com/alanbur/entry/dtrace_and_perl
+    
+    To get this and these scripts working, the rough steps are,
+ 
+diff --git a/Php/Readme b/Php/Readme
+index 5c9101f..4dfc6d3 100644
+--- a/Php/Readme
++++ b/Php/Readme
+@@ -7,7 +7,7 @@ Php - DTracing PHP
+    for download both as source and in binary form. The easiest instructions
+    are currently at,
+ 
+-	http://blogs.sun.com/shanti/entry/dtrace_support_for_php
++	http://blogs.oracle.com/shanti/entry/dtrace_support_for_php
+ 
+    which were written for Solaris and the coolstack distribution of PHP.
+    The steps are roughly,
+diff --git a/Proc/creatbyproc.d b/Proc/creatbyproc.d
+index 23e1f54..35c1564 100755
+--- a/Proc/creatbyproc.d
++++ b/Proc/creatbyproc.d
+@@ -2,9 +2,23 @@
+ /*
+  * creatbyproc.d - file creat()s by process name. DTrace OneLiner.
+  *
+- * This is a DTrace OneLiner from the DTraceToolkit.
++ * This is a DTrace (not exactly) OneLiner from the DTraceToolkit.
+  *
+  * $Id: creatbyproc.d 3 2007-08-01 10:50:08Z brendan $
+  */
+ 
+-syscall::creat*:entry { printf("%s %s", execname, copyinstr(arg0)); }
++/*
++ * In libc, the creat() function has become:
++ *
++ *	creat(const char *path, mode_t mode)
++ *	{
++ *		return (openat(AT_FDCWD, path, O_WRONLY|O_CREAT|O_TRUNC, mode));
++ *	}
++ */
++
++inline uint_t AT_FDCWD = 0xffd19553;
++inline int CREAT_FLAGS = 0x301;		/* O_WRONLY|O_CREAT|O_TRUNC */
++
++syscall::openat*:entry
++/(uint_t)arg0 == AT_FDCWD && arg2 == CREAT_FLAGS/
++{ printf("%s %s", execname, copyinstr(arg1)); }
+diff --git a/Proc/fddist b/Proc/fddist
+index b1fe17a..25bb976 100755
+--- a/Proc/fddist
++++ b/Proc/fddist
+@@ -20,7 +20,7 @@
+ # BASED ON: /usr/demo/dtrace/lquantize.d
+ #
+ # SEE ALSO:
+-#           DTrace Guide "Aggregations" chapter (docs.sun.com)
++#           DTrace Guide "Aggregations" chapter (docs.oracle.com)
+ #
+ # PORTIONS: Copyright (c) 2005, 2006 Brendan Gregg.
+ #
+diff --git a/Proc/filebyproc.d b/Proc/filebyproc.d
+index d1f7589..e55b82a 100755
+--- a/Proc/filebyproc.d
++++ b/Proc/filebyproc.d
+@@ -7,4 +7,4 @@
+  * $Id: filebyproc.d 3 2007-08-01 10:50:08Z brendan $
+  */
+ 
+-syscall::open*:entry { printf("%s %s", execname, copyinstr(arg0)); }
++syscall::openat*:entry { printf("%s %s", execname, copyinstr(arg1)); }
+diff --git a/Proc/kill.d b/Proc/kill.d
+index 215625f..5a9fb28 100755
+--- a/Proc/kill.d
++++ b/Proc/kill.d
+@@ -14,7 +14,7 @@
+  *              SIG      destination signal ("9" for a kill -9)
+  *              RESULT   result of signal (-1 is for failure)
+  *
+- * SEE ALSO: Chapter 25, Solaris Dynamic Tracing Guide, docs.sun.com,
++ * SEE ALSO: Chapter 25, Solaris Dynamic Tracing Guide, docs.oracle.com,
+  *           for a solution using proc:::signal-send.
+  *
+  * COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+diff --git a/Proc/lastwords b/Proc/lastwords
+index 1258cc9..b09bc97 100755
+--- a/Proc/lastwords
++++ b/Proc/lastwords
+@@ -23,7 +23,7 @@
+ #
+ # BASED ON: /usr/demo/dtrace/ring.d
+ #
+-# SEE ALSO: DTrace Guide "Buffers and Buffering" chapter (docs.sun.com)
++# SEE ALSO: DTrace Guide "Buffers and Buffering" chapter (docs.oracle.com)
+ #           dtruss (DTraceToolkit)
+ #
+ # PORTIONS: Copyright (c) 2005, 2006 Brendan Gregg.
+diff --git a/Proc/pathopens.d b/Proc/pathopens.d
+index 10cd0c8..cd1efd4 100755
+--- a/Proc/pathopens.d
++++ b/Proc/pathopens.d
+@@ -38,6 +38,9 @@
+  * 20-Apr-2006	   "	  "	Last update.
+  */
+ 
++/* how to we fetch this from the header file? */
++inline uint_t AT_FDCWD = 0xffd19553;
++
+ #pragma D option quiet
+ 
+ dtrace:::BEGIN
+@@ -45,34 +48,30 @@ dtrace:::BEGIN
+ 	printf("Tracing... Hit Ctrl-C to end.\n");
+ }
+ 
+-syscall::open*:entry
++syscall::openat:entry,
++syscall::openat64:entry
+ {
+-	self->pathp = arg0;
++	self->dfd = (uint_t)arg0;
++	self->pathp = arg1;
+ 	self->ok = 1;
+ }
+ 
+-syscall::open*:return
++syscall::openat:return,
++syscall::openat64:return
+ /self->ok && arg0 != -1/
+ {
+ 	self->file = copyinstr(self->pathp);
+-	self->char0 = copyin(self->pathp, 1);
+-
+-	/* fetch current working directory */
+-	this->path = curthread->t_procp->p_user.u_cdir->v_path;
+ 
+ 	/*
+ 	 * Make the full pathname
+ 	 *
+-	 * This routine takes the cwd and the filename, and generates a
+-	 * full pathname. Sometimes the filename is absolute, so we must
+-	 * ignore the cwd. This also checks if the cwd ends in an
+-	 * unnecessary '/'.
++	 * This routine takes the base dir and the filename, and generates a
++	 * full pathname. If the filename is absolute, we ignore the base dir.
+ 	 */
+-	this->len = strlen(this->path);
+-	self->join = *(char *)(this->path + this->len - 1) == '/' ?  "" : "/";
+-	self->dir = strjoin(cwd, self->join);
+-	self->dir = *(char *)self->char0 == '/' ? "" : self->dir;
+-	self->full = strjoin(self->dir, self->file);
++	self->dir  = *self->file == '/' ? "" :
++	    (self->dfd == AT_FDCWD ? cwd : fds[self->dfd].fi_pathname);
++	self->join = *self->file == '/' ? "" : "/";
++	self->full = strjoin(strjoin(self->dir, self->join), self->file);
+ 
+ 	/* save to aggregation */
+ 	@num[self->full] = count();
+@@ -82,15 +81,16 @@ syscall::open*:return
+ 	self->full  = 0;
+ 	self->dir   = 0;
+ 	self->file  = 0;
+-	self->char0 = 0;
+ }
+ 
+-syscall::open*:return
++syscall::openat:return,
++syscall::openat64:return
+ /self->ok/
+ {
+ 	/* cleanup */
+-	self->ok    = 0;
++	self->ok = 0;
+ 	self->pathp = 0;
++	self->dfd = 0;
+ }
+ 
+ dtrace:::END
+diff --git a/Proc/sampleproc b/Proc/sampleproc
+index 891be14..3d7ce38 100755
+--- a/Proc/sampleproc
++++ b/Proc/sampleproc
+@@ -20,7 +20,7 @@
+ # BASED ON: /usr/demo/dtrace/prof.d
+ #
+ # SEE ALSO:
+-#           DTrace Guide "profile Provider" chapter (docs.sun.com)
++#           DTrace Guide "profile Provider" chapter (docs.oracle.com)
+ #
+ # PORTIONS: Copyright (c) 2005 Brendan Gregg.
+ #
+diff --git a/Proc/sigdist.d b/Proc/sigdist.d
+index c3b2bc0..98f8e0e 100755
+--- a/Proc/sigdist.d
++++ b/Proc/sigdist.d
+@@ -19,7 +19,7 @@
+  *
+  * BASED ON: /usr/demo/dtrace/sig.d
+  *
+- * SEE ALSO: DTrace Guide "proc Provider" chapter (docs.sun.com)
++ * SEE ALSO: DTrace Guide "proc Provider" chapter (docs.oracle.com)
+  *           kill.d(1M)
+  *
+  * PORTIONS: Copyright (c) 2005, 2006 Brendan Gregg.
+diff --git a/Proc/sysbypid.d b/Proc/sysbypid.d
+index bb80653..341043b 100755
+--- a/Proc/sysbypid.d
++++ b/Proc/sysbypid.d
+@@ -15,7 +15,7 @@
+  *
+  * The virtual memory statistics are documented in the cpu_sysinfo struct
+  * in the /usr/include/sys/sysinfo.h file; and also in the sysinfo provider
+- * chapter of the DTrace Guide, http://docs.sun.com/db/doc/817-6223.
++ * chapter of the DTrace Guide, http://docs.oracle.com/cd/E23824_01/html/E22973.
+  *
+  * COPYRIGHT: Copyright (c) 2005, 2006 Brendan Gregg.
+  *
+diff --git a/Python/Readme b/Python/Readme
+index f183c74..1c5b3b4 100644
+--- a/Python/Readme
++++ b/Python/Readme
+@@ -8,7 +8,7 @@ Python - DTracing Python
+    OS with DTrace and would like to use these scripts, you could download
+    Python and the Python DTrace provider patch listed in the comments here,
+ 
+-	http://blogs.sun.com/levon/entry/python_and_dtrace_in_build
++	http://blogs.oracle.com/levon/entry/python_and_dtrace_in_build
+ 
+    You will need patch and build Python for these probes to work.
+    Or, check if a pre-built package is available someone on opensolaris.org.
+diff --git a/dexplorer b/dexplorer
+index 002c803..7e13d6b 100755
+--- a/dexplorer
++++ b/dexplorer
+@@ -25,6 +25,8 @@
+ #
+ # THANKS: David Visser, et all. for the idea and encouragement.
+ #
++# Copyright (c) 2015, Oracle and/or its affiliates. All rights reserved.
++#
+ # COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+ #
+ # CDDL HEADER START
+@@ -65,7 +67,7 @@ delete=1				# delete output dirs
+ dtrace=/usr/sbin/dtrace			# path to dtrace
+ root=.					# default output dir
+ PATH=/usr/bin:/usr/sbin			# safe path
+-dir=de_`uname -n`_`date +%Y%m%d%H%M`	# OUTPUT FILENAME
++dir=de_`uname -n`_`date +%Y_%m%d%H_%M`	# OUTPUT FILENAME
+ samples=20				# max number of tests
+ current=0				# current sample
+ 
+@@ -307,12 +309,12 @@ $dtrace -qn "$header"'
+ 
+ dstatus "Files opened successfully count..."
+ $dtrace -qn "$header"'
+-	syscall::open*:entry { self->file = copyinstr(arg0); self->ok = 1; }
+-	syscall::open*:return /self->ok && arg0 != -1/ 
++	syscall::openat*:entry { self->file = copyinstr(arg1); self->ok = 1; }
++	syscall::openat*:return /self->ok && arg0 != -1/ 
+ 	{ 
+ 		@num[self->file] = count();
+ 	}
+-	syscall::open*:return /self->ok/ { self->file = 0; self->ok = 0; }
++	syscall::openat*:return /self->ok/ { self->file = 0; self->ok = 0; }
+ 	dtrace:::END
+ 	{ 
+ 		printf("%-64s %8s\n", "FILE", "COUNT");
+diff --git a/dtruss b/dtruss
+index f4b5e45..99188c0 100755
+--- a/dtruss
++++ b/dtruss
+@@ -137,6 +137,7 @@ fi
+ 
+ ### Option translation
+ if [ "$trace" = "exec" ]; then trace="exece"; fi
++if [ "$trace" = "fork" ]; then trace="forksys"; fi
+ if [ "$trace" = "time" ]; then trace="gtime"; fi
+ if [ "$trace" = "exit" ]; then trace="rexit"; fi
+ 
+@@ -149,7 +150,7 @@ if [ "$trace" = "exit" ]; then trace="rexit"; fi
+ dtrace='
+ #pragma D option quiet
+ #pragma D option switchrate=10
+- 
++
+ /*
+  * Command line arguments
+  */
+@@ -167,7 +168,7 @@ inline int OPT_stack     = '$opt_stack';
+ inline string NAME       = "'$pname'";
+ inline string TRACE      = "'$trace'";
+ 
+-dtrace:::BEGIN 
++dtrace:::BEGIN
+ {
+ 	/* print header */
+ 	OPT_printid  ? printf("%-9s  ", "PID/LWP") : 1;
+@@ -181,7 +182,7 @@ dtrace:::BEGIN
+  * Save syscall entry info
+  */
+ syscall:::entry
+-/((OPT_command || OPT_pid) && pid == $target) || 
++/((OPT_command || OPT_pid) && pid == $target) ||
+  (OPT_name && execname == NAME) ||
+  (OPT_follow && progenyof($target))/
+ {
+@@ -191,6 +192,7 @@ syscall:::entry
+ 	self->arg0 = arg0;
+ 	self->arg1 = arg1;
+ 	self->arg2 = arg2;
++	self->arg3 = arg3;
+ 
+ 	/* count occurances */
+ 	OPT_counts == 1 ? @Counts[probefunc] = count() : 1;
+@@ -198,8 +200,10 @@ syscall:::entry
+ 
+ /*
+  * Follow children
++ * (vfork() is only executed by a process running in an S10-branded zone.)
+  */
+-syscall::fork*:return
++syscall::forksys:return,
++syscall::vfork:return
+ /(OPT_follow && progenyof($target)) && (!OPT_trace || (TRACE == probefunc))/
+ {
+ 	/* print output */
+@@ -225,6 +229,7 @@ syscall:::entry
+ 	self->arg0 = 0;
+ 	self->arg1 = 0;
+ 	self->arg2 = 0;
++	self->arg3 = 0;
+ }
+ 
+ /*
+@@ -249,13 +254,13 @@ syscall::lwp_sigmask:return
+ 	this->cpu = vtimestamp - self->vstart;
+ 	self->vstart = 0;
+ 	self->code = errno == 0 ? "" : "Err#";
+- 
++
+ 	/* print optional fields */
+ 	OPT_printid  ? printf("%6d/%d:  ", pid, tid) : 1;
+ 	OPT_relative ? printf("%8d ", vtimestamp/1000) : 1;
+ 	OPT_elapsed  ? printf("%7d ", this->elapsed/1000) : 1;
+ 	OPT_cpu ? printf("%6d ", this->cpu/1000) : 1;
+- 
++
+ 	/* print main data */
+ 	printf("%s(0x%X, 0x%X, 0x%X)\t\t = 0x%X %s%d\n", probefunc,
+ 	    (int)self->arg0, self->arg1, self->arg2, (int)arg0,
+@@ -265,13 +270,121 @@ syscall::lwp_sigmask:return
+ 	self->arg0 = 0;
+ 	self->arg1 = 0;
+ 	self->arg2 = 0;
++	self->arg3 = 0;
++}
++
++/* print 1 arg, arg0 as a string */
++syscall::chdir:return,
++syscall::chroot:return
++/self->start/
++{
++	/* calculate elapsed time */
++	this->elapsed = timestamp - self->start;
++	self->start = 0;
++	this->cpu = vtimestamp - self->vstart;
++	self->vstart = 0;
++	self->code = errno == 0 ? "" : "Err#";
++
++	/* print optional fields */
++	OPT_printid  ? printf("%6d/%d:  ", pid, tid) : 1;
++	OPT_relative ? printf("%8d ", vtimestamp/1000) : 1;
++	OPT_elapsed  ? printf("%7d ", this->elapsed/1000) : 1;
++	OPT_cpu      ? printf("%6d ", this->cpu/1000) : 1;
++
++	/* print main data */
++	printf("%s(\"%S\")\t\t = %d %s%d\n", probefunc,
++	    copyinstr(self->arg0), (int)arg0,
++	    self->code, (int)errno);
++	OPT_stack ? ustack()    : 1;
++	OPT_stack ? trace("\n") : 1;
++	self->arg0 = 0;
++	self->arg1 = 0;
++	self->arg2 = 0;
++	self->arg3 = 0;
++}
++
++/* print 2 args, arg0 as a string */
++syscall::getcwd:return,
++syscall::pathconf:return,
++syscall::statvfs64:return,
++syscall::statvfs:return,
++syscall::umount2:return
++/self->start/
++{
++	/* calculate elapsed time */
++	this->elapsed = timestamp - self->start;
++	self->start = 0;
++	this->cpu = vtimestamp - self->vstart;
++	self->vstart = 0;
++	self->code = errno == 0 ? "" : "Err#";
++
++	/* print optional fields */
++	OPT_printid  ? printf("%6d/%d:  ", pid, tid) : 1;
++	OPT_relative ? printf("%8d ", vtimestamp/1000) : 1;
++	OPT_elapsed  ? printf("%7d ", this->elapsed/1000) : 1;
++	OPT_cpu      ? printf("%6d ", this->cpu/1000) : 1;
++
++	/* print main data */
++	printf("%s(\"%S\", 0x%X)\t\t = %d %s%d\n", probefunc,
++	    copyinstr(self->arg0), self->arg1, (int)arg0,
++	    self->code, (int)errno);
++	OPT_stack ? ustack()    : 1;
++	OPT_stack ? trace("\n") : 1;
++	self->arg0 = 0;
++	self->arg1 = 0;
++	self->arg2 = 0;
++	self->arg3 = 0;
++}
++
++/* print *at() syscalls, 3 args, arg1 as a string if possible */
++syscall::faccessat:return,
++syscall::fchmodat:return,
++syscall::fchownat:return,
++syscall::fstatat:return,
++syscall::fstatat64:return,
++syscall::linkat:return,
++syscall::mkdirat:return,
++syscall::mknodat:return,
++syscall::openat:return,
++syscall::openat64:return,
++syscall::readlinkat:return,
++syscall::renameat:return,
++syscall::unlinkat:return,
++syscall::utimensat:return
++/self->start && self->arg1 != 0/
++{
++	/* calculate elapsed time */
++	this->elapsed = timestamp - self->start;
++	self->start = 0;
++	this->cpu = vtimestamp - self->vstart;
++	self->vstart = 0;
++	self->code = errno == 0 ? "" : "Err#";
++
++	/* print optional fields */
++	OPT_printid  ? printf("%6d/%d:  ", pid, tid) : 1;
++	OPT_relative ? printf("%8d ", vtimestamp/1000) : 1;
++	OPT_elapsed  ? printf("%7d ", this->elapsed/1000) : 1;
++	OPT_cpu      ? printf("%6d ", this->cpu/1000) : 1;
++
++	/* print main data */
++	printf("%s(0x%X, \"%S\", 0x%X)\t\t = %d %s%d\n", probefunc,
++	    (uint_t)self->arg0, copyinstr(self->arg1), self->arg2, (int)arg0,
++	    self->code, (int)errno);
++	OPT_stack ? ustack()    : 1;
++	OPT_stack ? trace("\n") : 1;
++	self->arg0 = 0;
++	self->arg1 = 0;
++	self->arg2 = 0;
++	self->arg3 = 0;
+ }
+ 
+ /* print 3 args, arg0 as a string */
+-syscall::stat*:return, 
+-syscall::lstat*:return, 
+-syscall::open*:return,
+-syscall::resolvepath:return
++syscall::acl:return,
++syscall::mount:return,
++syscall::resolvepath:return,
++syscall::statfs:return,
++syscall::symlinkat:return,
++syscall::uucopystr:return
+ /self->start/
+ {
+ 	/* calculate elapsed time */
+@@ -280,13 +393,13 @@ syscall::resolvepath:return
+ 	this->cpu = vtimestamp - self->vstart;
+ 	self->vstart = 0;
+ 	self->code = errno == 0 ? "" : "Err#";
+- 
++
+ 	/* print optional fields */
+ 	OPT_printid  ? printf("%6d/%d:  ", pid, tid) : 1;
+ 	OPT_relative ? printf("%8d ", vtimestamp/1000) : 1;
+ 	OPT_elapsed  ? printf("%7d ", this->elapsed/1000) : 1;
+ 	OPT_cpu      ? printf("%6d ", this->cpu/1000) : 1;
+- 
++
+ 	/* print main data */
+ 	printf("%s(\"%S\", 0x%X, 0x%X)\t\t = %d %s%d\n", probefunc,
+ 	    copyinstr(self->arg0), self->arg1, self->arg2, (int)arg0,
+@@ -296,13 +409,17 @@ syscall::resolvepath:return
+ 	self->arg0 = 0;
+ 	self->arg1 = 0;
+ 	self->arg2 = 0;
++	self->arg3 = 0;
+ }
+ 
+-/* print 3 args, arg1 as a string */
++/* print 3 args, arg1 as a string bounded by return value (size) */
++syscall::read:return,
++syscall::pread:return,
++syscall::pread64:return,
+ syscall::write:return,
+ syscall::pwrite:return,
+-syscall::*read*:return
+-/self->start/
++syscall::pwrite64:return
++/self->start && arg0 > 0/
+ {
+ 	/* calculate elapsed time */
+ 	this->elapsed = timestamp - self->start;
+@@ -310,27 +427,28 @@ syscall::*read*:return
+ 	this->cpu = vtimestamp - self->vstart;
+ 	self->vstart = 0;
+ 	self->code = errno == 0 ? "" : "Err#";
+- 
++
+ 	/* print optional fields */
+ 	OPT_printid  ? printf("%6d/%d:  ", pid, tid) : 1;
+ 	OPT_relative ? printf("%8d ", vtimestamp/1000) : 1;
+ 	OPT_elapsed  ? printf("%7d ", this->elapsed/1000) : 1;
+ 	OPT_cpu      ? printf("%6d ", this->cpu/1000) : 1;
+- 
++
+ 	/* print main data */
++	this->size = arg0 > 32? 32 : arg0;
+ 	printf("%s(0x%X, \"%S\", 0x%X)\t\t = %d %s%d\n", probefunc, self->arg0,
+-	    stringof(copyin(self->arg1, self->arg2)), self->arg2, (int)arg0,
++	    stringof(copyin(self->arg1, this->size)), self->arg2, (int)arg0,
+ 	    self->code, (int)errno);
+ 	OPT_stack ? ustack()    : 1;
+ 	OPT_stack ? trace("\n") : 1;
+ 	self->arg0 = 0;
+ 	self->arg1 = 0;
+ 	self->arg2 = 0;
++	self->arg3 = 0;
+ }
+ 
+-/* print 0 arg output */
+-syscall::gtime:return,
+-syscall::*fork*:return
++/* print 0 arg output (there are lots more 0-arg syscalls) */
++syscall::gtime:return
+ /self->start/
+ {
+ 	/* calculate elapsed time */
+@@ -339,13 +457,13 @@ syscall::*fork*:return
+ 	this->cpu = vtimestamp - self->vstart;
+ 	self->vstart = 0;
+ 	self->code = errno == 0 ? "" : "Err#";
+- 
++
+ 	/* print optional fields */
+ 	OPT_printid  ? printf("%6d/%d:  ", pid, tid) : 1;
+ 	OPT_relative ? printf("%8d ", vtimestamp/1000) : 1;
+ 	OPT_elapsed  ? printf("%7d ", this->elapsed/1000) : 1;
+ 	OPT_cpu      ? printf("%6d ", this->cpu/1000) : 1;
+- 
++
+ 	/* print main data */
+ 	printf("%s()\t\t = %d %s%d\n", probefunc,
+ 	    (int)arg0, self->code, (int)errno);
+@@ -354,13 +472,14 @@ syscall::*fork*:return
+ 	self->arg0 = 0;
+ 	self->arg1 = 0;
+ 	self->arg2 = 0;
++	self->arg3 = 0;
+ }
+ 
+-/* print 1 arg output */
++/* print 1 arg output (there are lots more 1-arg syscalls) */
+ syscall::brk:return,
+-syscall::times:return,
++syscall::close:return,
+ syscall::stime:return,
+-syscall::close:return
++syscall::times:return
+ /self->start/
+ {
+ 	/* calculate elapsed time */
+@@ -369,13 +488,13 @@ syscall::close:return
+ 	this->cpu = vtimestamp - self->vstart;
+ 	self->vstart = 0;
+ 	self->code = errno == 0 ? "" : "Err#";
+- 
++
+ 	/* print optional fields */
+ 	OPT_printid  ? printf("%6d/%d:  ", pid, tid) : 1;
+ 	OPT_relative ? printf("%8d ", vtimestamp/1000) : 1;
+ 	OPT_elapsed  ? printf("%7d ", this->elapsed/1000) : 1;
+ 	OPT_cpu      ? printf("%6d ", this->cpu/1000) : 1;
+- 
++
+ 	/* print main data */
+ 	printf("%s(0x%X)\t\t = %d %s%d\n", probefunc, self->arg0,
+ 	    (int)arg0, self->code, (int)errno);
+@@ -384,10 +503,10 @@ syscall::close:return
+ 	self->arg0 = 0;
+ 	self->arg1 = 0;
+ 	self->arg2 = 0;
++	self->arg3 = 0;
+ }
+ 
+-/* print 2 arg output */
+-syscall::utime:return,
++/* print 2 arg output (there are lots more 2-arg syscalls) */
+ syscall::munmap:return
+ /self->start/
+ {
+@@ -397,13 +516,13 @@ syscall::munmap:return
+ 	this->cpu = vtimestamp - self->vstart;
+ 	self->vstart = 0;
+ 	self->code = errno == 0 ? "" : "Err#";
+- 
++
+ 	/* print optional fields */
+ 	OPT_printid  ? printf("%6d/%d:  ", pid, tid) : 1;
+ 	OPT_relative ? printf("%8d ", vtimestamp/1000) : 1;
+ 	OPT_elapsed  ? printf("%7d ", this->elapsed/1000) : 1;
+ 	OPT_cpu      ? printf("%6d ", this->cpu/1000) : 1;
+- 
++
+ 	/* print main data */
+ 	printf("%s(0x%X, 0x%X)\t\t = %d %s%d\n", probefunc, self->arg0,
+ 	    self->arg1, (int)arg0, self->code, (int)errno);
+@@ -412,6 +531,7 @@ syscall::munmap:return
+ 	self->arg0 = 0;
+ 	self->arg1 = 0;
+ 	self->arg2 = 0;
++	self->arg3 = 0;
+ }
+ 
+ /* print 3 arg output - default */
+@@ -424,13 +544,13 @@ syscall:::return
+ 	this->cpu = vtimestamp - self->vstart;
+ 	self->vstart = 0;
+ 	self->code = errno == 0 ? "" : "Err#";
+- 
++
+ 	/* print optional fields */
+ 	OPT_printid  ? printf("%6d/%d:  ", pid, tid) : 1;
+ 	OPT_relative ? printf("%8d ", vtimestamp/1000) : 1;
+ 	OPT_elapsed  ? printf("%7d ", this->elapsed/1000) : 1;
+ 	OPT_cpu      ? printf("%6d ", this->cpu/1000) : 1;
+- 
++
+ 	/* print main data */
+ 	printf("%s(0x%X, 0x%X, 0x%X)\t\t = %d %s%d\n", probefunc, self->arg0,
+ 	    self->arg1, self->arg2, (int)arg0, self->code, (int)errno);
+@@ -439,6 +559,7 @@ syscall:::return
+ 	self->arg0 = 0;
+ 	self->arg1 = 0;
+ 	self->arg2 = 0;
++	self->arg3 = 0;
+ }
+ 
+ /* program exited */
+diff --git a/execsnoop b/execsnoop
+index 96e647c..fbbf77a 100755
+--- a/execsnoop
++++ b/execsnoop
+@@ -155,7 +155,7 @@ fi
+  /*
+   * Print exec event
+   */
+- syscall::exec:return, syscall::exece:return
++ syscall::exece:return
+  /(FILTER == 0) || (OPT_cmd == 1 && COMMAND == execname)/ 
+  {
+ 	/* print optional fields */
+diff --git a/iosnoop b/iosnoop
+index 00931d2..9540234 100755
+--- a/iosnoop
++++ b/iosnoop
+@@ -63,8 +63,7 @@
+ #   times may be due to events that have been filtered away, for example
+ #   another process that may be seeking the disk heads elsewhere.
+ #
+-# SEE ALSO: BigAdmin: DTrace, http://www.sun.com/bigadmin/content/dtrace
+-#	    Solaris Dynamic Tracing Guide, http://docs.sun.com
++# SEE ALSO: Solaris Dynamic Tracing Guide, http://docs.oracle.com
+ #	    DTrace Tools, http://www.brendangregg.com/dtrace.html
+ #
+ # COPYRIGHT: Copyright (c) 2005 Brendan Gregg.
+diff --git a/iotop b/iotop
+index 788c492..443fe6c 100755
+--- a/iotop
++++ b/iotop
+@@ -61,8 +61,7 @@
+ #   mean 2 disks are busy at 100%, or 4 disks at 50%...
+ #
+ # SEE ALSO: iosnoop
+-#	    BigAdmin: DTrace, http://www.sun.com/bigadmin/content/dtrace
+-#	    Solaris Dynamic Tracing Guide, http://docs.sun.com
++#	    Solaris Dynamic Tracing Guide, http://docs.oracle.com
+ #	    DTrace Tools, http://www.brendangregg.com/dtrace.html
+ #
+ # INSPIRATION:  top(1) by William LeFebvre
+diff --git a/opensnoop b/opensnoop
+index 5b1a89b..2d5bb37 100755
+--- a/opensnoop
++++ b/opensnoop
+@@ -189,10 +189,10 @@ fi
+  /*
+   * Print open event
+   */
+- syscall::open:entry, syscall::open64:entry
++ syscall::openat:entry, syscall::openat64:entry
+  {
+ 	/* save pathname */
+-	self->pathp = arg0;
++	self->pathp = arg1;
+ 
+ 	/* default is to trace unless filtering */
+ 	self->ok = FILTER ? 0 : 1;
+@@ -203,7 +203,7 @@ fi
+ 	/* OPT_file is checked on return to ensure pathp is mapped */
+  }
+ 
+- syscall::open:return, syscall::open64:return
++ syscall::openat:return, syscall::openat64:return
+  /self->ok && (! OPT_failonly || (int)arg0 < 0) && 
+  ((OPT_file == 0) || (OPT_file == 1 && PATHNAME == copyinstr(self->pathp)))/
+  {
+@@ -235,7 +235,7 @@ fi
+  /* 
+   * Cleanup 
+   */
+- syscall::open:return, syscall::open64:return 
++ syscall::openat:return, syscall::openat64:return 
+  /self->ok/
+  {
+ 	self->pathp = 0;
+diff --git a/statsnoop b/statsnoop
+index 6284fb5..a0f0b32 100755
+--- a/statsnoop
++++ b/statsnoop
+@@ -158,6 +158,11 @@ fi
+  inline string PATHNAME	 = "'$pathname'";
+  inline string NAME	 = "'$pname'";
+  inline string TRACE	 = "'$trace'";
++ /*
++  * Manifest constants
++  */
++ inline uint_t AT_FDCWD = 0xffd19553;
++ inline uint_t SLASH = 0x2f;	/* '/' */
+ 
+  #pragma D option quiet
+  #pragma D option switchrate=10hz
+@@ -191,9 +196,7 @@ fi
+  /*
+   * Print stat event
+   */
+- syscall::stat:entry, syscall::stat64:entry, syscall::xstat:entry,
+- syscall::lstat:entry, syscall::lstat64:entry, syscall::lxstat:entry,
+- syscall::fstat:entry, syscall::fstat64:entry, syscall::fxstat:entry
++ syscall::fstatat:entry, syscall::fstatat64:entry
+  {
+ 	/* default is to trace unless filtering */
+ 	self->ok = FILTER ? 0 : 1;
+@@ -204,47 +207,38 @@ fi
+ 	(OPT_trace == 1 && TRACE == probefunc) ? self->ok = 1 : 1;
+  }
+ 
+- syscall::stat:entry, syscall::stat64:entry,
+- syscall::lstat:entry, syscall::lstat64:entry, syscall::lxstat:entry
++ syscall::fstatat:entry, syscall::fstatat64:entry
+  /self->ok/
+  {
+-	self->pathp = arg0;
++	self->dfd = (uint_t)arg0;	/* may be AT_FDCWD */
++	self->pathp = arg1;		/* may be 0 (for fstat) */
+  }
+ 
+- syscall::xstat:entry
+- /self->ok/
++ syscall::fstatat:return, syscall::fstatat64:return
++ /self->ok && self->pathp != 0/		/* stat, lstat */
+  {
+-	self->pathp = arg1;
+- }
+-
+- syscall::stat:return, syscall::stat64:return, syscall::xstat:return,
+- syscall::lstat:return, syscall::lstat64:return, syscall::lxstat:return
+- /self->ok/
+- {
+-	self->path = copyinstr(self->pathp);
+-	self->pathp = 0;
+- }
++	self->rpath = copyinstr(self->pathp);
++	self->dir = *self->rpath == SLASH? "" :	/* it is a full pathname */
++	    (self->dfd == AT_FDCWD? cwd :	/* it is relative to cwd */
++	    fds[self->dfd].fi_pathname);	/* it is relative to dfd */
++	self->join = *self->rpath == SLASH? "" : "/";
++	self->path = strjoin(strjoin(self->dir, self->join), self->rpath);
+ 
+- syscall::fstat:return, syscall::fstat64:entry, syscall::fxstat:entry
+- /self->ok/
+- {
+-	self->filep = curthread->t_procp->p_user.u_finfo.fi_list[arg0].uf_file;
++	/* cleanup */
++	self->join = 0;
++	self->dir = 0;
++	self->rpath = 0;
+  }
+ 
+- syscall::fstat:return, syscall::fstat64:return, syscall::fxstat:return
+- /self->ok/
++ syscall::fstatat:return, syscall::fstatat64:return
++ /self->ok && self->pathp == 0/		/* fstat */
+  {
+-        this->vnodep = self->filep != 0 ? self->filep->f_vnode : 0;
+-        self->path = this->vnodep ? (this->vnodep->v_path != 0 ?
+-            cleanpath(this->vnodep->v_path) : "<unknown>") : "<unknown>";
+-	self->filep = 0;
++	self->path = fds[self->dfd].fi_pathname;
+  }
+ 
+- syscall::stat:return, syscall::stat64:return, syscall::xstat:return,
+- syscall::lstat:return, syscall::lstat64:return, syscall::lxstat:return,
+- syscall::fstat:return, syscall::fstat64:return, syscall::fxstat:return
+- /self->ok && (! OPT_failonly || (int)arg0 < 0) && 
+-     ((OPT_file == 0) || (OPT_file == 1 && PATHNAME == copyinstr(self->pathp)))/
++ syscall::fstatat:return, syscall::fstatat64:return
++ /self->ok && (!OPT_failonly || (int)arg0 < 0) && 
++     (OPT_file == 0 || (OPT_file == 1 && PATHNAME == self->path))/
+  {
+ 	/* print optional fields */
+  	OPT_time ? printf("%-14d ", timestamp/1000) : 1;
+@@ -266,20 +260,16 @@ fi
+ 	OPT_dump == 0 ? printf("%-20s ", self->path) : 1;
+ 	OPT_args == 1 ? printf("%S", curpsinfo->pr_psargs) : 1;
+ 	printf("\n");
+-
+-	/* cleanup */
+-	self->path = 0;
+-	self->ok = 0;
+  }
+ 
+  /* 
+   * Cleanup 
+   */
+- syscall::stat:return, syscall::stat64:return, syscall::xstat:return,
+- syscall::lstat:return, syscall::lstat64:return, syscall::lxstat:return,
+- syscall::fstat:return, syscall::fstat64:return, syscall::fxstat:return
++ syscall::fstatat:return, syscall::fstatat64:return
+  /self->ok/
+  {
++	self->dfd = 0;
++	self->pathp = 0;
+ 	self->path = 0;
+ 	self->ok = 0;
+  }

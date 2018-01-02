@@ -1,0 +1,559 @@
+
+See https://github.com/opendtrace/toolkit/pull/4
+
+From 0fba91ea7a69fb32dc42d78a5d3fb2ba1505f250 Mon Sep 17 00:00:00 2001
+From: Adam Thompson <athompso@athompso.net>
+Date: Wed, 8 Jun 2016 12:07:20 -0500
+Subject: [PATCH] Part 2: add new files from Solaris 11.3 DTT
+
+---
+ Bin/tcpio.d                   |   1 +
+ Bin/tcptop.d                  |   1 +
+ Bin/udpsnoop.d                |   1 +
+ Bin/udptop.d                  |   1 +
+ Examples/tcptop_d_example.txt |  12 ++++
+ Man/man1m/tcptop.d.1m         |  86 ++++++++++++++++++++++++++
+ Net/tcpio.d                   |  32 ++++++++++
+ Net/tcptop.d                  | 138 ++++++++++++++++++++++++++++++++++++++++++
+ Net/udpsnoop.d                |  59 ++++++++++++++++++
+ Net/udptop.d                  | 133 ++++++++++++++++++++++++++++++++++++++++
+ 12 files changed, 466 insertions(+)
+ create mode 120000 Bin/tcpio.d
+ create mode 120000 Bin/tcptop.d
+ create mode 120000 Bin/udpsnoop.d
+ create mode 120000 Bin/udptop.d
+ create mode 100644 Examples/tcptop_d_example.txt
+ create mode 100644 Man/man1m/tcptop.d.1m
+ create mode 100755 Net/tcpio.d
+ create mode 100755 Net/tcptop.d
+ create mode 100755 Net/udpsnoop.d
+ create mode 100755 Net/udptop.d
+
+diff --git a/Bin/tcpio.d b/Bin/tcpio.d
+new file mode 120000
+index 0000000..066a84b
+--- /dev/null
++++ b/Bin/tcpio.d
+@@ -0,0 +1 @@
++../Net/tcpio.d
+\ No newline at end of file
+diff --git a/Bin/tcptop.d b/Bin/tcptop.d
+new file mode 120000
+index 0000000..1ecd92a
+--- /dev/null
++++ b/Bin/tcptop.d
+@@ -0,0 +1 @@
++../Net/tcptop.d
+\ No newline at end of file
+diff --git a/Bin/udpsnoop.d b/Bin/udpsnoop.d
+new file mode 120000
+index 0000000..8ef18e7
+--- /dev/null
++++ b/Bin/udpsnoop.d
+@@ -0,0 +1 @@
++../Net/udpsnoop.d
+\ No newline at end of file
+diff --git a/Bin/udptop.d b/Bin/udptop.d
+new file mode 120000
+index 0000000..d0e1d12
+--- /dev/null
++++ b/Bin/udptop.d
+@@ -0,0 +1 @@
++../Net/udptop.d
+\ No newline at end of file
+diff --git a/Examples/tcptop_d_example.txt b/Examples/tcptop_d_example.txt
+new file mode 100644
+index 0000000..0be104d
+--- /dev/null
++++ b/Examples/tcptop_d_example.txt
+@@ -0,0 +1,12 @@
++The following is a demonstration of the tcptop command,
++
++$ ./tcptop.d
++Sampling... Please wait.
++2014 May  1 13:27:28,  load: 0.02,  TCPin:      0 Kb,  TCPout:      0 Kb
++
++  ZONE    PID LADDR           LPORT RADDR           RPORT      SIZE
++       0    574 10.134.64.85       22 10.132.145.148  51590        68
++
++This script will capture and display top tcp network parkets by process.
++
++
+diff --git a/Man/man1m/tcptop.d.1m b/Man/man1m/tcptop.d.1m
+new file mode 100644
+index 0000000..23dcdfa
+--- /dev/null
++++ b/Man/man1m/tcptop.d.1m
+@@ -0,0 +1,86 @@
++.TH tcptop 1m  "$Date:: 2007-10-04 #$" "USER COMMANDS"
++.SH NAME
++tcptop.d \- display top TCP network packets by process. Uses DTrace.
++.SH SYNOPSIS
++.B tcptop.d
++[count] [interval]
++.SH DESCRIPTION
++This analyses TCP network packets and prints the responsible PID and UID,
++plus standard details such as IP address and port. This captures traffic
++of newly created TCP connections that were established while this program
++was running. It can help identify which processes is causing TCP traffic.
++
++Since this uses DTrace, only the root user or users with the
++dtrace_kernel privilege can run this command.
++.SH OS
++Solaris 10 3/05
++.SH STABILITY
++stable - this script uses tcp provider, which is much more stable than
++fbt provider.
++.SH OPTIONS
++.TP
++interval
++sample seconds between refreshing the screen
++.TP
++count
++number of samples
++.PP
++.SH EXAMPLES
++.TP
++Print a report every 5 seconds,
++# 
++.B tcptop
++.PP
++.SH FIELDS
++.TP
++UID
++user ID
++.TP
++PID
++process ID
++.TP
++CMD
++command name
++.TP
++LADDR
++local IP address
++.TP
++RADDR
++remote IP address
++.TP
++LPORT
++local port number
++.TP
++RPORT
++remote port number
++.TP
++SIZE
++packet size, bytes
++.TP
++load
++1 minute load average
++.TP
++TCPin
++total TCP inbound payload data
++.TP
++TCPout
++total TCP outbound payload data
++.TP
++ZONE
++zone ID
++.TP
++PROJ
++project ID
++.PP
++.SH DOCUMENTATION
++See the DTraceToolkit for further documentation under the 
++Docs directory. The DTraceToolkit docs may include full worked
++examples with verbose descriptions explaining the output.
++.SH EXIT
++tcptop will print reports until Ctrl\-C is hit, or the specified
++count is reached.
++.SH AUTHOR
++Brendan Gregg
++[Sydney, Australia]
++.SH SEE ALSO
++tcpsnoop(1M), dtrace(1M)
+diff --git a/Net/tcpio.d b/Net/tcpio.d
+new file mode 100755
+index 0000000..b362843
+--- /dev/null
++++ b/Net/tcpio.d
+@@ -0,0 +1,32 @@
++#!/usr/sbin/dtrace -s
++/*
++ * CDDL HEADER START
++ *
++ * The contents of this file are subject to the terms of the
++ * Common Development and Distribution License (the "License").
++ * You may not use this file except in compliance with the License.
++ *
++ * You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
++ * or http://www.opensolaris.org/os/licensing.
++ * See the License for the specific language governing permissions
++ * and limitations under the License.
++ *
++ * When distributing Covered Code, include this CDDL HEADER in each
++ * file and include the License file at usr/src/OPENSOLARIS.LICENSE.
++ * If applicable, add the following below this CDDL HEADER, with the
++ * fields enclosed by brackets "[]" replaced with your own identifying
++ * information: Portions Copyright [yyyy] [name of copyright owner]
++ *
++ * CDDL HEADER END
++ */
++/*
++ * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
++ */
++
++tcp:::send,
++tcp:::receive
++{
++	printf("%15s:%-5d  ->  %15s:%-5d",
++	    args[2]->ip_saddr, args[4]->tcp_sport,
++	    args[2]->ip_daddr, args[4]->tcp_dport);
++}
+diff --git a/Net/tcptop.d b/Net/tcptop.d
+new file mode 100755
+index 0000000..450f496
+--- /dev/null
++++ b/Net/tcptop.d
+@@ -0,0 +1,138 @@
++#!/usr/sbin/dtrace -s
++/*
++ * tcptop: display top TCP network packets by process.
++ *	Written using DTrace tcp Provider.
++ *
++ * Usage: dtrace -s tcptop.d [count] [interval]
++ *
++ * This analyses TCP network packets and prints the responsible PID plus
++ * standard details such as IP address and port. This captures traffic
++ * of newly created TCP connections that were established while this program
++ * was running along with traffic from existing connections. It can help
++ * identify which processes is causing TCP traffic.
++ *
++ * CDDL HEADER START
++ *
++ * The contents of this file are subject to the terms of the
++ * Common Development and Distribution License (the "License").
++ * You may not use this file except in compliance with the License.
++ *
++ * You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
++ * or http://www.opensolaris.org/os/licensing.
++ * See the License for the specific language governing permissions
++ * and limitations under the License.
++ *
++ * When distributing Covered Code, include this CDDL HEADER in each
++ * file and include the License file at usr/src/OPENSOLARIS.LICENSE.
++ * If applicable, add the following below this CDDL HEADER, with the
++ * fields enclosed by brackets "[]" replaced with your own identifying
++ * information: Portions Copyright [yyyy] [name of copyright owner]
++ *
++ * CDDL HEADER END
++ */
++/*
++ * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
++ *
++ * Portions Copyright 2010 Brendan Gregg
++ */
++
++#pragma D option quiet
++#pragma D option defaultargs
++#pragma D option switchrate=10hz
++
++/*
++ * Print header
++ */
++dtrace:::BEGIN
++{
++	/* starting values */
++	counts = $1 ? $1 : 10;
++	secs = $2 ? $2 : 5;
++	TCP_out = 0;
++	TCP_in = 0;
++
++	printf("Sampling... Please wait.\n");
++}
++
++
++tcp:::send
++/ args[1]->cs_pid != -1 /
++{
++	@out[args[1]->cs_zoneid, args[1]->cs_pid, args[2]->ip_saddr, 
++	    args[4]->tcp_sport, args[2]->ip_daddr, args[4]->tcp_dport] =
++	    sum(args[2]->ip_plength - args[4]->tcp_offset);
++}
++
++tcp:::receive
++/ args[1]->cs_pid != -1 /
++{
++	@out[args[1]->cs_zoneid, args[1]->cs_pid, args[2]->ip_daddr, 
++	    args[4]->tcp_dport, args[2]->ip_saddr, args[4]->tcp_sport] =
++	    sum(args[2]->ip_plength - args[4]->tcp_offset);
++}
++
++/*
++ * TCP Systemwide Stats
++ */
++mib:::tcpOutDataBytes       { TCP_out += args[0]; }
++mib:::tcpRetransBytes       { TCP_out += args[0]; }
++mib:::tcpInDataInorderBytes { TCP_in  += args[0]; }
++mib:::tcpInDataDupBytes     { TCP_in  += args[0]; }
++mib:::tcpInDataUnorderBytes { TCP_in  += args[0]; }
++
++profile:::tick-1sec
++/secs != 0/
++{
++	secs--;
++}
++
++/*
++ * Print Report
++ */
++profile:::tick-1sec
++/secs == 0/
++{
++	/* fetch 1 min load average */
++	this->load1a  = `hp_avenrun[0] / 65536;
++	this->load1b  = ((`hp_avenrun[0] % 65536) * 100) / 65536;
++
++	/* convert TCP counters to Kb */
++	TCP_out /= 1024;
++	TCP_in  /= 1024;
++
++	/* print status */
++	printf("%Y,  load: %d.%02d,  TCPin: %6d Kb,  TCPout: %6d Kb\n\n",
++	    walltimestamp, this->load1a, this->load1b, TCP_in, TCP_out);
++
++	/* print headers */
++	printf("%6s %6s %-15s %5s %-15s %5s %9s\n",
++	    "ZONE", "PID", "LADDR", "LPORT", "RADDR", "RPORT", "SIZE");
++
++	/* print data */
++	printa("%6d %6d %-15s %5d %-15s %5d %@9d\n", @out);
++	printf("\n");
++
++	/* clear data */
++	trunc(@out);
++	TCP_in = 0;
++	TCP_out = 0;
++	secs = 5;
++	counts--;
++}
++
++/*
++ * End of program
++ */
++profile:::tick-1sec
++/counts == 0/
++{
++	exit(0);
++}
++
++/*
++ * Cleanup for Ctrl-C
++ */
++dtrace:::END
++{
++	trunc(@out);
++}
+diff --git a/Net/udpsnoop.d b/Net/udpsnoop.d
+new file mode 100755
+index 0000000..fffc290
+--- /dev/null
++++ b/Net/udpsnoop.d
+@@ -0,0 +1,59 @@
++#!/usr/sbin/dtrace -s
++/*
++ * udpsnoop - snoop UDP network packets by process.
++ *	Written using DTrace udp Provider.
++ *
++ * This analyses UDP network packets and prints the responsible PID plus
++ * standard details such as IP address and port. This captures traffic
++ * from existing and newly created UDP connections. It can help identify
++ * which processes are causing UDP traffic.
++ *
++ * CDDL HEADER START
++ *
++ * The contents of this file are subject to the terms of the
++ * Common Development and Distribution License (the "License").
++ * You may not use this file except in compliance with the License.
++ *
++ * You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
++ * or http://www.opensolaris.org/os/licensing.
++ * See the License for the specific language governing permissions
++ * and limitations under the License.
++ *
++ * When distributing Covered Code, include this CDDL HEADER in each
++ * file and include the License file at usr/src/OPENSOLARIS.LICENSE.
++ * If applicable, add the following below this CDDL HEADER, with the
++ * fields enclosed by brackets "[]" replaced with your own identifying
++ * information: Portions Copyright [yyyy] [name of copyright owner]
++ *
++ * CDDL HEADER END
++ */
++/*
++ * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
++ *
++ * Portions Copyright 2010 Brendan Gregg
++ */
++
++#pragma D option quiet
++#pragma D option switchrate=10hz
++
++dtrace:::BEGIN
++{
++	printf("%6s %6s %15s:%-5s      %15s:%-5s %6s\n",
++	    "TIME", "PID", "LADDR", "PORT", "RADDR", "PORT", "BYTES");
++}
++
++udp:::send
++{
++	printf("%6d %6d %15s:%-5d  ->  %15s:%-5d %6d\n",
++	    timestamp/1000, args[1]->cs_pid, args[2]->ip_saddr,
++	    args[4]->udp_sport, args[2]->ip_daddr, args[4]->udp_dport,
++	    args[4]->udp_length);
++}
++
++udp:::receive
++{
++	printf("%6d %6d %15s:%-5d  <-  %15s:%-5d %6d\n",
++	    timestamp/1000, args[1]->cs_pid, args[2]->ip_daddr,
++	    args[4]->udp_dport, args[2]->ip_saddr, args[4]->udp_sport,
++	    args[4]->udp_length);
++}
+diff --git a/Net/udptop.d b/Net/udptop.d
+new file mode 100755
+index 0000000..0885b40
+--- /dev/null
++++ b/Net/udptop.d
+@@ -0,0 +1,133 @@
++#!/usr/sbin/dtrace -s
++/*
++ * udptop: display top UDP network packets by process.
++ *	Written using DTrace udp Provider.
++ *
++ * Usage: dtrace -s udptop.d [count] [interval]
++ *
++ * This analyses UDP network packets and prints the responsible PID plus
++ * standard details such as IP address and port. This captures traffic
++ * of newly created UDP connections that were established while this program
++ * was running along with traffic from existing connections. It can help
++ * identify which processes is causing UDP traffic.
++ *
++ * CDDL HEADER START
++ *
++ * The contents of this file are subject to the terms of the
++ * Common Development and Distribution License (the "License").
++ * You may not use this file except in compliance with the License.
++ *
++ * You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
++ * or http://www.opensolaris.org/os/licensing.
++ * See the License for the specific language governing permissions
++ * and limitations under the License.
++ *
++ * When distributing Covered Code, include this CDDL HEADER in each
++ * file and include the License file at usr/src/OPENSOLARIS.LICENSE.
++ * If applicable, add the following below this CDDL HEADER, with the
++ * fields enclosed by brackets "[]" replaced with your own identifying
++ * information: Portions Copyright [yyyy] [name of copyright owner]
++ *
++ * CDDL HEADER END
++ *
++ */
++/*
++ * Copyright (c) 2010, 2012, Oracle and/or its affiliates. All rights reserved.
++ *
++ * Portions Copyright 2010 Brendan Gregg
++ */
++
++#pragma D option quiet
++#pragma D option defaultargs
++#pragma D option switchrate=10hz
++
++/*
++ * Print header
++ */
++dtrace:::BEGIN
++{
++	/* starting values */
++	counts = $1 ? $1 : 10;
++	secs = $2 ? $2 : 5;
++	UDP_out = 0;
++	UDP_in = 0;
++
++	printf("Sampling... Please wait.\n");
++}
++
++
++udp:::send
++/ args[1]->cs_pid != -1 /
++{
++	@out[args[1]->cs_zoneid, args[1]->cs_pid, args[2]->ip_saddr, 
++	    args[4]->udp_sport, args[2]->ip_daddr, args[4]->udp_dport] =
++	    sum(args[4]->udp_length);
++}
++
++udp:::receive
++/ args[1]->cs_pid != -1 /
++{
++	@out[args[1]->cs_zoneid, args[1]->cs_pid, args[2]->ip_daddr, 
++	    args[4]->udp_dport, args[2]->ip_saddr, args[4]->udp_sport] =
++	    sum(args[4]->udp_length);
++}
++
++/*
++ * UDP Systemwide Stats
++ */
++mib:::udpHCOutDatagrams		{ UDP_out += args[0]; }
++mib:::udpHCInDatagrams		{ UDP_in  += args[0]; }
++
++profile:::tick-1sec
++/secs != 0/
++{
++	secs--;
++}
++
++/*
++ * Print Report
++ */
++profile:::tick-1sec
++/secs == 0/
++{
++	/* fetch 1 min load average */
++	this->load1a  = `hp_avenrun[0] / 65536;
++	this->load1b  = ((`hp_avenrun[0] % 65536) * 100) / 65536;
++
++	/* print status */
++	printf("%Y,  load: %d.%02d,  UDP datagrams in: %6d, ",
++	    walltimestamp, this->load1a, this->load1b, UDP_in);
++	printf("UDP datagrams out: %6d\n\n", UDP_out);
++
++	/* print headers */
++	printf("%6s %6s %-15s %5s %-15s %5s %9s\n",
++	    "ZONE", "PID", "LADDR", "LPORT", "RADDR", "RPORT", "SIZE");
++
++	/* print data */
++	printa("%6d %6d %-15s %5d %-15s %5d %@9d\n", @out);
++	printf("\n");
++
++	/* clear data */
++	trunc(@out);
++	UDP_in = 0;
++	UDP_out = 0;
++	secs = 5;
++	counts--;
++}
++
++/*
++ * End of program
++ */
++profile:::tick-1sec
++/counts == 0/
++{
++	exit(0);
++}
++
++/*
++ * Cleanup for Ctrl-C
++ */
++dtrace:::END
++{
++	trunc(@out);
++}
