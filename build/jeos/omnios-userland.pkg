@@ -80,7 +80,7 @@ library/python-2/tempora-27		1.10
 library/readline			7.0
 library/security/openssl		1.0.2
 library/security/trousers		0.3
-library/unixodbc			2.3.4
+library/unixodbc			2.3.5
 library/zlib				1.2.11
 media/cdrtools				3
 network/dns/bind			9.10

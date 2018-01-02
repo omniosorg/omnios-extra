@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,23 +18,23 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
 
 PROG=unixODBC
-VER=2.3.4
+VER=2.3.5
 VERHUMAN=$VER
 PKG=library/unixodbc
 SUMMARY="The UnixODBC Subsystem and SDK"
 DESC="UnixODBC - The UnixODBC Subsystem and SDK ($VER)"
 
-DEPENDS_IPS="system/library system/library/math system/library/gcc-runtime"
+RUN_DEPENDS_IPS="system/library/gcc-runtime"
 
 CONFIGURE_OPTS="
     --includedir=$PREFIX/include/odbc
@@ -66,13 +66,11 @@ CONFIGURE_OPTS="
 save_function make_prog64 make_prog64_orig
 save_function make_prog32 make_prog32_orig
 make_prog64() {
-    logcmd perl -pi -e 's#(\$CC.*\$compiler_flags)#$1 -nostdlib#g;' libtool ||
-        logerr "libtool patch failed"
+    libtool_nostdlib libtool
     make_prog64_orig
 }
 make_prog32() {
-    logcmd perl -pi -e 's#(\$CC.*\$compiler_flags)#$1 -nostdlib#g;' libtool ||
-        logerr "libtool patch failed"
+    libtool_nostdlib libtool
     make_prog32_orig
 }
 
@@ -87,4 +85,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
