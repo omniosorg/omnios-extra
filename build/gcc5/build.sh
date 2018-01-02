@@ -48,10 +48,11 @@ export PATH=/usr/perl5/$PERLVER/bin:$OPT/bin:$PATH
 export TMPDIR=$TMPDIR/gcc-$GCCMAJOR
 export DTMPDIR=$TMPDIR
 
-DEPENDS_IPS="
+RUN_DEPENDS_IPS="
     developer/library/lint
     developer/linker
     developer/gnu-binutils
+    system/header
 "
 
 [ "$BUILDARCH" = "both" ] && BUILDARCH=32
