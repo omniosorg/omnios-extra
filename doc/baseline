@@ -18,12 +18,14 @@ omnios consolidation/sunpro/sunpro-incorporation
 omnios data/iso-codes
 omnios database/sqlite-3
 omnios developer/acpi
+omnios developer/acpi/compiler
 omnios developer/appcert
 omnios developer/apptrace
 omnios developer/apptrace/ucblib
 omnios developer/as
 omnios developer/astdev
 omnios developer/bmake
+omnios developer/build-essential
 omnios developer/build/autoconf
 omnios developer/build/automake
 omnios developer/build/gnu-make
@@ -63,6 +65,7 @@ omnios developer/library/profiled-libc o
 omnios developer/linker
 omnios developer/macro/cpp
 omnios developer/macro/gnu-m4
+omnios developer/nasm
 omnios developer/object-file
 omnios developer/omnios-build-tools
 omnios developer/opensolaris/osnet
@@ -282,10 +285,12 @@ omnios library/python-2/enum-27
 omnios library/python-2/functools32-27
 omnios library/python-2/idna-27
 omnios library/python-2/ipaddress-27
+omnios library/python-2/jaraco.classes-27
 omnios library/python-2/jsonrpclib-27
 omnios library/python-2/jsonschema-27
 omnios library/python-2/m2crypto-27 o
 omnios library/python-2/mako-27
+omnios library/python-2/more-itertools-27
 omnios library/python-2/ply-27
 omnios library/python-2/portend-27
 omnios library/python-2/pybonjour-27
@@ -463,6 +468,7 @@ omnios service/network/network-clients
 omnios service/network/network-servers
 omnios service/network/nis
 omnios service/network/ntp
+omnios service/network/ntpsec
 omnios service/network/slp
 omnios service/network/smtp/dma
 omnios service/network/smtp/sendmail
@@ -503,6 +509,7 @@ omnios storage/storage-nas o
 omnios storage/storage-server o
 omnios storage/svm o
 omnios system/accounting/legacy
+omnios system/bhyve/firmware
 omnios system/boot/grub
 omnios system/boot/loader
 omnios system/boot/network
@@ -640,6 +647,7 @@ omnios system/storage/fibre-channel/port-utility
 omnios system/storage/luxadm
 omnios system/storage/parted o
 omnios system/storage/sasinfo
+omnios system/test/cryptotest
 omnios system/test/fio
 omnios system/test/libctest
 omnios system/test/ostest
@@ -660,6 +668,7 @@ omnios system/zones/brand/lx
 omnios system/zones/brand/s10
 omnios system/zones/brand/sn1
 omnios system/zones/brand/sparse
+omnios system/zones/brand/vm
 omnios system/zones/internal
 omnios terminal/screen
 omnios terminal/tmux
