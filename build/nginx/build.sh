@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,29 +18,32 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
 
 PROG=nginx
-VER=1.12.1
+VER=1.12.2
 VERHUMAN=$VER
 PKG=ooce/server/nginx
 SUMMARY="nginx web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
-CONFPATH=/etc/$PREFIX/$PROG
-LOGPATH=/var/$PREFIX/$PROG/log
-RUNPATH=/var/$PREFIX/$PROG/run
+CONFPATH=/etc$PREFIX/$PROG
+LOGPATH=/var/log$PREFIX/$PROG
+RUNPATH=/var/run$PREFIX/$PROG
 ORIGPREFIX=$PREFIX
 PREFIX=$PREFIX/$PROG-$VER
 BUILD_DEPENDS_IPS="library/security/openssl library/pcre"
-DEPENDS_IPS=$BUILD_DEPENDS_IPS
+RUN_DEPENDS_IPS=$BUILD_DEPENDS_IPS
 BUILDARCH=64
+
+XFORM_ARGS="-D PREFIX=$PREFIX"
+
 CONFIGURE_OPTS_64=" \
     --with-ipv6 \
     --with-threads \
@@ -57,6 +60,9 @@ CONFIGURE_OPTS_64=" \
     --with-http_stub_status_module \
     --with-http_sub_module \
     --with-http_dav_module \
+    --with-stream \
+    --with-mail \
+    --with-mail_ssl_module \
     --user=nginx \
     --group=nginx \
     --prefix=$PREFIX \
@@ -74,6 +80,8 @@ LDFLAGS64="$LDFLAGS64 -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
 CFLAGS64="$CFLAGS64"
 
 add_extra_files() {
+    logmsg "--- Create home dir"
+    logcmd mkdir -p $DESTDIR/var/$ORIGPREFIX/$PROG
     logmsg "--- Copying SMF manifest"
     logcmd mkdir -p $DESTDIR/lib/svc/manifest/network
     logcmd cp $SRCDIR/files/http-nginx.xml $DESTDIR/lib/svc/manifest/network
@@ -95,4 +103,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
