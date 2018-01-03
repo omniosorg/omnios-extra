@@ -26,4 +26,8 @@ user username=nginx uid=81 group=nginx gcos-field="NGINX User" \
     home-dir=/var/opt/ooce/nginx password=NP
 <transform file path=etc/opt/ooce/nginx/.+$ -> set preserve renamenew>
 <transform dir  path=var/opt/ooce/nginx/ -> set owner nginx>
+<transform dir  path=var/log/opt/ooce/nginx/ -> set owner nginx>
+<transform dir  path=var/run/opt/ooce/nginx/ -> set owner nginx>
+<transform file path=$(PREFIX)/sbin/ \
+    -> set restart_fmri svc:/network/http:nginx>
 license LICENSE license=BSD
