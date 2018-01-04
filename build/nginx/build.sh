@@ -42,7 +42,7 @@ BUILD_DEPENDS_IPS="library/security/openssl library/pcre"
 RUN_DEPENDS_IPS=$BUILD_DEPENDS_IPS
 BUILDARCH=64
 
-XFORM_ARGS="-D PREFIX=$PREFIX"
+XFORM_ARGS="-D PREFIX=${PREFIX#/}"
 
 CONFIGURE_OPTS_64=" \
     --with-ipv6 \
