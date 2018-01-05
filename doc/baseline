@@ -516,6 +516,7 @@ omnios system/boot/network
 omnios system/boot/real-mode
 omnios system/boot/wanboot
 omnios system/boot/wanboot/internal
+omnios system/cpuid
 omnios system/data/console/fonts
 omnios system/data/hardware-registry
 omnios system/data/keyboard/keytables
