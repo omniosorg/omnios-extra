@@ -26,6 +26,7 @@
 <transform file path=kernel.*kvm$ -> set mode 0755>
 <transform file path=usr/lib/mdb/.*.so$ -> set mode 0755>
 <transform file path=usr/lib/devfsadm/.*.so$ -> set mode 0755>
+set name=variant.opensolaris.zone value=global
 driver name=kvm
 license COPYING.linux license=GPLv2
 license OPENSOLARIS.LICENSE license=CDDL
