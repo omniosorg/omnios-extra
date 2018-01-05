@@ -35,7 +35,7 @@ SUMMARY="nginx web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 CONFPATH=/etc$PREFIX/$PROG
 LOGPATH=/var/log$PREFIX/$PROG
-RUNPATH=/var/run$PREFIX/$PROG
+RUNPATH=/var$PREFIX/$PROG/run
 ORIGPREFIX=$PREFIX
 PREFIX=$PREFIX/$PROG-$VER
 BUILD_DEPENDS_IPS="library/security/openssl library/pcre"
@@ -80,8 +80,6 @@ LDFLAGS64="$LDFLAGS64 -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
 CFLAGS64="$CFLAGS64"
 
 add_extra_files() {
-    logmsg "--- Create home dir"
-    logcmd mkdir -p $DESTDIR/var/$ORIGPREFIX/$PROG
     logmsg "--- Copying SMF manifest"
     logcmd mkdir -p $DESTDIR/lib/svc/manifest/network
     logcmd cp $SRCDIR/files/http-nginx.xml $DESTDIR/lib/svc/manifest/network
