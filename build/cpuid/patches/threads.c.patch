@@ -1,0 +1,54 @@
+diff -pruN '--exclude=*.orig' cpuid-1.5.0~/threads.c cpuid-1.5.0/threads.c
+--- cpuid-1.5.0~/threads.c	2017-10-15 02:49:30.000000000 +0000
++++ cpuid-1.5.0/threads.c	2018-01-05 23:40:10.641757916 +0000
+@@ -44,6 +44,12 @@
+ #undef MAX_CPUS
+ #define MAX_CPUS CPU_MAXSIZE
+ 
++#elif defined(TARGET_OS_ILLUMOS)
++#include <pthread.h>
++#include <sys/types.h>
++#include <sys/processor.h>
++#include <sys/procset.h>
++
+ #elif defined(TARGET_OS_MACOSX)
+ 
+ #include <sys/sysctl.h>
+@@ -119,7 +125,7 @@ uintptr_t thread_get_binding(void)
+ 
+ 	return mask_id;
+ 
+-#elif defined(TARGET_OS_MACOSX)
++#elif defined(TARGET_OS_MACOSX) || defined(TARGET_OS_ILLUMOS)
+ 
+ 	/* Hopefully this function wasn't too important. */
+ 	return 0;
+@@ -158,7 +164,7 @@ uintptr_t thread_bind_mask(uintptr_t _ma
+ 
+ 	return (ret == 0) ? 0 : 1;
+ 
+-#elif defined(TARGET_OS_MACOSX)
++#elif defined(TARGET_OS_MACOSX) || defined(TARGET_OS_ILLUMOS)
+ 
+ 	/* We just have to pray nothing explodes too dramatically. */
+ 	return 0;
+@@ -243,6 +249,19 @@ int thread_bind_native(__unused_variable
+ 
+ 	if (state && ret == 0)
+ 		state->cpu_bound_index = id;
++
++	return (ret == 0) ? 0 : 1;
++
++#elif defined(TARGET_OS_ILLUMOS)
++
++	int ret;
++	pthread_t pth;
++
++	pth = pthread_self();
++	ret = processor_bind(P_LWPID, pth, id, NULL);
++
++	if (state && ret == 0)
++		state->cpu_bound_index = id;
+ 
+ 	return (ret == 0) ? 0 : 1;
+ 
