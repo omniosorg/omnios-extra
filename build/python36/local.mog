@@ -1,0 +1,7 @@
+license LICENSE license=Python
+set name=pkg.depend.runpath value=$PKGDEPEND_RUNPATH:/opt/ooce/python-$(VERMAJOR)/lib
+
+<transform link path=opt/ooce/bin/python3 -> set mediator python3>
+<transform link path=opt/ooce/bin/python3 -> set mediator-version $(VERMAJOR)>
+<transform link path=opt/ooce/share/man/man1/python3.1 -> set mediator python3>
+<transform link path=opt/ooce/share/man/man1/python3.1 -> set mediator-version $(VERMAJOR)>
