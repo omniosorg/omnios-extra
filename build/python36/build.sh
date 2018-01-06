@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,10 +18,10 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -29,7 +29,7 @@
 
 PROG=Python
 PROGLC=${PROG,,}
-VER=3.6.3
+VER=3.6.4
 VERHUMAN=$VER
 PKG=ooce/runtime/python-36
 SUMMARY="$PROG - An Interpreted, Interactive, Object-oriented, Extensible Programming Language."
@@ -43,34 +43,40 @@ ORIGPREFIX=$PREFIX
 PREFIX=$PREFIX/$PROGLC-$VERMAJOR
 BUILDARCH=64
 
+XFORM_ARGS="-D VERMAJOR=$VERMAJOR"
+
 CFLAGS="-O3"
 CXXFLAGS="-O3"
 CPPFLAGS="-D_REENTRANT"
 
-CONFIGURE_OPTS="--enable-shared
-                --disable-static
-                --with-system-ffi
+CONFIGURE_OPTS="
+    --enable-shared
+    --disable-static
+    --with-system-ffi
 "
 
-CONFIGURE_OPTS_64="--prefix=$PREFIX
-                   --sysconfdir=/etc/$ORIGPREFIX/$PROGLC$VERMAJOR
-                   --includedir=$PREFIX/include
-                   --bindir=$PREFIX/bin
-                   --sbindir=$PREFIX/sbin
-                   --libdir=$PREFIX/lib
-                   --libexecdir=$PREFIX/libexec
+CONFIGURE_OPTS_64="
+    --prefix=$PREFIX
+    --sysconfdir=/etc/$ORIGPREFIX/$PROGLC$VERMAJOR
+    --includedir=$PREFIX/include
+    --bindir=$PREFIX/bin
+    --sbindir=$PREFIX/sbin
+    --libdir=$PREFIX/lib
+    --libexecdir=$PREFIX/libexec
 "
 
 build() {
     CC="$CC $CFLAGS $CFLAGS64" \
     CXX="$CXX $CXXFLAGS $CXXFLAGS64" \
     build64
-    mv "$DESTDIR/$PREFIX/lib/$PROGLC$VERMAJOR/site-packages/setuptools/script (dev).tmpl" "$DESTDIR/$PREFIX/lib/$PROGLC$VERMAJOR/site-packages/setuptools/script_dev.tmpl" 
+    logcmd mv "$DESTDIR/$PREFIX/lib/$PROGLC$VERMAJOR/site-packages/setuptools/script (dev).tmpl" \
+        "$DESTDIR/$PREFIX/lib/$PROGLC$VERMAJOR/site-packages/setuptools/script_dev.tmpl"
 }
 
 make_install64() {
     logmsg '--- make install'
-    logcmd $MAKE DESTDIR=$DESTDIR DESTSHARED=${PREFIX}/lib/$PROGLC${VERMAJOR}/lib-dynload install || logerr '--- make install failed'
+    logcmd $MAKE DESTDIR=$DESTDIR DESTSHARED=${PREFIX}/lib/$PROGLC${VERMAJOR}/lib-dynload install || \
+        logerr '--- make install failed'
 }
 create_symlinks() {
     logmsg "--- Create bin symlink"
@@ -82,8 +88,6 @@ create_symlinks() {
     logcmd ln -s ../../../$PROGLC-$VERMAJOR/share/man/man1/$PROGLC${VERMAJOR}.1 \
         $DESTDIR/$ORIGPREFIX/share/man/man1/$PROGLC${VERMAJOR}.1
     logcmd ln -s $PROGLC${VERMAJOR}.1 $DESTDIR/$ORIGPREFIX/share/man/man1/${PROGLC}3.1
-    logmsg "--- Update version number in local.mog file"
-    sed "s/__VERSION__/$VERMAJOR/g" < $SRCDIR/files/local.mog > $SRCDIR/local.mog
 }
 
 init
@@ -96,4 +100,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker

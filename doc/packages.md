@@ -8,7 +8,7 @@
 | ooce/library/freetype2	| 2.8.1		| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/lxadm			| 0.1.6		| https://github.com/hadfl/lxadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/ooceapps			| 0.2.5		| https://github.com/hadfl/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/runtime/python-36	| 3.6.3		| https://www.python.org/downloads/source/ | [omniosorg](https://github.com/omniosorg)
+| ooce/runtime/python-36	| 3.6.4		| https://www.python.org/downloads/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.12.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 8.6.9		| http://www.methods.co.nz/asciidoc/ | [omniosorg](https://github.com/omniosorg)
 
