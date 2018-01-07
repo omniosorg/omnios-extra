@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=mpfr
-VER=4.0.0
+VER=3.1.6
 VERHUMAN=$VER
 PKG=library/mpfr
 SUMMARY="The GNU multiple-precision floating-point computation library"
@@ -27,10 +27,6 @@ DESC="$SUMMARY"
 CONFIGURE_OPTS+="
     --with-gmp-include=$PREFIX/include/gmp
 "
-
-# As of MPFR 4.0.0, the configure script detects libquadmath and then tries
-# to link it against testcases. We don't have libquadmath...
-export ac_cv_lib_quadmath_main=no
 
 TESTSUITE_FILTER='^[A-Z#][A-Z ]'
 

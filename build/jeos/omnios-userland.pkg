@@ -38,7 +38,7 @@ library/c++/sigcpp			2.99
 library/expat				2.2
 library/glib2				2.54
 library/gmp				6.1
-library/mpfr				4
+library/mpfr				3.1
 library/mpc				1.0
 library/idnkit/header-idnkit		2.3
 library/idnkit				2.3
