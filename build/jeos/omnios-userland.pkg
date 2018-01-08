@@ -3,7 +3,7 @@
 #
 archiver/gnu-tar			1.30
 compress/bzip2				1.0.6
-compress/gzip				1.8
+compress/gzip				1.9
 compress/p7zip				16
 compress/unzip				6.0
 compress/xz				5.2
