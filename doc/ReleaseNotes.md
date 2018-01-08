@@ -4,6 +4,29 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024j (2018-01-08)
+
+Weekly release for w/c 8th of January 2018.
+> This update requires a reboot.
+> `uname -v` shows `omnios-r151024-e482f10563`
+
+### Changes
+
+* ZFS fixes:
+  * [8909](https://www.illumos.org/issues/8909) Use-after-free kernel panic
+  * [8930](https://www.illumos.org/issues/8930)
+    do not remove the node if the filesystem is readonly
+* CIFS/SMB - Improve ioctl() bounds checking
+* Improvements to page scanner performance under low memory conditions
+* `pkg` - prevent UUIDs being shared between IPS images so they are truly
+  unique
+* Add `system/cpuid` package providing the `cpuid` command -
+  "A simple CPUID decoder/dumper for x86/x86_64""
+
+<br>
+
+----
+
 ## r151024g (2017-12-18)
 
 Weekly release for w/c 18th of December 2017.
@@ -88,7 +111,7 @@ Weekly release for w/c 20th of November 2017.
 
 Stable Release, 6th of November 2017
 
-`uname -a` shows `omnios-r151024-c2a1589567`
+`uname -v` shows `omnios-r151024-c2a1589567`
 
 r151024 release repository: https://pkg.omniosce.org/r151024/core
 
