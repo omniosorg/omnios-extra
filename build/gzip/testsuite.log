@@ -1,0 +1,40 @@
+  GEN      public-submodule-commit
+Making check in lib
+Making check in doc
+Making check in .
+  GEN      gzip.doc
+  GEN      gzip.doc.gz
+  GEN      check-local
+Making check in tests
+PASS: gzip-env
+PASS: helin-segv
+PASS: help-version
+PASS: hufts
+PASS: keep
+PASS: list
+PASS: memcpy-abuse
+PASS: mixed
+PASS: null-suffix-clobber
+PASS: stdin
+PASS: timestamp
+PASS: trailing-nul
+PASS: unpack-invalid
+PASS: unpack-valid
+PASS: upper-suffix
+PASS: z-suffix
+PASS: zdiff
+PASS: zgrep-f
+PASS: zgrep-context
+PASS: zgrep-signal
+PASS: znew-k
+============================================================================
+Testsuite summary for gzip 1.9
+============================================================================
+# TOTAL: 21
+# PASS:  21
+# SKIP:  0
+# XFAIL: 0
+# FAIL:  0
+# XPASS: 0
+# ERROR: 0
+============================================================================

@@ -3,7 +3,7 @@
 | :------ | :------ | :--- | :---- |
 | archiver/gnu-tar			| 1.30			| http://git.savannah.gnu.org/cgit/tar.git/refs/tags
 | compress/bzip2			| 1.0.6			| http://www.bzip.org/downloads.html
-| compress/gzip				| 1.8			| http://git.savannah.gnu.org/cgit/gzip.git/refs/tags
+| compress/gzip				| 1.9			| http://git.savannah.gnu.org/cgit/gzip.git/refs/tags
 | compress/p7zip			| 16.02			| https://sourceforge.net/projects/p7zip/files/p7zip
 | compress/unzip			| 6.0			| http://www.info-zip.org/UnZip.html
 | compress/xz				| 5.2.3			| https://tukaani.org/xz/
