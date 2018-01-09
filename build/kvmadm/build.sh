@@ -27,7 +27,7 @@
 . ../../lib/functions.sh
 
 PROG=kvmadm     # App name
-VER=0.12.2      # App version
+VER=0.12.3      # App version
 VERHUMAN=$VER   # Human-readable version
 PKG=ooce/kvmadm # Package name (e.g. library/foo)
 SUMMARY="IPS package management/publishing tool" # One-liner, must be filled in
