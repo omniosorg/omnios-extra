@@ -86,6 +86,7 @@
 <transform dir path=etc$ -> drop>
 <transform dir path=etc/opt$ -> drop>
 <transform dir path=etc/inet$ -> set group sys>
+<transform dir path=etc/opt$ -> drop>
 
 # This should only ever be in libiconv, but other GNU packages install it
 <transform file path=usr/gnu/lib/charset.alias$ -> drop>
