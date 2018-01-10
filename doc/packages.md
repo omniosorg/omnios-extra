@@ -31,7 +31,7 @@
 | editor/vim				| 8.0.586		| http://ftp.vim.org/pub/vim/unix
 | file/gnu-coreutils			| 8.29			| https://git.savannah.gnu.org/cgit/coreutils.git/refs/tags
 | file/gnu-findutils			| 4.6.0			| https://ftp.gnu.org/pub/gnu/findutils/
-| library/c++/sigcpp			| 2.99.9		| https://download.gnome.org/sources/libsigc++/cache.json
+| library/c++/sigcpp			| 2.99.10		| https://download.gnome.org/sources/libsigc++/cache.json
 | library/libevent			| 2.1.8			| https://github.com/libevent/libevent/releases | Used solely by tmux
 | library/expat				| 2.2.5			| https://sourceforge.net/projects/expat/files/expat
 | library/gmp				| 6.1.2			| https://gmplib.org/

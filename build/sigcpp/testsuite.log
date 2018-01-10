@@ -116,7 +116,7 @@ PASS: test_visit_each
 PASS: test_visit_each_trackable
 PASS: test_weak_raw_ptr
 ============================================================================
-Testsuite summary for libsigc++ 2.99.9
+Testsuite summary for libsigc++ 2.99.10
 ============================================================================
 # TOTAL: 38
 # PASS:  38
