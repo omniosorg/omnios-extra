@@ -81,6 +81,7 @@
 <transform dir path=var/svc$ -> drop>
 <transform dir path=var/svc/manifest$ -> drop>
 <transform dir path=var/svc/manifest/.*$ -> set group sys>
+<transform dir path=var/opt$ -> drop>
 <transform dir path=lib$ -> drop>
 <transform dir path=lib/svc$ -> drop>
 <transform dir path=lib/svc/manifest$ -> drop>
