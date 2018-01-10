@@ -34,6 +34,10 @@ PKG=network/rsync
 SUMMARY="rsync - faster, flexible replacement for rcp"
 DESC="rsync - faster, flexible replacement for rcp"
 
+# Two new local patches since last release.
+# Remove when rsync version goes to >= 3.1.3
+DASHREV=2
+
 REMOVE_PREVIOUS=1
 BUILDARCH=32
 CONFIGURE_OPTS_32="$CONFIGURE_OPTS_32 --bindir=/usr/bin --with-included-popt"
