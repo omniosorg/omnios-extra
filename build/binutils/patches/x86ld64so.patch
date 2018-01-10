@@ -1,6 +1,7 @@
---- binutils-2.23.2//gold/x86_64.cc	Tue Jun  4 02:58:11 2013
-+++ binutils-2.23.2//gold/x86_64.cc	Tue Jun  4 02:58:12 2013
-@@ -995,7 +995,11 @@
+diff -pruN '--exclude=*.orig' binutils-2.29.1~/gold/x86_64.cc binutils-2.29.1/gold/x86_64.cc
+--- binutils-2.29.1~/gold/x86_64.cc	2017-07-10 09:54:42.000000000 +0000
++++ binutils-2.29.1/gold/x86_64.cc	2018-01-10 21:24:04.500903728 +0000
+@@ -1259,7 +1259,11 @@ const Target::Target_info Target_x86_64<
    true,			// is_default_stack_executable
    true,			// can_icf_inline_merge_sections
    '\0',			// wrap_char

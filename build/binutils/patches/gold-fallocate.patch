@@ -1,6 +1,7 @@
---- binutils-2.23.2/gold/output.cc	Tue Jun  4 01:14:25 2013
-+++ binutils-2.23.2/gold/output.cc	Tue Jun  4 01:16:35 2013
-@@ -127,7 +127,7 @@
+diff -pruN '--exclude=*.orig' binutils-2.29.1~/gold/output.cc binutils-2.29.1/gold/output.cc
+--- binutils-2.29.1~/gold/output.cc	2017-07-10 09:54:42.000000000 +0000
++++ binutils-2.29.1/gold/output.cc	2018-01-10 21:24:02.443870570 +0000
+@@ -127,7 +127,7 @@ namespace gold
  static int
  gold_fallocate(int o, off_t offset, off_t len)
  {
