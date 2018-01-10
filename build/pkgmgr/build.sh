@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,29 +18,27 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
+# CDDL HEADER END }}}
 #
-#
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
 
-PROG=pkgmgr     # App name
-VER=0.2.2       # App version
-VERHUMAN=$VER   # Human-readable version
-#PVER=          # Branch (set in config.sh, override here if needed)
-PKG=ooce/developer/pkgmgr # Package name (e.g. library/foo)
-SUMMARY="IPS package management/publishing tool" # One-liner, must be filled in
-DESC=$SUMMARY   # Longer description, must be filled in
-BUILDARCH=32    # or 64 or both ... for libraries we want both for tools 32 bit only
-PREFIX=/opt/ooce
+PROG=pkgmgr
+VER=0.2.3
+VERHUMAN=$VER
+PKG=ooce/developer/pkgmgr
+SUMMARY="IPS package management/publishing tool"
+DESC=$SUMMARY
+BUILDARCH=32
 MIRROR="https://github.com/omniosorg/$PROG/releases/download"
 
 CONFIGURE_OPTS_32="
     --prefix=$PREFIX/$PROG
-    --sysconfdir=/etc/$PREFIX/$PROG"
+    --sysconfdir=/etc$PREFIX/$PROG
+"
 
 add_extra_files() {
     # create symbolic link to standard bin dir
@@ -66,4 +64,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
