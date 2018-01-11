@@ -35,6 +35,8 @@ DESC=$SUMMARY
 BUILDARCH=32
 MIRROR="https://github.com/omniosorg/$PROG/releases/download"
 
+RUN_DEPENDS_IPS="network/rsync"
+
 CONFIGURE_OPTS_32="
     --prefix=$PREFIX/$PROG
     --sysconfdir=/etc$PREFIX/$PROG
