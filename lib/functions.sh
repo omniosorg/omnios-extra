@@ -661,6 +661,8 @@ make_package() {
     if [[ -n "$FLAVORSTR" ]]; then
         DESCSTR="$DESCSTR ($FLAVOR)"
     fi
+    # Add the local dash-revision if specified.
+    [ -n "$DASHREV" ] && PVER=$DASHREV.$RELVER
     PKGSEND=/usr/bin/pkgsend
     PKGLINT=/usr/bin/pkglint
     PKGMOGRIFY=/usr/bin/pkgmogrify
