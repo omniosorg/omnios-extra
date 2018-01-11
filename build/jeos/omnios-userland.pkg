@@ -1,6 +1,9 @@
 # This is the list of OmniOS userland packages and the versions to which
 # they will be constrained by the userland incorporation.
 #
+# Format:
+# <package name>		<version to constrain>		<dash revision>
+#
 archiver/gnu-tar			1.30
 compress/bzip2				1.0.6
 compress/gzip				1.9
@@ -87,7 +90,7 @@ network/dns/bind			9.10
 network/dns/idnconv			2.3
 network/openssh-server			7.6
 network/openssh				7.6
-network/rsync				3.1
+network/rsync				3.1		2
 network/service/isc-dhcp		4.3
 network/test/iperf			3
 network/test/netperf			2.7

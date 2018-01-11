@@ -9,7 +9,7 @@
 # source.  A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 
 __SCRIPTDIR="${0%/*}"
 
@@ -26,6 +26,7 @@ problem()
 }
 
 typeset -A targets
+typeset -A dashrev
 
 add_target()
 {
@@ -37,6 +38,12 @@ add_target()
 		ver="`grep ^VER= $build | sed '
 			1 {
 				s/VER=//
+				s/ .*//
+				q
+			}'`"
+		drev="`grep ^DASHREV= $build | sed '
+			1 {
+				s/DASHREV=//
 				s/ .*//
 				q
 			}'`"
@@ -99,6 +106,7 @@ add_target()
 			*gcc44*)		return ;;
 			*pci.ids:*)		return ;;
 		esac
+		[ -n "$drev" ] && dashrev[$pkg]=$drev
 		targets[$pkg]=$ver
 	elif [[ $build = *.p5m ]]; then
 		egrep -q 'pkg.obsolete.*true' $build && return
@@ -191,7 +199,7 @@ check_packages_md()
 check_constraints()
 {
 	comp="$1"
-	while read pkg ver; do
+	while read pkg ver dash; do
 		# Skip some packages, tweak others
 		[ -n "${targets[$pkg]}" ] && bver=${targets[$pkg]} || bver=
 		case $pkg in
@@ -225,6 +233,14 @@ check_constraints()
 		obver="$bver"
 
 		if [ -n "$bver" ]; then
+			# Dash revision check
+			if [ "$comp" = "omnios-userland" -a \
+			     -n "${dashrev[$pkg]}" -a \
+			     "${dashrev[$pkg]}" != "$dash" ]; then
+				problem "$pkg - $comp= DASH $dash"\
+				    "(build=${dashrev[$pkg]})"
+			fi
+
 			[ "$bver" = "$ver" ] && continue
 			# Try with s/00/0
 			[ "${bver//00/0}" = "$ver" ] && continue
@@ -249,7 +265,7 @@ check_userland()
 	nawk < build/jeos/omnios-userland.pkg '
 		/^#/ { next }
 		/\// {
-			print $1, $2
+			print $1, $2, $3
 		}' | check_constraints omnios-userland
 }
 
