@@ -19,7 +19,7 @@ developer/dtrace/toolkit		0.99
 developer/gcc5				5
 developer/gcc6				6
 developer/gcc7				7
-developer/gnu-binutils			2.25
+developer/gnu-binutils			2
 developer/lexer/flex			2.6
 developer/macro/cpp			0.5.11
 developer/macro/gnu-m4			1.4.18

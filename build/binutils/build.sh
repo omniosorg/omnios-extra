@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,39 +18,51 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=binutils
-VER=2.25
+VER=2.29.1
 VERHUMAN=$VER
 PKG=developer/gnu-binutils
-SUMMARY="$PROG -  a collection of binary tools"
+SUMMARY="$PROG - a collection of binary tools"
 DESC="$SUMMARY"
 
-BUILD_DEPENDS_IPS="gcc44"
 [ "$BUILDARCH" = "both" ] && BUILDARCH=32
 
 CONFIGURE_OPTS="
-	--enable-gold=yes
-	--exec-prefix=/usr/gnu
-	--program-prefix=g
+    --exec-prefix=/usr/gnu
+    --program-prefix=g
+    --enable-gold=yes
+    --enable-largefile
+    --with-system-zlib
 "
 
-# Use old gcc4 standards level for this.
-CFLAGS="$CFLAGS -std=gnu89"
-
 make_prog() {
-    [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
     logmsg "--- make"
-    logcmd $MAKE SHELL=/bin/bash $MAKE_JOBS || \
-        logerr "--- Make failed"
+    # Without specifying the shell as bash here, the generated linker
+    # emulation files get truncated scripts.
+    # We already export SHELL=bash in config.sh but that doesn't seem
+    # to be enough.
+    logcmd $MAKE SHELL=/bin/bash $MAKE_JOBS || logerr "--- Make failed"
+}
+
+basic_tests() {
+    logmsg "--- basic tests"
+    # Limited sanity checks
+    [ `$DESTDIR/usr/bin/gld --print-output-format` = elf32-i386-sol2 ] \
+        || logerr "gld output format test failed"
+    # These targets are required for the ilumos-omnios UEFI build.
+    # https://illumos.topicbox.com/groups/developer/T5f37e8c8f0687062-Mcec43129fb017b70a035e5fd
+    for target in pe-i386 pei-i386 pe-x86-64 pei-x86-64; do
+        $DESTDIR/usr/bin/gobjdump -i | grep -qw "$target" \
+            || logerr "output format $target not supported."
+    done
 }
 
 init
@@ -59,8 +71,9 @@ patch_source
 prep_build
 build
 make_isa_stub
+basic_tests
 make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
