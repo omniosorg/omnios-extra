@@ -38,12 +38,14 @@ add_constraints()
 	local cmf=$1
 	local src=$2
 
-	egrep -v '^ *$|^#' $src | while read pkg ver; do
+	egrep -v '^ *$|^#' $src | while read pkg ver dash; do
 		if [ -z "$pkg" -o -z "$ver" ]; then
 			logerr "Bad package line, $pkg $ver"
 		fi
+		[ -z "$dash" ] && dash=0
 		echo "depend facet.version-lock.$pkg=true"\
-		    "fmri=$pkg@$ver,5.11-@PVER@ type=incorporate" >> $cmf
+		    "fmri=$pkg@$ver,5.11-$dash.@RELVER@ type=incorporate" \
+		    >> $cmf
 	done
 }
 
