@@ -21,13 +21,13 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=ncurses
-VER=6.0-20171104
+VER=6.0-20180106
 VERHUMAN=$VER
 BUILDDIR=$PROG-$VER
 VER=${VER/-/.}
