@@ -21,7 +21,7 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -29,7 +29,7 @@
 
 PKG=library/python-2/cffi-27
 PROG=cffi
-VER=1.11.2
+VER=1.11.3
 SUMMARY="cffi - Foreign Function Interface for Python calling C code"
 DESC="$SUMMARY"
 
