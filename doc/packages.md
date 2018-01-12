@@ -35,7 +35,7 @@
 | library/libevent			| 2.1.8			| https://github.com/libevent/libevent/releases | Used solely by tmux
 | library/expat				| 2.2.5			| https://sourceforge.net/projects/expat/files/expat
 | library/gmp				| 6.1.2			| https://gmplib.org/
-| library/mpc				| 1.0.3			| http://www.multiprecision.org/index.php?prog=mpc&page=download
+| library/mpc				| 1.0.3			| http://www.multiprecision.org/mpc/download.html
 | library/mpfr				| 3.1.6			| http://www.mpfr.org/mpfr-current/ | 4.x on-hold until `libmpc` is supported
 | library/idnkit			| 2.3			| https://jprs.co.jp/idn/index-e.html
 | library/libidn			| 1.33			| http://git.savannah.gnu.org/cgit/libidn.git/refs/tags
@@ -96,7 +96,7 @@
 | developer/swig			| 3.0.12		| http://www.swig.org/download.html
 | library/security/trousers		| 0.3.14		| https://sourceforge.net/projects/trousers/files/trousers
 | library/python-2/asn1crypto-27	| 0.24.0		| https://pypi.python.org/pypi/asn1crypto
-| library/python-2/cffi-27		| 1.11.2		| https://pypi.python.org/pypi/cffi
+| library/python-2/cffi-27		| 1.11.3		| https://pypi.python.org/pypi/cffi
 | library/python-2/cheroot-27		| 6.0.0			| https://pypi.python.org/pypi/cheroot
 | library/python-2/cherrypy-27		| 13.1.0		| https://pypi.python.org/pypi/cherrypy
 | library/python-2/coverage-27		| 4.4.2			| https://pypi.python.org/pypi/coverage
