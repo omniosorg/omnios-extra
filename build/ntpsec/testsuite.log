@@ -1,145 +1,4 @@
-BINARY      : /data/omnios-build/omniosorg/bloody/_build/ntpsec-1.0.0/build/main/tests/test_libparse
-RETURN VALUE: 0
-
-*** stdout ***
-Unity test run 1 of 1
-TEST(binio, get_lsb_int160) PASS
-TEST(binio, get_lsb_int161) PASS
-TEST(binio, get_lsb_int162) PASS
-TEST(binio, get_lsb_int163) PASS
-TEST(binio, get_lsb_int164) PASS
-TEST(binio, get_lsb_int320) PASS
-TEST(binio, get_lsb_int321) PASS
-TEST(binio, get_lsb_int322) PASS
-TEST(binio, get_lsb_int323) PASS
-TEST(binio, get_lsb_int324) PASS
-TEST(binio, put_lsb_uint160) PASS
-TEST(binio, put_lsb_uint161) PASS
-TEST(binio, put_lsb_uint162) PASS
-TEST(binio, put_lsb_uint163) PASS
-TEST(binio, put_lsb_uint164) PASS
-TEST(binio, get_lsb_uint160) PASS
-TEST(binio, get_lsb_uint161) PASS
-TEST(binio, get_lsb_uint162) PASS
-TEST(binio, get_lsb_uint163) PASS
-TEST(binio, get_lsb_uint164) PASS
-TEST(binio, get_lsb_uint320) PASS
-TEST(binio, get_lsb_uint321) PASS
-TEST(binio, get_lsb_uint322) PASS
-TEST(binio, get_lsb_uint323) PASS
-TEST(binio, get_lsb_uint324) PASS
-TEST(binio, get_msb_short0) PASS
-TEST(binio, get_msb_short1) PASS
-TEST(binio, get_msb_short2) PASS
-TEST(binio, get_msb_short3) PASS
-TEST(binio, get_msb_short4) PASS
-TEST(binio, getmsb_short0) PASS
-TEST(binio, getmsb_short1) PASS
-TEST(binio, getmsb_short2) PASS
-TEST(binio, getmsb_short3) PASS
-TEST(binio, getmsb_short4) PASS
-TEST(binio, get_msb_ushort0) PASS
-TEST(binio, get_msb_ushort1) PASS
-TEST(binio, get_msb_ushort2) PASS
-TEST(binio, get_msb_ushort3) PASS
-TEST(binio, get_msb_ushort4) PASS
-TEST(gpstolfp, check) PASS
-TEST(ieee754io, test_zero32) PASS
-TEST(ieee754io, test_one32) PASS
-TEST(ieee754io, test_negone32) PASS
-TEST(ieee754io, test_small32) PASS
-TEST(ieee754io, test_nan32) PASS
-TEST(ieee754io, test_max32) PASS
-TEST(ieee754io, test_order32) PASS
-TEST(ieee754io, test_zero64) PASS
-TEST(ieee754io, test_one64) PASS
-TEST(ieee754io, test_negone64) PASS
-TEST(ieee754io, test_small64) PASS
-TEST(ieee754io, test_nan64) PASS
-TEST(ieee754io, test_max64) PASS
-TEST(ieee754io, test_order64) PASS
-
------------------------
-55 Tests 0 Failures 0 Ignored 
-OK
-
-*** stderr ***
-
-
-
-BINARY      : /data/omnios-build/omniosorg/bloody/_build/ntpsec-1.0.0/build/main/tests/test_ntpd
-RETURN VALUE: 0
-
-*** stdout ***
-Unity test run 1 of 1
-TEST(leapsec, ValidateGood) PASS
-TEST(leapsec, ValidateNoHash) PASS
-TEST(leapsec, ValidateBad) PASS
-TEST(leapsec, ValidateMalformed) PASS
-TEST(leapsec, ValidateMalformedShort) PASS
-TEST(leapsec, ValidateNoLeadZero) PASS
-TEST(leapsec, tableSelect) PASS
-TEST(leapsec, loadFileExpire) PASS
-TEST(leapsec, loadFileTTL) PASS
-TEST(leapsec, lsQueryPristineState)leap table (0 entries) expires at 1970-01-01:
- PASS
-TEST(leapsec, ls2009faraway) PASS
-TEST(leapsec, ls2009weekaway) PASS
-TEST(leapsec, ls2009houraway) PASS
-TEST(leapsec, ls2009secaway) PASS
-TEST(leapsec, ls2009onspot) PASS
-TEST(leapsec, ls2009nodata) PASS
-TEST(leapsec, ls2009limdata)leap table (10 entries) expires at 2014-06-01:
-1991-01-01 [-] (1990-12-04) - 26
-1992-07-01 [-] (1992-06-03) - 27
-1993-07-01 [-] (1993-06-03) - 28
-1994-07-01 [-] (1994-06-03) - 29
-1996-01-01 [-] (1995-12-04) - 30
-1997-07-01 [-] (1997-06-03) - 31
-1999-01-01 [-] (1998-12-04) - 32
-2006-01-01 [-] (2005-12-04) - 33
-2009-01-01 [-] (2008-12-04) - 34
-2012-07-01 [-] (2012-06-03) - 35
- PASS
-TEST(leapsec, addDynamic)leap table (10 entries) expires at 1993-07-01:
-1990-01-01 [-] (1989-12-04) - 25
-1991-01-01 [-] (1990-12-04) - 26
-1992-07-01 [-] (1992-06-03) - 27
-1993-07-01 [-] (1993-06-03) - 28
-1996-01-11 [*] (1995-12-11) - 29
-1997-07-10 [*] (1997-06-10) - 30
-1999-01-11 [*] (1998-12-11) - 31
-2006-01-11 [*] (2005-12-11) - 32
-2009-01-11 [*] (2008-12-11) - 33
-2012-07-10 [*] (2012-06-10) - 34
- PASS
-TEST(leapsec, addFixed) PASS
-TEST(leapsec, ls2009seqInsElectric) PASS
-TEST(leapsec, ls2009seqInsDumb) PASS
-TEST(leapsec, ls2009seqDelElectric) PASS
-TEST(leapsec, ls2009seqDelDumb) PASS
-TEST(leapsec, ls2012seqInsElectric) PASS
-TEST(leapsec, ls2012seqInsDumb) PASS
-TEST(leapsec, lsEmptyTableDumb) PASS
-TEST(leapsec, lsEmptyTableElectric) PASS
-TEST(hackrestrict, RestrictionsAreEmptyAfterInit) PASS
-TEST(hackrestrict, ReturnsCorrectDefaultRestrictions) PASS
-TEST(hackrestrict, HackingDefaultRestriction) PASS
-TEST(hackrestrict, CantRemoveDefaultEntry) PASS
-TEST(hackrestrict, AddingNewRestriction) PASS
-TEST(hackrestrict, TheMostFittingRestrictionIsMatched) PASS
-TEST(hackrestrict, DeletedRestrictionIsNotMatched) PASS
-TEST(hackrestrict, RestrictUnflagWorks) PASS
-
------------------------
-35 Tests 0 Failures 0 Ignored 
-OK
-
-*** stderr ***
-
-
-
-BINARY      : /data/omnios-build/omniosorg/bloody/_build/ntpsec-1.0.0/build/main/tests/test_libntp
+BINARY      : test_libntp
 RETURN VALUE: 0
 
 *** stdout ***
@@ -277,6 +136,147 @@ TEST(ymd2yd, LeapYearDecember) PASS
 
 -----------------------
 130 Tests 0 Failures 0 Ignored 
+OK
+
+*** stderr ***
+
+
+
+BINARY      : test_libparse
+RETURN VALUE: 0
+
+*** stdout ***
+Unity test run 1 of 1
+TEST(binio, get_lsb_int160) PASS
+TEST(binio, get_lsb_int161) PASS
+TEST(binio, get_lsb_int162) PASS
+TEST(binio, get_lsb_int163) PASS
+TEST(binio, get_lsb_int164) PASS
+TEST(binio, get_lsb_int320) PASS
+TEST(binio, get_lsb_int321) PASS
+TEST(binio, get_lsb_int322) PASS
+TEST(binio, get_lsb_int323) PASS
+TEST(binio, get_lsb_int324) PASS
+TEST(binio, put_lsb_uint160) PASS
+TEST(binio, put_lsb_uint161) PASS
+TEST(binio, put_lsb_uint162) PASS
+TEST(binio, put_lsb_uint163) PASS
+TEST(binio, put_lsb_uint164) PASS
+TEST(binio, get_lsb_uint160) PASS
+TEST(binio, get_lsb_uint161) PASS
+TEST(binio, get_lsb_uint162) PASS
+TEST(binio, get_lsb_uint163) PASS
+TEST(binio, get_lsb_uint164) PASS
+TEST(binio, get_lsb_uint320) PASS
+TEST(binio, get_lsb_uint321) PASS
+TEST(binio, get_lsb_uint322) PASS
+TEST(binio, get_lsb_uint323) PASS
+TEST(binio, get_lsb_uint324) PASS
+TEST(binio, get_msb_short0) PASS
+TEST(binio, get_msb_short1) PASS
+TEST(binio, get_msb_short2) PASS
+TEST(binio, get_msb_short3) PASS
+TEST(binio, get_msb_short4) PASS
+TEST(binio, getmsb_short0) PASS
+TEST(binio, getmsb_short1) PASS
+TEST(binio, getmsb_short2) PASS
+TEST(binio, getmsb_short3) PASS
+TEST(binio, getmsb_short4) PASS
+TEST(binio, get_msb_ushort0) PASS
+TEST(binio, get_msb_ushort1) PASS
+TEST(binio, get_msb_ushort2) PASS
+TEST(binio, get_msb_ushort3) PASS
+TEST(binio, get_msb_ushort4) PASS
+TEST(gpstolfp, check) PASS
+TEST(ieee754io, test_zero32) PASS
+TEST(ieee754io, test_one32) PASS
+TEST(ieee754io, test_negone32) PASS
+TEST(ieee754io, test_small32) PASS
+TEST(ieee754io, test_nan32) PASS
+TEST(ieee754io, test_max32) PASS
+TEST(ieee754io, test_order32) PASS
+TEST(ieee754io, test_zero64) PASS
+TEST(ieee754io, test_one64) PASS
+TEST(ieee754io, test_negone64) PASS
+TEST(ieee754io, test_small64) PASS
+TEST(ieee754io, test_nan64) PASS
+TEST(ieee754io, test_max64) PASS
+TEST(ieee754io, test_order64) PASS
+
+-----------------------
+55 Tests 0 Failures 0 Ignored 
+OK
+
+*** stderr ***
+
+
+
+BINARY      : test_ntpd
+RETURN VALUE: 0
+
+*** stdout ***
+Unity test run 1 of 1
+TEST(leapsec, ValidateGood) PASS
+TEST(leapsec, ValidateNoHash) PASS
+TEST(leapsec, ValidateBad) PASS
+TEST(leapsec, ValidateMalformed) PASS
+TEST(leapsec, ValidateMalformedShort) PASS
+TEST(leapsec, ValidateNoLeadZero) PASS
+TEST(leapsec, tableSelect) PASS
+TEST(leapsec, loadFileExpire) PASS
+TEST(leapsec, loadFileTTL) PASS
+TEST(leapsec, lsQueryPristineState)leap table (0 entries) expires at 1970-01-01:
+ PASS
+TEST(leapsec, ls2009faraway) PASS
+TEST(leapsec, ls2009weekaway) PASS
+TEST(leapsec, ls2009houraway) PASS
+TEST(leapsec, ls2009secaway) PASS
+TEST(leapsec, ls2009onspot) PASS
+TEST(leapsec, ls2009nodata) PASS
+TEST(leapsec, ls2009limdata)leap table (10 entries) expires at 2014-06-01:
+1991-01-01 [-] (1990-12-04) - 26
+1992-07-01 [-] (1992-06-03) - 27
+1993-07-01 [-] (1993-06-03) - 28
+1994-07-01 [-] (1994-06-03) - 29
+1996-01-01 [-] (1995-12-04) - 30
+1997-07-01 [-] (1997-06-03) - 31
+1999-01-01 [-] (1998-12-04) - 32
+2006-01-01 [-] (2005-12-04) - 33
+2009-01-01 [-] (2008-12-04) - 34
+2012-07-01 [-] (2012-06-03) - 35
+ PASS
+TEST(leapsec, addDynamic)leap table (10 entries) expires at 1993-07-01:
+1990-01-01 [-] (1989-12-04) - 25
+1991-01-01 [-] (1990-12-04) - 26
+1992-07-01 [-] (1992-06-03) - 27
+1993-07-01 [-] (1993-06-03) - 28
+1996-01-10 [*] (1995-12-10) - 29
+1997-07-09 [*] (1997-06-09) - 30
+1999-01-10 [*] (1998-12-10) - 31
+2006-01-10 [*] (2005-12-10) - 32
+2009-01-10 [*] (2008-12-10) - 33
+2012-07-09 [*] (2012-06-09) - 34
+ PASS
+TEST(leapsec, addFixed) PASS
+TEST(leapsec, ls2009seqInsElectric) PASS
+TEST(leapsec, ls2009seqInsDumb) PASS
+TEST(leapsec, ls2009seqDelElectric) PASS
+TEST(leapsec, ls2009seqDelDumb) PASS
+TEST(leapsec, ls2012seqInsElectric) PASS
+TEST(leapsec, ls2012seqInsDumb) PASS
+TEST(leapsec, lsEmptyTableDumb) PASS
+TEST(leapsec, lsEmptyTableElectric) PASS
+TEST(hackrestrict, RestrictionsAreEmptyAfterInit) PASS
+TEST(hackrestrict, ReturnsCorrectDefaultRestrictions) PASS
+TEST(hackrestrict, HackingDefaultRestriction) PASS
+TEST(hackrestrict, CantRemoveDefaultEntry) PASS
+TEST(hackrestrict, AddingNewRestriction) PASS
+TEST(hackrestrict, TheMostFittingRestrictionIsMatched) PASS
+TEST(hackrestrict, DeletedRestrictionIsNotMatched) PASS
+TEST(hackrestrict, RestrictUnflagWorks) PASS
+
+-----------------------
+35 Tests 0 Failures 0 Ignored 
 OK
 
 *** stderr ***
