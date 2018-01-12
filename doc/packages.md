@@ -35,7 +35,7 @@
 | library/libevent			| 2.1.8			| https://github.com/libevent/libevent/releases | Used solely by tmux
 | library/expat				| 2.2.5			| https://sourceforge.net/projects/expat/files/expat
 | library/gmp				| 6.1.2			| https://gmplib.org/
-| library/mpc				| 1.0.3			| http://www.multiprecision.org/mpc/download.html
+| library/mpc				| 1.1.0			| http://www.multiprecision.org/mpc/download.html
 | library/mpfr				| 4.0.0			| http://www.mpfr.org/mpfr-current/
 | library/idnkit			| 2.3			| https://jprs.co.jp/idn/index-e.html
 | library/libidn			| 1.33			| http://git.savannah.gnu.org/cgit/libidn.git/refs/tags

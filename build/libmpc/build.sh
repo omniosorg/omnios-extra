@@ -13,12 +13,12 @@
 #
 # CDDL HEADER END  }}}
 #
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 #
 . ../../lib/functions.sh
 
 PROG=mpc
-VER=1.0.3
+VER=1.1.0
 VERHUMAN=$VER
 PKG=library/mpc
 SUMMARY="The GNU complex number library"
@@ -28,10 +28,13 @@ CONFIGURE_OPTS+="
     --with-gmp-include=$PREFIX/include/gmp
 "
 
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
+
 init
 download_source $PROG $PROG $VER
 prep_build
 build
+run_testsuite check
 make_isa_stub
 make_package
 clean_up
