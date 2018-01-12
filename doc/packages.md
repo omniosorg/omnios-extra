@@ -89,7 +89,7 @@
 | text/less				| 487			| https://ftp.gnu.org/gnu/less/
 | web/curl				| 7.57.0		| https://curl.haxx.se/download.html
 | web/wget				| 1.19.2		| https://git.savannah.gnu.org/cgit/wget.git/refs/tags
-| library/glib2				| 2.54.2		| https://download.gnome.org/sources/glib/cache.json | 2.55.0 is an unstable/dev version.
+| library/glib2				| 2.54.3		| https://download.gnome.org/sources/glib/cache.json | 2.55.x is an unstable/dev version.
 | developer/gnu-binutils		| 2.29.1		| https://ftp.gnu.org/gnu/binutils
 | media/cdrtools			| 3.01			| https://sourceforge.net/projects/cdrtools/files
 | system/virtualization/open-vm-tools	| 10.2.0		| https://github.com/vmware/open-vm-tools/releases
