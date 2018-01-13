@@ -17,6 +17,11 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 ### System Features
 
+* The ISO/USB installer has received multiple updates. It is now half the
+  size and around seven times faster to start up, text menus have been
+  replaced with dialogues to make it easier to navigate, and it is now
+  possible to select DHCP assignment of the DNS parameters.
+
 * The default mail submission agent is now `Dragonfly Mail Agent (dma)` rather
   than sendmail. In a default installation, `/usr/lib/sendmail` points to
   `dma` and can deliver email messages to local users and Internet recipients.
@@ -107,6 +112,11 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 ### Hardware Support
 
 ### Commands and Command Options
+
+* ZFS now supports the removal of a top-level vdev from a pool via
+  `zfs remove`, reducing the total amount of storage in the pool without
+  requiring a pool rebuild. More information ca be found in
+  [illumos Issue 7614](https://www.illumos.org/issues/7614).
 
 * `/usr/gnu/bin/uname -o` reports `illumos` as the operating system.
 
