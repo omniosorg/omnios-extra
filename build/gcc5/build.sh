@@ -24,7 +24,6 @@
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PKG=developer/gcc5
@@ -67,19 +66,26 @@ LD_FOR_TARGET=/bin/ld
 export LD LD_FOR_HOST LD_FOR_TARGET
 
 CONFIGURE_OPTS_32="--prefix=$OPT"
-CONFIGURE_OPTS="\
-    --host i386-pc-solaris2.11 \
-    --build i386-pc-solaris2.11 \
-    --target i386-pc-solaris2.11 \
-    --with-boot-ldflags=-R$OPT/lib \
-    --with-gmp-include=/usr/include/gmp \
-    --enable-languages=c,c++,fortran,lto \
-    --enable-__cxa_atexit \
-    --without-gnu-ld --with-ld=/bin/ld \
-    --with-as=/usr/bin/gas --with-gnu-as \
+CONFIGURE_OPTS="
+    --host i386-pc-solaris2.11
+    --build i386-pc-solaris2.11
+    --target i386-pc-solaris2.11
+    --with-boot-ldflags=-R$OPT/lib
+    --with-gmp-include=/usr/include/gmp
+    --enable-languages=c,c++,fortran,lto
+    --enable-__cxa_atexit
+    --without-gnu-ld --with-ld=/bin/ld
+    --with-as=/usr/bin/gas --with-gnu-as
     --with-build-time-tools=/usr/gnu/i386-pc-solaris2.11/bin"
 LDFLAGS32="-R$OPT/lib"
 export LD_OPTIONS="-zignore -zcombreloc -i"
+
+# If the selected compiler is the same version as the one we're building
+# then the three-stage bootstrap is unecessary and some build time can be
+# saved.
+[ "`gcc -v 2>&1 | nawk '/^gcc version/ { print $3 }'`" = "$VER" ] \
+    && CONFIGURE_OPTS+=" --disable-bootstrap" \
+    && logmsg "--- disabling bootstrap"
 
 make_install() {
     logmsg "--- make install"
