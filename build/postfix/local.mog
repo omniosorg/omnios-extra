@@ -1,0 +1,66 @@
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License, Version 1.0 only
+# (the "License").  You may not use this file except in compliance
+# with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+#
+# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+# Use is subject to license terms.
+group gid=27 groupname=$(PROG)
+group gid=28 groupname=postdrop
+user ftpuser=false gcos-field="Postfix Reserved UID" group=$(PROG) \
+    uid=27 password=NP username=$(PROG)
+<transform dir path=var/lib/$(PROG) -> set owner $(PROG)>
+<transform dir path=var/lib/$(PROG) -> set group $(PROG)>
+<transform dir path=var/spool/$(PROG)/.+ -> set owner $(PROG)>
+<transform dir path=var/spool/$(PROG)/maildrop -> set group postdrop>
+<transform dir path=var/spool/$(PROG)/maildrop -> set mode 1730>
+<transform dir path=var/spool/$(PROG)/public -> set group postdrop>
+<transform dir path=var/spool/$(PROG)/pid -> set owner root>
+<transform file dir path=$(PREFIX)/libexec/$(PROG)/pickup -> set owner root>
+<transform file path=$(PREFIX)/sbin/postqueue -> set group postdrop>
+<transform file path=$(PREFIX)/sbin/postdrop -> set group postdrop>
+<transform file path=$(PREFIX)/sbin/postdrop -> set mode 2555>
+<transform file path=$(PREFIX)/sbin/postqueue -> set mode 2555>
+<transform file path=etc/$(ORIGPREFIX)/$(PROG)/.* -> set preserve true>
+<transform file path=$(PREFIX)/sbin -> set restart_fmri svc:/network/smtp/$(PROG):default>
+<transform file path=$(PREFIX)/libexec -> set restart_fmri svc:/network/smtp/$(PROG):default>
+
+# Mediated symlinks
+link path=usr/bin/mailq mediator=mta mediator-implementation=$(PROG) \
+    target=../../$(PREFIX)/sbin/sendmail
+link path=usr/lib/sendmail mediator=mta mediator-implementation=$(PROG) \
+    target=../../$(PREFIX)/sbin/sendmail
+link path=usr/sbin/sendmail mediator=mta mediator-implementation=$(PROG) \
+    target=../../$(PREFIX)/sbin/sendmail
+link path=usr/sbin/newaliases mediator=mta mediator-implementation=$(PROG) \
+    target=../../$(PREFIX)/sbin/sendmail
+link path=etc/aliases mediator=mta mediator-implementation=$(PROG) \
+    target=./$(ORIGPREFIX)/$(PROG)/aliases
+
+# Mediated binaries
+<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
+    link path=$(ORIGPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> \
+    mediator=mta mediator-implementation=$(PROG) >
+
+# Mediated man pages
+<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
+    link path=$(ORIGPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> \
+    mediator=mta mediator-implementation=$(PROG) >
+
+license LICENSE license=IBM
