@@ -91,7 +91,13 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-logcmd cp $TMPDIR/$BUILDDIR/build/main/test.log $SRCDIR/testsuite.log
+# Force the testsuite output to be sorted by the binary being tested
+# to aid comparison; also remove binary paths from test log
+cat $TMPDIR/$BUILDDIR/build/main/test.log | perl -e '
+    m|(BINARY\s+:\s).*/([^/]+)$| && push @{$t{$b = $2}}, "$1$b"
+        or push @{$t{$b}}, $_ while(<>);
+    print @{$t{$_}} for sort keys %t
+' > $SRCDIR/testsuite.log
 install_ntpdate
 install_files
 install_smf network ntpsec.xml ntpsec
