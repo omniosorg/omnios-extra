@@ -38,7 +38,7 @@ MIRROR="https://github.com/hadfl/$PROG/releases/download"
 
 RUN_DEPENDS_IPS="system/zones/brand/lx"
 
-XFORM_ARGS="-D PREFIX=$PREFIX"
+XFORM_ARGS="-D PREFIX=${PREFIX#/}"
 
 CONFIGURE_OPTS_32="
     --prefix=$PREFIX/$PROG
