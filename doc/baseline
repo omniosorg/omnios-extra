@@ -1,4 +1,5 @@
 extra.omnios ooce/application/texlive
+extra.omnios ooce/database/bdb
 extra.omnios ooce/developer/build/ant
 extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr

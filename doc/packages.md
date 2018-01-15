@@ -1,6 +1,7 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
 | ooce/application/texlive	| 20170524	| ftp://tug.org/historic/systems/texlive/2017/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/bdb		| 5.3.28	| http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/build/ant	| 1.9.9		| https://ant.apache.org/srcdownload.cgi | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| 1.2.1		| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| 0.2.3		| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
