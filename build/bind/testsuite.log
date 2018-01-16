@@ -1,14 +1,11 @@
-S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/atomic/.libs/t_atomic:Saturday 29 July 00:37:58 2017
 T:test_atomic_xadd:1:A
 A:ensure that isc_atomic_xadd() works.
 I:32-bit counter 320000000, expected 320000000
 R:PASS
 T:test_atomic_store:1:A
 A:ensure that isc_atomic_store() works.
-I:32-bit store 0x1a1a1a1a, expected 0x1a1a1a1a
+I:32-bit store 0xf5f5f5f5, expected 0xf5f5f5f5
 R:PASS
-E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/atomic/.libs/t_atomic:Saturday 29 July 00:38:09 2017
-S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/db/.libs/t_db:Saturday 29 July 00:38:09 2017
 T:dns_db_load:1:A
 A:A call to dns_db_load(db, filename) loads the contents of the database in filename into db.
 I:testing using file dns_db_load_1.data and name a.
@@ -120,8 +117,6 @@ T:dns_db_load:25:A
 A:A call to dns_db_load(db, filename) returns DNS_R_NOTZONETOP when the zone data contains a SOA not at the zone apex.
 I:testing using file dns_db_load_25.data and name a.
 R:PASS
-E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/db/.libs/t_db:Saturday 29 July 00:38:09 2017
-S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/dst/.libs/t_dst:Saturday 29 July 00:38:09 2017
 T:dst:1:A
 A:the dst module provides the capability to generate, store and retrieve public and private keys, sign and verify data using the RSA, DSA and MD5 algorithms, and compute Diffie-Hellman shared secrets.
 I:testing use of stored keys [1]
@@ -137,8 +132,6 @@ I:testing t2_data_1, t2_rsasig, test., 54622, DST_ALG_RSAMD5, ISC_R_SUCCESS
 I:testing t2_data_1, t2_dsasig, test., 54622, DST_ALG_RSAMD5, !ISC_R_SUCCESS
 I:testing t2_data_2, t2_dsasig, test., 23616, DST_ALG_DSA, !ISC_R_SUCCESS
 R:PASS
-E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/dst/.libs/t_dst:Saturday 29 July 00:38:09 2017
-S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/master/.libs/t_master:Saturday 29 July 00:38:09 2017
 T:dns_master_loadfile:1:A
 A:dns_master_loadfile loads a valid master file and returns ISC_R_SUCCESS
 R:PASS
@@ -177,8 +170,6 @@ R:PASS
 T:dns_master_loadfile:11:A
 A:dns_master_loadfile allow leading zeros in SOA
 R:PASS
-E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/master/.libs/t_master:Saturday 29 July 00:38:10 2017
-S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/mem/.libs/t_mem:Saturday 29 July 00:38:10 2017
 T:mem:1:A
 A:the memory module supports the creation of memory contexts and the management of memory pools.
 I:setting freemax to 10
@@ -198,11 +189,7 @@ I:...
 I:...
 I:...
 R:PASS
-E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/mem/.libs/t_mem:Saturday 29 July 00:38:16 2017
-S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/hashes/.libs/t_hashes:Saturday 29 July 00:38:16 2017
 R:PASS
-E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/hashes/.libs/t_hashes:Saturday 29 July 00:38:16 2017
-S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/names/.libs/t_names:Saturday 29 July 00:38:16 2017
 T:dns_name_init:1:A
 A:dns_name_init initializes 'name' to the empty name
 R:PASS
@@ -355,8 +342,6 @@ I:testing a.b.C.d
 R:PASS
 I:testing a.b.
 R:PASS
-E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/names/.libs/t_names:Saturday 29 July 00:38:16 2017
-S:net:Saturday 29 July 00:38:16 2017
 T:isc_netaddr_ismulticast:1:A
 A:Checking to see if multicast addresses are detected properly
 I:1.2.3.4 is not multicast (PASSED)
@@ -369,8 +354,6 @@ R:PASS
 T:isc_sockaddr_ismulticast:2:A
 A:Checking to see if multicast addresses are detected properly
 R:PASS
-E:net:Saturday 29 July 00:38:16 2017
-S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/rbt/.libs/t_rbt:Saturday 29 July 00:38:16 2017
 T:dns_rbt_create:1:A
 A:dns_rbt_create creates a rbt and returns ISC_R_SUCCESS on success
 R:PASS
@@ -496,8 +479,6 @@ A:a call to dns_rbtnodechain_prev(chain, name, origin) sets name to point to the
 I:checking for next name of b and new origin of vix.com.
 I:checking for DNS_R_NEWORIGIN
 R:PASS
-E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/rbt/.libs/t_rbt:Saturday 29 July 00:38:16 2017
-S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/resolver/.libs/t_resolver:Saturday 29 July 00:38:16 2017
 T:test_dns_resolver_create:1:A
 A:a resolver can be created successfully
 R:PASS
@@ -519,20 +500,16 @@ T:test_dns_resolver_settimeout_over_maximum:1:A
 A:_settimeout() cannot set the value larger than the maximum.
 I:The new timeout is 30 seconds
 R:PASS
-E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/resolver/.libs/t_resolver:Saturday 29 July 00:38:16 2017
-S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/sockaddr/.libs/t_sockaddr:Saturday 29 July 00:38:16 2017
 T:isc_sockaddr_eqaddrprefix:1:A
 A:isc_sockaddr_eqaddrprefix() returns ISC_TRUE when prefixes of a and b are equal, and ISC_FALSE when they are not equal
 R:PASS
 T:isc_netaddr_masktoprefixlen:1:A
 A:isc_netaddr_masktoprefixlen() calculates correct prefix lengths 
 R:PASS
-E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/sockaddr/.libs/t_sockaddr:Saturday 29 July 00:38:16 2017
-S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/tasks/.libs/t_tasks:Saturday 29 July 00:38:16 2017
 T:tasks:1:A
 A:The task subsystem can create and manage tasks
-I:tick
 I:tock
+I:tick
 I:task 1
 I:task 2
 I:task 1
@@ -545,9 +522,9 @@ I:shutdown 3
 I:task 1
 I:tock
 I:task 4
+I:task 1
 I:task 4
 I:shutdown 4
-I:task 1
 I:task 1
 I:task 1
 I:task 1
@@ -608,12 +585,12 @@ I:testing purge on 0,4,0 expecting 15
 I:testing purge on 0,99,8 expecting 0
 I:testing purge on 3,5,0 expecting 5
 I:testing purgerange on 2,4-5,8 expecting 2
-I:event 806903c,5,8 matched but was not purgable
+I:event 80691a8,5,8 matched but was not purgable
 I:testing purge on 0,4-5,8 expecting 5
-I:event 806903c,5,8 matched but was not purgable
+I:event 80691a8,5,8 matched but was not purgable
 I:testing purge on 0,5-6,0 expecting 28
-I:event 806903c,5,8 matched but was not purgable
-I:event 806903c,5,a matched but was not purgable
+I:event 80691a8,5,8 matched but was not purgable
+I:event 80691a8,5,a matched but was not purgable
 I:testing purge on 0,99-101,8 expecting 0
 I:testing purge on 3,5-6,0 expecting 10
 R:PASS
@@ -623,45 +600,45 @@ I:task enter 0
 I:task enter 1
 I:task enter 2
 I:task enter 3
-I:task exit 0
-I:task enter 0
-I:task exit 1
-I:task enter 1
-I:task exit 3
-I:task enter 3
 I:task exit 2
 I:task enter 2
 I:task exit 1
 I:task enter 1
-I:task exit 0
-I:task enter 0
 I:task exit 3
 I:task enter 3
+I:task exit 0
+I:task enter 0
 I:task exit 2
 I:task enter 2
 I:task exit 1
 I:task enter 1
-I:task exit 0
-I:task enter 0
 I:task exit 3
 I:task enter 3
+I:task exit 0
+I:task enter 0
 I:task exit 2
 I:task enter 2
 I:task exit 1
 I:task enter 1
-I:task exit 0
-I:task enter 0
 I:task exit 3
 I:task enter 3
+I:task exit 0
+I:task enter 0
 I:task exit 2
 I:task enter 2
 I:task exit 1
+I:task enter 1
+I:task exit 3
+I:task enter 3
+I:task exit 0
+I:task enter 0
+I:task exit 2
 I:task enter 4
-I:task exit 0
+I:task exit 1
 I:task enter 5
 I:task exit 3
 I:task enter 6
-I:task exit 2
+I:task exit 0
 I:task exit 4
 I:task enter 4
 I:task exit 5
@@ -693,26 +670,24 @@ I:task 8 state 0
 I:task 9 state 0
 I:task exit 6
 I:task enter 7
-I:task enter 8
-I:task enter 1
 I:task enter 9
-I:task exit 9
-I:task enter 0
+I:task enter 2
+I:task enter 8
+I:task exit 2
+I:task enter 1
 I:task exit 7
 I:task enter 3
+I:task exit 9
+I:task enter 0
 I:task exit 8
-I:task enter 2
-I:task exit 1
 I:task enter 4
-I:task exit 0
-I:task enter 5
+I:task exit 1
 I:task exit 3
-I:task exit 2
+I:task enter 5
+I:task exit 0
 I:task exit 4
 I:task exit 5
 R:PASS
-E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/tasks/.libs/t_tasks:Saturday 29 July 00:38:28 2017
-S:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/timers/.libs/t_timers:Saturday 29 July 00:38:28 2017
 T:isc_timer_create:1:A
 A:When type is isc_timertype_ticker, a call to isc_timer_create() creates a timer that posts an ISC_TIMEREVENT_TICK event to the specified task every 'interval' seconds and returns ISC_R_SUCCESS.
 I:tick 1
@@ -749,572 +724,407 @@ I:t5_once_event
 I:t5_tick_event 1
 I:t5_shutdown_event
 R:PASS
-E:/omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/timers/.libs/t_timers:Saturday 29 July 00:39:29 2017
-making all in /omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/system/dlzexternal
-making all in /omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/system/lwresd
-making all in /omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/system/rsabigexponent
-making all in /omniosorg/build/bloody/_build/bind-9.10.6/bin/tests/system/tkey
-S:acl:Sat Jul 29 00:39:29 CEST 2017
 T:acl:1:A
 A:System test acl
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:acl:Sat Jul 29 00:39:29 CEST 2017
-S:additional:Sat Jul 29 00:39:29 CEST 2017
 T:additional:1:A
 A:System test additional
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:additional:Sat Jul 29 00:39:30 CEST 2017
-S:allow_query:Sat Jul 29 00:39:30 CEST 2017
 T:allow_query:1:A
 A:System test allow_query
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:allow_query:Sat Jul 29 00:39:30 CEST 2017
-S:addzone:Sat Jul 29 00:39:30 CEST 2017
 T:addzone:1:A
 A:System test addzone
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:addzone:Sat Jul 29 00:39:30 CEST 2017
-S:autosign:Sat Jul 29 00:39:30 CEST 2017
 T:autosign:1:A
 A:System test autosign
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:autosign:Sat Jul 29 00:39:30 CEST 2017
-S:builtin:Sat Jul 29 00:39:30 CEST 2017
 T:builtin:1:A
 A:System test builtin
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:builtin:Sat Jul 29 00:39:30 CEST 2017
-S:cacheclean:Sat Jul 29 00:39:30 CEST 2017
 T:cacheclean:1:A
 A:System test cacheclean
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:cacheclean:Sat Jul 29 00:39:30 CEST 2017
-S:case:Sat Jul 29 00:39:30 CEST 2017
 T:case:1:A
 A:System test case
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:case:Sat Jul 29 00:39:30 CEST 2017
-S:chain:Sat Jul 29 00:39:30 CEST 2017
 T:chain:1:A
 A:System test chain
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:chain:Sat Jul 29 00:39:30 CEST 2017
-S:checkconf:Sat Jul 29 00:39:30 CEST 2017
 T:checkconf:1:A
 A:System test checkconf
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:checkconf:Sat Jul 29 00:39:30 CEST 2017
-S:checkds:Sat Jul 29 00:39:30 CEST 2017
 T:checkds:1:A
 A:System test checkds
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:checkds:Sat Jul 29 00:39:30 CEST 2017
-S:checknames:Sat Jul 29 00:39:30 CEST 2017
 T:checknames:1:A
 A:System test checknames
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:checknames:Sat Jul 29 00:39:30 CEST 2017
-S:checkzone:Sat Jul 29 00:39:30 CEST 2017
 T:checkzone:1:A
 A:System test checkzone
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:checkzone:Sat Jul 29 00:39:30 CEST 2017
-S:cookie:Sat Jul 29 00:39:30 CEST 2017
 T:cookie:1:A
 A:System test cookie
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:cookie:Sat Jul 29 00:39:30 CEST 2017
-S:coverage:Sat Jul 29 00:39:30 CEST 2017
 T:coverage:1:A
 A:System test coverage
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:coverage:Sat Jul 29 00:39:30 CEST 2017
-S:database:Sat Jul 29 00:39:30 CEST 2017
 T:database:1:A
 A:System test database
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:database:Sat Jul 29 00:39:30 CEST 2017
 run.sh: delv: no such test
-S:digdelv:Sat Jul 29 00:39:30 CEST 2017
 T:digdelv:1:A
 A:System test digdelv
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:digdelv:Sat Jul 29 00:39:30 CEST 2017
-S:dlv:Sat Jul 29 00:39:30 CEST 2017
 T:dlv:1:A
 A:System test dlv
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:dlv:Sat Jul 29 00:39:30 CEST 2017
-S:dlvauto:Sat Jul 29 00:39:30 CEST 2017
 T:dlvauto:1:A
 A:System test dlvauto
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:dlvauto:Sat Jul 29 00:39:30 CEST 2017
-S:dlz:Sat Jul 29 00:39:30 CEST 2017
 T:dlz:1:A
 A:System test dlz
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:dlz:Sat Jul 29 00:39:30 CEST 2017
-S:dlzexternal:Sat Jul 29 00:39:30 CEST 2017
 T:dlzexternal:1:A
 A:System test dlzexternal
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:dlzexternal:Sat Jul 29 00:39:30 CEST 2017
-S:dlzredir:Sat Jul 29 00:39:30 CEST 2017
 T:dlzredir:1:A
 A:System test dlzredir
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:dlzredir:Sat Jul 29 00:39:30 CEST 2017
-S:dns64:Sat Jul 29 00:39:30 CEST 2017
 T:dns64:1:A
 A:System test dns64
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:dns64:Sat Jul 29 00:39:30 CEST 2017
-S:dnssec:Sat Jul 29 00:39:30 CEST 2017
 T:dnssec:1:A
 A:System test dnssec
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:dnssec:Sat Jul 29 00:39:30 CEST 2017
-S:dsdigest:Sat Jul 29 00:39:30 CEST 2017
 T:dsdigest:1:A
 A:System test dsdigest
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:dsdigest:Sat Jul 29 00:39:30 CEST 2017
-S:dscp:Sat Jul 29 00:39:30 CEST 2017
 T:dscp:1:A
 A:System test dscp
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:dscp:Sat Jul 29 00:39:30 CEST 2017
-S:ecdsa:Sat Jul 29 00:39:30 CEST 2017
 T:ecdsa:1:A
 A:System test ecdsa
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:ecdsa:Sat Jul 29 00:39:30 CEST 2017
-S:ednscompliance:Sat Jul 29 00:39:30 CEST 2017
 T:ednscompliance:1:A
 A:System test ednscompliance
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:ednscompliance:Sat Jul 29 00:39:30 CEST 2017
-S:emptyzones:Sat Jul 29 00:39:30 CEST 2017
 T:emptyzones:1:A
 A:System test emptyzones
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:emptyzones:Sat Jul 29 00:39:30 CEST 2017
-S:fetchlimit:Sat Jul 29 00:39:30 CEST 2017
 T:fetchlimit:1:A
 A:System test fetchlimit
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:fetchlimit:Sat Jul 29 00:39:30 CEST 2017
-S:filter-aaaa:Sat Jul 29 00:39:30 CEST 2017
 T:filter-aaaa:1:A
 A:System test filter-aaaa
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:filter-aaaa:Sat Jul 29 00:39:30 CEST 2017
-S:formerr:Sat Jul 29 00:39:30 CEST 2017
 T:formerr:1:A
 A:System test formerr
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:formerr:Sat Jul 29 00:39:30 CEST 2017
-S:forward:Sat Jul 29 00:39:30 CEST 2017
 T:forward:1:A
 A:System test forward
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:forward:Sat Jul 29 00:39:30 CEST 2017
-S:geoip:Sat Jul 29 00:39:30 CEST 2017
 T:geoip:1:A
 A:System test geoip
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:geoip:Sat Jul 29 00:39:30 CEST 2017
-S:glue:Sat Jul 29 00:39:30 CEST 2017
 T:glue:1:A
 A:System test glue
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:glue:Sat Jul 29 00:39:30 CEST 2017
-S:gost:Sat Jul 29 00:39:30 CEST 2017
 T:gost:1:A
 A:System test gost
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:gost:Sat Jul 29 00:39:30 CEST 2017
-S:ixfr:Sat Jul 29 00:39:30 CEST 2017
 T:ixfr:1:A
 A:System test ixfr
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:ixfr:Sat Jul 29 00:39:30 CEST 2017
-S:inline:Sat Jul 29 00:39:30 CEST 2017
 T:inline:1:A
 A:System test inline
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:inline:Sat Jul 29 00:39:30 CEST 2017
-S:integrity:Sat Jul 29 00:39:30 CEST 2017
 T:integrity:1:A
 A:System test integrity
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:integrity:Sat Jul 29 00:39:30 CEST 2017
-S:legacy:Sat Jul 29 00:39:30 CEST 2017
 T:legacy:1:A
 A:System test legacy
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:legacy:Sat Jul 29 00:39:30 CEST 2017
-S:limits:Sat Jul 29 00:39:30 CEST 2017
 T:limits:1:A
 A:System test limits
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:limits:Sat Jul 29 00:39:31 CEST 2017
-S:logfileconfig:Sat Jul 29 00:39:31 CEST 2017
 T:logfileconfig:1:A
 A:System test logfileconfig
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:logfileconfig:Sat Jul 29 00:39:31 CEST 2017
-S:lwresd:Sat Jul 29 00:39:31 CEST 2017
 T:lwresd:1:A
 A:System test lwresd
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:lwresd:Sat Jul 29 00:39:31 CEST 2017
-S:masterfile:Sat Jul 29 00:39:31 CEST 2017
 T:masterfile:1:A
 A:System test masterfile
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:masterfile:Sat Jul 29 00:39:31 CEST 2017
-S:masterformat:Sat Jul 29 00:39:31 CEST 2017
 T:masterformat:1:A
 A:System test masterformat
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:masterformat:Sat Jul 29 00:39:31 CEST 2017
-S:metadata:Sat Jul 29 00:39:31 CEST 2017
 T:metadata:1:A
 A:System test metadata
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:metadata:Sat Jul 29 00:39:31 CEST 2017
-S:notify:Sat Jul 29 00:39:31 CEST 2017
 T:notify:1:A
 A:System test notify
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:notify:Sat Jul 29 00:39:31 CEST 2017
-S:nslookup:Sat Jul 29 00:39:31 CEST 2017
 T:nslookup:1:A
 A:System test nslookup
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:nslookup:Sat Jul 29 00:39:31 CEST 2017
-S:nsupdate:Sat Jul 29 00:39:31 CEST 2017
 T:nsupdate:1:A
 A:System test nsupdate
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:nsupdate:Sat Jul 29 00:39:31 CEST 2017
-S:pending:Sat Jul 29 00:39:31 CEST 2017
 T:pending:1:A
 A:System test pending
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:pending:Sat Jul 29 00:39:31 CEST 2017
-S:reclimit:Sat Jul 29 00:39:31 CEST 2017
 T:reclimit:1:A
 A:System test reclimit
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:reclimit:Sat Jul 29 00:39:31 CEST 2017
-S:redirect:Sat Jul 29 00:39:31 CEST 2017
 T:redirect:1:A
 A:System test redirect
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:redirect:Sat Jul 29 00:39:31 CEST 2017
-S:resolver:Sat Jul 29 00:39:31 CEST 2017
 T:resolver:1:A
 A:System test resolver
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:resolver:Sat Jul 29 00:39:31 CEST 2017
-S:rndc:Sat Jul 29 00:39:31 CEST 2017
 T:rndc:1:A
 A:System test rndc
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:rndc:Sat Jul 29 00:39:31 CEST 2017
-S:rpz:Sat Jul 29 00:39:31 CEST 2017
 T:rpz:1:A
 A:System test rpz
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:rpz:Sat Jul 29 00:39:31 CEST 2017
-S:rpzrecurse:Sat Jul 29 00:39:31 CEST 2017
 T:rpzrecurse:1:A
 A:System test rpzrecurse
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:rpzrecurse:Sat Jul 29 00:39:31 CEST 2017
-S:rrl:Sat Jul 29 00:39:31 CEST 2017
 T:rrl:1:A
 A:System test rrl
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:rrl:Sat Jul 29 00:39:31 CEST 2017
-S:rrchecker:Sat Jul 29 00:39:31 CEST 2017
 T:rrchecker:1:A
 A:System test rrchecker
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:rrchecker:Sat Jul 29 00:39:31 CEST 2017
-S:rrsetorder:Sat Jul 29 00:39:31 CEST 2017
 T:rrsetorder:1:A
 A:System test rrsetorder
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:rrsetorder:Sat Jul 29 00:39:31 CEST 2017
-S:rsabigexponent:Sat Jul 29 00:39:31 CEST 2017
 T:rsabigexponent:1:A
 A:System test rsabigexponent
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:rsabigexponent:Sat Jul 29 00:39:31 CEST 2017
-S:smartsign:Sat Jul 29 00:39:31 CEST 2017
 T:smartsign:1:A
 A:System test smartsign
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:smartsign:Sat Jul 29 00:39:31 CEST 2017
-S:sortlist:Sat Jul 29 00:39:31 CEST 2017
 T:sortlist:1:A
 A:System test sortlist
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:sortlist:Sat Jul 29 00:39:31 CEST 2017
-S:spf:Sat Jul 29 00:39:31 CEST 2017
 T:spf:1:A
 A:System test spf
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:spf:Sat Jul 29 00:39:31 CEST 2017
-S:staticstub:Sat Jul 29 00:39:31 CEST 2017
 T:staticstub:1:A
 A:System test staticstub
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:staticstub:Sat Jul 29 00:39:31 CEST 2017
-S:statistics:Sat Jul 29 00:39:31 CEST 2017
 T:statistics:1:A
 A:System test statistics
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:statistics:Sat Jul 29 00:39:31 CEST 2017
-S:statschannel:Sat Jul 29 00:39:31 CEST 2017
 T:statschannel:1:A
 A:System test statschannel
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:statschannel:Sat Jul 29 00:39:31 CEST 2017
-S:stub:Sat Jul 29 00:39:31 CEST 2017
 T:stub:1:A
 A:System test stub
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:stub:Sat Jul 29 00:39:31 CEST 2017
-S:tcp:Sat Jul 29 00:39:31 CEST 2017
 T:tcp:1:A
 A:System test tcp
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:tcp:Sat Jul 29 00:39:31 CEST 2017
-S:tkey:Sat Jul 29 00:39:31 CEST 2017
 T:tkey:1:A
 A:System test tkey
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:tkey:Sat Jul 29 00:39:31 CEST 2017
-S:tsig:Sat Jul 29 00:39:31 CEST 2017
 T:tsig:1:A
 A:System test tsig
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:tsig:Sat Jul 29 00:39:31 CEST 2017
-S:tsiggss:Sat Jul 29 00:39:31 CEST 2017
 T:tsiggss:1:A
 A:System test tsiggss
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:tsiggss:Sat Jul 29 00:39:31 CEST 2017
-S:unknown:Sat Jul 29 00:39:31 CEST 2017
 T:unknown:1:A
 A:System test unknown
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:unknown:Sat Jul 29 00:39:31 CEST 2017
-S:upforwd:Sat Jul 29 00:39:31 CEST 2017
 T:upforwd:1:A
 A:System test upforwd
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:upforwd:Sat Jul 29 00:39:31 CEST 2017
-S:verify:Sat Jul 29 00:39:31 CEST 2017
 T:verify:1:A
 A:System test verify
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:verify:Sat Jul 29 00:39:31 CEST 2017
-S:views:Sat Jul 29 00:39:31 CEST 2017
 T:views:1:A
 A:System test views
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:views:Sat Jul 29 00:39:31 CEST 2017
-S:wildcard:Sat Jul 29 00:39:31 CEST 2017
 T:wildcard:1:A
 A:System test wildcard
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:wildcard:Sat Jul 29 00:39:31 CEST 2017
-S:xfer:Sat Jul 29 00:39:31 CEST 2017
 T:xfer:1:A
 A:System test xfer
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:xfer:Sat Jul 29 00:39:31 CEST 2017
-S:xferquota:Sat Jul 29 00:39:31 CEST 2017
 T:xferquota:1:A
 A:System test xferquota
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:xferquota:Sat Jul 29 00:39:31 CEST 2017
-S:zero:Sat Jul 29 00:39:31 CEST 2017
 T:zero:1:A
 A:System test zero
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:zero:Sat Jul 29 00:39:31 CEST 2017
-S:zonechecks:Sat Jul 29 00:39:31 CEST 2017
 T:zonechecks:1:A
 A:System test zonechecks
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-E:zonechecks:Sat Jul 29 00:39:31 CEST 2017
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:
 I:NOTE: System tests were skipped because they require that the

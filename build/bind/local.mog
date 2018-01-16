@@ -23,7 +23,7 @@
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright (c) 2013 by Delphix. All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 #
 
 <transform dir  path=etc -> drop>
@@ -31,23 +31,22 @@
 <transform file dir path=usr/include -> drop>
 <transform file path=usr/sbin/arpaname -> drop>
 <transform file path=usr/sbin/ddns-confgen -> drop>
-<transform file path=usr/sbin/dnssec-.* -> drop>
+<transform file path=usr/sbin/dnssec- -> drop>
 <transform file path=usr/sbin/genrandom -> drop>
-<transform file path=usr/sbin/isc-config.sh -> drop>
-<transform hardlink path=usr/sbin/bind9-config.sh -> drop>
-<transform hardlink path=usr/sbin/bind9-config -> drop>
+<transform file hardlink path=usr/sbin/isc-config -> drop>
+<transform file hardlink path=usr/sbin/bind9-config -> drop>
 <transform file path=usr/sbin/isc-hmac-fixup -> drop>
-<transform hardlink path=usr/sbin/lwresd -> drop>
-<transform file link path=usr/sbin/named.* -> drop>
+<transform file hardlink path=usr/sbin/lwresd -> drop>
+<transform file hardlink link path=usr/sbin/named -> drop>
 <transform file path=usr/sbin/nsec3hash -> drop>
-<transform file path=usr/sbin/pkcs11.* -> drop>
+<transform file path=usr/sbin/pkcs11 -> drop>
 <transform file path=usr/sbin/rndc -> drop>
-<transform file path=usr/sbin/rndc-confgen -> drop>
 <transform link path=usr/sbin/tsig-keygen -> drop>
 <transform file path=usr/share/man/man1/arpaname.1 -> drop>
 <transform file path=usr/share/man/man1/isc-config.sh.1 -> drop>
 <transform file path=usr/share/man/man1/named-rrchecker.1 -> drop>
-<transform hardlink path=usr/share/man/man1/bind9-config.sh.1 -> drop>
-<transform hardlink path=usr/share/man/man1/bind9-config.1 -> drop>
+<transform file hardlink path=usr/share/man/man1/bind9-config.sh.1 -> drop>
+<transform file hardlink path=usr/share/man/man1/bind9-config.1 -> drop>
 <transform file dir link hardlink path=usr/share/man/man[358] -> drop>
 license COPYRIGHT license=ISC
+
