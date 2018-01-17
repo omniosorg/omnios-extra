@@ -13,6 +13,5 @@
 | ooce/ooceapps			| 0.2.5		| https://github.com/hadfl/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/python-36	| 3.6.4		| https://www.python.org/downloads/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.12.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/system/mbuffer		| 20171011	| http://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 8.6.9		| http://www.methods.co.nz/asciidoc/ | [omniosorg](https://github.com/omniosorg)
-
-
