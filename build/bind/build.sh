@@ -27,14 +27,11 @@
 . ../../lib/functions.sh
 
 PROG=bind
-VER=9.10.6
+VER=9.10.6-P1
 VERHUMAN=$VER
 PKG=network/dns/bind
 SUMMARY="BIND DNS tools"
 DESC="$SUMMARY"
-
-RUN_DEPENDS_IPS="library/libxml2 library/security/openssl library/zlib
-             system/library system/library/gcc-runtime system/library/math"
 
 BUILDARCH=32
 
@@ -54,6 +51,11 @@ CONFIGURE_OPTS="
     --with-pkcs11
     --enable-shared
     --disable-static
+"
+
+TESTSUITE_SED="
+    /^[SE]:/d
+    /^making all in/d
 "
 
 init
