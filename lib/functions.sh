@@ -812,7 +812,13 @@ make_package() {
     if [ -n "$DESTDIR" ]; then
         logmsg "--- Generating package manifest from $DESTDIR"
         logmsg "------ Running: $PKGSEND generate $DESTDIR > $P5M_INT"
-        $PKGSEND generate $DESTDIR > $P5M_INT || \
+        GENERATE_ARGS=
+        if [ -n "$HARDLINK_TARGETS" ]; then
+            for f in "$HARDLINK_TARGETS"; do
+                GENERATE_ARGS+="--target $f "
+            done
+        fi
+        $PKGSEND generate $GENERATE_ARGS $DESTDIR > $P5M_INT || \
             logerr "------ Failed to generate manifest"
     else
         logmsg "--- Looks like a meta-package. Creating empty manifest"
