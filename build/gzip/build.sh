@@ -24,7 +24,6 @@
 # Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=gzip
@@ -41,58 +40,27 @@ CONFIGURE_OPTS="
 
 BUILDARCH=32
 
-# Solaris renames the z* utilities to gz* so we have to update the docs
+# /usr/bin/uncompress is a hardlink to gunzip but is also delivered by
+# system/extended-system-utilities. We therefore need to drop the version
+# delivered with gzip but since it's a hardlink it is sometimes identified as
+# a 'file' action and sometimes as 'hardlink'. Specify that gunzip should
+# always be the target allowing uncompress to be dropped in local.mog
+HARDLINK_TARGETS=usr/bin/gunzip
+
+# OmniOS renames the z* utilities to gz* so we have to update the docs
 rename_in_docs() {
     logmsg "Renaming z->gz references in documentation"
     pushd $TMPDIR/$BUILDDIR > /dev/null
-    for file in `ls *.1 *.info z*.in` ; do
-        logcmd mv $file $file.tmp
-        logmsg "Running: sed -f $SRCDIR/renaming.sed $file.tmp > $file"
-        sed -f $SRCDIR/renaming.sed $file.tmp > $file
-        logcmd rm -f $file.tmp
+    for file in *.1 z*.in; do
+        logcmd sed -i -f $SRCDIR/renaming.sed $file
     done
     popd > /dev/null
-}
-
-# Renames z* binaries and man pages to gz* in the DESTDIR
-rename_files() {
-    logmsg "Renaming z->gz files in $DESTDIR"
-    for dir in $DESTDIR$PREFIX/bin $DESTDIR$PREFIX/share/man/man1; do
-        pushd $dir
-        for zfile in `ls z*`; do
-            logcmd mv $zfile g$zfile
-        done
-        popd > /dev/null
-    done
-}
-
-remove_files() {
-    logmsg "Removing unwanted files in $DESTDIR"
-    # Uncompress is delivered by system/extended-system-utilities
-    # Can't do this in local.mog as it's a hardlink and can either by
-    # discovered as a file or a hardlink.
-    find $DESTDIR -name uncompress -exec rm {} +
-}
-
-build32() {
-    pushd $TMPDIR/$BUILDDIR > /dev/null
-    logmsg "Building 32-bit"
-    export ISALIST="$ISAPART"
-    make_clean
-    configure32
-    make_prog32
-    rename_in_docs
-    make_install32
-    rename_files
-    remove_files
-    popd > /dev/null
-    unset ISALIST
-    export ISALIST
 }
 
 init
 download_source $PROG $PROG $VER
 patch_source
+rename_in_docs
 prep_build
 build
 run_testsuite check
