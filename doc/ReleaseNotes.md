@@ -4,6 +4,55 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024l (2018-01-24)
+
+Weekly release for w/c 22nd of January 2018.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `bind` updated to 9.10.6-P1:
+  * [CVE-2017-3145](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-3145)
+* `curl` updated to 7.58.0
+  * [CVE-2018-1000005](https://curl.haxx.se/docs/adv_2018-824a.html)
+  * [CVE-2018-1000007](https://curl.haxx.se/docs/adv_2018-b3bf.html)
+
+### Other Changes
+
+* **Update `system/cpuid` package.** Amongst other improvements, this new
+  version can report on support for the new speculation control and branch
+  predictor instructions added via microcode updates.
+  ```
+	# cpuid | egrep 'IBRS|STI'
+	  Speculation Control (IBRS and IBPB)
+	  Single Thread Indirect Branch Predictors (STIBP)
+  ```
+
+* **Fix IPv6 multicast related kernel panic.**
+  This is a rare problem which has only been reported by one OmniOS user.
+  Therefore we have not published the updated package to the IPS repository
+  as it would force a reboot; it will be included in the next reboot
+  update for r151024. If you need this fix in the meantime, it is
+  [available for download](https://downloads.omniosce.org/pkg/8953-udp-backport_r24.p5p). See [illumos issue 8953](https://www.illumos.org/issues/8953).
+
+* **Support booting from RAIDZ2 or RAIDZ3 ZFS pools.**
+  This change has not been published to the repository as it would force a
+  reboot for all users and only benefits new installations; new installation
+  media have been prepared incorporating the fix. See
+  [illumos issue 8969](https://www.illumos.org/issues/8969)
+
+* **Fix extended attribute related kernel panic.**
+  This change has not yet been published to the repository as it would force
+  a reboot for all users and has only been reported by one user. It will be
+  rolled up into the next release. If you need this fix in the meantime, it is
+  [available for download](https://downloads.omniosce.org/pkg/8806-backport_r24.p5p). See [illumos issue 8806](https://www.illumos.org/issues/8806).
+
+> [Instructions for applying the interim updates](https://github.com/omniosorg/illumos-omnios/blob/r151024/README.OmniOS)
+
+<br>
+
+----
+
 ## r151024j (2018-01-08)
 
 Weekly release for w/c 8th of January 2018.
