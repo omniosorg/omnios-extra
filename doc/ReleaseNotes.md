@@ -6,6 +6,42 @@
 
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](https://omniosce.org/upgrade)
 
+## r151022aj (2018-01-24)
+
+Weekly release for w/c 22nd of January 2018.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `bind` updated to 9.10.6-P1:
+  * [CVE-2017-3145](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-3145)
+* `curl` updated to 7.58.0
+  * [CVE-2018-1000005](https://curl.haxx.se/docs/adv_2018-824a.html)
+  * [CVE-2018-1000007](https://curl.haxx.se/docs/adv_2018-b3bf.html)
+
+### Other Changes
+
+* **Update `system/cpuid` package.** Amongst other improvements, this new
+  version can report on support for the new speculation control and branch
+  predictor instructions added via microcode updates.
+  ```
+        # cpuid | egrep 'IBRS|STI'
+          Speculation Control (IBRS and IBPB)
+          Single Thread Indirect Branch Predictors (STIBP)
+  ```
+
+* **Fix extended attribute related kernel panic.**
+  This change has not yet been published to the repository as it would force
+  a reboot for all users and has only been reported by one user. It will be
+  rolled up into the next release. If you need this fix in the meantime, it is
+  [available for download](https://downloads.omniosce.org/pkg/8806-backport_r22.p5p). See [illumos issue 8806](https://www.illumos.org/issues/8806).
+
+> [Instructions for applying the interim updates](https://github.com/omniosorg/illumos-omnios/blob/r151022/README.OmniOS)
+
+<br>
+
+----
+
 ## r151022ae (2017-12-18)
 
 Weekly release for w/c 18th of December 2017.
