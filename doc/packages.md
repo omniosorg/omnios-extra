@@ -44,8 +44,8 @@
 | library/libxslt			| 1.1.30		| http://xmlsoft.org/libxslt/news.html
 | library/ncurses			| 6.0.20180106		| http://invisible-mirror.net/archives/ncurses/current/ https://ftp.gnu.org/gnu/ncurses/ | Updated every week
 | library/nghttp2			| 1.29.0		| https://github.com/nghttp2/nghttp2/releases
-| library/nss				| 3.34.1		| https://ftp.mozilla.org/pub/security/nss/releases/
-| library/nspr				| 4.17			| http://archive.mozilla.org/pub/nspr/releases/
+| library/nss				| 3.35			| https://ftp.mozilla.org/pub/security/nss/releases/
+| library/nspr				| 4.18			| http://archive.mozilla.org/pub/nspr/releases/
 | library/pcre				| 8.41			| https://ftp.pcre.org/pub/pcre/
 | library/readline			| 7.0			| https://ftp.gnu.org/gnu/readline/
 | library/security/openssl-1.0		| 1.0.2n		| https://www.openssl.org/source/
