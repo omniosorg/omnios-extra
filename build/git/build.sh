@@ -20,15 +20,15 @@
 #
 # CDDL HEADER END }}}
 #
-# Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Use is subject to license terms.
 # Copyright (c) 2014 by Delphix. All rights reserved.
+# Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=git
-VER=2.15.1
+VER=2.16.0
 PKG=developer/versioning/git
 SUMMARY="$PROG - distributed version control system"
 DESC="$SUMMARY"
@@ -74,6 +74,9 @@ install_man() {
 TESTSUITE_SED="
     /test_submodule/s/:.*//
     /I18N/s/I18N .*/I18N/
+    /^ok /d
+    /^gmake/d
+    /^[0-9][0-9]*\.\.[0-9]/d
 "
 
 init
