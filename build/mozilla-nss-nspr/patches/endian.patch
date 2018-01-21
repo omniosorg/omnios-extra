@@ -1,10 +1,10 @@
 --- nss-3.33~/nss/lib/freebl/verified/kremlib.h	2017-09-20 06:47:27.000000000 +0000
 +++ nss-3.33/nss/lib/freebl/verified/kremlib.h	2017-09-20 13:38:53.908505774 +0000
-@@ -17,6 +17,7 @@
+@@ -205,6 +205,7 @@
  
- #include <inttypes.h>
- #include <stdlib.h>
+ /* ... for Solaris */
+ #elif defined(__sun__)
 +#include <endian.h>
- 
- #include <stdbool.h>
- #include <stdio.h>
+ #include <sys/byteorder.h>
+ #define htole64(x) LE_64(x)
+ #define le64toh(x) LE_64(x)
