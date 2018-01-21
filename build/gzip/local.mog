@@ -19,9 +19,16 @@
 #
 # CDDL HEADER END
 #
-#
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-<transform file path=usr/sfw/.* -> drop>
 license COPYING license=GPLv3
+<transform file path=usr/sfw/.* -> drop>
+<transform hardlink path=usr/bin/uncompress -> drop>
+
+# Rename binaries z* -> gz*
+<transform file path=usr/bin/z -> edit path usr/bin/ usr/bin/g>
+# .. and man pages
+<transform file path=usr/share/man/man1/z -> edit path man1/ man1/g>
+
