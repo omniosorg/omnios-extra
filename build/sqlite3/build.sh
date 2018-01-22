@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,39 +18,25 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=sqlite-autoconf
-VER=3210000
-VERHUMAN=3.21.0
+VER=3220000
+VERHUMAN=3.22.0
 PKG=database/sqlite-3
 SUMMARY="SQL database engine library"
 DESC="$SUMMARY"
-
-CONFIGURE_OPTS_64+=" --includedir=/usr/include"
-LIBTOOL_NOSTDLIB=libtool
-LIBTOOL_NOSTDLIB_EXTRAS=-lc
-
-make_stub_dirs() {
-    logcmd mkdir -p $DESTDIR/usr/bin
-    logcmd mkdir -p $DESTDIR/usr/lib
-    logcmd mkdir -p $DESTDIR/usr/include
-    logcmd mkdir -p $DESTDIR/usr/lib/amd64
-    logcmd mkdir -p $DESTDIR/usr/share/man/man1
-}
 
 init
 download_source sqlite $PROG $VER
 patch_source
 prep_build
-make_stub_dirs
 build
 make_isa_stub
 VER=$VERHUMAN
@@ -58,4 +44,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
