@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,24 +18,23 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
-PROG=wget       # App name
-VER=1.19.2      # App version
-VERHUMAN=$VER   # Human-readable version
-PKG=web/wget    # Package name (without prefix)
+PROG=wget
+VER=1.19.4
+VERHUMAN=$VER
+PKG=web/wget
 SUMMARY="$PROG - a utility to retrieve files from the World Wide Web"
 DESC="$SUMMARY"
 
-BUILD_DEPENDS_IPS="developer/lexer/flex"
-DEPENDS_IPS="library/libidn web/ca-bundle"
+RUN_DEPENDS_IPS="library/libidn web/ca-bundle"
+BUILD_DEPENDS_IPS="developer/lexer/flex $RUN_DEPENDS_IPS"
 
 BUILDARCH=32
 CONFIGURE_OPTS="
@@ -57,4 +56,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
