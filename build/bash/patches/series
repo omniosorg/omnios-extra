@@ -10,3 +10,4 @@ bash-4.4-patches/bash44-009 -p0
 bash-4.4-patches/bash44-010 -p0
 bash-4.4-patches/bash44-011 -p0
 bash-4.4-patches/bash44-012 -p0
+memalloc.patch

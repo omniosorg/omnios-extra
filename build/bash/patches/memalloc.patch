@@ -1,0 +1,20 @@
+'sun' is considered a forbidden identifier by GCC and therefore it creates
+a "fixed" version of bash/include/memalloc.h in its library directory.
+
+This prevents the compiler from seeing any updated version of that file.
+
+To resolve that, the fix that GCC would use is applied directly to the
+include file so that it doesn't see a need to fix it.
+
+diff -ru bash-4.4~/include/memalloc.h bash-4.4/include/memalloc.h
+--- bash-4.4~/include/memalloc.h	2008-08-12 14:01:05.000000000 +0000
++++ bash-4.4/include/memalloc.h	2018-01-22 20:34:48.611886722 +0000
+@@ -22,7 +22,7 @@
+ #if !defined (_MEMALLOC_H_)
+ #  define _MEMALLOC_H_
+ 
+-#if defined (sparc) && defined (sun) && !defined (HAVE_ALLOCA_H)
++#if defined (sparc) && defined (__sun__) && !defined (HAVE_ALLOCA_H)
+ #  define HAVE_ALLOCA_H
+ #endif
+ 
