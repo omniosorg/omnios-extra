@@ -22,7 +22,7 @@ compress/p7zip					16	require
 compress/unzip					6.0	require
 compress/xz					5.2	require
 compress/zip					3.0	require
-database/sqlite-3				3.21	require
+database/sqlite-3				3	require
 developer/debug/mdb				0.5.11	require
 developer/linker				0.5.11	require
 diagnostic/cpu-counters				0.5.11	require

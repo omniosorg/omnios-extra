@@ -12,7 +12,7 @@ compress/unzip				6.0
 compress/xz				5.2
 compress/zip				3.0
 data/iso-codes				3.77
-database/sqlite-3			3.21
+database/sqlite-3			3
 developer/as				0.5.11
 developer/build/autoconf		2.69
 developer/build/automake		1.15
