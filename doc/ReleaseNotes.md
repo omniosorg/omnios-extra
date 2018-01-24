@@ -33,7 +33,7 @@ Weekly release for w/c 22nd of January 2018.
   Therefore we have not published the updated package to the IPS repository
   as it would force a reboot; it will be included in the next reboot
   update for r151024. If you need this fix in the meantime, it is
-  [available for download](https://downloads.omniosce.org/pkg/8953-udp-backport_r24.p5p). See [illumos issue 8953](https://www.illumos.org/issues/8953).
+  [available for download](https://downloads.omniosce.org/pkg/8653-udp-backport_r24.p5p). See [illumos issue 8653](https://www.illumos.org/issues/8653).
 
 * **Support booting from RAIDZ2 or RAIDZ3 ZFS pools.**
   This change has not been published to the repository as it would force a
