@@ -21,23 +21,25 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=curl
-VER=7.57.0
+VER=7.58.0
 PKG=web/curl
 SUMMARY="$PROG - command line tool for transferring data with URL syntax"
 DESC="$SUMMARY"
 
 DEPENDS_IPS="web/ca-bundle library/libidn"
 
-CONFIGURE_OPTS="--enable-thread --with-ca-bundle=/etc/ssl/cacert.pem"
-# curl actually has arch-dependent headers. Boo.
-CONFIGURE_OPTS_64="$CONFIGURE_OPTS_64 --includedir=$PREFIX/include/amd64"
+CONFIGURE_OPTS="
+    --enable-thread
+    --with-ca-bundle=/etc/ssl/cacert.pem
+"
+# curl has arch-dependent headers.
+CONFIGURE_OPTS_64+=" --includedir=$PREFIX/include/amd64"
 
 # Build backwards so that the 32-bit version is available for the test-suite.
 # Otherwise there are test failures because some tests preload a library
