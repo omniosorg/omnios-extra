@@ -19,11 +19,11 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 
 # Drop HTML docs
-<transform dir file path=usr/share/doc -> drop>
+<transform dir file link hardlink path=usr/share/doc -> drop>
 
 # Create symlinks in /usr/lib
 link path=usr/lib/libssl.so.1.0.0 target=../../lib/libssl.so.1.0.0

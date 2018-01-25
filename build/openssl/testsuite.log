@@ -1,3 +1,4 @@
+File::Glob::glob() will disappear in perl 5.30. Use File::Glob::bsd_glob() instead. at .././test/run_tests.pl line 45.
 ../test/recipes/01-test_abort.t ............ ok
 ../test/recipes/01-test_sanity.t ........... ok
 ../test/recipes/01-test_symbol_presence.t .. ok
@@ -94,5 +95,5 @@
 ../test/recipes/90-test_threads.t .......... ok
 ../test/recipes/90-test_v3name.t ........... ok
 All tests successful.
-Files=95, Tests=556, 78 wallclock secs ( 0.41 usr  0.28 sys + 26.74 cusr  3.51 csys = 30.94 CPU)
+Files=95, Tests=556, 71 wallclock secs ( 0.39 usr  0.30 sys + 29.37 cusr  4.59 csys = 34.65 CPU)
 Result: PASS

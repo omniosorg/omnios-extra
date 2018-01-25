@@ -21,7 +21,7 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
@@ -52,36 +52,30 @@ make_prog() {
     [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=
     logmsg "--- make"
     # This will setup the internal runpath of libssl and libcrypto
-    logcmd $MAKE $MAKE_JOBS SHARED_LDFLAGS="$SHARED_LDFLAGS" || \
-        logerr "--- Make failed"
+    logcmd $MAKE $MAKE_JOBS \
+        SHARED_LDFLAGS="$SHARED_LDFLAGS" \
+        LIB_LDFLAGS="$SHARED_LDFLAGS" \
+        || logerr "--- Make failed"
 }
 
 configure32() {
-    if isalist | egrep -s sparc; then
-      SSLPLAT=solaris-sparcv8-cc
-    else
-      SSLPLAT=solaris-x86-gcc
-    fi
+    SSLPLAT=solaris-x86-gcc
     logmsg "--- Configure (32-bit) $SSLPLAT"
     logcmd ./Configure $SSLPLAT --prefix=$PREFIX \
-	${OPENSSL_CONFIG_OPTS} \
-	${OPENSSL_CONFIG_32_OPTS} \
+        ${OPENSSL_CONFIG_OPTS} \
+        ${OPENSSL_CONFIG_32_OPTS} \
         || logerr "Failed to run configure"
-    SHARED_LDFLAGS="-shared -Wl,-z,text -Wl,-z,aslr"
+    SHARED_LDFLAGS="-shared -Wl,-z,text,-z,aslr,-z,ignore"
 }
 
 configure64() {
-    if [ -n "`isalist | grep sparc`" ]; then
-      SSLPLAT=solaris64-sparcv9-cc
-    else
-      SSLPLAT=solaris64-x86_64-gcc
-    fi
+    SSLPLAT=solaris64-x86_64-gcc
     logmsg "--- Configure (64-bit) $SSLPLAT"
     logcmd ./Configure $SSLPLAT --prefix=$PREFIX \
-	${OPENSSL_CONFIG_OPTS} \
-	${OPENSSL_CONFIG_64_OPTS} \
+        ${OPENSSL_CONFIG_OPTS} \
+        ${OPENSSL_CONFIG_64_OPTS} \
         || logerr "Failed to run configure"
-    SHARED_LDFLAGS="-m64 -shared -Wl,-z,text,-z,aslr"
+    SHARED_LDFLAGS="-m64 -shared -Wl,-z,text,-z,aslr,-z,ignore"
 }
 
 install_pkcs11()
@@ -116,43 +110,43 @@ move_libs() {
     logmsg "Relocating libs from usr/lib to lib"
     logcmd mv $DESTDIR/usr/lib/64 $DESTDIR/usr/lib/amd64
     logcmd mkdir -p $DESTDIR/lib/amd64
-    logcmd mv $DESTDIR/usr/lib/lib* $DESTDIR/lib/ ||
-        logerr "Failed to move libs (32-bit)"
-    logcmd mv $DESTDIR/usr/lib/amd64/lib* $DESTDIR/lib/amd64/ ||
-        logerr "Failed to move libs (64-bit)"
+    logcmd mv $DESTDIR/usr/lib/lib* $DESTDIR/lib/ \
+        || logerr "Failed to move libs (32-bit)"
+    logcmd mv $DESTDIR/usr/lib/amd64/lib* $DESTDIR/lib/amd64/ \
+        || logerr "Failed to move libs (64-bit)"
 }
 
 version_files() {
-	ver=$2
-	[ -d "$1~" ] || cp -rp "$1" "$1~"
-	pushd $1
-	mv usr/include/openssl usr/include/openssl-$ver
-	for f in usr/bin/*; do
-		mv $f $f-$ver
-	done
-	[ -d usr/share/man ] && mv usr/share/man usr/ssl/man
+    ver=$2
+    [ -d "$1~" ] || cp -rp "$1" "$1~"
+    pushd $1
+    mv usr/include/openssl usr/include/openssl-$ver
+    for f in usr/bin/*; do
+        mv $f $f-$ver
+    done
+    [ -d usr/share/man ] && mv usr/share/man usr/ssl/man
 
-	mkdir usr/ssl/lib usr/ssl/lib/amd64
-	mv usr/lib/pkgconfig usr/ssl/lib/pkgconfig
-	mv usr/lib/amd64/pkgconfig usr/ssl/lib/amd64/pkgconfig
-	mv lib/llib* lib/lib*.a usr/ssl/lib
-	mv lib/amd64/llib* lib/amd64/lib*.a usr/ssl/lib/amd64
+    mkdir usr/ssl/lib usr/ssl/lib/amd64
+    mv usr/lib/pkgconfig usr/ssl/lib/pkgconfig
+    mv usr/lib/amd64/pkgconfig usr/ssl/lib/amd64/pkgconfig
+    mv lib/llib* lib/lib*.a usr/ssl/lib
+    mv lib/amd64/llib* lib/amd64/lib*.a usr/ssl/lib/amd64
 
-	rm -f lib/lib{crypto,ssl}.so
-	rm -f lib/amd64/lib{crypto,ssl}.so
+    rm -f lib/lib{crypto,ssl}.so
+    rm -f lib/amd64/lib{crypto,ssl}.so
 
-	[ -d usr/ssl/certs ] && rm -rf usr/ssl/certs
-	(cd usr/ssl; ln -s ../../etc/ssl/certs)
+    [ -d usr/ssl/certs ] && rm -rf usr/ssl/certs
+    (cd usr/ssl; ln -s ../../etc/ssl/certs)
 
-	mv usr/ssl usr/ssl-$ver
-	popd
+    mv usr/ssl usr/ssl-$ver
+    popd
 }
 
 merge_package() {
-	version_files $DESTDIR `echo $VER | cut -d. -f1-2`
-	version_files $LDESTDIR `echo $LVER | cut -d. -f1-2`
+    version_files $DESTDIR `echo $VER | cut -d. -f1-2`
+    version_files $LDESTDIR `echo $LVER | cut -d. -f1-2`
 
-	( cd $LDESTDIR; find . | cpio -pmud $DESTDIR )
+    ( cd $LDESTDIR; find . | cpio -pmud $DESTDIR )
 }
 
 ######################################################################
@@ -183,7 +177,7 @@ oDESTDIR=$DESTDIR
 oPKG=$PKG
 oPKGE=$PKGE
 
-PKG=${PKG}_legacy	##IGNORE## Use different directory for build
+PKG=${PKG}_legacy        ##IGNORE## Use different directory for build
 OPENSSL_CONFIG_OPTS="$base_OPENSSL_CONFIG_OPTS"
 OPENSSL_CONFIG_OPTS+=" --pk11-libname=/usr/lib/libpkcs11.so.1"
 BUILDDIR=$PROG-$LVER
@@ -194,6 +188,8 @@ make_install() {
     logcmd make INSTALL_PREFIX=$DESTDIR install ||
         logerr "Failed to make install"
 }
+
+TESTSUITE_FILTER='[0-9] tests|TESTS'
 
 PATCHDIR=patches-1.0
 download_source $PROG $PROG $LVER
