@@ -20,24 +20,24 @@
 #
 # CDDL HEADER END }}}
 #
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
-PROG=ooceapps   # App name
-VER=0.2.5       # App version
-VERHUMAN=$VER   # Human-readable version
-#PVER=          # Branch (set in config.sh, override here if needed)
-PKG=ooce/ooceapps # Package name (e.g. library/foo)
-SUMMARY="Mattermost integrations for OmniOSce" # One-liner, must be filled in
-DESC=$SUMMARY   # Longer description, must be filled in
-BUILDARCH=32    # or 64 or both ... for libraries we want both for tools 32 bit only
+PROG=ooceapps
+VER=0.3.0
+VERHUMAN=$VER
+PKG=ooce/ooceapps
+SUMMARY="Web integrations for OmniOSce"
+DESC=$SUMMARY
+BUILDARCH=64
 PREFIX=/opt/ooce
 MIRROR="https://github.com/omniosorg/$PROG/releases/download"
 
-CONFIGURE_OPTS_32="
+RUN_DEPENDS_IPS="runtime/perl-64 ooce/application/texlive"
+
+CONFIGURE_OPTS_64="
     --prefix=$PREFIX/$PROG
     --sysconfdir=/etc$PREFIX/$PROG
     --localstatedir=/var$PREFIX/$PROG"
