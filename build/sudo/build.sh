@@ -21,13 +21,13 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=sudo
-VER=1.8.21p2
+VER=1.8.22
 VERHUMAN=$VER
 PKG=security/sudo
 SUMMARY="$PROG - authority delegation tool"
