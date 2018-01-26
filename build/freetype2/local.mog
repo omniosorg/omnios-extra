@@ -1,1 +1,6 @@
 license docs/LICENSE.TXT license=freetype
+
+link path=$(OPREFIX)/bin/freetype-config \
+    target=../freetype/bin/freetype-config
+link path=$(OPREFIX)/share/man/man1/freetype-config.1 \
+    target=../../../freetype/share/man/man1/freetype-config.1

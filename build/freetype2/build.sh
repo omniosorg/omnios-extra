@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,25 +18,39 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=freetype
 DOWNLOADDIR=freetype2
-VER=2.8.1
+VER=2.9
 VERHUMAN=$VER
 PKG=ooce/library/freetype2
 SUMMARY="A Free, High-Quality, and Portable Font Engine"
 DESC="$SUMMARY"
 
-RUN_DEPENDS_IPS="compress/bzip2 library/zlib system/library/gcc-5-runtime"
-BUILD_DEPENDS_IPS=$RUN_DEPENDS_IPS
+OPREFIX=$PREFIX
+PREFIX+="/$PROG"
+
+XFORM_ARGS="-D OPREFIX=${OPREFIX#/}"
+
+CONFIGURE_OPTS_32="
+    --prefix=$PREFIX
+    --includedir=$OPREFIX/include
+    --bindir=$PREFIX/bin/$ISAPART
+    --libdir=$OPREFIX/lib
+"
+CONFIGURE_OPTS_64="
+    --prefix=$PREFIX
+    --includedir=$OPREFIX/include
+    --bindir=$PREFIX/bin/$ISAPART64
+    --libdir=$OPREFIX/lib/$ISAPART64
+"
 
 init
 download_source $DOWNLOADDIR $PROG $VER
@@ -48,4 +62,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
