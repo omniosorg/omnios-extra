@@ -42,6 +42,7 @@ libtool: link: gcc -o .libs/check_gentime check_gentime.o gentime.o gmtoff.o sud
 libtool: link: gcc -o .libs/check_hexchar check_hexchar.o hexchar.o sudoers_debug.o -m64 -Wl,-z -Wl,aslr -fstack-protector-strong  ../../lib/util/.libs/libsudo_util.so -R/usr/lib/sudo/amd64/sudo
 libtool: link: gcc -o .libs/check_iolog_path check_iolog_path.o iolog_path.o locale.o pwutil.o pwutil_impl.o redblack.o sudoers_debug.o -m64 -Wl,-z -Wl,aslr -fstack-protector-strong  ../../lib/util/.libs/libsudo_util.so -R/usr/lib/sudo/amd64/sudo
 libtool: link: gcc -o .libs/check_wrap check_wrap.o logwrap.o sudoers_debug.o -m64 -Wl,-z -Wl,aslr -fstack-protector-strong  ../../lib/util/.libs/libsudo_util.so -R/usr/lib/sudo/amd64/sudo
+libtool: link: gcc -o .libs/check_starttime check_starttime.o starttime.o sudoers_debug.o -m64 -Wl,-z -Wl,aslr -fstack-protector-strong  ../../lib/util/.libs/libsudo_util.so -R/usr/lib/sudo/amd64/sudo
 libtool: link: gcc -o .libs/check_symbols check_symbols.o -m64 -Wl,-z -Wl,aslr -fstack-protector-strong  ../../lib/util/.libs/libsudo_util.so -lproject -R/usr/lib/sudo/amd64/sudo
 check_addr: 9 tests run, 0 errors, 100% success rate
 check_base64: 6 tests run, 0 errors, 100% success rate
@@ -50,6 +51,7 @@ check_fill: 18 tests run, 0 errors, 100% success rate
 check_gentime: 17 tests run, 0 errors, 100% success rate
 check_hexchar: 515 tests run, 0 errors, 100% success rate
 iolog_path: 8 tests run, 0 errors, 100% success rate
+check_starttime: 3 tests run, 0 errors, 100% success rate
 check_symbols: 7 tests run, 0 errors, 100% success rate
 sudoers/test1 (parse): OK
 sudoers/test1 (toke):  OK
