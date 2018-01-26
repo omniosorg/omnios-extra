@@ -4,6 +4,28 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024m (2018-01-29)
+Weekly release for w/c 29th of January 2018.
+> This update requires a reboot.
+> `uname -v` shows `omnios-r151024-32f54f0308`
+
+This update rolls up the following outstanding hot-fixes:
+
+* [8806 xattr_dir_inactive() releases used vnode with kernel panic](https://www.illumos.org/issues/8806)
+* [8653 Use after free in UDP socket close](https://www.illumos.org/issues/8653)
+* [8969 Cannot boot from RAIDZ with parity > 1](https://www.illumos.org/issues/8969)
+
+### Other Changes
+
+* Update `rsync` to 3.13
+* Update timezone data to 2018c release
+* Update certificate authority database to NSS 3.5
+* Re-synchronise CTF data between kernel and kernel modules
+
+<br>
+
+----
+
 ## r151024l (2018-01-24)
 
 Weekly release for w/c 22nd of January 2018.
