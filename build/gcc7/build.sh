@@ -21,14 +21,14 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2014 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
 
 PKG=developer/gcc7
 PROG=gcc
-VER=7.2.0
+VER=7.3.0
 VERHUMAN=$VER
 SUMMARY="gcc ${VER}"
 DESC="$SUMMARY"
