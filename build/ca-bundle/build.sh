@@ -30,8 +30,7 @@
 PROG=cabundle   # App name
 VER=5.11        # App version
 VERHUMAN=$VER   # Human-readable version
-NSSVER=`grep '^VER=' \
-    $SRCDIR/../mozilla-nss-nspr/build.sh | head -1 | cut -d= -f2`
+NSSVER=3.35
 PKG=web/ca-bundle  # Package name (without prefix)
 SUMMARY="$PROG - Bundle of SSL Root CA certificates"
 DESC="SSL Root CA certificates extracted from mozilla-nss $NSSVER source, plus OmniOSce CA cert."
