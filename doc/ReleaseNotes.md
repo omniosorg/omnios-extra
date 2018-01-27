@@ -6,6 +6,20 @@
 
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](https://omniosce.org/upgrade)
 
+## r151022ak (2018-01-29)
+Weekly release for w/c 29th of January 2018.
+> This is a non-reboot update
+
+### Changes
+
+* Update `rsync` to 3.13
+* Update timezone data to 2018c release
+* Update certificate authority database to NSS 3.5
+
+<br>
+
+----
+
 ## r151022aj (2018-01-24)
 
 Weekly release for w/c 22nd of January 2018.
