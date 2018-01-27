@@ -1,0 +1,11 @@
+--- libedit-20170329-3.1/src/makelist~	2018-01-27 17:22:37.183325481 +0000
++++ libedit-20170329-3.1/src/makelist	2018-01-27 17:21:19.570529091 +0000
+@@ -35,7 +35,7 @@
+ 
+ # makelist.sh: Automatically generate header files...
+ 
+-AWK=awk
++AWK=gawk
+ USAGE="Usage: $0 -h|-fc|-fh|-bh <filenames>"
+ 
+ if [ "x$1" = "x" ]

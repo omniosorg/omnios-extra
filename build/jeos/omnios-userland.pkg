@@ -38,6 +38,7 @@ editor/vim				8.0
 file/gnu-coreutils			8
 file/gnu-findutils			4.6
 library/c++/sigcpp			2.99
+library/editline			3
 library/expat				2.2
 library/glib2				2.54
 library/gmp				6.1

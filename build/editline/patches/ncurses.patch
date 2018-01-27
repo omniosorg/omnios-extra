@@ -1,0 +1,24 @@
+diff -ru libedit-20170329-3.1~/src/sys.h libedit-20170329-3.1/src/sys.h
+--- libedit-20170329-3.1~/src/sys.h	2017-03-29 18:08:21.000000000 +0000
++++ libedit-20170329-3.1/src/sys.h	2018-01-27 17:31:08.285166207 +0000
+@@ -115,7 +115,7 @@
+ #define	REGEX		/* Use POSIX.2 regular expression functions */
+ #undef	REGEXP		/* Use UNIX V8 regular expression functions */
+ 
+-#if defined(__sun)
++#if defined(__sun_NOT_REQUIRED)
+ extern int tgetent(char *, const char *);
+ extern int tgetflag(char *);
+ extern int tgetnum(char *);
+diff -ru libedit-20170329-3.1~/src/terminal.h libedit-20170329-3.1/src/terminal.h
+--- libedit-20170329-3.1~/src/terminal.h	2017-03-29 18:08:21.000000000 +0000
++++ libedit-20170329-3.1/src/terminal.h	2018-01-27 17:30:44.132457745 +0000
+@@ -80,7 +80,7 @@
+ #define	A_K_DE		6
+ #define	A_K_NKEYS	7
+ 
+-#ifdef __sun
++#ifdef __sun_NOT_REQUIRED
+ extern int tgetent(char *, const char *);
+ extern int tgetflag(char *);
+ extern int tgetnum(char *);
