@@ -252,13 +252,6 @@ url_encode() {
 #############################################################################
 # Some initialization
 #############################################################################
-# Set the LANG to C as the assembler will freak out on unicode in headers
-LANG=C
-GCCVER=6
-GCCPATH=/opt/gcc-$GCCVER
-# Set the path - This can be overriden/extended in the build script
-PATH="$GCCPATH/bin:/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin"
-export LANG GCCPATH PATH
 
 # The dir where this file is located - used for sourcing further files
 MYDIR=$PWD/`dirname $BASH_SOURCE[0]`
@@ -280,6 +273,20 @@ SUNOSVER=`uname -r`
 [ -f "$LOGFILE" ] && mv $LOGFILE $LOGFILE.1
 process_opts $@
 shift $((OPTIND - 1))
+
+#############################################################################
+# Compiler version
+#############################################################################
+
+set_gccver() {
+    GCCVER="$1"
+    GCCPATH="/opt/gcc-$GCCVER"
+    [ -x "$GCCPATH/bin/gcc" ] || logerr "Unknown compiler version $GCCVER"
+    PATH="$GCCPATH/bin:/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin"
+    export GCCVER GCCPATH PATH
+}
+
+set_gccver $DEFAULT_GCC_VER
 
 BasicRequirements() {
     local needed=""

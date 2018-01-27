@@ -40,6 +40,9 @@ PKGSRVR=file://$ROOTDIR/tmp.repo/
 # set locale to C
 export LC_ALL=C
 
+# Set the LANG to C as the assembler becomes upset about unicode in headers
+export LANG=C
+
 # Use bash for subshells and commands launched by python setuptools
 export SHELL=/usr/bin/bash
 
@@ -152,6 +155,9 @@ ISAPART64=amd64
 # For OmniOS we (almost) always want GCC
 CC=gcc
 CXX=g++
+
+# Specify default GCC version for building packages
+DEFAULT_GCC_VER=6
 
 # CFLAGS applies to both builds, 32/64 only gets applied to the respective
 # build
