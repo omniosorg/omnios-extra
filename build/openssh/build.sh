@@ -48,7 +48,8 @@ CONFIGURE_OPTS_64="
 # Feature choices
 CONFIGURE_OPTS="
     --with-audit=solaris
-    --with-kerberos5=$PREFIX/usr
+    --with-kerberos5=$PREFIX
+    --with-libedit=$PREFIX
     --with-pam
     --with-sandbox=solaris
     --with-solaris-contracts
