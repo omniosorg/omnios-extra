@@ -40,7 +40,7 @@ add_constraints()
     if [ ! -d "$repo" ]; then
 	logerr "--- Package repo does not exist."
     else
-	pkgrepo -s $repo list | sort -k2,2 | nawk '
+	pkgrepo -s $repo list | sort -k2,2 | nawk -v pub=$PKGPUBLISHER '
 	    BEGIN {
 		ops["o"] = "Obsolete"
 		ops["r"] = "Renamed"
@@ -49,7 +49,7 @@ add_constraints()
 	        printf("# %s: %s\n", ops[$3], $2)
 		next
 	    }
-	    $1 == "on-nightly" {
+	    $1 == pub {
 		pkg = $2
 		ver = $3
 		# 1.6.0-0.151023:20170728T111351Z
@@ -70,6 +70,8 @@ publish_pkg()
 		s/@RELVER@/$RELVER/g
 		s/@PVER@/$PVER/g
         " < $pmf > $pmf.final
+
+    [ "`cat $pmf.final | wc -l`" -lt 300 ] && logerr "Short file."
 
     pkgsend -s $PKGSRVR publish $pmf.final || bail "pkgsend failed"
 }
