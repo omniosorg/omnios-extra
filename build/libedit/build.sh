@@ -20,7 +20,7 @@ PROG=libedit
 VER=20170329-3.1
 
 VERHUMAN=$VER
-PKG=library/editline
+PKG=library/libedit
 SUMMARY="Editline Library (libedit)"
 DESC="$SUMMARY"
 

@@ -38,7 +38,6 @@ editor/vim				8.0
 file/gnu-coreutils			8
 file/gnu-findutils			4.6
 library/c++/sigcpp			2.99
-library/editline			3
 library/expat				2.2
 library/glib2				2.54
 library/gmp				6.1
@@ -46,6 +45,7 @@ library/mpfr				4
 library/mpc				1
 library/idnkit/header-idnkit		2.3
 library/idnkit				2.3
+library/libedit				3
 library/libffi				3.2
 library/libidn				1.33
 library/libtool/libltdl			2.4

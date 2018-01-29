@@ -32,13 +32,13 @@
 | file/gnu-coreutils			| 8.29			| https://git.savannah.gnu.org/cgit/coreutils.git/refs/tags
 | file/gnu-findutils			| 4.6.0			| https://ftp.gnu.org/pub/gnu/findutils/
 | library/c++/sigcpp			| 2.99.10		| https://download.gnome.org/sources/libsigc++/cache.json
-| library/editline			| 20170329-3.1		| http://thrysoee.dk/editline/
-| library/libevent			| 2.1.8			| https://github.com/libevent/libevent/releases | Used solely by tmux
 | library/expat				| 2.2.5			| https://sourceforge.net/projects/expat/files/expat
 | library/gmp				| 6.1.2			| https://gmplib.org/
 | library/mpc				| 1.1.0			| http://www.multiprecision.org/mpc/download.html
 | library/mpfr				| 4.0.0			| http://www.mpfr.org/mpfr-current/
 | library/idnkit			| 2.3			| https://jprs.co.jp/idn/index-e.html
+| library/libedit			| 20170329-3.1		| http://thrysoee.dk/editline/
+| library/libevent			| 2.1.8			| https://github.com/libevent/libevent/releases | Used solely by tmux
 | library/libidn			| 1.33			| http://git.savannah.gnu.org/cgit/libidn.git/refs/tags
 | library/libffi			| 3.2.1			| https://sourceware.org/libffi/
 | library/libxml2			| 2.9.7			| https://github.com/GNOME/libxml2/releases http://xmlsoft.org/news.html
