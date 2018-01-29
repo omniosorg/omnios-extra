@@ -27,13 +27,26 @@
 . ../../lib/functions.sh
 
 PROG=binutils
-VER=2.29.1
+VER=2.30
 VERHUMAN=$VER
 PKG=developer/gnu-binutils
 SUMMARY="$PROG - a collection of binary tools"
 DESC="$SUMMARY"
 
 [ "$BUILDARCH" = "both" ] && BUILDARCH=32
+
+HARDLINK_TARGETS="
+    usr/bin/i386/gar
+    usr/bin/i386/gas
+    usr/bin/i386/gld
+    usr/bin/i386/gld.gold
+    usr/bin/i386/gnm
+    usr/bin/i386/gobjcopy
+    usr/bin/i386/gobjdump
+    usr/bin/i386/granlib
+    usr/bin/i386/greadelf
+    usr/bin/i386/gstrip
+"
 
 CONFIGURE_OPTS="
     --exec-prefix=/usr/gnu
