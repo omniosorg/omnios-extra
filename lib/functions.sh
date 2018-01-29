@@ -821,7 +821,7 @@ make_package() {
         logmsg "------ Running: $PKGSEND generate $DESTDIR > $P5M_INT"
         GENERATE_ARGS=
         if [ -n "$HARDLINK_TARGETS" ]; then
-            for f in "$HARDLINK_TARGETS"; do
+            for f in $HARDLINK_TARGETS; do
                 GENERATE_ARGS+="--target $f "
             done
         fi
