@@ -65,7 +65,7 @@
 | service/network/ntp			| 4.2.8p10		| http://www.ntp.org/downloads.html
 | service/network/ntpsec		| 1.0.0			| https://github.com/ntpsec/ntpsec/releases
 | service/network/smtp/dma		| 0.11			| https://github.com/corecode/dma/releases
-| shell/bash				| 4.4.12		| https://ftp.gnu.org/gnu/bash/
+| shell/bash				| 4.4.18		| https://ftp.gnu.org/gnu/bash/
 | shell/bash-patchlvl			| 018			| https://ftp.gnu.org/gnu/bash/bash-4.4-patches
 | shell/pipe-viewer			| 1.6.6			| http://www.ivarch.com/programs/pv.shtml
 | shell/tcsh				| 6.20.00		| https://github.com/tcsh-org/tcsh/releases
