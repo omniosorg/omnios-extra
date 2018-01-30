@@ -35,6 +35,9 @@ umask 022
 # scripts
 #############################################################################
 
+BASEPATH=/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin
+export PATH=$BASEPATH
+
 #############################################################################
 # Process command line options
 #############################################################################
@@ -282,7 +285,7 @@ set_gccver() {
     GCCVER="$1"
     GCCPATH="/opt/gcc-$GCCVER"
     [ -x "$GCCPATH/bin/gcc" ] || logerr "Unknown compiler version $GCCVER"
-    PATH="$GCCPATH/bin:/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin"
+    PATH="$GCCPATH/bin:$BASEPATH"
     export GCCVER GCCPATH PATH
 }
 
