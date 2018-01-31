@@ -65,14 +65,14 @@
 | service/network/ntp			| 4.2.8p10		| http://www.ntp.org/downloads.html
 | service/network/ntpsec		| 1.0.0			| https://github.com/ntpsec/ntpsec/releases
 | service/network/smtp/dma		| 0.11			| https://github.com/corecode/dma/releases
-| shell/bash				| 4.4.12		| https://ftp.gnu.org/gnu/bash/
+| shell/bash				| 4.4.18		| https://ftp.gnu.org/gnu/bash/
 | shell/bash-patchlvl			| 018			| https://ftp.gnu.org/gnu/bash/bash-4.4-patches
 | shell/pipe-viewer			| 1.6.6			| http://www.ivarch.com/programs/pv.shtml
 | shell/tcsh				| 6.20.00		| https://github.com/tcsh-org/tcsh/releases
 | shell/zsh				| 5.4.2			| https://sourceforge.net/projects/zsh/files/zsh
 | system/cpuid				| 1.6.3			| https://github.com/tycho/cpuid/releases
 | system/library/dbus			| 1.12.2		| https://dbus.freedesktop.org/releases/dbus
-| system/library/libdbus-glib		| 0.108			| https://dbus.freedesktop.org/releases/dbus-glib/
+| system/library/libdbus-glib		| 0.110			| https://dbus.freedesktop.org/releases/dbus-glib/
 | system/library/pcap			| 1.8.1			| http://www.tcpdump.org/#latest-releases
 | system/management/ipmitool		| 1.8.18		| https://sourceforge.net/projects/ipmitool/files/ipmitool
 | system/management/snmp/net-snmp	| 5.7.3			| https://sourceforge.net/projects/net-snmp/files/net-snmp

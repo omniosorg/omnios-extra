@@ -122,7 +122,7 @@ system/library/iconv/unicode		0.5.11
 system/library/iconv/utf-8/manual	0.5.11
 system/library/iconv/utf-8		0.5.11
 system/library/iconv/xsh4/latin		0.5.11
-system/library/libdbus-glib		0.108
+system/library/libdbus-glib		0
 system/library/libdbus			1.12
 system/library/mozilla-nss/header-nss	3
 system/library/mozilla-nss		3

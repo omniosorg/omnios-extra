@@ -23,12 +23,7 @@
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 #
-<transform dir path=etc.* -> drop>
-<transform file path=etc.* -> drop>
-<transform link path=etc.* -> drop>
-
-<transform dir path=usr/share/gtk.* -> drop>
-<transform file path=usr/share/gtk.* -> drop>
-<transform link path=usr/share/gtk.* -> drop>
+<transform file dir link path=etc -> drop>
+<transform file dir link path=usr/share/gtk -> drop>
 
 license COPYING license="AFL2.1/GPLv2"
