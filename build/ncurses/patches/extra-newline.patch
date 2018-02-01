@@ -1,6 +1,7 @@
---- ncurses-6.0-orig/configure  Wed Aug  5 05:20:32 2015
-+++ ncurses-6.0/configure       Fri Apr  8 15:12:57 2016
-@@ -24038,6 +24038,10 @@
+diff -pruN '--exclude=*.orig' ncurses-6.1-20180129~/configure ncurses-6.1-20180129/configure
+--- ncurses-6.1-20180129~/configure	2018-01-20 00:27:18.000000000 +0000
++++ ncurses-6.1-20180129/configure	2018-02-01 18:23:53.482581860 +0000
+@@ -25482,6 +25482,10 @@ TMPSED=\${TMPDIR:-/tmp}/headers.sed\$\$
  echo installing \$SRC in \$DST
  CF_EOF
  
@@ -9,5 +10,5 @@
 +echo "" >>headers.sh
 +
  if test $WITH_CURSES_H = yes; then
-        cat >>headers.sh <<CF_EOF
+ 	cat >>headers.sh <<CF_EOF
  case \$DST in
