@@ -1,1 +1,4 @@
 license COPYING license=GPLv2
+
+# Drop compiled python files
+<transform file path=.*\.py[co]$ -> drop>
