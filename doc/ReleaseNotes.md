@@ -76,6 +76,7 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
     * Sendmail
     * Dragonfly Mail Agent
     * NTPsec
+    * DHCP daemon
 
 * `openssh` has been upgraded to 7.6p1. This version drops support for
   SSH protocol version 1, RSA keys under 1024 bits in length and a number
