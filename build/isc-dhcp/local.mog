@@ -11,33 +11,39 @@
 
 #
 # Copyright 2014 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 #
 
-<transform dir	path=etc$ -> edit path etc usr/share/isc-dhcp/examples>
-<transform file	path=etc/dhcpd.* -> edit path etc usr/share/isc-dhcp/examples>
-<transform file path=etc/dhclient.* -> drop>
-<transform dir	path=usr/include -> drop>
-<transform dir	path=usr/include/dhcpctl -> drop>
-<transform file	path=usr/include/dhcpctl/.* -> drop>
-<transform dir	path=usr/include/isc-dhcp -> drop>
-<transform file	path=usr/include/isc-dhcp/.* -> drop>
-<transform dir	path=usr/include/omapip -> drop>
-<transform file	path=usr/include/omapip/.* -> drop>
-<transform dir	path=usr/lib -> drop>
-<transform file	path=usr/lib/.* -> drop>
-<transform file	path=usr/sbin/dhclient -> drop>
-<transform file path=usr/share/man/man8/dhclient.8 -> drop>
-<transform dir	path=usr/share/man/man3 -> drop>
-<transform file	path=usr/share/man/man3/.* -> drop>
-<transform file	path=usr/share/man/man5/dhclient.* -> drop>
-<transform file	path=usr/share/man/man8/dhclient.* -> drop>
-<transform dir	path=var/db -> set group sys>
-<transform file	path=var/db/dhcp.leases -> set preserve true>
-<transform file	path=var/db/dhcp6.leases -> set preserve true>
+# Additional directories
+dir  path=usr/share/isc-dhcp owner=root group=bin mode=0755
+dir  path=usr/share/isc-dhcp/examples owner=root group=bin mode=0755
+dir  path=var/db owner=root group=sys mode=0755
 
-<transform file path=usr/sbin/dhcpd$ -> set restart_fmri svc:/network/service/dhcp:ipv4>
-<transform file path=usr/sbin/dhcpd$ -> add restart_fmri svc:/network/service/dhcp:ipv6>
-<transform file path=(usr/sbin/dhcrelay|lib/svc/method/dhcrelay)$ -> set restart_fmri svc:/network/service/dhcrelay:ipv4>
-<transform file path=(usr/sbin/dhcrelay|lib/svc/method/dhcrelay)$ -> add restart_fmri svc:/network/service/dhcrelay:ipv6>
+# Drop unwanted components
+<transform file dir path=usr/lib -> drop>
+<transform file dir path=usr/include -> drop>
+
+<transform file path=usr/sbin/dhclient -> drop>
+<transform file path=usr/share/man/man./dhclient -> drop>
+<transform file path=etc/dhclient -> drop>
+<transform file dir path=usr/share/man/man3 -> drop>
+
+# Move example dhcpd.conf file from /etc
+<transform file	dir path=etc -> edit path etc usr/share/isc-dhcp/examples>
+
+# Set permissions and preservation on lease files
+<transform dir	path=var/db -> set group sys>
+<transform file	path=var/db -> set preserve true>
+
+# Start services on package update
+<transform file path=usr/sbin/dhcpd$ -> \
+    set restart_fmri svc:/network/service/dhcp:ipv4>
+<transform file path=usr/sbin/dhcpd$ -> \
+    add restart_fmri svc:/network/service/dhcp:ipv6>
+
+<transform file path=(usr/sbin/dhcrelay|lib/svc/method/dhcrelay)$ \
+    -> set restart_fmri svc:/network/service/dhcrelay:ipv4>
+<transform file path=(usr/sbin/dhcrelay|lib/svc/method/dhcrelay)$ \
+    -> add restart_fmri svc:/network/service/dhcrelay:ipv6>
 
 license LICENSE license=ISC
