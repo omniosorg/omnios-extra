@@ -324,7 +324,7 @@ if [ "$UID" = "0" ]; then
     if [ -n "$ROOT_OK" ]; then
         logmsg "--- Running as root, but ROOT_OK is set; continuing"
     else
-        logerr "--- You cannot run this as root"
+        logerr "--- You should not run this as root"
     fi
 fi
 
@@ -337,7 +337,7 @@ if [ -n "$opensslver" -a "$opensslver" != "1.0" ]; then
     if [ -n "$OPENSSL_TEST" ]; then
         logmsg "--- OpenSSL version $opensslver but OPENSSL_TEST is set"
     else
-        logerr "--- OpenSSL version $opensslver cannot be used for build"
+        logerr "--- OpenSSL version $opensslver should not be used for build"
     fi
 fi
 
@@ -452,7 +452,7 @@ verify_depends() {
                 # than missing
                 i=${i:1}
                 pkg info $i > /dev/null 2<&1 && \
-                    logerr "--- $i cannot be installed during build."
+                    logerr "--- $i should not be installed during build."
                 continue
                 ;;
         esac
