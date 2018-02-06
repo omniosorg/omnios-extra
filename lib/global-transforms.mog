@@ -106,6 +106,9 @@
 # Drop everything under /var/run since it's tmpfs
 <transform file dir link hardlink path=var/run/ -> drop>
 
+# Drop compiled python files
+<transform file path=.*\.py[co]$ -> drop>
+
 # SMF manifests should be imported upon pkg install
 <transform file path=(var|lib)/svc/manifest/.*\.xml -> \
     add restart_fmri svc:/system/manifest-import:default>
