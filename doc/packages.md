@@ -99,7 +99,7 @@
 | library/python-2/asn1crypto-27	| 0.24.0		| https://pypi.python.org/pypi/asn1crypto
 | library/python-2/cffi-27		| 1.11.4		| https://pypi.python.org/pypi/cffi
 | library/python-2/cheroot-27		| 6.0.0			| https://pypi.python.org/pypi/cheroot
-| library/python-2/cherrypy-27		| 13.1.0		| https://pypi.python.org/pypi/cherrypy
+| library/python-2/cherrypy-27		| 14.0.0		| https://pypi.python.org/pypi/cherrypy
 | library/python-2/coverage-27		| 4.5			| https://pypi.python.org/pypi/coverage
 | library/python-2/cryptography-27	| 2.1.4			| https://pypi.python.org/pypi/cryptography
 | library/python-2/enum-27		| 1.1.6			| https://pypi.python.org/pypi/enum34
