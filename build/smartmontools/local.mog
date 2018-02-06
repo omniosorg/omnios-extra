@@ -1,0 +1,34 @@
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+
+license COPYING license=GPLv2
+dir group=bin mode=0755 owner=root path=var$(PREFIX)/run
+
+<transform file dir path=etc$(PREFIX)/init.d -> drop>
+
+<transform file path=etc$(PREFIX)/ -> set preserve renamenew>
+<transform file path=$(PREFIX)/sbin/smartd -> set restart_fmri svc:/system/smartd:default>
+
+link path=$(OPREFIX)/sbin/smartd target=../$(PROG)/sbin/smartd
+link path=$(OPREFIX)/sbin/smartctl target=../$(PROG)/sbin/smartctl
+link path=$(OPREFIX)/sbin/update-smart-drivedb target=../$(PROG)/sbin/update-smart-drivedb
+
+link path=$(OPREFIX)/share/man/man1m/smartctl.1m \
+    target=../../../$(PROG)/share/man/man1m/smartctl.1m
+link path=$(OPREFIX)/share/man/man1m/smartd.1m \
+    target=../../../$(PROG)/share/man/man1m/smartd.1m
+link path=$(OPREFIX)/share/man/man1m/update-smart-drivedb.1m \
+    target=../../../$(PROG)/share/man/man1m/update-smart-drivedb.1m
+link path=$(OPREFIX)/share/man/man4/smartd.conf.4 \
+    target=../../../$(PROG)/share/man/man4/smartd.conf.4
