@@ -25,22 +25,16 @@
 # Use is subject to license terms.
 #
 
-<transform file path=usr/share/info/standards.info -> drop>
-license LICENSE.txt license=GPLv3,murmurhash,papowell/jhweiss,PostgreSQL,Python,zlib
+license LICENSE.txt license=Multiple
 
-# Softlinks to simplify builds - just prepend /usr/lib/ccache to PATH
-# NOTE: Since these are softlinks, a certain relative directory structure
-# is expected (like rooting at /usr) when the package is installed.
-# You can turn off ccache without changing runtime PATHs by exporting
-# CCACHE_DISABLE=1 before a build
-link target=../../bin/ccache path=usr/lib/ccache/gcc
-link target=../../bin/ccache path=usr/lib/ccache/g++
-link target=../../bin/ccache path=usr/lib/ccache/cc
-link target=../../bin/ccache path=usr/lib/ccache/c++
-link target=../../bin/ccache path=usr/lib/ccache/cpp
+link target=ccache path=$(PREFIX)/bin/gcc
+link target=ccache path=$(PREFIX)/bin/g++
+link target=ccache path=$(PREFIX)/bin/cpp
+link target=ccache path=$(PREFIX)/bin/i386-pc-solaris2.11-c++
+link target=ccache path=$(PREFIX)/bin/i386-pc-solaris2.11-g++
+link target=ccache path=$(PREFIX)/bin/i386-pc-solaris2.11-gcc
 
-# A few links specifically to support gcc-4.4.4-il
-link target=../../bin/ccache path=usr/lib/ccache/i386-pc-solaris2.11-c++
-link target=../../bin/ccache path=usr/lib/ccache/i386-pc-solaris2.11-g++
-link target=../../bin/ccache path=usr/lib/ccache/i386-pc-solaris2.11-gcc
-link target=../../bin/ccache path=usr/lib/ccache/i386-pc-solaris2.11-gcc-4.4.4
+link target=../../ccache/share/man/man1/ccache.1 \
+    path=$(OPREFIX)/share/man/man1/ccache.1
+link target=../../ccache/bin/ccache path=$(OPREFIX)/bin/ccache
+
