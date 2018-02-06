@@ -4,6 +4,23 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024n (2018-02-06)
+Weekly release for w/c 5th of Februrary 2018.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `p7zip` updated to fix
+  * [CVE-2017-17969](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-17969)
+
+### Other Changes
+
+* Re-synchronise `/etc/motd` with `uname -v`.
+
+<br>
+
+----
+
 ## r151024m (2018-01-29)
 Weekly release for w/c 29th of January 2018.
 > This update requires a reboot.
