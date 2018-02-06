@@ -13,13 +13,13 @@
 #
 # }}}
 
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/functions.sh
 
 PKG=library/python-2/more-itertools-27
 PROG=more-itertools
-VER=4.0.1
+VER=4.1.0
 SUMMARY="more-itertools - More routines for operating on iterables"
 DESC="$SUMMARY"
 
@@ -31,7 +31,7 @@ patch_source
 prep_build
 python_build
 strip_install -x
-make_package local.mog ../final.mog
+make_package
 clean_up
 
 # Vim hints
