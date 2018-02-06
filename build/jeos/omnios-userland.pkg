@@ -60,8 +60,8 @@ library/perl-5/xml-parser		2.44
 library/python-2/asn1crypto-27		0.24
 library/python-2/cffi-27		1.11
 library/python-2/cheroot-27		6
-library/python-2/cherrypy-27		13
-library/python-2/coverage-27		4.4
+library/python-2/cherrypy-27		14
+library/python-2/coverage-27		4
 library/python-2/cryptography-27	2.1
 library/python-2/enum-27		1.1
 library/python-2/functools32-27		3.2

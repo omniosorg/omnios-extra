@@ -21,14 +21,14 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../../lib/functions.sh
 
 PKG=library/python-2/cherrypy-27
 PROG=CherryPy
-VER=13.1.0
+VER=14.0.0
 SUMMARY="cherrypy - A Minimalist Python Web Framework"
 DESC="$SUMMARY"
 
@@ -47,7 +47,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 python_build
-make_package local.mog ../final.mog
+make_package
 clean_up
 
 # Vim hints

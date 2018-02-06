@@ -154,7 +154,7 @@ build
 generate_archdeps
 make_isa_stub
 strip_install -x
-make_package local.mog final.mog
+make_package
 clean_up
 
 # Vim hints

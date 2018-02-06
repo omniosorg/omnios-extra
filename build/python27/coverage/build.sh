@@ -20,7 +20,7 @@
 #
 # CDDL HEADER END }}}
 #
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -28,7 +28,7 @@
 
 PKG=library/python-2/coverage-27
 PROG=coverage
-VER=4.4.2
+VER=4.5
 SUMMARY="Code coverage measurement for Python"
 DESC="$SUMMARY"
 
@@ -39,7 +39,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 python_build
-make_package local.mog ../final.mog
+make_package
 clean_up
 
 # Vim hints

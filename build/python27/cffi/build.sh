@@ -40,7 +40,7 @@ patch_source
 prep_build
 python_build
 strip_install -x
-make_package local.mog ../final.mog
+make_package
 clean_up
 
 # Vim hints

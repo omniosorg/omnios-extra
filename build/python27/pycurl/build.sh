@@ -40,7 +40,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 python_build
-make_package local.mog ../final.mog
+make_package
 clean_up
 
 # Vim hints
