@@ -21,14 +21,14 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../../lib/functions.sh
 
 PKG=library/python-2/setuptools-27
 PROG=setuptools
-VER=38.4.0
+VER=38.5.0
 SUMMARY="setuptools - Easily download, build, install, upgrade, and uninstall Python packages"
 DESC="$SUMMARY"
 
@@ -39,7 +39,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 python_build
-make_package local.mog ../final.mog
+make_package
 clean_up
 
 # Vim hints

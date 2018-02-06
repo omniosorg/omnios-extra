@@ -117,7 +117,7 @@
 | library/python-2/pycurl-27		| 7.43.0.1		| https://pypi.python.org/pypi/pycurl
 | library/python-2/pyopenssl-27		| 17.5.0		| https://pypi.python.org/pypi/pyOpenSSL
 | library/python-2/pytz-27		| 2017.3		| https://pypi.python.org/pypi/pytz
-| library/python-2/setuptools-27	| 38.4.0		| https://pypi.python.org/pypi/setuptools
+| library/python-2/setuptools-27	| 38.5.0		| https://pypi.python.org/pypi/setuptools
 | library/python-2/simplejson-27	| 3.13.2		| https://pypi.python.org/pypi/simplejson
 | library/python-2/six-27		| 1.11.0		| https://pypi.python.org/pypi/six
 | library/python-2/tempora-27		| 1.10			| https://pypi.python.org/pypi/tempora
