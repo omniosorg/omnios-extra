@@ -22,7 +22,7 @@
 | developer/java/jdk			| 1.7.0_161-b01		| http://hg.openjdk.java.net/jdk7u/jdk7u/tags
 | developer/lexer/flex			| 2.6.4			| https://github.com/westes/flex/releases
 | developer/macro/gnu-m4		| 1.4.18		| http://git.savannah.gnu.org/cgit/m4.git/refs/tags
-| developer/nasm			| 2.13.02		| http://www.nasm.us/pub/nasm/releasebuilds
+| developer/nasm			| 2.13.03		| http://www.nasm.us/pub/nasm/releasebuilds
 | developer/parser/bison		| 3.0.4			| https://git.savannah.gnu.org/cgit/bison.git/refs/tags
 | developer/pkg-config			| 0.29.2		| https://pkg-config.freedesktop.org/releases
 | developer/versioning/git		| 2.16.1		| https://www.kernel.org/pub/software/scm/git

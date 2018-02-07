@@ -12,14 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=nasm
-VER=2.13.02
+VER=2.13.03
 VERHUMAN=$VER
 PKG=developer/nasm
 SUMMARY="The Netwide Assembler"
