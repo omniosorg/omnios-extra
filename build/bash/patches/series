@@ -16,4 +16,5 @@ bash-4.4-patches/bash44-015 -p0
 bash-4.4-patches/bash44-016 -p0
 bash-4.4-patches/bash44-017 -p0
 bash-4.4-patches/bash44-018 -p0
+bash-4.4-patches/bash44-019 -p0
 memalloc.patch

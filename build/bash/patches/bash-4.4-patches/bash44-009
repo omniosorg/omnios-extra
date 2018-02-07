@@ -1,3 +1,22 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release:	4.4
+Patch-ID:	bash44-009
+
+Bug-Reported-by:	Hong Cho <hong.cho@citrix.com>
+Bug-Reference-ID:	<c30b5fe62b2543af8297e47ca487c29c@SJCPEX02CL02.citrite.net>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2016-12/msg00043.html
+
+Bug-Description:
+
+There is a race condition in add_history() that can be triggered by a fatal
+signal arriving between the time the history length is updated and the time
+the history list update is completed. A later attempt to reference an
+invalid history entry can cause a crash.
+
+Patch (apply with `patch -p0'):
+
 *** ../bash-4.4-patched/lib/readline/history.c	2016-11-11 13:42:49.000000000 -0500
 --- lib/readline/history.c	2016-12-05 10:37:51.000000000 -0500
 ***************
