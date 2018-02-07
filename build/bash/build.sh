@@ -29,7 +29,7 @@
 
 PROG=bash
 VER=4.4
-PATCHLEVEL=18
+PATCHLEVEL=19
 VERHUMAN="$VER.$PATCHLEVEL"
 PKG=shell/bash
 SUMMARY="GNU Bourne-Again shell (bash)"

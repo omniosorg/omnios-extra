@@ -1,3 +1,20 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release:	4.4
+Patch-ID:	bash44-012
+
+Bug-Reported-by:	Clark Wang <dearvoid@gmail.com>
+Bug-Reference-ID:	<CADv8-ojttPUFOZXqbjsvy83LfaJtQKZ5qejGdF6j0VJ3vtrYOA@mail.gmail.com>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2016-11/msg00106.html
+
+Bug-Description:
+
+When -N is used, the input is not supposed to be split using $IFS, but
+leading and trailing IFS whitespace was still removed.
+
+Patch (apply with `patch -p0'):
+
 *** ../bash-4.4-patched/subst.c	2017-01-20 14:22:01.000000000 -0500
 --- subst.c	2017-01-25 13:43:22.000000000 -0500
 ***************

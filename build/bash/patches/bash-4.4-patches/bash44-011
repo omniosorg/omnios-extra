@@ -1,3 +1,22 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release:	4.4
+Patch-ID:	bash44-011
+
+Bug-Reported-by:	Russell King <rmk@armlinux.org.uk>
+Bug-Reference-ID:	<E1cNnFx-0007G2-S2@flint.armlinux.org.uk>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2017-01/msg00000.html
+
+Bug-Description:
+
+Subshells begun to run command and process substitutions may attempt to
+set the terminal's process group to an incorrect value if they receive
+a fatal signal.  This depends on the behavior of the process that starts
+the shell.
+
+Patch (apply with `patch -p0'):
+
 *** ../bash-4.4-patched/sig.c	2016-02-11 15:02:45.000000000 -0500
 --- sig.c	2017-01-04 09:09:47.000000000 -0500
 ***************

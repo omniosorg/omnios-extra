@@ -1,3 +1,22 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release:	4.4
+Patch-ID:	bash44-001
+
+Bug-Reported-by:	Sean Zha <freeman_cha@hotmail.com>
+Bug-Reference-ID:	<BN3PR01MB13657D9303EB94BF6E54216E8CCA0@BN3PR01MB1365.prod.exchangelabs.com>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2016-09/msg00107.html
+
+Bug-Description:
+
+Bash-4.4 changed the way the history list is initially allocated to reduce
+the number of reallocations and copies.  Users who set HISTSIZE to a very
+large number to essentially unlimit the size of the history list will get
+memory allocation errors 
+
+Patch (apply with `patch -p0'):
+
 *** ../bash-4.4/lib/readline/history.c	2015-12-28 13:50:31.000000000 -0500
 --- lib/readline/history.c	2016-09-30 14:28:40.000000000 -0400
 ***************
