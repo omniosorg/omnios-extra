@@ -84,7 +84,7 @@
 | text/gnu-diffutils			| 3.6			| http://git.savannah.gnu.org/cgit/diffutils.git/refs/tags
 | text/gnu-gettext			| 0.19.8.1		| http://git.savannah.gnu.org/cgit/gettext.git/refs/tags
 | text/gnu-grep				| 3.1			| http://git.savannah.gnu.org/cgit/grep.git/refs/tags
-| text/gnu-patch			| 2.7.5			| http://git.savannah.gnu.org/cgit/patch.git/refs/tags
+| text/gnu-patch			| 2.7.6			| http://git.savannah.gnu.org/cgit/patch.git/refs/tags
 | text/gnu-sed				| 4.4			| http://git.savannah.gnu.org/cgit/sed.git/refs/tags
 | text/groff				| 1.22.3		| https://ftp.gnu.org/gnu/groff/
 | text/less				| 487			| https://ftp.gnu.org/gnu/less/
