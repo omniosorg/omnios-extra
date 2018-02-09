@@ -19,13 +19,16 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2017 OmniOS Community Edition.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition.  All rights reserved.
 # Use is subject to license terms.
-group groupname=ooceapps gid=79
-user username=ooceapps uid=79 group=ooceapps gcos-field="OOCEapps User" \
-    home-dir=/var/opt/ooce/ooceapps password=NP
-<transform file path=etc/opt/ooce/ooceapps/ooceapps.conf$ -> set preserve true>
-<transform dir  path=var/opt/ooce/ooceapps -> set owner ooceapps>
-<transform file path=opt/ooce/ooceapps/(bin|lib)/ \
+
+dir group=bin mode=0755 owner=root path=var/$(OPREFIX)
+
+group groupname=$(PROG) gid=79
+user username=$(PROG) uid=79 group=$(PROG) gcos-field="OOCEapps User" \
+    ftpuser=false home-dir=/var/$(PREFIX) password=NP
+<transform file path=etc/$(PREFIX)/ooceapps.conf$ -> set preserve true>
+<transform dir  path=var/$(PREFIX) -> set owner ooceapps>
+<transform file path=$(PREFIX)/(bin|lib)/ \
     -> set restart_fmri svc:/ooce/ooceapps:default>
 license LICENSE license=GPLv3

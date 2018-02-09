@@ -33,16 +33,23 @@ VERHUMAN=$VER
 PKG=ooce/server/nginx
 SUMMARY="nginx web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
-CONFPATH=/etc$PREFIX/$PROG
-LOGPATH=/var/log$PREFIX/$PROG
-RUNPATH=/var$PREFIX/$PROG/run
-ORIGPREFIX=$PREFIX
-PREFIX=$PREFIX/$PROG-$VER
+
 BUILD_DEPENDS_IPS="library/security/openssl library/pcre"
-RUN_DEPENDS_IPS=$BUILD_DEPENDS_IPS
+RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
 BUILDARCH=64
 
-XFORM_ARGS="-D PREFIX=${PREFIX#/}"
+OPREFIX=$PREFIX
+PREFIX+=/$PROG-$VER
+CONFPATH=/etc$OPREFIX/$PROG
+LOGPATH=/var/log$OPREFIX/$PROG
+RUNPATH=/var$OPREFIX/$PROG/run
+
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
+    -DPROG=$PROG
+    -DVERSION=${VER%.*}
+"
 
 CONFIGURE_OPTS_64=" \
     --with-ipv6 \
@@ -76,19 +83,7 @@ CONFIGURE_OPTS_64=" \
     --http-uwsgi-temp-path=/tmp/.nginx/uwsgi \
     --http-scgi-temp-path=/tmp/.nginx/scgi \
 "
-LDFLAGS64="$LDFLAGS64 -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
-CFLAGS64="$CFLAGS64"
-
-add_extra_files() {
-    logmsg "--- Copying SMF manifest"
-    logcmd mkdir -p $DESTDIR/lib/svc/manifest/network
-    logcmd cp $SRCDIR/files/http-nginx.xml $DESTDIR/lib/svc/manifest/network
-    logcmd mkdir -p $DESTDIR/lib/svc/method/
-    logcmd cp $SRCDIR/files/http-nginx $DESTDIR/lib/svc/method
-    logmsg "--- Create bin symlink"
-    logcmd mkdir -p $DESTDIR/$ORIGPREFIX/sbin
-    logcmd ln -s $PREFIX/sbin/$PROG $DESTDIR/$ORIGPREFIX/sbin/$PROG
-}
+LDFLAGS+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
@@ -96,7 +91,7 @@ patch_source
 prep_build
 build
 make_isa_stub
-add_extra_files
+install_smf network http-nginx.xml http-nginx
 make_package
 clean_up
 

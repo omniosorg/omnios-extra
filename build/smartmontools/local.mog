@@ -13,11 +13,13 @@
 # Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYING license=GPLv2
-dir group=bin mode=0755 owner=root path=var$(PREFIX)/run
+dir group=bin mode=0755 owner=root path=var/$(OPREFIX)
+dir group=bin mode=0755 owner=root path=var/$(PREFIX)
+dir group=bin mode=0755 owner=root path=var/$(PREFIX)/run
 
-<transform file dir path=etc$(PREFIX)/init.d -> drop>
+<transform file dir path=etc/$(PREFIX)/init.d -> drop>
 
-<transform file path=etc$(PREFIX)/ -> set preserve renamenew>
+<transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
 <transform file path=$(PREFIX)/sbin/smartd -> set restart_fmri svc:/system/smartd:default>
 
 link path=$(OPREFIX)/sbin/smartd target=../$(PROG)/sbin/smartd

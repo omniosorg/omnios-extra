@@ -23,11 +23,13 @@ PKG=ooce/system/smartmontools
 SUMMARY="Control and monitor storage systems using SMART"
 DESC="$SUMMARY"
 
-
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
-
-XFORM_ARGS="-DOPREFIX=$OPREFIX -DPREFIX=$PREFIX -DPROG=$PROG"
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
+    -DPROG=$PROG
+"
 
 # Build 64-bit only and skip the arch-specific directories
 BUILDARCH=64
