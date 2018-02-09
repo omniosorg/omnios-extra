@@ -53,8 +53,8 @@ install_modules() {
 }
 
 install_files() {
-    logcmd mkdir -p $DESTDIR/etc/$PREFIX || logerr "mkdir failed"
-    logcmd cp $SRCDIR/files/znc.conf $DESTDIR/etc/$PREFIX/ \
+    logcmd mkdir -p $DESTDIR/var/$PREFIX/configs || logerr "mkdir failed"
+    logcmd cp $SRCDIR/files/znc.conf $DESTDIR/var/$PREFIX/configs/ \
         || logerr "-- failed to copy configuration file"
 }
 
