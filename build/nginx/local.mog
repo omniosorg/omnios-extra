@@ -19,14 +19,21 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2017 OmniOS Community Edition.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition.  All rights reserved.
 # Use is subject to license terms.
-group groupname=nginx gid=81
-user username=nginx uid=81 group=nginx gcos-field="NGINX User" \
-    home-dir=/var/opt/ooce/nginx password=NP
-<transform file path=etc/opt/ooce/nginx/.+$ -> set preserve renamenew>
-<transform dir  path=var/opt/ooce/nginx -> set owner nginx>
-<transform dir  path=var/log/opt/ooce/nginx -> set owner nginx>
+
+dir group=bin mode=0755 owner=root path=var/$(OPREFIX)
+dir group=bin mode=0755 owner=root path=var/$(OPREFIX)/$(PROG)
+dir group=bin mode=0775 owner=root path=$(OPREFIX)/sbin
+link path=$(OPREFIX)/sbin/$(PROG) target=../$(PROG)/sbin/$(PROG) \
+    mediator=nginx mediator-version=$(VERSION)
+
+group groupname=$(PROG) gid=81
+user username=$(PROG) uid=81 group=$(PROG) gcos-field="NGINX User" \
+    home-dir=/var/$(OPREFIX)/$(PROG) password=NP
+<transform file path=etc/$(OPREFIX)/$(PROG)/.+$ -> set preserve renamenew>
+<transform dir  path=var/$(OPREFIX)/$(PROG) -> set owner nginx>
+<transform dir  path=var/log/$(OPREFIX)/$(PROG) -> set owner nginx>
 <transform file path=$(PREFIX)/sbin/ \
     -> set restart_fmri svc:/network/http:nginx>
 license LICENSE license=BSD

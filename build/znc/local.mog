@@ -1,0 +1,40 @@
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+
+license LICENSE license=Apache
+
+link path=$(OPREFIX)/bin/$(PROG) target=../$(PROG)/bin/$(PROG)
+
+link path=$(OPREFIX)/share/man/man1/$(PROG).1.gz \
+    target=../../../$(PROG)/share/man/man1/$(PROG).1.gz
+
+group gid=67 groupname=$(PROG)
+user ftpuser=false gcos-field="ZNC Daemon Account" group=$(PROG) \
+    uid=67 password=NP home-dir=/var/$(PREFIX) username=$(PROG)
+
+<transform file dir path=(var|etc)/$(PREFIX) -> set owner znc>
+<transform file dir path=(var|etc)/$(PREFIX) -> set group znc>
+<transform file path=(var|etc)/$(PREFIX) -> set mode 0600>
+<transform dir path=(var|etc)/$(PREFIX) -> set mode 0700>
+
+<transform file path=etc -> set preserve true>
+
+dir path=var/$(OPREFIX) owner=root group=sys mode=0755
+
+link path=var/$(PREFIX)/configs target=/etc/$(PREFIX)
+link path=var/$(PREFIX)/znc.pem target=/etc/$(PREFIX)/znc.pem
+
+<transform file path=$(PREFIX)/bin -> \
+    set restart_fmri svc:/network/znc:default>
+

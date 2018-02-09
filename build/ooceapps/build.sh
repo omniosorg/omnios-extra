@@ -37,18 +37,27 @@ MIRROR="https://github.com/omniosorg/$PROG/releases/download"
 
 RUN_DEPENDS_IPS="runtime/perl-64 ooce/application/texlive"
 
+OPREFIX=$PREFIX
+PREFIX+="/$PROG"
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
+    -DPROG=$PROG
+"
+
+reset_configure_opts
+
 CONFIGURE_OPTS_64="
-    --prefix=$PREFIX/$PROG
-    --sysconfdir=/etc$PREFIX/$PROG
-    --localstatedir=/var$PREFIX/$PROG"
+    --prefix=$PREFIX
+    --sysconfdir=/etc$PREFIX
+    --localstatedir=/var$PREFIX
+"
 
 add_extra_files() {
-    logmsg "--- Copying SMF manifest"
-    logcmd mkdir -p $DESTDIR/lib/svc/manifest/network
-    logcmd cp $SRCDIR/files/ooceapps.xml $DESTDIR/lib/svc/manifest/network
-    logcmd mkdir -p $DESTDIR/var/$PREFIX/$PROG
     # copy config template
-    logcmd cp $DESTDIR/etc/$PREFIX/$PROG/${PROG}.conf.dist $DESTDIR/etc/$PREFIX/$PROG/${PROG}.conf \
+    logcmd mkdir -p $DESTDIR/var/$PREFIX
+    logcmd cp $DESTDIR/etc/$PREFIX/$PROG.conf.dist \
+        $DESTDIR/etc/$PREFIX/$PROG.conf \
         || logerr "--- cannot copy config file template"
 }
 
@@ -58,6 +67,7 @@ patch_source
 prep_build
 build
 add_extra_files
+install_smf network ooceapps.xml
 make_package
 clean_up
 
