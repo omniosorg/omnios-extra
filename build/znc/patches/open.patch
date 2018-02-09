@@ -1,0 +1,20 @@
+Opened upstream as https://github.com/znc/znc/pull/1492
+This patch can be removed once ZNC is fixed.
+
+diff -pruN '--exclude=*.orig' znc-1.6.5~/src/FileUtils.cpp znc-1.6.5/src/FileUtils.cpp
+--- znc-1.6.5~/src/FileUtils.cpp	2017-03-12 21:00:58.000000000 +0000
++++ znc-1.6.5/src/FileUtils.cpp	2018-02-09 22:15:49.503389585 +0000
+@@ -329,11 +329,11 @@ bool CFile::Open(int iFlags, mode_t iMod
+ 	}
+ 
+ 	// We never want to get a controlling TTY through this -> O_NOCTTY
+-	iMode |= O_NOCTTY;
++	iFlags |= O_NOCTTY;
+ 
+ 	// Some weird OS from MS needs O_BINARY or else it generates fake EOFs
+ 	// when reading ^Z from a file.
+-	iMode |= O_BINARY;
++	iFlags |= O_BINARY;
+ 
+ 	m_iFD = open(m_sLongName.c_str(), iFlags, iMode);
+ 	if (m_iFD < 0) {
