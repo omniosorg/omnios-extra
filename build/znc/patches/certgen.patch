@@ -1,0 +1,24 @@
+
+From upstream github. Can be removed once the next version of ZNC is released.
+
+https://github.com/znc/znc/commit/744bd7d55c7093c38c4c887dd74a9dc792be2ce1
+Fix use-after-free in znc --makepem
+
+X509_get_subject_name() returns an internal pointer, which was destroyed
+by X509_set_subject_name(), and then accessed again in
+X509_set_issuer_name().
+But X509_set_subject_name() isn't needed at all, because subject name
+was modified in place.
+
+diff --git a/src/Utils.cpp b/src/Utils.cpp
+index 5ea7985bf..e72f05bb4 100644
+--- a/src/Utils.cpp
++++ b/src/Utils.cpp
+@@ -112,7 +112,6 @@
+ 	X509_NAME_add_entry_by_txt(pName, "CN", MBSTRING_ASC, (unsigned char *)pHostName, -1, -1, 0);
+ 	X509_NAME_add_entry_by_txt(pName, "emailAddress", MBSTRING_ASC, (unsigned char *)sEmailAddr.c_str(), -1, -1, 0);
+ 
+-	X509_set_subject_name(pCert.get(), pName);
+ 	X509_set_issuer_name(pCert.get(), pName);
+ 
+ 	if (!X509_sign(pCert.get(), pKey.get(), EVP_sha256()))

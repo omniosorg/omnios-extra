@@ -132,3 +132,8 @@
 <transform dir file link hardlink path=.*/pkgconfig(/.+\.pc){0,1}$ -> \
     default facet.devel true>
 
+# Fix permissions/ownership on var/opt/ooce directory
+<transform dir path=var/opt/ooce$ -> set owner root>
+<transform dir path=var/opt/ooce$ -> set group bin>
+<transform dir path=var/opt/ooce$ -> set mode 0755>
+
