@@ -28,8 +28,8 @@ user ftpuser=false gcos-field="ZNC Daemon Account" group=$(PROG) \
 <transform file path=(var|etc)/$(PREFIX) -> set mode 0600>
 <transform dir path=(var|etc)/$(PREFIX) -> set mode 0700>
 
-dir path=var/$(OPREFIX) owner=root group=sys mode=0755
-dir path=etc/$(OPREFIX) owner=root group=sys mode=0755
+dir path=var/$(OPREFIX) owner=root group=bin mode=0755
+dir path=etc/$(OPREFIX) owner=root group=bin mode=0755
 
 link path=etc/$(PREFIX) target=/var/$(PREFIX)/configs
 
