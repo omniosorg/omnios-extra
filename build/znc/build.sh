@@ -67,7 +67,7 @@ build
 install_files
 install_smf network znc.xml
 make_package
-#clean_up
+clean_up
 
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker
