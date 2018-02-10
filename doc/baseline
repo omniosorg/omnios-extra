@@ -258,6 +258,7 @@ omnios library/gmp
 omnios library/idnkit
 omnios library/idnkit/header-idnkit
 omnios library/libadt_jni
+omnios library/libedit
 omnios library/libffi
 omnios library/libidn
 omnios library/libtecla
@@ -514,8 +515,8 @@ omnios system/boot/grub
 omnios system/boot/loader
 omnios system/boot/network
 omnios system/boot/real-mode
-omnios system/boot/wanboot
-omnios system/boot/wanboot/internal
+omnios system/boot/wanboot o
+omnios system/boot/wanboot/internal o
 omnios system/cpuid
 omnios system/data/console/fonts
 omnios system/data/hardware-registry
