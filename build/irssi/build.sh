@@ -17,11 +17,11 @@
 #
 . ../../lib/functions.sh
 
-PROG=znc
-VER=1.6.5
+PROG=irssi
+VER=1.1.0
 VERHUMAN=$VER
-PKG=ooce/network/znc
-SUMMARY="$PROG - an advanced IRC bouncer"
+PKG=ooce/network/irssi
+SUMMARY="$PROG - text-mode modular chat client"
 DESC="$SUMMARY"
 
 OPREFIX=$PREFIX
@@ -40,32 +40,12 @@ CONFIGURE_OPTS="
     --bindir=$PREFIX/bin
     --libdir=$PREFIX/lib
 "
-CXXFLAGS=-g
-# Enable verbose make
-MAKE_JOBS+=" V=1"
-
-install_modules() {
-    for f in $SRCDIR/files/*.cpp; do
-        bf=`basename $f`
-        logmsg "Installing module: $bf"
-        logcmd cp $f $TMPDIR/$BUILDDIR/modules/
-    done
-}
-
-install_files() {
-    logcmd mkdir -p $DESTDIR/var/$PREFIX/configs || logerr "mkdir failed"
-    logcmd cp $SRCDIR/files/znc.conf $DESTDIR/var/$PREFIX/configs/ \
-        || logerr "-- failed to copy configuration file"
-}
 
 init
 download_source $PROG $PROG $VER
 patch_source
-install_modules
 prep_build
 build
-install_files
-install_smf network znc.xml
 make_package
 clean_up
 

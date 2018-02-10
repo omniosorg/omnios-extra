@@ -27,8 +27,22 @@
 # Configuration for the build system
 #############################################################################
 
-# Default branch
-RELVER=151025
+# Determine release version based on build system
+if [[ "`uname -v`" != omnios-* ]]; then
+	echo "This does not appear to be an OmniOS system."
+    uname -v
+    exit 1
+fi
+RELVER="`head -1 /etc/release | awk '{print $3}' | sed 's/[a-z]//g'`"
+if [[ ! "$RELVER" =~ ^151[0-9]{3}$ ]]; then
+    echo "Unable to determine release version (got $RELVER)"
+    exit 1
+fi
+
+echo
+echo "******** Building for release $RELVER ********"
+echo
+
 PVER=0.$RELVER
 
 # Default package publisher

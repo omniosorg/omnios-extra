@@ -253,7 +253,15 @@ url_encode() {
 #############################################################################
 # Set the LANG to C as the assembler will freak out on unicode in headers
 LANG=C
-GCCVER=6
+case $RELVER in
+    151022) GCCVER=5.1.0 ;;
+    151024) GCCVER=5 ;;
+    151025) GCCVER=6 ;;
+    151026) GCCVER=6 ;;
+    151027) GCCVER=7 ;;
+    151028) GCCVER=7 ;;
+    *)      logerr "Unknown release, can't select compiler." ;;
+esac
 GCCPATH=/opt/gcc-$GCCVER
 # Set the path - This can be overriden/extended in the build script
 PATH="$GCCPATH/bin:/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin"
