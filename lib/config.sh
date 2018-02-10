@@ -39,10 +39,6 @@ if [[ ! "$RELVER" =~ ^151[0-9]{3}$ ]]; then
     exit 1
 fi
 
-echo
-echo "******** Building for release $RELVER ********"
-echo
-
 PVER=0.$RELVER
 
 # Default package publisher
