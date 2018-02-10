@@ -71,7 +71,7 @@
 | shell/tcsh				| 6.20.00		| https://github.com/tcsh-org/tcsh/releases
 | shell/zsh				| 5.4.2			| https://sourceforge.net/projects/zsh/files/zsh
 | system/cpuid				| 1.6.3			| https://github.com/tycho/cpuid/releases
-| system/library/dbus			| 1.12.2		| https://dbus.freedesktop.org/releases/dbus
+| system/library/dbus			| 1.12.4		| https://dbus.freedesktop.org/releases/dbus | 1.13.x is an unstable/dev version.
 | system/library/libdbus-glib		| 0.110			| https://dbus.freedesktop.org/releases/dbus-glib/
 | system/library/pcap			| 1.8.1			| http://www.tcpdump.org/#latest-releases
 | system/management/ipmitool		| 1.8.18		| https://sourceforge.net/projects/ipmitool/files/ipmitool
