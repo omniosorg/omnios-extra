@@ -253,19 +253,6 @@ url_encode() {
 #############################################################################
 # Set the LANG to C as the assembler will freak out on unicode in headers
 LANG=C
-case $RELVER in
-    151022) GCCVER=5.1.0 ;;
-    151024) GCCVER=5 ;;
-    151025) GCCVER=6 ;;
-    151026) GCCVER=6 ;;
-    151027) GCCVER=7 ;;
-    151028) GCCVER=7 ;;
-    *)      logerr "Unknown release, can't select compiler." ;;
-esac
-GCCPATH=/opt/gcc-$GCCVER
-# Set the path - This can be overriden/extended in the build script
-PATH="$GCCPATH/bin:/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin"
-export LANG GCCPATH PATH
 
 # The dir where this file is located - used for sourcing further files
 MYDIR=$PWD/`dirname $BASH_SOURCE[0]`
@@ -275,11 +262,22 @@ ROOTDIR="`dirname $LIBDIR`"
 # build script
 SRCDIR=$PWD/`dirname $0`
 
-#############################################################################
-# Load configuration options
-#############################################################################
 . $MYDIR/config.sh
 [ -f $MYDIR/site.sh ] && . $MYDIR/site.sh
+
+case $RELVER in
+    151022) GCCVER=5.1.0 ;;
+    151024) GCCVER=5 ;;
+    151025) GCCVER=6 ;;
+    151026) GCCVER=6 ;;
+    151027) GCCVER=7 ;;
+    151028) GCCVER=7 ;;
+    *)      logerr "Unknown release '$RELVER', can't select compiler." ;;
+esac
+GCCPATH=/opt/gcc-$GCCVER
+# Set the path - This can be overriden/extended in the build script
+PATH="$GCCPATH/bin:/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin"
+export LANG GCCPATH PATH
 
 # Platform information, e.g. 5.11
 SUNOSVER=`uname -r`
