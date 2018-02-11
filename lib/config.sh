@@ -59,7 +59,8 @@ MIRROR=https://mirrors.omniosce.org
 
 # The production IPS repository for this branch (may be overriden in site.sh)
 # Used for package contents diffing.
-IPS_REPO=https://pkg.omniosce.org/bloody/extra
+IPS_REPO=https://pkg.omniosce.org/$RELVER/extra
+[ $((RELVER % 2)) != 0 ] && IPS_REPO=https://pkg.omniosce.org/bloody/extra
 
 # Default prefix for packages (may be overridden)
 PREFIX=/opt/ooce
@@ -89,7 +90,7 @@ NOSCRIPTSTUB=
 #############################################################################
 
 # Perl versions we currently build against
-PERLVER=5.26.1
+PERLVER="`perl -V:version | cut -d"'" -f2`"
 SPERLVER=${PERLVER%.*}
 
 # Full paths to bins
