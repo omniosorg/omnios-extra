@@ -55,3 +55,7 @@ hardlink path=usr/bin/users		target=../gnu/bin/users
 hardlink path=usr/bin/vdir		target=../gnu/bin/vdir
 hardlink path=usr/bin/whoami		target=../gnu/bin/whoami
 
+hardlink path=usr/bin/guname		target=../gnu/bin/uname
+hardlink path=usr/share/man/man1/guname.1 \
+    target=../../../gnu/share/man/man1/uname.1
+
