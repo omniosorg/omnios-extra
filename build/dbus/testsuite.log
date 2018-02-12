@@ -121,6 +121,10 @@ PASS: test-refs 4 /refs/server
 PASS: test-relay 1 /connect
 PASS: test-relay 2 /relay
 PASS: test-relay 3 /limit
+PASS: test-server-oom 1 /server/new-tcp
+PASS: test-server-oom 2 /server/new-nonce-tcp
+PASS: test-server-oom 3 /server/new-tcp-star
+PASS: test-server-oom 4 /server/new-tcp-v4
 PASS: test-syntax 1 /syntax/path
 PASS: test-syntax 2 /syntax/interface
 PASS: test-syntax 3 /syntax/error
@@ -143,10 +147,10 @@ PASS: test-sd-activation 4 /sd-activation/deny-receive/com.example.ReceiveDenied
 PASS: test-sd-activation 5 /sd-activation/transient-services/later
 PASS: test-sd-activation 6 /sd-activation/transient-services/in-advance
 ============================================================================
-Testsuite summary for dbus 1.12.2
+Testsuite summary for dbus 1.12.4
 ============================================================================
-# TOTAL: 136
-# PASS:  132
+# TOTAL: 140
+# PASS:  136
 # SKIP:  4
 # XFAIL: 0
 # FAIL:  0
@@ -155,7 +159,7 @@ Testsuite summary for dbus 1.12.2
 ============================================================================
 Making check in name-test
 ============================================================================
-Testsuite summary for dbus 1.12.2
+Testsuite summary for dbus 1.12.4
 ============================================================================
 # TOTAL: 0
 # PASS:  0

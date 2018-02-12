@@ -21,20 +21,18 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=dbus
-VER=1.12.2
+VER=1.12.4
 PKG=dbus ##IGNORE##
 SUMMARY="$PROG - IPC-based message notifications"
 DESC="$SUMMARY"
 
-# Use old gcc4 standards level for this.
-CFLAGS+="-std=gnu89"
-CPPFLAGS+="-D__EXTENSIONS__ -D_REENTRANT"
+CPPFLAGS+=" -D__EXTENSIONS__ -D_REENTRANT -D_XPG6"
 CONFIGURE_OPTS="
     --with-dbus-daemondir=/usr/lib
     --bindir=/usr/bin
@@ -44,8 +42,6 @@ CONFIGURE_OPTS="
     --with-dbus-user=root
     --disable-static
 "
-
-LIBTOOL_NOSTDLIB=libtool
 
 # We build backwards here on purpose so that 32bit binaries win
 # (for install collisions).
