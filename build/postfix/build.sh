@@ -27,7 +27,7 @@
 . ../../lib/functions.sh
 
 PROG=postfix
-VER=3.2.4
+VER=3.2.5
 VERHUMAN=$VER
 PKG=ooce/network/smtp/postfix
 SUMMARY="Postfix MTA"
