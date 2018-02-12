@@ -31,7 +31,7 @@ PROG=coreutils          # App name
 VER=8.29                # App version
 PKG=file/gnu-coreutils  # Package name (without prefix)
 SUMMARY="coreutils - GNU core utilities"
-DESC="GNU core utilities ($VER)"
+DESC="GNU core utilities"
 
 BUILD_DEPENDS_IPS="compress/xz library/gmp"
 
