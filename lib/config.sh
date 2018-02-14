@@ -149,6 +149,8 @@ DONT_REMOVE_INSTALL_DIR=
 # These variables will be passed to the build to construct multi-arch 
 # binary and lib directories in DESTDIR
 
+CCACHE_PATH=/opt/ooce/ccache/bin
+
 ISAPART=i386
 ISAPART64=amd64
 

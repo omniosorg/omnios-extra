@@ -53,7 +53,7 @@ process_opts() {
     SKIP_PKGLINT=
     REBASE_PATCHES=
     SKIP_TESTSUITE=
-    while getopts "biPptf:ha:d:lr:" opt; do
+    while getopts "bciPptf:ha:d:lr:" opt; do
         case $opt in
             h)
                 show_usage
@@ -74,6 +74,9 @@ process_opts() {
                 ;;
             b)
                 BATCH=1 # Batch mode - exit on error
+                ;;
+            c)
+                USE_CCACHE=1
                 ;;
             i)
                 AUTOINSTALL=1
@@ -115,6 +118,7 @@ cat << EOM
 Usage: $0 [-blt] [-f FLAVOR] [-h] [-a 32|64|both] [-d DEPVER]
   -a ARCH   : build 32/64 bit only, or both (default: both)
   -b        : batch mode (exit on errors without asking)
+  -c        : use 'ccache' to speed up (re-)compilation
   -d DEPVER : specify an extra dependency version (no default)
   -f FLAVOR : build a specific package flavor
   -h        : print this help text
@@ -286,6 +290,10 @@ set_gccver() {
     GCCPATH="/opt/gcc-$GCCVER"
     [ -x "$GCCPATH/bin/gcc" ] || logerr "Unknown compiler version $GCCVER"
     PATH="$GCCPATH/bin:$BASEPATH"
+    if [ -n "$USE_CCACHE" ]; then
+        [ -x $CCACHE_PATH/ccache ] || logerr "Ccache is not installed"
+        PATH="$CCACHE_PATH:$PATH"
+    fi
     export GCCVER GCCPATH PATH
 }
 
