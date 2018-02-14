@@ -43,3 +43,6 @@
 #	ooce/application/texlive
 #"
 
+# To always use the ccache engine to speed up re-compilation
+#USE_CCACHE=1
+

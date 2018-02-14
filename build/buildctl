@@ -381,6 +381,7 @@ parallel_build() {
     # Lint is not thread-safe and skip test-suite in parallel build mode.
     build_flags="-b -t -l"
     export BATCH=1  # So logerr() exits without prompting
+    [ -n "$USE_CCACHE" ] && build_flags+=" -c"
 
     note "Starting parallel build with $threads thread(s)"
 
@@ -528,6 +529,7 @@ case "$1" in
         add_targets
         shift
         [ "$1" = "-e" ] && BUILD_EXPENSIVE=1 && shift
+        [ "$1" = "-c" ] && USE_CCACHE=1 && shift
         tobuild="$@"
         [ -z "$tobuild" ] && tobuild=all
 
@@ -551,6 +553,7 @@ case "$1" in
 
         if [ "$tobuild" = "all" ]; then
             build_flags="-b -t -l"
+            [ -n "$USE_CCACHE" ] && build_flags+=" -c"
             export BATCH=1  # So logerr() exits without prompting
 
             pkgcount=${#fulltargets[@]}
