@@ -286,8 +286,6 @@ system/accounting/legacy			0.5.11	require
 system/boot/grub				0.97	require		FS
 system/boot/loader				1.1	require		S
 system/boot/real-mode				0.5.11	require
-system/boot/wanboot				0.5.11	require
-system/boot/wanboot/internal			0.5.11	require
 system/data/hardware-registry			0.5.11	require
 system/data/keyboard/keytables			0.5.11	require
 system/data/terminfo				0.5.11	require
