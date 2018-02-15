@@ -13,7 +13,7 @@
 | ooce/network/smtp/postfix	| 3.2.5		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.1.0		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/znc		| 1.6.5		| https://github.com/znc/znc/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/ooceapps			| 0.3.2		| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/ooceapps			| 0.3.3		| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/python-36	| 3.6.4		| https://www.python.org/downloads/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.12.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/mbuffer		| 20171011	| http://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
