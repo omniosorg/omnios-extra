@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,14 +18,12 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 # This is pretty meaningless, and should be "0.5.11" but we messed that up
@@ -100,7 +98,6 @@ check_for_prebuilt
 # First we build the kernel module
 
 PROG=illumos-kvm
-# Default to building tip, but site.sh can force a specific commit checkout.
 COMMIT=$KVM_ROLLBACK
 SRC_REPO=https://github.com/joyent/illumos-kvm.git
 PATCHDIR=patches.$PROG
@@ -121,7 +118,6 @@ clean_up
 # Next, the utilities (they follow the kernel module version)
 
 PROG=illumos-kvm-cmd
-# Default to building tip, but site.sh can force a specific commit checkout.
 COMMIT=$KVM_CMD_ROLLBACK
 SRC_REPO=https://github.com/joyent/illumos-kvm-cmd.git
 KVM_DIR=$TMPDIR/illumos-kvm-$VER
@@ -164,4 +160,4 @@ make_package kvm-cmd.mog
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
