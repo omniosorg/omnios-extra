@@ -28,12 +28,17 @@
 . ../../lib/functions.sh
 
 PROG=git
-VER=2.16.1
+VER=2.16.2
 PKG=developer/versioning/git
 SUMMARY="$PROG - distributed version control system"
 DESC="$SUMMARY"
 
 BUILD_DEPENDS_IPS="compatibility/ucb developer/build/autoconf archiver/gnu-tar"
+
+HARDLINK_TARGETS="
+    usr/libexec/git-core/git
+    usr/libexec/amd64/git-core/git
+"
 
 # For inet_ntop which isn't detected properly in the configure script
 LDFLAGS="-lnsl"
