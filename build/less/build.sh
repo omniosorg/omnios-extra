@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,52 +18,40 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
-PROG=less       # App name
-VER=487         # App version
-PKG=text/less    # Package name (without prefix)
+PROG=less
+VER=530
+PKG=text/less
 SUMMARY="$PROG - GNU paginator"
 DESC="$SUMMARY"
 
-DEPENDS_IPS="SUNWcs"
-
 BUILDARCH=32
-CONFIGURE_OPTS_32="--prefix=$PREFIX
-        --sysconfdir=/etc
-        --includedir=$PREFIX/include
-        --bindir=$PREFIX/bin
-        --sbindir=$PREFIX/sbin
-        --libdir=$PREFIX/lib
-        --libexecdir=$PREFIX/libexec"
-
-install_license() {
-    local LICENSE_FILE
-    LICENSE_FILE=$TMPDIR/$BUILDDIR/$1
-
-    if [ -f "$LICENSE_FILE" ]; then
-        logmsg "Using $LICENSE_FILE as package license"
-        logcmd cp $LICENSE_FILE $DESTDIR/license
-    else
-        logerr "-- $LICENSE_FILE not found!"
-        exit 255
-    fi
-}
+CONFIGURE_OPTS_32="
+    --prefix=$PREFIX
+    --sysconfdir=/etc
+    --includedir=$PREFIX/include
+    --bindir=$PREFIX/bin
+    --sbindir=$PREFIX/sbin
+    --libdir=$PREFIX/lib
+    --libexecdir=$PREFIX/libexec
+"
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-install_license COPYING
 make_isa_stub
 strip_install
 make_package
 clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker
