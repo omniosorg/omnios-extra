@@ -39,7 +39,11 @@ RUN_DEPENDS_IPS="network/rsync"
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-XFORM_ARGS="-DOPREFIX=$OPREFIX -DPROG=$PROG"
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
+    -DPROG=$PROG
+"
 
 reset_configure_opts
 
@@ -48,11 +52,18 @@ CONFIGURE_OPTS_32="
     --sysconfdir=/etc$PREFIX
 "
 
+copy_config() {
+    # copy config template
+    logcmd cp $DESTDIR/etc$PREFIX/$PROG.conf.dist $DESTDIR/etc$PREFIX/$PROG.conf \
+        || logerr "--- cannot copy config file template"
+}
+
 init
 download_source "v$VER" $PROG $VER
 patch_source
 prep_build
 build
+copy_config
 make_package
 clean_up
 
