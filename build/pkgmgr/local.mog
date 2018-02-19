@@ -19,7 +19,11 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2017 OmniOS Community Edition.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition.  All rights reserved.
 # Use is subject to license terms.
-<transform file path=etc/opt/ooce/pkgmgr/pkgmgr.conf$ -> set preserve true>
 license LICENSE license=GPLv3
+
+link path=$(OPREFIX)/bin/$(PROG) target=../$(PROG)/bin/$(PROG)
+
+link path=$(OPREFIX)/share/man/man1/$(PROG).1 \
+    target=../../../$(PROG)/share/man/man1/$(PROG).1
