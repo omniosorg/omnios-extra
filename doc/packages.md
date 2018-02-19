@@ -5,7 +5,7 @@
 | ooce/developer/build/ant	| 1.9.9		| https://ant.apache.org/srcdownload.cgi | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
 | ooce/developer/omni		| 1.2.2		| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/pkgmgr		| 0.2.3		| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/pkgmgr		| 0.2.4		| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/freetype2	| 2.9		| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
