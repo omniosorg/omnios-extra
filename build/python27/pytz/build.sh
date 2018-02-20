@@ -20,15 +20,14 @@
 #
 # CDDL HEADER END }}}
 #
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../../lib/functions.sh
 
 PKG=library/python-2/pytz-27
 PROG=pytz
-VER=2017.3
+VER=2018.3
 SUMMARY="pytz - World Timezone Definitions for Python"
 DESC="$SUMMARY"
 

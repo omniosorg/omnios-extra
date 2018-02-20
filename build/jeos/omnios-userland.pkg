@@ -76,7 +76,7 @@ library/python-2/portend-27		2.2
 library/python-2/pybonjour-27		1.1.1
 library/python-2/pycurl-27		7.43
 library/python-2/pyopenssl-27		17
-library/python-2/pytz-27		2017
+library/python-2/pytz-27		2018
 library/python-2/setuptools-27		38
 library/python-2/simplejson-27		3.13
 library/python-2/six-27			1.11
