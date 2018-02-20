@@ -100,7 +100,7 @@
 | library/python-2/cffi-27		| 1.11.4		| https://pypi.python.org/pypi/cffi
 | library/python-2/cheroot-27		| 6.0.0			| https://pypi.python.org/pypi/cheroot
 | library/python-2/cherrypy-27		| 14.0.0		| https://pypi.python.org/pypi/cherrypy
-| library/python-2/coverage-27		| 4.5			| https://pypi.python.org/pypi/coverage
+| library/python-2/coverage-27		| 4.5.1			| https://pypi.python.org/pypi/coverage
 | library/python-2/cryptography-27	| 2.1.4			| https://pypi.python.org/pypi/cryptography
 | library/python-2/enum-27		| 1.1.6			| https://pypi.python.org/pypi/enum34
 | library/python-2/functools32-27	| 3.2.3-2		| https://pypi.python.org/pypi/functools32
