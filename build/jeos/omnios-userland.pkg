@@ -71,12 +71,12 @@ library/python-2/jaraco.classes-27	1.4
 library/python-2/jsonschema-27		2.6
 library/python-2/mako-27		1.0
 library/python-2/more-itertools-27	4
-library/python-2/ply-27			3.10
+library/python-2/ply-27			3
 library/python-2/portend-27		2.2
 library/python-2/pybonjour-27		1.1.1
 library/python-2/pycurl-27		7.43
 library/python-2/pyopenssl-27		17
-library/python-2/pytz-27		2017
+library/python-2/pytz-27		2018
 library/python-2/setuptools-27		38
 library/python-2/simplejson-27		3.13
 library/python-2/six-27			1.11

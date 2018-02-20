@@ -23,12 +23,11 @@
 # Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../../lib/functions.sh
 
 PKG=library/python-2/coverage-27
 PROG=coverage
-VER=4.5
+VER=4.5.1
 SUMMARY="Code coverage measurement for Python"
 DESC="$SUMMARY"
 
