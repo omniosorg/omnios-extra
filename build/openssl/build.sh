@@ -34,10 +34,10 @@ PKG=library/security/openssl
 SUMMARY="$PROG - A toolkit for Secure Sockets Layer and Transport Layer protocols and general purpose cryptographic library"
 DESC="$SUMMARY"
 
-DEPENDS_IPS="SUNWcs system/library system/library/gcc-runtime library/zlib"
-BUILD_DEPENDS_IPS="$DEPENDS_IPS developer/sunstudio12.1"
+RUN_DEPENDS_IPS="system/library library/zlib"
+BUILD_DEPENDS_IPS="$RUN_DEPENDS_IPS developer/sunstudio12.1"
 
-# Generic configure optons for both 32 and 64bit variants
+# Generic configure options for both 32 and 64bit variants
 base_OPENSSL_CONFIG_OPTS="shared threads zlib enable-ssl2 enable-ssl3"
 
 # Configure options specific to a 32bit build
@@ -78,11 +78,21 @@ configure64() {
     SHARED_LDFLAGS="-m64 -shared -Wl,-z,text,-z,aslr,-z,ignore"
 }
 
+# Preserve the opensslconf.h file from each build since there will be
+# differences due to the architecture.
+# These are used to prepare the patch that is applied before packaging.
+build() {
+    [[ $BUILDARCH =~ ^(32|both)$ ]] && build32 && \
+        logcmd cp $DESTDIR/usr/include/openssl/opensslconf.h{,.32}
+    [[ $BUILDARCH =~ ^(64|both)$ ]] && build64 && \
+        logcmd cp $DESTDIR/usr/include/openssl/opensslconf.h{,.64}
+}
+
 install_pkcs11()
 {
     logmsg "--- installing pkcs11 engine"
     pushd $SRCDIR/engine_pkcs11 > /dev/null
-    find . | cpio -pvmud $TMPDIR/$BUILDDIR/crypto/engine/
+    find . | cpio -pvmud $TMPDIR/$BUILDDIR/engines/
     popd > /dev/null
 }
 
@@ -156,64 +166,74 @@ init
 ######################################################################
 ### OpenSSL 1.1.x build
 
-note "Building OpenSSL $VER"
+if [ -z "$FLAVOR" -o "$FLAVOR" = "1.1" ]; then
+    note "Building OpenSSL $VER"
 
-OPENSSL_CONFIG_OPTS="$base_OPENSSL_CONFIG_OPTS --api=1.0.0"
-download_source $PROG $PROG $VER
-patch_source
-prep_build
-build
-run_testsuite
-move_libs
-make_lintlibs crypto /lib /usr/include "openssl/!(asn1_mac|ssl*|*tls*).h"
-make_lintlibs ssl /lib /usr/include "openssl/{ssl,*tls}*.h"
+    OPENSSL_CONFIG_OPTS="$base_OPENSSL_CONFIG_OPTS --api=1.0.0"
+    download_source $PROG $PROG $VER
+    patch_source
+    prep_build
+    build
+    (cd $DESTDIR; gpatch -p1 < $SRCDIR/$PATCHDIR/post/opensslconf.dualarch)
+    run_testsuite
+    move_libs
+    make_lintlibs crypto /lib /usr/include "openssl/!(asn1_mac|ssl*|*tls*).h"
+    make_lintlibs ssl /lib /usr/include "openssl/{ssl,*tls}*.h"
+fi
 
 ######################################################################
 ### OpenSSL 1.0.x build
 
-note "Building OpenSSL $LVER"
+if [ -z "$FLAVOR" -o "$FLAVOR" = "1.0" ]; then
+    note "Building OpenSSL $LVER"
 
-oDESTDIR=$DESTDIR
-oPKG=$PKG
-oPKGE=$PKGE
+    oDESTDIR=$DESTDIR
+    oPKG=$PKG
+    oPKGE=$PKGE
 
-PKG=${PKG}_legacy        ##IGNORE## Use different directory for build
-OPENSSL_CONFIG_OPTS="$base_OPENSSL_CONFIG_OPTS"
-OPENSSL_CONFIG_OPTS+=" --pk11-libname=/usr/lib/libpkcs11.so.1"
-BUILDDIR=$PROG-$LVER
+    PKG+=_legacy        ##IGNORE## Use different directory for build
+    OPENSSL_CONFIG_OPTS="$base_OPENSSL_CONFIG_OPTS"
+    OPENSSL_CONFIG_32_OPTS+=" --pk11-libname=/usr/lib/libpkcs11.so.1"
+    OPENSSL_CONFIG_64_OPTS+=" --pk11-libname=/usr/lib/64/libpkcs11.so.1"
+    BUILDDIR=$PROG-$LVER
 
-# OpenSSL uses INSTALL_PREFIX= instead of DESTDIR=
-make_install() {
-    logmsg "--- make install"
-    logcmd make INSTALL_PREFIX=$DESTDIR install ||
-        logerr "Failed to make install"
-}
+    # OpenSSL 1.0 uses INSTALL_PREFIX= instead of DESTDIR=
+    make_install() {
+        logmsg "--- make install"
+        logcmd make INSTALL_PREFIX=$DESTDIR install ||
+            logerr "Failed to make install"
+    }
 
-TESTSUITE_FILTER='[0-9] tests|TESTS'
+    TESTSUITE_FILTER='[0-9] tests|TESTS'
 
-PATCHDIR=patches-1.0
-download_source $PROG $PROG $LVER
-patch_source
-install_pkcs11
-prep_build
-build
-run_testsuite test "" testsuite.1.0.log
-move_libs
-make_lintlibs crypto /lib /usr/include "openssl/!(ssl*|*tls*).h"
-make_lintlibs ssl /lib /usr/include "openssl/{ssl,*tls}*.h"
+    PATCHDIR=patches-1.0
+    download_source $PROG $PROG $LVER
+    patch_source
+    install_pkcs11
+    prep_build
+    build
+    (cd $DESTDIR; gpatch -p1 < $SRCDIR/$PATCHDIR/post/opensslconf.dualarch)
+    run_testsuite test "" testsuite.1.0.log
+    move_libs
+    make_lintlibs crypto /lib /usr/include "openssl/!(ssl*|*tls*).h"
+    make_lintlibs ssl /lib /usr/include "openssl/{ssl,*tls}*.h"
 
-PKG=$oPKG ##IGNORE##
-PKGE=$oPKGE
-LDESTDIR="$DESTDIR"
-DESTDIR="$oDESTDIR"
+    PKG=$oPKG ##IGNORE##
+    PKGE=$oPKGE
+    LDESTDIR="$DESTDIR"
+    DESTDIR="$oDESTDIR"
+fi
 
 ######################################################################
 ### Packaging
 
-merge_package
-# Use legacy version for the package as long as it's the default mediator
-VER=$LVER
-make_package
+if [ -z "$FLAVOR" ]; then
+    merge_package
+    # Use legacy version for the package as long as it's the default mediator
+    VER=$LVER
+    make_package
+fi
+
 clean_up
 
 # Vim hints

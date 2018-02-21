@@ -1,9 +1,9 @@
 /*
- * Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
- * Use is subject to license terms.
+ * Copyright 2017 Gary Mills
+ * Copyright (c) 2004, 2017, Oracle and/or its affiliates. All rights reserved.
  */
 
-/* crypto/engine/hw_pk11.c */
+/* crypto/engine/e_pk11.c */
 /*
  * This product includes software developed by the OpenSSL Project for
  * use in the OpenSSL Toolkit (http://www.openssl.org/).
@@ -71,6 +71,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <strings.h>
 
 #include <openssl/e_os2.h>
 #include <openssl/crypto.h>
@@ -93,7 +94,6 @@
 #include <openssl/objects.h>
 #include <openssl/x509.h>
 #include <openssl/aes.h>
-#include <cryptlib.h>
 #include <dlfcn.h>
 #include <pthread.h>
 
@@ -108,22 +108,38 @@
  * Solaris specific code. See comment at check_hw_mechanisms() for more
  * information.
  */
-#if defined (__SVR4) && defined (__sun)
+#if defined(__SVR4) && defined(__sun)
 #define	SOLARIS_HW_SLOT_SELECTION
 #endif
 
-/*
- * AES counter mode is not supported in the OpenSSL EVP API yet and neither
- * there are official OIDs for mechanisms based on this mode. With our changes,
- * an application can define its own EVP calls for AES counter mode and then
- * it can make use of hardware acceleration through this engine. However, it's
- * better if we keep AES CTR support code under ifdef's.
- */
-#define	SOLARIS_AES_CTR
+#ifdef	SOLARIS_HW_SLOT_SELECTION
+#include <sys/auxv.h>
+#endif
 
-#include "cryptoki.h"
-#include "pkcs11.h"
-#include "hw_pk11_err.c"
+#ifdef DEBUG_SLOT_SELECTION
+#define	DEBUG_SLOT_SEL(...) fprintf(stderr, __VA_ARGS__)
+#else
+#define	DEBUG_SLOT_SEL(...)
+#endif
+
+#include <security/cryptoki.h>
+#include <security/pkcs11.h>
+#include "e_pk11.h"
+#include "e_pk11_uri.h"
+
+static CK_BBOOL pk11_true = CK_TRUE;
+static CK_BBOOL pk11_false = CK_FALSE;
+#define	PK11_ENGINE_LIB_NAME "PKCS#11 engine"
+#include "e_pk11_err.c"
+#include "e_pk11_uri.c"
+#include "e_pk11_pub.c"
+
+/*
+ * We use this lock to prevent multiple C_Login()s, guard getpassphrase(),
+ * uri_struct manipulation, and static token info. All of that is used by the
+ * RSA keys by reference feature.
+ */
+pthread_mutex_t *uri_lock = NULL;
 
 #ifdef	SOLARIS_HW_SLOT_SELECTION
 /*
@@ -136,6 +152,12 @@ int *hw_dnids;
 
 /* PKCS#11 session caches and their locks for all operation types */
 static PK11_CACHE session_cache[OP_MAX];
+
+/*
+ * We cache the flags so that we do not have to run C_GetTokenInfo() again when
+ * logging into the token.
+ */
+CK_FLAGS pubkey_token_flags;
 
 /*
  * As stated in v2.20, 11.7 Object Management Function, in section for
@@ -169,6 +191,57 @@ PK11_active *active_list[OP_MAX] = { NULL };
  * without losing the secret key objects.
  */
 static CK_SESSION_HANDLE	global_session = CK_INVALID_HANDLE;
+
+/* Index for the supported ciphers */
+enum pk11_cipher_id
+	{
+	PK11_DES_CBC,
+	PK11_DES3_CBC,
+	PK11_DES_ECB,
+	PK11_DES3_ECB,
+	PK11_RC4,
+	PK11_AES_128_CBC,
+	PK11_AES_192_CBC,
+	PK11_AES_256_CBC,
+	PK11_AES_128_ECB,
+	PK11_AES_192_ECB,
+	PK11_AES_256_ECB,
+	PK11_BLOWFISH_CBC,
+	PK11_AES_128_CTR,
+	PK11_AES_192_CTR,
+	PK11_AES_256_CTR,
+	PK11_CIPHER_MAX
+	};
+
+/* Index for the supported digests */
+enum pk11_digest_id
+	{
+	PK11_MD5,
+	PK11_SHA1,
+	PK11_SHA224,
+	PK11_SHA256,
+	PK11_SHA384,
+	PK11_SHA512,
+	PK11_DIGEST_MAX
+	};
+
+typedef struct PK11_CIPHER_st
+	{
+	enum pk11_cipher_id	id;
+	int			nid;
+	int			iv_len;
+	int			min_key_len;
+	int			max_key_len;
+	CK_KEY_TYPE		key_type;
+	CK_MECHANISM_TYPE	mech_type;
+	} PK11_CIPHER;
+
+typedef struct PK11_DIGEST_st
+	{
+	enum pk11_digest_id	id;
+	int			nid;
+	CK_MECHANISM_TYPE	mech_type;
+	} PK11_DIGEST;
 
 /* ENGINE level stuff */
 static int pk11_init(ENGINE *e);
@@ -212,25 +285,21 @@ static int pk11_free_all_sessions(void);
 static int pk11_free_session_list(PK11_OPTYPE optype);
 static int pk11_setup_session(PK11_SESSION *sp, PK11_OPTYPE optype);
 static int pk11_destroy_cipher_key_objects(PK11_SESSION *session);
-static int pk11_destroy_object(CK_SESSION_HANDLE session,
-	CK_OBJECT_HANDLE oh);
+static int pk11_destroy_object(CK_SESSION_HANDLE handle, CK_OBJECT_HANDLE oh,
+    CK_BBOOL persistent);
 static const char *get_PK11_LIBNAME(void);
 static void free_PK11_LIBNAME(void);
 static long set_PK11_LIBNAME(const char *name);
 
 /* Symmetric cipher and digest support functions */
 static int cipher_nid_to_pk11(int nid);
-#ifdef	SOLARIS_AES_CTR
-static int pk11_add_NID(char *sn, char *ln);
-static int pk11_add_aes_ctr_NIDs(void);
-#endif	/* SOLARIS_AES_CTR */
 static int pk11_usable_ciphers(const int **nids);
 static int pk11_usable_digests(const int **nids);
 static int pk11_cipher_init(EVP_CIPHER_CTX *ctx, const unsigned char *key,
 	const unsigned char *iv, int enc);
 static int pk11_cipher_final(PK11_SESSION *sp);
 static int pk11_cipher_do_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
-	const unsigned char *in, unsigned int inl);
+	const unsigned char *in, size_t inl);
 static int pk11_cipher_cleanup(EVP_CIPHER_CTX *ctx);
 static int pk11_engine_ciphers(ENGINE *e, const EVP_CIPHER **cipher,
 	const int **nids, int nid);
@@ -249,6 +318,14 @@ static int pk11_digest_copy(EVP_MD_CTX *to, const EVP_MD_CTX *from);
 static int pk11_digest_cleanup(EVP_MD_CTX *ctx);
 
 static int pk11_choose_slots(int *any_slot_found);
+static void pk11_choose_rand_slot(CK_TOKEN_INFO token_info,
+    CK_SLOT_ID current_slot);
+static void pk11_choose_pubkey_slot(CK_MECHANISM_INFO mech_info,
+    CK_TOKEN_INFO token_info, CK_SLOT_ID current_slot, CK_RV rv,
+    int best_number_of_mechs, CK_SLOT_ID best_pubkey_slot_sofar);
+static void pk11_choose_cipher_digest(int *local_cipher_nids,
+    int *local_digest_nids, CK_FUNCTION_LIST_PTR pflist,
+    CK_SLOT_ID current_slot);
 static void pk11_find_symmetric_ciphers(CK_FUNCTION_LIST_PTR pflist,
     CK_SLOT_ID current_slot, int *current_slot_n_cipher,
     int *local_cipher_nids);
@@ -256,11 +333,11 @@ static void pk11_find_digests(CK_FUNCTION_LIST_PTR pflist,
     CK_SLOT_ID current_slot, int *current_slot_n_digest,
     int *local_digest_nids);
 static void pk11_get_symmetric_cipher(CK_FUNCTION_LIST_PTR, int slot_id,
-    CK_MECHANISM_TYPE mech, int *current_slot_n_cipher, int *local_cipher_nids,
-    int id);
+    int *current_slot_n_cipher, int *local_cipher_nids,
+    PK11_CIPHER *cipher);
 static void pk11_get_digest(CK_FUNCTION_LIST_PTR pflist, int slot_id,
-    CK_MECHANISM_TYPE mech, int *current_slot_n_digest, int *local_digest_nids,
-    int id);
+    int *current_slot_n_digest, int *local_digest_nids,
+    PK11_DIGEST *digest);
 
 static int pk11_init_all_locks(void);
 static void pk11_free_all_locks(void);
@@ -268,48 +345,17 @@ static void pk11_free_all_locks(void);
 #ifdef	SOLARIS_HW_SLOT_SELECTION
 static int check_hw_mechanisms(void);
 static int nid_in_table(int nid, int *nid_table);
+static int hw_aes_instruction_set_present(void);
 #endif	/* SOLARIS_HW_SLOT_SELECTION */
 
-/* Index for the supported ciphers */
-enum pk11_cipher_id {
-	PK11_DES_CBC,
-	PK11_DES3_CBC,
-	PK11_DES_ECB,
-	PK11_DES3_ECB,
-	PK11_RC4,
-	PK11_AES_128_CBC,
-	PK11_AES_192_CBC,
-	PK11_AES_256_CBC,
-	PK11_AES_128_ECB,
-	PK11_AES_192_ECB,
-	PK11_AES_256_ECB,
-	PK11_BLOWFISH_CBC,
-#ifdef	SOLARIS_AES_CTR
-	PK11_AES_128_CTR,
-	PK11_AES_192_CTR,
-	PK11_AES_256_CTR,
-#endif	/* SOLARIS_AES_CTR */
-	PK11_CIPHER_MAX
-};
-
-/* Index for the supported digests */
-enum pk11_digest_id {
-	PK11_MD5,
-	PK11_SHA1,
-	PK11_SHA224,
-	PK11_SHA256,
-	PK11_SHA384,
-	PK11_SHA512,
-	PK11_DIGEST_MAX
-};
-
-#define	TRY_OBJ_DESTROY(sess_hdl, obj_hdl, retval, uselock, alg_type)	\
+#define	TRY_OBJ_DESTROY(sp, obj_hdl, retval, uselock, alg_type)	\
 	{								\
 	if (uselock)							\
 		LOCK_OBJSTORE(alg_type);				\
 	if (pk11_active_delete(obj_hdl, alg_type) == 1)			\
 		{							\
-		retval = pk11_destroy_object(sess_hdl, obj_hdl);	\
+		retval = pk11_destroy_object(sp->session, obj_hdl,	\
+		    sp->persistent);					\
 		}							\
 	if (uselock)							\
 		UNLOCK_OBJSTORE(alg_type);				\
@@ -324,17 +370,12 @@ static CK_BBOOL pk11_have_dsa	= CK_FALSE;
 static CK_BBOOL pk11_have_dh	= CK_FALSE;
 static CK_BBOOL pk11_have_random = CK_FALSE;
 
-typedef struct PK11_CIPHER_st
-	{
-	enum pk11_cipher_id	id;
-	int			nid;
-	int			iv_len;
-	int			min_key_len;
-	int			max_key_len;
-	CK_KEY_TYPE		key_type;
-	CK_MECHANISM_TYPE	mech_type;
-	} PK11_CIPHER;
-
+/*
+ * Static list of ciphers.
+ * Note, that ciphers array is indexed by member PK11_CIPHER.id,
+ * thus ciphers[i].id == i
+ * Rows must be kept in sync with enum pk11_cipher_id.
+ */
 static PK11_CIPHER ciphers[] =
 	{
 	{ PK11_DES_CBC,		NID_des_cbc,		8,	 8,   8,
@@ -361,24 +402,20 @@ static PK11_CIPHER ciphers[] =
 		CKK_AES,	CKM_AES_ECB, },
 	{ PK11_BLOWFISH_CBC,	NID_bf_cbc,		8,	16,  16,
 		CKK_BLOWFISH,	CKM_BLOWFISH_CBC, },
-#ifdef	SOLARIS_AES_CTR
-	/* we don't know the correct NIDs until the engine is initialized */
-	{ PK11_AES_128_CTR,	NID_undef,		16,	16,  16,
+	{ PK11_AES_128_CTR,	NID_aes_128_ctr,	16,	16,  16,
 		CKK_AES,	CKM_AES_CTR, },
-	{ PK11_AES_192_CTR,	NID_undef,		16,	24,  24,
+	{ PK11_AES_192_CTR,	NID_aes_192_ctr,	16,	24,  24,
 		CKK_AES,	CKM_AES_CTR, },
-	{ PK11_AES_256_CTR,	NID_undef,		16,	32,  32,
+	{ PK11_AES_256_CTR,	NID_aes_256_ctr,	16,	32,  32,
 		CKK_AES,	CKM_AES_CTR, },
-#endif	/* SOLARIS_AES_CTR */
 	};
 
-typedef struct PK11_DIGEST_st
-	{
-	enum pk11_digest_id	id;
-	int			nid;
-	CK_MECHANISM_TYPE	mech_type;
-	} PK11_DIGEST;
-
+/*
+ * Static list of digests.
+ * Note, that digests array is indexed by member PK11_DIGEST.id,
+ * thus digests[i].id == i
+ * Rows must be kept in sync with enum pk11_digest_id.
+ */
 static PK11_DIGEST digests[] =
 	{
 	{PK11_MD5,	NID_md5,	CKM_MD5, },
@@ -559,17 +596,11 @@ static const EVP_CIPHER pk11_aes_256_ecb =
 	NULL
 	};
 
-#ifdef	SOLARIS_AES_CTR
-/*
- * NID_undef's will be changed to the AES counter mode NIDs as soon they are
- * created in pk11_library_init(). Note that the need to change these structures
- * is the reason why we don't define them with the const keyword.
- */
 static EVP_CIPHER pk11_aes_128_ctr =
 	{
-	NID_undef,
+	NID_aes_128_ctr,
 	16, 16, 16,
-	EVP_CIPH_CBC_MODE,
+	EVP_CIPH_CTR_MODE,
 	pk11_cipher_init,
 	pk11_cipher_do_cipher,
 	pk11_cipher_cleanup,
@@ -581,9 +612,9 @@ static EVP_CIPHER pk11_aes_128_ctr =
 
 static EVP_CIPHER pk11_aes_192_ctr =
 	{
-	NID_undef,
+	NID_aes_192_ctr,
 	16, 24, 16,
-	EVP_CIPH_CBC_MODE,
+	EVP_CIPH_CTR_MODE,
 	pk11_cipher_init,
 	pk11_cipher_do_cipher,
 	pk11_cipher_cleanup,
@@ -595,9 +626,9 @@ static EVP_CIPHER pk11_aes_192_ctr =
 
 static EVP_CIPHER pk11_aes_256_ctr =
 	{
-	NID_undef,
+	NID_aes_256_ctr,
 	16, 32, 16,
-	EVP_CIPH_CBC_MODE,
+	EVP_CIPH_CTR_MODE,
 	pk11_cipher_init,
 	pk11_cipher_do_cipher,
 	pk11_cipher_cleanup,
@@ -606,13 +637,12 @@ static EVP_CIPHER pk11_aes_256_ctr =
 	EVP_CIPHER_get_asn1_iv,
 	NULL
 	};
-#endif	/* SOLARIS_AES_CTR */
 
 static const EVP_CIPHER pk11_bf_cbc =
 	{
 	NID_bf_cbc,
 	8, 16, 8,
-	EVP_CIPH_VARIABLE_LENGTH,
+	EVP_CIPH_VARIABLE_LENGTH | EVP_CIPH_CBC_MODE,
 	pk11_cipher_init,
 	pk11_cipher_do_cipher,
 	pk11_cipher_cleanup,
@@ -657,7 +687,7 @@ static const EVP_MD pk11_sha1 =
 	NID_sha1,
 	NID_sha1WithRSAEncryption,
 	SHA_DIGEST_LENGTH,
-	0,
+	EVP_MD_FLAG_PKEY_METHOD_SIGNATURE|EVP_MD_FLAG_DIGALGID_ABSENT,
 	pk11_digest_init,
 	pk11_digest_update,
 	pk11_digest_final,
@@ -673,7 +703,7 @@ static const EVP_MD pk11_sha224 =
 	NID_sha224,
 	NID_sha224WithRSAEncryption,
 	SHA224_DIGEST_LENGTH,
-	0,
+	EVP_MD_FLAG_PKEY_METHOD_SIGNATURE|EVP_MD_FLAG_DIGALGID_ABSENT,
 	pk11_digest_init,
 	pk11_digest_update,
 	pk11_digest_final,
@@ -690,7 +720,7 @@ static const EVP_MD pk11_sha256 =
 	NID_sha256,
 	NID_sha256WithRSAEncryption,
 	SHA256_DIGEST_LENGTH,
-	0,
+	EVP_MD_FLAG_PKEY_METHOD_SIGNATURE|EVP_MD_FLAG_DIGALGID_ABSENT,
 	pk11_digest_init,
 	pk11_digest_update,
 	pk11_digest_final,
@@ -706,7 +736,7 @@ static const EVP_MD pk11_sha384 =
 	NID_sha384,
 	NID_sha384WithRSAEncryption,
 	SHA384_DIGEST_LENGTH,
-	0,
+	EVP_MD_FLAG_PKEY_METHOD_SIGNATURE|EVP_MD_FLAG_DIGALGID_ABSENT,
 	pk11_digest_init,
 	pk11_digest_update,
 	pk11_digest_final,
@@ -723,7 +753,7 @@ static const EVP_MD pk11_sha512 =
 	NID_sha512,
 	NID_sha512WithRSAEncryption,
 	SHA512_DIGEST_LENGTH,
-	0,
+	EVP_MD_FLAG_PKEY_METHOD_SIGNATURE|EVP_MD_FLAG_DIGALGID_ABSENT,
 	pk11_digest_init,
 	pk11_digest_update,
 	pk11_digest_final,
@@ -770,19 +800,20 @@ CK_FUNCTION_LIST_PTR pFuncList = NULL;
 static const char PK11_GET_FUNCTION_LIST[] = "C_GetFunctionList";
 
 /*
- * These is the static string constant for the DSO file name and the function
- * symbol names to bind to.
+ * This is a static string constant for the DSO file name and the function
+ * symbol names to bind to. We set it in the Configure script based on whether
+ * this is 32 or 64 bit build.
  */
 static const char def_PK11_LIBNAME[] = PK11_LIB_LOCATION;
 
-static CK_BBOOL true = TRUE;
-static CK_BBOOL false = FALSE;
-static CK_SLOT_ID pubkey_SLOTID = 0;
+/* Needed in e_pk11_pub.c as well so that's why it is not static. */
+CK_SLOT_ID pubkey_SLOTID = 0;
 static CK_SLOT_ID rand_SLOTID = 0;
 static CK_SLOT_ID SLOTID = 0;
-static CK_BBOOL pk11_library_initialized = FALSE;
-static CK_BBOOL pk11_atfork_initialized = FALSE;
+static CK_BBOOL pk11_library_initialized = CK_FALSE;
+static CK_BBOOL pk11_atfork_initialized = CK_FALSE;
 static int pk11_pid = 0;
+static ENGINE* pk11_engine = NULL;
 
 static DSO *pk11_dso = NULL;
 
@@ -797,6 +828,10 @@ static int pk11_init_all_locks(void)
 		goto malloc_err;
 	(void) pthread_mutex_init(find_lock[OP_RSA], NULL);
 #endif /* OPENSSL_NO_RSA */
+
+	if ((uri_lock = OPENSSL_malloc(sizeof (pthread_mutex_t))) == NULL)
+		goto malloc_err;
+	(void) pthread_mutex_init(uri_lock, NULL);
 
 #ifndef OPENSSL_NO_DSA
 	find_lock[OP_DSA] = OPENSSL_malloc(sizeof (pthread_mutex_t));
@@ -867,6 +902,10 @@ static void pk11_free_all_locks(void)
 			session_cache[type].lock = NULL;
 			}
 		}
+	/* Free uri_lock */
+	(void) pthread_mutex_destroy(uri_lock);
+	OPENSSL_free(uri_lock);
+	uri_lock = NULL;
 	}
 
 /*
@@ -887,6 +926,10 @@ static int bind_pk11(ENGINE *e)
 	    !ENGINE_set_ciphers(e, pk11_engine_ciphers) ||
 	    !ENGINE_set_digests(e, pk11_engine_digests))
 		return (0);
+
+	if (!ENGINE_set_pkey_meths(e, pk11_engine_pkey_methods))
+		return (0);
+
 #ifndef OPENSSL_NO_RSA
 	if (pk11_have_rsa == CK_TRUE)
 		{
@@ -894,9 +937,7 @@ static int bind_pk11(ENGINE *e)
 		    !ENGINE_set_load_privkey_function(e, pk11_load_privkey) ||
 		    !ENGINE_set_load_pubkey_function(e, pk11_load_pubkey))
 			return (0);
-#ifdef	DEBUG_SLOT_SELECTION
-		fprintf(stderr, "%s: registered RSA\n", PK11_DBG);
-#endif	/* DEBUG_SLOT_SELECTION */
+		DEBUG_SLOT_SEL("%s: registered RSA\n", PK11_DBG);
 		}
 #endif	/* OPENSSL_NO_RSA */
 #ifndef OPENSSL_NO_DSA
@@ -904,9 +945,7 @@ static int bind_pk11(ENGINE *e)
 		{
 		if (!ENGINE_set_DSA(e, PK11_DSA()))
 			return (0);
-#ifdef	DEBUG_SLOT_SELECTION
-		fprintf(stderr, "%s: registered DSA\n", PK11_DBG);
-#endif	/* DEBUG_SLOT_SELECTION */
+		DEBUG_SLOT_SEL("%s: registered DSA\n", PK11_DBG);
 		}
 #endif	/* OPENSSL_NO_DSA */
 #ifndef OPENSSL_NO_DH
@@ -914,18 +953,14 @@ static int bind_pk11(ENGINE *e)
 		{
 		if (!ENGINE_set_DH(e, PK11_DH()))
 			return (0);
-#ifdef	DEBUG_SLOT_SELECTION
-		fprintf(stderr, "%s: registered DH\n", PK11_DBG);
-#endif	/* DEBUG_SLOT_SELECTION */
+		DEBUG_SLOT_SEL("%s: registered DH\n", PK11_DBG);
 		}
 #endif	/* OPENSSL_NO_DH */
 	if (pk11_have_random)
 		{
 		if (!ENGINE_set_RAND(e, &pk11_random))
 			return (0);
-#ifdef	DEBUG_SLOT_SELECTION
-		fprintf(stderr, "%s: registered random\n", PK11_DBG);
-#endif	/* DEBUG_SLOT_SELECTION */
+		DEBUG_SLOT_SEL("%s: registered random\n", PK11_DBG);
 		}
 	if (!ENGINE_set_init_function(e, pk11_init) ||
 	    !ENGINE_set_destroy_function(e, pk11_destroy) ||
@@ -952,8 +987,6 @@ static int bind_pk11(ENGINE *e)
 	return (1);
 	}
 
-/* Dynamic engine support is disabled at a higher level for Solaris */
-#ifdef	ENGINE_DYNAMIC_SUPPORT
 static int bind_helper(ENGINE *e, const char *id)
 	{
 	if (id && (strcmp(id, engine_pk11_id) != 0))
@@ -967,71 +1000,6 @@ static int bind_helper(ENGINE *e, const char *id)
 
 IMPLEMENT_DYNAMIC_CHECK_FN()
 IMPLEMENT_DYNAMIC_BIND_FN(bind_helper)
-
-#else
-static ENGINE *engine_pk11(void)
-	{
-	ENGINE *ret = ENGINE_new();
-
-	if (!ret)
-		return (NULL);
-
-	if (!bind_pk11(ret))
-		{
-		ENGINE_free(ret);
-		return (NULL);
-		}
-
-	return (ret);
-	}
-
-void
-ENGINE_load_pk11(void)
-	{
-	ENGINE *e_pk11 = NULL;
-
-	/*
-	 * Do not use dynamic PKCS#11 library on Solaris due to
-	 * security reasons. We will link it in statically.
-	 */
-	/* Attempt to load PKCS#11 library */
-	if (!pk11_dso)
-		pk11_dso = DSO_load(NULL, get_PK11_LIBNAME(), NULL, 0);
-
-	if (pk11_dso == NULL)
-		{
-		PK11err(PK11_F_LOAD, PK11_R_DSO_FAILURE);
-		return;
-		}
-
-	e_pk11 = engine_pk11();
-	if (!e_pk11)
-		{
-		DSO_free(pk11_dso);
-		pk11_dso = NULL;
-		return;
-		}
-
-	/*
-	 * At this point, the pk11 shared library is either dynamically
-	 * loaded or statically linked in. So, initialize the pk11
-	 * library before calling ENGINE_set_default since the latter
-	 * needs cipher and digest algorithm information
-	 */
-	if (!pk11_library_init(e_pk11))
-		{
-		DSO_free(pk11_dso);
-		pk11_dso = NULL;
-		ENGINE_free(e_pk11);
-		return;
-		}
-
-	ENGINE_add(e_pk11);
-
-	ENGINE_free(e_pk11);
-	ERR_clear_error();
-	}
-#endif	/* ENGINE_DYNAMIC_SUPPORT */
 
 /*
  * These are the static string constants for the DSO file name and
@@ -1073,6 +1041,7 @@ static void pk11_fork_prepare(void)
 	LOCK_OBJSTORE(OP_RSA);
 	LOCK_OBJSTORE(OP_DSA);
 	LOCK_OBJSTORE(OP_DH);
+	(void) pthread_mutex_lock(uri_lock);
 	for (i = 0; i < OP_MAX; i++)
 		{
 		(void) pthread_mutex_lock(session_cache[i].lock);
@@ -1094,6 +1063,7 @@ static void pk11_fork_parent(void)
 	UNLOCK_OBJSTORE(OP_DH);
 	UNLOCK_OBJSTORE(OP_DSA);
 	UNLOCK_OBJSTORE(OP_RSA);
+	(void) pthread_mutex_unlock(uri_lock);
 	}
 
 /*
@@ -1107,6 +1077,9 @@ static void pk11_fork_child(void)
 	if (!pk11_library_initialized)
 		return;
 
+	/* invalidate the global session */
+	global_session = CK_INVALID_HANDLE;
+
 	for (i = OP_MAX - 1; i >= 0; i--)
 		{
 		(void) pthread_mutex_unlock(session_cache[i].lock);
@@ -1114,13 +1087,32 @@ static void pk11_fork_child(void)
 	UNLOCK_OBJSTORE(OP_DH);
 	UNLOCK_OBJSTORE(OP_DSA);
 	UNLOCK_OBJSTORE(OP_RSA);
+	(void) pthread_mutex_unlock(uri_lock);
 	}
 
 /* Initialization function for the pk11 engine */
 static int pk11_init(ENGINE *e)
-{
+	{
 	return (pk11_library_init(e));
-}
+	}
+
+/*
+ * Helper function that unsets reference to current engine (pk11_engine = NULL).
+ *
+ * Use of local variable only seems clumsy, it needs to be this way!
+ * This is to prevent double free in the unlucky scenario:
+ *     ENGINE_free calls pk11_destroy calls pk11_finish calls ENGINE_free
+ * Setting pk11_engine to NULL prior to ENGINE_free() avoids this.
+ */
+static void pk11_engine_free()
+	{
+	ENGINE* old_engine = pk11_engine;
+
+	if (old_engine)
+		{
+		pk11_engine = NULL;
+		}
+	}
 
 /*
  * Initialization function. Sets up various PKCS#11 library components.
@@ -1138,6 +1130,12 @@ static int pk11_library_init(ENGINE *e)
 	CK_ULONG ul_state_len;
 	int any_slot_found;
 	int i;
+
+	if (e != pk11_engine)
+		{
+		pk11_engine_free();
+		pk11_engine = e;
+		}
 
 	/*
 	 * pk11_library_initialized is set to 0 in pk11_finish() which is called
@@ -1168,20 +1166,32 @@ static int pk11_library_init(ENGINE *e)
 			}
 		}
 
-	if (pk11_dso == NULL)
-		{
-		PK11err(PK11_F_LIBRARY_INIT, PK11_R_DSO_FAILURE);
-		goto err;
-		}
 
-#ifdef	SOLARIS_AES_CTR
 	/*
-	 * We must do this before we start working with slots since we need all
-	 * NIDs there.
+	 * If initialization of the locks fails pk11_init_all_locks()
+	 * will do the cleanup.
 	 */
-	if (pk11_add_aes_ctr_NIDs() == 0)
+	if (!pk11_init_all_locks())
 		goto err;
-#endif	/* SOLARIS_AES_CTR */
+	for (i = 0; i < OP_MAX; i++)
+		session_cache[i].head = NULL;
+	/*
+	 * Initialize active lists. We only use active lists
+	 * for asymmetric ciphers.
+	 */
+	for (i = 0; i < OP_MAX; i++)
+		active_list[i] = NULL;
+
+	/* Attempt to load PKCS#11 library. */
+	if (!pk11_dso)
+		{
+		pk11_dso = DSO_load(NULL, get_PK11_LIBNAME(), NULL, 0);
+		if (pk11_dso == NULL)
+			{
+			PK11err(PK11_F_LOAD, PK11_R_DSO_FAILURE);
+			goto err;
+			}
+		}
 
 #ifdef	SOLARIS_HW_SLOT_SELECTION
 	if (check_hw_mechanisms() == 0)
@@ -1250,30 +1260,15 @@ static int pk11_library_init(ENGINE *e)
 	 * this function is required by OpenSSL digest copy function
 	 */
 	if (pFuncList->C_GetOperationState(global_session, NULL, &ul_state_len)
-			== CKR_FUNCTION_NOT_SUPPORTED) {
-#ifdef	DEBUG_SLOT_SELECTION
-		fprintf(stderr, "%s: C_GetOperationState() not supported, "
+			== CKR_FUNCTION_NOT_SUPPORTED)
+		{
+		DEBUG_SLOT_SEL("%s: C_GetOperationState() not supported, "
 		    "setting digest_count to 0\n", PK11_DBG);
-#endif	/* DEBUG_SLOT_SELECTION */
 		digest_count = 0;
-	}
+		}
 
-	pk11_library_initialized = TRUE;
+	pk11_library_initialized = CK_TRUE;
 	pk11_pid = getpid();
-	/*
-	 * if initialization of the locks fails pk11_init_all_locks()
-	 * will do the cleanup.
-	 */
-	if (!pk11_init_all_locks())
-		goto err;
-	for (i = 0; i < OP_MAX; i++)
-		session_cache[i].head = NULL;
-	/*
-	 * initialize active lists. We only use active lists
-	 * for asymmetric ciphers.
-	 */
-	for (i = 0; i < OP_MAX; i++)
-		active_list[i] = NULL;
 
 	if (!pk11_atfork_initialized)
 		{
@@ -1283,7 +1278,7 @@ static int pk11_library_init(ENGINE *e)
 			PK11err(PK11_F_LIBRARY_INIT, PK11_R_ATFORK_FAILED);
 			goto err;
 			}
-		pk11_atfork_initialized = TRUE;
+		pk11_atfork_initialized = CK_TRUE;
 		}
 
 	return (1);
@@ -1296,9 +1291,14 @@ err:
 /* ARGSUSED */
 static int pk11_destroy(ENGINE *e)
 	{
+	int rtn = 1;
+
 	free_PK11_LIBNAME();
 	ERR_unload_pk11_strings();
-	return (1);
+	if (pk11_library_initialized == CK_TRUE)
+		rtn = pk11_finish(e);
+
+	return (rtn);
 	}
 
 /*
@@ -1309,6 +1309,15 @@ static int pk11_destroy(ENGINE *e)
 static int pk11_finish(ENGINE *e)
 	{
 	int i;
+
+	/*
+	 * Make sure, right engine instance is being destroyed.
+	 * Engine e may be the wrong instance if
+	 * 	1) either someone calls ENGINE_load_pk11 twice
+	 * 	2) or last ref. to an already finished engine is being destroyed
+	 */
+	if (e != pk11_engine)
+		goto err;
 
 	if (pk11_dso == NULL)
 		{
@@ -1325,8 +1334,12 @@ static int pk11_finish(ENGINE *e)
 	for (i = 0; i < OP_MAX; i++)
 		pk11_free_active_list(i);
 
-	pFuncList->C_CloseSession(global_session);
-	global_session = CK_INVALID_HANDLE;
+	/* Global session is not present when there are no slots. */
+	if (global_session != CK_INVALID_HANDLE)
+		{
+		pFuncList->C_CloseSession(global_session);
+		global_session = CK_INVALID_HANDLE;
+		}
 
 	/*
 	 * Since we are part of a library (libcrypto.so), calling this function
@@ -1335,7 +1348,6 @@ static int pk11_finish(ENGINE *e)
 #if 0
 	pFuncList->C_Finalize(NULL);
 #endif
-
 	if (!DSO_free(pk11_dso))
 		{
 		PK11err(PK11_F_FINISH, PK11_R_DSO_FAILURE);
@@ -1343,8 +1355,9 @@ static int pk11_finish(ENGINE *e)
 		}
 	pk11_dso = NULL;
 	pFuncList = NULL;
-	pk11_library_initialized = FALSE;
+	pk11_library_initialized = CK_FALSE;
 	pk11_pid = 0;
+	pk11_engine_free();
 	/*
 	 * There is no way how to unregister atfork handlers (other than
 	 * unloading the library) so we just free the locks. For this reason
@@ -1510,6 +1523,8 @@ pk11_get_session(PK11_OPTYPE optype)
 	{
 	PK11_SESSION *sp = NULL, *sp1, *freelist;
 	pthread_mutex_t *freelist_lock;
+	static pid_t pid = 0;
+	pid_t new_pid;
 	CK_RV rv;
 
 	switch (optype)
@@ -1528,11 +1543,20 @@ pk11_get_session(PK11_OPTYPE optype)
 			return (NULL);
 		}
 	(void) pthread_mutex_lock(freelist_lock);
+
+	/*
+	 * Will use it to find out if we forked. We cannot use the PID field in
+	 * the session structure because we could get a newly allocated session
+	 * here, with no PID information.
+	 */
+	if (pid == 0)
+		pid = getpid();
+
 	freelist = session_cache[optype].head;
 	sp = freelist;
 
 	/*
-	 * If the free list is empty, allocate new unitialized (filled
+	 * If the free list is empty, allocate new uninitialized (filled
 	 * with zeroes) PK11_SESSION structure otherwise return first
 	 * structure from the freelist.
 	 */
@@ -1545,17 +1569,31 @@ pk11_get_session(PK11_OPTYPE optype)
 			goto err;
 			}
 		(void) memset(sp, 0, sizeof (PK11_SESSION));
+
+		/*
+		 * It is a new session so it will look like a cache miss to the
+		 * code below. So, we must not try to to destroy its members so
+		 * mark them as unused.
+		 */
+		sp->opdata_rsa_priv_key = CK_INVALID_HANDLE;
+		sp->opdata_rsa_pub_key = CK_INVALID_HANDLE;
 		}
 	else
-		{
 		freelist = sp->next;
-		}
 
-	if (sp->pid != 0 && sp->pid != getpid())
+	/*
+	 * Check whether we have forked. In that case, we must get rid of all
+	 * inherited sessions and start allocating new ones.
+	 */
+	if (pid != (new_pid = getpid()))
 		{
+		pid = new_pid;
+
 		/*
 		 * We are a new process and thus need to free any inherited
-		 * PK11_SESSION objects.
+		 * PK11_SESSION objects aside from the first session (sp) which
+		 * is the only PK11_SESSION structure we will reuse (for the
+		 * head of the list).
 		 */
 		while ((sp1 = freelist) != NULL)
 			{
@@ -1609,13 +1647,28 @@ pk11_get_session(PK11_OPTYPE optype)
 			goto err;
 			}
 
-		/* It is an inherited session and needs re-initialization. */
+		/*
+		 * It is an inherited session from our parent so it needs
+		 * re-initialization.
+		 */
 		if (pk11_setup_session(sp, optype) == 0)
 			{
 			OPENSSL_free(sp);
 			sp = NULL;
+			goto err;
+			}
+		if (pk11_token_relogin(sp->session) == 0)
+			{
+			/*
+			 * We will keep the session in the cache list and let
+			 * the caller cope with the situation.
+			 */
+			freelist = sp;
+			sp = NULL;
+			goto err;
 			}
 		}
+
 	if (sp->pid == 0)
 		{
 		/* It is a new session and needs initialization. */
@@ -1645,6 +1698,11 @@ pk11_return_session(PK11_SESSION *sp, PK11_OPTYPE optype)
 	pthread_mutex_t *freelist_lock;
 	PK11_SESSION *freelist;
 
+	/*
+	 * If this is a session from the parent it will be taken care of and
+	 * freed in pk11_get_session() as part of the post-fork clean up the
+	 * next time we will ask for a new session.
+	 */
 	if (sp == NULL || sp->pid != getpid())
 		return;
 
@@ -1756,7 +1814,8 @@ static int pk11_free_session_list(PK11_OPTYPE optype)
 	}
 
 
-static int pk11_setup_session(PK11_SESSION *sp, PK11_OPTYPE optype)
+static int
+pk11_setup_session(PK11_SESSION *sp, PK11_OPTYPE optype)
 	{
 	CK_RV rv;
 	CK_SLOT_ID myslot;
@@ -1782,9 +1841,7 @@ static int pk11_setup_session(PK11_SESSION *sp, PK11_OPTYPE optype)
 		}
 
 	sp->session = CK_INVALID_HANDLE;
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: myslot=%d optype=%d\n", PK11_DBG, myslot, optype);
-#endif	/* DEBUG_SLOT_SELECTION */
+	DEBUG_SLOT_SEL("%s: myslot=%d optype=%d\n", PK11_DBG, myslot, optype);
 	rv = pFuncList->C_OpenSession(myslot, CKF_SERIAL_SESSION,
 		NULL_PTR, NULL_PTR, &sp->session);
 	if (rv == CKR_CRYPTOKI_NOT_INITIALIZED)
@@ -1793,7 +1850,7 @@ static int pk11_setup_session(PK11_SESSION *sp, PK11_OPTYPE optype)
 		 * We are probably a child process so force the
 		 * reinitialize of the session
 		 */
-		pk11_library_initialized = FALSE;
+		pk11_library_initialized = CK_FALSE;
 		if (!pk11_library_init(NULL))
 			return (0);
 		rv = pFuncList->C_OpenSession(myslot, CKF_SERIAL_SESSION,
@@ -1843,10 +1900,41 @@ static int pk11_setup_session(PK11_SESSION *sp, PK11_OPTYPE optype)
 			break;
 		}
 
+	/*
+	 * We always initialize the session as containing a non-persistent
+	 * object. The key load functions set it to persistent if that is so.
+	 */
+	sp->persistent = CK_FALSE;
 	return (1);
 	}
 
 #ifndef OPENSSL_NO_RSA
+/*
+ * Destroy all non-NULL RSA parameters. For the RSA keys by reference code,
+ * public components 'n'/'e' are the key components we use to check for the
+ * cache hit even for the private keys. So, no matter whether we are destroying
+ * a public or a private key, we always free what we can.
+ */
+static void
+destroy_all_rsa_params(PK11_SESSION *sp)
+	{
+	if (sp->opdata_rsa_n_num != NULL)
+		{
+		BN_free(sp->opdata_rsa_n_num);
+		sp->opdata_rsa_n_num = NULL;
+		}
+	if (sp->opdata_rsa_e_num != NULL)
+		{
+		BN_free(sp->opdata_rsa_e_num);
+		sp->opdata_rsa_e_num = NULL;
+		}
+	if (sp->opdata_rsa_d_num != NULL)
+		{
+		BN_free(sp->opdata_rsa_d_num);
+		sp->opdata_rsa_d_num = NULL;
+		}
+	}
+
 /* Destroy RSA public key from single session. */
 int
 pk11_destroy_rsa_object_pub(PK11_SESSION *sp, CK_BBOOL uselock)
@@ -1855,20 +1943,11 @@ pk11_destroy_rsa_object_pub(PK11_SESSION *sp, CK_BBOOL uselock)
 
 	if (sp->opdata_rsa_pub_key != CK_INVALID_HANDLE)
 		{
-		TRY_OBJ_DESTROY(sp->session, sp->opdata_rsa_pub_key,
+		TRY_OBJ_DESTROY(sp, sp->opdata_rsa_pub_key,
 		    ret, uselock, OP_RSA);
 		sp->opdata_rsa_pub_key = CK_INVALID_HANDLE;
 		sp->opdata_rsa_pub = NULL;
-		if (sp->opdata_rsa_n_num != NULL)
-			{
-			BN_free(sp->opdata_rsa_n_num);
-			sp->opdata_rsa_n_num = NULL;
-			}
-		if (sp->opdata_rsa_e_num != NULL)
-			{
-			BN_free(sp->opdata_rsa_e_num);
-			sp->opdata_rsa_e_num = NULL;
-			}
+		destroy_all_rsa_params(sp);
 		}
 
 	return (ret);
@@ -1882,15 +1961,11 @@ pk11_destroy_rsa_object_priv(PK11_SESSION *sp, CK_BBOOL uselock)
 
 	if (sp->opdata_rsa_priv_key != CK_INVALID_HANDLE)
 		{
-		TRY_OBJ_DESTROY(sp->session, sp->opdata_rsa_priv_key,
+		TRY_OBJ_DESTROY(sp, sp->opdata_rsa_priv_key,
 		    ret, uselock, OP_RSA);
 		sp->opdata_rsa_priv_key = CK_INVALID_HANDLE;
 		sp->opdata_rsa_priv = NULL;
-		if (sp->opdata_rsa_d_num != NULL)
-			{
-			BN_free(sp->opdata_rsa_d_num);
-			sp->opdata_rsa_d_num = NULL;
-			}
+		destroy_all_rsa_params(sp);
 		}
 
 	return (ret);
@@ -1906,7 +1981,7 @@ pk11_destroy_rsa_key_objects(PK11_SESSION *session)
 	int ret = 1;
 	PK11_SESSION *sp = NULL;
 	PK11_SESSION *local_free_session;
-	CK_BBOOL uselock = TRUE;
+	CK_BBOOL uselock = CK_TRUE;
 
 	if (session != NULL)
 		local_free_session = session;
@@ -1914,7 +1989,7 @@ pk11_destroy_rsa_key_objects(PK11_SESSION *session)
 		{
 		(void) pthread_mutex_lock(session_cache[OP_RSA].lock);
 		local_free_session = session_cache[OP_RSA].head;
-		uselock = FALSE;
+		uselock = CK_FALSE;
 		}
 
 	/*
@@ -1956,7 +2031,7 @@ pk11_destroy_dsa_object_pub(PK11_SESSION *sp, CK_BBOOL uselock)
 
 	if (sp->opdata_dsa_pub_key != CK_INVALID_HANDLE)
 		{
-		TRY_OBJ_DESTROY(sp->session, sp->opdata_dsa_pub_key,
+		TRY_OBJ_DESTROY(sp, sp->opdata_dsa_pub_key,
 		    ret, uselock, OP_DSA);
 		sp->opdata_dsa_pub_key = CK_INVALID_HANDLE;
 		sp->opdata_dsa_pub = NULL;
@@ -1978,7 +2053,7 @@ pk11_destroy_dsa_object_priv(PK11_SESSION *sp, CK_BBOOL uselock)
 
 	if (sp->opdata_dsa_priv_key != CK_INVALID_HANDLE)
 		{
-		TRY_OBJ_DESTROY(sp->session, sp->opdata_dsa_priv_key,
+		TRY_OBJ_DESTROY(sp, sp->opdata_dsa_priv_key,
 		    ret, uselock, OP_DSA);
 		sp->opdata_dsa_priv_key = CK_INVALID_HANDLE;
 		sp->opdata_dsa_priv = NULL;
@@ -2002,7 +2077,7 @@ pk11_destroy_dsa_key_objects(PK11_SESSION *session)
 	int ret = 1;
 	PK11_SESSION *sp = NULL;
 	PK11_SESSION *local_free_session;
-	CK_BBOOL uselock = TRUE;
+	CK_BBOOL uselock = CK_TRUE;
 
 	if (session != NULL)
 		local_free_session = session;
@@ -2010,7 +2085,7 @@ pk11_destroy_dsa_key_objects(PK11_SESSION *session)
 		{
 		(void) pthread_mutex_lock(session_cache[OP_DSA].lock);
 		local_free_session = session_cache[OP_DSA].head;
-		uselock = FALSE;
+		uselock = CK_FALSE;
 		}
 
 	/*
@@ -2052,7 +2127,7 @@ pk11_destroy_dh_object(PK11_SESSION *sp, CK_BBOOL uselock)
 
 	if (sp->opdata_dh_key != CK_INVALID_HANDLE)
 		{
-		TRY_OBJ_DESTROY(sp->session, sp->opdata_dh_key,
+		TRY_OBJ_DESTROY(sp, sp->opdata_dh_key,
 		    ret, uselock, OP_DH);
 		sp->opdata_dh_key = CK_INVALID_HANDLE;
 		sp->opdata_dh = NULL;
@@ -2078,7 +2153,7 @@ pk11_destroy_dh_key_objects(PK11_SESSION *session)
 	int ret = 1;
 	PK11_SESSION *sp = NULL;
 	PK11_SESSION *local_free_session;
-	CK_BBOOL uselock = TRUE;
+	CK_BBOOL uselock = CK_TRUE;
 
 	if (session != NULL)
 		local_free_session = session;
@@ -2086,7 +2161,7 @@ pk11_destroy_dh_key_objects(PK11_SESSION *session)
 		{
 		(void) pthread_mutex_lock(session_cache[OP_DH].lock);
 		local_free_session = session_cache[OP_DH].head;
-		uselock = FALSE;
+		uselock = CK_FALSE;
 		}
 
 	while ((sp = local_free_session) != NULL)
@@ -2103,7 +2178,6 @@ pk11_destroy_dh_key_objects(PK11_SESSION *session)
 			continue;
 			}
 		}
-err:
 	if (session == NULL)
 		(void) pthread_mutex_unlock(session_cache[OP_DH].lock);
 
@@ -2111,9 +2185,20 @@ err:
 	}
 #endif	/* OPENSSL_NO_DH */
 
-static int pk11_destroy_object(CK_SESSION_HANDLE session, CK_OBJECT_HANDLE oh)
+static int
+pk11_destroy_object(CK_SESSION_HANDLE session, CK_OBJECT_HANDLE oh,
+    CK_BBOOL persistent)
 	{
 	CK_RV rv;
+
+	/*
+	 * We never try to destroy persistent objects which are the objects
+	 * stored in the keystore. Also, we always use read-only sessions so
+	 * C_DestroyObject() would be returning CKR_SESSION_READ_ONLY here.
+	 */
+	if (persistent == CK_TRUE)
+		return (1);
+
 	rv = pFuncList->C_DestroyObject(session, oh);
 	if (rv != CKR_OK)
 		{
@@ -2166,20 +2251,17 @@ static int pk11_init_symmetric(EVP_CIPHER_CTX *ctx, PK11_CIPHER *pcipher,
 	PK11_SESSION *sp, CK_MECHANISM_PTR pmech)
 	{
 	CK_RV rv;
-#ifdef	SOLARIS_AES_CTR
 	CK_AES_CTR_PARAMS ctr_params;
-#endif	/* SOLARIS_AES_CTR */
 
 	/*
 	 * We expect pmech->mechanism to be already set and
 	 * pParameter/ulParameterLen initialized to NULL/0 before
-	 * pk11_init_symetric() is called.
+	 * pk11_init_symmetric() is called.
 	 */
 	OPENSSL_assert(pmech->mechanism != NULL);
 	OPENSSL_assert(pmech->pParameter == NULL);
 	OPENSSL_assert(pmech->ulParameterLen == 0);
 
-#ifdef	SOLARIS_AES_CTR
 	if (ctx->cipher->nid == NID_aes_128_ctr ||
 	    ctx->cipher->nid == NID_aes_192_ctr ||
 	    ctx->cipher->nid == NID_aes_256_ctr)
@@ -2199,7 +2281,6 @@ static int pk11_init_symmetric(EVP_CIPHER_CTX *ctx, PK11_CIPHER *pcipher,
 		(void) memcpy(ctr_params.cb, ctx->iv, AES_BLOCK_SIZE);
 		}
 	else
-#endif	/* SOLARIS_AES_CTR */
 		{
 		if (pcipher->iv_len > 0)
 			{
@@ -2238,7 +2319,10 @@ pk11_cipher_init(EVP_CIPHER_CTX *ctx, const unsigned char *key,
 	PK11_SESSION *sp;
 	PK11_CIPHER *p_ciph_table_row;
 
-	state->sp = NULL;
+	if (state->sp != NULL) {
+		(void) pk11_cipher_cleanup(ctx);
+		state->sp = NULL;
+	}
 
 	index = cipher_nid_to_pk11(ctx->cipher->nid);
 	if (index < 0 || index >= PK11_CIPHER_MAX)
@@ -2261,10 +2345,11 @@ pk11_cipher_init(EVP_CIPHER_CTX *ctx, const unsigned char *key,
 	 */
 	if (ctx->cipher->iv_len < p_ciph_table_row->iv_len ||
 	    ctx->key_len < p_ciph_table_row->min_key_len ||
-	    ctx->key_len > p_ciph_table_row->max_key_len) {
+	    ctx->key_len > p_ciph_table_row->max_key_len)
+		{
 		PK11err(PK11_F_CIPHER_INIT, PK11_R_KEY_OR_IV_LEN_PROBLEM);
 		return (0);
-	}
+		}
 
 	if ((sp = pk11_get_session(OP_CIPHER)) == NULL)
 		return (0);
@@ -2372,7 +2457,7 @@ pk11_cipher_final(PK11_SESSION *sp)
  */
 static int
 pk11_cipher_do_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
-	const unsigned char *in, unsigned int inl)
+	const unsigned char *in, size_t inl)
 	{
 	PK11_CIPHER_STATE *state = (PK11_CIPHER_STATE *) ctx->cipher_data;
 	PK11_SESSION *sp;
@@ -2519,6 +2604,15 @@ pk11_engine_ciphers(ENGINE *e, const EVP_CIPHER **cipher,
 		case NID_aes_256_ecb:
 			*cipher = &pk11_aes_256_ecb;
 			break;
+		case NID_aes_128_ctr:
+			*cipher = &pk11_aes_128_ctr;
+			break;
+		case NID_aes_192_ctr:
+			*cipher = &pk11_aes_192_ctr;
+			break;
+		case NID_aes_256_ctr:
+			*cipher = &pk11_aes_256_ctr;
+			break;
 		case NID_bf_cbc:
 			*cipher = &pk11_bf_cbc;
 			break;
@@ -2526,19 +2620,6 @@ pk11_engine_ciphers(ENGINE *e, const EVP_CIPHER **cipher,
 			*cipher = &pk11_rc4;
 			break;
 		default:
-#ifdef	SOLARIS_AES_CTR
-			/*
-			 * These can't be in separated cases because the NIDs
-			 * here are not constants.
-			 */
-			if (nid == NID_aes_128_ctr)
-				*cipher = &pk11_aes_128_ctr;
-			else if (nid == NID_aes_192_ctr)
-				*cipher = &pk11_aes_192_ctr;
-			else if (nid == NID_aes_256_ctr)
-				*cipher = &pk11_aes_256_ctr;
-			else
-#endif	/* SOLARIS_AES_CTR */
 			*cipher = NULL;
 			break;
 		}
@@ -2558,7 +2639,17 @@ pk11_engine_digests(ENGINE *e, const EVP_MD **digest,
 		case NID_md5:
 			*digest = &pk11_md5;
 			break;
+		/*
+		 * A special case. For "openssl dgst -dss1 -engine pkcs11 ...",
+		 * OpenSSL calls EVP_get_digestbyname() on "dss1" which ends up
+		 * calling pk11_engine_digests() for NID_dsa. Internally, if an
+		 * engine is not used, OpenSSL uses SHA1_Init() as expected for
+		 * DSA. So, we must return pk11_sha1() for NID_dsa as well. Note
+		 * that this must have changed between 0.9.8 and 1.0.0 since we
+		 * did not have the problem with the 0.9.8 version.
+		 */
 		case NID_sha1:
+		case NID_dsa:
 			*digest = &pk11_sha1;
 			break;
 		case NID_sha224:
@@ -2594,9 +2685,9 @@ static CK_OBJECT_HANDLE pk11_get_cipher_key(EVP_CIPHER_CTX *ctx,
 		{
 		{CKA_CLASS, (void*) NULL, sizeof (CK_OBJECT_CLASS)},
 		{CKA_KEY_TYPE, (void*) NULL, sizeof (CK_KEY_TYPE)},
-		{CKA_TOKEN, &false, sizeof (false)},
-		{CKA_ENCRYPT, &true, sizeof (true)},
-		{CKA_DECRYPT, &true, sizeof (true)},
+		{CKA_TOKEN, &pk11_false, sizeof (pk11_false)},
+		{CKA_ENCRYPT, &pk11_true, sizeof (pk11_true)},
+		{CKA_DECRYPT, &pk11_true, sizeof (pk11_true)},
 		{CKA_VALUE, (void*) NULL, 0},
 		};
 
@@ -2760,9 +2851,12 @@ pk11_digest_copy(EVP_MD_CTX *to, const EVP_MD_CTX *from)
 	CK_BYTE_PTR pstate = NULL;
 	CK_ULONG ul_state_len;
 
+	if (from->md_data == NULL || to->digest->ctx_size == 0)
+		return (1);
+
 	/* The copy-from state */
 	state = (PK11_CIPHER_STATE *) from->md_data;
-	if (state == NULL || state->sp == NULL)
+	if (state->sp == NULL)
 		goto err;
 
 	/* Initialize the copy-to state */
@@ -2888,10 +2982,10 @@ static int pk11_destroy_cipher_key_objects(PK11_SESSION *session)
 			{
 			/*
 			 * The secret key object is created in the
-			 * global_session. See pk11_get_cipher_key
+			 * global_session. See pk11_get_cipher_key().
 			 */
 			if (pk11_destroy_object(global_session,
-				sp->opdata_cipher_key) == 0)
+				sp->opdata_cipher_key, CK_FALSE) == 0)
 				goto err;
 			sp->opdata_cipher_key = CK_INVALID_HANDLE;
 			}
@@ -2952,14 +3046,9 @@ pk11_choose_slots(int *any_slot_found)
 	CK_TOKEN_INFO token_info;
 	int i;
 	CK_RV rv;
-	CK_SLOT_ID best_slot_sofar;
-	CK_BBOOL found_candidate_slot = CK_FALSE;
-	int slot_n_cipher = 0;
-	int slot_n_digest = 0;
+	CK_SLOT_ID best_pubkey_slot_sofar;
 	CK_SLOT_ID current_slot = 0;
-	int current_slot_n_cipher = 0;
-	int current_slot_n_digest = 0;
-
+	int best_number_of_mechs = 0;
 	int local_cipher_nids[PK11_CIPHER_MAX];
 	int local_digest_nids[PK11_DIGEST_MAX];
 
@@ -2968,7 +3057,7 @@ pk11_choose_slots(int *any_slot_found)
 		*any_slot_found = 0;
 
 	/* Get slot list for memory allocation */
-	rv = pFuncList->C_GetSlotList(0, NULL_PTR, &ulSlotCount);
+	rv = pFuncList->C_GetSlotList(CK_FALSE, NULL_PTR, &ulSlotCount);
 
 	if (rv != CKR_OK)
 		{
@@ -2979,9 +3068,7 @@ pk11_choose_slots(int *any_slot_found)
 	/* it's not an error if we didn't find any providers */
 	if (ulSlotCount == 0)
 		{
-#ifdef	DEBUG_SLOT_SELECTION
-		fprintf(stderr, "%s: no crypto providers found\n", PK11_DBG);
-#endif	/* DEBUG_SLOT_SELECTION */
+		DEBUG_SLOT_SEL("%s: no crypto providers found\n", PK11_DBG);
 		return (1);
 		}
 
@@ -2994,7 +3081,7 @@ pk11_choose_slots(int *any_slot_found)
 		}
 
 	/* Get the slot list for processing */
-	rv = pFuncList->C_GetSlotList(0, pSlotList, &ulSlotCount);
+	rv = pFuncList->C_GetSlotList(CK_FALSE, pSlotList, &ulSlotCount);
 	if (rv != CKR_OK)
 		{
 		PK11err_add_data(PK11_F_CHOOSE_SLOT, PK11_R_GETSLOTLIST, rv);
@@ -3002,238 +3089,51 @@ pk11_choose_slots(int *any_slot_found)
 		return (0);
 		}
 
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: provider: %s\n", PK11_DBG, def_PK11_LIBNAME);
-	fprintf(stderr, "%s: number of slots: %d\n", PK11_DBG, ulSlotCount);
-
-	fprintf(stderr, "%s: == checking rand slots ==\n", PK11_DBG);
-#endif	/* DEBUG_SLOT_SELECTION */
-	for (i = 0; i < ulSlotCount; i++)
-		{
-		current_slot = pSlotList[i];
-
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: checking slot: %d\n", PK11_DBG, i);
-#endif	/* DEBUG_SLOT_SELECTION */
-		/* Check if slot has random support. */
-		rv = pFuncList->C_GetTokenInfo(current_slot, &token_info);
-		if (rv != CKR_OK)
-			continue;
-
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: token label: %.32s\n", PK11_DBG, token_info.label);
-#endif	/* DEBUG_SLOT_SELECTION */
-
-		if (token_info.flags & CKF_RNG)
-			{
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: this token has CKF_RNG flag\n", PK11_DBG);
-#endif	/* DEBUG_SLOT_SELECTION */
-			pk11_have_random = CK_TRUE;
-			rand_SLOTID = current_slot;
-			break;
-			}
-		}
-
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: == checking pubkey slots ==\n", PK11_DBG);
-#endif	/* DEBUG_SLOT_SELECTION */
+	DEBUG_SLOT_SEL("%s: provider: %s\n", PK11_DBG, def_PK11_LIBNAME);
+	DEBUG_SLOT_SEL("%s: number of slots: %d\n", PK11_DBG, ulSlotCount);
 
 	pubkey_SLOTID = pSlotList[0];
 	for (i = 0; i < ulSlotCount; i++)
 		{
-		CK_BBOOL slot_has_rsa = CK_FALSE;
-		CK_BBOOL slot_has_dsa = CK_FALSE;
-		CK_BBOOL slot_has_dh = CK_FALSE;
 		current_slot = pSlotList[i];
-
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: checking slot: %d\n", PK11_DBG, i);
-#endif	/* DEBUG_SLOT_SELECTION */
+		DEBUG_SLOT_SEL("%s: == checking slot: %d ==\n", PK11_DBG,
+		    current_slot);
 		rv = pFuncList->C_GetTokenInfo(current_slot, &token_info);
 		if (rv != CKR_OK)
 			continue;
 
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: token label: %.32s\n", PK11_DBG, token_info.label);
-#endif	/* DEBUG_SLOT_SELECTION */
+		DEBUG_SLOT_SEL("%s: token label: %.32s\n", PK11_DBG,
+		    token_info.label);
 
-#ifndef OPENSSL_NO_RSA
-		/*
-		 * Check if this slot is capable of signing and
-		 * verifying with CKM_RSA_PKCS.
-		 */
-		rv = pFuncList->C_GetMechanismInfo(current_slot, CKM_RSA_PKCS,
-			&mech_info);
+		pk11_choose_rand_slot(token_info, current_slot);
 
-		if (rv == CKR_OK && ((mech_info.flags & CKF_SIGN) &&
-				(mech_info.flags & CKF_VERIFY)))
-			{
-			/*
-			 * Check if this slot is capable of encryption,
-			 * decryption, sign, and verify with CKM_RSA_X_509.
-			 */
-			rv = pFuncList->C_GetMechanismInfo(current_slot,
-			    CKM_RSA_X_509, &mech_info);
+		pk11_choose_pubkey_slot(mech_info, token_info, current_slot,
+			rv, best_number_of_mechs, best_pubkey_slot_sofar);
 
-			if (rv == CKR_OK && ((mech_info.flags & CKF_SIGN) &&
-			    (mech_info.flags & CKF_VERIFY) &&
-			    (mech_info.flags & CKF_ENCRYPT) &&
-			    (mech_info.flags & CKF_VERIFY_RECOVER) &&
-			    (mech_info.flags & CKF_DECRYPT)))
-				{
-				slot_has_rsa = CK_TRUE;
-				}
-			}
-#endif	/* OPENSSL_NO_RSA */
-
-#ifndef OPENSSL_NO_DSA
-		/*
-		 * Check if this slot is capable of signing and
-		 * verifying with CKM_DSA.
-		 */
-		rv = pFuncList->C_GetMechanismInfo(current_slot, CKM_DSA,
-			&mech_info);
-		if (rv == CKR_OK && ((mech_info.flags & CKF_SIGN) &&
-		    (mech_info.flags & CKF_VERIFY)))
-			{
-			slot_has_dsa = CK_TRUE;
-			}
-
-#endif	/* OPENSSL_NO_DSA */
-
-#ifndef OPENSSL_NO_DH
-		/*
-		 * Check if this slot is capable of DH key generataion and
-		 * derivation.
-		 */
-		rv = pFuncList->C_GetMechanismInfo(current_slot,
-		    CKM_DH_PKCS_KEY_PAIR_GEN, &mech_info);
-
-		if (rv == CKR_OK && (mech_info.flags & CKF_GENERATE_KEY_PAIR))
-			{
-			rv = pFuncList->C_GetMechanismInfo(current_slot,
-				CKM_DH_PKCS_DERIVE, &mech_info);
-			if (rv == CKR_OK && (mech_info.flags & CKF_DERIVE))
-				{
-				slot_has_dh = CK_TRUE;
-				}
-			}
-#endif	/* OPENSSL_NO_DH */
-
-		if (!found_candidate_slot &&
-		    (slot_has_rsa || slot_has_dsa || slot_has_dh))
-			{
-#ifdef	DEBUG_SLOT_SELECTION
-			fprintf(stderr,
-			    "%s: potential slot: %d\n", PK11_DBG, current_slot);
-#endif	/* DEBUG_SLOT_SELECTION */
-			best_slot_sofar = current_slot;
-			pk11_have_rsa = slot_has_rsa;
-			pk11_have_dsa = slot_has_dsa;
-			pk11_have_dh = slot_has_dh;
-			found_candidate_slot = CK_TRUE;
-#ifdef	DEBUG_SLOT_SELECTION
-			fprintf(stderr,
-			    "%s: setting found_candidate_slot to CK_TRUE\n",
-			    PK11_DBG);
-			fprintf(stderr,
-			    "%s: best so far slot: %d\n", PK11_DBG,
-			    best_slot_sofar);
-			}
-		else
-			{
-			fprintf(stderr,
-			    "%s: no rsa/dsa/dh\n", PK11_DBG);
-			}
-#else
-			} /* if */
-#endif	/* DEBUG_SLOT_SELECTION */
-		} /* for */
-
-	if (found_candidate_slot)
-		{
-		pubkey_SLOTID = best_slot_sofar;
-		}
-
-	found_candidate_slot = CK_FALSE;
-	best_slot_sofar = 0;
-
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: == checking cipher/digest ==\n", PK11_DBG);
-#endif	/* DEBUG_SLOT_SELECTION */
-
-	SLOTID = pSlotList[0];
-	for (i = 0; i < ulSlotCount; i++)
-		{
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: checking slot: %d\n", PK11_DBG, i);
-#endif	/* DEBUG_SLOT_SELECTION */
-
-		current_slot = pSlotList[i];
-		current_slot_n_cipher = 0;
-		current_slot_n_digest = 0;
 		(void) memset(local_cipher_nids, 0, sizeof (local_cipher_nids));
 		(void) memset(local_digest_nids, 0, sizeof (local_digest_nids));
-
-		pk11_find_symmetric_ciphers(pFuncList, current_slot,
-		    &current_slot_n_cipher, local_cipher_nids);
-
-		pk11_find_digests(pFuncList, current_slot,
-		    &current_slot_n_digest, local_digest_nids);
-
-#ifdef	DEBUG_SLOT_SELECTION
-		fprintf(stderr, "%s: current_slot_n_cipher %d\n", PK11_DBG,
-			current_slot_n_cipher);
-		fprintf(stderr, "%s: current_slot_n_digest %d\n", PK11_DBG,
-			current_slot_n_digest);
-		fprintf(stderr, "%s: best so far cipher/digest slot: %d\n",
-			PK11_DBG, best_slot_sofar);
-#endif	/* DEBUG_SLOT_SELECTION */
-
-		/*
-		 * If the current slot supports more ciphers/digests than
-		 * the previous best one we change the current best to this one,
-		 * otherwise leave it where it is.
-		 */
-		if ((current_slot_n_cipher + current_slot_n_digest) >
-		    (slot_n_cipher + slot_n_digest))
-			{
-#ifdef	DEBUG_SLOT_SELECTION
-			fprintf(stderr,
-				"%s: changing best so far slot to %d\n",
-				PK11_DBG, current_slot);
-#endif	/* DEBUG_SLOT_SELECTION */
-			best_slot_sofar = SLOTID = current_slot;
-			cipher_count = slot_n_cipher = current_slot_n_cipher;
-			digest_count = slot_n_digest = current_slot_n_digest;
-			(void) memcpy(cipher_nids, local_cipher_nids,
-			    sizeof (local_cipher_nids));
-			(void) memcpy(digest_nids, local_digest_nids,
-			    sizeof (local_digest_nids));
-			}
+		pk11_choose_cipher_digest(local_cipher_nids,
+			local_digest_nids, pFuncList, current_slot);
 		}
 
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr,
-	    "%s: chosen pubkey slot: %d\n", PK11_DBG, pubkey_SLOTID);
-	fprintf(stderr,
-	    "%s: chosen rand slot: %d\n", PK11_DBG, rand_SLOTID);
-	fprintf(stderr,
-	    "%s: chosen cipher/digest slot: %d\n", PK11_DBG, SLOTID);
-	fprintf(stderr,
-	    "%s: pk11_have_rsa %d\n", PK11_DBG, pk11_have_rsa);
-	fprintf(stderr,
-	    "%s: pk11_have_dsa %d\n", PK11_DBG, pk11_have_dsa);
-	fprintf(stderr,
-	    "%s: pk11_have_dh %d\n", PK11_DBG, pk11_have_dh);
-	fprintf(stderr,
-	    "%s: pk11_have_random %d\n", PK11_DBG, pk11_have_random);
-	fprintf(stderr,
-	    "%s: cipher_count %d\n", PK11_DBG, cipher_count);
-	fprintf(stderr,
-	    "%s: digest_count %d\n", PK11_DBG, digest_count);
-#endif	/* DEBUG_SLOT_SELECTION */
+	if (best_number_of_mechs == 0)
+		{
+		DEBUG_SLOT_SEL("%s: no rsa/dsa/dh\n", PK11_DBG);
+		}
+	else
+		{
+		pubkey_SLOTID = best_pubkey_slot_sofar;
+		}
+
+	DEBUG_SLOT_SEL("%s: chosen pubkey slot: %d\n", PK11_DBG, pubkey_SLOTID);
+	DEBUG_SLOT_SEL("%s: chosen rand slot: %d\n", PK11_DBG, rand_SLOTID);
+	DEBUG_SLOT_SEL("%s: chosen cipher/digest slot: %d\n", PK11_DBG, SLOTID);
+	DEBUG_SLOT_SEL("%s: pk11_have_rsa %d\n", PK11_DBG, pk11_have_rsa);
+	DEBUG_SLOT_SEL("%s: pk11_have_dsa %d\n", PK11_DBG, pk11_have_dsa);
+	DEBUG_SLOT_SEL("%s: pk11_have_dh %d\n", PK11_DBG, pk11_have_dh);
+	DEBUG_SLOT_SEL("%s: pk11_have_random %d\n", PK11_DBG, pk11_have_random);
+	DEBUG_SLOT_SEL("%s: cipher_count %d\n", PK11_DBG, cipher_count);
+	DEBUG_SLOT_SEL("%s: digest_count %d\n", PK11_DBG, digest_count);
 
 	if (pSlotList != NULL)
 		OPENSSL_free(pSlotList);
@@ -3248,153 +3148,253 @@ pk11_choose_slots(int *any_slot_found)
 	return (1);
 	}
 
-static void pk11_get_symmetric_cipher(CK_FUNCTION_LIST_PTR pflist,
-    int slot_id, CK_MECHANISM_TYPE mech, int *current_slot_n_cipher,
-    int *local_cipher_nids, int id)
+static void pk11_choose_rand_slot(CK_TOKEN_INFO token_info,
+    CK_SLOT_ID current_slot)
 	{
-	CK_MECHANISM_INFO mech_info;
-	CK_RV rv;
+	DEBUG_SLOT_SEL("%s: checking rand slots\n", PK11_DBG);
+	if (((token_info.flags & CKF_RNG) != 0) && !pk11_have_random)
+		{
+		DEBUG_SLOT_SEL("%s: this token has CKF_RNG flag\n", PK11_DBG);
+		pk11_have_random = CK_TRUE;
+		rand_SLOTID = current_slot;
+		}
+	}
 
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: checking mech: %x", PK11_DBG, mech);
-#endif	/* DEBUG_SLOT_SELECTION */
-	rv = pflist->C_GetMechanismInfo(slot_id, mech, &mech_info);
+static void pk11_choose_pubkey_slot(CK_MECHANISM_INFO mech_info,
+    CK_TOKEN_INFO token_info, CK_SLOT_ID current_slot, CK_RV rv,
+    int best_number_of_mechs, CK_SLOT_ID best_pubkey_slot_sofar)
+	{
+	CK_BBOOL slot_has_rsa = CK_FALSE;
+	CK_BBOOL slot_has_dsa = CK_FALSE;
+	CK_BBOOL slot_has_dh = CK_FALSE;
+	int current_number_of_mechs = 0;
+
+	DEBUG_SLOT_SEL("%s: checking pubkey slots\n", PK11_DBG);
+
+#ifndef OPENSSL_NO_RSA
+	/*
+	 * Check if this slot is capable of signing and
+	 * verifying with CKM_RSA_PKCS.
+	 */
+	rv = pFuncList->C_GetMechanismInfo(current_slot, CKM_RSA_PKCS,
+		&mech_info);
+
+	if (rv == CKR_OK && ((mech_info.flags & CKF_SIGN) &&
+			(mech_info.flags & CKF_VERIFY)))
+		{
+		/*
+		 * Check if this slot is capable of encryption,
+		 * decryption, sign, and verify with CKM_RSA_X_509.
+		 */
+		rv = pFuncList->C_GetMechanismInfo(current_slot,
+		    CKM_RSA_X_509, &mech_info);
+
+		if (rv == CKR_OK && ((mech_info.flags & CKF_SIGN) &&
+		    (mech_info.flags & CKF_VERIFY) &&
+		    (mech_info.flags & CKF_ENCRYPT) &&
+		    (mech_info.flags & CKF_VERIFY_RECOVER) &&
+		    (mech_info.flags & CKF_DECRYPT)))
+			{
+			slot_has_rsa = CK_TRUE;
+			current_number_of_mechs++;
+			}
+		}
+#endif  /* OPENSSL_NO_RSA */
+
+#ifndef OPENSSL_NO_DSA
+	/*
+	 * Check if this slot is capable of signing and
+	 * verifying with CKM_DSA.
+	 */
+	rv = pFuncList->C_GetMechanismInfo(current_slot, CKM_DSA,
+		&mech_info);
+	if (rv == CKR_OK && ((mech_info.flags & CKF_SIGN) &&
+	    (mech_info.flags & CKF_VERIFY)))
+		{
+		slot_has_dsa = CK_TRUE;
+		current_number_of_mechs++;
+		}
+#endif  /* OPENSSL_NO_DSA */
+
+#ifndef OPENSSL_NO_DH
+	/*
+	 * Check if this slot is capable of DH key generataion and
+	 * derivation.
+	 */
+	rv = pFuncList->C_GetMechanismInfo(current_slot,
+	    CKM_DH_PKCS_KEY_PAIR_GEN, &mech_info);
+
+	if (rv == CKR_OK && (mech_info.flags & CKF_GENERATE_KEY_PAIR))
+		{
+		rv = pFuncList->C_GetMechanismInfo(current_slot,
+			CKM_DH_PKCS_DERIVE, &mech_info);
+		if (rv == CKR_OK && (mech_info.flags & CKF_DERIVE))
+			{
+			slot_has_dh = CK_TRUE;
+			current_number_of_mechs++;
+			}
+		}
+#endif  /* OPENSSL_NO_DH */
+
+	if (current_number_of_mechs > best_number_of_mechs)
+		{
+		best_pubkey_slot_sofar = current_slot;
+		pk11_have_rsa = slot_has_rsa;
+		pk11_have_dsa = slot_has_dsa;
+		pk11_have_dh = slot_has_dh;
+		best_number_of_mechs = current_number_of_mechs;
+		/*
+		 * Cache the flags for later use. We might need those if
+		 * RSA keys by reference feature is used.
+		 */
+		pubkey_token_flags = token_info.flags;
+		DEBUG_SLOT_SEL("%s: pubkey flags changed to "
+		    "%lu.\n", PK11_DBG, pubkey_token_flags);
+		}
+	}
+
+static void pk11_choose_cipher_digest(int *local_cipher_nids,
+    int *local_digest_nids, CK_FUNCTION_LIST_PTR pflist,
+    CK_SLOT_ID current_slot)
+	{
+	int current_slot_n_cipher = 0;
+	int current_slot_n_digest = 0;
+
+	DEBUG_SLOT_SEL("%s: checking cipher/digest\n", PK11_DBG);
+
+	pk11_find_symmetric_ciphers(pFuncList, current_slot,
+	    &current_slot_n_cipher, local_cipher_nids);
+
+	pk11_find_digests(pFuncList, current_slot,
+	    &current_slot_n_digest, local_digest_nids);
+
+	DEBUG_SLOT_SEL("%s: current_slot_n_cipher %d\n", PK11_DBG,
+		current_slot_n_cipher);
+	DEBUG_SLOT_SEL("%s: current_slot_n_digest %d\n", PK11_DBG,
+		current_slot_n_digest);
+	/*
+	 * If the current slot supports more ciphers/digests than
+	 * the previous best one we change the current best to this one,
+	 * otherwise leave it where it is.
+	 */
+	if ((current_slot_n_cipher + current_slot_n_digest) >
+	    (cipher_count + digest_count))
+		{
+		DEBUG_SLOT_SEL("%s: changing best slot to %d\n",
+			PK11_DBG, current_slot);
+		SLOTID = current_slot;
+		cipher_count = current_slot_n_cipher;
+		digest_count = current_slot_n_digest;
+		OPENSSL_assert(cipher_count <= PK11_CIPHER_MAX);
+		OPENSSL_assert(digest_count <= PK11_DIGEST_MAX);
+		(void) memcpy(cipher_nids, local_cipher_nids,
+			sizeof (int) * cipher_count);
+		(void) memcpy(digest_nids, local_digest_nids,
+			sizeof (int) * digest_count);
+		}
+	}
+
+static void pk11_get_symmetric_cipher(CK_FUNCTION_LIST_PTR pflist,
+    int slot_id, int *current_slot_n_cipher, int *local_cipher_nids,
+    PK11_CIPHER *cipher)
+	{
+	static CK_MECHANISM_INFO mech_info;
+	static CK_RV rv;
+	static CK_MECHANISM_TYPE last_checked_mech = (CK_MECHANISM_TYPE)-1;
+
+	OPENSSL_assert(cipher->mech_type != (CK_MECHANISM_TYPE)-1);
+
+	DEBUG_SLOT_SEL("%s: checking mech: %x", PK11_DBG, cipher->mech_type);
+	if (cipher->mech_type != last_checked_mech)
+		{
+		rv = pflist->C_GetMechanismInfo(slot_id, cipher->mech_type,
+		    &mech_info);
+		}
+
+	last_checked_mech = cipher->mech_type;
 
 	if (rv != CKR_OK)
 		{
-#ifdef	DEBUG_SLOT_SELECTION
-		fprintf(stderr, " not found\n");
-#endif	/* DEBUG_SLOT_SELECTION */
+		DEBUG_SLOT_SEL(" not found\n");
 		return;
 		}
 
 	if ((mech_info.flags & CKF_ENCRYPT) &&
 	    (mech_info.flags & CKF_DECRYPT))
 		{
-#ifdef	SOLARIS_HW_SLOT_SELECTION
-		if (nid_in_table(ciphers[id].nid, hw_cnids))
-#endif	/* SOLARIS_HW_SLOT_SELECTION */
+		if (mech_info.ulMinKeySize > cipher->min_key_len ||
+		    mech_info.ulMaxKeySize < cipher->max_key_len)
 			{
-#ifdef	DEBUG_SLOT_SELECTION
-		fprintf(stderr, " usable\n");
-#endif	/* DEBUG_SLOT_SELECTION */
-			local_cipher_nids[(*current_slot_n_cipher)++] =
-			    ciphers[id].nid;
+			DEBUG_SLOT_SEL(" engine key size range <%i-%i> does not"
+			    " match mech range <%lu-%lu>\n",
+			    cipher->min_key_len, cipher->max_key_len,
+			    mech_info.ulMinKeySize, mech_info.ulMaxKeySize);
+			return;
 			}
 #ifdef	SOLARIS_HW_SLOT_SELECTION
-#ifdef	DEBUG_SLOT_SELECTION
+		if (nid_in_table(cipher->nid, hw_cnids))
+#endif	/* SOLARIS_HW_SLOT_SELECTION */
+			{
+			DEBUG_SLOT_SEL(" usable\n");
+			local_cipher_nids[(*current_slot_n_cipher)++] =
+			    cipher->nid;
+			}
+#ifdef	SOLARIS_HW_SLOT_SELECTION
 		else
 			{
-		fprintf(stderr, " rejected, software implementation only\n");
+			DEBUG_SLOT_SEL(
+			    " rejected, software implementation only\n");
 			}
-#endif	/* DEBUG_SLOT_SELECTION */
 #endif	/* SOLARIS_HW_SLOT_SELECTION */
 		}
-#ifdef	DEBUG_SLOT_SELECTION
 	else
 		{
-		fprintf(stderr, " unusable\n");
+		DEBUG_SLOT_SEL(" unusable\n");
 		}
-#endif	/* DEBUG_SLOT_SELECTION */
 
 	return;
 	}
 
 static void pk11_get_digest(CK_FUNCTION_LIST_PTR pflist, int slot_id,
-    CK_MECHANISM_TYPE mech, int *current_slot_n_digest, int *local_digest_nids,
-    int id)
+    int *current_slot_n_digest, int *local_digest_nids, PK11_DIGEST *digest)
 	{
 	CK_MECHANISM_INFO mech_info;
 	CK_RV rv;
 
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: checking mech: %x", PK11_DBG, mech);
-#endif	/* DEBUG_SLOT_SELECTION */
-	rv = pflist->C_GetMechanismInfo(slot_id, mech, &mech_info);
+	DEBUG_SLOT_SEL("%s: checking mech: %x", PK11_DBG, digest->mech_type);
+	rv = pflist->C_GetMechanismInfo(slot_id, digest->mech_type, &mech_info);
 
 	if (rv != CKR_OK)
 		{
-#ifdef	DEBUG_SLOT_SELECTION
-		fprintf(stderr, " not found\n");
-#endif	/* DEBUG_SLOT_SELECTION */
+		DEBUG_SLOT_SEL(" not found\n");
 		return;
 		}
 
 	if (mech_info.flags & CKF_DIGEST)
 		{
 #ifdef	SOLARIS_HW_SLOT_SELECTION
-		if (nid_in_table(digests[id].nid, hw_dnids))
+		if (nid_in_table(digest->nid, hw_dnids))
 #endif	/* SOLARIS_HW_SLOT_SELECTION */
 			{
-#ifdef	DEBUG_SLOT_SELECTION
-		fprintf(stderr, " usable\n");
-#endif	/* DEBUG_SLOT_SELECTION */
+			DEBUG_SLOT_SEL(" usable\n");
 			local_digest_nids[(*current_slot_n_digest)++] =
-			    digests[id].nid;
+			    digest->nid;
 			}
 #ifdef	SOLARIS_HW_SLOT_SELECTION
-#ifdef	DEBUG_SLOT_SELECTION
 		else
 			{
-		fprintf(stderr, " rejected, software implementation only\n");
+			DEBUG_SLOT_SEL(
+			    " rejected, software implementation only\n");
 			}
-#endif	/* DEBUG_SLOT_SELECTION */
 #endif	/* SOLARIS_HW_SLOT_SELECTION */
 		}
-#ifdef	DEBUG_SLOT_SELECTION
 	else
 		{
-		fprintf(stderr, " unusable\n");
+		DEBUG_SLOT_SEL(" unusable\n");
 		}
-#endif	/* DEBUG_SLOT_SELECTION */
 
 	return;
 	}
-
-#ifdef	SOLARIS_AES_CTR
-/* create a new NID when we have no OID for that mechanism */
-static int pk11_add_NID(char *sn, char *ln)
-	{
-	ASN1_OBJECT *o;
-	int nid;
-
-	if ((o = ASN1_OBJECT_create(OBJ_new_nid(1), (unsigned char *)"",
-	    1, sn, ln)) == NULL)
-		{
-		return (0);
-		}
-
-	/* will return NID_undef on error */
-	nid = OBJ_add_object(o);
-	ASN1_OBJECT_free(o);
-
-	return (nid);
-	}
-
-/*
- * Create new NIDs for AES counter mode. OpenSSL doesn't support them now so we
- * have to help ourselves here.
- */
-static int pk11_add_aes_ctr_NIDs(void)
-	{
-	/* are we already set? */
-	if (NID_aes_256_ctr != NID_undef)
-		return (1);
-
-	/*
-	 * There are no official names for AES counter modes yet so we just
-	 * follow the format of those that exist.
-	 */
-	ciphers[PK11_AES_128_CTR].nid = pk11_aes_128_ctr.nid = NID_aes_128_ctr;
-	ciphers[PK11_AES_192_CTR].nid = pk11_aes_192_ctr.nid = NID_aes_192_ctr;
-	ciphers[PK11_AES_256_CTR].nid = pk11_aes_256_ctr.nid = NID_aes_256_ctr;
-	return (1);
-
-err:
-	PK11err(PK11_F_ADD_AES_CTR_NIDS, PK11_R_ADD_NID_FAILED);
-	return (0);
-	}
-#endif	/* SOLARIS_AES_CTR */
 
 /* Find what symmetric ciphers this slot supports. */
 static void pk11_find_symmetric_ciphers(CK_FUNCTION_LIST_PTR pflist,
@@ -3405,8 +3405,7 @@ static void pk11_find_symmetric_ciphers(CK_FUNCTION_LIST_PTR pflist,
 	for (i = 0; i < PK11_CIPHER_MAX; ++i)
 		{
 		pk11_get_symmetric_cipher(pflist, current_slot,
-		    ciphers[i].mech_type, current_slot_n_cipher,
-		    local_cipher_nids, ciphers[i].id);
+		    current_slot_n_cipher, local_cipher_nids, &ciphers[i]);
 		}
 	}
 
@@ -3418,8 +3417,8 @@ static void pk11_find_digests(CK_FUNCTION_LIST_PTR pflist,
 
 	for (i = 0; i < PK11_DIGEST_MAX; ++i)
 		{
-		pk11_get_digest(pflist, current_slot, digests[i].mech_type,
-		    current_slot_n_digest, local_digest_nids, digests[i].id);
+		pk11_get_digest(pflist, current_slot, current_slot_n_digest,
+		    local_digest_nids, &digests[i]);
 		}
 	}
 
@@ -3462,7 +3461,7 @@ static void pk11_find_digests(CK_FUNCTION_LIST_PTR pflist,
  * ciphers and digests, we check that any found mechanism is in the table
  * created using the pkcs11_kernel library. So, as a result we have two arrays
  * of mechanisms that were advertised as supported in hardware which was the
- * goal of that whole excercise. Thus, we can use libpkcs11 but avoid soft token
+ * goal of that whole exercise. Thus, we can use libpkcs11 but avoid soft token
  * code for symmetric ciphers and digests. See pk11_choose_slots() for more
  * information.
  *
@@ -3491,14 +3490,17 @@ static int check_hw_mechanisms(void)
 	int n_cipher = 0, n_digest = 0;
 	CK_FUNCTION_LIST_PTR pflist = NULL;
 	CK_SLOT_ID_PTR pSlotList = NULL_PTR;
-	int *tmp_hw_cnids, *tmp_hw_dnids;
+	int *tmp_hw_cnids = NULL, *tmp_hw_dnids = NULL;
 	int hw_ctable_size, hw_dtable_size;
 
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: SOLARIS_HW_SLOT_SELECTION code running\n",
+	DEBUG_SLOT_SEL("%s: SOLARIS_HW_SLOT_SELECTION code running\n",
 	    PK11_DBG);
-#endif
-	if ((handle = dlopen(pkcs11_kernel, RTLD_LAZY)) == NULL)
+	/*
+	 * Use RTLD_GROUP to limit the pkcs11_kernel provider to its own
+	 * symbols, which prevents it from mistakenly accessing C_* functions
+	 * from the top-level PKCS#11 library.
+	 */
+	if ((handle = dlopen(pkcs11_kernel, RTLD_LAZY | RTLD_GROUP)) == NULL)
 		{
 		PK11err(PK11_F_CHECK_HW_MECHANISMS, PK11_R_DSO_FAILURE);
 		goto err;
@@ -3535,9 +3537,7 @@ static int check_hw_mechanisms(void)
 	/* no slots, set the hw mechanism tables as empty */
 	if (ulSlotCount == 0)
 		{
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: no hardware mechanisms found\n", PK11_DBG);
-#endif
+		DEBUG_SLOT_SEL("%s: no hardware mechanisms found\n", PK11_DBG);
 		hw_cnids = OPENSSL_malloc(sizeof (int));
 		hw_dnids = OPENSSL_malloc(sizeof (int));
 		if (hw_cnids == NULL || hw_dnids == NULL)
@@ -3567,7 +3567,7 @@ static int check_hw_mechanisms(void)
 		}
 
 	/*
-	 * We don't care about duplicit mechanisms in multiple slots and also
+	 * We don't care about duplicate mechanisms in multiple slots and also
 	 * reserve one slot for the terminal NID_undef which we use to stop the
 	 * search.
 	 */
@@ -3590,21 +3590,18 @@ static int check_hw_mechanisms(void)
 	for (i = 0; i < hw_dtable_size; ++i)
 		tmp_hw_dnids[i] = NID_undef;
 
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: provider: %s\n", PK11_DBG, pkcs11_kernel);
-	fprintf(stderr, "%s: found %d hardware slots\n", PK11_DBG, ulSlotCount);
-	fprintf(stderr, "%s: now looking for mechs supported in hw\n",
+	DEBUG_SLOT_SEL("%s: provider: %s\n", PK11_DBG, pkcs11_kernel);
+	DEBUG_SLOT_SEL("%s: found %d hardware slots\n", PK11_DBG, ulSlotCount);
+	DEBUG_SLOT_SEL("%s: now looking for mechs supported in hw\n",
 	    PK11_DBG);
-#endif	/* DEBUG_SLOT_SELECTION */
 
 	for (i = 0; i < ulSlotCount; i++)
 		{
 		if (pflist->C_GetTokenInfo(pSlotList[i], &token_info) != CKR_OK)
 			continue;
 
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: token label: %.32s\n", PK11_DBG, token_info.label);
-#endif	/* DEBUG_SLOT_SELECTION */
+		DEBUG_SLOT_SEL("%s: token label: %.32s\n", PK11_DBG,
+		    token_info.label);
 
 		/*
 		 * We are filling the hw mech tables here. Global tables are
@@ -3629,9 +3626,7 @@ static int check_hw_mechanisms(void)
 	hw_cnids = tmp_hw_cnids;
 	hw_dnids = tmp_hw_dnids;
 
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, "%s: hw mechs check complete\n", PK11_DBG);
-#endif	/* DEBUG_SLOT_SELECTION */
+	DEBUG_SLOT_SEL("%s: hw mechs check complete\n", PK11_DBG);
 	return (1);
 
 err:
@@ -3646,7 +3641,8 @@ err:
 	}
 
 /*
- * Check presence of a NID in the table of NIDs. The table may be NULL (i.e.,
+ * Check presence of a NID in the table of NIDs unless the mechanism is
+ * supported directly in a CPU instruction set. The table may be NULL (i.e.,
  * non-existent).
  */
 static int nid_in_table(int nid, int *nid_table)
@@ -3654,29 +3650,83 @@ static int nid_in_table(int nid, int *nid_table)
 	int i = 0;
 
 	/*
-	 * a special case. NULL means that we are initializing a new
-	 * table.
+	 * Special case first. NULL means that we are initializing a new table.
 	 */
 	if (nid_table == NULL)
 		return (1);
 
+#if defined(__x86)
 	/*
-	 * the table is never full, there is always at least one
-	 * NID_undef.
+	 * On Intel, if we have AES-NI instruction set we route AES to the
+	 * Crypto Framework. Intel CPUs do not have other instruction sets for
+	 * HW crypto acceleration so we check the HW NID table for any other
+	 * mechanism.
 	 */
+	if (hw_aes_instruction_set_present() == 1)
+		{
+		switch (nid)
+			{
+			case NID_aes_128_ecb:
+			case NID_aes_192_ecb:
+			case NID_aes_256_ecb:
+			case NID_aes_128_cbc:
+			case NID_aes_192_cbc:
+			case NID_aes_256_cbc:
+			case NID_aes_128_ctr:
+			case NID_aes_192_ctr:
+			case NID_aes_256_ctr:
+				return (1);
+			}
+		}
+#elif defined(__sparc)
+	if (hw_aes_instruction_set_present() == 1)
+		return (1);
+#endif
+
+	/* The table is never full, there is always at least one NID_undef. */
 	while (nid_table[i] != NID_undef)
 		{
 		if (nid_table[i++] == nid)
 			{
-#ifdef	DEBUG_SLOT_SELECTION
-	fprintf(stderr, " (NID %d in hw table, idx %d)", nid, i);
-#endif	/* DEBUG_SLOT_SELECTION */
+			DEBUG_SLOT_SEL(" (NID %d in hw table, idx %d)", nid, i);
 			return (1);
 			}
 		}
 
 	return (0);
 	}
+
+/* Do we have an AES instruction set? */
+static int
+hw_aes_instruction_set_present(void)
+	{
+	static int present = -1;
+
+	if (present == -1)
+		{
+		uint_t ui = 0;
+
+		(void) getisax(&ui, 1);
+
+#if defined(__amd64) || defined(__i386)
+		present = (ui & AV_386_AES) > 0;
+#elif defined(__sparc)
+/*
+ * These symbols should already be defined from /usr/include/sys/auxv_SPARC.h
+ */
+#ifndef AV_SPARC_AES
+#define AV_SPARC_AES 0
+#endif
+#ifndef AV_SPARC_FJAES
+#define AV_SPARC_FJAES 0
+#endif
+		present = (ui & (AV_SPARC_AES|AV_SPARC_FJAES)) > 0;
+#endif
+		}
+
+	return (present);
+	}
+
 #endif	/* SOLARIS_HW_SLOT_SELECTION */
 
 #endif	/* OPENSSL_NO_HW_PK11 */

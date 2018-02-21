@@ -1,6 +1,9 @@
-diff -ruN orig/Configure dist/Configure
---- orig/Configure	2016-09-22 06:23:06.000000000 -0400
-+++ dist/Configure	2016-09-22 11:29:09.768633695 -0400
+#
+# This patch file adds the Solaris's pkcs11 engine.
+# This is Solaris-specific (developed in house): not suitable for upstream.
+#
+--- /tmp/Configure	Fri Feb 11 14:40:39 2011
++++ openssl-1.0.0d/Configure	Fri Feb 11 14:41:36 2011
 @@ -10,7 +10,7 @@
  
  # see INSTALL for instructions.
@@ -20,7 +23,7 @@ diff -ruN orig/Configure dist/Configure
  # --install_prefix  Additional prefix for package builders (empty by
  #               default).  This needn't be set in advance, you can
  #               just as well use "make INSTALL_PREFIX=/whatever install".
-@@ -724,6 +727,9 @@
+@@ -716,6 +719,9 @@
  my $idx_arflags = $idx++;
  my $idx_multilib = $idx++;
  
@@ -30,7 +33,7 @@ diff -ruN orig/Configure dist/Configure
  my $prefix="";
  my $libdir="";
  my $openssldir="";
-@@ -948,6 +954,10 @@
+@@ -938,6 +944,10 @@
  				{
  				$prefix=$1;
  				}
@@ -41,7 +44,7 @@ diff -ruN orig/Configure dist/Configure
  			elsif (/^--libdir=(.*)$/)
  				{
  				$libdir=$1;
-@@ -1110,6 +1120,13 @@
+@@ -1105,6 +11115,13 @@
  	exit 0;
  }
  
@@ -55,7 +58,7 @@ diff -ruN orig/Configure dist/Configure
  if ($target =~ m/^CygWin32(-.*)$/) {
  	$target = "Cygwin".$1;
  }
-@@ -1285,6 +1302,8 @@
+@@ -1279,6 +1296,8 @@
  if ($flags ne "")	{ $cflags="$flags$cflags"; }
  else			{ $no_user_cflags=1;       }
  
@@ -64,7 +67,7 @@ diff -ruN orig/Configure dist/Configure
  # Kerberos settings.  The flavor must be provided from outside, either through
  # the script "config" or manually.
  if (!$no_krb5)
-@@ -1701,6 +1720,7 @@
+@@ -1687,6 +1706,7 @@
  	s/^VERSION=.*/VERSION=$version/;
  	s/^MAJOR=.*/MAJOR=$major/;
  	s/^MINOR=.*/MINOR=$minor/;
@@ -72,9 +75,8 @@ diff -ruN orig/Configure dist/Configure
  	s/^SHLIB_VERSION_NUMBER=.*/SHLIB_VERSION_NUMBER=$shlib_version_number/;
  	s/^SHLIB_VERSION_HISTORY=.*/SHLIB_VERSION_HISTORY=$shlib_version_history/;
  	s/^SHLIB_MAJOR=.*/SHLIB_MAJOR=$shlib_major/;
-diff -ruN orig/Makefile.org dist/Makefile.org
---- orig/Makefile.org	2016-09-22 06:23:06.000000000 -0400
-+++ dist/Makefile.org	2016-09-22 11:29:09.782559356 -0400
+--- /tmp/Makefile.org	Fri Feb 11 14:41:54 2011
++++ openssl-1.0.0d/Makefile.org	Fri Feb 11 14:38:01 2011
 @@ -26,6 +26,9 @@
  INSTALL_PREFIX=
  INSTALLTOP=/usr/local/ssl
@@ -85,96 +87,105 @@ diff -ruN orig/Makefile.org dist/Makefile.org
  # Do not edit this manually. Use Configure --openssldir=DIR do change this!
  OPENSSLDIR=/usr/local/ssl
  
-diff -ruN orig/crypto/engine/Makefile dist/crypto/engine/Makefile
---- orig/crypto/engine/Makefile	2016-09-22 06:24:44.000000000 -0400
-+++ dist/crypto/engine/Makefile	2016-09-22 11:29:09.777253510 -0400
-@@ -22,13 +22,13 @@
- 	tb_rsa.c tb_dsa.c tb_ecdsa.c tb_dh.c tb_ecdh.c tb_rand.c tb_store.c \
- 	tb_cipher.c tb_digest.c tb_pkmeth.c tb_asnmth.c \
- 	eng_openssl.c eng_cnf.c eng_dyn.c eng_cryptodev.c \
--	eng_rdrand.c
-+	eng_rdrand.c hw_pk11.c hw_pk11_pub.c
- LIBOBJ= eng_err.o eng_lib.o eng_list.o eng_init.o eng_ctrl.o \
- 	eng_table.o eng_pkey.o eng_fat.o eng_all.o \
- 	tb_rsa.o tb_dsa.o tb_ecdsa.o tb_dh.o tb_ecdh.o tb_rand.o tb_store.o \
- 	tb_cipher.o tb_digest.o tb_pkmeth.o tb_asnmth.o \
- 	eng_openssl.o eng_cnf.o eng_dyn.o eng_cryptodev.o \
--	eng_rdrand.o
-+	eng_rdrand.o hw_pk11.o hw_pk11_pub.o
+--- /tmp/Makefile	Mon Feb 14 14:59:22 2011
++++ openssl-1.0.0d/engines/Makefile	Mon Feb 14 15:00:35 2011
+@@ -26,7 +26,8 @@
+ APPS=
+ 
+ LIB=$(TOP)/libcrypto.a
+-LIBNAMES= 4758cca aep atalla cswift gmp chil nuron sureware ubsec padlock capi
++LIBNAMES= 4758cca aep atalla cswift gmp chil nuron sureware ubsec padlock capi \
++	  pk11
+ 
+ LIBSRC=	e_4758cca.c \
+ 	e_aep.c \
+@@ -38,7 +39,8 @@
+ 	e_sureware.c \
+ 	e_ubsec.c \
+ 	e_padlock.c \
+-	e_capi.c
++	e_capi.c \
++	e_pk11.c
+ LIBOBJ= e_4758cca.o \
+ 	e_aep.o \
+ 	e_atalla.o \
+@@ -49,7 +51,8 @@
+ 	e_sureware.o \
+ 	e_ubsec.o \
+ 	e_padlock.o \
+-	e_capi.o
++	e_capi.o \
++	e_pk11.o
  
  SRC= $(LIBSRC)
  
-@@ -282,6 +282,54 @@
- eng_table.o: ../../include/openssl/symhacks.h ../../include/openssl/x509.h
- eng_table.o: ../../include/openssl/x509_vfy.h ../cryptlib.h eng_int.h
- eng_table.o: eng_table.c
-+hw_pk11.o: ../../include/openssl/e_os2.h ../../include/openssl/opensslconf.h
-+hw_pk11.o: ../../include/openssl/engine.h ../../include/openssl/ossl_typ.h
-+hw_pk11.o: ../../include/openssl/bn.h ../../include/openssl/rsa.h
-+hw_pk11.o: ../../include/openssl/asn1.h ../../include/openssl/bio.h
-+hw_pk11.o: ../../include/openssl/crypto.h ../../include/openssl/stack.h
-+hw_pk11.o: ../../include/openssl/safestack.h ../../include/openssl/opensslv.h
-+hw_pk11.o: ../../include/openssl/symhacks.h ../../include/openssl/dsa.h
-+hw_pk11.o: ../../include/openssl/dh.h ../../include/openssl/rand.h
-+hw_pk11.o: ../../include/openssl/ui.h ../../include/openssl/err.h
-+hw_pk11.o: ../../include/openssl/lhash.h ../../include/openssl/dso.h
-+hw_pk11.o: ../../include/openssl/pem.h ../../include/openssl/evp.h
-+hw_pk11.o: ../../include/openssl/md4.h
-+hw_pk11.o: ../../include/openssl/md5.h ../../include/openssl/sha.h
-+hw_pk11.o: ../../include/openssl/ripemd.h ../../include/openssl/des.h
-+hw_pk11.o: ../../include/openssl/des_old.h ../../include/openssl/ui_compat.h
-+hw_pk11.o: ../../include/openssl/rc4.h ../../include/openssl/rc2.h
-+hw_pk11.o: ../../crypto/rc5/rc5.h ../../include/openssl/blowfish.h
-+hw_pk11.o: ../../include/openssl/cast.h ../../include/openssl/idea.h
-+hw_pk11.o: ../../crypto/mdc2/mdc2.h ../../include/openssl/aes.h
-+hw_pk11.o: ../../include/openssl/objects.h ../../include/openssl/obj_mac.h
-+hw_pk11.o: ../../include/openssl/x509.h ../../include/openssl/buffer.h
-+hw_pk11.o: ../../include/openssl/x509_vfy.h ../../include/openssl/pkcs7.h
-+hw_pk11.o: ../../include/openssl/pem2.h ../cryptlib.h
-+hw_pk11.o: ../../e_os.h hw_pk11_err.c hw_pk11_err.h hw_pk11.c
-+hw_pk11_pub.o: ../../include/openssl/e_os2.h ../../include/openssl/opensslconf.h
-+hw_pk11_pub.o: ../../include/openssl/engine.h ../../include/openssl/ossl_typ.h
-+hw_pk11_pub.o: ../../include/openssl/bn.h ../../include/openssl/rsa.h
-+hw_pk11_pub.o: ../../include/openssl/asn1.h ../../include/openssl/bio.h
-+hw_pk11_pub.o: ../../include/openssl/crypto.h ../../include/openssl/stack.h
-+hw_pk11_pub.o: ../../include/openssl/safestack.h ../../include/openssl/opensslv.h
-+hw_pk11_pub.o: ../../include/openssl/symhacks.h ../../include/openssl/dsa.h
-+hw_pk11_pub.o: ../../include/openssl/dh.h ../../include/openssl/rand.h
-+hw_pk11_pub.o: ../../include/openssl/ui.h ../../include/openssl/err.h
-+hw_pk11_pub.o: ../../include/openssl/lhash.h ../../include/openssl/dso.h
-+hw_pk11_pub.o: ../../include/openssl/pem.h ../../include/openssl/evp.h
-+hw_pk11_pub.o: ../../include/openssl/md4.h
-+hw_pk11_pub.o: ../../include/openssl/md5.h ../../include/openssl/sha.h
-+hw_pk11_pub.o: ../../include/openssl/ripemd.h ../../include/openssl/des.h
-+hw_pk11_pub.o: ../../include/openssl/des_old.h ../../include/openssl/ui_compat.h
-+hw_pk11_pub.o: ../../include/openssl/rc4.h ../../include/openssl/rc2.h
-+hw_pk11_pub.o: ../../crypto/rc5/rc5.h ../../include/openssl/blowfish.h
-+hw_pk11_pub.o: ../../include/openssl/cast.h ../../include/openssl/idea.h
-+hw_pk11_pub.o: ../../crypto/mdc2/mdc2.h ../../include/openssl/aes.h
-+hw_pk11_pub.o: ../../include/openssl/objects.h ../../include/openssl/obj_mac.h
-+hw_pk11_pub.o: ../../include/openssl/x509.h ../../include/openssl/buffer.h
-+hw_pk11_pub.o: ../../include/openssl/x509_vfy.h ../../include/openssl/pkcs7.h
-+hw_pk11_pub.o: ../../include/openssl/pem2.h ../cryptlib.h
-+hw_pk11_pub.o: ../../e_os.h hw_pk11_err.c hw_pk11_err.h hw_pk11_pub.c
- tb_asnmth.o: ../../e_os.h ../../include/openssl/asn1.h
- tb_asnmth.o: ../../include/openssl/bio.h ../../include/openssl/buffer.h
- tb_asnmth.o: ../../include/openssl/crypto.h ../../include/openssl/e_os2.h
-diff -ruN orig/crypto/engine/eng_all.c dist/crypto/engine/eng_all.c
---- orig/crypto/engine/eng_all.c	2016-09-22 06:23:06.000000000 -0400
-+++ dist/crypto/engine/eng_all.c	2016-09-22 11:29:09.769375418 -0400
-@@ -109,6 +109,9 @@
- #  ifndef OPENSSL_NO_HW_PADLOCK
-     ENGINE_load_padlock();
- #  endif
-+#  ifndef OPENSSL_NO_HW_PKCS11
-+    ENGINE_load_pk11();
-+#  endif
- # endif
- # ifndef OPENSSL_NO_GOST
-     ENGINE_load_gost();
-diff -ruN orig/crypto/engine/engine.h dist/crypto/engine/engine.h
---- orig/crypto/engine/engine.h	2016-09-22 06:23:06.000000000 -0400
-+++ dist/crypto/engine/engine.h	2016-09-22 11:29:09.769956387 -0400
+@@ -63,7 +66,8 @@
+ 	e_nuron_err.c e_nuron_err.h \
+ 	e_sureware_err.c e_sureware_err.h \
+ 	e_ubsec_err.c e_ubsec_err.h \
+-	e_capi_err.c e_capi_err.h
++	e_capi_err.c e_capi_err.h \
++	e_pk11.h e_pk11_uri.h e_pk11_err.h e_pk11_pub.c e_pk11_uri.c e_pk11_err.c
+ 
+ ALL=    $(GENERAL) $(SRC) $(HEADER)
+ 
+@@ -78,7 +82,7 @@
+ 		for l in $(LIBNAMES); do \
+ 			$(MAKE) -f ../Makefile.shared -e \
+ 				LIBNAME=$$l LIBEXTRAS=e_$$l.o \
+-				LIBDEPS='-L.. -lcrypto $(EX_LIBS)' \
++				LIBDEPS='-L.. -lcrypto -lcryptoutil $(EX_LIBS)' \
+ 				link_o.$(SHLIB_TARGET); \
+ 		done; \
+ 	else \
+--- crypto/engine/eng_all.c Thu Sep  5 12:59:50 2013
++++ openssl-1.0.1e/crypto/engine/eng_all.c Thu Sep  5 12:59:50 2013
+@@ -60,6 +60,16 @@
+ #include "cryptlib.h"
+ #include "eng_int.h"
+
++/*
++ * pkcs11 engine no longer is a built-in engine, and ENGINE_load_pk11() needs to be
++ * defined in libcrypto.so for ssh.  Instead of load pkcs11 engine, it load dynamic
++ * engines.
++ */
++void ENGINE_load_pk11(void)
++	{
++	ENGINE_load_dynamic();
++	}
++
+ void ENGINE_load_builtin_engines(void)
+ {
+     /* Some ENGINEs need this */
+--- crypto/dso/dso_lib.c Thu Sep  5 12:59:50 2013
++++ openssl-1.0.1e/crypto/dso/dso_lib.c Thu Sep  5 12:59:50 2013
+@@ -396,6 +396,24 @@
+         DSOerr(DSO_F_DSO_CONVERT_FILENAME, DSO_R_NO_FILENAME);
+         return (NULL);
+     }
++    /*
++     * For pkcs11 engine, use libpk11.so (instead of libpkcs11.so) to
++     * avoid the name collision with PKCS#11 library.
++     */
++    if (strcmp(filename, "pkcs11") == 0) {
++#ifdef  _LP64
++        char *fullpath = "/usr/lib/amd64/engines/libpk11.so";
++#else
++        char *fullpath = "/usr/lib/engines/libpk11.so";
++#endif
++        result = OPENSSL_malloc(strlen(fullpath) + 1);
++        if(result == NULL) {
++            DSOerr(DSO_F_DSO_CONVERT_FILENAME, ERR_R_MALLOC_FAILURE);
++            return(NULL);
++        }
++        BUF_strlcpy(result, fullpath, strlen(fullpath) + 1);
++        return (result);
++    }
+     if ((dso->flags & DSO_FLAG_NO_NAME_TRANSLATION) == 0) {
+         if (dso->name_converter != NULL)
+             result = dso->name_converter(dso, filename);
+--- /tmp/engine.h       Fri Feb 11 14:46:24 2011
++++ openssl-1.0.0d/crypto/engine/engine.h       Fri Feb 11 14:47:32 2011
 @@ -413,6 +413,7 @@
  #  endif
  # endif

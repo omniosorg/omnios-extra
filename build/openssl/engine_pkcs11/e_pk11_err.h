@@ -1,9 +1,7 @@
 /*
- * Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
- * Use is subject to license terms.
+ * Copyright (c) 2004, 2013, Oracle and/or its affiliates. All rights reserved.
  */
 
-/* crypto/engine/hw_pk11_err.h */
 /*
  * This product includes software developed by the OpenSSL Project for
  * use in the OpenSSL Toolkit (http://www.openssl.org/).
@@ -66,8 +64,12 @@
  *
  */
 
-#ifndef	HW_PK11_ERR_H
-#define	HW_PK11_ERR_H
+#ifndef	E_PK11_ERR_H
+#define	E_PK11_ERR_H
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
 
 void ERR_pk11_error(int function, int reason, char *file, int line);
 void PK11err_add_data(int function, int reason, CK_RV rv);
@@ -106,7 +108,7 @@ void PK11err_add_data(int function, int reason, CK_RV rv);
 #define	PK11_F_DSA_VERIFY			126
 #define	PK11_F_DSA_INIT				127
 #define	PK11_F_DSA_FINISH			128
-#define	PK11_F_GET_PUB_DSA_KEY 			129
+#define	PK11_F_GET_PUB_DSA_KEY			129
 #define	PK11_F_GET_PRIV_DSA_KEY 		130
 #define	PK11_F_DH_INIT 				131
 #define	PK11_F_DH_FINISH 			132
@@ -136,6 +138,14 @@ void PK11err_add_data(int function, int reason, CK_RV rv);
 #define	PK11_F_ADD_AES_CTR_NIDS			156
 #define	PK11_F_INIT_ALL_LOCKS			157
 #define	PK11_F_RETURN_SESSION			158
+#define	PK11_F_GET_PIN				159
+#define	PK11_F_FIND_ONE_OBJECT 			160
+#define	PK11_F_CHECK_TOKEN_ATTRS 		161
+#define	PK11_F_CACHE_PIN			162
+#define	PK11_F_MLOCK_PIN_IN_MEMORY		163
+#define	PK11_F_TOKEN_LOGIN 			164
+#define	PK11_F_TOKEN_RELOGIN 			165
+#define	PK11_F_RUN_ASKPASS 			166
 
 /* Reason codes. */
 #define	PK11_R_ALREADY_LOADED 			100
@@ -204,172 +214,29 @@ void PK11err_add_data(int function, int reason, CK_RV rv);
 #define	PK11_R_INVALID_OPERATION_TYPE		164
 #define	PK11_R_ADD_NID_FAILED			165
 #define	PK11_R_ATFORK_FAILED			166
+#define	PK11_R_TOKEN_LOGIN_FAILED		167
+#define	PK11_R_MORE_THAN_ONE_OBJECT_FOUND	168
+#define	PK11_R_INVALID_PKCS11_URI		169
+#define	PK11_R_COULD_NOT_READ_PIN		170
+#define	PK11_R_COULD_NOT_OPEN_COMMAND		171
+#define	PK11_R_PIPE_FAILED			172
+#define	PK11_R_PIN_NOT_READ_FROM_COMMAND	173
+#define	PK11_R_BAD_PASSPHRASE_SPEC		174
+#define	PK11_R_TOKEN_NOT_INITIALIZED		175
+#define	PK11_R_TOKEN_PIN_NOT_SET		176
+#define	PK11_R_TOKEN_PIN_NOT_PROVIDED		177
+#define	PK11_R_MISSING_OBJECT_LABEL		178
+#define	PK11_R_TOKEN_ATTRS_DO_NOT_MATCH		179
+#define	PK11_R_PRIV_KEY_NOT_FOUND		180
+#define	PK11_R_NO_OBJECT_FOUND			181
+#define	PK11_R_PIN_CACHING_POLICY_INVALID	182
+#define	PK11_R_SYSCONF_FAILED			183
+#define	PK11_R_MMAP_FAILED			183
+#define	PK11_R_PRIV_PROC_LOCK_MEMORY_MISSING	184
+#define	PK11_R_MLOCK_FAILED			185
+#define	PK11_R_FORK_FAILED			186
 
-/* max byte length of a symetric key we support */
-#define	PK11_KEY_LEN_MAX			32
-
-/*
- * This structure encapsulates all reusable information for a PKCS#11
- * session. A list of these objects is created on behalf of the
- * calling application using an on-demand method. Each operation
- * type (see PK11_OPTYPE below) has its own per-process list.
- * Each of the lists is basically a cache for faster PKCS#11 object
- * access to avoid expensive C_Find{,Init,Final}Object() calls.
- *
- * When a new request comes in, an object will be taken from the list
- * (if there is one) or a new one is created to handle the request
- * (if the list is empty). See pk11_get_session() on how it is done.
- */
-typedef struct PK11_st_SESSION
-	{
-	struct PK11_st_SESSION	*next;
-	CK_SESSION_HANDLE	session;	/* PK11 session handle */
-	pid_t			pid;		/* Current process ID */
-	union
-		{
-#ifndef OPENSSL_NO_RSA
-		struct
-			{
-			CK_OBJECT_HANDLE	rsa_pub_key; /* pub handle */
-			CK_OBJECT_HANDLE	rsa_priv_key; /* priv handle */
-			RSA			*rsa_pub; /* pub key addr */
-			BIGNUM			*rsa_n_num; /* pub modulus */
-			BIGNUM			*rsa_e_num; /* pub exponent */
-			RSA			*rsa_priv; /* priv key addr */
-			BIGNUM			*rsa_d_num; /* priv exponent */
-			} u_RSA;
-#endif /* OPENSSL_NO_RSA */
-#ifndef OPENSSL_NO_DSA
-		struct
-			{
-			CK_OBJECT_HANDLE	dsa_pub_key; /* pub handle */
-			CK_OBJECT_HANDLE	dsa_priv_key; /* priv handle */
-			DSA			*dsa_pub; /* pub key addr */
-			BIGNUM			*dsa_pub_num; /* pub key */
-			DSA			*dsa_priv; /* priv key addr */
-			BIGNUM			*dsa_priv_num; /* priv key */
-			} u_DSA;
-#endif /* OPENSSL_NO_DSA */
-#ifndef OPENSSL_NO_DH
-		struct
-			{
-			CK_OBJECT_HANDLE	dh_key; /* key handle */
-			DH			*dh; /* dh key addr */
-			BIGNUM			*dh_priv_num; /* priv dh key */
-			} u_DH;
-#endif /* OPENSSL_NO_DH */
-		struct
-			{
-			CK_OBJECT_HANDLE	cipher_key; /* key handle */
-			unsigned char		key[PK11_KEY_LEN_MAX];
-			int			key_len; /* priv key len */
-			int			encrypt; /* 1/0 enc/decr */
-			} u_cipher;
-		} opdata_u;
-	} PK11_SESSION;
-
-#define	opdata_rsa_pub_key	opdata_u.u_RSA.rsa_pub_key
-#define	opdata_rsa_priv_key	opdata_u.u_RSA.rsa_priv_key
-#define	opdata_rsa_pub		opdata_u.u_RSA.rsa_pub
-#define	opdata_rsa_priv		opdata_u.u_RSA.rsa_priv
-#define	opdata_rsa_n_num	opdata_u.u_RSA.rsa_n_num
-#define	opdata_rsa_e_num	opdata_u.u_RSA.rsa_e_num
-#define	opdata_rsa_d_num	opdata_u.u_RSA.rsa_d_num
-#define	opdata_dsa_pub_key	opdata_u.u_DSA.dsa_pub_key
-#define	opdata_dsa_priv_key	opdata_u.u_DSA.dsa_priv_key
-#define	opdata_dsa_pub		opdata_u.u_DSA.dsa_pub
-#define	opdata_dsa_pub_num	opdata_u.u_DSA.dsa_pub_num
-#define	opdata_dsa_priv		opdata_u.u_DSA.dsa_priv
-#define	opdata_dsa_priv_num	opdata_u.u_DSA.dsa_priv_num
-#define	opdata_dh_key		opdata_u.u_DH.dh_key
-#define	opdata_dh		opdata_u.u_DH.dh
-#define	opdata_dh_priv_num	opdata_u.u_DH.dh_priv_num
-#define	opdata_cipher_key	opdata_u.u_cipher.cipher_key
-#define	opdata_key		opdata_u.u_cipher.key
-#define	opdata_key_len		opdata_u.u_cipher.key_len
-#define	opdata_encrypt		opdata_u.u_cipher.encrypt
-
-/*
- * We have 3 different groups of operation types:
- *   1) asymmetric operations
- *   2) random operations
- *   3) symmetric and digest operations
- *
- * This division into groups stems from the fact that it's common that hardware
- * providers may support operations from one group only. For example, hardware
- * providers on UltraSPARC T2, n2rng(7d), ncp(7d), and n2cp(7d), each support
- * only a single group of operations.
- *
- * For every group a different slot can be chosen. That means that we must have
- * at least 3 different lists of cached PKCS#11 sessions since sessions from
- * different groups may be initialized in different slots.
- *
- * To provide locking granularity in multithreaded environment, the groups are
- * further splitted into types with each type having a separate session cache.
- */
-typedef enum PK11_OPTYPE_ENUM
-	{
-	OP_RAND,
-	OP_RSA,
-	OP_DSA,
-	OP_DH,
-	OP_CIPHER,
-	OP_DIGEST,
-	OP_MAX
-	} PK11_OPTYPE;
-
-/*
- * This structure contains the heads of the lists forming the object caches
- * and locks associated with the lists.
- */
-typedef struct PK11_st_CACHE
-	{
-	PK11_SESSION *head;
-	pthread_mutex_t *lock;
-	} PK11_CACHE;
-
-/* structure for tracking handles of asymmetric key objects */
-typedef struct PK11_active_st
-	{
-	CK_OBJECT_HANDLE h;
-	unsigned int refcnt;
-	struct PK11_active_st *prev;
-	struct PK11_active_st *next;
-	} PK11_active;
-
-extern pthread_mutex_t *find_lock[];
-extern PK11_active *active_list[];
-
-#define	LOCK_OBJSTORE(alg_type)	\
-	(void) pthread_mutex_lock(find_lock[alg_type])
-#define	UNLOCK_OBJSTORE(alg_type)	\
-	(void) pthread_mutex_unlock(find_lock[alg_type])
-
-extern PK11_SESSION *pk11_get_session(PK11_OPTYPE optype);
-extern void pk11_return_session(PK11_SESSION *sp, PK11_OPTYPE optype);
-
-#ifndef OPENSSL_NO_RSA
-extern int pk11_destroy_rsa_key_objects(PK11_SESSION *session);
-extern int pk11_destroy_rsa_object_pub(PK11_SESSION *sp, CK_BBOOL uselock);
-extern int pk11_destroy_rsa_object_priv(PK11_SESSION *sp, CK_BBOOL uselock);
-extern EVP_PKEY *pk11_load_privkey(ENGINE *e, const char *pubkey_file,
-	UI_METHOD *ui_method, void *callback_data);
-extern EVP_PKEY *pk11_load_pubkey(ENGINE *e, const char *pubkey_file,
-	UI_METHOD *ui_method, void *callback_data);
-extern RSA_METHOD *PK11_RSA(void);
-#endif /* OPENSSL_NO_RSA */
-#ifndef OPENSSL_NO_DSA
-extern int pk11_destroy_dsa_key_objects(PK11_SESSION *session);
-extern int pk11_destroy_dsa_object_pub(PK11_SESSION *sp, CK_BBOOL uselock);
-extern int pk11_destroy_dsa_object_priv(PK11_SESSION *sp, CK_BBOOL uselock);
-extern DSA_METHOD *PK11_DSA(void);
-#endif /* OPENSSL_NO_DSA */
-#ifndef OPENSSL_NO_DH
-extern int pk11_destroy_dh_key_objects(PK11_SESSION *session);
-extern int pk11_destroy_dh_object(PK11_SESSION *sp, CK_BBOOL uselock);
-extern DH_METHOD *PK11_DH(void);
-#endif /* OPENSSL_NO_DH */
-
-extern CK_FUNCTION_LIST_PTR pFuncList;
-
-#endif /* HW_PK11_ERR_H */
+#ifdef	__cplusplus
+}
+#endif
+#endif /* E_PK11_ERR_H */

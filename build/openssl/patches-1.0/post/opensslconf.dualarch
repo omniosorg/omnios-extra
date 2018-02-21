@@ -1,0 +1,111 @@
+We deliver a dual-arch OpenSSL package but only one set of headers.
+The opensslconf.h header differs between 32 and 64-bit builds so this patch
+is applied build to produce a header file that will work with either arch.
+
+--- a/usr/include/openssl/opensslconf.h	2018-02-21 14:17:06.000000000 +0000
++++ b/usr/include/openssl/opensslconf.h	2018-02-21 14:33:06.054283420 +0000
+@@ -59,6 +59,11 @@
+    who haven't had the time to do the appropriate changes in their
+    applications.  */
+ #ifdef OPENSSL_ALGORITHM_DEFINES
++#ifndef __x86_64
++# if defined(OPENSSL_NO_EC_NISTP_64_GCC_128) && !defined(NO_EC_NISTP_64_GCC_128)
++#  define NO_EC_NISTP_64_GCC_128
++# endif
++#endif /* __x86_64 */
+ # if defined(OPENSSL_NO_GMP) && !defined(NO_GMP)
+ #  define NO_GMP
+ # endif
+@@ -106,7 +111,11 @@
+ 
+ #if !(defined(VMS) || defined(__VMS)) /* VMS uses logical names instead */
+ #if defined(HEADER_CRYPTLIB_H) && !defined(OPENSSLDIR)
++#ifdef __x86_64
+ #define ENGINESDIR "/usr/lib/64/engines"
++#else
++#define ENGINESDIR "/usr/lib/engines"
++#endif
+ #define OPENSSLDIR "/usr/ssl"
+ #endif
+ #endif
+@@ -145,7 +154,11 @@
+  * This enables code handling data aligned at natural CPU word
+  * boundary. See crypto/rc4/rc4_enc.c for further details.
+  */
++#ifdef __x86_64
+ #define RC4_CHUNK unsigned long
++#else
++#undef RC4_CHUNK
++#endif /* __x86_64 */
+ #endif
+ #endif
+ 
+@@ -153,27 +166,45 @@
+ /* If this is set to 'unsigned int' on a DEC Alpha, this gives about a
+  * %20 speed up (longs are 8 bytes, int's are 4). */
+ #ifndef DES_LONG
++#ifdef __x86_64
+ #define DES_LONG unsigned int
++#else
++#define DES_LONG unsigned long
++#endif /* __x86_64 */
+ #endif
+ #endif
+ 
+ #if defined(HEADER_BN_H) && !defined(CONFIG_HEADER_BN_H)
+ #define CONFIG_HEADER_BN_H
++#ifdef __x86_64
+ #undef BN_LLONG
++#else
++#define BN_LLONG
++#endif /* __x86_64 */
+ 
+ /* Should we define BN_DIV2W here? */
+ 
+ /* Only one for the following should be defined */
++#ifdef __x86_64
+ #define SIXTY_FOUR_BIT_LONG
+ #undef SIXTY_FOUR_BIT
+ #undef THIRTY_TWO_BIT
++#else
++#undef SIXTY_FOUR_BIT_LONG
++#undef SIXTY_FOUR_BIT
++#define THIRTY_TWO_BIT
++#endif /* __x86_64 */
+ #endif
+ 
+ #if defined(HEADER_RC4_LOCL_H) && !defined(CONFIG_HEADER_RC4_LOCL_H)
+ #define CONFIG_HEADER_RC4_LOCL_H
+ /* if this is defined data[i] is used instead of *data, this is a %20
+  * speedup on x86 */
++#ifdef __x86_64
+ #undef RC4_INDEX
++#else
++#define RC4_INDEX
++#endif /* __x86_64 */
+ #endif
+ 
+ #if defined(HEADER_BF_LOCL_H) && !defined(CONFIG_HEADER_BF_LOCL_H)
+@@ -187,14 +218,22 @@
+ /* the following is tweaked from a config script, that is why it is a
+  * protected undef/define */
+ #ifndef DES_PTR
++#ifdef __x86_64
+ #undef DES_PTR
++#else
++#define DES_PTR
++#endif /* __x86_64 */
+ #endif
+ 
+ /* This helps C compiler generate the correct code for multiple functional
+  * units.  It reduces register dependancies at the expense of 2 more
+  * registers */
+ #ifndef DES_RISC1
++#ifdef __x86_64
+ #undef DES_RISC1
++#else
++#define DES_RISC1
++#endif /* __x86_64 */
+ #endif
+ 
+ #ifndef DES_RISC2
