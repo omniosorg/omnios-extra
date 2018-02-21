@@ -1,0 +1,38 @@
+We deliver a dual-arch OpenSSL package but only one set of headers.
+The opensslconf.h header differs between 32 and 64-bit builds so this patch
+is applied build to produce a header file that will work with either arch.
+
+--- a/usr/include/openssl/opensslconf.h	2018-02-21 14:17:06.000000000 +0000
++++ b/usr/include/openssl/opensslconf.h	2018-02-21 14:33:06.054283420 +0000
+@@ -41,6 +41,11 @@
+ #ifndef OPENSSL_NO_CRYPTO_MDEBUG_BACKTRACE
+ # define OPENSSL_NO_CRYPTO_MDEBUG_BACKTRACE
+ #endif
++#ifndef __x86_64
++#ifndef OPENSSL_NO_EC_NISTP_64_GCC_128
++# define OPENSSL_NO_EC_NISTP_64_GCC_128
++#endif
++#endif /* __x86_64 */
+ #ifndef OPENSSL_NO_EGD
+ # define OPENSSL_NO_EGD
+ #endif
+@@ -153,11 +158,19 @@
+  * The following are cipher-specific, but are part of the public API.
+  */
+ #if !defined(OPENSSL_SYS_UEFI)
++#ifdef __x86_64
+ # undef BN_LLONG
+ /* Only one for the following should be defined */
+ # define SIXTY_FOUR_BIT_LONG
+ # undef SIXTY_FOUR_BIT
+ # undef THIRTY_TWO_BIT
++#else
++# define BN_LLONG
++/* Only one for the following should be defined */
++# undef SIXTY_FOUR_BIT_LONG
++# undef SIXTY_FOUR_BIT
++# define THIRTY_TWO_BIT
++#endif /* __x86_64 */
+ #endif
+ 
+ #define RC4_INT unsigned int

@@ -1,9 +1,8 @@
 /*
- * Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
- * Use is subject to license terms.
+ * Copyright (c) 2004, 2013, Oracle and/or its affiliates. All rights reserved.
  */
 
-/* crypto/engine/hw_pk11_err.c */
+/* crypto/engine/e_pk11_err.c */
 /*
  * This product includes software developed by the OpenSSL Project for
  * use in the OpenSSL Toolkit (http://www.openssl.org/).
@@ -68,7 +67,7 @@
 
 #include <stdio.h>
 #include <openssl/err.h>
-#include "hw_pk11_err.h"
+#include "e_pk11_err.h"
 
 /* BEGIN ERROR CODES */
 #ifndef OPENSSL_NO_ERR
@@ -131,6 +130,16 @@ static ERR_STRING_DATA pk11_str_functs[]=
 { ERR_PACK(0, PK11_F_CHECK_HW_MECHANISMS, 0),	"PK11_CHECK_HW_MECHANISMS"},
 { ERR_PACK(0, PK11_F_INIT_SYMMETRIC, 0),	"PK11_INIT_SYMMETRIC"},
 { ERR_PACK(0, PK11_F_ADD_AES_CTR_NIDS, 0),	"PK11_ADD_AES_CTR_NIDS"},
+{ ERR_PACK(0, PK11_F_INIT_ALL_LOCKS, 0),	"PK11_INIT_ALL_LOCKS"},
+{ ERR_PACK(0, PK11_F_RETURN_SESSION, 0),	"PK11_RETURN_SESSION"},
+{ ERR_PACK(0, PK11_F_GET_PIN, 0),		"PK11_GET_PIN"},
+{ ERR_PACK(0, PK11_F_FIND_ONE_OBJECT, 0),	"PK11_FIND_ONE_OBJECT"},
+{ ERR_PACK(0, PK11_F_CHECK_TOKEN_ATTRS, 0),	"PK11_CHECK_TOKEN_ATTRS"},
+{ ERR_PACK(0, PK11_F_CACHE_PIN, 0),		"PK11_CACHE_PIN"},
+{ ERR_PACK(0, PK11_F_MLOCK_PIN_IN_MEMORY, 0),	"PK11_MLOCK_PIN_IN_MEMORY"},
+{ ERR_PACK(0, PK11_F_TOKEN_LOGIN, 0),		"PK11_TOKEN_LOGIN"},
+{ ERR_PACK(0, PK11_F_TOKEN_RELOGIN, 0),		"PK11_TOKEN_RELOGIN"},
+{ ERR_PACK(0, PK11_F_RUN_ASKPASS, 0),		"PK11_F_RUN_ASKPASS"},
 { 0, NULL}
 };
 
@@ -201,12 +210,42 @@ static ERR_STRING_DATA pk11_str_reasons[]=
 { PK11_R_KEY_OR_IV_LEN_PROBLEM,		"IV or key length incorrect"},
 { PK11_R_INVALID_OPERATION_TYPE,	"invalid operation type"},
 { PK11_R_ADD_NID_FAILED,		"failed to add NID" },
+{ PK11_R_ATFORK_FAILED,			"atfork failed" },
+{ PK11_R_TOKEN_LOGIN_FAILED,		"C_Login failed on token" },
+{ PK11_R_MORE_THAN_ONE_OBJECT_FOUND,	"more than one object found" },
+{ PK11_R_INVALID_PKCS11_URI,		"pkcs11 URI provided is invalid" },
+{ PK11_R_COULD_NOT_READ_PIN,		"could not read PIN from terminal" },
+{ PK11_R_PIN_NOT_READ_FROM_COMMAND,	"PIN not read from external command" },
+{ PK11_R_COULD_NOT_OPEN_COMMAND,	"could not popen dialog command" },
+{ PK11_R_PIPE_FAILED,			"pipe failed" },
+{ PK11_R_BAD_PASSPHRASE_SPEC,		"bad passphrasedialog specification" },
+{ PK11_R_TOKEN_NOT_INITIALIZED,		"token not initialized" },
+{ PK11_R_TOKEN_PIN_NOT_SET,		"token PIN required but not set" },
+{ PK11_R_TOKEN_PIN_NOT_PROVIDED,	"token PIN required but not provided" },
+{ PK11_R_MISSING_OBJECT_LABEL,		"missing mandatory 'object' keyword" },
+{ PK11_R_TOKEN_ATTRS_DO_NOT_MATCH,	"token attrs provided do not match" },
+{ PK11_R_PRIV_KEY_NOT_FOUND,		"private key not found in keystore" },
+{ PK11_R_NO_OBJECT_FOUND,		"specified object not found" },
+{ PK11_R_PIN_CACHING_POLICY_INVALID,	"PIN set but caching policy invalid" },
+{ PK11_R_SYSCONF_FAILED,		"sysconf failed" },
+{ PK11_R_MMAP_FAILED,			"mmap failed" },
+{ PK11_R_PRIV_PROC_LOCK_MEMORY_MISSING,	"PROC_LOCK_MEMORY privilege missing" },
+{ PK11_R_MLOCK_FAILED,			"mlock failed" },
+{ PK11_R_FORK_FAILED,			"fork failed" },
 { 0,	NULL}
 };
 #endif	/* OPENSSL_NO_ERR */
 
 static int pk11_lib_error_code = 0;
 static int pk11_error_init = 1;
+
+#ifdef PK11_ENGINE_LIB_NAME
+static ERR_STRING_DATA pk11_engine_lib_name[] =
+{
+{0, PK11_ENGINE_LIB_NAME},
+{0, NULL}
+};
+#endif
 
 static void
 ERR_load_pk11_strings(void)
@@ -221,8 +260,14 @@ ERR_load_pk11_strings(void)
 		ERR_load_strings(pk11_lib_error_code, pk11_str_functs);
 		ERR_load_strings(pk11_lib_error_code, pk11_str_reasons);
 #endif
+
+#ifdef PK11_ENGINE_LIB_NAME
+		pk11_engine_lib_name->error =
+		    ERR_PACK(pk11_lib_error_code, 0, 0);
+		ERR_load_strings(0, pk11_engine_lib_name);
+#endif
 		}
-}
+	}
 
 static void
 ERR_unload_pk11_strings(void)
@@ -233,24 +278,29 @@ ERR_unload_pk11_strings(void)
 		ERR_unload_strings(pk11_lib_error_code, pk11_str_functs);
 		ERR_unload_strings(pk11_lib_error_code, pk11_str_reasons);
 #endif
+
+#ifdef PK11_ENGINE_LIB_NAME
+		ERR_unload_strings(0, pk11_engine_lib_name);
+#endif
+
 		pk11_error_init = 1;
 		}
-}
+	}
 
 void
 ERR_pk11_error(int function, int reason, char *file, int line)
-{
+	{
 	if (pk11_lib_error_code == 0)
 		pk11_lib_error_code = ERR_get_next_error_library();
 	ERR_PUT_error(pk11_lib_error_code, function, reason, file, line);
-}
+	}
 
 void
 PK11err_add_data(int function, int reason, CK_RV rv)
-{
+	{
 	char tmp_buf[20];
 
 	PK11err(function, reason);
 	(void) snprintf(tmp_buf, sizeof (tmp_buf), "%lx", rv);
 	ERR_add_error_data(2, "PK11 CK_RV=0X", tmp_buf);
-}
+	}
