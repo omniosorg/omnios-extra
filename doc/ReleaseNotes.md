@@ -4,6 +4,45 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024q (2018-02-26)
+Weekly release for w/c 26th of Februrary 2018.
+> This update requires a reboot.
+
+### Security fixes
+
+* `GNU patch` updated to fix
+  * [CVE-2018-6951](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-6951)
+
+### Bug fixes
+
+* Fix for time-of-day clock error
+  [illumos issue 8680](https://www.illumos.org/issues/8680)
+* Fix for broken ZFS ACL inheritance
+  [illumos issue 8984](https://www.illumos.org/issues/8984)
+
+> If you use ZFS ACLs (i.e. more than just the standard permissions set with
+> `chmod`) and use ACL inheritance, then it is possible that this bug will
+> have resulted in files with overly permissive permissions. To check a
+> data-store for this problem, you can use a script similar to that at
+> https://downloads.omniosce.org/misc/8984-acl-check
+> If you need any help with this, please get in touch via
+> [the lobby](https://gitter.im/omniosorg/Lobby) or
+> [#omnios on Freenode](http://webchat.freenode.net?randomnick=1&channels=%23omnios&uio=d4)
+
+### Enhancements
+
+* New package command to easily install a hotfix from a local package
+  archive or remote web site, for example:
+```
+% pfexec pkg apply-hot-fix --be-name=hotfix1234 \
+    https://downloads.omniosce.org/pkg/r151022/1234_hotfix.p5p
+```
+
+<br>
+
+----
+
+
 ## r151024n (2018-02-06)
 Weekly release for w/c 5th of Februrary 2018.
 > This is a non-reboot update.
