@@ -22,6 +22,9 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   replaced with dialogues to make it easier to navigate, and it is now
   possible to select DHCP assignment of the DNS parameters.
 
+* It is now possible to boot OmniOS form a root pool which uses RAIDZ2 or
+  RAIDZ3.
+
 * The default mail submission agent is now `Dragonfly Mail Agent (dma)` rather
   than sendmail. In a default installation, `/usr/lib/sendmail` points to
   `dma` and can deliver email messages to local users and Internet recipients.
@@ -77,6 +80,7 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
     * Dragonfly Mail Agent
     * NTPsec
     * DHCP daemon
+    * SNMP daemon
 
 * `openssh` has been upgraded to 7.6p1. This version drops support for
   SSH protocol version 1, RSA keys under 1024 bits in length and a number
@@ -85,7 +89,7 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   details.
 
 * `libdiskmgt` (and therefore `diskinfo`) now recognises nvme, sata and xen
-  controllers
+  controllers.
 
 * The `/etc/screenrc` file delivered by the `screen` package is now based on
   the recommended global template as delivered by the authors; you may wish
@@ -100,17 +104,23 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   as projected by the manufacturer (SSD wearout, see
   [illumos Issue 8074](https://www.illumos.org/issues/8074))
 
-* IPv6 default address selection table updated for RFC6724
+* IPv6 default address selection table updated for RFC6724.
+
+* Improvements to page recovery under low memory conditions.
 
 ### LX zones
 
 * Report that `/proc/sys` is writable to keep systemd happy.
 
+* More complete emulation of `/proc/mounts`.
+
 * Emulate a userspace clock of 100Hz to accommodate some broken applications.
 
-* support for joining multicast group
+* Support for joining multicast group.
 
 ### Hardware Support
+
+* Better support for AMD Ryzen processors.
 
 ### Commands and Command Options
 
@@ -128,6 +138,14 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 * `pkg install` now permits package downgrades.
 
+* `date -r` to display the date associated with an epoch value, or the
+  timestamp of a file.
+
+* The `reboot now` command, as sometimes mistyped due to its prevelance on
+  other system types, no longer breaks booting due to trying to load a
+  kernel called `now`; the system always falls back to `unix` for the
+  default kernel.
+
 ### Developer Features
 
 * GCC version 7 is now available - `pkg install developer/gcc7` - and can be
@@ -137,6 +155,9 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 * Perl has been upgraded to 5.26.X. The version of perl shipped with OmniOS
   is for internal system use and should not be relied on for anything else.
+
+* MDB smart-write feature via `/z` - see
+  [illumos issue 9091](https://www.illumos.org/issues/9091)
 
 ### Deprecated features
 
