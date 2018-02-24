@@ -111,6 +111,7 @@
 		name='start'
 		exec='/lib/svc/method/svc-net-snmp'
 		timeout_seconds='60'>
+		<method_context security_flags='aslr' />
 	</exec_method>
 
 	<exec_method
