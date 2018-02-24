@@ -5,6 +5,5 @@ license LICENSE license=BSD
 dir path=var/tpm mode=0755 owner=root group=sys
 dir path=var/tpm/pkcs11 mode=0755 owner=root group=sys
 
-<transform dir path=var -> drop>
-
+<transform dir path=var/lib -> drop>
 
