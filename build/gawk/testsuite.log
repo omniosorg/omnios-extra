@@ -137,7 +137,6 @@ memleak
 messages
 minusstr
 mmap8k
-mtchi18n
 nasty
 nasty2
 negexp
@@ -161,6 +160,7 @@ nors
 nulinsrc
 nulrsend
 numindex
+numstr1
 numsubstr
 octsub
 ofmt
@@ -224,6 +224,8 @@ rswhite
 scalar
 sclforin
 sclifin
+setrec0
+setrec1
 sigpipe1
 sortempty
 sortglos
@@ -255,6 +257,7 @@ uninit5
 uninitialized
 unterm
 uparrfs
+uplus
 wideidx
 wideidx2
 widesub
@@ -365,6 +368,7 @@ indirectbuiltin
 indirectcall
 indirectcall2
 intarray
+isarrayunset
 lint
 lintexp
 lintindex
@@ -410,6 +414,7 @@ profile8
 profile9
 profile10
 pty1
+pty2
 rebuf
 regnul1
 regnul2
@@ -467,9 +472,10 @@ intformat
 ======== Starting tests that can vary based on character set or locale support ========
 **************************************************************************
 * Some or all of these tests may fail if you have inadequate or missing  *
-* locale support. At least en_US.UTF-8, ru_RU.UTF-8 and ja_JP.UTF-8 are  *
-* needed. The el_GR.iso88597 is optional but helpful. However, if you    *
-* see this message, the Makefile thinks you have what you need ...       *
+* locale support. At least en_US.UTF-8, fr_FR.UTF-8, ru_RU.UTF-8 and     *
+* ja_JP.UTF-8 are needed. The el_GR.iso88597 is optional but helpful.    *
+* However, if you see this message, the Makefile thinks you have what    *
+* you need ...                                                           *
 **************************************************************************
 asort
 asorti
@@ -488,6 +494,9 @@ mbprintf2
 mbprintf3
 mbprintf4
 mbprintf5
+mtchi18n
+nlstringtest
+./nlstringtest.ok _nlstringtest differ: char 3, line 1
 rebt8b2
 rtlenmb
 sort1
@@ -518,18 +527,26 @@ testext
 time
 ======== Done with shared library tests ========
 ======== Starting MPFR tests ========
-mpfrnr
-mpfrnegzero
+mpfrbigint
+mpfrexprange
+mpfrieee
 mpfrmemok1
+mpfrnegzero
+mpfrnr
 mpfrrem
 mpfrrnd
-mpfrieee
+mpfrrndeval
+mpfrsort
+mpfrsqrt
+mpfrstrtonum
+mpgforcenum
+mpfruplus
 ======== Done with MPFR tests ========
-2 TESTS FAILED
-gmake[2]: *** [Makefile:4572: pass-fail] Error 1
+3 TESTS FAILED
+gmake[2]: *** [Makefile:4646: pass-fail] Error 1
 ============== _backsmalls1 =============
-*** backsmalls1.ok	Sun Apr  5 08:13:50 2015
---- _backsmalls1	Tue Nov  7 22:43:12 2017
+*** backsmalls1.ok	Thu Dec 14 17:53:45 2017
+--- _backsmalls1	Sun Feb 25 22:25:28 2018
 ***************
 *** 1,5 ****
    
@@ -547,8 +564,8 @@ gmake[2]: *** [Makefile:4572: pass-fail] Error 1
   　
 --- 9,12 ----
 ============== _localenl =============
-*** localenl.ok	Thu May  3 18:13:57 2012
---- _localenl	Tue Nov  7 22:42:57 2017
+*** localenl.ok	Thu Dec 14 17:49:00 2017
+--- _localenl	Sun Feb 25 22:24:57 2018
 ***************
 *** 1,4 ****
   LC_ALL=C passed
@@ -560,5 +577,21 @@ gmake[2]: *** [Makefile:4572: pass-fail] Error 1
   LC_ALL=POSIX passed
 ! LC_ALL=POSIX passed
   LC_ALL=en_US.UTF-8 passed
-gmake[1]: *** [Makefile:1796: check] Error 1
+============== _nlstringtest =============
+*** nlstringtest.ok	Mon Jan 15 18:37:32 2018
+--- _nlstringtest	Sun Feb 25 22:25:28 2018
+***************
+*** 1,5 ****
+! 2 morceaux de gateau
+! %2$s remplace %1$s.
+! %2$s remplace %1$s.
+  
+! EUR remplace FF.
+--- 1,5 ----
+! 2 pieces of cake
+! %s is replaced by %s.
+! %s is replaced by %s.
+  
+! FF is replaced by EUR.
+gmake[1]: *** [Makefile:1819: check] Error 1
 gmake: *** [Makefile:725: check-recursive] Error 1

@@ -21,14 +21,13 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2011-2015 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=gawk
-VER=4.2.0
+VER=4.2.1
 VERHUMAN=$VER
 PKG=text/gawk
 SUMMARY="gawk - GNU implementation of awk"
@@ -40,6 +39,8 @@ BUILDARCH=32
 CONFIGURE_OPTS_32+=" --bindir=/usr/bin"
 CPPFLAGS+=" -I/usr/include/gmp"
 CFLAGS+=" -D_XPG6"
+
+HARDLINK_TARGETS=usr/bin/gawk
 
 init
 download_source $PROG $PROG $VER
