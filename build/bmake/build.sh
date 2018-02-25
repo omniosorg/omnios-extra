@@ -21,12 +21,13 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
 
 PROG=bmake
-VER=20171207
+VER=20180222
 VERHUMAN=$VER
 PKG=developer/bmake
 SUMMARY="portable version of NetBSD make(1)"

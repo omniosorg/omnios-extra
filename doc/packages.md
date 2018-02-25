@@ -11,7 +11,7 @@
 | data/iso-codes			| 3.77			| http://pkg-isocodes.alioth.debian.org/downloads/
 | database/sqlite-3			| 3220000		| https://www.sqlite.org/download.html
 | developer/acpi/compiler		| 20180105		| https://www.acpica.org/downloads/
-| developer/bmake			| 20171207		| http://ftp.netbsd.org/pub/NetBSD/misc/sjg/ http://www.crufty.net/ftp/pub/sjg/
+| developer/bmake			| 20180222		| http://ftp.netbsd.org/pub/NetBSD/misc/sjg/ http://www.crufty.net/ftp/pub/sjg/
 | developer/build/autoconf		| 2.69			| https://git.savannah.gnu.org/cgit/autoconf.git/refs/tags
 | developer/build/automake		| 1.15.1		| https://git.savannah.gnu.org/cgit/automake.git/refs/tags
 | developer/build/gnu-make		| 4.2.1			| http://git.savannah.gnu.org/cgit/make.git/refs/tags
