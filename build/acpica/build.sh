@@ -12,14 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 
-#
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=acpica-unix
-VER=20180105
+VER=20180209
 VERHUMAN=$VER
 PKG=developer/acpi/compiler
 SUMMARY="ACPI Component Architecture compiler"
@@ -47,7 +45,6 @@ make_prog32() {
     PATH=/usr/gnu/bin:$PATH logcmd $MAKE CC=$CC iasl \
         || logerr "--- Build failed"
 }
-
 
 init
 download_source acpica $PROG $VER
