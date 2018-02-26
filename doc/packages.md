@@ -10,7 +10,7 @@
 | compress/zip				| 3.0			| http://www.info-zip.org/Zip.html
 | data/iso-codes			| 3.77			| http://pkg-isocodes.alioth.debian.org/downloads/
 | database/sqlite-3			| 3220000		| https://www.sqlite.org/download.html
-| developer/acpi/compiler		| 20180105		| https://www.acpica.org/downloads/
+| developer/acpi/compiler		| 20180209		| https://www.acpica.org/downloads/
 | developer/bmake			| 20180222		| http://ftp.netbsd.org/pub/NetBSD/misc/sjg/ http://www.crufty.net/ftp/pub/sjg/
 | developer/build/autoconf		| 2.69			| https://git.savannah.gnu.org/cgit/autoconf.git/refs/tags
 | developer/build/automake		| 1.15.1		| https://git.savannah.gnu.org/cgit/automake.git/refs/tags
@@ -43,7 +43,7 @@
 | library/libffi			| 3.2.1			| https://sourceware.org/libffi/
 | library/libxml2			| 2.9.7			| https://github.com/GNOME/libxml2/releases http://xmlsoft.org/news.html
 | library/libxslt			| 1.1.30		| http://xmlsoft.org/libxslt/news.html
-| library/ncurses			| 6.1.20180129		| http://invisible-mirror.net/archives/ncurses/current/ https://ftp.gnu.org/gnu/ncurses/ | Updated every week
+| library/ncurses			| 6.1.20180224		| http://invisible-mirror.net/archives/ncurses/current/ https://ftp.gnu.org/gnu/ncurses/ | Updated every week
 | library/nghttp2			| 1.30.0		| https://github.com/nghttp2/nghttp2/releases
 | library/nss				| 3.35			| https://ftp.mozilla.org/pub/security/nss/releases/
 | library/nspr				| 4.18			| http://archive.mozilla.org/pub/nspr/releases/
@@ -80,7 +80,7 @@
 | system/test/fio			| 3.5			| https://github.com/axboe/fio/releases
 | terminal/screen			| 4.6.2			| http://git.savannah.gnu.org/cgit/screen.git/refs/tags
 | terminal/tmux				| 2.6			| https://github.com/tmux/tmux/releases
-| text/gawk				| 4.2.0			| https://ftp.gnu.org/gnu/gawk/
+| text/gawk				| 4.2.1			| https://ftp.gnu.org/gnu/gawk/
 | text/gnu-diffutils			| 3.6			| http://git.savannah.gnu.org/cgit/diffutils.git/refs/tags
 | text/gnu-gettext			| 0.19.8.1		| http://git.savannah.gnu.org/cgit/gettext.git/refs/tags
 | text/gnu-grep				| 3.1			| http://git.savannah.gnu.org/cgit/grep.git/refs/tags
