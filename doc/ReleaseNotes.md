@@ -7,8 +7,6 @@
 
 Stable Release, TBC of May 2018
 
-illumos-omnios branch r151026 at XXX
-
 `uname -a` shows `omnios-r151026-XXX`
 
 r151026 release repository: https://pkg.omniosce.org/r151026/core
@@ -20,7 +18,10 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 * The ISO/USB installer has received multiple updates. It is now half the
   size and around seven times faster to start up, text menus have been
   replaced with dialogues to make it easier to navigate, and it is now
-  possible to select DHCP assignment of the DNS parameters.
+  possible to select DHCP assignment of the DNS parameters. Additional
+  options are available for configuring aspects of the root pool including
+  whether to force a 4K block size (ashift=12) and whether to use use
+  EFI or MBR labels.
 
 * It is now possible to boot OmniOS form a root pool which uses RAIDZ2 or
   RAIDZ3.
@@ -78,7 +79,7 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
     * rpcbind
     * Sendmail
     * Dragonfly Mail Agent
-    * NTPsec
+    * NTP & NTPsec
     * DHCP daemon
     * SNMP daemon
 
@@ -107,6 +108,29 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 * IPv6 default address selection table updated for RFC6724.
 
 * Improvements to page recovery under low memory conditions.
+
+* Workarounds for some systems with known broken firmware.
+
+### Package Management
+
+* A new `pkg apply-hot-fix` command has been added to make it easier to apply
+  a hot-fix directly from a package archive. For example:
+```
+    % pfexec pkg apply-hot-fix --be-name=hotfix1234 https://downloads.omniosce.org/pkg/r151022/1234_hotfix.p5p
+```
+
+* It is now possible to set an image property to make recursive operations
+  the default behaviour and also to specify the default concurrency for
+  package operations. So if you routinely use `pkg udpate -r -C 0` then you
+  can now:
+
+```
+# pkg set-property default-recurse True
+# pkg set-property recursion-concurrency 0
+```
+
+  The new `-R` option allows temporary override for recursion, refer to the
+  `pkg.1` man page for more details.
 
 ### LX zones
 
@@ -160,6 +184,13 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   [illumos issue 9091](https://www.illumos.org/issues/9091)
 
 ### Deprecated features
+
+* Several legacy SunSSH compatibility options for OpenSSH are deprecated
+  with this release and should be removed from SSH daemon configuration
+  files. A future release of OmniOS will remove support for these options
+  completely. Refer to
+  [https://omniosce.org/info/sunssh](https://omniosce.org/info/sunssh)
+  for more details.
 
 * The python `m2crypto`, `typing`, `lxml` and `pyrex` modules
   have been removed as they are no longer required by core OmniOS packages.
