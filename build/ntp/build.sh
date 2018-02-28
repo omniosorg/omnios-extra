@@ -22,13 +22,14 @@
 #
 #
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
 . ../../lib/functions.sh
 
 PROG=ntp
-VER=4.2.8p10
+VER=4.2.8p11
 VERHUMAN=$VER
 PKG=service/network/ntp
 SUMMARY="Network Time Services"
