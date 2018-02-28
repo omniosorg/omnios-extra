@@ -22,6 +22,7 @@
 
  Copyright (c) 2009, 2011, Oracle and/or its affiliates. All rights reserved.
  Copyright 2016 Andrew Stormont <andyjstormont@gmail.com>
+ Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 
  NOTE:  This service manifest is not editable; its contents will
  be overwritten by package or patch operations, including
@@ -81,7 +82,7 @@
     	    name='start'
     	    exec='/lib/svc/method/ntp %m'
     	    timeout_seconds='600'>
-		<method_context>
+		<method_context security_flags='aslr'>
 			<method_credential
 			    user='root'
 			    group='root'
