@@ -23,7 +23,7 @@
 # Use is subject to license terms.
 license LICENSE license=GPLv3
 
-<transform file path=etc/$(PREFIX)/$(PROG).conf -> set preserve true>
+<transform file path=etc/$(PREFIX)/$(PROG).conf$ -> set preserve true>
 
 link path=$(OPREFIX)/bin/$(PROG) target=../$(PROG)/bin/$(PROG)
 
