@@ -21,27 +21,30 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
 
 PROG=ntp
-VER=4.2.8p10
+VER=4.2.8p11
 VERHUMAN=$VER
 PKG=service/network/ntp
 SUMMARY="Network Time Services"
 DESC="$SUMMARY"
 
-BUILDARCH=32
+BUILDARCH=64
 
-DEPENDS_IPS="SUNWcs library/security/openssl service/network/dns/mdns system/library/math system/library runtime/perl"
-
-CFLAGS="$CFLAGS -std=c99 -D_XOPEN_SOURCE=600 -D__EXTENSIONS__"
-CONFIGURE_OPTS_32="--prefix=/usr
+CONFIGURE_OPTS_64="
+    --prefix=/usr
     --bindir=/usr/sbin
     --with-binsubdir=sbin
     --libexecdir=/usr/lib/inet
     --sysconfdir=/etc/inet
+    --with-openssl-libdir=/lib
+"
+
+CONFIGURE_OPTS="
     --enable-all-clocks
     --enable-debugging
     --enable-debug-timing
@@ -51,7 +54,6 @@ CONFIGURE_OPTS_32="--prefix=/usr
     --without-ntpsnmpd
     --without-sntp
     --without-lineeditlibs
-    --with-openssl-libdir=/lib
 "
 
 overlay_root() {
@@ -64,6 +66,7 @@ patch_source
 prep_build
 build
 overlay_root
+install_smf network ntp.xml ntp
 make_isa_stub
 #NOTE: Uncomment these IFF we go back to ntp-dev versions or p-releases again.
 #VER=${VER//dev-/}
