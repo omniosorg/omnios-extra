@@ -30,6 +30,8 @@ XFORM_ARGS="-D PVER=$PYTHONVER"
 BUILD_DEPENDS_IPS="ooce/text/asciidoc"
 export PATH=$PATH:/opt/ooce/bin
 
+export XML_CATALOG_FILES=/opt/ooce/docbook-xsl/catalog.xml
+
 # NTPsec uses the 'waf' build system
 
 make_clean() {
