@@ -27,7 +27,7 @@
 . ../../lib/functions.sh
 
 PROG=dbus
-VER=1.12.4
+VER=1.12.6
 PKG=dbus ##IGNORE##
 SUMMARY="$PROG - IPC-based message notifications"
 DESC="$SUMMARY"
@@ -53,9 +53,9 @@ build() {
 post_install() {
     mkdir -p $DESTDIR/etc/security/auth_attr.d
     mkdir -p $DESTDIR/etc/security/prof_attr.d
-    cp files/auth-system%2Flibrary%2Fdbus \
+    cp $SRCDIR/files/auth-system%2Flibrary%2Fdbus \
         $DESTDIR/etc/security/auth_attr.d/system%2Flibrary%2Fdbus
-    cp files/prof-system%2Flibrary%2Fdbus \
+    cp $SRCDIR/files/prof-system%2Flibrary%2Fdbus \
         $DESTDIR/etc/security/prof_attr.d/system%2Flibrary%2Fdbus
 }
 

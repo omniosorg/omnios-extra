@@ -59,6 +59,8 @@ PASS: test-dbus-daemon 26 /properties/features
 PASS: test-dbus-daemon 27 /properties/interfaces
 PASS: test-dbus-daemon 28 /properties/get-all
 PASS: test-dbus-daemon 29 /policy/count-fds
+SKIP: test-dbus-daemon 30 /fd-limit/session # SKIP prlimit() not supported on this platform
+SKIP: test-dbus-daemon 31 /fd-limit/system # SKIP cannot use alternative uid when not uid 0
 PASS: test-dbus-daemon-eavesdrop 1 /eavedrop/match_keyword/broadcast
 PASS: test-dbus-daemon-eavesdrop 2 /eavedrop/match_keyword/unicast_to_receiver
 PASS: test-dbus-daemon-eavesdrop 3 /eavedrop/match_keyword/unicast_to_sender
@@ -147,11 +149,11 @@ PASS: test-sd-activation 4 /sd-activation/deny-receive/com.example.ReceiveDenied
 PASS: test-sd-activation 5 /sd-activation/transient-services/later
 PASS: test-sd-activation 6 /sd-activation/transient-services/in-advance
 ============================================================================
-Testsuite summary for dbus 1.12.4
+Testsuite summary for dbus 1.12.6
 ============================================================================
-# TOTAL: 140
+# TOTAL: 142
 # PASS:  136
-# SKIP:  4
+# SKIP:  6
 # XFAIL: 0
 # FAIL:  0
 # XPASS: 0
@@ -159,7 +161,7 @@ Testsuite summary for dbus 1.12.4
 ============================================================================
 Making check in name-test
 ============================================================================
-Testsuite summary for dbus 1.12.4
+Testsuite summary for dbus 1.12.6
 ============================================================================
 # TOTAL: 0
 # PASS:  0
