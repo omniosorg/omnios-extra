@@ -16,38 +16,36 @@
 
 . ../../lib/functions.sh
 
-PROG=asciidoc
-VER=8.6.9
+PROG=docbook-xsl
+VER=20161215
 VERHUMAN=$VER
-PKG=ooce/text/asciidoc
-SUMMARY="AsciiDoc - text based documentation"
+PKG=ooce/text/docbook-xsl
+SUMMARY="XSLT 1.0 Stylesheets for DocBook"
 DESC="$SUMMARY"
+
+BUILDDIR=docbook-xsl-snapshot
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-XFORM_ARGS=" -DOPREFIX=$OPREFIX -DPREFIX=$PREFIX"
-
-RUN_DEPENDS_IPS="ooce/text/docbook-xsl"
-
-# Building twice fails due to xmllint failure. Always use a fresh copy of
-# the source.
-REMOVE_PREVIOUS=1
-
-# Build 32-bit only and skip the arch-specific directories
-BUILDARCH=32
-CONFIGURE_OPTS="
-    --sysconfdir=/etc/$OPREFIX
-    --bindir=$PREFIX/bin
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
+    -DPROG=$PROG
 "
 
-reset_configure_opts
+install() {
+    pushd $TMPDIR/$BUILDDIR
+    logcmd mkdir -p $DESTDIR/$PREFIX
+    find . | cpio -pvmud $DESTDIR/$PREFIX >/dev/null
+    popd
+}
 
 init
-download_source $PROG $PROG $VER
-patch_source
 prep_build
-build
+download_source docbook $PROG $VER
+patch_source
+install
 make_package
 clean_up
 
