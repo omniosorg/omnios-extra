@@ -1,0 +1,12 @@
+
+Add rewrite rules for sourceforge resources
+
+--- a/catalog.xml	2016-12-15 14:24:30.000000000 +0000
++++ b/catalog.xml	2018-03-02 19:32:05.186540804 +0000
+@@ -5,4 +5,6 @@
+   <rewriteSystem systemIdStartString="http://cdn.docbook.org/release/xsl/current/" rewritePrefix="./"/>
+   <rewriteURI uriStartString="http://cdn.docbook.org/release/xsl/snapshot/" rewritePrefix="./"/>
+   <rewriteSystem systemIdStartString="http://cdn.docbook.org/release/xsl/snapshot/" rewritePrefix="./"/>
++  <rewriteURI uriStartString="http://docbook.sourceforge.net/release/xsl/current/" rewritePrefix="./"/>
++  <rewriteSystem systemIdStartString="http://docbook.sourceforge.net/release/xsl/current/" rewritePrefix="./"/>
+ </catalog>
