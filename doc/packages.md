@@ -13,7 +13,7 @@
 | developer/acpi/compiler		| 20180209		| https://www.acpica.org/downloads/
 | developer/bmake			| 20180222		| http://ftp.netbsd.org/pub/NetBSD/misc/sjg/ http://www.crufty.net/ftp/pub/sjg/
 | developer/build/autoconf		| 2.69			| https://git.savannah.gnu.org/cgit/autoconf.git/refs/tags
-| developer/build/automake		| 1.15.1		| https://git.savannah.gnu.org/cgit/automake.git/refs/tags
+| developer/build/automake		| 1.16		| https://git.savannah.gnu.org/cgit/automake.git/refs/tags https://ftp.gnu.org/gnu/automake/
 | developer/build/gnu-make		| 4.2.1			| http://git.savannah.gnu.org/cgit/make.git/refs/tags
 | developer/build/libtool		| 2.4.6			| https://www.gnu.org/software/libtool/
 | developer/gcc5			| 5.5			| https://www.gnu.org/software/gcc/releases.html

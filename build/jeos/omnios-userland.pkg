@@ -15,7 +15,7 @@ data/iso-codes				3.77
 database/sqlite-3			3
 developer/as				0.5.11
 developer/build/autoconf		2.69
-developer/build/automake		1.15
+developer/build/automake		1.16
 developer/build/gnu-make		4.2
 developer/build/libtool			2.4
 developer/dtrace/toolkit		0.99
