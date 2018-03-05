@@ -4,6 +4,27 @@
 
 # Release Notes for OmniOSce v11 r151022
 
+## r151022ap (2018-03-05)
+Weekly release for w/c 5th of March 2018.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `DHCP` updated to 4.3.6-P1
+  * [CVE-2018-5732](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-5732)
+  * [CVE-2018-5733](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-5733)
+* `NTP` updated to 4.2.8p11
+  * [CVE-2016-1549](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2016-1549)
+  * [CVE-2018-7182](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-7182)
+  * [CVE-2018-7170](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-7170)
+  * [CVE-2018-7184](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-7184)
+  * [CVE-2018-7185](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-7185)
+  * [CVE-2018-7183](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-7183)
+
+<br>
+
+----
+
 [Instructions for updating from OmniTI OmniOS r151022 are available on our web site](https://omniosce.org/upgrade)
 
 ## r151022ao (2018-02-26)
