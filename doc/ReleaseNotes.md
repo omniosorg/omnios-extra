@@ -63,14 +63,11 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   `pkg uninstall service/network/ntp && pkg install service/network/ntpsec`.
   Restore any customisations and then start the network/ntp service.
 
-* Experimental support for `sparse` and `vm` branded zones. These are
-  linked-ipkg zones that share most of the `/usr`, `/sbin` and `/lib`
-  directories with the global zone. They are tiny (under 4MiB of installed
+* Experimental support for `sparse` branded zones. This is a linked-ipkg
+  zone that shares most of the `/usr`, `/sbin` and `/lib` directories with
+  the global zone. Sparse zones are tiny (under 4MiB of installed
   files) and perfect for isolating small services or VM instances for extra
-  security or to apply more granular resource controls. The only current
-  difference between `sparse` and `vm` zones is the services which are enabled
-  by default. `vm` zones have no services running and are designed specifically
-  for isolating VM instances; they may become more specialised in the future.
+  security or to apply more granular resource controls.
 
 * A number of system components now enable Address Space Layout Randomisation
   (ASLR) by default:
