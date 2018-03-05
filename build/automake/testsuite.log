@@ -667,21 +667,18 @@ PASS: t/autohdr-subdir-pr12495.sh
 PASS: t/autohdrdry.sh
 PASS: t/automake-cmdline.tap 1 - invalid long option (run)
 PASS: t/automake-cmdline.tap 2 - invalid long option (stderr)
-PASS: t/automake-cmdline.tap 3 - list of options terminated by '--' (run)
-PASS: t/automake-cmdline.tap 4 - list of options terminated by '--' (stderr)
-PASS: t/automake-cmdline.tap 5 - empty argument (run)
-PASS: t/automake-cmdline.tap 6 - empty argument (stderr)
-PASS: t/automake-cmdline.tap 7 - missing argument for long option (run)
-PASS: t/automake-cmdline.tap 8 - missing argument for long option (stderr)
-PASS: t/automake-cmdline.tap 9 - missing argument for short option (run)
-PASS: t/automake-cmdline.tap 10 - missing argument for short option (stderr)
+PASS: t/automake-cmdline.tap 3 - empty argument (run)
+PASS: t/automake-cmdline.tap 4 - empty argument (stderr)
+PASS: t/automake-cmdline.tap 5 - missing argument for long option (run)
+PASS: t/automake-cmdline.tap 6 - missing argument for long option (stderr)
+PASS: t/automake-cmdline.tap 7 - missing argument for short option (run)
+PASS: t/automake-cmdline.tap 8 - missing argument for short option (stderr)
+PASS: t/automake-cmdline.tap 9 - '--help' as option argument (run)
+PASS: t/automake-cmdline.tap 10 - '--help' as option argument (stderr)
 PASS: t/automake-cmdline.tap 11 - '--help' as option argument (run)
 PASS: t/automake-cmdline.tap 12 - '--help' as option argument (stderr)
-PASS: t/automake-cmdline.tap 13 - '--help' as option argument (run)
-PASS: t/automake-cmdline.tap 14 - '--help' as option argument (stderr)
-PASS: t/automake-cmdline.tap 15 - ambiguous incomplete option (run)
-PASS: t/automake-cmdline.tap 16 - ambiguous incomplete option (stderr)
-PASS: t/automake-cmdline.tap 17 - unambiguous incomplete long option
+PASS: t/automake-cmdline.tap 13 - ambiguous incomplete option (run)
+PASS: t/automake-cmdline.tap 14 - ambiguous incomplete option (stderr)
 PASS: t/auxdir.sh
 PASS: t/auxdir6.sh
 PASS: t/auxdir7.sh
@@ -930,6 +927,7 @@ PASS: t/depend3.sh
 PASS: t/depend4.sh
 PASS: t/depend5.sh
 PASS: t/depend6.sh
+PASS: t/depend-postproc.sh
 PASS: t/deprecated-acinit.sh
 PASS: t/destdir.sh
 PASS: t/dir-named-obj-is-bad.sh
@@ -1014,14 +1012,15 @@ PASS: t/dist-missing-m4.sh
 PASS: t/dist-readonly.sh
 PASS: t/dist-repeated.sh
 XFAIL: t/dist-pr109765.sh
+PASS: t/dist-vs-built-sources.sh
 PASS: t/distcleancheck.sh
 PASS: t/distcom2.sh
 PASS: t/distcom3.sh
 PASS: t/distcom4.sh
 PASS: t/distcom5.sh
 PASS: t/distcom-subdir.sh
-FAIL: t/distdir.sh
-FAIL: t/disthook.sh
+PASS: t/distdir.sh
+PASS: t/disthook.sh
 PASS: t/distlinks.sh
 PASS: t/distlinksbrk.sh
 PASS: t/distname.sh
@@ -1069,11 +1068,11 @@ PASS: t/ext3.sh
 PASS: t/extra.sh
 PASS: t/extra-sources-no-spurious.sh
 PASS: t/extra-data.sh
-FAIL: t/extra-dist-vpath-dir.sh
-FAIL: t/extra-dist-dirs-and-subdirs.sh
-FAIL: t/extra-dist-vpath-dir-merge.sh
+PASS: t/extra-dist-vpath-dir.sh
+PASS: t/extra-dist-dirs-and-subdirs.sh
+PASS: t/extra-dist-vpath-dir-merge.sh
 PASS: t/extra-dist-wildcards.sh
-FAIL: t/extra-dist-wildcards-gnu.sh
+PASS: t/extra-dist-wildcards-gnu.sh
 PASS: t/extra-dist-wildcards-vpath.sh
 PASS: t/extra-programs-misc.sh
 PASS: t/extra-programs-and-libs.sh
@@ -1086,8 +1085,8 @@ PASS: t/extra-deps-lt.sh
 PASS: t/f90only.sh
 PASS: t/flavor.sh
 PASS: t/flibs.sh
-FAIL: t/fn99.sh
-FAIL: t/fn99subdir.sh
+PASS: t/fn99.sh
+PASS: t/fn99subdir.sh
 PASS: t/fnoc.sh
 PASS: t/forcemiss.sh
 PASS: t/forcemiss2.sh
@@ -1214,9 +1213,9 @@ PASS: t/lex-lib-external.sh
 PASS: t/lex-libobj.sh
 PASS: t/lex-multiple.sh
 PASS: t/lex-noyywrap.sh
-PASS: t/lex-clean-cxx.sh
+FAIL: t/lex-clean-cxx.sh
 PASS: t/lex-clean.sh
-PASS: t/lex-depend-cxx.sh
+FAIL: t/lex-depend-cxx.sh
 PASS: t/lex-depend-grep.sh
 PASS: t/lex-depend.sh
 PASS: t/lex-line.sh
@@ -1226,6 +1225,7 @@ PASS: t/lflags.sh
 PASS: t/lflags-cxx.sh
 PASS: t/libexec.sh
 PASS: t/libobj-basic.sh
+PASS: t/libobj-no-dependency-tracking.sh
 PASS: t/libobj2.sh
 PASS: t/libobj3.sh
 PASS: t/libobj4.sh
@@ -1283,6 +1283,8 @@ SKIP: t/lisp6.sh
 PASS: t/lisp7.sh
 lisp8: skipped test: required program 'emacs' not available
 SKIP: t/lisp8.sh
+lisp-readonly-srcdir: skipped test: required program 'emacs' not available
+SKIP: t/lisp-readonly-srcdir.sh
 lisp-loadpath: skipped test: required program 'emacs' not available
 SKIP: t/lisp-loadpath.sh
 lisp-subdir: skipped test: required program 'emacs' not available
@@ -1635,7 +1637,6 @@ PASS: t/posixsubst-programs.sh
 PASS: t/posixsubst-scripts.sh
 PASS: t/posixsubst-sources.sh
 PASS: t/posixsubst-tests.sh
-PASS: t/postproc.sh
 PASS: t/ppf77.sh
 PASS: t/pr2.sh
 PASS: t/pr9.sh
@@ -2265,12 +2266,15 @@ PASS: t/subobj11c.sh
 PASS: t/subobjname.sh
 PASS: t/subobj-clean-pr10697.sh
 PASS: t/subobj-clean-lt-pr10697.sh
-XFAIL: t/subobj-indir-pr13928.sh
-XFAIL: t/subobj-vpath-pr13928.sh
-PASS: t/subpkg.sh
+PASS: t/subobj-indir-pr13928.sh
+PASS: t/subobj-objname-clash.sh
+PASS: t/subobj-vpath-pr13928.sh
+subobj-pr13928-more-langs: skipped test: no Fortran 77 compiler available
+SKIP: t/subobj-pr13928-more-langs.sh
+FAIL: t/subpkg.sh
 PASS: t/subpkg2.sh
 PASS: t/subpkg3.sh
-FAIL: t/subpkg4.sh
+PASS: t/subpkg4.sh
 PASS: t/subpkg-yacc.sh
 PASS: t/subpkg-macrodir.sh
 PASS: t/subst.sh
@@ -2519,8 +2523,7 @@ PASS: t/upc2.sh
 SKIP: t/upc3.sh
 PASS: t/vala-configure.sh
 PASS: t/vala-grepping.sh
-pkg-config-macros: skipped test: pkg-config m4 macros not found
-SKIP: t/pkg-config-macros.sh
+PASS: t/pkg-config-macros.sh
 vala-headers: skipped test: required program 'valac' not available
 SKIP: t/vala-headers.sh
 vala-libs: skipped test: required program 'valac' not available
@@ -2645,19 +2648,345 @@ PASS: t/missing-version-mismatch-w.sh
 PASS: t/missing3-w.sh
 PASS: t/mkinst3-w.sh
 PASS: t/posixsubst-tests-w.sh
-ERROR: t/depcomp-lt-auto.tap - Bail out! couldn't populate source directory '.'
-ERROR: t/depcomp-lt-cpp.tap - Bail out! couldn't populate source directory '.'
-ERROR: t/depcomp-lt-dashmstdout.tap - Bail out! couldn't populate source directory '.'
-ERROR: t/depcomp-lt-disabled.tap - Bail out! couldn't populate source directory '.'
-ERROR: t/depcomp-lt-gcc.tap - Bail out! couldn't populate source directory '.'
+PASS: t/depcomp-lt-auto.tap 1 - [in-tree build, default] configure
+PASS: t/depcomp-lt-auto.tap 2 - [in-tree build, default] right depmode selected
+PASS: t/depcomp-lt-auto.tap 3 - [in-tree build, default] simple make
+PASS: t/depcomp-lt-auto.tap 4 - [in-tree build, default] clean & rebuild
+PASS: t/depcomp-lt-auto.tap 5 - [in-tree build, default] generated Plo files look correct
+PASS: t/depcomp-lt-auto.tap 6 - [in-tree build, default] dependency tracking works
+PASS: t/depcomp-lt-auto.tap 7 - [in-tree build, default] make distclean
+PASS: t/depcomp-lt-auto.tap 8 - [in-tree build, noshared] configure
+PASS: t/depcomp-lt-auto.tap 9 - [in-tree build, noshared] right depmode selected
+PASS: t/depcomp-lt-auto.tap 10 - [in-tree build, noshared] simple make
+PASS: t/depcomp-lt-auto.tap 11 - [in-tree build, noshared] clean & rebuild
+PASS: t/depcomp-lt-auto.tap 12 - [in-tree build, noshared] generated Plo files look correct
+PASS: t/depcomp-lt-auto.tap 13 - [in-tree build, noshared] dependency tracking works
+PASS: t/depcomp-lt-auto.tap 14 - [in-tree build, noshared] make distclean
+PASS: t/depcomp-lt-auto.tap 15 - [in-tree build, nostatic] configure
+PASS: t/depcomp-lt-auto.tap 16 - [in-tree build, nostatic] right depmode selected
+PASS: t/depcomp-lt-auto.tap 17 - [in-tree build, nostatic] simple make
+PASS: t/depcomp-lt-auto.tap 18 - [in-tree build, nostatic] clean & rebuild
+PASS: t/depcomp-lt-auto.tap 19 - [in-tree build, nostatic] generated Plo files look correct
+PASS: t/depcomp-lt-auto.tap 20 - [in-tree build, nostatic] dependency tracking works
+PASS: t/depcomp-lt-auto.tap 21 - [in-tree build, nostatic] make distclean
+PASS: t/depcomp-lt-auto.tap 22 - [simple VPATH, default] configure
+PASS: t/depcomp-lt-auto.tap 23 - [simple VPATH, default] right depmode selected
+PASS: t/depcomp-lt-auto.tap 24 - [simple VPATH, default] simple make
+PASS: t/depcomp-lt-auto.tap 25 - [simple VPATH, default] clean & rebuild
+PASS: t/depcomp-lt-auto.tap 26 - [simple VPATH, default] generated Plo files look correct
+PASS: t/depcomp-lt-auto.tap 27 - [simple VPATH, default] dependency tracking works
+PASS: t/depcomp-lt-auto.tap 28 - [simple VPATH, default] make distclean
+PASS: t/depcomp-lt-auto.tap 29 - [simple VPATH, noshared] configure
+PASS: t/depcomp-lt-auto.tap 30 - [simple VPATH, noshared] right depmode selected
+PASS: t/depcomp-lt-auto.tap 31 - [simple VPATH, noshared] simple make
+PASS: t/depcomp-lt-auto.tap 32 - [simple VPATH, noshared] clean & rebuild
+PASS: t/depcomp-lt-auto.tap 33 - [simple VPATH, noshared] generated Plo files look correct
+PASS: t/depcomp-lt-auto.tap 34 - [simple VPATH, noshared] dependency tracking works
+PASS: t/depcomp-lt-auto.tap 35 - [simple VPATH, noshared] make distclean
+PASS: t/depcomp-lt-auto.tap 36 - [simple VPATH, nostatic] configure
+PASS: t/depcomp-lt-auto.tap 37 - [simple VPATH, nostatic] right depmode selected
+PASS: t/depcomp-lt-auto.tap 38 - [simple VPATH, nostatic] simple make
+PASS: t/depcomp-lt-auto.tap 39 - [simple VPATH, nostatic] clean & rebuild
+PASS: t/depcomp-lt-auto.tap 40 - [simple VPATH, nostatic] generated Plo files look correct
+PASS: t/depcomp-lt-auto.tap 41 - [simple VPATH, nostatic] dependency tracking works
+PASS: t/depcomp-lt-auto.tap 42 - [simple VPATH, nostatic] make distclean
+PASS: t/depcomp-lt-auto.tap 43 - [long VPATH, default] configure
+PASS: t/depcomp-lt-auto.tap 44 - [long VPATH, default] right depmode selected
+PASS: t/depcomp-lt-auto.tap 45 - [long VPATH, default] simple make
+PASS: t/depcomp-lt-auto.tap 46 - [long VPATH, default] clean & rebuild
+PASS: t/depcomp-lt-auto.tap 47 - [long VPATH, default] generated Plo files look correct
+PASS: t/depcomp-lt-auto.tap 48 - [long VPATH, default] dependency tracking works
+PASS: t/depcomp-lt-auto.tap 49 - [long VPATH, default] make distclean
+PASS: t/depcomp-lt-auto.tap 50 - [long VPATH, noshared] configure
+PASS: t/depcomp-lt-auto.tap 51 - [long VPATH, noshared] right depmode selected
+PASS: t/depcomp-lt-auto.tap 52 - [long VPATH, noshared] simple make
+PASS: t/depcomp-lt-auto.tap 53 - [long VPATH, noshared] clean & rebuild
+PASS: t/depcomp-lt-auto.tap 54 - [long VPATH, noshared] generated Plo files look correct
+PASS: t/depcomp-lt-auto.tap 55 - [long VPATH, noshared] dependency tracking works
+PASS: t/depcomp-lt-auto.tap 56 - [long VPATH, noshared] make distclean
+PASS: t/depcomp-lt-auto.tap 57 - [long VPATH, nostatic] configure
+PASS: t/depcomp-lt-auto.tap 58 - [long VPATH, nostatic] right depmode selected
+PASS: t/depcomp-lt-auto.tap 59 - [long VPATH, nostatic] simple make
+PASS: t/depcomp-lt-auto.tap 60 - [long VPATH, nostatic] clean & rebuild
+PASS: t/depcomp-lt-auto.tap 61 - [long VPATH, nostatic] generated Plo files look correct
+PASS: t/depcomp-lt-auto.tap 62 - [long VPATH, nostatic] dependency tracking works
+PASS: t/depcomp-lt-auto.tap 63 - [long VPATH, nostatic] make distclean
+PASS: t/depcomp-lt-auto.tap 64 - [absolute VPATH, default] configure
+PASS: t/depcomp-lt-auto.tap 65 - [absolute VPATH, default] right depmode selected
+PASS: t/depcomp-lt-auto.tap 66 - [absolute VPATH, default] simple make
+PASS: t/depcomp-lt-auto.tap 67 - [absolute VPATH, default] clean & rebuild
+PASS: t/depcomp-lt-auto.tap 68 - [absolute VPATH, default] generated Plo files look correct
+PASS: t/depcomp-lt-auto.tap 69 - [absolute VPATH, default] dependency tracking works
+PASS: t/depcomp-lt-auto.tap 70 - [absolute VPATH, default] make distclean
+PASS: t/depcomp-lt-auto.tap 71 - [absolute VPATH, noshared] configure
+PASS: t/depcomp-lt-auto.tap 72 - [absolute VPATH, noshared] right depmode selected
+PASS: t/depcomp-lt-auto.tap 73 - [absolute VPATH, noshared] simple make
+PASS: t/depcomp-lt-auto.tap 74 - [absolute VPATH, noshared] clean & rebuild
+PASS: t/depcomp-lt-auto.tap 75 - [absolute VPATH, noshared] generated Plo files look correct
+PASS: t/depcomp-lt-auto.tap 76 - [absolute VPATH, noshared] dependency tracking works
+PASS: t/depcomp-lt-auto.tap 77 - [absolute VPATH, noshared] make distclean
+PASS: t/depcomp-lt-auto.tap 78 - [absolute VPATH, nostatic] configure
+PASS: t/depcomp-lt-auto.tap 79 - [absolute VPATH, nostatic] right depmode selected
+PASS: t/depcomp-lt-auto.tap 80 - [absolute VPATH, nostatic] simple make
+PASS: t/depcomp-lt-auto.tap 81 - [absolute VPATH, nostatic] clean & rebuild
+PASS: t/depcomp-lt-auto.tap 82 - [absolute VPATH, nostatic] generated Plo files look correct
+PASS: t/depcomp-lt-auto.tap 83 - [absolute VPATH, nostatic] dependency tracking works
+PASS: t/depcomp-lt-auto.tap 84 - [absolute VPATH, nostatic] make distclean
+PASS: t/depcomp-lt-cpp.tap 1 - [in-tree build] configure
+PASS: t/depcomp-lt-cpp.tap 2 - [in-tree build] right depmode selected
+PASS: t/depcomp-lt-cpp.tap 3 - [in-tree build] simple make
+PASS: t/depcomp-lt-cpp.tap 4 - [in-tree build] clean & rebuild
+PASS: t/depcomp-lt-cpp.tap 5 - [in-tree build] generated Plo files look correct
+PASS: t/depcomp-lt-cpp.tap 6 - [in-tree build] dependency tracking works
+PASS: t/depcomp-lt-cpp.tap 7 - [in-tree build] make distclean
+PASS: t/depcomp-lt-cpp.tap 8 - [simple VPATH] configure
+PASS: t/depcomp-lt-cpp.tap 9 - [simple VPATH] right depmode selected
+PASS: t/depcomp-lt-cpp.tap 10 - [simple VPATH] simple make
+PASS: t/depcomp-lt-cpp.tap 11 - [simple VPATH] clean & rebuild
+PASS: t/depcomp-lt-cpp.tap 12 - [simple VPATH] generated Plo files look correct
+PASS: t/depcomp-lt-cpp.tap 13 - [simple VPATH] dependency tracking works
+PASS: t/depcomp-lt-cpp.tap 14 - [simple VPATH] make distclean
+PASS: t/depcomp-lt-cpp.tap 15 - [long VPATH] configure
+PASS: t/depcomp-lt-cpp.tap 16 - [long VPATH] right depmode selected
+PASS: t/depcomp-lt-cpp.tap 17 - [long VPATH] simple make
+PASS: t/depcomp-lt-cpp.tap 18 - [long VPATH] clean & rebuild
+PASS: t/depcomp-lt-cpp.tap 19 - [long VPATH] generated Plo files look correct
+PASS: t/depcomp-lt-cpp.tap 20 - [long VPATH] dependency tracking works
+PASS: t/depcomp-lt-cpp.tap 21 - [long VPATH] make distclean
+PASS: t/depcomp-lt-cpp.tap 22 - [absolute VPATH] configure
+PASS: t/depcomp-lt-cpp.tap 23 - [absolute VPATH] right depmode selected
+PASS: t/depcomp-lt-cpp.tap 24 - [absolute VPATH] simple make
+PASS: t/depcomp-lt-cpp.tap 25 - [absolute VPATH] clean & rebuild
+PASS: t/depcomp-lt-cpp.tap 26 - [absolute VPATH] generated Plo files look correct
+PASS: t/depcomp-lt-cpp.tap 27 - [absolute VPATH] dependency tracking works
+PASS: t/depcomp-lt-cpp.tap 28 - [absolute VPATH] make distclean
+PASS: t/depcomp-lt-dashmstdout.tap 1 - [in-tree build] configure
+PASS: t/depcomp-lt-dashmstdout.tap 2 - [in-tree build] right depmode selected
+PASS: t/depcomp-lt-dashmstdout.tap 3 - [in-tree build] simple make
+PASS: t/depcomp-lt-dashmstdout.tap 4 - [in-tree build] clean & rebuild
+PASS: t/depcomp-lt-dashmstdout.tap 5 - [in-tree build] generated Plo files look correct
+PASS: t/depcomp-lt-dashmstdout.tap 6 - [in-tree build] dependency tracking works
+PASS: t/depcomp-lt-dashmstdout.tap 7 - [in-tree build] make distclean
+PASS: t/depcomp-lt-dashmstdout.tap 8 - [simple VPATH] configure
+PASS: t/depcomp-lt-dashmstdout.tap 9 - [simple VPATH] right depmode selected
+PASS: t/depcomp-lt-dashmstdout.tap 10 - [simple VPATH] simple make
+PASS: t/depcomp-lt-dashmstdout.tap 11 - [simple VPATH] clean & rebuild
+PASS: t/depcomp-lt-dashmstdout.tap 12 - [simple VPATH] generated Plo files look correct
+PASS: t/depcomp-lt-dashmstdout.tap 13 - [simple VPATH] dependency tracking works
+PASS: t/depcomp-lt-dashmstdout.tap 14 - [simple VPATH] make distclean
+PASS: t/depcomp-lt-dashmstdout.tap 15 - [long VPATH] configure
+PASS: t/depcomp-lt-dashmstdout.tap 16 - [long VPATH] right depmode selected
+PASS: t/depcomp-lt-dashmstdout.tap 17 - [long VPATH] simple make
+PASS: t/depcomp-lt-dashmstdout.tap 18 - [long VPATH] clean & rebuild
+PASS: t/depcomp-lt-dashmstdout.tap 19 - [long VPATH] generated Plo files look correct
+PASS: t/depcomp-lt-dashmstdout.tap 20 - [long VPATH] dependency tracking works
+PASS: t/depcomp-lt-dashmstdout.tap 21 - [long VPATH] make distclean
+PASS: t/depcomp-lt-dashmstdout.tap 22 - [absolute VPATH] configure
+PASS: t/depcomp-lt-dashmstdout.tap 23 - [absolute VPATH] right depmode selected
+PASS: t/depcomp-lt-dashmstdout.tap 24 - [absolute VPATH] simple make
+PASS: t/depcomp-lt-dashmstdout.tap 25 - [absolute VPATH] clean & rebuild
+PASS: t/depcomp-lt-dashmstdout.tap 26 - [absolute VPATH] generated Plo files look correct
+PASS: t/depcomp-lt-dashmstdout.tap 27 - [absolute VPATH] dependency tracking works
+PASS: t/depcomp-lt-dashmstdout.tap 28 - [absolute VPATH] make distclean
+PASS: t/depcomp-lt-disabled.tap 1 - [in-tree build] configure
+PASS: t/depcomp-lt-disabled.tap 2 - [in-tree build] right depmode selected
+PASS: t/depcomp-lt-disabled.tap 3 - [in-tree build] simple make
+PASS: t/depcomp-lt-disabled.tap 4 - [in-tree build] clean & rebuild
+PASS: t/depcomp-lt-disabled.tap 5 - [in-tree build] no dependency files generated
+PASS: t/depcomp-lt-disabled.tap 6 - [in-tree build] dependency tracking is truly disabled
+PASS: t/depcomp-lt-disabled.tap 7 - [in-tree build] make distclean
+PASS: t/depcomp-lt-disabled.tap 8 - [simple VPATH] configure
+PASS: t/depcomp-lt-disabled.tap 9 - [simple VPATH] right depmode selected
+PASS: t/depcomp-lt-disabled.tap 10 - [simple VPATH] simple make
+PASS: t/depcomp-lt-disabled.tap 11 - [simple VPATH] clean & rebuild
+PASS: t/depcomp-lt-disabled.tap 12 - [simple VPATH] no dependency files generated
+PASS: t/depcomp-lt-disabled.tap 13 - [simple VPATH] dependency tracking is truly disabled
+PASS: t/depcomp-lt-disabled.tap 14 - [simple VPATH] make distclean
+PASS: t/depcomp-lt-disabled.tap 15 - [long VPATH] configure
+PASS: t/depcomp-lt-disabled.tap 16 - [long VPATH] right depmode selected
+PASS: t/depcomp-lt-disabled.tap 17 - [long VPATH] simple make
+PASS: t/depcomp-lt-disabled.tap 18 - [long VPATH] clean & rebuild
+PASS: t/depcomp-lt-disabled.tap 19 - [long VPATH] no dependency files generated
+PASS: t/depcomp-lt-disabled.tap 20 - [long VPATH] dependency tracking is truly disabled
+PASS: t/depcomp-lt-disabled.tap 21 - [long VPATH] make distclean
+PASS: t/depcomp-lt-disabled.tap 22 - [absolute VPATH] configure
+PASS: t/depcomp-lt-disabled.tap 23 - [absolute VPATH] right depmode selected
+PASS: t/depcomp-lt-disabled.tap 24 - [absolute VPATH] simple make
+PASS: t/depcomp-lt-disabled.tap 25 - [absolute VPATH] clean & rebuild
+PASS: t/depcomp-lt-disabled.tap 26 - [absolute VPATH] no dependency files generated
+PASS: t/depcomp-lt-disabled.tap 27 - [absolute VPATH] dependency tracking is truly disabled
+PASS: t/depcomp-lt-disabled.tap 28 - [absolute VPATH] make distclean
+PASS: t/depcomp-lt-gcc.tap 1 - [in-tree build] configure
+PASS: t/depcomp-lt-gcc.tap 2 - [in-tree build] right depmode selected
+PASS: t/depcomp-lt-gcc.tap 3 - [in-tree build] simple make
+PASS: t/depcomp-lt-gcc.tap 4 - [in-tree build] clean & rebuild
+PASS: t/depcomp-lt-gcc.tap 5 - [in-tree build] generated Plo files look correct
+PASS: t/depcomp-lt-gcc.tap 6 - [in-tree build] dependency tracking works
+PASS: t/depcomp-lt-gcc.tap 7 - [in-tree build] make distclean
+PASS: t/depcomp-lt-gcc.tap 8 - [simple VPATH] configure
+PASS: t/depcomp-lt-gcc.tap 9 - [simple VPATH] right depmode selected
+PASS: t/depcomp-lt-gcc.tap 10 - [simple VPATH] simple make
+PASS: t/depcomp-lt-gcc.tap 11 - [simple VPATH] clean & rebuild
+PASS: t/depcomp-lt-gcc.tap 12 - [simple VPATH] generated Plo files look correct
+PASS: t/depcomp-lt-gcc.tap 13 - [simple VPATH] dependency tracking works
+PASS: t/depcomp-lt-gcc.tap 14 - [simple VPATH] make distclean
+PASS: t/depcomp-lt-gcc.tap 15 - [long VPATH] configure
+PASS: t/depcomp-lt-gcc.tap 16 - [long VPATH] right depmode selected
+PASS: t/depcomp-lt-gcc.tap 17 - [long VPATH] simple make
+PASS: t/depcomp-lt-gcc.tap 18 - [long VPATH] clean & rebuild
+PASS: t/depcomp-lt-gcc.tap 19 - [long VPATH] generated Plo files look correct
+PASS: t/depcomp-lt-gcc.tap 20 - [long VPATH] dependency tracking works
+PASS: t/depcomp-lt-gcc.tap 21 - [long VPATH] make distclean
+PASS: t/depcomp-lt-gcc.tap 22 - [absolute VPATH] configure
+PASS: t/depcomp-lt-gcc.tap 23 - [absolute VPATH] right depmode selected
+PASS: t/depcomp-lt-gcc.tap 24 - [absolute VPATH] simple make
+PASS: t/depcomp-lt-gcc.tap 25 - [absolute VPATH] clean & rebuild
+PASS: t/depcomp-lt-gcc.tap 26 - [absolute VPATH] generated Plo files look correct
+PASS: t/depcomp-lt-gcc.tap 27 - [absolute VPATH] dependency tracking works
+PASS: t/depcomp-lt-gcc.tap 28 - [absolute VPATH] make distclean
 SKIP: t/depcomp-lt-makedepend.tap - required program 'makedepend' not available
 SKIP: t/depcomp-lt-msvcmsys.tap - Microsoft C compiler 'cl' not available
 SKIP: t/depcomp-lt-msvisualcpp.tap - Microsoft C compiler 'cl' not available
-ERROR: t/depcomp-auto.tap - Bail out! couldn't populate source directory '.'
-ERROR: t/depcomp-cpp.tap - Bail out! couldn't populate source directory '.'
-ERROR: t/depcomp-dashmstdout.tap - Bail out! couldn't populate source directory '.'
-ERROR: t/depcomp-disabled.tap - Bail out! couldn't populate source directory '.'
-ERROR: t/depcomp-gcc.tap - Bail out! couldn't populate source directory '.'
+PASS: t/depcomp-auto.tap 1 - [in-tree build] configure
+PASS: t/depcomp-auto.tap 2 - [in-tree build] right depmode selected
+PASS: t/depcomp-auto.tap 3 - [in-tree build] simple make
+PASS: t/depcomp-auto.tap 4 - [in-tree build] clean & rebuild
+PASS: t/depcomp-auto.tap 5 - [in-tree build] generated Po files look correct
+PASS: t/depcomp-auto.tap 6 - [in-tree build] dependency tracking works
+PASS: t/depcomp-auto.tap 7 - [in-tree build] make distclean
+PASS: t/depcomp-auto.tap 8 - [simple VPATH] configure
+PASS: t/depcomp-auto.tap 9 - [simple VPATH] right depmode selected
+PASS: t/depcomp-auto.tap 10 - [simple VPATH] simple make
+PASS: t/depcomp-auto.tap 11 - [simple VPATH] clean & rebuild
+PASS: t/depcomp-auto.tap 12 - [simple VPATH] generated Po files look correct
+PASS: t/depcomp-auto.tap 13 - [simple VPATH] dependency tracking works
+PASS: t/depcomp-auto.tap 14 - [simple VPATH] make distclean
+PASS: t/depcomp-auto.tap 15 - [long VPATH] configure
+PASS: t/depcomp-auto.tap 16 - [long VPATH] right depmode selected
+PASS: t/depcomp-auto.tap 17 - [long VPATH] simple make
+PASS: t/depcomp-auto.tap 18 - [long VPATH] clean & rebuild
+PASS: t/depcomp-auto.tap 19 - [long VPATH] generated Po files look correct
+PASS: t/depcomp-auto.tap 20 - [long VPATH] dependency tracking works
+PASS: t/depcomp-auto.tap 21 - [long VPATH] make distclean
+PASS: t/depcomp-auto.tap 22 - [absolute VPATH] configure
+PASS: t/depcomp-auto.tap 23 - [absolute VPATH] right depmode selected
+PASS: t/depcomp-auto.tap 24 - [absolute VPATH] simple make
+PASS: t/depcomp-auto.tap 25 - [absolute VPATH] clean & rebuild
+PASS: t/depcomp-auto.tap 26 - [absolute VPATH] generated Po files look correct
+PASS: t/depcomp-auto.tap 27 - [absolute VPATH] dependency tracking works
+PASS: t/depcomp-auto.tap 28 - [absolute VPATH] make distclean
+PASS: t/depcomp-cpp.tap 1 - [in-tree build] configure
+PASS: t/depcomp-cpp.tap 2 - [in-tree build] right depmode selected
+PASS: t/depcomp-cpp.tap 3 - [in-tree build] simple make
+PASS: t/depcomp-cpp.tap 4 - [in-tree build] clean & rebuild
+PASS: t/depcomp-cpp.tap 5 - [in-tree build] generated Po files look correct
+PASS: t/depcomp-cpp.tap 6 - [in-tree build] dependency tracking works
+PASS: t/depcomp-cpp.tap 7 - [in-tree build] make distclean
+PASS: t/depcomp-cpp.tap 8 - [simple VPATH] configure
+PASS: t/depcomp-cpp.tap 9 - [simple VPATH] right depmode selected
+PASS: t/depcomp-cpp.tap 10 - [simple VPATH] simple make
+PASS: t/depcomp-cpp.tap 11 - [simple VPATH] clean & rebuild
+PASS: t/depcomp-cpp.tap 12 - [simple VPATH] generated Po files look correct
+PASS: t/depcomp-cpp.tap 13 - [simple VPATH] dependency tracking works
+PASS: t/depcomp-cpp.tap 14 - [simple VPATH] make distclean
+PASS: t/depcomp-cpp.tap 15 - [long VPATH] configure
+PASS: t/depcomp-cpp.tap 16 - [long VPATH] right depmode selected
+PASS: t/depcomp-cpp.tap 17 - [long VPATH] simple make
+PASS: t/depcomp-cpp.tap 18 - [long VPATH] clean & rebuild
+PASS: t/depcomp-cpp.tap 19 - [long VPATH] generated Po files look correct
+PASS: t/depcomp-cpp.tap 20 - [long VPATH] dependency tracking works
+PASS: t/depcomp-cpp.tap 21 - [long VPATH] make distclean
+PASS: t/depcomp-cpp.tap 22 - [absolute VPATH] configure
+PASS: t/depcomp-cpp.tap 23 - [absolute VPATH] right depmode selected
+PASS: t/depcomp-cpp.tap 24 - [absolute VPATH] simple make
+PASS: t/depcomp-cpp.tap 25 - [absolute VPATH] clean & rebuild
+PASS: t/depcomp-cpp.tap 26 - [absolute VPATH] generated Po files look correct
+PASS: t/depcomp-cpp.tap 27 - [absolute VPATH] dependency tracking works
+PASS: t/depcomp-cpp.tap 28 - [absolute VPATH] make distclean
+PASS: t/depcomp-dashmstdout.tap 1 - [in-tree build] configure
+PASS: t/depcomp-dashmstdout.tap 2 - [in-tree build] right depmode selected
+PASS: t/depcomp-dashmstdout.tap 3 - [in-tree build] simple make
+PASS: t/depcomp-dashmstdout.tap 4 - [in-tree build] clean & rebuild
+PASS: t/depcomp-dashmstdout.tap 5 - [in-tree build] generated Po files look correct
+PASS: t/depcomp-dashmstdout.tap 6 - [in-tree build] dependency tracking works
+PASS: t/depcomp-dashmstdout.tap 7 - [in-tree build] make distclean
+PASS: t/depcomp-dashmstdout.tap 8 - [simple VPATH] configure
+PASS: t/depcomp-dashmstdout.tap 9 - [simple VPATH] right depmode selected
+PASS: t/depcomp-dashmstdout.tap 10 - [simple VPATH] simple make
+PASS: t/depcomp-dashmstdout.tap 11 - [simple VPATH] clean & rebuild
+PASS: t/depcomp-dashmstdout.tap 12 - [simple VPATH] generated Po files look correct
+PASS: t/depcomp-dashmstdout.tap 13 - [simple VPATH] dependency tracking works
+PASS: t/depcomp-dashmstdout.tap 14 - [simple VPATH] make distclean
+PASS: t/depcomp-dashmstdout.tap 15 - [long VPATH] configure
+PASS: t/depcomp-dashmstdout.tap 16 - [long VPATH] right depmode selected
+PASS: t/depcomp-dashmstdout.tap 17 - [long VPATH] simple make
+PASS: t/depcomp-dashmstdout.tap 18 - [long VPATH] clean & rebuild
+PASS: t/depcomp-dashmstdout.tap 19 - [long VPATH] generated Po files look correct
+PASS: t/depcomp-dashmstdout.tap 20 - [long VPATH] dependency tracking works
+PASS: t/depcomp-dashmstdout.tap 21 - [long VPATH] make distclean
+PASS: t/depcomp-dashmstdout.tap 22 - [absolute VPATH] configure
+PASS: t/depcomp-dashmstdout.tap 23 - [absolute VPATH] right depmode selected
+PASS: t/depcomp-dashmstdout.tap 24 - [absolute VPATH] simple make
+PASS: t/depcomp-dashmstdout.tap 25 - [absolute VPATH] clean & rebuild
+PASS: t/depcomp-dashmstdout.tap 26 - [absolute VPATH] generated Po files look correct
+PASS: t/depcomp-dashmstdout.tap 27 - [absolute VPATH] dependency tracking works
+PASS: t/depcomp-dashmstdout.tap 28 - [absolute VPATH] make distclean
+PASS: t/depcomp-disabled.tap 1 - [in-tree build] configure
+PASS: t/depcomp-disabled.tap 2 - [in-tree build] right depmode selected
+PASS: t/depcomp-disabled.tap 3 - [in-tree build] simple make
+PASS: t/depcomp-disabled.tap 4 - [in-tree build] clean & rebuild
+PASS: t/depcomp-disabled.tap 5 - [in-tree build] no dependency files generated
+PASS: t/depcomp-disabled.tap 6 - [in-tree build] dependency tracking is truly disabled
+PASS: t/depcomp-disabled.tap 7 - [in-tree build] make distclean
+PASS: t/depcomp-disabled.tap 8 - [simple VPATH] configure
+PASS: t/depcomp-disabled.tap 9 - [simple VPATH] right depmode selected
+PASS: t/depcomp-disabled.tap 10 - [simple VPATH] simple make
+PASS: t/depcomp-disabled.tap 11 - [simple VPATH] clean & rebuild
+PASS: t/depcomp-disabled.tap 12 - [simple VPATH] no dependency files generated
+PASS: t/depcomp-disabled.tap 13 - [simple VPATH] dependency tracking is truly disabled
+PASS: t/depcomp-disabled.tap 14 - [simple VPATH] make distclean
+PASS: t/depcomp-disabled.tap 15 - [long VPATH] configure
+PASS: t/depcomp-disabled.tap 16 - [long VPATH] right depmode selected
+PASS: t/depcomp-disabled.tap 17 - [long VPATH] simple make
+PASS: t/depcomp-disabled.tap 18 - [long VPATH] clean & rebuild
+PASS: t/depcomp-disabled.tap 19 - [long VPATH] no dependency files generated
+PASS: t/depcomp-disabled.tap 20 - [long VPATH] dependency tracking is truly disabled
+PASS: t/depcomp-disabled.tap 21 - [long VPATH] make distclean
+PASS: t/depcomp-disabled.tap 22 - [absolute VPATH] configure
+PASS: t/depcomp-disabled.tap 23 - [absolute VPATH] right depmode selected
+PASS: t/depcomp-disabled.tap 24 - [absolute VPATH] simple make
+PASS: t/depcomp-disabled.tap 25 - [absolute VPATH] clean & rebuild
+PASS: t/depcomp-disabled.tap 26 - [absolute VPATH] no dependency files generated
+PASS: t/depcomp-disabled.tap 27 - [absolute VPATH] dependency tracking is truly disabled
+PASS: t/depcomp-disabled.tap 28 - [absolute VPATH] make distclean
+PASS: t/depcomp-gcc.tap 1 - [in-tree build] configure
+PASS: t/depcomp-gcc.tap 2 - [in-tree build] right depmode selected
+PASS: t/depcomp-gcc.tap 3 - [in-tree build] simple make
+PASS: t/depcomp-gcc.tap 4 - [in-tree build] clean & rebuild
+PASS: t/depcomp-gcc.tap 5 - [in-tree build] generated Po files look correct
+PASS: t/depcomp-gcc.tap 6 - [in-tree build] dependency tracking works
+PASS: t/depcomp-gcc.tap 7 - [in-tree build] make distclean
+PASS: t/depcomp-gcc.tap 8 - [simple VPATH] configure
+PASS: t/depcomp-gcc.tap 9 - [simple VPATH] right depmode selected
+PASS: t/depcomp-gcc.tap 10 - [simple VPATH] simple make
+PASS: t/depcomp-gcc.tap 11 - [simple VPATH] clean & rebuild
+PASS: t/depcomp-gcc.tap 12 - [simple VPATH] generated Po files look correct
+PASS: t/depcomp-gcc.tap 13 - [simple VPATH] dependency tracking works
+PASS: t/depcomp-gcc.tap 14 - [simple VPATH] make distclean
+PASS: t/depcomp-gcc.tap 15 - [long VPATH] configure
+PASS: t/depcomp-gcc.tap 16 - [long VPATH] right depmode selected
+PASS: t/depcomp-gcc.tap 17 - [long VPATH] simple make
+PASS: t/depcomp-gcc.tap 18 - [long VPATH] clean & rebuild
+PASS: t/depcomp-gcc.tap 19 - [long VPATH] generated Po files look correct
+PASS: t/depcomp-gcc.tap 20 - [long VPATH] dependency tracking works
+PASS: t/depcomp-gcc.tap 21 - [long VPATH] make distclean
+PASS: t/depcomp-gcc.tap 22 - [absolute VPATH] configure
+PASS: t/depcomp-gcc.tap 23 - [absolute VPATH] right depmode selected
+PASS: t/depcomp-gcc.tap 24 - [absolute VPATH] simple make
+PASS: t/depcomp-gcc.tap 25 - [absolute VPATH] clean & rebuild
+PASS: t/depcomp-gcc.tap 26 - [absolute VPATH] generated Po files look correct
+PASS: t/depcomp-gcc.tap 27 - [absolute VPATH] dependency tracking works
+PASS: t/depcomp-gcc.tap 28 - [absolute VPATH] make distclean
 SKIP: t/depcomp-makedepend.tap - required program 'makedepend' not available
 SKIP: t/depcomp-msvcmsys.tap - Microsoft C compiler 'cl' not available
 SKIP: t/depcomp-msvisualcpp.tap - Microsoft C compiler 'cl' not available
@@ -2668,19 +2997,19 @@ SKIP: contrib/t/parallel-tests-html-recursive.sh
 PASS: contrib/t/help-multilib.sh
 PASS: contrib/t/multilib.sh
 ============================================================================
-Testsuite summary for GNU Automake 1.15.1
+Testsuite summary for GNU Automake 1.16
 ============================================================================
-# TOTAL: 2575
-# PASS:  2386
-# SKIP:  125
-# XFAIL: 42
-# FAIL:  12
+# TOTAL: 2903
+# PASS:  2731
+# SKIP:  126
+# XFAIL: 40
+# FAIL:  6
 # XPASS: 0
-# ERROR: 10
+# ERROR: 0
 ============================================================================
 See ./test-suite.log
 Please report to bug-automake@gnu.org
 ============================================================================
-gmake[2]: *** [Makefile:3029: test-suite.log] Error 1
-gmake[1]: *** [Makefile:3137: check-TESTS] Error 2
-gmake: *** [Makefile:3368: check-am] Error 2
+gmake[2]: *** [Makefile:3025: test-suite.log] Error 1
+gmake[1]: *** [Makefile:3133: check-TESTS] Error 2
+gmake: *** [Makefile:3367: check-am] Error 2
