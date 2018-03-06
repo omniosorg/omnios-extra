@@ -38,8 +38,6 @@ PKG=system/zones/brand/lipkg
 PKGLIST+=" $PKG"
 PKG=system/zones/brand/sparse
 PKGLIST+=" $PKG"
-PKG=system/zones/brand/vm
-PKGLIST+=" $PKG"
 SUMMARY="This isn't used, see the makefiles for pkg"
 DESC="This isn't used, see the makefiles for pkg"
 
