@@ -15,6 +15,16 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 ### System Features
 
+* Experimental support for `bhyve` virtual machines. See
+  [https://omniosce.org/info/bhyve](https://omniosce.org/info/bhyve)
+  for details.
+
+* Support for `sparse` branded zones. This is a linked-ipkg
+  zone that shares most of the `/usr`, `/sbin` and `/lib` directories with
+  the global zone. Sparse zones are tiny (under 4MiB of installed
+  files) and perfect for isolating small services or VM instances for extra
+  security or to apply more granular resource controls.
+
 * The ISO/USB installer has received multiple updates. It is now half the
   size and around seven times faster to start up, text menus have been
   replaced with dialogues to make it easier to navigate, and it is now
@@ -22,9 +32,6 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   options are available for configuring aspects of the root pool including
   whether to force a 4K block size (ashift=12) and whether to use use
   EFI or MBR labels.
-
-* It is now possible to boot OmniOS form a root pool which uses RAIDZ2 or
-  RAIDZ3.
 
 * The default mail submission agent is now `Dragonfly Mail Agent (dma)` rather
   than sendmail. In a default installation, `/usr/lib/sendmail` points to
@@ -63,12 +70,6 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   `pkg uninstall service/network/ntp && pkg install service/network/ntpsec`.
   Restore any customisations and then start the network/ntp service.
 
-* Experimental support for `sparse` branded zones. This is a linked-ipkg
-  zone that shares most of the `/usr`, `/sbin` and `/lib` directories with
-  the global zone. Sparse zones are tiny (under 4MiB of installed
-  files) and perfect for isolating small services or VM instances for extra
-  security or to apply more granular resource controls.
-
 * A number of system components now enable Address Space Layout Randomisation
   (ASLR) by default:
     * OpenSSH daemon
@@ -85,9 +86,14 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   of old ciphers and MACs. Refer to
   [the release notes](https://www.openssh.com/txt/release-7.6) for more
   details.
+  Several legacy SunSSH compatibility options for OpenSSH are deprecated
+  and will be removed in a future release; see below for more details.
 
 * `libdiskmgt` (and therefore `diskinfo`) now recognises nvme, sata and xen
   controllers.
+
+* It is now possible to boot OmniOS from a root pool which uses RAIDZ2 or
+  RAIDZ3.
 
 * The `/etc/screenrc` file delivered by the `screen` package is now based on
   the recommended global template as delivered by the authors; you may wish
@@ -102,6 +108,8 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   as projected by the manufacturer (SSD wearout, see
   [illumos Issue 8074](https://www.illumos.org/issues/8074))
 
+* Many improvements in resource management within zones.
+
 * IPv6 default address selection table updated for RFC6724.
 
 * Improvements to page recovery under low memory conditions.
@@ -112,26 +120,67 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 * A new `pkg apply-hot-fix` command has been added to make it easier to apply
   a hot-fix directly from a package archive. For example:
-```
-    % pfexec pkg apply-hot-fix --be-name=hotfix1234 https://downloads.omniosce.org/pkg/r151022/1234_hotfix.p5p
-```
+    ```
+	% pfexec pkg apply-hot-fix --be-name=hotfix1234 https://downloads.omniosce.org/pkg/r151022/1234_hotfix.p5p
+    ```
 
 * It is now possible to set an image property to make recursive operations
   the default behaviour and also to specify the default concurrency for
   package operations. So if you routinely use `pkg udpate -r -C 0` then you
   can now:
 
-```
-# pkg set-property default-recurse True
-# pkg set-property recursion-concurrency 0
-```
+    ```
+	# pkg set-property default-recurse True
+	# pkg set-property recursion-concurrency 0
+    ```
 
   The new `-R` option allows temporary override for recursion, refer to the
   `pkg.1` man page for more details.
 
+* The `pkg set-publisher -O` option is now documented and has been extended
+  to support bare and relative path-names. This is now the recommended way
+  to switch releases - see [upgrade notes](https://omniosce.org/upgrade)
+
+* A number of core packages can now be removed if not required. In particular
+  removing packages which require a reboot on upgrade will mean that the
+  reboot is avoided if that package is updated upstream. The list can be
+  viewed with `pkg contents -m entire | grep optional`. This in addition
+  to the _runtime/java_ _java/jdk_ and _service/resource-pools/poold_
+  packages which became optional in the last release.
+
+* `pkgsign` has gained `--dkey` and `--dcert` options to enable use of an
+  SSL client certificate when signing packages in a remote HTTPS repository.
+
+* `pkg install` now permits package downgrades.
+
+* `pkg history -o time,command -n 5` now works as expected.
+
 ### LX zones
 
-* Report that `/proc/sys` is writable to keep systemd happy.
+* The IP address information for an interface in an LX zone can now be
+  set directly via the `allowed-address` and `defrouter` properties instead
+  of by using attributes. In addition to setting the address within the
+  zone, this also enables L3 protection on the interface so that it can
+  no longer be changed from inside the zone. The old method of setting
+  attributes is still supported but does not afford this protection.
+    ```
+	GZ# zonecfg -z lx info net
+	net:
+		address not specified
+		allowed-address: 172.30.1.129/26
+		defrouter: 172.30.1.254
+		physical: deb0
+
+	GZ# dladm show-linkprop deb0
+	LINK         PROPERTY        PERM VALUE          DEFAULT        POSSIBLE
+	deb0         protection      rw   ip-nospoof     --             
+	deb0         allowed-ips     rw   172.30.1.129/32 --            --
+    ```
+
+* Any secondary file-systems mounted within /usr, /lib or /sbin are no longer
+  accessible from within an LX zone through /native/.
+
+* Report that `/proc/sys` is writable to keep _systemd_ happy.
 
 * More complete emulation of `/proc/mounts`.
 
@@ -139,9 +188,13 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 * Support for joining multicast group.
 
+* Many other fixes and compatibility updates from Joyent.
+
 ### Hardware Support
 
 * Better support for AMD Ryzen processors.
+
+* Support for Sound Blaster Audigy RX.
 
 ### Commands and Command Options
 
@@ -150,21 +203,17 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   requiring a pool rebuild. More information ca be found in
   [illumos Issue 7614](https://www.illumos.org/issues/7614).
 
-* `/usr/gnu/bin/uname -o` reports `illumos` as the operating system.
+* `/bin/uname -o` and `/usr/gnu/bin/uname -o` report `illumos` as the
+  operating system name.
 
 * `grep` now supports context options (-A, -B, -C)
-
-* `pkgsign` has gained `--dkey` and `--dcert` options to enable use of an
-  SSL client certificate when signing packages in a remote HTTPS repository.
-
-* `pkg install` now permits package downgrades.
 
 * `date -r` to display the date associated with an epoch value, or the
   timestamp of a file.
 
 * The `reboot now` command, as sometimes mistyped due to its prevelance on
   other system types, no longer breaks booting due to trying to load a
-  kernel called `now`; the system always falls back to `unix` for the
+  kernel called `now`; the system now always falls back to `unix` for the
   default kernel.
 
 ### Developer Features
