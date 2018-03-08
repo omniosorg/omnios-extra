@@ -27,16 +27,12 @@
 . ../../lib/functions.sh
 
 PROG=mercurial
-VER=4.5
+VER=4.5.2
 PKG=developer/versioning/mercurial
 SUMMARY="$PROG - a free and open source, distributed version control system"
 DESC="$SUMMARY"
 
-DEPENDS_IPS="web/curl library/security/openssl"
-
-PYTHONPATH=/usr
-PYTHON=$PYTHONPATH/bin/python2.7
-PYTHONLIB=$PYTHONPATH/lib
+RUN_DEPENDS_IPS="web/curl library/security/openssl"
 
 python_build() {
     logmsg "Building using python setup.py"
@@ -44,22 +40,22 @@ python_build() {
     ISALIST=i386
     export ISALIST
     logmsg "--- setup.py (32) build"
-    logcmd $PYTHON ./setup.py build ||
-        logerr "--- build failed"
+    logcmd $PYTHON ./setup.py build \
+        || logerr "--- build failed"
     logmsg "--- setup.py (32) install"
     logcmd $PYTHON \
-        ./setup.py install --root=$DESTDIR ||
-        logerr "--- install failed"
+        ./setup.py install --root=$DESTDIR \
+        || logerr "--- install failed"
 
     ISALIST="amd64 i386"
     export ISALIST
     logmsg "--- setup.py (64) build"
-    logcmd $PYTHON ./setup.py build ||
-        logerr "--- build failed"
+    logcmd $PYTHON ./setup.py build \
+        || logerr "--- build failed"
     logmsg "--- setup.py (64) install"
     logcmd $PYTHON \
-        ./setup.py install --root=$DESTDIR ||
-        logerr "--- install failed"
+        ./setup.py install --root=$DESTDIR \
+        || logerr "--- install failed"
     popd > /dev/null
 
     python_vendor_relocate
