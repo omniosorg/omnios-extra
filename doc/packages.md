@@ -97,7 +97,7 @@
 | developer/swig			| 3.0.12		| http://www.swig.org/download.html
 | library/security/trousers		| 0.3.14		| https://sourceforge.net/projects/trousers/files/trousers
 | library/python-2/asn1crypto-27	| 0.24.0		| https://pypi.python.org/pypi/asn1crypto
-| library/python-2/cffi-27		| 1.11.4		| https://pypi.python.org/pypi/cffi
+| library/python-2/cffi-27		| 1.11.5		| https://pypi.python.org/pypi/cffi
 | library/python-2/cheroot-27		| 6.0.0			| https://pypi.python.org/pypi/cheroot
 | library/python-2/cherrypy-27		| 14.0.0		| https://pypi.python.org/pypi/cherrypy
 | library/python-2/coverage-27		| 4.5.1			| https://pypi.python.org/pypi/coverage
@@ -117,7 +117,7 @@
 | library/python-2/pycurl-27		| 7.43.0.1		| https://pypi.python.org/pypi/pycurl
 | library/python-2/pyopenssl-27		| 17.5.0		| https://pypi.python.org/pypi/pyOpenSSL
 | library/python-2/pytz-27		| 2018.3		| https://pypi.python.org/pypi/pytz
-| library/python-2/setuptools-27	| 38.5.1		| https://pypi.python.org/pypi/setuptools
+| library/python-2/setuptools-27	| 38.5.2		| https://pypi.python.org/pypi/setuptools
 | library/python-2/simplejson-27	| 3.13.2		| https://pypi.python.org/pypi/simplejson
 | library/python-2/six-27		| 1.11.0		| https://pypi.python.org/pypi/six
 | library/python-2/tempora-27		| 1.10			| https://pypi.python.org/pypi/tempora
