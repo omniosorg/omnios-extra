@@ -28,7 +28,7 @@
 
 PKG=library/python-2/setuptools-27
 PROG=setuptools
-VER=38.5.1
+VER=38.5.2
 SUMMARY="setuptools - Easily download, build, install, upgrade, and uninstall Python packages"
 DESC="$SUMMARY"
 
