@@ -19,9 +19,11 @@
 #
 # CDDL HEADER END
 #
-#
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 license LICENSE.md license=BSD
 <transform file path=usr/bin/cherryd -> drop>
+<transform file dir path=.*/tutorial -> drop>
+<transform file dir path=.*/cherrypy/test -> drop>
