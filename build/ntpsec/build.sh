@@ -103,6 +103,7 @@ cat $TMPDIR/$BUILDDIR/build/main/test.log | perl -e '
 install_ntpdate
 install_files
 install_smf network ntpsec.xml ntpsec
+python_compile
 make_package
 clean_up
 

@@ -23,7 +23,7 @@
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 # Copyright (c) 2014 by Delphix. All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 #
 # Make all directories usable
 <transform dir -> default mode 0755>
@@ -106,8 +106,8 @@
 # Drop everything under /var/run since it's tmpfs
 <transform file dir link hardlink path=var/run/ -> drop>
 
-# Drop compiled python files
-<transform file path=.*\.py[co]$ -> drop>
+# Drop compiled optimised python files
+<transform file path=.*\.pyo$ -> drop>
 
 # SMF manifests should be imported upon pkg install
 <transform file path=(var|lib)/svc/manifest/.*\.xml -> \

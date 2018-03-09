@@ -1317,6 +1317,11 @@ python_vendor_relocate() {
         logerr "python: cannot move from site-packages to vendor-packages"
 }
 
+python_compile() {
+    logmsg "Compiling python modules"
+    logcmd $PYTHON -m compileall $DESTDIR
+}
+
 python_build() {
     [ -z "$PYTHON" ] && logerr "PYTHON not set"
     [ -z "$PYTHONPATH" ] && logerr "PYTHONPATH not set"
@@ -1348,6 +1353,8 @@ python_build() {
     popd > /dev/null
 
     python_vendor_relocate
+
+    python_compile
 }
 
 #############################################################################
