@@ -37,9 +37,6 @@ dir group=sys mode=0755 owner=root path=var/ntp/ntpstats
 <transform file path=usr/sbin/ntpd$ -> \
     set restart_fmri svc:/nework/ntp:default>
 
-# Drop compiled python files.
-<transform file path=.*\.py[oc]$ -> drop>
-
 # Backwards compatibility links
 link path=usr/sbin/ntp-keygen target=../bin/ntpkeygen
 link path=usr/sbin/ntpdate target=../bin/ntpdate
