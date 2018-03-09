@@ -510,6 +510,7 @@ omnios storage/storage-nas o
 omnios storage/storage-server o
 omnios storage/svm o
 omnios system/accounting/legacy
+omnios system/bhyve
 omnios system/bhyve/firmware
 omnios system/boot/grub
 omnios system/boot/loader
