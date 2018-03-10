@@ -25,7 +25,7 @@ BUILD_DEPENDS_IPS="
 
 PROG=uefi-edk2
 PKG=system/bhyve/firmware
-VER=20160525
+VER=20180309
 VERHUMAN=$VER
 SUMMARY="UEFI-EDK2(+CSM) firmware for bhyve"
 DESC="$SUMMARY"
@@ -61,10 +61,14 @@ clone_source() {
         if [ -n "$EDK2_CLONE" -a -d "$EDK2_CLONE" ]; then
             logmsg "-- pulling $PROG from local clone"
             logcmd rsync -ar $EDK2_CLONE/ $PROG/
+            logmsg "Checking out branch $PKG_SOURCE_BRANCH"
+            logcmd $GIT -C $PROG checkout $PKG_SOURCE_BRANCH \
+                || logerr "Could not check out $PKG_SOURCE_BRANCH"
         else
-            logmsg "-- cloning $PKG_SOURCE_REPO"
+            logmsg "-- cloning $PKG_SOURCE_REPO ($PKG_SOURCE_BRANCH)"
             logcmd $GIT clone --depth 1 -b $PKG_SOURCE_BRANCH \
-                $PKG_SOURCE_REPO $PROG
+                $PKG_SOURCE_REPO $PROG \
+                || logerr "Could not fetch $PKG_SOURCE_REPO/$PKG_SOURCE_BRANCH"
         fi
     fi
     if [ -z "$EDK2_CLONE" ]; then
@@ -103,6 +107,16 @@ build_tools() {
     popd > /dev/null
 }
 
+fixup() {
+    case $1 in
+        RELEASE)    level=CRIT ;;
+        DEBUG)      level=VERB ;;
+    esac
+
+    sed -i "/^UINTN DebugLevel =/s/=.*/= DBG_$level;/" \
+        BhyvePkg/Csm/BhyveCsm16/Printf.c
+}
+
 build() {
     pushd $TMPDIR/$BUILDDIR/$PROG > /dev/null || logerr "--- chdir failed"
 
@@ -119,7 +133,10 @@ build() {
     fi
 
     for mode in RELEASE DEBUG; do
+        [[ "$FLAVOR" = *DEBUG* && $mode = RELEASE ]] && continue
+        [[ "$FLAVOR" = *RELEASE* && $mode = DEBUG ]] && continue
         logmsg "-- Building $mode firmware"
+        fixup $mode
         logcmd `which build` \
             -t OOGCC -a X64 -b $mode \
             -p BhyvePkg/BhyvePkgX64.dsc \
@@ -149,15 +166,19 @@ cleanup
 build_tools
 edksetup
 
-# Build UEFI firmware
-note "UEFI Firmware"
-build
-install
+if [[ -z "$FLAVOR" || "$FLAVOR" = *UEFI* ]]; then
+    # Build UEFI firmware
+    note "UEFI Firmware"
+    build
+    install
+fi
 
-# Build UEFI+CSM firmware
-note "UEFI+CSM Firmware"
-build -csm
-install _CSM
+if [[ -z "$FLAVOR" || "$FLAVOR" = *CSM* ]]; then
+    # Build UEFI+CSM firmware
+    note "UEFI+CSM Firmware"
+    build -csm
+    install _CSM
+fi
 
 # Reset version for package creation
 VER=$VERHUMAN
