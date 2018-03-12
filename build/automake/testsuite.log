@@ -7,6 +7,7 @@ XFAIL: t/pm/DisjCon2.pl
 XFAIL: t/pm/DisjCon3.pl
 PASS: t/pm/DisjConditions.pl
 PASS: t/pm/DisjConditions-t.pl
+PASS: t/pm/General.pl
 PASS: t/pm/Version.pl
 XFAIL: t/pm/Version2.pl
 XFAIL: t/pm/Version3.pl
@@ -2997,10 +2998,10 @@ SKIP: contrib/t/parallel-tests-html-recursive.sh
 PASS: contrib/t/help-multilib.sh
 PASS: contrib/t/multilib.sh
 ============================================================================
-Testsuite summary for GNU Automake 1.16
+Testsuite summary for GNU Automake 1.16.1
 ============================================================================
-# TOTAL: 2903
-# PASS:  2731
+# TOTAL: 2904
+# PASS:  2732
 # SKIP:  126
 # XFAIL: 40
 # FAIL:  6
@@ -3010,6 +3011,6 @@ Testsuite summary for GNU Automake 1.16
 See ./test-suite.log
 Please report to bug-automake@gnu.org
 ============================================================================
-gmake[2]: *** [Makefile:3025: test-suite.log] Error 1
-gmake[1]: *** [Makefile:3133: check-TESTS] Error 2
-gmake: *** [Makefile:3367: check-am] Error 2
+gmake[2]: *** [Makefile:3026: test-suite.log] Error 1
+gmake[1]: *** [Makefile:3134: check-TESTS] Error 2
+gmake: *** [Makefile:3368: check-am] Error 2
