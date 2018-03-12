@@ -1,0 +1,58 @@
+These changes are in the upstream cpuid repository so this patch can
+be removed for the next cpuid release (> 1.6.3)
+
+diff -pruN '--exclude=*.orig' cpuid-1.6.3~/handlers.c cpuid-1.6.3/handlers.c
+--- cpuid-1.6.3~/handlers.c	2018-01-23 08:11:49.000000000 +0000
++++ cpuid-1.6.3/handlers.c	2018-03-12 10:39:37.563602613 +0000
+@@ -1606,6 +1606,12 @@ static void handle_vmm_base(struct cpu_r
+ 	size_t i;
+ 
+ 	state->curmax = regs->eax;
++
++	if (state->curmax < 0x40000000)
++		return;
++	if (state->curmax > 0x4000FFFF)
++		return;
++
+ 	printf("Maximum hypervisor CPUID leaf: 0x%08x\n\n", state->curmax);
+ 
+ 	*(uint32_t *)(&buf[0]) = regs->ebx;
+@@ -1641,6 +1647,9 @@ static void handle_vmm_base(struct cpu_r
+ 	} else if (strcmp(buf, " lrpepyh  vr") == 0) {
+ 		state->vendor |= VENDOR_HV_PARALLELS;
+ 		printf("Parallels Desktop detected\n\n");
++	} else if (strcmp(buf, "bhyve bhyve ") == 0) {
++		state->vendor |= VENDOR_HV_BHYVE;
++		printf("BHYVE hypervisor detected\n\n");
+ 	}
+ }
+ 
+diff -pruN '--exclude=*.orig' cpuid-1.6.3~/main.c cpuid-1.6.3/main.c
+--- cpuid-1.6.3~/main.c	2018-01-23 08:11:49.000000000 +0000
++++ cpuid-1.6.3/main.c	2018-03-12 10:39:37.564076069 +0000
+@@ -98,6 +98,14 @@ static void run_cpuid(struct cpuid_state
+ 			 * value of EDX a bit nondeterministic when CPUID is executed.
+ 			 */
+ 			for (j = 0; j < sizeof(ignore) / sizeof(struct cpu_regs_t); j++) {
++				/* The BHYVE hypervisor maps any 4000xxxx leaf to 0x40000000,
++				 * which causes the ignore list to exclude leaf 0x40000000
++				 * itself. Special exception here to ensure that the base
++				 * hypervisor leaf doesn't get excluded.
++				 */
++				if (i == 0x40000000)
++					break;
++
+ 				if (i == r && 0 == memcmp(&ignore[j], &cr_tmp, sizeof(struct cpu_regs_t) - 4))
+ 					goto invalid_leaf;
+ 			}
+diff -pruN '--exclude=*.orig' cpuid-1.6.3~/vendor.h cpuid-1.6.3/vendor.h
+--- cpuid-1.6.3~/vendor.h	2018-01-23 08:11:49.000000000 +0000
++++ cpuid-1.6.3/vendor.h	2018-03-12 10:39:37.564477473 +0000
+@@ -34,6 +34,7 @@ typedef enum
+ 	VENDOR_HV_KVM       = 0x40,
+ 	VENDOR_HV_HYPERV    = 0x80,
+ 	VENDOR_HV_PARALLELS = 0x100,
++	VENDOR_HV_BHYVE     = 0x200,
+ 	VENDOR_ANY          = (int)-1
+ } cpu_vendor_t;
+ 
