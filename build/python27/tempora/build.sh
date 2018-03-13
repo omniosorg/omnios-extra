@@ -20,7 +20,7 @@
 #
 # CDDL HEADER END }}}
 #
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -28,13 +28,13 @@
 
 PKG=library/python-2/tempora-27
 PROG=tempora
-VER=1.10
+VER=1.11
 SUMMARY="tempora - Objects and routines pertaining to date and time"
 DESC="$SUMMARY"
 
 . $SRCDIR/../common.sh
 
-RUN_DEPENDS_IPS+="library/python-2/pytz-27"
+RUN_DEPENDS_IPS="library/python-2/pytz-27"
 
 init
 download_source $PROG $PROG $VER
