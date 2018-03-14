@@ -4,6 +4,27 @@
 
 # Release Notes for OmniOSce v11 r151022
 
+## r151022ar (2018-03-19)
+Weekly release for w/c 19th of March 2018.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `curl` updated to 7.59.0
+  * [CVE-2018-1000120](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1000120)
+  * [CVE-2018-1000121](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1000121)
+  * [CVE-2018-1000122](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1000122)
+* `bind` updated to 9.10.7
+  * [CVE-2017-3140](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-3140)
+  * [CVE-2017-3141](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-3141)
+  * [CVE-2017-3142](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-3142)
+  * [CVE-2017-3143](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-3143)
+  * [CVE-2017-3145](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-3145)
+
+<br>
+
+----
+
 ## r151022ap (2018-03-05)
 Weekly release for w/c 5th of March 2018.
 > This is a non-reboot update.
