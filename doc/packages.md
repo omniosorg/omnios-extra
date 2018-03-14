@@ -88,7 +88,7 @@
 | text/gnu-sed				| 4.4			| http://git.savannah.gnu.org/cgit/sed.git/refs/tags
 | text/groff				| 1.22.3		| https://ftp.gnu.org/gnu/groff/
 | text/less				| 530			| https://ftp.gnu.org/gnu/less/
-| web/curl				| 7.58.0		| https://curl.haxx.se/download.html
+| web/curl				| 7.59.0		| https://curl.haxx.se/download.html
 | web/wget				| 1.19.4		| https://git.savannah.gnu.org/cgit/wget.git/refs/tags
 | library/glib2				| 2.54.3		| https://download.gnome.org/sources/glib/cache.json https://developer.gnome.org/glib/ | 2.55.x is an unstable/dev version.
 | developer/gnu-binutils		| 2.30			| https://ftp.gnu.org/gnu/binutils
