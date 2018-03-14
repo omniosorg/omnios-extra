@@ -4,7 +4,7 @@ I:32-bit counter 320000000, expected 320000000
 R:PASS
 T:test_atomic_store:1:A
 A:ensure that isc_atomic_store() works.
-I:32-bit store 0xf5f5f5f5, expected 0xf5f5f5f5
+I:32-bit store 0x84848484, expected 0x84848484
 R:PASS
 T:dns_db_load:1:A
 A:A call to dns_db_load(db, filename) loads the contents of the database in filename into db.
@@ -529,16 +529,16 @@ I:task 1
 I:task 1
 I:task 1
 I:tick
-I:tick
 I:tock
 I:tick
 I:tock
 I:tick
-I:tock
 I:tick
 I:tock
 I:tick
 I:tock
+I:tock
+I:tick
 I:tick
 I:tock
 I:tick
@@ -585,60 +585,60 @@ I:testing purge on 0,4,0 expecting 15
 I:testing purge on 0,99,8 expecting 0
 I:testing purge on 3,5,0 expecting 5
 I:testing purgerange on 2,4-5,8 expecting 2
-I:event 80691a8,5,8 matched but was not purgable
+I:event 8069248,5,8 matched but was not purgable
 I:testing purge on 0,4-5,8 expecting 5
-I:event 80691a8,5,8 matched but was not purgable
+I:event 8069248,5,8 matched but was not purgable
 I:testing purge on 0,5-6,0 expecting 28
-I:event 80691a8,5,8 matched but was not purgable
-I:event 80691a8,5,a matched but was not purgable
+I:event 8069248,5,8 matched but was not purgable
+I:event 8069248,5,a matched but was not purgable
 I:testing purge on 0,99-101,8 expecting 0
 I:testing purge on 3,5-6,0 expecting 10
 R:PASS
 T:tasks:14:A
 A:isc_task_beginexclusive() gets exclusive access
 I:task enter 0
-I:task enter 1
 I:task enter 2
+I:task enter 3
+I:task enter 1
+I:task exit 0
+I:task enter 0
+I:task exit 2
+I:task enter 2
+I:task exit 3
+I:task enter 3
+I:task exit 1
+I:task enter 1
+I:task exit 0
+I:task enter 0
+I:task exit 3
 I:task enter 3
 I:task exit 2
 I:task enter 2
 I:task exit 1
 I:task enter 1
-I:task exit 3
-I:task enter 3
 I:task exit 0
 I:task enter 0
+I:task exit 3
+I:task enter 3
 I:task exit 2
 I:task enter 2
 I:task exit 1
 I:task enter 1
-I:task exit 3
-I:task enter 3
 I:task exit 0
 I:task enter 0
+I:task exit 3
+I:task enter 3
 I:task exit 2
 I:task enter 2
 I:task exit 1
 I:task enter 1
-I:task exit 3
-I:task enter 3
 I:task exit 0
-I:task enter 0
-I:task exit 2
-I:task enter 2
-I:task exit 1
-I:task enter 1
-I:task exit 3
-I:task enter 3
-I:task exit 0
-I:task enter 0
-I:task exit 2
 I:task enter 4
-I:task exit 1
-I:task enter 5
 I:task exit 3
+I:task enter 5
+I:task exit 2
 I:task enter 6
-I:task exit 0
+I:task exit 1
 I:task exit 4
 I:task enter 4
 I:task exit 5
@@ -670,21 +670,21 @@ I:task 8 state 0
 I:task 9 state 0
 I:task exit 6
 I:task enter 7
-I:task enter 9
-I:task enter 2
 I:task enter 8
-I:task exit 2
-I:task enter 1
-I:task exit 7
-I:task enter 3
-I:task exit 9
+I:task enter 9
 I:task enter 0
+I:task exit 9
+I:task enter 3
+I:task exit 7
+I:task enter 2
 I:task exit 8
+I:task enter 1
+I:task exit 0
 I:task enter 4
-I:task exit 1
 I:task exit 3
 I:task enter 5
-I:task exit 0
+I:task exit 2
+I:task exit 1
 I:task exit 4
 I:task exit 5
 R:PASS
@@ -815,11 +815,6 @@ A:System test dlv
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
-T:dlvauto:1:A
-A:System test dlvauto
-testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
-I:Network interface aliases not set up.  Skipping test.
-R:UNTESTED
 T:dlz:1:A
 A:System test dlz
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
@@ -857,6 +852,11 @@ I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
 T:ecdsa:1:A
 A:System test ecdsa
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+T:eddsa:1:A
+A:System test eddsa
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
@@ -975,6 +975,11 @@ A:System test pending
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
+T:pkcs11ssl:1:A
+A:System test pkcs11ssl
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
 T:reclimit:1:A
 A:System test reclimit
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
@@ -1022,6 +1027,11 @@ I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
 T:rsabigexponent:1:A
 A:System test rsabigexponent
+testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
+I:Network interface aliases not set up.  Skipping test.
+R:UNTESTED
+T:runtime:1:A
+A:System test runtime
 testsock.pl: bind(10.53.0.1, 0): Cannot assign requested address
 I:Network interface aliases not set up.  Skipping test.
 R:UNTESTED
@@ -1132,4 +1142,4 @@ I:      IP addresses 10.53.0.1 through 10.53.0.8 be configured
 I:      as alias addresses on the loopback interface.  Please run
 I:      "bin/tests/system/ifconfig.sh up" as root to configure them.
 I:System test result summary:
-I:   80 UNTESTED
+I:   82 UNTESTED
