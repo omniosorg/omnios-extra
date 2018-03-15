@@ -15,6 +15,12 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 ### System Features
 
+* Kernel Page Table Isolation (kpti) feature from Joyent. This adds protection
+  against the [Meltdown](http://meltdownattack.com) Intel CPU vulnerability
+  announced early in 2018. See
+  [https://omniosce.org/info/kpti](https://omniosce.org/info/kpti)
+  for details.
+
 * Experimental support for `bhyve` virtual machines. See
   [https://omniosce.org/info/bhyve](https://omniosce.org/info/bhyve)
   for details.
@@ -94,6 +100,9 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 * It is now possible to boot OmniOS from a root pool which uses RAIDZ2 or
   RAIDZ3.
+
+* New `zfs remove` and `zpool checkpoint` features - see _Commands and options_
+  below.
 
 * The `/etc/screenrc` file delivered by the `screen` package is now based on
   the recommended global template as delivered by the authors; you may wish
@@ -202,6 +211,13 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   `zfs remove`, reducing the total amount of storage in the pool without
   requiring a pool rebuild. More information ca be found in
   [illumos Issue 7614](https://www.illumos.org/issues/7614).
+
+* ZFS now supports pool-wide state checkpoints via `zpool checkpoint`.
+> A pool checkpoint can be thought of as a pool-wide snapshot and should be
+> used with care as it contains every part of the pool's state, from
+> properties to vdev configuration.
+  Refer to the zpool man page for more details.
+  [illumos Issue 9166](https://www.illumos.org/issues/9166)
 
 * `/bin/uname -o` and `/usr/gnu/bin/uname -o` report `illumos` as the
   operating system name.
