@@ -480,21 +480,11 @@ run_inbuild() {
     popd > /dev/null
 }
 
-run_autoheader() {
-    run_inbuild autoheader
-}
-
-run_autoconf() {
-    run_inbuild autoconf
-}
-
-run_automake() {
-    run_inbuild automake
-}
-
-run_aclocal() {
-    run_inbuild aclocal
-}
+run_autoheader() { run_inbuild autoheader; }
+run_autoreconf() { run_inbuild autoreconf; }
+run_autoconf() { run_inbuild autoconf; }
+run_automake() { run_inbuild automake; }
+run_aclocal() { run_inbuild aclocal; }
 
 #############################################################################
 # Stuff that needs to be done/set before we start building

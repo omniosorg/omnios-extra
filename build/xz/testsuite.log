@@ -1,0 +1,27 @@
+Making check in src
+Making check in liblzma
+Making check in api
+Making check in xzdec
+Making check in xz
+Making check in lzmainfo
+Making check in scripts
+Making check in po
+Making check in tests
+PASS: test_check
+PASS: test_stream_flags
+PASS: test_filter_flags
+PASS: test_block_header
+PASS: test_index
+PASS: test_bcj_exact_size
+PASS: test_files.sh
+test_compress.sh:
+  generated_abc.............
+  generated_random.............
+  generated_text.............
+  prepared_bcj_sparc.............
+  prepared_bcj_x86.............
+PASS: test_compress.sh
+PASS: test_scripts.sh
+==================
+All 9 tests passed
+==================
