@@ -24,7 +24,6 @@
 # Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=glib
@@ -45,6 +44,7 @@ CONFIGURE_OPTS="
     --disable-fam
     --disable-dtrace
     --with-threads=posix
+    --disable-dependency-tracking
 "
 
 TESTSUITE_FILTER='^[A-Z#][A-Z ]'
@@ -57,6 +57,7 @@ export cc_cv_CFLAGS__Werror_format_2=no
 init
 download_source $PROG $PROG $VER
 patch_source
+run_autoreconf
 prep_build
 build
 run_testsuite check
