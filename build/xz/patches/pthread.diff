@@ -1,6 +1,11 @@
---- xz-5.0.4/m4/ax_pthread.m4.orig	Fri Nov  2 17:25:20 2012
-+++ xz-5.0.4/m4/ax_pthread.m4	Fri Nov  2 17:25:23 2012
-@@ -156,7 +156,7 @@
+
+illumos does  not need the -mt and -pthreads flags. pthreads are native to
+libc these days.
+
+diff -pruN '--exclude=*.orig' xz-5.2.3~/m4/ax_pthread.m4 xz-5.2.3/m4/ax_pthread.m4
+--- xz-5.2.3~/m4/ax_pthread.m4	2016-12-30 11:08:20.000000000 +0000
++++ xz-5.2.3/m4/ax_pthread.m4	2018-03-16 11:20:33.162971475 +0000
+@@ -156,7 +156,7 @@ case ${host_os} in
          # who knows whether they'll stub that too in a future libc.)  So,
          # we'll just look for -pthreads and -lpthread first:
  
