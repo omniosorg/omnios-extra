@@ -360,8 +360,8 @@ baseline() {
 }
 
 job_status() {
-    logmsg "######################################################"
-    logmsg "-- Job status $*--"
+    logmsg -h "######################################################"
+    logmsg -h "-- Job status $*--"
     now=`date +%s`
 
     # If nightly is running, include that status too
@@ -371,17 +371,17 @@ job_status() {
         if kill -0 $nightly_pid; then
             # Nightly running
             msg=`grep '^===' ${nightly/lock/log} | tail -1`
-            logmsg "`printf "    [=] %8d -  nightly %s\n" \
+            logmsg -h "`printf "    [=] %8d -  nightly %s\n" \
                 "$nightly_pid" "${msg:0:50}"`"
         fi
     fi
     for i in `seq 0 $threads`; do
         [ -n "${slots[$i]}" ] || continue
         ((tm = now - ${slotstart[$i]}))
-        logmsg "`printf "    [%d] %8d - (%5ds) %s\n" \
+        logmsg -h "`printf "    [%d] %8d - (%5ds) %s\n" \
             "$i" "${slots[$i]}" "$tm" "${slotdesc[$i]}"`"
     done
-    logmsg "######################################################"
+    logmsg -h "######################################################"
 }
 
 parallel_build() {
@@ -440,11 +440,11 @@ parallel_build() {
                         logmsg "-- Job $i terminated with status $s"
                         if [ $s -ne 0 ]; then
                             err="${slottgt[$i]}"
-                            note "***** BUILD ERROR ***** ($err)"
+                            note -e "***** BUILD ERROR ***** ($err)"
                             break 3
                         fi
                     fi
-                    note "($pkgnum/$pkgcount) Building $tgt (slot $i)"
+                    note -h "($pkgnum/$pkgcount) Building $tgt (slot $i)"
                     logprefix="[$i] " build $tgt &
                     slots[$i]=$!
                     slottgt[$i]=$tgt
@@ -460,12 +460,12 @@ parallel_build() {
     done
 
     if [ -n "$err" -a -z "$NOKILL_ON_ERROR" ]; then
-        logmsg "-- error encountered, killing jobs"
+        logmsg -e "-- error encountered, killing jobs"
         for i in `seq 0 $threads`; do
             [ -n "${slots[$i]}" ] && kill "${slots[$i]}"
         done
     else
-        logmsg "-- waiting for jobs to finish"
+        logmsg -h "-- waiting for jobs to finish"
         while :; do
             running=0
             for i in `seq 0 $threads`; do
@@ -486,12 +486,12 @@ parallel_build() {
 
     if [ -z "$err" -a -z "$SKIP_KAYAK_KERNEL" ]; then
         # Build this one last
-        note "($pkgcount/$pkgcount) Building system/install/kayak-kernel"
+        note -h "($pkgcount/$pkgcount) Building system/install/kayak-kernel"
         build system/install/kayak-kernel
     fi
 
     if [ -n "$err" ]; then
-        note "***** BUILD ERROR ***** ($err)"
+        note -e "***** BUILD ERROR ***** ($err)"
     else
         baseline check
     fi

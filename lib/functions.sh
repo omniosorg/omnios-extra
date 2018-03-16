@@ -166,14 +166,27 @@ logcmd() {
     fi
 }
 
+c_highlight="`tput setaf 2`"
+c_error="`tput setaf 1`"
+c_reset="`tput sgr0`"
 logmsg() {
+    typeset highlight=0
+    [ "$1" = "-h" ] && shift && highlight=1
+    [ "$1" = "-e" ] && shift && highlight=2
+
     echo "$logprefix$@" >> $LOGFILE
-    echo "$logprefix$@"
+    if [ $highlight -eq 1 ]; then
+        echo "$c_highlight$logprefix$@$c_reset"
+    elif [ $highlight -eq 2 ]; then
+        echo "$c_error$logprefix$@$c_reset"
+    else
+        echo "$logprefix$@"
+    fi
 }
 
 logerr() {
     # Print an error message and ask the user if they wish to continue
-    logmsg $@
+    logmsg -e "$@"
     if [ -z "$BATCH" ]; then
         ask_to_continue "An Error occured in the build. "
     else
@@ -182,10 +195,13 @@ logerr() {
 }
 
 note() {
+    typeset xarg=
+    [ "$1" = "-h" ] && xarg=$1 && shift
+    [ "$1" = "-e" ] && xarg=$1 && shift
     logmsg ""
-    logmsg "***"
-    logmsg "*** $@"
-    logmsg "***"
+    logmsg $xarg "***"
+    logmsg $xarg "*** $@"
+    logmsg $xarg "***"
 }
 
 ask_to_continue_() {
@@ -204,7 +220,7 @@ ask_to_continue_() {
 ask_to_continue() {
     ask_to_continue_ "${1}" "Do you wish to continue anyway?" "y/n" "[yYnN]"
     if [[ "$REPLY" == "n" || "$REPLY" == "N" ]]; then
-        logmsg "===== Build aborted ====="
+        logmsg -e "===== Build aborted ====="
         exit 1
     fi
     logmsg "===== User elected to continue after prompt. ====="
@@ -220,14 +236,14 @@ ask_to_install() {
         return
     fi
     if [ -n "$BATCH" ]; then
-        logmsg "===== Build aborted ====="
+        logmsg -e "===== Build aborted ====="
         exit 1
     fi
     ask_to_continue_ "$MSG " "Install/Abort?" "i/a" "[iIaA]"
     if [[ "$REPLY" == "i" || "$REPLY" == "I" ]]; then
         logcmd $PFEXEC pkg install $ati_PKG || logerr "pkg install failed"
     else
-        logmsg "===== Build aborted ====="
+        logmsg -e "===== Build aborted ====="
         exit 1
     fi
 }
@@ -314,7 +330,7 @@ BasicRequirements() {
         logmsg " "
         logmsg "  $PFEXEC pkg install$needed"
         if [ -n "$BATCH" ]; then
-            logmsg "===== Build aborted ====="
+            logmsg -e "===== Build aborted ====="
             exit 1
         fi
         echo
@@ -343,7 +359,7 @@ fi
 opensslver=`pkg mediator -H openssl 2>/dev/null| awk '{print $3}'`
 if [ -n "$opensslver" -a "$opensslver" != "1.0" ]; then
     if [ -n "$OPENSSL_TEST" ]; then
-        logmsg "--- OpenSSL version $opensslver but OPENSSL_TEST is set"
+        logmsg -h "--- OpenSSL version $opensslver but OPENSSL_TEST is set"
     else
         logerr "--- OpenSSL version $opensslver should not be used for build"
     fi
@@ -1555,7 +1571,7 @@ save_function() {
 
 wait_for_prebuilt() {
     if [ ! -d ${PREBUILT_ILLUMOS:-/dev/null} ]; then
-        logerr "wait_for_prebuilt() called w/o PREBUILT_ILLUMOS. Aborting."
+        logmsg -e "wait_for_prebuilt() called w/o PREBUILT_ILLUMOS. Aborting."
         exit 1
     fi
 
