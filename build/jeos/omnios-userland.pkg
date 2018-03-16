@@ -39,7 +39,7 @@ file/gnu-coreutils			8
 file/gnu-findutils			4.6
 library/c++/sigcpp			2.99
 library/expat				2.2
-library/glib2				2.54
+library/glib2				2.56
 library/gmp				6.1
 library/mpfr				4
 library/mpc				1

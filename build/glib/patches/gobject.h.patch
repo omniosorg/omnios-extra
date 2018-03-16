@@ -1,0 +1,12 @@
+diff -pruN '--exclude=*.orig' glib-2.56.0~/gobject/gobject.h glib-2.56.0/gobject/gobject.h
+--- glib-2.56.0~/gobject/gobject.h	2018-01-08 22:34:19.000000000 +0000
++++ glib-2.56.0/gobject/gobject.h	2018-03-17 01:53:44.243093528 +0000
+@@ -722,7 +722,7 @@ static inline gboolean
+     return FALSE;
+ 
+   if (new_object != NULL)
+-    g_object_ref (new_object);
++    (void)g_object_ref (new_object);
+ 
+   *object_ptr = new_object;
+ 

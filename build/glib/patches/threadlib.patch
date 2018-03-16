@@ -1,7 +1,7 @@
-diff -ru glib~/configure glib/configure
---- glib~/configure	2017-09-11 00:18:49.000000000 +0000
-+++ glib/configure	2017-09-20 09:09:36.556218408 +0000
-@@ -26928,7 +26928,7 @@
+diff -pruN '--exclude=*.orig' glib-2.56.0~/configure glib-2.56.0/configure
+--- glib-2.56.0~/configure	2018-03-12 21:52:25.000000000 +0000
++++ glib-2.56.0/configure	2018-03-17 01:53:43.463770435 +0000
+@@ -27036,7 +27036,7 @@ if  test x"$have_threads" = xposix; then
        # Sun Studio expands -mt to -D_REENTRANT and -lthread
        # gcc expands -pthreads to -D_REENTRANT -D_PTHREADS -lpthread
        G_THREAD_CFLAGS="-D_REENTRANT -D_PTHREADS"
@@ -10,10 +10,10 @@ diff -ru glib~/configure glib/configure
        ;;
      *)
        for flag in pthread pthreads mt; do
-diff -ru glib~/configure.ac glib/configure.ac
---- glib~/configure.ac	2017-09-11 00:17:54.000000000 +0000
-+++ glib/configure.ac	2017-09-20 09:09:41.067395474 +0000
-@@ -1927,7 +1927,7 @@
+diff -pruN '--exclude=*.orig' glib-2.56.0~/configure.ac glib-2.56.0/configure.ac
+--- glib-2.56.0~/configure.ac	2018-03-12 21:49:26.000000000 +0000
++++ glib-2.56.0/configure.ac	2018-03-17 01:53:43.464279776 +0000
+@@ -2007,7 +2007,7 @@ AS_IF([ test x"$have_threads" = xposix],
        # Sun Studio expands -mt to -D_REENTRANT and -lthread
        # gcc expands -pthreads to -D_REENTRANT -D_PTHREADS -lpthread
        G_THREAD_CFLAGS="-D_REENTRANT -D_PTHREADS"
