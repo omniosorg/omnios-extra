@@ -22,9 +22,9 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=expat
@@ -52,6 +52,7 @@ CONFIGURE_OPTS_64="$CONFIGURE_OPTS_64 --includedir=/usr/include"
 init
 download_source $PROG $PROG $VER
 patch_source
+run_autoreconf
 prep_build
 build
 run_testsuite check
