@@ -1,9 +1,9 @@
 
 Re-locate the default configuration file from /etc/ to /etc/inet/
 
-diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/docs/includes/ntp-conf-body.txt ntpsec-1.0.0/docs/includes/ntp-conf-body.txt
---- ntpsec-1.0.0~/docs/includes/ntp-conf-body.txt	2017-10-10 03:54:39.000000000 +0000
-+++ ntpsec-1.0.0/docs/includes/ntp-conf-body.txt	2017-12-27 14:20:07.061288869 +0000
+diff -pruN '--exclude=*.orig' ntpsec-1.1.0~/docs/includes/ntp-conf-body.txt ntpsec-1.1.0/docs/includes/ntp-conf-body.txt
+--- ntpsec-1.1.0~/docs/includes/ntp-conf-body.txt	2018-03-15 03:28:15.000000000 +0000
++++ ntpsec-1.1.0/docs/includes/ntp-conf-body.txt	2018-03-16 16:41:50.599909363 +0000
 @@ -4,7 +4,7 @@
  
  [[synop]]
@@ -29,12 +29,12 @@ diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/docs/includes/ntp-conf-body.txt ntps
 -`/etc/ntp.conf`::
 +`/etc/inet/ntp.conf`::
    the default name of the configuration file
- _ntp.keys_::
-   private MD5 keys
-diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/docs/ntpsec.txt ntpsec-1.0.0/docs/ntpsec.txt
---- ntpsec-1.0.0~/docs/ntpsec.txt	2017-10-10 03:54:39.000000000 +0000
-+++ ntpsec-1.0.0/docs/ntpsec.txt	2017-12-27 14:20:07.061587491 +0000
-@@ -195,8 +195,8 @@ codebase has been outright removed, with
+ `ntp.keys`::
+   private keys
+diff -pruN '--exclude=*.orig' ntpsec-1.1.0~/docs/ntpsec.txt ntpsec-1.1.0/docs/ntpsec.txt
+--- ntpsec-1.1.0~/docs/ntpsec.txt	2018-03-15 03:28:15.000000000 +0000
++++ ntpsec-1.1.0/docs/ntpsec.txt	2018-03-16 16:41:50.600213154 +0000
+@@ -193,8 +193,8 @@ codebase has been outright removed, with
  * The ntpq utility resizes its display to take advantage of wide
    terminal windows, allowing more space for long peer addresses.
  
@@ -45,7 +45,7 @@ diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/docs/ntpsec.txt ntpsec-1.0.0/docs/nt
    that require authentication. Thus it will often not be necessary to enter
    them by hand. Note that your installation's locations for config and
    key files may differ from these; in that case this convenience
-@@ -247,10 +247,10 @@ codebase has been outright removed, with
+@@ -255,10 +255,10 @@ codebase has been outright removed, with
    respect to the current working directory but with respect to the
    directory name of the last pushed file in the stack.  This means
    that you can run ntpd from any directory with "includefile foo"
@@ -58,9 +58,9 @@ diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/docs/ntpsec.txt ntpsec-1.0.0/docs/nt
    more configuration declarations. Only files with the extension
    ".conf" are interpreted; others are ignored.  This feature is
    intended to make assembling configuration easier for administration
-diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/include/ntp_config.h ntpsec-1.0.0/include/ntp_config.h
---- ntpsec-1.0.0~/include/ntp_config.h	2017-10-10 03:54:39.000000000 +0000
-+++ ntpsec-1.0.0/include/ntp_config.h	2017-12-27 14:20:07.061804919 +0000
+diff -pruN '--exclude=*.orig' ntpsec-1.1.0~/include/ntp_config.h ntpsec-1.1.0/include/ntp_config.h
+--- ntpsec-1.1.0~/include/ntp_config.h	2018-03-15 03:28:15.000000000 +0000
++++ ntpsec-1.1.0/include/ntp_config.h	2018-03-16 16:41:50.600429747 +0000
 @@ -18,7 +18,7 @@
   * Configuration file name
   */
@@ -70,10 +70,10 @@ diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/include/ntp_config.h ntpsec-1.0.0/in
  #endif /* not CONFIG_FILE */
  #define CONFIG_DIR	"ntp.d"
  
-diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/ntpclients/ntpleapfetch ntpsec-1.0.0/ntpclients/ntpleapfetch
---- ntpsec-1.0.0~/ntpclients/ntpleapfetch	2017-10-10 03:54:39.000000000 +0000
-+++ ntpsec-1.0.0/ntpclients/ntpleapfetch	2017-12-27 14:20:07.062032656 +0000
-@@ -23,7 +23,7 @@ MAXTRIES=6
+diff -pruN '--exclude=*.orig' ntpsec-1.1.0~/ntpclients/ntpleapfetch ntpsec-1.1.0/ntpclients/ntpleapfetch
+--- ntpsec-1.1.0~/ntpclients/ntpleapfetch	2018-03-15 03:28:15.000000000 +0000
++++ ntpsec-1.1.0/ntpclients/ntpleapfetch	2018-03-16 16:41:50.600665571 +0000
+@@ -24,7 +24,7 @@ MAXTRIES=6
  INTERVAL=10
  
  # Where to find ntp config file
@@ -82,10 +82,10 @@ diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/ntpclients/ntpleapfetch ntpsec-1.0.0
  
  # How long before expiration to get updated file
  PREFETCH="60 days"
-diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/pylib/packet.py ntpsec-1.0.0/pylib/packet.py
---- ntpsec-1.0.0~/pylib/packet.py	2017-10-10 03:54:39.000000000 +0000
-+++ ntpsec-1.0.0/pylib/packet.py	2017-12-27 14:20:07.062578539 +0000
-@@ -1674,7 +1674,7 @@ class Authenticator:
+diff -pruN '--exclude=*.orig' ntpsec-1.1.0~/pylib/packet.py ntpsec-1.1.0/pylib/packet.py
+--- ntpsec-1.1.0~/pylib/packet.py	2018-03-15 03:28:15.000000000 +0000
++++ ntpsec-1.1.0/pylib/packet.py	2018-03-16 16:41:50.601178056 +0000
+@@ -1685,7 +1685,7 @@ class Authenticator:
                  return (keyid,) + self.passwords[keyid]
              else:
                  return (keyid, None, None)

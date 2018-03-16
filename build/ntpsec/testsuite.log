@@ -1,3 +1,17 @@
+BINARY      : test_agentx_packet.py
+RETURN VALUE: 0
+
+*** stdout ***
+
+*** stderr ***
+.........................................
+----------------------------------------------------------------------
+Ran 41 tests in 0.008s
+
+OK
+
+
+
 BINARY      : test_libntp
 RETURN VALUE: 0
 
@@ -21,7 +35,6 @@ TEST(calendar, RoundTripDate) PASS
 TEST(clocktime, CurrentYear) PASS
 TEST(clocktime, CurrentYearExplicit) PASS
 TEST(clocktime, CurrentYearFuzz) PASS
-TEST(clocktime, TimeZoneOffset) PASS
 TEST(clocktime, WrongYearStart) PASS
 TEST(clocktime, PreviousYear) PASS
 TEST(clocktime, NextYear) PASS
@@ -41,8 +54,6 @@ TEST(hextolfp, PositiveFraction) PASS
 TEST(hextolfp, NegativeFraction) PASS
 TEST(hextolfp, IllegalNumberOfInteger) PASS
 TEST(hextolfp, IllegalChar) PASS
-TEST(humandate, RegularTime) PASS
-TEST(humandate, CurrentTime) PASS
 TEST(lfpfunc, Extraction) PASS
 TEST(lfpfunc, Negation) PASS
 TEST(lfpfunc, Absolute) PASS
@@ -124,7 +135,6 @@ TEST(timespecops, test_FromLFPbittest) PASS
 TEST(timespecops, test_FromLFPrelPos) PASS
 TEST(timespecops, test_FromLFPrelNeg) PASS
 TEST(timespecops, test_LFProundtrip) PASS
-TEST(timespecops, test_ToString) PASS
 TEST(vi64ops, SetVUI64s_pos) PASS
 TEST(vi64ops, SetVUI64s_neg) PASS
 TEST(vi64ops, SetVUI64u) PASS
@@ -135,7 +145,7 @@ TEST(ymd2yd, LeapYearFebruary) PASS
 TEST(ymd2yd, LeapYearDecember) PASS
 
 -----------------------
-130 Tests 0 Failures 0 Ignored 
+126 Tests 0 Failures 0 Ignored 
 OK
 
 *** stderr ***
@@ -250,12 +260,12 @@ TEST(leapsec, addDynamic)leap table (10 entries) expires at 1993-07-01:
 1991-01-01 [-] (1990-12-04) - 26
 1992-07-01 [-] (1992-06-03) - 27
 1993-07-01 [-] (1993-06-03) - 28
-1996-01-10 [*] (1995-12-10) - 29
-1997-07-09 [*] (1997-06-09) - 30
-1999-01-10 [*] (1998-12-10) - 31
-2006-01-10 [*] (2005-12-10) - 32
-2009-01-10 [*] (2008-12-10) - 33
-2012-07-09 [*] (2012-06-09) - 34
+1996-01-11 [*] (1995-12-11) - 29
+1997-07-10 [*] (1997-06-10) - 30
+1999-01-11 [*] (1998-12-11) - 31
+2006-01-11 [*] (2005-12-11) - 32
+2009-01-11 [*] (2008-12-11) - 33
+2012-07-10 [*] (2012-06-10) - 34
  PASS
 TEST(leapsec, addFixed) PASS
 TEST(leapsec, ls2009seqInsElectric) PASS
@@ -280,6 +290,48 @@ TEST(hackrestrict, RestrictUnflagWorks) PASS
 OK
 
 *** stderr ***
+
+
+
+BINARY      : test_packet.py
+RETURN VALUE: 0
+
+*** stdout ***
+
+*** stderr ***
+..........................................................
+----------------------------------------------------------------------
+Ran 58 tests in 0.012s
+
+OK
+
+
+
+BINARY      : test_statfiles.py
+RETURN VALUE: 0
+
+*** stdout ***
+
+*** stderr ***
+..............
+----------------------------------------------------------------------
+Ran 14 tests in 0.007s
+
+OK
+
+
+
+BINARY      : test_util.py
+RETURN VALUE: 0
+
+*** stdout ***
+
+*** stderr ***
+.........................................
+----------------------------------------------------------------------
+Ran 41 tests in 0.008s
+
+OK
 
 
 
