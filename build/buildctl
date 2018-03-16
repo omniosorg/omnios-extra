@@ -363,17 +363,17 @@ baseline() {
 }
 
 job_status() {
-    logmsg "######################################################"
-    logmsg "-- Job status $*--"
+    logmsg -h "######################################################"
+    logmsg -h "-- Job status $*--"
     now=`date +%s`
 
     for i in `seq 0 $threads`; do
         [ -n "${slots[$i]}" ] || continue
         ((tm = now - ${slotstart[$i]}))
-        logmsg "`printf "    [%d] %8d - (%5ds) %s\n" \
+        logmsg -h "`printf "    [%d] %8d - (%5ds) %s\n" \
             "$i" "${slots[$i]}" "$tm" "${slotdesc[$i]}"`"
     done
-    logmsg "######################################################"
+    logmsg -h "######################################################"
 }
 
 parallel_build() {
@@ -429,13 +429,13 @@ parallel_build() {
                         if [ $s -ne 0 ]; then
                             logmsg -e "-- Job $i terminated with status $s"
                             err="${slottgt[$i]}"
-                            note "***** BUILD ERROR ***** ($err)"
+                            note -e "***** BUILD ERROR ***** ($err)"
                             break 3
                         else
                             logmsg "-- Job $i terminated normally"
                         fi
                     fi
-                    note "($pkgnum/$pkgcount) Building $tgt (slot $i)"
+                    note -h "($pkgnum/$pkgcount) Building $tgt (slot $i)"
                     logprefix="[$i] " build $tgt &
                     slots[$i]=$!
                     slottgt[$i]=$tgt
@@ -451,12 +451,12 @@ parallel_build() {
     done
 
     if [ -n "$err" -a -z "$NOKILL_ON_ERROR" ]; then
-        logmsg "-- error encountered, killing jobs"
+        logmsg -e "-- error encountered, killing jobs"
         for i in `seq 0 $threads`; do
             [ -n "${slots[$i]}" ] && kill "${slots[$i]}"
         done
     else
-        logmsg "-- waiting for jobs to finish"
+        logmsg -h "-- waiting for jobs to finish"
         while :; do
             running=0
             for i in `seq 0 $threads`; do
@@ -476,7 +476,7 @@ parallel_build() {
     fi
 
     if [ -n "$err" ]; then
-        note "***** BUILD ERROR ***** ($err)"
+        note -e "***** BUILD ERROR ***** ($err)"
     else
         baseline check
     fi
