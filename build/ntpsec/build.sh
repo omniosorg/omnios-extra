@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=ntpsec
-VER=1.0.0
+VER=1.1.0
 VERHUMAN=$VER
 PKG=service/network/ntpsec
 SUMMARY="A secure, hardened and improved Network Time Protocol implementation"
@@ -31,6 +31,10 @@ BUILD_DEPENDS_IPS="ooce/text/asciidoc"
 export PATH=$PATH:/opt/ooce/bin
 
 export XML_CATALOG_FILES=/opt/ooce/docbook-xsl/catalog.xml
+
+# Required to include struct timespec definition and constants.
+CFLAGS+=" -D__EXTENSIONS__"
+export CFLAGS
 
 # NTPsec uses the 'waf' build system
 
@@ -55,6 +59,8 @@ configure64() {
         --nopyo \
         --nopycache \
         || logerr "--- configure failed"
+    logcmd mkdir -p build/main/pylib
+    logcmd ln -s . build/main/pylib/64
 }
 
 make_prog() {

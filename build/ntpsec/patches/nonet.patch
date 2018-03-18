@@ -2,10 +2,10 @@
 Always pass --nonet to xsltproc to avoid it checking for updated
 stylesheets.
 
-diff -pruN '--exclude=*.orig' ntpsec-1.0.0~/wscript ntpsec-1.0.0/wscript
---- ntpsec-1.0.0~/wscript	2017-10-10 03:54:39.000000000 +0000
-+++ ntpsec-1.0.0/wscript	2017-12-27 14:20:06.985213252 +0000
-@@ -207,6 +207,8 @@
+diff -pruN '--exclude=*.orig' ntpsec-1.1.0~/wscript ntpsec-1.1.0/wscript
+--- ntpsec-1.1.0~/wscript	2018-03-16 16:41:50.675686990 +0000
++++ ntpsec-1.1.0/wscript	2018-03-16 16:41:50.745536954 +0000
+@@ -195,6 +195,8 @@ def configure(ctx):
      if not ctx.options.enable_a2x_xmllint:
          ctx.env.A2X_FLAGS += ["--no-xmllint"]
  

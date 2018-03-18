@@ -63,7 +63,7 @@
 | runtime/python-27			| 2.7.14		| https://www.python.org/downloads/source/
 | security/sudo				| 1.8.22		| https://www.sudo.ws/
 | service/network/ntp			| 4.2.8p11		| http://www.ntp.org/downloads.html
-| service/network/ntpsec		| 1.0.0			| https://github.com/ntpsec/ntpsec/releases
+| service/network/ntpsec		| 1.1.0			| https://github.com/ntpsec/ntpsec/releases https://blog.ntpsec.org/
 | service/network/smtp/dma		| 0.11			| https://github.com/corecode/dma/releases
 | shell/bash				| 4.4.18		| https://ftp.gnu.org/gnu/bash/
 | shell/bash-patchlvl			| 019			| https://ftp.gnu.org/gnu/bash/bash-4.4-patches
