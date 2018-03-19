@@ -62,7 +62,7 @@ library/python-2/cffi-27		1.11
 library/python-2/cheroot-27		6
 library/python-2/cherrypy-27		14
 library/python-2/coverage-27		4
-library/python-2/cryptography-27	2.1
+library/python-2/cryptography-27	2.2
 library/python-2/enum-27		1.1
 library/python-2/functools32-27		3.2
 library/python-2/idna-27		2.6
@@ -77,7 +77,7 @@ library/python-2/pybonjour-27		1.1.1
 library/python-2/pycurl-27		7.43
 library/python-2/pyopenssl-27		17
 library/python-2/pytz-27		2018
-library/python-2/setuptools-27		38
+library/python-2/setuptools-27		39
 library/python-2/simplejson-27		3.13
 library/python-2/six-27			1.11
 library/python-2/tempora-27		1.11

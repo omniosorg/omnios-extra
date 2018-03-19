@@ -101,7 +101,7 @@
 | library/python-2/cheroot-27		| 6.0.0			| https://pypi.python.org/pypi/cheroot
 | library/python-2/cherrypy-27		| 14.0.0		| https://pypi.python.org/pypi/cherrypy
 | library/python-2/coverage-27		| 4.5.1			| https://pypi.python.org/pypi/coverage
-| library/python-2/cryptography-27	| 2.1.4			| https://pypi.python.org/pypi/cryptography
+| library/python-2/cryptography-27	| 2.2			| https://pypi.python.org/pypi/cryptography
 | library/python-2/enum-27		| 1.1.6			| https://pypi.python.org/pypi/enum34
 | library/python-2/functools32-27	| 3.2.3-2		| https://pypi.python.org/pypi/functools32
 | library/python-2/idna-27		| 2.6			| https://pypi.python.org/pypi/idna
@@ -117,7 +117,7 @@
 | library/python-2/pycurl-27		| 7.43.0.1		| https://pypi.python.org/pypi/pycurl
 | library/python-2/pyopenssl-27		| 17.5.0		| https://pypi.python.org/pypi/pyOpenSSL
 | library/python-2/pytz-27		| 2018.3		| https://pypi.python.org/pypi/pytz
-| library/python-2/setuptools-27	| 38.5.2		| https://pypi.python.org/pypi/setuptools
+| library/python-2/setuptools-27	| 39.0.1		| https://pypi.python.org/pypi/setuptools
 | library/python-2/simplejson-27	| 3.13.2		| https://pypi.python.org/pypi/simplejson
 | library/python-2/six-27		| 1.11.0		| https://pypi.python.org/pypi/six
 | library/python-2/tempora-27		| 1.11			| https://pypi.python.org/pypi/tempora
