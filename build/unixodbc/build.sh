@@ -24,17 +24,14 @@
 # Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=unixODBC
-VER=2.3.5
+VER=2.3.6
 VERHUMAN=$VER
 PKG=library/unixodbc
 SUMMARY="The UnixODBC Subsystem and SDK"
-DESC="UnixODBC - The UnixODBC Subsystem and SDK ($VER)"
-
-RUN_DEPENDS_IPS="system/library/gcc-runtime"
+DESC="UnixODBC - The UnixODBC Subsystem and SDK"
 
 CONFIGURE_OPTS="
     --includedir=$PREFIX/include/odbc
@@ -62,18 +59,6 @@ CONFIGURE_OPTS="
     --disable-ltdl-install
     --with-pic
 "
-
-save_function make_prog64 make_prog64_orig
-save_function make_prog32 make_prog32_orig
-make_prog64() {
-    libtool_nostdlib libtool
-    make_prog64_orig
-}
-make_prog32() {
-    libtool_nostdlib libtool
-    make_prog32_orig
-}
-
 
 init
 download_source $PROG $PROG $VER
