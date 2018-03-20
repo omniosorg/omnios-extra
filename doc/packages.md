@@ -51,7 +51,7 @@
 | library/readline			| 7.0			| https://ftp.gnu.org/gnu/readline/
 | library/security/openssl-1.0		| 1.0.2n		| https://www.openssl.org/source/
 | library/security/openssl-1.1		| 1.1.0g		| https://www.openssl.org/source/
-| library/unixodbc			| 2.3.5			| http://www.unixodbc.org/download.html
+| library/unixodbc			| 2.3.6			| http://www.unixodbc.org/download.html
 | library/zlib				| 1.2.11		| http://www.zlib.net/
 | network/dns/bind			| 9.10.7		| https://www.isc.org/downloads/
 | network/openssh			| 7.6p1			| https://mirrors.evowise.com/pub/OpenBSD/OpenSSH/portable/
