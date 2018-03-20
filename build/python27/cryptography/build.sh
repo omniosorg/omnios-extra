@@ -20,14 +20,14 @@
 #
 # CDDL HEADER END }}}
 #
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../../lib/functions.sh
 
 PKG=library/python-2/cryptography-27
 PROG=cryptography
-VER=2.1.4
+VER=2.2
 SUMMARY="cryptography - cryptographic recipes and primitives"
 DESC="$SUMMARY"
 
