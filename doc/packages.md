@@ -47,7 +47,7 @@
 | library/nghttp2			| 1.31.0		| https://github.com/nghttp2/nghttp2/releases
 | library/nss				| 3.36			| https://ftp.mozilla.org/pub/security/nss/releases/
 | library/nspr				| 4.19			| http://archive.mozilla.org/pub/nspr/releases/
-| library/pcre				| 8.41			| https://ftp.pcre.org/pub/pcre/
+| library/pcre				| 8.42			| https://ftp.pcre.org/pub/pcre/
 | library/readline			| 7.0			| https://ftp.gnu.org/gnu/readline/
 | library/security/openssl-1.0		| 1.0.2n		| https://www.openssl.org/source/
 | library/security/openssl-1.1		| 1.1.0g		| https://www.openssl.org/source/

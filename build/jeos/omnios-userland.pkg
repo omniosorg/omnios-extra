@@ -55,7 +55,7 @@ library/ncurses				6
 library/nghttp2				1
 library/nspr/header-nspr		4
 library/nspr				4
-library/pcre				8.41
+library/pcre				8
 library/perl-5/xml-parser		2.44
 library/python-2/asn1crypto-27		0.24
 library/python-2/cffi-27		1.11
