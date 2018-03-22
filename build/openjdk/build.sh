@@ -23,15 +23,14 @@
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Use is subject to license terms.
 # Copyright (c) 2014 by Delphix. All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=openjdk
 VER=1.7.0
-UPDATE=161
-BUILD=01
+UPDATE=171
+BUILD=02
 VERHUMAN="jdk7u${UPDATE}-b${BUILD}"
 
 # Taken from illumos...
