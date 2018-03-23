@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=git
-VER=2.16.2
+VER=2.16.3
 PKG=developer/versioning/git
 SUMMARY="$PROG - distributed version control system"
 DESC="$SUMMARY"
@@ -38,6 +38,14 @@ BUILD_DEPENDS_IPS="compatibility/ucb developer/build/autoconf archiver/gnu-tar"
 HARDLINK_TARGETS="
     usr/libexec/git-core/git
     usr/libexec/amd64/git-core/git
+    usr/libexec/git-core/git-remote-ftp
+    usr/libexec/amd64/git-core/git-remote-ftp
+    usr/libexec/git-core/git-cvsserver
+    usr/libexec/amd64/git-core/git-cvsserver
+    usr/libexec/git-core/git-shell
+    usr/libexec/amd64/git-core/git-shell
+    usr/libexec/git-core/git-upload-pack
+    usr/libexec/amd64/git-core/git-upload-pack
 "
 
 # For inet_ntop which isn't detected properly in the configure script
