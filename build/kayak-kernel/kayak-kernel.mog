@@ -25,4 +25,5 @@
 #
 
 # Prevents pkgdepend from freaking out.
-<transform file path=tftpboot/boot/platform/i86pc/kernel/amd64/unix -> set pkg.depend.bypass-generate .* >
+<transform file path=tftpboot/boot/platform/i86pc/kernel/amd64/unix \
+    -> set pkg.depend.bypass-generate .* >
