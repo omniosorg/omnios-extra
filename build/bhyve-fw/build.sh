@@ -12,10 +12,8 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 
-#
-# Load support functions
 . ../../lib/functions.sh
 
 BUILD_DEPENDS_IPS="
@@ -31,12 +29,12 @@ SUMMARY="UEFI-EDK2(+CSM) firmware for bhyve"
 DESC="$SUMMARY"
 
 # Respect environmental overrides for these to ease development.
-: ${PKG_SOURCE_REPO:=https://github.com/omniosorg/$PROG}
-: ${PKG_SOURCE_BRANCH:=bhyve/UDK2014.SP1}
+: ${EDK2_SOURCE_REPO:=$GITHUB/$PROG}
+: ${EDK2_SOURCE_BRANCH:=bhyve/UDK2014.SP1}
 
 # Extend VER so that the temporary build directory is branch specific.
 # Branch names can include '/' so remove them.
-VER+="-${PKG_SOURCE_BRANCH//\//_}"
+VER+="-${EDK2_SOURCE_BRANCH//\//_}"
 
 export GCCPATH=/opt/gcc-4.4.4
 
@@ -54,27 +52,8 @@ export IASL_PREFIX=/usr/sbin/
 export NASM_PREFIX=/usr/bin/i386/
 
 clone_source() {
-    logmsg "$PROG -> $TMPDIR/$BUILDDIR/$PROG"
-    logcmd mkdir -p $TMPDIR/$BUILDDIR
-    pushd $TMPDIR/$BUILDDIR > /dev/null 
-    if [ ! -d $PROG ]; then
-        if [ -n "$EDK2_CLONE" -a -d "$EDK2_CLONE" ]; then
-            logmsg "-- pulling $PROG from local clone"
-            logcmd rsync -ar $EDK2_CLONE/ $PROG/
-            logmsg "Checking out branch $PKG_SOURCE_BRANCH"
-            logcmd $GIT -C $PROG checkout $PKG_SOURCE_BRANCH \
-                || logerr "Could not check out $PKG_SOURCE_BRANCH"
-        else
-            logmsg "-- cloning $PKG_SOURCE_REPO ($PKG_SOURCE_BRANCH)"
-            logcmd $GIT clone --depth 1 -b $PKG_SOURCE_BRANCH \
-                $PKG_SOURCE_REPO $PROG \
-                || logerr "Could not fetch $PKG_SOURCE_REPO/$PKG_SOURCE_BRANCH"
-        fi
-    fi
-    if [ -z "$EDK2_CLONE" ]; then
-        logcmd $GIT -C $PROG pull || logerr "--- Failed to pull repo"
-    fi
-    popd > /dev/null 
+    clone_github_source $PROG \
+        "$EDK2_SOURCE_REPO" "$EDK2_SOURCE_BRANCH" "$EDK2_CLONE"
 }
 
 edksetup() {

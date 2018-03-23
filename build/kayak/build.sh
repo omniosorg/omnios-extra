@@ -28,8 +28,9 @@ DESC="Kayak generates install media for OmniOS: either ISO/USB or network instal
 BUILD_DEPENDS_IPS="developer/versioning/git"
 DEPENDS_IPS="developer/build/gnu-make developer/dtrace service/network/tftp"
 
-GIT=/usr/bin/git
-CHECKOUTDIR=$TMPDIR/$BUILDDIR
+# Respect environmental overrides for these to ease development.
+: ${KAYAK_SOURCE_REPO:=$GITHUB/kayak}
+: ${KAYAK_SOURCE_BRANCH:=r$RELVER}
 
 clone_source() {
     logmsg "kayak -> $CHECKOUTDIR/kayak"

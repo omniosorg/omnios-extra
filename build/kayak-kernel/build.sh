@@ -86,6 +86,10 @@ export PKGURL
 logmsg "Grabbing packages from $PKGURL."
 logmsg "Publishing kayak-kernel to $PKGSRVR."
 
+# Respect environmental overrides for these to ease development.
+: ${KAYAK_SOURCE_REPO:=$GITHUB/kayak}
+: ${KAYAK_SOURCE_BRANCH:=r$RELVER}
+
 clone_source() {
     logmsg "kayak -> $CHECKOUTDIR/kayak"
     logcmd mkdir -p $TMPDIR/$BUILDDIR
