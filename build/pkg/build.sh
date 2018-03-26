@@ -21,10 +21,9 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
-#
-# Load support functions
+
 . ../../lib/functions.sh
 
 # The following lines starting with PKG= let buildctl spot the packages that
@@ -38,8 +37,8 @@ PKG=system/zones/brand/lipkg
 PKGLIST+=" $PKG"
 PKG=system/zones/brand/sparse
 PKGLIST+=" $PKG"
-SUMMARY="This isn't used, see the makefiles for pkg"
-DESC="This isn't used, see the makefiles for pkg"
+SUMMARY="This isn't used"
+DESC="$SUMMARY"
 
 PROG=pkg
 VER=omni
@@ -57,33 +56,16 @@ BUILD_DEPENDS_IPS="
 RUN_DEPENDS_IPS="runtime/python-27"
 
 # Respect environmental overrides for these to ease development.
-: ${PKG_SOURCE_REPO:=https://github.com/omniosorg/pkg5}
+: ${PKG_SOURCE_REPO:=$GITHUB/pkg5}
 : ${PKG_SOURCE_BRANCH:=r$RELVER}
 VER+="-$PKG_SOURCE_BRANCH"
 
-clone_source(){
-    logmsg "pkg -> $TMPDIR/$BUILDDIR/pkg"
-    logcmd mkdir -p $TMPDIR/$BUILDDIR
-    pushd $TMPDIR/$BUILDDIR > /dev/null 
-    # Even though our default is "pkg5" now, still call the directory 
-    # "pkg" for now due to the hideous number of places "pkg" occurs here.
-    if [ ! -d pkg ]; then
-        if [ -n "$PKG5_CLONE" -a -d "$PKG5_CLONE" ]; then
-            logmsg "-- pulling pkg5 from local clone"
-            logcmd rsync -ar $PKG5_CLONE/ pkg/
-        else
-            logcmd $GIT clone $PKG_SOURCE_REPO pkg
-        fi
-    fi
-    if [ -z "$PKG5_CLONE" ]; then
-        logcmd $GIT -C pkg pull || logerr "failed to pull"
-    fi
-    logcmd $GIT -C pkg checkout $PKG_SOURCE_BRANCH \
-        || logmsg "No $PKG_SOURCE_BRANCH branch, using master."
-    popd > /dev/null 
+clone_source() {
+    clone_github_source pkg \
+        "$PKG_SOURCE_REPO" "$PKG_SOURCE_BRANCH" "$PKG5_CLONE"
 }
 
-build(){
+build() {
     pushd $TMPDIR/$BUILDDIR/pkg/src > /dev/null \
         || logerr "Cannot change to src dir"
     find . -depth -name \*.mo -exec touch {} +
@@ -104,7 +86,7 @@ build(){
     popd > /dev/null
 }
 
-package(){
+package() {
     pushd $TMPDIR/$BUILDDIR/pkg/src/pkg > /dev/null
     logmsg "--- packaging"
     logcmd make clean

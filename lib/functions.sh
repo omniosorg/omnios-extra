@@ -763,6 +763,39 @@ extract_archive() {
 }
 
 #############################################################################
+# Export source from github or local clone
+#############################################################################
+
+clone_github_source() {
+    typeset prog="$1"
+    typeset src="$2"
+    typeset branch="$3"
+    typeset local="$4"
+
+    logmsg "$prog -> $TMPDIR/$BUILDDIR/$prog"
+    logcmd mkdir -p $TMPDIR/$BUILDDIR
+    pushd $TMPDIR/$BUILDDIR > /dev/null
+
+    if [ ! -d $prog ]; then
+        if [ -n "$local" -a -d "$local" ]; then
+            logmsg "-- pulling $prog from local clone"
+            logcmd rsync -ar $local/ $prog/
+        else
+            logcmd $GIT clone $src $prog
+        fi
+    fi
+    if [ -z "$local" ]; then
+        logcmd $GIT -C $prog pull || logerr "failed to pull"
+    fi
+    if [ -n "$branch" ]; then
+        logcmd $GIT -C $prog checkout $branch \
+            || logmsg "No $branch branch, using master."
+    fi
+
+    popd > /dev/null
+}
+
+#############################################################################
 # Make the package
 #############################################################################
 

@@ -46,6 +46,9 @@ export LANG=C
 # Use bash for subshells and commands launched by python setuptools
 export SHELL=/usr/bin/bash
 
+# The github repository root from which some packages are pulled
+GITHUB=https://github.com/omniosorg
+
 # Which server to fetch files from.
 # If $MIRROR begins with a '/', it is treated as a local directory.
 MIRROR=https://mirrors.omniosce.org

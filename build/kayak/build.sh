@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 #
+# {{{ CDDL HEADER
 #
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.
@@ -7,15 +8,15 @@
 # 1.0 of the CDDL.
 #
 # A full copy of the text of the CDDL should have accompanied this
-# source.  A copy of the CDDL is also available via the Internet at
+# source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
-#
+# }}}
 
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 #
 
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=kayak
@@ -26,35 +27,29 @@ SUMMARY="Kayak - OmniOS media generator and server"
 DESC="Kayak generates install media for OmniOS: either ISO/USB or network installation using PXE, DHCP, and HTTP"
 
 BUILD_DEPENDS_IPS="developer/versioning/git"
-DEPENDS_IPS="developer/build/gnu-make developer/dtrace service/network/tftp"
+RUN_DEPENDS_IPS="developer/build/gnu-make"
 
-GIT=/usr/bin/git
-CHECKOUTDIR=$TMPDIR/$BUILDDIR
+# Respect environmental overrides for these to ease development.
+: ${KAYAK_SOURCE_REPO:=$GITHUB/kayak}
+: ${KAYAK_SOURCE_BRANCH:=r$RELVER}
 
 clone_source() {
-    logmsg "kayak -> $CHECKOUTDIR/kayak"
-    logcmd mkdir -p $TMPDIR/$BUILDDIR
-    pushd $CHECKOUTDIR > /dev/null
-    if [[ -d kayak ]]; then
-        logmsg "--- old checkout found, removing it."
-        logcmd rm -rf kayak
-    fi
-    logcmd $GIT clone https://github.com/omniosorg/kayak
-    pushd kayak > /dev/null
-    logcmd $GIT checkout r$RELVER || logmsg "No r$RELVER branch, using master."
-    GITREV=`$GIT log -1  --format=format:%at`
-    COMMIT=`$GIT log -1  --format=format:%h`
+    clone_github_source kayak \
+        "$KAYAK_SOURCE_REPO" "$KAYAK_SOURCE_BRANCH" "$KAYAK_CLONE"
+
+    gdir=$TMPDIR/$BUILDDIR/kayak
+    GITREV=`$GIT -C $gdir log -1  --format=format:%at`
+    COMMIT=`$GIT -C $gdir log -1  --format=format:%h`
     REVDATE=`echo $GITREV | gawk '{ print strftime("%c %Z",$1) }'`
     VERHUMAN="${COMMIT:0:7} from $REVDATE"
-    popd > /dev/null
-    popd > /dev/null
 }
 
 build_server() {
-    pushd $CHECKOUTDIR/kayak > /dev/null || logerr "Cannot change to src dir"
+    pushd $TMPDIR/$BUILDDIR/kayak > /dev/null \
+        || logerr "Cannot change to src dir"
     logmsg "Installing server files"
-    logcmd gmake DESTDIR=$DESTDIR install-package || \
-        logerr "gmake failed"
+    logcmd gmake DESTDIR=$DESTDIR install-package \
+        || logerr "gmake failed"
     popd > /dev/null
 }
 
@@ -67,4 +62,4 @@ make_package kayak.mog
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
