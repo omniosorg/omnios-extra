@@ -104,6 +104,10 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 * New `zfs remove` and `zpool checkpoint` features - see _Commands and options_
   below.
 
+* Improved support for ZFS pool recovery - see
+  [Pavel Zakharov's _Turbocharging ZFS Data Recovery_ article](https://www.delphix.com/blog/openzfs-pool-import-recovery)
+  for more details.
+
 * The `/etc/screenrc` file delivered by the `screen` package is now based on
   the recommended global template as delivered by the authors; you may wish
   to check that it still meets your needs. If you have previously customised
