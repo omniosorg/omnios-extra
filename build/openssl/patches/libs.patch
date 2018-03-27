@@ -11,10 +11,10 @@ unecessary library is linked.
 Openssl is one of the libraries used by illumos-omnios and therefore we
 patch the configuration script to stop linking against these two libraries.
 
-diff -ru openssl-1.1.0g~/Configurations/10-main.conf openssl-1.1.0g/Configurations/10-main.conf
---- openssl-1.1.0g~/Configurations/10-main.conf	2017-11-02 14:29:01.000000000 +0000
-+++ openssl-1.1.0g/Configurations/10-main.conf	2018-01-24 22:17:29.180632536 +0000
-@@ -179,7 +179,7 @@
+diff -pruN '--exclude=*.orig' openssl-1.1.0h~/Configurations/10-main.conf openssl-1.1.0h/Configurations/10-main.conf
+--- openssl-1.1.0h~/Configurations/10-main.conf	2018-03-27 15:50:37.000000000 +0000
++++ openssl-1.1.0h/Configurations/10-main.conf	2018-03-27 20:07:14.443512101 +0000
+@@ -179,7 +179,7 @@ sub vms_info {
          inherit_from     => [ "BASE_unix" ],
          template         => 1,
          cflags           => "-DFILIO_H",
@@ -23,22 +23,24 @@ diff -ru openssl-1.1.0g~/Configurations/10-main.conf openssl-1.1.0g/Configuratio
          dso_scheme       => "dlfcn",
          thread_scheme    => "pthreads",
          shared_target    => "solaris-shared",
-@@ -202,8 +202,7 @@
+@@ -202,9 +202,7 @@ sub vms_info {
          cc               => "gcc",
          cflags           => add_before(picker(default => "-Wall -DL_ENDIAN -DOPENSSL_NO_INLINE_ASM",
                                                debug   => "-O0 -g",
 -                                              release => "-O3 -fomit-frame-pointer"),
 -                                       threads("-pthread")),
+-        ex_libs          => add(threads("-pthread")),
 +                                              release => "-O3 -fomit-frame-pointer")),
          bn_ops           => "BN_LLONG",
          shared_cflag     => "-fPIC",
          shared_ldflag    => "-shared -static-libgcc",
-@@ -221,8 +220,7 @@
+@@ -222,9 +220,7 @@ sub vms_info {
          cc               => "gcc",
          cflags           => add_before(picker(default => "-m64 -Wall -DL_ENDIAN",
                                                debug   => "-O0 -g",
 -                                              release => "-O3"),
 -                                       threads("-pthread")),
+-        ex_libs          => add(threads("-pthread")),
 +                                              release => "-O3")),
          bn_ops           => "SIXTY_FOUR_BIT_LONG",
          perlasm_scheme   => "elf",
