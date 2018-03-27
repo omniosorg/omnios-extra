@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=irssi
-VER=1.1.0
+VER=1.1.1
 VERHUMAN=$VER
 PKG=ooce/network/irssi
 SUMMARY="$PROG - text-mode modular chat client"
