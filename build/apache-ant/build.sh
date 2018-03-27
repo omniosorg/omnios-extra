@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,17 +18,17 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+
 # Use is subject to license terms.
-#
-# Load support functions
+
 . ../../lib/functions.sh
 
 PROG=apache-ant
-VER=1.9.9 # stay on 1.9.x, 1.10.x requires Java8
+VER=1.9.10 # stay on 1.9.x, 1.10.x requires Java8
 VERHUMAN=$VER
 JUNITVER=4.12
 PKG=ooce/developer/build/ant
@@ -69,4 +69,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
