@@ -4,6 +4,19 @@
 
 # Release Notes for OmniOSce v11 r151022
 
+## r151022as (2018-03-28)
+Weekly release for w/c 26th of March 2018.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `openssl` updated to 1.0.2o
+  * [CVE-2018-0739](https://www.openssl.org/news/vulnerabilities.html#2018-0739)
+
+<br>
+
+----
+
 ## r151022ar (2018-03-19)
 Weekly release for w/c 19th of March 2018.
 > This is a non-reboot update.
