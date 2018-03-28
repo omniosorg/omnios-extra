@@ -81,6 +81,7 @@
 ../test/recipes/90-test_bio_enc.t .......... ok
 ../test/recipes/90-test_bioprint.t ......... ok
 ../test/recipes/90-test_constant_time.t .... ok
+../test/recipes/90-test_fatalerr.t ......... ok
 ../test/recipes/90-test_fuzz.t ............. ok
 ../test/recipes/90-test_gmdiff.t ........... ok
 ../test/recipes/90-test_heartbeat.t ........ skipped: heartbeats is not supported by this OpenSSL build
@@ -94,5 +95,5 @@
 ../test/recipes/90-test_threads.t .......... ok
 ../test/recipes/90-test_v3name.t ........... ok
 All tests successful.
-Files=95, Tests=556, 72 wallclock secs ( 0.36 usr  0.28 sys + 26.35 cusr  3.21 csys = 30.20 CPU)
+Files=96, Tests=557, 46 wallclock secs ( 0.55 usr  0.18 sys + 14.81 cusr  2.21 csys = 17.75 CPU)
 Result: PASS
