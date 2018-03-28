@@ -1,4 +1,3 @@
-File::Glob::glob() will disappear in perl 5.30. Use File::Glob::bsd_glob() instead. at .././test/run_tests.pl line 45.
 ../test/recipes/01-test_abort.t ............ ok
 ../test/recipes/01-test_sanity.t ........... ok
 ../test/recipes/01-test_symbol_presence.t .. ok
@@ -82,6 +81,7 @@ File::Glob::glob() will disappear in perl 5.30. Use File::Glob::bsd_glob() inste
 ../test/recipes/90-test_bio_enc.t .......... ok
 ../test/recipes/90-test_bioprint.t ......... ok
 ../test/recipes/90-test_constant_time.t .... ok
+../test/recipes/90-test_fatalerr.t ......... ok
 ../test/recipes/90-test_fuzz.t ............. ok
 ../test/recipes/90-test_gmdiff.t ........... ok
 ../test/recipes/90-test_heartbeat.t ........ skipped: heartbeats is not supported by this OpenSSL build
@@ -95,5 +95,5 @@ File::Glob::glob() will disappear in perl 5.30. Use File::Glob::bsd_glob() inste
 ../test/recipes/90-test_threads.t .......... ok
 ../test/recipes/90-test_v3name.t ........... ok
 All tests successful.
-Files=95, Tests=556, 71 wallclock secs ( 0.39 usr  0.30 sys + 29.37 cusr  4.59 csys = 34.65 CPU)
+Files=96, Tests=557, 60 wallclock secs ( 0.65 usr  0.21 sys + 20.16 cusr  5.63 csys = 26.65 CPU)
 Result: PASS
