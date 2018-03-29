@@ -5,7 +5,7 @@
 | compress/bzip2			| 1.0.6			| http://www.bzip.org/downloads.html
 | compress/gzip				| 1.9			| http://git.savannah.gnu.org/cgit/gzip.git/refs/tags
 | compress/p7zip			| 16.02			| https://sourceforge.net/projects/p7zip/files/p7zip
-| compress/unzip			| 6.0			| http://www.info-zip.org/UnZip.html
+| compress/unzip			| 6.0			| http://www.info-zip.org/UnZip.html https://www.cvedetails.com/vulnerability-list/vendor_id-816/product_id-1395/Info-zip-Unzip.html
 | compress/xz				| 5.2.3			| https://tukaani.org/xz/
 | compress/zip				| 3.0			| http://www.info-zip.org/Zip.html
 | data/iso-codes			| 3.77			| http://pkg-isocodes.alioth.debian.org/downloads/

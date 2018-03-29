@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,13 +18,12 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=unzip
@@ -37,6 +36,10 @@ DESC="$SUMMARY"
 BUILDDIR=$PROG${VER//./}
 BUILDARCH=32
 
+HARDLINK_TARGETS="
+    usr/bin/i386/unzip
+"
+
 # Copied from upstream's pkg makefile
 export LOCAL_UNZIP="-DUNICODE_SUPPORT -DNO_WORKING_ISPRINT -DUNICODE_WCHAR"
 
@@ -45,7 +48,7 @@ configure32() {
 }
 
 make_prog() {
-    [[ -n $NO_PARALLEL_MAKE ]] && MAKE_JOBS=""
+    [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=
     logmsg "--- make"
     logcmd $MAKE $MAKE_JOBS -f unix/Makefile generic_gcc || \
         logerr "--- Make failed"
@@ -67,4 +70,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker
