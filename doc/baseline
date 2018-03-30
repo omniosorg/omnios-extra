@@ -512,6 +512,7 @@ omnios storage/svm o
 omnios system/accounting/legacy
 omnios system/bhyve
 omnios system/bhyve/firmware
+omnios system/bhyve/tests
 omnios system/boot/grub
 omnios system/boot/loader
 omnios system/boot/network
