@@ -86,16 +86,6 @@ build_tools() {
     popd > /dev/null
 }
 
-fixup() {
-    case $1 in
-        RELEASE)    level=CRIT ;;
-        DEBUG)      level=VERB ;;
-    esac
-
-    sed -i "/^UINTN DebugLevel =/s/=.*/= DBG_$level;/" \
-        BhyvePkg/Csm/BhyveCsm16/Printf.c
-}
-
 build() {
     pushd $TMPDIR/$BUILDDIR/$PROG > /dev/null || logerr "--- chdir failed"
 
@@ -115,7 +105,6 @@ build() {
         [[ "$FLAVOR" = *DEBUG* && $mode = RELEASE ]] && continue
         [[ "$FLAVOR" = *RELEASE* && $mode = DEBUG ]] && continue
         logmsg "-- Building $mode firmware"
-        fixup $mode
         logcmd `which build` \
             -t OOGCC -a X64 -b $mode \
             -p BhyvePkg/BhyvePkgX64.dsc \
