@@ -39,7 +39,7 @@
 | library/idnkit			| 2.3			| https://jprs.co.jp/idn/index-e.html
 | library/libedit			| 20170329-3.1		| http://thrysoee.dk/editline/
 | library/libevent			| 2.1.8			| https://github.com/libevent/libevent/releases | Used solely by tmux
-| library/libidn			| 1.33			| http://git.savannah.gnu.org/cgit/libidn.git/refs/tags
+| library/libidn			| 1.34			| http://git.savannah.gnu.org/cgit/libidn.git/refs/tags
 | library/libffi			| 3.2.1			| https://sourceware.org/libffi/
 | library/libxml2			| 2.9.8			| https://github.com/GNOME/libxml2/releases http://xmlsoft.org/news.html
 | library/libxslt			| 1.1.30		| http://xmlsoft.org/libxslt/news.html
