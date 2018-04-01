@@ -146,7 +146,7 @@ text/gnu-diffutils			3.6
 text/gnu-gettext			0.19.8
 text/gnu-grep				3.1
 text/gnu-patch				2.7
-text/gnu-sed				4.4
+text/gnu-sed				4.5
 text/groff				1.22.3
 text/less				530
 web/ca-bundle				5.11
