@@ -139,6 +139,8 @@ LCPUS=`psrinfo | wc -l`
 MJOBS="$[ $LCPUS + ($LCPUS / 2) ]"
 [ "$MJOBS" = "0" ] && MJOBS=2
 MAKE_JOBS="-j $MJOBS"
+MAKE_ARGS=
+MAKE_INSTALL_ARGS=
 NO_PARALLEL_MAKE=
 
 # Remove install or packaging files by default. You can set this in a build
