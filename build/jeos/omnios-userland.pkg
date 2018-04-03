@@ -47,7 +47,7 @@ library/idnkit/header-idnkit		2.3
 library/idnkit				2.3
 library/libedit				3
 library/libffi				3.2
-library/libidn				1.33
+library/libidn				1.34
 library/libtool/libltdl			2.4
 library/libxml2				2.9
 library/libxslt				1.1

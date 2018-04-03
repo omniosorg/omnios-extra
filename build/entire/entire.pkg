@@ -139,7 +139,7 @@ library/expat					2.2	require
 library/glib2					2.56	require
 library/gmp					6.1	require
 library/libffi					3.2	require
-library/libidn					1.33	require
+library/libidn					1.34	require
 library/libtecla				1.6.0	require
 library/libtool/libltdl				2.4	require
 library/libxml2					2.9	require
