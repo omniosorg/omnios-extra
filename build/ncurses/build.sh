@@ -27,7 +27,7 @@
 . ../../lib/functions.sh
 
 PROG=ncurses
-VER=6.1-20180317
+VER=6.1-20180331
 VERHUMAN=$VER
 BUILDDIR=$PROG-$VER
 VER=${VER/-/.}
