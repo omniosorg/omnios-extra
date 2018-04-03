@@ -22,16 +22,16 @@
 
 #
 # Copyright (c) 2014 by Delphix. All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 #
 
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=open-vm-tools
-VER=10.2.0
-BUILD=7253323
-BUILDDIR=$PROG-$VER-$BUILD
+VER=10.2.5
+# Uncomment these again if a release includes a build number.
+#BUILD=7253323
+#BUILDDIR=$PROG-$VER-$BUILD
 PKG=system/virtualization/open-vm-tools
 SUMMARY="Open Virtual Machine Tools"
 DESC="The Open Virtual Machine Tools project aims to provide a suite of open source virtualization utilities and drivers to improve the functionality and user experience of virtualization. The project currently runs in guest operating systems under the VMware hypervisor."
@@ -39,7 +39,6 @@ DESC="The Open Virtual Machine Tools project aims to provide a suite of open sou
 PATH=/usr/gnu/bin:$PATH export PATH
 
 BUILD_DEPENDS_IPS='developer/pkg-config'
-RUN_DEPENDS_IPS='system/library/gcc-runtime'
 
 # _FILE_OFFSET_BITS=64 - Large file interface is required
 # _XPG4_2 - Need cmsg from UNIX95
@@ -88,7 +87,7 @@ install_conf() {
 }
 
 init
-download_source $PROG $PROG $VER-$BUILD
+download_source $PROG $PROG $VER
 patch_source
 prep_build
 export LIBS="-lnsl"
