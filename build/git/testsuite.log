@@ -1,4 +1,3 @@
-Manifying 9 pod documents
 *** t0000-basic.sh ***
 # passed all 78 test(s)
 *** t0001-init.sh ***
@@ -16,7 +15,7 @@ Manifying 9 pod documents
 *** t0007-git-var.sh ***
 # passed all 6 test(s)
 *** t0008-ignores.sh ***
-# passed all 392 test(s)
+# passed all 394 test(s)
 *** t0009-prio-queue.sh ***
 # passed all 3 test(s)
 *** t0010-racy-git.sh ***
@@ -48,7 +47,7 @@ Manifying 9 pod documents
 *** t0040-parse-options.sh ***
 # passed all 48 test(s)
 *** t0050-filesystem.sh ***
-# passed all 9 test(s)
+# passed all 10 test(s)
 *** t0055-beyond-symlinks.sh ***
 # passed all 3 test(s)
 *** t0056-git-C.sh ***
@@ -56,7 +55,7 @@ Manifying 9 pod documents
 *** t0060-path-utils.sh ***
 # passed all 188 test(s)
 *** t0061-run-command.sh ***
-# passed all 12 test(s)
+# passed all 13 test(s)
 *** t0062-revision-walking.sh ***
 # passed all 2 test(s)
 *** t0063-string-list.sh ***
