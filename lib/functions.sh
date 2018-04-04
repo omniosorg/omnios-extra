@@ -771,26 +771,35 @@ clone_github_source() {
     typeset src="$2"
     typeset branch="$3"
     typeset local="$4"
+    typeset depth="${5:-1}"
+    typeset fresh=0
 
     logmsg "$prog -> $TMPDIR/$BUILDDIR/$prog"
-    logcmd mkdir -p $TMPDIR/$BUILDDIR
+    [ -d $TMPDIR/$BUILDDIR ] || logcmd mkdir -p $TMPDIR/$BUILDDIR
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
-    if [ ! -d $prog ]; then
-        if [ -n "$local" -a -d "$local" ]; then
-            logmsg "-- pulling $prog from local clone"
-            logcmd rsync -ar $local/ $prog/
-        else
-            logcmd $GIT clone $src $prog
-        fi
-    fi
-    if [ -z "$local" ]; then
-        logcmd $GIT -C $prog pull || logerr "failed to pull"
+    if [ -n "$local" -a -d "$local" ]; then
+        logmsg "-- syncing $prog from local clone"
+        logcmd rsync -ar $local/ $prog/ || logerr "rsync failed."
+        fresh=1
+    elif [ ! -d $prog ]; then
+        logcmd $GIT clone --depth $depth $src $prog || logerr "clone failed"
+        fresh=1
+    else
+        logmsg "Using existing checkout"
     fi
     if [ -n "$branch" ]; then
-        logcmd $GIT -C $prog checkout $branch \
-            || logmsg "No $branch branch, using master."
+        if ! logcmd $GIT -C $prog checkout $branch; then
+            typeset _branch=$branch
+            branch="`$GIT -C $prog rev-parse --abbrev-ref HEAD`"
+            logmsg "No $_branch branch, using $branch."
+        fi
     fi
+    if [ "$fresh" -eq 0 -a -n "$branch" ]; then
+        logcmd $GIT -C $prog pull origin $branch || logerr "failed to pull"
+    fi
+
+    $GIT -C $prog show --shortstat
 
     popd > /dev/null
 }
