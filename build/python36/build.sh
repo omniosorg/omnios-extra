@@ -24,12 +24,11 @@
 # Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=Python
 PROGLC=${PROG,,}
-VER=3.6.4
+VER=3.6.5
 VERHUMAN=$VER
 PKG=ooce/runtime/python-36
 SUMMARY="$PROG - An Interpreted, Interactive, Object-oriented, Extensible Programming Language."
