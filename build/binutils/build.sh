@@ -56,14 +56,11 @@ CONFIGURE_OPTS="
     --with-system-zlib
 "
 
-make_prog() {
-    logmsg "--- make"
-    # Without specifying the shell as bash here, the generated linker
-    # emulation files get truncated scripts.
-    # We already export SHELL=bash in config.sh but that doesn't seem
-    # to be enough.
-    logcmd $MAKE SHELL=/bin/bash $MAKE_JOBS || logerr "--- Make failed"
-}
+# Without specifying the shell as bash here, the generated linker
+# emulation files get truncated scripts.
+# We already export SHELL=bash in config.sh but that doesn't seem
+# to be enough.
+MAKE_ARGS+=" SHELL=/bin/bash"
 
 basic_tests() {
     logmsg "--- basic tests"

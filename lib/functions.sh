@@ -1198,7 +1198,7 @@ make_prog() {
         libtool_nostdlib $LIBTOOL_NOSTDLIB $LIBTOOL_NOSTDLIB_EXTRAS
     fi
     logmsg "--- make"
-    logcmd $MAKE $MAKE_JOBS || logerr "--- Make failed"
+    logcmd $MAKE $MAKE_JOBS $MAKE_ARGS || logerr "--- Make failed"
 }
 
 make_prog32() {
@@ -1211,7 +1211,7 @@ make_prog64() {
 
 make_install() {
     logmsg "--- make install"
-    logcmd $MAKE DESTDIR=${DESTDIR} install || \
+    logcmd $MAKE DESTDIR=${DESTDIR} $MAKE_INSTALL_ARGS install || \
         logerr "--- Make install failed"
 }
 

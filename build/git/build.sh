@@ -28,12 +28,16 @@
 . ../../lib/functions.sh
 
 PROG=git
-VER=2.16.3
+VER=2.17.0
 PKG=developer/versioning/git
 SUMMARY="$PROG - distributed version control system"
 DESC="$SUMMARY"
 
-BUILD_DEPENDS_IPS="compatibility/ucb developer/build/autoconf archiver/gnu-tar"
+BUILD_DEPENDS_IPS="
+    compatibility/ucb
+    developer/build/autoconf
+    archiver/gnu-tar
+"
 
 HARDLINK_TARGETS="
     usr/libexec/git-core/git
@@ -56,6 +60,8 @@ CONFIGURE_OPTS="
     --with-curl=/usr
     --with-openssl=/usr
 "
+
+MAKE_INSTALL_ARGS+=" perllibdir=/usr/lib/site_perl"
 
 save_function configure32 configure32_orig
 configure32() {
@@ -84,6 +90,16 @@ install_man() {
     popd > /dev/null
 }
 
+install_pod() {
+    pushd ${DESTDIR}${PREFIX} > /dev/null
+    mkdir -p share/man/man3
+    find lib/site_perl -name \*.pm | grep -v CPAN | while read p; do
+        man="`echo $p | sed 's/\.pm$//' | cut -d/ -f3- | sed 's^/^::^g'`"
+        pod2man $p > share/man/man3/$man.3 || rm -f share/man/man3/$man.3
+    done
+    popd > /dev/null
+}
+
 TESTSUITE_SED="
     /test_submodule/s/:.*//
     /I18N/s/I18N .*/I18N/
@@ -100,6 +116,7 @@ build
 run_testsuite
 make_isa_stub
 install_man
+install_pod
 make_package
 clean_up
 
