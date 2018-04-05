@@ -20,7 +20,7 @@
 
 # Usage:
 #
-# sudo-bits KAYAK_CLOBBER IMG_DSET CHECKOUTDIR PREBUILT_ILLUMOS DESTDIR \
+# sudo-bits KAYAK_CLOBBER CHECKOUTDIR PREBUILT_ILLUMOS DESTDIR \
 #   PKGURL VER OLDUSER BATCHMODE
 #
 # Basically, we pass everything on the command line to avoid environment
@@ -28,14 +28,13 @@
 #
 
 KAYAK_CLOBBER="$1"
-IMG_DSET="$2"
-CHECKOUTDIR="$3"
-PREBUILT_ILLUMOS="$4"
-DESTDIR="$5"
-export PKGURL="$6"
-VER="$7"
-OLDUSER="$8"
-BATCHMODE="$9"
+CHECKOUTDIR="$2"
+PREBUILT_ILLUMOS="$3"
+DESTDIR="$4"
+export PKGURL="$5"
+VER="$6"
+OLDUSER="$7"
+BATCHMODE="$8"
 
 export ROOT_OK=yes
 
@@ -58,14 +57,13 @@ chown $OLDUSER build.log
     || PBI_STRING="PREBUILT_ILLUMOS=$PREBUILT_ILLUMOS"
 
 if [ -n "$KAYAK_CLOBBER" -a "$KAYAK_CLOBBER" != 0 ]; then
-    logmsg "Clobbering $IMG_DSET"
-    logcmd /sbin/zfs destroy -r $IMG_DSET
+    logmsg "Clobbering kayak_image dataset"
+    logcmd gmake zfsdestroy
 fi
-zfs list -H $IMG_DSET 2>/dev/null || logcmd /sbin/zfs create $IMG_DSET
 
 pushd $CHECKOUTDIR/kayak > /dev/null || logerr "Cannot change to src dir"
 logmsg "Building miniroot"
-logcmd gmake BUILDSEND=$IMG_DSET $PBI_STRING DESTDIR=$DESTDIR install-tftp \
+logcmd gmake $PBI_STRING DESTDIR=$DESTDIR install-tftp \
     || logerr "miniroot build failed"
 
 # So the user's build.sh can cleanup after itself.
