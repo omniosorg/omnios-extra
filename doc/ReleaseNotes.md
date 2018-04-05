@@ -15,7 +15,7 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 ### System Features
 
-* Kernel Page Table Isolation (kpti) feature from Joyent. This adds protection
+* Kernel Page Table Isolation (KPTI) feature from Joyent. This adds protection
   against the [Meltdown](http://meltdownattack.com) Intel CPU vulnerability
   announced early in 2018. See
   [https://omniosce.org/info/kpti](https://omniosce.org/info/kpti)
@@ -36,8 +36,8 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   replaced with dialogues to make it easier to navigate, and it is now
   possible to select DHCP assignment of the DNS parameters. Additional
   options are available for configuring aspects of the root pool including
-  whether to force a 4K block size (ashift=12) and whether to use use
-  EFI or MBR labels.
+  whether to force a 4K block size (ashift=12), whether to use stripe, mirror
+  or a RAIDZ level, and whether to use EFI or MBR labels.
 
 * The default mail submission agent is now `Dragonfly Mail Agent (dma)` rather
   than sendmail. In a default installation, `/usr/lib/sendmail` points to
@@ -78,13 +78,13 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 * A number of system components now enable Address Space Layout Randomisation
   (ASLR) by default:
+    * DHCP daemon
+    * Dragonfly Mail Agent
+    * NTP & NTPsec
     * OpenSSH daemon
     * pfexecd
     * rpcbind
     * Sendmail
-    * Dragonfly Mail Agent
-    * NTP & NTPsec
-    * DHCP daemon
     * SNMP daemon
 
 * `openssh` has been upgraded to 7.6p1. This version drops support for
@@ -129,6 +129,68 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 * Workarounds for some systems with known broken firmware.
 
+### Commands and Command Options
+
+* ZFS now supports the removal of a top-level vdev from a pool via
+  `zfs remove`, reducing the total amount of storage in the pool without
+  requiring a pool rebuild. More information ca be found in
+  [illumos Issue 7614](https://www.illumos.org/issues/7614).
+
+* ZFS now supports pool-wide state checkpoints via `zpool checkpoint`.
+> A pool checkpoint can be thought of as a pool-wide snapshot and should be
+> used with care as it contains every part of the pool's state, from
+> properties to vdev configuration.
+  Refer to the zpool man page for more details.
+  [illumos Issue 9166](https://www.illumos.org/issues/9166)
+
+* `/bin/uname -o` and `/usr/gnu/bin/uname -o` report `illumos` as the
+  operating system name.
+
+* `grep` now supports context options (-A, -B, -C)
+
+* `date -r` to display the date associated with an epoch value, or the
+  timestamp of a file.
+
+* The `reboot now` command, as sometimes mistyped due to its prevelance on
+  other system types, no longer breaks booting due to trying to load a
+  kernel called `now`; the system now always falls back to `unix` for the
+  default kernel.
+
+### LX zones
+
+* The IP address information for an interface in an LX zone can now be
+  set directly via the `allowed-address` and `defrouter` properties instead
+  of by using attributes. In addition to setting the address within the
+  zone, this also enables L3 protection on the interface so that it can
+  no longer be changed from inside the zone. The old method of setting
+  attributes is still supported but does not afford this protection.
+    ```
+	GZ# zonecfg -z lx info net
+	net:
+		address not specified
+		allowed-address: 172.30.1.129/26
+		defrouter: 172.30.1.254
+		physical: deb0
+
+	GZ# dladm show-linkprop deb0
+	LINK         PROPERTY        PERM VALUE          DEFAULT        POSSIBLE
+	deb0         protection      rw   ip-nospoof     --             
+	deb0         allowed-ips     rw   172.30.1.129/32 --            --
+    ```
+
+* Any secondary file-systems mounted within /usr, /lib or /sbin are no longer
+  accessible from within an LX zone through /native/.
+
+* Report that `/proc/sys` is writable to keep _systemd_ happy.
+
+* More complete emulation of `/proc/mounts`.
+
+* Emulate a userspace clock of 100Hz to accommodate some broken applications.
+
+* Support for joining multicast group.
+
+* Many other fixes and compatibility updates from Joyent.
+
 ### Package Management
 
 * A new `pkg apply-hot-fix` command has been added to make it easier to apply
@@ -168,73 +230,13 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 * `pkg history -o time,command -n 5` now works as expected.
 
-### LX zones
-
-* The IP address information for an interface in an LX zone can now be
-  set directly via the `allowed-address` and `defrouter` properties instead
-  of by using attributes. In addition to setting the address within the
-  zone, this also enables L3 protection on the interface so that it can
-  no longer be changed from inside the zone. The old method of setting
-  attributes is still supported but does not afford this protection.
-    ```
-	GZ# zonecfg -z lx info net
-	net:
-		address not specified
-		allowed-address: 172.30.1.129/26
-		defrouter: 172.30.1.254
-		physical: deb0
-
-	GZ# dladm show-linkprop deb0
-	LINK         PROPERTY        PERM VALUE          DEFAULT        POSSIBLE
-	deb0         protection      rw   ip-nospoof     --             
-	deb0         allowed-ips     rw   172.30.1.129/32 --            --
-    ```
-
-* Any secondary file-systems mounted within /usr, /lib or /sbin are no longer
-  accessible from within an LX zone through /native/.
-
-* Report that `/proc/sys` is writable to keep _systemd_ happy.
-
-* More complete emulation of `/proc/mounts`.
-
-* Emulate a userspace clock of 100Hz to accommodate some broken applications.
-
-* Support for joining multicast group.
-
-* Many other fixes and compatibility updates from Joyent.
-
 ### Hardware Support
+
+* Support for Broadcom/Avago tri-mode adapters.
 
 * Better support for AMD Ryzen processors.
 
 * Support for Sound Blaster Audigy RX.
-
-### Commands and Command Options
-
-* ZFS now supports the removal of a top-level vdev from a pool via
-  `zfs remove`, reducing the total amount of storage in the pool without
-  requiring a pool rebuild. More information ca be found in
-  [illumos Issue 7614](https://www.illumos.org/issues/7614).
-
-* ZFS now supports pool-wide state checkpoints via `zpool checkpoint`.
-> A pool checkpoint can be thought of as a pool-wide snapshot and should be
-> used with care as it contains every part of the pool's state, from
-> properties to vdev configuration.
-  Refer to the zpool man page for more details.
-  [illumos Issue 9166](https://www.illumos.org/issues/9166)
-
-* `/bin/uname -o` and `/usr/gnu/bin/uname -o` report `illumos` as the
-  operating system name.
-
-* `grep` now supports context options (-A, -B, -C)
-
-* `date -r` to display the date associated with an epoch value, or the
-  timestamp of a file.
-
-* The `reboot now` command, as sometimes mistyped due to its prevelance on
-  other system types, no longer breaks booting due to trying to load a
-  kernel called `now`; the system now always falls back to `unix` for the
-  default kernel.
 
 ### Developer Features
 
@@ -243,8 +245,7 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   Details of the changes in GCC 7 can be found on
   [the gcc web site](https://gcc.gnu.org/gcc-7/changes.html).
 
-* Perl has been upgraded to 5.26.X. The version of perl shipped with OmniOS
-  is for internal system use and should not be relied on for anything else.
+* Perl has been upgraded to 5.26.
 
 * MDB smart-write feature via `/z` - see
   [illumos issue 9091](https://www.illumos.org/issues/9091)
