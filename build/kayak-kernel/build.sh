@@ -63,16 +63,6 @@ fi
 
 VER=1.1
 
-# Pick a reasonable default for ZFS filesystem to use for the build...
-if [ "`zonename`" = global ]; then
-    IMG_DSET=rpool/kayak_image
-else
-    rootfs="`df / | cut -d\( -f2 | cut -d\) -f1`"
-    IMG_DSET="$rootfs/kayak_image"
-fi
-# ... but allow it to be overidden in site.sh
-[ -n "$KAYAK_IMG_DSET" ] && IMG_DSET=$KAYAK_IMG_DSET
-
 # NOTE: If PKGURL is specified, allow it to be different than the destination
 # PKGSRVR. PKGURL is from where kayak-kernel takes its bits. PKGSRVR is where
 # this package (with a prebuilt miniroot and unix) will be installed.
@@ -105,7 +95,7 @@ DEPENDS_IPS=""
 
 clone_source
 logmsg "Now building $PKG"
-$SUDO ./sudo-bits.sh $KAYAK_CLOBBER $IMG_DSET $TMPDIR/$BUILDDIR \
+$SUDO ./sudo-bits.sh $KAYAK_CLOBBER $TMPDIR/$BUILDDIR \
     $PREBUILT_ILLUMOS $DESTDIR $PKGURL $VER $OLDUSER $BATCHMODE
 if [ $? != 0 ]; then
     logerr "--- sudo-bits sub-script failed."
