@@ -783,7 +783,8 @@ clone_github_source() {
         logcmd rsync -ar $local/ $prog/ || logerr "rsync failed."
         fresh=1
     elif [ ! -d $prog ]; then
-        logcmd $GIT clone --depth $depth $src $prog || logerr "clone failed"
+        logcmd $GIT clone --no-single-branch --depth $depth $src $prog \
+            || logerr "clone failed"
         fresh=1
     else
         logmsg "Using existing checkout"
