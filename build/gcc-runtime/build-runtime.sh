@@ -37,12 +37,6 @@ DESC="$SUMMARY"
 init
 prep_build
 
-mkdir -p $TMPDIR/$BUILDDIR
-for lic in COPYING.RUNTIME COPYING.LIB COPYING3.LIB; do
-    logcmd cp $SRCDIR/files/$lic $TMPDIR/$BUILDDIR/$lic || \
-        logerr "Cannot copy licence: $lic"
-done
-
 mkdir -p $DESTDIR/usr/lib
 mkdir -p $DESTDIR/usr/lib/amd64
 

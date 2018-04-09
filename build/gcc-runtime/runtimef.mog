@@ -1,0 +1,12 @@
+license files/COPYING.LIB license=LGPLv2.1
+license files/COPYING.RUNTIME license="GCC runtime license"
+license files/COPYING3.LIB license=LGPLv3
+
+link path=usr/lib/$(LIB).3 target=$(LIB).3.0.0
+link path=usr/lib/$(LIB).4 target=$(LIB).$(LIBVER)
+link path=usr/lib/$(LIB) target=$(LIB).$(LIBVER)
+
+link path=usr/lib/amd64/$(LIB).3 target=$(LIB).3.0.0
+link path=usr/lib/amd64/$(LIB).4 target=$(LIB).$(LIBVER)
+link path=usr/lib/amd64/$(LIB) target=$(LIB).$(LIBVER)
+
