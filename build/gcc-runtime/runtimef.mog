@@ -10,3 +10,8 @@ link path=usr/lib/amd64/$(LIB).3 target=$(LIB).3.0.0
 link path=usr/lib/amd64/$(LIB).4 target=$(LIB).$(LIBVER)
 link path=usr/lib/amd64/$(LIB) target=$(LIB).$(LIBVER)
 
+link path=usr/lib/libquadmath.so.0 target=libquadmath.so.0.0.0
+link path=usr/lib/libquadmath.so target=libquadmath.so.0.0.0
+link path=usr/lib/amd64/libquadmath.so.0 target=libquadmath.so.0.0.0
+link path=usr/lib/amd64/libquadmath.so target=libquadmath.so.0.0.0
+
