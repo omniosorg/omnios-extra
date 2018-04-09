@@ -289,14 +289,19 @@ omnios library/python-2/ipaddress-27
 omnios library/python-2/jaraco.classes-27
 omnios library/python-2/jsonrpclib-27
 omnios library/python-2/jsonschema-27
+omnios library/python-2/lxml-27 o
 omnios library/python-2/m2crypto-27 o
 omnios library/python-2/mako-27
 omnios library/python-2/more-itertools-27
+omnios library/python-2/numpy-27 o
 omnios library/python-2/ply-27
 omnios library/python-2/portend-27
 omnios library/python-2/pybonjour-27
 omnios library/python-2/pycurl-27
+omnios library/python-2/pylint-27 o
 omnios library/python-2/pyopenssl-27
+omnios library/python-2/pyrex-27 o
+omnios library/python-2/python-extra-27 o
 omnios library/python-2/pytz-27
 omnios library/python-2/setuptools-27
 omnios library/python-2/simplejson-27
@@ -672,7 +677,6 @@ omnios system/zones/brand/lx
 omnios system/zones/brand/s10
 omnios system/zones/brand/sn1
 omnios system/zones/brand/sparse
-omnios system/zones/brand/vm
 omnios system/zones/internal
 omnios terminal/screen
 omnios terminal/tmux
