@@ -40,7 +40,7 @@ DESC="$SUMMARY"
 # Unless building with HEAD from joyent/illumos-kvm[-cmd], specify the
 # revision to use.
 KVM_ROLLBACK=8c4fef5305b02720d9147e903cb28db5ed9e5958
-KVM_CMD_ROLLBACK=
+KVM_CMD_ROLLBACK=70a3b9ac0fffc05cbe541164c097f51040addc8c
 
 # These are the dependencies for both the module and the cmds
 BUILD_DEPENDS_IPS="
