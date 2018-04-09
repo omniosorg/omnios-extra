@@ -16,4 +16,5 @@ extra.omnios ooce/runtime/python-36
 extra.omnios ooce/server/nginx
 extra.omnios ooce/system/mbuffer
 extra.omnios ooce/system/smartmontools
+extra.omnios ooce/system/test/iozone
 extra.omnios ooce/text/asciidoc
