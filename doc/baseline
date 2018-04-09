@@ -581,6 +581,7 @@ omnios system/library/gcc-4-runtime r
 omnios system/library/gcc-5-runtime r
 omnios system/library/gcc-6-runtime r
 omnios system/library/gcc-runtime
+omnios system/library/gfortran-runtime
 omnios system/library/iconv/unicode
 omnios system/library/iconv/utf-8
 omnios system/library/iconv/utf-8/manual

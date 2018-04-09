@@ -39,12 +39,6 @@ OPT=/opt/gcc-$VER
 init
 prep_build
 
-mkdir -p $TMPDIR/$BUILDDIR
-for lic in COPYING.RUNTIME COPYING.LIB COPYING3.LIB; do
-    logcmd cp $SRCDIR/files/$lic $TMPDIR/$BUILDDIR/$lic || \
-        logerr "Cannot copy licence: $lic"
-done
-
 mkdir -p $DESTDIR/usr/lib
 mkdir -p $DESTDIR/usr/lib/amd64
 
@@ -59,13 +53,13 @@ for v in 6.0.13 6.0.16 6.0.17 6.0.18 6.0.21 6.0.22; do
 	if [ -f /usr/lib/$LIB.$v ]; then
 		cp /usr/lib/$LIB.$v $DESTDIR/usr/lib/$LIB.$v
 	else
-		logerr "/usr/lib/libstdc++.so.$v not found"
+		logerr "/usr/lib/$LIB.$v not found"
 	fi
 
 	if [ -f /usr/lib/amd64/$LIB.$v ]; then
 		cp /usr/lib/amd64/$LIB.$v $DESTDIR/usr/lib/amd64/$LIB.$v
 	else
-		logerr "/usr/lib/amd64/libstdc++.so.$v not found"
+		logerr "/usr/lib/amd64/$LIB.$v not found"
 	fi
 done
 
