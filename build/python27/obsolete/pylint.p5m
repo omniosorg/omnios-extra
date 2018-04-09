@@ -1,0 +1,4 @@
+set name=pkg.fmri value=library/python-2/pylint-27@1.7.4-0.@RELVER@
+set name=pkg.summary value="python code static checker"
+set name=pkg.descr value="python code static checker"
+set name=pkg.obsolete value=true

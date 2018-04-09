@@ -1,0 +1,4 @@
+set name=pkg.fmri value=library/python-2/lxml-27@4.1.1-0.@RELVER@
+set name=pkg.summary value="lxml - Powerful and Pythonic XML processing library"
+set name=pkg.descr value="lxml - Powerful and Pythonic XML processing library"
+set name=pkg.obsolete value=true
