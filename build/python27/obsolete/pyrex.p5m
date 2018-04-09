@@ -1,0 +1,4 @@
+set name=pkg.fmri value=library/python-2/pyrex-27@0.9.9-0.@RELVER@
+set name=pkg.summary value="Pyrex - a Language for Writing Python Extension Modules"
+set name=pkg.descr value="Pyrex - a Language for Writing Python Extension Modules"
+set name=pkg.obsolete value=true

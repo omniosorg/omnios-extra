@@ -1,0 +1,4 @@
+set name=pkg.fmri value=library/python-2/numpy-27@1.13.3-0.@RELVER@
+set name=pkg.summary value="numpy - package for scientific computing with Python"
+set name=pkg.descr value="numpy - package for scientific computing with Python"
+set name=pkg.obsolete value=true

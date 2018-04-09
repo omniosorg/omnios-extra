@@ -1,0 +1,4 @@
+set name=pkg.fmri value=library/python-2/python-extra-27@5.11-0.@RELVER@
+set name=pkg.summary value="Supplemental Python libraries and utilities"
+set name=pkg.descr value="Supplemental Python libraries and utilities"
+set name=pkg.obsolete value=true
