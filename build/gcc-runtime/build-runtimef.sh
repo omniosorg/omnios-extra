@@ -63,7 +63,16 @@ cp $OPT/lib/$LIB.$LIBVER $DESTDIR/usr/lib/$LIB.$LIBVER \
 cp $OPT/lib/amd64/$LIB.$LIBVER $DESTDIR/usr/lib/amd64/$LIB.$LIBVER \
     || logerr "Failed to copy $LIBVER (amd64)"
 
-make_package runtimef.mog
+# libquadmath
+LIB=libquadmath.so
+LIBVER=0.0.0
+
+cp $OPT/lib/$LIB.$LIBVER $DESTDIR/usr/lib/$LIB.$LIBVER \
+    || logerr "Failed to copy $LIBVER"
+cp $OPT/lib/amd64/$LIB.$LIBVER $DESTDIR/usr/lib/amd64/$LIB.$LIBVER \
+    || logerr "Failed to copy $LIBVER (amd64)"
+
+make_package runtimef.mog runtimef_post.mog
 clean_up
 
 # Vim hints
