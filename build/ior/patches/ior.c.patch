@@ -1,0 +1,21 @@
+diff -pruN '--exclude=*.orig' ior-3.1.0~/src/ior.c ior-3.1.0/src/ior.c
+--- ior-3.1.0~/src/ior.c	2017-08-24 01:36:29.000000000 +0000
++++ ior-3.1.0/src/ior.c	2018-04-09 19:43:47.995527100 +0000
+@@ -913,7 +913,7 @@ void GetPlatformName(char *platformName)
+         char nodeName[MAX_STR], *p, *start, sysName[MAX_STR];
+         struct utsname name;
+ 
+-        if (uname(&name) != 0) {
++        if (uname(&name) < 0) {
+                 EWARN("cannot get platform name");
+                 sprintf(sysName, "%s", "Unknown");
+                 sprintf(nodeName, "%s", "Unknown");
+@@ -1502,7 +1502,7 @@
+                 fprintf(stdout, " %s", argv[i]);
+         }
+         fprintf(stdout, "\n");
+-        if (uname(&unamebuf) != 0) {
++        if (uname(&unamebuf) < 0) {
+                 EWARN("uname failed");
+                 fprintf(stdout, "Machine: Unknown");
+         } else {
