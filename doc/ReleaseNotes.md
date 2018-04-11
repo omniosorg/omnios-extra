@@ -151,6 +151,9 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 * `date -r` to display the date associated with an epoch value, or the
   timestamp of a file.
 
+* `netstat` supports the `-c` option to include CIDR mask length after
+  addresses. This is a less verbose alternative to adding `-v`.
+
 * The `reboot now` command, as sometimes mistyped due to its prevelance on
   other system types, no longer breaks booting due to trying to load a
   kernel called `now`; the system now always falls back to `unix` for the
