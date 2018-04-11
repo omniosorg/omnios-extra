@@ -151,8 +151,10 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 * `date -r` to display the date associated with an epoch value, or the
   timestamp of a file.
 
-* `netstat` supports the `-c` option to include CIDR mask length after
-  addresses. This is a less verbose alternative to adding `-v`.
+* `netstat` now supports the `-c` option to print IPv4 networks using CIDR
+  notation (x.y.z.a/NN) with the _-i_, _-r_ and _-M_ options. IPv6 networks
+  default to including the mask information but, to preserve backwards
+  compatibility, IPv4 ones do not without this new flag.
 
 * The `reboot now` command, as sometimes mistyped due to its prevelance on
   other system types, no longer breaks booting due to trying to load a
