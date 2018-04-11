@@ -1,6 +1,7 @@
---- zsh-5.0.5/configure.orig   Fri Nov 29 18:28:55 2013
-+++ zsh-5.0.5/configure      Sun Jul 20 21:53:55 2014
-@@ -7603,7 +7603,6 @@
+diff -pruN '--exclude=*.orig' zsh-5.4.2~/configure zsh-5.4.2/configure
+--- zsh-5.4.2~/configure	2017-06-30 20:36:56.000000000 +0000
++++ zsh-5.4.2/configure	2018-04-11 19:53:05.040709385 +0000
+@@ -7690,7 +7690,6 @@ if ${zsh_cv_type_sigset_t+:} false; then
  else
    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
  /* end confdefs.h.  */
