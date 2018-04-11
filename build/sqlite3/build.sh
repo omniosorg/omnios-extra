@@ -27,11 +27,21 @@
 . ../../lib/functions.sh
 
 PROG=sqlite-autoconf
-VER=3230000
-VERHUMAN=3.23.0
+VER=3230100
 PKG=database/sqlite-3
 SUMMARY="SQL database engine library"
 DESC="$SUMMARY"
+
+VERHUMAN="`echo $VER | sed '
+    # Mmmsspp -> M.mm.ss.pp
+    s/\(.\)\(..\)\(..\)\(..\)/\1.\2.\3.\4/
+    # Remove leading zeros
+    s/\.0/./g
+    # Remove empty last component
+    s/\.0$//
+'`"
+[ -n "$VERHUMAN" ] || logerr "-- Could not build VERHUMAN"
+logmsg "-- Building version $VERHUMAN"
 
 init
 download_source sqlite $PROG $VER
