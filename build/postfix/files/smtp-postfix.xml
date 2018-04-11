@@ -18,19 +18,19 @@
         <exec_method
             type="method"
             name="start"
-            exec="/opt/ooce/sbin/postfix start"
+            exec="/opt/ooce/postfix/sbin/postfix start"
             timeout_seconds="60">
             <method_context security_flags="aslr" />
         </exec_method>
         <exec_method
             type="method"
             name="stop"
-            exec="/opt/ooce/sbin/postfix stop"
+            exec="/opt/ooce/postfix/sbin/postfix stop"
             timeout_seconds="60"/>
         <exec_method
             type="method"
             name="refresh"
-            exec="/opt/ooce/sbin/postfix reload"
+            exec="/opt/ooce/postfix/sbin/postfix reload"
             timeout_seconds="60"/>
 
         <property_group name="startd" type="framework">
