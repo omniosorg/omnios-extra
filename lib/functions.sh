@@ -35,6 +35,9 @@ umask 022
 # scripts
 #############################################################################
 
+BASEPATH=/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin
+export PATH=$BASEPATH
+
 #############################################################################
 # Process command line options
 #############################################################################
@@ -265,19 +268,25 @@ SRCDIR=$PWD/`dirname $0`
 . $MYDIR/config.sh
 [ -f $MYDIR/site.sh ] && . $MYDIR/site.sh
 
+set_gccver() {
+    GCCVER="$1"
+    GCCPATH="/opt/gcc-$GCCVER"
+    [ -x "$GCCPATH/bin/gcc" ] || logerr "Unknown compiler version $GCCVER"
+    PATH="$GCCPATH/bin:$BASEPATH"
+    export GCCVER GCCPATH PATH
+}
+
 case $RELVER in
-    151022) GCCVER=5.1.0 ;;
-    151024) GCCVER=5 ;;
-    151025) GCCVER=6 ;;
-    151026) GCCVER=6 ;;
-    151027) GCCVER=7 ;;
-    151028) GCCVER=7 ;;
+    151022) DEFAULT_GCC_VER=5.1.0 ;;
+    151024) DEFAULT_GCC_VER=5 ;;
+    151025) DEFAULT_GCC_VER=6 ;;
+    151026) DEFAULT_GCC_VER=6 ;;
+    151027) DEFAULT_GCC_VER=7 ;;
+    151028) DEFAULT_GCC_VER=7 ;;
     *)      logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
-GCCPATH=/opt/gcc-$GCCVER
-# Set the path - This can be overriden/extended in the build script
-PATH="$GCCPATH/bin:/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin"
-export LANG GCCPATH PATH
+
+set_gccver $DEFAULT_GCC_VER
 
 # Platform information, e.g. 5.11
 SUNOSVER=`uname -r`
