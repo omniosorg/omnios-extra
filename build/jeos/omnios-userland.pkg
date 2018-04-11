@@ -109,7 +109,7 @@ service/network/smtp/dma		0.11
 shell/bash				4.4
 shell/pipe-viewer			1.6
 shell/tcsh				6.20.0
-shell/zsh				5.4
+shell/zsh				5.5
 system/cpuid				1
 system/install/kayak-kernel		1.1
 system/install/kayak			1.1
