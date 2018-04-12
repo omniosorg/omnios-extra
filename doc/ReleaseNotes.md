@@ -4,6 +4,24 @@
 
 # Release Notes for OmniOSce v11 r151022
 
+## r151022av (2018-04-16)
+Weekly release for w/c 16th of April 2018.
+> This update requires a reboot.
+
+### Security fixes
+
+* `zsh` updated to fix:
+  * [CVE-2018-1100](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1100)
+
+### Bug fixes
+
+* Backport xnf network driver fix to avoid crash under Xen 4.x.
+  * [illumos issue 7186](https://www.illumos.org/issues/7186)
+
+<br>
+
+----
+
 ## r151022at (2018-04-03)
 Weekly release for w/c 2nd of April 2018.
 > This is a non-reboot update.
