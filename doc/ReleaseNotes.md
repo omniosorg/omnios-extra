@@ -4,6 +4,19 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024x (2018-04-16)
+Weekly release for w/c 16th of April 2018.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `zsh` updated to fix:
+  * [CVE-2018-1100](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1100)
+
+<br>
+
+----
+
 ## r151024v (2018-04-03)
 Weekly release for w/c 2nd of April 2018.
 > This is a non-reboot update.
