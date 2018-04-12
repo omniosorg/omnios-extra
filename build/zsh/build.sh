@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# CDDL HEADER START
+# {{{ CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
 # Common Development and Distribution License, Version 1.0 only
@@ -18,27 +18,25 @@
 # fields enclosed by brackets "[]" replaced with your own identifying
 # information: Portions Copyright [yyyy] [name of copyright owner]
 #
-# CDDL HEADER END
-#
+# CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=zsh
-VER=5.4.2
+VER=5.5
 VERHUMAN=$VER
 PKG=shell/zsh
 SUMMARY="Z shell"
 DESC="Z shell"
 
-DEPENDS_IPS="system/library system/library/math library/pcre"
-
 BUILDARCH=32
-CPPFLAGS32="$CPPFLAGS32 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
-CONFIGURE_OPTS_32="$CONFIGURE_OPTS_32 --bindir=/usr/bin
+CPPFLAGS32+=" -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
+CONFIGURE_OPTS_32+="
+    --bindir=/usr/bin
 	--enable-cap
 	--enable-dynamic
 	--enable-etcdir=/etc
@@ -49,7 +47,8 @@ CONFIGURE_OPTS_32="$CONFIGURE_OPTS_32 --bindir=/usr/bin
 	--enable-multibyte
 	--enable-pcre
 	--with-tcsetpgrp
-	--disable-gdbm"
+	--disable-gdbm
+"
 
 install_zshrc() {
   mkdir -p $DESTDIR/etc
@@ -74,4 +73,4 @@ make_package
 clean_up
 
 # Vim hints
-# vim:ts=4:sw=4:et:
+# vim:ts=4:sw=4:et:fdm=marker

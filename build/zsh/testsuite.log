@@ -1,6 +1,16 @@
 ./A01grammar.ztst: starting.
 This test hangs the shell when it fails...
-./A01grammar.ztst: all tests successful.
+Test ./A01grammar.ztst failed: bad status 127, expected 0 from:
+  mkdir test_path_script
+  print "#!/bin/sh\necho Found the script." >test_path_script/myscript
+  chmod u+x test_path_script/myscript
+  path=($PWD/test_path_script $path)
+  export PATH
+  $ZTST_testdir/../Src/zsh -f -o pathscript myscript
+Error output:
+/data/omnios-build/omniosorg/bloody/_build/zsh-5.5/Test/../Src/zsh: can't open input file: myscript
+Was testing: PATHSCRIPT option
+./A01grammar.ztst: test failed.
 ./A02alias.ztst: starting.
 This test hangs the shell when it fails...
 ./A02alias.ztst: all tests successful.
@@ -34,6 +44,8 @@ This test takes 3 seconds and hangs the shell when it fails...
 ./B08shift.ztst: all tests successful.
 ./B09hash.ztst: starting.
 ./B09hash.ztst: all tests successful.
+./B10getopts.ztst: starting.
+./B10getopts.ztst: all tests successful.
 ./C01arith.ztst: starting.
 ./C01arith.ztst: all tests successful.
 ./C02cond.ztst: starting.
@@ -102,6 +114,8 @@ Test case skipped: strftime extensions not supported
 ./W01history.ztst: starting.
 History tests write to /dev/tty
 ./W01history.ztst: all tests successful.
+./W02jobs.ztst: starting.
+./W02jobs.ztst: all tests successful.
 ./X02zlevi.ztst: starting.
 This test may hang the shell when it fails...
 ./X02zlevi.ztst: all tests successful.
@@ -116,5 +130,7 @@ Test case skipped: multibyte not available for bindkey test
 ./Y03arguments.ztst: starting.
 ./Y03arguments.ztst: all tests successful.
 **************************************
-48 successful test scripts, 0 failures, 1 skipped
+49 successful test scripts, 1 failure, 1 skipped
 **************************************
+gmake[1]: *** [Makefile:188: check] Error 1
+gmake: *** [Makefile:263: test] Error 2
