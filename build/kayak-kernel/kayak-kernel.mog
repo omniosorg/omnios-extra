@@ -27,3 +27,7 @@
 # Prevents pkgdepend from freaking out.
 <transform file path=tftpboot/boot/platform/i86pc/kernel/amd64/unix \
     -> set pkg.depend.bypass-generate .* >
+
+<transform file path=tftpboot/boot/grub/menu.lst -> set preserve renamenew>
+<transform file path=tftpboot/boot/loader.conf.local -> set preserve renamenew>
+
