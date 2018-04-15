@@ -35,7 +35,7 @@ export SHELL
 
 case $DEPVER in
     "")
-	DEPVER=5.24.3
+	DEPVER=5.24.4
         logmsg "no version specified, using $DEPVER"
         ;;
 esac
