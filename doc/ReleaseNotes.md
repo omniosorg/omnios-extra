@@ -12,6 +12,8 @@ Weekly release for w/c 16th of April 2018.
 
 * `zsh` updated to fix:
   * [CVE-2018-1100](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1100)
+* `nghttp2` updated to fix:
+  * [CVE-2018-1000168](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1000168)
 
 ### Bug fixes
 
