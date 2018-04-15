@@ -10,6 +10,10 @@ Weekly release for w/c 16th of April 2018.
 
 ### Security fixes
 
+* `perl` updated to fix:
+  * [CVE-2018-6797](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-6797)
+  * [CVE-2018-6798](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-6798)
+  * [CVE-2018-6913](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-6913)
 * `zsh` updated to fix:
   * [CVE-2018-1100](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1100)
 
