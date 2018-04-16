@@ -3,3 +3,8 @@ t_op_getppid.t.patch -p0
 dtrace.patch
 CVE-2017-12837.patch
 CVE-2017-12883.patch
+CVE-2018-6797.patch
+CVE-2018-6798a.patch
+CVE-2018-6798b.patch
+CVE-2018-6798c.patch
+CVE-2018-6913.patch
