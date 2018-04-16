@@ -81,7 +81,7 @@ FFIVERS=`pkg list -H libffi | awk '{print $(NF-1)}' | cut -d- -f1`
 #############################################################################
 
 # Perl versions we currently build against
-PERLVER=5.24.3
+PERLVER=5.24.4
 SPERLVER=${PERLVER%.*}
 
 # Full paths to bins
