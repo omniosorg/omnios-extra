@@ -900,7 +900,7 @@ make_package() {
         echo "set name=pkg.human-version value=\"$VERHUMAN\"" >> $MY_MOG_FILE
     fi
     echo "set name=pkg.summary value=\"$SUMMARY\"" >> $MY_MOG_FILE
-    echo "set name=pkg.descr value=\"$DESCSTR\"" >> $MY_MOG_FILE
+    echo "set name=pkg.description value=\"$DESCSTR\"" >> $MY_MOG_FILE
     echo "set name=publisher value=\"sa@omniosce.org\"" >> $MY_MOG_FILE
     logmsg "--- Applying transforms"
     $PKGMOGRIFY \
