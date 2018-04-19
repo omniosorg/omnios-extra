@@ -273,6 +273,18 @@ url_encode() {
 }
 
 #############################################################################
+# ASCII character to number
+#############################################################################
+
+# Turn the letter component of the version into a number for IPS versioning
+ord26() {
+    local ASCII=$(printf '%d' "'$1")
+    ASCII=$((ASCII - 64))
+    [[ $ASCII -gt 32 ]] && ASCII=$((ASCII - 32))
+    echo $ASCII
+}
+
+#############################################################################
 # Some initialization
 #############################################################################
 
@@ -900,7 +912,7 @@ make_package() {
         echo "set name=pkg.human-version value=\"$VERHUMAN\"" >> $MY_MOG_FILE
     fi
     echo "set name=pkg.summary value=\"$SUMMARY\"" >> $MY_MOG_FILE
-    echo "set name=pkg.descr value=\"$DESCSTR\"" >> $MY_MOG_FILE
+    echo "set name=pkg.description value=\"$DESCSTR\"" >> $MY_MOG_FILE
     echo "set name=publisher value=\"sa@omniosce.org\"" >> $MY_MOG_FILE
     logmsg "--- Applying transforms"
     $PKGMOGRIFY \

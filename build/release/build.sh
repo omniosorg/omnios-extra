@@ -1,0 +1,84 @@
+#!/usr/bin/bash
+#
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+#
+. ../../lib/functions.sh
+
+PROG=release
+VERHUMAN=$VER
+PKG=release/name
+SUMMARY="OmniOS release information"
+DESC="OmniOS /etc/release and /etc/os-release files"
+RELEASE=151026
+RELDATE="`date +%Y.%m.%d`"
+RELNUM="`echo $RELEASE | sed 's/[a-z]//g'`"
+VER=$RELNUM
+RELREV=0
+
+if [[ "$RELEASE" = *[a-z] ]]; then
+    # Populate dash revision based on release version
+
+    alpha="`echo "$RELEASE" | sed 's/[0-9]//g'`"
+    while [ ${#alpha} -gt 0 ]; do
+        ((RELREV *= 26))
+        ch="`ord26 ${alpha:0:1}`"
+        ((RELREV += ch))
+        alpha="${alpha:1}"
+    done
+    DASHREV="$RELREV"
+fi
+
+XFORM_ARGS="
+    -DRELEASE=$RELEASE -DRELNUM=$RELNUM -DRELDATE=$RELDATE -DRELREV=$RELREV
+"
+
+build() {
+    logmsg "Generating release files"
+
+    pushd $DESTDIR >/dev/null
+
+    logcmd mkdir -p etc || logerr "-- mkdir failed"
+
+    cat <<- EOM > etc/release
+  OmniOS v11 r$RELEASE
+  Copyright 2017 OmniTI Computer Consulting, Inc. All rights reserved.
+  Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+  All rights reserved. Use is subject to licence terms.
+	EOM
+
+    cat <<- EOM > etc/os-release
+NAME="OmniOS"
+PRETTY_NAME="OmniOS Community Edition v11 r$RELEASE"
+CPE_NAME="cpe:/o:omniosce:omnios:11:$RELNUM:$RELREV"
+ID=omnios
+VERSION=r$RELEASE
+VERSION_ID=r$RELEASE
+BUILD_ID=$RELNUM.$RELREV.$RELDATE
+HOME_URL="https://omniosce.org/"
+SUPPORT_URL="https://omniosce.org/"
+BUG_REPORT_URL="https://github.com/omniosorg/omnios-build/issues/new"
+	EOM
+
+    popd >/dev/null
+}
+
+init
+prep_build
+build
+make_package
+clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker

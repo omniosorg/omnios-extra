@@ -96,14 +96,6 @@ install_pkcs11()
     popd > /dev/null
 }
 
-# Turn the letter component of the version into a number for IPS versioning
-ord26() {
-    local ASCII=$(printf '%d' "'$1")
-    ASCII=$((ASCII - 64))
-    [[ $ASCII -gt 32 ]] && ASCII=$((ASCII - 32))
-    echo $ASCII
-}
-
 save_function make_package make_package_orig
 make_package() {
     if echo $VER | egrep -s '[a-z]'; then
