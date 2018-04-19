@@ -129,6 +129,8 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 * Workarounds for some systems with known broken firmware.
 
+* New `/etc/os-release` file.
+
 ### Commands and Command Options
 
 * ZFS now supports the removal of a top-level vdev from a pool via
