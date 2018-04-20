@@ -24,9 +24,9 @@
 
 dir group=bin mode=0755 owner=root path=var/$(OPREFIX)
 dir group=bin mode=0755 owner=root path=var/$(OPREFIX)/$(PROG)
+dir group=bin mode=0755 owner=root path=var/log/$(OPREFIX)/$(PROG)
 dir group=bin mode=0775 owner=root path=$(OPREFIX)/sbin
-link path=$(OPREFIX)/sbin/$(PROG) target=../$(PROG)/sbin/$(PROG) \
-    mediator=nginx mediator-version=$(VERSION)
+link path=$(OPREFIX)/sbin/$(PROG) target=../$(PROG)-$(VERSION)/sbin/$(PROG)
 
 group groupname=$(PROG) gid=81
 user username=$(PROG) uid=81 group=$(PROG) gcos-field="NGINX User" \
