@@ -17,6 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=release
+VER=0.5.11
 VERHUMAN=$VER
 PKG=release/name
 SUMMARY="OmniOS release information"
@@ -24,12 +25,9 @@ DESC="OmniOS /etc/release and /etc/os-release files"
 RELEASE=151026
 RELDATE="`date +%Y.%m.%d`"
 RELNUM="`echo $RELEASE | sed 's/[a-z]//g'`"
-VER=$RELNUM
 RELREV=0
 
 if [[ "$RELEASE" = *[a-z] ]]; then
-    # Populate dash revision based on release version
-
     alpha="`echo "$RELEASE" | sed 's/[0-9]//g'`"
     while [ ${#alpha} -gt 0 ]; do
         ((RELREV *= 26))
@@ -37,7 +35,6 @@ if [[ "$RELEASE" = *[a-z] ]]; then
         ((RELREV += ch))
         alpha="${alpha:1}"
     done
-    DASHREV="$RELREV"
 fi
 
 XFORM_ARGS="
