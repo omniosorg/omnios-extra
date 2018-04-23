@@ -95,6 +95,10 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   Several legacy SunSSH compatibility options for OpenSSH are deprecated
   and will be removed in a future release; see below for more details.
 
+  > Note that OpenSSH is now delivered as a 64-bit application and so you
+  > may need to adjust your PAM configuration if you have custom rules in
+  > `/etc/pam.conf`
+
 * `libdiskmgt` (and therefore `diskinfo`) now recognises nvme, sata and xen
   controllers.
 
