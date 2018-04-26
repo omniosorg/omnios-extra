@@ -4,6 +4,18 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024z (2018-05-01)
+Weekly release for w/c 30th of April 2018.
+> This is a non-reboot update.
+
+### Bug fixes
+
+* Update `openssh` to work properly with SMF-based ipfilter.
+
+<br>
+
+----
+
 ## r151024x (2018-04-16)
 Weekly release for w/c 16th of April 2018.
 > This is a non-reboot update.
