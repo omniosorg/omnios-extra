@@ -3,11 +3,10 @@
 </a>
 
 # Release Notes for OmniOSce v11 r151026
-![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ** These are DRAFT release notes ** ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
 
-Stable Release, TBC of May 2018
+Stable Release, 7th of May 2018
 
-`uname -a` shows `omnios-r151026-XXX`
+`uname -a` shows `omnios-r151026-d442a020ce`
 
 r151026 release repository: https://pkg.omniosce.org/r151026/core
 
@@ -273,7 +272,109 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 * The python `m2crypto`, `typing`, `lxml` and `pyrex` modules
   have been removed as they are no longer required by core OmniOS packages.
 
-### Package changes ([+] Added, [-] Removed, [\*] Changed)
+### Package changes
 
-XXX
+| Package | Old Version | New Version |
+| :------ | :---------- | :---------- |
+| archiver/gnu-tar | 1.29 | 1.30
+| compress/gzip | 1.8 | 1.9
+| data/iso-codes | 3.76 | 3.77
+| database/sqlite-3 | 3.20.1 | 3.23.1
+| **developer/acpi/compiler** | _New_ | 20180313
+| developer/bmake | 20170812 | 20180222
+| **developer/build-essential** | _New_ | 11
+| developer/build/automake | 1.15.1 | 1.16.1
+| ~~developer/gcc5/libgmp-gcc5~~ | 6.1.2 | _Removed_
+| ~~developer/gcc5/libmpc-gcc5~~ | 1.0.3 | _Removed_
+| ~~developer/gcc5/libmpfr-gcc5~~ | 3.1.5 | _Removed_
+| ~~developer/gcc6/libgmp-gcc6~~ | 6.1.2 | _Removed_
+| ~~developer/gcc6/libmpc-gcc6~~ | 1.0.3 | _Removed_
+| ~~developer/gcc6/libmpfr-gcc6~~ | 3.1.5 | _Removed_
+| **developer/gcc7** | _New_ | 7.3.0
+| developer/gnu-binutils | 2.25 | 2.30
+| developer/java/jdk | 1.7.0.151.1 | 1.7.0.171.2
+| **developer/nasm** | _New_ | 2.13.3
+| developer/versioning/git | 2.14.2 | 2.17.0
+| developer/versioning/mercurial | 4.3.3 | 4.5.3
+| file/gnu-coreutils | 8.28 | 8.29
+| library/c++/sigcpp | 2.99.9 | 2.99.10
+| library/expat | 2.2.4 | 2.2.5
+| library/glib2 | 2.54.0 | 2.56.0
+| **library/libedit** | _New_ | 3.1
+| library/libidn | 1.33 | 1.34
+| library/libxml2 | 2.9.6 | 2.9.8
+| **library/mpc** | _New_ | 1.1.0
+| **library/mpfr** | _New_ | 4.0.1
+| library/ncurses | 6.0.20171014 | 6.1.20180331
+| library/nghttp2 | 1.26.0 | 1.31.1
+| library/nspr | 4.17 | 4.19
+| library/nspr/header-nspr | 4.17 | 4.19
+| library/pcre | 8.41 | 8.42
+| library/python-2/asn1crypto-27 | 0.23.0 | 0.24.0
+| library/python-2/cffi-27 | 1.11.1 | 1.11.5
+| library/python-2/cheroot-27 | 5.8.3 | 6.0.0
+| library/python-2/cherrypy-27 | 11.0.0 | 14.0.1
+| library/python-2/coverage-27 | 4.4.1 | 4.5.1
+| library/python-2/cryptography-27 | 2.0.3 | 2.2.2
+| library/python-2/enum-27 | 0.4.6 | 1.1.6
+| library/python-2/ipaddress-27 | 1.0.18 | 1.0.19
+| **library/python-2/jaraco.classes-27** | _New_ | 1.4.3
+| ~~library/python-2/lxml-27~~ | 4.0.0 | _Removed_
+| ~~library/python-2/m2crypto-27~~ | 0.27.0 | _Removed_
+| **library/python-2/more-itertools-27** | _New_ | 4.1.0
+| ~~library/python-2/numpy-27~~ | 1.13.3 | _Removed_
+| library/python-2/ply-27 | 3.10 | 3.11
+| library/python-2/pycurl-27 | 7.43.0 | 7.43.0.1
+| ~~library/python-2/pylint-27~~ | 1.7.4 | _Removed_
+| library/python-2/pyopenssl-27 | 17.3.0 | 17.5.0
+| ~~library/python-2/pyrex-27~~ | 0.9.9 | _Removed_
+| ~~library/python-2/python-extra-27~~ | 0.5.11 | _Removed_
+| library/python-2/pytz-27 | 2017.2 | 2018.3
+| library/python-2/setuptools-27 | 36.5.0 | 39.0.1
+| library/python-2/simplejson-27 | 3.11.1 | 3.13.2
+| library/python-2/tempora-27 | 1.9 | 1.11
+| ~~library/python-2/typing-27~~ | 3.6.2 | _Removed_
+| library/unixodbc | 2.3.4 | 2.3.6
+| network/openssh | 7.5.1 | 7.6.1
+| network/openssh-server | 7.5.1 | 7.6.1
+| network/service/isc-dhcp | 4.3.6.1 | 4.4.1
+| runtime/java | 1.7.0.151.1 | 1.7.0.171.2
+| runtime/perl | 5.24.4 | 5.26.2
+| runtime/perl-64 | 5.24.4 | 5.26.2
+| runtime/perl/manual | 5.24.4 | 5.26.2
+| security/sudo | 1.8.21.2 | 1.8.22
+| **service/network/ntpsec** | _New_ | 1.1.0
+| **service/network/smtp/dma** | _New_ | 0.11
+| shell/bash | 4.4.12 | 4.4.19
+| shell/zsh | 5.4.2 | 5.5.1
+| **system/bhyve** | _New_ | 0.5.11
+| **system/bhyve/firmware** | _New_ | 20180309
+| **system/bhyve/tests** | _New_ | 0.5.11
+| ~~system/boot/wanboot~~ | 0.5.11 | _Removed_
+| ~~system/boot/wanboot/internal~~ | 0.5.11 | _Removed_
+| **system/library/c-runtime** | _New_ | 0.5.11
+| system/library/dbus | 1.11.20 | 1.12.6
+| ~~system/library/g++-5-runtime~~ | 5.5.0 | _Removed_
+| ~~system/library/g++-6-runtime~~ | 6.4.0 | _Removed_
+| **system/library/g++-runtime** | _New_ | 7
+| ~~system/library/gcc-5-runtime~~ | 5.5.0 | _Removed_
+| ~~system/library/gcc-6-runtime~~ | 6.4.0 | _Removed_
+| **system/library/gcc-runtime** | _New_ | 7
+| **system/library/gfortran-runtime** | _New_ | 7
+| system/library/libdbus | 1.11.20 | 1.12.6
+| system/library/libdbus-glib | 0.108 | 0.110
+| system/library/mozilla-nss | 3.33 | 3.36
+| system/library/mozilla-nss/header-nss | 3.33 | 3.36
+| system/pciutils | 3.5.5 | 3.5.6
+| system/pciutils/pci.ids | 2.2.20170423 | 2.2.20180208
+| **system/test/cryptotest** | _New_ | 0.5.11
+| system/test/fio | 3.1 | 3.5
+| system/virtualization/open-vm-tools | 10.1.15 | 10.2.5
+| **system/zones/brand/sparse** | _New_ | 0.5.11
+| terminal/screen | 4.6.1 | 4.6.2
+| text/gawk | 4.1.4 | 4.2.1
+| text/gnu-patch | 2.7.5 | 2.7.6
+| text/gnu-sed | 4.4 | 4.5
+| text/less | 487 | 530
+| web/wget | 1.19.2 | 1.19.4
 
