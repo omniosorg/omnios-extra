@@ -8,6 +8,10 @@
 Weekly release for w/c 30th of April 2018.
 > This is a non-reboot update.
 
+### Security fixes
+
+* `python` upgraded to 2.7.15, fixing various security issues.
+
 ### Bug fixes
 
 * Update `openssh` to work properly with SMF-based ipfilter.
