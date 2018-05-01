@@ -20,6 +20,8 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
   [https://omniosce.org/info/kpti](https://omniosce.org/info/kpti)
   for details.
 
+* Stack-clash mitigation for 64-bit processes; from Joyent.
+
 * Experimental support for `bhyve` virtual machines. See
   [https://omniosce.org/info/bhyve](https://omniosce.org/info/bhyve)
   for details.
