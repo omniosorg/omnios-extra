@@ -22,6 +22,7 @@
 #
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 # Load support functions
@@ -58,9 +59,12 @@ NSS_LIBS="libfreebl3.so libnss3.so
 	libnssutil3.so libsmime3.so
 	libsoftokn3.so libssl3.so"
 NSPR_LIBS="libnspr4.so libplc4.so libplds4.so"
+NSS_BINS="certutil"
+NSPR_BINS=
 
 # Variables that switch between NSS and NSPR
 TGT_LIBS=$NSS_LIBS
+TGT_BINS=$NSS_BINS
 PC_FILE=nss.pc
 LOCAL_MOG_FILE=nss-local.mog
 
@@ -105,6 +109,15 @@ make_install32() {
 	logcmd cp $TMPDIR/$BUILDDIR/dist/$DIST32/lib/$lib /tmp/nspr-save.$$
     done
     cp $TMPDIR/$BUILDDIR/nspr/$DIST32/config/nspr.pc /tmp/nspr-save.$$
+
+    logmsg "Installing binaries (32)"
+    mkdir -p $DESTDIR/usr/bin/i386
+    for bin in $TGT_BINS; do
+        logcmd cp $TMPDIR/$BUILDDIR/dist/$DIST32/bin/$bin \
+            $DESTDIR/usr/bin/i386/$bin
+        logcmd elfedit -e 'dyn:runpath /usr/lib/mps' \
+            $DESTDIR/usr/bin/i386/$bin
+    done
 }
 
 configure64() {
@@ -127,6 +140,14 @@ make_install64() {
         logcmd cp $TMPDIR/$BUILDDIR/dist/$DIST64/lib/$lib \
 	    $DESTDIR/usr/lib/mps/amd64/$lib
     done
+    logmsg "Installing binaries (64)"
+    mkdir -p $DESTDIR/usr/bin/amd64
+    for bin in $TGT_BINS; do
+        logcmd cp $TMPDIR/$BUILDDIR/dist/$DIST32/bin/$bin \
+            $DESTDIR/usr/bin/amd64/$bin
+        logcmd elfedit -e 'dyn:runpath /usr/lib/mps/amd64' \
+            $DESTDIR/usr/bin/amd64/$bin
+    done
 }
 secv1_links() {
     logcmd ln -s amd64 $DESTDIR/usr/lib/mps/64
@@ -148,6 +169,7 @@ patch_source
 prep_build
 build
 secv1_links
+make_isa_stub
 
 PKG=system/library/mozilla-nss/header-nss
 SUMMARY="Network Security Services Headers"
@@ -167,6 +189,7 @@ clean_up
 # Switch variables & populate other proto area.
 VER=$NSPRVER
 TGT_LIBS=$NSPR_LIBS
+TGT_BINS=$NSPR_BINS
 PC_FILE=nspr.pc
 LOCAL_MOG_FILE=nspr-local.mog
 DESTDIR=`echo $DESTDIR | sed 's/nss/nspr/g'`
