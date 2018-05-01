@@ -1,0 +1,36 @@
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+# CDDL HEADER START
+#
+# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+
+dir group=bin mode=0755 owner=root path=var/$(OPREFIX)
+dir group=bin mode=0755 owner=root path=var/$(OPREFIX)/$(PROG)
+dir group=bin mode=0755 owner=root path=var/log/$(OPREFIX)/$(PROG)
+dir group=bin mode=0775 owner=root path=$(OPREFIX)/sbin
+
+link path=$(OPREFIX)/bin/$(PROG) target=../$(PROG)-$(VERSION)/bin/$(PROG) \
+    mediator=php mediator-version=$(VERSION)
+
+<transform file dir path=\. -> drop>
+
+group groupname=$(PROG) gid=82
+user username=$(PROG) uid=82 group=$(PROG) gcos-field="PHP User" \
+    home-dir=/var/$(OPREFIX)/$(PROG) password=NP
+<transform file path=etc/$(OPREFIX)/$(PROG)/.+$ -> set preserve renamenew>
+<transform dir  path=var/$(OPREFIX)/$(PROG) -> set owner $(PROG)>
+<transform dir  path=var/log/$(OPREFIX)/$(PROG) -> set owner $(PROG)>
+<transform file path=$(PREFIX)/sbin/ \
+    -> set restart_fmri svc:/application/$(PROG)$(sVERSION):default>
+
+license LICENSE license=PHP
+
