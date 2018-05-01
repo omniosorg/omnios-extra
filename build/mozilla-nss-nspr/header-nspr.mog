@@ -21,7 +21,7 @@
 #
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 <transform file dir link path=usr/bin -> drop>
@@ -29,4 +29,4 @@
 <transform dir path=usr/lib -> drop>
 <transform dir file link path=usr/lib/mps -> drop>
 <transform dir path=usr/include/mps/pkgconfig -> drop>
-<transform file path=usr/lib/pkgconfig/nspr.pc -> set mode 0444>
+<transform file dir path=usr/lib/pkgconfig -> drop>

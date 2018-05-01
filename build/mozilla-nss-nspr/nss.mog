@@ -24,7 +24,6 @@
 # Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-<transform file dir link path=usr/bin -> drop>
 <transform file dir link path=usr/include -> drop>
 <transform file dir link path=usr/share -> drop>
 <transform file link path=usr/.*/lib.*\.a$ -> drop>

@@ -55,25 +55,27 @@ MAKE_OPTS="
 NSS_LIBS="libfreebl3.so libnss3.so libnssckbi.so libnssdbm3.so
           libnssutil3.so libsmime3.so libsoftokn3.so libssl3.so"
 NSPR_LIBS="libnspr4.so libplc4.so libplds4.so"
+NSS_BINS="certutil"
+NSPR_BINS=
+
+NSPR_SAVE="$TMPDIR/nspr-save.$$"
 
 make_clean() {
     # Assume PWD == top-level with nss & nspr subdirs.
     /bin/rm -rf dist
-    cd nss
+    pushd nss >/dev/null || logerr "pushd nss"
     logcmd gmake $MAKE_OPTS nss_clean_all || logerr "Can't make clean"
-    cd ..
+    popd >/dev/null
 }
 
 configure32() {
     # Get the install/prototype path out of the way now.
-    logcmd mkdir -p $DESTDIR/usr/lib/mps || \
-        logerr "Failed to create NSS install directory."
+    logcmd mkdir -p $DESTDIR/usr/lib/mps \
+        || logerr "Failed to create NSS install directory."
 }
 
 make_prog32() {
-    logmsg "Making libraries (32)"
-    # Assume PWD == top-level with nss & nspr subdirs.
-    cd nss
+    cd nss || logerr "cd nss"
     logcmd gmake $MAKE_OPTS nss_build_all || logerr "build failed"
     cd ..
 }
@@ -85,31 +87,38 @@ make_install32() {
             $DESTDIR/usr/lib/mps/$lib
     done
     logmsg "Installing headers"
-    logcmd mkdir -p $DESTDIR/usr/include/mps || \
-        logerr "Failed to create NSS header install directory."
+    logcmd mkdir -p $DESTDIR/usr/include/mps \
+        || logerr "Failed to create NSS header install directory."
     logcmd cp $TMPDIR/$BUILDDIR/dist/public/nss/* $DESTDIR/usr/include/mps/
     logcmd cp $TMPDIR/$BUILDDIR/dist/public/dbm/* $DESTDIR/usr/include/mps/
 
     # Save 32-bit NSPR dist off for NSPR build.
-    mkdir /tmp/nspr-save.$$
+    mkdir $NSPR_SAVE
     for lib in $NSPR_LIBS; do
-        logcmd cp $TMPDIR/$BUILDDIR/dist/$DIST32/lib/$lib /tmp/nspr-save.$$
+        logcmd cp $TMPDIR/$BUILDDIR/dist/$DIST32/lib/$lib $NSPR_SAVE
     done
-    cp $TMPDIR/$BUILDDIR/nspr/$DIST32/config/nspr.pc /tmp/nspr-save.$$
+    cp $TMPDIR/$BUILDDIR/nspr/$DIST32/config/nspr.pc $NSPR_SAVE
+
+    logmsg "Installing binaries (32)"
+    mkdir -p $DESTDIR/usr/bin/i386
+    for bin in $TGT_BINS; do
+        logcmd cp $TMPDIR/$BUILDDIR/dist/$DIST32/bin/$bin \
+            $DESTDIR/usr/bin/i386/$bin
+        logcmd elfedit -e 'dyn:runpath /usr/lib/mps' \
+            $DESTDIR/usr/bin/i386/$bin
+    done
 }
 
 configure64() {
     # Get the install/prototype path out of the way now.
-    logcmd mkdir -p $DESTDIR/usr/lib/mps/amd64 || \
-        logerr "Failed to create NSS install directory."
+    logcmd mkdir -p $DESTDIR/usr/lib/mps/amd64 \
+        || logerr "Failed to create NSS install directory."
 }
 
 make_prog64() {
-    logmsg "Making libraries (64)"
-    # Assume PWD == top-level with nss & nspr subdirs.
-    cd nss
+    pushd nss >/dev/null || logerr "pushd nss"
     logcmd gmake $MAKE_OPTS USE_64=1 nss_build_all || logerr "build failed"
-    cd ..
+    popd >/dev/null
 }
 
 make_install64() {
@@ -117,6 +126,14 @@ make_install64() {
     for lib in $TGT_LIBS; do
         logcmd cp $TMPDIR/$BUILDDIR/dist/$DIST64/lib/$lib \
             $DESTDIR/usr/lib/mps/amd64/$lib
+    done
+    logmsg "Installing binaries (64)"
+    mkdir -p $DESTDIR/usr/bin/amd64
+    for bin in $TGT_BINS; do
+        logcmd cp $TMPDIR/$BUILDDIR/dist/$DIST64/bin/$bin \
+            $DESTDIR/usr/bin/amd64/$bin
+        logcmd elfedit -e 'dyn:runpath /usr/lib/mps/amd64' \
+            $DESTDIR/usr/bin/amd64/$bin
     done
 }
 
@@ -145,11 +162,13 @@ patch_source
 
 LOCAL_MOG_FILE=nss-local.mog
 TGT_LIBS=$NSS_LIBS
+TGT_BINS=$NSS_BINS
 PC_FILE=nss.pc
 
 prep_build
 build
 secv1_links
+make_isa_stub
 
 ###########################################################################
 # system/library/mozilla-nss/headers-nss
@@ -163,7 +182,7 @@ make_package header-nss.mog
 # system/library/mozilla-nss
 
 PKG=system/library/mozilla-nss
-SUMMARY="Network Security Services Libraries"
+SUMMARY="Network Security Services Libraries/Utilities"
 DESC="$SUMMARY"
 make_package nss.mog
 
@@ -181,6 +200,7 @@ DESC="$SUMMARY"
 
 VER=$NSPRVER
 TGT_LIBS=$NSPR_LIBS
+TGT_BINS=$NSPR_BINS
 PC_FILE=nspr.pc
 LOCAL_MOG_FILE=nspr-local.mog
 DESTDIR=${DESTDIR/nss/nspr}
@@ -188,13 +208,13 @@ DESTDIR=${DESTDIR/nss/nspr}
 prep_build
 
 for dir in md obsolete private pkgconfig; do
-    logcmd mkdir -p $DESTDIR/usr/include/mps/$dir || \
-        logerr "Failed to create NSPR header install $dir directory."
+    logcmd mkdir -p $DESTDIR/usr/include/mps/$dir \
+        || logerr "Failed to create NSPR header install $dir directory."
 done
 
 for dir in amd64 pkgconfig amd64/pkgconfig; do
-    logcmd mkdir -p $DESTDIR/usr/lib/mps/$dir || \
-        logerr "Failed to create NSPR install $dir directory."
+    logcmd mkdir -p $DESTDIR/usr/lib/mps/$dir \
+        || logerr "Failed to create NSPR install $dir directory."
 done
 
 make_install64
@@ -202,26 +222,14 @@ make_install64
 for dir in "" obsolete private; do
     logcmd cp \
         $TMPDIR/$BUILDDIR/dist/$DIST64/include/$dir/*.h \
-        $DESTDIR/usr/include/mps/$dir || \
-        logerr "Failed to copy $dir header files"
+        $DESTDIR/usr/include/mps/$dir \
+        || logerr "Failed to copy $dir header files"
 done
 
 logcmd cp \
     $TMPDIR/$BUILDDIR/dist/$DIST64/include/md/*.cfg \
-    $DESTDIR/usr/include/mps/md || \
-    logerr "Failed to copy md/ cfg files"
-
-logcmd cp $TMPDIR/$BUILDDIR/nspr/$DIST64/config/nspr.pc \
-    $DESTDIR/usr/lib/mps/amd64/pkgconfig || \
-    logerr "Failed to copy pkgconfig"
-
-# Restore 32-bit NSPR libraries.
-logcmd cp /tmp/nspr-save.$$/nspr.pc $DESTDIR/usr/lib/mps/pkgconfig/nspr.pc
-logcmd cp /tmp/nspr-save.$$/*.so $DESTDIR/usr/lib/mps || \
-    logerr "32-bit NSPR library installation failure"
-logcmd rm -rf /tmp/nspr-save.$$
-
-secv1_links
+    $DESTDIR/usr/include/mps/md \
+    || logerr "Failed to copy md/ cfg files"
 
 make_package header-nspr.mog
 
@@ -231,6 +239,19 @@ make_package header-nspr.mog
 PKG=library/nspr
 SUMMARY="Netscape Portable Runtime"
 DESC="$SUMMARY"
+
+logcmd cp $TMPDIR/$BUILDDIR/nspr/$DIST64/config/nspr.pc \
+    $DESTDIR/usr/lib/mps/amd64/pkgconfig \
+    || logerr "Failed to copy pkgconfig"
+
+# Restore 32-bit NSPR libraries.
+logcmd cp $NSPR_SAVE/nspr.pc $DESTDIR/usr/lib/mps/pkgconfig/nspr.pc
+logcmd cp $NSPR_SAVE/*.so $DESTDIR/usr/lib/mps \
+    || logerr "32-bit NSPR library installation failure"
+logcmd rm -rf $NSPR_SAVE
+
+secv1_links
+
 make_package nspr.mog
 
 ###########################################################################
