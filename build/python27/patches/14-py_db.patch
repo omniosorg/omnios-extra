@@ -7,8 +7,8 @@ some point, but the suitability (or lack thereof) has not yet been determined.
  
  # Default target
  all:		@DEF_MAKE_ALL_RULE@
--build_all:	$(BUILDPYTHON) oldsharedmods sharedmods gdbhooks
-+build_all:	$(BUILDPYTHON) oldsharedmods sharedmods gdbhooks build-py_db
+-build_all:	check-clean-src $(BUILDPYTHON) oldsharedmods sharedmods gdbhooks
++build_all:	check-clean-src $(BUILDPYTHON) oldsharedmods sharedmods gdbhooks build-py_db
  
  # Compile a binary with profile guided optimization.
  profile-opt:
