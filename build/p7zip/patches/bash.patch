@@ -1,5 +1,6 @@
---- contrib/gzip-like_CLI_wrapper_for_7z/p7zip.orig	Mon Feb 27 23:21:32 2012
-+++ contrib/gzip-like_CLI_wrapper_for_7z/p7zip	Mon Feb 27 23:24:11 2012
+diff -pruN '--exclude=*.orig' p7zip_16.02~/contrib/gzip-like_CLI_wrapper_for_7z/p7zip p7zip_16.02/contrib/gzip-like_CLI_wrapper_for_7z/p7zip
+--- p7zip_16.02~/contrib/gzip-like_CLI_wrapper_for_7z/p7zip	2007-07-25 19:10:48.000000000 +0000
++++ p7zip_16.02/contrib/gzip-like_CLI_wrapper_for_7z/p7zip	2018-05-02 12:40:09.859210371 +0000
 @@ -1,4 +1,4 @@
 -#!/bin/sh
 +#!/bin/bash
@@ -19,7 +20,7 @@
  usage ()
    {
      echo "Usage: $0 [-d] [-h|--help] [--] [ name ... ]"
-@@ -28,13 +34,13 @@
+@@ -28,13 +34,13 @@ doit()
    if [ "${file}" != "" ] ; then
      if ${compress} ; then
        if [ -f "${file}" ] ; then
@@ -37,7 +38,7 @@
        else
          exit 1
        fi
-@@ -42,11 +48,11 @@
+@@ -42,11 +48,11 @@ doit()
        case "${file}" in
          *.7z)
            if [ -f "${file}" ] ; then
@@ -51,7 +52,7 @@
             else
               exit 1
             fi
-@@ -61,30 +67,30 @@
+@@ -61,30 +67,30 @@ doit()
    fi
    
    P7ZIPTMP=${TMP:-/tmp}
@@ -91,7 +92,7 @@
    return 0
  }
  
-@@ -95,14 +101,6 @@
+@@ -95,14 +101,6 @@ compress=true
  flag=true
  file=""
  
