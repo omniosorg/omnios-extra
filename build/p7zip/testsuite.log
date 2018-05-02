@@ -1,5 +1,5 @@
-REP=TMP_15693
-P7ZIP= /data/omnios-build/omniosorg/_build/p7zip_16.02/check/../bin/7za
+REP=TMP_8580
+P7ZIP= /data/omnios-build/omniosorg/bloody/_build/p7zip_16.02/check/../bin/7za
 TOOLS=
 
 # TESTING ...
@@ -418,10 +418,10 @@ Creating archive: 7za433_7zip_lzma.x
 
 Items to compress: 6
 
-Write SFX: /data/omnios-build/omniosorg/_build/p7zip_16.02/check/../bin/7zCon.sfx : 513064 bytes (502 KiB)
+Write SFX: /data/omnios-build/omniosorg/bloody/_build/p7zip_16.02/check/../bin/7zCon.sfx : 512264 bytes (501 KiB)
 
 Files read from disk: 3
-Archive size: 697530 bytes (682 KiB)
+Archive size: 696730 bytes (681 KiB)
 Everything is Ok
 
 7-Zip (a) [32] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21
