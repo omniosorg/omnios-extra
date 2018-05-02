@@ -1,4 +1,5 @@
 makefile.patch
-bash.patch -p0
-CVE-2016-9296.patch -p1
+bash.patch
+CVE-2016-9296.patch
 CVE-2017-17969.patch
+CVE-2018-10115.patch
