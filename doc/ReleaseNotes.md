@@ -6,7 +6,7 @@
 
 Stable Release, 7th of May 2018
 
-`uname -a` shows `omnios-r151026-d442a020ce`
+`uname -a` shows `omnios-r151026-673c59f55d`
 
 r151026 release repository: https://pkg.omniosce.org/r151026/core
 
@@ -134,7 +134,7 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 
 * Workarounds for some systems with known broken firmware.
 
-* New `/etc/os-release` file.
+* New file: `/etc/os-release`
 
 ### Commands and Command Options
 
