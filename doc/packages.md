@@ -19,6 +19,7 @@
 | ooce/runtime/python-36	| 3.6.5		| https://www.python.org/downloads/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/security/gnupg		| 1.4.22	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-112		| 1.12.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/server/nginx-114		| 1.14.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/mbuffer		| 20180318	| http://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/smartmontools	| 6.6		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/test/ior		| 3.1.0		| https://github.com/hpc/ior/releases | [omniosorg](https://github.com/omniosorg)
