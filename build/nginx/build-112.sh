@@ -28,28 +28,33 @@
 . ../../lib/functions.sh
 
 PROG=nginx
+PKG=ooce/server/nginx-112
 VER=1.12.2
 VERHUMAN=$VER
-PKG=ooce/server/nginx
-SUMMARY="nginx web server"
+SUMMARY="nginx 1.12 web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
-BUILD_DEPENDS_IPS="library/security/openssl library/pcre"
-RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
 BUILDARCH=64
 
-MAJVER=${VER%.*}
+MAJVER=${VER%.*}            # M.m
+sMAJVER=${MAJVER//./}       # Mm
+PATCHDIR=patches-$sMAJVER
+
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
-CONFPATH=/etc$OPREFIX/$PROG
+CONFPATH=/etc$PREFIX
 LOGPATH=/var/log$OPREFIX/$PROG
-RUNPATH=/var$OPREFIX/$PROG/run
+VARPATH=/var$OPREFIX/$PROG
+RUNPATH=$VARPATH/run
+
+BUILD_DEPENDS_IPS="library/security/openssl library/pcre"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
     -DVERSION=$MAJVER
+    -DsVERSION=$sMAJVER
 "
 
 CONFIGURE_OPTS_64=" \
@@ -74,8 +79,8 @@ CONFIGURE_OPTS_64=" \
     --user=nginx \
     --group=nginx \
     --prefix=$PREFIX \
-    --conf-path=$CONFPATH/nginx.conf \
-    --pid-path=$RUNPATH/nginx.pid \
+    --conf-path=$CONFPATH/$PROG.conf \
+    --pid-path=$RUNPATH/$PROG-$MAJVER.pid \
     --http-log-path=$LOGPATH/access.log \
     --error-log-path=$LOGPATH/error.log \
     --http-client-body-temp-path=/tmp/.nginx/body \
@@ -84,7 +89,17 @@ CONFIGURE_OPTS_64=" \
     --http-uwsgi-temp-path=/tmp/.nginx/uwsgi \
     --http-scgi-temp-path=/tmp/.nginx/scgi \
 "
+
 LDFLAGS+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
+
+copy_man_page() {
+    logmsg "--- copying man page"
+    logcmd mkdir -p $DESTDIR$PREFIX/share/man/man8 || \
+        logerr "--- creating man page directory failed"
+
+    logcmd cp $TMPDIR/$BUILDDIR/man/$PROG.8 $DESTDIR$PREFIX/share/man/man8 || \
+        logerr "--- copying man page failed"
+}
 
 init
 download_source $PROG $PROG $VER
@@ -92,7 +107,8 @@ patch_source
 prep_build
 build
 make_isa_stub
-install_smf network http-nginx.xml http-nginx
+copy_man_page
+install_smf network http-$PROG-$sMAJVER.xml http-$PROG-$sMAJVER
 make_package
 clean_up
 
