@@ -257,7 +257,7 @@ locale/zh_sg					0.5.11	require		S
 locale/zh_tw					0.5.11	require		S
 naming/ldap					0.5.11	require
 network/bridging				0.5.11	require
-network/dns/bind				9.10	require
+network/dns/bind				9.11	require
 network/ftp					0.5.11	optional
 network/ipfilter				0.5.11	require
 network/openssh-server				7.6	optional
