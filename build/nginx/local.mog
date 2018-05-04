@@ -22,29 +22,18 @@
 # Copyright 2018 OmniOS Community Edition.  All rights reserved.
 # Use is subject to license terms.
 
-dir group=bin mode=0755 owner=root path=var/$(OPREFIX)
-dir group=bin mode=0755 owner=root path=var/$(OPREFIX)/$(PROG)
-dir group=bin mode=0755 owner=root path=var/log/$(OPREFIX)/$(PROG)
-dir group=bin mode=0755 owner=root path=$(OPREFIX)/sbin
-
 # Mediated binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
     link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
-	mediator=$(PROG) mediator-version=$(VERSION) >
+    mediator=$(PROG) mediator-version=$(VERSION) >
 
 # Mediated man pages
 <transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
     link path=$(OPREFIX)/share/man/%<1>/%<2> \
-	target=../../../$(PROG)-$(VERSION)/share/man/%<1>/%<2> \
-	mediator=$(PROG) mediator-version=$(VERSION) >
-
-group groupname=$(PROG) gid=81
-user username=$(PROG) uid=81 group=$(PROG) gcos-field="NGINX User" \
-    home-dir=/var/$(OPREFIX)/$(PROG) password=NP
+    target=../../../$(PROG)-$(VERSION)/share/man/%<1>/%<2> \
+    mediator=$(PROG) mediator-version=$(VERSION) >
 
 <transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
-<transform dir  path=var/$(OPREFIX)/$(PROG) -> set owner $(PROG)>
-<transform dir  path=var/log/$(OPREFIX)/$(PROG) -> set owner $(PROG)>
 <transform file path=$(PREFIX)/sbin/ \
     -> set restart_fmri svc:/network/http:$(PROG)$(sVERSION)>
 

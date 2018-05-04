@@ -17,6 +17,7 @@ extra.omnios ooce/ooceapps
 extra.omnios ooce/runtime/python-36
 extra.omnios ooce/server/nginx-112
 extra.omnios ooce/server/nginx-114
+extra.omnios ooce/server/nginx-common
 extra.omnios ooce/system/mbuffer
 extra.omnios ooce/system/smartmontools
 extra.omnios ooce/system/test/ior

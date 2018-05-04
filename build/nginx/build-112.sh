@@ -48,6 +48,7 @@ VARPATH=/var$OPREFIX/$PROG
 RUNPATH=$VARPATH/run
 
 BUILD_DEPENDS_IPS="library/security/openssl library/pcre"
+RUN_DEPENDS_IPS="ooce/server/nginx-common"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
