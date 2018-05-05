@@ -337,6 +337,7 @@ r151026 release repository: https://pkg.omniosce.org/r151026/core
 | library/python-2/tempora-27 | 1.9 | 1.11
 | ~~library/python-2/typing-27~~ | 3.6.2 | _Removed_
 | library/unixodbc | 2.3.4 | 2.3.6
+| network/dns/bind | 9.10.7 | 9.11.3
 | network/openssh | 7.5.1 | 7.6.1
 | network/openssh-server | 7.5.1 | 7.6.1
 | network/service/isc-dhcp | 4.3.6.1 | 4.4.1
