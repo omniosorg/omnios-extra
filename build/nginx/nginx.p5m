@@ -1,0 +1,16 @@
+set name=pkg.fmri value=ooce/server/nginx-common@1.0.0-@PVER@
+set name=variant.arch value=i386
+set name=variant.opensolaris.zone value=global value=nonglobal
+set name=description value="Common nginx package"
+set name=pkg.description value="Common nginx package"
+set name=pkg.summary value="Common nginx package"
+
+dir group=bin mode=0755 owner=root  path=var/opt/ooce
+dir group=bin mode=0755 owner=nginx path=var/opt/ooce/nginx
+dir group=bin mode=0755 owner=nginx path=var/log/opt/ooce/nginx
+dir group=bin mode=0755 owner=root  path=opt/ooce/sbin
+
+group groupname=nginx gid=81
+user username=nginx uid=81 group=nginx gcos-field="NGINX User" \
+    home-dir=/var/opt/ooce/nginx password=NP
+

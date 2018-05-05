@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=php
-PKG=ooce/application/php72
+PKG=ooce/application/php-72
 VER=7.2.5
 VERHUMAN=$VER
 SUMMARY="PHP 7.2"
@@ -32,7 +32,7 @@ PATCHDIR=patches-$sMAJVER
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
-CONFPATH=/etc$OPREFIX/$PROG-$MAJVER
+CONFPATH=/etc$PREFIX
 LOGPATH=/var/log$OPREFIX/$PROG
 VARPATH=/var$OPREFIX/$PROG
 RUNPATH=$VARPATH/run
@@ -123,7 +123,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-install_smf application php$sMAJVER.xml php-$sMAJVER
+install_smf application $PROG-$sMAJVER.xml $PROG-$sMAJVER
 make_package
 clean_up
 

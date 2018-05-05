@@ -1,3 +1,4 @@
+extra.omnios ooce/application/php-72
 extra.omnios ooce/application/texlive
 extra.omnios ooce/database/bdb
 extra.omnios ooce/developer/build/ant
@@ -14,7 +15,9 @@ extra.omnios ooce/network/smtp/postfix
 extra.omnios ooce/network/znc
 extra.omnios ooce/ooceapps
 extra.omnios ooce/runtime/python-36
-extra.omnios ooce/server/nginx
+extra.omnios ooce/server/nginx-112
+extra.omnios ooce/server/nginx-114
+extra.omnios ooce/server/nginx-common
 extra.omnios ooce/system/mbuffer
 extra.omnios ooce/system/smartmontools
 extra.omnios ooce/system/test/ior

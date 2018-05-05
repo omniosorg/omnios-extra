@@ -1,6 +1,6 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
-| ooce/application/php72	| 7.2.5		| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-72	| 7.2.5		| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20170524	| ftp://tug.org/historic/systems/texlive/2017/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/bdb		| 5.3.28	| http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/build/ant	| 1.9.11	| https://ant.apache.org/srcdownload.cgi | [omniosorg](https://github.com/omniosorg)
@@ -18,7 +18,8 @@
 | ooce/ooceapps			| 0.3.4		| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/python-36	| 3.6.5		| https://www.python.org/downloads/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/security/gnupg		| 1.4.22	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/server/nginx		| 1.12.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/server/nginx-112		| 1.12.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/server/nginx-114		| 1.14.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/mbuffer		| 20180318	| http://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/smartmontools	| 6.6		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/test/ior		| 3.1.0		| https://github.com/hpc/ior/releases | [omniosorg](https://github.com/omniosorg)
