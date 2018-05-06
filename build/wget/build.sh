@@ -20,15 +20,14 @@
 #
 # CDDL HEADER END
 #
-#
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=wget       # App name
-VER=1.19.2      # App version
+VER=1.19.5      # App version
 VERHUMAN=$VER   # Human-readable version
 PKG=web/wget    # Package name (without prefix)
 SUMMARY="$PROG - a utility to retrieve files from the World Wide Web"
