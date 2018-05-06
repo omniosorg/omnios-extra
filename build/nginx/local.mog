@@ -34,6 +34,8 @@
     mediator=$(PROG) mediator-version=$(VERSION) >
 
 <transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
+<transform dir  path=var/$(OPREFIX)/$(PROG) -> set owner $(PROG)>
+<transform dir  path=var/log/$(OPREFIX)/$(PROG) -> set owner $(PROG)>
 <transform file path=$(PREFIX)/sbin/ \
     -> set restart_fmri svc:/network/http:$(PROG)$(sVERSION)>
 
