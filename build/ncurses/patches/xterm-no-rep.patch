@@ -1,0 +1,21 @@
+Although a true xterm has supported the ECMA-48 REP (repeat character) control
+since January 1997, many other terminal emulators that claim to be xterm do
+not support this. (For example, VTE, konsole, PuTTY, iTerm2).
+
+For least surprise, remove this capability from
+the xterm terminal definition in OmniOS.
+
+See also http://invisible-island.net/ncurses/ncurses.faq.html#xterm_generic
+
+diff -pruN '--exclude=*.orig' ncurses-6.1-20180129~/misc/terminfo.src ncurses-6.1-20180129/misc/terminfo.src
+--- ncurses-6.1-20180129~/misc/terminfo.src	2018-01-27 15:14:08.000000000 +0000
++++ ncurses-6.1-20180129/misc/terminfo.src	2018-02-01 18:23:53.649144972 +0000
+@@ -4328,7 +4328,7 @@ xterm-xfree86|xterm terminal emulator (X
+ xterm-new|modern xterm terminal emulator,
+ 	npc,
+ 	indn=\E[%p1%dS, kb2=\EOE, kcbt=\E[Z, kent=\EOM,
+-	rin=\E[%p1%dT, use=ansi+rep, use=ecma+strikeout,
++	rin=\E[%p1%dT, use=ecma+strikeout,
+ 	use=xterm+sm+1006, use=xterm+pcfkeys, use=xterm+tmux,
+ 	use=xterm-basic,
+ 
