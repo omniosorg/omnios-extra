@@ -4,6 +4,24 @@
 
 # Release Notes for OmniOSce v11 r151024
 
+## r151024aa (2018-05-07)
+Weekly release for w/c 7th of May 2018.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `p7zip` updated to fix:
+  * [CVE-2018-5996](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-5996)
+  * [CVE-2018-10115](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-10115)
+* `ncurses` updated to fix:
+  * [CVE-2018-10754](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-10754)
+* `wget` updated to 1.19.5 to fix:
+  * [CVE-2018-0494](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-0494)
+
+<br>
+
+----
+
 ## r151024z (2018-05-01)
 Weekly release for w/c 30th of April 2018.
 > This is a non-reboot update.
