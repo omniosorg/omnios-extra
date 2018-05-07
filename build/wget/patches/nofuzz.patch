@@ -1,0 +1,31 @@
+The fuzz tests for wget do not work on OmniOS for two reasons:
+
+1. No support for fmemopen()
+2. Cannot modify the stderr variable
+
+The fuzzing tests are therefore disabled.
+
+diff -ru wget-1.19.5.dist/Makefile.am wget-1.19.5/Makefile.am
+--- wget-1.19.5.dist/Makefile.am	2018-05-05 20:46:22.000000000 +0000
++++ wget-1.19.5/Makefile.am	2018-05-06 22:40:03.493484910 +0000
+@@ -41,7 +41,7 @@
+ ACLOCAL_AMFLAGS = -I m4
+ 
+ # subdirectories in the distribution
+-SUBDIRS = lib src doc po util fuzz tests testenv
++SUBDIRS = lib src doc po util tests testenv
+ 
+ EXTRA_DIST = MAILING-LIST \
+              msdos/config.h msdos/Makefile.DJ \
+diff -ru wget-1.19.5.dist/Makefile.in wget-1.19.5/Makefile.in
+--- wget-1.19.5.dist/Makefile.in	2018-05-06 16:47:51.000000000 +0000
++++ wget-1.19.5/Makefile.in	2018-05-06 22:40:09.751485858 +0000
+@@ -1443,7 +1443,7 @@
+ ACLOCAL_AMFLAGS = -I m4
+ 
+ # subdirectories in the distribution
+-SUBDIRS = lib src doc po util fuzz tests testenv
++SUBDIRS = lib src doc po util tests testenv
+ EXTRA_DIST = MAILING-LIST \
+              msdos/config.h msdos/Makefile.DJ \
+              msdos/Makefile.WC ABOUT-NLS \

@@ -27,7 +27,7 @@
 . ../../lib/functions.sh
 
 PROG=wget
-VER=1.19.4
+VER=1.19.5
 VERHUMAN=$VER
 PKG=web/wget
 SUMMARY="$PROG - a utility to retrieve files from the World Wide Web"
