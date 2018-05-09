@@ -23,5 +23,5 @@
 | ooce/system/mbuffer		| 20180318	| http://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/smartmontools	| 6.6		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/test/ior		| 3.1.0		| https://github.com/hpc/ior/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/system/test/iozone	| 3.471		| http://www.iozone.org/src/current/ | [omniosorg](https://github.com/omniosorg)
+| ooce/system/test/iozone	| 3.478		| http://www.iozone.org/src/current/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 8.6.9		| http://www.methods.co.nz/asciidoc/ | [omniosorg](https://github.com/omniosorg)
