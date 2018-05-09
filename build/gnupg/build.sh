@@ -35,13 +35,12 @@ reset_configure_opts
 
 # Build 64-bit only and skip the arch-specific directories
 BUILDARCH=64
+# GCC can't handle the assembly files that come with the source.
 CONFIGURE_OPTS="
     --bindir=$PREFIX/bin
     --libdir=$PREFIX/lib
+    --disable-asm
 "
-
-# GCC5 can't handle the assembly files that come with the source.
-[[ "$GCCVER" = 5* ]] && CONFIGURE_OPTS+=" --disable-asm"
 
 init
 download_source $PROG $PROG $VER
