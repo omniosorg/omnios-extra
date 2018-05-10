@@ -15,6 +15,7 @@ extra.omnios ooce/network/smtp/postfix
 extra.omnios ooce/network/znc
 extra.omnios ooce/ooceapps
 extra.omnios ooce/runtime/python-36
+extra.omnios ooce/security/gnupg
 extra.omnios ooce/server/nginx-112
 extra.omnios ooce/server/nginx-114
 extra.omnios ooce/server/nginx-common
@@ -23,3 +24,4 @@ extra.omnios ooce/system/smartmontools
 extra.omnios ooce/system/test/ior
 extra.omnios ooce/system/test/iozone
 extra.omnios ooce/text/asciidoc
+extra.omnios ooce/text/docbook-xsl
