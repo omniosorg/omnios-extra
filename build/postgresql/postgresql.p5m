@@ -1,0 +1,15 @@
+set name=pkg.fmri value=ooce/database/postgresql-common@1.0.0-@PVER@
+set name=variant.arch value=i386
+set name=variant.opensolaris.zone value=global value=nonglobal
+set name=description value="Common PostgreSQL package"
+set name=pkg.description value="Common PostgreSQL package"
+set name=pkg.summary value="Common PostgreSQL package"
+
+dir group=bin mode=0755 owner=root path=var/opt/ooce
+dir group=bin mode=0700 owner=postgres path=var/opt/ooce/pgsql
+dir group=bin mode=0755 owner=root path=opt/ooce/bin
+
+group groupname=postgres gid=90
+user ftpuser=false username=postgres uid=90 group=postgres password=NP \
+    gcos-field="PostgreSQL Reserved UID" home-dir=/var/opt/ooce/pgsql
+

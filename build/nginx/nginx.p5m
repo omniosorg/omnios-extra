@@ -11,6 +11,6 @@ dir group=bin mode=0755 owner=nginx path=var/log/opt/ooce/nginx
 dir group=bin mode=0755 owner=root  path=opt/ooce/sbin
 
 group groupname=nginx gid=81
-user username=nginx uid=81 group=nginx gcos-field="NGINX User" \
+user ftpuser=false username=nginx uid=81 group=nginx gcos-field="NGINX User" \
     home-dir=/var/opt/ooce/nginx password=NP
 
