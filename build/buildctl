@@ -100,6 +100,7 @@ usage() {
 $0
     list [grep pattern]            - sorted alphabetically
     list-build [grep pattern]      - sorted in build order
+    list-built [grep pattern]      - show package build status
     licenses                       - audit licenses
     build <pkg>
     build [-e] all
@@ -155,6 +156,16 @@ list_build() {
         else
             echo "$target" | egrep "$PAT"
         fi
+    done
+}
+
+list_built() {
+    PAT=${1-.}
+
+    buildorder | while read target; do
+        echo $target | egrep -s "$PAT" || continue
+        is_built $target && echo "${c_highlight}* \\c" || echo "${c_error}  \\c"
+        echo $target$c_reset
     done
 }
 
@@ -511,6 +522,13 @@ case "$1" in
     list-build)
         add_targets
         list_build $2
+        exit
+        ;;
+
+    list-built)
+        add_targets
+        restore_built
+        list_built $2
         exit
         ;;
 
