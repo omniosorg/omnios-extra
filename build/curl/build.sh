@@ -25,12 +25,11 @@
 # Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
-PROG=curl       # App name
-VER=7.59.0      # App version
-PKG=web/curl    # Package name (without prefix)
+PROG=curl
+VER=7.60.0
+PKG=web/curl
 SUMMARY="$PROG - command line tool for transferring data with URL syntax"
 DESC="$SUMMARY"
 
