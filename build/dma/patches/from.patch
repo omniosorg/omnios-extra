@@ -1,0 +1,21 @@
+Many Unix MUAs require that a mail message header begin with a line that starts
+with the five-character sequence “From ”.  For that reason, most MTAs strip
+these header lines out of messages before SMTP delivery.
+Without the following patch, DMA does not do this and that causes problems
+with messages generated via UNIX utilities such as the mail command
+(which happens to be used by cron on OmniOS).
+
+diff -pruN '--exclude=*.orig' dma-0.11~/mail.c dma-0.11/mail.c
+--- dma-0.11~/mail.c	2018-05-17 15:08:25.992773633 +0000
++++ dma-0.11/mail.c	2018-05-17 15:08:26.053475016 +0000
+@@ -397,7 +397,9 @@ readmail(struct dma_queue *queue, int no
+ 			if (!(line[0] == ' ' || line[0] == '\t'))
+ 				nocopy = 0;
+ 
+-			if (strprefixcmp(line, "Date:") == 0)
++			if (strprefixcmp(line, "From ") == 0)
++				continue;
++			else if (strprefixcmp(line, "Date:") == 0)
+ 				had_date = 1;
+ 			else if (strprefixcmp(line, "Message-Id:") == 0)
+ 				had_messagid = 1;
