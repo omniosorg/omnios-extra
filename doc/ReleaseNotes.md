@@ -14,6 +14,14 @@ Weekly release for w/c 17th of May 2018.
   * [CVE-2018-1000300](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1000300)
   * [CVE-2018-1000301](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1000301)
 
+### Other changes
+
+* `dma` updated so that it strips header lines that begin with the
+  five-character sequence _"From "_. This is the default behaviour of other
+  MTAs such as Sendmail. This fixes a problem with processing emails generated
+  by cron or by other users of the `mail` command where message headers end
+  up as part of the body.
+
 <br>
 
 ----
