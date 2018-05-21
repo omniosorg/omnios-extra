@@ -1,0 +1,20 @@
+getdefs.c:451:29: error: '%s' directive writing up to 255 bytes into a region of size 253 [-Werror=format-overflow=]
+         sprintf(def_str, "  %s'", name_bf);
+                             ^~    ~~~~~~~
+getdefs.c:451:9: note: 'sprintf' output between 4 and 259 bytes into a destination of size 255
+         sprintf(def_str, "  %s'", name_bf);
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+diff -wpruN '--exclude=*.orig' a~/getdefs/getdefs.c a/getdefs/getdefs.c
+--- a~/getdefs/getdefs.c	1970-01-01 00:00:00
++++ a/getdefs/getdefs.c	1970-01-01 00:00:00
+@@ -448,7 +448,7 @@ buildPreamble(char ** ppzDef, char ** pp
+      *       and insert the index into the output.
+      */
+     if (pzIndexText != NULL) {
+-        sprintf(def_str, "  %s'", name_bf);
++        sprintf(def_str, "  %.250s'", name_bf);
+         pzOut = assignIndex(pzOut, def_bf);
+     }
+ 
