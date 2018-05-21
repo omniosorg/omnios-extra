@@ -32,6 +32,7 @@
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/bdw-gc		| 8.0.4		| http://www.hboehm.info/gc/gc_source/| [omniosorg](https://github.com/omniosorg)
 | ooce/library/freetype2	| 2.10.1	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libarchive	| 3.3.3		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libev		| 4.27		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libexif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/libexif/ | [omniosorg](https://github.com/omniosorg)
