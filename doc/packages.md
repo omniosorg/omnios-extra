@@ -30,6 +30,7 @@
 | ooce/editor/nano		| 4.3		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
 | ooce/file/lsof		| 4.91		| https://people.freebsd.org/~abe/ | [omniosorg](https://github.com/omniosorg)
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/library/bdw-gc		| 8.0.4		| http://www.hboehm.info/gc/gc_source/| [omniosorg](https://github.com/omniosorg)
 | ooce/library/freetype2	| 2.10.1	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libarchive	| 3.3.3		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libev		| 4.27		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
