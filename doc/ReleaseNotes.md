@@ -4,9 +4,33 @@
 
 # Release Notes for OmniOSce v11 r151026
 
+## r151026c (2018-05-17)
+Weekly release for w/c 17th of May 2018.
+> This is a non-reboot update.
+
+### Security fixes
+
+* `curl` upgraded to version 7.60.0:
+  * [CVE-2018-1000300](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1000300)
+  * [CVE-2018-1000301](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1000301)
+
+### Other changes
+
+* `dma` updated so that it strips header lines that begin with the
+  five-character sequence _"From "_. This is the default behaviour of other
+  MTAs such as Sendmail. This fixes a problem with processing emails generated
+  by cron or by other users of the `mail` command where message headers end
+  up as part of the body.
+
+<br>
+
+----
+
+## r151026 (2018-05-07)
+
 Stable Release, 7th of May 2018
 
-`uname -a` shows `omnios-r151026-673c59f55d`
+`uname -v` shows `omnios-r151026-673c59f55d`
 
 r151026 release repository: https://pkg.omniosce.org/r151026/core
 
