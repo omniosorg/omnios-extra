@@ -337,7 +337,8 @@ fi
 #############################################################################
 
 opensslver=`pkg mediator -H openssl 2>/dev/null| awk '{print $3}'`
-if [ -n "$opensslver" -a "$opensslver" != "1.0" ]; then
+[ "$RELVER" -lt 151027 ] && defsslver="1.0" || defsslver="1.1"
+if [ -n "$opensslver" -a "$opensslver" != "$defsslver" ]; then
     if [ -n "$OPENSSL_TEST" ]; then
         logmsg "--- OpenSSL version $opensslver but OPENSSL_TEST is set"
     else
