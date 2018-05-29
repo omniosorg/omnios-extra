@@ -14,6 +14,7 @@ extra.omnios ooce/network/irssi
 extra.omnios ooce/network/smtp/postfix
 extra.omnios ooce/network/znc
 extra.omnios ooce/ooceapps
+extra.omnios ooce/runtime/node-8.11
 extra.omnios ooce/runtime/python-36
 extra.omnios ooce/security/gnupg
 extra.omnios ooce/server/nginx-112

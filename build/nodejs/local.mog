@@ -1,0 +1,11 @@
+license LICENSE license=MIT
+
+<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
+    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
+    mediator=$(PROG) mediator-version=$(VERSION) >
+
+<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
+    link path=$(OPREFIX)/share/man/%<1>/%<2> \
+    target=../../../$(PROG)-$(VERSION)/share/man/%<1>/%<2> \
+    mediator=$(PROG) mediator-version=$(VERSION) >
+
