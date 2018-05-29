@@ -43,24 +43,24 @@ user ftpuser=false gcos-field="Postfix Reserved UID" group=$(PROG) \
 
 # Mediated symlinks
 link path=usr/bin/mailq mediator=mta mediator-implementation=$(PROG) \
-    target=../../$(PREFIX)/sbin/sendmail
+    mediator-priority=site target=../../$(PREFIX)/sbin/sendmail
 link path=usr/lib/sendmail mediator=mta mediator-implementation=$(PROG) \
-    target=../../$(PREFIX)/sbin/sendmail
+    mediator-priority=site target=../../$(PREFIX)/sbin/sendmail
 link path=usr/sbin/sendmail mediator=mta mediator-implementation=$(PROG) \
-    target=../../$(PREFIX)/sbin/sendmail
+    mediator-priority=site target=../../$(PREFIX)/sbin/sendmail
 link path=usr/sbin/newaliases mediator=mta mediator-implementation=$(PROG) \
-    target=../../$(PREFIX)/sbin/sendmail
+    mediator-priority=site target=../../$(PREFIX)/sbin/sendmail
 link path=etc/aliases mediator=mta mediator-implementation=$(PROG) \
-    target=./$(ORIGPREFIX)/$(PROG)/aliases
+    mediator-priority=site target=./$(ORIGPREFIX)/$(PROG)/aliases
 
 # Mediated binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
     link path=$(ORIGPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> \
-    mediator=mta mediator-implementation=$(PROG) >
+    mediator=mta mediator-priority=site mediator-implementation=$(PROG) >
 
 # Mediated man pages
 <transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
     link path=$(ORIGPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> \
-    mediator=mta mediator-implementation=$(PROG) >
+    mediator=mta mediator-priority=site mediator-implementation=$(PROG) >
 
 license LICENSE license=IBM
