@@ -1,0 +1,20 @@
+diff -pruN '--exclude=*.orig' go~/src/run.bash go/src/run.bash
+--- go~/src/run.bash	2015-09-23 06:37:37.000000000 +0000
++++ go/src/run.bash	2018-05-29 20:30:18.273520942 +0000
+@@ -253,11 +253,11 @@ rm -f runtest
+ 
+ [ "$GOOS" == android ] ||
+ [ "$GOOS" == nacl ] ||
+-(
+-echo
+-echo '# Checking API compatibility.'
+-time go run $GOROOT/src/cmd/api/run.go || exit 1
+-) || exit $?
++#(
++#echo
++#echo '# Checking API compatibility.'
++#time go run $GOROOT/src/cmd/api/run.go || exit 1
++#) || exit $?
+ 
+ echo
+ echo ALL TESTS PASSED

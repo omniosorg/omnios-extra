@@ -1,0 +1,27 @@
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+# CDDL HEADER START
+#
+# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+
+dir group=bin mode=0755 owner=root path=$(OPREFIX)/bin
+
+<transform file path=$(PREFIX)/src/ -> default pkg.depend.bypass-generate .* >
+<transform file path=$(PREFIX)/include/ \
+    -> default pkg.depend.bypass-generate .* >
+
+# Mediated binaries
+<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
+    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
+    mediator=$(PROG) mediator-version=$(VERSION) >
+
+license $(PREFIX)/LICENSE license=BSD
