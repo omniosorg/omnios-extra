@@ -9,7 +9,7 @@
 | ooce/developer/pkgmgr		| 0.2.6		| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/library/freetype2	| 2.9		| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/freetype2	| 2.9.1		| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/openmpi		| 2.1.3		| https://www.open-mpi.org/software/ompi/ | [omniosorg](https://github.com/omniosorg)
 | ooce/lxadm			| 0.1.6		| https://github.com/hadfl/lxadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/smtp/postfix	| 3.3.1		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)

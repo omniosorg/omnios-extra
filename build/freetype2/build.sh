@@ -28,7 +28,7 @@
 
 PROG=freetype
 DOWNLOADDIR=freetype2
-VER=2.9
+VER=2.9.1
 VERHUMAN=$VER
 PKG=ooce/library/freetype2
 SUMMARY="A Free, High-Quality, and Portable Font Engine"
