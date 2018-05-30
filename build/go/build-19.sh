@@ -57,7 +57,7 @@ configure64() {
 make_prog64() {
     pushd $TMPDIR/$BUILDDIR/src >/dev/null
     logmsg "--- make"
-    logcmd ./all.bash || logerr "--- make failed"
+    logcmd ./make.bash || logerr "--- make failed"
     popd >/dev/null
 }
 
@@ -78,7 +78,10 @@ prep_build
 make_prog64
 
 logmsg "--- move bootstrap"
-logcmd mv $TMPDIR/$BUILDDIR "$TMPDIR/$BUILDDIR-bootstrap" \
+BDIR="$TMPDIR/$BUILDDIR-bootstrap"
+[ -d "$BDIR" ] && rm -rf "$BDIR" \
+    || logerr "--- removing old bootstrap dir failed"
+logcmd mv $TMPDIR/$BUILDDIR "$BDIR" \
     || logerr "--- moving bootstrap failed"
 
 # building go 1.9

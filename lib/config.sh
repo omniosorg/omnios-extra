@@ -21,11 +21,50 @@
 #
 # Copyright (c) 2015 by Delphix. All rights reserved.
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 #
 #############################################################################
 # Configuration for the build system
 #############################################################################
+
+# Clear environment variables we know to be bad for the build
+unset LD_OPTIONS
+unset LD_AUDIT LD_AUDIT_32 LD_AUDIT_64
+unset LD_BIND_NOW LD_BIND_NOW_32 LD_BIND_NOW_64
+unset LD_BREADTH LD_BREADTH_32 LD_BREADTH_64
+unset LD_CONFIG LD_CONFIG_32 LD_CONFIG_64
+unset LD_DEBUG LD_DEBUG_32 LD_DEBUG_64
+unset LD_DEMANGLE LD_DEMANGLE_32 LD_DEMANGLE_64
+unset LD_FLAGS LD_FLAGS_32 LD_FLAGS_64
+unset LD_LIBRARY_PATH LD_LIBRARY_PATH_32 LD_LIBRARY_PATH_64
+unset LD_LOADFLTR LD_LOADFLTR_32 LD_LOADFLTR_64
+unset LD_NOAUDIT LD_NOAUDIT_32 LD_NOAUDIT_64
+unset LD_NOAUXFLTR LD_NOAUXFLTR_32 LD_NOAUXFLTR_64
+unset LD_NOCONFIG LD_NOCONFIG_32 LD_NOCONFIG_64
+unset LD_NODIRCONFIG LD_NODIRCONFIG_32 LD_NODIRCONFIG_64
+unset LD_NODIRECT LD_NODIRECT_32 LD_NODIRECT_64
+unset LD_NOLAZYLOAD LD_NOLAZYLOAD_32 LD_NOLAZYLOAD_64
+unset LD_NOOBJALTER LD_NOOBJALTER_32 LD_NOOBJALTER_64
+unset LD_NOVERSION LD_NOVERSION_32 LD_NOVERSION_64
+unset LD_ORIGIN LD_ORIGIN_32 LD_ORIGIN_64
+unset LD_PRELOAD LD_PRELOAD_32 LD_PRELOAD_64
+unset LD_PROFILE LD_PROFILE_32 LD_PROFILE_64
+unset CFLAGS CPPFLAGS
+
+unset CONFIG GROUP OWNER REMOTE ENV ARCH CLASSPATH NAME
+
+# set locale to C
+#
+LANG=C;         export LANG
+LC_ALL=C;       export LC_ALL
+LC_COLLATE=C;   export LC_COLLATE
+LC_CTYPE=C;     export LC_CTYPE
+LC_MESSAGES=C;  export LC_MESSAGES
+LC_MONETARY=C;  export LC_MONETARY
+LC_NUMERIC=C;   export LC_NUMERIC
+LC_TIME=C;      export LC_TIME
+
+######################################################################
 
 # Determine release version based on build system
 if [[ "`uname -v`" != omnios-* ]]; then
@@ -38,7 +77,6 @@ if [[ ! "$RELVER" =~ ^151[0-9]{3}$ ]]; then
     echo "Unable to determine release version (got $RELVER)"
     exit 1
 fi
-
 PVER=0.$RELVER
 
 # Default package publisher
@@ -47,11 +85,11 @@ PKGPUBLISHER=extra.omnios
 # Default repository
 PKGSRVR=file://$ROOTDIR/tmp.repo/
 
-# set locale to C
-export LC_ALL=C
-
 # Use bash for subshells and commands launched by python setuptools
 export SHELL=/usr/bin/bash
+
+# The github repository root from which some packages are pulled
+GITHUB=https://github.com/omniosorg
 
 # Which server to fetch files from.
 # If $MIRROR begins with a '/', it is treated as a local directory.
@@ -71,9 +109,7 @@ PREFIX=/opt/ooce
 #    TMPDIR includes a username
 # DTMPDIR is used for constructing the DESTDIR path
 # Let the environment override TMPDIR.
-if [ -z "$TMPDIR" ]; then
-	TMPDIR=/tmp/build_$USER
-fi
+[ -z "$TMPDIR" ] && TMPDIR=/tmp/build_$USER
 DTMPDIR=$TMPDIR
 
 # Log file for all output
@@ -136,14 +172,20 @@ GIT=git
 # Command for privilege escalation. Can be overridden in site.sh
 PFEXEC=sudo
 
+SUNSTUDIO_BIN=/opt/sunstudio12.1/bin
+
 # Figure out number of logical CPUs for use with parallel gmake jobs (-j)
 # Default to 1.5*nCPUs as we assume the build machine is 100% devoted to
-# compiling.  
+# compiling.
 # A build script may serialize make by setting NO_PARALLEL_MAKE
 LCPUS=`psrinfo | wc -l`
 MJOBS="$[ $LCPUS + ($LCPUS / 2) ]"
 [ "$MJOBS" = "0" ] && MJOBS=2
 MAKE_JOBS="-j $MJOBS"
+MAKE_ARGS=
+MAKE_INSTALL_ARGS=
+MAKE_INSTALL_ARGS_32=
+MAKE_INSTALL_ARGS_64=
 NO_PARALLEL_MAKE=
 
 # Remove install or packaging files by default. You can set this in a build
@@ -154,8 +196,10 @@ DONT_REMOVE_INSTALL_DIR=
 # C compiler options - these can be overriden by a build script
 #############################################################################
 # isaexec(3C) variants
-# These variables will be passed to the build to construct multi-arch 
+# These variables will be passed to the build to construct multi-arch
 # binary and lib directories in DESTDIR
+
+CCACHE_PATH=/opt/ooce/ccache/bin
 
 ISAPART=i386
 ISAPART64=amd64
@@ -163,6 +207,17 @@ ISAPART64=amd64
 # For OmniOS we (almost) always want GCC
 CC=gcc
 CXX=g++
+
+# Specify default GCC version for building packages
+case $RELVER in
+    151022) DEFAULT_GCC_VER=5.1.0 ;;
+    151024) DEFAULT_GCC_VER=5 ;;
+    151025) DEFAULT_GCC_VER=6 ;;
+    151026) DEFAULT_GCC_VER=6 ;;
+    151027) DEFAULT_GCC_VER=7 ;;
+    151028) DEFAULT_GCC_VER=7 ;;
+    *)      logerr "Unknown release '$RELVER', can't select compiler." ;;
+esac
 
 # CFLAGS applies to both builds, 32/64 only gets applied to the respective
 # build
@@ -197,33 +252,33 @@ CONFIGURE_CMD="./configure"
 reset_configure_opts() {
     # If it's the global default (/usr), we want sysconfdir to be /etc
     # otherwise put it under PREFIX
-    if [[ $PREFIX == "/usr" ]]; then
-        SYSCONFDIR=/etc
-    else
-        SYSCONFDIR=/etc$PREFIX
-    fi
-    CONFIGURE_OPTS_32="--prefix=$PREFIX
+    [ $PREFIX = "/usr" ] && SYSCONFDIR=/etc || SYSCONFDIR=/etc$PREFIX
+
+    CONFIGURE_OPTS_32="
+        --prefix=$PREFIX
         --sysconfdir=$SYSCONFDIR
         --includedir=$PREFIX/include
         --bindir=$PREFIX/bin/$ISAPART
         --sbindir=$PREFIX/sbin/$ISAPART
         --libdir=$PREFIX/lib
-        --libexecdir=$PREFIX/libexec"
+        --libexecdir=$PREFIX/libexec
+    "
 
-    CONFIGURE_OPTS_64="--prefix=$PREFIX
+    CONFIGURE_OPTS_64="
+        --prefix=$PREFIX
         --sysconfdir=$SYSCONFDIR
         --includedir=$PREFIX/include
         --bindir=$PREFIX/bin/$ISAPART64
         --sbindir=$PREFIX/sbin/$ISAPART64
         --libdir=$PREFIX/lib/$ISAPART64
-        --libexecdir=$PREFIX/libexec/$ISAPART64"
+        --libexecdir=$PREFIX/libexec/$ISAPART64
+    "
 }
 reset_configure_opts
 
 # Configure options to apply to both builds - this is the one you usually want
 # to change for things like --enable-feature
 CONFIGURE_OPTS=
-
 # Configure options that can contain embedded white-space within escaped quotes
 CONFIGURE_OPTS_WS=
 CONFIGURE_OPTS_WS_32=
