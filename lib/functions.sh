@@ -53,7 +53,8 @@ process_opts() {
     SKIP_PKGLINT=
     REBASE_PATCHES=
     SKIP_TESTSUITE=
-    while getopts "bciPptf:ha:d:lr:" opt; do
+    SKIP_CHECKSUM=
+    while getopts "bciPptsf:ha:d:lr:" opt; do
         case $opt in
             h)
                 show_usage
@@ -83,6 +84,9 @@ process_opts() {
                 ;;
             t)
                 SKIP_TESTSUITE=1
+                ;;
+            s)
+                SKIP_CHECKSUM=1
                 ;;
             f)
                 FLAVOR=$OPTARG
@@ -129,6 +133,7 @@ Usage: $0 [-blt] [-f FLAVOR] [-h] [-a 32|64|both] [-d DEPVER]
   -r REPO   : specify the IPS repo to use
               (default: $PKGSRVR)
   -t        : skip test suite
+  -s        : skip checksum comparison
 
 EOM
 }
@@ -771,15 +776,17 @@ download_source() {
     fi
 
     # Fetch and verify the archive checksum
-    logmsg "Verifying checksum of downloaded file."
-    if [ ! -f "$FILENAME.sha256" ]; then
-        get_resource $DLDIR/$FILENAME.sha256 \
-            || logerr "Unable to download SHA256 checksum file for $FILENAME"
-    fi
-    if [ -f "$FILENAME.sha256" ]; then
-        sum="`digest -a sha256 $FILENAME`"
-        [ "$sum" = "`cat $FILENAME.sha256`" ] \
-            || logerr "Checksum of downloaded file does not match."
+    if [ -z "$SKIP_CHECKSUM" ]; then
+        logmsg "Verifying checksum of downloaded file."
+        if [ ! -f "$FILENAME.sha256" ]; then
+            get_resource $DLDIR/$FILENAME.sha256 \
+                || logerr "Unable to download SHA256 checksum file for $FILENAME"
+        fi
+        if [ -f "$FILENAME.sha256" ]; then
+            sum="`digest -a sha256 $FILENAME`"
+            [ "$sum" = "`cat $FILENAME.sha256`" ] \
+                || logerr "Checksum of downloaded file does not match."
+        fi
     fi
 
     # Extract the archive

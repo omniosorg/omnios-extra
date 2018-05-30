@@ -34,6 +34,8 @@ DESC=$SUMMARY
 BUILDARCH=32
 MIRROR="https://github.com/omniosorg/$PROG/releases/download"
 
+SKIP_CHECKSUM=1
+
 RUN_DEPENDS_IPS="network/rsync"
 
 OPREFIX=$PREFIX
