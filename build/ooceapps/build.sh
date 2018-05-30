@@ -35,6 +35,8 @@ BUILDARCH=64
 PREFIX=/opt/ooce
 MIRROR="https://github.com/omniosorg/$PROG/releases/download"
 
+SKIP_CHECKSUM=1
+
 RUN_DEPENDS_IPS="runtime/perl-64 ooce/application/texlive"
 
 OPREFIX=$PREFIX

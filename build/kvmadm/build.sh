@@ -20,10 +20,9 @@
 #
 # CDDL HEADER END }}}
 #
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=kvmadm     # App name
@@ -35,6 +34,8 @@ DESC=$SUMMARY   # Longer description, must be filled in
 BUILDARCH=32    # or 64 or both ... for libraries we want both for tools 32 bit only
 PREFIX=/opt/ooce
 MIRROR="https://github.com/hadfl/$PROG/releases/download"
+
+SKIP_CHECKSUM=1
 
 RUN_DEPENDS_IPS="
     driver/virtualization/kvm
