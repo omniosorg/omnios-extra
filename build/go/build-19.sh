@@ -79,8 +79,7 @@ make_prog64
 
 logmsg "--- move bootstrap"
 BDIR="$TMPDIR/$BUILDDIR-bootstrap"
-[ -d "$BDIR" ] && rm -rf "$BDIR" \
-    || logerr "--- removing old bootstrap dir failed"
+[ -d "$BDIR" ] && rm -rf "$BDIR"
 logcmd mv $TMPDIR/$BUILDDIR "$BDIR" \
     || logerr "--- moving bootstrap failed"
 
