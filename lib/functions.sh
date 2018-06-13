@@ -768,15 +768,18 @@ get_resource() {
 #   $2 - program name
 #   $3 - program version
 #   $4 - target directory
+#   $5 - passed to extract_archive
 #
 # E.g.
 #       download_source myprog myprog 1.2.3 will try:
 #       http://mirrors.omniosce.org/myprog/myprog-1.2.3.tar.gz
 download_source() {
-    local DLDIR="$1"
-    local PROG="$2"
-    local VER="$3"
-    local TARGETDIR="$4"
+    local DLDIR="$1"; shift
+    local PROG="$1"; shift
+    local VER="$1"; shift
+    local TARGETDIR="$1"; shift
+    local EXTRACTARGS="$@"
+
     local ARCHIVEPREFIX="$PROG"
     [ -n "$VER" ] && ARCHIVEPREFIX+="-$VER"
     [ -z "$TARGETDIR" ] && TARGETDIR="$TMPDIR"
@@ -850,7 +853,8 @@ download_source() {
 
     # Extract the archive
     logmsg "Extracting archive: $FILENAME"
-    logcmd extract_archive $FILENAME || logerr "--- Unable to extract archive."
+    logcmd extract_archive $FILENAME $EXTRACTARGS \
+        || logerr "--- Unable to extract archive."
 
     # Make sure the archive actually extracted some source where we expect
     if [ ! -d "$BUILDDIR" ]; then
@@ -865,27 +869,23 @@ download_source() {
 # Example: find_archive myprog-1.2.3 FILENAME
 #   Stores myprog-1.2.3.tar.gz in $FILENAME
 find_archive() {
-    FILES=`ls $1.{tar.bz2,tar.gz,tar.xz,tgz,tbz,tar,zip} 2>/dev/null`
+    FILES=`ls $1.{tar.gz,tgz,tar.bz2,tbz,tar.xz,tar,zip} 2>/dev/null`
     FILES=${FILES%% *} # Take only the first filename returned
     # This dereferences the second parameter passed
     eval "$2=\"$FILES\""
 }
 
-# Extracts an archive regardless of its extension
+# Extracts various types of archive
 extract_archive() {
-    if [[ $1 =~ .tar.gz|.tgz ]]; then
-        $GZIP -dc $1 | $TAR -xvf -
-    elif [[ $1 =~ .tar.bz2|.tbz ]]; then
-        $BUNZIP2 -dc $1 | $TAR -xvf -
-    elif [[ $1 = *.tar.xz ]]; then
-        $XZCAT $1 | $TAR -xvf -
-    elif [[ $1 = *.tar ]]; then
-        $TAR -xvf $1
-    elif [[ $1 = *.zip ]]; then
-        $UNZIP $1
-    else
-        return 1
-    fi
+    local file="$1"; shift
+    case $file in
+        *.tar.gz|*.tgz)     $GZIP -dc $file | $TAR -xvf - $* ;;
+        *.tar.bz2|*.tbz)    $BUNZIP2 -dc $file | $TAR -xvf - $* ;;
+        *.tar.xz)           $XZCAT $file | $TAR -xvf - $* ;;
+        *.tar)              $TAR -xvf $file $* ;;
+        *.zip)              $UNZIP $file $* ;;
+        *)                  return 1 ;;
+    esac
 }
 
 #############################################################################
