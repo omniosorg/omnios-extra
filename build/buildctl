@@ -179,9 +179,11 @@ built_pipe="$TMPDIR/built.ipc"
 # Record all expensive packages as already built
 record_expensive() {
     if [ -n "$EXPENSIVE" -a "$BUILD_EXPENSIVE" -eq 0 ]; then
+        record_built '# start of expensive packages'
         for pkg in $EXPENSIVE; do
             record_built $pkg
         done
+        record_built '# end of expensive packages'
     fi
 }
 
@@ -226,7 +228,7 @@ stop_built_listener() {
 restore_built() {
     [ -f "$BUILT_CACHE" ] || record_expensive
 
-    for pkg in `cat "$BUILT_CACHE"`; do
+    for pkg in `grep -v '^#' "$BUILT_CACHE"`; do
         [ -n "${already_built[$pkg]}" ] || already_built+=([$pkg]=1)
     done
 }
