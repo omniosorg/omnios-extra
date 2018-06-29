@@ -1652,13 +1652,7 @@ python_compile() {
     logcmd $PYTHON -m compileall $DESTDIR
 }
 
-python_build() {
-    [ -z "$PYTHON" ] && logerr "PYTHON not set"
-    [ -z "$PYTHONPATH" ] && logerr "PYTHONPATH not set"
-    [ -z "$PYTHONLIB" ] && logerr "PYTHONLIB not set"
-    logmsg "Building using python setup.py"
-    pushd $TMPDIR/$BUILDDIR > /dev/null
-
+python_build32() {
     ISALIST=i386
     export ISALIST
     pre_python_32
@@ -1669,7 +1663,9 @@ python_build() {
     logmsg "--- setup.py (32) install"
     logcmd $PYTHON ./setup.py install --root=$DESTDIR $PYINST32OPTS \
         || logerr "--- install failed"
+}
 
+python_build64() {
     ISALIST="amd64 i386"
     export ISALIST
     pre_python_64
@@ -1680,10 +1676,23 @@ python_build() {
     logmsg "--- setup.py (64) install"
     logcmd $PYTHON ./setup.py install --root=$DESTDIR $PYINST64OPTS \
         || logerr "--- install failed"
+}
+
+python_build() {
+    [ -z "$PYTHON" ] && logerr "PYTHON not set"
+    [ -z "$PYTHONPATH" ] && logerr "PYTHONPATH not set"
+    [ -z "$PYTHONLIB" ] && logerr "PYTHONLIB not set"
+
+    logmsg "Building using python setup.py"
+
+    pushd $TMPDIR/$BUILDDIR > /dev/null
+
+    [[ $BUILDARCH =~ ^(32|both)$ ]] && python_build32
+    [[ $BUILDARCH =~ ^(64|both)$ ]] && python_build64
+
     popd > /dev/null
 
     python_vendor_relocate
-
     python_compile
 }
 
