@@ -1416,14 +1416,25 @@ make_isa_stub() {
 
 make_isaexec_stub_arch() {
     for file in $1/*; do
-        [ -f "$file" ] || continue # Deals with empty dirs & non-files
+        [ -f "$file" ] || continue
+        if [ -z "$STUBLINKS" -a -h "$file" ]; then
+            # Symbolic link. If it's relative to within the same ARCH
+            # directory, then replicate it at the ISAEXEC level.
+            link=`readlink "$file"`
+            [[ $link = */* ]] && continue
+            base=`basename "$file"`
+            [ -h "$base" ] && continue
+            logmsg "------ Symbolic link: $file - replicating"
+            logcmd ln -s $link $base || logerr "--- Link failed"
+            continue
+        fi
         # Check to make sure we don't have a script
         read -n 4 < $file
-        file=`echo $file | sed -e "s/$1\///;"`
+        file=`basename $file`
         # Only copy non-binaries if we set NOSCRIPTSTUB
         if [[ $REPLY != $'\177'ELF && -n "$NOSCRIPTSTUB" ]]; then
             logmsg "------ Non-binary file: $file - copying instead"
-            cp $1/$file . && rm $1/$file
+            logcmd cp $1/$file . && rm $1/$file || logerr "--- Copy failed"
             chmod +x $file
             continue
         fi
