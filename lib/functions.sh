@@ -1786,6 +1786,17 @@ strip_install() {
 }
 
 #############################################################################
+# Check for dangling symlinks
+#############################################################################
+
+check_symlinks() {
+    logmsg "Checking for dangling symlinks"
+    for link in `find "$1" -type l`; do
+        readlink -e $link >/dev/null || logerr "Dangling symlink $link"
+    done
+}
+
+#############################################################################
 # Clean up and print Done message
 #############################################################################
 
