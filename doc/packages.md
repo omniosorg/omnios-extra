@@ -16,6 +16,7 @@
 | ooce/lxadm			| 0.1.6		| https://github.com/hadfl/lxadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.1.1		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/smtp/postfix	| 3.3.1		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
+| ooce/network/socat		| 1.7.3.2	| http://www.dest-unreach.org/socat/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/znc		| 1.7.0		| https://github.com/znc/znc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/ooceapps			| 0.4.2		| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-811		| 8.11.2	| https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
