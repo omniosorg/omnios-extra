@@ -784,11 +784,11 @@ rebase_patches() {
     # Read the series file for patch filenames
     exec 3<"$SRCDIR/$PATCHDIR/series"
     pushd $TMPDIR > /dev/null
-    rsync -a --delete $BUILDDIR/ $BUILDDIR.unpatched/
+    rsync -ac --delete $BUILDDIR/ $BUILDDIR.unpatched/
     while read LINE <&3 ; do
         [[ $LINE = \#* ]] && continue
         patchfile="$SRCDIR/$PATCHDIR/`echo $LINE | awk '{print $1}'`"
-        rsync -a --delete $BUILDDIR/ $BUILDDIR~/
+        rsync -ac --delete $BUILDDIR/ $BUILDDIR~/
         (
             cd $BUILDDIR
             patch_file $LINE
@@ -810,7 +810,7 @@ rebase_patches() {
         ' >> $patchfile
         rm -f $patchfile~
     done
-    rsync -a --delete $BUILDDIR.unpatched/ $BUILDDIR/
+    rsync -ac --delete $BUILDDIR.unpatched/ $BUILDDIR/
     popd > /dev/null
     exec 3<&- # Close the file
     # Now the patches have been re-based, -pX is no longer required.
