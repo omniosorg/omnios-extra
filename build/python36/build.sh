@@ -28,7 +28,7 @@
 
 PROG=Python
 PROGLC=${PROG,,}
-VER=3.6.5
+VER=3.6.6
 VERHUMAN=$VER
 PKG=ooce/runtime/python-36
 SUMMARY="$PROG - An Interpreted, Interactive, Object-oriented, Extensible Programming Language."
