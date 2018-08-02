@@ -1603,6 +1603,17 @@ build_dependency() {
 # Build function for python programs
 #############################################################################
 
+set_python_version() {
+    PYTHONVER=$1
+    PYTHONPKGVER=${PYTHONVER//./}
+    PYTHONPATH=/usr
+    PYTHON=$PYTHONPATH/bin/python$PYTHONVER
+    PYTHONLIB=$PYTHONPATH/lib
+    PYTHONVENDOR=$PYTHONLIB/python$PYTHONVER/vendor-packages
+    [[ $PYTHONVER = 3.* ]] && BUILDARCH=64
+}
+set_python_version $DEFAULT_PYTHON_VER
+
 pre_python_32() {
     logmsg "prepping 32bit python build"
 }
@@ -2000,15 +2011,6 @@ save_function() {
     local ORIG_FUNC=$(declare -f $1)
     local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
     eval "$NEWNAME_FUNC"
-}
-
-# Change the PYTHON version so we can perform version-agile Python tricks.
-set_python_version() {
-    PYTHONVER=$1
-    PYTHONPKGVER=`echo $PYTHONVER | sed 's/\.//g'`
-    # Assume PYTHONPATH from config.sh is a constant.
-    PYTHON=$PYTHONPATH/bin/python$PYTHONVER
-    PYTHONLIB=$PYTHONPATH/lib
 }
 
 # Vim hints

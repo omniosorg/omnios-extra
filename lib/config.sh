@@ -159,15 +159,6 @@ export PERL_MM_USE_DEFAULT=true
 PERL_MAKE_TEST=1
 
 #############################################################################
-# Python -- NOTE, these can be changed at runtime via set_python_version().
-#############################################################################
-: ${PYTHONVER:=2.7}
-: ${PYTHONPKGVER:=${PYTHONVER//./}}
-PYTHONPATH=/usr
-PYTHON=$PYTHONPATH/bin/python$PYTHONVER
-PYTHONLIB=$PYTHONPATH/lib
-
-#############################################################################
 # Paths to common tools
 #############################################################################
 WGET=wget
@@ -235,6 +226,12 @@ case $RELVER in
     151029|151030)  DEFAULT_GCC_VER=8 ;;
     *) logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
+
+PYTHON2VER=2.7
+PYTHON3VER=3.5
+# Specify default Python version for building packages
+[ $RELVER -lt 151029 ] && DEFAULT_PYTHON_VER=$PYTHON2VER \
+    || DEFAULT_PYTHON_VER=$PYTHON3VER
 
 # CFLAGS applies to both builds, 32/64 only gets applied to the respective
 # build
