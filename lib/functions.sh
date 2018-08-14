@@ -1687,8 +1687,9 @@ python_build() {
 
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
-    [[ $BUILDARCH =~ ^(32|both)$ ]] && python_build32
-    [[ $BUILDARCH =~ ^(64|both)$ ]] && python_build64
+    for b in $BUILDORDER; do
+        [[ $BUILDARCH =~ ^($b|both)$ ]] && python_build$b
+    done
 
     popd > /dev/null
 
