@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=apache-ant
-VER=1.9.11 # stay on 1.9.x, 1.10.x requires Java8
+VER=1.9.13 # stay on 1.9.x, 1.10.x requires Java8
 VERHUMAN=$VER
 JUNITVER=4.12
 PKG=ooce/developer/build/ant
