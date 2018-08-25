@@ -763,6 +763,7 @@ apply_patches() {
         exec 3<"$SRCDIR/$PATCHDIR/series" # Open the series file with handle 3
         pushd $TMPDIR/$BUILDDIR > /dev/null
         while read LINE <&3 ; do
+            [[ $LINE = \#* ]] && continue
             # Split Line into filename+args
             patch_file $LINE
         done
@@ -783,6 +784,7 @@ rebase_patches() {
     pushd $TMPDIR > /dev/null
     rsync -a --delete $BUILDDIR/ $BUILDDIR.unpatched/
     while read LINE <&3 ; do
+        [[ $LINE = \#* ]] && continue
         patchfile="$SRCDIR/$PATCHDIR/`echo $LINE | awk '{print $1}'`"
         rsync -a --delete $BUILDDIR/ $BUILDDIR~/
         (
