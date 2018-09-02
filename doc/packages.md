@@ -5,6 +5,7 @@
 | ooce/database/bdb		| 5.3.28	| http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/build/ant	| 1.9.13	| https://ant.apache.org/srcdownload.cgi | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
+| ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-19		| 1.9.7		| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-110		| 1.10.3	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| 1.2.9		| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
