@@ -499,16 +499,14 @@ print_elapsed() {
 build_end() {
     rv=$?
     if [ -n "$PKG" -a -n "$build_start" ]; then
-        logmsg "Time: $PKG - $(print_elapsed $((`date +%s` - build_start)))"
+        logmsg Time: $PKG - $((`date +%s` - build_start))
         build_start=
     fi
     exit $rv
 }
 
 build_start=`date +%s`
-trap '[ -n "$build_start" ] && \
-    logmsg Time: $PKG - $((`date +%s` - build_start)) && \
-    build_start=' EXIT
+trap 'build_end' EXIT
 
 #############################################################################
 # Libtool -nostdlib hacking
@@ -1265,7 +1263,9 @@ make_package() {
     fi
     logmsg "--- Published $FMRI"
 
-     [ -z "$BATCH" -a -z "$SKIP_PKG_DIFF" ] && diff_package $FMRI
+    [ -z "$BATCH" -a -z "$SKIP_PKG_DIFF" ] && diff_package $FMRI
+
+    return 0
 }
 
 translate_manifest()
@@ -2121,6 +2121,7 @@ clean_up() {
             logerr "Failed to remove temporary manifest and transform files"
         logmsg "Done."
     fi
+    return 0
 }
 
 #############################################################################
