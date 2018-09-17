@@ -26,7 +26,7 @@
 . ../../lib/functions.sh
 
 PROG=pkgmgr
-VER=0.2.7
+VER=0.2.8
 VERHUMAN=$VER
 PKG=ooce/developer/pkgmgr
 SUMMARY="IPS package management/publishing tool"
