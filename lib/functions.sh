@@ -975,6 +975,7 @@ clone_github_source() {
     if [ -n "$local" -a -d "$local" ]; then
         logmsg "-- syncing $prog from local clone"
         logcmd rsync -ar $local/ $prog/ || logerr "rsync failed."
+        logcmd $GIT -C $prog clean -fdx
         fresh=1
     elif [ ! -d $prog ]; then
         logcmd $GIT clone --no-single-branch --depth $depth $src $prog \
