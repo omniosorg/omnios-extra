@@ -246,43 +246,16 @@ CXXFLAGS64="-m64"
 # Default configure command - almost always sufficient
 CONFIGURE_CMD="./configure"
 
-# Default configure options - replace/add to as needed
-# This is a function so it can be called again if you change $PREFIX
-# This is far from ideal, but works
-reset_configure_opts() {
-    # If it's the global default (/usr), we want sysconfdir to be /etc
-    # otherwise put it under PREFIX
-    [ $PREFIX = "/usr" ] && SYSCONFDIR=/etc || SYSCONFDIR=/etc$PREFIX
-
-    CONFIGURE_OPTS_32="
-        --prefix=$PREFIX
-        --sysconfdir=$SYSCONFDIR
-        --includedir=$PREFIX/include
-        --bindir=$PREFIX/bin/$ISAPART
-        --sbindir=$PREFIX/sbin/$ISAPART
-        --libdir=$PREFIX/lib
-        --libexecdir=$PREFIX/libexec
-    "
-
-    CONFIGURE_OPTS_64="
-        --prefix=$PREFIX
-        --sysconfdir=$SYSCONFDIR
-        --includedir=$PREFIX/include
-        --bindir=$PREFIX/bin/$ISAPART64
-        --sbindir=$PREFIX/sbin/$ISAPART64
-        --libdir=$PREFIX/lib/$ISAPART64
-        --libexecdir=$PREFIX/libexec/$ISAPART64
-    "
-}
-reset_configure_opts
-
 # Configure options to apply to both builds - this is the one you usually want
 # to change for things like --enable-feature
 CONFIGURE_OPTS=
+CONFIGURE_OPTS_32=
+CONFIGURE_OPTS_64=
 # Configure options that can contain embedded white-space within escaped quotes
 CONFIGURE_OPTS_WS=
 CONFIGURE_OPTS_WS_32=
 CONFIGURE_OPTS_WS_64=
+FORGO_ISAEXEC=
 
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker
