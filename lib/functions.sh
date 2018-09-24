@@ -1420,8 +1420,9 @@ EOF
 }
 
 build() {
-    [[ $BUILDARCH =~ ^(32|both)$ ]] && build32
-    [[ $BUILDARCH =~ ^(64|both)$ ]] && build64
+    for b in $BUILDORDER; do
+        [[ $BUILDARCH =~ ^($b|both)$ ]] && build$b
+    done
 }
 
 build32() {
@@ -1543,8 +1544,9 @@ buildperl() {
         logmsg "Sourcing environment file: $SRCDIR/${PROG}-${VER}.env"
         source $SRCDIR/${PROG}-${VER}.env
     fi
-    [[ $BUILDARCH =~ ^(32|both)$ ]] && buildperl32
-    [[ $BUILDARCH =~ ^(64|both)$ ]] && buildperl64
+    for b in $BUILDORDER; do
+        [[ $BUILDARCH =~ ^($b|both)$ ]] && buildperl$b
+    done
 }
 
 buildperl32() {
