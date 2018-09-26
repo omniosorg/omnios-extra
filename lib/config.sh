@@ -77,7 +77,10 @@ if [[ ! "$RELVER" =~ ^151[0-9]{3}$ ]]; then
     echo "Unable to determine release version (got $RELVER)"
     exit 1
 fi
-PVER=0.$RELVER
+
+# Default branch
+DASHREV=0
+[ $RELVER -ge 151027 ] && PVER=$RELVER.$DASHREV || PVER=$DASHREV.$RELVER
 
 # Default package publisher
 PKGPUBLISHER=extra.omnios
