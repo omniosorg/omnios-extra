@@ -20,7 +20,7 @@
 PROG=libpciaccess
 VER=0.14
 VERHUMAN=$VER
-PKG=library/libpciaccess
+PKG=ooce/library/libpciaccess
 SUMMARY="PCI access utility library from X.org"
 DESC="The pciaccess library wraps platform-dependent PCI access methods in a convenient library."
 
