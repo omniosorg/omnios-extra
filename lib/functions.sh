@@ -350,6 +350,58 @@ set_gccver() {
 
 set_gccver $DEFAULT_GCC_VER
 
+#############################################################################
+# Default configure options.
+#############################################################################
+
+reset_configure_opts() {
+    # If it's the global default (/usr), we want sysconfdir to be /etc
+    # otherwise put it under PREFIX
+    [ $PREFIX = "/usr" ] && SYSCONFDIR=/etc || SYSCONFDIR=$PREFIX/etc
+
+    CONFIGURE_OPTS_32="
+        --prefix=$PREFIX
+        --sysconfdir=$SYSCONFDIR
+        --includedir=$PREFIX/include
+    "
+    CONFIGURE_OPTS_64="$CONFIGURE_OPTS_32"
+
+    if [ -n "$FORGO_ISAEXEC" ]; then
+        CONFIGURE_OPTS_32+="
+            --bindir=$PREFIX/bin
+            --sbindir=$PREFIX/sbin
+            --libdir=$PREFIX/lib
+            --libexecdir=$PREFIX/libexec
+        "
+        CONFIGURE_OPTS_64="$CONFIGURE_OPTS_32"
+    else
+        CONFIGURE_OPTS_32+="
+            --bindir=$PREFIX/bin/$ISAPART
+            --sbindir=$PREFIX/sbin/$ISAPART
+            --libdir=$PREFIX/lib
+            --libexecdir=$PREFIX/libexec
+        "
+        CONFIGURE_OPTS_64+="
+            --bindir=$PREFIX/bin/$ISAPART64
+            --sbindir=$PREFIX/sbin/$ISAPART64
+            --libdir=$PREFIX/lib/$ISAPART64
+            --libexecdir=$PREFIX/libexec/$ISAPART64
+        "
+    fi
+}
+reset_configure_opts
+
+forgo_isaexec() {
+    FORGO_ISAEXEC=1
+    reset_configure_opts
+}
+
+set_arch() {
+    [[ $1 =~ ^(32|64)$ ]] || logerr "Bad argument to set_arch"
+    BUILDARCH=$1
+    forgo_isaexec
+}
+
 BasicRequirements() {
     local needed=""
     [ -x $GCCPATH/bin/gcc ] || needed+=" developer/gcc$GCCVER"
@@ -903,7 +955,7 @@ make_package() {
         DESCSTR="$DESCSTR ($FLAVOR)"
     fi
     # Add the local dash-revision if specified.
-    [ -n "$DASHREV" ] && PVER=$DASHREV.$RELVER
+    [ $RELVER -ge 151027 ] && PVER=$RELVER.$DASHREV || PVER=$DASHREV.$RELVER
     PKGSEND=/usr/bin/pkgsend
     PKGLINT=/usr/bin/pkglint
     PKGMOGRIFY=/usr/bin/pkgmogrify
@@ -1181,6 +1233,8 @@ install_smf() {
 #############################################################################
 
 make_isa_stub() {
+    [ -n "$FORGO_ISAEXEC" ] \
+        && logerr "-- Calling make_isa_stub after forgo_isaexec"
     logmsg "Making isaexec stub binaries"
     [ -z "$ISAEXEC_DIRS" ] && ISAEXEC_DIRS="bin sbin"
     for DIR in $ISAEXEC_DIRS; do
@@ -1366,8 +1420,9 @@ EOF
 }
 
 build() {
-    [[ $BUILDARCH =~ ^(32|both)$ ]] && build32
-    [[ $BUILDARCH =~ ^(64|both)$ ]] && build64
+    for b in $BUILDORDER; do
+        [[ $BUILDARCH =~ ^($b|both)$ ]] && build$b
+    done
 }
 
 build32() {
@@ -1489,8 +1544,9 @@ buildperl() {
         logmsg "Sourcing environment file: $SRCDIR/${PROG}-${VER}.env"
         source $SRCDIR/${PROG}-${VER}.env
     fi
-    [[ $BUILDARCH =~ ^(32|both)$ ]] && buildperl32
-    [[ $BUILDARCH =~ ^(64|both)$ ]] && buildperl64
+    for b in $BUILDORDER; do
+        [[ $BUILDARCH =~ ^($b|both)$ ]] && buildperl$b
+    done
 }
 
 buildperl32() {

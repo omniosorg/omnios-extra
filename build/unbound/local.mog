@@ -1,0 +1,29 @@
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+
+license LICENSE license="BSD"
+
+group groupname=$(PROG) gid=54
+user username=$(PROG) uid=54 group=$(PROG) gcos-field="Unbound DNS Resolver" \
+    home-dir=var/$(PREFIX) ftpuser=false password=NP
+
+dir group=bin mode=0755 owner=root path=var/$(OPREFIX)
+dir group=$(PROG) mode=0755 owner=$(PROG) path=var/$(PREFIX)
+
+<transform file path=etc/$(PREFIX)/unbound.conf -> set preserve renamenew>
+<transform file path=etc/$(PREFIX)/unbound.conf -> set group unbound>
+<transform file path=etc/$(PREFIX)/unbound.conf -> set mode 0640>
+
+link path=$(OPREFIX)/bin/unbound-control target=../$(PROG)/sbin/unbound-control
+
