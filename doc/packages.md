@@ -13,6 +13,7 @@
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/freetype2	| 2.9.1		| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libpciaccess	| 0.14		| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
 | ooce/library/openmpi		| 2.1.3		| https://www.open-mpi.org/software/ompi/ | [omniosorg](https://github.com/omniosorg)
 | ooce/lxadm			| 0.1.6		| https://github.com/hadfl/lxadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.1.1		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
@@ -30,4 +31,3 @@
 | ooce/system/test/ior		| 3.1.0		| https://github.com/hpc/ior/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/test/iozone	| 3.478		| http://www.iozone.org/src/current/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 8.6.9		| http://www.methods.co.nz/asciidoc/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libpciaccess	| 0.14		| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
