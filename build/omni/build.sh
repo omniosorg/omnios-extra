@@ -26,7 +26,7 @@
 . ../../lib/functions.sh
 
 PROG=omni
-VER=1.2.9
+VER=1.3.0
 VERHUMAN=$VER
 PKG=ooce/developer/omni
 SUMMARY="OmniOS build management utility"
@@ -36,6 +36,7 @@ MIRROR="https://github.com/omniosorg/$PROG/archive"
 BUILDDIR="$PROG-$VER"
 TAR=gtar
 XFORM_ARGS="-D PREFIX=$PREFIX"
+SKIP_CHECKSUM=1
 
 build() {
     mkdir -p "$DESTDIR/$PREFIX/$PROG"
