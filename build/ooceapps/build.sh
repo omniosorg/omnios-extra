@@ -26,7 +26,7 @@
 . ../../lib/functions.sh
 
 PROG=ooceapps
-VER=0.4.3
+VER=0.4.4
 VERHUMAN=$VER
 PKG=ooce/ooceapps
 SUMMARY="Web integrations for OmniOSce"
