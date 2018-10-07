@@ -195,7 +195,13 @@ clear_built() {
 record_built() {
     if [ -n "$BUILDCTL_PARALLEL" ]; then
         [ -p "$built_pipe" ] || logerr "Built cache pipe does not exist."
-        echo "$*" >> $built_pipe
+        for i in {1..10}; do
+            echo "$*" >> $built_pipe
+            # EACCESS, pipe could be full
+            [ $? -ne 141 ] && break
+            logmsg -e "Built pipe is full, retrying..."
+            sleep 1
+        done
     else
         already_built+=([$1]=1)
         [ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
