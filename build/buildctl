@@ -10,6 +10,8 @@ declare -A targets
 declare -A fulltargets
 # list of licenses
 declare -A licenses
+# expensive package lookup table
+declare -A expensive
 
 add_target() {
     local pkg=$1
@@ -63,9 +65,17 @@ add_buildscripts() {
     done
 }
 
+add_expensive() {
+    typeset i=1
+    for pkg in $EXPENSIVE; do
+        expensive[$pkg]=$((i++))
+    done
+}
+
 add_targets() {
     add_manifests
     add_buildscripts
+    add_expensive
 }
 
 detect_licenses() {
@@ -240,6 +250,7 @@ stop_built_listener() {
 
 restore_built() {
     [ -f "$BUILT_CACHE" ] || record_expensive
+    touch "$BUILT_CACHE"
 
     for pkg in `grep -v '^#' "$BUILT_CACHE"`; do
         [ -n "${already_built[$pkg]}" ] || already_built+=([$pkg]=1)
@@ -402,9 +413,54 @@ job_status() {
     logmsg -h "######################################################"
 }
 
+nextslot=
+wait_for_slot() {
+    nextslot=
+    err=
+    while :; do
+        for i in `seq 0 $threads`; do
+            # Idle slot? Just return the slot number
+            [ -z "${slots[$i]}" ] && nextslot=$i && return
+            # Job finished?
+            kill -0 "${slots[$i]}" 2>/dev/null && continue
+
+            # Reap terminated job
+            wait "${slots[$i]}"
+            s=$?
+            typeset job="${slottgt[$i]}"
+            if [ $s -ne 0 ]; then
+                logmsg -e "-- Job $i ($job) terminated with status $s"
+                note -e "***** BUILD ERROR ***** ($job/$s)"
+                return
+            else
+                logmsg -n "-- Job $i ($job) terminated normally"
+                slots[$i]=
+                nextslot=$i
+                return
+            fi
+        done
+        # Print status summary each minute (approx.)
+        [ `date +%S` -eq 0 ] && job_status
+        sleep 1
+    done
+}
+
+count_expensive() {
+    typeset -i ne=0
+    for i in `seq 0 $threads`; do
+        [ -z "${slots[$i]}" ] && continue
+        p="${slottgt[$i]}"
+        # Expensive?
+        [ -n "${expensive[$p]}" ] || continue
+        ((ne++))
+    done
+    echo $ne
+}
+
 parallel_build() {
     threads=$1
-    # Lint is not thread-safe and skip test-suite in parallel build mode.
+    # pkglint is not thread-safe so skip it and the test-suite in parallel
+    # build mode.
     build_flags="-b -t -l"
     export BATCH=1  # So logerr() exits without prompting
     [ -n "$USE_CCACHE" ] && build_flags+=" -c"
@@ -413,7 +469,6 @@ parallel_build() {
 
     ((threads = threads - 1))
 
-    pkgcount=${#fulltargets[@]}
     pkgnum=0
 
     start_built_listener
@@ -424,9 +479,23 @@ parallel_build() {
     declare -A slottgt
     declare -A slotdesc
     declare -A slotstart
+    declare -a queue
 
+    [ -n "$ETHROTTLE" ] || ETHROTTLE=0
+
+    # Queue up the packages to build
     for tgt in `buildorder`; do
-        ((pkgnum = pkgnum + 1))
+        queue+=($tgt)
+    done
+
+    pkgcount=${#queue[@]}
+
+    while [ ${#queue[@]} -gt 0 ]; do
+        # Pop tgt off queue
+        tgt=${queue[0]}; queue=("${queue[@]:1}")
+        nextslot=
+
+        ((pkgnum++))
 
         # If this target belongs to the same script as an already running
         # job, skip it.
@@ -439,41 +508,62 @@ parallel_build() {
             fi
         done
 
-        logmsg "-- Waiting for spare job slot for $tgt"
-
-        err=
-        while :; do
-            for i in `seq 0 $threads`; do
-                # Idle slot?
-                if [ -z "${slots[$i]}" ] || \
-                  ! kill -0 "${slots[$i]}" 2>/dev/null; then
-                    # Reap terminated job
-                    if [ -n "${slots[$i]}" ]; then
-                        #logmsg "-- waiting for job $i (${slots[$i]})..."
-                        wait "${slots[$i]}"
-                        s=$?
-                        if [ $s -ne 0 ]; then
-                            logmsg -e "-- Job $i terminated with status $s"
-                            err="${slottgt[$i]}"
-                            note -e "***** BUILD ERROR ***** ($err)"
-                            break 3
-                        else
-                            logmsg "-- Job $i terminated normally"
-                        fi
-                    fi
-                    note -h "($pkgnum/$pkgcount) Building $tgt (slot $i)"
-                    logprefix="[$i] " build $tgt &
-                    slots[$i]=$!
-                    slottgt[$i]=$tgt
-                    slotdesc[$i]="`printf "(%3d/%d) %s" $pkgnum $pkgcount $tgt`"
-                    slotstart[$i]=`date +%s`
-                    break 2
+        # If this target is expensive and we want to throttle the number
+        # of parallel expensive jobs, then check that we are not running too
+        # many expensive jobs in parallel. If so, then the job is moved
+        # to later on in the queue unless it is already near the end in
+        # which case we just wait until the number of expensive jobs has
+        # dropped before proceeding.
+        if [ "$ETHROTTLE" -gt 0 -a -n "${expensive[$tgt]}" ]; then
+            # Count the number of running expensive targets
+            ne=`count_expensive`
+            if [ $ne -ge $ETHROTTLE ]; then
+                # Calculate the new queue position for this target.
+                # Currently just its position in the expensive array
+                # multipled by 10. If the queue is shorter than the new
+                # location, then the target is just appended.
+                newloc=${expensive[$tgt]}
+                ((newloc *= 10))
+                # Ensure that kayak-kernel remains last
+                if [ $((newloc + 1)) -ge ${#queue[@]} ]; then
+                    newloc=${#queue[@]}
+                    ((newloc -= 2))
                 fi
-            done
-            # Print status summary each minute (approx.)
-            [ `date +%S` -eq 0 ] && job_status
-            sleep 1
-        done
+                # If the new location is at the head of the queue or if
+                # the queue size is less than the number of expensive
+                # packages, then we are draining. Just pause until the
+                # number of expensive jobs has dropped low enough.
+                if [ $newloc -le 0 -o ${#queue[@]} -le ${#expensive[@]} ]; then
+                    logmsg -n "-- $tgt, waiting for number of jobs to drop"
+                    while [ `count_expensive` -gt $ETHROTTLE ]; do
+                        wait_for_slot
+                    done
+                    break
+                else
+                    logmsg -n "-- $tgt, relocating to $newloc/${#queue[@]}"
+                    _queue=("${queue[@]:0:newloc}")
+                    _queue+=($tgt)
+                    _queue+=("${queue[@]:newloc}")
+                    queue=("${_queue[@]}")
+                    # Next queue target
+                    ((pkgnum--))
+                    continue
+                fi
+            fi
+        fi
+
+        if [ -z "$nextslot" ]; then
+            logmsg "-- Waiting for spare job slot for $tgt"
+            wait_for_slot
+            [ -n "$nextslot" ] || break
+        fi
+
+        note -h "($pkgnum/$pkgcount) Building $tgt (slot $nextslot)"
+        logprefix="[$nextslot] " build $tgt &
+        slots[$nextslot]=$!
+        slottgt[$nextslot]=$tgt
+        slotdesc[$nextslot]="`printf "(%3d/%d) %s" $pkgnum $pkgcount $tgt`"
+        slotstart[$nextslot]=`date +%s`
     done
 
     if [ -n "$err" -a -z "$NOKILL_ON_ERROR" ]; then
@@ -492,7 +582,7 @@ parallel_build() {
                     wait "${slots[$i]}"
                     slots[$i]=
                 else
-                    ((running = running + 1))
+                    ((running++))
                 fi
             done
             [ "$running" -eq 0 ] && break

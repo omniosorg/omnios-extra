@@ -43,6 +43,9 @@
 #	ooce/application/texlive
 #"
 
+# Throttle the number of expensive packages that can be built in parallel
+#ETHROTTLE=3
+
 # To always use the ccache engine to speed up re-compilation
 #USE_CCACHE=1
 
