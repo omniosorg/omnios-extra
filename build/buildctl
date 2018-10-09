@@ -118,11 +118,6 @@ EOM
     exit
 }
 
-bail() {
-    echo $*
-    exit
-}
-
 # Dependencies are limited at the moment. Build everything
 # in alphabetical order.
 buildorder() {
@@ -267,21 +262,21 @@ build_manifest() {
     if [ -f root.tar.bz2 ]; then
         logmsg "File archive found. Extracting..."
         bzip2 -dc root.tar.bz2 | tar xf - \
-            || bail "Failed to extract root.tar.bz2"
+            || logerr "Failed to extract root.tar.bz2"
         logmsg "Publishing from $mf.final"
         logcmd pkgsend -s $PKGSRVR publish -d $PKGROOT $mf.final \
-            || bail "pkgsend failed"
+            || logerr "pkgsend failed"
         logcmd rm -rf $PKGROOT
     elif [ -d "$PKGROOT" ]; then
         # In case we just have a tree of files and not a tarball
         logmsg "Publishing from $mf.final"
         logcmd pkgsend -s $PKGSRVR publish -d $PKGROOT $mf.final \
-            || bail "pkgsend failed"
+            || logerr "pkgsend failed"
     else
         # Else we just have a manifest to import
         logmsg "Simple manifest to import... importing to $PKGSRVR"
         logcmd pkgsend -s $PKGSRVR publish $mf.final \
-            || bail "pkgsend failed"
+            || logerr "pkgsend failed"
     fi
     rm -f $mf.final
 }
@@ -293,7 +288,7 @@ build() {
         buildtgt="${targets[$1]}"
         logmsg "--- $1 -> $buildtgt"
     else
-        bail "Unknown package: $1"
+        logerr "Unknown package: $1"
     fi
     if is_built $buildtgt; then
         logmsg "--- Package $1 was already built."
@@ -301,7 +296,7 @@ build() {
         BUILD=${fulltargets[$buildtgt]}
         DIR="`dirname $BUILD`"
         SCRIPT="`basename $BUILD`"
-        pushd $DIR > /dev/null || bail "Cannot chdir to $DIR"
+        pushd $DIR > /dev/null || logerr "Cannot chdir to $DIR"
         PKGSRVR=$DEFAULT_PKGSRVR
         PKGPUBLISHER=$DEFAULT_PKGPUBLISHER
         PKGROOT=`pwd`/root
