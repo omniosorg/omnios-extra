@@ -103,8 +103,8 @@ $0
     list-built [grep pattern]      - show package build status
     licenses                       - audit licenses
     build <pkg>
-    build [-e] all
-    build [-e] parallel <threads>  - start/continue parallel build
+    build [-e|E] all
+    build [-e|E] parallel <num>    - start/continue parallel build
     build continue                 - continue interrupted build
     build from <pkg>               - build <pkg> then those after
     baseline [create [repo]]       - check or create pkg baseline
@@ -112,6 +112,7 @@ $0
 Options:
 
     -e                             - also build packages flagged as expensive
+    -E                             - force (re-)build of expensive packages
 
 EOM
 
@@ -180,6 +181,17 @@ record_expensive() {
         done
         record_built '# end of expensive packages'
     fi
+}
+
+# Remove all expensive packages from the built cache
+remove_expensive() {
+    [ -f "$BUILT_CACHE" ] || return
+    [ -n "$EXPENSIVE" ] || return
+    for pkg in $EXPENSIVE; do
+        cp $BUILT_CACHE $BUILT_CACHE.$$
+        egrep -v "^$pkg\$" $BUILT_CACHE.$$ > $BUILT_CACHE
+        rm -f $BUILT_CACHE.$$
+    done
 }
 
 clear_built() {
@@ -551,6 +563,12 @@ case "$1" in
         shift
         [ "$1" = "-e" ] && BUILD_EXPENSIVE=1 && shift
         [ "$1" = "-c" ] && USE_CCACHE=1 && shift
+        if [ "$1" = "-E" ]; then
+            # Force (re)build of expensive packages
+            remove_expensive
+            BUILD_EXPENSIVE=1
+            shift
+        fi
         tobuild="$@"
         [ -z "$tobuild" ] && tobuild=all
 
