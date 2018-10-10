@@ -214,7 +214,7 @@ record_built() {
         [ -p "$built_pipe" ] || logerr "Built cache pipe does not exist."
         for i in {1..10}; do
             echo "$*" >> $built_pipe
-            # EACCESS, pipe could be full
+            # SIGPIPE, pipe could be full
             [ $? -ne 141 ] && break
             logmsg -e "Built pipe is full, retrying..."
             sleep 1
@@ -428,16 +428,28 @@ wait_for_slot() {
             wait "${slots[$i]}"
             s=$?
             typeset job="${slottgt[$i]}"
-            if [ $s -ne 0 ]; then
-                logmsg -e "-- Job $i ($job) terminated with status $s"
-                note -e "***** BUILD ERROR ***** ($job/$s)"
-                return
-            else
-                logmsg -n "-- Job $i ($job) terminated normally"
-                slots[$i]=
-                nextslot=$i
-                return
-            fi
+            case $s in
+                0)  logmsg -n "-- Job $i ($job) terminated normally"
+                    slots[$i]=
+                    nextslot=$i
+                    return
+                    ;;
+                141)
+                    # Jobs sometimes terminate with 141 (SIGPIPE) but have
+                    # actually run to completion. We don't know why this
+                    # happens yet, but treat this as a successful run for now.
+                    # If the build or publication has not worked, the baseline
+                    # check will catch it.
+                    logmsg -n "-- Job $i ($job) terminated with SIGPIPE"
+                    slots[$i]=
+                    nextslot=$i
+                    return
+                    ;;
+                *)  logmsg -e "-- Job $i ($job) terminated with status $s"
+                    note -e "***** BUILD ERROR ***** ($job/$s)"
+                    return
+                    ;;
+            esac
         done
         # Print status summary each minute (approx.)
         [ `date +%S` -eq 0 ] && job_status
