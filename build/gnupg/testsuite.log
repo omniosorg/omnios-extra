@@ -1,0 +1,55 @@
+Making check in m4
+Making check in intl
+Making check in zlib
+Making check in util
+Making check in mpi
+Making check in cipher
+Making check in tools
+Making check in g10
+Making check in keyserver
+Making check in po
+Making check in doc
+Making check in checks
+gpg (GnuPG) 1.4.23
+Copyright (C) 2015 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Home: .
+Supported algorithms:
+Pubkey: RSA, RSA-E, RSA-S, ELG-E, DSA
+Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
+        CAMELLIA128, CAMELLIA192, CAMELLIA256
+Hash: MD5, SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
+Compression: Uncompressed, ZIP, ZLIB, BZIP2
+PASS: version.test
+PASS: mds.test
+PASS: decrypt.test
+PASS: decrypt-dsa.test
+MD5 SHA1 RIPEMD160 SHA256 SHA384 SHA512 SHA224 | PASS: sigs.test
+PASS: sigs-dsa.test
+IDEA 3DES CAST5 BLOWFISH AES AES192 AES256 TWOFISH CAMELLIA128 CAMELLIA192 CAMELLIA256 | PASS: encrypt.test
+IDEA 3DES CAST5 BLOWFISH AES AES192 AES256 TWOFISH CAMELLIA128 CAMELLIA192 CAMELLIA256 | PASS: encrypt-dsa.test
+PASS: seat.test
+PASS: clearsig.test
+PASS: encryptp.test
+PASS: detach.test
+PASS: armsigs.test
+PASS: armencrypt.test
+PASS: armencryptp.test
+PASS: signencrypt.test
+PASS: signencrypt-dsa.test
+PASS: armsignencrypt.test
+PASS: armdetach.test
+PASS: armdetachm.test
+PASS: detachm.test
+PASS: genkey1024.test
+IDEA 3DES CAST5 BLOWFISH AES AES192 AES256 TWOFISH CAMELLIA128 CAMELLIA192 CAMELLIA256 | PASS: conventional.test
+IDEA 3DES CAST5 BLOWFISH AES AES192 AES256 TWOFISH CAMELLIA128 CAMELLIA192 CAMELLIA256 | PASS: conventional-mdc.test
+PASS: multisig.test
+PASS: verify.test
+PASS: armor.test
+===================
+All 27 tests passed
+===================

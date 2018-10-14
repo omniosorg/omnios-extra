@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=gnupg
-VER=1.4.22
+VER=1.4.23
 VERHUMAN=$VER
 PKG=ooce/security/gnupg
 SUMMARY="$PROG - GNU Privacy Guard"
