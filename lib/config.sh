@@ -225,7 +225,7 @@ esac
 
 # CFLAGS applies to both builds, 32/64 only gets applied to the respective
 # build
-CFLAGS=
+CFLAGS="-O2"
 CFLAGS32=
 CFLAGS64="-m64"
 
@@ -240,7 +240,7 @@ CPPFLAGS32=
 CPPFLAGS64=
 
 # C++ flags
-CXXFLAGS=
+CXXFLAGS="-O2"
 CXXFLAGS32=
 CXXFLAGS64="-m64"
 
