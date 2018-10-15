@@ -1,0 +1,13 @@
+allow_override_bootstrap_flags.patch
+src_bootstrap_bin_rustc.rs.patch
+src_bootstrap_lib.rs.patch
+src_ibcompiler_builtins_compiler-rt_lib_asan_CMakeList.txt.patch
+src_libbacktrace_configure.patch
+src_liblibc_src_unix_solaris_mod.rs.patch
+src_libstd_build.rs.patch
+src_libstd_sys_unix_thread.rs.patch
+src_llvm-emscripten_include_llvm_Support_DataTypes.h.cmake.patch
+src_llvm_CMakeLists.txt.patch
+src_llvm_cmake_modules_AddLLVM.cmake.patch
+src_vendor_rand_src_rngs_os.rs.patch
+install-bash.patch
