@@ -1,7 +1,7 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
 | ooce/application/php-72	| 7.2.11	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
-| ooce/application/texlive	| 20170524	| ftp://tug.org/historic/systems/texlive/2017/ | [omniosorg](https://github.com/omniosorg)
+| ooce/application/texlive	| 20180414	| ftp://tug.org/historic/systems/texlive/2018/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/bdb		| 5.3.28	| http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/build/ant	| 1.9.13	| https://ant.apache.org/srcdownload.cgi | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)

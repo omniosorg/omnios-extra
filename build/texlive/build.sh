@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=texlive
-VER=20170524
+VER=20180414
 VERHUMAN=$VER
 PKG=ooce/application/texlive
 SUMMARY="TeX Live - LaTeX distribution"
@@ -108,14 +108,15 @@ make_install() {
         || logerr "--- Make install failed"
 }
 
+# texlive should be built out-of-tree
+OUT_OF_TREE_BUILD=1
+
 init
 BUILDDIR=${PROG}-${VER}-source
 download_source $PROG $PROG ${VER}-source
 patch_source
 dl_dist
-BUILDDIR=${BUILDDIR}/build
-logcmd mkdir ${TMPDIR}/$BUILDDIR
-CONFIGURE_CMD=../configure
+run_autoreconf
 prep_build
 install_dist
 build
