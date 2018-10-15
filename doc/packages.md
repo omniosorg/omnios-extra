@@ -20,7 +20,7 @@
 | ooce/network/irssi		| 1.1.1		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/smtp/postfix	| 3.3.1		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/network/socat		| 1.7.3.2	| http://www.dest-unreach.org/socat/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/unbound		| 1.8.0		| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/unbound		| 1.8.1		| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/znc		| 1.7.1		| https://github.com/znc/znc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/ooceapps			| 0.4.4		| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-811		| 8.11.4	| https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)

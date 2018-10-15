@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=unbound
-VER=1.8.0
+VER=1.8.1
 PKG=ooce/network/unbound
 SUMMARY="DNS resolver"
 DESC="Unbound is a validating, recursive, caching DNS resolver."
@@ -31,6 +31,7 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
+FORCE_OPENSSL_VERSION=1.0
 BUILD_DEPENDS_IPS="ooce/library/libev"
 
 set_arch 64
