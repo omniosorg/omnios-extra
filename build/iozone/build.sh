@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=iozone
-VER=3.478
+VER=3.482
 VERHUMAN=$VER
 PKG=ooce/system/test/iozone
 SUMMARY="IOzone - filesystem benchmark"

@@ -19,7 +19,7 @@
 
 PROG=go
 PKG=ooce/developer/go-110
-VER=1.10.3
+VER=1.10.4
 VERHUMAN=$VER
 SUMMARY="The Go Programming Language"
 DESC=$SUMMARY

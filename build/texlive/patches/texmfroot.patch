@@ -1,11 +1,10 @@
-diff --git a/texk/kpathsea/texmf.cnf b/texk/kpathsea/texmf.cnf
-index 77bcfb9..1dc3207 100644
---- a/texk/kpathsea/texmf.cnf
-+++ b/texk/kpathsea/texmf.cnf
-@@ -51,7 +51,7 @@
- % Redistributors will probably want $SELFAUTODIR/share, i.e., /usr/share.
- % Kpathsea sets SELFAUTOLOC (the directory with the binary),
- % SELFAUTODIR (its parent), and SELFAUTOPARENT (its grandparent).
+diff -wpruN '--exclude=*.orig' texlive-20180414-source~/texk/kpathsea/texmf.cnf texlive-20180414-source/texk/kpathsea/texmf.cnf
+--- texlive-20180414-source~/texk/kpathsea/texmf.cnf	2018-03-26 14:23:43.000000000 +0000
++++ texlive-20180414-source/texk/kpathsea/texmf.cnf	2018-10-14 17:51:56.208543279 +0000
+@@ -58,7 +58,7 @@
+ % SELFAUTOPARENT (its grandparent = /usr/local/texlive/YYYY), and
+ % SELFAUTOGRANDPARENT (its great-grandparent = /usr/local/texlive).
+ % Sorry for the off-by-one-generation names.
 -TEXMFROOT = $SELFAUTOPARENT
 +TEXMFROOT = $SELFAUTODIR/share
  
