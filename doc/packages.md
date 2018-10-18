@@ -24,7 +24,6 @@
 | ooce/network/znc		| 1.7.1		| https://github.com/znc/znc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/ooceapps			| 0.4.4		| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-811		| 8.11.4	| https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/runtime/python-36	| 3.6.6		| https://www.python.org/downloads/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/security/gnupg		| 1.4.23	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-112		| 1.12.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-114		| 1.14.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
