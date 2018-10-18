@@ -399,18 +399,26 @@ baseline() {
     rm -f $TMPDIR/baseline.$$
 }
 
+hashline="`printf -- '#%.0s' {1..79}`"
 job_status() {
-    logmsg -h "######################################################"
+    logmsg -h "$hashline"
     logmsg -h "-- Job status $*--"
     now=`date +%s`
 
     for i in `seq 0 $threads`; do
         [ -n "${slots[$i]}" ] || continue
         ((tm = now - ${slotstart[$i]}))
+        e=' '
+        p="${slottgt[$i]}"
+        if [ -n "${expensive[$p]}" ]; then
+            e='*'
+        elif [ $tm -lt 70 ]; then
+            e='+'
+        fi
         logmsg -h "`printf "    [%d] %8d - (%5ds) %s\n" \
-            "$i" "${slots[$i]}" "$tm" "${slotdesc[$i]}"`"
+            "$i" "${slots[$i]}" "$tm" "$e${slotdesc[$i]}"`"
     done
-    logmsg -h "######################################################"
+    logmsg -h "$hashline"
 }
 
 nextslot=
