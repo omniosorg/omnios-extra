@@ -253,12 +253,14 @@ ask_to_install() {
 }
 
 ask_to_pkglint() {
-    ask_to_continue_ "" "Do you want to run pkglint at this time?" "y/n" "[yYnN]"
+    ask_to_continue_ "" "Do you want to run pkglint at this time?" \
+        "y/n" "[yYnN]"
     [[ "$REPLY" == "y" || "$REPLY" == "Y" ]]
 }
 
 ask_to_testsuite() {
-    ask_to_continue_ "" "Do you want to run the test-suite at this time?" "y/n" "[yYnN]"
+    ask_to_continue_ "" "Do you want to run the test-suite at this time?" \
+        "y/n" "[yYnN]"
     [[ "$REPLY" == "y" || "$REPLY" == "Y" ]]
 }
 
@@ -938,6 +940,41 @@ clone_github_source() {
 # Make the package
 #############################################################################
 
+run_pkglint() {
+    typeset repo="$1"
+    typeset mf="$2"
+
+    typeset _repo=
+    if [ ! -f $BASE_TMPDIR/lint/pkglintrc ]; then
+        logcmd mkdir $BASE_TMPDIR/lint
+        (
+            cat << EOM
+[pkglint]
+use_progress_tracker = True
+log_level = INFO
+do_pub_checks = True
+pkglint.exclude = pkg.lint.opensolaris pkg.lint.pkglint_manifest.PkgManifestChecker.naming
+version.pattern = *,5.11-0.
+pkglint001.5.report-linted = True
+
+EOM
+            echo "pkglint.action005.1.missing-deps = \\c"
+            for pkg in `nawk '
+                $3 == "" {
+                    printf("pkg:/%s ", $2)
+                }' $ROOTDIR/doc/baseline`; do
+                echo "$pkg \\c"
+            done
+            echo
+        ) > $BASE_TMPDIR/lint/pkglintrc
+        _repo="-r $repo"
+    fi
+    echo $c_note
+    $PKGLINT -f $BASE_TMPDIR/lint/pkglintrc -c $BASE_TMPDIR/lint/cache $mf \
+        $_repo || logerr "----- pkglint failed"
+    echo $c_reset
+}
+
 make_package() {
     logmsg "Making package"
     case $BUILDARCH in
@@ -1113,13 +1150,13 @@ make_package() {
     grep '^depend ' $P5M_FINAL | while read line; do
         logmsg "$line"
     done
-    if [[ -z $SKIP_PKGLINT ]] && ( [[ -n $BATCH ]] || ask_to_pkglint ); then
-        $PKGLINT -c $TMPDIR/lint-cache -r $PKGSRVR $P5M_FINAL || \
-            logerr "----- pkglint failed"
+    if [ -z "$SKIP_PKGLINT" ] && ( [ -n "$BATCH" ] || ask_to_pkglint ); then
+        run_pkglint $PKGSRVR $P5M_FINAL
     fi
     logmsg "--- Publishing package to $PKGSRVR"
     if [ -z "$BATCH" ]; then
-        logmsg "Intentional pause: Last chance to sanity-check before publication!"
+        logmsg "Intentional pause:" \
+            "Last chance to sanity-check before publication!"
         ask_to_continue
     fi
     if [ -n "$DESTDIR" ]; then
