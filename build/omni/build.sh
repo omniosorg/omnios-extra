@@ -26,7 +26,7 @@
 . ../../lib/functions.sh
 
 PROG=omni
-VER=1.3.0
+VER=1.3.1
 VERHUMAN=$VER
 PKG=ooce/developer/omni
 SUMMARY="OmniOS build management utility"
