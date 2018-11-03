@@ -32,7 +32,7 @@ dir group=bin mode=0755 owner=root path=$(OPREFIX)/bin
 <transform file dir path=\. -> drop>
 
 group groupname=$(PROG) gid=82
-user username=$(PROG) uid=82 group=$(PROG) gcos-field="PHP User" \
+user ftpuser=false username=$(PROG) uid=82 group=$(PROG) gcos-field="PHP User" \
     home-dir=/var/$(OPREFIX)/$(PROG) password=NP
 
 <transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
