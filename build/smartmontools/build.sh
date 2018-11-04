@@ -37,7 +37,11 @@ CPPFLAGS64+=" -D_AVL_H"
 CONFIGURE_OPTS="
     --sysconfdir=/etc$PREFIX
     --sbindir=$PREFIX/sbin
+    --with-gnupg=/opt/ooce/bin/gpg
+    --with-scriptpath=/usr/bin:/opt/ooce/bin
 "
+
+RUN_DEPENDS_IPS=ooce/security/gnupg
 
 reset_configure_opts
 
