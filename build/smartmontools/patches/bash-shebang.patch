@@ -1,0 +1,9 @@
+diff -ru smartmontools-6.6/update-smart-drivedb.in smartmontools-6.6~/update-smart-drivedb.in
+--- smartmontools-6.6/update-smart-drivedb.in	2017-11-03 22:43:32.000000000 +0000
++++ smartmontools-6.6~/update-smart-drivedb.in	2018-11-04 20:16:37.685811494 +0000
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#!/bin/bash
+ #
+ # smartmontools drive database update script
+ #
