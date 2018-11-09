@@ -1350,6 +1350,12 @@ diff_package() {
     rm -f $TMPDIR/pkgdiff.$$
 }
 
+diff_latest() {
+    typeset fmri="`pkg list -nvHg $PKGSRVR $1 | nawk 'NR==1{print $1}'`"
+    logmsg "-- For package $fmri"
+    diff_package $fmri
+}
+
 #############################################################################
 # Re-publish packages from one repository to another, changing the publisher
 #############################################################################
