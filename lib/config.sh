@@ -220,6 +220,8 @@ case $RELVER in
     151026) DEFAULT_GCC_VER=6 ;;
     151027) DEFAULT_GCC_VER=7 ;;
     151028) DEFAULT_GCC_VER=7 ;;
+    151029) DEFAULT_GCC_VER=8 ;;
+    151030) DEFAULT_GCC_VER=8 ;;
     *)      logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
 
