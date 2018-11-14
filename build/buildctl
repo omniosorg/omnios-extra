@@ -244,11 +244,7 @@ build_manifest() {
 
     init_repo
     logmsg "Found a manifest file. Preparing it for publishing."
-    sed -e "
-        s/@PKGPUBLISHER@/$PKGPUBLISHER/g
-        s/@RELVER@/$RELVER/g
-        s/@PVER@/$PVER/g
-    " < $mf > $mf.final
+    translate_manifest $mf $mf.final
     if [ -f root.tar.bz2 ]; then
         logmsg "File archive found. Extracting..."
         logcmd bzip2 -dc root.tar.bz2 | tar xf - \
