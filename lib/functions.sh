@@ -1144,6 +1144,7 @@ pkgitems() {
         s/^file [^ ]+/file/
         s/ chash=[^ ]+//
         s/ elfhash=[^ ]+//
+        s/ pkg.content-hash=[^ ]+//g
         # Remove file sizes
         s/ pkg.[c]?size=[0-9]+//g
         # Remove timestamps
