@@ -29,7 +29,7 @@
 
 PROG=nginx
 PKG=ooce/server/nginx-114
-VER=1.14.0
+VER=1.14.1
 VERHUMAN=$VER
 SUMMARY="nginx 1.14 web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
