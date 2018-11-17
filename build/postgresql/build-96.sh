@@ -28,7 +28,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-96
-VER=9.6.10
+VER=9.6.11
 VERHUMAN=$VER
 SUMMARY="$PROG 9.6 - Open Source Database System"
 DESC="$SUMMARY"
