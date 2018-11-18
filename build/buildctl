@@ -635,37 +635,31 @@ DEFAULT_PKGPUBLISHER=$PKGPUBLISHER
 case "$1" in
     config)
         print_config
-        exit
         ;;
 
     list)
         add_targets
         list $2
-        exit
         ;;
 
     list-build)
         add_targets
         list_build $2
-        exit
         ;;
 
     list-built)
         add_targets
         restore_built
         list_built $2
-        exit
         ;;
 
     licenses)
         licenses
-        exit
         ;;
 
     baseline)
         shift
         baseline "$@"
-        exit
         ;;
 
     build)
@@ -735,13 +729,15 @@ case "$1" in
                 done
             fi
         fi
-        exit
         ;;
 
     *)
         usage
         ;;
 esac
+
+# Set PKG before exit so that the elapsed time is labelled properly
+PKG="Total build"
 
 # Vim hints
 # vim:ts=4:sw=4:et:

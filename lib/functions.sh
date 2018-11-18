@@ -491,6 +491,20 @@ fi
 
 logmsg "===== Build started at `date` ====="
 
+print_elapsed() {
+    typeset s=$1
+    printf '%dh%dm%ds' $((s/3600)) $((s%3600/60)) $((s%60))
+}
+
+build_end() {
+    rv=$?
+    if [ -n "$PKG" -a -n "$build_start" ]; then
+        logmsg "Time: $PKG - $(print_elapsed $((`date +%s` - build_start)))"
+        build_start=
+    fi
+    exit $rv
+}
+
 build_start=`date +%s`
 trap '[ -n "$build_start" ] && \
     logmsg Time: $PKG - $((`date +%s` - build_start)) && \
