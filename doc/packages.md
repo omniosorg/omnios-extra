@@ -14,6 +14,7 @@
 | ooce/developer/omni		| 1.3.1		| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| 0.2.8		| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libjpeg-turbo	| 2.0.1		| https://sourceforge.net/projects/libjpeg-turbo/files/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libpng		| 1.6.35	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/freetype2	| 2.9.1		| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
