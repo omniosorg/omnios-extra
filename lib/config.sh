@@ -214,15 +214,12 @@ CXX=g++
 
 # Specify default GCC version for building packages
 case $RELVER in
-    151022) DEFAULT_GCC_VER=5.1.0 ;;
-    151024) DEFAULT_GCC_VER=5 ;;
-    151025) DEFAULT_GCC_VER=6 ;;
-    151026) DEFAULT_GCC_VER=6 ;;
-    151027) DEFAULT_GCC_VER=7 ;;
-    151028) DEFAULT_GCC_VER=7 ;;
-    151029) DEFAULT_GCC_VER=8 ;;
-    151030) DEFAULT_GCC_VER=8 ;;
-    *)      logerr "Unknown release '$RELVER', can't select compiler." ;;
+    15102[12])      DEFAULT_GCC_VER=5.1.0 ;;
+    15102[34])      DEFAULT_GCC_VER=5 ;;
+    15102[56])      DEFAULT_GCC_VER=6 ;;
+    15102[78])      DEFAULT_GCC_VER=7 ;;
+    151029|151030)  DEFAULT_GCC_VER=8 ;;
+    *) logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
 
 # CFLAGS applies to both builds, 32/64 only gets applied to the respective
