@@ -1,0 +1,53 @@
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+# CDDL HEADER START
+#
+# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+
+set name=variant.opensolaris.zone value="global"
+
+license opt/$(PROG)/LICENSE license=GPLv2
+
+driver name=vboxdrv
+driver name=vboxflt
+driver name=vboxnet
+driver name=vboxusb
+driver name=vboxusbmon
+
+# Remove extraneous files from root
+<transform file path=[^/]+$ -> drop>
+<transform file link path=.*install\.sh$ -> drop>
+<transform file path=.*/autoresponse -> drop>
+
+# SetUID binaries
+<transform file path=$(PREFIX)/amd64/ -> default mode 0555>
+<transform file path=$(PREFIX)/amd64/VBoxHeadless -> set mode 4555>
+<transform file path=$(PREFIX)/amd64/VBoxNetAdpCtl -> set mode 4555>
+<transform file path=$(PREFIX)/amd64/VBoxNetDHCP -> set mode 4555>
+<transform file path=$(PREFIX)/amd64/VBoxNetNAT -> set mode 4555>
+
+# Set correct group on system directories
+<transform dir path=platform -> set group sys>
+
+# Remove stray 64/ directory
+<transform dir path=$(PREFIX)/64 -> drop>
+
+# Require a new BE if a kernel module is updated
+<transform file path=platform/i86pc/kernel/drv/amd64 -> set reboot-needed true>
+
+# Remove icons etc. that are not required for a headless installation
+<transform file dir link path=usr/share -> drop>
+
+# Drop some commands from usr/bin
+<transform dir path=usr -> drop>
+<transform link path=usr/bin/VBoxDTrace -> drop>
+

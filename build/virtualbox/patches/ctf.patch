@@ -1,0 +1,146 @@
+Add CTF data to virtualbox objects to aid debugging. Also use the same gcc
+flags as for the main illumos build to disable optimisations that hinder
+problem resolution.
+
+diff --git a/kBuild/tools/GCC3PLAIN.kmk b/kBuild/tools/GCC3PLAIN.kmk
+index 0793f839..585aeafa 100644
+--- a/kBuild/tools/GCC3PLAIN.kmk
++++ b/kBuild/tools/GCC3PLAIN.kmk
+@@ -66,7 +66,11 @@ endif
+ # General Properties used by kBuild
+ TOOL_GCC3PLAIN_COBJSUFF         ?= .o
+ TOOL_GCC3PLAIN_CFLAGS           ?=
+-TOOL_GCC3PLAIN_CFLAGS.debug     ?= -g
++TOOL_GCC3PLAIN_CFLAGS.debug     ?= \
++	-gdwarf-2 -fno-inline-small-functions \
++	-fno-inline-functions-called-once \
++	-fno-ipa-cp -fno-ipa-icf \
++	-fno-clone-functions -fno-reorder-functions
+ TOOL_GCC3PLAIN_CFLAGS.profile   ?= -O2 #-g -pg
+ TOOL_GCC3PLAIN_CFLAGS.release   ?= -O2
+ TOOL_GCC3PLAIN_CINCS            ?=
+@@ -75,7 +79,11 @@ TOOL_GCC3PLAIN_CDEFS            ?=
+ TOOL_GCC3PLAIN_CXXOBJSUFF       ?= .o
+ TOOL_GCC3PLAIN_CXXOBJSUFF       ?= .o
+ TOOL_GCC3PLAIN_CXXFLAGS         ?=
+-TOOL_GCC3PLAIN_CXXFLAGS.debug   ?= -g
++TOOL_GCC3PLAIN_CXXFLAGS.debug   ?= \
++	-gdwarf-2 -fno-inline-small-functions \
++	-fno-inline-functions-called-once \
++	-fno-ipa-cp -fno-ipa-icf \
++	-fno-clone-functions -fno-reorder-functions
+ TOOL_GCC3PLAIN_CXXFLAGS.profile ?= -O2 #-g -pg
+ TOOL_GCC3PLAIN_CXXFLAGS.release ?= -O2
+ TOOL_GCC3PLAIN_CXXINCS          ?=
+@@ -91,6 +99,8 @@ TOOL_GCC3PLAIN_ARLIBSUFF        ?= .a
+ 
+ TOOL_GCC3PLAIN_LDFLAGS          ?=
+ 
++TOOL_CTFCONVERT			?= /opt/onbld/bin/i386/ctfconvert
++
+ 
+ ## Compile C source.
+ # @param    $(target)   Normalized main target name.
+@@ -122,6 +132,7 @@ define TOOL_GCC3PLAIN_COMPILE_C_CMDS
+ 		$(flags) -fpreprocessed -x c\
+ 		-o $(obj)\
+ 		-
++	-$(QUIET)$(TOOL_CTFCONVERT) -i -L VERSION $(obj)
+ 	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
+ endef
+ else # !KBUILD_USE_KOBJCACHE
+@@ -132,6 +143,7 @@ define TOOL_GCC3PLAIN_COMPILE_C_CMDS
+ 		-Wp,-MD,$(dep) -Wp,-MT,$(obj) -Wp,-MP\
+ 		-o $(obj)\
+ 		$(abspath $(source))
++	-$(QUIET)$(TOOL_CTFCONVERT) -i -L VERSION $(obj)
+ 	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
+ endef
+ endif # !KBUILD_USE_KOBJCACHE
+@@ -166,6 +178,7 @@ define TOOL_GCC3PLAIN_COMPILE_CXX_CMDS
+ 		$(flags) -fpreprocessed -x c++\
+ 		-o $(obj)\
+ 		-
++	-$(QUIET)$(TOOL_CTFCONVERT) -i -L VERSION $(obj)
+ 	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
+ endef
+ else # !KBUILD_USE_KOBJCACHE
+@@ -176,6 +189,7 @@ define TOOL_GCC3PLAIN_COMPILE_CXX_CMDS
+ 		-Wp,-MD,$(dep) -Wp,-MT,$(obj) -Wp,-MP\
+ 		-o $(obj)\
+ 		$(abspath $(source))
++	-$(QUIET)$(TOOL_CTFCONVERT) -i -L VERSION $(obj)
+ 	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
+ endef
+ endif # !KBUILD_USE_KOBJCACHE
+diff --git a/kBuild/tools/GXX3PLAIN.kmk b/kBuild/tools/GXX3PLAIN.kmk
+index 92ab12bb..6217d108 100644
+--- a/kBuild/tools/GXX3PLAIN.kmk
++++ b/kBuild/tools/GXX3PLAIN.kmk
+@@ -66,7 +66,11 @@ endif
+ # General Properties used by kBuild
+ TOOL_GXX3PLAIN_COBJSUFF         ?= .o
+ TOOL_GXX3PLAIN_CFLAGS           ?=
+-TOOL_GXX3PLAIN_CFLAGS.debug     ?= -g
++TOOL_GXX3PLAIN_CFLAGS.debug     ?= \
++	-gdwarf-2 -fno-inline-small-functions \
++	-fno-inline-functions-called-once \
++	-fno-ipa-cp -fno-ipa-icf \
++	-fno-clone-functions -fno-reorder-functions
+ TOOL_GXX3PLAIN_CFLAGS.profile   ?= -O2 #-g -pg
+ TOOL_GXX3PLAIN_CFLAGS.release   ?= -O2
+ TOOL_GXX3PLAIN_CINCS            ?=
+@@ -75,7 +79,11 @@ TOOL_GXX3PLAIN_CDEFS            ?=
+ TOOL_GXX3PLAIN_CXXOBJSUFF       ?= .o
+ TOOL_GXX3PLAIN_CXXOBJSUFF       ?= .o
+ TOOL_GXX3PLAIN_CXXFLAGS         ?=
+-TOOL_GXX3PLAIN_CXXFLAGS.debug   ?= -g
++TOOL_GXX3PLAIN_CXXFLAGS.debug   ?= \
++	-gdwarf-2 -fno-inline-small-functions \
++	-fno-inline-functions-called-once \
++	-fno-ipa-cp -fno-ipa-icf \
++	-fno-clone-functions -fno-reorder-functions
+ TOOL_GXX3PLAIN_CXXFLAGS.profile ?= -O2 #-g -pg
+ TOOL_GXX3PLAIN_CXXFLAGS.release ?= -O2
+ TOOL_GXX3PLAIN_CXXINCS          ?=
+@@ -91,6 +99,8 @@ TOOL_GXX3PLAIN_ARLIBSUFF        ?= .a
+ 
+ TOOL_GXX3PLAIN_LDFLAGS          ?=
+ 
++TOOL_CTFCONVERT			?= /opt/onbld/bin/i386/ctfconvert
++
+ 
+ ## Compile C source.
+ # @param    $(target)   Normalized main target name.
+@@ -122,6 +132,7 @@ define TOOL_GXX3PLAIN_COMPILE_C_CMDS
+ 		$(flags) -fpreprocessed -x c\
+ 		-o $(obj)\
+ 		-
++	-$(QUIET)$(TOOL_CTFCONVERT) -i -L VERSION $(obj)
+ 	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
+ endef
+ else # !KBUILD_USE_KOBJCACHE
+@@ -132,6 +143,7 @@ define TOOL_GXX3PLAIN_COMPILE_C_CMDS
+ 		-Wp,-MD,$(dep) -Wp,-MT,$(obj) -Wp,-MP\
+ 		-o $(obj)\
+ 		$(abspath $(source))
++	-$(QUIET)$(TOOL_CTFCONVERT) -i -L VERSION $(obj)
+ 	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
+ endef
+ endif # !KBUILD_USE_KOBJCACHE
+@@ -166,6 +178,7 @@ define TOOL_GXX3PLAIN_COMPILE_CXX_CMDS
+ 		$(flags) -fpreprocessed -x c++\
+ 		-o $(obj)\
+ 		-
++	-$(QUIET)$(TOOL_CTFCONVERT) -i -L VERSION $(obj)
+ 	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
+ endef
+ else # !KBUILD_USE_KOBJCACHE
+@@ -176,6 +189,7 @@ define TOOL_GXX3PLAIN_COMPILE_CXX_CMDS
+ 		-Wp,-MD,$(dep) -Wp,-MT,$(obj) -Wp,-MP\
+ 		-o $(obj)\
+ 		$(abspath $(source))
++	-$(QUIET)$(TOOL_CTFCONVERT) -i -L VERSION $(obj)
+ 	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
+ endef
+ endif # !KBUILD_USE_KOBJCACHE

@@ -1,0 +1,20 @@
+
+Following the integration of '9641 want stack-clash mitigation', as_map()
+now expects callback functions to be:
+
+typedef int (*segcreate_func_t)(struct seg **, void *);
+
+diff -wpruN '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/memobj-r0drv-solaris.h a/src/VBox/Runtime/r0drv/solaris/memobj-r0drv-solaris.h
+--- a~/src/VBox/Runtime/r0drv/solaris/memobj-r0drv-solaris.h	1970-01-01 00:00:00
++++ a/src/VBox/Runtime/r0drv/solaris/memobj-r0drv-solaris.h	1970-01-01 00:00:00
+@@ -56,8 +56,9 @@ static struct seg_ops s_SegVBoxOps;
+ static vnode_t s_segVBoxVnode;
+ 
+ 
+-DECLINLINE(int) rtR0SegVBoxSolCreate(seg_t *pSeg, void *pvArgs)
++DECLINLINE(int) rtR0SegVBoxSolCreate(seg_t **ppSeg, void *pvArgs)
+ {
++    seg_t          *pSeg       = *ppSeg;
+     struct as      *pAddrSpace = pSeg->s_as;
+     PSEGVBOX_CRARGS pArgs      = pvArgs;
+     PSEGVBOX_DATA   pData      = kmem_zalloc(sizeof(*pData), KM_SLEEP);
