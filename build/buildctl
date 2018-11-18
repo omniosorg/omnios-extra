@@ -352,8 +352,10 @@ baseline() {
 
 hashline="`printf -- '#%.0s' {1..79}`"
 job_status() {
+    local _stat="$*"
+    elapsed=$((`date +%s` - build_start))
     logmsg -h "$hashline"
-    logmsg -h "-- Job status $*--"
+    logmsg -h "-- Job status $_stat-- `print_elapsed $elapsed` --"
     now=`date +%s`
 
     for i in `seq 0 $threads`; do
@@ -372,6 +374,34 @@ job_status() {
     logmsg -h "$hashline"
 }
 
+# Reap a finished job
+reap_slot() {
+    typeset -i i=$1
+
+    wait "${slots[$i]}"
+    typeset s=$?
+    typeset job="${slottgt[$i]}"
+    typeset -i ret=0
+    case $s in
+        0)  logmsg -n "-- Job $i ($job) terminated normally"
+            ;;
+        141)
+            # Jobs sometimes terminate with 141 (SIGPIPE) but have
+            # actually run to completion. We don't know why this
+            # happens yet, but treat this as a successful run for now.
+            # If the build or publication has not worked, the baseline
+            # check will catch it.
+            logmsg -n "-- Job $i ($job) terminated with SIGPIPE"
+            ;;
+        *)  logmsg -e "-- Job $i ($job) terminated with status $s"
+            note -e "***** BUILD ERROR ***** ($job/$s)"
+            ret=1
+            ;;
+    esac
+    slots[$i]=
+    return $ret
+}
+
 nextslot=
 wait_for_slot() {
     nextslot=
@@ -382,36 +412,31 @@ wait_for_slot() {
             [ -z "${slots[$i]}" ] && nextslot=$i && return
             # Job finished?
             kill -0 "${slots[$i]}" 2>/dev/null && continue
-
-            # Reap terminated job
-            wait "${slots[$i]}"
-            s=$?
-            typeset job="${slottgt[$i]}"
-            case $s in
-                0)  logmsg -n "-- Job $i ($job) terminated normally"
-                    slots[$i]=
-                    nextslot=$i
-                    return
-                    ;;
-                141)
-                    # Jobs sometimes terminate with 141 (SIGPIPE) but have
-                    # actually run to completion. We don't know why this
-                    # happens yet, but treat this as a successful run for now.
-                    # If the build or publication has not worked, the baseline
-                    # check will catch it.
-                    logmsg -n "-- Job $i ($job) terminated with SIGPIPE"
-                    slots[$i]=
-                    nextslot=$i
-                    return
-                    ;;
-                *)  logmsg -e "-- Job $i ($job) terminated with status $s"
-                    note -e "***** BUILD ERROR ***** ($job/$s)"
-                    return
-                    ;;
-            esac
+            # Yes, reap it
+            reap_slot $i && nextslot=$i
+            return
         done
         # Print status summary each minute (approx.)
-        [ `date +%S` -eq 0 ] && job_status ""
+        [ `date +%S` -eq 0 ] && job_status
+        sleep 1
+    done
+}
+
+wait_for_jobs() {
+    local msg="$1"
+    while :; do
+        typeset -i running=0
+        for i in `seq 0 $threads`; do
+            [ -n "${slots[$i]}" ] || continue
+            if ! kill -0 "${slots[$i]}" 2>/dev/null; then
+                # Job has finished
+                reap_slot $i
+            else
+                ((running++))
+            fi
+        done
+        [ "$running" -eq 0 ] && break
+        [ `date +%S` -eq 0 ] && job_status "($msg) "
         sleep 1
     done
 }
@@ -437,6 +462,8 @@ parallel_build() {
     [ -n "$USE_CCACHE" ] && build_flags+=" -c"
 
     note "Starting parallel build with $threads thread(s)"
+
+    build_start=`date +%s`
 
     ((threads = threads - 1))
 
@@ -467,6 +494,13 @@ parallel_build() {
         nextslot=
 
         ((pkgnum++))
+
+        # Handle special targets
+        if [ "$tgt" = ".WAIT" ]; then
+            # Special target that waits until there are no running jobs
+            wait_for_jobs "emptying queue"
+            continue
+        fi
 
         # If this target belongs to the same script as an already running
         # job, skip it.
@@ -544,22 +578,7 @@ parallel_build() {
         done
     else
         logmsg -h "-- waiting for jobs to finish"
-        while :; do
-            running=0
-            for i in `seq 0 $threads`; do
-                [ -n "${slots[$i]}" ] || continue
-                if ! kill -0 "${slots[$i]}" 2>/dev/null; then
-                    # Job has finished
-                    wait "${slots[$i]}"
-                    slots[$i]=
-                else
-                    ((running++))
-                fi
-            done
-            [ "$running" -eq 0 ] && break
-            [ `date +%S` -eq 0 ] && job_status "(draining) "
-            sleep 1
-        done
+        wait_for_jobs draining
     fi
 
     if [ -n "$err" ]; then
