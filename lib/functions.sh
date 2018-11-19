@@ -213,6 +213,7 @@ note() {
     typeset xarg=
     [ "$1" = "-h" ] && xarg=$1 && shift
     [ "$1" = "-e" ] && xarg=$1 && shift
+    [ "$1" = "-n" ] && xarg=$1 && shift
     logmsg ""
     logmsg $xarg "***"
     logmsg $xarg "*** $@"
