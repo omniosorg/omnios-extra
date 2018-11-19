@@ -105,10 +105,13 @@ OOCEMIRROR=https://mirrors.omniosce.org
 # If $MIRROR begins with a '/', it is treated as a local directory.
 MIRROR=$OOCEMIRROR
 
-# The production IPS repository for this branch (may be overriden in site.sh)
+# The production IPS repository for this branch (may be overridden in site.sh)
 # Used for package contents diffing.
-IPS_REPO=https://pkg.omniosce.org/r$RELVER/extra
-[ $((RELVER % 2)) != 0 ] && IPS_REPO=https://pkg.omniosce.org/bloody/extra
+if [ $((RELVER % 2)) == 0 ]; then
+    IPS_REPO=https://pkg.omniosce.org/r$RELVER/extra
+else
+    IPS_REPO=https://pkg.omniosce.org/bloody/extra
+fi
 
 ARCHIVE_TYPES="tar.xz tar.bz2 tar.gz tgz tar zip"
 
@@ -210,7 +213,7 @@ NO_PARALLEL_MAKE=
 DONT_REMOVE_INSTALL_DIR=
 
 #############################################################################
-# C compiler options - these can be overriden by a build script
+# C compiler options - these can be overridden by a build script
 #############################################################################
 # isaexec(3C) variants
 # These variables will be passed to the build to construct multi-arch

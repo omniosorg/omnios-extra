@@ -1481,10 +1481,10 @@ make_isaexec_stub_arch() {
 #   - In the normal case, where you just want to add --enable-feature, set
 #     CONFIGURE_OPTS. This will be appended to the end of CONFIGURE_CMD
 #     for both 32 and 64 bit builds.
-#   - Any of these functions can be overriden in your build script, so if
+#   - Any of these functions can be overridden in your build script, so if
 #     anything here doesn't apply to the build process for your application,
 #     just override that function with whatever code you need. The build
-#     function itself can be overriden if the build process doesn't fit into a
+#     function itself can be overridden if the build process doesn't fit into a
 #     configure, make, make install pattern.
 #############################################################################
 
