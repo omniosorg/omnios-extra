@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/terminal.c a/terminal.c
+--- a~/terminal.c	1970-01-01 00:00:00
++++ a/terminal.c	1970-01-01 00:00:00
+@@ -111,7 +111,7 @@ init_curses(void)
+ 	nodelay(w, TRUE);
+ 	nonl();
+ 	Oldcurs = curs_set(0);
+-	if (has_colors()) {
++	if (0) {
+ 		dbug("terminal has colors\n");
+ 		init_color(COLOR_BLACK,0,0,0);
+ 		init_color(COLOR_WHITE,1000,1000,1000);
