@@ -1,0 +1,39 @@
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+# CDDL HEADER START
+#
+# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+
+
+dir group=bin mode=0755 owner=root path=var/$(PREFIX)
+dir group=$(PROG) mode=0700 owner=$(PROG) path=var/$(PREFIX)/data
+dir group=$(PROG) mode=0700 owner=$(PROG) path=var/log/$(PREFIX)
+dir group=$(PROG) mode=0755 owner=$(PROG) path=$(PREFIX)/plugins
+dir group=$(PROG) mode=0755 owner=$(PROG) path=$(PREFIX)/client/plugins
+
+link path=$(PREFIX)/logs target=../../../var/log/$(PREFIX)
+link path=$(PREFIX)/data target=../../../var/$(PREFIX)/data
+link path=$(PREFIX)/config target=../../../etc/$(PREFIX)
+
+group groupname=$(PROG) gid=85
+user ftpuser=false username=$(PROG) uid=85 group=$(PROG) gcos-field="Mattermost User" \
+    home-dir=$(PREFIX) password=NP
+
+<transform dir file path=$(PREFIX)/(?:logs|config|prepackaged_plugins) -> drop>
+<transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
+<transform file path=etc/$(PREFIX)/ -> set owner $(PROG)>
+
+<transform file path=$(PREFIX)/bin/ \
+    -> set restart_fmri svc:/ooce/application/$(PROG):default>
+
+license LICENSE.txt license=MIT
+
