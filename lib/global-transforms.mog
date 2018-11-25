@@ -48,7 +48,7 @@
 <transform file dir link path=usr/share/info -> drop>
 
 # We don't want any libtool archives packaging
-<transform file path=.*/lib/.*\.la$ -> drop>
+<transform file link path=.*/lib/.*\.la$ -> drop>
 
 # Other upper-level directories to fix
 <transform dir path=etc/security.* -> drop>
