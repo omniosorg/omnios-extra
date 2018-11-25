@@ -1,0 +1,13 @@
+Patch originally taken from OpenIndiana, author is Alexander Pyhalov
+
+--- VirtualBox-5.2.18/Config.kmk.~1~	2018-08-14 14:38:13.000000000 +0000
++++ VirtualBox-5.2.18/Config.kmk	2018-09-21 16:58:33.317054655 +0000
+@@ -2698,8 +2698,6 @@
+ 		$(VBOX_GCC_PATH_CXX) \
+ 		$(VBOX_GCC32_PATH_CC) \
+ 		$(VBOX_GCC32_PATH_CXX) \
+-		$(if-expr "$(KBUILD_HOST).$(KBUILD_HOST_ARCH)" == "solaris.amd64" && $(KBUILD_HOST_VERSION_MINOR) >= 11 \
+-			, /platform/i86pc/kernel/$(KBUILD_HOST_ARCH)/unix,) \
+         	| $(PATH_OUT)/DynamicConfig.c $(PATH_OUT)/DynamicConfig.cpp
+ 	$(call MSG_GENERATE,,$@,)
+ 	$(QUIET)$(RM) -f '$@'

@@ -719,7 +719,14 @@ rebase_patches() {
             /^diff -/q
             p
             ' < $patchfile~ > $patchfile
-        gdiff -wpruN --exclude='*.orig' $BUILDDIR~ $BUILDDIR >> $patchfile
+        # Generate new patch and normalise the header lines so that they do
+        # not change with each run.
+        gdiff -wpruN --exclude='*.orig' $BUILDDIR~ $BUILDDIR | sed '
+            /^diff -wpruN/,/^\+\+\+ / {
+                s% [^ ~/]*\(~*\)/% a\1/%g
+                s%[0-9][0-9][0-9][0-9]-[0-9].*%1970-01-01 00:00:00%
+            }
+        ' >> $patchfile
         rm -f $patchfile~
     done
     rsync -a --delete $BUILDDIR.unpatched/ $BUILDDIR/

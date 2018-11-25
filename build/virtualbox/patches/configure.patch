@@ -1,0 +1,28 @@
+Help configure set up the correct path to libpng as delivered by
+ooce/library/libpng
+
+diff -wpruN '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -130,8 +130,8 @@
+ MESA="-lGL"
+ INCZ=""
+ LIBZ="-lz"
+-INCVNCSERVER=""
+-LIBVNCSERVER="-lvncserver"
++INCVNCSERVER="-I/opt/ooce/include"
++LIBVNCSERVER="-L/opt/ooce/lib/amd64 -R/opt/ooce/lib/amd64 -lvncserver"
+ INCDEVMAPPER=""
+ LIBDEVMAPPER="-ldevmapper"
+ CXX_FLAGS=""
+@@ -145,8 +145,8 @@ if [ "$OS" = "freebsd" ]; then
+ else
+   INCCURL=""
+   LIBCURL="-lcurl"
+-  INCPNG=""
+-  LIBPNG="-lpng"
++  INCPNG="/opt/ooce/include"
++  LIBPNG="-L/opt/ooce/lib/amd64 -R/opt/ooce/lib/amd64 -lpng"
+ fi
+ INCVPX=""
+ LIBVPX="-lvpx"
