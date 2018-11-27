@@ -37,7 +37,7 @@ user ftpuser=false gcos-field="Postfix Reserved UID" group=$(PROG) \
 <transform file path=$(PREFIX)/sbin/postdrop -> set group postdrop>
 <transform file path=$(PREFIX)/sbin/postdrop -> set mode 2555>
 <transform file path=$(PREFIX)/sbin/postqueue -> set mode 2555>
-<transform file path=etc/$(ORIGPREFIX)/$(PROG)/.* -> set preserve true>
+<transform file path=etc/$(OPREFIX)/$(PROG)/.* -> set preserve true>
 <transform file path=$(PREFIX)/sbin -> set restart_fmri svc:/network/smtp/$(PROG):default>
 <transform file path=$(PREFIX)/libexec -> set restart_fmri svc:/network/smtp/$(PROG):default>
 
@@ -51,16 +51,16 @@ link path=usr/sbin/sendmail mediator=mta mediator-implementation=$(PROG) \
 link path=usr/sbin/newaliases mediator=mta mediator-implementation=$(PROG) \
     mediator-priority=site target=../../$(PREFIX)/sbin/sendmail
 link path=etc/aliases mediator=mta mediator-implementation=$(PROG) \
-    mediator-priority=site target=./$(ORIGPREFIX)/$(PROG)/aliases
+    mediator-priority=site target=./$(OPREFIX)/$(PROG)/aliases
 
 # Mediated binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(ORIGPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> \
+    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> \
     mediator=mta mediator-priority=site mediator-implementation=$(PROG) >
 
 # Mediated man pages
 <transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(ORIGPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> \
+    link path=$(OPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> \
     mediator=mta mediator-priority=site mediator-implementation=$(PROG) >
 
 license LICENSE license=IBM
