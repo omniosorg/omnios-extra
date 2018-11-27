@@ -27,18 +27,33 @@
 . ../../lib/functions.sh
 
 PROG=postfix
-VER=3.3.1
+VER=3.3.2
 VERHUMAN=$VER
 PKG=ooce/network/smtp/postfix
 SUMMARY="Postfix MTA"
 DESC="Wietse Venema's mail server alternative to sendmail"
-ORIGPREFIX=$PREFIX
-PREFIX=$PREFIX/$PROG
-CONFPATH=/etc$PREFIX
-BUILDARCH="64"
-BUILD_DEPENDS_IPS="library/pcre ooce/database/bdb"
 
-XFORM_ARGS="-D PREFIX=${PREFIX#/} -D ORIGPREFIX=${ORIGPREFIX#/} -D PROG=${PROG}"
+set_arch 64
+
+HARDLINK_TARGETS="
+    opt/ooce/postfix/libexec/postfix/smtp
+    opt/ooce/postfix/libexec/postfix/qmgr
+"
+
+OPREFIX=$PREFIX
+PREFIX+="/$PROG"
+CONFPATH="/etc$PREFIX"
+
+BUILD_DEPENDS_IPS="
+    library/pcre
+    ooce/database/bdb
+"
+
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
+    -DPROG=${PROG}
+"
 
 configure64() {
     logmsg "--- configure (make makefiles)"
@@ -50,28 +65,26 @@ configure64() {
         -DDEF_NEWALIAS_PATH=\"'${PREFIX}/bin/newaliases'\" \
         -DDEF_MANPAGE_DIR=\"'${PREFIX}/share/man'\" \
         -DDEF_SENDMAIL_PATH=\"'${PREFIX}/sbin/sendmail'\" \
-        -I'${ORIGPREFIX}/include \
-        AUXLIBS="-R${ORIGPREFIX}/lib/${ISAPART64} -L${ORIGPREFIX}/lib/${ISAPART64} -ldb -lssl -lcrypto" || \
-            logerr "Failed make makefiles command"
+        -I'${OPREFIX}/include \
+        AUXLIBS="-R${OPREFIX}/lib/${ISAPART64} -L${OPREFIX}/lib/${ISAPART64} -ldb -lssl -lcrypto" \
+            || logerr "Failed make makefiles command"
 }
 
 make_clean() {
     logmsg "--- make (dist)clean"
-    logcmd $MAKE tidy || \
-    logcmd $MAKE -f Makefile.init makefiles || \
-        logmsg "--- *** WARNING *** make (dist)clean Failed"
+    logcmd $MAKE tidy || logcmd $MAKE -f Makefile.init makefiles \
+        || logmsg "--- *** WARNING *** make (dist)clean Failed"
 }
 
 # Overriding this because "install" for postfix is interactive
 make_install() {
     logmsg "--- make install"
-    logcmd /bin/sh postfix-install -non-interactive install_root=${DESTDIR} || \
-        logerr "--- Make install failed"
+    logcmd /bin/sh postfix-install -non-interactive install_root=${DESTDIR} \
+        || logerr "--- Make install failed"
 
     logmsg "--- change default aliases paths"
-    logcmd perl -i -pe "s!^#(alias_(?:maps|database)\\s+=\\s+hash:)/etc/aliases\$!\$1${CONFPATH}/aliases!g" \
-        $DESTDIR$CONFPATH/main.cf || \
-        logerr "-- modifying main.cf failed"
+    logcmd perl -i -pe "s!^#(alias_(?:maps|database)\\s+=\\s+hash:)/etc/aliases\$!\$1${CONFPATH}/aliases!" \
+        $DESTDIR$CONFPATH/main.cf || logerr "-- modifying main.cf failed"
 }
 
 init
@@ -80,7 +93,6 @@ patch_source
 prep_build
 build
 install_smf network smtp-postfix.xml
-make_isa_stub
 make_package
 clean_up
 
