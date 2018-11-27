@@ -1,5 +1,6 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
+| ooce/application/mattermost	| 5.5.0		| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-72	| 7.2.12	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20180414	| ftp://tug.org/historic/systems/texlive/2018/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/bdb		| 5.3.28	| http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html | [omniosorg](https://github.com/omniosorg)
@@ -10,6 +11,7 @@
 | ooce/developer/cmake		| 3.12.3	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-110		| 1.10.5	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/go-111		| 1.11.2	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-19		| 1.9.7		| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| 1.3.1		| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| 0.2.8		| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)

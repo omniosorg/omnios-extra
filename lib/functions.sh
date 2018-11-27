@@ -923,7 +923,8 @@ clone_github_source() {
         fi
     fi
     if [ "$fresh" -eq 0 -a -n "$branch" ]; then
-        logcmd $GIT -C $prog pull origin $branch || logerr "failed to pull"
+        logcmd $GIT -C $prog reset --hard $branch || logerr "failed to reset branch"
+        logcmd $GIT -C $prog pull --rebase origin $branch || logerr "failed to pull"
     fi
 
     $GIT -C $prog show --shortstat
