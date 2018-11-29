@@ -335,7 +335,9 @@ set_gccver() {
     GCCVER="$1"
     logmsg "-- Setting GCC version to $GCCVER"
     GCCPATH="/opt/gcc-$GCCVER"
-    [ -x "$GCCPATH/bin/gcc" ] || logerr "Unknown compiler version $GCCVER"
+    GCC="$GCCPATH/bin/gcc"
+    GXX="$GCCPATH/bin/g++"
+    [ -x "$GCC" ] || logerr "Unknown compiler version $GCCVER"
     PATH="$GCCPATH/bin:$BASEPATH"
     for cmd in gcc g++; do
         [ -h $TMPDIR/tools/$cmd ] && rm -f $TMPDIR/tools/$cmd
@@ -345,7 +347,7 @@ set_gccver() {
         [ -x $CCACHE_PATH/ccache ] || logerr "Ccache is not installed"
         PATH="$CCACHE_PATH:$PATH"
     fi
-    export GCCVER GCCPATH PATH
+    export GCC GXX GCCVER GCCPATH PATH
 }
 
 set_gccver $DEFAULT_GCC_VER
