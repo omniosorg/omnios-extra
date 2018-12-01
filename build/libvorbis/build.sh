@@ -39,7 +39,7 @@ XFORM_ARGS="
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --includedir=$OPREFIX/include
-    --disable-asm-optimizations
+    --disable-static
 "
 CONFIGURE_OPTS_32="
     --bindir=$PREFIX/bin/$ISAPART

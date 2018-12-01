@@ -39,7 +39,10 @@ XFORM_ARGS="-D PREFIX=${PREFIX#/} -D ORIGPREFIX=${ORIGPREFIX#/} -D PROGVER=${PRO
 
 BUILDDIR=db-$VER/build_unix
 CONFIGURE_CMD="../dist/configure"
-CONFIGURE_OPTS="--enable-compat185"
+CONFIGURE_OPTS="
+    --enable-compat185
+    --disable-static
+"
 CONFIGURE_OPTS_32="
     --prefix=$PREFIX
     --includedir=$ORIGPREFIX/include

@@ -35,6 +35,8 @@ XFORM_ARGS="
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --incdir=$OPREFIX/include
+    --disable-static
+    --enable-shared
     --strip=gstrip
 "
 CONFIGURE_OPTS_32="

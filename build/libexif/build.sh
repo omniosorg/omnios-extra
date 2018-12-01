@@ -33,6 +33,7 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
+    --disable-static
     --includedir=$OPREFIX/include
 "
 CONFIGURE_OPTS_32="
