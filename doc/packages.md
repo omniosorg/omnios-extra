@@ -22,7 +22,7 @@
 | ooce/library/libidl		| 0.8.14	| https://ftp.gnome.org/pub/gnome/sources/libIDL/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libjpeg-turbo	| 2.0.1		| https://sourceforge.net/projects/libjpeg-turbo/files/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libpciaccess	| 0.14		| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
-| ooce/library/libpng		| 1.6.35	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libpng		| 1.6.36	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvncserver	| 20181116	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/lxadm			| 0.1.6		| https://github.com/hadfl/lxadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.1.1		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
