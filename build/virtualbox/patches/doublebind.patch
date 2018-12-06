@@ -1,0 +1,13 @@
+Virtualbox attempts to listen on the VRDE socket twice in succession.
+
+--- a/src/VBox/Main/src-client/ConsoleImpl.cpp~	2018-12-06 16:27:28.680798085 +0000
++++ b/src/VBox/Main/src-client/ConsoleImpl.cpp	2018-12-06 16:27:58.531907358 +0000
+@@ -9860,7 +9860,7 @@
+         alock.acquire();
+ 
+         /* Enable client connections to the server. */
+-        pConsole->i_consoleVRDPServer()->EnableConnections();
++        /*pConsole->i_consoleVRDPServer()->EnableConnections();*/
+ 
+ #ifdef VBOX_WITH_AUDIO_VRDE
+         /* Attach the VRDE audio driver. */
