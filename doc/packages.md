@@ -34,7 +34,7 @@
 | ooce/runtime/node-811		| 8.11.4	| https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/security/gnupg		| 1.4.23	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-112		| 1.12.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/server/nginx-114		| 1.14.1	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/server/nginx-114		| 1.14.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/mbuffer		| 20180625	| http://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/smartmontools	| 6.6		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/test/iozone	| 3.482		| http://www.iozone.org/src/current/ | [omniosorg](https://github.com/omniosorg)
