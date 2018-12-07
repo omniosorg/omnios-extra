@@ -91,17 +91,25 @@ PKGSRVR=file://$ROOTDIR/tmp.repo/
 # Use bash for subshells and commands launched by python setuptools
 export SHELL=/usr/bin/bash
 
+# The package publisher email address
+PUBLISHER_EMAIL=sa@omniosce.org
+
 # The github repository root from which some packages are pulled
 GITHUB=https://github.com/omniosorg
+# The main OOCE mirror
+OOCEMIRROR=https://mirrors.omniosce.org
 
-# Which server to fetch files from.
+# The server or path from which to fetch source code and other files.
+# MIRROR may be overridden in lib/site.sh but defaults to the main OOCE mirror
 # If $MIRROR begins with a '/', it is treated as a local directory.
-MIRROR=https://mirrors.omniosce.org
+MIRROR=$OOCEMIRROR
 
 # The production IPS repository for this branch (may be overriden in site.sh)
 # Used for package contents diffing.
 IPS_REPO=https://pkg.omniosce.org/r$RELVER/extra
 [ $((RELVER % 2)) != 0 ] && IPS_REPO=https://pkg.omniosce.org/bloody/extra
+
+ARCHIVE_TYPES="tar.xz tar.bz2 tar.gz tgz tar zip"
 
 # Default prefix for packages (may be overridden)
 PREFIX=/opt/ooce

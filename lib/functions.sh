@@ -529,6 +529,9 @@ init() {
         logerr "DESC may not be empty. Please update your build script"
     fi
 
+    # Blank out the source code location
+    _ARC_SOURCE=
+
     # BUILDDIR can be used to manually specify what directory the program is
     # built in (i.e. what the tarball extracts to). This defaults to the name
     # and version of the program, which works in most cases.
@@ -664,7 +667,7 @@ check_for_patches() {
 }
 
 patch_file() {
-    FILENAME=$1
+    local FILENAME=$1
     shift
     ARGS=$@
     if [ ! -f $SRCDIR/$PATCHDIR/$FILENAME ]; then
@@ -783,6 +786,7 @@ download_source() {
     local VER="$1"; shift
     local TARGETDIR="$1"; shift
     local EXTRACTARGS="$@"
+    local FILENAME
 
     local ARCHIVEPREFIX="$PROG"
     [ -n "$VER" ] && ARCHIVEPREFIX+="-$VER"
@@ -794,52 +798,31 @@ download_source() {
         logcmd mkdir -p $TARGETDIR
     fi
 
-    pushd $TARGETDIR > /dev/null
+    pushd $TARGETDIR >/dev/null
+
     logmsg "Checking for source directory"
     if [ -d "$BUILDDIR" ]; then
-        logmsg "--- Source directory found"
-        if [ -n "$REMOVE_PREVIOUS" ]; then
-            logmsg "--- Removing old source directory"\
-                "(REMOVE_PREVIOUS=$REMOVE_PREVIOUS)"
-            logcmd rm -rf $BUILDDIR || \
-                logerr "Failed to remove source directory"
-        elif check_for_patches "to see if we need to remove the source"; then
-            logmsg "--- Patches are present, removing source directory"
-            logcmd rm -rf $BUILDDIR || \
-                logerr "Failed to remove source directory"
-        else
-            logmsg "--- Patches are not present and REMOVE_PREVIOUS is not"\
-                "set, keeping source directory"
-            popd > /dev/null
-            return
-        fi
+        logmsg "--- Source directory found, removing"
+        logcmd rm -rf "$BUILDDIR" || logerr "Failed to remove source directory"
     else
         logmsg "--- Source directory not found"
     fi
 
-    # If we reach this point, the source directory was either not found, or it
-    # was removed due to patches being present.
     logmsg "Checking for $PROG source archive"
     find_archive $ARCHIVEPREFIX FILENAME
     if [ -z "$FILENAME" ]; then
-        # Try all possible archive names
         logmsg "--- Archive not found."
         logmsg "Downloading archive"
-        get_resource $DLDIR/$ARCHIVEPREFIX.tar.gz || \
-            get_resource $DLDIR/$ARCHIVEPREFIX.tar.bz2 || \
-            get_resource $DLDIR/$ARCHIVEPREFIX.tar.xz || \
-            get_resource $DLDIR/$ARCHIVEPREFIX.tgz || \
-            get_resource $DLDIR/$ARCHIVEPREFIX.tbz || \
-            get_resource $DLDIR/$ARCHIVEPREFIX.tar || \
-            get_resource $DLDIR/$ARCHIVEPREFIX.zip || \
-            logerr "--- Failed to download file"
+        for ext in $ARCHIVE_TYPES; do
+            get_resource $DLDIR/$ARCHIVEPREFIX.$ext && break
+        done
         find_archive $ARCHIVEPREFIX FILENAME
-        if [ -z "$FILENAME" ]; then
-            logerr "Unable to find downloaded file."
-        fi
+        [ -z "$FILENAME" ] && logerr "Unable to find downloaded file."
+        logmsg "--- Downloaded $FILENAME"
     else
-        logmsg "--- $PROG source archive found"
+        logmsg "--- Found $FILENAME"
     fi
+    _ARC_SOURCE="$DLDIR/$FILENAME"
 
     # Fetch and verify the archive checksum
     if [ -z "$SKIP_CHECKSUM" ]; then
@@ -865,7 +848,8 @@ download_source() {
         logerr "--- Extracted source is not in the expected location" \
             " ($BUILDDIR)"
     fi
-    popd > /dev/null
+
+    popd >/dev/null
 }
 
 # Finds an existing archive and stores its value in a variable whose name
@@ -873,22 +857,28 @@ download_source() {
 # Example: find_archive myprog-1.2.3 FILENAME
 #   Stores myprog-1.2.3.tar.gz in $FILENAME
 find_archive() {
-    FILES=`ls $1.{tar.gz,tgz,tar.bz2,tbz,tar.xz,tar,zip} 2>/dev/null`
-    FILES=${FILES%% *} # Take only the first filename returned
-    # This dereferences the second parameter passed
-    eval "$2=\"$FILES\""
+    local base="$1"
+    local var="$2"
+    local ext
+    for ext in $ARCHIVE_TYPES; do
+        [ -f "$base.$ext" ] || continue
+        eval "$var=\"$base.$ext\""
+        break
+    done
 }
 
 # Extracts various types of archive
 extract_archive() {
     local file="$1"; shift
     case $file in
-        *.tar.gz|*.tgz)     $GZIP -dc $file | $TAR -xvf - $* ;;
-        *.tar.bz2|*.tbz)    $BUNZIP2 -dc $file | $TAR -xvf - $* ;;
         *.tar.xz)           $XZCAT $file | $TAR -xvf - $* ;;
-        *.tar)              $TAR -xvf $file $* ;;
+        *.tar.bz2)          $BUNZIP2 -dc $file | $TAR -xvf - $* ;;
+        *.tar.gz|*.tgz)     $GZIP -dc $file | $TAR -xvf - $* ;;
         *.zip)              $UNZIP $file $* ;;
-        *)                  return 1 ;;
+        *.tar)              $TAR -xvf $file $* ;;
+        # May as well try tar. It's GNU tar which does a fair job at detecting
+        # the compression format.
+        *)                  $TAR -xvf $file $* ;;
     esac
 }
 
@@ -975,6 +965,10 @@ EOM
     echo $c_reset
 }
 
+pkgmeta() {
+    echo set name=$1 value=\"$2\"
+}
+
 make_package() {
     logmsg "Making package"
     case $BUILDARCH in
@@ -1058,16 +1052,21 @@ make_package() {
         logcmd touch $P5M_INT || \
             logerr "------ Failed to create empty manifest"
     fi
+
+    # Package metadata
     logmsg "--- Generating package metadata"
-    echo "set name=pkg.fmri value=$FMRI" > $MY_MOG_FILE
-    # Set human-readable version, if it exists
-    if [ -n "$VERHUMAN" ]; then
-        logmsg "------ Setting human-readable version"
-        echo "set name=pkg.human-version value=\"$VERHUMAN\"" >> $MY_MOG_FILE
-    fi
-    echo "set name=pkg.summary value=\"$SUMMARY\"" >> $MY_MOG_FILE
-    echo "set name=pkg.description value=\"$DESCSTR\"" >> $MY_MOG_FILE
-    echo "set name=publisher value=\"sa@omniosce.org\"" >> $MY_MOG_FILE
+    [ -z "$VERHUMAN" ] && VERHUMAN="$VER"
+    (
+        pkgmeta pkg.fmri            "$FMRI"
+        pkgmeta pkg.summary         "$SUMMARY"
+        pkgmeta pkg.description     "$DESCSTR"
+        pkgmeta publisher           "$PUBLISHER_EMAIL"
+        pkgmeta pkg.human-version   "$VERHUMAN"
+        [ -n "$_ARC_SOURCE" ] && \
+            pkgmeta info.source-url "$OOCEMIRROR/$_ARC_SOURCE"
+    ) > $MY_MOG_FILE
+
+    # Transforms
     logmsg "--- Applying transforms"
     $PKGMOGRIFY \
         $XFORM_ARGS \
