@@ -1,0 +1,4 @@
+config.h.in.patch
+minidlna.conf.patch
+minissdp.c.patch
+icons.c.patch

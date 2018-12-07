@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/config.h.in a/config.h.in
+--- a~/config.h.in	1970-01-01 00:00:00
++++ a/config.h.in	1970-01-01 00:00:00
+@@ -1,5 +1,8 @@
+ /* config.h.in.  Generated from configure.ac by autoheader.  */
+ 
++#define MIN(a,b) (((a)<(b))?(a):(b))
++#define MAX(a,b) (((a)>(b))?(a):(b))
++
+ /* Define if building universal (internal helper macro) */
+ #undef AC_APPLE_UNIVERSAL_BUILD
+ 

@@ -39,15 +39,17 @@ PREFIX+="/$PROG"
 
 XFORM_ARGS="-D OPREFIX=${OPREFIX#/}"
 
-CONFIGURE_OPTS_32="
+CONFIGURE_OPTS="
     --prefix=$PREFIX
     --includedir=$OPREFIX/include
+    --disable-static
+"
+
+CONFIGURE_OPTS_32="
     --bindir=$PREFIX/bin/$ISAPART
     --libdir=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    --prefix=$PREFIX
-    --includedir=$OPREFIX/include
     --bindir=$PREFIX/bin/$ISAPART64
     --libdir=$OPREFIX/lib/$ISAPART64
 "

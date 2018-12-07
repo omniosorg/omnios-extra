@@ -1,0 +1,29 @@
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+
+dir group=$(PROG) mode=0700 owner=$(PROG) path=var/$(PREFIX)
+dir group=$(PROG) mode=0700 owner=$(PROG) path=var/$(PREFIX)/cache
+dir group=$(PROG) mode=0700 owner=$(PROG) path=var/log/$(PREFIX)
+
+group groupname=minidlna gid=19
+user ftpuser=false username=minidlna uid=19 group=minidlna gcos-field="MiniDLNA User" \
+home-dir=/var/$(PREFIX) password=NP
+
+<transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
+
+<transform file path=$(PREFIX)/sbin/ \
+    -> set restart_fmri svc:/ooce/multimedia/$(PROG):default>
+
+license COPYING license=GPLv2
+
