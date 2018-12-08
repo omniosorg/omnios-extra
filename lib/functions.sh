@@ -1671,6 +1671,7 @@ build_dependency() {
     # Adjust variables so that download, patch and build work correctly
     BUILDDIR="$dir"
     PATCHDIR="patches-$dep"
+    DEPROOT=$TMPDIR/_deproot
     DESTDIR=$DEPROOT
     mkdir -p $DEPROOT
 
