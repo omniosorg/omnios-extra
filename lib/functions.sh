@@ -822,7 +822,7 @@ download_source() {
     else
         logmsg "--- Found $FILENAME"
     fi
-    _ARC_SOURCE="$DLDIR/$FILENAME"
+    _ARC_SOURCE+="${_ARC_SOURCE:+ }$DLDIR/$FILENAME"
 
     # Fetch and verify the archive checksum
     if [ -z "$SKIP_CHECKSUM" ]; then
@@ -1056,14 +1056,26 @@ make_package() {
     # Package metadata
     logmsg "--- Generating package metadata"
     [ -z "$VERHUMAN" ] && VERHUMAN="$VER"
+    if [ "$OVERRIDE_SOURCE_URL" = "none" ]; then
+        _ARC_SOURCE=
+    elif [ -n "$OVERRIDE_SOURCE_URL" ]; then
+        _ARC_SOURCE="$OVERRIDE_SOURCE_URL"
+    fi
     (
         pkgmeta pkg.fmri            "$FMRI"
         pkgmeta pkg.summary         "$SUMMARY"
         pkgmeta pkg.description     "$DESCSTR"
         pkgmeta publisher           "$PUBLISHER_EMAIL"
         pkgmeta pkg.human-version   "$VERHUMAN"
-        [ -n "$_ARC_SOURCE" ] && \
+        if [[ $_ARC_SOURCE = *\ * ]]; then
+            _asindex=0
+            for _as in $_ARC_SOURCE; do
+                pkgmeta "info.source-url.$_asindex" "$OOCEMIRROR/$_as"
+                ((_asindex++))
+            done
+        elif [ -n "$_ARC_SOURCE" ]; then
             pkgmeta info.source-url "$OOCEMIRROR/$_ARC_SOURCE"
+        fi
     ) > $MY_MOG_FILE
 
     # Transforms
