@@ -45,7 +45,8 @@ install() {
     pushd $TMPDIR/$BUILDDIR >/dev/null
 
     logcmd mkdir -p $DESTDIR/$PREFIX/bin
-    cp target/release/rg $DESTDIR/$PREFIX/bin/rg || logerr "cp failed"
+    logcmd cp target/release/rg $DESTDIR/$PREFIX/bin/rg || logerr "cp failed"
+    logcmd strip -x $DESTDIR/$PREFIX/bin/rg
 
     logcmd mkdir -p $DESTDIR/$PREFIX/share/man/man1
     logcmd cp target/release/build/ripgrep-*/out/rg.1 \

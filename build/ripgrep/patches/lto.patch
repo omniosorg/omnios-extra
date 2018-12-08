@@ -1,0 +1,11 @@
+--- ripgrep-0.10.0/Cargo.toml~	2018-12-08 09:53:29.729086223 +0000
++++ ripgrep-0.10.0/Cargo.toml	2018-12-08 09:54:05.253293488 +0000
+@@ -77,7 +77,7 @@
+ pcre2 = ["grep/pcre2"]
+ 
+ [profile.release]
+-debug = 1
++lto = true
+ 
+ [package.metadata.deb]
+ features = ["pcre2"]
