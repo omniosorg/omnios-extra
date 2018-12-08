@@ -65,6 +65,7 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DVERSION=$MAJVER
     -DsVERSION=$sMAJVER
+    -DGSOAPDIR=$GSOAPDIR
 "
 
 # The usual --prefix etc. options are not supported
