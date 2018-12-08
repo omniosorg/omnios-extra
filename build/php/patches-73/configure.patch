@@ -1,0 +1,14 @@
+Adjust for non-standard location of OmniOS' gmp.h include file
+
+diff -ru php-7.2.5~/configure php-7.2.5/configure
+--- php-7.2.5~/configure	Tue Apr 24 15:10:05 2018
++++ php-7.2.5/configure	Fri Apr 27 14:01:29 2018
+@@ -38772,7 +38772,7 @@
+   MACHINE_INCLUDES=$($CC -dumpmachine)
+ 
+   for i in $PHP_GMP /usr/local /usr; do
+-    test -f $i/include/gmp.h && GMP_DIR=$i && break
++    test -f $i/include/gmp/gmp.h && GMP_DIR=$i && break
+     test -f $i/include/$MACHINE_INCLUDES/gmp.h && GMP_DIR=$i && break
+   done
+ 

@@ -16,7 +16,7 @@
 
 . /lib/svc/share/smf_include.sh
 
-PIDF=/var/opt/ooce/php/run/php-7.2-fpm.pid
+PIDF=/var/opt/ooce/php/run/php-7.3-fpm.pid
 
 check_and_kill()
 {
@@ -31,7 +31,7 @@ case "$1" in
         ;;
 
 'start')
-	/opt/ooce/php-7.2/sbin/php-fpm -c /etc/opt/ooce/php-7.2/php.ini
+	/opt/ooce/php-7.3/sbin/php-fpm -c /etc/opt/ooce/php-7.3/php.ini
 	;;
 
 'stop')
