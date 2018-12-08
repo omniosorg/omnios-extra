@@ -1,0 +1,16 @@
+set name=pkg.fmri value=ooce/application/php-common@1.0.0-@PVER@
+set name=variant.arch value=i386
+set name=variant.opensolaris.zone value=global value=nonglobal
+set name=description value="Common php package"
+set name=pkg.description value="Common php package"
+set name=pkg.summary value="Common php package"
+
+dir group=bin mode=0755 owner=root path=var/opt/ooce
+dir group=bin mode=0755 owner=php  path=var/opt/ooce/php
+dir group=bin mode=0755 owner=php  path=var/log/opt/ooce/php
+dir group=bin mode=0755 owner=root path=opt/ooce/bin
+
+group groupname=$(PROG) gid=82
+	user ftpuser=false username=php uid=82 group=php gcos-field="PHP User" \
+	home-dir=/var/opt/ooce/php password=NP
+

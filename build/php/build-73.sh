@@ -38,6 +38,7 @@ VARPATH=/var$OPREFIX/$PROG
 RUNPATH=$VARPATH/run
 
 BUILD_DEPENDS_IPS="ooce/database/bdb"
+RUN_DEPENDS_IPS="ooce/application/php-common"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
