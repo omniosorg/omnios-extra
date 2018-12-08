@@ -1,0 +1,11 @@
+--- rustc-1.29.2-src/src/bootstrap/install.rs~	2018-12-07 13:42:01.416022190 +0000
++++ rustc-1.29.2-src/src/bootstrap/install.rs	2018-12-07 13:42:15.112158910 +0000
+@@ -110,7 +110,7 @@
+         pkgname(builder, name)
+     };
+ 
+-    let mut cmd = Command::new("sh");
++    let mut cmd = Command::new("bash");
+     cmd.current_dir(&empty_dir)
+         .arg(sanitize_sh(&tmpdir(builder).join(&package_name).join("install.sh")))
+         .arg(format!("--prefix={}", sanitize_sh(&prefix)))

@@ -16,6 +16,7 @@
 | ooce/developer/go-19		| 1.9.7		| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| 1.3.1		| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| 0.2.8		| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/rust		| 1.29.2	| https://prev.rust-lang.org/en-US/other-installers.html | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/freetype2	| 2.9.1		| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
@@ -46,4 +47,5 @@
 | ooce/system/smartmontools	| 6.6		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/test/iozone	| 3.482		| http://www.iozone.org/src/current/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 8.6.9		| http://www.methods.co.nz/asciidoc/ | [omniosorg](https://github.com/omniosorg)
+| ooce/text/ripgrep		| 0.10.0	| https://github.com/BurntSushi/ripgrep/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/virtualization/virtualbox | 5.2.22	| https://www.virtualbox.org/wiki/Downloads | [omniosorg](https://github.com/omniosorg)
