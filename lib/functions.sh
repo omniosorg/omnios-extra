@@ -253,12 +253,14 @@ ask_to_install() {
 }
 
 ask_to_pkglint() {
-    ask_to_continue_ "" "Do you want to run pkglint at this time?" "y/n" "[yYnN]"
+    ask_to_continue_ "" "Do you want to run pkglint at this time?" \
+        "y/n" "[yYnN]"
     [[ "$REPLY" == "y" || "$REPLY" == "Y" ]]
 }
 
 ask_to_testsuite() {
-    ask_to_continue_ "" "Do you want to run the test-suite at this time?" "y/n" "[yYnN]"
+    ask_to_continue_ "" "Do you want to run the test-suite at this time?" \
+        "y/n" "[yYnN]"
     [[ "$REPLY" == "y" || "$REPLY" == "Y" ]]
 }
 
@@ -335,7 +337,9 @@ set_gccver() {
     GCCVER="$1"
     logmsg "-- Setting GCC version to $GCCVER"
     GCCPATH="/opt/gcc-$GCCVER"
-    [ -x "$GCCPATH/bin/gcc" ] || logerr "Unknown compiler version $GCCVER"
+    GCC="$GCCPATH/bin/gcc"
+    GXX="$GCCPATH/bin/g++"
+    [ -x "$GCC" ] || logerr "Unknown compiler version $GCCVER"
     PATH="$GCCPATH/bin:$BASEPATH"
     for cmd in gcc g++; do
         [ -h $TMPDIR/tools/$cmd ] && rm -f $TMPDIR/tools/$cmd
@@ -345,7 +349,7 @@ set_gccver() {
         [ -x $CCACHE_PATH/ccache ] || logerr "Ccache is not installed"
         PATH="$CCACHE_PATH:$PATH"
     fi
-    export GCCVER GCCPATH PATH
+    export GCC GXX GCCVER GCCPATH PATH
 }
 
 set_gccver $DEFAULT_GCC_VER
@@ -525,6 +529,9 @@ init() {
         logerr "DESC may not be empty. Please update your build script"
     fi
 
+    # Blank out the source code location
+    _ARC_SOURCE=
+
     # BUILDDIR can be used to manually specify what directory the program is
     # built in (i.e. what the tarball extracts to). This defaults to the name
     # and version of the program, which works in most cases.
@@ -660,7 +667,7 @@ check_for_patches() {
 }
 
 patch_file() {
-    FILENAME=$1
+    local FILENAME=$1
     shift
     ARGS=$@
     if [ ! -f $SRCDIR/$PATCHDIR/$FILENAME ]; then
@@ -768,15 +775,19 @@ get_resource() {
 #   $2 - program name
 #   $3 - program version
 #   $4 - target directory
+#   $5 - passed to extract_archive
 #
 # E.g.
 #       download_source myprog myprog 1.2.3 will try:
 #       http://mirrors.omniosce.org/myprog/myprog-1.2.3.tar.gz
 download_source() {
-    local DLDIR="$1"
-    local PROG="$2"
-    local VER="$3"
-    local TARGETDIR="$4"
+    local DLDIR="$1"; shift
+    local PROG="$1"; shift
+    local VER="$1"; shift
+    local TARGETDIR="$1"; shift
+    local EXTRACTARGS="$@"
+    local FILENAME
+
     local ARCHIVEPREFIX="$PROG"
     [ -n "$VER" ] && ARCHIVEPREFIX+="-$VER"
     [ -z "$TARGETDIR" ] && TARGETDIR="$TMPDIR"
@@ -787,52 +798,31 @@ download_source() {
         logcmd mkdir -p $TARGETDIR
     fi
 
-    pushd $TARGETDIR > /dev/null
+    pushd $TARGETDIR >/dev/null
+
     logmsg "Checking for source directory"
     if [ -d "$BUILDDIR" ]; then
-        logmsg "--- Source directory found"
-        if [ -n "$REMOVE_PREVIOUS" ]; then
-            logmsg "--- Removing old source directory"\
-                "(REMOVE_PREVIOUS=$REMOVE_PREVIOUS)"
-            logcmd rm -rf $BUILDDIR || \
-                logerr "Failed to remove source directory"
-        elif check_for_patches "to see if we need to remove the source"; then
-            logmsg "--- Patches are present, removing source directory"
-            logcmd rm -rf $BUILDDIR || \
-                logerr "Failed to remove source directory"
-        else
-            logmsg "--- Patches are not present and REMOVE_PREVIOUS is not"\
-                "set, keeping source directory"
-            popd > /dev/null
-            return
-        fi
+        logmsg "--- Source directory found, removing"
+        logcmd rm -rf "$BUILDDIR" || logerr "Failed to remove source directory"
     else
         logmsg "--- Source directory not found"
     fi
 
-    # If we reach this point, the source directory was either not found, or it
-    # was removed due to patches being present.
     logmsg "Checking for $PROG source archive"
     find_archive $ARCHIVEPREFIX FILENAME
     if [ -z "$FILENAME" ]; then
-        # Try all possible archive names
         logmsg "--- Archive not found."
         logmsg "Downloading archive"
-        get_resource $DLDIR/$ARCHIVEPREFIX.tar.gz || \
-            get_resource $DLDIR/$ARCHIVEPREFIX.tar.bz2 || \
-            get_resource $DLDIR/$ARCHIVEPREFIX.tar.xz || \
-            get_resource $DLDIR/$ARCHIVEPREFIX.tgz || \
-            get_resource $DLDIR/$ARCHIVEPREFIX.tbz || \
-            get_resource $DLDIR/$ARCHIVEPREFIX.tar || \
-            get_resource $DLDIR/$ARCHIVEPREFIX.zip || \
-            logerr "--- Failed to download file"
+        for ext in $ARCHIVE_TYPES; do
+            get_resource $DLDIR/$ARCHIVEPREFIX.$ext && break
+        done
         find_archive $ARCHIVEPREFIX FILENAME
-        if [ -z "$FILENAME" ]; then
-            logerr "Unable to find downloaded file."
-        fi
+        [ -z "$FILENAME" ] && logerr "Unable to find downloaded file."
+        logmsg "--- Downloaded $FILENAME"
     else
-        logmsg "--- $PROG source archive found"
+        logmsg "--- Found $FILENAME"
     fi
+    _ARC_SOURCE="$DLDIR/$FILENAME"
 
     # Fetch and verify the archive checksum
     if [ -z "$SKIP_CHECKSUM" ]; then
@@ -850,14 +840,16 @@ download_source() {
 
     # Extract the archive
     logmsg "Extracting archive: $FILENAME"
-    logcmd extract_archive $FILENAME || logerr "--- Unable to extract archive."
+    logcmd extract_archive $FILENAME $EXTRACTARGS \
+        || logerr "--- Unable to extract archive."
 
     # Make sure the archive actually extracted some source where we expect
     if [ ! -d "$BUILDDIR" ]; then
         logerr "--- Extracted source is not in the expected location" \
             " ($BUILDDIR)"
     fi
-    popd > /dev/null
+
+    popd >/dev/null
 }
 
 # Finds an existing archive and stores its value in a variable whose name
@@ -865,27 +857,29 @@ download_source() {
 # Example: find_archive myprog-1.2.3 FILENAME
 #   Stores myprog-1.2.3.tar.gz in $FILENAME
 find_archive() {
-    FILES=`ls $1.{tar.bz2,tar.gz,tar.xz,tgz,tbz,tar,zip} 2>/dev/null`
-    FILES=${FILES%% *} # Take only the first filename returned
-    # This dereferences the second parameter passed
-    eval "$2=\"$FILES\""
+    local base="$1"
+    local var="$2"
+    local ext
+    for ext in $ARCHIVE_TYPES; do
+        [ -f "$base.$ext" ] || continue
+        eval "$var=\"$base.$ext\""
+        break
+    done
 }
 
-# Extracts an archive regardless of its extension
+# Extracts various types of archive
 extract_archive() {
-    if [[ $1 =~ .tar.gz|.tgz ]]; then
-        $GZIP -dc $1 | $TAR -xvf -
-    elif [[ $1 =~ .tar.bz2|.tbz ]]; then
-        $BUNZIP2 -dc $1 | $TAR -xvf -
-    elif [[ $1 = *.tar.xz ]]; then
-        $XZCAT $1 | $TAR -xvf -
-    elif [[ $1 = *.tar ]]; then
-        $TAR -xvf $1
-    elif [[ $1 = *.zip ]]; then
-        $UNZIP $1
-    else
-        return 1
-    fi
+    local file="$1"; shift
+    case $file in
+        *.tar.xz)           $XZCAT $file | $TAR -xvf - $* ;;
+        *.tar.bz2)          $BUNZIP2 -dc $file | $TAR -xvf - $* ;;
+        *.tar.gz|*.tgz)     $GZIP -dc $file | $TAR -xvf - $* ;;
+        *.zip)              $UNZIP $file $* ;;
+        *.tar)              $TAR -xvf $file $* ;;
+        # May as well try tar. It's GNU tar which does a fair job at detecting
+        # the compression format.
+        *)                  $TAR -xvf $file $* ;;
+    esac
 }
 
 #############################################################################
@@ -935,6 +929,45 @@ clone_github_source() {
 #############################################################################
 # Make the package
 #############################################################################
+
+run_pkglint() {
+    typeset repo="$1"
+    typeset mf="$2"
+
+    typeset _repo=
+    if [ ! -f $BASE_TMPDIR/lint/pkglintrc ]; then
+        logcmd mkdir $BASE_TMPDIR/lint
+        (
+            cat << EOM
+[pkglint]
+use_progress_tracker = True
+log_level = INFO
+do_pub_checks = True
+pkglint.exclude = pkg.lint.opensolaris pkg.lint.pkglint_manifest.PkgManifestChecker.naming
+version.pattern = *,5.11-0.
+pkglint001.5.report-linted = True
+
+EOM
+            echo "pkglint.action005.1.missing-deps = \\c"
+            for pkg in `nawk '
+                $3 == "" {
+                    printf("pkg:/%s ", $2)
+                }' $ROOTDIR/doc/baseline`; do
+                echo "$pkg \\c"
+            done
+            echo
+        ) > $BASE_TMPDIR/lint/pkglintrc
+        _repo="-r $repo"
+    fi
+    echo $c_note
+    $PKGLINT -f $BASE_TMPDIR/lint/pkglintrc -c $BASE_TMPDIR/lint/cache $mf \
+        $_repo || logerr "----- pkglint failed"
+    echo $c_reset
+}
+
+pkgmeta() {
+    echo set name=$1 value=\"$2\"
+}
 
 make_package() {
     logmsg "Making package"
@@ -1019,16 +1052,21 @@ make_package() {
         logcmd touch $P5M_INT || \
             logerr "------ Failed to create empty manifest"
     fi
+
+    # Package metadata
     logmsg "--- Generating package metadata"
-    echo "set name=pkg.fmri value=$FMRI" > $MY_MOG_FILE
-    # Set human-readable version, if it exists
-    if [ -n "$VERHUMAN" ]; then
-        logmsg "------ Setting human-readable version"
-        echo "set name=pkg.human-version value=\"$VERHUMAN\"" >> $MY_MOG_FILE
-    fi
-    echo "set name=pkg.summary value=\"$SUMMARY\"" >> $MY_MOG_FILE
-    echo "set name=pkg.description value=\"$DESCSTR\"" >> $MY_MOG_FILE
-    echo "set name=publisher value=\"sa@omniosce.org\"" >> $MY_MOG_FILE
+    [ -z "$VERHUMAN" ] && VERHUMAN="$VER"
+    (
+        pkgmeta pkg.fmri            "$FMRI"
+        pkgmeta pkg.summary         "$SUMMARY"
+        pkgmeta pkg.description     "$DESCSTR"
+        pkgmeta publisher           "$PUBLISHER_EMAIL"
+        pkgmeta pkg.human-version   "$VERHUMAN"
+        [ -n "$_ARC_SOURCE" ] && \
+            pkgmeta info.source-url "$OOCEMIRROR/$_ARC_SOURCE"
+    ) > $MY_MOG_FILE
+
+    # Transforms
     logmsg "--- Applying transforms"
     $PKGMOGRIFY \
         $XFORM_ARGS \
@@ -1111,13 +1149,13 @@ make_package() {
     grep '^depend ' $P5M_FINAL | while read line; do
         logmsg "$line"
     done
-    if [[ -z $SKIP_PKGLINT ]] && ( [[ -n $BATCH ]] || ask_to_pkglint ); then
-        $PKGLINT -c $TMPDIR/lint-cache -r $PKGSRVR $P5M_FINAL || \
-            logerr "----- pkglint failed"
+    if [ -z "$SKIP_PKGLINT" ] && ( [ -n "$BATCH" ] || ask_to_pkglint ); then
+        run_pkglint $PKGSRVR $P5M_FINAL
     fi
     logmsg "--- Publishing package to $PKGSRVR"
     if [ -z "$BATCH" ]; then
-        logmsg "Intentional pause: Last chance to sanity-check before publication!"
+        logmsg "Intentional pause:" \
+            "Last chance to sanity-check before publication!"
         ask_to_continue
     fi
     if [ -n "$DESTDIR" ]; then
