@@ -16,6 +16,7 @@
 set name=variant.opensolaris.zone value="global"
 
 license opt/$(PROG)/LICENSE license=GPLv2
+license ../$(GSOAPDIR)/GPLv2_license.txt license=GPLv2
 
 driver name=vboxdrv
 driver name=vboxflt
