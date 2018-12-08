@@ -35,6 +35,9 @@ driver name=vboxusbmon
 <transform file path=$(PREFIX)/amd64/VBoxNetDHCP -> set mode 4555>
 <transform file path=$(PREFIX)/amd64/VBoxNetNAT -> set mode 4555>
 
+# web service link
+link path=$(PREFIX)/vboxwebsrv target=amd64/vboxwebsrv
+
 # Set correct group on system directories
 <transform dir path=platform -> set group sys>
 
