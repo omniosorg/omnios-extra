@@ -1517,6 +1517,40 @@ run_testsuite() {
 }
 
 #############################################################################
+# Build function for dependencies which are not packaged
+#############################################################################
+
+build_dependency() {
+    typeset dep="$1"
+    typeset dir="$2"
+    typeset dldir="$3"
+    typeset prog="$4"
+    typeset ver="$5"
+
+    # Preserve the current variables
+    typeset _BUILDDIR=$BUILDDIR
+    typeset _PATCHDIR=$PATCHDIR
+    typeset _DESTDIR=$DESTDIR
+
+    # Adjust variables so that download, patch and build work correctly
+    BUILDDIR="$dir"
+    PATCHDIR="patches-$dep"
+    DEPROOT=$TMPDIR/_deproot
+    DESTDIR=$DEPROOT
+    mkdir -p $DEPROOT
+
+    download_source "$dldir" "$prog" "$ver" "$TMPDIR"
+    patch_source
+    note "-- Building dependency $dep"
+    build
+
+    # Restore variables
+    BUILDDIR=$_BUILDDIR
+    PATCHDIR=$_PATCHDIR
+    DESTDIR=$_DESTDIR
+}
+
+#############################################################################
 # Build function for python programs
 #############################################################################
 

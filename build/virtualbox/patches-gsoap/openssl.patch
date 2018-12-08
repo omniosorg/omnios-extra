@@ -1,0 +1,94 @@
+diff -ru gsoap-2.8~/gsoap/stdsoap2.c gsoap-2.8/gsoap/stdsoap2.c
+--- gsoap-2.8~/gsoap/stdsoap2.c	2018-12-03 20:49:13.000000000 +0000
++++ gsoap-2.8/gsoap/stdsoap2.c	2018-12-08 01:20:14.537339551 +0000
+@@ -3885,7 +3885,7 @@
+   int r;
+   if (!soap_ssl_init_done)
+     soap_ssl_init();
+-  RAND_pseudo_bytes((unsigned char*)&r, sizeof(int));
++  RAND_bytes((unsigned char*)&r, sizeof(int));
+   return r;
+ }
+ #endif
+@@ -4352,7 +4352,11 @@
+     if (SSL_CTX_need_tmp_RSA(soap->ctx))
+ #endif
+     {
+-      RSA *rsa = RSA_generate_key(SOAP_SSL_RSA_BITS, RSA_F4, NULL, NULL);
++      RSA *rsa = RSA_new();
++      BIGNUM *e = BN_new();
++      BN_set_word(e, RSA_F4);
++      RSA_generate_key_ex(rsa, SOAP_SSL_RSA_BITS, e, NULL);
++      BN_free(e);
+       if (!rsa || !SSL_CTX_set_tmp_rsa(soap->ctx, rsa))
+       {
+         if (rsa)
+@@ -4372,7 +4376,10 @@
+ #if defined(VXWORKS)
+       DH_generate_parameters_ex(dh, n, 2/*or 5*/, NULL); /* vxWorks compatible */
+ #else
+-      dh = DH_generate_parameters(n, 2/*or 5*/, NULL, NULL);
++{
++      dh = DH_new();
++      DH_generate_parameters_ex(dh, n, 2/*or 5*/, NULL);
++}
+ #endif
+     else
+     {
+diff -ru gsoap-2.8~/gsoap/stdsoap2.cpp gsoap-2.8/gsoap/stdsoap2.cpp
+--- gsoap-2.8~/gsoap/stdsoap2.cpp	2018-12-03 20:49:13.000000000 +0000
++++ gsoap-2.8/gsoap/stdsoap2.cpp	2018-12-08 01:20:08.522652262 +0000
+@@ -3885,7 +3885,7 @@
+   int r;
+   if (!soap_ssl_init_done)
+     soap_ssl_init();
+-  RAND_pseudo_bytes((unsigned char*)&r, sizeof(int));
++  RAND_bytes((unsigned char*)&r, sizeof(int));
+   return r;
+ }
+ #endif
+@@ -4352,7 +4352,11 @@
+     if (SSL_CTX_need_tmp_RSA(soap->ctx))
+ #endif
+     {
+-      RSA *rsa = RSA_generate_key(SOAP_SSL_RSA_BITS, RSA_F4, NULL, NULL);
++      RSA *rsa = RSA_new();
++      BIGNUM *e = BN_new();
++      BN_set_word(e, RSA_F4);
++      RSA_generate_key_ex(rsa, SOAP_SSL_RSA_BITS, e, NULL);
++      BN_free(e);
+       if (!rsa || !SSL_CTX_set_tmp_rsa(soap->ctx, rsa))
+       {
+         if (rsa)
+@@ -4372,7 +4376,10 @@
+ #if defined(VXWORKS)
+       DH_generate_parameters_ex(dh, n, 2/*or 5*/, NULL); /* vxWorks compatible */
+ #else
+-      dh = DH_generate_parameters(n, 2/*or 5*/, NULL, NULL);
++{
++      dh = DH_new();
++      DH_generate_parameters_ex(dh, n, 2/*or 5*/, NULL);
++}
+ #endif
+     else
+     {
+@@ -5957,7 +5964,7 @@
+             name = X509_NAME_ENTRY_get_data(X509_NAME_get_entry(subj, i));
+             if (name)
+             {
+-              const char *tmp = (const char*)ASN1_STRING_data(name);
++              const char *tmp = (const char*)ASN1_STRING_get0_data(name);
+               if (!soap_tag_cmp(host, tmp))
+               {
+                 ok = 1;
+diff -ru gsoap-2.8~/gsoap/stdsoap2.h gsoap-2.8/gsoap/stdsoap2.h
+--- gsoap-2.8~/gsoap/stdsoap2.h	2018-12-03 20:49:13.000000000 +0000
++++ gsoap-2.8/gsoap/stdsoap2.h	2018-12-08 01:05:06.419805521 +0000
+@@ -930,6 +930,7 @@
+ # include <openssl/rand.h>
+ # include <openssl/ssl.h>
+ # include <openssl/x509v3.h>
++# include <openssl/rsa.h>
+ # ifndef ALLOW_OLD_VERSIONS
+ #  if (OPENSSL_VERSION_NUMBER < 0x00905100L)
+ #   error "Must use OpenSSL 0.9.6 or later"
