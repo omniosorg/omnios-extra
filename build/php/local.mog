@@ -31,7 +31,6 @@
     -> set restart_fmri svc:/application/$(PROG)$(sVERSION):default>
 
 <transform dir path=var/$(OPREFIX)/$(PROG) -> set owner $(PROG)>
-<transform dir file path=var/$(OPREFIX)/$(PROG)/(?:log|run) -> drop >
 
 license LICENSE license=PHP
 
