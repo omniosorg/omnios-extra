@@ -32,6 +32,7 @@
 | ooce/library/libvorbis	| 1.3.6		| https://ftp.osuosl.org/pub/xiph/releases/vorbis/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvncserver	| 20181116	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/lxadm			| 0.1.6		| https://github.com/hadfl/lxadm/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/multimedia/exif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/exif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/ffmpeg	| 4.1		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/minidlna	| 1.1.5		| https://sourceforge.net/projects/minidlna/files/minidlna/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.1.1		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
