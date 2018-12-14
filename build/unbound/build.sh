@@ -33,9 +33,6 @@ XFORM_ARGS="
 
 BUILD_DEPENDS_IPS="ooce/library/libev"
 
-# See also --with-ssl configure option.
-FORCE_OPENSSL_VERSION=1.0
-
 set_arch 64
 
 CONFIGURE_OPTS="
@@ -43,7 +40,6 @@ CONFIGURE_OPTS="
     --with-run-dir=/var$PREFIX
     --with-libevent=/opt/ooce
     --with-pthreads
-    --with-ssl=/usr/ssl-1.0
 "
 
 LDFLAGS="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
