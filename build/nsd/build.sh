@@ -16,56 +16,61 @@
 
 . ../../lib/functions.sh
 
-PROG=unbound
-VER=1.8.3
-PKG=ooce/network/unbound
-SUMMARY="DNS resolver"
-DESC="Unbound is a validating, recursive, caching DNS resolver."
+PROG=nsd
+VER=4.1.26
+PKG=ooce/network/nsd
+SUMMARY="Authoritative DNS server"
+DESC="The NLnet Labs Name Server Daemon (NSD) is an authoritative "
+DESC+="DNS name server."
+
+MAJVER=${VER%.*}            # M.m
+sMAJVER=${MAJVER//./}       # Mm
 
 OPREFIX=$PREFIX
-PREFIX+="/$PROG"
+PREFIX+=/$PROG-$MAJVER
+sPREFIX=$OPREFIX/$PROG
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
+    -DsPREFIX=${sPREFIX#/}
     -DPROG=$PROG
+    -DVERSION=$MAJVER
+    -DsVERSION=$sMAJVER
 "
-
-BUILD_DEPENDS_IPS="ooce/library/libev"
 
 # See also --with-ssl configure option.
 FORCE_OPENSSL_VERSION=1.0
+
+BUILD_DEPENDS_IPS="ooce/library/libev"
 
 set_arch 64
 
 CONFIGURE_OPTS="
     --sysconfdir=/etc$OPREFIX
-    --with-run-dir=/var$PREFIX
+    --with-run-dir=/var$sPREFIX
     --with-libevent=/opt/ooce
     --with-pthreads
+    --localstatedir=/var$sPREFIX
+    --with-configdir=/etc$sPREFIX
+    --with-zonesdir=/var$sPREFIX/zone
+    --with-xfrdir=/var$sPREFIX/xfr
+    --with-dbfile=/var$sPREFIX/db/nsd.db
+    --with-xfrdfile=/var$sPREFIX/db/xfrd.state
+    --with-zonelistfile=/var$sPREFIX/db/zone.list
+    --with-pidfile=/var$sPREFIX/run/nsd.pid
     --with-ssl=/usr/ssl-1.0
 "
 
 LDFLAGS="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 export MAKE
 
-fixup_config() {
-    # We do not want to chroot by default as this requires additional setup.
-    # Also, people may (should) be running this inside a zone anyway.
-    sed -i '
-        /chroot:/c\
-	chroot: ""
-    ' $DESTDIR/etc$PREFIX/unbound.conf
-}
-
 init
 download_source $PROG $PROG $VER
 prep_build
 patch_source
 build
-run_testsuite
-install_smf network dns-unbound.xml
-fixup_config
+install_smf network dns-nsd.xml
 make_package
 clean_up
 
