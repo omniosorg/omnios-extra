@@ -39,9 +39,6 @@ XFORM_ARGS="
     -DsVERSION=$sMAJVER
 "
 
-# See also --with-ssl configure option.
-FORCE_OPENSSL_VERSION=1.0
-
 BUILD_DEPENDS_IPS="ooce/library/libev"
 
 set_arch 64
@@ -59,7 +56,6 @@ CONFIGURE_OPTS="
     --with-xfrdfile=/var$sPREFIX/db/xfrd.state
     --with-zonelistfile=/var$sPREFIX/db/zone.list
     --with-pidfile=/var$sPREFIX/run/nsd.pid
-    --with-ssl=/usr/ssl-1.0
 "
 
 LDFLAGS="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
