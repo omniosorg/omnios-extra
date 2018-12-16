@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.5.1
+VER=5.6.0
 VERHUMAN=$VER
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
@@ -29,16 +29,18 @@ GITHUB=https://github.com/$PROG
 
 set_arch 64
 
-BUILDDIR="$PROG/src/github.com/$PROG/$PROGB"
-export GOPATH=$TMPDIR/$PROG-$VER/$PROG
-export BUILD_NUMBER=$VER
-
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
+BUILDDIR="$PROG/src/github.com/$PROG/$PROGB"
+GOPATH=$TMPDIR/$PROG-$VER/$PROG
+PATH="$GOPATH/bin:$OPREFIX/go-1.10/bin:$PATH"
+BUILD_NUMBER=$VER
+export PATH GOPATH BUILD_NUMBER
+
 BUILD_DEPENDS_IPS="
     developer/versioning/git
-    ooce/developer/go-19
+    ooce/developer/go-110
 "
 
 XFORM_ARGS="
@@ -61,8 +63,8 @@ configure64() { :; }
 make_prog64() {
     logmsg "Making $PROG"
     cd $TMPDIR/$BUILDDIR
-    PATH="$PATH:$GOPATH/bin:$OPREFIX/go-1.9/bin" gmake build-illumos \
-        || logerr "Build failed"
+    $MAKE build-illumos || logerr "Build failed"
+
 }
 
 make_install64() {
