@@ -1295,7 +1295,7 @@ publish_manifest()
     translate_manifest $pmf $pmf.final
 
     logcmd pkgsend -s $PKGSRVR publish $pmf.final || logerr "pkgsend failed"
-    [ -z "$BATCH" -a -z "$SKIP_PKG_DIFF" ] && diff_latest pkg
+    [ -z "$BATCH" -a -z "$SKIP_PKG_DIFF" ] && diff_latest $pkg
 }
 
 # Create a list of the items contained within a package in a format suitable
