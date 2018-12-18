@@ -1044,7 +1044,7 @@ pkgmeta() {
 }
 
 make_package() {
-    logmsg -n "Building package $PKG"
+    logmsg "-- building package $PKG"
     case $BUILDARCH in
         32)
             BUILDSTR="32bit-"
