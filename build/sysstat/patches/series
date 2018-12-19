@@ -1,0 +1,4 @@
+local_only.patch
+no_colour.patch
+relocate_bin.patch
+reset_stdin_flags.patch

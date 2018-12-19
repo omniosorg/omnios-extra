@@ -1,0 +1,152 @@
+diff -wpruN '--exclude=*.orig' a~/sysstat.1m a/sysstat.1m
+--- a~/sysstat.1m	1970-01-01 00:00:00
++++ a/sysstat.1m	1970-01-01 00:00:00
+@@ -155,7 +155,7 @@ summary of resident memory of all proces
+ .TP
+ \fBH+S\fR
+ summary of heap and stack of all processes of this user - to get this
+-column, sysstatd/"sysstat -d" must be run with root privileges in order
++column, sysstat must be run with root privileges in order
+ to get access to /proc/<pid>/status.
+ 
+ H+S information is useful when trying to determine multi user scaling of
+@@ -198,23 +198,6 @@ Print a short help message for sysstat.
+ Non-curses mode. Write statistics to standard out instead of display in
+ curses mode. This is useful for logging statistics in a file.
+ .TP
+-\fB\-d\fR
+-Start sysstat in daemon mode. This will start sysstat in the background.
+-In this mode, sysstat will only multicast information to the network.
+-.TP
+-\fB\-l\fR
+-Start sysstat in pure local mode. I.e. this disables network support and
+-will suppress multicasting of the gathered data to the network.
+-.TP
+-\fB\-k\fR
+-Use this switch to kill a running sysstat daemon.
+-.TP
+-\fB\-m \fI<addr>\fR
+-Set the multicast address for sysstat to \fI<addr>\fR.
+-.TP
+-\fB\-p \fI<port>\fR
+-Set the multicast port for sysstat to \fI<port>\fR.
+-.TP
+ \fB\-f \fI<num>\fR
+ Show at least \fI<num>\fR lines of filesystem information (default: 5).
+ .TP
+diff -wpruN '--exclude=*.orig' a~/sysstat.c a/sysstat.c
+--- a~/sysstat.c	1970-01-01 00:00:00
++++ a/sysstat.c	1970-01-01 00:00:00
+@@ -39,7 +39,7 @@ extern const char *getexecname(void);
+ #define PATH_MAX _XOPEN_PATH_MAX
+ #endif
+ 
+-int Fslines = 5, Showzfs = 1, Showdisks = 1, Shownets = 1, Localmode = 0, CPULines = 4;
++int Fslines = 5, Showzfs = 1, Showdisks = 1, Shownets = 1, Localmode = 1, CPULines = 4;
+ extern int Port;
+ extern char *McastAddr;
+ 
+@@ -389,14 +389,9 @@ usage(const char *m, int r)
+ 	"Options:\n"
+ 	"-h        : display this help screen and exit\n"
+ 	"-c        : write stats to stdout instead of using curses\n"
+-	"-d        : start sysstat as daemon, multicasting stats\n"
+ 	"-D        : suppress disk statistics gathering\n"
+ 	"-U        : suppress user statistics gathering\n"
+ 	"-f <num>  : show at least num lines of filesystem information\n"
+-	"-k        : kill sysstat's daemon\n"
+-	"-l        : start sysstat in local-mode (i.e. without network support)\n"
+-	"-m <addr> : send info to spawndaemon address <addr> (default: 224.0.0.75)\n"
+-	"-p <port> : set spawndaemon port to <port> (default: 7536)\n"
+ 	"-r        : sort user/process summary by rss\n"
+ 	"-s        : sort user/process summary by size\n"
+ 	"-t        : sort user/process summary by %%CPU time\n"
+@@ -445,7 +440,7 @@ main(int argc, char **argv)
+ 	strcpy(Execname,argv[0]);
+ #endif
+ 	dbug("Execname %s\n",Execname);
+-	while ((c = getopt(argc, argv, "cDdf:hklm:p:rstUuvVz")) != -1) {
++	while ((c = getopt(argc, argv, "cDf:hrstUuvVz")) != -1) {
+ 		switch(c) {
+ 		default:
+ 			assert(0);
+@@ -456,9 +451,6 @@ main(int argc, char **argv)
+ 		case 'D':
+ 			nodiskstat = 1;
+ 			break;
+-		case 'd':
+-			daemon = 1;
+-			break;
+ 		case 'f':
+ 			if ((optarg == 0) || (1 != sscanf(optarg,"%u",&Fslines)))
+ 				usage("",EXIT_FAILURE);
+@@ -466,25 +458,6 @@ main(int argc, char **argv)
+ 		case 'h':
+ 			usage("",EXIT_SUCCESS);
+ 			break;
+-		case 'k':
+-			killdaemon = 1;
+-			break;
+-		case 'l':
+-			Localmode = 1;
+-			break;
+-		case 'm':
+-			if (optarg == 0)
+-				usage("",EXIT_FAILURE);
+-			McastAddr = optarg;
+-			mcastAddr = argv[optind-1];
+-			info("spawndaemon address set to %s\n",optarg);
+-			break;
+-		case 'p':
+-			if ((optarg == 0) || (1 != sscanf(optarg,"%u",&Port)))
+-				usage("",EXIT_FAILURE);
+-			info("port set to %s\n",Port);
+-			port = argv[optind-1];
+-			break;
+ 		case 'r':
+ 			set_sort_by_rss();
+ 			break;
+diff -wpruN '--exclude=*.orig' a~/sysstatd.c a/sysstatd.c
+--- a~/sysstatd.c	1970-01-01 00:00:00
++++ a/sysstatd.c	1970-01-01 00:00:00
+@@ -33,7 +33,7 @@ ssize_t (*getzonenamebyid)(zoneid_t,char
+ #include "userstat.h"
+ 
+ 
+-int Localmode = 0, Userstats = 1, Diskstats = 1, VerboseZFS = 0;
++int Localmode = 1, Userstats = 1, Diskstats = 1, VerboseZFS = 0;
+ unsigned Interval = 1;
+ 
+ 
+@@ -46,7 +46,6 @@ usage(const char *m, int r)
+ 	"-h        : display this help screen and exit\n"
+ 	"-k        : kill sysstat's daemon\n"
+ 	"-l        : operate in pipe mode\n"
+-	"-p <port> : set port to send to\n"
+ 	"-d        : do not run as a daemon\n"
+ 	"-D        : disable disk statistics gathering\n"
+ 	"-u        : disable user process statistics gathering\n"
+@@ -125,7 +124,7 @@ main(int argc, char **argv)
+ 	DfltSegV = signal(SIGSEGV,SegVhandler);
+ 	if (-1 == chdir("/var/tmp"))
+ 		error("Could not change directory to /var/tmp: %s\n",strerror(errno));
+-	while ((c = getopt(argc, argv, "DdhklmpuvVz")) != -1) {
++	while ((c = getopt(argc, argv, "DdhkluvVz")) != -1) {
+ 		extern int Port;
+ 		extern char *McastAddr;
+ 
+@@ -151,14 +150,6 @@ main(int argc, char **argv)
+ 			Localmode = 1;
+ 			dbug("local mode requested\n");
+ 			break;
+-		case 'm':
+-			McastAddr = optarg;
+-			info("multicast address set to %s\n",McastAddr);
+-			break;
+-		case 'p':
+-			if ((optarg == 0) || (1 != sscanf(optarg,"%u",&Port)))
+-				usage("no port given",EXIT_FAILURE);
+-			break;
+ 		case 'u':
+ 			Userstats = 0;
+ 			dbug("disabling user process statistics lookup");

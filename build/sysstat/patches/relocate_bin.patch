@@ -1,0 +1,72 @@
+diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -77,25 +77,18 @@ $(DDIR)/sysstatd: $(DDIR) $(DOBJS) Makef
+ 	$(CC) $(D_CFLAGS) $(LDFLAGS) -o $@ $(DOBJS) $(D_LIBS)
+ 
+ install_sysstat: $(CDIR)/sysstat
+-	-$(MKDIR) $(PREFIX)/bin/$(PROC)
+-	$(CP) $(CDIR)/sysstat $(PREFIX)/bin/$(PROC)
+-	-$(CHOWN) root:bin $(PREFIX)/bin/$(PROC)/sysstat
+-	-$(MKDIR) $(PREFIX)/lib
+-	test -x $(ISAEXEC) || $(CP) /usr/lib/isaexec $(ISAEXEC)
+-	$(RM) $(PREFIX)/bin/sysstat
+-	$(LN) $(ISAEXEC) $(PREFIX)/bin/sysstat
+-	-$(MKDIR) $(PREFIX)/share/man/man1m
+-	$(CP) sysstat.1m $(PREFIX)/share/man/man1m
+-	-$(CHOWN) root:bin $(PREFIX)/share/man/man1m/sysstat.1m
+-	-$(CHMOD) 0644 $(PREFIX)/share/man/man1m/sysstat.1m
++	-$(MKDIR) $(DESTDIR)$(PREFIX)/bin
++	$(CP) $(CDIR)/sysstat $(DESTDIR)$(PREFIX)/bin
++	-$(CHOWN) root:bin $(DESTDIR)$(PREFIX)/bin/$(KPROC)/sysstat
++	-$(MKDIR) $(DESTDIR)$(PREFIX)/share/man/man1m
++	$(CP) sysstat.1m $(DESTDIR)$(PREFIX)/share/man/man1m
++	-$(CHOWN) root:bin $(DESTDIR)$(PREFIX)/share/man/man1m/sysstat.1m
++	-$(CHMOD) 0644 $(DESTDIR)$(PREFIX)/share/man/man1m/sysstat.1m
+ 
+ install_sysstatd: $(DDIR)/sysstatd
+-	-$(MKDIR) $(PREFIX)/sbin/$(KPROC)
+-	$(INSTALL) -f $(PREFIX)/sbin/$(KPROC) -m 04755 -u root -g bin $(DDIR)/sysstatd
+-	$(RM) $(PREFIX)/sbin/sysstatd
+-	-$(MKDIR) $(PREFIX)/lib
+-	test -x $(ISAEXEC) || $(CP) /usr/lib/isaexec $(ISAEXEC)
+-	$(LN) $(ISAEXEC) $(PREFIX)/sbin/sysstatd
++	-$(MKDIR) $(DESTDIR)$(PREFIX)/sbin
++	$(CP) $(DDIR)/sysstatd $(DESTDIR)$(PREFIX)/sbin
++	-$(CHOWN) root:bin $(DESTDIR)$(PREFIX)/sbin/$(KPROC)/sysstatd
+ 
+ lint:
+ 	lint $(DEFS) $(INCDIRS) $(CSRCS)
+diff -wpruN '--exclude=*.orig' a~/client.c a/client.c
+--- a~/client.c	1970-01-01 00:00:00
++++ a/client.c	1970-01-01 00:00:00
+@@ -122,7 +122,7 @@ setup_source(const char *IntervalArg, un
+ 		dbug("Execname %s\n",Execname);
+ 		strcpy(bin,dirname(Execname));
+ 		dbug("Execdir %s\n",bin);
+-		strcat(bin,"/../../sbin/sysstatd");
++		strcat(bin,"/../sbin/sysstatd");
+ 		if (access(bin,X_OK) != 0) {
+ 			error("cannot find sysstatd at %s",bin);
+ 			return -1;
+diff -wpruN '--exclude=*.orig' a~/sysstat.c a/sysstat.c
+--- a~/sysstat.c	1970-01-01 00:00:00
++++ a/sysstat.c	1970-01-01 00:00:00
+@@ -540,7 +540,7 @@ main(int argc, char **argv)
+ 		char cmd[PATH_MAX];
+ 		int ret = 0;
+ 		strcpy(cmd,dirname(Execname));
+-		strcat(cmd,"/../../sbin/sysstatd -k");
++		strcat(cmd,"/../sbin/sysstatd -k");
+ 		ret = system(cmd);
+ 		if (ret == -1) {
+ 			error("could not execute '%s': %s\n",cmd,strerror(errno));
+@@ -588,7 +588,7 @@ main(int argc, char **argv)
+ 			char *args[16];
+ 			int num = 0;
+ 			strcpy(bin,dirname(Execname));
+-			strcat(bin,"/../../sbin/sysstatd");
++			strcat(bin,"/../sbin/sysstatd");
+ 			args[num++] = bin;
+ 			if (verbose)
+ 				args[num++] = "-v";
