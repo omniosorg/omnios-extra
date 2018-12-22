@@ -1,0 +1,32 @@
+diff -wpruN '--exclude=*.orig' a~/monitor.c a/monitor.c
+--- a~/monitor.c	1970-01-01 00:00:00
++++ a/monitor.c	1970-01-01 00:00:00
+@@ -531,17 +531,21 @@ monitor_insert_directory(int fd, char *n
+ 	{
+ 		if( e->d_name[0] == '.' )
+ 			continue;
++
++		type = TYPE_UNKNOWN;
+ 		esc_name = escape_tag(e->d_name, 1);
+ 		snprintf(path_buf, sizeof(path_buf), "%s/%s", path, e->d_name);
+-		switch( e->d_type )
++		if( is_dir(e->d_name) == 1 )
++		{
++			type = TYPE_DIR;
++		}
++		else if( is_reg(e->d_name) == 1 )
++		{
++			type = TYPE_FILE;
++		}
++		else
+ 		{
+-			case DT_DIR:
+-			case DT_REG:
+-			case DT_LNK:
+-			case DT_UNKNOWN:
+ 				type = resolve_unknown_type(path_buf, dir_types);
+-			default:
+-				break;
+ 		}
+ 		if( type == TYPE_DIR )
+ 		{

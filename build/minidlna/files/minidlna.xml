@@ -32,9 +32,9 @@ CDDL HEADER END
         <dependency name='config-file' grouping='require_all' restart_on='refresh' type='path'>
             <service_fmri value='file://localhost/etc/opt/ooce/minidlna/minidlna.conf' />
         </dependency>
-        <exec_method 
-            type="method" 
-            name="start" 
+        <exec_method
+            type="method"
+            name="start"
             exec="/opt/ooce/minidlna/sbin/minidlnad -R -f /etc/opt/ooce/minidlna/minidlna.conf -P /var/opt/ooce/minidlna/minidlna.pid"
             timeout_seconds="60">
             <method_context security_flags="aslr">
