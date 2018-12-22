@@ -26,7 +26,7 @@
 . ../../lib/functions.sh
 
 PROG=ooceapps
-VER=0.4.5
+VER=0.5.0
 VERHUMAN=$VER
 PKG=ooce/ooceapps
 SUMMARY="OOCEapps"
