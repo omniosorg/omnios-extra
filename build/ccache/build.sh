@@ -22,13 +22,14 @@
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2016-2018 Jim Klimov
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
 
-PROG=ccache                   # App name
-VER=3.3.6                     # App version
-PKG=ooce/developer/ccache          # Package name (without prefix)
+PROG=ccache
+VER=3.5
+PKG=ooce/developer/ccache
 SUMMARY="ccache - cache GCC-compiled files to avoid doing the same job twice"
 DESC="$SUMMARY ($VER)"
 
@@ -36,22 +37,19 @@ BUILD_DEPENDS_IPS="developer/build/autoconf text/gnu-grep"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
-XFORM_ARGS="-DOPREFIX=$OPREFIX -DPREFIX=$PREFIX -DPROG=$PROG"
-reset_configure_opts
-
-# Build 32-bit only and skip arch-specific directories
-BUILDARCH=32
-CONFIGURE_OPTS="
-    --bindir=$PREFIX/bin
-    --sbindir=$PREFIX/sbin
+XFORM_ARGS="
+    -DOPREFIX=$OPREFIX
+    -DPREFIX=$PREFIX
+    -DPROG=$PROG
 "
+
+set_arch 64
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-make_isa_stub
 make_package
 clean_up
 

@@ -25,7 +25,7 @@
 # Use is subject to license terms.
 #
 
-license LICENSE.txt license=Multiple
+license LICENSE.adoc license=Multiple
 
 link target=ccache path=$(PREFIX)/bin/gcc
 link target=ccache path=$(PREFIX)/bin/g++
