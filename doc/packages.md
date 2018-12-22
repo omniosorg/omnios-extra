@@ -24,7 +24,7 @@
 | ooce/library/libev		| 4.24		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libexif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/libexif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libid3tag	| 0.15.1b	| https://sourceforge.net/projects/mad/files/libid3tag/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libidl		| 0.8.14	| https://ftp.gnome.org/pub/gnome/sources/libIDL/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libidl		| 0.8.14	| https://download.gnome.org/sources/libIDL/cache.json https://download.gnome.org/sources/libIDL/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libjpeg-turbo	| 2.0.1		| https://sourceforge.net/projects/libjpeg-turbo/files/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libogg		| 1.3.3		| https://ftp.osuosl.org/pub/xiph/releases/ogg/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libpciaccess	| 0.14		| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
