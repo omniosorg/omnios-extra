@@ -1,19 +1,7 @@
---- minidlna~/minidlna.conf	Fri Dec  7 20:17:19 2018
-+++ minidlna/minidlna.conf	Fri Dec  7 20:18:49 2018
-@@ -25,10 +25,10 @@
- #friendly_name=My DLNA Server
- 
- # set this if you would like to specify the directory where you want MiniDLNA to store its database and album art cache
--#db_dir=/var/cache/minidlna
-+db_dir=/var/opt/ooce/minidlna/cache
- 
- # set this if you would like to specify the directory where you want MiniDLNA to store its log file
--#log_dir=/var/log
-+log_dir=/var/log/opt/ooce/minidlna
- 
- # set this to change the verbosity of the information that is logged
- # each section can use a different level: off, fatal, error, warn, info, or debug
-@@ -40,7 +40,7 @@
+diff -wpruN '--exclude=*.orig' a~/minidlna.conf a/minidlna.conf
+--- a~/minidlna.conf	1970-01-01 00:00:00
++++ a/minidlna.conf	1970-01-01 00:00:00
+@@ -40,7 +40,7 @@ album_art_names=Cover.jpg/cover.jpg/Albu
  
  # set this to no to disable inotify monitoring to automatically discover new files
  # note: the default is yes

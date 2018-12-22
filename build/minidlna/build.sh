@@ -17,10 +17,10 @@
 . ../../lib/functions.sh
 
 PROG=minidlna
-VER=1.1.5
+VER=1.2.1
 VERHUMAN=$VER
 PKG=ooce/multimedia/minidlna
-SUMMARY="$PROG"
+SUMMARY="MiniDLNA"
 DESC="DLNA/UPnP-AV media server"
 
 set_arch 64
@@ -44,11 +44,12 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-# minidlna incorrectly detects inotify support
-export ac_cv_func_inotify_init=no
-
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX
+    --with-db-path=/var$PREFIX/cache
+    --with-log-path=/var/log$PREFIX
+    ac_cv_header_sys_inotify_h=no
+    ac_cv_func_inotify_init=no
 "
 
 default_config() {
