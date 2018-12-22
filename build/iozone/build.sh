@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=iozone
-VER=3.482
+VER=3.484
 VERHUMAN=$VER
 PKG=ooce/system/test/iozone
 SUMMARY="IOzone - filesystem benchmark"
@@ -34,7 +34,7 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-BUILDARCH=64
+set_arch 64
 
 # No configure
 configure64() {
