@@ -17,10 +17,10 @@
 . ../../lib/functions.sh
 
 PROG=libev
-VER=4.24
+VER=4.25
 PKG=ooce/library/libev
-SUMMARY="High-performance event loop library"
-DESC="$SUMMARY"
+SUMMARY="libev"
+DESC="High-performance event loop library"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -33,6 +33,8 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS="
     --disable-static
+    ac_cv_header_sys_inotify_h=no
+    ac_cv_func_inotify_init1=no
 "
 
 init
