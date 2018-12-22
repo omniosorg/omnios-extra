@@ -26,11 +26,11 @@
 . ../../lib/functions.sh
 
 PROG=ooceapps
-VER=0.4.4
+VER=0.4.5
 VERHUMAN=$VER
 PKG=ooce/ooceapps
-SUMMARY="Web integrations for OmniOSce"
-DESC=$SUMMARY
+SUMMARY="OOCEapps"
+DESC="Web integrations for OmniOSce"
 BUILDARCH=64
 PREFIX=/opt/ooce
 MIRROR="https://github.com/omniosorg/$PROG/releases/download"
