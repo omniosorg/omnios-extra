@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=libvncserver
-VER=20181116
+VER=0.9.11.20181116
 PKG=ooce/library/libvncserver
 SUMMARY="libvncserver"
 DESC="A library for easy implementation of a VNC server."
