@@ -76,7 +76,7 @@ build() {
     done
 }
 
-download_source $PROG $PROG master-$VER
+download_source $PROG "LibVNCServer" $VER
 patch_source
 build
 make_package
