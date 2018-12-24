@@ -52,4 +52,5 @@
 | ooce/system/test/iozone	| 3.484		| http://www.iozone.org/src/current/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 8.6.9		| https://sourceforge.net/projects/asciidoc/files/asciidoc/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/ripgrep		| 0.10.0	| https://github.com/BurntSushi/ripgrep/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/text/texinfo		| 6.5		| https://ftp.gnu.org/gnu/texinfo/ | [omniosorg](https://github.com/omniosorg)
 | ooce/virtualization/virtualbox | 5.2.22	| https://www.virtualbox.org/wiki/Downloads | [omniosorg](https://github.com/omniosorg)
