@@ -15,27 +15,28 @@
 # Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-# Load support functions
 . ../../lib/functions.sh
 
 PROG=node
-VER=8.11.4
+VER=8.15.0
 VERHUMAN=$VER
-PKG=ooce/runtime/node-811
+PKG=ooce/runtime/node-8
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
-DESC="Node.js is an evented I/O framework for the V8 JavaScript engine.\
-It is intended for writing scalable network programs such as web servers."
+DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
+DESC+="It is intended for writing scalable network programs such as web servers."
 
-BUILDARCH=64
+set_arch 64
 
-MAJVER=${VER%.*}           # M.m
-sMAJVER=${MAJVER//./}      # Mm
+BUILDDIR=$PROG-v$VER
+BUILD_DEPENDS_IPS="developer/gnu-binutils"
+
+MAJVER=${VER%%.*}
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
 
 # objdump is needed to build nodejs
-PATH=$PATH:/usr/gnu/i386-pc-solaris2.11/bin
+PATH+=":/usr/gnu/i386-pc-solaris2.11/bin"
 
 CXXFLAGS+="-ffunction-sections -fdata-sections"
 MAKE_ARGS="CC=$CC"
@@ -45,7 +46,6 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
     -DVERSION=$MAJVER
-    -DsVERSION=$sMAJVER
 "
 
 CONFIGURE_OPTS_64=" \
@@ -53,14 +53,12 @@ CONFIGURE_OPTS_64=" \
     --dest-cpu=x64 \
     --prefix=$PREFIX \
 "
-BUILDDIR=$PROG-v$VER
-BUILD_DEPENDS_IPS="developer/gnu-binutils"
 
 init
 download_source $PROG $PROG v$VER
 prep_build
 build
-make_isa_stub
+strip_install
 make_package
 clean_up
 

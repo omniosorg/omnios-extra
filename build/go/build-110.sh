@@ -36,12 +36,6 @@ PATCHDIR=patches-$sMAJVER
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
 
-export GOROOT_FINAL=$PREFIX
-export GOROOT_BOOTSTRAP="$OPREFIX/$PROG-1.9"
-export GOPATH="$DESTDIR$PREFIX"
-
-BUILD_DEPENDS_IPS=ooce/developer/go-19
-
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
@@ -73,6 +67,29 @@ make_install64() {
     logcmd mv $TMPDIR/$BUILDDIR $DESTDIR$GOROOT_FINAL \
         || logerr "--- make install failed"
 }
+
+# building go 1.4.x for bootstrapping
+BVER=1.4.3
+PATCHDIR="patches-14"
+
+init
+download_source $PROG "$PROG$BVER.src"
+patch_source
+prep_build
+make_prog64
+
+logmsg "--- move bootstrap"
+BDIR="$TMPDIR/$BUILDDIR-bootstrap"
+[ -d "$BDIR" ] && rm -rf "$BDIR"
+logcmd mv $TMPDIR/$BUILDDIR "$BDIR" \
+    || logerr "--- moving bootstrap failed"
+
+# building go 1.10
+PATCHDIR=patches-$sMAJVER
+
+export GOROOT_FINAL=$PREFIX
+export GOROOT_BOOTSTRAP="$TMPDIR/$BUILDDIR-bootstrap"
+export GOPATH="$DESTDIR$PREFIX"
 
 init
 download_source $PROG "$PROG$VER.src"

@@ -1,4 +1,16 @@
-license LICENSE license=MIT
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+#
+# Copyright 2018 OmniOS Community Edition. All rights reserved.
 
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
     link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
@@ -8,4 +20,10 @@ license LICENSE license=MIT
     link path=$(OPREFIX)/share/man/%<1>/%<2> \
     target=../../../$(PROG)-$(VERSION)/share/man/%<1>/%<2> \
     mediator=$(PROG) mediator-version=$(VERSION) >
+
+# Prevent pkgdepend from reporting an error
+<transform file path=$(PREFIX)/lib/node_modules/npm/node_modules/node-gyp \
+    -> set pkg.depend.bypass-generate .*>
+
+license LICENSE license=MIT
 
