@@ -14,7 +14,6 @@ extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/cunit
 extra.omnios ooce/developer/go-110
 extra.omnios ooce/developer/go-111
-extra.omnios ooce/developer/go-19
 extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr
 extra.omnios ooce/developer/rust
