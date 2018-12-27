@@ -25,7 +25,10 @@ DESC="Free Lossless Audio Codec"
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-BUILD_DEPENDS_IPS="ooce/library/libogg"
+BUILD_DEPENDS_IPS="
+    developer/nasm
+    ooce/library/libogg
+"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -33,12 +36,9 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-# TODO: $host_cpu is detected as i386, therefore 64bit asm build produces 32bit object files
-# configure.ac patching needed. disabling asm optimisation for now as a workaround
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --includedir=$OPREFIX/include
-    --disable-asm-optimizations
 "
 CONFIGURE_OPTS_32="
     --bindir=$PREFIX/bin/$ISAPART
@@ -46,9 +46,10 @@ CONFIGURE_OPTS_32="
     --libdir=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    --bindir=$PREFIX/bin/$ISAPART64
-    --sbindir=$PREFIX/sbin/$ISAPART64
+    --bindir=$PREFIX/bin
+    --sbindir=$PREFIX/sbin
     --libdir=$OPREFIX/lib/$ISAPART64
+    --build=amd64-pc-solaris2.11
 "
 
 CFLAGS+=" -I$OPREFIX/include"
@@ -60,7 +61,6 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-make_isa_stub
 make_package
 clean_up
 
