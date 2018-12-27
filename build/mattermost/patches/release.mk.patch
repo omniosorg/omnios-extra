@@ -7,7 +7,7 @@ diff -wpruN '--exclude=*.orig' mattermost-server~/build/release.mk mattermost-se
  
 +build-illumos:
 +	@echo Build illumos amd64
-+	env GOOS=solaris GOARCH=amd64 $(GO) install $(GOFLAGS) $(GO_LINKER_FLAGS) ./...
++	env GOOS=solaris GOARCH=amd64 $(GO) install -i $(GOFLAGS) $(GO_LINKER_FLAGS) ./...
 +
  build-linux:
  	@echo Build Linux amd64
