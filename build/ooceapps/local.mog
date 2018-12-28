@@ -27,8 +27,12 @@ dir group=bin mode=0755 owner=root path=var/$(OPREFIX)
 group groupname=$(PROG) gid=79
 user username=$(PROG) uid=79 group=$(PROG) gcos-field="OOCEapps User" \
     ftpuser=false home-dir=/var/$(PREFIX) password=NP
+
 <transform file path=etc/$(PREFIX)/ooceapps.conf$ -> set preserve true>
 <transform dir  path=var/$(PREFIX) -> set owner ooceapps>
+<transform dir  path=etc/$(PREFIX) -> set owner ooceapps>
 <transform file path=$(PREFIX)/(bin|lib)/ \
     -> set restart_fmri svc:/ooce/ooceapps:default>
+
 license LICENSE license=GPLv3
+
