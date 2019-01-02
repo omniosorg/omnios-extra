@@ -17,11 +17,13 @@
 . ../../lib/functions.sh
 
 PROG=smartmontools
-VER=6.6
+VER=7.0
 VERHUMAN=$VER
 PKG=ooce/system/smartmontools
-SUMMARY="Control and monitor storage systems using SMART"
-DESC="$SUMMARY"
+SUMMARY="smartmontools"
+DESC="Control and monitor storage systems using SMART"
+
+RUN_DEPENDS_IPS=ooce/security/gnupg
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -32,7 +34,8 @@ XFORM_ARGS="
 "
 
 # Build 64-bit only and skip the arch-specific directories
-BUILDARCH=64
+set_arch 64
+
 CPPFLAGS64+=" -D_AVL_H"
 CONFIGURE_OPTS="
     --sysconfdir=/etc$PREFIX
@@ -41,7 +44,6 @@ CONFIGURE_OPTS="
     --with-scriptpath=/usr/bin:/opt/ooce/bin
 "
 
-RUN_DEPENDS_IPS=ooce/security/gnupg
 
 reset_configure_opts
 

@@ -47,7 +47,7 @@
 | ooce/server/nginx-112		| 1.12.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-114		| 1.14.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/mbuffer		| 20181119	| http://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
-| ooce/system/smartmontools	| 6.6		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
+| ooce/system/smartmontools	| 7.0		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/sysstat		| 20151012	| http://www.maier-komor.de/sysstat.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/test/iozone	| 3.484		| http://www.iozone.org/src/current/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 8.6.9		| https://sourceforge.net/projects/asciidoc/files/asciidoc/ | [omniosorg](https://github.com/omniosorg)
