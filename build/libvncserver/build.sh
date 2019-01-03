@@ -27,6 +27,7 @@ BUILDDIR=$PROG-master
 BUILD_DEPENDS_IPS="
     ooce/developer/cmake
     ooce/library/libjpeg-turbo
+    ooce/library/libpng
 "
 
 XFORM_ARGS="
