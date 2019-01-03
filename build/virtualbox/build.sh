@@ -97,7 +97,6 @@ CONFIGURE_OPTS="
     --build-headless
     --build-libopus
     --disable-python
-    --disable-java
     --disable-alsa
     --disable-pulse
     --disable-dbus
