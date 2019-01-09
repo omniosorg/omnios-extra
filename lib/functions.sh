@@ -689,7 +689,7 @@ prep_build() {
         logcmd chmod -R u+w $DESTDIR > /dev/null 2>&1
         logcmd rm -rf $DESTDIR || \
             logerr "Failed to remove old temporary install dir"
-        mkdir -p $DESTDIR || \
+        logcmd mkdir -p $DESTDIR || \
             logerr "Failed to create temporary install dir"
     fi
 
@@ -714,9 +714,6 @@ prep_build() {
     # ... and to DESTDIR
     [ -h $SRCDIR/tmp/pkg ] && rm -f $SRCDIR/tmp/pkg
     logcmd ln -sf $DESTDIR $SRCDIR/tmp/pkg
-    # Set DEPROOT and wipe if present
-    DEPROOT=$TMPDIR/_deproot
-    [ -d "$DEPROOT" ] && rm -rf "$DEPROOT"
 }
 
 #############################################################################
