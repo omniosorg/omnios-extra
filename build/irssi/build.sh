@@ -12,17 +12,17 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
 
 PROG=irssi
-VER=1.1.1
+VER=1.1.2
 VERHUMAN=$VER
 PKG=ooce/network/irssi
-SUMMARY="$PROG - text-mode modular chat client"
-DESC="$SUMMARY"
+SUMMARY="Irssi"
+DESC="Text-mode modular chat client"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
