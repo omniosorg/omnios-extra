@@ -12,17 +12,17 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=libvncserver
-VER=0.9.11.20181116
+VER=0.9.12
 PKG=ooce/library/libvncserver
 SUMMARY="libvncserver"
 DESC="A library for easy implementation of a VNC server."
 
-BUILDDIR=$PROG-master
+BUILDDIR="$PROG-LibVNCServer-$VER"
 
 BUILD_DEPENDS_IPS="
     ooce/developer/cmake

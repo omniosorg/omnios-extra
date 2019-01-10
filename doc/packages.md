@@ -29,7 +29,7 @@
 | ooce/library/libpciaccess	| 0.14		| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
 | ooce/library/libpng		| 1.6.36	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvorbis	| 1.3.6		| https://ftp.osuosl.org/pub/xiph/releases/vorbis/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libvncserver	| 0.9.11.20181116 | https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libvncserver	| 0.9.12	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/lxadm			| 0.1.6		| https://github.com/hadfl/lxadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/exif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/exif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/ffmpeg	| 4.1		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
