@@ -10,7 +10,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYING license=GPLv2
 
@@ -19,5 +19,5 @@ link path=$(OPREFIX)/share/man/man1/$(PROG).1 \
     target=../../../$(PROG)/share/man/man1/$(PROG).1
 
 dir path=etc/$(OPREFIX) owner=root group=bin mode=0755
-<transform file path=etc -> set preserve true>
+<transform file path=etc/$(PREFIX) -> set preserve true>
 

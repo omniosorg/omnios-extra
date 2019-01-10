@@ -32,11 +32,11 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-reset_configure_opts
-
 # Build 64-bit only and skip the arch-specific directories
-BUILDARCH=64
+set_arch 64
+
 CONFIGURE_OPTS="
+    --sysconfdir=/etc$PREFIX
     --bindir=$PREFIX/bin
     --libdir=$PREFIX/lib
 "
