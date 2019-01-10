@@ -12,14 +12,14 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
 
 PROG=php
 PKG=ooce/application/php-73
-VER=7.3.0
+VER=7.3.1
 VERHUMAN=$VER
 SUMMARY="PHP 7.3"
 DESC="A popular general-purpose scripting language"

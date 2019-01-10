@@ -1,8 +1,8 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
 | ooce/application/mattermost	| 5.6.2		| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-72	| 7.2.13	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-73	| 7.3.0		| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-72	| 7.2.14	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-73	| 7.3.1		| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20180414	| ftp://tug.org/historic/systems/texlive/2018/ | [omniosorg](https://github.com/omniosorg)
 | ooce/audio/flac		| 1.3.2		| https://ftp.osuosl.org/pub/xiph/releases/flac/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/bdb		| 5.3.28	| http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html | [omniosorg](https://github.com/omniosorg)
@@ -29,7 +29,7 @@
 | ooce/library/libpciaccess	| 0.14		| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
 | ooce/library/libpng		| 1.6.36	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvorbis	| 1.3.6		| https://ftp.osuosl.org/pub/xiph/releases/vorbis/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libvncserver	| 0.9.11.20181116 | https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libvncserver	| 0.9.12	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/lxadm			| 0.1.6		| https://github.com/hadfl/lxadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/exif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/exif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/ffmpeg	| 4.1		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
