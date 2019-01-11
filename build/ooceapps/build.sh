@@ -20,13 +20,13 @@
 #
 # CDDL HEADER END }}}
 #
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
 
 PROG=ooceapps
-VER=0.5.1
+VER=0.5.2
 VERHUMAN=$VER
 PKG=ooce/ooceapps
 SUMMARY="OOCEapps"
