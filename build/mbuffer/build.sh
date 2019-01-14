@@ -25,15 +25,15 @@ PKG=ooce/system/mbuffer
 SUMMARY="$PROG - measuring buffer"
 DESC="$PROG is a tool for buffering data streams"
 
-# Build 64-bit only and skip the arch-specific directories
-set_arch 64
-
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
 "
+
+# Build 64-bit only and skip the arch-specific directories
+set_arch 64
 
 init
 download_source $PROG $PROG $VER
