@@ -1009,8 +1009,10 @@ make_package() {
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
     GLOBAL_MOG_FILE=$MYDIR/global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
-    [ -f $SRCDIR/local.mog ] && \
-        LOCAL_MOG_FILE=$SRCDIR/local.mog || LOCAL_MOG_FILE=
+    if [ -z "$LOCAL_MOG_FILE" ]; then
+        [ -f $SRCDIR/local.mog ] && \
+            LOCAL_MOG_FILE=$SRCDIR/local.mog || LOCAL_MOG_FILE=
+    fi
     EXTRA_MOG_FILE=
     FINAL_MOG_FILE=
     if [ -n "$1" ]; then
