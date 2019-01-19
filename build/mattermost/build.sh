@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 #
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.6.2
+VER=5.7.0
 VERHUMAN=$VER
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
