@@ -19,8 +19,11 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 # Use is subject to license terms.
+
+# Drop 32bit binaries
+<transform path=$(PREFIX)/s?bin/i386 -> drop>
 
 # Symlink binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \

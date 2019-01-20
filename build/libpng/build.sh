@@ -35,19 +35,17 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS="
     --disable-static
-"
-CONFIGURE_OPTS_32="
     --prefix=$PREFIX
     --includedir=$OPREFIX/include
+"
+CONFIGURE_OPTS_32="
     --bindir=$PREFIX/bin/$ISAPART
     --sbindir=$PREFIX/sbin/$ISAPART
     --libdir=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    --prefix=$PREFIX
-    --includedir=$OPREFIX/include
-    --bindir=$PREFIX/bin/$ISAPART64
-    --sbindir=$PREFIX/sbin/$ISAPART64
+    --bindir=$PREFIX/bin
+    --sbindir=$PREFIX/sbin
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
@@ -56,7 +54,6 @@ download_source $PROG $PROG $VER
 prep_build
 patch_source
 build
-make_isa_stub
 make_package
 clean_up
 
