@@ -11,7 +11,7 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 
-license COPYING license=LGPLv2
+license COPYING license=LGPLv2.1
 

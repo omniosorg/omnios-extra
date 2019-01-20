@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+
+__SCRIPTDIR="${0%/*}"
+
+. $__SCRIPTDIR/../lib/config.sh
+
+doc=$__SCRIPTDIR/../doc/licences
+
+[ ! -f $doc ] && echo "Cannot find licences file" && exit 1
+
+if [ $# -lt 1 ]; then
+    echo "Syntax: <file>[ <file>...]"
+    exit 0
+fi
+
+for f in "$@"; do
+    nawk -F"\t+" '/^#/ {next} {print $1}' $doc | while read lic; do
+            pattern="`nawk -F"\t+" -v type="$lic" '
+                /^#/ { next }
+                $1 == type { print $2 }
+            ' $doc`"
+            if $RIPGREP -qU "$pattern" "$f"; then
+                echo "$f: $lic"
+            fi
+    done
+done
+
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker

@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -30,6 +30,8 @@ BUILD_DEPENDS_IPS=ooce/developer/rust
 [ $RELVER -ge 151029 ] && BUILD_DEPENDS_IPS+=" library/pcre2"
 
 set_arch 64
+
+SKIP_LICENCES=UNLICENSE
 
 build() {
     logmsg "Building 64-bit"

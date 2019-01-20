@@ -24,4 +24,4 @@ dir group=bin mode=0755 owner=root path=$(OPREFIX)/bin
     link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
     mediator=$(PROG) mediator-version=$(VERSION) >
 
-license $(PREFIX)/LICENSE license=BSD
+license $(PREFIX)/LICENSE license=BSD-style

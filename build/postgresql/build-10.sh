@@ -21,7 +21,7 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
@@ -34,6 +34,8 @@ SUMMARY="$PROG 10 - Open Source Database System"
 DESC="$SUMMARY"
 
 BUILDARCH=64
+
+SKIP_LICENCES=postgresql
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm

@@ -11,9 +11,9 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 
-license LICENSE.md license=BSD
+license LICENSE.md license=sBSD
 
 <transform path=$(PREFIX)/share/doc -> drop>
 

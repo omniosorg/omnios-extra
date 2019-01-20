@@ -1,0 +1,26 @@
+CDDL			COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (.CDDL. *)?Version 1.0
+Sun Binary License	Sun Microsystems, Inc. Binary Code License Agreement
+Sun			\ACopyright \(c\) [0-9]{4} Sun Microsystems, Inc.  All Rights Reserved.
+#
+GPLv2			(?i)GNU GENERAL PUBLIC LICENSE(?-i).*\n{1,2}.*Version 2,
+GPLv3			GNU GENERAL PUBLIC LICENSE.*\n.*Version 3,
+LGPLv2			GNU LIBRARY GENERAL PUBLIC LICENSE.*\n.*Version 2,
+LGPLv2.1		GNU LESSER GENERAL PUBLIC LICENSE.*\n.*Version 2.1,
+LGPLv3			GNU LESSER GENERAL PUBLIC LICENSE.*\n.*Version 3,
+#
+Apache2			Apache License.*\n.*Version 2.0,
+#
+Artistic2		Artistic License 2.0(?s:.)*Copyright.*The Perl Foundation
+#
+MPLv2			^Mozilla Public License,? [Vv]ersion 2.0$
+#
+GCC runtime license	GCC RUNTIME LIBRARY EXCEPTION
+#
+MIT			Permission is hereby granted, free of charge(?s:.)*The above copyright notice and this permission notice shall be(?s).*included.*in.all.copies.or.(?-s)substantial portions of the Software.$(?s:.)*THE SOFTWARE IS PROVIDED .AS IS., WITHOUT WARRANTY OF ANY KIND,( EXPRESS( OR)?)?
+OSCL			OPEN SOURCE CODE LICENSE.*\n.*Version 1
+#
+BSD			Redistribution and use in source and binary forms,(?s:.)*(THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ..AS IS.. AND|THIS SOFTWARE IS PROVIDED ..AS IS.. AND WITHOUT ANY EXPRESS OR)$
+sBSD			Redistribution and use in source and binary forms, with or without(?s).*modification,.*are(?-s) permitted provided that the following(?s).*conditions.are.met:(?-s)(?s:.)*THIS SOFTWARE IS PROVIDED BY THE (COPYRIGHT HOLDERS AND(?s:.)*)?CONTRIBUTORS(?s:.)*.AS IS.(?s).*AND.*ANY.*EXPRESS.OR.IMPLIED.WARRANTIES,
+mBSD			Redistribution and use in source and binary forms, with or without(?s:.)*modification, are permitted provided that the following conditions(?s:.)*are met:(?s:.)*THIS SOFTWARE IS PROVIDED BY THE AUTHOR ..AS IS..(?s:.)AND ANY EXPRESS
+#
+PSFv2			^PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2$

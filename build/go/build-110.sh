@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
@@ -28,6 +28,8 @@ DESC+="reliable, and efficient software."
 BUILDDIR=$PROG
 
 BUILDARCH=64
+
+SKIP_LICENCES=BSD-style
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm

@@ -12,7 +12,7 @@
 
 # Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 
-license COPYING license="GPLv2"
+license COPYING license=GPLv2
 
 # Skip dependency detection for python scripts
 <transform file path=.*\.py -> set pkg.depend.bypass-generate .* >

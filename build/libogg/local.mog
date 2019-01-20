@@ -11,10 +11,10 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 
 # Drop html documentation
 <transform path=$(PREFIX)/share/doc -> drop >
 
-license COPYING license=Xiph
+license COPYING license=sBSD
 

@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=iozone
-VER=3.484
+VER=3.487
 VERHUMAN=$VER
 PKG=ooce/system/test/iozone
 SUMMARY="IOzone - filesystem benchmark"
@@ -35,6 +35,8 @@ XFORM_ARGS="
 "
 
 set_arch 64
+
+SKIP_LICENCES=iozone
 
 # No configure
 configure64() {

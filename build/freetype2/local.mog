@@ -1,4 +1,4 @@
-license docs/LICENSE.TXT license=freetype
+license docs/GPLv2.TXT license=GPLv2
 
 link path=$(OPREFIX)/bin/freetype-config \
     target=../freetype/bin/freetype-config

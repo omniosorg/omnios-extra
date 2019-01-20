@@ -10,9 +10,9 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
-license COPYING license="MIT"
+license COPYING license=MIT
 
 <transform file path=$(PREFIX)/\. -> drop>
 <transform file path=.*\.sh$ -> drop>

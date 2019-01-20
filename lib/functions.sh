@@ -1009,8 +1009,10 @@ make_package() {
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
     GLOBAL_MOG_FILE=$MYDIR/global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
-    [ -f $SRCDIR/local.mog ] && \
-        LOCAL_MOG_FILE=$SRCDIR/local.mog || LOCAL_MOG_FILE=
+    if [ -z "$LOCAL_MOG_FILE" ]; then
+        [ -f $SRCDIR/local.mog ] && \
+            LOCAL_MOG_FILE=$SRCDIR/local.mog || LOCAL_MOG_FILE=
+    fi
     EXTRA_MOG_FILE=
     FINAL_MOG_FILE=
     if [ -n "$1" ]; then
@@ -1037,6 +1039,8 @@ make_package() {
         FMRI="${PKG}@${VER},${SUNOSVER}-${PVER}"
     fi
     if [ -n "$DESTDIR" ]; then
+        check_symlinks "$DESTDIR"
+        [ -z "$BATCH" ] && check_libabi "$DESTDIR" "$PKG"
         logmsg "--- Generating package manifest from $DESTDIR"
         logmsg "------ Running: $PKGSEND generate $DESTDIR > $P5M_INT"
         GENERATE_ARGS=
@@ -1088,6 +1092,9 @@ make_package() {
         $LOCAL_MOG_FILE \
         $EXTRA_MOG_FILE \
         | $PKGFMT -u > $P5M_INT2
+
+    [ -n "$DESTDIR" ] && check_licences
+
     logmsg "--- Resolving dependencies"
     (
         set -e
@@ -1164,6 +1171,7 @@ make_package() {
     if [ -z "$SKIP_PKGLINT" ] && ( [ -n "$BATCH" ] || ask_to_pkglint ); then
         run_pkglint $PKGSRVR $P5M_FINAL
     fi
+
     logmsg "--- Publishing package to $PKGSRVR"
     if [ -z "$BATCH" ]; then
         logmsg "Intentional pause:" \
@@ -1786,11 +1794,161 @@ strip_install() {
 }
 
 #############################################################################
+# Check for dangling symlinks
+#############################################################################
+
+check_symlinks() {
+    logmsg "-- Checking for dangling symlinks"
+    for link in `find "$1" -type l`; do
+        readlink -e $link >/dev/null || logerr "Dangling symlink $link"
+    done
+}
+
+#############################################################################
+# Check for library ABI change
+#############################################################################
+
+extract_libabis() {
+    declare -Ag "$1"
+    local -n array="$1"
+    local src="$2"
+
+    while read file; do
+        lib=${file%.so.*}
+        abi=${file#*.so.}
+        array[$lib]+="$abi "
+    done < <(sed < "$src" '
+        # basename
+        s/.*\///
+        # Remove minor versions (e.g. .so.7.1.2 -> .so.7)
+        s/\(\.so\.[0-9][0-9]*\)\..*/\1/
+        ' | sort | uniq)
+}
+
+check_libabi() {
+    local destdir="$1"
+    local pkg="$2"
+
+    logmsg "-- Checking for library ABI changes"
+
+    # Build list of libraries and ABIs from this package on disk
+    logcmd -p find "$destdir" -type f -name lib\*.so.\* > $TMPDIR/libs.$$
+    extract_libabis cla__new $TMPDIR/libs.$$
+    logcmd rm -f $TMPDIR/libs.$$
+
+    [ ${#cla__new[@]} -gt 0 ] || return
+
+    # The package has at least one library
+
+    logmsg "--- Found libraries, fetching previous package contents"
+    pkgitems -g $IPS_REPO $pkg | nawk '
+            /^file path=.*\.so\./ {
+                sub(/path=/, "", $2)
+                print $2
+            }
+        ' > $TMPDIR/libs.$$
+    [ -s $TMPDIR/libs.$$ ] || logerr "Could not retrieve contents"
+    # In case the user chooses to continue after the previous error
+    [ -s $TMPDIR/libs.$$ ] || return
+    extract_libabis cla__prev $TMPDIR/libs.$$
+    rm -f $TMPDIR/libs.$$
+
+    # Compare
+    for k in "${!cla__new[@]}"; do
+        [ "${cla__new[$k]}" = "${cla__prev[$k]}" ] && continue
+        # The list of ABIs has changed. Make sure that all of the old versions
+        # are present in the new.
+        logmsg -n "--- $lib ABI change, ${cla__prev[$k]} -> ${cla__new[$k]}"
+        local prev new flag
+        for prev in ${cla__prev[$k]}; do
+            flag=0
+            for new in ${cla__new[$k]}; do
+                [ "$prev" = "$new" ] && flag=1
+            done
+            [ "$flag" -eq 1 ] && continue
+            logerr "--- $lib.so.$prev missing from new package"
+        done
+    done
+}
+
+#############################################################################
+# Check package licences
+#############################################################################
+
+check_licences() {
+    typeset -i lics=0
+    typeset -a errs
+    typeset -i flag
+    while read file types; do
+        ((lics++))
+        logmsg "-- licence '$file' ($types)"
+
+        # Check if the "license" lines point to valid files
+        flag=0
+        for dir in $DESTDIR $TMPDIR/$BUILDDIR $SRCDIR; do
+            if [ -f "$dir/$file" ]; then
+                #logmsg "   found in $dir/$file"
+                flag=1
+                break
+            fi
+        done
+        if [ $flag -eq 0 ]; then
+            errs+=("Licence '$file' not found.")
+            continue
+        fi
+
+        # Consolidate found licences into a temporary directory
+        mkdir -p $BASE_TMPDIR/licences
+        typeset lf="$BASE_TMPDIR/licences/$PKGD.`basename $file`"
+        dos2unix "$dir/$file" "$lf"
+        chmod u+rw "$lf"
+
+        [ -n "$BATCH" ] && continue
+
+        _IFS="$IFS"; IFS=,
+        for type in $types; do
+            case "$type" in $SKIP_LICENCES) continue ;; esac
+
+            # Check that the licence type is correct
+            pattern="`nawk -F"\t+" -v type="${type%%/*}" '
+                /^#/ { next }
+                $1 == type { print $2 }
+            ' $ROOTDIR/doc/licences`"
+            if [ -z "$pattern" ]; then
+                    errs+=("Unknown licence type '$type'")
+                    continue
+            fi
+            if ! $RIPGREP -qU "$pattern" "$lf"; then
+                errs+=("Wrong licence in mog for $file ($type)")
+            fi
+        done
+        IFS="$_IFS"
+    done < <(nawk '
+            $1 == "license" {
+                if (split($0, a, /"/) != 3) split($0, a, "=")
+                print $2, a[2]
+            }
+        ' $P5M_INT2)
+
+    if [ "${#errs[@]}" -gt 0 ]; then
+        for e in "${errs[@]}"; do
+            logmsg -e $e
+        done
+        logerr ""
+    fi
+
+    if [ $lics -eq 0 ]; then
+        logerr "-- No 'license' line in final mog"
+        return
+    fi
+}
+
+#############################################################################
 # Clean up and print Done message
 #############################################################################
 
 clean_up() {
-    logmsg "Cleaning up"
+    logmsg "-- Cleaning up"
     if [ -z "$DONT_REMOVE_INSTALL_DIR" ]; then
         logmsg "--- Removing temporary install directory $DESTDIR"
         logcmd chmod -R u+w $DESTDIR > /dev/null 2>&1

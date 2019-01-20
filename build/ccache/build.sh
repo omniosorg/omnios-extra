@@ -22,18 +22,20 @@
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2016-2018 Jim Klimov
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
 
 PROG=ccache
-VER=3.5
+VER=3.6
 PKG=ooce/developer/ccache
 SUMMARY="ccache - cache GCC-compiled files to avoid doing the same job twice"
 DESC="$SUMMARY ($VER)"
 
 BUILD_DEPENDS_IPS="developer/build/autoconf text/gnu-grep"
+
+SKIP_LICENCES="Various"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -48,6 +50,7 @@ set_arch 64
 init
 download_source $PROG $PROG $VER
 patch_source
+run_autoreconf -fi
 prep_build
 build
 make_package

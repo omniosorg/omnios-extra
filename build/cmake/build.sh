@@ -25,6 +25,8 @@ DESC+="compiler-independent manner"
 
 set_arch 64
 
+SKIP_LICENCES=Kitware
+
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX
 "

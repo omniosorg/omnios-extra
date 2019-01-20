@@ -11,8 +11,7 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
-
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 
 dir group=bin mode=0755 owner=root path=var/$(PREFIX)
 dir group=$(PROG) mode=0700 owner=$(PROG) path=var/$(PREFIX)/data
@@ -35,5 +34,5 @@ user ftpuser=false username=$(PROG) uid=85 group=$(PROG) gcos-field="Mattermost 
 <transform file path=$(PREFIX)/bin/ \
     -> set restart_fmri svc:/ooce/application/$(PROG):default>
 
-license LICENSE.txt license=MIT
+license LICENSE.txt license=Apache2
 
