@@ -10,9 +10,9 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
-license COPYING license=GPLv2
+license COPYING license=GPLv3
 
 link path=$(OPREFIX)/bin/gpg target=../$(PROG)/bin/gpg
 link path=$(OPREFIX)/share/man/man1/gpg.1 \

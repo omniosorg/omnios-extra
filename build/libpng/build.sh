@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -21,6 +21,8 @@ VER=1.6.36
 PKG=ooce/library/libpng
 SUMMARY="libpng"
 DESC="libpng is the official PNG reference library"
+
+SKIP_LICENCES=libpng
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"

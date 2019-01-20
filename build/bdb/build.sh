@@ -21,7 +21,7 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
@@ -36,6 +36,8 @@ ORIGPREFIX=$PREFIX
 PREFIX=$PREFIX/$PROG-$VER
 
 XFORM_ARGS="-D PREFIX=${PREFIX#/} -D ORIGPREFIX=${ORIGPREFIX#/} -D PROGVER=${PROG}-${VER}"
+
+SKIP_LICENCES="Sleepycat"
 
 BUILDDIR=db-$VER/build_unix
 CONFIGURE_CMD="../dist/configure"

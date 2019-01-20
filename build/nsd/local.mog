@@ -10,9 +10,9 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
-license LICENSE license="BSD"
+license LICENSE license=sBSD
 
 group groupname=$(PROG) gid=55
 user username=$(PROG) uid=55 group=$(PROG) gcos-field="NSD DNS Server" \

@@ -22,10 +22,12 @@
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2016 Jim Klimov
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 
-license LICENSE.adoc license=Multiple
+license LICENSE.adoc license=Various
+license GPL-3.0.txt license=GPLv3
 
 link target=ccache path=$(PREFIX)/bin/gcc
 link target=ccache path=$(PREFIX)/bin/g++

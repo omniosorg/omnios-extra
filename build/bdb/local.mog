@@ -19,7 +19,7 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 # Use is subject to license terms.
 
 # Symlink binaries
@@ -29,4 +29,4 @@
 # Remove html documentation
 <transform file dir path=$(PREFIX)/docs -> drop >
 
-license ../LICENSE license=BDB
+license ../LICENSE license=Sleepycat

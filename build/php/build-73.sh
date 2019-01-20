@@ -26,6 +26,8 @@ DESC="A popular general-purpose scripting language"
 
 BUILDARCH=64
 
+SKIP_LICENCES=PHP
+
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
 PATCHDIR=patches-$sMAJVER

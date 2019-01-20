@@ -35,6 +35,8 @@ DESC="$SUMMARY ($VER)"
 
 BUILD_DEPENDS_IPS="developer/build/autoconf text/gnu-grep"
 
+SKIP_LICENCES="Various"
+
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 XFORM_ARGS="

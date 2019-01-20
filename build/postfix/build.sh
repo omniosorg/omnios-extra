@@ -21,7 +21,7 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
@@ -34,6 +34,8 @@ SUMMARY="Postfix MTA"
 DESC="Wietse Venema's mail server alternative to sendmail"
 
 set_arch 64
+
+SKIP_LICENCES=IBM
 
 HARDLINK_TARGETS="
     opt/ooce/postfix/libexec/postfix/smtp
