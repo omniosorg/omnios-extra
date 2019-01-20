@@ -1,6 +1,6 @@
-diff -pruN '--exclude=*.orig' go~/src/run.bash go/src/run.bash
---- go~/src/run.bash	2015-09-23 06:37:37.000000000 +0000
-+++ go/src/run.bash	2018-05-29 20:30:18.273520942 +0000
+diff -wpruN '--exclude=*.orig' a~/src/run.bash a/src/run.bash
+--- a~/src/run.bash	1970-01-01 00:00:00
++++ a/src/run.bash	1970-01-01 00:00:00
 @@ -253,11 +253,11 @@ rm -f runtest
  
  [ "$GOOS" == android ] ||
