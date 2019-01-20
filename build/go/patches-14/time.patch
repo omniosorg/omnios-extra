@@ -10,9 +10,9 @@ Reviewed-on: https://go-review.googlesource.com/29995
 Reviewed-by: Brad Fitzpatrick <bradfitz@golang.org>
 Run-TryBot: Brad Fitzpatrick <bradfitz@golang.org>
 TryBot-Result: Gobot Gobot <gobot@golang.org>
-diff -pruN '--exclude=*.orig' go~/src/time/time_test.go go/src/time/time_test.go
---- go~/src/time/time_test.go	2015-09-23 06:37:37.000000000 +0000
-+++ go/src/time/time_test.go	2018-05-29 20:30:18.067219309 +0000
+diff -wpruN '--exclude=*.orig' a~/src/time/time_test.go a/src/time/time_test.go
+--- a~/src/time/time_test.go	1970-01-01 00:00:00
++++ a/src/time/time_test.go	1970-01-01 00:00:00
 @@ -925,8 +925,11 @@ func TestLoadFixed(t *testing.T) {
  	// but Go and most other systems use "east is positive".
  	// So GMT+1 corresponds to -3600 in the Go zone, not +3600.
