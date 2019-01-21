@@ -39,7 +39,7 @@ LOGPATH=/var/log$OPREFIX/$PROG
 VARPATH=/var$OPREFIX/$PROG
 RUNPATH=$VARPATH/run
 
-BUILD_DEPENDS_IPS="ooce/database/bdb"
+BUILD_DEPENDS_IPS="ooce/database/bdb ooce/library/lmdb"
 RUN_DEPENDS_IPS="ooce/application/php-common"
 
 XFORM_ARGS="
@@ -76,7 +76,8 @@ CONFIGURE_OPTS_64="
     --with-bz2=/usr
     --with-curl
 
-    --with-db4=/opt/ooce
+    --with-db4=$OPREFIX
+    --with-lmdb=$OPREFIX
 
     --enable-fpm
     --with-fpm-user=php
