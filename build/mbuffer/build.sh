@@ -19,7 +19,7 @@
 . ../../lib/functions.sh
 
 PROG=mbuffer
-VER=20190113
+VER=20190119
 VERHUMAN=$VER
 PKG=ooce/system/mbuffer
 SUMMARY="$PROG - measuring buffer"
@@ -39,7 +39,6 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-run_autoconf
 build
 make_package
 clean_up
