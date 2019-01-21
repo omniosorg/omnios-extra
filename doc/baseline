@@ -44,6 +44,7 @@ extra.omnios ooce/omnios-build-tools
 extra.omnios ooce/ooceapps
 extra.omnios ooce/runtime/node-8
 extra.omnios ooce/runtime/node-10
+extra.omnios ooce/runtime/ruby-25
 extra.omnios ooce/security/gnupg
 extra.omnios ooce/server/nginx-112
 extra.omnios ooce/server/nginx-114
