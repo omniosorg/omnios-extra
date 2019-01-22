@@ -16,6 +16,9 @@
 # Drop 32bit binaries
 <transform path=$(PREFIX)/s?bin/i386 -> drop>
 
+# Drop static libraries
+<transform path=$(OPREFIX)/lib/(?:amd64/)?.*\.a$ -> drop>
+
 # Symlink binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
     link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
@@ -24,8 +27,5 @@
 <transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
     link path=$(OPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> >
 
-# Drop html documentation
-<transform path=$(PREFIX)/share/doc -> drop>
-
-license COPYING.LGPL license=LGPLv2.1
+license ../../LICENSE license=OpenLDAP
 

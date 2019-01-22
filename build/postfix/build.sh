@@ -49,6 +49,7 @@ CONFPATH="/etc$PREFIX"
 BUILD_DEPENDS_IPS="
     library/pcre
     ooce/database/bdb
+    ooce/library/lmdb
 "
 
 XFORM_ARGS="
@@ -59,7 +60,7 @@ XFORM_ARGS="
 
 configure64() {
     logmsg "--- configure (make makefiles)"
-    logcmd $MAKE makefiles CCARGS='-m64 -DUSE_TLS -DHAS_DB -DNO_NIS \
+    logcmd $MAKE makefiles CCARGS='-m64 -DUSE_TLS -DHAS_DB -DHAS_LMDB -DNO_NIS \
         -DDEF_COMMAND_DIR=\"'${PREFIX}/sbin'\" \
         -DDEF_CONFIG_DIR=\"'${CONFPATH}'\" \
         -DDEF_DAEMON_DIR=\"'${PREFIX}/libexec/postfix'\" \
@@ -69,6 +70,7 @@ configure64() {
         -DDEF_SENDMAIL_PATH=\"'${PREFIX}/sbin/sendmail'\" \
         -I'${OPREFIX}/include \
         AUXLIBS="-R${OPREFIX}/lib/${ISAPART64} -L${OPREFIX}/lib/${ISAPART64} -ldb -lssl -lcrypto" \
+        AUXLIBS_LMDB="-R${OPREFIX}/lib/${ISAPART64} -L${OPREFIX}/lib/${ISAPART64} -llmdb" \
             || logerr "Failed make makefiles command"
 }
 

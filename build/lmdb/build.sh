@@ -16,11 +16,18 @@
 
 . ../../lib/functions.sh
 
-PROG=libIDL
-VER=0.8.14
-PKG=ooce/library/libidl
-SUMMARY="libIDL"
-DESC="library for creating trees of CORBA Interface Definition Language (IDL)"
+PROG=lmdb
+# check version in lmdb.h
+VER=0.9.23
+# lmdb is part of the openldap source package
+LDAPVER=2.4.47
+PKG=ooce/library/lmdb
+SUMMARY="lmdb"
+DESC="Lightning Memory-Mapped Database"
+
+SKIP_LICENCES=OpenLDAP
+
+BUILDDIR="openldap-$LDAPVER/libraries/liblmdb"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -31,26 +38,34 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-CONFIGURE_OPTS="
-    --disable-static
-    --prefix=$PREFIX
-    --includedir=$OPREFIX/include
-"
-CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
-    --sbindir=$PREFIX/sbin/$ISAPART
-    --libdir=$OPREFIX/lib
-"
-CONFIGURE_OPTS_64="
-    --bindir=$PREFIX/bin
-    --sbindir=$PREFIX/sbin
-    --libdir=$OPREFIX/lib/$ISAPART64
+MAKE_INSTALL_ARGS="
+    prefix=$PREFIX
+    includedir=$OPREFIX/include
 "
 
+MAKE_INSTALL_ARGS_32="
+    bindir=$PREFIX/bin/$ISAPART
+    sbindir=$PREFIX/sbin/$ISAPART
+    libdir=$OPREFIX/lib
+"
+
+MAKE_INSTALL_ARGS_64="
+    bindir=$PREFIX/bin
+    sbindir=$PREFIX/sbin
+    libdir=$OPREFIX/lib/$ISAPART64
+"
+
+configure32() { :; }
+
+configure64() { 
+    export XCFLAGS="-m64"
+    export LDFLAGS="-m64"
+}
+
 init
-download_source $PROG $PROG $VER
-prep_build
+download_source openldap openldap $LDAPVER
 patch_source
+prep_build
 build
 make_package
 clean_up
