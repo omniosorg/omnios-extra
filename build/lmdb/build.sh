@@ -21,7 +21,7 @@ PROG=lmdb
 VER=0.9.23
 # lmdb is part of the openldap source package
 LDAPVER=2.4.47
-PKG=ooce/library/lmdb
+PKG=ooce/database/lmdb
 SUMMARY="lmdb"
 DESC="Lightning Memory-Mapped Database"
 

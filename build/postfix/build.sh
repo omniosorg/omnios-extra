@@ -49,7 +49,7 @@ CONFPATH="/etc$PREFIX"
 BUILD_DEPENDS_IPS="
     library/pcre
     ooce/database/bdb
-    ooce/library/lmdb
+    ooce/database/lmdb
 "
 
 XFORM_ARGS="
