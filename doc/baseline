@@ -5,6 +5,7 @@ extra.omnios ooce/application/php-common
 extra.omnios ooce/application/texlive
 extra.omnios ooce/audio/flac
 extra.omnios ooce/database/bdb
+extra.omnios ooce/database/lmdb
 extra.omnios ooce/database/postgresql-10
 extra.omnios ooce/database/postgresql-96
 extra.omnios ooce/database/postgresql-common
