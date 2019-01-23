@@ -1,8 +1,9 @@
 Patch originally taken from OpenIndiana, author is Alexander Pyhalov
 
---- VirtualBox-5.2.18/Config.kmk.~1~	2018-08-14 14:38:13.000000000 +0000
-+++ VirtualBox-5.2.18/Config.kmk	2018-09-21 16:58:33.317054655 +0000
-@@ -2698,8 +2698,6 @@
+diff -wpruN '--exclude=*.orig' a~/Config.kmk a/Config.kmk
+--- a~/Config.kmk	1970-01-01 00:00:00
++++ a/Config.kmk	1970-01-01 00:00:00
+@@ -2701,8 +2701,6 @@ $(PATH_OUT)/DynamicConfig.kmk: \
  		$(VBOX_GCC_PATH_CXX) \
  		$(VBOX_GCC32_PATH_CC) \
  		$(VBOX_GCC32_PATH_CXX) \
