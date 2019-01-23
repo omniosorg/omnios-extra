@@ -21,5 +21,5 @@
     target=../../../$(PROG)-$(VERSION)/share/man/%<1>/%<2> \
     mediator=$(PROG) mediator-version=$(VERSION) >
 
-license BSDL license=sBSD
+license BSDL license=simplified-BSD
 

@@ -1903,7 +1903,7 @@ check_licences() {
         dos2unix "$dir/$file" "$lf"
         chmod u+rw "$lf"
 
-        [ -n "$BATCH" ] && continue
+        [ -z "$FORCE_LICENCE_CHECK" -a -n "$BATCH" ] && continue
 
         _IFS="$IFS"; IFS=,
         for type in $types; do
