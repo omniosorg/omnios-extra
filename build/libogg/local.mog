@@ -16,5 +16,5 @@
 # Drop html documentation
 <transform path=$(PREFIX)/share/doc -> drop >
 
-license COPYING license=sBSD
+license COPYING license=modified-BSD
 

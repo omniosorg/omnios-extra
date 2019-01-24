@@ -12,7 +12,7 @@
 
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
-license LICENSE license=sBSD
+license LICENSE license=modified-BSD
 
 group groupname=$(PROG) gid=54
 user username=$(PROG) uid=54 group=$(PROG) gcos-field="Unbound DNS Resolver" \

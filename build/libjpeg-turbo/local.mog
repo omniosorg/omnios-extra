@@ -13,7 +13,7 @@
 #
 # Copyright 2019 OmniOS Community Edition.  All rights reserved.
 
-license LICENSE.md license=sBSD
+license LICENSE.md license=modified-BSD
 
 <transform path=$(PREFIX)/share/doc -> drop>
 
