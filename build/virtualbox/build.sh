@@ -18,8 +18,8 @@
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox
-VER=5.2.22
-GSOAPVER=2.8.73
+VER=5.2.24
+GSOAPVER=2.8.76
 GSOAPDIR=gsoap-${GSOAPVER%.*}
 SUMMARY="VirtualBox"
 DESC="VirtualBox is a general-purpose full virtualiser for x86 hardware, "
@@ -90,8 +90,8 @@ CONFIGURE_OPTS="
 NO_PARALLEL_MAKE=1
 build_dependency gsoap $GSOAPDIR gsoap gsoap_$GSOAPVER ""
 NO_PARALLEL_MAKE=
-LD_LIBRARY_PATH+=":$DEPROOT/usr/lib"
-export LD_LIBRARY_PATH
+export GSOAP=$DEPROOT/usr
+export LD_LIBRARY_PATH+=":$GSOAP/lib"
 
 #########################################################################
 
@@ -103,9 +103,17 @@ CONFIGURE_OPTS="
     --disable-pulse
     --disable-dbus
     --disable-kmods
+    --disable-sdl-ttf
+    --disable-libvpx
     --enable-vnc
     --enable-webservice
 "
+
+save_function configure64 _configure64
+configure64() {
+    sed -i "/^GSOAP=.*/s||GSOAP=$GSOAP|" configure
+    _configure64
+}
 
 make_prog() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
@@ -120,24 +128,27 @@ VBOX_WITH_TESTCASES =
 VBOX_WITH_SHARED_FOLDERS =
 VBOX_WITH_SHARED_CLIPBOARD =
 VBOX_WITH_DEBUGGER_GUI =
-
 VBOX_X11_SEAMLESS_GUEST =
 VBOX_GCC_std = -std=c++11
 
+# Disable dtrace (does not yet work)
 VBOX_WITH_DTRACE_R3 =
 VBOX_WITH_DTRACE_R3_MAIN =
 VBOX_WITH_DTRACE_R0DRV =
 VBOX_WITH_DTRACE_RC =
 VBOX_WITH_NATIVE_DTRACE =
+
+# Undefine codec libraries which are not needed.
+VBOX_WITH_LIBVPX =
+VBOX_WITH_LIBOPUS =
+# Disable video recording (with audio support).
+VBOX_WITH_VIDEOREC =
+VBOX_WITH_AUDIO_VIDEOREC =
+
+# configure does not properly detect include path for libvncserver
 VBoxVNC_INCS = /opt/ooce/include
 
-NOWEBSVC =
-VBOX_WITH_WEBSERVICES = 1
-VBOX_WITH_WEBSERVICES_SSL = 1
-VBOX_GSOAP_INSTALLED = 1
-VBOX_PATH_GSOAP = $DEPROOT/usr
-VBOX_PATH_GSOAP_IMPORT = $DEPROOT/usr/share/gsoap/import
-VBOX_GSOAP_CXX_SOURCES =
+# configure does not properly detect include path or libraries for gsoap
 VBOX_GSOAP_CXX_LIBS = libgsoapssl++ libz
 VBOX_GSOAP_INCS = $DEPROOT/usr/include
 
@@ -181,6 +192,8 @@ make_install() {
     logcmd mkdir -p $DESTDIR$PREFIX/extpack
     logcmd cp out/solaris.amd64/$BUILD_TYPE/packages/VNC-*.vbox-extpack \
         $DESTDIR$PREFIX/extpack
+
+    echo $VER > $DESTDIR$PREFIX/VERSION
 }
 
 download_source $PROG $PROG $VER

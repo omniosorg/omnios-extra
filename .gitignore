@@ -3,3 +3,4 @@ build.log.*
 tmp.repo/
 *.p5m.final
 *~
+tmp
