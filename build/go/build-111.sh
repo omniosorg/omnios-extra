@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 #
 . ../../lib/functions.sh
 
 PROG=go
 PKG=ooce/developer/go-111
-VER=1.11.4
+VER=1.11.5
 VERHUMAN=$VER
 SUMMARY="The Go Programming Language"
 DESC="An open source programming language that makes it easy to build simple, "
@@ -26,10 +26,10 @@ DESC+="reliable, and efficient software."
 
 BUILDDIR=$PROG
 
-BUILDARCH=64
+set_arch 64
 
-MAJVER=${VER%.*}            # M.m
-sMAJVER=${MAJVER//./}       # Mm
+MAJVER=${VER%.*}
+sMAJVER=${MAJVER//./}
 PATCHDIR=patches-$sMAJVER
 
 OPREFIX=$PREFIX
