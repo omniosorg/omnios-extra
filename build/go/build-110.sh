@@ -19,7 +19,7 @@
 
 PROG=go
 PKG=ooce/developer/go-110
-VER=1.10.7
+VER=1.10.8
 VERHUMAN=$VER
 SUMMARY="The Go Programming Language"
 DESC="An open source programming language that makes it easy to build simple, "
@@ -27,12 +27,10 @@ DESC+="reliable, and efficient software."
 
 BUILDDIR=$PROG
 
-BUILDARCH=64
+set_arch 64
 
-SKIP_LICENCES=BSD-style
-
-MAJVER=${VER%.*}            # M.m
-sMAJVER=${MAJVER//./}       # Mm
+MAJVER=${VER%.*}
+sMAJVER=${MAJVER//./}
 PATCHDIR=patches-$sMAJVER
 
 OPREFIX=$PREFIX
