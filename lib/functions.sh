@@ -599,6 +599,7 @@ init() {
     fi
 
     # Create symbolic links to build area
+    logcmd mkdir -p $TMPDIR
     [ -h $SRCDIR/tmp ] && rm -f $SRCDIR/tmp
     logcmd ln -sf $TMPDIR $SRCDIR/tmp
     [ -h $SRCDIR/tmp/src ] && rm -f $SRCDIR/tmp/src
