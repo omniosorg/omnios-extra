@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2015 J-P Nurmi
+ * Copyright (C) 2014-2015 J-P Nurmi
+ * Copyright (C) 2017-2018 Vladimir Panteleev and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,6 +81,7 @@ public:
 
 #if ZNC17
     virtual EModRet OnUserRawMessage(CMessage& Message) override;
+    virtual EModRet OnUserTextMessage(CTextMessage& Message) override;
     virtual EModRet OnSendToClientMessage(CMessage& Message) override;
 #else
     virtual EModRet OnUserRaw(CString& line) override;
@@ -197,6 +199,22 @@ void CClientBufferMod::OnClientLogin()
     }
 }
 
+/// Filter which message kinds cause us to consider the buffer updated.
+#if ZNC17
+static bool WantMessageType(CMessage::Type MessageType)
+{
+    return MessageType == CMessage::Type::Text
+        || MessageType == CMessage::Type::Notice
+        || MessageType == CMessage::Type::Action
+        || MessageType == CMessage::Type::CTCP;
+}
+#else
+static bool WantMessageCmd(CString cmd)
+{
+    return cmd == "PRIVMSG" || cmd == "NOTICE";
+}
+#endif
+
 /// ZNC callback (called when a client sends any message to ZNC).
 /// Updates the client "last seen" timestamp.
 #if ZNC17
@@ -206,8 +224,7 @@ CModule::EModRet CClientBufferMod::OnUserRawMessage(CMessage& Message)
     if (!client)
         return CONTINUE;
 
-    // make sure not to update the timestamp for a channel when joining it
-    if (Message.GetType() != CMessage::Type::Join)
+    if (WantMessageType(Message.GetType()))
         UpdateTimestamp(client->GetIdentifier(), GetTarget(Message), Message.GetTime());
 
     return CONTINUE;
@@ -218,10 +235,22 @@ CModule::EModRet CClientBufferMod::OnUserRaw(CString& line)
     CClient* client = GetClient();
     if (client) {
         CNick nick; CString cmd, target;
-        // make sure not to update the timestamp for a channel when joining it
-        if (ParseMessage(line, nick, cmd, target) && !cmd.Equals("JOIN"))
+        if (ParseMessage(line, nick, cmd, target) && WantMessageCmd(cmd))
             UpdateTimestamp(client, target);
     }
+    return CONTINUE;
+}
+#endif
+
+/// ZNC callback for messages sent from clients.
+/// Used in addition to OnUserRawMessage as this one will contain the parsed target.
+#if ZNC17
+CModule::EModRet CClientBufferMod::OnUserTextMessage(CTextMessage& Message)
+{
+    CClient* client = Message.GetClient();
+    if (client)
+        UpdateTimestamp(client->GetIdentifier(), GetTarget(Message), Message.GetTime());
+
     return CONTINUE;
 }
 #endif
@@ -232,7 +261,7 @@ CModule::EModRet CClientBufferMod::OnUserRaw(CString& line)
 CModule::EModRet CClientBufferMod::OnSendToClientMessage(CMessage& Message)
 {
     // make sure not to update the timestamp for a channel when joining it
-    if (Message.GetType() == CMessage::Type::Join)
+    if (!WantMessageType(Message.GetType()))
         return CONTINUE;
 
     // make sure not to update the timestamp for a channel when attaching it
