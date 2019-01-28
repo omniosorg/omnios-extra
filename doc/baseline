@@ -4,6 +4,7 @@ extra.omnios ooce/application/php-73
 extra.omnios ooce/application/php-common
 extra.omnios ooce/application/texlive
 extra.omnios ooce/audio/flac
+extra.omnios ooce/compress/lz4
 extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
 extra.omnios ooce/database/postgresql-10
@@ -37,6 +38,7 @@ extra.omnios ooce/multimedia/ffmpeg
 extra.omnios ooce/multimedia/minidlna
 extra.omnios ooce/network/irssi
 extra.omnios ooce/network/nsd
+extra.omnios ooce/network/openvpn
 extra.omnios ooce/network/smtp/postfix
 extra.omnios ooce/network/socat
 extra.omnios ooce/network/unbound
