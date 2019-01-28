@@ -29,7 +29,6 @@ BOOTSTRAP_VER=1.28.0
 BUILD_DEPENDS_IPS+="
     developer/gnu-binutils
     runtime/python-35
-    ooce/developer/cmake
 "
 
 BUILDARCH=64
