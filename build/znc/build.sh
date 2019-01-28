@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
 
 PROG=znc
-VER=1.7.1
+VER=1.7.2
 VERHUMAN=$VER
 PKG=ooce/network/znc
 SUMMARY="$PROG - an advanced IRC bouncer"
@@ -32,14 +32,8 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-reset_configure_opts
+set_arch 64
 
-# Build 64-bit only and skip the arch-specific directories
-BUILDARCH=64
-CONFIGURE_OPTS="
-    --bindir=$PREFIX/bin
-    --libdir=$PREFIX/lib
-"
 CXXFLAGS=-g
 # Enable verbose make
 MAKE_JOBS+=" V=1"
