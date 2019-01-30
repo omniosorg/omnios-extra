@@ -63,7 +63,8 @@ configure64() {
 make_prog64() {
     pushd $TMPDIR/$BUILDDIR/src >/dev/null
     logmsg "--- make"
-    logcmd ./make.bash || logerr "--- make failed"
+    [ -z "$SKIP_TESTSUITE" ] && CMD="./all.bash" || CMD="./make.bash"
+    logcmd $CMD || logerr "--- make failed"
     popd >/dev/null
 }
 
