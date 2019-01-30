@@ -12,14 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
 
 PROG=node
 VER=8.15.0
-VERHUMAN=$VER
 PKG=ooce/runtime/node-8
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
@@ -28,6 +27,7 @@ DESC+="It is intended for writing scalable network programs such as web servers.
 set_arch 64
 
 BUILDDIR=$PROG-v$VER
+
 BUILD_DEPENDS_IPS="developer/gnu-binutils"
 
 MAJVER=${VER%%.*}
