@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+CDDL HEADER START
+
+The contents of this file are subject to the terms of the
+Common Development and Distribution License (the "License").
+You may not use this file except in compliance with the License.
+
+You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+or http://www.opensolaris.org/os/licensing.
+See the License for the specific language governing permissions
+and limitations under the License.
+
+When distributing Covered Code, include this CDDL HEADER in each
+file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+If applicable, add the following below this CDDL HEADER, with the
+fields enclosed by brackets "[]" replaced with your own identifying
+information: Portions Copyright [yyyy] [name of copyright owner]
+
+CDDL HEADER END
+
+Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+-->
+
+<service_bundle type='manifest' name='mariadb103'>
+    <service name='ooce/database/mariadb103' type='service' version='1'>
+
+        <dependency name='filesystem-local'
+	    grouping='require_all' restart_on='error' type='service'>
+		<service_fmri value='svc:/system/filesystem/local:default'/>
+        </dependency>
+
+        <dependency name='loopback'
+	    grouping='require_any' restart_on='error' type='service'>
+		<service_fmri value='svc:/network/loopback'/>
+        </dependency>
+
+        <dependency name='network'
+	    grouping='optional_all' restart_on='error' type='service'>
+		<service_fmri value='svc:/milestone/network'/>
+        </dependency>
+
+        <dependent name='mariadb103_multi-user' grouping='optional_all'
+	    restart_on='none'>
+                <service_fmri value='svc:/milestone/multi-user' />
+        </dependent>
+
+        <exec_method type='method' name='start' timeout_seconds='120'
+            exec='/opt/ooce/mariadb-10.3/bin/mysqld_safe --datadir="${datadir}" &amp;'>
+            <method_context security_flags='aslr'>
+                <method_credential user='mysql' group='mysql' />
+            </method_context>
+        </exec_method>
+
+        <exec_method type='method' name='stop' exec=':kill'
+            timeout_seconds='60' />
+
+        <exec_method type='method' name='refresh' exec=':kill -HUP'
+            timeout_seconds='60' />
+
+        <property_group name='startd' type='framework'>
+            <propval name='duration' type='astring' value='contract'/>
+        </property_group>
+
+        <instance name='default' enabled='false'>
+            <property_group name='application' type='application'>
+                <propval name='datadir' type='astring'
+		    value='/var/opt/ooce/mariadb-10.3/data'/>
+            </property_group>
+        </instance>
+
+        <stability value='External' />
+
+        <template>
+	    <common_name>
+		<loctext xml:lang='C'> MariaDB 10.3 </loctext>
+	    </common_name>
+        </template>
+    </service>
+</service_bundle>

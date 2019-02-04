@@ -7,6 +7,8 @@ extra.omnios ooce/audio/flac
 extra.omnios ooce/compress/lz4
 extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
+extra.omnios ooce/database/mariadb-102
+extra.omnios ooce/database/mariadb-103
 extra.omnios ooce/database/postgresql-10
 extra.omnios ooce/database/postgresql-96
 extra.omnios ooce/database/postgresql-common
