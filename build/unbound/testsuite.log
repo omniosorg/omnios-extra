@@ -1,44 +1,44 @@
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitanchor.c  -fPIC -DPIC -o .libs/unitanchor.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitanchor.c -o unitanchor.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitdname.c  -fPIC -DPIC -o .libs/unitdname.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitdname.c -o unitdname.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitlruhash.c  -fPIC -DPIC -o .libs/unitlruhash.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitlruhash.c -o unitlruhash.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitmain.c  -fPIC -DPIC -o .libs/unitmain.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitmain.c -o unitmain.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitmsgparse.c  -fPIC -DPIC -o .libs/unitmsgparse.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitmsgparse.c -o unitmsgparse.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitneg.c  -fPIC -DPIC -o .libs/unitneg.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitneg.c -o unitneg.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitregional.c  -fPIC -DPIC -o .libs/unitregional.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitregional.c -o unitregional.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitslabhash.c  -fPIC -DPIC -o .libs/unitslabhash.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitslabhash.c -o unitslabhash.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitverify.c  -fPIC -DPIC -o .libs/unitverify.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitverify.c -o unitverify.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/readhex.c  -fPIC -DPIC -o .libs/readhex.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/readhex.c -o readhex.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/testpkts.c  -fPIC -DPIC -o .libs/testpkts.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/testpkts.c -o testpkts.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitldns.c  -fPIC -DPIC -o .libs/unitldns.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitldns.c -o unitldns.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitecs.c  -fPIC -DPIC -o .libs/unitecs.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitecs.c -o unitecs.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitauth.c  -fPIC -DPIC -o .libs/unitauth.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitauth.c -o unitauth.o >/dev/null 2>&1
-libtool: link: gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -m64 -o unittest .libs/unitanchor.o .libs/unitdname.o .libs/unitlruhash.o .libs/unitmain.o .libs/unitmsgparse.o .libs/unitneg.o .libs/unitregional.o .libs/unitslabhash.o .libs/unitverify.o .libs/readhex.o .libs/testpkts.o .libs/unitldns.o .libs/unitecs.o .libs/unitauth.o .libs/worker_cb.o .libs/dns.o .libs/infra.o .libs/rrset.o .libs/dname.o .libs/msgencode.o .libs/as112.o .libs/msgparse.o .libs/msgreply.o .libs/packed_rrset.o .libs/iterator.o .libs/iter_delegpt.o .libs/iter_donotq.o .libs/iter_fwd.o .libs/iter_hints.o .libs/iter_priv.o .libs/iter_resptype.o .libs/iter_scrub.o .libs/iter_utils.o .libs/localzone.o .libs/mesh.o .libs/modstack.o .libs/view.o .libs/outbound_list.o .libs/alloc.o .libs/config_file.o .libs/configlexer.o .libs/configparser.o .libs/fptr_wlist.o .libs/edns.o .libs/locks.o .libs/log.o .libs/mini_event.o .libs/module.o .libs/net_help.o .libs/random.o .libs/rbtree.o .libs/regional.o .libs/rtt.o .libs/dnstree.o .libs/lookup3.o .libs/lruhash.o .libs/slabhash.o .libs/tcp_conn_limit.o .libs/timehist.o .libs/tube.o .libs/winsock_event.o .libs/autotrust.o .libs/val_anchor.o .libs/validator.o .libs/val_kcache.o .libs/val_kentry.o .libs/val_neg.o .libs/val_nsec3.o .libs/val_nsec.o .libs/val_secalgo.o .libs/val_sigcrypt.o .libs/val_utils.o .libs/dns64.o .libs/cachedb.o .libs/redis.o .libs/authzone.o .libs/respip.o .libs/netevent.o .libs/listen_dnsport.o .libs/outside_network.o .libs/ub_event.o .libs/keyraw.o .libs/sbuffer.o .libs/wire2str.o .libs/parse.o .libs/parseutil.o .libs/rrdef.o .libs/str2wire.o  -L/opt/ooce/lib/amd64 -L/usr/ssl-1.0/lib/amd64 -L/usr/ssl/lib -L/opt/ooce/lib -lssl -lev -lsocket -lcrypto -pthreads  -R/usr/ssl/lib -R/opt/ooce/lib -R/opt/ooce/lib/amd64
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/testbound.c  -fPIC -DPIC -o .libs/testbound.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/testbound.c -o testbound.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/replay.c  -fPIC -DPIC -o .libs/replay.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/replay.c -o replay.o >/dev/null 2>&1
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/fake_event.c  -fPIC -DPIC -o .libs/fake_event.o
-libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/fake_event.c -o fake_event.o >/dev/null 2>&1
-libtool: link: gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -I/usr/ssl-1.0/include -O2 -m64 -std=c99 -D_REENTRANT -pthreads -m64 -o testbound .libs/testbound.o .libs/replay.o .libs/fake_event.o .libs/testpkts.o .libs/worker.o .libs/acl_list.o .libs/daemon.o .libs/stats.o .libs/shm_main.o .libs/dns.o .libs/infra.o .libs/rrset.o .libs/dname.o .libs/msgencode.o .libs/as112.o .libs/msgparse.o .libs/msgreply.o .libs/packed_rrset.o .libs/iterator.o .libs/iter_delegpt.o .libs/iter_donotq.o .libs/iter_fwd.o .libs/iter_hints.o .libs/iter_priv.o .libs/iter_resptype.o .libs/iter_scrub.o .libs/iter_utils.o .libs/localzone.o .libs/mesh.o .libs/modstack.o .libs/view.o .libs/outbound_list.o .libs/alloc.o .libs/config_file.o .libs/configlexer.o .libs/configparser.o .libs/fptr_wlist.o .libs/edns.o .libs/locks.o .libs/log.o .libs/mini_event.o .libs/module.o .libs/net_help.o .libs/random.o .libs/rbtree.o .libs/regional.o .libs/rtt.o .libs/dnstree.o .libs/lookup3.o .libs/lruhash.o .libs/slabhash.o .libs/tcp_conn_limit.o .libs/timehist.o .libs/tube.o .libs/winsock_event.o .libs/autotrust.o .libs/val_anchor.o .libs/validator.o .libs/val_kcache.o .libs/val_kentry.o .libs/val_neg.o .libs/val_nsec3.o .libs/val_nsec.o .libs/val_secalgo.o .libs/val_sigcrypt.o .libs/val_utils.o .libs/dns64.o .libs/cachedb.o .libs/redis.o .libs/authzone.o .libs/respip.o .libs/ub_event.o .libs/keyraw.o .libs/sbuffer.o .libs/wire2str.o .libs/parse.o .libs/parseutil.o .libs/rrdef.o .libs/str2wire.o  -L/opt/ooce/lib/amd64 -L/usr/ssl-1.0/lib/amd64 -L/usr/ssl/lib -L/opt/ooce/lib -lssl -lev -lsocket -lcrypto -pthreads  -R/usr/ssl/lib -R/opt/ooce/lib -R/opt/ooce/lib/amd64
-Start of unbound 1.8.3 unit test.
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitanchor.c  -fPIC -DPIC -o .libs/unitanchor.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitanchor.c -o unitanchor.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitdname.c  -fPIC -DPIC -o .libs/unitdname.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitdname.c -o unitdname.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitlruhash.c  -fPIC -DPIC -o .libs/unitlruhash.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitlruhash.c -o unitlruhash.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitmain.c  -fPIC -DPIC -o .libs/unitmain.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitmain.c -o unitmain.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitmsgparse.c  -fPIC -DPIC -o .libs/unitmsgparse.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitmsgparse.c -o unitmsgparse.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitneg.c  -fPIC -DPIC -o .libs/unitneg.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitneg.c -o unitneg.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitregional.c  -fPIC -DPIC -o .libs/unitregional.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitregional.c -o unitregional.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitslabhash.c  -fPIC -DPIC -o .libs/unitslabhash.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitslabhash.c -o unitslabhash.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitverify.c  -fPIC -DPIC -o .libs/unitverify.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitverify.c -o unitverify.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/readhex.c  -fPIC -DPIC -o .libs/readhex.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/readhex.c -o readhex.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/testpkts.c  -fPIC -DPIC -o .libs/testpkts.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/testpkts.c -o testpkts.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitldns.c  -fPIC -DPIC -o .libs/unitldns.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitldns.c -o unitldns.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitecs.c  -fPIC -DPIC -o .libs/unitecs.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitecs.c -o unitecs.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitauth.c  -fPIC -DPIC -o .libs/unitauth.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/unitauth.c -o unitauth.o >/dev/null 2>&1
+libtool: link: gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -m64 -o unittest .libs/unitanchor.o .libs/unitdname.o .libs/unitlruhash.o .libs/unitmain.o .libs/unitmsgparse.o .libs/unitneg.o .libs/unitregional.o .libs/unitslabhash.o .libs/unitverify.o .libs/readhex.o .libs/testpkts.o .libs/unitldns.o .libs/unitecs.o .libs/unitauth.o .libs/worker_cb.o .libs/dns.o .libs/infra.o .libs/rrset.o .libs/dname.o .libs/msgencode.o .libs/as112.o .libs/msgparse.o .libs/msgreply.o .libs/packed_rrset.o .libs/iterator.o .libs/iter_delegpt.o .libs/iter_donotq.o .libs/iter_fwd.o .libs/iter_hints.o .libs/iter_priv.o .libs/iter_resptype.o .libs/iter_scrub.o .libs/iter_utils.o .libs/localzone.o .libs/mesh.o .libs/modstack.o .libs/view.o .libs/outbound_list.o .libs/alloc.o .libs/config_file.o .libs/configlexer.o .libs/configparser.o .libs/fptr_wlist.o .libs/edns.o .libs/locks.o .libs/log.o .libs/mini_event.o .libs/module.o .libs/net_help.o .libs/random.o .libs/rbtree.o .libs/regional.o .libs/rtt.o .libs/dnstree.o .libs/lookup3.o .libs/lruhash.o .libs/slabhash.o .libs/tcp_conn_limit.o .libs/timehist.o .libs/tube.o .libs/winsock_event.o .libs/autotrust.o .libs/val_anchor.o .libs/validator.o .libs/val_kcache.o .libs/val_kentry.o .libs/val_neg.o .libs/val_nsec3.o .libs/val_nsec.o .libs/val_secalgo.o .libs/val_sigcrypt.o .libs/val_utils.o .libs/dns64.o .libs/cachedb.o .libs/redis.o .libs/authzone.o .libs/respip.o .libs/netevent.o .libs/listen_dnsport.o .libs/outside_network.o .libs/ub_event.o .libs/keyraw.o .libs/sbuffer.o .libs/wire2str.o .libs/parse.o .libs/parseutil.o .libs/rrdef.o .libs/str2wire.o  -L/opt/ooce/lib/amd64 -L/usr/ssl/lib -L/opt/ooce/lib -lssl -lev -lsocket -lcrypto -pthreads  -R/usr/ssl/lib -R/opt/ooce/lib -R/opt/ooce/lib/amd64
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/testbound.c  -fPIC -DPIC -o .libs/testbound.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/testbound.c -o testbound.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/replay.c  -fPIC -DPIC -o .libs/replay.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/replay.c -o replay.o >/dev/null 2>&1
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/fake_event.c  -fPIC -DPIC -o .libs/fake_event.o
+libtool: compile:  gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -c testcode/fake_event.c -o fake_event.o >/dev/null 2>&1
+libtool: link: gcc -I. -I/usr/ssl/include -I/opt/ooce/include -DSRCDIR=. -O2 -m64 -std=c99 -D_REENTRANT -pthreads -m64 -o testbound .libs/testbound.o .libs/replay.o .libs/fake_event.o .libs/testpkts.o .libs/worker.o .libs/acl_list.o .libs/daemon.o .libs/stats.o .libs/shm_main.o .libs/dns.o .libs/infra.o .libs/rrset.o .libs/dname.o .libs/msgencode.o .libs/as112.o .libs/msgparse.o .libs/msgreply.o .libs/packed_rrset.o .libs/iterator.o .libs/iter_delegpt.o .libs/iter_donotq.o .libs/iter_fwd.o .libs/iter_hints.o .libs/iter_priv.o .libs/iter_resptype.o .libs/iter_scrub.o .libs/iter_utils.o .libs/localzone.o .libs/mesh.o .libs/modstack.o .libs/view.o .libs/outbound_list.o .libs/alloc.o .libs/config_file.o .libs/configlexer.o .libs/configparser.o .libs/fptr_wlist.o .libs/edns.o .libs/locks.o .libs/log.o .libs/mini_event.o .libs/module.o .libs/net_help.o .libs/random.o .libs/rbtree.o .libs/regional.o .libs/rtt.o .libs/dnstree.o .libs/lookup3.o .libs/lruhash.o .libs/slabhash.o .libs/tcp_conn_limit.o .libs/timehist.o .libs/tube.o .libs/winsock_event.o .libs/autotrust.o .libs/val_anchor.o .libs/validator.o .libs/val_kcache.o .libs/val_kentry.o .libs/val_neg.o .libs/val_nsec3.o .libs/val_nsec.o .libs/val_secalgo.o .libs/val_sigcrypt.o .libs/val_utils.o .libs/dns64.o .libs/cachedb.o .libs/redis.o .libs/authzone.o .libs/respip.o .libs/ub_event.o .libs/keyraw.o .libs/sbuffer.o .libs/wire2str.o .libs/parse.o .libs/parseutil.o .libs/rrdef.o .libs/str2wire.o  -L/opt/ooce/lib/amd64 -L/usr/ssl/lib -L/opt/ooce/lib -lssl -lev -lsocket -lcrypto -pthreads  -R/usr/ssl/lib -R/opt/ooce/lib -R/opt/ooce/lib/amd64
+Start of unbound 1.9.0 unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
-ub_random seed is 1544549383
+ub_random seed is 1549400797
 test per-view respip config data apply functions
 test global respip config data apply functions
 test per-view respip config actions apply functions
@@ -59,10 +59,11 @@ test signature verify:./testdata/test_sigs.rsasha512_draft
 test signature verify:./testdata/test_signatures.9
 test signature verify:./testdata/test_sigs.hinfo
 test signature verify:./testdata/test_sigs.revoked
-test signature verify:./testdata/test_sigs.gost
 test signature verify:./testdata/test_sigs.ecdsa_p256
 test signature verify:./testdata/test_sigs.ecdsa_p384
 test DS verify:./testdata/test_ds.sha384
+test signature verify:./testdata/test_sigs.ed25519
+test signature verify:./testdata/test_sigs.ed448
 test DS verify:./testdata/test_ds.sha1
 test NSEC3 hash:./testdata/test_nsec3_hash.1
 test util/net_help.c:str_is_ip6
@@ -100,10 +101,12 @@ test slabhash functions
 test infra cache functions
 test sldns functions
 test message parse functions
-[0] did 10000 in 97.495 msec for 102569.362531 encode/sec size 615
-904789 checks ok.
+[0] did 10000 in 72.274 msec for 138362.343305 encode/sec size 615
+904060 checks ok.
 selftest successful (33 checks).
 -n ./testdata/acl.rpl 
+OK
+-n ./testdata/auth_nsec3_wild.rpl 
 OK
 -n ./testdata/auth_xfr.rpl 
 OK
