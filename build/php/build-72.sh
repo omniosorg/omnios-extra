@@ -19,12 +19,12 @@
 
 PROG=php
 PKG=ooce/application/php-72
-VER=7.2.14
+VER=7.2.15
 VERHUMAN=$VER
 SUMMARY="PHP 7.2"
 DESC="A popular general-purpose scripting language"
 
-BUILDARCH=64
+set_arch 64
 
 SKIP_LICENCES=PHP
 
