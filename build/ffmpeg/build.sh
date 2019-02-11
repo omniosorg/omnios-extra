@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=ffmpeg
-VER=4.1
+VER=4.1.1
 PKG=ooce/multimedia/ffmpeg
 SUMMARY="ffmpeg"
 DESC="A complete, cross-platform solution to record, "
@@ -40,11 +40,9 @@ CONFIGURE_OPTS="
     --strip=gstrip
 "
 CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
     --libdir=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    --bindir=$PREFIX/bin/$ISAPART64
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
@@ -56,7 +54,6 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-make_isa_stub
 make_package
 clean_up
 
