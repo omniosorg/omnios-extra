@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=irssi
-VER=1.1.2
+VER=1.2.0
 VERHUMAN=$VER
 PKG=ooce/network/irssi
 SUMMARY="Irssi"
