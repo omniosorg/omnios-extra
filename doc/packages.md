@@ -8,6 +8,8 @@
 | ooce/compress/lz4		| 1.8.3		| https://github.com/lz4/lz4/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/database/bdb		| 5.3.28	| http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/database/lmdb		| 0.9.23	| https://github.com/LMDB/lmdb/releases https://mirror.eu.oneandone.net/software/openldap/openldap-release/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/mariadb-102	| 10.2.21	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/mariadb-103	| 10.3.12	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-10	| 10.6		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-96	| 9.6.11	| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/build/ant	| 1.9.13	| https://ant.apache.org/srcdownload.cgi | [omniosorg](https://github.com/omniosorg)

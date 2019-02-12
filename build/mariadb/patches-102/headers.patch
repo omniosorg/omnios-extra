@@ -1,0 +1,23 @@
+diff -wpruN '--exclude=*.orig' a~/include/my_global.h a/include/my_global.h
+--- a~/include/my_global.h	1970-01-01 00:00:00
++++ a/include/my_global.h	1970-01-01 00:00:00
+@@ -386,6 +386,8 @@ C_MODE_END
+ #include <crypt.h>
+ #endif
+ 
++#include <ieeefp.h>
++
+ /*
+   A lot of our programs uses asserts, so better to always include it
+   This also fixes a problem when people uses DBUG_ASSERT without including
+diff -wpruN '--exclude=*.orig' a~/mysys_ssl/my_crypt.cc a/mysys_ssl/my_crypt.cc
+--- a~/mysys_ssl/my_crypt.cc	1970-01-01 00:00:00
++++ a/mysys_ssl/my_crypt.cc	1970-01-01 00:00:00
+@@ -17,6 +17,7 @@
+ 
+ #include <my_global.h>
+ #include <string.h>
++#include <strings.h>
+ 
+ #ifdef HAVE_YASSL
+ #include "yassl.cc"
