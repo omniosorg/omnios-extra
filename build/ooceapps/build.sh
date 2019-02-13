@@ -26,13 +26,12 @@
 . ../../lib/functions.sh
 
 PROG=ooceapps
-VER=0.5.2
+VER=0.5.3
 VERHUMAN=$VER
 PKG=ooce/ooceapps
 SUMMARY="OOCEapps"
 DESC="Web integrations for OmniOSce"
-BUILDARCH=64
-PREFIX=/opt/ooce
+
 MIRROR="https://github.com/omniosorg/$PROG/releases/download"
 
 SKIP_CHECKSUM=1
@@ -47,7 +46,7 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-reset_configure_opts
+set_arch 64
 
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX
