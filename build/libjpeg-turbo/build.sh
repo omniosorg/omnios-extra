@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=libjpeg-turbo
-VER=2.0.1
+VER=2.0.2
 PKG=ooce/library/libjpeg-turbo
 SUMMARY="libjpeg-turbo"
 DESC="SIMD-accelerated libjpeg-compatible JPEG codec library"
@@ -36,14 +36,7 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-CONFIGURE_CMD="$OPREFIX/bin/cmake"
-
-# Run these early to make DESTDIR available
-init
-prep_build
-
 CONFIGURE_OPTS="
-    ..
     -DENABLE_STATIC=0
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_INSTALL_INCLUDEDIR=$OPREFIX/include
@@ -68,7 +61,9 @@ build() {
     done
 }
 
+init
 download_source $PROG $PROG $VER
+prep_build cmake
 patch_source
 build
 make_package
