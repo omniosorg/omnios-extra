@@ -28,12 +28,9 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-10
-VER=10.6
-VERHUMAN=$VER
-SUMMARY="$PROG 10 - Open Source Database System"
-DESC="$SUMMARY"
-
-BUILDARCH=64
+VER=10.7
+SUMMARY="PostgreSQL 10"
+DESC="The World's Most Advanced Open Source Relational Database"
 
 SKIP_LICENCES=postgresql
 
@@ -47,6 +44,8 @@ CONFPATH=/etc$PREFIX
 LOGPATH=/var/log$PREFIX
 VARPATH=/var$PREFIX
 RUNPATH=$VARPATH/run
+
+set_arch 64
 
 RUN_DEPENDS_IPS="ooce/database/postgresql-common"
 

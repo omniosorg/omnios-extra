@@ -19,11 +19,14 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 # Use is subject to license terms.
 
 dir group=postgres mode=0700 owner=postgres \
     path=var/opt/ooce/pgsql/pgsql-$(VERSION)
+
+# Drop html documentation
+<transform path=$(PREFIX)/share/doc/html -> drop >
 
 # Mediated binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
