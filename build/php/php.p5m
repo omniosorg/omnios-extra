@@ -10,7 +10,7 @@ dir group=bin mode=0755 owner=php  path=var/opt/ooce/php
 dir group=bin mode=0755 owner=php  path=var/log/opt/ooce/php
 dir group=bin mode=0755 owner=root path=opt/ooce/bin
 
-group groupname=$(PROG) gid=82
-	user ftpuser=false username=php uid=82 group=php gcos-field="PHP User" \
-	home-dir=/var/opt/ooce/php password=NP
+group groupname=php gid=82
+user ftpuser=false username=php uid=82 group=php gcos-field="PHP User" \
+    home-dir=/var/opt/ooce/php password=NP
 
