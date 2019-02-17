@@ -31,9 +31,9 @@ dir group=mysql mode=0700 owner=mysql path=var/$(PREFIX)/data
     mediator=$(PROG) mediator-version=$(VERSION) >
 
 # Mediated man pages
-<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
+<transform file path=$(PREFIX)/man/(man\d)/(.*) -> emit \
     link path=$(OPREFIX)/share/man/%<1>/%<2> \
-    target=../../../$(PROG)-$(VERSION)/share/man/%<1>/%<2> \
+    target=../../../$(PROG)-$(VERSION)/man/%<1>/%<2> \
     mediator=$(PROG) mediator-version=$(VERSION) >
 
 <transform file path=$(PREFIX)/(?:lib|bin)/ \

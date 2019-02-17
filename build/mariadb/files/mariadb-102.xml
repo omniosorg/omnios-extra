@@ -47,7 +47,7 @@ Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
         </dependent>
 
         <exec_method type='method' name='start' timeout_seconds='120'
-            exec='/opt/ooce/mariadb-10.2/bin/mysqld_safe --datadir="${datadir}" &amp;'>
+            exec='/opt/ooce/mariadb-10.2/bin/mysqld_safe --datadir="%{datadir}" &amp;'>
             <method_context security_flags='aslr'>
                 <method_credential user='mysql' group='mysql' />
             </method_context>
