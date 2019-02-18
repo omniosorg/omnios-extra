@@ -106,7 +106,7 @@ make_install() {
         /^listen / {
             s/^/;/
             a\\
-listen = $RUNPATH/www.sock
+listen = $RUNPATH/www-$MAJVER.sock
         }
         /listen.mode/ {
             s/^;//
