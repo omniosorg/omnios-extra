@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=openvpn
-VER=2.4.6
+VER=2.4.7
 PKG=ooce/network/openvpn
 LZOVER=2.10
 SUMMARY="OpenVPN"
