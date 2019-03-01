@@ -1,0 +1,11 @@
+diff -wpruN '--exclude=*.orig' a~/src/util/unix_dgram_connect.c a/src/util/unix_dgram_connect.c
+--- a~/src/util/unix_dgram_connect.c	1970-01-01 00:00:00
++++ a/src/util/unix_dgram_connect.c	1970-01-01 00:00:00
+@@ -59,6 +59,7 @@
+ 
+ int     unix_dgram_connect(const char *path, int block_mode)
+ {
++#undef sun
+     const char myname[] = "unix_dgram_connect";
+     struct sockaddr_un sun;
+     ssize_t path_len;
