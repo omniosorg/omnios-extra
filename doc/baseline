@@ -57,6 +57,7 @@ extra.omnios ooce/security/gnupg
 extra.omnios ooce/server/nginx-112
 extra.omnios ooce/server/nginx-114
 extra.omnios ooce/server/nginx-common
+extra.omnios ooce/system/htop
 extra.omnios ooce/system/mbuffer
 extra.omnios ooce/system/smartmontools
 extra.omnios ooce/system/sysstat

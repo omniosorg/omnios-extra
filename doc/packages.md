@@ -55,6 +55,7 @@
 | ooce/security/gnupg		| 1.4.23	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-112		| 1.12.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-114		| 1.14.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/system/htop		| 2.2.0		| https://hisham.hm/htop/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/mbuffer		| 20190127	| http://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/smartmontools	| 7.0		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/sysstat		| 20151012	| http://www.maier-komor.de/sysstat.html | [omniosorg](https://github.com/omniosorg)
