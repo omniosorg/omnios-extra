@@ -191,8 +191,6 @@ PKGMOGRIFY=/usr/bin/pkgmogrify
 PKGFMT=/usr/bin/pkgfmt
 PKGDEPEND=/usr/bin/pkgdepend
 
-SUNSTUDIO_BIN=/opt/sunstudio12.1/bin
-
 # Figure out number of logical CPUs for use with parallel gmake jobs (-j)
 # Default to 1.5*nCPUs as we assume the build machine is 100% devoted to
 # compiling.
