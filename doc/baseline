@@ -61,6 +61,7 @@ extra.omnios ooce/system/mbuffer
 extra.omnios ooce/system/smartmontools
 extra.omnios ooce/system/sysstat
 extra.omnios ooce/system/test/iozone
+extra.omnios ooce/system/top
 extra.omnios ooce/text/asciidoc
 extra.omnios ooce/text/docbook-xsl
 extra.omnios ooce/text/ripgrep
