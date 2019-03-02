@@ -34,6 +34,7 @@ extra.omnios ooce/library/libpciaccess
 extra.omnios ooce/library/libpng
 extra.omnios ooce/library/libvncserver
 extra.omnios ooce/library/libvorbis
+extra.omnios ooce/library/slang
 extra.omnios ooce/lxadm
 extra.omnios ooce/multimedia/exif
 extra.omnios ooce/multimedia/ffmpeg
