@@ -21,7 +21,7 @@
 
 # Symlink man pages
 <transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-	link path=$(OPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> >
+    link path=$(OPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> >
 
 # Drop html documentation
 <transform path=$(PREFIX)/share/doc/slsh/html -> drop>
