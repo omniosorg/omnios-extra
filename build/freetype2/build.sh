@@ -21,7 +21,7 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
@@ -29,7 +29,6 @@
 PROG=freetype
 DOWNLOADDIR=freetype2
 VER=2.9.1
-VERHUMAN=$VER
 PKG=ooce/library/freetype2
 SUMMARY="A Free, High-Quality, and Portable Font Engine"
 DESC="$SUMMARY"
@@ -43,6 +42,7 @@ CONFIGURE_OPTS="
     --prefix=$PREFIX
     --includedir=$OPREFIX/include
     --disable-static
+    --enable-freetype-config
 "
 
 CONFIGURE_OPTS_32="
