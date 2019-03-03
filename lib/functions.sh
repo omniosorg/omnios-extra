@@ -654,6 +654,9 @@ prep_build() {
             logerr "Failed to create temporary install dir"
     fi
 
+    [ -n "$OUT_OF_TREE_BUILD" ] \
+        && CONFIGURE_CMD=$TMPDIR/$BUILDDIR/$CONFIGURE_CMD
+
     if [ "$style" = cmake ]; then
         OUT_OF_TREE_BUILD=1
         CONFIGURE_CMD="$CMAKE $TMPDIR/$BUILDDIR"
@@ -661,8 +664,6 @@ prep_build() {
 
     if [ -n "$OUT_OF_TREE_BUILD" ]; then
         logmsg "-- Setting up for out-of-tree build"
-        [ "$CONFIGURE_CMD" = configure ] \
-            && CONFIGURE_CMD=$TMPDIR/$BUILDDIR/configure
         BUILDDIR+=-build
         [ -d $TMPDIR/$BUILDDIR ] && logcmd rm -rf $TMPDIR/$BUILDDIR
         logcmd mkdir -p $TMPDIR/$BUILDDIR
