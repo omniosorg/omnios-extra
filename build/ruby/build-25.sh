@@ -40,10 +40,6 @@ XFORM_ARGS="
     -DsVERSION=$sMAJVER
 "
 
-CONFIGURE_OPTS="
-    --disable-install-static-library
-"
-
 CFLAGS="-I/usr/include/gmp"
 
 init
