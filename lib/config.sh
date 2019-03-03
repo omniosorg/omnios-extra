@@ -185,7 +185,11 @@ CMAKE=/opt/ooce/bin/cmake
 # Command for privilege escalation. Can be overridden in site.sh
 PFEXEC=sudo
 
-SUNSTUDIO_BIN=/opt/sunstudio12.1/bin
+PKGSEND=/usr/bin/pkgsend
+PKGLINT=/usr/bin/pkglint
+PKGMOGRIFY=/usr/bin/pkgmogrify
+PKGFMT=/usr/bin/pkgfmt
+PKGDEPEND=/usr/bin/pkgdepend
 
 # Figure out number of logical CPUs for use with parallel gmake jobs (-j)
 # Default to 1.5*nCPUs as we assume the build machine is 100% devoted to

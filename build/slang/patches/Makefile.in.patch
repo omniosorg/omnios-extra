@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/modules/Makefile.in a/modules/Makefile.in
+--- a~/modules/Makefile.in	1970-01-01 00:00:00
++++ a/modules/Makefile.in	1970-01-01 00:00:00
+@@ -213,7 +213,7 @@ runtests: all
+ 	cd test; ./runtests.sh $$test_scripts
+ clean:
+ 	-/bin/rm -f $(OBJDIR_TSTAMP)
+-	-cd $(OBJDIR) && /bin/rm -f $(MODULES) $(CHKSUM_OBJS)
++	-cd $(OBJDIR) && /bin/rm -f $(MODULES) $(STATS_OBJS) $(CHKSUM_OBJS)
+ 	-/bin/rm -f *~ */*~
+ distclean: clean
+ 	-/bin/rm -f Makefile $(OBJDIR)/Makefile $(CONFIG_H)

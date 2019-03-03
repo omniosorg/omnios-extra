@@ -12,23 +12,24 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 
 . ../../lib/functions.sh
 
-PROG=ruby
-VER=2.6.1
-PKG=ooce/runtime/ruby-26
-SUMMARY="Ruby"
-DESC="A dynamic, open source programming language "
-DESC+="with a focus on simplicity and productivity."
+PROG=mc
+PKG=ooce/application/mc
+VER=4.8.22
+SUMMARY="Midnight Commander"
+DESC="A feature rich full-screen text mode application that allows you to copy, "
+DESC+="move and delete files and whole directory trees, search for files and run "
+DESC+="commands in the subshell. Internal viewer and editor are included."
 
-MAJVER=${VER%.*}
-sMAJVER=${MAJVER//./}
-PATCHDIR=patches-$sMAJVER
+BUILD_DEPENDS_IPS="
+    ooce/library/slang
+"
 
 OPREFIX=$PREFIX
-PREFIX+=/$PROG-$MAJVER
+PREFIX+=/$PROG
 
 set_arch 64
 
@@ -36,18 +37,24 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-    -DVERSION=$MAJVER
-    -DsVERSION=$sMAJVER
+    -DVERSION=$VER
 "
 
-CFLAGS="-I/usr/include/gmp"
+CONFIGURE_OPTS="
+    --prefix=$PREFIX
+    --sysconfdir=/etc/$PREFIX
+    --with-slang-includes=$OPREFIX/include
+    --with-slang-libs=$OPREFIX/lib/$ISAPART64
+"
+
+CFLAGS+=" -I$OPREFIX/include"
+LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-strip_install
 make_package
 clean_up
 

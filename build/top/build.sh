@@ -12,23 +12,18 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 
 . ../../lib/functions.sh
 
-PROG=ruby
-VER=2.6.1
-PKG=ooce/runtime/ruby-26
-SUMMARY="Ruby"
-DESC="A dynamic, open source programming language "
-DESC+="with a focus on simplicity and productivity."
-
-MAJVER=${VER%.*}
-sMAJVER=${MAJVER//./}
-PATCHDIR=patches-$sMAJVER
+PROG=top
+PKG=ooce/system/top
+VER=3.7
+SUMMARY="top"
+DESC="Display and update information about the top cpu processes"
 
 OPREFIX=$PREFIX
-PREFIX+=/$PROG-$MAJVER
+PREFIX+=/$PROG
 
 set_arch 64
 
@@ -36,18 +31,19 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-    -DVERSION=$MAJVER
-    -DsVERSION=$sMAJVER
+    -DVERSION=$VER
 "
 
-CFLAGS="-I/usr/include/gmp"
+CONFIGURE_OPTS_64="
+    --prefix=$PREFIX
+    --disable-dualarch
+"
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-strip_install
 make_package
 clean_up
 

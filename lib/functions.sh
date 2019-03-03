@@ -160,13 +160,23 @@ EOM
 # Log output of a command to a file
 #############################################################################
 logcmd() {
+    typeset preserve_stdout=0
+    [ "$1" = "-p" ] && shift && preserve_stdout=1
     if [ -z "$SCREENOUT" ]; then
         echo Running: "$@" >> $LOGFILE
-        "$@" >> $LOGFILE 2>&1
+        if [ "$preserve_stdout" = 0 ]; then
+            "$@" >> $LOGFILE 2>&1
+        else
+            "$@"
+        fi
     else
         echo Running: "$@" | tee -a $LOGFILE
-        "$@" | tee -a $LOGFILE 2>&1
-        return ${PIPESTATUS[0]}
+        if [ "$preserve_stdout" = 0 ]; then
+            "$@" | tee -a $LOGFILE 2>&1
+            return ${PIPESTATUS[0]}
+        else
+            "$@"
+        fi
     fi
 }
 
@@ -644,6 +654,9 @@ prep_build() {
             logerr "Failed to create temporary install dir"
     fi
 
+    [ -n "$OUT_OF_TREE_BUILD" ] \
+        && CONFIGURE_CMD=$TMPDIR/$BUILDDIR/$CONFIGURE_CMD
+
     if [ "$style" = cmake ]; then
         OUT_OF_TREE_BUILD=1
         CONFIGURE_CMD="$CMAKE $TMPDIR/$BUILDDIR"
@@ -651,8 +664,6 @@ prep_build() {
 
     if [ -n "$OUT_OF_TREE_BUILD" ]; then
         logmsg "-- Setting up for out-of-tree build"
-        [ "$CONFIGURE_CMD" = configure ] \
-            && CONFIGURE_CMD=$TMPDIR/$BUILDDIR/configure
         BUILDDIR+=-build
         [ -d $TMPDIR/$BUILDDIR ] && logcmd rm -rf $TMPDIR/$BUILDDIR
         logcmd mkdir -p $TMPDIR/$BUILDDIR
@@ -991,7 +1002,7 @@ pkgmeta() {
 }
 
 make_package() {
-    logmsg "Making package"
+    logmsg -n "Building package $PKG"
     case $BUILDARCH in
         32)
             BUILDSTR="32bit-"
@@ -1018,11 +1029,6 @@ make_package() {
     fi
     # Add the local dash-revision if specified.
     [ $RELVER -ge 151027 ] && PVER=$RELVER.$DASHREV || PVER=$DASHREV.$RELVER
-    PKGSEND=/usr/bin/pkgsend
-    PKGLINT=/usr/bin/pkglint
-    PKGMOGRIFY=/usr/bin/pkgmogrify
-    PKGFMT=/usr/bin/pkgfmt
-    PKGDEPEND=/usr/bin/pkgdepend
     P5M_INT=$TMPDIR/${PKGE}.p5m.int
     P5M_INT2=$TMPDIR/${PKGE}.p5m.int.2
     P5M_INT3=$TMPDIR/${PKGE}.p5m.int.3
@@ -1070,7 +1076,7 @@ make_package() {
                 GENERATE_ARGS+="--target $f "
             done
         fi
-        $PKGSEND generate $GENERATE_ARGS $DESTDIR > $P5M_INT || \
+        logcmd -p $PKGSEND generate $GENERATE_ARGS $DESTDIR > $P5M_INT || \
             logerr "------ Failed to generate manifest"
     else
         logmsg "--- Looks like a meta-package. Creating empty manifest"
@@ -1105,7 +1111,7 @@ make_package() {
 
     # Transforms
     logmsg "--- Applying transforms"
-    $PKGMOGRIFY \
+    logcmd -p $PKGMOGRIFY \
         $XFORM_ARGS \
         $P5M_INT \
         $MY_MOG_FILE \
@@ -1119,8 +1125,8 @@ make_package() {
     logmsg "--- Resolving dependencies"
     (
         set -e
-        $PKGDEPEND generate -md $DESTDIR $P5M_INT2 > $P5M_INT3
-        $PKGDEPEND resolve -m $P5M_INT3
+        logcmd -p $PKGDEPEND generate -md $DESTDIR $P5M_INT2 > $P5M_INT3
+        logcmd $PKGDEPEND resolve -m $P5M_INT3
     ) || logerr "--- Dependency resolution failed"
     logmsg "--- Detected dependencies"
     grep '^depend ' $P5M_INT3.res | while read line; do
@@ -1183,8 +1189,8 @@ make_package() {
             fi
         done
     fi
-    $PKGMOGRIFY $XFORM_ARGS "${P5M_INT3}.res" "$MANUAL_DEPS" $FINAL_MOG_FILE \
-        | $PKGFMT -u > $P5M_FINAL
+    logcmd -p $PKGMOGRIFY $XFORM_ARGS "${P5M_INT3}.res" \
+        "$MANUAL_DEPS" $FINAL_MOG_FILE | $PKGFMT -u > $P5M_FINAL
     logmsg "--- Final dependencies"
     grep '^depend ' $P5M_FINAL | while read line; do
         logmsg "$line"

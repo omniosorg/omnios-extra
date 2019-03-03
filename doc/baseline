@@ -1,4 +1,5 @@
 extra.omnios ooce/application/mattermost
+extra.omnios ooce/application/mc
 extra.omnios ooce/application/php-72
 extra.omnios ooce/application/php-73
 extra.omnios ooce/application/php-common
@@ -22,6 +23,7 @@ extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr
 extra.omnios ooce/developer/rust
 extra.omnios ooce/editor/joe
+extra.omnios ooce/file/lsof
 extra.omnios ooce/kvmadm
 extra.omnios ooce/library/freetype2
 extra.omnios ooce/library/libev
@@ -34,6 +36,7 @@ extra.omnios ooce/library/libpciaccess
 extra.omnios ooce/library/libpng
 extra.omnios ooce/library/libvncserver
 extra.omnios ooce/library/libvorbis
+extra.omnios ooce/library/slang
 extra.omnios ooce/lxadm
 extra.omnios ooce/multimedia/exif
 extra.omnios ooce/multimedia/ffmpeg
@@ -47,18 +50,22 @@ extra.omnios ooce/network/unbound
 extra.omnios ooce/network/znc
 extra.omnios ooce/omnios-build-tools
 extra.omnios ooce/ooceapps
+extra.omnios ooce/runtime/expect
 extra.omnios ooce/runtime/node-8
 extra.omnios ooce/runtime/node-10
 extra.omnios ooce/runtime/ruby-25
 extra.omnios ooce/runtime/ruby-26
+extra.omnios ooce/runtime/tcl
 extra.omnios ooce/security/gnupg
 extra.omnios ooce/server/nginx-112
 extra.omnios ooce/server/nginx-114
 extra.omnios ooce/server/nginx-common
+extra.omnios ooce/system/htop
 extra.omnios ooce/system/mbuffer
 extra.omnios ooce/system/smartmontools
 extra.omnios ooce/system/sysstat
 extra.omnios ooce/system/test/iozone
+extra.omnios ooce/system/top
 extra.omnios ooce/text/asciidoc
 extra.omnios ooce/text/docbook-xsl
 extra.omnios ooce/text/ripgrep

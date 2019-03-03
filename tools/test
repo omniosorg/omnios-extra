@@ -40,6 +40,11 @@ add_target()
 				s/ .*//
 				q
 			}'`"
+		case $pkg:$ver in
+			ooce/runtime/expect:*)
+				ver="`grep '^EXPECTVER=' $build | cut -d= -f2`"
+				;;
+		esac
 		targets[$pkg]=$ver
 	elif [[ $build = *.p5m ]]; then
 		egrep -q 'pkg.obsolete.*true' $build && return

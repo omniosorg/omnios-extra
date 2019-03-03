@@ -12,9 +12,15 @@
 
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
-<transform file path=opt/ooce/texlive/share/texmf-var/.*\.log$ -> drop>
-<transform file path=opt/ooce/texlive/share/texmf-dist/(?:doc|scripts|asymptote|source) \
-    -> set pkg.depend.bypass-generate .*>
+# Symlink binaries
+<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
+    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
 
-license LICENSE.TL license=TeXLive
+# Symlink man pages
+<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
+	link path=$(OPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> >
+
+<transform path=$(PREFIX)/share/(?:application|pixmap)s -> drop>
+
+license COPYING license=GPLv2
 
