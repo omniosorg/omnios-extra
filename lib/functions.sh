@@ -89,9 +89,8 @@ process_opts() {
                 SKIP_CHECKSUM=1
                 ;;
             f)
-                FLAVOR=$OPTARG
-                OLDFLAVOR=$OPTARG # Used to see if the script overrides the
-                                   # flavor
+                FLAVOR="$OPTARG"
+                OLDFLAVOR="$OPTARG" # Used to see if the script overrides
                 ;;
             r)
                 PKGSRVR=$OPTARG
