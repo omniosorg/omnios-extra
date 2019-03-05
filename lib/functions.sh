@@ -162,16 +162,16 @@ EOM
 logcmd() {
     typeset preserve_stdout=0
     [ "$1" = "-p" ] && shift && preserve_stdout=1
+    echo Running: "$@" >> $LOGFILE
     if [ -z "$SCREENOUT" ]; then
-        echo Running: "$@" >> $LOGFILE
         if [ "$preserve_stdout" = 0 ]; then
             "$@" >> $LOGFILE 2>&1
         else
             "$@"
         fi
     else
-        echo Running: "$@" | tee -a $LOGFILE
         if [ "$preserve_stdout" = 0 ]; then
+            echo Running: "$@"
             "$@" | tee -a $LOGFILE 2>&1
             return ${PIPESTATUS[0]}
         else
