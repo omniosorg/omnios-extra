@@ -20,26 +20,30 @@
 #
 # CDDL HEADER END }}}
 #
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 . ../../lib/functions.sh
 
 PROG=pkgmgr
-VER=0.2.8
-VERHUMAN=$VER
+VER=0.3.0
 PKG=ooce/developer/pkgmgr
-SUMMARY="IPS package management/publishing tool"
-DESC=$SUMMARY
-BUILDARCH=32
+SUMMARY="IPS package manager"
+DESC="IPS package management/publishing tool"
+
 MIRROR="https://github.com/omniosorg/$PROG/releases/download"
 
 SKIP_CHECKSUM=1
 
-RUN_DEPENDS_IPS="network/rsync"
+RUN_DEPENDS_IPS="
+    runtime/perl-64
+    network/rsync
+"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
+set_arch 64
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -47,9 +51,7 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-reset_configure_opts
-
-CONFIGURE_OPTS_32="
+CONFIGURE_OPTS_64="
     --prefix=$PREFIX
     --sysconfdir=/etc$PREFIX
 "
