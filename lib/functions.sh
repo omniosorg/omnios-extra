@@ -1590,7 +1590,7 @@ run_testsuite() {
         pushd $TMPDIR/$BUILDDIR/$dir > /dev/null
         logmsg "Running testsuite"
         op=`mktemp`
-        gmake --quiet $target 2>&1 | tee $op
+        $TESTSUITE_MAKE $target 2>&1 | tee $op
         if [ -n "$TESTSUITE_SED" ]; then
             sed "$TESTSUITE_SED" $op > $SRCDIR/$output
         elif [ -n "$TESTSUITE_FILTER" ]; then
