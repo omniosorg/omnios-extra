@@ -1536,9 +1536,20 @@ EOF
 }
 
 build() {
+    while [[ "$1" == -* ]]; do
+        case "$1" in
+            -ctf)
+                CFLAGS+=" -gdwarf-2"
+                ENABLE_CTF=1
+                ;;
+        esac
+        shift
+    done
     for b in $BUILDORDER; do
         [[ $BUILDARCH =~ ^($b|both)$ ]] && build$b
     done
+
+    [ -n "$ENABLE_CTF" ] && convert_ctf
 }
 
 build32() {
@@ -1853,11 +1864,25 @@ strip_install() {
         file $file | egrep -s 'ELF.*stripped' || continue
         logmsg "------ stripping $file"
         MODE=$(stat -c %a "$file")
-        logcmd chmod 644 "$file" || logerr "chmod failed: $file"
+        logcmd chmod u+w "$file" || logerr "chmod failed: $file"
         logcmd strip -x "$file" || logerr "strip failed: $file"
         logcmd chmod $MODE "$file" || logerr "chmod failed: $file"
-    done < <(find . -depth -type f)
+    done < <(find . -depth -type f -perm -0100)
     popd > /dev/null
+}
+
+convert_ctf() {
+    pushd $DESTDIR >/dev/null
+    while read file; do
+        file $file | egrep -s 'ELF.*not stripped' || continue
+        logmsg "------ Converting CTF data for $file"
+        MODE=$(stat -c %a "$file")
+        logcmd chmod u+w "$file" || logerr "chmod failed: $file"
+        logcmd $CTFCONVERT -l "$PROG-$VER" -o $file $file
+        logcmd strip -x "$file" || logerr "strip failed: $file"
+        logcmd chmod $MODE "$file" || logerr "chmod failed: $file"
+    done < <(find . -depth -type f -perm -0100)
+    popd >/dev/null
 }
 
 #############################################################################
