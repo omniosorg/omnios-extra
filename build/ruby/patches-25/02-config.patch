@@ -1,27 +1,12 @@
-# Ensure we correctly identify a 64-bit build and
-# use "amd64" and "sparcv9" for the 64-bit cpu string.
-# Changes were developed in-house, are Solaris specific,
-# and are not suitable for upstream.
-
 diff -wpruN '--exclude=*.orig' a~/tool/config.guess a/tool/config.guess
 --- a~/tool/config.guess	1970-01-01 00:00:00
 +++ a/tool/config.guess	1970-01-01 00:00:00
-@@ -383,25 +383,18 @@ case "$UNAME_MACHINE:$UNAME_SYSTEM:$UNAM
- 	echo sparc-hal-solaris2"`echo "$UNAME_RELEASE"|sed -e 's/[^.]*//'`"
- 	exit ;;
-     sun4*:SunOS:5.*:* | tadpole*:SunOS:5.*:*)
--	echo sparc-sun-solaris2"`echo "$UNAME_RELEASE" | sed -e 's/[^.]*//'`"
-+	# Check CFLAGS for the 64-bit compile option to set the arch
-+	SUN_ARCH="sparc"
-+	echo $CFLAGS | /usr/gnu/bin/grep -q -w '\-m64' && SUN_ARCH="sparcv9"
-+	echo ${SUN_ARCH}-sun-solaris2`echo ${UNAME_RELEASE}|sed -e 's/[^.]*//'`
- 	exit ;;
-     i86pc:AuroraUX:5.*:* | i86xen:AuroraUX:5.*:*)
+@@ -404,19 +404,9 @@ case "$UNAME_MACHINE:$UNAME_SYSTEM:$UNAM
  	echo i386-pc-auroraux"$UNAME_RELEASE"
  	exit ;;
      i86pc:SunOS:5.*:* | i86xen:SunOS:5.*:*)
--	eval "$set_cc_for_build"
--	SUN_ARCH=i386
+-	set_cc_for_build
+ 	SUN_ARCH=i386
 -	# If there is a compiler, see if it is configured for 64-bit objects.
 -	# Note that the Sun cc does not turn __LP64__ into 1 like gcc does.
 -	# This test works for both compilers.
@@ -33,21 +18,19 @@ diff -wpruN '--exclude=*.orig' a~/tool/config.guess a/tool/config.guess
 -		SUN_ARCH=x86_64
 -	    fi
 -	fi
-+	SUN_ARCH="i386"
 +	# Check CFLAGS for the 64-bit compile option to set the arch
 +	echo $CFLAGS | /usr/gnu/bin/grep -q -w '\-m64' && SUN_ARCH="amd64"
  	echo "$SUN_ARCH"-pc-solaris2"`echo "$UNAME_RELEASE"|sed -e 's/[^.]*//'`"
  	exit ;;
      sun4*:SunOS:6*:*)
-diff -wpruN '--exclude=*.orig' a~/tool/config.sub a/tool/config.sub
---- a~/tool/config.sub	1970-01-01 00:00:00
-+++ a/tool/config.sub	1970-01-01 00:00:00
-@@ -799,7 +799,7 @@ case $basic_machine in
- 		basic_machine=x86_64-pc
- 		;;
+--- a~/tool/config.sub	Wed Mar 13 19:56:27 2019
++++ a/tool/config.sub	Wed Mar 13 19:56:54 2019
+@@ -1009,7 +1009,7 @@
+ 
+ 	# Here we normalize CPU types irrespective of the vendor
  	amd64-*)
--		basic_machine=x86_64-`echo "$basic_machine" | sed 's/^[^-]*-//'`
+-		cpu=x86_64
 +		# don't change basic_machine
  		;;
- 	amiga | amiga-*)
- 		basic_machine=m68k-unknown
+ 	blackfin-*)
+ 		cpu=bfin

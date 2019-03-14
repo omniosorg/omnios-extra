@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=ruby
-VER=2.6.1
+VER=2.6.2
 PKG=ooce/runtime/ruby-26
 SUMMARY="Ruby"
 DESC="A dynamic, open source programming language "
