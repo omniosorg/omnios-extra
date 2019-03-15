@@ -119,6 +119,9 @@ make_prog() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
     cat << EOF > LocalConfig.kmk
+
+DEFS.solaris += OOCEVER=$RELVER
+
 VBOX_WITHOUT_ADDITIONS = 1
 VBOX_WITH_HEADLESS = 1
 VBOX_WITH_VBOXFB =

@@ -39,7 +39,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/solaris/SUPDrv-so
  
  #include "../SUPDrvInternal.h"
  #include <VBox/log.h>
-@@ -973,6 +974,49 @@ bool VBOXCALL  supdrvOSAreTscDeltasInSyn
+@@ -973,6 +974,53 @@ bool VBOXCALL  supdrvOSAreTscDeltasInSyn
      return false;
  }
  
@@ -56,7 +56,11 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/solaris/SUPDrv-so
 +		if (vbox_hma_reg)
 +			return VINF_SUCCESS;
 +
++#if OOCEVER >= 151029
++		if ((reg = hma_register_exclusive(vbox_hma_ident)) == NULL)
++#else
 +		if ((reg = hma_register(vbox_hma_ident)) == NULL)
++#endif
 +			return VERR_NOT_SUPPORTED;
 +
 +		cmn_err(CE_NOTE, "!Successfully registered '%s'\n",
