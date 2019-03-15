@@ -27,14 +27,14 @@
 . ../../lib/functions.sh
 
 PROG=postfix
-VER=3.4.3
+VER=3.4.4
 PKG=ooce/network/smtp/postfix
 SUMMARY="Postfix MTA"
 DESC="Wietse Venema's mail server alternative to sendmail"
 
 set_arch 64
 
-SKIP_LICENCES=IBM
+SKIP_LICENCES=IPL
 
 HARDLINK_TARGETS="
     opt/ooce/postfix/libexec/postfix/smtp

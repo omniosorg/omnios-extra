@@ -19,12 +19,14 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 # Use is subject to license terms.
+
 group gid=27 groupname=$(PROG)
 group gid=28 groupname=postdrop
 user ftpuser=false gcos-field="Postfix Reserved UID" group=$(PROG) \
     uid=27 password=NP username=$(PROG)
+
 <transform dir path=var/lib/$(PROG) -> set owner $(PROG)>
 <transform dir path=var/lib/$(PROG) -> set group $(PROG)>
 <transform dir path=var/spool/$(PROG)/.+ -> set owner $(PROG)>
@@ -63,4 +65,5 @@ link path=etc/aliases mediator=mta mediator-implementation=$(PROG) \
     link path=$(OPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> \
     mediator=mta mediator-priority=site mediator-implementation=$(PROG) >
 
-license LICENSE license=IBM
+license LICENSE license=IPL
+
