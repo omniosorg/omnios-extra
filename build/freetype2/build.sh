@@ -28,7 +28,7 @@
 
 PROG=freetype
 DOWNLOADDIR=freetype2
-VER=2.9.1
+VER=2.10.0
 PKG=ooce/library/freetype2
 SUMMARY="A Free, High-Quality, and Portable Font Engine"
 DESC="$SUMMARY"
@@ -36,7 +36,11 @@ DESC="$SUMMARY"
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-XFORM_ARGS="-D OPREFIX=${OPREFIX#/}"
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
+    -DPROG=$PROG
+"
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
