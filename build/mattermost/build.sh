@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.8.0
+VER=5.9.0
 VERHUMAN=$VER
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
@@ -34,13 +34,13 @@ PREFIX+="/$PROG"
 
 BUILDDIR="$PROG/src/github.com/$PROG/$PROGB"
 GOPATH=$TMPDIR/$PROG-$VER/$PROG
-PATH="$GOPATH/bin:$OPREFIX/go-1.10/bin:$PATH"
+PATH="$GOPATH/bin:$OPREFIX/go-1.11/bin:$PATH"
 BUILD_NUMBER=$VER
 export PATH GOPATH BUILD_NUMBER
 
 BUILD_DEPENDS_IPS="
     developer/versioning/git
-    ooce/developer/go-110
+    ooce/developer/go-111
 "
 
 XFORM_ARGS="
