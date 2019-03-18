@@ -13,7 +13,6 @@ extra.omnios ooce/database/mariadb-103
 extra.omnios ooce/database/postgresql-10
 extra.omnios ooce/database/postgresql-96
 extra.omnios ooce/database/postgresql-common
-extra.omnios ooce/developer/build/ant
 extra.omnios ooce/developer/ccache
 extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/cunit
