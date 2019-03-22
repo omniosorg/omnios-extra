@@ -26,7 +26,6 @@ DESC+="reliable, and efficient software."
 BUILDDIR=$PROG
 
 set_arch 64
-set_gover 1.10
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
@@ -34,9 +33,6 @@ PATCHDIR=patches-$sMAJVER
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
-
-export GOROOT_FINAL=$PREFIX
-export GOPATH="$DESTDIR$PREFIX"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -72,9 +68,30 @@ make_install64() {
 }
 
 init
+prep_build
+
+#########################################################################
+
+# Download and build go 1.4.x for bootstrapping
+
+BVER=1.4.3
+
+# test suite fails for 1.4.x (known issue)
+_SKIP_TESTSUITE=$SKIP_TESTSUITE
+SKIP_TESTSUITE=1
+build_dependency $PROG-14 $PROG $PROG "$PROG$BVER.src"
+SKIP_TESTSUITE=$_SKIP_TESTSUITE
+
+export GOROOT_BOOTSTRAP="$DEPROOT/$PROG"
+
+#########################################################################
+
+# needs to be set after building the bootstrap version
+export GOROOT_FINAL=$PREFIX
+export GOPATH="$DESTDIR$PREFIX"
+
 download_source $PROG "$PROG$VER.src"
 patch_source
-prep_build
 build
 make_package
 clean_up
