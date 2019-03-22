@@ -28,20 +28,17 @@ PROGB=$PROG-server
 GITHUB=https://github.com/$PROG
 
 set_arch 64
+set_gover 1.11
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 BUILDDIR="$PROG/src/github.com/$PROG/$PROGB"
 GOPATH=$TMPDIR/$PROG-$VER/$PROG
-PATH="$GOPATH/bin:$OPREFIX/go-1.11/bin:$PATH"
 BUILD_NUMBER=$VER
-export PATH GOPATH BUILD_NUMBER
+export GOPATH BUILD_NUMBER
 
-BUILD_DEPENDS_IPS="
-    developer/versioning/git
-    ooce/developer/go-111
-"
+BUILD_DEPENDS_IPS="developer/versioning/git"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}

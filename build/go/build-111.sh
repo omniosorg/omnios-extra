@@ -26,6 +26,7 @@ DESC+="reliable, and efficient software."
 BUILDDIR=$PROG
 
 set_arch 64
+set_gover 1.10
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
@@ -35,10 +36,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
 
 export GOROOT_FINAL=$PREFIX
-export GOROOT_BOOTSTRAP="$OPREFIX/$PROG-1.10"
 export GOPATH="$DESTDIR$PREFIX"
-
-BUILD_DEPENDS_IPS=ooce/developer/go-110
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}

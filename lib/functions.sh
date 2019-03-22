@@ -366,6 +366,19 @@ set_gccver() {
 set_gccver $DEFAULT_GCC_VER
 
 #############################################################################
+# Go version
+#############################################################################
+
+set_gover() {
+    GOVER="$1"
+    logmsg "-- Setting Go version to $GOVER"
+    GOPATH="/opt/ooce/go-$GOVER"
+    PATH="$GOPATH/bin:$PATH"
+    GOROOT_BOOTSTRAP="$GOPATH"
+    export PATH GOROOT_BOOTSTRAP
+}
+
+#############################################################################
 # Default configure options.
 #############################################################################
 
@@ -592,6 +605,8 @@ verify_depends() {
     if [ -z "$BUILD_DEPENDS_IPS" -a -n "$DEPENDS_IPS" ]; then
         BUILD_DEPENDS_IPS=$DEPENDS_IPS
     fi
+    # add go as a build dependency if $GOVER is set
+    [ -n "$GOVER" ] && BUILD_DEPENDS_IPS+=" ooce/developer/go-${GOVER//./}"
     for i in $BUILD_DEPENDS_IPS; do
         # Trim indicators to get the true name (see make_package for details)
         case ${i:0:1} in
@@ -676,6 +691,9 @@ prep_build() {
     # ... and to DESTDIR
     [ -h $SRCDIR/tmp/pkg ] && rm -f $SRCDIR/tmp/pkg
     logcmd ln -sf $DESTDIR $SRCDIR/tmp/pkg
+    # Set DEPROOT and wipe if present
+    DEPROOT=$TMPDIR/_deproot
+    [ -d "$DEPROOT" ] && rm -rf "$DEPROOT"
 }
 
 #############################################################################
@@ -1584,7 +1602,6 @@ build_dependency() {
     # Adjust variables so that download, patch and build work correctly
     BUILDDIR="$dir"
     PATCHDIR="patches-$dep"
-    DEPROOT=$TMPDIR/_deproot
     DESTDIR=$DEPROOT
     mkdir -p $DEPROOT
 
