@@ -18,6 +18,7 @@ extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/developer/ccache
 extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/cunit
+extra.omnios ooce/developer/flamegraph
 extra.omnios ooce/developer/go-111
 extra.omnios ooce/developer/go-112
 extra.omnios ooce/developer/ninja
