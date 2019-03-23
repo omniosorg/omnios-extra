@@ -1,0 +1,30 @@
+diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -17,7 +17,7 @@ LDLIBS_PTHREAD = -lpthread
+ 
+ 
+ # Optimization flags
+-CXXFLAGS = -O2
++CXXFLAGS = -m64 -O2 -fno-aggressive-loop-optimizations
+ 
+ #CXXFLAGS += -g -Wall
+ #CXXFLAGS += -ansi
+@@ -50,7 +50,7 @@ CXXFLAGS += $(CXXFLAGS_PTHREAD)
+ 
+ 
+ # Linker flags
+-LDFLAGS =
++LDFLAGS = -m64
+ 
+ 
+ # External libraries
+@@ -59,7 +59,7 @@ LDLIBS += $(LDLIBS_PTHREAD)
+ 
+ 
+ # Where you want pbzip2 installed when you do 'make install'
+-PREFIX = /usr
++PREFIX = /opt/ooce
+ DESTDIR =
+ 
+ 
