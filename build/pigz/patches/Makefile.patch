@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -1,6 +1,6 @@
+ CC=gcc
+-CFLAGS=-O3 -Wall -Wextra -Wno-unknown-pragmas
+-LDFLAGS=
++CFLAGS=-m64 -O3 -Wall -Wextra -Wno-unknown-pragmas -fno-aggressive-loop-optimizations
++LDFLAGS=-m64
+ LIBS=-lm -lpthread -lz
+ ZOPFLI=zopfli/src/zopfli/
+ ZOP=deflate.o blocksplitter.o tree.o lz77.o cache.o hash.o util.o squeeze.o katajainen.o
