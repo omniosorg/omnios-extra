@@ -7,6 +7,8 @@
 | ooce/application/texlive	| 20180414	| ftp://tug.org/historic/systems/texlive/2018/ | [omniosorg](https://github.com/omniosorg)
 | ooce/audio/flac		| 1.3.2		| https://ftp.osuosl.org/pub/xiph/releases/flac/ | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/lz4		| 1.8.3		| https://github.com/lz4/lz4/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/compress/pbzip2		| 1.1.13	| https://launchpad.net/pbzip2/+download | [omniosorg](https://github.com/omniosorg)
+| ooce/compress/pigz		| 2.4		| https://zlib.net/pigz/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/bdb		| 5.3.28	| http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/database/lmdb		| 0.9.23	| https://github.com/LMDB/lmdb/releases https://mirror.eu.oneandone.net/software/openldap/openldap-release/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-102	| 10.2.22	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
