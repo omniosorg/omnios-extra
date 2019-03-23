@@ -361,6 +361,9 @@ set_gccver() {
         PATH="$CCACHE_PATH:$PATH"
     fi
     export GCC GXX GCCVER GCCPATH PATH
+
+    CFLAGS="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
+    CXXFLAGS="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
 }
 
 set_gccver $DEFAULT_GCC_VER
@@ -1088,7 +1091,6 @@ make_package() {
         check_symlinks "$DESTDIR"
         [ -z "$BATCH" ] && check_libabi "$DESTDIR" "$PKG"
         logmsg "--- Generating package manifest from $DESTDIR"
-        logmsg "------ Running: $PKGSEND generate $DESTDIR > $P5M_INT"
         GENERATE_ARGS=
         if [ -n "$HARDLINK_TARGETS" ]; then
             for f in $HARDLINK_TARGETS; do

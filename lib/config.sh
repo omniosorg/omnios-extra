@@ -234,9 +234,24 @@ PYTHON3VER=3.5
 [ $RELVER -lt 151029 ] && DEFAULT_PYTHON_VER=$PYTHON2VER \
     || DEFAULT_PYTHON_VER=$PYTHON3VER
 
+# Options to turn compiler features on and off. Associative array keyed by
+# compiler version or _ for all versions.
+typeset -A FCFLAGS
+
+# Use optimisation level 2 with all versions of gcc
+FCFLAGS[_]+=" -O2"
+
+# Taken from illumos-joyent along with the following comment:
+# "gcc has a rather aggressive optimization on by default that infers loop
+#  bounds based on undefined behavior (!!).  This can lead to some VERY
+#  surprising optimizations -- ones that may be technically correct in the
+#  strictest sense but also result in incorrect program behavior."
+FCFLAGS[7]+=" -fno-aggressive-loop-optimizations"
+FCFLAGS[8]+=" -fno-aggressive-loop-optimizations"
+
 # CFLAGS applies to both builds, 32/64 only gets applied to the respective
 # build
-CFLAGS="-O2"
+CFLAGS=
 CFLAGS32=
 CFLAGS64="-m64"
 
@@ -251,7 +266,7 @@ CPPFLAGS32=
 CPPFLAGS64=
 
 # C++ flags
-CXXFLAGS="-O2"
+CXXFLAGS=
 CXXFLAGS32=
 CXXFLAGS64="-m64"
 
