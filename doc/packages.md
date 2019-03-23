@@ -39,7 +39,7 @@
 | ooce/library/slang		| 2.3.2		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)
 | ooce/lxadm			| 0.1.6		| https://github.com/hadfl/lxadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/exif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/exif/ | [omniosorg](https://github.com/omniosorg)
-| ooce/multimedia/ffmpeg	| 4.1.1		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
+| ooce/multimedia/ffmpeg	| 4.1.2		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/minidlna	| 1.2.1		| https://sourceforge.net/projects/minidlna/files/minidlna/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.2.0		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nsd		| 4.1.26	| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
