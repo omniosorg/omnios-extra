@@ -361,9 +361,25 @@ set_gccver() {
         PATH="$CCACHE_PATH:$PATH"
     fi
     export GCC GXX GCCVER GCCPATH PATH
+
+    CFLAGS="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
+    CXXFLAGS="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
 }
 
 set_gccver $DEFAULT_GCC_VER
+
+#############################################################################
+# Go version
+#############################################################################
+
+set_gover() {
+    GOVER="$1"
+    logmsg "-- Setting Go version to $GOVER"
+    GOPATH="/opt/ooce/go-$GOVER"
+    PATH="$GOPATH/bin:$PATH"
+    GOROOT_BOOTSTRAP="$GOPATH"
+    export PATH GOROOT_BOOTSTRAP
+}
 
 #############################################################################
 # Default configure options.
@@ -592,6 +608,8 @@ verify_depends() {
     if [ -z "$BUILD_DEPENDS_IPS" -a -n "$DEPENDS_IPS" ]; then
         BUILD_DEPENDS_IPS=$DEPENDS_IPS
     fi
+    # add go as a build dependency if $GOVER is set
+    [ -n "$GOVER" ] && BUILD_DEPENDS_IPS+=" ooce/developer/go-${GOVER//./}"
     for i in $BUILD_DEPENDS_IPS; do
         # Trim indicators to get the true name (see make_package for details)
         case ${i:0:1} in
@@ -676,6 +694,9 @@ prep_build() {
     # ... and to DESTDIR
     [ -h $SRCDIR/tmp/pkg ] && rm -f $SRCDIR/tmp/pkg
     logcmd ln -sf $DESTDIR $SRCDIR/tmp/pkg
+    # Set DEPROOT and wipe if present
+    DEPROOT=$TMPDIR/_deproot
+    [ -d "$DEPROOT" ] && rm -rf "$DEPROOT"
 }
 
 #############################################################################
@@ -1070,7 +1091,6 @@ make_package() {
         check_symlinks "$DESTDIR"
         [ -z "$BATCH" ] && check_libabi "$DESTDIR" "$PKG"
         logmsg "--- Generating package manifest from $DESTDIR"
-        logmsg "------ Running: $PKGSEND generate $DESTDIR > $P5M_INT"
         GENERATE_ARGS=
         if [ -n "$HARDLINK_TARGETS" ]; then
             for f in $HARDLINK_TARGETS; do
@@ -1584,7 +1604,6 @@ build_dependency() {
     # Adjust variables so that download, patch and build work correctly
     BUILDDIR="$dir"
     PATCHDIR="patches-$dep"
-    DEPROOT=$TMPDIR/_deproot
     DESTDIR=$DEPROOT
     mkdir -p $DEPROOT
 
@@ -1602,6 +1621,16 @@ build_dependency() {
 #############################################################################
 # Build function for python programs
 #############################################################################
+
+set_python_version() {
+    PYTHONVER=$1
+    PYTHONPKGVER=${PYTHONVER//./}
+    PYTHONPATH=/usr
+    PYTHON=$PYTHONPATH/bin/python$PYTHONVER
+    PYTHONLIB=$PYTHONPATH/lib
+    PYTHONVENDOR=$PYTHONLIB/python$PYTHONVER/vendor-packages
+}
+set_python_version $DEFAULT_PYTHON_VER
 
 pre_python_32() {
     logmsg "prepping 32bit python build"
@@ -1622,13 +1651,7 @@ python_compile() {
     logcmd $PYTHON -m compileall $DESTDIR
 }
 
-python_build() {
-    [ -z "$PYTHON" ] && logerr "PYTHON not set"
-    [ -z "$PYTHONPATH" ] && logerr "PYTHONPATH not set"
-    [ -z "$PYTHONLIB" ] && logerr "PYTHONLIB not set"
-    logmsg "Building using python setup.py"
-    pushd $TMPDIR/$BUILDDIR > /dev/null
-
+python_build32() {
     ISALIST=i386
     export ISALIST
     pre_python_32
@@ -1639,7 +1662,9 @@ python_build() {
     logmsg "--- setup.py (32) install"
     logcmd $PYTHON ./setup.py install --root=$DESTDIR $PYINST32OPTS \
         || logerr "--- install failed"
+}
 
+python_build64() {
     ISALIST="amd64 i386"
     export ISALIST
     pre_python_64
@@ -1650,10 +1675,27 @@ python_build() {
     logmsg "--- setup.py (64) install"
     logcmd $PYTHON ./setup.py install --root=$DESTDIR $PYINST64OPTS \
         || logerr "--- install failed"
+}
+
+python_build() {
+    [ -z "$PYTHON" ] && logerr "PYTHON not set"
+    [ -z "$PYTHONPATH" ] && logerr "PYTHONPATH not set"
+    [ -z "$PYTHONLIB" ] && logerr "PYTHONLIB not set"
+
+    logmsg "Building using python setup.py"
+
+    pushd $TMPDIR/$BUILDDIR > /dev/null
+
+    # we only ship 64 bit python3
+    [[ $PYTHONVER = 3.* ]] && BUILDARCH=64
+
+    for b in $BUILDORDER; do
+        [[ $BUILDARCH =~ ^($b|both)$ ]] && python_build$b
+    done
+
     popd > /dev/null
 
     python_vendor_relocate
-
     python_compile
 }
 
@@ -2000,15 +2042,6 @@ save_function() {
     local ORIG_FUNC=$(declare -f $1)
     local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
     eval "$NEWNAME_FUNC"
-}
-
-# Change the PYTHON version so we can perform version-agile Python tricks.
-set_python_version() {
-    PYTHONVER=$1
-    PYTHONPKGVER=`echo $PYTHONVER | sed 's/\.//g'`
-    # Assume PYTHONPATH from config.sh is a constant.
-    PYTHON=$PYTHONPATH/bin/python$PYTHONVER
-    PYTHONLIB=$PYTHONPATH/lib
 }
 
 # Vim hints

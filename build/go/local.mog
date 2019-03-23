@@ -24,5 +24,10 @@ dir group=bin mode=0755 owner=root path=$(OPREFIX)/bin
     link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
     mediator=$(PROG) mediator-version=$(VERSION) >
 
+# Drop tests and objects
+<transform path=$(PREFIX)/(?:test|pkg/obj) -> drop>
+# Drop testdata (contains malformed elf which breaks pkgsend)
+<transform path=$(PREFIX)/src/cmd/vendor/github.com/google/pprof/internal/binutils/testdata -> drop>
+
 license $(PREFIX)/LICENSE license=modified-BSD
 

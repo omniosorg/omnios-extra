@@ -13,14 +13,12 @@
 # }}}
 
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
 #
 . ../../lib/functions.sh
 
 PROG=go
-PKG=ooce/developer/go-110
-VER=1.10.8
-VERHUMAN=$VER
+PKG=ooce/developer/go-112
+VER=1.12.1
 SUMMARY="The Go Programming Language"
 DESC="An open source programming language that makes it easy to build simple, "
 DESC+="reliable, and efficient software."
@@ -28,6 +26,7 @@ DESC+="reliable, and efficient software."
 BUILDDIR=$PROG
 
 set_arch 64
+set_gover 1.11
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
@@ -35,6 +34,9 @@ PATCHDIR=patches-$sMAJVER
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
+
+export GOROOT_FINAL=$PREFIX
+export GOPATH="$DESTDIR$PREFIX"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -58,7 +60,8 @@ configure64() {
 make_prog64() {
     pushd $TMPDIR/$BUILDDIR/src >/dev/null
     logmsg "--- make"
-    logcmd ./make.bash || logerr "--- make failed"
+    [ -z "$SKIP_TESTSUITE" ] && CMD="./all.bash" || CMD="./make.bash"
+    logcmd $CMD || logerr "--- make failed"
     popd >/dev/null
 }
 
@@ -68,35 +71,12 @@ make_install64() {
         || logerr "--- make install failed"
 }
 
-# building go 1.4.x for bootstrapping
-BVER=1.4.3
-PATCHDIR="patches-14"
-
-init
-download_source $PROG "$PROG$BVER.src"
-patch_source
-prep_build
-make_prog64
-
-logmsg "--- move bootstrap"
-BDIR="$TMPDIR/$BUILDDIR-bootstrap"
-[ -d "$BDIR" ] && rm -rf "$BDIR"
-logcmd mv $TMPDIR/$BUILDDIR "$BDIR" \
-    || logerr "--- moving bootstrap failed"
-
-# building go 1.10
-PATCHDIR=patches-$sMAJVER
-
-export GOROOT_FINAL=$PREFIX
-export GOROOT_BOOTSTRAP="$TMPDIR/$BUILDDIR-bootstrap"
-export GOPATH="$DESTDIR$PREFIX"
-
 init
 download_source $PROG "$PROG$VER.src"
 patch_source
 prep_build
 build
-make_package
+LC_ALL=en_US.UTF-8 make_package
 clean_up
 
 # Vim hints
