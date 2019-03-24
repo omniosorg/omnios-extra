@@ -1,6 +1,7 @@
---- rustc-1.29.2-src/src/bootstrap/install.rs~	2018-12-07 13:42:01.416022190 +0000
-+++ rustc-1.29.2-src/src/bootstrap/install.rs	2018-12-07 13:42:15.112158910 +0000
-@@ -110,7 +110,7 @@
+diff -wpruN '--exclude=*.orig' a~/src/bootstrap/install.rs a/src/bootstrap/install.rs
+--- a~/src/bootstrap/install.rs	1970-01-01 00:00:00
++++ a/src/bootstrap/install.rs	1970-01-01 00:00:00
+@@ -103,7 +103,7 @@ fn install_sh(
          pkgname(builder, name)
      };
  

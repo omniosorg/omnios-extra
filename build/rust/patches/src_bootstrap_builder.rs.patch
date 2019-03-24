@@ -1,0 +1,15 @@
+$NetBSD: patch-src_bootstrap_builder.rs,v 1.2 2019/03/03 09:16:21 he Exp $
+
+Do not install 'src'.
+
+diff -wpruN '--exclude=*.orig' a~/src/bootstrap/builder.rs a/src/bootstrap/builder.rs
+--- a~/src/bootstrap/builder.rs	1970-01-01 00:00:00
++++ a/src/bootstrap/builder.rs	1970-01-01 00:00:00
+@@ -464,7 +464,6 @@ impl<'a> Builder<'a> {
+                 install::Clippy,
+                 install::Miri,
+                 install::Analysis,
+-                install::Src,
+                 install::Rustc
+             ),
+         }
