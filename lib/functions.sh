@@ -35,7 +35,7 @@ umask 022
 # scripts
 #############################################################################
 
-BASEPATH=/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin
+BASEPATH=/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin:/opt/ooce/bin
 export PATH=$BASEPATH
 
 #############################################################################
