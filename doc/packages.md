@@ -21,7 +21,7 @@
 | ooce/developer/go-111		| 1.11.6	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-112		| 1.12.1	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ninja		| 1.9.0		| https://github.com/ninja-build/ninja/releases https://ninja-build.org/ | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/omni		| 1.3.3		| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/omni		| 1.3.4		| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| 0.3.0		| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/rust		| 1.29.2	| https://prev.rust-lang.org/en-US/other-installers.html | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
