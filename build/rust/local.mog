@@ -11,24 +11,22 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 
-license LICENSE-MIT license=MIT
+license LICENSE-APACHE license=Apache2
 
 dir group=bin mode=0755 owner=root path=$(OPREFIX)/bin
 dir group=bin mode=0755 owner=root path=$(OPREFIX)/share
 dir group=bin mode=0755 owner=root path=$(OPREFIX)/share/man
 dir group=bin mode=0755 owner=root path=$(OPREFIX)/share/man1
 
-# Mediated binaries
+# Symlink binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
-    mediator=$(PROG) mediator-version=$(VERSION) >
+    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
 
-# Mediated man pages
+# Symlink man pages
 <transform file path=$(PREFIX)/(share/man/man\d/.*) -> emit \
-    link path=$(OPREFIX)/%<1> target=../../../$(PROG)-$(VERSION)/%<1> \
-    mediator=$(PROG) mediator-version=$(VERSION) >
+    link path=$(OPREFIX)/%<1> target=../../../$(PROG)/%<1> >
 
 # Drop bash completions from etc/$PREFIX
 <transform path=etc -> drop>
@@ -38,5 +36,5 @@ dir group=bin mode=0755 owner=root path=$(OPREFIX)/share/man1
 <transform path=share/doc -> drop>
 
 # Skip dependency resolution for elf components
-<transform file path=$(PREFIX)/(lib|bin) -> set pkg.depend.bypass-generate .*>
+<transform file path=$(PREFIX)/(?:lib|bin) -> set pkg.depend.bypass-generate .*>
 

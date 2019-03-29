@@ -23,8 +23,6 @@ SUMMARY="Fast line-oriented search tool"
 DESC="A fast line-oriented search tool that recursively searches your current "
 DESC+="directory for a regex pattern while respecting your gitignore rules"
 
-PATH+=":$PREFIX/bin"
-
 BUILD_DEPENDS_IPS=ooce/developer/rust
 # libpcre2 is included with OmniOS as of r151029 and ripgrep can use it
 [ $RELVER -ge 151029 ] && BUILD_DEPENDS_IPS+=" library/pcre2"

@@ -5,7 +5,7 @@ Don't implement sys/regset.h workaround, fix source instead.
 diff -wpruN '--exclude=*.orig' a~/src/llvm/CMakeLists.txt a/src/llvm/CMakeLists.txt
 --- a~/src/llvm/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/src/llvm/CMakeLists.txt	1970-01-01 00:00:00
-@@ -818,11 +818,6 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "(FreeBS
+@@ -810,11 +810,6 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "(FreeBS
    link_directories("/usr/local/lib")
  endif(${CMAKE_SYSTEM_NAME} MATCHES "(FreeBSD|DragonFly)")
  

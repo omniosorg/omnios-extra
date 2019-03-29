@@ -36,8 +36,7 @@ MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
 
 # Set path so that libIDL-config-2 can be found by the configure script
-export PATH="$PREFIX/bin:$PATH"
-export LD_LIBRARY_PATH="$PREFIX/lib/amd64"
+export LD_LIBRARY_PATH="$PREFIX/lib/$ISAPART64"
 
 OPREFIX=$PREFIX
 PREFIX=/opt/$PROG
