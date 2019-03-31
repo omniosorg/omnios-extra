@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=znc
-VER=1.7.2
+VER=1.7.3
 VERHUMAN=$VER
 PKG=ooce/network/znc
 SUMMARY="$PROG - an advanced IRC bouncer"
@@ -58,6 +58,7 @@ patch_source
 install_modules
 prep_build
 build
+strip_install
 install_files
 install_smf network znc.xml
 make_package
