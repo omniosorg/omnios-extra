@@ -52,6 +52,7 @@ BUILD_DEPENDS_IPS="
     ooce/library/libjpeg-turbo
     ooce/library/libvncserver
     system/header/header-usb
+    system/header/header-agp
 "
 
 # Needed for the VNC extension pack
@@ -101,7 +102,6 @@ CONFIGURE_OPTS="
     --disable-alsa
     --disable-pulse
     --disable-dbus
-    --disable-kmods
     --disable-sdl-ttf
     --disable-libvpx
     --enable-vnc
@@ -112,6 +112,7 @@ save_function configure64 _configure64
 configure64() {
     sed -i "/^GSOAP=.*/s||GSOAP=$GSOAP|" configure
     _configure64
+    echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> env.sh
 }
 
 make_prog() {
@@ -121,15 +122,14 @@ make_prog() {
 
 DEFS.solaris += OOCEVER=$RELVER
 
-VBOX_WITHOUT_ADDITIONS = 1
 VBOX_WITH_HEADLESS = 1
 VBOX_WITH_VBOXFB =
 VBOX_WITH_KCHMVIEWER =
 VBOX_WITH_TESTSUITE =
 VBOX_WITH_TESTCASES =
-VBOX_WITH_SHARED_FOLDERS =
 VBOX_WITH_SHARED_CLIPBOARD =
 VBOX_WITH_DEBUGGER_GUI =
+VBOX_WITH_X11_ADDITIONS =
 VBOX_X11_SEAMLESS_GUEST =
 VBOX_GCC_std = -std=c++11
 
@@ -172,6 +172,7 @@ make_install() {
     popd >/dev/null
 
     rpath=$PREFIX/amd64:$OPREFIX/lib/amd64:/usr/gcc/$GCCVER/lib/amd64
+    bindir=out/solaris.amd64/$BUILD_TYPE
 
     # Fix the runtime path for these components to include the ooce lib
     # in order that libpng can be found.
@@ -181,19 +182,37 @@ make_install() {
     done
 
     # Fix the runtime path for the VNC module.
-    pushd out/solaris.amd64/$BUILD_TYPE/bin/ExtensionPacks/VNC/solaris.amd64
+    pushd $bindir/bin/ExtensionPacks/VNC/solaris.amd64
     logcmd elfedit -e "dyn:value -s RUNPATH $rpath" VBoxVNC.so
     logcmd elfedit -e "dyn:value -s RPATH $rpath" VBoxVNC.so
     popd
 
+    # Copy in VNC extension pack
     pushd src/VBox/ExtPacks/VNC >/dev/null
     logcmd kmk packing
     popd >/dev/null
 
-    # Copy in VNC extension pack
     logcmd mkdir -p $DESTDIR$PREFIX/extpack
-    logcmd cp out/solaris.amd64/$BUILD_TYPE/packages/VNC-*.vbox-extpack \
-        $DESTDIR$PREFIX/extpack
+    logcmd cp $bindir/packages/VNC-*.vbox-extpack $DESTDIR$PREFIX/extpack
+
+    # Install the additions
+
+    additions=$bindir/dist/bin/additions
+    aDESTDIR=$DESTDIR/_additions
+
+    logcmd mkdir -p $aDESTDIR/usr/kernel/drv/amd64
+    for d in vboxguest; do
+        logcmd cp $additions/$d $aDESTDIR/usr/kernel/drv/amd64/
+        logcmd cp $additions/$d.conf $aDESTDIR/usr/kernel/drv/
+    done
+
+    logcmd mkdir -p $aDESTDIR/usr/kernel/fs/amd64
+    logcmd cp $additions/vboxfs $aDESTDIR/usr/kernel/fs/amd64/
+
+    logcmd mkdir -p $aDESTDIR/etc/fs/vboxfs
+    logcmd cp $additions/vboxfsmount $aDESTDIR/etc/fs/vboxfs/
+
+    logcmd cp $DESTDIR$PREFIX/LICENSE $aDESTDIR/
 
     echo $VER > $DESTDIR$PREFIX/VERSION
 }
@@ -201,7 +220,14 @@ make_install() {
 download_source $PROG $PROG $VER
 patch_source
 build
-make_package
+make_package vbox.mog
+
+# package the additions
+RUN_DEPENDS_IPS=
+PKG+=/additions
+DESTDIR+="/_additions"
+make_package additions.mog
+
 clean_up
 
 # Vim hints
