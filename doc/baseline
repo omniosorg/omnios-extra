@@ -73,3 +73,4 @@ extra.omnios ooce/text/asciidoc
 extra.omnios ooce/text/docbook-xsl
 extra.omnios ooce/text/ripgrep
 extra.omnios ooce/virtualization/virtualbox
+extra.omnios ooce/virtualization/virtualbox/additions

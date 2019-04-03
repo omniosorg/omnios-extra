@@ -11,9 +11,11 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 
 set name=variant.opensolaris.zone value="global"
+
+<transform path=_additions -> drop>
 
 license opt/$(PROG)/LICENSE license=GPLv2
 license ../$(GSOAPDIR)/GPLv2_license.txt license=GPLv2
