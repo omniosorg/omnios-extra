@@ -12,7 +12,7 @@
 | ooce/database/bdb		| 5.3.28	| http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/database/lmdb		| 0.9.23	| https://github.com/LMDB/lmdb/releases https://mirror.eu.oneandone.net/software/openldap/openldap-release/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-102	| 10.2.23	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/database/mariadb-103	| 10.3.13	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/mariadb-103	| 10.3.14	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-10	| 10.7		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-96	| 9.6.12	| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
