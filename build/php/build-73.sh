@@ -19,7 +19,7 @@
 
 PROG=php
 PKG=ooce/application/php-73
-VER=7.3.3
+VER=7.3.4
 VERHUMAN=$VER
 SUMMARY="PHP 7.3"
 DESC="A popular general-purpose scripting language"
@@ -132,6 +132,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+strip_install
 install_smf application $PROG-$sMAJVER.xml $PROG-$sMAJVER
 make_package
 clean_up
