@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=socat
-VER=1.7.3.2
+VER=1.7.3.3
 VERHUMAN=$VER
 PKG=ooce/network/socat
 SUMMARY="Multipurpose socket relay"
