@@ -50,7 +50,7 @@
 | ooce/network/socat		| 1.7.3.3	| http://www.dest-unreach.org/socat/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/unbound		| 1.9.1		| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/znc		| 1.7.3		| https://github.com/znc/znc/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/ooceapps			| 0.5.7		| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/ooceapps			| 0.5.8		| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/expect		| 5.45.4	| https://sourceforge.net/projects/expect/files/Expect/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-8		| 8.15.1	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-10		| 10.15.3	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
