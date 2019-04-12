@@ -1,0 +1,9 @@
+--- a/Cargo.toml~	2019-04-12 08:07:55.123222742 +0000
++++ a/Cargo.toml	2019-04-12 08:08:12.759243154 +0000
+@@ -53,3 +53,6 @@
+ 
+ [build-dependencies]
+ clap = "2.32"
++
++[patch.crates-io]
++termios = { git = "https://github.com/papertigers/termios-rs", branch = "mz-illumos" }
