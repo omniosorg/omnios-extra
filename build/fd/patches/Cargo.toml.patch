@@ -1,0 +1,10 @@
+--- fd-7.3.0/Cargo.toml~	2019-04-12 07:18:01.887587486 +0000
++++ fd-7.3.0/Cargo.toml	2019-04-12 07:18:30.152119232 +0000
+@@ -59,3 +59,7 @@
+ [profile.release]
+ lto = true
+ codegen-units = 1
++
++[patch.crates-io]
++nix = { git = "https://github.com/papertigers/nix", branch = "mz-illumos" }
++ctrlc = { git = "https://github.com/papertigers/rust-ctrlc", branch = "mz-illumos" }
