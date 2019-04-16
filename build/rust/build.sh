@@ -13,23 +13,33 @@
 # }}}
 
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-#
+
 . ../../lib/functions.sh
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.33.0
+VER=1.35.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
 
+#
 # to build rust with a bootstrap binary package instead of the installed
 # rust, set BOOTSTRAP_VER=<bootstrap_rust_ver> env variable
+#
+# to use system LLVM instead of the bundled one, set SYSTEM_LLVM
+#
 
 BUILDDIR=${PROG}c-${VER}-src
 
 BUILD_DEPENDS_IPS="developer/gnu-binutils"
 [ -z "$BOOTSTRAP_VER" ] && BUILD_DEPENDS_IPS+=" ooce/developer/rust"
+
+if [ -n "$SYSTEM_LLVM" ]; then
+    SYSTEM_LLVM_PATH="/opt/ooce/llvm-8"
+    RUN_DEPENDS_IPS="ooce/developer/llvm-8"
+    BUILD_DEPENDS_IPS+=" $RUN_DEPENDS_IPS"
+fi
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
@@ -56,13 +66,14 @@ XFORM_ARGS="
 
 export RUSTARCH=x86_64-sun-solaris
 export RUSTFLAGS="-C linker=$CC"
-export RUST_BACKTRACE=1
 export GNUAR=/bin/gar
 
 # Required to enable the POSIX 1003.6 style getpwuid_r() prototype
 CFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS"
 CXXFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS"
 export CFLAGS CXXFLAGS
+
+CONFIGURE_CMD="src/bootstrap/configure.py"
 
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX
@@ -89,6 +100,14 @@ CONFIGURE_OPTS+="
     --python=$PYTHON
 "
 
+if [ -n "$SYSTEM_LLVM_PATH" ]; then
+    CONFIGURE_OPTS+="
+        --enable-llvm-link-shared
+        --llvm-root=$SYSTEM_LLVM_PATH
+    "
+    export LD_LIBRARY_PATH="$SYSTEM_LLVM_PATH/lib"
+fi
+
 save_function make_install _make_install
 make_install() {
     mkdir -p $DESTDIR/$PREFIX
@@ -99,6 +118,7 @@ fix_runpaths() {
     pushd $DESTDIR/$PREFIX >/dev/null
 
     rpath="$PREFIX/lib:/usr/lib/64:/usr/gcc/$DEFAULT_GCC_VER/lib/$ISAPART64"
+    [ -n "$SYSTEM_LLVM_PATH" ] && rpath+=":$SYSTEM_LLVM_PATH/lib"
     for f in bin/{cargo,rls,rustc,rustdoc} lib/*.so* lib/rustlib/$RUSTARCH/*/*.so*; do
         logcmd /usr/bin/elfedit -e "dyn:runpath $rpath" $f
     done
@@ -108,15 +128,12 @@ fix_runpaths() {
 
 fix_checksums() {
     WRKSRC="$TMPDIR/$BUILDDIR"
-    cp ${WRKSRC}/vendor/rand-0.5.5/.cargo-checksum.json \
-        ${WRKSRC}/vendor/rand-0.5.5/.cargo-checksum.json.orig
-    sed -e 's/cb94a0b54e47022b2e9b58b45e0196785c61d083760333276226da435cc040d9/bcb195562cf830c9e2078757e6d0976f86ede59816ff305e21a2764a4a4cf43e/' ${WRKSRC}/vendor/rand-0.5.5/.cargo-checksum.json.orig > ${WRKSRC}/vendor/rand-0.5.5/.cargo-checksum.json
     cp ${WRKSRC}/vendor/rand/.cargo-checksum.json \
         ${WRKSRC}/vendor/rand/.cargo-checksum.json.orig
     sed -e 's/1e732c2e3b4bd1561f11e0979bf9d20669a96eae7afe0deff9dfbb980ee47bf1/55abd8100db14a076dedbf84ce0f2db08158e1bd33ff1d4978bd3c4ad978f281/' ${WRKSRC}/vendor/rand/.cargo-checksum.json.orig > ${WRKSRC}/vendor/rand/.cargo-checksum.json
     cp ${WRKSRC}/vendor/libc/.cargo-checksum.json \
         ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig
-    sed -e 's/7950a26f3eb0b7bc8e71f524cc2e05832b759fe2ce12a58e0c1957e0ec1286dc/a188bb00f0eddf252738f830b864e3a39bf2345f05f195d5ee5ca42b101f1de5/' ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig > ${WRKSRC}/vendor/libc/.cargo-checksum.json
+    sed -e 's/c6a740dac9af99321f48d5c9e86c6a4f5dcc611c413263881764f7121c1f7e9d/01ca1e6a21f01efd9d4b2768c1f9bcfab829e95a23d88cd35bf4e0172c672f3a/' ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig > ${WRKSRC}/vendor/libc/.cargo-checksum.json
     cp ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json \
           ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig
     sed -e 's/59763fc255248b54fba5d0761d61093a73d51fa4cb400b0df1b5f339b9c2f48a/ba66d192421fd536ceddb50616c4c4aea06f4e39450eb0bc2bbbaed0b1e684c1/' ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig > ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json
