@@ -20,7 +20,9 @@ dir group=root mode=0700 owner=root path=var/log/$(PREFIX)
 <transform path=etc/$(PREFIX) -> set owner root >
 
 <transform file path=$(PREFIX)/sbin/ \
-    -> set restart_fmri svc:/ooce/network/$(PROG) >
+    -> add restart_fmri svc:/ooce/network/$(PROG):server >
+<transform file path=$(PREFIX)/sbin/ \
+    -> add restart_fmri svc:/ooce/network/$(PROG):client >
 
 # symlink man page
 link path=$(OPREFIX)/share/man/man8/$(PROG).8 \
