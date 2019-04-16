@@ -18,13 +18,13 @@
 
 PROG=lz4
 PKG=ooce/compress/lz4
-VER=1.8.3
+VER=1.9.0
 VERHUMAN=$VER
 SUMMARY="LZ4"
 DESC="Extremely fast compression"
 
 OPREFIX=$PREFIX
-PREFIX+=/$PROG-$VER
+PREFIX+=/$PROG
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}

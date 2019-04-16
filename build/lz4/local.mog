@@ -14,12 +14,12 @@
 
 # Symlink binaries
 <transform file link path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> >
+    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
 
 # Symlink man pages
 <transform file link path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
     link path=$(OPREFIX)/share/man/%<1>/%<2> \
-    target=../../../$(PROG)-$(VERSION)/share/man/%<1>/%<2> >
+    target=../../../$(PROG)/share/man/%<1>/%<2> >
 
 license lib/LICENSE license=simplified-BSD
 license programs/COPYING license=GPLv2
