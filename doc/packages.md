@@ -71,4 +71,4 @@
 | ooce/text/ripgrep		| 0.10.0	| https://github.com/BurntSushi/ripgrep/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/bat			| 0.10.0	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/fd			| 7.3.0		| https://github.com/sharkdp/fd/releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/virtualization/virtualbox | 5.2.26	| https://www.virtualbox.org/wiki/Download_Old_Builds_5_2 | [omniosorg](https://github.com/omniosorg)
+| ooce/virtualization/virtualbox | 5.2.28	| https://www.virtualbox.org/wiki/Download_Old_Builds_5_2 | [omniosorg](https://github.com/omniosorg)
