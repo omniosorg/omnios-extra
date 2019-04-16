@@ -20,6 +20,7 @@ license LICENSE license=GPLv2
 
 # Set correct group on system directories
 <transform dir path=etc -> set group sys>
+<transform dir path=usr -> set group sys>
 
 driver name=vboxguest \
     devlink=type=ddi_pseudo;name=vboxguest\t\D \
