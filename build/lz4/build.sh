@@ -18,7 +18,7 @@
 
 PROG=lz4
 PKG=ooce/compress/lz4
-VER=1.9.0
+VER=1.9.1
 VERHUMAN=$VER
 SUMMARY="LZ4"
 DESC="Extremely fast compression"
