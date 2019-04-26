@@ -4,9 +4,9 @@ diff -wpruN '--exclude=*.orig' a~/Config.kmk a/Config.kmk
 --- a~/Config.kmk	1970-01-01 00:00:00
 +++ a/Config.kmk	1970-01-01 00:00:00
 @@ -2701,8 +2701,6 @@ $(PATH_OUT)/DynamicConfig.kmk: \
- 		$(VBOX_GCC_PATH_CXX) \
  		$(VBOX_GCC32_PATH_CC) \
  		$(VBOX_GCC32_PATH_CXX) \
+                $(VBOX_GCC32_LIBGCC) \
 -		$(if-expr "$(KBUILD_HOST).$(KBUILD_HOST_ARCH)" == "solaris.amd64" && $(KBUILD_HOST_VERSION_MINOR) >= 11 \
 -			, /platform/i86pc/kernel/$(KBUILD_HOST_ARCH)/unix,) \
          	| $(PATH_OUT)/DynamicConfig.c $(PATH_OUT)/DynamicConfig.cpp
