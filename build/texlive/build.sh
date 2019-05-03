@@ -28,7 +28,7 @@
 . ../../lib/functions.sh
 
 PROG=texlive
-VER=20180414
+VER=20190410
 PKG=ooce/application/texlive
 SUMMARY="TeX Live"
 DESC="LaTeX distribution"
