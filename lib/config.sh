@@ -221,11 +221,11 @@ CXX=g++
 
 # Specify default GCC version for building packages
 case $RELVER in
-    15102[12])      DEFAULT_GCC_VER=5.1.0 ;;
-    15102[34])      DEFAULT_GCC_VER=5 ;;
-    15102[56])      DEFAULT_GCC_VER=6 ;;
-    15102[78])      DEFAULT_GCC_VER=7 ;;
-    151029|151030)  DEFAULT_GCC_VER=8 ;;
+    15102[12])          DEFAULT_GCC_VER=5.1.0 ;;
+    15102[34])          DEFAULT_GCC_VER=5 ;;
+    15102[56])          DEFAULT_GCC_VER=6 ;;
+    15102[78])          DEFAULT_GCC_VER=7 ;;
+    151029|15103[01])   DEFAULT_GCC_VER=8 ;;
     *) logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
 
