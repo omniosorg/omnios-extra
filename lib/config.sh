@@ -178,6 +178,7 @@ CMAKE=/opt/ooce/bin/cmake
 PFEXEC=sudo
 
 CTFCONVERT=/opt/onbld/bin/i386/ctfconvert
+CTFCONVERTFLAGS=-l
 PKGSEND=/usr/bin/pkgsend
 PKGLINT=/usr/bin/pkglint
 PKGMOGRIFY=/usr/bin/pkgmogrify

@@ -200,6 +200,7 @@ logmsg() {
 }
 
 logerr() {
+    [ "$1" = "-b" ] && BATCH=1 && shift
     # Print an error message and ask the user if they wish to continue
     logmsg -e "$@"
     if [ -z "$BATCH" ]; then
@@ -1864,9 +1865,9 @@ strip_install() {
         file $file | egrep -s 'ELF.*stripped' || continue
         logmsg "------ stripping $file"
         MODE=$(stat -c %a "$file")
-        logcmd chmod u+w "$file" || logerr "chmod failed: $file"
-        logcmd strip -x "$file" || logerr "strip failed: $file"
-        logcmd chmod $MODE "$file" || logerr "chmod failed: $file"
+        logcmd chmod u+w "$file" || logerr -b "chmod failed: $file"
+        logcmd strip -x "$file" || logerr -b "strip failed: $file"
+        logcmd chmod $MODE "$file" || logerr -b "chmod failed: $file"
     done < <(find . -depth -type f -perm -0100)
     popd > /dev/null
 }
@@ -1877,10 +1878,10 @@ convert_ctf() {
         file $file | egrep -s 'ELF.*not stripped' || continue
         logmsg "------ Converting CTF data for $file"
         MODE=$(stat -c %a "$file")
-        logcmd chmod u+w "$file" || logerr "chmod failed: $file"
-        logcmd $CTFCONVERT -l "$PROG-$VER" -o $file $file
-        logcmd strip -x "$file" || logerr "strip failed: $file"
-        logcmd chmod $MODE "$file" || logerr "chmod failed: $file"
+        logcmd chmod u+w "$file" || logerr -b "chmod failed: $file"
+        logcmd $CTFCONVERT $CTFCONVERTFLAGS "$PROG-$VER" -o $file $file
+        logcmd strip -x "$file" || logerr -b "strip failed: $file"
+        logcmd chmod $MODE "$file" || logerr -b "chmod failed: $file"
     done < <(find . -depth -type f -perm -0100)
     popd >/dev/null
 }
