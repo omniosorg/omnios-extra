@@ -108,6 +108,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build cmake
 build
+strip_install
 install_smf database $PROG-$sMAJVER.xml
 make_package
 clean_up
