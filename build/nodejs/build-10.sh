@@ -13,12 +13,11 @@
 # }}}
 
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
-#
+
 . ../../lib/functions.sh
 
 PROG=node
-VER=10.15.3
+VER=10.16.0
 PKG=ooce/runtime/node-10
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
