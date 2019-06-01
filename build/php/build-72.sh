@@ -13,13 +13,12 @@
 # }}}
 
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
-#
+
 . ../../lib/functions.sh
 
 PROG=php
 PKG=ooce/application/php-72
-VER=7.2.18
+VER=7.2.19
 VERHUMAN=$VER
 SUMMARY="PHP 7.2"
 DESC="A popular general-purpose scripting language"
@@ -27,6 +26,10 @@ DESC="A popular general-purpose scripting language"
 set_arch 64
 
 SKIP_LICENCES=PHP
+
+# configure needs gawk for 7.2.19 as awk bails out with
+# record .... too long
+export AWK
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
