@@ -21,12 +21,11 @@
 # CDDL HEADER END }}}
 #
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
-#
+
 . ../../lib/functions.sh
 
 PROG=pkgmgr
-VER=0.3.0
+VER=0.3.1
 PKG=ooce/developer/pkgmgr
 SUMMARY="IPS package manager"
 DESC="IPS package management/publishing tool"
