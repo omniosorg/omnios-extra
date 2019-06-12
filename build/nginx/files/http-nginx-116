@@ -23,16 +23,14 @@
 
 #
 # Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
-#
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 #
 
 source /lib/svc/share/smf_include.sh
 
-typeset -r CONF_FILE="/etc/opt/ooce/nginx-1.12/nginx.conf"
-typeset -r PIDFILE="/var/opt/ooce/nginx/run/nginx-1.12.pid"
-typeset -r NGINX="/opt/ooce/nginx-1.12/sbin/nginx"
+typeset -r CONF_FILE="/etc/opt/ooce/nginx-1.16/nginx.conf"
+typeset -r PIDFILE="/var/opt/ooce/nginx/run/nginx-1.16.pid"
+typeset -r NGINX="/opt/ooce/nginx-1.16/sbin/nginx"
 
 [[ ! -f ${CONF_FILE} ]] && exit $SMF_EXIT_ERR_CONFIG
 

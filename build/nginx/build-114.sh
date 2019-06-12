@@ -22,9 +22,7 @@
 #
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
-#
-# Load support functions
+
 . ../../lib/functions.sh
 
 PROG=nginx
@@ -34,9 +32,7 @@ VERHUMAN=$VER
 SUMMARY="nginx 1.14 web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
-BUILDARCH=64
-
-SKIP_LICENCES=BSD
+set_arch 64
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
@@ -109,7 +105,6 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-make_isa_stub
 copy_man_page
 install_smf network http-$PROG-$sMAJVER.xml http-$PROG-$sMAJVER
 make_package

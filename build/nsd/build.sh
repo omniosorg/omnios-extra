@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=nsd
-VER=4.1.27
+VER=4.2.0
 PKG=ooce/network/nsd
 SUMMARY="Authoritative DNS server"
 DESC="The NLnet Labs Name Server Daemon (NSD) is an authoritative "
@@ -66,6 +66,7 @@ download_source $PROG $PROG $VER
 prep_build
 patch_source
 build
+strip_install
 install_smf network dns-nsd.xml
 make_package
 clean_up

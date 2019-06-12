@@ -25,9 +25,9 @@ CDDL HEADER END
     Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
     Use is subject to license terms.
 -->
-<service_bundle type="manifest" name="http:nginx112">
+<service_bundle type="manifest" name="http:nginx116">
 <service name="network/http" type="service" version="1">
-    <instance name="nginx112" enabled="false">
+    <instance name="nginx116" enabled="false">
         <dependency name="network" grouping="require_all" restart_on="error" type="service">
             <service_fmri value="svc:/milestone/network:default"/>
         </dependency>
@@ -40,7 +40,7 @@ CDDL HEADER END
         <exec_method
             type="method"
             name="start"
-            exec="/lib/svc/method/http-nginx-112 start"
+            exec="/lib/svc/method/http-nginx-116 start"
             timeout_seconds="60">
             <method_context security_flags="aslr">
                 <method_credential user="nginx" group="nginx"
@@ -50,21 +50,21 @@ CDDL HEADER END
         <exec_method
             type="method"
             name="stop"
-            exec="/opt/ooce/nginx-1.12/sbin/nginx -s quit"
+            exec="/opt/ooce/nginx-1.16/sbin/nginx -s quit"
             timeout_seconds="60">
         </exec_method>
         <exec_method
             type="method"
             name="refresh"
-            exec="/opt/ooce/nginx-1.12/sbin/nginx -s reload"
+            exec="/opt/ooce/nginx-1.16/sbin/nginx -s reload"
             timeout_seconds="60">
         </exec_method>
         <property_group name="startd" type="framework">
             <propval name="ignore_error" type="astring" value="core,signal" />
         </property_group>
-        <template> <common_name> <loctext xml:lang="C"> nginx 1.12 web server </loctext> </common_name>
+        <template> <common_name> <loctext xml:lang="C"> nginx 1.16 web server </loctext> </common_name>
             <documentation>
-                <manpage title="nginx" section="8" manpath="/opt/ooce/nginx-1.12/share/man" />
+                <manpage title="nginx" section="8" manpath="/opt/ooce/nginx-1.16/share/man" />
                 <doc_link name="nginx.org" uri="http://nginx.org/" />
             </documentation>
         </template>
