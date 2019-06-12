@@ -19,8 +19,7 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
-# Use is subject to license terms.
+# Copyright 2019 OmniOS Community Edition.  All rights reserved.
 
 # Mediated binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
@@ -39,4 +38,5 @@
 <transform file path=$(PREFIX)/sbin/ \
     -> set restart_fmri svc:/network/http:$(PROG)$(sVERSION)>
 
-license LICENSE license=BSD
+license LICENSE license=simplified-BSD
+
