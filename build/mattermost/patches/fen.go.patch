@@ -1,6 +1,6 @@
-diff -wpruN '--exclude=*.orig' mattermost-server~/vendor/github.com/fsnotify/fsnotify/fen.go mattermost-server/vendor/github.com/fsnotify/fsnotify/fen.go
---- mattermost-server~/vendor/github.com/fsnotify/fsnotify/fen.go	2018-11-25 12:12:54.676423068 +0000
-+++ mattermost-server/vendor/github.com/fsnotify/fsnotify/fen.go	2018-11-25 12:12:57.455824075 +0000
+diff -wpruN '--exclude=*.orig' a/src/github.com/mattermost/mattermost-server~/vendor/github.com/fsnotify/fsnotify/fen.go a/src/github.com/mattermost/mattermost-server/vendor/github.com/fsnotify/fsnotify/fen.go
+--- a~/vendor/github.com/fsnotify/fsnotify/fen.go	1970-01-01 00:00:00
++++ a/vendor/github.com/fsnotify/fsnotify/fen.go	1970-01-01 00:00:00
 @@ -6,32 +6,367 @@
  
  package fsnotify
