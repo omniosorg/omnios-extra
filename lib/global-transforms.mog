@@ -113,13 +113,17 @@
     add restart_fmri svc:/system/manifest-import:default>
 
 # Set the doc.man facet on man pages
-<transform dir file link hardlink path=usr/.+/man(/.+)? -> \
+<transform dir file link hardlink path=opt/ooce/.+/man(/.+)? -> \
     default facet.doc.man true>
+
+# man pages should trigger a whatis database rebuild
+<transform file link path=opt/ooce/share/man/.*\.\d[a-z]*$ -> \
+    add restart_fmri svc:/system/rebuild-whatis:default>
 
 # Transforms to set facet.devel on files useful to developers only.
 
 # header files
-<transform dir file link hardlink path=usr.*/include(/.+){0,1} -> \
+<transform dir file link hardlink path=opt/ooce.*/include(/.+){0,1} -> \
     default facet.devel true>
 
 # archive libraries
