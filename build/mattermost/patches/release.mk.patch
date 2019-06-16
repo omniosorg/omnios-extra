@@ -1,21 +1,21 @@
-diff -wpruN '--exclude=*.orig' mattermost-server~/build/release.mk mattermost-server/build/release.mk
---- mattermost-server~/build/release.mk	2018-11-25 12:12:54.636043916 +0000
-+++ mattermost-server/build/release.mk	2018-11-25 12:12:57.153040166 +0000
+diff -wpruN '--exclude=*.orig' a/src/github.com/mattermost/mattermost-server~/build/release.mk a/src/github.com/mattermost/mattermost-server/build/release.mk
+--- a~/build/release.mk	1970-01-01 00:00:00
++++ a/build/release.mk	1970-01-01 00:00:00
 @@ -1,6 +1,10 @@
  
  dist: | check-style test package
  
 +build-illumos:
 +	@echo Build illumos amd64
-+	env GOOS=solaris GOARCH=amd64 $(GO) install -i $(GOFLAGS) $(GO_LINKER_FLAGS) ./...
++	env GOOS=solaris GOARCH=amd64 $(GO) install -i $(GOFLAGS) -ldflags '$(LDFLAGS)' ./...
 +
  build-linux:
  	@echo Build Linux amd64
- 	env GOOS=linux GOARCH=amd64 $(GO) install -i $(GOFLAGS) $(GO_LINKER_FLAGS) ./...
-@@ -122,6 +130,15 @@ else
-     curl -s https://api.github.com/repos/mattermost/$$plugin_package/releases/latest | grep browser_download_url | grep linux | cut -d '"' -f 4 | wget -qi - -P  $(DIST_PATH)/prepackaged_plugins/ ;\
- 	done
- endif
+ 	env GOOS=linux GOARCH=amd64 $(GO) install -i $(GOFLAGS) -ldflags '$(LDFLAGS)' ./...
+@@ -71,6 +75,16 @@ endif
+ 
+ 	@# ----- PLATFORM SPECIFIC -----
+ 
 +	@# Make illumos package
 +	@# Copy binary
 +ifeq ($(BUILDER_GOOS_GOARCH),"solaris_amd64")
@@ -25,6 +25,7 @@ diff -wpruN '--exclude=*.orig' mattermost-server~/build/release.mk mattermost-se
 +	cp $(GOPATH)/bin/solaris_amd64/mattermost $(DIST_PATH)/bin # from cross-compiled bin dir
 +	cp $(GOPATH)/bin/solaris_amd64/platform $(DIST_PATH)/bin # from cross-compiled bin dir
 +endif
- 	@# Package
- 	tar -C dist -czf $(DIST_PATH)-$(BUILD_TYPE_NAME)-linux-amd64.tar.gz mattermost
- 	@# Don't clean up native package so dev machines will have an unzipped package available
++
+ 	@# Make osx package
+ 	@# Copy binary
+ ifeq ($(BUILDER_GOOS_GOARCH),"darwin_amd64")
