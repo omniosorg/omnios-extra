@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=unbound
-VER=1.9.1
+VER=1.9.2
 PKG=ooce/network/unbound
 SUMMARY="DNS resolver"
 DESC="Unbound is a validating, recursive, caching DNS resolver."
@@ -44,6 +44,8 @@ CONFIGURE_OPTS="
 
 LDFLAGS="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 export MAKE
+
+TESTSUITE_SED="/libtool/d"
 
 fixup_config() {
     # We do not want to chroot by default as this requires additional setup.
