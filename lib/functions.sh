@@ -1217,6 +1217,12 @@ make_package() {
     grep '^depend ' $P5M_FINAL | while read line; do
         logmsg "$line"
     done
+
+    if [ $RELVER -ge 151031 ]; then
+        logmsg "--- Formatting manifest"
+        logcmd $PKGFMT -s $P5M_FINAL
+    fi
+
     if [ -z "$SKIP_PKGLINT" ] && ( [ -n "$BATCH" ] || ask_to_pkglint ); then
         run_pkglint $PKGSRVR $P5M_FINAL
     fi
