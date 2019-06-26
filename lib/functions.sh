@@ -696,10 +696,18 @@ prep_build() {
     [ -n "$OUT_OF_TREE_BUILD" ] \
         && CONFIGURE_CMD=$TMPDIR/$BUILDDIR/$CONFIGURE_CMD
 
-    if [ "$style" = cmake ]; then
-        OUT_OF_TREE_BUILD=1
-        CONFIGURE_CMD="$CMAKE $TMPDIR/$BUILDDIR"
-    fi
+    case "$style" in
+        cmake)
+            OUT_OF_TREE_BUILD=1
+            CONFIGURE_CMD="$CMAKE $TMPDIR/$BUILDDIR"
+            ;;
+        meson)
+            OUT_OF_TREE_BUILD=1
+            MAKE="$MESON_MAKE"
+            TESTSUITE_MAKE="$MESON_MAKE"
+            CONFIGURE_CMD="$PYTHONLIB/python$PYTHONVER/bin/meson setup $TMPDIR/$BUILDDIR"
+            ;;
+    esac
 
     if [ -n "$OUT_OF_TREE_BUILD" ]; then
         logmsg "-- Setting up for out-of-tree build"
