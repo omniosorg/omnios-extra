@@ -13,12 +13,11 @@
 # }}}
 #
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
-#
+
 . ../../lib/functions.sh
 
 PROG=irssi
-VER=1.2.0
+VER=1.2.1
 VERHUMAN=$VER
 PKG=ooce/network/irssi
 SUMMARY="Irssi"
