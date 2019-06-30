@@ -1,6 +1,6 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
-| ooce/application/mattermost	| 5.12.0	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
+| ooce/application/mattermost	| 5.12.1	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.23	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-72	| 7.2.19	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-73	| 7.3.6		| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
@@ -45,7 +45,7 @@
 | ooce/multimedia/exif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/exif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/ffmpeg	| 4.1.3		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/minidlna	| 1.2.1		| https://sourceforge.net/projects/minidlna/files/minidlna/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/irssi		| 1.2.0		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/network/irssi		| 1.2.1		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nsd		| 4.2.0		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn		| 2.4.7		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/smtp/postfix	| 3.4.5		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
