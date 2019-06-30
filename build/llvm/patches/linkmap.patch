@@ -1,0 +1,26 @@
+diff -wpruN '--exclude=*.orig' a~/tools/lto/lto.exports a/tools/lto/lto.exports
+--- a~/tools/lto/lto.exports	1970-01-01 00:00:00
++++ a/tools/lto/lto.exports	1970-01-01 00:00:00
+@@ -41,12 +41,6 @@ lto_codegen_optimize
+ lto_codegen_compile_optimized
+ lto_codegen_set_should_internalize
+ lto_codegen_set_should_embed_uselists
+-LLVMCreateDisasm
+-LLVMCreateDisasmCPU
+-LLVMDisasmDispose
+-LLVMDisasmInstruction
+-LLVMSetDisasmOptions
+-LLVMCreateDisasmCPUFeatures
+ thinlto_create_codegen
+ thinlto_codegen_dispose
+ thinlto_codegen_add_module
+diff -wpruN '--exclude=*.orig' a~/tools/opt-remarks/OptRemarks.exports a/tools/opt-remarks/OptRemarks.exports
+--- a~/tools/opt-remarks/OptRemarks.exports	1970-01-01 00:00:00
++++ a/tools/opt-remarks/OptRemarks.exports	1970-01-01 00:00:00
+@@ -1,6 +1,0 @@
+-LLVMOptRemarkParserCreate
+-LLVMOptRemarkParserGetNext
+-LLVMOptRemarkParserHasError
+-LLVMOptRemarkParserGetErrorMessage
+-LLVMOptRemarkParserDispose
+-LLVMOptRemarkVersion
