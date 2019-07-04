@@ -22,12 +22,11 @@
 #
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
-#
+
 . ../../lib/functions.sh
 
 PROG=postfix
-VER=3.4.5
+VER=3.4.6
 PKG=ooce/network/smtp/postfix
 SUMMARY="Postfix MTA"
 DESC="Wietse Venema's mail server alternative to sendmail"
