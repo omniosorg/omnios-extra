@@ -1464,8 +1464,13 @@ make_prog64() {
 make_install() {
     local args="$@"
     logmsg "--- make install"
-    logcmd $MAKE DESTDIR=${DESTDIR} $args $MAKE_INSTALL_ARGS install || \
-        logerr "--- Make install failed"
+    if [ "${MAKE##*/}" = "ninja" ]; then
+        DESTDIR=${DESTDIR} logcmd $MAKE $args $MAKE_INSTALL_ARGS "$@" install \
+            || logerr "--- Make install failed"
+    else
+        logcmd $MAKE DESTDIR=${DESTDIR} $args $MAKE_INSTALL_ARGS "$@" install \
+            || logerr "--- Make install failed"
+    fi
 }
 
 make_install32() {
