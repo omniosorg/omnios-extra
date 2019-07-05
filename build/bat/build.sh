@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=bat
-VER=0.10.0
+VER=0.11.0
 PKG=ooce/util/bat
 SUMMARY="cat alternative"
 DESC="A cat(1) clone with wings"
@@ -27,7 +27,7 @@ if [ $RELVER -lt 151028 ]; then
     exit 0
 fi
 
-BUILD_DEPENDS_IPS=ooce/developer/rust@1.33
+BUILD_DEPENDS_IPS=ooce/developer/rust
 
 set_arch 64
 
