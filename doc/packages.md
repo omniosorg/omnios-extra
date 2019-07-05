@@ -1,9 +1,9 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
-| ooce/application/mattermost	| 5.12.1	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
+| ooce/application/mattermost	| 5.12.2	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.23	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-72	| 7.2.19	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-73	| 7.3.6		| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-72	| 7.2.20	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-73	| 7.3.7		| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20190410	| ftp://tug.org/historic/systems/texlive/2019/ | [omniosorg](https://github.com/omniosorg)
 | ooce/audio/flac		| 1.3.2		| https://ftp.osuosl.org/pub/xiph/releases/flac/ | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/lz4		| 1.9.1		| https://github.com/lz4/lz4/releases | [omniosorg](https://github.com/omniosorg)
@@ -28,7 +28,7 @@
 | ooce/editor/nano		| 4.3		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
 | ooce/file/lsof		| 4.91		| https://people.freebsd.org/~abe/ | [omniosorg](https://github.com/omniosorg)
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/library/freetype2	| 2.10.0	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/freetype2	| 2.10.1	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libarchive	| 3.3.3		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libev		| 4.27		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libexif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/libexif/ | [omniosorg](https://github.com/omniosorg)
