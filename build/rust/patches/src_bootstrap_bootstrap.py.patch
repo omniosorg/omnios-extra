@@ -19,7 +19,7 @@ diff -wpruN '--exclude=*.orig' a~/src/bootstrap/bootstrap.py a/src/bootstrap/boo
      # Consider the direct transformation first and then the special cases
      if ostype in ostype_mapper:
          ostype = ostype_mapper[ostype]
-@@ -265,10 +270,12 @@ def default_build_triple():
+@@ -272,10 +277,12 @@ def default_build_triple():
              ostype = 'linux-androideabi'
          else:
              ostype += 'eabihf'
@@ -33,7 +33,7 @@ diff -wpruN '--exclude=*.orig' a~/src/bootstrap/bootstrap.py a/src/bootstrap/boo
          else:
              ostype += 'eabihf'
      elif cputype == 'mips':
-@@ -612,7 +619,7 @@ class RustBuild(object):
+@@ -619,7 +626,7 @@ class RustBuild(object):
          env["LIBRARY_PATH"] = os.path.join(self.bin_root(), "lib") + \
              (os.pathsep + env["LIBRARY_PATH"]) \
              if "LIBRARY_PATH" in env else ""

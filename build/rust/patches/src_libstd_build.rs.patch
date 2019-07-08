@@ -8,7 +8,7 @@ SunOS support:
 diff -wpruN '--exclude=*.orig' a~/src/libstd/build.rs a/src/libstd/build.rs
 --- a~/src/libstd/build.rs	1970-01-01 00:00:00
 +++ a/src/libstd/build.rs	1970-01-01 00:00:00
-@@ -20,6 +20,7 @@ fn main() {
+@@ -18,6 +18,7 @@ fn main() {
          println!("cargo:rustc-link-lib=execinfo");
          println!("cargo:rustc-link-lib=pthread");
      } else if target.contains("netbsd") {
@@ -16,7 +16,7 @@ diff -wpruN '--exclude=*.orig' a~/src/libstd/build.rs a/src/libstd/build.rs
          println!("cargo:rustc-link-lib=pthread");
          println!("cargo:rustc-link-lib=rt");
      } else if target.contains("dragonfly") || target.contains("bitrig") ||
-@@ -30,6 +31,9 @@ fn main() {
+@@ -28,6 +29,9 @@ fn main() {
          println!("cargo:rustc-link-lib=posix4");
          println!("cargo:rustc-link-lib=pthread");
          println!("cargo:rustc-link-lib=resolv");
