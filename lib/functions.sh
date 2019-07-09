@@ -1467,11 +1467,11 @@ make_install() {
     eval set -- $MAKE_INSTALL_ARGS_WS
     logmsg "--- make install"
     if [ "${MAKE##*/}" = "ninja" ]; then
-        DESTDIR=${DESTDIR} logcmd $MAKE $args $MAKE_INSTALL_ARGS "$@" install \
-            || logerr "--- Make install failed"
+        DESTDIR=${DESTDIR} logcmd $MAKE $args $MAKE_INSTALL_ARGS "$@" \
+            $MAKE_INSTALL_TARGET || logerr "--- Make install failed"
     else
-        logcmd $MAKE DESTDIR=${DESTDIR} $args $MAKE_INSTALL_ARGS "$@" install \
-            || logerr "--- Make install failed"
+        logcmd $MAKE DESTDIR=${DESTDIR} $args $MAKE_INSTALL_ARGS "$@" \
+            $MAKE_INSTALL_TARGET || logerr "--- Make install failed"
     fi
 }
 
@@ -1510,7 +1510,7 @@ make_in() {
 make_install_in() {
     [ -z "$1" ] && logerr "--- Make install in dir failed - no dir specified"
     logmsg "------ make install in $1"
-    logcmd $MAKE -C $1 DESTDIR=${DESTDIR} install || \
+    logcmd $MAKE -C $1 DESTDIR=${DESTDIR} $MAKE_INSTALL_TARGET || \
         logerr "------ Make install in $1 failed"
 }
 
