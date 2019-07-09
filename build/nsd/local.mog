@@ -34,3 +34,6 @@ dir group=$(PROG) mode=0755 owner=$(PROG) path=var/$(sPREFIX)/zone
 <transform dir path=var/$(sPREFIX) -> set owner nsd>
 <transform dir path=var/$(sPREFIX) -> set group nsd>
 
+<transform file path=$(PREFIX)/sbin/ \
+    -> set restart_fmri svc:/network/dns/$(PROG):default>
+

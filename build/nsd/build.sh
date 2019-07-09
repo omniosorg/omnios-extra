@@ -46,7 +46,7 @@ set_arch 64
 CONFIGURE_OPTS="
     --sysconfdir=/etc$OPREFIX
     --with-run-dir=/var$sPREFIX
-    --with-libevent=/opt/ooce
+    --with-libevent=$OPREFIX
     --with-pthreads
     --localstatedir=/var$sPREFIX
     --with-configdir=/etc$sPREFIX
