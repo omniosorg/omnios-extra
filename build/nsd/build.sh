@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=nsd
-VER=4.2.0
+VER=4.2.1
 PKG=ooce/network/nsd
 SUMMARY="Authoritative DNS server"
 DESC="The NLnet Labs Name Server Daemon (NSD) is an authoritative "
@@ -46,7 +46,7 @@ set_arch 64
 CONFIGURE_OPTS="
     --sysconfdir=/etc$OPREFIX
     --with-run-dir=/var$sPREFIX
-    --with-libevent=/opt/ooce
+    --with-libevent=$OPREFIX
     --with-pthreads
     --localstatedir=/var$sPREFIX
     --with-configdir=/etc$sPREFIX

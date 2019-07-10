@@ -13,11 +13,11 @@
 # }}}
 
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-#
+
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.12.2
+VER=5.12.3
 VERHUMAN=$VER
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
