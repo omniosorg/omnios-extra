@@ -26,9 +26,9 @@
 . ../../lib/functions.sh
 
 PROG=postgresql
-PKG=ooce/database/postgresql-10
-VER=10.9
-SUMMARY="PostgreSQL 10"
+PKG=ooce/database/postgresql-11
+VER=11.4
+SUMMARY="PostgreSQL 11"
 DESC="The World's Most Advanced Open Source Relational Database"
 
 SKIP_LICENCES=postgresql
