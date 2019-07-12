@@ -1451,7 +1451,8 @@ make_prog() {
         libtool_nostdlib $LIBTOOL_NOSTDLIB $LIBTOOL_NOSTDLIB_EXTRAS
     fi
     logmsg "--- make"
-    logcmd $MAKE $MAKE_JOBS $MAKE_ARGS "$@" || logerr "--- Make failed"
+    logcmd $MAKE $MAKE_JOBS $MAKE_ARGS "$@" $MAKE_TARGET \
+        || logerr "--- Make failed"
 }
 
 make_prog32() {
@@ -1501,7 +1502,7 @@ make_in() {
     [ -z "$1" ] && logerr "------ Make in dir failed - no dir specified"
     [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
     logmsg "------ make in $1"
-    logcmd $MAKE $MAKE_JOBS -C $1 || \
+    logcmd $MAKE $MAKE_JOBS -C $1 $MAKE_TARGET || \
         logerr "------ Make in $1 failed"
 }
 

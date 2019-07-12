@@ -194,6 +194,7 @@ LCPUS=`psrinfo | wc -l`
 MJOBS="$[ $LCPUS + ($LCPUS / 2) ]"
 [ "$MJOBS" = "0" ] && MJOBS=2
 MAKE_JOBS="-j $MJOBS"
+MAKE_TARGET=
 MAKE_ARGS=
 MAKE_ARGS_WS=
 MAKE_INSTALL_TARGET=install
