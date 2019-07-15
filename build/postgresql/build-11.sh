@@ -20,53 +20,70 @@
 #
 # CDDL HEADER END }}}
 #
+# Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
-PROG=ooceapps
-VER=0.5.9
-PKG=ooce/ooceapps
-SUMMARY="OOCEapps"
-DESC="Web integrations for OmniOS"
+PROG=postgresql
+PKG=ooce/database/postgresql-11
+VER=11.4
+SUMMARY="PostgreSQL 11"
+DESC="The World's Most Advanced Open Source Relational Database"
 
-MIRROR="https://github.com/omniosorg/$PROG/releases/download"
+SKIP_LICENCES=postgresql
 
-SKIP_CHECKSUM=1
-
-RUN_DEPENDS_IPS="runtime/perl-64 ooce/application/texlive"
+MAJVER=${VER%.*}            # M.m
+sMAJVER=${MAJVER//./}       # Mm
+PATCHDIR=patches-$sMAJVER
 
 OPREFIX=$PREFIX
-PREFIX+="/$PROG"
+PREFIX+=/pgsql-$MAJVER
+CONFPATH=/etc$PREFIX
+LOGPATH=/var/log$PREFIX
+VARPATH=/var$PREFIX
+RUNPATH=$VARPATH/run
+
+set_arch 64
+
+RUN_DEPENDS_IPS="ooce/database/postgresql-common"
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DVERSION=$MAJVER
+    -DsVERSION=$sMAJVER
 "
 
-set_arch 64
+CFLAGS+=" -O3"
+
+CONFIGURE_OPTS="
+    --enable-thread-safety
+    --with-openssl
+    --with-libxml
+    --with-xslt
+    --with-readline
+"
 
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX
-    --sysconfdir=/etc$PREFIX
-    --localstatedir=/var$PREFIX
+    --sysconfdir=$CONFPATH
+    --localstatedir=$VARPATH
+    --enable-dtrace DTRACEFLAGS=\"-64\"
 "
 
-add_extra_files() {
-    # copy config template
-    logcmd mkdir -p $DESTDIR/var/$PREFIX
-    logcmd cp $DESTDIR/etc/$PREFIX/$PROG.conf.dist \
-        $DESTDIR/etc/$PREFIX/$PROG.conf \
-        || logerr "--- cannot copy config file template"
-}
+# need to build world to get e.g. man pages in
+MAKE_TARGET=world
+MAKE_INSTALL_TARGET=install-world
 
 init
-download_source "v$VER" $PROG $VER
+download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-add_extra_files
-install_smf network ooceapps.xml
+#run_testsuite check-world
+install_smf database $PROG-$sMAJVER.xml
 make_package
 clean_up
 

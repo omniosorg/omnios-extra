@@ -74,17 +74,8 @@ CONFIGURE_OPTS_64="
 "
 
 # need to build world to get e.g. man pages in
-make_prog() {
-    logmsg "--- make"
-    logcmd $MAKE $MAKE_JOBS world || \
-        logerr "--- Make failed"
-}
-
-make_install() {
-    logmsg "--- make install"
-    logcmd $MAKE DESTDIR=${DESTDIR} install-world || \
-        logerr "--- Make install failed"
-}
+MAKE_TARGET=world
+MAKE_INSTALL_TARGET=install-world
 
 init
 download_source $PROG $PROG $VER

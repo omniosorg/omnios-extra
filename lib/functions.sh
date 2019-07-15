@@ -1445,12 +1445,14 @@ configure64() {
 }
 
 make_prog() {
+    eval set -- $MAKE_ARGS_WS
     [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
     if [ -n "$LIBTOOL_NOSTDLIB" ]; then
         libtool_nostdlib $LIBTOOL_NOSTDLIB $LIBTOOL_NOSTDLIB_EXTRAS
     fi
     logmsg "--- make"
-    logcmd $MAKE $MAKE_JOBS $MAKE_ARGS || logerr "--- Make failed"
+    logcmd $MAKE $MAKE_JOBS $MAKE_ARGS "$@" $MAKE_TARGET \
+        || logerr "--- Make failed"
 }
 
 make_prog32() {
@@ -1463,13 +1465,14 @@ make_prog64() {
 
 make_install() {
     local args="$@"
+    eval set -- $MAKE_INSTALL_ARGS_WS
     logmsg "--- make install"
     if [ "${MAKE##*/}" = "ninja" ]; then
-        DESTDIR=${DESTDIR} logcmd $MAKE $args $MAKE_INSTALL_ARGS "$@" install \
-            || logerr "--- Make install failed"
+        DESTDIR=${DESTDIR} logcmd $MAKE $args $MAKE_INSTALL_ARGS "$@" \
+            $MAKE_INSTALL_TARGET || logerr "--- Make install failed"
     else
-        logcmd $MAKE DESTDIR=${DESTDIR} $args $MAKE_INSTALL_ARGS "$@" install \
-            || logerr "--- Make install failed"
+        logcmd $MAKE DESTDIR=${DESTDIR} $args $MAKE_INSTALL_ARGS "$@" \
+            $MAKE_INSTALL_TARGET || logerr "--- Make install failed"
     fi
 }
 
@@ -1499,7 +1502,7 @@ make_in() {
     [ -z "$1" ] && logerr "------ Make in dir failed - no dir specified"
     [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
     logmsg "------ make in $1"
-    logcmd $MAKE $MAKE_JOBS -C $1 || \
+    logcmd $MAKE $MAKE_JOBS -C $1 $MAKE_TARGET || \
         logerr "------ Make in $1 failed"
 }
 
@@ -1508,7 +1511,7 @@ make_in() {
 make_install_in() {
     [ -z "$1" ] && logerr "--- Make install in dir failed - no dir specified"
     logmsg "------ make install in $1"
-    logcmd $MAKE -C $1 DESTDIR=${DESTDIR} install || \
+    logcmd $MAKE -C $1 DESTDIR=${DESTDIR} $MAKE_INSTALL_TARGET || \
         logerr "------ Make install in $1 failed"
 }
 
