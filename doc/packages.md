@@ -17,7 +17,7 @@
 | ooce/database/postgresql-11	| 11.4		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-96	| 9.6.14	| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
-| ooce/developer/cmake		| 3.14.5	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/cmake		| 3.14.6	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-111		| 1.11.12	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-112		| 1.12.7	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
