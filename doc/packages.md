@@ -1,6 +1,6 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
-| ooce/application/mattermost	| 5.12.3	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
+| ooce/application/mattermost	| 5.13.0	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.23	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-72	| 7.2.20	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-73	| 7.3.7		| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
@@ -17,7 +17,7 @@
 | ooce/database/postgresql-11	| 11.4		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-96	| 9.6.14	| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
-| ooce/developer/cmake		| 3.14.6	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/cmake		| 3.15.0	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-111		| 1.11.12	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-112		| 1.12.7	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
@@ -38,7 +38,7 @@
 | ooce/library/libidl		| 0.8.14	| https://download.gnome.org/sources/libIDL/cache.json https://download.gnome.org/sources/libIDL/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libjpeg-turbo	| 2.0.2		| https://sourceforge.net/projects/libjpeg-turbo/files/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libogg		| 1.3.3		| https://ftp.osuosl.org/pub/xiph/releases/ogg/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libpciaccess	| 0.15		| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
+| ooce/library/libpciaccess	| 0.16		| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
 | ooce/library/libpng		| 1.6.37	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvorbis	| 1.3.6		| https://ftp.osuosl.org/pub/xiph/releases/vorbis/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvncserver	| 0.9.12	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)

@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=libpciaccess
-VER=0.15
+VER=0.16
 PKG=ooce/library/libpciaccess
 SUMMARY="PCI access utility library from X.org"
 DESC="The pciaccess library wraps platform-dependent PCI access "
