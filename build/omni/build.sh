@@ -20,14 +20,12 @@
 #
 # CDDL HEADER END }}}
 #
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 #
 . ../../lib/functions.sh
 
 PROG=omni
-VER=1.3.4
-VERHUMAN=$VER
+VER=1.3.5
 PKG=ooce/developer/omni
 SUMMARY="OmniOS build management utility"
 DESC=$SUMMARY
