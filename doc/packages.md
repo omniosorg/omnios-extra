@@ -1,6 +1,6 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
-| ooce/application/mattermost	| 5.13.0	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
+| ooce/application/mattermost	| 5.13.1	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.23	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-72	| 7.2.20	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-73	| 7.3.7		| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
@@ -21,7 +21,7 @@
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-111		| 1.11.12	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-112		| 1.12.7	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/llvm-8		| 8.0.0		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/llvm-8		| 8.0.1		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ninja		| 1.9.0		| https://github.com/ninja-build/ninja/releases https://ninja-build.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| 1.3.5		| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| 0.3.1		| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
