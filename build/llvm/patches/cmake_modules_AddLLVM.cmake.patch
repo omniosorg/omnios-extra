@@ -7,18 +7,15 @@ On Darwin, use correct install-name for shared libraries.
 diff -wpruN '--exclude=*.orig' a~/cmake/modules/AddLLVM.cmake a/cmake/modules/AddLLVM.cmake
 --- a~/cmake/modules/AddLLVM.cmake	1970-01-01 00:00:00
 +++ a/cmake/modules/AddLLVM.cmake	1970-01-01 00:00:00
-@@ -218,10 +218,7 @@ function(add_link_opts target_name)
-         # ld64's implementation of -dead_strip breaks tools that use plugins.
-         set_property(TARGET ${target_name} APPEND_STRING PROPERTY
+@@ -218,7 +218,7 @@ function(add_link_opts target_name)
                       LINK_FLAGS " -Wl,-dead_strip")
--      elseif(${CMAKE_SYSTEM_NAME} MATCHES "SunOS")
--        set_property(TARGET ${target_name} APPEND_STRING PROPERTY
+       elseif(${CMAKE_SYSTEM_NAME} MATCHES "SunOS")
+         set_property(TARGET ${target_name} APPEND_STRING PROPERTY
 -                     LINK_FLAGS " -Wl,-z -Wl,discard-unused=sections")
--      elseif(NOT WIN32 AND NOT LLVM_LINKER_IS_GOLD AND NOT ${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
-+      elseif(NOT WIN32 AND NOT LLVM_LINKER_IS_GOLD AND NOT ${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD|SunOS")
++                     LINK_FLAGS " -Wl,-zignore")
+       elseif(NOT WIN32 AND NOT LLVM_LINKER_IS_GOLD AND NOT ${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
          # Object files are compiled with -ffunction-data-sections.
          # Versions of bfd ld < 2.23.1 have a bug in --gc-sections that breaks
-         # tools that use plugins. Always pass --gc-sections once we require
 @@ -521,7 +518,7 @@ function(llvm_add_library name)
    endif()
  
