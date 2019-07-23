@@ -23,6 +23,9 @@ PKG=ooce/network/socat
 SUMMARY="Multipurpose socket relay"
 DESC="socat is a relay for bidirectional data transfer between two independent data channels."
 
+# socat was moved to omnios core from r151031 on
+[ $RELVER -ge 151031 ] && exit 0
+
 BUILDARCH=64
 
 CONFIGURE_OPTS="
