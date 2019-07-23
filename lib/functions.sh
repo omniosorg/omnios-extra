@@ -440,7 +440,7 @@ forgo_isaexec() {
 }
 
 set_arch() {
-    [[ $1 =~ ^(32|64)$ ]] || logerr "Bad argument to set_arch"
+    [[ $1 =~ ^(both|32|64)$ ]] || logerr "Bad argument to set_arch"
     BUILDARCH=$1
     forgo_isaexec
 }
