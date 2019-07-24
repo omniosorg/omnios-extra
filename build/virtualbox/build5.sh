@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=VirtualBox
-PKG=ooce/virtualization/virtualbox
+PKG=ooce/virtualization/virtualbox  ##IGNORE##
 VER=5.2.32
 GSOAPVER=2.8.87
 GSOAPDIR=gsoap-${GSOAPVER%.*}
