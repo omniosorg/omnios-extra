@@ -760,6 +760,7 @@ apply_patches() {
 rebase_patches() {
     if ! check_for_patches "in order to re-base them"; then
         logerr "--- No patches to re-base"
+        return
     fi
 
     logmsg "Re-basing patches"
