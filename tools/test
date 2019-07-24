@@ -121,6 +121,7 @@ check_packages_md()
 		case $pkg in
 			shell/bash-patchlvl)	continue ;;
 			shell/bash)		continue ;;
+			*/virtualbox5)		continue ;;
 		esac
 
 		if [ -n "${targets[$pkg]}" ]; then

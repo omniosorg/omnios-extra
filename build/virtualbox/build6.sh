@@ -25,7 +25,7 @@ SUMMARY="VirtualBox"
 DESC="VirtualBox is a general-purpose full virtualiser for x86 hardware, "
 DESC+="targeted at server, desktop and embedded use."
 
-if [ $RELVER -lt 151028 ]; then
+if [ $RELVER -lt 151030 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
     exit 0
 fi
