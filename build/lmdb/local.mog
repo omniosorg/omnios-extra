@@ -27,5 +27,5 @@
 <transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
     link path=$(OPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> >
 
-license ../../LICENSE license=OpenLDAP
+license LICENSE license=OpenLDAP
 

@@ -17,17 +17,15 @@
 . ../../lib/functions.sh
 
 PROG=lmdb
-# check version in lmdb.h
-VER=0.9.23
-# lmdb is part of the openldap source package
-LDAPVER=2.4.47
+VER=0.9.24
 PKG=ooce/database/lmdb
 SUMMARY="lmdb"
 DESC="Lightning Memory-Mapped Database"
 
 SKIP_LICENCES=OpenLDAP
 
-BUILDDIR="openldap-$LDAPVER/libraries/liblmdb"
+PROGUCVER=${PROG^^}_$VER
+BUILDDIR=$PROG-$PROGUCVER/libraries/liblmdb
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -63,10 +61,10 @@ configure64() {
 }
 
 init
-download_source openldap openldap $LDAPVER
+download_source $PROG $PROGUCVER
 patch_source
 prep_build
-build
+build -ctf
 make_package
 clean_up
 
