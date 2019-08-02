@@ -72,7 +72,7 @@
 | ooce/system/test/iozone	| 3.487		| http://www.iozone.org/src/current/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/top		| 3.7		| https://sourceforge.net/projects/unixtop/files/unixtop/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 8.6.9		| https://sourceforge.net/projects/asciidoc/files/asciidoc/ | [omniosorg](https://github.com/omniosorg)
-| ooce/text/ripgrep		| 11.0.1	| https://github.com/BurntSushi/ripgrep/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/text/ripgrep		| 11.0.2	| https://github.com/BurntSushi/ripgrep/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/bat			| 0.11.0	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/fd			| 7.3.0		| https://github.com/sharkdp/fd/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/virtualization/virtualbox-5 | 5.2.32	| https://www.virtualbox.org/wiki/Download_Old_Builds_5_2 | [omniosorg](https://github.com/omniosorg)

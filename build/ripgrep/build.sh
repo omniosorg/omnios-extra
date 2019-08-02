@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=ripgrep
-VER=11.0.1
+VER=11.0.2
 PKG=ooce/text/ripgrep
 SUMMARY="Fast line-oriented search tool"
 DESC="A fast line-oriented search tool that recursively searches your current "
