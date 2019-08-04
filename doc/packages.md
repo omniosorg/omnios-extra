@@ -5,7 +5,7 @@
 | ooce/application/php-72	| 7.2.21	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-73	| 7.3.8		| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20190410	| ftp://tug.org/historic/systems/texlive/2019/ | [omniosorg](https://github.com/omniosorg)
-| ooce/audio/flac		| 1.3.2		| https://ftp.osuosl.org/pub/xiph/releases/flac/ | [omniosorg](https://github.com/omniosorg)
+| ooce/audio/flac		| 1.3.3		| https://ftp.osuosl.org/pub/xiph/releases/flac/ https://xiph.org/flac/changelog.html | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/lz4		| 1.9.1		| https://github.com/lz4/lz4/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pbzip2		| 1.1.13	| https://launchpad.net/pbzip2/+download | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pigz		| 2.4		| https://zlib.net/pigz/ | [omniosorg](https://github.com/omniosorg)
