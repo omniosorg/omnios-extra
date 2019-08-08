@@ -13,7 +13,7 @@
 | ooce/database/lmdb		| 0.9.24	| https://github.com/LMDB/lmdb/releases https://symas.com/lmdb/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-102	| 10.2.26	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-103	| 10.3.17	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/database/postgresql-10	| 10.9		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/postgresql-10	| 10.10		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-11	| 11.4		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-96	| 9.6.15	| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
