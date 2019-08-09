@@ -27,7 +27,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-11
-VER=11.4
+VER=11.5
 SUMMARY="PostgreSQL 11"
 DESC="The World's Most Advanced Open Source Relational Database"
 
