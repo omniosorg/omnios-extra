@@ -1166,7 +1166,8 @@ make_package() {
     logmsg "--- Resolving dependencies"
     (
         set -e
-        logcmd -p $PKGDEPEND generate -md $DESTDIR $P5M_INT2 > $P5M_INT3
+        logcmd -p $PKGDEPEND generate -md $DESTDIR -d $SRCDIR $P5M_INT2 \
+            > $P5M_INT3
         logcmd $PKGDEPEND resolve -m $P5M_INT3
     ) || logerr "--- Dependency resolution failed"
     logmsg "--- Detected dependencies"
