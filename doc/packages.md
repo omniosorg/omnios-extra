@@ -64,7 +64,7 @@
 | ooce/runtime/tcl		| 8.6.9		| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/security/gnupg		| 1.4.23	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-114		| 1.14.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/server/nginx-116		| 1.16.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/server/nginx-116		| 1.16.1	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/htop		| 2.2.0		| https://hisham.hm/htop/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/mbuffer		| 20190725	| http://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/smartmontools	| 7.0		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
