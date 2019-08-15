@@ -1638,7 +1638,8 @@ run_testsuite() {
         pushd $TMPDIR/$BUILDDIR/$dir > /dev/null
         logmsg "Running testsuite"
         op=`mktemp`
-        $TESTSUITE_MAKE $target 2>&1 | tee $op
+        eval set -- $MAKE_TESTSUITE_ARGS_WS
+        $TESTSUITE_MAKE $target $MAKE_TESTSUITE_ARGS "$@" 2>&1 | tee $op
         if [ -n "$TESTSUITE_SED" ]; then
             sed "$TESTSUITE_SED" $op > $SRCDIR/$output
         elif [ -n "$TESTSUITE_FILTER" ]; then

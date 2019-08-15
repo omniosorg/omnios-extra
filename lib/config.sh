@@ -168,7 +168,7 @@ PERL_MAKE_TEST=1
 WGET=wget
 PATCH=gpatch
 MAKE=gmake
-TESTSUITE_MAKE="gmake --quiet"
+TESTSUITE_MAKE=gmake
 TAR="gtar --no-same-permissions --no-same-owner"
 GZIP=/opt/ooce/bin/pigz
 BUNZIP2=/opt/ooce/bin/pbunzip2
@@ -207,6 +207,8 @@ MAKE_INSTALL_ARGS_WS=
 MAKE_INSTALL_ARGS_32=
 MAKE_INSTALL_ARGS_64=
 NO_PARALLEL_MAKE=
+MAKE_TESTSUITE_ARGS=--quiet
+MAKE_TESTSUITE_ARGS_WS=
 
 # Remove install or packaging files by default. You can set this in a build
 # script when testing to speed up building a package
