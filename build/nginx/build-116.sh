@@ -27,8 +27,7 @@
 
 PROG=nginx
 PKG=ooce/server/nginx-116
-VER=1.16.0
-VERHUMAN=$VER
+VER=1.16.1
 SUMMARY="nginx 1.16 web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
