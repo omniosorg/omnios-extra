@@ -22,7 +22,7 @@
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/dejagnu	| 1.6.2		| https://ftp.gnu.org/gnu/dejagnu/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-111		| 1.11.13	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/go-112		| 1.12.7	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/go-112		| 1.12.9	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-8		| 8.0.1		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ninja		| 1.9.0		| https://github.com/ninja-build/ninja/releases https://ninja-build.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| 1.3.5		| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
