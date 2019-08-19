@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=nsd
-VER=4.2.1
+VER=4.2.2
 PKG=ooce/network/nsd
 SUMMARY="Authoritative DNS server"
 DESC="The NLnet Labs Name Server Daemon (NSD) is an authoritative "
