@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=cups
-VER=2.2.11
+VER=2.2.12
 PKG=ooce/print/cups
 SUMMARY="Common UNIX Printing System"
 DESC="Standards-based, open source printing system for UNIX operating systems"
