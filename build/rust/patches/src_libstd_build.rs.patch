@@ -15,8 +15,8 @@ diff -wpruN '--exclude=*.orig' a~/src/libstd/build.rs a/src/libstd/build.rs
 +        println!("cargo:rustc-link-lib=execinfo");
          println!("cargo:rustc-link-lib=pthread");
          println!("cargo:rustc-link-lib=rt");
-     } else if target.contains("dragonfly") || target.contains("bitrig") ||
-@@ -28,6 +29,9 @@ fn main() {
+     } else if target.contains("dragonfly") || target.contains("openbsd") {
+@@ -27,6 +28,9 @@ fn main() {
          println!("cargo:rustc-link-lib=posix4");
          println!("cargo:rustc-link-lib=pthread");
          println!("cargo:rustc-link-lib=resolv");
