@@ -19,11 +19,12 @@
 
 # Symlink man pages
 <transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(OPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> >
+    link path=$(OPREFIX)/share/man/%<1>/%<2> \
+    target=../../../$(PROG)/share/man/%<1>/%<2> >
 
 <transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
 
 <transform path=etc/dbus-1 -> drop>
 
-license LICENSE.txt license=LGPLv2
+license LICENSE license=Apache2
 

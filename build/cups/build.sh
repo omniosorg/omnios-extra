@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=cups
-VER=2.2.12
+VER=2.3.0
 PKG=ooce/print/cups
 SUMMARY="Common UNIX Printing System"
 DESC="Standards-based, open source printing system for UNIX operating systems"
@@ -47,6 +47,9 @@ CONFIGURE_OPTS="
     --without-bundledir
     --without-icondir
     --without-menudir
+    --without-rcdir
+    --without-dnssd
+    --without-systemd
     --without-python
     --without-php
     --without-java
@@ -59,17 +62,27 @@ CONFIGURE_OPTS_64="
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
-CFLAGS+=" -I$OPREFIX/include"
-LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib -lsocket"
+LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64 -lsocket"
+
+save_function configure32 _configure32
+configure32(){
+    export DSOFLAGS="$LDFLAGS $LDFLAGS32"
+    _configure32
+}
+
+save_function configure64 _configure64
+configure64(){
+    export DSOFLAGS="$LDFLAGS $LDFLAGS64"
+    _configure64
+}
 
 init
 download_source $PROG $PROG $VER-source
 patch_source
 prep_build
 run_autoconf -f
-# cups does not use DESTDIR but DSTROOT
-DSTROOT=$DESTDIR build
+build
 strip_install
 make_package
 clean_up
