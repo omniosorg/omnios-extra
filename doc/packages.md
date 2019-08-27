@@ -58,7 +58,7 @@
 | ooce/network/openvpn		| 2.4.7		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/smtp/postfix	| 3.4.6		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/network/socat		| 1.7.3.3	| http://www.dest-unreach.org/socat/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/unbound		| 1.9.2		| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/unbound		| 1.9.3		| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/znc		| 1.7.4		| https://github.com/znc/znc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/ooceapps			| 0.5.9		| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/print/cups		| 2.3.0		| https://github.com/apple/cups/releases | [omniosorg](https://github.com/omniosorg)
