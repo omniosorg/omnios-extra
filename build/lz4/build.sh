@@ -18,7 +18,7 @@
 
 PROG=lz4
 PKG=ooce/compress/lz4
-VER=1.9.1
+VER=1.9.2
 VERHUMAN=$VER
 SUMMARY="LZ4"
 DESC="Extremely fast compression"
@@ -34,11 +34,17 @@ XFORM_ARGS="
 "
 
 # we build/ship 32 and 64bit libraries but only 64bit binaries
-configure32() { :; }
+configure32() {
+    MAKE_ARGS_WS="
+        CFLAGS=\"$CFLAGS $CFLAGS32\"
+        LDFLAGS=\"$LDFLAGS $LDFLAGS32\"
+    "
+}
 configure64() {
-    export CFLAGS+=" $CFLAGS64"
-    export CXXFLAGS+=" $CXXFLAGS64"
-    export LDFLAGS+=" $LDFLAGS64"
+    MAKE_ARGS_WS="
+        CFLAGS=\"$CFLAGS $CFLAGS64\"
+        LDFLAGS=\"$LDFLAGS $LDFLAGS64\"
+    "
 }
 
 MAKE_INSTALL_ARGS="
