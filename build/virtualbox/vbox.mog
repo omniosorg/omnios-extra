@@ -41,6 +41,10 @@ driver name=vboxusbmon
 # web service link
 link path=$(PREFIX)/vboxwebsrv target=amd64/vboxwebsrv
 
+# Links to amd64/
+<transform file path=$(PREFIX)/amd64/(VBox[^.]+$) mode=0755 -> emit \
+    link path=$(PREFIX)/%<1> target=amd64/%<1> >
+
 # Set correct group on system directories
 <transform dir path=platform -> set group sys>
 
