@@ -2,7 +2,7 @@
 | :------ | :------ | :--- | :--------- |
 | ooce/application/mattermost	| 5.14.0	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.23	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-72	| 7.2.21	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-72	| 7.2.22	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-73	| 7.3.8		| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20190410	| ftp://tug.org/historic/systems/texlive/2019/ | [omniosorg](https://github.com/omniosorg)
 | ooce/audio/flac		| 1.3.3		| https://ftp.osuosl.org/pub/xiph/releases/flac/ https://xiph.org/flac/changelog.html | [omniosorg](https://github.com/omniosorg)
