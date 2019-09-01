@@ -1,0 +1,7 @@
+set name=pkg.fmri value=pkg://@PKGPUBLISHER@/ooce/developer/llvm-8@8.0.1,@SUNOSVER@-@PVER@
+set name=pkg.summary value="Low Level Virtual Machine compiler infrastructure"
+set name=pkg.description value="A collection of modular and reusable compiler and toolchain technologies"
+set name=publisher value=sa@omniosce.org
+set name=pkg.renamed value=true
+depend fmri=pkg:/ooce/developer/llvm-80 type=require
+

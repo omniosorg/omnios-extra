@@ -29,6 +29,7 @@ DESC+="prevents segfaults, and guarantees thread safety."
 #
 # to use system LLVM instead of the bundled one, set SYSTEM_LLVM
 #
+LLVM_MAJVER=8.0
 
 BUILDDIR=${PROG}c-${VER}-src
 
@@ -36,8 +37,8 @@ BUILD_DEPENDS_IPS="developer/gnu-binutils"
 [ -z "$BOOTSTRAP_VER" ] && BUILD_DEPENDS_IPS+=" ooce/developer/rust"
 
 if [ -n "$SYSTEM_LLVM" ]; then
-    SYSTEM_LLVM_PATH="/opt/ooce/llvm-8"
-    RUN_DEPENDS_IPS="ooce/developer/llvm-8"
+    SYSTEM_LLVM_PATH="/opt/ooce/llvm-$LLVM_MAJVER"
+    RUN_DEPENDS_IPS="ooce/developer/llvm-${LLVM_MAJVER//./}"
     BUILD_DEPENDS_IPS+=" $RUN_DEPENDS_IPS"
 fi
 
@@ -73,7 +74,7 @@ CFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS"
 CXXFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS"
 export CFLAGS CXXFLAGS
 
-CONFIGURE_CMD="src/bootstrap/configure.py"
+CONFIGURE_CMD="$PYTHON src/bootstrap/configure.py"
 
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX

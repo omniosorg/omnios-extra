@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=llvm
-PKG=ooce/developer/llvm-8
+PKG=ooce/developer/llvm-80
 VER=8.0.1
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
@@ -28,7 +28,7 @@ set_arch 64
 
 SKIP_LICENCES=UIUC
 
-MAJVER=${VER%%.*}
+MAJVER=${VER%.*}
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
@@ -55,6 +55,7 @@ CONFIGURE_OPTS_WS_64="
     -DLLVM_INCLUDE_BENCHMARKS=OFF
     -DLLVM_INSTALL_UTILS=ON
     -DLLVM_LINK_LLVM_DYLIB=ON
+    -DPYTHON_EXECUTABLE=\"$PYTHON\"
 "
 
 init
@@ -62,7 +63,7 @@ download_source $PROG $PROG $VER.src
 patch_source
 prep_build cmake
 build
-run_testsuite check
+run_testsuite check-all
 make_package
 clean_up
 
