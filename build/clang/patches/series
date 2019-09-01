@@ -1,0 +1,4 @@
+02-gas.patch
+03-disable-compiler-rt-parts.patch
+04-rpath.patch
+05-pthreads.patch
