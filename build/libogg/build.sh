@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=libogg
-VER=1.3.3
+VER=1.3.4
 PKG=ooce/library/libogg
 SUMMARY="libogg"
 DESC="Multimedia container format"
