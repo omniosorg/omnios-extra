@@ -16,19 +16,26 @@
 
 . ../../lib/functions.sh
 
-PROG=llvm
-PKG=ooce/developer/llvm-80
+PROG=clang
+PKG=ooce/developer/clang-80
 VER=8.0.1
-SUMMARY="Low Level Virtual Machine compiler infrastructure"
-DESC="A collection of modular and reusable compiler and toolchain technologies"
+SUMMARY="C language family frontend for LLVM"
+DESC="The Clang project provides a language front-end and tooling "
+DESC+="infrastructure for languages in the C language family (C, C++, "
+DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
 
-BUILDDIR=$PROG-$VER.src
+BUILDDIR=cfe-$VER.src
+
+MAJVER=${VER%.*}
+
+BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}@$VER-$RELVER"
+# Using the = prefix to require the specific matching version of llvm
+# need gcc until compiler-rt ships its own crtbegin, crtend objects
+RUN_DEPENDS_IPS="=$BUILD_DEPENDS_IPS developer/gcc$GCCVER"
 
 set_arch 64
 
 SKIP_LICENCES=UIUC
-
-MAJVER=${VER%.*}
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
@@ -51,19 +58,18 @@ CONFIGURE_OPTS_WS_64="
     -DCMAKE_C_COMPILER=\"$CC\"
     -DCMAKE_CXX_COMPILER=\"$CXX\"
     -DCMAKE_CXX_LINK_FLAGS=\"$LDFLAGS64\"
-    -DLLVM_BUILD_LLVM_DYLIB=ON
-    -DLLVM_INCLUDE_BENCHMARKS=OFF
-    -DLLVM_INSTALL_UTILS=ON
-    -DLLVM_LINK_LLVM_DYLIB=ON
+    -DGCC_INSTALL_PREFIX=\"$GCCPATH\"
+    -DCLANG_DEFAULT_LINKER=\"/usr/bin/ld\"
+    -DLLVM_LIBRARY_DIR=\"$OPREFIX/llvm-$MAJVER/lib\"
+    -DLLVM_MAIN_INCLUDE_DIR=\"$OPREFIX/llvm-$MAJVER/include\"
     -DPYTHON_EXECUTABLE=\"$PYTHON\"
 "
 
 init
-download_source $PROG $PROG $VER.src
+download_source $PROG $BUILDDIR
 patch_source
 prep_build cmake
 build
-run_testsuite check-all
 make_package
 clean_up
 

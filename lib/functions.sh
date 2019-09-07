@@ -1250,6 +1250,30 @@ make_package() {
      [ -z "$BATCH" -a -z "$SKIP_PKG_DIFF" ] && diff_package $FMRI
 }
 
+translate_manifest()
+{
+    local src=$1
+    local dst=$2
+
+    sed -e "
+        s/@PKGPUBLISHER@/$PKGPUBLISHER/g
+        s/@RELVER@/$RELVER/g
+        s/@PVER@/$PVER/g
+        s/@SUNOSVER@/$SUNOSVER/g
+        " < $src > $dst
+}
+
+publish_manifest()
+{
+    local pkg=$1
+    local pmf=$2
+
+    translate_manifest $pmf $pmf.final
+
+    logcmd pkgsend -s $PKGSRVR publish $pmf.final || logerr "pkgsend failed"
+    [ -z "$BATCH" -a -z "$SKIP_PKG_DIFF" ] && diff_latest pkg
+}
+
 # Create a list of the items contained within a package in a format suitable
 # for comparing with previous versions. We don't care about changes in file
 # content, just whether items have been added, removed or had their attributes

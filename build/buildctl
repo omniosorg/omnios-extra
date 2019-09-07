@@ -239,6 +239,34 @@ built_packages_sh() {
 
 ##############################################################################
 
+build_manifest() {
+    typeset mf="$1"
+
+    init_repo
+    logmsg "Found a manifest file. Preparing it for publishing."
+    translate_manifest $mf $mf.final
+    if [ -f root.tar.bz2 ]; then
+        logmsg "File archive found. Extracting..."
+        logcmd bzip2 -dc root.tar.bz2 | tar xf - \
+            || bail "Failed to extract root.tar.bz2"
+        logmsg "Publishing from $mf.final"
+        logcmd pkgsend -s $PKGSRVR publish -d $PKGROOT $mf.final \
+            || bail "pkgsend failed"
+        logcmd rm -rf $PKGROOT
+    elif [ -d "$PKGROOT" ]; then
+        # In case we just have a tree of files and not a tarball
+        logmsg "Publishing from $mf.final"
+        logcmd pkgsend -s $PKGSRVR publish -d $PKGROOT $mf.final \
+            || bail "pkgsend failed"
+    else
+        # Else we just have a manifest to import
+        logmsg "Simple manifest to import... importing to $PKGSRVR"
+        logcmd pkgsend -s $PKGSRVR publish $mf.final \
+            || bail "pkgsend failed"
+    fi
+    rm -f $mf.final
+}
+
 build() {
     if [ -n "${fulltargets[$1]}" ]; then
         buildtgt=$1
@@ -263,33 +291,10 @@ build() {
             . environment
         fi
         if [[ "$SCRIPT" = *.p5m ]]; then
-            init_repo
-            echo "Found a manifest file. Preparing it for publishing."
-            sed -e "
-                    s/@PKGPUBLISHER@/$PKGPUBLISHER/g
-                    s/@RELVER@/$RELVER/g
-                    s/@PVER@/$PVER/g
-                " < $SCRIPT > $SCRIPT.final
-            if [ -f root.tar.bz2 ]; then
-                echo "File archive found. Extracting..."
-                bzip2 -dc root.tar.bz2 | tar xf - || \
-                    bail "Failed to extract root.tar.bz2"
-                echo "Publishing from $SCRIPT.final"
-                pkgsend -s $PKGSRVR publish -d $PKGROOT $SCRIPT.final || \
-                    bail "pkgsend failed"
-                rm -rf $PKGROOT
-            elif [ -d "$PKGROOT" ]; then
-                # In case we just have a tree of files and not a tarball
-                echo "Publishing from $SCRIPT.final"
-                pkgsend -s $PKGSRVR publish -d $PKGROOT $SCRIPT.final || \
-                    bail "pkgsend failed"
-            else
-                # Else we just have a manifest to import
-                echo "Simple manifest to import... importing to $PKGSRVR"
-                pkgsend -s $PKGSRVR publish $SCRIPT.final || \
-                    bail "pkgsend failed"
-                rm $SCRIPT.final
-            fi
+            _LOGFILE="$LOGFILE"
+            LOGFILE="$PWD/build.log.`basename $SCRIPT .p5m`"
+            build_manifest "$SCRIPT"
+            LOGFILE="$_LOGFILE"
             built_packages_p5m $SCRIPT
         else
             PATH=$PATH:. $SCRIPT -r $PKGSRVR $build_flags || \
@@ -420,11 +425,13 @@ parallel_build() {
                         #logmsg "-- waiting for job $i (${slots[$i]})..."
                         wait "${slots[$i]}"
                         s=$?
-                        logmsg "-- Job $i terminated with status $s"
                         if [ $s -ne 0 ]; then
+                            logmsg -e "-- Job $i terminated with status $s"
                             err="${slottgt[$i]}"
                             note "***** BUILD ERROR ***** ($err)"
                             break 3
+                        else
+                            logmsg "-- Job $i terminated normally"
                         fi
                     fi
                     note "($pkgnum/$pkgcount) Building $tgt (slot $i)"
