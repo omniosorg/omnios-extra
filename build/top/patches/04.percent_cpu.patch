@@ -1,0 +1,70 @@
+#
+# Community BugDB: 	sf.net/tracker
+# Community BugID: 	3602141
+# Community BugURL:	https://sourceforge.net/tracker/?func=detail&aid=3602141&group_id=72892&atid=536042
+#
+
+diff -wpruN '--exclude=*.orig' a~/machine/m_sunos5.c a/machine/m_sunos5.c
+--- a~/machine/m_sunos5.c	1970-01-01 00:00:00
++++ a/machine/m_sunos5.c	1970-01-01 00:00:00
+@@ -149,10 +149,10 @@
+  * These values are weighted over one minute whereas top output prefers
+  * a near-instantaneous measure of cpu utilization.  So we choose to
+  * ignore pr_pctcpu: we calculate our own cpu percentage and store it in
+- * one of the spare slots in the prinfo structure.
++ * oldpct field.
+  */
++#define percent_cpu(pp)	(((struct oldproc *)hash_lookup_pid(prochash, pp->pr_pid))->oldpct)
+ 
+-#define percent_cpu(pp) (*(double *)dbl_align(&pp->pr_filler[0]))
+ 
+ /* definitions for indices in the nlist array */
+ #define X_V			 0
+@@ -1965,6 +1965,7 @@ getptable (struct prpsinfo *baseptr)
+ 	    op->fd_psinfo = -1;
+ 	    op->fd_lpsinfo = -1;
+ 	    op->oldtime = 0.0;
++	    op->oldpct = 0.0;
+ 	}
+ 
+ 	/* do we have a cached file? */
+@@ -2021,13 +2022,13 @@ getptable (struct prpsinfo *baseptr)
+ 	 */
+ 	if (lasttime.tv_sec > 0)
+ 	{
+-	    percent_cpu(currproc) =
++            op->oldpct =
+ 		(TIMESPEC_TO_DOUBLE(currproc->pr_time) - op->oldtime) / timediff;
+ 	}
+ 	else
+ 	{
+ 	    /* first screen -- no difference is possible */
+-	    percent_cpu(currproc) = 0.0;
++            op->oldpct = 0.0;
+ 	}
+ 
+ 	/* save data for next time */
+@@ -2134,20 +2135,20 @@ getptable (struct prpsinfo *baseptr)
+ 		    /* calculate percent cpu for just this thread */
+ 		    if (lasttime.tv_sec > 0)
+ 		    {
+-			percent_cpu(currproc) =
++			op->oldpct =
+ 			    (TIMESPEC_TO_DOUBLE(lwpp->pr_time) - op->oldtime) /
+ 			    timediff;
+ 		    }
+ 		    else
+ 		    {
+ 			/* first screen -- no difference is possible */
+-			percent_cpu(currproc) = 0.0;
++			op->oldpct = 0.0;
+ 		    }
+ 
+ 		    dprintf("getptable: %d.%d: time %.0f, state %d, pctcpu %.2f\n",
+ 			    currproc->pr_pid, lwpp->pr_lwpid,
+ 			    TIMESPEC_TO_DOUBLE(currproc->pr_time),
+-			    currproc->px_state, percent_cpu(currproc));
++			    currproc->px_state, op->oldpct);
+ 		}
+ 
+ 		/* save data for next time */

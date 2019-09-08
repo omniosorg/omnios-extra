@@ -18,9 +18,12 @@
 
 PROG=top
 PKG=ooce/system/top
-VER=3.7
+VER=3.8
+BETA=1
 SUMMARY="top"
 DESC="Display and update information about the top cpu processes"
+
+BUILDDIR="$PROG-${VER}beta$BETA"
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
@@ -40,7 +43,7 @@ CONFIGURE_OPTS_64="
 "
 
 init
-download_source $PROG $PROG $VER
+download_source $PROG $PROG ${VER}beta$BETA
 patch_source
 prep_build
 build

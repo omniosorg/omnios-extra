@@ -1,0 +1,18 @@
+diff -wpruN '--exclude=*.orig' a~/screen.c a/screen.c
+--- a~/screen.c	1970-01-01 00:00:00
++++ a/screen.c	1970-01-01 00:00:00
+@@ -84,14 +84,9 @@ char *tgetstr(const char *, char **);
+ # include <sgtty.h>
+ # define USE_SGTTY
+ #else
+-# ifdef TCGETA
+-#  define USE_TERMIO
+-#  include <termio.h>
+-# else
+ #  define USE_TERMIOS
+ #  include <termios.h>
+ # endif
+-#endif
+ #if defined(USE_TERMIO) || defined(USE_TERMIOS)
+ # ifndef TAB3
+ #  ifdef OXTABS

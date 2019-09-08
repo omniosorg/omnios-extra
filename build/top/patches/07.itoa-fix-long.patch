@@ -1,0 +1,63 @@
+diff -wpruN '--exclude=*.orig' a~/display.c a/display.c
+--- a~/display.c	1970-01-01 00:00:00
++++ a/display.c	1970-01-01 00:00:00
+@@ -635,7 +635,7 @@ summary_format_memory(int x, int y, long
+ 	    }
+ 	    else
+ 	    {
+-		display_write(x, y, color, 0, itoa((int)num));
++		display_write(x, y, color, 0, itoa(num));
+ 	    }
+ 
+ 	    /* next iteration will not start at x, y */
+diff -wpruN '--exclude=*.orig' a~/utils.c a/utils.c
+--- a~/utils.c	1970-01-01 00:00:00
++++ a/utils.c	1970-01-01 00:00:00
+@@ -93,27 +93,27 @@ atoiwi(char *str)
+ }
+ 
+ /*
+- *  itoa - convert integer (decimal) to ascii string for positive numbers
++ *  itoa - convert integer (long) to ascii string for positive numbers
+  *  	   only (we don't bother with negative numbers since we know we
+  *	   don't use them).
+  */
+ 
+ 				/*
+-				 * How do we know that 16 will suffice?
++				 * How do we know that 24 will suffice?
+ 				 * Because the biggest number that we will
+-				 * ever convert will be 2^32-1, which is 10
++				 * ever convert will be 2^64-1, which is 20
+ 				 * digits.
+ 				 */
+ 
+ char *
+-itoa(int val)
++itoa(long val)
+ 
+ {
+     register char *ptr;
+-    static char buffer[16];	/* result is built here */
+-    				/* 16 is sufficient since the largest number
+-				   we will ever convert will be 2^32-1,
+-				   which is 10 digits. */
++    static char buffer[24];	/* result is built here */
++    				/* 24 is sufficient since the largest number
++				   we will ever convert will be 2^64-1,
++				   which is 20 digits. */
+ 
+     ptr = buffer + sizeof(buffer);
+     *--ptr = '\0';
+diff -wpruN '--exclude=*.orig' a~/utils.h a/utils.h
+--- a~/utils.h	1970-01-01 00:00:00
++++ a/utils.h	1970-01-01 00:00:00
+@@ -40,7 +40,7 @@
+ #define _UTILS_H
+ 
+ int atoiwi(char *);
+-char *itoa(int);
++char *itoa(long);
+ char *itoa_w(int, int);
+ char *itoa7(int);
+ int digits(int);

@@ -1,0 +1,25 @@
+#
+# This patch was added for
+#    6820883 *top* segfaults when re-nicing
+#
+gdiff -Nurp top-3.8beta1/commands.c.orig top-3.8beta1/commands.c
+diff -wpruN '--exclude=*.orig' a~/commands.c a/commands.c
+--- a~/commands.c	1970-01-01 00:00:00
++++ a/commands.c	1970-01-01 00:00:00
+@@ -501,13 +501,15 @@ renice_procs(char *str)
+     if (procnum == -1 || prio < PRIO_MIN || prio > PRIO_MAX)
+     {
+ 	message_error(" renice: bad priority value");
++	return;
+     }
+ #endif
+ 
+     /* move to the first process number */
+     if ((str = next_field(str)) == NULL)
+     {
+-	message_error(" remice: no processes specified");
++	message_error(" renice: no processes specified");
++	return;
+     }
+ 
+ #ifdef HAVE_SETPRIORITY

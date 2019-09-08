@@ -1,0 +1,31 @@
+https://sourceforge.net/p/unixtop/patches/22/
+
+diff -wpruN '--exclude=*.orig' a~/top.c a/top.c
+--- a~/top.c	1970-01-01 00:00:00
++++ a/top.c	1970-01-01 00:00:00
+@@ -257,14 +257,14 @@ hold_signals()
+ }
+ 
+ void
+-set_signals()
++set_signals(int set_winch)
+ 
+ {
+     (void) set_signal(SIGINT, sig_leave);
+     (void) set_signal(SIGQUIT, sig_leave);
+     (void) set_signal(SIGTSTP, sig_tstop);
+ #ifdef SIGWINCH
+-    (void) set_signal(SIGWINCH, sig_winch);
++    if(set_winch) set_signal(SIGWINCH, sig_winch);
+ #endif
+ }
+ 
+@@ -907,7 +907,7 @@ main(int argc, char *argv[])
+     screen_init();
+ 
+     /* set the signal handlers */
+-    set_signals();
++    set_signals(gstate->interactive);
+ 
+     /* longjmp re-entry point */
+     /* set the jump buffer for long jumps out of signal handlers */
