@@ -79,7 +79,7 @@
 | ooce/system/smartmontools	| 7.0		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/sysstat		| 20151012	| http://www.maier-komor.de/sysstat.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/test/iozone	| 3.487		| http://www.iozone.org/src/current/ | [omniosorg](https://github.com/omniosorg)
-| ooce/system/top		| 3.7		| https://sourceforge.net/projects/unixtop/files/unixtop/ | [omniosorg](https://github.com/omniosorg)
+| ooce/system/top		| 3.8		| https://sourceforge.net/projects/unixtop/files/unixtop/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 8.6.9		| https://sourceforge.net/projects/asciidoc/files/asciidoc/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/ripgrep		| 11.0.2	| https://github.com/BurntSushi/ripgrep/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/bat			| 0.11.0	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)

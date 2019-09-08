@@ -1,0 +1,325 @@
+$OpenIndiana: Feature https://www.illumos.org/issues/7305 - Franklin Ronald <franklin@wiselabs.com.br>$
+diff -wpruN '--exclude=*.orig' a~/display.c a/display.c
+--- a~/display.c	1970-01-01 00:00:00
++++ a/display.c	1970-01-01 00:00:00
+@@ -101,6 +101,8 @@ static int x_kernel = X_KERNEL;
+ static int y_kernel = Y_KERNEL;
+ static int x_mem = X_MEM;
+ static int y_mem = Y_MEM;
++static int x_arc = X_ARC;
++static int y_arc = Y_ARC;
+ static int x_swap = X_SWAP;
+ static int y_swap = Y_SWAP;
+ static int y_message = Y_MESSAGE;
+@@ -132,12 +134,14 @@ static int virt_x, virt_y;
+ static char **procstate_names;
+ static char **cpustate_names;
+ static char **memory_names;
++static char **arc_names;
+ static char **swap_names;
+ static char **kernel_names;
+ 
+ static int num_procstates;
+ static int num_cpustates;
+ static int num_memory;
++static int num_arc;
+ static int num_swap;
+ static int num_kernel;
+ 
+@@ -171,10 +175,12 @@ static int load_cidx[3];
+ static int header_cidx;
+ static int *cpustate_cidx;
+ static int *memory_cidx;
++static int *arc_cidx;
+ static int *swap_cidx;
+ static int *kernel_cidx;
+ #else
+ #define memory_cidx NULL
++#define arc_cidx NULL
+ #define swap_cidx NULL
+ #define kernel_cidx NULL
+ #endif
+@@ -526,10 +532,10 @@ display_cte()
+ }
+ 
+ static void
+-summary_format(int x, int y, int *numbers, char **names, int *cidx)
++summary_format(int x, int y, long *numbers, char **names, int *cidx)
+ 
+ {
+-    register int num;
++    register long num;
+     register char *thisname;
+     register char *lastname = NULL;
+     register int color;
+@@ -782,6 +788,17 @@ display_init(struct statics *statics)
+ 	y_procs++;
+     }
+     
++    /* arc names */
++    arc_names = statics->arc_names;
++    if ((num_arc = string_count(arc_names)) > 0)
++    {
++	/* adjust screen placements */
++	y_message++;
++	y_header++;
++	y_idlecursor++;
++	y_procs++;
++    }
++    
+     /* call resize to do the dirty work */
+     top_lines = display_resize();
+ 
+@@ -800,6 +817,8 @@ display_init(struct statics *statics)
+ 	memory_names = statics->memory_names;
+ 	num_memory = string_count(memory_names);
+ 
++        arc_names = statics->arc_names;
++
+ 	/* calculate starting columns where needed */
+ 	cpustate_total_length = 0;
+ 	pp = cpustate_names;
+@@ -856,6 +875,16 @@ display_init(struct statics *statics)
+ 	memory_cidx[i++] = color_tag(scratchbuf);
+     }
+ 
++    /* color tags for memory */
++    arc_cidx = (int *)malloc(num_arc * sizeof(int));
++    i = 0;
++    p = strcpyend(scratchbuf, "arc.");
++    while (i < num_arc)
++    {
++        strcpy(p, homogenize(arc_names[i]+1));
++        arc_cidx[i++] = color_tag(scratchbuf);
++    }
++
+     /* color tags for swap */
+     if (num_swap > 0)
+     {
+@@ -1316,6 +1345,28 @@ u_memory(long *stats)
+ }
+ 
+ /*
++ *  *_arc(stats) - print "ARC: " followed by the ARC summary string
++ */
++void
++i_arc(long *stats)
++
++{
++    /* print the tag */
++    display_write(0, y_arc, 0, 0, "ARC: ");
++
++    /* format and print the swap summary */
++    summary_format_memory(x_arc, y_arc, stats, arc_names, arc_cidx);
++}
++
++void
++u_arc(long *stats)
++
++{
++    /* format and print the swap summary */
++    summary_format_memory(x_arc, y_arc, stats, arc_names, arc_cidx);
++}
++
++/*
+  *  *_swap(stats) - print "Swap: " followed by the swap summary string
+  *
+  *  Assumptions:  cursor is on "lastline", the previous line
+@@ -1333,7 +1384,7 @@ i_swap(long *stats)
+ 	display_write(0, y_swap, 0, 0, "Swap: ");
+ 
+ 	/* format and print the swap summary */
+-	summary_format_memory(x_swap, y_swap, stats, swap_names, swap_cidx);
++	summary_format(x_swap, y_swap, stats, swap_names, swap_cidx);
+     }
+ }
+ 
+diff -wpruN '--exclude=*.orig' a~/display.h a/display.h
+--- a~/display.h	1970-01-01 00:00:00
++++ a/display.h	1970-01-01 00:00:00
+@@ -58,6 +58,8 @@ void i_kernel(int *stats);
+ void u_kernel(int *stats);
+ void i_memory(long *stats);
+ void u_memory(long *stats);
++void i_arc(long *stats);
++void u_arc(long *stats);
+ void i_swap(long *stats);
+ void u_swap(long *stats);
+ void i_message(struct timeval *now);
+diff -wpruN '--exclude=*.orig' a~/layout.h a/layout.h
+--- a~/layout.h	1970-01-01 00:00:00
++++ a/layout.h	1970-01-01 00:00:00
+@@ -58,6 +58,8 @@
+ #define  Y_KERNEL       3
+ #define  X_MEM		8
+ #define  Y_MEM		3
++#define  X_ARC          8
++#define  Y_ARC          5
+ #define  X_SWAP		6
+ #define  Y_SWAP		4
+ #define  Y_MESSAGE	4
+diff -wpruN '--exclude=*.orig' a~/machine/m_sunos5.c a/machine/m_sunos5.c
+--- a~/machine/m_sunos5.c	1970-01-01 00:00:00
++++ a/machine/m_sunos5.c	1970-01-01 00:00:00
+@@ -294,6 +294,10 @@ char *memorynames[] =
+ #define MEMORY_TOTALSWAP 2
+ #define MEMORY_FREESWAP  3
+ 
++/* these are for detailing the ZFS ARC statistics */
++char *arcnames[] =
++{"K Total, ", "K MRU, ", "K MFU, ", "K Anon, ", "K Header, ", "K Other", NULL};
++
+ /* these are for detailing kernel statistics */
+ int kernel_stats[8];
+ char *kernelnames[] =
+@@ -845,6 +849,7 @@ kstat_safe_namematch(int num, kstat_t **
+ }
+ 
+ static kstat_t *ks_system_misc = NULL;
++static kstat_t *ks_arcstats = NULL;
+ 
+ #endif /* USE_KSTAT */
+ 
+@@ -888,6 +893,66 @@ get_avenrun(int avenrun[3])
+ }
+ 
+ int
++get_arcstats(long arcstats[NUM_ZFS_ARC])
++{
++    #ifdef USE_KSTAT
++    int status;
++    kstat_named_t *kn;
++    memset(arcstats, 0, sizeof(long) * NUM_ZFS_ARC);
++
++    dprintf("get_arcstats(%08x)\n", arcstats);
++
++    if ((status = kstat_safe_retrieve(&ks_arcstats,
++				      "zfs", 0, "arcstats", NULL)) == 0)
++    {
++        if ((kn = kstat_data_lookup(ks_arcstats, "size")) != NULL)
++	{
++            if(kn->value.ui64 > 0){
++                arcstats[0] = (long) kn->value.ui64 / 1024;
++            }
++	}
++	if ((kn = kstat_data_lookup(ks_arcstats, "mru_size")) != NULL)
++	{
++            if(kn->value.ui64 > 0){
++                arcstats[1] = (long) kn->value.ui64 / 1024;
++            }
++	}
++	if ((kn = kstat_data_lookup(ks_arcstats, "mfu_size")) != NULL)
++	{
++            if(kn->value.ui64 > 0){
++                arcstats[2] = (long) kn->value.ui64 / 1024;
++            }
++	}
++	if ((kn = kstat_data_lookup(ks_arcstats, "anon_size")) != NULL)
++	{
++            if(kn->value.ui64 > 0){
++                arcstats[3] = (long) kn->value.ui64 / 1024;
++            }
++	}
++	if ((kn = kstat_data_lookup(ks_arcstats, "hdr_size")) != NULL)
++	{
++            if(kn->value.ui64 > 0){
++                arcstats[4] = (long) kn->value.ui64 / 1024;
++            }
++	}
++	if ((kn = kstat_data_lookup(ks_arcstats, "other_size")) != NULL)
++	{
++            if(kn->value.ui64 > 0){
++                arcstats[5] = (long) kn->value.ui64 / 1024;
++            }
++	}
++    }
++    dprintf("get_arcstats returns %d\n", status);
++    return (status);
++
++#else /* !USE_KSTAT */
++
++    return 0;
++
++#endif /* USE_KSTAT */
++}
++
++int
+ get_ncpus()
+ 
+ {
+@@ -1236,6 +1301,7 @@ machine_init (struct statics *statics)
+     statics->procstate_names = procstatenames;
+     statics->cpustate_names = cpustatenames;
+     statics->memory_names = memorynames;
++    statics->arc_names = arcnames;
+     statics->kernel_names = kernelnames;
+     statics->order_names = ordernames;
+     statics->flags.fullcmds = 1;
+@@ -1398,6 +1464,7 @@ void
+ get_system_info (struct system_info *si)
+ {
+     int avenrun[3];
++    long arcstats[NUM_ZFS_ARC];
+ 
+     static long cp_time[CPUSTATES];
+     static long cp_old[CPUSTATES];
+@@ -1415,6 +1482,10 @@ get_system_info (struct system_info *si)
+     /* get important information */
+     get_avenrun(avenrun);
+ 
++    /* get ARC information */
++    get_arcstats(arcstats);
++    memcpy(si->arc, arcstats, sizeof(arcstats));
++
+     /* get the cpu statistics arrays */
+     cpustats = get_cpustats(&cpus, cpustats);
+ 
+diff -wpruN '--exclude=*.orig' a~/machine.h a/machine.h
+--- a~/machine.h	1970-01-01 00:00:00
++++ a/machine.h	1970-01-01 00:00:00
+@@ -50,6 +50,7 @@ struct statics
+     char **procstate_names;
+     char **cpustate_names;
+     char **memory_names;
++    char **arc_names;
+     char **swap_names;		/* optional */
+     char **order_names;		/* optional */
+     char **top_color_names;	/* optional */
+@@ -84,6 +85,7 @@ struct system_info
+     int    *cpustates;
+     int    *kernel;
+     long   *memory;
++    long   arc[NUM_ZFS_ARC];
+     long   *swap;
+ };
+ 
+diff -wpruN '--exclude=*.orig' a~/top.c a/top.c
+--- a~/top.c	1970-01-01 00:00:00
++++ a/top.c	1970-01-01 00:00:00
+@@ -547,6 +547,7 @@ do_display(globalstate *gstate)
+ 	}
+ 	i_kernel(system_info.kernel);
+ 	i_memory(system_info.memory);
++        i_arc(system_info.arc);
+ 	i_swap(system_info.swap);
+ 	i_message(&(gstate->now));
+ 	i_header(hdr);
+@@ -569,6 +570,7 @@ do_display(globalstate *gstate)
+ 	u_cpustates(system_info.cpustates);
+ 	u_kernel(system_info.kernel);
+ 	u_memory(system_info.memory);
++        u_arc(system_info.arc);
+ 	u_swap(system_info.swap);
+ 	u_message(&(gstate->now));
+ 	u_header(hdr);
+diff -wpruN '--exclude=*.orig' a~/top.h a/top.h
+--- a~/top.h	1970-01-01 00:00:00
++++ a/top.h	1970-01-01 00:00:00
+@@ -59,6 +59,7 @@
+  */
+ 
+ #define NUM_AVERAGES    3
++#define NUM_ZFS_ARC     7
+ 
+ struct ext_decl {
+     int (*f_minibar)(char *, int);
