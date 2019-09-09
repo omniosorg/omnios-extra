@@ -28,6 +28,8 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
+CONFIGURE_OPTS_32+=" --disable-64bit-solaris"
+
 init
 download_source $PROG $PROG-cpp $VER
 prep_build
