@@ -17,19 +17,24 @@
 . ../../lib/functions.sh
 
 PROG=bat
-VER=0.11.0
+VER=0.12.1
 PKG=ooce/util/bat
 SUMMARY="cat alternative"
 DESC="A cat(1) clone with wings"
+
+# clang is a build-time requirement for 0.12.x
+CLANGVER=8.0
 
 if [ $RELVER -lt 151028 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
     exit 0
 fi
 
-BUILD_DEPENDS_IPS=ooce/developer/rust
+BUILD_DEPENDS_IPS="ooce/developer/rust ooce/developer/clang-${CLANGVER//./}"
 
 set_arch 64
+
+export LIBCLANG_PATH="$PREFIX/clang-$CLANGVER/lib"
 
 build() {
     logmsg "Building 64-bit"
