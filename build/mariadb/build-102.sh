@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=mariadb
-VER=10.2.26
+VER=10.2.27
 PKG=ooce/database/mariadb-102
 SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
