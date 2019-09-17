@@ -118,7 +118,7 @@
 
 # man pages should trigger a whatis database rebuild
 <transform file link path=opt/ooce/share/man/.*\.\d[a-z]*$ -> \
-    add restart_fmri svc:/system/rebuild-whatis:default>
+    add restart_fmri svc:/system/update-man-index:default>
 
 # Transforms to set facet.devel on files useful to developers only.
 
