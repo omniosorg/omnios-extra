@@ -1,6 +1,6 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
-| ooce/application/mattermost	| 5.14.2	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
+| ooce/application/mattermost	| 5.15.0	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.23	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-72	| 7.2.22	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-73	| 7.3.9		| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
