@@ -10,8 +10,8 @@ extra.omnios ooce/compress/pbzip2
 extra.omnios ooce/compress/pigz
 extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
-extra.omnios ooce/database/mariadb-102
 extra.omnios ooce/database/mariadb-103
+extra.omnios ooce/database/mariadb-104
 extra.omnios ooce/database/postgresql-10
 extra.omnios ooce/database/postgresql-96
 extra.omnios ooce/database/postgresql-common

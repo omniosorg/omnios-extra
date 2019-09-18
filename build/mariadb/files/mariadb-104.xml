@@ -23,8 +23,8 @@ CDDL HEADER END
 Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 -->
 
-<service_bundle type='manifest' name='mariadb102'>
-    <service name='ooce/database/mariadb102' type='service' version='1'>
+<service_bundle type='manifest' name='mariadb104'>
+    <service name='ooce/database/mariadb104' type='service' version='1'>
 
         <dependency name='filesystem-local'
 	    grouping='require_all' restart_on='error' type='service'>
@@ -41,13 +41,13 @@ Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 		<service_fmri value='svc:/milestone/network'/>
         </dependency>
 
-        <dependent name='mariadb102_multi-user' grouping='optional_all'
+        <dependent name='mariadb104_multi-user' grouping='optional_all'
 	    restart_on='none'>
                 <service_fmri value='svc:/milestone/multi-user' />
         </dependent>
 
         <exec_method type='method' name='start' timeout_seconds='120'
-            exec='/opt/ooce/mariadb-10.2/bin/mysqld_safe --datadir="%{datadir}" &amp;'>
+            exec='/opt/ooce/mariadb-10.4/bin/mysqld_safe --datadir="%{datadir}" &amp;'>
             <method_context security_flags='aslr'>
                 <method_credential user='mysql' group='mysql' />
             </method_context>
@@ -66,7 +66,7 @@ Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
         <instance name='default' enabled='false'>
             <property_group name='application' type='application'>
                 <propval name='datadir' type='astring'
-		    value='/var/opt/ooce/mariadb-10.2/data'/>
+		    value='/var/opt/ooce/mariadb-10.4/data'/>
             </property_group>
         </instance>
 
@@ -74,7 +74,7 @@ Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
         <template>
 	    <common_name>
-		<loctext xml:lang='C'> MariaDB 10.2 </loctext>
+		<loctext xml:lang='C'> MariaDB 10.4 </loctext>
 	    </common_name>
         </template>
     </service>
