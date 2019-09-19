@@ -1,0 +1,15 @@
+illumos does not define SI_KERNEL; codes greater than 0 are from kernel, see:
+https://github.com/omniosorg/illumos-omnios/blob/master/usr/src/uts/common/sys/siginfo.h#L124
+
+diff -wpruN '--exclude=*.orig' a~/sql/mysqld.cc a/sql/mysqld.cc
+--- a~/sql/mysqld.cc	1970-01-01 00:00:00
++++ a/sql/mysqld.cc	1970-01-01 00:00:00
+@@ -3286,7 +3286,7 @@ pthread_handler_t signal_hand(void *arg
+       }
+       break;
+     case SIGHUP:
+-      if (!abort_loop && origin != SI_KERNEL)
++      if (!abort_loop && origin <= SI_USER)
+       {
+         int not_used;
+ 	mysql_print_status();		// Print some debug info
