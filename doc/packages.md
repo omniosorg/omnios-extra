@@ -29,6 +29,7 @@
 | ooce/developer/go-113		| 1.13.5	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/gperf		| 3.1		| https://ftp.gnu.org/pub/gnu/gperf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-80	| 8.0.1		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/llvm-90	| 9.0.0		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ninja		| 1.9.0		| https://github.com/ninja-build/ninja/releases https://ninja-build.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| 1.3.5		| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| 0.3.1		| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
