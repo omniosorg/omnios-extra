@@ -48,7 +48,7 @@
 | ooce/library/libvorbis	| 1.3.6		| https://ftp.osuosl.org/pub/xiph/releases/vorbis/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvncserver	| 0.9.12	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libzip		| 1.5.2		| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/protobuf		| 3.9.1		| https://github.com/protocolbuffers/protobuf/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/protobuf		| 3.9.2		| https://github.com/protocolbuffers/protobuf/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/slang		| 2.3.2		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/unistring	| 0.9.10	| https://ftp.gnu.org/gnu/libunistring/ | [omniosorg](https://github.com/omniosorg)
 | ooce/lxadm			| 0.1.6		| https://github.com/hadfl/lxadm/releases | [omniosorg](https://github.com/omniosorg)
