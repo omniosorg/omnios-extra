@@ -2,5 +2,5 @@ configure.patch
 stackclash.patch
 solaris-install.patch
 build-in-zone.patch
-#ctf.patch
+ctf.patch
 hma.patch

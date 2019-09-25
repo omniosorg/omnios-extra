@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/SUPDrv.cpp a/src/VBox/HostDrivers/Support/SUPDrv.cpp
 --- a~/src/VBox/HostDrivers/Support/SUPDrv.cpp	1970-01-01 00:00:00
 +++ a/src/VBox/HostDrivers/Support/SUPDrv.cpp	1970-01-01 00:00:00
-@@ -4016,7 +4016,7 @@ SUPR0DECL(RTCCUINTREG) SUPR0ChangeCR4(RT
+@@ -4049,7 +4049,7 @@ SUPR0DECL(RTCCUINTREG) SUPR0ChangeCR4(RT
   */
  SUPR0DECL(int) SUPR0EnableVTx(bool fEnable)
  {
@@ -10,7 +10,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/SUPDrv.cpp a/src/
      return supdrvOSEnableVTx(fEnable);
  #else
      RT_NOREF1(fEnable);
-@@ -4034,7 +4034,7 @@ SUPR0DECL(int) SUPR0EnableVTx(bool fEnab
+@@ -4067,7 +4067,7 @@ SUPR0DECL(int) SUPR0EnableVTx(bool fEnab
   */
  SUPR0DECL(bool) SUPR0SuspendVTxOnCpu(void)
  {
@@ -19,7 +19,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/SUPDrv.cpp a/src/
      return supdrvOSSuspendVTxOnCpu();
  #else
      return false;
-@@ -4051,7 +4051,7 @@ SUPR0DECL(bool) SUPR0SuspendVTxOnCpu(voi
+@@ -4084,7 +4084,7 @@ SUPR0DECL(bool) SUPR0SuspendVTxOnCpu(voi
   */
  SUPR0DECL(void) SUPR0ResumeVTxOnCpu(bool fSuspended)
  {
@@ -39,7 +39,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/solaris/SUPDrv-so
  
  #include "../SUPDrvInternal.h"
  #include <VBox/log.h>
-@@ -973,6 +974,53 @@ bool VBOXCALL  supdrvOSAreTscDeltasInSyn
+@@ -972,6 +973,53 @@ bool VBOXCALL  supdrvOSAreTscDeltasInSyn
      return false;
  }
  
