@@ -332,7 +332,7 @@ shift $((OPTIND - 1))
 # Set up tools area
 #############################################################################
 
-logmsg "-- Initialising tools area"
+#logmsg "-- Initialising tools area"
 
 [ -d $TMPDIR/tools ] || mkdir -p $TMPDIR/tools
 # Disable any commands that should not be used for the build
@@ -347,7 +347,7 @@ BASEPATH=$TMPDIR/tools:$BASEPATH
 
 set_gccver() {
     GCCVER="$1"
-    logmsg "-- Setting GCC version to $GCCVER"
+    [ -z "$2" ] && logmsg "-- Setting GCC version to $GCCVER"
     GCCPATH="/opt/gcc-$GCCVER"
     GCC="$GCCPATH/bin/gcc"
     GXX="$GCCPATH/bin/g++"
@@ -367,7 +367,7 @@ set_gccver() {
     CXXFLAGS="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
 }
 
-set_gccver $DEFAULT_GCC_VER
+set_gccver $DEFAULT_GCC_VER -q
 
 #############################################################################
 # Go version
