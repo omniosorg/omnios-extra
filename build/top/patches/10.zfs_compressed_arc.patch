@@ -49,7 +49,7 @@ diff -wpruN '--exclude=*.orig' a~/display.c a/display.c
 +	    {
 +		char rbuf[6];
 +		(void) snprintf(rbuf, sizeof(rbuf), "%.2f", 
-+		    (float)*(numbers - 2) / (float)num);
++		    ((float)num)/100.0);
 +		display_write(x, y, color, 0, rbuf);
 +	    }
  	    else
@@ -73,7 +73,7 @@ diff -wpruN '--exclude=*.orig' a~/display.c a/display.c
  
 @@ -818,6 +841,7 @@ display_init(struct statics *statics)
  	num_memory = string_count(memory_names);
-         
+ 
          arc_names = statics->arc_names;
 +        carc_names = statics->carc_names;
  
@@ -189,7 +189,7 @@ diff -wpruN '--exclude=*.orig' a~/machine/m_sunos5.c a/machine/m_sunos5.c
  {
      #ifdef USE_KSTAT
      int status;
-@@ -941,6 +945,25 @@ get_arcstats(long arcstats[NUM_ZFS_ARC])
+@@ -941,6 +945,30 @@ get_arcstats(long arcstats[NUM_ZFS_ARC])
                  arcstats[5] = (long) kn->value.ui64 / 1024;
              }
  	}
@@ -205,7 +205,12 @@ diff -wpruN '--exclude=*.orig' a~/machine/m_sunos5.c a/machine/m_sunos5.c
 +                carc_stats[1] = (long) kn->value.ui64 / 1024;
 +            }
 +	}
-+        carc_stats[2] = arcstats[0];	/* ARC Total */
++	if (carc_stats[0] > 0)
++	{
++            /* We calculate this statistics here, and use 100 multiplier as numbers 
++               is array of long */
++            carc_stats[2] = round(((float) carc_stats[1])/((float) carc_stats[0])*100);
++	}
 +	if ((kn = kstat_data_lookup(ks_arcstats, "overhead_size")) != NULL)
 +	{
 +            if(kn->value.ui64 > 0){
@@ -215,7 +220,7 @@ diff -wpruN '--exclude=*.orig' a~/machine/m_sunos5.c a/machine/m_sunos5.c
      }
      dprintf("get_arcstats returns %d\n", status);
      return (status);
-@@ -1302,6 +1325,7 @@ machine_init (struct statics *statics)
+@@ -1302,6 +1330,7 @@ machine_init (struct statics *statics)
      statics->cpustate_names = cpustatenames;
      statics->memory_names = memorynames;
      statics->arc_names = arcnames;
@@ -223,9 +228,9 @@ diff -wpruN '--exclude=*.orig' a~/machine/m_sunos5.c a/machine/m_sunos5.c
      statics->kernel_names = kernelnames;
      statics->order_names = ordernames;
      statics->flags.fullcmds = 1;
-@@ -1483,8 +1507,9 @@ get_system_info (struct system_info *si)
+@@ -1483,8 +1512,9 @@ get_system_info (struct system_info *si)
      get_avenrun(avenrun);
-     
+ 
      /* get ARC information */
 -    get_arcstats(arcstats);
 +    get_arcstats(arcstats, carc_stats);
