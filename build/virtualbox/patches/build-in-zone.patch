@@ -3,7 +3,7 @@ Patch originally taken from OpenIndiana, author is Alexander Pyhalov
 diff -wpruN '--exclude=*.orig' a~/Config.kmk a/Config.kmk
 --- a~/Config.kmk	1970-01-01 00:00:00
 +++ a/Config.kmk	1970-01-01 00:00:00
-@@ -2701,8 +2701,6 @@ $(PATH_OUT)/DynamicConfig.kmk: \
+@@ -2796,8 +2796,6 @@ $(PATH_OUT)/DynamicConfig.kmk: \
  		$(VBOX_GCC32_PATH_CC) \
  		$(VBOX_GCC32_PATH_CXX) \
                 $(VBOX_GCC32_LIBGCC) \
