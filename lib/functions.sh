@@ -575,7 +575,9 @@ init() {
     # built in (i.e. what the tarball extracts to). This defaults to the name
     # and version of the program, which works in most cases.
     [ -z "$BUILDDIR" ] && BUILDDIR=$PROG-$VER
-    SRC_BUILDDIR=$BUILDDIR
+    # Preserve the original BUILDDIR since this can be changed for an
+    # out-of-tree build
+    EXTRACTED_SRC=$BUILDDIR
 
     # Build each package in a sub-directory of the temporary area.
     # In addition to keeping everything related to a package together,
@@ -601,6 +603,11 @@ init() {
     logcmd ln -sf $TMPDIR $SRCDIR/tmp
     [ -h $SRCDIR/tmp/src ] && rm -f $SRCDIR/tmp/src
     logcmd ln -sf $BUILDDIR $SRCDIR/tmp/src
+}
+
+set_builddir() {
+    BUILDDIR="$1"
+    EXTRACTED_SRC="$1"
 }
 
 #############################################################################
@@ -1251,7 +1258,7 @@ make_package() {
     fi
     if [ -n "$DESTDIR" ]; then
         logcmd $PKGSEND -s $PKGSRVR publish -d $DESTDIR \
-            -d $TMPDIR/$SRC_BUILDDIR \
+            -d $TMPDIR/$EXTRACTED_SRC \
             -d $SRCDIR -T \*.py $P5M_FINAL || \
         logerr "------ Failed to publish package"
     else
@@ -2010,7 +2017,7 @@ check_licences() {
 
         # Check if the "license" lines point to valid files
         flag=0
-        for dir in $DESTDIR $TMPDIR/$SRC_BUILDDIR $SRCDIR; do
+        for dir in $DESTDIR $TMPDIR/$EXTRACTED_SRC $SRCDIR; do
             if [ -f "$dir/$file" ]; then
                 #logmsg "   found in $dir/$file"
                 flag=1
