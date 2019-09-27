@@ -18,7 +18,7 @@
 
 PROG=php
 PKG=ooce/application/php-72
-VER=7.2.22
+VER=7.2.23
 VERHUMAN=$VER
 SUMMARY="PHP 7.2"
 DESC="A popular general-purpose scripting language"

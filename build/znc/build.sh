@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=znc
-VER=1.7.4
+VER=1.7.5
 VERHUMAN=$VER
 PKG=ooce/network/znc
 SUMMARY="$PROG - an advanced IRC bouncer"
@@ -32,10 +32,6 @@ XFORM_ARGS="
 "
 
 set_arch 64
-
-CXXFLAGS=-g
-# Enable verbose make
-MAKE_JOBS+=" V=1"
 
 install_modules() {
     for f in $SRCDIR/files/*.cpp; do
