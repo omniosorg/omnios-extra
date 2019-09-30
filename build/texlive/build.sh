@@ -97,7 +97,7 @@ install_dist() {
     logcmd cp -RP $TMPDIR/$PROG-$VER-texmf/texmf-dist $DESTDIR$PREFIX/share/
     logmsg "--- Copying extra"
     logcmd cp -RP $TMPDIR/$PROG-$VER-extra/tlpkg $DESTDIR$PREFIX/share/
-    logcmd cp $TMPDIR/$PROG-$VER-extra/LICENSE.TL $TMPDIR/$SRC_BUILDDIR/LICENSE.TL
+    logcmd cp $TMPDIR/$PROG-$VER-extra/LICENSE.TL $TMPDIR/$EXTRACTED_SRC/LICENSE.TL
 }
 
 config_tex() {

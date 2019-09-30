@@ -27,7 +27,7 @@ if [ $RELVER -lt 151028 ]; then
     exit 0
 fi
 
-BUILD_DEPENDS_IPS=ooce/developer/rust@1.33
+BUILD_DEPENDS_IPS=ooce/developer/rust
 
 set_arch 64
 
@@ -53,7 +53,7 @@ install() {
 }
 
 init
-download_source rust$PROG rust$PROG $VER
+download_source $PROG rust$PROG $VER
 patch_source
 prep_build
 build
