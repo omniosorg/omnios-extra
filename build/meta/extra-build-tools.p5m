@@ -1,0 +1,28 @@
+set name=pkg.fmri value=pkg://@PKGPUBLISHER@/ooce/extra-build-tools@11,5.11-@PVER@
+set name=pkg.summary value="Tools required to build OmniOS extra"
+set name=pkg.description value="Tools required to build OmniOS extra"
+
+depend fmri=driver/tuntap type=require
+depend fmri=ooce/audio/flac type=require
+depend fmri=ooce/compress/lz4 type=require
+depend fmri=ooce/database/bdb type=require
+depend fmri=ooce/database/lmdb type=require
+depend fmri=ooce/developer/clang-80 type=require
+depend fmri=ooce/developer/cmake type=require
+depend fmri=ooce/developer/go-111 type=require
+depend fmri=ooce/developer/go-112 type=require
+depend fmri=ooce/developer/llvm-80 type=require
+depend fmri=ooce/developer/rust type=require
+depend fmri=ooce/library/libev type=require
+depend fmri=ooce/library/libexif type=require
+depend fmri=ooce/library/libid3tag type=require
+depend fmri=ooce/library/libidl type=require
+depend fmri=ooce/library/libjpeg-turbo type=require
+depend fmri=ooce/library/libvncserver type=require
+depend fmri=ooce/library/libvorbis type=require
+depend fmri=ooce/library/protobuf type=require
+depend fmri=ooce/library/slang type=require
+depend fmri=ooce/multimedia/ffmpeg type=require
+depend fmri=system/header/header-agp type=require
+depend fmri=system/header/header-usb type=require
+

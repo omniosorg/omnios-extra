@@ -28,7 +28,7 @@ BUILDDIR=cfe-$VER.src
 
 MAJVER=${VER%.*}
 
-BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}@$VER-$RELVER"
+BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}"
 # Using the = prefix to require the specific matching version of llvm
 # need gcc until compiler-rt ships its own crtbegin, crtend objects
 RUN_DEPENDS_IPS="=$BUILD_DEPENDS_IPS developer/gcc$GCCVER"

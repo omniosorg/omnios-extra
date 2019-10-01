@@ -105,10 +105,13 @@ OOCEMIRROR=https://mirrors.omniosce.org
 # If $MIRROR begins with a '/', it is treated as a local directory.
 MIRROR=$OOCEMIRROR
 
-# The production IPS repository for this branch (may be overriden in site.sh)
+# The production IPS repository for this branch (may be overridden in site.sh)
 # Used for package contents diffing.
-IPS_REPO=https://pkg.omniosce.org/r$RELVER/extra
-[ $((RELVER % 2)) != 0 ] && IPS_REPO=https://pkg.omniosce.org/bloody/extra
+if [ $((RELVER % 2)) == 0 ]; then
+    IPS_REPO=https://pkg.omniosce.org/r$RELVER/extra
+else
+    IPS_REPO=https://pkg.omniosce.org/bloody/extra
+fi
 
 ARCHIVE_TYPES="tar.xz tar.bz2 tar.gz tgz tar zip"
 
@@ -165,7 +168,7 @@ PERL_MAKE_TEST=1
 WGET=wget
 PATCH=gpatch
 MAKE=gmake
-TESTSUITE_MAKE="gmake --quiet"
+TESTSUITE_MAKE=gmake
 TAR="gtar --no-same-permissions --no-same-owner"
 GZIP=/opt/ooce/bin/pigz
 BUNZIP2=/opt/ooce/bin/pbunzip2
@@ -175,6 +178,7 @@ AWK=gawk
 GIT=git
 RIPGREP=/opt/ooce/bin/rg
 CMAKE=/opt/ooce/bin/cmake
+MESON_MAKE=/opt/ooce/bin/ninja
 # Command for privilege escalation. Can be overridden in site.sh
 PFEXEC=sudo
 
@@ -203,13 +207,15 @@ MAKE_INSTALL_ARGS_WS=
 MAKE_INSTALL_ARGS_32=
 MAKE_INSTALL_ARGS_64=
 NO_PARALLEL_MAKE=
+MAKE_TESTSUITE_ARGS=--quiet
+MAKE_TESTSUITE_ARGS_WS=
 
 # Remove install or packaging files by default. You can set this in a build
 # script when testing to speed up building a package
 DONT_REMOVE_INSTALL_DIR=
 
 #############################################################################
-# C compiler options - these can be overriden by a build script
+# C compiler options - these can be overridden by a build script
 #############################################################################
 # isaexec(3C) variants
 # These variables will be passed to the build to construct multi-arch
@@ -231,7 +237,7 @@ case $RELVER in
     15102[34])          DEFAULT_GCC_VER=5 ;;
     15102[56])          DEFAULT_GCC_VER=6 ;;
     15102[78])          DEFAULT_GCC_VER=7 ;;
-    151029|15103[01])   DEFAULT_GCC_VER=8 ;;
+    151029|15103[0-3])  DEFAULT_GCC_VER=8 ;;
     *) logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
 

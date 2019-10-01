@@ -8,8 +8,8 @@ build_flags=
 declare -A targets
 # fulltargets maps full package names to their build script.
 declare -A fulltargets
-# list of licenses
-declare -A licenses
+# expensive package lookup table
+declare -A expensive
 
 add_target() {
     local pkg=$1
@@ -63,36 +63,17 @@ add_buildscripts() {
     done
 }
 
+add_expensive() {
+    typeset i=1
+    for pkg in $EXPENSIVE; do
+        expensive[$pkg]=$((i++))
+    done
+}
+
 add_targets() {
     add_manifests
     add_buildscripts
-}
-
-detect_licenses() {
-    for build in `find . -name build\*.sh | cut -c3-`; do
-        for PKG in $(grep -v '##IGNORE##' $build | \
-            sed -e '
-                s/^ +//
-                s/ +#.+//
-                s/=/ /g
-                s/^.+make_package/make_package/g
-      ' | nawk '
-            $1 == "PKG" { PKG=$2 }
-            $1 == "make_package" { print PKG"="$2 }
-      '); do
-            MOG=${PKG#*=}
-            PKG=${PKG%=*}
-            LOCALMOG="`dirname $build`/local.mog"
-            [ -f $MOG ] || MOG=""
-            [ -f $LOCALMOG ] || LOCALMOG=""
-            LICENSE=`nawk '
-                /"/ { gsub("\"", "") }
-                /^license/ { print $3 }
-                ' $MOG $LOCALMOG /dev/null | xargs`
-            licenses+=([$PKG]=$LICENSE)
-            print -f "."
-        done
-    done
+    add_expensive
 }
 
 usage() {
@@ -100,10 +81,10 @@ usage() {
 $0
     list [grep pattern]            - sorted alphabetically
     list-build [grep pattern]      - sorted in build order
-    licenses                       - audit licenses
+    list-built [grep pattern]      - show package build status
     build <pkg>
-    build [-e] all
-    build [-e] parallel <threads>  - start/continue parallel build
+    build [-e|E] all
+    build [-e|E] parallel <num>    - start/continue parallel build
     build continue                 - continue interrupted build
     build from <pkg>               - build <pkg> then those after
     baseline [create [repo]]       - check or create pkg baseline
@@ -111,14 +92,10 @@ $0
 Options:
 
     -e                             - also build packages flagged as expensive
+    -E                             - force (re-)build of expensive packages
 
 EOM
 
-    exit
-}
-
-bail() {
-    echo $*
     exit
 }
 
@@ -158,6 +135,16 @@ list_build() {
     done
 }
 
+list_built() {
+    PAT=${1-.}
+
+    buildorder | while read target; do
+        echo $target | egrep -s "$PAT" || continue
+        is_built $target && echo "${c_highlight}* \\c" || echo "${c_error}  \\c"
+        echo $target$c_reset
+    done
+}
+
 ##############################################################################
 # Built package cache management.
 
@@ -168,10 +155,23 @@ built_pipe="$TMPDIR/built.ipc"
 # Record all expensive packages as already built
 record_expensive() {
     if [ -n "$EXPENSIVE" -a "$BUILD_EXPENSIVE" -eq 0 ]; then
+        record_built '# start of expensive packages'
         for pkg in $EXPENSIVE; do
             record_built $pkg
         done
+        record_built '# end of expensive packages'
     fi
+}
+
+# Remove all expensive packages from the built cache
+remove_expensive() {
+    [ -f "$BUILT_CACHE" ] || return
+    [ -n "$EXPENSIVE" ] || return
+    for pkg in $EXPENSIVE; do
+        cp $BUILT_CACHE $BUILT_CACHE.$$
+        egrep -v "^$pkg\$" $BUILT_CACHE.$$ > $BUILT_CACHE
+        rm -f $BUILT_CACHE.$$
+    done
 }
 
 clear_built() {
@@ -182,7 +182,13 @@ clear_built() {
 record_built() {
     if [ -n "$BUILDCTL_PARALLEL" ]; then
         [ -p "$built_pipe" ] || logerr "Built cache pipe does not exist."
-        echo "$*" >> $built_pipe
+        for i in {1..10}; do
+            echo "$*" >> $built_pipe
+            # SIGPIPE, pipe could be full
+            [ $? -ne 141 ] && break
+            logmsg -e "Built pipe is full, retrying..."
+            sleep 1
+        done
     else
         already_built+=([$1]=1)
         [ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
@@ -214,8 +220,9 @@ stop_built_listener() {
 
 restore_built() {
     [ -f "$BUILT_CACHE" ] || record_expensive
+    touch "$BUILT_CACHE"
 
-    for pkg in `cat "$BUILT_CACHE"`; do
+    for pkg in `grep -v '^#' "$BUILT_CACHE"`; do
         [ -n "${already_built[$pkg]}" ] || already_built+=([$pkg]=1)
     done
 }
@@ -247,22 +254,22 @@ build_manifest() {
     translate_manifest $mf $mf.final
     if [ -f root.tar.bz2 ]; then
         logmsg "File archive found. Extracting..."
-        logcmd bzip2 -dc root.tar.bz2 | tar xf - \
-            || bail "Failed to extract root.tar.bz2"
+        bzip2 -dc root.tar.bz2 | tar xf - \
+            || logerr "Failed to extract root.tar.bz2"
         logmsg "Publishing from $mf.final"
         logcmd pkgsend -s $PKGSRVR publish -d $PKGROOT $mf.final \
-            || bail "pkgsend failed"
+            || logerr "pkgsend failed"
         logcmd rm -rf $PKGROOT
     elif [ -d "$PKGROOT" ]; then
         # In case we just have a tree of files and not a tarball
         logmsg "Publishing from $mf.final"
         logcmd pkgsend -s $PKGSRVR publish -d $PKGROOT $mf.final \
-            || bail "pkgsend failed"
+            || logerr "pkgsend failed"
     else
         # Else we just have a manifest to import
         logmsg "Simple manifest to import... importing to $PKGSRVR"
         logcmd pkgsend -s $PKGSRVR publish $mf.final \
-            || bail "pkgsend failed"
+            || logerr "pkgsend failed"
     fi
     rm -f $mf.final
 }
@@ -274,7 +281,7 @@ build() {
         buildtgt="${targets[$1]}"
         logmsg "--- $1 -> $buildtgt"
     else
-        bail "Unknown package: $1"
+        logerr "Unknown package: $1"
     fi
     if is_built $buildtgt; then
         logmsg "--- Package $1 was already built."
@@ -282,7 +289,7 @@ build() {
         BUILD=${fulltargets[$buildtgt]}
         DIR="`dirname $BUILD`"
         SCRIPT="`basename $BUILD`"
-        pushd $DIR > /dev/null || bail "Cannot chdir to $DIR"
+        pushd $DIR > /dev/null || logerr "Cannot chdir to $DIR"
         PKGSRVR=$DEFAULT_PKGSRVR
         PKGPUBLISHER=$DEFAULT_PKGPUBLISHER
         PKGROOT=`pwd`/root
@@ -303,25 +310,6 @@ build() {
         fi
         popd >/dev/null
     fi
-}
-
-licenses() {
-    detect_licenses
-    echo
-    for target in "${!licenses[@]}"
-    do
-        if [ -n "${licenses[$target]}" ]; then
-            echo " * $target     -> ${licenses[$target]}"
-        fi
-    done | sort
-    echo
-    echo "=== Packages missing license information ==="
-    for target in "${!licenses[@]}"
-    do
-        if [ -z "${licenses[$target]}" ]; then
-            echo " * $target"
-        fi
-    done | sort
 }
 
 baseline() {
@@ -362,31 +350,123 @@ baseline() {
     rm -f $TMPDIR/baseline.$$
 }
 
+hashline="`printf -- '#%.0s' {1..79}`"
 job_status() {
-    logmsg "######################################################"
-    logmsg "-- Job status $*--"
+    local _stat="$*"
+    elapsed=$((`date +%s` - build_start))
+    logmsg -h "$hashline"
+    logmsg -h "-- Job status $_stat-- `print_elapsed $elapsed` --"
     now=`date +%s`
 
     for i in `seq 0 $threads`; do
         [ -n "${slots[$i]}" ] || continue
         ((tm = now - ${slotstart[$i]}))
-        logmsg "`printf "    [%d] %8d - (%5ds) %s\n" \
-            "$i" "${slots[$i]}" "$tm" "${slotdesc[$i]}"`"
+        e=' '
+        p="${slottgt[$i]}"
+        if [ -n "${expensive[$p]}" ]; then
+            e='*'
+        elif [ $tm -lt 70 ]; then
+            e='+'
+        fi
+        logmsg -h "`printf "    [%d] %8d - (%5ds) %s\n" \
+            "$i" "${slots[$i]}" "$tm" "$e${slotdesc[$i]}"`"
     done
-    logmsg "######################################################"
+    logmsg -h "$hashline"
+}
+
+# Reap a finished job
+reap_slot() {
+    typeset -i i=$1
+
+    wait "${slots[$i]}"
+    typeset s=$?
+    typeset job="${slottgt[$i]}"
+    typeset -i ret=0
+    case $s in
+        0)  logmsg -n "-- Job $i ($job) terminated normally"
+            ;;
+        141)
+            # Jobs sometimes terminate with 141 (SIGPIPE) but have
+            # actually run to completion. We don't know why this
+            # happens yet, but treat this as a successful run for now.
+            # If the build or publication has not worked, the baseline
+            # check will catch it.
+            logmsg -n "-- Job $i ($job) terminated with SIGPIPE"
+            ;;
+        *)  logmsg -e "-- Job $i ($job) terminated with status $s"
+            note -e "***** BUILD ERROR ***** ($job/$s)"
+            ret=1
+            ;;
+    esac
+    slots[$i]=
+    return $ret
+}
+
+nextslot=
+wait_for_slot() {
+    nextslot=
+    err=
+    while :; do
+        for i in `seq 0 $threads`; do
+            # Idle slot? Just return the slot number
+            [ -z "${slots[$i]}" ] && nextslot=$i && return
+            # Job finished?
+            kill -0 "${slots[$i]}" 2>/dev/null && continue
+            # Yes, reap it
+            reap_slot $i && nextslot=$i
+            return
+        done
+        # Print status summary each minute (approx.)
+        [ `date +%S` -eq 0 ] && job_status
+        sleep 1
+    done
+}
+
+wait_for_jobs() {
+    local msg="$1"
+    while :; do
+        typeset -i running=0
+        for i in `seq 0 $threads`; do
+            [ -n "${slots[$i]}" ] || continue
+            if ! kill -0 "${slots[$i]}" 2>/dev/null; then
+                # Job has finished
+                reap_slot $i
+            else
+                ((running++))
+            fi
+        done
+        [ "$running" -eq 0 ] && break
+        [ `date +%S` -eq 0 ] && job_status "($msg) "
+        sleep 1
+    done
+}
+
+count_expensive() {
+    typeset -i ne=0
+    for i in `seq 0 $threads`; do
+        [ -z "${slots[$i]}" ] && continue
+        p="${slottgt[$i]}"
+        # Expensive?
+        [ -n "${expensive[$p]}" ] || continue
+        ((ne++))
+    done
+    echo $ne
 }
 
 parallel_build() {
     threads=$1
-    # Lint is not thread-safe and skip test-suite in parallel build mode.
+    # pkglint is not thread-safe so skip it and the test-suite in parallel
+    # build mode.
     build_flags="-b -t -l"
     export BATCH=1  # So logerr() exits without prompting
+    [ -n "$USE_CCACHE" ] && build_flags+=" -c"
 
     note "Starting parallel build with $threads thread(s)"
 
+    build_start=`date +%s`
+
     ((threads = threads - 1))
 
-    pkgcount=${#fulltargets[@]}
     pkgnum=0
 
     start_built_listener
@@ -397,9 +477,30 @@ parallel_build() {
     declare -A slottgt
     declare -A slotdesc
     declare -A slotstart
+    declare -a queue
 
+    [ -n "$ETHROTTLE" ] || ETHROTTLE=0
+
+    # Queue up the packages to build
     for tgt in `buildorder`; do
-        ((pkgnum = pkgnum + 1))
+        queue+=($tgt)
+    done
+
+    pkgcount=${#queue[@]}
+
+    while [ ${#queue[@]} -gt 0 ]; do
+        # Pop tgt off queue
+        tgt=${queue[0]}; queue=("${queue[@]:1}")
+        nextslot=
+
+        ((pkgnum++))
+
+        # Handle special targets
+        if [ "$tgt" = ".WAIT" ]; then
+            # Special target that waits until there are no running jobs
+            wait_for_jobs "emptying queue"
+            continue
+        fi
 
         # If this target belongs to the same script as an already running
         # job, skip it.
@@ -412,70 +513,76 @@ parallel_build() {
             fi
         done
 
-        logmsg "-- Waiting for spare job slot for $tgt"
-
-        err=
-        while :; do
-            for i in `seq 0 $threads`; do
-                # Idle slot?
-                if [ -z "${slots[$i]}" ] || \
-                  ! kill -0 "${slots[$i]}" 2>/dev/null; then
-                    # Reap terminated job
-                    if [ -n "${slots[$i]}" ]; then
-                        #logmsg "-- waiting for job $i (${slots[$i]})..."
-                        wait "${slots[$i]}"
-                        s=$?
-                        if [ $s -ne 0 ]; then
-                            logmsg -e "-- Job $i terminated with status $s"
-                            err="${slottgt[$i]}"
-                            note "***** BUILD ERROR ***** ($err)"
-                            break 3
-                        else
-                            logmsg "-- Job $i terminated normally"
-                        fi
-                    fi
-                    note "($pkgnum/$pkgcount) Building $tgt (slot $i)"
-                    logprefix="[$i] " build $tgt &
-                    slots[$i]=$!
-                    slottgt[$i]=$tgt
-                    slotdesc[$i]="`printf "(%3d/%d) %s" $pkgnum $pkgcount $tgt`"
-                    slotstart[$i]=`date +%s`
-                    break 2
+        # If this target is expensive and we want to throttle the number
+        # of parallel expensive jobs, then check that we are not running too
+        # many expensive jobs in parallel. If so, then the job is moved
+        # to later on in the queue unless it is already near the end in
+        # which case we just wait until the number of expensive jobs has
+        # dropped before proceeding.
+        if [ "$ETHROTTLE" -gt 0 -a -n "${expensive[$tgt]}" ]; then
+            # Count the number of running expensive targets
+            ne=`count_expensive`
+            if [ $ne -ge $ETHROTTLE ]; then
+                # Calculate the new queue position for this target.
+                # Currently just its position in the expensive array
+                # multipled by 10. If the queue is shorter than the new
+                # location, then the target is just appended.
+                newloc=${expensive[$tgt]}
+                ((newloc *= 10))
+                # Ensure that kayak-kernel remains last
+                if [ $((newloc + 1)) -ge ${#queue[@]} ]; then
+                    newloc=${#queue[@]}
+                    ((newloc -= 2))
                 fi
-            done
-            # Print status summary each minute (approx.)
-            [ `date +%S` -eq 0 ] && job_status
-            sleep 1
-        done
+                # If the new location is at the head of the queue or if
+                # the queue size is less than the number of expensive
+                # packages, then we are draining. Just pause until the
+                # number of expensive jobs has dropped low enough.
+                if [ $newloc -le 0 -o ${#queue[@]} -le ${#expensive[@]} ]; then
+                    logmsg -n "-- $tgt, waiting for number of jobs to drop"
+                    while [ `count_expensive` -gt $ETHROTTLE ]; do
+                        wait_for_slot
+                    done
+                    break
+                else
+                    logmsg -n "-- $tgt, relocating to $newloc/${#queue[@]}"
+                    _queue=("${queue[@]:0:newloc}")
+                    _queue+=($tgt)
+                    _queue+=("${queue[@]:newloc}")
+                    queue=("${_queue[@]}")
+                    # Next queue target
+                    ((pkgnum--))
+                    continue
+                fi
+            fi
+        fi
+
+        if [ -z "$nextslot" ]; then
+            logmsg "-- Waiting for spare job slot for $tgt"
+            wait_for_slot
+            [ -n "$nextslot" ] || break
+        fi
+
+        note -h "($pkgnum/$pkgcount) Building $tgt (slot $nextslot)"
+        logprefix="[$nextslot] " build $tgt &
+        slots[$nextslot]=$!
+        slottgt[$nextslot]=$tgt
+        slotdesc[$nextslot]="`printf "(%3d/%d) %s" $pkgnum $pkgcount $tgt`"
+        slotstart[$nextslot]=`date +%s`
     done
 
     if [ -n "$err" -a -z "$NOKILL_ON_ERROR" ]; then
-        logmsg "-- error encountered, killing jobs"
+        logmsg -e "-- error encountered, killing jobs"
         for i in `seq 0 $threads`; do
             [ -n "${slots[$i]}" ] && kill "${slots[$i]}"
         done
     else
-        logmsg "-- waiting for jobs to finish"
-        while :; do
-            running=0
-            for i in `seq 0 $threads`; do
-                [ -n "${slots[$i]}" ] || continue
-                if ! kill -0 "${slots[$i]}" 2>/dev/null; then
-                    # Job has finished
-                    wait "${slots[$i]}"
-                    slots[$i]=
-                else
-                    ((running = running + 1))
-                fi
-            done
-            [ "$running" -eq 0 ] && break
-            [ `date +%S` -eq 0 ] && job_status "(draining) "
-            sleep 1
-        done
+        logmsg -h "-- waiting for jobs to finish"
+        wait_for_jobs draining
     fi
 
     if [ -n "$err" ]; then
-        note "***** BUILD ERROR ***** ($err)"
+        note -e "***** BUILD ERROR ***** ($err)"
     else
         baseline check
     fi
@@ -498,36 +605,40 @@ DEFAULT_PKGPUBLISHER=$PKGPUBLISHER
 case "$1" in
     config)
         print_config
-        exit
         ;;
 
     list)
         add_targets
         list $2
-        exit
         ;;
 
     list-build)
         add_targets
         list_build $2
-        exit
         ;;
 
-    licenses)
-        licenses
-        exit
+    list-built)
+        add_targets
+        restore_built
+        list_built $2
         ;;
 
     baseline)
         shift
         baseline "$@"
-        exit
         ;;
 
     build)
         add_targets
         shift
         [ "$1" = "-e" ] && BUILD_EXPENSIVE=1 && shift
+        [ "$1" = "-c" ] && USE_CCACHE=1 && shift
+        if [ "$1" = "-E" ]; then
+            # Force (re)build of expensive packages
+            remove_expensive
+            BUILD_EXPENSIVE=1
+            shift
+        fi
         tobuild="$@"
         [ -z "$tobuild" ] && tobuild=all
 
@@ -551,6 +662,7 @@ case "$1" in
 
         if [ "$tobuild" = "all" ]; then
             build_flags="-b -t -l"
+            [ -n "$USE_CCACHE" ] && build_flags+=" -c"
             export BATCH=1  # So logerr() exits without prompting
 
             pkgcount=${#fulltargets[@]}
@@ -583,13 +695,15 @@ case "$1" in
                 done
             fi
         fi
-        exit
         ;;
 
     *)
         usage
         ;;
 esac
+
+# Set PKG before exit so that the elapsed time is labelled properly
+PKG="Total build"
 
 # Vim hints
 # vim:ts=4:sw=4:et:

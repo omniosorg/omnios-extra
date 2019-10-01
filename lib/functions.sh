@@ -89,9 +89,8 @@ process_opts() {
                 SKIP_CHECKSUM=1
                 ;;
             f)
-                FLAVOR=$OPTARG
-                OLDFLAVOR=$OPTARG # Used to see if the script overrides the
-                                   # flavor
+                FLAVOR="$OPTARG"
+                OLDFLAVOR="$OPTARG" # Used to see if the script overrides
                 ;;
             r)
                 PKGSRVR=$OPTARG
@@ -214,6 +213,7 @@ note() {
     typeset xarg=
     [ "$1" = "-h" ] && xarg=$1 && shift
     [ "$1" = "-e" ] && xarg=$1 && shift
+    [ "$1" = "-n" ] && xarg=$1 && shift
     logmsg ""
     logmsg $xarg "***"
     logmsg $xarg "*** $@"
@@ -329,10 +329,21 @@ process_opts $@
 shift $((OPTIND - 1))
 
 #############################################################################
+# Running as root is not safe
+#############################################################################
+if [ "$UID" = "0" ]; then
+    if [ -n "$ROOT_OK" ]; then
+        logmsg "--- Running as root, but ROOT_OK is set; continuing"
+    else
+        logerr "--- You should not run this as root"
+    fi
+fi
+
+#############################################################################
 # Set up tools area
 #############################################################################
 
-logmsg "-- Initialising tools area"
+#logmsg "-- Initialising tools area"
 
 [ -d $TMPDIR/tools ] || mkdir -p $TMPDIR/tools
 # Disable any commands that should not be used for the build
@@ -347,15 +358,15 @@ BASEPATH=$TMPDIR/tools:$BASEPATH
 
 set_gccver() {
     GCCVER="$1"
-    logmsg "-- Setting GCC version to $GCCVER"
+    [ -z "$2" ] && logmsg "-- Setting GCC version to $GCCVER"
     GCCPATH="/opt/gcc-$GCCVER"
     GCC="$GCCPATH/bin/gcc"
     GXX="$GCCPATH/bin/g++"
     [ -x "$GCC" ] || logerr "Unknown compiler version $GCCVER"
     PATH="$GCCPATH/bin:$BASEPATH"
     for cmd in gcc g++; do
-        [ -h $TMPDIR/tools/$cmd ] && rm -f $TMPDIR/tools/$cmd
-        ln -sf $GCCPATH/bin/$cmd $TMPDIR/tools/$cmd || logerr "$cmd link"
+        [ -h $BASE_TMPDIR/tools/$cmd ] && rm -f $TMPDIR/tools/$cmd
+        ln -sf $GCCPATH/bin/$cmd $BASE_TMPDIR/tools/$cmd || logerr "$cmd link"
     done
     if [ -n "$USE_CCACHE" ]; then
         [ -x $CCACHE_PATH/ccache ] || logerr "Ccache is not installed"
@@ -367,7 +378,7 @@ set_gccver() {
     CXXFLAGS="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
 }
 
-set_gccver $DEFAULT_GCC_VER
+set_gccver $DEFAULT_GCC_VER -q
 
 #############################################################################
 # Go version
@@ -429,7 +440,7 @@ forgo_isaexec() {
 }
 
 set_arch() {
-    [[ $1 =~ ^(32|64)$ ]] || logerr "Bad argument to set_arch"
+    [[ $1 =~ ^(both|32|64)$ ]] || logerr "Bad argument to set_arch"
     BUILDARCH=$1
     forgo_isaexec
 }
@@ -439,7 +450,6 @@ BasicRequirements() {
     [ -x $GCCPATH/bin/gcc ] || needed+=" developer/gcc$GCCVER"
     [ -x /usr/bin/ar ] || needed+=" developer/object-file"
     [ -x /usr/bin/ld ] || needed+=" developer/linker"
-    [ -f /usr/lib/crt1.o ] || needed+=" developer/library/lint"
     [ -x /usr/bin/gmake ] || needed+=" developer/build/gnu-make"
     [ -f /usr/include/sys/types.h ] || needed+=" system/header"
     [ -f /usr/include/math.h ] || needed+=" system/library/math"
@@ -461,17 +471,6 @@ BasicRequirements() {
 BasicRequirements
 
 #############################################################################
-# Running as root is not safe
-#############################################################################
-if [ "$UID" = "0" ]; then
-    if [ -n "$ROOT_OK" ]; then
-        logmsg "--- Running as root, but ROOT_OK is set; continuing"
-    else
-        logerr "--- You should not run this as root"
-    fi
-fi
-
-#############################################################################
 # Check the OpenSSL mediator
 #############################################################################
 
@@ -491,10 +490,22 @@ fi
 
 logmsg "===== Build started at `date` ====="
 
+print_elapsed() {
+    typeset s=$1
+    printf '%dh%dm%ds' $((s/3600)) $((s%3600/60)) $((s%60))
+}
+
+build_end() {
+    rv=$?
+    if [ -n "$PKG" -a -n "$build_start" ]; then
+        logmsg "Time: $PKG - $(print_elapsed $((`date +%s` - build_start)))"
+        build_start=
+    fi
+    exit $rv
+}
+
 build_start=`date +%s`
-trap '[ -n "$build_start" ] && \
-    logmsg Time: $PKG - $((`date +%s` - build_start)) && \
-    build_start=' EXIT
+trap 'build_end' EXIT
 
 #############################################################################
 # Libtool -nostdlib hacking
@@ -564,7 +575,9 @@ init() {
     # built in (i.e. what the tarball extracts to). This defaults to the name
     # and version of the program, which works in most cases.
     [ -z "$BUILDDIR" ] && BUILDDIR=$PROG-$VER
-    SRC_BUILDDIR=$BUILDDIR
+    # Preserve the original BUILDDIR since this can be changed for an
+    # out-of-tree build
+    EXTRACTED_SRC=$BUILDDIR
 
     # Build each package in a sub-directory of the temporary area.
     # In addition to keeping everything related to a package together,
@@ -586,10 +599,16 @@ init() {
     fi
 
     # Create symbolic links to build area
+    logcmd mkdir -p $TMPDIR
     [ -h $SRCDIR/tmp ] && rm -f $SRCDIR/tmp
     logcmd ln -sf $TMPDIR $SRCDIR/tmp
     [ -h $SRCDIR/tmp/src ] && rm -f $SRCDIR/tmp/src
     logcmd ln -sf $BUILDDIR $SRCDIR/tmp/src
+}
+
+set_builddir() {
+    BUILDDIR="$1"
+    EXTRACTED_SRC="$1"
 }
 
 #############################################################################
@@ -670,17 +689,25 @@ prep_build() {
         logcmd chmod -R u+w $DESTDIR > /dev/null 2>&1
         logcmd rm -rf $DESTDIR || \
             logerr "Failed to remove old temporary install dir"
-        mkdir -p $DESTDIR || \
+        logcmd mkdir -p $DESTDIR || \
             logerr "Failed to create temporary install dir"
     fi
 
     [ -n "$OUT_OF_TREE_BUILD" ] \
         && CONFIGURE_CMD=$TMPDIR/$BUILDDIR/$CONFIGURE_CMD
 
-    if [ "$style" = cmake ]; then
-        OUT_OF_TREE_BUILD=1
-        CONFIGURE_CMD="$CMAKE $TMPDIR/$BUILDDIR"
-    fi
+    case "$style" in
+        cmake)
+            OUT_OF_TREE_BUILD=1
+            CONFIGURE_CMD="$CMAKE $TMPDIR/$BUILDDIR"
+            ;;
+        meson)
+            OUT_OF_TREE_BUILD=1
+            MAKE="$MESON_MAKE"
+            TESTSUITE_MAKE="$MESON_MAKE"
+            CONFIGURE_CMD="$PYTHONLIB/python$PYTHONVER/bin/meson setup $TMPDIR/$BUILDDIR"
+            ;;
+    esac
 
     if [ -n "$OUT_OF_TREE_BUILD" ]; then
         logmsg "-- Setting up for out-of-tree build"
@@ -695,9 +722,6 @@ prep_build() {
     # ... and to DESTDIR
     [ -h $SRCDIR/tmp/pkg ] && rm -f $SRCDIR/tmp/pkg
     logcmd ln -sf $DESTDIR $SRCDIR/tmp/pkg
-    # Set DEPROOT and wipe if present
-    DEPROOT=$TMPDIR/_deproot
-    [ -d "$DEPROOT" ] && rm -rf "$DEPROOT"
 }
 
 #############################################################################
@@ -749,6 +773,7 @@ apply_patches() {
         exec 3<"$SRCDIR/$PATCHDIR/series" # Open the series file with handle 3
         pushd $TMPDIR/$BUILDDIR > /dev/null
         while read LINE <&3 ; do
+            [[ $LINE = \#* ]] && continue
             # Split Line into filename+args
             patch_file $LINE
         done
@@ -767,10 +792,11 @@ rebase_patches() {
     # Read the series file for patch filenames
     exec 3<"$SRCDIR/$PATCHDIR/series"
     pushd $TMPDIR > /dev/null
-    rsync -a --delete $BUILDDIR/ $BUILDDIR.unpatched/
+    rsync -ac --delete $BUILDDIR/ $BUILDDIR.unpatched/
     while read LINE <&3 ; do
+        [[ $LINE = \#* ]] && continue
         patchfile="$SRCDIR/$PATCHDIR/`echo $LINE | awk '{print $1}'`"
-        rsync -a --delete $BUILDDIR/ $BUILDDIR~/
+        rsync -ac --delete $BUILDDIR/ $BUILDDIR~/
         (
             cd $BUILDDIR
             patch_file $LINE
@@ -792,7 +818,7 @@ rebase_patches() {
         ' >> $patchfile
         rm -f $patchfile~
     done
-    rsync -a --delete $BUILDDIR.unpatched/ $BUILDDIR/
+    rsync -ac --delete $BUILDDIR.unpatched/ $BUILDDIR/
     popd > /dev/null
     exec 3<&- # Close the file
     # Now the patches have been re-based, -pX is no longer required.
@@ -957,6 +983,7 @@ clone_github_source() {
     if [ -n "$local" -a -d "$local" ]; then
         logmsg "-- syncing $prog from local clone"
         logcmd rsync -ar $local/ $prog/ || logerr "rsync failed."
+        logcmd $GIT -C $prog clean -fdx
         fresh=1
     elif [ ! -d $prog ]; then
         logcmd $GIT clone --no-single-branch --depth $depth $src $prog \
@@ -1026,7 +1053,7 @@ pkgmeta() {
 }
 
 make_package() {
-    logmsg -n "Building package $PKG"
+    logmsg "-- building package $PKG"
     case $BUILDARCH in
         32)
             BUILDSTR="32bit-"
@@ -1148,7 +1175,8 @@ make_package() {
     logmsg "--- Resolving dependencies"
     (
         set -e
-        logcmd -p $PKGDEPEND generate -md $DESTDIR $P5M_INT2 > $P5M_INT3
+        logcmd -p $PKGDEPEND generate -md $DESTDIR -d $SRCDIR $P5M_INT2 \
+            > $P5M_INT3
         logcmd $PKGDEPEND resolve -m $P5M_INT3
     ) || logerr "--- Dependency resolution failed"
     logmsg "--- Detected dependencies"
@@ -1238,7 +1266,7 @@ make_package() {
     fi
     if [ -n "$DESTDIR" ]; then
         logcmd $PKGSEND -s $PKGSRVR publish -d $DESTDIR \
-            -d $TMPDIR/$SRC_BUILDDIR \
+            -d $TMPDIR/$EXTRACTED_SRC \
             -d $SRCDIR -T \*.py $P5M_FINAL || \
         logerr "------ Failed to publish package"
     else
@@ -1249,7 +1277,9 @@ make_package() {
     fi
     logmsg "--- Published $FMRI"
 
-     [ -z "$BATCH" -a -z "$SKIP_PKG_DIFF" ] && diff_package $FMRI
+    [ -z "$BATCH" -a -z "$SKIP_PKG_DIFF" ] && diff_package $FMRI
+
+    return 0
 }
 
 translate_manifest()
@@ -1273,7 +1303,7 @@ publish_manifest()
     translate_manifest $pmf $pmf.final
 
     logcmd pkgsend -s $PKGSRVR publish $pmf.final || logerr "pkgsend failed"
-    [ -z "$BATCH" -a -z "$SKIP_PKG_DIFF" ] && diff_latest pkg
+    [ -z "$BATCH" -a -z "$SKIP_PKG_DIFF" ] && diff_latest $pkg
 }
 
 # Create a list of the items contained within a package in a format suitable
@@ -1281,7 +1311,7 @@ publish_manifest()
 # content, just whether items have been added, removed or had their attributes
 # such as ownership changed.
 pkgitems() {
-    pkg contents -m "$@" 2>&1 | sed -E '
+    pkg contents -m "$@" 2>&1 | sed -E "
         # Remove signatures
         /^signature/d
         # Remove version numbers from the package FMRI
@@ -1298,7 +1328,8 @@ pkgitems() {
         s/ pkg.[c]?size=[0-9]+//g
         # Remove timestamps
         s/ timestamp=[^ ]+//
-    ' | pkgfmt
+        $PKGDIFF_HELPER
+    " | pkgfmt
 }
 
 diff_package() {
@@ -1317,6 +1348,12 @@ diff_package() {
             ask_to_continue
     fi
     rm -f $TMPDIR/pkgdiff.$$
+}
+
+diff_latest() {
+    typeset fmri="`pkg list -nvHg $PKGSRVR $1 | nawk 'NR==1{print $1}'`"
+    logmsg "-- For package $fmri"
+    diff_package $fmri
 }
 
 #############################################################################
@@ -1400,14 +1437,25 @@ make_isa_stub() {
 
 make_isaexec_stub_arch() {
     for file in $1/*; do
-        [ -f "$file" ] || continue # Deals with empty dirs & non-files
+        [ -f "$file" ] || continue
+        if [ -z "$STUBLINKS" -a -h "$file" ]; then
+            # Symbolic link. If it's relative to within the same ARCH
+            # directory, then replicate it at the ISAEXEC level.
+            link=`readlink "$file"`
+            [[ $link = */* ]] && continue
+            base=`basename "$file"`
+            [ -h "$base" ] && continue
+            logmsg "------ Symbolic link: $file - replicating"
+            logcmd ln -s $link $base || logerr "--- Link failed"
+            continue
+        fi
         # Check to make sure we don't have a script
         read -n 4 < $file
-        file=`echo $file | sed -e "s/$1\///;"`
+        file=`basename $file`
         # Only copy non-binaries if we set NOSCRIPTSTUB
         if [[ $REPLY != $'\177'ELF && -n "$NOSCRIPTSTUB" ]]; then
             logmsg "------ Non-binary file: $file - copying instead"
-            cp $1/$file . && rm $1/$file
+            logcmd cp $1/$file . && rm $1/$file || logerr "--- Copy failed"
             chmod +x $file
             continue
         fi
@@ -1433,10 +1481,10 @@ make_isaexec_stub_arch() {
 #   - In the normal case, where you just want to add --enable-feature, set
 #     CONFIGURE_OPTS. This will be appended to the end of CONFIGURE_CMD
 #     for both 32 and 64 bit builds.
-#   - Any of these functions can be overriden in your build script, so if
+#   - Any of these functions can be overridden in your build script, so if
 #     anything here doesn't apply to the build process for your application,
 #     just override that function with whatever code you need. The build
-#     function itself can be overriden if the build process doesn't fit into a
+#     function itself can be overridden if the build process doesn't fit into a
 #     configure, make, make install pattern.
 #############################################################################
 
@@ -1542,41 +1590,6 @@ make_install_in() {
         logerr "------ Make install in $1 failed"
 }
 
-make_lintlibs() {
-    logmsg "Making lint libraries"
-
-    LINTLIB=$1
-    LINTLIBDIR=$2
-    LINTINCDIR=$3
-    LINTINCFILES=$4
-
-    [ -z "$LINTLIB" ] && logerr "not lint library specified"
-    [ -z $"LINTINCFILES" ] && LINTINCFILES="*.h"
-
-    cat <<EOF > ${DTMPDIR}/${PKGD}_llib-l${LINTLIB}
-/* LINTLIBRARY */
-/* PROTOLIB1 */
-#include <sys/types.h>
-#undef _LARGEFILE_SOURCE
-EOF
-    pushd ${DESTDIR}${LINTINCDIR} > /dev/null
-    sh -c "eval /usr/gnu/bin/ls -U ${LINTINCFILES}" | \
-        sed -e 's/\(.*\)/#include <\1>/' >> ${DTMPDIR}/${PKGD}_llib-l${LINTLIB}
-    popd > /dev/null
-
-    pushd ${DESTDIR}${LINTLIBDIR} > /dev/null
-    logcmd /opt/sunstudio12.1/bin/lint -nsvx -I${DESTDIR}${LINTINCDIR} \
-        -o ${LINTLIB} ${DTMPDIR}/${PKGD}_llib-l${LINTLIB} || \
-        logerr "failed to generate 32bit lint library ${LINTLIB}"
-    popd > /dev/null
-
-    pushd ${DESTDIR}${LINTLIBDIR}/amd64 > /dev/null
-    logcmd /opt/sunstudio12.1/bin/lint -nsvx -I${DESTDIR}${LINTINCDIR} -m64 \
-        -o ${LINTLIB} ${DTMPDIR}/${PKGD}_llib-l${LINTLIB} || \
-        logerr "failed to generate 64bit lint library ${LINTLIB}"
-    popd > /dev/null
-}
-
 build() {
     while [[ "$1" == -* ]]; do
         case "$1" in
@@ -1625,7 +1638,8 @@ run_testsuite() {
         pushd $TMPDIR/$BUILDDIR/$dir > /dev/null
         logmsg "Running testsuite"
         op=`mktemp`
-        $TESTSUITE_MAKE $target 2>&1 | tee $op
+        eval set -- $MAKE_TESTSUITE_ARGS_WS
+        $TESTSUITE_MAKE $target $MAKE_TESTSUITE_ARGS "$@" 2>&1 | tee $op
         if [ -n "$TESTSUITE_SED" ]; then
             sed "$TESTSUITE_SED" $op > $SRCDIR/$output
         elif [ -n "$TESTSUITE_FILTER" ]; then
@@ -1657,6 +1671,7 @@ build_dependency() {
     # Adjust variables so that download, patch and build work correctly
     BUILDDIR="$dir"
     PATCHDIR="patches-$dep"
+    DEPROOT=$TMPDIR/_deproot
     DESTDIR=$DEPROOT
     mkdir -p $DEPROOT
 
@@ -1694,9 +1709,14 @@ pre_python_64() {
 }
 
 python_vendor_relocate() {
-    mv $DESTDIR/usr/lib/python$PYTHONVER/site-packages \
-        $DESTDIR/usr/lib/python$PYTHONVER/vendor-packages ||
-        logerr "python: cannot move from site-packages to vendor-packages"
+    pushd $DESTDIR/usr/lib >/dev/null || logerr "python relocate pushd"
+    for ver in $PYTHON2VER $PYTHON3VER; do
+        [ -d python$ver/site-packages ] || continue
+        logmsg "Relocating python $ver site to vendor-packages"
+        mv python$ver/site-packages python$ver/vendor-packages \
+            || logerr "python: cannot move from site to vendor-packages"
+    done
+    popd >/dev/null
 }
 
 python_compile() {
@@ -2019,7 +2039,7 @@ check_licences() {
 
         # Check if the "license" lines point to valid files
         flag=0
-        for dir in $DESTDIR $TMPDIR/$SRC_BUILDDIR $SRCDIR; do
+        for dir in $DESTDIR $TMPDIR/$EXTRACTED_SRC $SRCDIR; do
             if [ -f "$dir/$file" ]; then
                 #logmsg "   found in $dir/$file"
                 flag=1
@@ -2094,6 +2114,7 @@ clean_up() {
             logerr "Failed to remove temporary manifest and transform files"
         logmsg "Done."
     fi
+    return 0
 }
 
 #############################################################################
