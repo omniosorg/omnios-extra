@@ -28,7 +28,7 @@
 | ooce/developer/ninja		| 1.9.0		| https://github.com/ninja-build/ninja/releases https://ninja-build.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| 1.3.5		| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| 0.3.1		| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/rust		| 1.37.0	| https://forge.rust-lang.org/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/rust		| 1.37.0	| https://forge.rust-lang.org/infra/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/nano		| 4.4		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
 | ooce/file/lsof		| 4.91		| https://people.freebsd.org/~abe/ | [omniosorg](https://github.com/omniosorg)
