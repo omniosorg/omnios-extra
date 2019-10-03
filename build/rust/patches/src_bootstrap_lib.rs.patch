@@ -6,7 +6,7 @@ FreeBSD has a particular C++ runtime library name
 diff -wpruN '--exclude=*.orig' a~/src/bootstrap/lib.rs a/src/bootstrap/lib.rs
 --- a~/src/bootstrap/lib.rs	1970-01-01 00:00:00
 +++ a/src/bootstrap/lib.rs	1970-01-01 00:00:00
-@@ -769,7 +769,6 @@ impl Build {
+@@ -768,7 +768,6 @@ impl Build {
          // cc-rs because the build scripts will determine that for themselves.
          let mut base = self.cc[&target].args().iter()
                             .map(|s| s.to_string_lossy().into_owned())

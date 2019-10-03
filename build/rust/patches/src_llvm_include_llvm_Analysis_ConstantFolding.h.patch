@@ -5,7 +5,7 @@ Fix SunOS CS conflict not handled by include/llvm-c/DataTypes.h
 diff -wpruN '--exclude=*.orig' a~/src/llvm-project/llvm/include/llvm/Analysis/ConstantFolding.h a/src/llvm-project/llvm/include/llvm/Analysis/ConstantFolding.h
 --- a~/src/llvm-project/llvm/include/llvm/Analysis/ConstantFolding.h	1970-01-01 00:00:00
 +++ a/src/llvm-project/llvm/include/llvm/Analysis/ConstantFolding.h	1970-01-01 00:00:00
-@@ -20,6 +20,10 @@
+@@ -19,6 +19,10 @@
  #ifndef LLVM_ANALYSIS_CONSTANTFOLDING_H
  #define LLVM_ANALYSIS_CONSTANTFOLDING_H
  

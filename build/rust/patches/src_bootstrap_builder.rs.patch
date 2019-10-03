@@ -5,7 +5,7 @@ Do not install 'src'.
 diff -wpruN '--exclude=*.orig' a~/src/bootstrap/builder.rs a/src/bootstrap/builder.rs
 --- a~/src/bootstrap/builder.rs	1970-01-01 00:00:00
 +++ a/src/bootstrap/builder.rs	1970-01-01 00:00:00
-@@ -470,7 +470,6 @@ impl<'a> Builder<'a> {
+@@ -468,7 +468,6 @@ impl<'a> Builder<'a> {
                  install::Clippy,
                  install::Miri,
                  install::Analysis,
