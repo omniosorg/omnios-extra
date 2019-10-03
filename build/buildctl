@@ -504,11 +504,21 @@ parallel_build() {
         ((pkgnum++))
 
         # Handle special targets
-        if [ "$tgt" = ".WAIT" ]; then
-            # Special target that waits until there are no running jobs
-            wait_for_jobs "emptying queue"
-            continue
-        fi
+        case "$tgt" in
+            .WAIT)
+                # Special target that waits until there are no running jobs
+                logmsg -n "-- waiting for jobs"
+                wait_for_jobs "emptying queue"
+                continue
+            ;;
+            .REBUILD)
+                # Rebuild the repository
+                logmsg -n "-- Rebuilding the package repository"
+                wait_for_jobs "emptying for rebuild"
+                pkgrepo -s $PKGSRVR rebuild
+                continue
+            ;;
+        esac
 
         # If this target belongs to the same script as an already running
         # job, skip it.
