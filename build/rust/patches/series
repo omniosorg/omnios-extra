@@ -11,10 +11,9 @@ src_llvm_cmake_modules_AddLLVM.cmake.patch
 src_llvm_CMakeLists.txt.patch
 src_llvm_include_llvm_Analysis_ConstantFolding.h.patch
 src_llvm_include_llvm-c_DataTypes.h.patch
-src_llvm_utils_FileCheck_FileCheck.cpp.patch
 src_tools_rls_src_cmd.rs.patch
 src_tools_rls_src_server_io.rs.patch
 src_tools_rust-installer_install-template.sh.patch
 vendor_backtrace-sys_src_libbacktrace_configure.patch
 vendor_libc_src_unix_solaris_mod.rs.patch
-vendor_rand_src_rngs_os.rs.patch
+vendor_rand-0.6.1_src_rngs_os.rs.patch

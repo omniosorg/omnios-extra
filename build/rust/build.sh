@@ -18,7 +18,7 @@
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.37.0
+VER=1.38.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
@@ -70,7 +70,8 @@ export RUSTFLAGS="-C linker=$CC"
 export GNUAR=/bin/gar
 
 # Required to enable the POSIX 1003.6 style getpwuid_r() prototype
-CFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS"
+# _XPG4_2 - Need struct timeval from sys/time.h
+CFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS -D_XPG4_2"
 CXXFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS"
 export CFLAGS CXXFLAGS
 
@@ -129,12 +130,12 @@ fix_runpaths() {
 
 fix_checksums() {
     WRKSRC="$TMPDIR/$BUILDDIR"
-    cp ${WRKSRC}/vendor/rand/.cargo-checksum.json \
-        ${WRKSRC}/vendor/rand/.cargo-checksum.json.orig
-    sed -e 's/1e732c2e3b4bd1561f11e0979bf9d20669a96eae7afe0deff9dfbb980ee47bf1/55abd8100db14a076dedbf84ce0f2db08158e1bd33ff1d4978bd3c4ad978f281/' ${WRKSRC}/vendor/rand/.cargo-checksum.json.orig > ${WRKSRC}/vendor/rand/.cargo-checksum.json
+    cp ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json \
+        ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json.orig
+    sed -e 's/1e732c2e3b4bd1561f11e0979bf9d20669a96eae7afe0deff9dfbb980ee47bf1/55abd8100db14a076dedbf84ce0f2db08158e1bd33ff1d4978bd3c4ad978f281/' ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json.orig > ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json
     cp ${WRKSRC}/vendor/libc/.cargo-checksum.json \
         ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig
-    sed -e 's/0c6d148d84f2fa9feb86b464d30af9c52322553bf321ae4fe27184d274ccbe21/27dae4ec77f317c74e2c205658bcc8220c512f751802b754b07770c16e420dd1/' ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig > ${WRKSRC}/vendor/libc/.cargo-checksum.json
+    sed -e 's/b715246dd48adf4794e7b6dc2ec166c80561fcae42fa100c62ffca23b624d6fc/efeeb8c29ec9b5c69e643cb9dfdb5d4760b6fc8ca6dec4c641450be95da1b7c3/' ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig > ${WRKSRC}/vendor/libc/.cargo-checksum.json
     cp ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json \
           ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig
     sed -e 's/59763fc255248b54fba5d0761d61093a73d51fa4cb400b0df1b5f339b9c2f48a/ba66d192421fd536ceddb50616c4c4aea06f4e39450eb0bc2bbbaed0b1e684c1/' ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig > ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json
