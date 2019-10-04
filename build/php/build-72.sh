@@ -42,7 +42,13 @@ LOGPATH=/var/log$OPREFIX/$PROG
 VARPATH=/var$OPREFIX/$PROG
 RUNPATH=$VARPATH/run
 
-BUILD_DEPENDS_IPS="ooce/database/bdb ooce/database/lmdb"
+BUILD_DEPENDS_IPS="
+    ooce/database/bdb
+    ooce/database/lmdb
+    ooce/library/freetype2
+    ooce/library/libjpeg-turbo
+    ooce/library/libpng
+"
 RUN_DEPENDS_IPS="ooce/application/php-common"
 
 XFORM_ARGS="
@@ -78,17 +84,22 @@ CONFIGURE_OPTS_64="
     --with-zlib-dir=/usr
     --with-bz2=/usr
     --with-curl
+    --with-gd
 
     --with-db4=$OPREFIX
     --with-lmdb=$OPREFIX
+    --with-jpeg-dir=$OPREFIX
+    --with-png-dir=$OPREFIX
+    --with-freetype-dir=$OPREFIX
 
     --enable-fpm
     --with-fpm-user=php
     --with-fpm-group=php
 "
+PKG_CONFIG_PATH+=":$OPREFIX/lib/$ISAPART64/pkgconfig"
 CPPFLAGS+=" -I/usr/include/gmp"
 LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
-export LDFLAGS
+export PKG_CONFIG_PATH CPPFLAGS LDFLAGS
 
 make_install() {
     logmsg "--- make install"
