@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+CDDL HEADER START
+
+The contents of this file are subject to the terms of the
+Common Development and Distribution License (the "License").
+You may not use this file except in compliance with the License.
+
+You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+or http://www.opensolaris.org/os/licensing.
+See the License for the specific language governing permissions
+and limitations under the License.
+
+When distributing Covered Code, include this CDDL HEADER in each
+file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+If applicable, add the following below this CDDL HEADER, with the
+fields enclosed by brackets "[]" replaced with your own identifying
+information: Portions Copyright [yyyy] [name of copyright owner]
+
+CDDL HEADER END
+-->
+
+<!--
+Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
+Use is subject to license terms.
+-->
+<service_bundle type="manifest" name="znapzend">
+<service name="ooce/system/znapzend" type="service" version="1">
+	<create_default_instance enabled="false" />
+	<single_instance/>
+    <dependency name="filesystem-local" grouping="require_all" restart_on="none" type="service">
+        <service_fmri value="svc:/system/filesystem/local:default"/>
+    </dependency>
+    <dependency name="autofs" grouping="optional_all" restart_on="error" type="service">
+        <service_fmri value="svc:/system/filesystem/autofs:default"/>
+    </dependency>
+    <exec_method
+        type="method"
+        name="start"
+        exec="/opt/ooce/znapzend/bin/znapzend --daemonize --features=recvu --pidfile=/var/opt/ooce/znapzend/run/znapzend.pid"
+        timeout_seconds="180">
+    </exec_method>
+    <exec_method
+        type="method"
+        name="stop"
+        exec=":kill"
+        timeout_seconds="30">
+    </exec_method>
+    <stability value="Unstable" />
+    <template> <common_name> <loctext xml:lang="C"> ZnapZend - ZFS backup system </loctext> </common_name>
+        <documentation>
+            <manpage title="znapzend" section="1" manpath="/opt/ooce/share/man" />
+            <manpage title="znapzendzetup" section="1" manpath="/opt/ooce/share/man" />
+            <manpage title="znapzendztatz" section="1" manpath="/opt/ooce/share/man" />
+        </documentation>
+    </template>
+</service>
+</service_bundle>
