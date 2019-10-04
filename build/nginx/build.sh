@@ -26,23 +26,23 @@
 . ../../lib/functions.sh
 
 PROG=nginx
-PKG=ooce/server/nginx-114
-VER=1.14.2
-VERHUMAN=$VER
-SUMMARY="nginx 1.14 web server"
+PKG=ooce/server/nginx
+VER=1.17.4
+SUMMARY="nginx web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
+
+LOCAL_MOG_FILE=local-mainline.mog
 
 set_arch 64
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
-PATCHDIR=patches-$sMAJVER
 
 OPREFIX=$PREFIX
-PREFIX+=/$PROG-$MAJVER
+PREFIX+=/$PROG
 CONFPATH=/etc$PREFIX
-LOGPATH=/var/log$OPREFIX/$PROG
-VARPATH=/var$OPREFIX/$PROG
+LOGPATH=/var/log$PREFIX
+VARPATH=/var$PREFIX
 RUNPATH=$VARPATH/run
 
 BUILD_DEPENDS_IPS="library/security/openssl library/pcre"
@@ -79,7 +79,7 @@ CONFIGURE_OPTS_64=" \
     --group=nginx \
     --prefix=$PREFIX \
     --conf-path=$CONFPATH/$PROG.conf \
-    --pid-path=$RUNPATH/$PROG-$MAJVER.pid \
+    --pid-path=$RUNPATH/$PROG.pid \
     --http-log-path=$LOGPATH/access.log \
     --error-log-path=$LOGPATH/error.log \
     --http-client-body-temp-path=/tmp/.nginx/body \
@@ -106,7 +106,7 @@ patch_source
 prep_build
 build
 copy_man_page
-install_smf network http-$PROG-$sMAJVER.xml http-$PROG-$sMAJVER
+install_smf network http-$PROG.xml http-$PROG
 make_package
 clean_up
 

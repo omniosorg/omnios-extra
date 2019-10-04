@@ -75,7 +75,7 @@ extra.omnios ooce/runtime/ruby-25
 extra.omnios ooce/runtime/ruby-26
 extra.omnios ooce/runtime/tcl
 extra.omnios ooce/security/gnupg
-extra.omnios ooce/server/nginx-114
+extra.omnios ooce/server/nginx
 extra.omnios ooce/server/nginx-116
 extra.omnios ooce/server/nginx-common
 extra.omnios ooce/system/htop
