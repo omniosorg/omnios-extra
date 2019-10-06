@@ -25,50 +25,43 @@ CDDL HEADER END
     Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
     Use is subject to license terms.
 -->
-<service_bundle type="manifest" name="http:nginx114">
-<service name="network/http" type="service" version="1">
-    <instance name="nginx114" enabled="false">
-        <dependency name="network" grouping="require_all" restart_on="error" type="service">
-            <service_fmri value="svc:/milestone/network:default"/>
-        </dependency>
-        <dependency name="filesystem-local" grouping="require_all" restart_on="none" type="service">
+<service_bundle type="manifest" name="postgresql12">
+    <service name="ooce/database/postgresql12" type="service" version="1">
+        <dependency name="filesystem-local" grouping="require_all" restart_on="error" type="service">
             <service_fmri value="svc:/system/filesystem/local:default"/>
-        </dependency>
-        <dependency name="autofs" grouping="optional_all" restart_on="error" type="service">
-            <service_fmri value="svc:/system/filesystem/autofs:default"/>
         </dependency>
         <exec_method
             type="method"
             name="start"
-            exec="/lib/svc/method/http-nginx-114 start"
+            exec="/opt/ooce/pgsql-12/bin/pg_ctl -D %{datadir} -w start"
             timeout_seconds="60">
             <method_context security_flags="aslr">
-                <method_credential user="nginx" group="nginx"
-                    privileges="basic,net_privaddr,!proc_info,!proc_session" />
+                <method_credential user="postgres" group="postgres" />
             </method_context>
         </exec_method>
         <exec_method
             type="method"
             name="stop"
-            exec="/opt/ooce/nginx-1.14/sbin/nginx -s quit"
+            exec="/opt/ooce/pgsql-12/bin/pg_ctl -D %{datadir} stop"
             timeout_seconds="60">
-        </exec_method>
-        <exec_method
-            type="method"
-            name="refresh"
-            exec="/opt/ooce/nginx-1.14/sbin/nginx -s reload"
-            timeout_seconds="60">
+            <method_context>
+                <method_credential user="postgres" group="postgres" />
+            </method_context>
         </exec_method>
         <property_group name="startd" type="framework">
-            <propval name="ignore_error" type="astring" value="core,signal" />
+            <propval name="duration" type="astring" value="contract"/>
         </property_group>
-        <template> <common_name> <loctext xml:lang="C"> nginx 1.14 web server </loctext> </common_name>
+        <instance name="default" enabled="false">
+            <property_group name="application" type="application">
+                <propval name="datadir" type="astring" value="/var/opt/ooce/pgsql/pgsql-12"/>
+            </property_group>
+        </instance>
+        <stability value="External" />
+        <template> <common_name> <loctext xml:lang="C"> PostgreSQL 12 </loctext> </common_name>
             <documentation>
-                <manpage title="nginx" section="8" manpath="/opt/ooce/nginx-1.14/share/man" />
-                <doc_link name="nginx.org" uri="http://nginx.org/" />
+                <manpage title="postgres" section="1" manpath="/opt/ooce/pgsql-12/share/man" />
+                <doc_link name="postgresql.org" uri="https://www.postgresql.org/" />
             </documentation>
         </template>
-    </instance>
-    <stability value="External" />
-</service>
+    </service>
 </service_bundle>

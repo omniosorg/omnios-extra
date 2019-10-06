@@ -11,50 +11,42 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 # }}}
-
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+#
+# Copyright 1995-2013 OETIKER+PARTNER AG  All rights reserved.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
-PROG=nano
-VER=4.5
-PKG=ooce/editor/nano
-SUMMARY="nano editor"
-DESC="GNU implementation of nano, a text editor emulating pico"
+PROG=znapzend
+VER=0.19.1
+PKG=ooce/system/znapzend
+SUMMARY="A ZFS-aware backup script"
+DESC="Take snapshots and transfer them to a second pool, "
+DESC+="potentially on a different box"
 
-BUILD_DEPENDS_IPS="library/ncurses"
+RUN_DEPENDS_IPS="runtime/perl-64"
+
+OPREFIX=$PREFIX
+PREFIX+="/$PROG"
 
 set_arch 64
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
 "
 
-CONFIGURE_OPTS="
-    --sysconfdir=/etc/$PREFIX
-    --enable-color
-    --enable-multibuffer
-    --disable-libmagic
-    get_wch=getwch
+CONFIGURE_OPTS_64="
+    --prefix=$PREFIX
 "
-
-CPPFLAGS+=" -I/usr/include/ncurses"
-
-save_function make_install _make_install
-make_install() {
-    _make_install
-    logcmd mkdir -p $DESTDIR/etc/opt/ooce || logerr "mkdir"
-    logcmd cp doc/sample.nanorc $DESTDIR/etc/opt/ooce/nanorc \
-        || logerr "install nanorc"
-}
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-strip_install
+install_smf system system-$PROG.xml
 make_package
 clean_up
 

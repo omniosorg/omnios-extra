@@ -14,6 +14,7 @@ extra.omnios ooce/database/mariadb-103
 extra.omnios ooce/database/mariadb-104
 extra.omnios ooce/database/postgresql-10
 extra.omnios ooce/database/postgresql-11
+extra.omnios ooce/database/postgresql-12
 extra.omnios ooce/database/postgresql-96
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/developer/autogen
@@ -75,10 +76,11 @@ extra.omnios ooce/runtime/ruby-25
 extra.omnios ooce/runtime/ruby-26
 extra.omnios ooce/runtime/tcl
 extra.omnios ooce/security/gnupg
-extra.omnios ooce/server/nginx-114
+extra.omnios ooce/server/nginx
 extra.omnios ooce/server/nginx-116
 extra.omnios ooce/server/nginx-common
 extra.omnios ooce/system/htop
+extra.omnios ooce/system/znapzend
 extra.omnios ooce/system/mbuffer
 extra.omnios ooce/system/smartmontools
 extra.omnios ooce/system/sysstat
