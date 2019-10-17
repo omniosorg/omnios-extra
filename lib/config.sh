@@ -242,7 +242,10 @@ case $RELVER in
 esac
 
 PYTHON2VER=2.7
-PYTHON3VER=3.5
+case $RELVER in
+    15103[3-9])         PYTHON3VER=3.7 ;;
+    *)                  PYTHON3VER=3.5 ;;
+esac
 # Specify default Python version for building packages
 [ $RELVER -lt 151029 ] && DEFAULT_PYTHON_VER=$PYTHON2VER \
     || DEFAULT_PYTHON_VER=$PYTHON3VER
