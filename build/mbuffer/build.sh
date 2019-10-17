@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=mbuffer
-VER=20190725
+VER=20191016
 PKG=ooce/system/mbuffer
 SUMMARY="$PROG - measuring buffer"
 DESC="$PROG is a tool for buffering data streams"
@@ -30,7 +30,6 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-# Build 64-bit only and skip the arch-specific directories
 set_arch 64
 
 init
