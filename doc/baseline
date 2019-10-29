@@ -28,6 +28,7 @@ extra.omnios ooce/developer/dejagnu
 extra.omnios ooce/developer/flamegraph
 extra.omnios ooce/developer/go-112
 extra.omnios ooce/developer/go-113
+extra.omnios ooce/developer/gperf
 extra.omnios ooce/developer/llvm-8 r
 extra.omnios ooce/developer/llvm-80
 extra.omnios ooce/developer/ninja
