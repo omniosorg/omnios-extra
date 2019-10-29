@@ -12,13 +12,5 @@
 
 # Copyright 2019 OmniOS Community Edition.  All rights reserved.
 
-# Symlink binaries
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
-
-# Symlink man
-<transform file path=$(PREFIX)/(share/man/man\d/.*) -> emit \
-    link path=$(OPREFIX)/%<1> target=../../../$(PROG)/%<1> >
-
 license LICENSE license=modified-BSD
 

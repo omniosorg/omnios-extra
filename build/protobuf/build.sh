@@ -23,11 +23,6 @@ SUMMARY="protobuf"
 DESC="Google's language-neutral, platform-neutral, extensible mechanism "
 DESC+="for serializing structured data"
 
-XFORM_ARGS="
-    -DPREFIX=${PREFIX#/}
-    -DPROG=$PROG
-"
-
 CONFIGURE_OPTS_32+=" --disable-64bit-solaris"
 
 init
