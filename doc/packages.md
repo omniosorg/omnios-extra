@@ -38,6 +38,7 @@
 | ooce/file/lsof		| 4.91		| https://people.freebsd.org/~abe/ | [omniosorg](https://github.com/omniosorg)
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/bdw-gc		| 8.0.4		| https://www.hboehm.info/gc/gc_source/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/fontconfig	| 2.13.1	| https://www.freedesktop.org/software/fontconfig/release/ https://www.freedesktop.org/wiki/Software/fontconfig/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/freetype2	| 2.10.1	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libarchive	| 3.4.0		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)

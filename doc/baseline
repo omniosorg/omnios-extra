@@ -41,6 +41,7 @@ extra.omnios ooce/extra-build-tools
 extra.omnios ooce/file/lsof
 extra.omnios ooce/kvmadm
 extra.omnios ooce/library/bdw-gc
+extra.omnios ooce/library/fontconfig
 extra.omnios ooce/library/freetype2
 extra.omnios ooce/library/guile
 extra.omnios ooce/library/libarchive
