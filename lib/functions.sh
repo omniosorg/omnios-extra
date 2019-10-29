@@ -1254,6 +1254,9 @@ make_package() {
         logcmd $PKGFMT -s $P5M_FINAL
     fi
 
+    fgrep -q '$(' $P5M_FINAL \
+        && logerr "------ Manifest contains unresolved variables"
+
     if [ -z "$SKIP_PKGLINT" ] && ( [ -n "$BATCH" ] || ask_to_pkglint ); then
         run_pkglint $PKGSRVR $P5M_FINAL
     fi
