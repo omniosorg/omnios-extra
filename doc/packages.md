@@ -59,7 +59,7 @@
 | ooce/network/irssi		| 1.2.2		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosh		| 1.3.2		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nsd		| 4.2.2		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/openvpn		| 2.4.7		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/openvpn		| 2.4.8		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/smtp/postfix	| 3.4.7		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/network/socat		| 1.7.3.3	| http://www.dest-unreach.org/socat/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/unbound		| 1.9.4		| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
