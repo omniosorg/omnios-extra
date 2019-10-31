@@ -1,0 +1,12 @@
+--- src/config/config.go~	2019-10-31 21:49:31.887071321 +0000
++++ src/config/config.go	2019-10-31 21:49:57.062645536 +0000
+@@ -545,8 +545,8 @@
+ }
+ 
+ var ConfigFileDefaultLocations = []string{
++	"/etc/opt/ooce/zrepl/zrepl.yml",
+ 	"/etc/zrepl/zrepl.yml",
+-	"/usr/local/etc/zrepl/zrepl.yml",
+ }
+ 
+ func ParseConfig(path string) (i *Config, err error) {
