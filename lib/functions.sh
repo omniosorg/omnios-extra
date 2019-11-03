@@ -1399,6 +1399,9 @@ install_smf() {
     pushd $DESTDIR > /dev/null
     logmsg "-- Installing SMF service ($mtype / $manifest / $method)"
 
+    logcmd svccfg validate $SRCDIR/files/$manifest \
+        || logerr "Manifest does not pass validation"
+
     # Manifest
     logcmd mkdir -p lib/svc/manifest/$mtype \
         || logerr "mkdir of $DESTDIR/lib/svc/manifest/$mtype failed"
