@@ -4,6 +4,7 @@ extra.omnios ooce/application/php-72
 extra.omnios ooce/application/php-73
 extra.omnios ooce/application/php-common
 extra.omnios ooce/application/texlive
+extra.omnios ooce/application/tidy
 extra.omnios ooce/audio/flac
 extra.omnios ooce/compress/lz4
 extra.omnios ooce/compress/pbzip2
