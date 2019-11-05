@@ -23,9 +23,9 @@ Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 	type='service'
 	version='1'>
 
-	<single_instance/>
-
 	<create_default_instance enabled='false' />
+
+	<single_instance/>
 
 	<dependency
 	    name='filesystem_local'
