@@ -35,25 +35,20 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-CONFIGURE_CMD="$PREFIX/bin/cmake"
-
-# Run these early to make DESTDIR available
-init
-prep_build
-
 CONFIGURE_OPTS="
-    ..
+    -DCMAKE_BUILD_TYPE=Release
     -DADDITIONAL_LIBS=socket
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DWITH_WEBSOCKETS=0
 "
+CONFIGURE_OPTS_32=
 CONFIGURE_OPTS_64="
-    -DJPEG_LIBRARY_RELEASE:FILEPATH=$PREFIX/lib/amd64/libjpeg.so
-    -DPNG_LIBRARY_RELEASE:FILEPATH=$PREFIX/lib/amd64/libpng.so
+    -DJPEG_LIBRARY_RELEASE:FILEPATH=$PREFIX/lib/$ISAPART64/libjpeg.so
+    -DPNG_LIBRARY_RELEASE:FILEPATH=$PREFIX/lib/$ISAPART64/libpng.so
 "
 
 LDFLAGS32+=" -L$PREFIX/lib -R$PREFIX/lib"
-LDFLAGS64+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
+LDFLAGS64+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
 CFLAGS+=" -D_REENTRANT"
 
 BUILDORDER="64 32"
@@ -62,8 +57,8 @@ save_function make_install64 _make_install64
 make_install64() {
     _make_install64
     pushd $DESTDIR/$PREFIX >/dev/null
-    logcmd mkdir -p lib/amd64/
-    logcmd mv lib/*.so.* lib/pkgconfig lib/amd64/
+    logcmd mkdir -p lib/$ISAPART64/
+    logcmd mv lib/*.so.* lib/pkgconfig lib/$ISAPART64/
     popd >/dev/null
 }
 
@@ -77,8 +72,10 @@ build() {
     done
 }
 
+init
 download_source $PROG "LibVNCServer" $VER
 patch_source
+prep_build cmake
 build
 make_package
 clean_up
