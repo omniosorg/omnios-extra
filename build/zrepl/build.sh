@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.12
+set_gover 1.13
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -50,7 +50,8 @@ build() {
         logmsg "---- $out"
         logcmd go build -v -mod=readonly -o "$GOPATH/$out" $src
     done
-    $MAKE build ZREPL_VERSION=$VER GOOS=solaris GOARCH=amd64
+    logmsg "Building zrepl..."
+    logcmd $MAKE build ZREPL_VERSION=$VER GOOS=illumos GOARCH=amd64
 
     popd >/dev/null
 }
