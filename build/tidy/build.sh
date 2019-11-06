@@ -16,51 +16,34 @@
 
 . ../../lib/functions.sh
 
-PROG=libvncserver
-VER=0.9.12
-PKG=ooce/library/libvncserver
-SUMMARY="libvncserver"
-DESC="A library for easy implementation of a VNC server."
-
-BUILDDIR="$PROG-LibVNCServer-$VER"
+PROG=tidy
+VER=5.6.0
+PKG=ooce/application/tidy
+SUMMARY="tidy"
+DESC="Application that corrects and cleans up HTML and XML documents by "
+DESC+="fixing markup errors and upgrading legacy code to modern standards"
 
 BUILD_DEPENDS_IPS="
     ooce/developer/cmake
-    ooce/library/libjpeg-turbo
-    ooce/library/libpng
 "
 
-XFORM_ARGS="
-    -DPREFIX=${PREFIX#/}
-    -DPROG=$PROG
-"
+SKIP_LICENCES=W3C
+
+set_builddir "$PROG-html5-$VER"
 
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
-    -DADDITIONAL_LIBS=socket
     -DCMAKE_INSTALL_PREFIX=$PREFIX
-    -DWITH_WEBSOCKETS=0
 "
-CONFIGURE_OPTS_32=
+CONFIGURE_OPTS_32="
+    -DLIB_INSTALL_DIR=$PREFIX/lib
+"
 CONFIGURE_OPTS_64="
-    -DJPEG_LIBRARY_RELEASE:FILEPATH=$PREFIX/lib/$ISAPART64/libjpeg.so
-    -DPNG_LIBRARY_RELEASE:FILEPATH=$PREFIX/lib/$ISAPART64/libpng.so
+    -DLIB_INSTALL_DIR=$PREFIX/lib/$ISAPART64
 "
 
-LDFLAGS32+=" -L$PREFIX/lib -R$PREFIX/lib"
-LDFLAGS64+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
-CFLAGS+=" -D_REENTRANT"
-
-BUILDORDER="64 32"
-
-save_function make_install64 _make_install64
-make_install64() {
-    _make_install64
-    pushd $DESTDIR/$PREFIX >/dev/null
-    logcmd mkdir -p lib/$ISAPART64/
-    logcmd mv lib/*.so.* lib/pkgconfig lib/$ISAPART64/
-    popd >/dev/null
-}
+LDFLAGS32+=" -R$PREFIX/lib"
+LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
 
 build() {
     _BUILDDIR=$BUILDDIR
@@ -73,7 +56,7 @@ build() {
 }
 
 init
-download_source $PROG "LibVNCServer" $VER
+download_source $PROG $VER
 patch_source
 prep_build cmake
 build
