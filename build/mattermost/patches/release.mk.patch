@@ -7,7 +7,7 @@ diff -wpruN '--exclude=*.orig' a/src/github.com/mattermost/mattermost-server~/bu
  
 +build-illumos:
 +	@echo Build illumos amd64
-+	env GOOS=solaris GOARCH=amd64 $(GO) install -i $(GOFLAGS) -ldflags '$(LDFLAGS)' ./...
++	env GOOS=illumos GOARCH=amd64 $(GO) install -i $(GOFLAGS) -ldflags '$(LDFLAGS)' ./...
 +
  build-linux:
  	@echo Build Linux amd64
@@ -18,12 +18,12 @@ diff -wpruN '--exclude=*.orig' a/src/github.com/mattermost/mattermost-server~/bu
  
 +	@# Make illumos package
 +	@# Copy binary
-+ifeq ($(BUILDER_GOOS_GOARCH),"solaris_amd64")
++ifeq ($(BUILDER_GOOS_GOARCH),"illumos_amd64")
 +	cp $(GOPATH)/bin/mattermost $(DIST_PATH)/bin # from native bin dir, not cross-compiled
 +	cp $(GOPATH)/bin/platform $(DIST_PATH)/bin # from native bin dir, not cross-compiled
 +else
-+	cp $(GOPATH)/bin/solaris_amd64/mattermost $(DIST_PATH)/bin # from cross-compiled bin dir
-+	cp $(GOPATH)/bin/solaris_amd64/platform $(DIST_PATH)/bin # from cross-compiled bin dir
++	cp $(GOPATH)/bin/illumos_amd64/mattermost $(DIST_PATH)/bin # from cross-compiled bin dir
++	cp $(GOPATH)/bin/illumos_amd64/platform $(DIST_PATH)/bin # from cross-compiled bin dir
 +endif
 +
  	@# Make osx package

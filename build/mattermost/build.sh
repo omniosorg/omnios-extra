@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.16.2
+VER=5.16.3
 VERHUMAN=$VER
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
@@ -28,7 +28,7 @@ PROGB=$PROG-server
 GITHUB=https://github.com/$PROG
 
 set_arch 64
-set_gover 1.12
+set_gover 1.13
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
