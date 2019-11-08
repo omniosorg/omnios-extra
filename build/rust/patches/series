@@ -1,5 +1,4 @@
 install-bash.patch
-src_bootstrap_bin_rustc.rs.patch
 src_bootstrap_bootstrap.py.patch
 src_bootstrap_builder.rs.patch
 src_bootstrap_lib.rs.patch
