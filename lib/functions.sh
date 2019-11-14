@@ -673,6 +673,15 @@ run_aclocal() { run_inbuild aclocal "$@"; }
 
 prep_build() {
     typeset style=${1:-autoconf}
+    typeset flags="$2"
+
+    for flag in "$flags"; do
+        case $flag in
+            -oot)
+                OUT_OF_TREE_BUILD=1
+                ;;
+        esac
+    done
 
     logmsg "Preparing for $style build"
 

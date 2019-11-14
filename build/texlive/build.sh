@@ -125,15 +125,13 @@ make_install() {
 CFLAGS+=" -I$OPREFIX/include"
 LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
-# texlive should be built out-of-tree
-OUT_OF_TREE_BUILD=1
-
 init
 download_source $PROG $PROG $VER-source
 patch_source
 dl_dist
 run_autoreconf
-prep_build
+# texlive should be built out-of-tree
+prep_build autoconf -oot
 install_dist
 build
 config_tex
