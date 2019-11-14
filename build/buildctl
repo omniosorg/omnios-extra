@@ -91,14 +91,15 @@ $0
     list-build [grep pattern]      - sorted in build order
     list-built [grep pattern]      - show package build status
     build <pkg>
-    build [-e|E] all
-    build [-e|E] parallel <num>    - start/continue parallel build
+    build [-e|E|-D] all
+    build [-e|E|-D] parallel <num> - start/continue parallel build
     build continue                 - continue interrupted build
     build from <pkg>               - build <pkg> then those after
     baseline [create [repo]]       - check or create pkg baseline
 
 Options:
 
+    -D                             - record any package content differences
     -e                             - also build packages flagged as expensive
     -E                             - force (re-)build of expensive packages
 
@@ -461,13 +462,16 @@ count_expensive() {
     echo $ne
 }
 
+set_build_flags() {
+    build_flags="-b -t -l"
+    [ -n "$USE_CCACHE" ] && build_flags+=" -c"
+    [ -n "$KEEP_DIFFS" ] && build_flags+=" -D"
+    export BATCH=1  # So logerr() exits without prompting
+}
+
 parallel_build() {
     threads=$1
-    # pkglint is not thread-safe so skip it and the test-suite in parallel
-    # build mode.
-    build_flags="-b -t -l"
-    export BATCH=1  # So logerr() exits without prompting
-    [ -n "$USE_CCACHE" ] && build_flags+=" -c"
+    set_build_flags
 
     note "Starting parallel build with $threads thread(s)"
 
@@ -649,14 +653,19 @@ case "$1" in
     build)
         add_targets
         shift
-        [ "$1" = "-e" ] && BUILD_EXPENSIVE=1 && shift
-        [ "$1" = "-c" ] && USE_CCACHE=1 && shift
-        if [ "$1" = "-E" ]; then
-            # Force (re)build of expensive packages
-            remove_expensive
-            BUILD_EXPENSIVE=1
+        while [[ "$1" = -? ]]; do
+            case $1 in
+                -e) BUILD_EXPENSIVE=1 ;;
+                -c) USE_CCACHE=1 ;;
+                -D) KEEP_DIFFS=1 ;;
+                -E)
+                    # Force (re)build of expensive packages
+                    remove_expensive
+                    BUILD_EXPENSIVE=1
+                    ;;
+            esac
             shift
-        fi
+        done
         tobuild="$@"
         [ -z "$tobuild" ] && tobuild=all
 
@@ -679,9 +688,7 @@ case "$1" in
         fi
 
         if [ "$tobuild" = "all" ]; then
-            build_flags="-b -t -l"
-            [ -n "$USE_CCACHE" ] && build_flags+=" -c"
-            export BATCH=1  # So logerr() exits without prompting
+            set_build_flags
 
             pkgcount=${#fulltargets[@]}
             pkgnum=0
