@@ -268,12 +268,12 @@ FCFLAGS[8]+=" -fno-aggressive-loop-optimizations"
 # CFLAGS applies to both builds, 32/64 only gets applied to the respective
 # build
 CFLAGS=
-CFLAGS32=
+CFLAGS32="-m32"
 CFLAGS64="-m64"
 
 # Linker flags
 LDFLAGS=
-LDFLAGS32=
+LDFLAGS32="-m32"
 LDFLAGS64="-m64"
 
 # C pre-processor flags
@@ -283,7 +283,7 @@ CPPFLAGS64=
 
 # C++ flags
 CXXFLAGS=
-CXXFLAGS32=
+CXXFLAGS32="-m32"
 CXXFLAGS64="-m64"
 
 #############################################################################
