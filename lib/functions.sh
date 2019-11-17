@@ -1497,10 +1497,10 @@ make_isaexec_stub_arch() {
         # Skip if we already made a stub for this file
         [ -f "$file" ] && continue
         logmsg "------ $file"
-        # Run the makeisa.sh script
-        CC=$CC \
-        logcmd $MYDIR/makeisa.sh $PREFIX/$DIR $file || \
-            logerr "--- Failed to make isaexec stub for $DIR/$file"
+        # Run the makeisa.sh script - build a 32-bit isa stub
+        CC=$CC CFLAGS="-m32 -O2" \
+            logcmd $MYDIR/makeisa.sh $PREFIX/$DIR $file \
+            || logerr "--- Failed to make isaexec stub for $DIR/$file"
     done
 }
 
