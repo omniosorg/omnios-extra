@@ -1,6 +1,6 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
-| ooce/application/mattermost	| 5.16.3	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
+| ooce/application/mattermost	| 5.17.0	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.23	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-72	| 7.2.24	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-73	| 7.3.11	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
@@ -65,7 +65,7 @@
 | ooce/network/socat		| 1.7.3.3	| http://www.dest-unreach.org/socat/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/unbound		| 1.9.4		| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/znc		| 1.7.5		| https://github.com/znc/znc/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/ooceapps			| 0.5.11	| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/ooceapps			| 0.5.12	| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/print/cups		| 2.3.0		| https://github.com/apple/cups/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/expect		| 5.45.4	| https://sourceforge.net/projects/expect/files/Expect/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-8		| 8.16.2	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
