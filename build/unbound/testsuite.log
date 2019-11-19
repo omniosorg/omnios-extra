@@ -1,8 +1,8 @@
-Start of unbound 1.9.3 unit test.
+Start of unbound 1.9.5 unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
-ub_random seed is 1566921905
+ub_random seed is 1574188553
 test per-view respip config data apply functions
 test global respip config data apply functions
 test per-view respip config actions apply functions
@@ -65,8 +65,8 @@ test slabhash functions
 test infra cache functions
 test sldns functions
 test message parse functions
-[0] did 10000 in 99.868 msec for 100132.174470 encode/sec size 615
-903736 checks ok.
+[0] did 10000 in 99.309 msec for 100695.808034 encode/sec size 615
+903818 checks ok.
 selftest successful (33 checks).
 -n ./testdata/acl.rpl 
 OK
