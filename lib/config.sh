@@ -237,7 +237,8 @@ case $RELVER in
     15102[34])          DEFAULT_GCC_VER=5 ;;
     15102[56])          DEFAULT_GCC_VER=6 ;;
     15102[78])          DEFAULT_GCC_VER=7 ;;
-    151029|15103[0-3])  DEFAULT_GCC_VER=8 ;;
+    151029|15103[0-2])  DEFAULT_GCC_VER=8 ;;
+    151033)             DEFAULT_GCC_VER=9 ;;
     *) logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
 
@@ -259,11 +260,12 @@ FCFLAGS[_]+=" -O2"
 
 # Taken from illumos-joyent along with the following comment:
 # "gcc has a rather aggressive optimization on by default that infers loop
-#  bounds based on undefined behavior (!!).  This can lead to some VERY
-#  surprising optimizations -- ones that may be technically correct in the
+#  bounds based on undefined behaviour (!!).  This can lead to some VERY
+#  surprising optimisations -- ones that may be technically correct in the
 #  strictest sense but also result in incorrect program behavior."
 FCFLAGS[7]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[8]+=" -fno-aggressive-loop-optimizations"
+FCFLAGS[9]+=" -fno-aggressive-loop-optimizations"
 
 # CFLAGS applies to both builds, 32/64 only gets applied to the respective
 # build
