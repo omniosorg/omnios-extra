@@ -53,11 +53,14 @@ MAKE_INSTALL_ARGS_64="
     libdir=$OPREFIX/lib/$ISAPART64
 "
 
-configure32() { :; }
+configure32() {
+    export XCFLAGS="$CFLAGS $CFLAGS32"
+    export LDFLAGS="$LDFLAGS $LDFLAGS32"
+}
 
 configure64() { 
-    export XCFLAGS="-m64"
-    export LDFLAGS="-m64"
+    export XCFLAGS="$CFLAGS $CFLAGS64"
+    export LDFLAGS="$LDFLAGS $LDFLAGS64"
 }
 
 init
