@@ -67,7 +67,7 @@ CONFIGURE_OPTS_64="
     --with-system-freetype2
     --with-system-libpng
     --with-system-zlib
-    --build=x86_64-pc-solaris2.11
+    --build=$TRIPLET64
 "
 
 dl_dist() {
