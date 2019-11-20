@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=nsd
-VER=4.2.2
+VER=4.2.3
 PKG=ooce/network/nsd
 SUMMARY="Authoritative DNS server"
 DESC="The NLnet Labs Name Server Daemon (NSD) is an authoritative "
@@ -58,6 +58,8 @@ CONFIGURE_OPTS="
     --with-pidfile=/var$sPREFIX/run/nsd.pid
 "
 
+# need msg_flags from struct msghdr
+CFLAGS+=" -D_XPG4_2"
 LDFLAGS="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 export MAKE
 
