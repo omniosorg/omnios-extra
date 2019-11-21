@@ -18,7 +18,7 @@
 
 PROG=zrepl
 PKG=ooce/system/zrepl
-VER=0.2.0
+VER=0.2.1
 SUMMARY="$PROG - ZFS replication"
 DESC="$PROG is a one-stop, integrated solution for ZFS replication"
 
@@ -34,6 +34,10 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DVERSION=$VER
 "
+
+GOOS=illumos
+GOARCH=amd64
+export GOOS GOARCH
 
 build() {
     pushd $TMPDIR/$BUILDDIR >/dev/null
@@ -51,14 +55,14 @@ build() {
         logcmd go build -v -mod=readonly -o "$GOPATH/$out" $src
     done
     logmsg "Building zrepl..."
-    logcmd $MAKE build ZREPL_VERSION=$VER GOOS=illumos GOARCH=amd64
+    logcmd $MAKE $PROG-bin ZREPL_VERSION=$VER
 
     popd >/dev/null
 }
 
 install() {
     logcmd mkdir -p $DESTDIR/$PREFIX/bin || logerr "mkdir"
-    logcmd cp $TMPDIR/$BUILDDIR/artifacts/zrepl $DESTDIR/$PREFIX/bin/ \
+    logcmd cp $TMPDIR/$BUILDDIR/artifacts/$PROG-$GOOS-$GOARCH $DESTDIR/$PREFIX/bin/$PROG \
         || logerr "Cannot install binary"
 }
 
