@@ -14,6 +14,6 @@ diff -wpruN '--exclude=*.orig' a/unix~/installManPage a/unix/installManPage
  esac
  
 +#SECTION=`echo $MANPAGE | sed 's/.*\(.\)$/\1/'`
+ Name=`basename $ManPage .$Section`
  SrcDir=`dirname $ManPage`
  
- ########################################################################

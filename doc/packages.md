@@ -72,7 +72,7 @@
 | ooce/runtime/node-10		| 10.17.0	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-25		| 2.5.7		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-26		| 2.6.5		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
-| ooce/runtime/tcl		| 8.6.9		| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/runtime/tcl		| 8.6.10	| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/security/gnupg		| 1.4.23	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.17.6	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-116		| 1.16.1	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
