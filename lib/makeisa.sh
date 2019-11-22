@@ -94,5 +94,5 @@ main(int argc, char *argv[], char *envp[]) {
 }
 EOF
 
-$CC -o $BIN $CFILE
+$CC $CFLAGS -o $BIN $CFILE
 rm $CFILE

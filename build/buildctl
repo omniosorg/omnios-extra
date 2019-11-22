@@ -96,6 +96,7 @@ $0
     build continue                 - continue interrupted build
     build from <pkg>               - build <pkg> then those after
     baseline [create [repo]]       - check or create pkg baseline
+    diff                           - generate diff files for published packages
 
 Options:
 
@@ -357,6 +358,25 @@ baseline() {
         logerr "Package list does not match baseline"
     fi
     rm -f $TMPDIR/baseline.$$
+}
+
+diffpkg() {
+    filter="${1:-.}"
+    repo="$PKGSRVR"
+
+    [ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
+
+    pkgrepo -s $repo list | nawk '
+        $1 == "PUBLISHER" { next }
+        $2 in seen { next }
+        {
+            seen[$2] = 1
+            printf("%s@%s\n", $2, $NF)
+        }
+    ' | sort | egrep "$filter" | while read pkg; do
+        logmsg "--- $pkg"
+        BATCH=1 diff_package $pkg
+    done
 }
 
 hashline="`printf -- '#%.0s' {1..79}`"
@@ -648,6 +668,11 @@ case "$1" in
     baseline)
         shift
         baseline "$@"
+        ;;
+
+    diff)
+        shift
+        diffpkg "$@"
         ;;
 
     build)

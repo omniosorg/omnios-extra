@@ -49,7 +49,7 @@ CONFIGURE_OPTS_64="
     --bindir=$PREFIX/bin
     --sbindir=$PREFIX/sbin
     --libdir=$OPREFIX/lib/$ISAPART64
-    --build=amd64-pc-solaris2.11
+    --build=$TRIPLET64
 "
 
 CFLAGS+=" -I$OPREFIX/include"

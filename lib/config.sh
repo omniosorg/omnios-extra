@@ -136,6 +136,12 @@ PATCHDIR=patches
 # Do we create isaexec stubs for scripts and other non-binaries (default yes)
 NOSCRIPTSTUB=
 
+ISAPART=i386
+ISAPART64=amd64
+
+TRIPLET32=i386-pc-solaris2.11
+TRIPLET64=x86_64-pc-solaris2.11
+
 #############################################################################
 # Perl stuff
 #############################################################################
@@ -223,8 +229,6 @@ DONT_REMOVE_INSTALL_DIR=
 
 CCACHE_PATH=/opt/ooce/ccache/bin
 
-ISAPART=i386
-ISAPART64=amd64
 BUILDORDER="32 64"
 
 # For OmniOS we (almost) always want GCC
@@ -237,7 +241,8 @@ case $RELVER in
     15102[34])          DEFAULT_GCC_VER=5 ;;
     15102[56])          DEFAULT_GCC_VER=6 ;;
     15102[78])          DEFAULT_GCC_VER=7 ;;
-    151029|15103[0-3])  DEFAULT_GCC_VER=8 ;;
+    151029|15103[0-2])  DEFAULT_GCC_VER=8 ;;
+    151033)             DEFAULT_GCC_VER=9 ;;
     *) logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
 
@@ -259,21 +264,22 @@ FCFLAGS[_]+=" -O2"
 
 # Taken from illumos-joyent along with the following comment:
 # "gcc has a rather aggressive optimization on by default that infers loop
-#  bounds based on undefined behavior (!!).  This can lead to some VERY
-#  surprising optimizations -- ones that may be technically correct in the
+#  bounds based on undefined behaviour (!!).  This can lead to some VERY
+#  surprising optimisations -- ones that may be technically correct in the
 #  strictest sense but also result in incorrect program behavior."
 FCFLAGS[7]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[8]+=" -fno-aggressive-loop-optimizations"
+FCFLAGS[9]+=" -fno-aggressive-loop-optimizations"
 
 # CFLAGS applies to both builds, 32/64 only gets applied to the respective
 # build
 CFLAGS=
-CFLAGS32=
+CFLAGS32="-m32"
 CFLAGS64="-m64"
 
 # Linker flags
 LDFLAGS=
-LDFLAGS32=
+LDFLAGS32="-m32"
 LDFLAGS64="-m64"
 
 # C pre-processor flags
@@ -283,7 +289,7 @@ CPPFLAGS64=
 
 # C++ flags
 CXXFLAGS=
-CXXFLAGS32=
+CXXFLAGS32="-m32"
 CXXFLAGS64="-m64"
 
 #############################################################################

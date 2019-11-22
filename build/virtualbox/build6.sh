@@ -30,6 +30,8 @@ if [ $RELVER -lt 151030 ]; then
     exit 0
 fi
 
+set_gccver 8
+
 SKIP_LICENCES=GPLv2
 
 MAJVER=${VER%.*}            # M.m
