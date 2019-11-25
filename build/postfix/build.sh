@@ -26,7 +26,7 @@
 . ../../lib/functions.sh
 
 PROG=postfix
-VER=3.4.7
+VER=3.4.8
 PKG=ooce/network/smtp/postfix
 SUMMARY="Postfix MTA"
 DESC="Wietse Venema's mail server alternative to sendmail"
