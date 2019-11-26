@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=protobuf
-VER=3.10.0
+VER=3.11.0
 PKG=ooce/library/protobuf
 SUMMARY="protobuf"
 DESC="Google's language-neutral, platform-neutral, extensible mechanism "
