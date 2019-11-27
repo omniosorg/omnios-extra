@@ -1,6 +1,6 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
-| ooce/application/mattermost	| 5.17.0	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
+| ooce/application/mattermost	| 5.17.1	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.23	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-72	| 7.2.25	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-73	| 7.3.12	| http://uk1.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
@@ -21,7 +21,7 @@
 | ooce/developer/autogen	| 5.18.16	| https://ftp.gnu.org/gnu/autogen/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
 | ooce/developer/clang-80	| 8.0.1		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/cmake		| 3.15.5	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/cmake		| 3.16.0	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/dejagnu	| 1.6.2		| https://ftp.gnu.org/gnu/dejagnu/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-112		| 1.12.13	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
@@ -50,7 +50,7 @@
 | ooce/library/libvorbis	| 1.3.6		| https://ftp.osuosl.org/pub/xiph/releases/vorbis/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvncserver	| 0.9.12	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libzip		| 1.5.2		| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/protobuf		| 3.10.0	| https://github.com/protocolbuffers/protobuf/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/protobuf		| 3.11.0	| https://github.com/protocolbuffers/protobuf/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/slang		| 2.3.2		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/unistring	| 0.9.10	| https://ftp.gnu.org/gnu/libunistring/ | [omniosorg](https://github.com/omniosorg)
 | ooce/lxadm			| 0.1.6		| https://github.com/hadfl/lxadm/releases | [omniosorg](https://github.com/omniosorg)
