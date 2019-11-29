@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=nano
-VER=4.5
+VER=4.6
 PKG=ooce/editor/nano
 SUMMARY="nano editor"
 DESC="GNU implementation of nano, a text editor emulating pico"
@@ -44,8 +44,8 @@ CPPFLAGS+=" -I/usr/include/ncurses"
 save_function make_install _make_install
 make_install() {
     _make_install
-    logcmd mkdir -p $DESTDIR/etc/opt/ooce || logerr "mkdir"
-    logcmd cp doc/sample.nanorc $DESTDIR/etc/opt/ooce/nanorc \
+    logcmd mkdir -p $DESTDIR/etc$PREFIX || logerr "mkdir"
+    logcmd cp doc/sample.nanorc $DESTDIR/etc$PREFIX/nanorc \
         || logerr "install nanorc"
 }
 
