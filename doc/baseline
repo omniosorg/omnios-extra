@@ -53,6 +53,7 @@ extra.omnios ooce/library/libpng
 extra.omnios ooce/library/libvncserver
 extra.omnios ooce/library/libvorbis
 extra.omnios ooce/library/libzip
+extra.omnios ooce/library/onig
 extra.omnios ooce/library/protobuf
 extra.omnios ooce/library/slang
 extra.omnios ooce/library/unistring
