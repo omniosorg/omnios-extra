@@ -1742,12 +1742,18 @@ pre_python_64() {
 
 python_vendor_relocate() {
     pushd $DESTDIR/usr/lib >/dev/null || logerr "python relocate pushd"
-    for ver in $PYTHON2VER $PYTHON3VER; do
-        [ -d python$ver/site-packages ] || continue
-        logmsg "Relocating python $ver site to vendor-packages"
-        mv python$ver/site-packages python$ver/vendor-packages \
+    [ -d python$PYTHONVER/site-packages ] || continue
+    logmsg "Relocating python $PYTHONVER site to vendor-packages"
+    if [ -d python$PYTHONVER/vendor-packages ]; then
+        rsync -a python$PYTHONVER/site-packages/ \
+            python$PYTHONVER/vendor-packages/ \
+            || logerr "python: cannot copy from site to vendor-packages"
+        rm -rf python$PYTHONVER/site-packages \
+            || logerr "python: cannot remove site-packages directory"
+    else
+        mv python$PYTHONVER/site-packages/ python$PYTHONVER/vendor-packages/ \
             || logerr "python: cannot move from site to vendor-packages"
-    done
+    fi
     popd >/dev/null
 }
 
