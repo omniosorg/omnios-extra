@@ -25,6 +25,8 @@ DESC="$PROG is a lightweight and flexible command-line JSON processor"
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
+BUILD_DEPENDS_IPS="ooce/library/onig"
+
 set_arch 64
 
 XFORM_ARGS="
@@ -36,18 +38,10 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
-    --with-oniguruma=builtin
+    --with-oniguruma=$OPREFIX
 "
 
-save_function prep_build _prep_build
-prep_build() {
-    pushd $TMPDIR/$BUILDDIR/modules/oniguruma >/dev/null
-    [ -f configure ] && logerr "--- looks like modules/oniguruma is fixed"
-    autoreconf -fi
-    popd >/dev/null
-
-    _prep_build
-}
+LDFLAGS="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER

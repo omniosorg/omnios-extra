@@ -20,6 +20,7 @@ depend fmri=ooce/library/libidl type=require
 depend fmri=ooce/library/libjpeg-turbo type=require
 depend fmri=ooce/library/libvncserver type=require
 depend fmri=ooce/library/libvorbis type=require
+depend fmri=ooce/library/onig type=require
 depend fmri=ooce/library/protobuf type=require
 depend fmri=ooce/library/slang type=require
 depend fmri=ooce/multimedia/ffmpeg type=require
