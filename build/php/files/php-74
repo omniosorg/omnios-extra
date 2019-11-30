@@ -1,0 +1,57 @@
+#!/sbin/sh
+
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+
+. /lib/svc/share/smf_include.sh
+
+PIDF=/var/opt/ooce/php/run/php-7.4-fpm.pid
+
+check_and_kill()
+{
+	PID=`head -1 $1`
+	kill -0 $PID > /dev/null 2>&1
+	[ $? -eq 0 ] && kill $PID
+}
+
+case "$1" in
+'refresh')
+        [ -f $PIDF ] && kill -USR2 `head -1 $PIDF`
+        ;;
+
+'start')
+	/opt/ooce/php-7.4/sbin/php-fpm -c /etc/opt/ooce/php-7.4/php.ini
+	;;
+
+'stop')
+	[ -f $PIDF ] && check_and_kill $PIDF
+	# Need to kill the entire service contract to kill all php related
+	# processes
+	smf_kill_contract $2 TERM 1 30
+	ret=$?
+	[ $ret -eq 1 ] && exit 1
+
+	# It is possible that some of these are not responding to TERM.
+	# If the contract did not empty after TERM, move on to KILL.
+	if [ $ret -eq 2 ] ; then
+		smf_kill_contract $2 KILL 1
+	fi
+	;;
+*)
+	echo "Usage: $0 { start | stop | refresh }"
+	exit 1
+	;;
+esac
+exit 0
+

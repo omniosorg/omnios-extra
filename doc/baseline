@@ -2,6 +2,7 @@ extra.omnios ooce/application/mattermost
 extra.omnios ooce/application/mc
 extra.omnios ooce/application/php-72
 extra.omnios ooce/application/php-73
+extra.omnios ooce/application/php-74
 extra.omnios ooce/application/php-common
 extra.omnios ooce/application/texlive
 extra.omnios ooce/application/tidy
