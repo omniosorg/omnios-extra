@@ -16,5 +16,3 @@ license COPYING license=GPLv3
 
 <transform path=$(PREFIX)/share/(?:doc|info) -> drop>
 
-<transform file path=etc -> set preserve true>
-

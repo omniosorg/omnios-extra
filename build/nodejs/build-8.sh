@@ -36,7 +36,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
 
 # objdump is needed to build nodejs
-PATH+=":/usr/gnu/$TRIPLET32/bin"
+PATH+=":/usr/gnu/$TRIPLET64/bin"
 
 CXXFLAGS+="-ffunction-sections -fdata-sections"
 MAKE_ARGS="CC=$CC"

@@ -1,0 +1,33 @@
+
+Do not remove UUID file when a scanned directory is empty
+
+Because FcDirCacheDeleteUUID does not reset the modification time on
+the directory, and because FcDirCacheRead unconditionally creates the
+UUID file each time it is run, any empty directory in the cache will
+get its timestamp changed each time the cache for that directory is
+read.
+
+Instead, just leave the UUID file around as it is harmless.
+
+The alternative would be to only create the UUID file after the cache
+has been created and the directory has been discovered to be
+non-empty, but that would delay the creation of the UUID file.
+Signed-off-by: Keith Packard's avatarKeith Packard <keithp@keithp.com>
+
+diff -wpruN '--exclude=*.orig' a~/src/fcdir.c a/src/fcdir.c
+--- a~/src/fcdir.c	1970-01-01 00:00:00
++++ a/src/fcdir.c	1970-01-01 00:00:00
+@@ -421,13 +421,6 @@ FcDirCacheRead (const FcChar8 *dir, FcBo
+     /* Not using existing cache file, construct new cache */
+     if (!cache)
+ 	cache = FcDirCacheScan (dir, config);
+-    if (cache)
+-    {
+-	FcFontSet *fs = FcCacheSet (cache);
+-
+-	if (cache->dirs_count == 0 && (!fs || fs->nfont == 0))
+-	    FcDirCacheDeleteUUID (dir, config);
+-    }
+ 
+     return cache;
+ }

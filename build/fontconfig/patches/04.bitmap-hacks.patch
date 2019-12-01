@@ -1,0 +1,84 @@
+diff -wpruN '--exclude=*.orig' a~/src/fcmatch.c a/src/fcmatch.c
+--- a~/src/fcmatch.c	1970-01-01 00:00:00
++++ a/src/fcmatch.c	1970-01-01 00:00:00
+@@ -50,6 +50,15 @@ FcCompareNumber (const FcValue *value1,
+ 	return -1.0;
+     }
+     v = v2 - v1;
++
++    /*
++     * Hack to allow bitmap fonts to equal requested font if it is close
++     */
++    if ( v > -.5 && v <= .5 )
++    {
++        v = 0;
++    }
++
+     if (v < 0)
+ 	v = -v;
+     *bestValue = FcValueCanonicalize (value2);
+@@ -720,6 +729,46 @@ FcFontRenderPrepare (FcConfig	    *confi
+     return new;
+ }
+ 
++static void
++FcChangeFormat ( FcPattern *p )
++{
++    int i;
++    FcPatternElt    *pe = FcPatternElts(p);
++
++    /*
++     * Hack. If user want monochrome mode, then try to pick bitmaps over
++     * outlines.
++     */
++    for ( i = 0; i < p->num; i++ )
++    {
++        if ( !strcmp(&pe[i].object, "antialias" ))
++        {
++            int aa = (int) &pe[i].values->value.u.b;
++            int j;
++            int done = 0;
++            FcValue v;
++
++            v.type = FcTypeBool;
++            v.u.b  = aa;
++
++            for ( j = 0; j < p->num; j++ )
++            {
++                if ( !strcmp(&pe[j].object, "outline" ))
++                {
++                    done = 1;
++                    break;
++                }
++            }
++            if ( !done )
++            {
++                FcPatternObjectAddWithBinding (p, "outline", v,
++                        FcValueBindingStrong, 1);
++            }
++            break;
++        }
++    }
++}
++
+ static FcPattern *
+ FcFontSetMatchInternal (FcFontSet   **sets,
+ 			int	    nsets,
+@@ -733,6 +782,8 @@ FcFontSetMatchInternal (FcFontSet   **se
+     int		    i;
+     int		    set;
+ 
++    FcChangeFormat ( p );
++
+     for (i = 0; i < PRI_END; i++)
+ 	bestscore[i] = 0;
+     best = 0;
+@@ -1016,6 +1067,8 @@ FcFontSetSort (FcConfig	    *config FC_U
+     FcBool    	    *patternLangSat;
+     FcValue	    patternLang;
+ 
++    FcChangeFormat ( p );
++
+     assert (sets != NULL);
+     assert (p != NULL);
+     assert (result != NULL);

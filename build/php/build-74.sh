@@ -17,16 +17,16 @@
 . ../../lib/functions.sh
 
 PROG=php
-PKG=ooce/application/php-72
-VER=7.2.25
-SUMMARY="PHP 7.2"
+PKG=ooce/application/php-74
+VER=7.4.0
+SUMMARY="PHP 7.4"
 DESC="A popular general-purpose scripting language"
 
 set_arch 64
 
 SKIP_LICENCES=PHP
 
-# configure needs gawk for 7.2.19 as awk bails out with
+# configure needs gawk for 7.3.6 as awk bails out with
 # record .... too long
 export AWK
 
@@ -47,6 +47,7 @@ BUILD_DEPENDS_IPS="
     ooce/library/freetype2
     ooce/library/libjpeg-turbo
     ooce/library/libpng
+    ooce/library/onig
 "
 RUN_DEPENDS_IPS="ooce/application/php-common"
 

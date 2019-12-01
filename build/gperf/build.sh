@@ -16,38 +16,25 @@
 
 . ../../lib/functions.sh
 
-PROG=jq
-PKG=ooce/util/jq
-VER=1.6
-SUMMARY="$PROG - JSON query tool"
-DESC="$PROG is a lightweight and flexible command-line JSON processor"
-
-OPREFIX=$PREFIX
-PREFIX+=/$PROG
-
-BUILD_DEPENDS_IPS="ooce/library/onig"
+PROG=gperf
+VER=3.1
+PKG=ooce/developer/gperf
+SUMMARY="$PROG"
+DESC="A perfect hash function generator"
 
 set_arch 64
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
-    -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-    -DVERSION=$VER
 "
-
-CONFIGURE_OPTS="
-    --prefix=$PREFIX
-    --with-oniguruma=$OPREFIX
-"
-
-LDFLAGS="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+strip_install
 make_package
 clean_up
 

@@ -1,0 +1,8 @@
+01.arial-narrow.conf.patch
+02.cjk-fonts.conf.patch
+04.bitmap-hacks.patch
+05-uuid.patch
+10-do-not-update-mtime.patch
+11-do-not-try-updating-mtime.patch
+12-do-not-remove-uuid-file.patch
+13-do-not-run-a-test-case-for-uuid-deletion.patch
