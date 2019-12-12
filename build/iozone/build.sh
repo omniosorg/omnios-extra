@@ -17,14 +17,15 @@
 . ../../lib/functions.sh
 
 PROG=iozone
-VER=3.487
+VER=3.488
 VERHUMAN=$VER
 PKG=ooce/system/test/iozone
 SUMMARY="IOzone - filesystem benchmark"
 DESC="$SUMMARY"
 
 OVER=${VER/./_}
-BUILDDIR="$PROG$OVER/src/current"
+
+set_builddir "$PROG$OVER/src/current"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -39,9 +40,7 @@ set_arch 64
 SKIP_LICENCES=iozone
 
 # No configure
-configure64() {
-    :
-}
+configure64() { :; }
 
 make_prog() {
     logmsg "--- make"
@@ -65,6 +64,7 @@ download_source $PROG "$PROG$OVER"
 patch_source
 prep_build
 build
+strip_install
 make_package
 clean_up
 
