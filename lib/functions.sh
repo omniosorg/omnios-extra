@@ -1709,7 +1709,7 @@ build_dependency() {
 
     download_source "$dldir" "$prog" "$ver" "$TMPDIR"
     patch_source
-    note "-- Building dependency $dep"
+    note -n "-- Building dependency $dep"
     build
 
     # Restore variables
