@@ -24,6 +24,11 @@
 
 <transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
 
+<transform file path=$(OPREFIX)/(?:lib|$(PROG)/(?:sbin|lib))/ \
+    -> add restart_fmri svc:/application/cups/scheduler:default>
+<transform file path=$(OPREFIX)/(?:lib|$(PROG)/(?:sbin|lib))/ \
+    -> add restart_fmri svc:/application/cups/in-lpd:default>
+
 <transform path=etc/dbus-1 -> drop>
 
 license LICENSE license=Apache2

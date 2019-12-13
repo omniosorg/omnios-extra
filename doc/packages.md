@@ -70,7 +70,7 @@
 | ooce/network/unbound		| 1.9.6		| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/znc		| 1.7.5		| https://github.com/znc/znc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/ooceapps			| 0.5.12	| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/print/cups		| 2.3.0		| https://github.com/apple/cups/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/print/cups		| 2.3.1		| https://github.com/apple/cups/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/expect		| 5.45.4	| https://sourceforge.net/projects/expect/files/Expect/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-8		| 8.16.2	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-10		| 10.17.0	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
