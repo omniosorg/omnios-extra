@@ -25,7 +25,7 @@
 . ../../lib/functions.sh
 
 PROG=ooceapps
-VER=0.5.12
+VER=0.5.13
 PKG=ooce/ooceapps
 SUMMARY="OOCEapps"
 DESC="Web integrations for OmniOS"
