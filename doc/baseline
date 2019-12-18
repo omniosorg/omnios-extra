@@ -76,6 +76,7 @@ extra.omnios ooce/ooceapps
 extra.omnios ooce/print/cups
 extra.omnios ooce/runtime/expect
 extra.omnios ooce/runtime/node-10
+extra.omnios ooce/runtime/node-12
 extra.omnios ooce/runtime/node-8
 extra.omnios ooce/runtime/ruby-25
 extra.omnios ooce/runtime/ruby-26
