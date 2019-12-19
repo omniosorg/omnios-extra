@@ -26,7 +26,7 @@ DESC+="It is intended for writing scalable network programs such as web servers.
 
 set_arch 64
 
-BUILDDIR=$PROG-v$VER
+set_builddir $PROG-v$VER
 
 BUILD_DEPENDS_IPS="developer/gnu-binutils"
 
@@ -36,7 +36,8 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
 
 # objdump is needed to build nodejs
-PATH+=":/usr/gnu/$TRIPLET64/bin"
+[ $RELVER -ge 151033 ] && TRIPLET=$TRIPLET64 || TRIPLET=$TRIPLET32
+PATH+=":/usr/gnu/$TRIPLET/bin"
 
 CXXFLAGS+="-ffunction-sections -fdata-sections"
 MAKE_ARGS="CC=$CC"
