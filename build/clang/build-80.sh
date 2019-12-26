@@ -24,16 +24,16 @@ DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
 DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
 
-BUILDDIR=cfe-$VER.src
-
 MAJVER=${VER%.*}
+PATCHDIR=patches-${MAJVER//./}
 
 BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}"
 # Using the = prefix to require the specific matching version of llvm
 # need gcc until compiler-rt ships its own crtbegin, crtend objects
-RUN_DEPENDS_IPS="=$BUILD_DEPENDS_IPS developer/gcc$GCCVER"
+RUN_DEPENDS_IPS="=$BUILD_DEPENDS_IPS@$MAJVER developer/gcc$GCCVER"
 
 set_arch 64
+set_builddir cfe-$VER.src
 
 SKIP_LICENCES=UIUC
 

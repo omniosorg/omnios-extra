@@ -22,13 +22,13 @@ VER=8.0.1
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 
-BUILDDIR=$PROG-$VER.src
-
 set_arch 64
+set_builddir $PROG-$VER.src
 
 SKIP_LICENCES=UIUC
 
 MAJVER=${VER%.*}
+PATCHDIR=patches-${MAJVER//./}
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
