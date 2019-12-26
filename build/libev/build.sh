@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=libev
-VER=4.27
+VER=4.31
 PKG=ooce/library/libev
 SUMMARY="libev"
 DESC="High-performance event loop library"
