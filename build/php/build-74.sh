@@ -84,13 +84,13 @@ CONFIGURE_OPTS_64="
     --with-zlib-dir=/usr
     --with-bz2=/usr
     --with-curl
-    --with-gd
+    --enable-gd
 
     --with-db4=$OPREFIX
     --with-lmdb=$OPREFIX
-    --with-jpeg-dir=$OPREFIX
-    --with-png-dir=$OPREFIX
-    --with-freetype-dir=$OPREFIX
+    --with-jpeg
+    --with-png
+    --with-freetype
 
     --enable-fpm
     --with-fpm-user=php
@@ -100,6 +100,17 @@ PKG_CONFIG_PATH+=":$OPREFIX/lib/$ISAPART64/pkgconfig"
 CPPFLAGS+=" -I/usr/include/gmp"
 LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 export PKG_CONFIG_PATH CPPFLAGS LDFLAGS
+
+save_function configure64 _configure64
+configure64() {
+    _configure64 "$@"
+
+    # Test that desired features have been properly enabled
+
+    for f in GD_BUNDLED GD_FREETYPE GD_JPG GD_PNG LIBFREETYPE LIBJPEG; do
+        egrep -s "HAVE_$f 1" main/php_config.h || logerr "$f is not enabled"
+    done
+}
 
 make_install() {
     logmsg "--- make install"
