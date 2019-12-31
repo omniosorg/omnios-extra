@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=smartmontools
-VER=7.0
+VER=7.1
 VERHUMAN=$VER
 PKG=ooce/system/smartmontools
 SUMMARY="smartmontools"
@@ -43,9 +43,6 @@ CONFIGURE_OPTS="
     --with-gnupg=/opt/ooce/bin/gpg
     --with-scriptpath=/usr/bin:/opt/ooce/bin
 "
-
-
-reset_configure_opts
 
 init
 download_source $PROG $PROG $VER
