@@ -21,3 +21,7 @@ depend fmri=ooce/developer/autogen type=conditional \
 depend fmri=ooce/developer/dejagnu type=conditional \
     predicate=release/name@0.5.11-151030
 
+# Required to run the bison testsuite from r151033 onwards
+depend fmri=ooce/runtime/ruby-26 type=conditional \
+    predicate=release/name@0.5.11-151033
+
