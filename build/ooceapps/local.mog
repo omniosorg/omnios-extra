@@ -1,37 +1,31 @@
-# CDDL HEADER START
-# 
-# The contents of this file are subject to the terms of the
-# Common Development and Distribution License, Version 1.0 only
-# (the "License").  You may not use this file except in compliance
-# with the License.
+# {{{ CDDL HEADER
 #
-# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
-# or http://www.opensolaris.org/os/licensing.
-# See the License for the specific language governing permissions
-# and limitations under the License.
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
 #
-# When distributing Covered Code, include this CDDL HEADER in each
-# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
-# If applicable, add the following below this CDDL HEADER, with the
-# fields enclosed by brackets "[]" replaced with your own identifying
-# information: Portions Copyright [yyyy] [name of copyright owner]
-#
-# CDDL HEADER END
-#
-#
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
-# Use is subject to license terms.
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
 
-dir group=bin mode=0755 owner=root path=var/$(OPREFIX)
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 group groupname=$(PROG) gid=79
 user username=$(PROG) uid=79 group=$(PROG) gcos-field="OOCEapps User" \
     ftpuser=false home-dir=/var/$(PREFIX) password=NP
 
-<transform file path=etc/$(PREFIX)/ooceapps.conf$ -> set preserve true>
-<transform dir  path=var/$(PREFIX) -> set owner ooceapps>
-<transform dir  path=etc/$(PREFIX) -> set owner ooceapps>
-<transform file path=$(PREFIX)/(bin|lib)/ \
+<transform path=etc/$(PREFIX) -> set owner $(PROG)>
+<transform path=etc/$(PREFIX) -> set group $(PROG)>
+<transform dir path=etc/$(PREFIX) -> set mode 0700>
+<transform file path=etc/$(PREFIX)/$(PROG).conf$ -> set mode 0400>
+<transform file path=etc/$(PREFIX)/$(PROG).conf$ -> set preserve true>
+
+<transform dir path=var/$(PREFIX) -> set owner $(PROG)>
+<transform dir path=var/$(PREFIX) -> set group $(PROG)>
+
+<transform file path=$(PREFIX)/(?:bin|lib)/ \
     -> set restart_fmri svc:/ooce/ooceapps:default>
 
 license LICENSE license=GPLv3
