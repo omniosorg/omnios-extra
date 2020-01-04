@@ -1,0 +1,34 @@
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+license LICENSE license=MIT
+
+group groupname=$(PROG) gid=86
+user ftpuser=false username=gitea uid=86 group=$(PROG) \
+    gcos-field="Gitea - git with a cup of tea" \
+    home-dir=/var/$(PREFIX) password=NP
+
+<transform path=etc/$(PREFIX) -> set owner $(PROG)>
+<transform path=etc/$(PREFIX) -> set group $(PROG)>
+<transform file path=etc/$(PREFIX) -> set mode 0600>
+<transform file path=etc/$(PREFIX) -> set preserve true>
+
+<transform dir path=var/$(PREFIX) -> set owner $(PROG)>
+<transform dir path=var/$(PREFIX) -> set group $(PROG)>
+
+<transform dir path=var/$(PREFIX)/data -> set mode 0700>
+
+<transform dir path=var/log/$(PREFIX) -> set owner $(PROG)>
+<transform dir path=var/log/$(PREFIX) -> set group $(PROG)>
+
