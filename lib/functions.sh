@@ -1827,59 +1827,17 @@ buildperl() {
         logmsg "Sourcing environment file: $SRCDIR/${PROG}-${VER}.env"
         source $SRCDIR/${PROG}-${VER}.env
     fi
-    for b in $BUILDORDER; do
-        [[ $BUILDARCH =~ ^($b|both)$ ]] && buildperl$b
-    done
-}
-
-buildperl32() {
-    if [ -f "$SRCDIR/${PROG}-${VER}.env32" ]; then
-        logmsg "Sourcing environment file: $SRCDIR/${PROG}-${VER}.env32"
-        source $SRCDIR/${PROG}-${VER}.env32
-    fi
-    pushd $TMPDIR/$BUILDDIR > /dev/null
-    logmsg "Building 32-bit"
-    export ISALIST="$ISAPART"
-    local OPTS
-    OPTS=${MAKEFILE_OPTS//_ARCH_/}
-    OPTS=${OPTS//_ARCHBIN_/$ISAPART}
-    if [ -f Makefile.PL ]; then
-        make_clean
-        makefilepl32 $OPTS
-        make_prog
-        [ -n "$PERL_MAKE_TEST" ] && make_param test
-        make_pure_install
-    elif [ -f Build.PL ]; then
-        build_clean
-        buildpl32 $OPTS
-        build_prog
-        [ -n "$PERL_MAKE_TEST" ] && build_test
-        build_install
-    fi
-    popd > /dev/null
-    unset ISALIST
-    export ISALIST
-}
-
-buildperl64() {
-    if [ -f "$SRCDIR/${PROG}-${VER}.env64" ]; then
-        logmsg "Sourcing environment file: $SRCDIR/${PROG}-${VER}.env64"
-        source $SRCDIR/${PROG}-${VER}.env64
-    fi
     pushd $TMPDIR/$BUILDDIR > /dev/null
     logmsg "Building 64-bit"
-    local OPTS
-    OPTS=${MAKEFILE_OPTS//_ARCH_/$ISAPART64}
-    OPTS=${OPTS//_ARCHBIN_/$ISAPART64}
     if [ -f Makefile.PL ]; then
         make_clean
-        makefilepl64 $OPTS
+        makefilepl $PERL_MAKEFILE_OPTS
         make_prog
         [ -n "$PERL_MAKE_TEST" ] && make_param test
         make_pure_install
     elif [ -f Build.PL ]; then
         build_clean
-        buildpl64 $OPTS
+        buildpl $PERL_MAKEFILE_OPTS
         build_prog
         [ -n "$PERL_MAKE_TEST" ] && build_test
         build_install
@@ -1887,25 +1845,14 @@ buildperl64() {
     popd > /dev/null
 }
 
-makefilepl32() {
-    logmsg "--- Makefile.PL 32-bit"
-    logcmd $PERL32 Makefile.PL $@ || logerr "Failed to run Makefile.PL"
-}
-
-makefilepl64() {
+makefilepl() {
     logmsg "--- Makefile.PL 64-bit"
-    logcmd $PERL64 Makefile.PL $@ || logerr "Failed to run Makefile.PL"
+    logcmd $PERL Makefile.PL $@ || logerr "Failed to run Makefile.PL"
 }
 
-buildpl32() {
-    logmsg "--- Build.PL 32-bit"
-    logcmd $PERL32 Build.PL prefix=$PREFIX $@ ||
-        logerr "Failed to run Build.PL"
-}
-
-buildpl64() {
+buildpl() {
     logmsg "--- Build.PL 64-bit"
-    logcmd $PERL64 Build.PL prefix=$PREFIX $@ ||
+    logcmd $PERL Build.PL prefix=$PREFIX $@ ||
         logerr "Failed to run Build.PL"
 }
 
@@ -1942,7 +1889,7 @@ test_if_core() {
     else
         logmsg "------ Not installed, good."
     fi
-    if logcmd $PERL32 -M$MODNAME -e '1'; then
+    if logcmd $PERL -M$MODNAME -e '1'; then
         # Module is in core, don't create a package
         logmsg "--- Module is in core for Perl $DEPVER.  Not creating a package."
         exit 0
