@@ -151,14 +151,13 @@ PERLVER="`perl -V:version | cut -d"'" -f2`"
 SPERLVER=${PERLVER%.*}
 
 # Full paths to bins
-PERL32=/usr/perl5/${SPERLVER}/bin/$ISAPART/perl
-PERL64=/usr/perl5/${SPERLVER}/bin/$ISAPART64/perl
+PERL=/usr/perl5/${SPERLVER}/bin/perl
 
 # Default Makefile.PL options
-PERL_MAKEFILE_OPTS="INSTALLSITEBIN=$PREFIX/bin/_ARCHBIN_ \
-                    INSTALLSITESCRIPT=$PREFIX/bin/_ARCHBIN_ \
-                    INSTALLSITEMAN1DIR=$PREFIX/share/man/man1 \
-                    INSTALLSITEMAN3DIR=$PREFIX/share/man/man3 \
+PERL_MAKEFILE_OPTS="INSTALLSITEBIN=$PREFIX/perl5/bin \
+                    INSTALLSITESCRIPT=$PREFIX/perl5/bin \
+                    INSTALLSITEMAN1DIR=$PREFIX/perl5/$SPERLVER/man/man1 \
+                    INSTALLSITEMAN3DIR=$PREFIX/perl5/$SPERLVER/man/man3 \
                     INSTALLDIRS=site"
 
 # Accept MakeMaker defaults so as not to stall build scripts
