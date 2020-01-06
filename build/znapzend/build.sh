@@ -13,7 +13,7 @@
 # }}}
 #
 # Copyright 1995-2013 OETIKER+PARTNER AG  All rights reserved.
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -24,7 +24,7 @@ SUMMARY="A ZFS-aware backup script"
 DESC="Take snapshots and transfer them to a second pool, "
 DESC+="potentially on a different box"
 
-RUN_DEPENDS_IPS="runtime/perl-64"
+[ $RELVER -lt 151033 ] && RUN_DEPENDS_IPS="runtime/perl-64"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"

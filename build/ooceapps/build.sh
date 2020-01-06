@@ -26,7 +26,8 @@ MIRROR="https://github.com/omniosorg/$PROG/releases/download"
 
 SKIP_CHECKSUM=1
 
-RUN_DEPENDS_IPS="runtime/perl-64 ooce/application/texlive"
+RUN_DEPENDS_IPS="ooce/application/texlive"
+[ $RELVER -lt 151033 ] && RUN_DEPENDS_IPS+=" runtime/perl-64"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
