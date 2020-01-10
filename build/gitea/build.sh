@@ -35,6 +35,8 @@ XFORM_ARGS="
     -DVERSION=$VER
 "
 
+RUN_DEPENDS_IPS=developer/versioning/git
+
 GOOS=illumos
 GOARCH=amd64
 export GOOS GOARCH
