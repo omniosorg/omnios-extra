@@ -52,6 +52,7 @@ extra.omnios ooce/library/guile
 extra.omnios ooce/library/libarchive
 extra.omnios ooce/library/libev
 extra.omnios ooce/library/libexif
+extra.omnios ooce/library/libgd
 extra.omnios ooce/library/libid3tag
 extra.omnios ooce/library/libidl
 extra.omnios ooce/library/libjpeg-turbo
