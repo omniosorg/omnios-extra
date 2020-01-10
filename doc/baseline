@@ -39,6 +39,7 @@ extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr
 extra.omnios ooce/developer/rust
+extra.omnios ooce/editor/emacs
 extra.omnios ooce/editor/joe
 extra.omnios ooce/editor/nano
 extra.omnios ooce/extra-build-tools
