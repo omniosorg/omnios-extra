@@ -1,0 +1,51 @@
+To avoid dependency on libtool/libltdl, change "*.la" extension to "*.so".
+This also changes the path for the *.so files necessary for testing to the
+correct location.
+This patch comes from in-house.  It has not been submitted upstream; plans
+unclear.
+
+diff -wpruN '--exclude=*.orig' a~/MagickCore/module.c a/MagickCore/module.c
+--- a~/MagickCore/module.c	1970-01-01 00:00:00
++++ a/MagickCore/module.c	1970-01-01 00:00:00
+@@ -77,7 +77,7 @@ typedef void *ModuleHandle;
+   Define declarations.
+ */
+ #if defined(MAGICKCORE_LTDL_DELEGATE)
+-#  define ModuleGlobExpression "*.la"
++#  define ModuleGlobExpression "*.so"
+ #else
+ #  if defined(_DEBUG)
+ #    define ModuleGlobExpression "IM_MOD_DB_*.dll"
+@@ -1467,7 +1467,7 @@ static void TagToCoderModuleName(const c
+   (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",tag);
+   assert(name != (char *) NULL);
+ #if defined(MAGICKCORE_LTDL_DELEGATE)
+-  (void) FormatLocaleString(name,MagickPathExtent,"%s.la",tag);
++  (void) FormatLocaleString(name,MagickPathExtent,"%s.so",tag);
+   (void) LocaleLower(name);
+ #else
+ #if defined(MAGICKCORE_WINDOWS_SUPPORT)
+@@ -1520,7 +1520,7 @@ static void TagToFilterModuleName(const
+ #elif !defined(MAGICKCORE_LTDL_DELEGATE)
+   (void) FormatLocaleString(name,MagickPathExtent,"%s.dll",tag);
+ #else
+-  (void) FormatLocaleString(name,MagickPathExtent,"%s.la",tag);
++  (void) FormatLocaleString(name,MagickPathExtent,"%s.so",tag);
+ #endif
+ }
+ 
+diff -wpruN '--exclude=*.orig' a~/common.shi.in a/common.shi.in
+--- a~/common.shi.in	1970-01-01 00:00:00
++++ a/common.shi.in	1970-01-01 00:00:00
+@@ -19,9 +19,9 @@ VALIDATE="@abs_top_builddir@/tests/valid
+ DRAWTEST="@abs_top_builddir@/tests/drawtest"
+ WANDTEST="@abs_top_builddir@/tests/wandtest"
+ LD_LIBRARY_PATH="@abs_top_builddir@/MagickCore/.libs:@abs_top_builddir@/MagickWand/.libs:${LD_LIBRARY_PATH}"
+-MAGICK_CODER_MODULE_PATH="@abs_top_builddir@/coders"
++MAGICK_CODER_MODULE_PATH="@abs_top_builddir@/coders/.libs"
+ MAGICK_CONFIGURE_PATH="@abs_top_builddir@/config:@abs_top_srcdir@/config"
+-MAGICK_FILTER_MODULE_PATH="@abs_top_builddir@/filters"
++MAGICK_FILTER_MODULE_PATH="@abs_top_builddir@/filters/.libs"
+ MAGICK_FONT="@abs_top_srcdir@/PerlMagick/demo/Generic.ttf"
+ PATH="@abs_top_builddir@/utilities:@abs_top_builddir@/tests:${PATH}"
+ set +a

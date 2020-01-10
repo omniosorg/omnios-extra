@@ -1,6 +1,7 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
 | ooce/application/gitea	| 1.10.2	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/imagemagick	| 7.0.9-14	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mattermost	| 5.18.1	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.23	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-72	| 7.2.26	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
