@@ -1,30 +1,20 @@
 #!/usr/bin/bash
 #
-# {{{ CDDL HEADER START
+# {{{ CDDL HEADER
 #
-# The contents of this file are subject to the terms of the
-# Common Development and Distribution License, Version 1.0 only
-# (the "License").  You may not use this file except in compliance
-# with the License.
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
 #
-# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
-# or http://www.opensolaris.org/os/licensing.
-# See the License for the specific language governing permissions
-# and limitations under the License.
-#
-# When distributing Covered Code, include this CDDL HEADER in each
-# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
-# If applicable, add the following below this CDDL HEADER, with the
-# fields enclosed by brackets "[]" replaced with your own identifying
-# information: Portions Copyright [yyyy] [name of copyright owner]
-#
-# CDDL HEADER END }}}
-#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
-#
-# Load support functions
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
 . ../../lib/functions.sh
 
 PROG=joe
@@ -33,37 +23,29 @@ VERHUMAN=$VER
 PKG=ooce/editor/joe
 SUMMARY="joe's own editor"
 DESC="full featured terminal-based screen editor"
-CONFPATH=/etc$PREFIX
-ORIGPREFIX=$PREFIX
-PREFIX=$PREFIX/$PROG
-BUILDARCH=64
 
-CONFIGURE_OPTS_64=" \
-    --prefix=$PREFIX \
-    --sysconfdir=$CONFPATH \
+OPREFIX=$PREFIX
+PREFIX+="/$PROG"
+
+set_arch 64
+
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
+    -DPROG=$PROG
 "
 
-create_symlinks() {
-    # create symbolic link to standard bin dir
-    logcmd mkdir -p $DESTDIR/$ORIGPREFIX/bin
-    for P in jmacs  joe    jpico  jstar; do
-	logcmd ln -s ../$PROG/bin/$P $DESTDIR/$ORIGPREFIX/bin \
-        	|| logerr "--- cannot create $PROG symlink"
-    done
-    # create symbolic link to man page
-    logcmd mkdir -p $DESTDIR/$ORIGPREFIX/share/man/man1
-    logcmd ln -s ../../../$PROG/share/man/man1/${PROG}.1 $DESTDIR/$ORIGPREFIX/share/man/man1/${PROG}.1 \
-        || logerr "--- cannot create man page symlink"
-}
-
+CONFIGURE_OPTS_64="
+    --prefix=$PREFIX
+    --sysconfdir=/etc$OPREFIX
+"
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-make_isa_stub
-create_symlinks
+strip_install
 make_package
 clean_up
 
