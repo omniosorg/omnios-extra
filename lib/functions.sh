@@ -688,6 +688,9 @@ prep_build() {
             -oot)
                 OUT_OF_TREE_BUILD=1
                 ;;
+            -keep)
+                DONT_REMOVE_INSTALL_DIR=1
+                ;;
         esac
     done
 
@@ -1704,6 +1707,10 @@ run_testsuite() {
 #############################################################################
 
 build_dependency() {
+    typeset merge=0
+    case $1 in
+        -merge)     merge=1; shift ;;
+    esac
     typeset dep="$1"
     typeset dir="$2"
     typeset dldir="$3"
@@ -1718,9 +1725,13 @@ build_dependency() {
     # Adjust variables so that download, patch and build work correctly
     BUILDDIR="$dir"
     PATCHDIR="patches-$dep"
-    DEPROOT=$TMPDIR/_deproot
-    DESTDIR=$DEPROOT
-    mkdir -p $DEPROOT
+    if [ $merge -eq 0 ]; then
+        DEPROOT=$TMPDIR/_deproot
+        DESTDIR=$DEPROOT
+        mkdir -p $DEPROOT
+    else
+        DEPROOT=$DESTDIR
+    fi
 
     download_source "$dldir" "$prog" "$ver" "$TMPDIR"
     patch_source
