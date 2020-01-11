@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -25,37 +25,23 @@ DESC="Reads and writes EXIF metainformation from and to image files."
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-XFORM_ARGS="
-    -DPREFIX=${PREFIX#/}
-    -DOPREFIX=${OPREFIX#/}
-    -DPROG=$PROG
-"
-
 CONFIGURE_OPTS="
     --prefix=$PREFIX
-    --disable-static
     --includedir=$OPREFIX/include
+    --disable-static
 "
 CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
-    --sbindir=$PREFIX/sbin/$ISAPART
     --libdir=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    --bindir=$PREFIX/bin/$ISAPART64
-    --sbindir=$PREFIX/sbin/$ISAPART64
     --libdir=$OPREFIX/lib/$ISAPART64
 "
-
-LDFLAGS32+=" -R$OPREFIX/lib"
-LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-make_isa_stub
 make_package
 clean_up
 
