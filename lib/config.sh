@@ -184,6 +184,7 @@ GIT=git
 RIPGREP=/opt/ooce/bin/rg
 CMAKE=/opt/ooce/bin/cmake
 MESON_MAKE=/opt/ooce/bin/ninja
+REALPATH=/usr/gnu/bin/realpath
 # Command for privilege escalation. Can be overridden in site.sh
 PFEXEC=sudo
 

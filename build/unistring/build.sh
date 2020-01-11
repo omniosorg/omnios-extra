@@ -12,8 +12,8 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-#
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
 . ../../lib/functions.sh
 
 PROG=unistring
@@ -25,6 +25,8 @@ BUILDDIR=lib$PROG-$VER
 
 [ $RELVER -lt 151030 ] && exit 0
 
+XFORM_ARGS="-DPREFIX=${PREFIX#/}"
+
 CONFIGURE_OPTS="
     --disable-namespacing
 "
@@ -34,7 +36,6 @@ download_source $PROG lib$PROG $VER
 patch_source
 prep_build
 build
-make_isa_stub
 make_package
 clean_up
 

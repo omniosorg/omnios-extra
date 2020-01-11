@@ -1,4 +1,4 @@
-# {{{ CDDL HEADER
+# {{{ CDDL HEADER START
 #
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.
@@ -10,7 +10,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition. All rights reserved.
 
 # Symlink binaries
 <transform file link path=$(PREFIX)/(s?bin)/(.*) -> emit \
@@ -19,9 +19,7 @@
 # Symlink man pages
 <transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
     link path=$(OPREFIX)/share/man/%<1>/%<2> \
-	target=../../../$(PROG)/share/man/%<1>/%<2> >
+    target=../../../$(PROG)/share/man/%<1>/%<2> >
 
-<transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
-
-license COPYING license=GPLv2
+license COPYING license=GPLv3
 

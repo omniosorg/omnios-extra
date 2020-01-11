@@ -1,3 +1,5 @@
+extra.omnios ooce/application/gitea
+extra.omnios ooce/application/imagemagick
 extra.omnios ooce/application/mattermost
 extra.omnios ooce/application/mc
 extra.omnios ooce/application/php-72
@@ -37,6 +39,7 @@ extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr
 extra.omnios ooce/developer/rust
+extra.omnios ooce/editor/emacs
 extra.omnios ooce/editor/joe
 extra.omnios ooce/editor/nano
 extra.omnios ooce/extra-build-tools
@@ -61,6 +64,7 @@ extra.omnios ooce/library/libzip
 extra.omnios ooce/library/onig
 extra.omnios ooce/library/protobuf
 extra.omnios ooce/library/slang
+extra.omnios ooce/library/tiff
 extra.omnios ooce/library/unistring
 extra.omnios ooce/lxadm
 extra.omnios ooce/multimedia/exif

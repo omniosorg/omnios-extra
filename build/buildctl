@@ -643,6 +643,7 @@ DEFAULT_PKGPUBLISHER=$PKGPUBLISHER
 [ -n "$BATCH" ] && build_flags+="-b "
 [ -n "$SKIP_PKGLINT" ] && build_flags+="-l "
 [ -n "$SKIP_TESTSUITE" ] && build_flags+="-t "
+[ -n "$SKIP_HARDLINK" ] && build_flags+="-L "
 
 case "$1" in
     config)

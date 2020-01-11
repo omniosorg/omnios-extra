@@ -1,4 +1,4 @@
-# {{{ CDDL HEADER
+# {{{ CDDL HEADER START
 #
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.
@@ -12,5 +12,17 @@
 
 # Copyright 2020 OmniOS Community Edition.  All rights reserved.
 
-license COPYING license=GPLv2
+# Symlink binaries
+<transform file link path=$(PREFIX)/(s?bin)/(.*) -> emit \
+    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
+
+# Symlink man pages
+<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
+    link path=$(OPREFIX)/share/man/%<1>/%<2> \
+    target=../../../$(PROG)/share/man/%<1>/%<2> >
+
+# Drop html documentation
+<transform path=$(PREFIX)/share/doc -> drop >
+
+license LICENSE license=ImageMagick
 

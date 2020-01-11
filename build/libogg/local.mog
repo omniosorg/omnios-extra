@@ -9,12 +9,11 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 # }}}
-# CDDL HEADER START
-#
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+
+# Copyright 2020 OmniOS Community Edition.  All rights reserved.
 
 # Drop html documentation
-<transform path=$(PREFIX)/share/doc -> drop >
+<transform path=$(PREFIX)/share -> drop >
 
 license COPYING license=modified-BSD
 

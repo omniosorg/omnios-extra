@@ -1,0 +1,14 @@
+# Ensure that emacs uses GNU find.
+#
+diff -wpruN '--exclude=*.orig' a~/lisp/progmodes/grep.el a/lisp/progmodes/grep.el
+--- a~/lisp/progmodes/grep.el	1970-01-01 00:00:00
++++ a/lisp/progmodes/grep.el	1970-01-01 00:00:00
+@@ -464,7 +464,7 @@ This gets tacked on the end of the gener
+ This variable's value takes effect when `grep-compute-defaults' is called.")
+ 
+ ;;;###autoload
+-(defvar find-program (purecopy "find")
++(defvar find-program (purecopy "/usr/gnu/bin/find")
+   "The default find program.
+ This is used by commands like `grep-find-command', `find-dired'
+ and others.")

@@ -16,24 +16,46 @@
 
 . ../../lib/functions.sh
 
-PROG=libid3tag
-VER=0.15.1b
-PKG=ooce/library/libid3tag
-SUMMARY="libid3tag"
-DESC="ID3 tag manipulation library."
+PROG=tiff
+VER=4.1.0
+PKG=ooce/library/tiff
+SUMMARY="LibTIFF - TIFF Library and Utilities"
+DESC="Support for the Tag Image File Format (TIFF), a widely used format "
+DESC+="for storing image data."
+
+SKIP_LICENCES=BSD-like
+
+OPREFIX=$PREFIX
+PREFIX+="/$PROG"
+
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
+    -DPROG=$PROG
+"
 
 CONFIGURE_OPTS="
     --disable-static
+    --prefix=$PREFIX
+    --includedir=$OPREFIX/include
+"
+CONFIGURE_OPTS_32="
+    --bindir=$PREFIX/bin/$ISAPART
+    --sbindir=$PREFIX/sbin/$ISAPART
+    --libdir=$OPREFIX/lib
+"
+CONFIGURE_OPTS_64="
+    --bindir=$PREFIX/bin
+    --sbindir=$PREFIX/sbin
+    --libdir=$OPREFIX/lib/$ISAPART64
 "
 
 init
 download_source $PROG $PROG $VER
-patch_source
 prep_build
+patch_source
 build
-NUMVER=${VER::$((${#VER} -1))}
-ALPHAVER=${VER:$((${#VER} -1))}
-VER=${NUMVER}.$(ord26 ${ALPHAVER}) make_package
+make_package
 clean_up
 
 # Vim hints
