@@ -1535,10 +1535,14 @@ make_clean() {
 configure32() {
     logmsg "--- configure (32-bit)"
     eval set -- $CONFIGURE_OPTS_WS_32 $CONFIGURE_OPTS_WS
+    PCPATH=
+    [ -n "$PKG_CONFIG_PATH" ] && addpath PCPATH "$PKG_CONFIG_PATH"
+    [ -n "$PKG_CONFIG_PATH32" ] && addpath PCPATH "$PKG_CONFIG_PATH32"
     CFLAGS="$CFLAGS $CFLAGS32" \
         CXXFLAGS="$CXXFLAGS $CXXFLAGS32" \
         CPPFLAGS="$CPPFLAGS $CPPFLAGS32" \
         LDFLAGS="$LDFLAGS $LDFLAGS32" \
+        PKG_CONFIG_PATH="$PCPATH" \
         CC="$CC" CXX="$CXX" \
         logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_32 \
         $CONFIGURE_OPTS "$@" || \
@@ -1548,10 +1552,14 @@ configure32() {
 configure64() {
     logmsg "--- configure (64-bit)"
     eval set -- $CONFIGURE_OPTS_WS_64 $CONFIGURE_OPTS_WS
+    PCPATH=
+    [ -n "$PKG_CONFIG_PATH" ] && addpath PCPATH "$PKG_CONFIG_PATH"
+    [ -n "$PKG_CONFIG_PATH64" ] && addpath PCPATH "$PKG_CONFIG_PATH64"
     CFLAGS="$CFLAGS $CFLAGS64" \
         CXXFLAGS="$CXXFLAGS $CXXFLAGS64" \
         CPPFLAGS="$CPPFLAGS $CPPFLAGS64" \
         LDFLAGS="$LDFLAGS $LDFLAGS64" \
+        PKG_CONFIG_PATH="$PCPATH" \
         CC="$CC" CXX="$CXX" \
         logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_64 \
         $CONFIGURE_OPTS "$@" || \

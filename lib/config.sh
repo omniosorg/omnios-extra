@@ -292,6 +292,10 @@ CXXFLAGS=
 CXXFLAGS32="-m32"
 CXXFLAGS64="-m64"
 
+# pkg-config paths
+PKG_CONFIG_PATH32=
+PKG_CONFIG_PATH64=
+
 #############################################################################
 # Configuration of the packaged software
 #############################################################################
