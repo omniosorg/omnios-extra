@@ -10,9 +10,9 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYING license=GPLv3
 
-<transform path=.*/share -> drop>
+<transform path=$(PREFIX)/share -> drop>
 
