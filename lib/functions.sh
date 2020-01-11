@@ -688,6 +688,9 @@ prep_build() {
             -oot)
                 OUT_OF_TREE_BUILD=1
                 ;;
+            -keep)
+                DONT_REMOVE_INSTALL_DIR=1
+                ;;
         esac
     done
 
@@ -722,7 +725,8 @@ prep_build() {
             OUT_OF_TREE_BUILD=1
             MAKE="$MESON_MAKE"
             TESTSUITE_MAKE="$MESON_MAKE"
-            CONFIGURE_CMD="$PYTHONLIB/python$PYTHONVER/bin/meson setup $TMPDIR/$BUILDDIR"
+            CONFIGURE_CMD="$PYTHONLIB/python$PYTHONVER/bin/meson setup"
+            CONFIGURE_CMD+=" $TMPDIR/$BUILDDIR"
             ;;
     esac
 
@@ -1535,10 +1539,14 @@ make_clean() {
 configure32() {
     logmsg "--- configure (32-bit)"
     eval set -- $CONFIGURE_OPTS_WS_32 $CONFIGURE_OPTS_WS
+    PCPATH=
+    [ -n "$PKG_CONFIG_PATH" ] && addpath PCPATH "$PKG_CONFIG_PATH"
+    [ -n "$PKG_CONFIG_PATH32" ] && addpath PCPATH "$PKG_CONFIG_PATH32"
     CFLAGS="$CFLAGS $CFLAGS32" \
         CXXFLAGS="$CXXFLAGS $CXXFLAGS32" \
         CPPFLAGS="$CPPFLAGS $CPPFLAGS32" \
         LDFLAGS="$LDFLAGS $LDFLAGS32" \
+        PKG_CONFIG_PATH="$PCPATH" \
         CC="$CC" CXX="$CXX" \
         logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_32 \
         $CONFIGURE_OPTS "$@" || \
@@ -1548,10 +1556,14 @@ configure32() {
 configure64() {
     logmsg "--- configure (64-bit)"
     eval set -- $CONFIGURE_OPTS_WS_64 $CONFIGURE_OPTS_WS
+    PCPATH=
+    [ -n "$PKG_CONFIG_PATH" ] && addpath PCPATH "$PKG_CONFIG_PATH"
+    [ -n "$PKG_CONFIG_PATH64" ] && addpath PCPATH "$PKG_CONFIG_PATH64"
     CFLAGS="$CFLAGS $CFLAGS64" \
         CXXFLAGS="$CXXFLAGS $CXXFLAGS64" \
         CPPFLAGS="$CPPFLAGS $CPPFLAGS64" \
         LDFLAGS="$LDFLAGS $LDFLAGS64" \
+        PKG_CONFIG_PATH="$PCPATH" \
         CC="$CC" CXX="$CXX" \
         logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_64 \
         $CONFIGURE_OPTS "$@" || \
@@ -1696,6 +1708,10 @@ run_testsuite() {
 #############################################################################
 
 build_dependency() {
+    typeset merge=0
+    case $1 in
+        -merge)     merge=1; shift ;;
+    esac
     typeset dep="$1"
     typeset dir="$2"
     typeset dldir="$3"
@@ -1710,9 +1726,13 @@ build_dependency() {
     # Adjust variables so that download, patch and build work correctly
     BUILDDIR="$dir"
     PATCHDIR="patches-$dep"
-    DEPROOT=$TMPDIR/_deproot
-    DESTDIR=$DEPROOT
-    mkdir -p $DEPROOT
+    if [ $merge -eq 0 ]; then
+        DEPROOT=$TMPDIR/_deproot
+        DESTDIR=$DEPROOT
+        mkdir -p $DEPROOT
+    else
+        DEPROOT=$DESTDIR
+    fi
 
     download_source "$dldir" "$prog" "$ver" "$TMPDIR"
     patch_source
@@ -1948,6 +1968,17 @@ check_symlinks() {
     for link in `find "$1" -type l`; do
         readlink -e $link >/dev/null || logerr "Dangling symlink $link"
     done
+}
+
+#############################################################################
+# Add a component to a path
+#############################################################################
+
+addpath() {
+    declare -n var=$1
+    typeset val="$2"
+
+    var+="${var:+:}$val"
 }
 
 #############################################################################

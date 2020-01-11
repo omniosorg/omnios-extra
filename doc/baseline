@@ -46,12 +46,14 @@ extra.omnios ooce/extra-build-tools
 extra.omnios ooce/file/lsof
 extra.omnios ooce/kvmadm
 extra.omnios ooce/library/bdw-gc
+extra.omnios ooce/library/cairo
 extra.omnios ooce/library/fontconfig
 extra.omnios ooce/library/freetype2
 extra.omnios ooce/library/guile
 extra.omnios ooce/library/libarchive
 extra.omnios ooce/library/libev
 extra.omnios ooce/library/libexif
+extra.omnios ooce/library/libgd
 extra.omnios ooce/library/libid3tag
 extra.omnios ooce/library/libidl
 extra.omnios ooce/library/libjpeg-turbo
@@ -62,6 +64,7 @@ extra.omnios ooce/library/libvncserver
 extra.omnios ooce/library/libvorbis
 extra.omnios ooce/library/libzip
 extra.omnios ooce/library/onig
+extra.omnios ooce/library/pango
 extra.omnios ooce/library/protobuf
 extra.omnios ooce/library/slang
 extra.omnios ooce/library/tiff
