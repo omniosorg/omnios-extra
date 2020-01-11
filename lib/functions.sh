@@ -51,11 +51,12 @@ process_opts() {
     AUTOINSTALL=
     DEPVER=
     SKIP_PKGLINT=
+    SKIP_HARDLINK=
     SKIP_PKG_DIFF=
     REBASE_PATCHES=
     SKIP_TESTSUITE=
     SKIP_CHECKSUM=
-    while getopts "bcDiPptsf:ha:d:lr:" opt; do
+    while getopts "bcDiPptsf:ha:d:Llr:" opt; do
         case $opt in
             h)
                 show_usage
@@ -67,6 +68,9 @@ process_opts() {
                 ;;
             l)
                 SKIP_PKGLINT=1
+                ;;
+            L)
+                SKIP_HARDLINK=1
                 ;;
             p)
                 SCREENOUT=1
@@ -130,6 +134,7 @@ Usage: $0 [-blt] [-f FLAVOR] [-h] [-a 32|64|both] [-d DEPVER]
   -h        : print this help text
   -i        : autoinstall mode (install build deps)
   -l        : skip pkglint check
+  -L        : skip hardlink target check
   -p        : output all commands to the screen as well as log file
   -P        : re-base patches on latest source
   -r REPO   : specify the IPS repo to use
@@ -1140,7 +1145,8 @@ make_package() {
         fi
         logcmd -p $PKGSEND generate $GENERATE_ARGS $DESTDIR > $P5M_INT || \
             logerr "------ Failed to generate manifest"
-        check_hardlinks "$P5M_INT" "$HARDLINK_TARGETS"
+        [ -z "$SKIP_HARDLINK" -a -z "$BATCH" ] \
+            && check_hardlinks "$P5M_INT" "$HARDLINK_TARGETS"
     else
         logmsg "--- Looks like a meta-package. Creating empty manifest"
         logcmd touch $P5M_INT || \
