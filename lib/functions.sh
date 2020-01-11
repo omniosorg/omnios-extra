@@ -725,7 +725,8 @@ prep_build() {
             OUT_OF_TREE_BUILD=1
             MAKE="$MESON_MAKE"
             TESTSUITE_MAKE="$MESON_MAKE"
-            CONFIGURE_CMD="$PYTHONLIB/python$PYTHONVER/bin/meson setup $TMPDIR/$BUILDDIR"
+            CONFIGURE_CMD="$PYTHONLIB/python$PYTHONVER/bin/meson setup"
+            CONFIGURE_CMD+=" $TMPDIR/$BUILDDIR"
             ;;
     esac
 
