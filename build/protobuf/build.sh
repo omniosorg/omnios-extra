@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -23,14 +23,24 @@ SUMMARY="protobuf"
 DESC="Google's language-neutral, platform-neutral, extensible mechanism "
 DESC+="for serializing structured data"
 
-CONFIGURE_OPTS_32+=" --disable-64bit-solaris"
+XFORM_ARGS="-DPREFIX=${PREFIX#/}"
+
+CONFIGURE_OPTS="
+    --prefix=$PREFIX
+"
+CONFIGURE_OPTS_32="
+    --bindir=$PREFIX/bin/$ISAPART
+    --disable-64bit-solaris
+"
+CONFIGURE_OPTS_64="
+    --bindir=$PREFIX/bin
+"
 
 init
 download_source $PROG $PROG-cpp $VER
 prep_build
 patch_source
 build
-make_isa_stub
 make_package
 clean_up
 

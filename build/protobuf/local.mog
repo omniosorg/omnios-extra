@@ -10,7 +10,10 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2020 OmniOS Community Edition.
+
+# Drop 32bit binaries
+<transform path=$(PREFIX)/s?bin/i386 -> drop>
 
 license LICENSE license=modified-BSD
 
