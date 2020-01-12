@@ -67,23 +67,11 @@ prep_build
 
 ######################################################################
 
-# The 64-bit build of harfbuzz tries to link in libstdc++ twice for some reason
-# when building the utilities. Modify the .la file to prevent this.
-save_function make_prog64 _make_prog64
-make_prog64() {
-    logmsg "--- make"
-    logcmd $MAKE -C src || logerr "--- Make src failed"
-    logcmd sed -i 's^ /usr/lib/amd64/libstdc++.la^^' src/libharfbuzz-subset.la
-    logcmd $MAKE -C util || logerr "--- Make util failed"
-}
-
 EXPECTED_OPTIONS="CAIRO CAIRO_FT FONTCONFIG FREETYPE GLIB"
 build_dependency -merge harfbuzz harfbuzz-$HARFBUZZVER \
     harfbuzz harfbuzz $HARFBUZZVER
 
 export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/harfbuzz"
-
-save_function _make_prog64 make_prog64
 
 ######################################################################
 
