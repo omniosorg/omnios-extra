@@ -12,8 +12,8 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-#
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
 . ../../lib/functions.sh
 
 PROG=guile
@@ -51,7 +51,7 @@ CONFIGURE_OPTS_32="
     --libdir=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    --bindir=$PREFIX/bin/$ISAPART64
+    --bindir=$PREFIX/bin
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
@@ -67,7 +67,6 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-make_isa_stub
 make_package
 clean_up
 

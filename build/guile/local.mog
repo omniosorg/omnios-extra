@@ -10,9 +10,10 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-license COPYING license=GPLv3
+# Drop 32bit binaries
+<transform path=$(PREFIX)/s?bin/i386 -> drop>
 
 # Symlink binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
@@ -21,4 +22,6 @@ license COPYING license=GPLv3
 # charset.alias is also delivered by libunistring
 <transform path=.*/charset.alias -> drop>
 <transform path=.*/share/info -> drop>
+
+license COPYING license=GPLv3
 
