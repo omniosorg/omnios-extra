@@ -95,10 +95,9 @@ CONFIGURE_OPTS_64="
     --with-fpm-user=php
     --with-fpm-group=php
 "
-PKG_CONFIG_PATH+=":$OPREFIX/lib/$ISAPART64/pkgconfig"
+
 CPPFLAGS+=" -I/usr/include/gmp"
 LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
-export PKG_CONFIG_PATH CPPFLAGS LDFLAGS
 
 make_install() {
     logmsg "--- make install"

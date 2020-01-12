@@ -57,7 +57,6 @@ CONFIGURE_OPTS="
     --disable-static
 "
 
-export PKG_CONFIG_PATH="$OPREFIX/lib/$ISAPART64/pkgconfig"
 CFLAGS+=" -I$OPREFIX/include"
 LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 

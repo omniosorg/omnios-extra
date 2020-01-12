@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -58,18 +58,6 @@ CONFIGURE_OPTS_64="
 
 # The build framework expects GNU tools
 export PATH="/usr/gnu/bin:$PATH"
-
-save_function configure32 _configure32
-configure32() {
-    export PKG_CONFIG_PATH="$OPREFIX/lib/pkgconfig"
-    _configure32
-}
-
-save_function configure64 _configure64
-configure64() {
-    export PKG_CONFIG_PATH="$OPREFIX/lib/$ISAPART64/pkgconfig"
-    _configure64
-}
 
 rem_abs_symlinks() {
     logmsg "--- removing absolute symlinks"

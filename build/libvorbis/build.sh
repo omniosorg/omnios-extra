@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -25,8 +25,6 @@ DESC+="general-purpose compressed audio format"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
-
-export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$OPREFIX/lib/pkgconfig"
 
 BUILD_DEPENDS_IPS="ooce/library/libogg"
 

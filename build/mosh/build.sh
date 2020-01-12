@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -30,8 +30,7 @@ CONFIGURE_OPTS="
     --bindir=$PREFIX/bin
 "
 
-export PKG_CONFIG_PATH=$PREFIX/lib/$ISAPART64/pkgconfig
-export LDFLAGS="-R$PREFIX/lib/$ISAPART64"
+LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER

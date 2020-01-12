@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -96,10 +96,9 @@ CONFIGURE_OPTS_64="
     --with-fpm-user=php
     --with-fpm-group=php
 "
-PKG_CONFIG_PATH+=":$OPREFIX/lib/$ISAPART64/pkgconfig"
+
 CPPFLAGS+=" -I/usr/include/gmp"
 LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
-export PKG_CONFIG_PATH CPPFLAGS LDFLAGS
 
 save_function configure64 _configure64
 configure64() {
