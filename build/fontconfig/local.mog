@@ -10,7 +10,11 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2020 OmniOS Community Edition.  All rights reserved.
+
+# Preserve configuration files
+<transform path=etc/$(PREFIX)/fonts/fonts.conf -> set preserve true>
+<transform path=etc/$(PREFIX)/fonts/fonts.conf.bak -> drop>
 
 # Drop 32bit binaries
 <transform path=$(PREFIX)/s?bin/i386 -> drop>
