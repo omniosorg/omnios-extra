@@ -11,9 +11,9 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 # }}}
-#
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-#
+
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
 . ../../lib/functions.sh
 
 PROG=bdw-gc
@@ -22,17 +22,16 @@ PKG=ooce/library/bdw-gc
 SUMMARY="A garbage collector for C and C++"
 DESC="$SUMMARY"
 
-[ $RELVER -lt 151030 ] && exit 0
-
-BUILDDIR=gc-$VER
+set_builddir gc-$VER
 SKIP_LICENCES=gc
+
+XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 init
 download_source $PROG gc $VER
 patch_source
 prep_build
 build
-make_isa_stub
 make_package
 clean_up
 
