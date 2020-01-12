@@ -49,7 +49,7 @@
 | ooce/library/freetype2	| 2.10.1	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libarchive	| 3.4.1		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libgd		| 2.2.5		| https://github.com/libgd/libgd/releases| [omniosorg](https://github.com/omniosorg)
+| ooce/library/libgd		| 2.2.5		| https://github.com/libgd/libgd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libev		| 4.31		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libexif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/libexif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libid3tag	| 0.15.1b	| https://sourceforge.net/projects/mad/files/libid3tag/ | [omniosorg](https://github.com/omniosorg)
