@@ -293,8 +293,8 @@ CXXFLAGS32="-m32"
 CXXFLAGS64="-m64"
 
 # pkg-config paths
-PKG_CONFIG_PATH32=
-PKG_CONFIG_PATH64=
+PKG_CONFIG_PATH32=$PREFIX/lib/pkgconfig
+PKG_CONFIG_PATH64=$PREFIX/lib/$ISAPART64/pkgconfig
 
 #############################################################################
 # Configuration of the packaged software

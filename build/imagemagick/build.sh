@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=ImageMagick
-VER=7.0.9-14
+VER=7.0.9-15
 PKG=ooce/application/imagemagick
 SUMMARY="$PROG - Convert, Edit, or Compose Bitmap Images"
 DESC="Use $PROG to create, edit, compose, or convert bitmap images. It can "
@@ -43,6 +43,8 @@ PREFIX+=/$PROG
 
 set_arch 64
 
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
@@ -57,7 +59,6 @@ CONFIGURE_OPTS="
     --disable-static
 "
 
-export PKG_CONFIG_PATH="$OPREFIX/lib/$ISAPART64/pkgconfig"
 CFLAGS+=" -I$OPREFIX/include"
 LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
@@ -67,6 +68,7 @@ patch_source
 prep_build
 build
 strip_install
+run_testsuite check
 VER=${VER//-/.}
 make_package
 clean_up

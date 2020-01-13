@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -41,8 +41,6 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
 "
-
-export PKG_CONFIG_PATH=$OPREFIX/lib/amd64/pkgconfig
 
 CONFIGURE_OPTS="
     --sysconfdir=/etc/$OPREFIX

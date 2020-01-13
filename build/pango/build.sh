@@ -50,9 +50,6 @@ test_config() {
     done
 }
 
-addpath PKG_CONFIG_PATH32 $PREFIX/lib/pkgconfig
-addpath PKG_CONFIG_PATH64 $PREFIX/lib/$ISAPART64/pkgconfig
-
 save_function configure32 _configure32
 configure32() {
     _configure32

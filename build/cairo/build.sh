@@ -74,8 +74,6 @@ CONFIGURE_OPTS_64="
 
 LDFLAGS32+=" -R$OPREFIX/lib"
 LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
-addpath PKG_CONFIG_PATH32 $OPREFIX/lib/pkgconfig
-addpath PKG_CONFIG_PATH64 $OPREFIX/lib/$ISAPART64/pkgconfig
 
 note -n "-- Building $PROG"
 
