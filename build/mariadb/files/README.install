@@ -1,0 +1,20 @@
+
+--------------------------
+MariaDB Installation Notes
+--------------------------
+
+When the mariadb service is started for the first time, an initial
+database will be set up and two all-privilege accounts will be created.
+
+One is root@localhost, it has no password, but you need to
+be system 'root' user to connect. Use, for example, 'sudo mysql'
+
+The second is mysql@localhost, it has no password either, but
+you need to be the system 'mysql' user to connect.
+
+You may wish to review the default configuration file at
+/etc/opt/ooce/mariadb-<version>/my.cnf before starting the service
+for the first time.
+
+--------------------------
+

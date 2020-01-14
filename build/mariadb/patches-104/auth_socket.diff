@@ -1,0 +1,101 @@
+Submitted upstream at https://github.com/MariaDB/server/pull/1434
+
+diff --git a/plugin/auth_socket/CMakeLists.txt b/plugin/auth_socket/CMakeLists.txt
+index 5a59520a..5941cf07 100644
+--- a/plugin/auth_socket/CMakeLists.txt
++++ b/plugin/auth_socket/CMakeLists.txt
+@@ -57,12 +57,39 @@ IF (HAVE_XUCRED)
+   SET(ok 1)
+ ELSE()
+ 
++# illumos, is that you?
++CHECK_CXX_SOURCE_COMPILES(
++"#include <ucred.h>
++int main() {
++  ucred_t *cred = NULL;
++  getpeerucred(0, &cred);
++  }" HAVE_GETPEERUCRED)
++
++# Depending on the flags set in the compilation environment, illumos will have
++# either the POSIX.1c draft 6 or POSIX.1c final implementation of getpwuid_r()
++# Check that defining _POSIX_PTHREAD_SEMANTICS provides the final standard
++# version.
++
++CHECK_CXX_SOURCE_COMPILES(
++"#define _POSIX_PTHREAD_SEMANTICS
++#include <pwd.h>
++int main() {
++  getpwuid_r(0, NULL, NULL, 0, NULL);
++  }" HAVE_GETPWUID_POSIX_FINAL)
++
++IF (HAVE_GETPEERUCRED AND HAVE_GETPWUID_POSIX_FINAL)
++  ADD_DEFINITIONS(-DHAVE_GETPEERUCRED)
++  ADD_DEFINITIONS(-D_POSIX_PTHREAD_SEMANTICS)
++  SET(ok 1)
++ELSE()
++
+ # Who else? Anyone?
+ # C'mon, show your creativity, be different! ifdef's are fun, aren't they?
+ 
+ ENDIF()
+ ENDIF()
+ ENDIF()
++ENDIF()
+ 
+ IF(ok)
+   MYSQL_ADD_PLUGIN(auth_socket auth_socket.c DEFAULT)
+diff --git a/plugin/auth_socket/auth_socket.c b/plugin/auth_socket/auth_socket.c
+index 46eae517..b10679a5 100644
+--- a/plugin/auth_socket/auth_socket.c
++++ b/plugin/auth_socket/auth_socket.c
+@@ -47,6 +47,9 @@
+ #define uid cr_uid
+ #define ucred xucred
+ 
++#elif defined HAVE_GETPEERUCRED
++#include <ucred.h>
++
+ #else
+ #error impossible
+ #endif
+@@ -64,10 +67,15 @@ static int socket_auth(MYSQL_PLUGIN_VIO *vio, MYSQL_SERVER_AUTH_INFO *info)
+ {
+   unsigned char *pkt;
+   MYSQL_PLUGIN_VIO_INFO vio_info;
++#ifdef HAVE_GETPEERUCRED
++  ucred_t *cred = NULL;
++#else
+   struct ucred cred;
+   socklen_t cred_len= sizeof(cred);
++#endif
+   struct passwd pwd_buf, *pwd;
+   char buf[1024];
++  uid_t u;
+ 
+   /* no user name yet ? read the client handshake packet with the user name */
+   if (info->user_name == 0)
+@@ -83,14 +91,23 @@ static int socket_auth(MYSQL_PLUGIN_VIO *vio, MYSQL_SERVER_AUTH_INFO *info)
+     return CR_ERROR;
+ 
+   /* get the UID of the client process */
++#ifdef HAVE_GETPEERUCRED
++  if (getpeerucred(vio_info.socket, &cred) != 0)
++    return CR_ERROR;
++  u = ucred_geteuid(cred);
++  ucred_free(cred);
++#else
+   if (getsockopt(vio_info.socket, level, SO_PEERCRED, &cred, &cred_len))
+     return CR_ERROR;
+ 
+   if (cred_len != sizeof(cred))
+     return CR_ERROR;
+ 
++  u = cred.uid;
++#endif
++
+   /* and find the username for this uid */
+-  getpwuid_r(cred.uid, &pwd_buf, buf, sizeof(buf), &pwd);
++  getpwuid_r(u, &pwd_buf, buf, sizeof(buf), &pwd);
+   if (pwd == NULL)
+     return CR_ERROR;
+ 

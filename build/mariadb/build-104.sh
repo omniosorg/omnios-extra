@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -50,12 +50,18 @@ XFORM_ARGS="
 set_arch 64
 
 CFLAGS64+=" -O3 -I$OPREFIX/include -I/usr/include/gssapi"
-CXXFLAGS64="$CFLAGS64 -R$OPREFIX/lib/amd64"
-LDFLAGS64+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
+CXXFLAGS64="$CFLAGS64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+# Enables the POSIX.1c final implementations of getpwuid_r()
+CPPFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS"
+# Prevents "Text relocation remains referenced against symbol offset
+# in file ../../sql/mysqld_dtrace_all.o" error
+LDFLAGS+=" -Bsymbolic -mimpure-text -lrt"
 
 CONFIGURE_OPTS_64=
-CONFIGURE_OPTS_WS_64="
-    -DCOMPILATION_COMMENT=\"OmniOSce MariaDB Server\"
+CONFIGURE_OPTS_WS="
+    -DWITH_COMMENT=\"OmniOS MariaDB Server\"
+    -DCOMPILATION_COMMENT=\"OmniOS MariaDB Server\"
 
     -DCMAKE_VERBOSE_MAKEFILE=1
     -DCMAKE_BUILD_TYPE=Release
@@ -64,31 +70,40 @@ CONFIGURE_OPTS_WS_64="
     -DCMAKE_EXE_LINKER_FLAGS_RELEASE=\"$LDFLAGS64\"
     -DCMAKE_MODULE_LINKER_FLAGS_RELEASE=\"$LDFLAGS64\"
     -DCMAKE_SHARED_LINKER_FLAGS_RELEASE=\"$LDFLAGS64\"
-    -DWITH_MYSQLD_LDFLAGS=-lumem
+    -DCMAKE_REQUIRED_INCLUDES=/usr/include/pcre
 
+    -DINSTALL_LAYOUT=SVR4
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DDEFAULT_SYSCONFDIR=$CONFPATH
-    -DMYSQL_DATADIR=$VARPATH/data
-
-    -DINSTALL_LAYOUT=STANDALONE
+    -DINSTALL_BINDIR=$PREFIX/bin
+    -DINSTALL_SBINDIR=$PREFIX/bin
+    -DINSTALL_SCRIPTDIR=$PREFIX/bin
     -DINSTALL_LIBDIR=$PREFIX/lib/$ISAPART64
+    -DMYSQL_DATADIR=$VARPATH/data
     -DINSTALL_UNIX_ADDRDIR=/tmp/mysql-$MAJVER.sock
+
+    -DWITH_SSL=yes
+    -DWITH_ZLIB=system
+    -DWITH_PCRE=system
+    -DWITH_SSL=system
+
     -DMYSQL_MAINTAINER_MODE=OFF
     -DWITH_DEBUG=OFF
     -DENABLE_DEBUG_SYNC=OFF
 
-    -DENABLE_DTRACE=OFF
+    -DFEATURE_SET=community
+    -DENABLE_DTRACE=ON
     -DWITH_READLINE=ON
     -DWITH_EMBEDDED_SERVER=OFF
     -DWITHOUT_MROONGA_STORAGE_ENGINE=ON
+    -DPLUGIN_AUTH_SOCKET=YES
     -DPLUGIN_CONNECT=NO
 
     -DENABLED_LOCAL_INFILE=1
     -DWITH_EXTRA_CHARSETS=complex
 
-    -DWITH_SSL=yes
-    -DWITH_ZLIB=bundled
     -DWITH_INNODB_LZ4=ON
+    -DWITH_MYSQLD_LDFLAGS=-lumem
 
     -DWITH_PIC=1
 "
@@ -109,7 +124,8 @@ patch_source
 prep_build cmake
 build
 strip_install
-install_smf database $PROG-$sMAJVER.xml
+add_notes README.install
+install_smf application $PROG-$sMAJVER.xml $PROG-$sMAJVER
 make_package
 clean_up
 
