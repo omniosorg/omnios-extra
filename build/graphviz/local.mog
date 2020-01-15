@@ -9,23 +9,11 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 # }}}
-
+#
 # Copyright 2020 OmniOS Community Edition.  All rights reserved.
 
-# Preserve configuration files
-<transform path=etc/$(PREFIX)/fonts/fonts.conf -> set preserve true>
-<transform path=etc/$(PREFIX)/fonts/fonts.conf.bak -> drop>
-
-# Drop 32bit binaries
-<transform path=$(PREFIX)/s?bin/i386 -> drop>
-
-# Drop html documentation
-<transform path=$(PREFIX)/share/doc -> drop>
-
-# Create relative symlinks
-<transform file path=$(PREFIX)/share/fontconfig/conf.avail/(.*\.conf)$ -> emit \
-    link path=etc/$(PREFIX)/fonts/conf.d/%<1> \
-    target=../../../../../../$(PREFIX)/share/fontconfig/conf.avail/%<1> >
+# Drop unwanted files
+<transform path=$(PREFIX)/share/graphviz/(?:demo|doc) -> drop>
 
 # Symlink binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
@@ -33,7 +21,8 @@
 
 # Symlink man pages
 <transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(OPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> >
+    link path=$(OPREFIX)/share/man/%<1>/%<2> \
+    target=../../../$(PROG)/share/man/%<1>/%<2> >
 
-license COPYING license=MIT
+license COPYING license=Eclipse
 

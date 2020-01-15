@@ -36,6 +36,7 @@ BUILD_DEPENDS_IPS="
     ooce/library/libpng
     ooce/library/pango
     ooce/library/tiff
+    ooce/application/graphviz
 "
 
 OPREFIX=$PREFIX
