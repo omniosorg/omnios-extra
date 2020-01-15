@@ -1,0 +1,71 @@
+#!/sbin/sh
+
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+. /lib/svc/share/smf_include.sh
+
+if [ -z $SMF_FMRI ]; then
+	echo "SMF framework variables are not initialized."
+	exit $SMF_EXIT_ERR_FATAL
+fi
+
+rootdir="`svcprop -p application/root $SMF_FMRI`"
+datadir="`svcprop -p application/datadir $SMF_FMRI`"
+
+if [ -z "$rootdir" ]; then
+	echo "application/rootdir property is not set on this instance"
+	exit $SMF_EXIT_ERR_CONFIG
+fi
+
+if [ -z "$datadir" ]; then
+	echo "application/datadir property is not set on this instance"
+	exit $SMF_EXIT_ERR_CONFIG
+fi
+
+if [ ! -d "$datadir" ]; then
+	echo "Data directory $datadir does not exist"
+	exit $SMF_EXIT_ERR_CONFIG
+fi
+
+if [ ! -w "$datadir" ]; then
+	echo "The $datadir directory is not writeable by `$USER`"
+	exit $SMF_EXIT_ERR_CONFIG
+fi
+
+create_database() {
+	[ -d "$datadir/mysql" ] && return
+	echo "*** No existing database found, creating now"
+	$rootdir/bin/mysql_install_db \
+	    --datadir="$datadir" \
+	    --auth-root-authentication-method=socket \
+	    --auth-root-socket-user=`id -un`
+}
+
+start_mariadb() {
+	pidfile="$datadir/`uname -n`.pid"
+	echo "Starting mariadb with datadir=$datadir"
+	$rootdir/bin/mysqld_safe --datadir="$datadir" --pid-file="$pidfile" &
+}
+
+case "$1" in
+	start)
+		create_database
+		start_mariadb
+		;;
+	*)
+		echo "Usage $0 {start}"
+		exit $SMF_EXIT_ERR_FATAL
+		;;
+esac
+
+exit $SMF_EXIT_OK
+

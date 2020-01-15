@@ -1191,6 +1191,7 @@ make_package() {
         $GLOBAL_MOG_FILE \
         $LOCAL_MOG_FILE \
         $EXTRA_MOG_FILE \
+        $NOTES_MOG_FILE \
         | $PKGFMT -u > $P5M_INT2
 
     [ -n "$DESTDIR" ] && check_licences
@@ -1422,6 +1423,37 @@ EOM
         pkgmogrify $pdir/manifest $mog > $pdir/manifest.newpub
         logcmd pkgsend publish -s $PKGSRVR -d $pdir $pdir/manifest.newpub
     done
+}
+
+#############################################################################
+# Add some release notes
+#############################################################################
+
+# Add some release notes that are displayed during installation/upgrade.
+# Pass the name of the notes file (relative to files/) as the first argument
+# and set the second argument to:
+#   0       - display the notes on initial package installation only
+#   <ver>   - display the notes when upgrading from before version <ver>
+# If the second argument is omitted, it defaults to 0
+
+add_notes() {
+    local file="${1:?file}"
+    local ver="${2:-0}"
+
+    pushd $DESTDIR > /dev/null
+    logmsg "-- Adding notes from $file"
+    local tgt=${NOTES_LOCATION#/}
+    logcmd mkdir -p $tgt
+    logcmd cp $SRCDIR/files/$file $tgt/$PKGD || logerr "Cannot copy to $tgt"
+    if [ -z "$NOTES_MOG_FILE" ]; then
+        NOTES_MOG_FILE=$TMPDIR/notes.mog
+        :>$NOTES_MOG_FILE
+    fi
+    cat << EOM >> $NOTES_MOG_FILE
+<transform file path=$tgt/$PKGD\$ -> set release-note feature/pkg/self@$ver>
+<transform file path=$tgt/$PKGD\$ -> set must-display true>
+EOM
+    popd >/dev/null
 }
 
 #############################################################################
