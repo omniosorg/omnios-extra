@@ -85,7 +85,7 @@ dl_dist() {
                     || logerr "Checksum of downloaded file does not match."
             fi
         fi
-        [ -d "$DIR" ] && logcmd rm -rf "$DIR" || logerr "--- failed to remove $DIR"
+        [ -d "$DIR" ] && logcmd rm -rf "$DIR"
         logmsg "--- Extracting $dist archive"
         logcmd extract_archive $FILENAME \
             || logerr "--- failed to extract $dist"
