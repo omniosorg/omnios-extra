@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -27,16 +27,16 @@ DESC+="prevents segfaults, and guarantees thread safety."
 # to build rust with a bootstrap binary package instead of the installed
 # rust, set BOOTSTRAP_VER=<bootstrap_rust_ver> env variable
 #
-# to use system LLVM instead of the bundled one, set SYSTEM_LLVM
+# to use bundled LLVM instead of the bundled one, set BUNDLED_LLVM
 #
-LLVM_MAJVER=8.0
+[ $RELVER -lt 151033 ] && LLVM_MAJVER=8.0 || LLVM_MAJVER=9.0
 
 BUILDDIR=${PROG}c-${VER}-src
 
 BUILD_DEPENDS_IPS="developer/gnu-binutils"
 [ -z "$BOOTSTRAP_VER" ] && BUILD_DEPENDS_IPS+=" ooce/developer/rust"
 
-if [ -n "$SYSTEM_LLVM" ]; then
+if [ -z "$BUNDLED_LLVM" ]; then
     SYSTEM_LLVM_PATH="/opt/ooce/llvm-$LLVM_MAJVER"
     RUN_DEPENDS_IPS="ooce/developer/llvm-${LLVM_MAJVER//./}"
     BUILD_DEPENDS_IPS+=" $RUN_DEPENDS_IPS"
