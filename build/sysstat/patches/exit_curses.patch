@@ -1,0 +1,21 @@
+diff -wpruN '--exclude=*.orig' a~/terminal.c a/terminal.c
+--- a~/terminal.c	1970-01-01 00:00:00
++++ a/terminal.c	1970-01-01 00:00:00
+@@ -31,7 +31,7 @@ extern int Fslines, Showzfs, Showdisks,
+ extern int stdin_flags;
+ 
+ static void
+-exit_curses(void)
++_exit_curses(void)
+ {
+ 	curs_set(Oldcurs);
+ 	endwin();
+@@ -141,7 +141,7 @@ init_curses(void)
+ 	assert(osig != SIG_ERR);
+ 	osig = signal(SIGTERM,sighandler);
+ 	assert(osig != SIG_ERR);
+-	atexit(exit_curses);
++	atexit(_exit_curses);
+ 	return 1;
+ }
+ 
