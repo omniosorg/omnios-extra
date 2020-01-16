@@ -12,14 +12,7 @@
 
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-# Symlink binaries
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
-
-# Symlink man pages
-<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(OPREFIX)/share/man/%<1>/%<2> \
-    target=../../../$(PROG)/share/man/%<1>/%<2> >
+<transform path=$(PREFIX)/share -> drop >
 
 license docs/GPLv2.TXT license=GPLv2
 
