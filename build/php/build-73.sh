@@ -89,7 +89,7 @@ CONFIGURE_OPTS_64="
     --with-lmdb=$OPREFIX
     --with-jpeg-dir=$OPREFIX
     --with-png-dir=$OPREFIX
-    --with-freetype-dir=$OPREFIX
+    --with-freetype-dir=$SRCDIR/files
 
     --enable-fpm
     --with-fpm-user=php
