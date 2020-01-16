@@ -1,7 +1,7 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
 | ooce/application/gitea	| 1.10.2	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/imagemagick	| 7.0.9-15	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/application/imagemagick	| 7.0.9-16	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.40.1	| https://graphviz.gitlab.io/_pages/Download/Download_source.html | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mattermost	| 5.18.1	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.23	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
@@ -104,5 +104,5 @@
 | ooce/util/bat			| 0.12.1	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/fd			| 7.3.0		| https://github.com/sharkdp/fd/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/jq			| 1.6		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/virtualization/virtualbox-5 | 5.2.34	| https://www.virtualbox.org/wiki/Download_Old_Builds_5_2 | [omniosorg](https://github.com/omniosorg)
-| ooce/virtualization/virtualbox | 6.1.0	| https://www.virtualbox.org/wiki/Downloads | [omniosorg](https://github.com/omniosorg)
+| ooce/virtualization/virtualbox-5 | 5.2.36	| https://www.virtualbox.org/wiki/Download_Old_Builds_5_2 | [omniosorg](https://github.com/omniosorg)
+| ooce/virtualization/virtualbox | 6.1.2	| https://www.virtualbox.org/wiki/Downloads | [omniosorg](https://github.com/omniosorg)
