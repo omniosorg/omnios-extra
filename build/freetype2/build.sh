@@ -23,35 +23,27 @@ PKG=ooce/library/freetype2
 SUMMARY="A Free, High-Quality, and Portable Font Engine"
 DESC="$SUMMARY"
 
-OPREFIX=$PREFIX
-PREFIX+="/$PROG"
-
 # we don't want freetype2 to have any runtime dependencies
 # on omnios-extra packages. since openjdk bundles freetype2 and
 # therefore would end up having runtime dependencies on -extra packages
 PKG_CONFIG_PATH32=
 PKG_CONFIG_PATH64=
 
-XFORM_ARGS="
-    -DPREFIX=${PREFIX#/}
-    -DOPREFIX=${OPREFIX#/}
-    -DPROG=$PROG
-"
+XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
-    --includedir=$OPREFIX/include
+    --includedir=$PREFIX/include
     --disable-static
-    --enable-freetype-config
 "
 
 CONFIGURE_OPTS_32="
     --bindir=$PREFIX/bin/$ISAPART
-    --libdir=$OPREFIX/lib
+    --libdir=$PREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    --bindir=$PREFIX/bin/$ISAPART64
-    --libdir=$OPREFIX/lib/$ISAPART64
+    --bindir=$PREFIX/bin
+    --libdir=$PREFIX/lib/$ISAPART64
 "
 
 init
@@ -59,7 +51,6 @@ download_source ${PROG}2 $PROG $VER
 patch_source
 prep_build
 build -ctf
-make_isa_stub
 make_package
 clean_up
 
