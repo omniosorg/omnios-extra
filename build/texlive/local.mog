@@ -10,10 +10,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-<transform file path=opt/ooce/texlive/share/texmf-var/.*\.log$ -> drop>
-<transform file path=opt/ooce/texlive/share/texmf-dist/(?:doc|scripts|asymptote|source) \
+# drop unwanted stuff
+<transform file path=$(PREFIX)/share/texmf-var/.*\.log$ -> drop>
+
+<transform file path=$(PREFIX)/share/texmf-dist/(?:doc|scripts|asymptote|source) \
     -> set pkg.depend.bypass-generate .*>
 
 license LICENSE.TL license=TeXLive
