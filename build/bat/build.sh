@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -23,7 +23,7 @@ SUMMARY="cat alternative"
 DESC="A cat(1) clone with wings"
 
 # clang is a build-time requirement for 0.12.x
-CLANGVER=8.0
+CLANGVER=9.0
 
 if [ $RELVER -lt 151028 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
