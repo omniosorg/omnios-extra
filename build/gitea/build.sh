@@ -18,7 +18,7 @@
 
 PROG=gitea
 PKG=ooce/application/gitea
-VER=1.10.2
+VER=1.10.3
 SUMMARY="Git with a cup of tea"
 DESC="Git with a cup of tea, painless self-hosted git service"
 
@@ -52,6 +52,7 @@ build() {
     -X code.gitea.io/gitea/modules/setting.CustomConf=/etc$PREFIX/app.ini \
     -X code.gitea.io/gitea/modules/setting.AppWorkPath=/var$PREFIX \
     "
+    logmsg "Building 64-bit"
     logcmd $MAKE build LDFLAGS="$LDFLAGS" || logerr "Build failed"
     ./gitea help | sed -n '/DEFAULT CONFIGURATION:/,$p'
 
