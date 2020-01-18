@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -29,13 +29,14 @@ PATCHDIR=patches-${MAJVER//./}
 
 BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}"
 # Using the = prefix to require the specific matching version of llvm
-# need gcc until compiler-rt ships its own crtbegin, crtend objects
-RUN_DEPENDS_IPS="=$BUILD_DEPENDS_IPS@$MAJVER developer/gcc$GCCVER"
+RUN_DEPENDS_IPS="
+    =$BUILD_DEPENDS_IPS@$MAJVER
+    =ooce/developer/compiler-rt-${MAJVER//./}@$MAJVER
+    ooce/developer/compiler-rt-${MAJVER//./}
+"
 
 set_arch 64
 set_builddir cfe-$VER.src
-
-SKIP_LICENCES=UIUC
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
@@ -45,6 +46,7 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
     -DVERSION=$MAJVER
+    -DLICENCE=Apache2
 "
 
 CMAKE="cmake -G Ninja"
@@ -60,7 +62,8 @@ CONFIGURE_OPTS_WS_64="
     -DCMAKE_CXX_LINK_FLAGS=\"$LDFLAGS64\"
     -DGCC_INSTALL_PREFIX=\"$GCCPATH\"
     -DCLANG_DEFAULT_LINKER=\"/usr/bin/ld\"
-    -DLLVM_DIR=\"$OPREFIX/llvm-$MAJVER/lib/cmake/llvm\"
+    -DCLANG_DEFAULT_RTLIB=compiler-rt
+    -DLLVM_CONFIG=\"$OPREFIX/llvm-$MAJVER/bin/llvm-config\"
     -DPYTHON_EXECUTABLE=\"$PYTHON\"
 "
 

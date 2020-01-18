@@ -25,7 +25,8 @@ DESC="A collection of modular and reusable compiler and toolchain technologies"
 set_arch 64
 set_builddir $PROG-$VER.src
 
-SKIP_LICENCES=UIUC
+LIC=UIUC
+SKIP_LICENCES=$LIC
 
 MAJVER=${VER%.*}
 PATCHDIR=patches-${MAJVER//./}
@@ -38,6 +39,7 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
     -DVERSION=$MAJVER
+    -DLICENCE=$LIC
 "
 
 CMAKE="cmake -G Ninja"

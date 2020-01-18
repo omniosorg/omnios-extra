@@ -11,11 +11,11 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
-
-license LICENSE.TXT license=UIUC
+# Copyright 2020 OmniOS Community Edition.  All rights reserved.
 
 # Skip dependency resolution for python components
 <transform file path=$(PREFIX)/share/opt-viewer/.*\.py$ \
     -> set pkg.depend.bypass-generate .*>
+
+license LICENSE.TXT license=$(LICENCE)
 

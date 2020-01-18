@@ -1,3 +1,4 @@
 02-gas.patch
-04-rpath.patch
-05-pthreads.patch
+patch-lib_Basic_Targets_OSTargets.h
+patch-lib_Driver_ToolChains_Solaris.cpp
+patch-lib_Frontend_InitHeaderSearch.cpp
