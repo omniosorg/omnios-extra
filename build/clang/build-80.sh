@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -35,7 +35,8 @@ RUN_DEPENDS_IPS="=$BUILD_DEPENDS_IPS@$MAJVER developer/gcc$GCCVER"
 set_arch 64
 set_builddir cfe-$VER.src
 
-SKIP_LICENCES=UIUC
+LIC=UIUC
+SKIP_LICENCES=$LIC
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
@@ -45,6 +46,7 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
     -DVERSION=$MAJVER
+    -DLICENCE=$LIC
 "
 
 CMAKE="cmake -G Ninja"
@@ -60,7 +62,7 @@ CONFIGURE_OPTS_WS_64="
     -DCMAKE_CXX_LINK_FLAGS=\"$LDFLAGS64\"
     -DGCC_INSTALL_PREFIX=\"$GCCPATH\"
     -DCLANG_DEFAULT_LINKER=\"/usr/bin/ld\"
-    -DLLVM_DIR=\"$OPREFIX/llvm-$MAJVER/lib/cmake/llvm\"
+    -DLLVM_CONFIG=\"$OPREFIX/llvm-$MAJVER/bin/llvm-config\"
     -DPYTHON_EXECUTABLE=\"$PYTHON\"
 "
 

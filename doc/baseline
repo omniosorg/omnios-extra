@@ -27,6 +27,7 @@ extra.omnios ooce/developer/ccache
 extra.omnios ooce/developer/clang-80
 extra.omnios ooce/developer/clang-90
 extra.omnios ooce/developer/cmake
+extra.omnios ooce/developer/compiler-rt-90
 extra.omnios ooce/developer/cunit
 extra.omnios ooce/developer/dejagnu
 extra.omnios ooce/developer/flamegraph

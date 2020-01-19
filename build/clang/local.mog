@@ -11,9 +11,7 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
-
-license LICENSE.TXT license=UIUC
+# Copyright 2020 OmniOS Community Edition.  All rights reserved.
 
 # Mediated binaries
 <transform file link path=$(PREFIX)/(s?bin)/(.*) -> emit \
@@ -31,4 +29,6 @@ license LICENSE.TXT license=UIUC
     -> set pkg.depend.bypass-generate .*>
 <transform file path=$(PREFIX)/bin/(?:git-clang-format|hmaptool|scan-view) \
     -> set pkg.depend.bypass-generate .*>
+
+license LICENSE.TXT license=$(LICENCE)
 
