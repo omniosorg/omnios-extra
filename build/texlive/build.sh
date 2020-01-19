@@ -23,6 +23,11 @@ PKG=ooce/application/texlive
 SUMMARY="TeX Live"
 DESC="LaTeX distribution"
 
+OPREFIX=$PREFIX
+PREFIX+=/$PROG
+
+SKIP_LICENCES=TeXLive
+
 BUILD_DEPENDS_IPS="
     ooce/library/fontconfig
     ooce/library/freetype2
@@ -30,15 +35,12 @@ BUILD_DEPENDS_IPS="
     ooce/library/cairo
 "
 
+XFORM_ARGS="-DPREFIX=${PREFIX#/}"
+
 set_builddir $PROG-$VER-source
 
 # texlive doesn't check for gmake
 export MAKE
-
-OPREFIX=$PREFIX
-PREFIX+=/$PROG
-
-SKIP_LICENCES=TeXLive
 
 set_arch 64
 
@@ -63,47 +65,26 @@ CONFIGURE_OPTS_64="
 "
 
 dl_dist() {
-    pushd $TMPDIR >/dev/null
     for dist in texmf extra; do
-        DIR=$PROG-$VER-$dist
-        FILENAME=$DIR.tar.xz
-        logmsg "--- Downloading $dist archive"
-        if ! [ -f $FILENAME ]; then
-            get_resource $PROG/$FILENAME \
-                || logerr "--- failed to download $dist"
-        fi
-        # Fetch and verify the archive checksum
-        if [ -z "$SKIP_CHECKSUM" ]; then
-            logmsg "Verifying checksum of downloaded file."
-            if [ ! -f "$FILENAME.sha256" ]; then
-                get_resource $PROG/$FILENAME.sha256 \
-                    || logerr "Unable to download SHA256 checksum file for $FILENAME"
-            fi
-            if [ -f "$FILENAME.sha256" ]; then
-                sum="`digest -a sha256 $FILENAME`"
-                [ "$sum" = "`cat $FILENAME.sha256`" ] \
-                    || logerr "Checksum of downloaded file does not match."
-            fi
-        fi
-        [ -d "$DIR" ] && logcmd rm -rf "$DIR"
-        logmsg "--- Extracting $dist archive"
-        logcmd extract_archive $FILENAME \
-            || logerr "--- failed to extract $dist"
+        BUILDDIR=$PROG-$VER-$dist download_source $PROG $PROG-$VER-$dist
     done
-    popd >/dev/null
 }
 
 install_dist() {
-    mkdir -p $DESTDIR$PREFIX/share
+    dst="$DESTDIR$PREFIX/share"
     # manpages get installed from the source package into $PREFIX/share/man
     # already
     rm -rf $TMPDIR/$PROG-$VER-texmf/texmf-dist/doc/man
-    # we don't want the python/ruby stuff
+    logcmd mkdir -p $dst
     logmsg "--- Copying texmf"
-    logcmd cp -RP $TMPDIR/$PROG-$VER-texmf/texmf-dist $DESTDIR$PREFIX/share/
+    logcmd rsync -a $TMPDIR/$PROG-$VER-texmf/texmf-dist $dst/ \
+        || logerr "rsync texmf"
     logmsg "--- Copying extra"
-    logcmd cp -RP $TMPDIR/$PROG-$VER-extra/tlpkg $DESTDIR$PREFIX/share/
-    logcmd cp $TMPDIR/$PROG-$VER-extra/LICENSE.TL $TMPDIR/$EXTRACTED_SRC/LICENSE.TL
+    logcmd rsync -a $TMPDIR/$PROG-$VER-extra/tlpkg $dst/ \
+        || logerr "rsync extra"
+    logcmd cp $TMPDIR/$PROG-$VER-extra/LICENSE.TL \
+        $TMPDIR/$EXTRACTED_SRC/LICENSE.TL \
+        || logerr "copy LICENSE.TL"
 }
 
 config_tex() {

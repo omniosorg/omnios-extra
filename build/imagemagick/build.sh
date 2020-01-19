@@ -24,8 +24,6 @@ DESC="Use $PROG to create, edit, compose, or convert bitmap images. It can "
 DESC+="read and write images in a variety of formats (over 200) including "
 DESC+="PNG, JPEG, GIF, HEIC, TIFF, DPX, EXR, WebP, Postscript, PDF, and SVG."
 
-[ $RELVER -lt 151032 ] && exit 0
-
 SKIP_LICENCES=ImageMagick
 
 BUILD_DEPENDS_IPS="
