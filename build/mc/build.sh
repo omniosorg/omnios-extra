@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2020 OmniOS Community Edition.  All rights reserved.
 
 . ../../lib/functions.sh
 
 PROG=mc
 PKG=ooce/application/mc
-VER=4.8.23
+VER=4.8.24
 SUMMARY="Midnight Commander"
 DESC="A feature rich full-screen text mode application that allows you to copy, "
 DESC+="move and delete files and whole directory trees, search for files and run "
