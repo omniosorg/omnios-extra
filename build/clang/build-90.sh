@@ -18,11 +18,14 @@
 
 PROG=clang
 PKG=ooce/developer/clang-90
-VER=9.0.0
+VER=9.0.1
 SUMMARY="C language family frontend for LLVM"
 DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
 DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
+
+set_arch 64
+set_builddir $PROG-$VER.src
 
 MAJVER=${VER%.*}
 PATCHDIR=patches-${MAJVER//./}
@@ -34,9 +37,6 @@ RUN_DEPENDS_IPS="
     =ooce/developer/compiler-rt-${MAJVER//./}@$MAJVER
     ooce/developer/compiler-rt-${MAJVER//./}
 "
-
-set_arch 64
-set_builddir cfe-$VER.src
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
@@ -68,7 +68,7 @@ CONFIGURE_OPTS_WS_64="
 "
 
 init
-download_source $PROG $BUILDDIR
+download_source $PROG $PROG $VER.src
 patch_source
 prep_build cmake
 build
