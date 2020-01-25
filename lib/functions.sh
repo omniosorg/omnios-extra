@@ -1149,8 +1149,6 @@ make_package() {
         fi
         logcmd -p $PKGSEND generate $GENERATE_ARGS $DESTDIR > $P5M_INT || \
             logerr "------ Failed to generate manifest"
-        [ -z "$SKIP_HARDLINK" -a -z "$BATCH" ] \
-            && check_hardlinks "$P5M_INT" "$HARDLINK_TARGETS"
     else
         logmsg "--- Looks like a meta-package. Creating empty manifest"
         logcmd touch $P5M_INT || \
@@ -1194,7 +1192,11 @@ make_package() {
         $NOTES_MOG_FILE \
         | $PKGFMT -u > $P5M_INT2
 
-    [ -n "$DESTDIR" ] && check_licences
+    if [ -n "$DESTDIR" ]; then
+        check_licences
+        [ -z "$SKIP_HARDLINK" -a -z "$BATCH" ] \
+            && check_hardlinks "$P5M_INT2" "$HARDLINK_TARGETS"
+    fi
 
     logmsg "--- Resolving dependencies"
     (
