@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=iozone
-VER=3.488
+VER=3.489
 VERHUMAN=$VER
 PKG=ooce/system/test/iozone
 SUMMARY="IOzone - filesystem benchmark"
