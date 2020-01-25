@@ -12,17 +12,15 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2020 OmniOS Community Edition.  All rights reserved.
 
 . ../../lib/functions.sh
 
 PROG=lsof
 PKG=ooce/file/lsof
-VER=4.91
+VER=4.93.2
 SUMMARY="List open files"
 DESC="Report a list of all open files and the processes that opened them"
-
-BUILDDIR="${PROG}_${VER}_src"
 
 SKIP_LICENCES=lsof
 
@@ -47,14 +45,15 @@ make_install64() {
     logmsg "--- make install"
     mkdir -p $DESTDIR$PREFIX/share/man/man8
     mkdir -p $DESTDIR$PREFIX/bin
-    logcmd cp $TMPDIR/$BUILDDIR/$PROG.8 $DESTDIR$PREFIX/share/man/man8/$PROG.8 \
+    logcmd cp $TMPDIR/$BUILDDIR/${PROG^}.8 \
+        $DESTDIR$PREFIX/share/man/man8/$PROG.8 \
         || logerr "--- Make install failed"
     logcmd cp $TMPDIR/$BUILDDIR/$PROG $DESTDIR$PREFIX/bin/$PROG \
         || logerr "--- Make install failed"
 }
 
 init
-download_source $PROG $BUILDDIR
+download_source $PROG $VER
 patch_source
 prep_build
 build
