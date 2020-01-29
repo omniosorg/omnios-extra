@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2020 OmniOS Community Edition.  All rights reserved.
 
 . ../../lib/functions.sh
 
 PROG=ninja
 PKG=ooce/developer/ninja
-VER=1.9.0
+VER=1.10.0
 SUMMARY="Ninja"
 DESC="A small build system with a focus on speed"
 
