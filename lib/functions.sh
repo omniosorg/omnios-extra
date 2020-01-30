@@ -1346,11 +1346,21 @@ publish_manifest()
 {
     local pkg=$1
     local pmf=$2
+    local root=$3
+
+    [ -n "$root" ] && root="-d $root"
 
     translate_manifest $pmf $pmf.final
 
-    logcmd pkgsend -s $PKGSRVR publish $pmf.final || logerr "pkgsend failed"
-    [ -z "$SKIP_PKG_DIFF" ] && diff_latest $pkg
+    logmsg "Publishing from $pmf.final"
+
+    if [ -z "$SKIP_PKGLINT" ] && ( [ -n "$BATCH" ] || ask_to_pkglint ); then
+        run_pkglint $PKGSRVR $pmf.final
+    fi
+
+    logcmd pkgsend -s $PKGSRVR publish $root $pmf.final \
+        || logerr "pkgsend failed"
+    [ -n "$pkg" -a -z "$SKIP_PKG_DIFF" ] && diff_latest $pkg
 }
 
 # Create a list of the items contained within a package in a format suitable

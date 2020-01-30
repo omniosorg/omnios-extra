@@ -261,25 +261,18 @@ build_manifest() {
 
     init_repo
     logmsg "Found a manifest file. Preparing it for publishing."
-    translate_manifest $mf $mf.final
     if [ -f root.tar.bz2 ]; then
         logmsg "File archive found. Extracting..."
         bzip2 -dc root.tar.bz2 | tar xf - \
             || logerr "Failed to extract root.tar.bz2"
-        logmsg "Publishing from $mf.final"
-        logcmd pkgsend -s $PKGSRVR publish -d $PKGROOT $mf.final \
-            || logerr "pkgsend failed"
+        publish_manifest "" $mf $PKGROOT
         logcmd rm -rf $PKGROOT
     elif [ -d "$PKGROOT" ]; then
         # In case we just have a tree of files and not a tarball
-        logmsg "Publishing from $mf.final"
-        logcmd pkgsend -s $PKGSRVR publish -d $PKGROOT $mf.final \
-            || logerr "pkgsend failed"
+        publish_manifest "" $mf $PKGROOT
     else
         # Else we just have a manifest to import
-        logmsg "Simple manifest to import... importing to $PKGSRVR"
-        logcmd pkgsend -s $PKGSRVR publish $mf.final \
-            || logerr "pkgsend failed"
+        publish_manifest "" $mf
     fi
     rm -f $mf.final
 }
