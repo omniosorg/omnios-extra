@@ -12,7 +12,7 @@ diff -wpruN '--exclude=*.orig' a~/src/tools/rls/rls/src/cmd.rs a/src/tools/rls/r
  
  use lsp_types::{
      ClientCapabilities, CodeActionContext, CodeActionParams, CompletionItem,
-@@ -314,8 +314,8 @@ fn url(file_name: &str) -> Url {
+@@ -316,8 +316,8 @@ fn url(file_name: &str) -> Url {
  }
  
  fn next_id() -> RequestId {
