@@ -4,3 +4,4 @@ si_kernel.patch
 05-no-pie.patch
 08-dtrace-invalid-conversion.patch
 auth_socket.diff
+cfi.patch

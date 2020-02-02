@@ -1,9 +1,8 @@
 Submitted upstream at https://github.com/MariaDB/server/pull/1434
 
-diff --git a/plugin/auth_socket/CMakeLists.txt b/plugin/auth_socket/CMakeLists.txt
-index 5a59520a..5941cf07 100644
---- a/plugin/auth_socket/CMakeLists.txt
-+++ b/plugin/auth_socket/CMakeLists.txt
+diff -wpruN '--exclude=*.orig' a~/plugin/auth_socket/CMakeLists.txt a/plugin/auth_socket/CMakeLists.txt
+--- a~/plugin/auth_socket/CMakeLists.txt	1970-01-01 00:00:00
++++ a/plugin/auth_socket/CMakeLists.txt	1970-01-01 00:00:00
 @@ -57,12 +57,39 @@ IF (HAVE_XUCRED)
    SET(ok 1)
  ELSE()
@@ -44,10 +43,9 @@ index 5a59520a..5941cf07 100644
  
  IF(ok)
    MYSQL_ADD_PLUGIN(auth_socket auth_socket.c DEFAULT)
-diff --git a/plugin/auth_socket/auth_socket.c b/plugin/auth_socket/auth_socket.c
-index 46eae517..b10679a5 100644
---- a/plugin/auth_socket/auth_socket.c
-+++ b/plugin/auth_socket/auth_socket.c
+diff -wpruN '--exclude=*.orig' a~/plugin/auth_socket/auth_socket.c a/plugin/auth_socket/auth_socket.c
+--- a~/plugin/auth_socket/auth_socket.c	1970-01-01 00:00:00
++++ a/plugin/auth_socket/auth_socket.c	1970-01-01 00:00:00
 @@ -47,6 +47,9 @@
  #define uid cr_uid
  #define ucred xucred
@@ -58,7 +56,7 @@ index 46eae517..b10679a5 100644
  #else
  #error impossible
  #endif
-@@ -64,10 +67,15 @@ static int socket_auth(MYSQL_PLUGIN_VIO *vio, MYSQL_SERVER_AUTH_INFO *info)
+@@ -64,10 +67,15 @@ static int socket_auth(MYSQL_PLUGIN_VIO
  {
    unsigned char *pkt;
    MYSQL_PLUGIN_VIO_INFO vio_info;
@@ -74,7 +72,7 @@ index 46eae517..b10679a5 100644
  
    /* no user name yet ? read the client handshake packet with the user name */
    if (info->user_name == 0)
-@@ -83,14 +91,23 @@ static int socket_auth(MYSQL_PLUGIN_VIO *vio, MYSQL_SERVER_AUTH_INFO *info)
+@@ -83,14 +91,23 @@ static int socket_auth(MYSQL_PLUGIN_VIO
      return CR_ERROR;
  
    /* get the UID of the client process */

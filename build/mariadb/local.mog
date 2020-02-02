@@ -20,6 +20,7 @@ dir group=mysql mode=0700 owner=mysql path=var/$(PREFIX)/data
 <transform path=.*/sql-bench -> drop>
 <transform path=.*/mysql-test -> drop>
 <transform path=.*/support-files/policy -> drop>
+<transform path=$(PREFIX)/bin/i386 -> drop>
 
 <transform file path=etc/$(PREFIX)/ -> set group mysql>
 <transform file path=etc/$(PREFIX)/ -> set mode 0640>
@@ -36,7 +37,7 @@ dir group=mysql mode=0700 owner=mysql path=var/$(PREFIX)/data
     target=../../../$(PROG)-$(VERSION)/man/%<1>/%<2> \
     mediator=$(PROG) mediator-version=$(VERSION) >
 
-<transform file path=$(PREFIX)/(?:lib|bin)/ \
+<transform file path=$(PREFIX)/bin/mysqld$ \
     -> set restart_fmri svc:/ooce/database/$(PROG)$(sVERSION):default>
 
 license COPYING license=GPLv2
