@@ -33,12 +33,12 @@ diff -wpruN '--exclude=*.orig' a~/src/bootstrap/bootstrap.py a/src/bootstrap/boo
          else:
              ostype += 'eabihf'
      elif cputype == 'mips':
-@@ -618,7 +625,7 @@ class RustBuild(object):
-         env["LIBRARY_PATH"] = os.path.join(self.bin_root(), "lib") + \
-             (os.pathsep + env["LIBRARY_PATH"]) \
+@@ -645,7 +652,7 @@ class RustBuild(object):
              if "LIBRARY_PATH" in env else ""
--        env["RUSTFLAGS"] = "-Cdebuginfo=2 "
-+        env["RUSTFLAGS"] = "-Copt-level=2 "
+         # preserve existing RUSTFLAGS
+         env.setdefault("RUSTFLAGS", "")
+-        env["RUSTFLAGS"] += " -Cdebuginfo=2"
++        env["RUSTFLAGS"] += " -Copt-level=2"
  
          build_section = "target.{}".format(self.build_triple())
          target_features = []
