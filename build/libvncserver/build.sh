@@ -62,16 +62,6 @@ make_install64() {
     popd >/dev/null
 }
 
-build() {
-    _BUILDDIR=$BUILDDIR
-    for b in $BUILDORDER; do
-        mkdir -p $TMPDIR/$BUILDDIR/build.$b
-        BUILDDIR+="/build.$b"
-        [[ $BUILDARCH =~ ^($b|both)$ ]] && build$b
-        BUILDDIR=$_BUILDDIR
-    done
-}
-
 init
 download_source $PROG "LibVNCServer" $VER
 patch_source

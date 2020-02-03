@@ -50,16 +50,6 @@ CONFIGURE_OPTS_64="
 LDFLAGS32+=" -R$OPREFIX/lib"
 LDFLAGS64+=" -R$OPREFIX/lib/amd64"
 
-build() {
-    _BUILDDIR=$BUILDDIR
-    for b in $BUILDORDER; do
-        mkdir -p $TMPDIR/$BUILDDIR/build.$b
-        BUILDDIR+="/build.$b"
-        [[ $BUILDARCH =~ ^($b|both)$ ]] && build$b
-        BUILDDIR=$_BUILDDIR
-    done
-}
-
 init
 download_source $PROG $PROG $VER
 prep_build cmake
