@@ -1,0 +1,20 @@
+
+The 32-bit compiler complains that:
+
+my_context.s:18: Error: CFI instruction used without previous .cfi_startproc
+
+We don't need this since we do not build mariadb with -fomit-frame-pointer
+and we do not rely on dwarf data in the target 32-bit binaries.
+
+diff -wpruN '--exclude=*.orig' a~/mysys/my_context.c a/mysys/my_context.c
+--- a~/mysys/my_context.c	1970-01-01 00:00:00
++++ a/mysys/my_context.c	1970-01-01 00:00:00
+@@ -455,7 +455,7 @@ my_context_spawn(struct my_context *c, v
+     (
+      "movl %%esp, (%[save])\n\t"
+      "movl %[stack], %%esp\n\t"
+-#if (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)) && !defined(__INTEL_COMPILER)
++#if (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)) && !defined(__INTEL_COMPILER) && !defined(__sun)
+      /*
+        This emits a DWARF DW_CFA_undefined directive to make the return address
+        undefined. This indicates that this is the top of the stack frame, and

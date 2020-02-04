@@ -719,6 +719,7 @@ prep_build() {
     case "$style" in
         cmake)
             OUT_OF_TREE_BUILD=1
+            MULTI_BUILD=1
             CONFIGURE_CMD="$CMAKE $TMPDIR/$BUILDDIR"
             ;;
         meson)
@@ -1340,7 +1341,7 @@ publish_manifest()
 # content, just whether items have been added, removed or had their attributes
 # such as ownership changed.
 pkgitems() {
-    pkg contents -m "$@" 2>&1 | sed -E "
+    pkg contents -m "$@" 2>&1 | pkgfmt -u | sed -E "
         # Remove signatures
         /^signature/d
         # Remove version numbers from the package FMRI
@@ -1358,7 +1359,7 @@ pkgitems() {
         # Remove timestamps
         s/ timestamp=[^ ]+//
         $PKGDIFF_HELPER
-    " | pkgfmt
+    "
 }
 
 diff_package() {
@@ -1676,17 +1677,27 @@ make_install_in() {
 }
 
 build() {
-    while [[ "$1" == -* ]]; do
+    while [[ "$1" = -* ]]; do
         case "$1" in
             -ctf)
                 CFLAGS+=" -gdwarf-2"
                 ENABLE_CTF=1
                 ;;
+            -multi)
+                MULTI_BUILD=1
+                ;;
         esac
         shift
     done
+    [ -n "$MULTI_BUILD" ] && logmsg "--- Using multiple build directories"
+    _BUILDDIR=$BUILDDIR
     for b in $BUILDORDER; do
+        if [ -n "$MULTI_BUILD" ]; then
+            BUILDDIR+="/build.$b"
+            mkdir -p $TMPDIR/$BUILDDIR
+        fi
         [[ $BUILDARCH =~ ^($b|both)$ ]] && build$b
+        BUILDDIR=$_BUILDDIR
     done
 
     [ -n "$ENABLE_CTF" ] && convert_ctf
