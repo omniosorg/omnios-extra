@@ -5,3 +5,5 @@ si_kernel.patch
 08-dtrace-invalid-conversion.patch
 auth_socket.diff
 cfi.patch
+offset_t.patch
+pam.patch
