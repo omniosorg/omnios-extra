@@ -2038,7 +2038,7 @@ check_hardlinks() {
     logmsg "-- Checking hardlinks"
 
     for t in $targets; do
-        t="`$REALPATH \"/$t\"`"
+        t="`$REALPATH \"$DESTDIR/$t\"`"
         tlookup[$t]=1
     done
 
@@ -2061,9 +2061,9 @@ check_hardlinks() {
                 }
             }
         }' < "$manifest" | while read link path; do
-            link="`$REALPATH \"/$link\"`"
+            flink="`$REALPATH \"$DESTDIR/$link\"`"
             logmsg "--- checking hardlink $link"
-            [ -n "${tlookup[$link]}" ] || echo "$link <- $path" >> $hlf
+            [ -n "${tlookup[$flink]}" ] || echo "$link <- $path" >> $hlf
     done
 
     if [ -s $hlf ]; then
