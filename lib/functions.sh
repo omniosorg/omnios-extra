@@ -1079,11 +1079,14 @@ EOM
             done
             echo
         ) > $BASE_TMPDIR/lint/pkglintrc
-        _repo="-r $repo"
+        [ $RELVER -ge 151033 ] \
+            && _repo="-r $repo -r $IPS_REPO -r $OB_IPS_REPO" \
+            || _repo="-r $repo"
     fi
     echo $c_note
-    $PKGLINT -f $BASE_TMPDIR/lint/pkglintrc -c $BASE_TMPDIR/lint/cache $mf \
-        $_repo || logerr "----- pkglint failed"
+    logcmd -p $PKGLINT -f $BASE_TMPDIR/lint/pkglintrc \
+        -c $BASE_TMPDIR/lint/cache $mf $_repo \
+        || logerr "----- pkglint failed"
     echo $c_reset
 }
 
