@@ -1,0 +1,59 @@
+diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -41,12 +41,12 @@ install:= TARGET = install
+ pkg:= TARGET = pkg
+ lint:= TARGET = lint
+ 
+-all: $(MACH) $(MACH64)
++all: $(MACH64)
+ 
+ clean: $(MACH) $(MACH64)
+ 	rm -fr $(DIRS) $(ROOT) $(PKGDIR)
+ 
+-install: preinstall $(MACH) $(MACH64)
++install: preinstall $(MACH64)
+ 
+ lint: $(MACH) $(MACH64)
+ 
+diff -wpruN '--exclude=*.orig' a~/Makefile.com a/Makefile.com
+--- a~/Makefile.com	1970-01-01 00:00:00
++++ a/Makefile.com	1970-01-01 00:00:00
+@@ -24,7 +24,7 @@
+ # Use is subject to license terms.
+ 
+ INSTALL= /usr/sbin/install
+-CC = cc
++CC = gcc
+ CTFMERGE = ctfmerge
+ CTFCONVERT = ctfconvert
+ LINT = lint
+@@ -41,7 +41,7 @@ HDRS=fuse.h fuse_kernel.h fuse_queue.h
+ SRC=$(OBJS:%.o=../%.c)
+ INCHDRS=$(HDRS:%.h=../%.h)
+ 
+-ROOT = ../proto
++ROOT = $(DESTDIR)
+ 
+ all: $(FUSE_MODULE) $(SRC) 
+ 
+diff -wpruN '--exclude=*.orig' a~/amd64/Makefile a/amd64/Makefile
+--- a~/amd64/Makefile	1970-01-01 00:00:00
++++ a/amd64/Makefile	1970-01-01 00:00:00
+@@ -23,7 +23,9 @@
+ # Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
+ # Use is subject to license terms.
+ 
+-CFLAGS=-xmodel=kernel -m64
++CFLAGS= -fno-aggressive-loop-optimizations -m64 -mcmodel=kernel -fno-shrink-wrap \
++    -mindirect-branch=thunk-extern -mindirect-branch-register -g -O2 -fno-inline \
++    -ffreestanding -fno-strict-aliasing -Wpointer-arith -gdwarf-2 -std=gnu99 -mno-red-zone
+ LINTFLAGS = -m64
+ include ../Makefile.com
+ 
+@@ -31,4 +33,5 @@ DIRSAMD64 = $(ROOT)/usr/drv/amd64
+ 
+ install:
+ 	mkdir -p $(DIRSAMD64)
++	$(INSTALL) -f $(ROOT)/usr/kernel/drv ../fuse.conf
+ 	$(INSTALL) -f $(ROOT)/usr/kernel/drv/amd64 fuse

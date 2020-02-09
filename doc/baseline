@@ -41,6 +41,7 @@ extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr
 extra.omnios ooce/developer/rust
+extra.omnios ooce/driver/fuse
 extra.omnios ooce/editor/emacs
 extra.omnios ooce/editor/joe
 extra.omnios ooce/editor/nano
@@ -96,6 +97,7 @@ extra.omnios ooce/security/gnupg
 extra.omnios ooce/server/nginx
 extra.omnios ooce/server/nginx-116
 extra.omnios ooce/server/nginx-common
+extra.omnios ooce/system/file-system/ntfs-3g
 extra.omnios ooce/system/htop
 extra.omnios ooce/system/mbuffer
 extra.omnios ooce/system/smartmontools

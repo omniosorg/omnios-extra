@@ -1,0 +1,15 @@
+#!/bin/sh
+while [ -n "$1" ];  do
+    case "$1" in
+        -*)
+            shift
+            ;;
+        *)
+            /opt/ooce/ntfs-3g/bin/ntfs-3g.probe --readonly "$1" >/dev/null 2>&1 \
+                && echo "ntfs-3g" && exit 0
+            exit 1
+            ;;
+    esac
+done
+exit 1
+
