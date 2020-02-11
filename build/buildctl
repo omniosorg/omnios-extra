@@ -482,16 +482,19 @@ count_expensive() {
     echo $ne
 }
 
-set_build_flags() {
+set_batch_build_flags() {
     build_flags="-b -t -l"
     [ -n "$USE_CCACHE" ] && build_flags+=" -c"
     [ -n "$KEEP_DIFFS" ] && build_flags+=" -D"
     export BATCH=1  # So logerr() exits without prompting
+    export SKIP_PKG_DIFF=1
+    export SKIP_PKGLINT=1
+    export SKIP_TESTSUITE=1
 }
 
 parallel_build() {
     threads=$1
-    set_build_flags
+    set_batch_build_flags
 
     note "Starting parallel build with $threads thread(s)"
 
@@ -714,7 +717,7 @@ case "$1" in
         fi
 
         if [ "$tobuild" = "all" ]; then
-            set_build_flags
+            set_batch_build_flags
 
             pkgcount=${#fulltargets[@]}
             pkgnum=0
