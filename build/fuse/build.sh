@@ -37,10 +37,13 @@ PATH+=":/opt/onbld/bin/i386"
 MAKE_ARGS=-e
 CFLAGS+=" -fident -fno-builtin -fno-asm -nodefaultlibs -Wall"
 CFLAGS+=" -Wno-unknown-pragmas -Wno-unused -fno-inline-functions -m64"
-CFLAGS+=" -mcmodel=kernel -fno-shrink-wrap -mindirect-branch=thunk-extern"
-CFLAGS+=" -mindirect-branch-register -g -O2 -fno-inline -ffreestanding"
+CFLAGS+=" -mcmodel=kernel -fno-shrink-wrap -g -O2 -fno-inline -ffreestanding"
 CFLAGS+=" -fno-strict-aliasing -Wpointer-arith -gdwarf-2 -std=gnu99"
 CFLAGS+=" -mno-red-zone"
+if [ $RELVER -ge 151032 ]; then
+    # From r151032, the kernel is built with retpolines
+    CFLAGS+=" -mindirect-branch=thunk-extern -mindirect-branch-register"
+fi
 export CFLAGS
 
 # No configure
