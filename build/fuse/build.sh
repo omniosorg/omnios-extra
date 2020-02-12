@@ -31,6 +31,18 @@ MAKE=/usr/bin/dmake
 # build requires ctf tools
 PATH+=":/opt/onbld/bin/i386"
 
+# override CFLAGS for kernel module; flags taken from:
+# https://github.com/omniosorg/illumos-kvm/blob/master/Makefile#L105
+# omitting gcc version specific flags; removing -Werror for now.
+MAKE_ARGS=-e
+CFLAGS+=" -fident -fno-builtin -fno-asm -nodefaultlibs -Wall"
+CFLAGS+=" -Wno-unknown-pragmas -Wno-unused -fno-inline-functions -m64"
+CFLAGS+=" -mcmodel=kernel -fno-shrink-wrap -mindirect-branch=thunk-extern"
+CFLAGS+=" -mindirect-branch-register -g -O2 -fno-inline -ffreestanding"
+CFLAGS+=" -fno-strict-aliasing -Wpointer-arith -gdwarf-2 -std=gnu99"
+CFLAGS+=" -mno-red-zone"
+export CFLAGS
+
 # No configure
 configure64() { :; }
 
