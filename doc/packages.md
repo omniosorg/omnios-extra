@@ -31,7 +31,7 @@
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/dejagnu	| 1.6.2		| https://ftp.gnu.org/gnu/dejagnu/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-112		| 1.12.16	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/go-113		| 1.13.7	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/go-113		| 1.13.8	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/gperf		| 3.1		| https://ftp.gnu.org/pub/gnu/gperf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-80	| 8.0.1		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-90	| 9.0.1		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
