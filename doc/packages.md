@@ -21,7 +21,7 @@
 | ooce/database/postgresql-10	| 10.11		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-11	| 11.6		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-12	| 12.1		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
-| ooce/database/postgresql-96	| 9.6.16	| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/postgresql-96	| 9.6.17	| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/autogen	| 5.18.16	| https://ftp.gnu.org/gnu/autogen/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
 | ooce/developer/clang-80	| 8.0.1		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
