@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=libarchive
-VER=3.4.1
+VER=3.4.2
 PKG=ooce/library/libarchive
 SUMMARY="libarchive"
 DESC="Multi-format archive and compression library"
@@ -34,13 +34,15 @@ XFORM_ARGS="
 reset_configure_opts
 
 CONFIGURE_OPTS="
+    --prefix=$PREFIX
     --disable-static
 "
 
-CONFIGURE_OPTS_32+="
+CONFIGURE_OPTS_32="
+    --bindir=$PREFIX/bin/$ISAPART
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64+="
+CONFIGURE_OPTS_64="
     --bindir=$PREFIX/bin
     --libdir=$OPREFIX/lib/$ISAPART64
 "
