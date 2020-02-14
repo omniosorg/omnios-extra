@@ -114,6 +114,7 @@ extra.omnios ooce/text/ripgrep
 extra.omnios ooce/util/acmefetch
 extra.omnios ooce/util/bat
 extra.omnios ooce/util/fd
+extra.omnios ooce/util/gh
 extra.omnios ooce/util/jq
 extra.omnios ooce/virtualization/virtualbox
 extra.omnios ooce/virtualization/virtualbox/additions

@@ -1,0 +1,47 @@
+diff -wpruN '--exclude=*.orig' a/cli~/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.0.5/terminal/runereader_posix.go a/cli/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.0.5/terminal/runereader_posix.go
+--- a~/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.0.5/terminal/runereader_posix.go	1970-01-01 00:00:00
++++ a/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.0.5/terminal/runereader_posix.go	1970-01-01 00:00:00
+@@ -12,12 +12,11 @@ import (
+ 	"bufio"
+ 	"bytes"
+ 	"fmt"
+-	"syscall"
+-	"unsafe"
++	"golang.org/x/sys/unix"
+ )
+ 
+ type runeReaderState struct {
+-	term   syscall.Termios
++	term   unix.Termios
+ 	reader *bufio.Reader
+ 	buf    *bytes.Buffer
+ }
+@@ -39,14 +38,15 @@ func (rr *RuneReader) Buffer() *bytes.Bu
+ 
+ // For reading runes we just want to disable echo.
+ func (rr *RuneReader) SetTermMode() error {
+-	if _, _, err := syscall.Syscall6(syscall.SYS_IOCTL, uintptr(rr.stdio.In.Fd()), ioctlReadTermios, uintptr(unsafe.Pointer(&rr.state.term)), 0, 0, 0); err != 0 {
++	termios, err := unix.IoctlGetTermios(int(rr.stdio.In.Fd()), unix.TCGETS)
++	if err != nil {
+ 		return err
+ 	}
+ 
+-	newState := rr.state.term
+-	newState.Lflag &^= syscall.ECHO | syscall.ECHONL | syscall.ICANON | syscall.ISIG
++	rr.state.term = *termios
++	termios.Lflag &^= unix.ECHO | unix.ECHONL | unix.ICANON | unix.ISIG
+ 
+-	if _, _, err := syscall.Syscall6(syscall.SYS_IOCTL, uintptr(rr.stdio.In.Fd()), ioctlWriteTermios, uintptr(unsafe.Pointer(&newState)), 0, 0, 0); err != 0 {
++	if err := unix.IoctlSetTermios(int(rr.stdio.In.Fd()), unix.TCSETS, termios); err != nil {
+ 		return err
+ 	}
+ 
+@@ -54,7 +54,7 @@ func (rr *RuneReader) SetTermMode() erro
+ }
+ 
+ func (rr *RuneReader) RestoreTermMode() error {
+-	if _, _, err := syscall.Syscall6(syscall.SYS_IOCTL, uintptr(rr.stdio.In.Fd()), ioctlWriteTermios, uintptr(unsafe.Pointer(&rr.state.term)), 0, 0, 0); err != 0 {
++	if err := unix.IoctlSetTermios(int(rr.stdio.In.Fd()), unix.TCSETS, &rr.state.term); err != nil {
+ 		return err
+ 	}
+ 	return nil
