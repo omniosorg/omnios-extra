@@ -18,7 +18,7 @@
 
 PROG=gitea
 PKG=ooce/application/gitea
-VER=1.10.3
+VER=1.11.0
 SUMMARY="Git with a cup of tea"
 DESC="Git with a cup of tea, painless self-hosted git service"
 
@@ -27,6 +27,8 @@ PREFIX+=/$PROG
 
 set_arch 64
 set_gover 1.13
+# gitea 1.11.x requires node.js
+set_nodever 12
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -37,23 +39,35 @@ XFORM_ARGS="
 
 RUN_DEPENDS_IPS=developer/versioning/git
 
+# gitea build wants GNU grep from 1.11.x on
+export PATH="/usr/gnu/bin:$PATH"
+
 GOOS=illumos
 GOARCH=amd64
 export GOOS GOARCH
 
+# Respect environmental overrides for these to ease development.
+: ${GITEA_SOURCE_REPO:=$GITHUB/$PROG}
+: ${GITEA_SOURCE_BRANCH:=v$VER}
+
+clone_source() {
+    clone_github_source $PROG \
+        "$GITEA_SOURCE_REPO" "$GITEA_SOURCE_BRANCH"
+
+    BUILDDIR+=/$PROG
+}
+
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
-    # Fix up the version number in main.go
-    logcmd sed -i "/Version = \"/s/1.9.0-dev/$VER/" main.go || logerr Version
-
-    LDFLAGS+=" \
+    export LDFLAGS=" \
     -X code.gitea.io/gitea/modules/setting.CustomPath=/var$PREFIX/custom \
     -X code.gitea.io/gitea/modules/setting.CustomConf=/etc$PREFIX/app.ini \
     -X code.gitea.io/gitea/modules/setting.AppWorkPath=/var$PREFIX \
     "
+
     logmsg "Building 64-bit"
-    logcmd $MAKE build LDFLAGS="$LDFLAGS" || logerr "Build failed"
+    logcmd $MAKE build || logerr "Build failed"
     ./gitea help | sed -n '/DEFAULT CONFIGURATION:/,$p'
 
     # Gitea version <ver> built with go<ver>
@@ -85,7 +99,7 @@ install() {
 }
 
 init
-download_source $PROG v$VER ""
+clone_source
 patch_source
 prep_build
 build
