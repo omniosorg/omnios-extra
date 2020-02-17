@@ -97,6 +97,8 @@ extra.omnios ooce/security/gnupg
 extra.omnios ooce/server/nginx
 extra.omnios ooce/server/nginx-116
 extra.omnios ooce/server/nginx-common
+extra.omnios ooce/storage/minio
+extra.omnios ooce/storage/minio-mc
 extra.omnios ooce/system/file-system/ntfs-3g
 extra.omnios ooce/system/htop
 extra.omnios ooce/system/mbuffer
@@ -112,6 +114,7 @@ extra.omnios ooce/text/ripgrep
 extra.omnios ooce/util/acmefetch
 extra.omnios ooce/util/bat
 extra.omnios ooce/util/fd
+extra.omnios ooce/util/gh
 extra.omnios ooce/util/jq
 extra.omnios ooce/virtualization/virtualbox
 extra.omnios ooce/virtualization/virtualbox/additions

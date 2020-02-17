@@ -1,0 +1,20 @@
+diff -wpruN '--exclude=*.orig' a~/deps/pkg/mod/github.com/ncw/directio@v1.0.5/direct_io_unix.go a/deps/pkg/mod/github.com/ncw/directio@v1.0.5/direct_io_unix.go
+--- a~/deps/pkg/mod/github.com/ncw/directio@v1.0.5/direct_io_unix.go	1970-01-01 00:00:00
++++ a/deps/pkg/mod/github.com/ncw/directio@v1.0.5/direct_io_unix.go	1970-01-01 00:00:00
+@@ -6,7 +6,6 @@ package directio
+ 
+ import (
+ 	"os"
+-	"syscall"
+ )
+ 
+ const (
+@@ -17,7 +16,6 @@ const (
+ 	BlockSize = 4096
+ )
+ 
+-// OpenFile is a modified version of os.OpenFile which sets O_DIRECT
+ func OpenFile(name string, flag int, perm os.FileMode) (file *os.File, err error) {
+-	return os.OpenFile(name, syscall.O_DIRECT|flag, perm)
++	return os.OpenFile(name, flag, perm)
+ }

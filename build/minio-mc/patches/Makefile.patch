@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -73,7 +73,7 @@ coverage: build
+ # Builds mc locally.
+ build: checks
+ 	@echo "Building mc binary to './mc'"
+-	@GO111MODULE=on CGO_ENABLED=0 go build -tags kqueue --ldflags $(BUILD_LDFLAGS) -o $(PWD)/mc
++	@GO111MODULE=on CGO_ENABLED=1 go build -tags kqueue --ldflags $(BUILD_LDFLAGS) -o $(PWD)/mc
+ 
+ # Builds MinIO and installs it to $GOPATH/bin.
+ install: build

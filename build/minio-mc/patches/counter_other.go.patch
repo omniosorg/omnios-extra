@@ -1,0 +1,9 @@
+diff -wpruN '--exclude=*.orig' a~/deps/pkg/mod/github.com/minio/minio@v0.0.0-20200118222113-b849fd7a756d/pkg/cpu/counter_other.go a/deps/pkg/mod/github.com/minio/minio@v0.0.0-20200118222113-b849fd7a756d/pkg/cpu/counter_other.go
+--- a~/deps/pkg/mod/github.com/minio/minio@v0.0.0-20200118222113-b849fd7a756d/pkg/cpu/counter_other.go	1970-01-01 00:00:00
++++ a/deps/pkg/mod/github.com/minio/minio@v0.0.0-20200118222113-b849fd7a756d/pkg/cpu/counter_other.go	1970-01-01 00:00:00
+@@ -1,4 +1,4 @@
+-// +build darwin freebsd openbsd netbsd dragonfly windows
++// +build darwin freebsd openbsd netbsd dragonfly windows illumos
+ 
+ /*
+  * MinIO Cloud Storage, (C) 2019 MinIO, Inc.
