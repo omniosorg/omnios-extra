@@ -11,7 +11,7 @@ diff -wpruN '--exclude=*.orig' a/src/github.com/mattermost/mattermost-server~/bu
 +
  build-linux:
  	@echo Build Linux amd64
- 	env GOOS=linux GOARCH=amd64 $(GO) install -i $(GOFLAGS) -ldflags '$(LDFLAGS)' ./...
+ 	env GOOS=linux GOARCH=amd64 $(GO) install -i $(GOFLAGS) -trimpath -ldflags '$(LDFLAGS)' ./...
 @@ -71,6 +75,16 @@ endif
  
  	@# ----- PLATFORM SPECIFIC -----

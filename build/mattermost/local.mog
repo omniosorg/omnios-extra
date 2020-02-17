@@ -28,6 +28,8 @@ user ftpuser=false username=$(PROG) uid=85 group=$(PROG) gcos-field="Mattermost 
     home-dir=$(PREFIX) password=NP
 
 <transform dir file path=$(PREFIX)/(?:logs|config|prepackaged_plugins) -> drop>
+# drop mmctl for now
+<transform dir file path=$(PREFIX)/bin/mmctl$ -> drop>
 <transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
 <transform file path=etc/$(PREFIX)/ -> set owner $(PROG)>
 
