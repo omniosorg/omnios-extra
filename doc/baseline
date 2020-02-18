@@ -80,6 +80,7 @@ extra.omnios ooce/network/irssi
 extra.omnios ooce/network/mosh
 extra.omnios ooce/network/nsd
 extra.omnios ooce/network/openvpn
+extra.omnios ooce/network/rclone
 extra.omnios ooce/network/smtp/postfix
 extra.omnios ooce/network/unbound
 extra.omnios ooce/network/znc
