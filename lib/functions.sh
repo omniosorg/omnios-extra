@@ -408,7 +408,7 @@ set_gover() {
 set_nodever() {
     NODEVER="$1"
     logmsg "-- Setting node.js version to $NODEVER"
-    NODDEPATH="/opt/ooce/node-$NODEVER/bin"
+    NODDEPATH="/opt/ooce/node-$NODEVER"
     PATH="$NODEPATH/bin:$PATH"
     export PATH
 }
