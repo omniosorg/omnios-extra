@@ -335,11 +335,14 @@ baseline() {
 }
 
 diffpkg() {
-    filter="${1:-.}"
-    repo="$PKGSRVR"
+    typeset filter="${1:-.}"
+    typeset repo="$PKGSRVR"
+    typeset op=$TMPDIR/batch.diff
 
     [ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
     : > $TMPDIR/pkg.diff
+
+    cp /dev/null $op
 
     pkgrepo -s $repo list | nawk '
         $1 == "PUBLISHER" { next }
@@ -350,7 +353,7 @@ diffpkg() {
         }
     ' | sort | egrep "$filter" | while read pkg; do
         logmsg "--- $pkg"
-        BATCH=1 diff_package $pkg
+        BATCH=1 diff_package $pkg || cat $TMPDIR/pkg.diff >> $op
     done
 }
 
