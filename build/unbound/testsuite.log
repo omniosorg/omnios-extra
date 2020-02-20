@@ -1,4 +1,4 @@
-Start of unbound 1.9.6 unit test.
+Start of unbound 1.10.0 unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -8,12 +8,6 @@ test per-view respip config actions apply functions
 test global respip config actions apply functions
 test signature verify functions
 test signature verify:./testdata/test_signatures.1
-test signature verify:./testdata/test_signatures.2
-test signature verify:./testdata/test_signatures.3
-test signature verify:./testdata/test_signatures.4
-test signature verify:./testdata/test_signatures.5
-test signature verify:./testdata/test_signatures.6
-test signature verify:./testdata/test_signatures.7
 test signature verify:./testdata/test_signatures.8
 test signature verify:./testdata/test_sigs.rsasha256
 test signature verify:./testdata/test_sigs.sha1_and_256
@@ -55,6 +49,7 @@ test util/data/dname.c:dname_iswild
 test util/data/dname.c:dname_canonical_compare
 test util/data/dname.c:dname_get_shared_topdomain
 test util/data/dname.c:dname_valid
+test util/data/dname.c:dname_has_label
 test util/rtt.c:rtt_timeout
 test trust anchor store functions
 test alloc_special_obtain functions
@@ -64,8 +59,8 @@ test slabhash functions
 test infra cache functions
 test sldns functions
 test message parse functions
-[0] did 10000 in 118.147 msec for 84640.320956 encode/sec size 615
-903972 checks ok.
+[0] did 10000 in 305.526 msec for 32730.438653 encode/sec size 615
+904144 checks ok.
 selftest successful (33 checks).
 -n ./testdata/acl.rpl 
 OK
@@ -433,11 +428,37 @@ OK
 OK
 -n ./testdata/root_key_sentinel.rpl 
 OK
+-n ./testdata/rpz_axfr.rpl 
+OK
+-n ./testdata/rpz_ixfr.rpl 
+OK
+-n ./testdata/rpz_qname.rpl 
+OK
+-n ./testdata/rpz_qname_override.rpl 
+OK
+-n ./testdata/rpz_respip.rpl 
+OK
+-n ./testdata/rpz_respip_override.rpl 
+OK
 -n ./testdata/rrset_rettl.rpl 
 OK
 -n ./testdata/rrset_untrusted.rpl 
 OK
 -n ./testdata/rrset_updated.rpl 
+OK
+-n ./testdata/serve_expired.rpl 
+OK
+-n ./testdata/serve_expired_client_timeout.rpl 
+OK
+-n ./testdata/serve_expired_reply_ttl.rpl 
+OK
+-n ./testdata/serve_expired_servfail.rpl 
+OK
+-n ./testdata/serve_expired_ttl.rpl 
+OK
+-n ./testdata/serve_expired_ttl_client_timeout.rpl 
+OK
+-n ./testdata/serve_expired_zerottl.rpl 
 OK
 -n ./testdata/stop_nxdomain.rpl 
 OK
