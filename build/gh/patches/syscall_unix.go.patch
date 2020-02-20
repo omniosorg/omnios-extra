@@ -1,0 +1,19 @@
+--- a~/_deps/pkg/mod/github.com/muesli/termenv@v0.4.0/syscall_unix.go	Thu Feb 20 18:02:27 2020
++++ a/_deps/pkg/mod/github.com/muesli/termenv@v0.4.0/syscall_unix.go	Thu Feb 20 18:03:24 2020
+@@ -1,11 +1,12 @@
+-// +build !linux,!windows,!plan9,!solaris
++// +build !linux,!windows,!plan9
+ 
+ package termenv
+ 
+ import (
+-	"syscall"
++	"golang.org/x/sys/unix"
+ )
+ 
+-func sysSelect(nfd int, r *syscall.FdSet, timeout *syscall.Timeval) error {
+-	return syscall.Select(nfd, r, nil, nil, timeout)
++func sysSelect(nfd int, r *unix.FdSet, timeout *unix.Timeval) error {
++	_, err := unix.Select(nfd, r, nil, nil, timeout)
++	return err
+ }
