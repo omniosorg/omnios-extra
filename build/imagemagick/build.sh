@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=ImageMagick
-VER=7.0.9-17
+VER=7.0.9-24
 PKG=ooce/application/imagemagick
 SUMMARY="$PROG - Convert, Edit, or Compose Bitmap Images"
 DESC="Use $PROG to create, edit, compose, or convert bitmap images. It can "

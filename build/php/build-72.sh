@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=php
 PKG=ooce/application/php-72
-VER=7.2.27
+VER=7.2.28
 SUMMARY="PHP 7.2"
 DESC="A popular general-purpose scripting language"
 
