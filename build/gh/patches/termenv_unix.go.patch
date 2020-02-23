@@ -1,0 +1,29 @@
+--- a~/_deps/pkg/mod/github.com/muesli/termenv@v0.4.0/termenv_unix.go	Thu Feb 20 17:48:35 2020
++++ a/_deps/pkg/mod/github.com/muesli/termenv@v0.4.0/termenv_unix.go	Thu Feb 20 17:49:27 2020
+@@ -7,7 +7,7 @@
+ 	"os"
+ 	"strconv"
+ 	"strings"
+-	"syscall"
++	"golang.org/x/sys/unix"
+ 
+ 	"github.com/google/goterm/term"
+ )
+@@ -97,7 +97,7 @@
+ }
+ 
+ func readWithTimeout(f *os.File) (string, bool) {
+-	var readfds syscall.FdSet
++	var readfds unix.FdSet
+ 	fd := f.Fd()
+ 	readfds.Bits[fd/64] |= 1 << (fd % 64)
+ 
+@@ -104,7 +104,7 @@
+ 	// Use select to attempt to read from os.Stdout for 100 ms
+ 	err := sysSelect(int(fd)+1,
+ 		&readfds,
+-		&syscall.Timeval{Usec: 100000})
++		&unix.Timeval{Usec: 100000})
+ 
+ 	if err != nil {
+ 		// log.Printf("select(read stdout): %v", err)
