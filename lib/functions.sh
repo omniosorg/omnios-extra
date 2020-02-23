@@ -1079,11 +1079,14 @@ EOM
             done
             echo
         ) > $BASE_TMPDIR/lint/pkglintrc
-        _repo="-r $repo"
+        [ $RELVER -ge 151033 ] \
+            && _repo="-r $repo -r $IPS_REPO -r $OB_IPS_REPO" \
+            || _repo="-r $repo"
     fi
     echo $c_note
-    $PKGLINT -f $BASE_TMPDIR/lint/pkglintrc -c $BASE_TMPDIR/lint/cache $mf \
-        $_repo || logerr "----- pkglint failed"
+    logcmd -p $PKGLINT -f $BASE_TMPDIR/lint/pkglintrc \
+        -c $BASE_TMPDIR/lint/cache $mf $_repo \
+        || logerr "----- pkglint failed"
     echo $c_reset
 }
 
@@ -1346,11 +1349,21 @@ publish_manifest()
 {
     local pkg=$1
     local pmf=$2
+    local root=$3
+
+    [ -n "$root" ] && root="-d $root"
 
     translate_manifest $pmf $pmf.final
 
-    logcmd pkgsend -s $PKGSRVR publish $pmf.final || logerr "pkgsend failed"
-    [ -z "$SKIP_PKG_DIFF" ] && diff_latest $pkg
+    logmsg "Publishing from $pmf.final"
+
+    if [ -z "$SKIP_PKGLINT" ] && ( [ -n "$BATCH" ] || ask_to_pkglint ); then
+        run_pkglint $PKGSRVR $pmf.final
+    fi
+
+    logcmd pkgsend -s $PKGSRVR publish $root $pmf.final \
+        || logerr "pkgsend failed"
+    [ -n "$pkg" -a -z "$SKIP_PKG_DIFF" ] && diff_latest $pkg
 }
 
 # Create a list of the items contained within a package in a format suitable

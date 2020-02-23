@@ -109,8 +109,10 @@ MIRROR=$OOCEMIRROR
 # Used for package contents diffing.
 if [ $((RELVER % 2)) == 0 ]; then
     IPS_REPO=https://pkg.omniosce.org/r$RELVER/extra
+    OB_IPS_REPO=https://pkg.omniosce.org/r$RELVER/core
 else
     IPS_REPO=https://pkg.omniosce.org/bloody/extra
+    OB_IPS_REPO=https://pkg.omniosce.org/bloody/core
 fi
 
 ARCHIVE_TYPES="tar.xz tar.bz2 tar.gz tgz tar zip"
