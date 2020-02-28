@@ -31,8 +31,8 @@ extra.omnios ooce/developer/compiler-rt-90
 extra.omnios ooce/developer/cunit
 extra.omnios ooce/developer/dejagnu
 extra.omnios ooce/developer/flamegraph
-extra.omnios ooce/developer/go-112
 extra.omnios ooce/developer/go-113
+extra.omnios ooce/developer/go-114
 extra.omnios ooce/developer/gperf
 extra.omnios ooce/developer/llvm-8 r
 extra.omnios ooce/developer/llvm-80
