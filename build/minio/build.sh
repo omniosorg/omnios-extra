@@ -18,12 +18,10 @@
 
 PROG=minio
 PKG=ooce/storage/minio
-VER=2020-02-20T22-51-23Z
+VER=2020-02-27T00-23-05Z
 SUMMARY="MinIO server"
 DESC="A high Performance Object Storage released under Apache License v2.0. "
 DESC+="It is API compatible with Amazon S3 cloud storage service."
-
-GITHUB=https://github.com/$PROG
 
 set_arch 64
 set_gover 1.13
@@ -43,32 +41,6 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
 "
-
-# Respect environmental overrides for these to ease development.
-: ${MINIO_SOURCE_REPO:=$GITHUB/$PROG}
-: ${MINIO_SOURCE_BRANCH:=RELEASE.$VER}
-
-clone_source() {
-    clone_github_source $PROG \
-        "$MINIO_SOURCE_REPO" "$MINIO_SOURCE_BRANCH"
-
-    BUILDDIR+=/$PROG
-}
-
-get_deps() {
-    pushd $TMPDIR/$BUILDDIR > /dev/null
-
-    GOPATH=$TMPDIR/$BUILDDIR/deps
-    export GOPATH
-
-    logmsg "getting dependencies (in order to patch them)..."
-    logcmd go get -u ./...
-
-    logmsg "fixing permissions on modules (in order to be able to patch them)..."
-    logcmd chmod -R u+w $GOPATH
-
-    popd >/dev/null
-}
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
@@ -94,8 +66,7 @@ install() {
 }
 
 init
-clone_source
-get_deps
+clone_go_source $PROG $PROG "RELEASE.$VER"
 patch_source
 prep_build
 build
