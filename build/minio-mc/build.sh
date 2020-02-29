@@ -18,14 +18,11 @@
 
 PROG=minio-mc
 PKG=ooce/storage/minio-mc
-VER=2020-02-20T23-49-54Z
+VER=2020-02-25T18-10-03Z
 SUMMARY="MinIO client"
 DESC="A modern alternative to UNIX commands like ls, cat, cp, mirror, diff, "
 DESC+="find etc. It supports filesystems and Amazon S3 compatible cloud "
 DESC+="storage service (AWS Signature v2 and v4)"
-
-PROGB=mc
-GITHUB=https://github.com/minio
 
 set_arch 64
 set_gover 1.13
@@ -34,34 +31,6 @@ GOOS=illumos
 GOARCH=amd64
 MC_RELEASE=RELEASE
 export GOOS GOARCH MC_RELEASE
-
-BUILD_DEPENDS_IPS="developer/versioning/git"
-
-# Respect environmental overrides for these to ease development.
-: ${MC_SOURCE_REPO:=$GITHUB/$PROGB}
-: ${MC_SOURCE_BRANCH:=RELEASE.$VER}
-
-clone_source() {
-    clone_github_source $PROGB \
-        "$MC_SOURCE_REPO" "$MC_SOURCE_BRANCH"
-
-    BUILDDIR+=/$PROGB
-}
-
-get_deps() {
-    pushd $TMPDIR/$BUILDDIR > /dev/null
-
-    GOPATH=$TMPDIR/$BUILDDIR/deps
-    export GOPATH
-
-    logmsg "getting dependencies (in order to patch them)..."
-    logcmd go get -u ./...
-
-    logmsg "fixing permissions on modules (in order to be able to patch them)..."
-    logcmd chmod -R u+w $GOPATH
-
-    popd >/dev/null
-}
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
@@ -77,7 +46,7 @@ build() {
     logcmd $MAKE LDFLAGS="$LDFLAGS" || logerr "Build failed"
 
     # $PROG version <ver>
-    [ "`./$PROGB --version | awk '{print $3}'`" = "$MC_RELEASE.$VER" ] \
+    [ "`./mc --version | awk '{print $3}'`" = "$MC_RELEASE.$VER" ] \
         || logerr "version patch failed."
 
     popd >/dev/null
@@ -90,8 +59,7 @@ install() {
 }
 
 init
-clone_source
-get_deps
+clone_go_source mc minio "RELEASE.$VER"
 patch_source
 prep_build
 build
