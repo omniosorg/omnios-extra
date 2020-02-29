@@ -22,13 +22,11 @@ VER=1.11.1
 SUMMARY="Git with a cup of tea"
 DESC="Git with a cup of tea, painless self-hosted git service"
 
-GITHUB=https://github.com/go-$PROG
-
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.13
+set_gover 1.14
 # gitea 1.11.x requires node.js
 set_nodever 12
 
@@ -47,17 +45,6 @@ export PATH="/usr/gnu/bin:$PATH"
 GOOS=illumos
 GOARCH=amd64
 export GOOS GOARCH
-
-# Respect environmental overrides for these to ease development.
-: ${GITEA_SOURCE_REPO:=$GITHUB/$PROG}
-: ${GITEA_SOURCE_BRANCH:=v$VER}
-
-clone_source() {
-    clone_github_source $PROG \
-        "$GITEA_SOURCE_REPO" "$GITEA_SOURCE_BRANCH"
-
-    BUILDDIR+=/$PROG
-}
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
@@ -101,7 +88,7 @@ install() {
 }
 
 init
-clone_source
+clone_go_source $PROG go-$PROG v$VER
 patch_source
 prep_build
 build
