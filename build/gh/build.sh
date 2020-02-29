@@ -22,43 +22,14 @@ VER=0.5.7
 SUMMARY="github-cli"
 DESC="The GitHub CLI tool"
 
-PROGB=cli
-GITHUB=https://github.com/cli
-
 set_arch 64
-set_gover 1.13
+set_gover 1.14
 
 GOOS=illumos
 GOARCH=amd64
 export GOOS GOARCH
 
-BUILD_DEPENDS_IPS="developer/versioning/git"
-RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
-
-# Respect environmental overrides for these to ease development.
-: ${GH_SOURCE_REPO:=$GITHUB/$PROGB}
-: ${GH_SOURCE_BRANCH:=v$VER}
-
-clone_source() {
-    clone_github_source $PROGB \
-        "$GH_SOURCE_REPO" "$GH_SOURCE_BRANCH"
-
-    BUILDDIR+=/$PROGB
-}
-
-get_deps() {
-    pushd $TMPDIR/$BUILDDIR > /dev/null
-
-    export GOPATH=$TMPDIR/$BUILDDIR/_deps
-
-    logmsg "getting dependencies (in order to patch them)..."
-    logcmd go get -u ./...
-
-    logmsg "fixing permissions on modules (in order to be able to patch them)..."
-    logcmd chmod -R u+w $GOPATH
-
-    popd >/dev/null
-}
+RUN_DEPENDS_IPS="developer/versioning/git"
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
@@ -76,8 +47,7 @@ install() {
 }
 
 init
-clone_source
-get_deps
+clone_go_source cli cli v$VER
 patch_source
 prep_build
 build
