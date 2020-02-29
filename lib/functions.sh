@@ -1049,6 +1049,34 @@ clone_github_source() {
 }
 
 #############################################################################
+# Get go source from github
+#############################################################################
+
+clone_go_source() {
+    typeset prog="$1"
+    typeset src="$2"
+    typeset branch="$3"
+    typeset deps="${4-_deps}"
+
+    clone_github_source $prog "$GITHUB/$src/$prog" $branch
+
+    BUILDDIR+=/$prog
+
+    pushd $TMPDIR/$BUILDDIR > /dev/null
+
+    [ -z "$GOPATH" ] && GOPATH="$TMPDIR/$BUILDDIR/$deps"
+    export GOPATH
+
+    logmsg "Getting go dependencies"
+    logcmd go get -d ./...
+
+    logmsg "Fixing permissions on dependencies"
+    logcmd chmod -R u+w $GOPATH
+
+    popd > /dev/null
+}
+
+#############################################################################
 # Make the package
 #############################################################################
 
