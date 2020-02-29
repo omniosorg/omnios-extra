@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2020 OmniOS Community Edition.  All rights reserved.
 
 . ../../lib/functions.sh
 
@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.13
+set_gover 1.14
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -42,20 +42,8 @@ export GOOS GOARCH
 build() {
     pushd $TMPDIR/$BUILDDIR >/dev/null
 
-    export GO111MODULE=on
-    export GOPATH=$TMPDIR/go
-    logcmd mkdir -p $GOPATH/bin
-    export PATH+=":$GOPATH/bin"
-
-    logmsg "--- Building pre-requisites..."
-    grep 'go build.*mod=' lazy.sh | while read x x x x x out src; do
-        out=${out#*/}
-        out=${out//\"}
-        logmsg "---- $out"
-        logcmd go build -v -mod=readonly -o "$GOPATH/$out" $src
-    done
-    logmsg "Building zrepl..."
-    logcmd $MAKE $PROG-bin ZREPL_VERSION=$VER
+    logmsg "Building 64-bit"
+    logcmd $MAKE || logerr "Build failed"
 
     popd >/dev/null
 }
@@ -67,7 +55,7 @@ install() {
 }
 
 init
-download_source $PROG v$VER ""
+clone_go_source $PROG $PROG v$VER
 patch_source
 prep_build
 build
