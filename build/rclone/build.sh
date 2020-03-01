@@ -23,32 +23,17 @@ SUMMARY="rsync for cloud storage"
 DESC="A command line program to sync files and directories to and from "
 DESC+="different cloud storage providers"
 
-GITHUB=https://github.com/$PROG
-
 set_arch 64
-set_gover 1.13
+set_gover 1.14
 
 GOOS=illumos
 GOARCH=amd64
 export GOOS GOARCH
 
-BUILD_DEPENDS_IPS="developer/versioning/git"
-
 XFORM_ARGS="-DPROG=$PROG"
 
 # rclone build wants GNU cp
 export PATH="/usr/gnu/bin:$PATH"
-
-# Respect environmental overrides for these to ease development.
-: ${RCLONE_SOURCE_REPO:=$GITHUB/$PROG}
-: ${RCLONE_SOURCE_BRANCH:=v$VER}
-
-clone_source() {
-    clone_github_source $PROG \
-        "$RCLONE_SOURCE_REPO" "$RCLONE_SOURCE_BRANCH"
-
-    BUILDDIR+=/$PROG
-}
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
@@ -67,7 +52,7 @@ install() {
 }
 
 init
-clone_source
+clone_go_source $PROG $PROG v$VER
 patch_source
 prep_build
 build
