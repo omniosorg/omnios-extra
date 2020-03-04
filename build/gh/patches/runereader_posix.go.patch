@@ -1,6 +1,6 @@
-diff -wpruN '--exclude=*.orig' a/cli~/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.0.5/terminal/runereader_posix.go a/cli/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.0.5/terminal/runereader_posix.go
---- a~/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.0.5/terminal/runereader_posix.go	1970-01-01 00:00:00
-+++ a/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.0.5/terminal/runereader_posix.go	1970-01-01 00:00:00
+diff -wpruN '--exclude=*.orig' a/cli~/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.0.7/terminal/runereader_posix.go a/cli/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.0.7/terminal/runereader_posix.go
+--- a~/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.0.7/terminal/runereader_posix.go	1970-01-01 00:00:00
++++ a/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.0.7/terminal/runereader_posix.go	1970-01-01 00:00:00
 @@ -12,12 +12,11 @@ import (
  	"bufio"
  	"bytes"
