@@ -3,7 +3,7 @@ diff -wpruN '--exclude=*.orig' a~/pkg/disk/stat_openbsd.go a/pkg/disk/stat_openb
 +++ a/pkg/disk/stat_openbsd.go	1970-01-01 00:00:00
 @@ -1,4 +1,4 @@
 -// +build openbsd
-+// +build illumos
++// +build openbsd illumos
  
  /*
   * MinIO Cloud Storage, (C) 2019-2020 MinIO, Inc.

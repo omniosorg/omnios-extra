@@ -18,7 +18,7 @@
 
 PROG=minio-mc
 PKG=ooce/storage/minio-mc
-VER=2020-02-25T18-10-03Z
+VER=2020-03-06T23-29-45Z
 SUMMARY="MinIO client"
 DESC="A modern alternative to UNIX commands like ls, cat, cp, mirror, diff, "
 DESC+="find etc. It supports filesystems and Amazon S3 compatible cloud "
@@ -52,18 +52,12 @@ build() {
     popd >/dev/null
 }
 
-install() {
-    logcmd mkdir -p $DESTDIR/$PREFIX/bin || logerr "mkdir"
-    logcmd cp $TMPDIR/$BUILDDIR/mc $DESTDIR/$PREFIX/bin/$PROG \
-        || logerr "Cannot install binary"
-}
-
 init
 clone_go_source mc minio "RELEASE.$VER"
 patch_source
 prep_build
 build
-install
+install_go mc
 VER=${VER%T*}
 VER=${VER//-/.} make_package
 clean_up
