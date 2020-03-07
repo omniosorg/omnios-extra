@@ -18,7 +18,7 @@
 
 PROG=minio
 PKG=ooce/storage/minio
-VER=2020-02-27T00-23-05Z
+VER=2020-03-06T22-23-56Z
 SUMMARY="MinIO server"
 DESC="A high Performance Object Storage released under Apache License v2.0. "
 DESC+="It is API compatible with Amazon S3 cloud storage service."
@@ -59,18 +59,12 @@ build() {
     popd >/dev/null
 }
 
-install() {
-    logcmd mkdir -p $DESTDIR/$PREFIX/bin || logerr "mkdir"
-    logcmd cp $TMPDIR/$BUILDDIR/$PROG $DESTDIR/$PREFIX/bin/$PROG \
-        || logerr "Cannot install binary"
-}
-
 init
 clone_go_source $PROG $PROG "RELEASE.$VER"
 patch_source
 prep_build
 build
-install
+install_go
 install_smf application application-$PROG.xml
 VER=${VER%T*}
 VER=${VER//-/.} make_package
