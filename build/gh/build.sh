@@ -40,18 +40,12 @@ build() {
     popd >/dev/null
 }
 
-install() {
-    logcmd mkdir -p $DESTDIR/$PREFIX/bin || logerr "mkdir"
-    logcmd cp $TMPDIR/$BUILDDIR/bin/$PROG $DESTDIR/$PREFIX/bin/$PROG \
-        || logerr "Cannot install binary"
-}
-
 init
 clone_go_source cli cli v$VER
 patch_source
 prep_build
 build
-install
+install_go bin/$PROG
 make_package
 clean_up
 
