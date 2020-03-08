@@ -11,7 +11,7 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2020 OmniOS Community Edition.
 
 # Symlink binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
@@ -23,6 +23,10 @@
     target=../../../$(PROG)/share/man/%<1>/%<2> >
 
 <transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
+
+# fix group and permissions
+<transform path=(?:etc|var)/$(PREFIX) -> set group lp>
+<transform path=var/$(PREFIX)/run/$(PROG) -> set mode 0777>
 
 <transform file path=$(OPREFIX)/(?:lib|$(PROG)/(?:sbin|lib))/ \
     -> add restart_fmri svc:/application/cups/scheduler:default>

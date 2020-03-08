@@ -1068,7 +1068,7 @@ clone_go_source() {
     export GOPATH
 
     logmsg "Getting go dependencies"
-    logcmd go get -d ./...
+    logcmd go get -d ./... || logerr "failed to get dependencies"
 
     logmsg "Fixing permissions on dependencies"
     logcmd chmod -R u+w $GOPATH
@@ -1549,6 +1549,22 @@ install_smf() {
     fi
 
     popd > /dev/null
+}
+
+#############################################################################
+# Install a go binary
+#############################################################################
+
+install_go() {
+    typeset src="${1:-$PROG}"
+    typeset dst="${2:-$PROG}"
+    typeset dstdir="${3:-$DESTDIR/$PREFIX/bin}"
+
+    logcmd mkdir -p $dstdir \
+        || logerr "Failed to create install dir"
+
+    logcmd cp $TMPDIR/$BUILDDIR/$src $dstdir/$dst \
+        || logerr "Failed to install binary"
 }
 
 #############################################################################

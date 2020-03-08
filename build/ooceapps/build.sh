@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=ooceapps
-VER=0.6.1
+VER=0.6.2
 PKG=ooce/ooceapps
 SUMMARY="OOCEapps"
 DESC="Web integrations for OmniOS"
@@ -25,6 +25,9 @@ DESC="Web integrations for OmniOS"
 MIRROR="https://github.com/omniosorg/$PROG/releases/download"
 
 SKIP_CHECKSUM=1
+
+# some perl modules require gnu-tar to unpack
+export PATH="/usr/gnu/bin:$PATH"
 
 RUN_DEPENDS_IPS="ooce/application/texlive"
 [ $RELVER -lt 151033 ] && RUN_DEPENDS_IPS+=" runtime/perl-64"

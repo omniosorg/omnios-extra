@@ -38,17 +38,10 @@ export PATH="/usr/gnu/bin:$PATH"
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
-    export GOPATH=$TMPDIR/$BUILDDIR/proto
     logmsg "Building 64-bit"
     logcmd $MAKE || logerr "Build failed"
 
     popd >/dev/null
-}
-
-install() {
-    logcmd mkdir -p $DESTDIR/$PREFIX/bin || logerr "mkdir"
-    logcmd cp $GOPATH/bin/$PROG $DESTDIR/$PREFIX/bin/$PROG \
-        || logerr "Cannot install binary"
 }
 
 init
@@ -56,7 +49,7 @@ clone_go_source $PROG $PROG v$VER
 patch_source
 prep_build
 build
-install
+install_go
 make_package
 clean_up
 
