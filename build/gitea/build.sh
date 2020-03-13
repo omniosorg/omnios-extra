@@ -18,7 +18,7 @@
 
 PROG=gitea
 PKG=ooce/application/gitea
-VER=1.11.2
+VER=1.11.3
 SUMMARY="Git with a cup of tea"
 DESC="Git with a cup of tea, painless self-hosted git service"
 
@@ -26,7 +26,10 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.14
+# gitea is not yet certified for building with go 1.14 and is known to have
+# a few issues -
+# see https://blog.gitea.io/2020/03/gitea-1.11.3-and-1.10.6-released/
+set_gover 1.13
 # gitea 1.11.x requires node.js
 set_nodever 12
 
