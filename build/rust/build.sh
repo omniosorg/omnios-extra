@@ -18,7 +18,7 @@
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.41.1
+VER=1.42.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
@@ -70,8 +70,9 @@ export RUSTFLAGS="-C linker=$CC"
 export GNUAR=/bin/gar
 
 # Required to enable the POSIX 1003.6 style getpwuid_r() prototype
-# _XPG4_2 - Need struct timeval from sys/time.h
-CFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS -D_XPG4_2"
+# __EXTENSIONS__ - Need struct timeval from sys/time.h
+#                  and struct procset_t from sys/procset.h
+CFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS -D__EXTENSIONS__"
 CXXFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS"
 export CFLAGS CXXFLAGS
 
@@ -135,7 +136,7 @@ fix_checksums() {
     sed -e 's/1e732c2e3b4bd1561f11e0979bf9d20669a96eae7afe0deff9dfbb980ee47bf1/55abd8100db14a076dedbf84ce0f2db08158e1bd33ff1d4978bd3c4ad978f281/' ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json.orig > ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json
     cp ${WRKSRC}/vendor/libc/.cargo-checksum.json \
         ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig
-    sed -e 's/8e5369ed1e86c5be92831d290b9eeb77c537a2de728950a5086e77438a4f0f3a/dac34dab563a2ca03c1d43f0224736f30662c3bbf0c2f1c44e220a7172345f4f/' ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig > ${WRKSRC}/vendor/libc/.cargo-checksum.json
+    sed -e 's/cd266cee38f25fe9ed896ba88ddd3530eca352c4d260671fb63d315890bc49e6/109a8e5a1638b09c4297e8e7ff95f35b4d16a3c0b42c8791b5fdd3f550612f8c/' ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig > ${WRKSRC}/vendor/libc/.cargo-checksum.json
     cp ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json \
           ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig
     sed -e 's/59763fc255248b54fba5d0761d61093a73d51fa4cb400b0df1b5f339b9c2f48a/ba66d192421fd536ceddb50616c4c4aea06f4e39450eb0bc2bbbaed0b1e684c1/' ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig > ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json

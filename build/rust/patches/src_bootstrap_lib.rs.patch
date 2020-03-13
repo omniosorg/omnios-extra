@@ -7,10 +7,10 @@ diff -wpruN '--exclude=*.orig' a~/src/bootstrap/lib.rs a/src/bootstrap/lib.rs
 --- a~/src/bootstrap/lib.rs	1970-01-01 00:00:00
 +++ a/src/bootstrap/lib.rs	1970-01-01 00:00:00
 @@ -752,7 +752,6 @@ impl Build {
-         // cc-rs because the build scripts will determine that for themselves.
-         let mut base = self.cc[&target].args().iter()
-                            .map(|s| s.to_string_lossy().into_owned())
--                           .filter(|s| !s.starts_with("-O") && !s.starts_with("/O"))
-                            .collect::<Vec<String>>();
+             .args()
+             .iter()
+             .map(|s| s.to_string_lossy().into_owned())
+-            .filter(|s| !s.starts_with("-O") && !s.starts_with("/O"))
+             .collect::<Vec<String>>();
  
          // If we're compiling on macOS then we add a few unconditional flags
