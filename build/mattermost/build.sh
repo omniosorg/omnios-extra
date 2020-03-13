@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.20.1
+VER=5.20.2
 VERHUMAN=$VER
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
