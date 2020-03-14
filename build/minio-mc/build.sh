@@ -18,7 +18,7 @@
 
 PROG=minio-mc
 PKG=ooce/storage/minio-mc
-VER=2020-03-06T23-29-45Z
+VER=2020-03-14T01-23-37Z
 SUMMARY="MinIO client"
 DESC="A modern alternative to UNIX commands like ls, cat, cp, mirror, diff, "
 DESC+="find etc. It supports filesystems and Amazon S3 compatible cloud "
@@ -34,9 +34,6 @@ export GOOS GOARCH MC_RELEASE
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
-
-    logcmd ln -sf stat_openbsd.go pkg/disk/stat_illumos.go \
-        || logerr "failed to symlink stat_illumos.go"
 
     LDFLAGS=" \
     -s -w -X github.com/minio/mc/cmd.Version=$VER \
