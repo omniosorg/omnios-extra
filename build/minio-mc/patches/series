@@ -1,3 +1,2 @@
 direct_io_unix.go.patch
-stat_openbsd.go.patch
 Makefile.patch
