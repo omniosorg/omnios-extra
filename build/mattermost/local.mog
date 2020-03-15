@@ -11,7 +11,7 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2020 OmniOS Community Edition.
 
 dir group=bin mode=0755 owner=root path=var/$(PREFIX)
 dir group=$(PROG) mode=0700 owner=$(PROG) path=var/$(PREFIX)/data
@@ -23,18 +23,18 @@ link path=$(PREFIX)/logs target=../../../var/log/$(PREFIX)
 link path=$(PREFIX)/data target=../../../var/$(PREFIX)/data
 link path=$(PREFIX)/config target=../../../etc/$(PREFIX)
 
+link path=$(OPREFIX)/bin/mmctl target=../$(PROG)/bin/mmctl
+
 group groupname=$(PROG) gid=85
 user ftpuser=false username=$(PROG) uid=85 group=$(PROG) gcos-field="Mattermost User" \
     home-dir=$(PREFIX) password=NP
 
 <transform dir file path=$(PREFIX)/(?:logs|config|prepackaged_plugins) -> drop>
-# drop mmctl for now
-<transform dir file path=$(PREFIX)/bin/mmctl$ -> drop>
 <transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
 <transform file path=etc/$(PREFIX)/ -> set owner $(PROG)>
 
-<transform file path=$(PREFIX)/bin/ \
+<transform file path=$(PREFIX)/bin/$(PROG) \
     -> set restart_fmri svc:/ooce/application/$(PROG):default>
 
-license LICENSE.txt license=Apache2
+license $(PROG)/LICENSE.txt license=Apache2
 
