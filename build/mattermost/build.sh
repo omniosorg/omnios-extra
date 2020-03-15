@@ -18,14 +18,11 @@
 
 PROG=mattermost
 VER=5.20.2
-VERHUMAN=$VER
+MMCTLVER=5.20.0
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
 DESC="All your team communication in one place, "
 DESC+="instantly searchable and accessible anywhere."
-
-PROGB=$PROG-server
-GITHUB=https://github.com/$PROG
 
 set_arch 64
 set_gover 1.13
@@ -33,12 +30,7 @@ set_gover 1.13
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-BUILDDIR="$PROG/src/github.com/$PROG/$PROGB"
-GOPATH=$TMPDIR/$PROG-$VER/$PROG
-BUILD_NUMBER=$VER
-export GOPATH BUILD_NUMBER
-
-BUILD_DEPENDS_IPS="developer/versioning/git"
+export BUILD_NUMBER=$VER
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -46,32 +38,28 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-# Respect environmental overrides for these to ease development.
-: ${MM_SOURCE_REPO:=$GITHUB/$PROGB}
-: ${MM_SOURCE_BRANCH:=v$VER}
+build() {
+    pushd $TMPDIR/$BUILDDIR > /dev/null
 
-clone_source() {
-    clone_github_source $PROGB \
-        "$MM_SOURCE_REPO" "$MM_SOURCE_BRANCH"
+    logmsg "Building 64-bit"
+    logcmd $MAKE "$@" || logerr "Build failed"
+
+    popd >/dev/null
 }
 
-configure64() { :; }
+install() {
+    logcmd mkdir -p $DESTDIR/$OPREFIX || logerr "mkdir"
 
-make_prog64() {
-    logmsg "Making $PROG"
-    cd $TMPDIR/$BUILDDIR
-    $MAKE build-illumos || logerr "Build failed"
-
-}
-
-make_install64() {
-    logcmd mkdir -p $DESTDIR/$OPREFIX
     logcmd mv $TMPDIR/proto/$PROG $DESTDIR/$OPREFIX \
         || logerr "Cannot move dist to $DESTDIR"
+
     for f in platform $PROG; do
-        logcmd cp $TMPDIR/$PROG/bin/$f $DESTDIR/$PREFIX/bin \
+        logcmd cp $TMPDIR/$BUILDDIR/proto/bin/$f $DESTDIR/$PREFIX/bin \
             || logerr "Cannot copy $f to $DESTDIR"
     done
+
+    logcmd cp $TMPDIR/$BUILDDIR/../mmctl/mmctl $DESTDIR/$PREFIX/bin \
+        || logerr "Cannot copy mmctl to $DESTDIR"
 
     logmsg "Creating config path"
     logcmd mkdir -p $DESTDIR/etc/$PREFIX || logerr "Cannot create config path"
@@ -80,11 +68,32 @@ make_install64() {
 }
 
 init
-BUILDDIR=$PROG download_source $PROG $PROG-team-$VER-linux-amd64 '' $TMPDIR/proto
-BUILDDIR=$PROG/src/github.com/$PROG clone_source
-patch_source
 prep_build
-build
+
+#########################################################################
+
+# building mmctl
+_prog=$PROG
+_builddir=$BUILDDIR
+PROG=mmctl
+
+clone_go_source $PROG $_prog v$MMCTLVER
+build "ADVANCED_VET=FALSE"
+
+BUILDDIR=$_builddir
+PROG=$_prog
+
+#########################################################################
+
+BUILDDIR=$PROG download_source $PROG $PROG-team-$VER-linux-amd64 '' $TMPDIR/proto
+# use clone_github_source instead of clone_go_source
+# since mattermost bundles its dependencies
+clone_github_source $PROG "$GITHUB/$PROG/$PROG-server" v$VER
+BUILDDIR+=/$PROG
+patch_source
+export GOPATH="$TMPDIR/$BUILDDIR/proto"
+build build-illumos
+install
 install_smf application $PROG.xml
 make_package
 clean_up
