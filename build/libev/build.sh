@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=libev
-VER=4.31
+VER=4.33
 PKG=ooce/library/libev
 SUMMARY="libev"
 DESC="High-performance event loop library"
