@@ -189,6 +189,8 @@ RIPGREP=/opt/ooce/bin/rg
 CMAKE=/opt/ooce/bin/cmake
 MESON_MAKE=/opt/ooce/bin/ninja
 REALPATH=/usr/gnu/bin/realpath
+FIND_ELF=/opt/onbld/bin/find_elf
+CHECK_RTIME=/opt/onbld/bin/check_rtime
 # Command for privilege escalation. Can be overridden in site.sh
 PFEXEC=sudo
 

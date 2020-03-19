@@ -1198,6 +1198,7 @@ make_package() {
     if [ -n "$DESTDIR" ]; then
         check_symlinks "$DESTDIR"
         [ -z "$BATCH" ] && check_libabi "$DESTDIR" "$PKG"
+        [ -z "$BATCH" ] && [ $RELVER -ge 151033 ] && check_rtime "$DESTDIR"
         logmsg "--- Generating package manifest from $DESTDIR"
         GENERATE_ARGS=
         if [ -n "$HARDLINK_TARGETS" ]; then
@@ -2227,6 +2228,21 @@ check_libabi() {
             logerr "--- $lib.so.$prev missing from new package"
         done
     done
+}
+
+check_rtime() {
+    local destdir="$1"
+
+    logmsg "-- Checking ELF runtime attributes"
+    logcmd -p $FIND_ELF -fr $destdir/ > $TMPDIR/rtime.files
+    logcmd $CHECK_RTIME \
+        -e $ROOTDIR/doc/rtime \
+        -E $TMPDIR/rtime.err \
+        -f $TMPDIR/rtime.files
+    if [ -s "$TMPDIR/rtime.err" ]; then
+        cat $TMPDIR/rtime.err | tee -a $LOGFILE
+        logerr "ELF runtime problems detected"
+    fi
 }
 
 #############################################################################
