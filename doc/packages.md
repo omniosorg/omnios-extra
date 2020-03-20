@@ -94,7 +94,7 @@
 | ooce/security/gnupg		| 1.4.23	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.17.9	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-116		| 1.16.1	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/storage/minio		| 2020-03-14T02-21-58Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/storage/minio		| 2020-03-19T21-49-00Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio-mc		| 2020-03-14T01-23-37Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/file-system/ntfs-3g | 2017.3.23AR.4 | https://jp-andre.pagesperso-orange.fr/openindiana-ntfs-3g.html https://www.tuxera.com/community/open-source-ntfs-3g/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/htop		| 2.2.0		| https://hisham.hm/htop/releases/ | [omniosorg](https://github.com/omniosorg)
