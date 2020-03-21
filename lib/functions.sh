@@ -1198,6 +1198,8 @@ make_package() {
     if [ -n "$DESTDIR" ]; then
         check_symlinks "$DESTDIR"
         [ -z "$BATCH" ] && check_libabi "$DESTDIR" "$PKG"
+        [ -z "$BATCH" ] && [ $RELVER -ge 151033 ] && check_rtime "$DESTDIR"
+        check_bmi "$DESTDIR"
         logmsg "--- Generating package manifest from $DESTDIR"
         GENERATE_ARGS=
         if [ -n "$HARDLINK_TARGETS" ]; then
@@ -2227,6 +2229,50 @@ check_libabi() {
             logerr "--- $lib.so.$prev missing from new package"
         done
     done
+}
+
+#############################################################################
+# ELF checks
+#############################################################################
+
+check_rtime() {
+    local destdir="$1"
+
+    logmsg "-- Checking ELF runtime attributes"
+    logcmd -p $FIND_ELF -fr $destdir/ > $TMPDIR/rtime.files
+    logcmd $CHECK_RTIME \
+        -e $ROOTDIR/doc/rtime \
+        -E $TMPDIR/rtime.err \
+        -f $TMPDIR/rtime.files
+    if [ -s "$TMPDIR/rtime.err" ]; then
+        cat $TMPDIR/rtime.err | tee -a $LOGFILE
+        logerr "ELF runtime problems detected"
+    fi
+}
+
+check_bmi() {
+    local destdir="$1"
+
+    [ -n "$BMI_EXPECTED" ] && return
+
+    logmsg "-- Checking for BMI instructions"
+    [ -f "$TMPDIR/rtime.files" ] || \
+        logcmd -p $FIND_ELF -fr $destdir/ > $TMPDIR/rtime.files
+
+    # In the past, some programs have ended up containing BMI instructions
+    # that will cause an illegal instruction error on pre-Haswell processors.
+    # We explicitly check for this in the elf objects.
+    : > $TMPDIR/rtime.bmi
+    nawk '/^OBJECT/ { print $NF }' $TMPDIR/rtime.files | while read obj; do
+        [ -f "$destdir/$obj" ] || continue
+        dis $destdir/$obj 2>/dev/null | egrep -s '(mulx|lzcntq|shlx)' \
+        && echo "$obj has been built with BMI instructions" \
+        >> $TMPDIR/rtime.bmi
+    done
+    if [ -s "$TMPDIR/rtime.bmi" ]; then
+        cat $TMPDIR/rtime.bmi | tee -a $LOGFILE
+        logerr "BMI instruction set found"
+    fi
 }
 
 #############################################################################
