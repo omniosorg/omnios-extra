@@ -48,6 +48,8 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DVERSION=$MAJVER
 "
+# node contains BMI instructions even when built on an older CPU
+BMI_EXPECTED=1
 
 CONFIGURE_OPTS_64=" \
     --with-dtrace \
