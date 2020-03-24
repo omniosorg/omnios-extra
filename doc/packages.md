@@ -42,7 +42,7 @@
 | ooce/driver/fuse		| 1.4		| https://github.com/jurikm/illumos-fusefs/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/emacs		| 26.3		| https://ftp.gnu.org/gnu/emacs/ https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html#Releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
-| ooce/editor/nano		| 4.8		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
+| ooce/editor/nano		| 4.9		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
 | ooce/file/lsof		| 4.93.2	| https://github.com/lsof-org/lsof/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/bdw-gc		| 8.0.4		| https://www.hboehm.info/gc/gc_source/ | [omniosorg](https://github.com/omniosorg)
