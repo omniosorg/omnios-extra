@@ -404,6 +404,8 @@ set_gover() {
     GO_PATH="/opt/ooce/go-$GOVER"
     PATH="$GO_PATH/bin:$PATH"
     GOROOT_BOOTSTRAP="$GO_PATH"
+    # go binaries contain BMI instructions even when built on an older CPU
+    BMI_EXPECTED=1
     export PATH GOROOT_BOOTSTRAP
 }
 
