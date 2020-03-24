@@ -1,10 +1,10 @@
 diff -wpruN '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
 --- a~/Cargo.toml	1970-01-01 00:00:00
 +++ a/Cargo.toml	1970-01-01 00:00:00
-@@ -54,3 +54,6 @@ escargot = "0.5.0"
+@@ -60,3 +60,6 @@ lazy_static = "1.4"
  
- [build-dependencies]
- clap = "2.33"
+ [profile.release]
+ lto = true
 +
 +[patch.crates-io]
 +termios = { git = "https://github.com/papertigers/termios-rs", branch = "mz-illumos" }

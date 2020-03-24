@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=bat
-VER=0.12.1
+VER=0.13.0
 PKG=ooce/util/bat
 SUMMARY="cat alternative"
 DESC="A cat(1) clone with wings"
@@ -53,7 +53,8 @@ install() {
     logcmd cp target/release/bat $DESTDIR/$PREFIX/bin/bat || logerr "cp failed"
 
     logcmd mkdir -p $DESTDIR/$PREFIX/share/man/man1
-    logcmd cp doc/bat.1 $DESTDIR/$PREFIX/share/man/man1/ || logerr "cp failed"
+    logcmd cp target/release/build/bat-*/out/assets/manual/bat.1 \
+        $DESTDIR/$PREFIX/share/man/man1/ || logerr "cp failed"
 
     popd >/dev/null
 }
