@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=znapzend
-VER=0.19.1
+VER=0.20.0
 PKG=ooce/system/znapzend
 SUMMARY="A ZFS-aware backup script"
 DESC="Take snapshots and transfer them to a second pool, "

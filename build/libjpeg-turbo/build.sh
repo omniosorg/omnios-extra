@@ -49,9 +49,6 @@ CONFIGURE_OPTS_64="
     -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/amd64
 "
 
-LDFLAGS32+=" -R$OPREFIX/lib"
-LDFLAGS64+=" -R$OPREFIX/lib/amd64"
-
 init
 download_source $PROG $PROG $VER
 prep_build cmake

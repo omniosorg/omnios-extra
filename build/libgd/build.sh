@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=libgd
-VER=2.2.5
+VER=2.3.0
 PKG=ooce/library/libgd
 SUMMARY="libgd"
 DESC="GD is an open source code library for the dynamic creation of images by "

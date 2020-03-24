@@ -404,6 +404,8 @@ set_gover() {
     GO_PATH="/opt/ooce/go-$GOVER"
     PATH="$GO_PATH/bin:$PATH"
     GOROOT_BOOTSTRAP="$GO_PATH"
+    # go binaries contain BMI instructions even when built on an older CPU
+    BMI_EXPECTED=1
     export PATH GOROOT_BOOTSTRAP
 }
 
@@ -2265,7 +2267,7 @@ check_bmi() {
     : > $TMPDIR/rtime.bmi
     nawk '/^OBJECT/ { print $NF }' $TMPDIR/rtime.files | while read obj; do
         [ -f "$destdir/$obj" ] || continue
-        dis $destdir/$obj 2>/dev/null | egrep -s '(mulx|lzcntq|shlx)' \
+        dis $destdir/$obj 2>/dev/null | egrep -s '\<(mulx|lzcntq|shlx)\>' \
         && echo "$obj has been built with BMI instructions" \
         >> $TMPDIR/rtime.bmi
     done
