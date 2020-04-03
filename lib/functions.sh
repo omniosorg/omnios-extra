@@ -357,14 +357,17 @@ fi
 # Set up tools area
 #############################################################################
 
-#logmsg "-- Initialising tools area"
+init_tools() {
+    BASEPATH=$TMPDIR/tools:$BASEPATH
+    [ -d $TMPDIR/tools ] && return
+    logcmd mkdir -p $TMPDIR/tools || logerr "mkdir tools failed"
+    # Disable any commands that should not be used for the build
+    for cmd in cc CC; do
+        logcmd ln -sf /bin/false $TMPDIR/tools/$cmd || logerr "ln $cmd failed"
+    done
+}
 
-[ -d $TMPDIR/tools ] || mkdir -p $TMPDIR/tools
-# Disable any commands that should not be used for the build
-for cmd in cc CC; do
-    [ -h $TMPDIR/tools/$cmd ] || logcmd ln -sf /bin/false $TMPDIR/tools/$cmd
-done
-BASEPATH=$TMPDIR/tools:$BASEPATH
+init_tools
 
 #############################################################################
 # Compiler version
@@ -378,10 +381,6 @@ set_gccver() {
     GXX="$GCCPATH/bin/g++"
     [ -x "$GCC" ] || logerr "Unknown compiler version $GCCVER"
     PATH="$GCCPATH/bin:$BASEPATH"
-    for cmd in gcc g++; do
-        [ -h $BASE_TMPDIR/tools/$cmd ] && rm -f $TMPDIR/tools/$cmd
-        ln -sf $GCCPATH/bin/$cmd $BASE_TMPDIR/tools/$cmd || logerr "$cmd link"
-    done
     if [ -n "$USE_CCACHE" ]; then
         [ -x $CCACHE_PATH/ccache ] || logerr "Ccache is not installed"
         PATH="$CCACHE_PATH:$PATH"
