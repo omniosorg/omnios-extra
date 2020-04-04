@@ -1789,6 +1789,18 @@ build() {
     [ -n "$ENABLE_CTF" ] && convert_ctf
 }
 
+check_buildlog() {
+    typeset -i expected="${1:-0}"
+
+    logmsg "--- Checking logfile for errors (expect $expected)"
+
+    errs="`grep 'error: ' $LOGFILE | \
+        egrep -cv 'pathspec.*did not match any file'`"
+
+    [ "$errs" -ne "$expected" ] \
+        && logerr "Found $errs errors in logfile (expected $expected)"
+}
+
 build32() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
     logmsg "Building 32-bit"
@@ -1796,6 +1808,7 @@ build32() {
     make_clean
     configure32
     make_prog32
+    [ -z "$SKIP_BUILD_ERRCHK" ] && check_buildlog ${EXPECTED_BUILD_ERRS:-0}
     make_install32
     popd > /dev/null
     unset ISALIST
@@ -1808,6 +1821,7 @@ build64() {
     make_clean
     configure64
     make_prog64
+    [ -z "$SKIP_BUILD_ERRCHK" ] && check_buildlog ${EXPECTED_BUILD_ERRS:-0}
     make_install64
     popd > /dev/null
 }
