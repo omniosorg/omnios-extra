@@ -406,6 +406,8 @@ set_gover() {
     # go binaries contain BMI instructions even when built on an older CPU
     BMI_EXPECTED=1
     export PATH GOROOT_BOOTSTRAP
+
+    BUILD_DEPENDS_IPS+=" ooce/developer/go-${GOVER//./}"
 }
 
 #############################################################################
@@ -418,6 +420,22 @@ set_nodever() {
     NODDEPATH="/opt/ooce/node-$NODEVER"
     PATH="$NODEPATH/bin:$PATH"
     export PATH
+
+    BUILD_DEPENDS_IPS+=" ooce/runtime/node-$NODEVER"
+}
+
+#############################################################################
+# Ruby version
+#############################################################################
+
+set_rubyver() {
+    RUBYVER="$1"
+    logmsg "-- Setting Ruby version to $RUBYVER"
+    RUBYPATH="/opt/ooce/ruby-$RUBYVER"
+    PATH="$RUBYPATH/bin:$PATH"
+    export PATH
+
+    BUILD_DEPENDS_IPS+=" ooce/runtime/ruby-${RUBYVER//./}"
 }
 
 #############################################################################
