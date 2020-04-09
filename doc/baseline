@@ -48,6 +48,7 @@ extra.omnios ooce/editor/joe
 extra.omnios ooce/editor/nano
 extra.omnios ooce/extra-build-tools
 extra.omnios ooce/file/lsof
+extra.omnios ooce/file/tree
 extra.omnios ooce/kvmadm
 extra.omnios ooce/library/bdw-gc
 extra.omnios ooce/library/cairo
