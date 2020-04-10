@@ -1,0 +1,18 @@
+diff -wpruN '--exclude=*.orig' a~/libexec/racc2y a/libexec/racc2y
+--- a~/libexec/racc2y	1970-01-01 00:00:00
++++ a/libexec/racc2y	1970-01-01 00:00:00
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/ruby
++#!/usr/bin/env ruby
+ #
+ # $Id$
+ #
+diff -wpruN '--exclude=*.orig' a~/libexec/y2racc a/libexec/y2racc
+--- a~/libexec/y2racc	1970-01-01 00:00:00
++++ a/libexec/y2racc	1970-01-01 00:00:00
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/ruby
++#!/usr/bin/env ruby
+ #
+ # $Id$
+ #

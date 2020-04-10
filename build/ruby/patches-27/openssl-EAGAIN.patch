@@ -1,0 +1,21 @@
+diff -wpruN '--exclude=*.orig' a~/ext/openssl/ossl_ssl.c a/ext/openssl/ossl_ssl.c
+--- a~/ext/openssl/ossl_ssl.c	1970-01-01 00:00:00
++++ a/ext/openssl/ossl_ssl.c	1970-01-01 00:00:00
+@@ -1850,13 +1850,16 @@ ossl_ssl_read_internal(int argc, VALUE *
+                 rb_io_wait_writable(fptr->fd);
+                 continue;
+ 	    case SSL_ERROR_WANT_READ:
++wantread:
+ 		if (no_exception_p(opts)) { return sym_wait_readable; }
+                 read_would_block(nonblock);
+                 rb_io_wait_readable(fptr->fd);
+ 		continue;
+ 	    case SSL_ERROR_SYSCALL:
+ 		if (!ERR_peek_error()) {
+-		    if (errno)
++		    if (errno == EAGAIN)
++			goto wantread;
++		    else if (errno)
+ 			rb_sys_fail(0);
+ 		    else {
+ 			/*
