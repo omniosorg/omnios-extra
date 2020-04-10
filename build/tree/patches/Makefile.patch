@@ -1,0 +1,14 @@
+diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -50,8 +50,8 @@ CFLAGS=-ggdb -pedantic -Wall -DLINUX -D_
+ #CC=cc
+ #CFLAGS=-xO0 -v
+ #LDFLAGS=
+-#OBJS+=strverscmp.o
+-#MANDIR=${prefix}/share/man/man1
++OBJS+=strverscmp.o
++MANDIR=${prefix}/share/man/man1
+ 
+ # Uncomment for Cygwin:
+ #CFLAGS=-O2 -Wall -fomit-frame-pointer -DCYGWIN

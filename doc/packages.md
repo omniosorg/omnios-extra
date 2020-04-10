@@ -45,6 +45,7 @@
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/nano		| 4.9.2		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
 | ooce/file/lsof		| 4.93.2	| https://github.com/lsof-org/lsof/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/file/tree		| 1.8.0		| http://mama.indstate.edu/users/ice/tree/ | [omniosorg](https://github.com/omniosorg)
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/bdw-gc		| 8.0.4		| https://www.hboehm.info/gc/gc_source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/cairo		| 1.16.0	| https://cairographics.org/releases/ | [omniosorg](https://github.com/omniosorg)
