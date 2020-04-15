@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=graphviz
-VER=2.40.1
+VER=2.44.0
 PKG=ooce/application/graphviz
 SUMMARY="graphviz"
 DESC="Graph visualisation software"
@@ -43,6 +43,8 @@ XFORM_ARGS="
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --disable-static
+    --disable-python2
+    --without-visio
     --includedir=$OPREFIX/include
     --libdir=$OPREFIX/lib/$ISAPART64
 "
