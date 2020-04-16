@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.21.0
+VER=5.22.0
 MMCTLVER=$VER
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
@@ -25,7 +25,7 @@ DESC="All your team communication in one place, "
 DESC+="instantly searchable and accessible anywhere."
 
 set_arch 64
-set_gover 1.13
+set_gover 1.14
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -54,7 +54,7 @@ install() {
         || logerr "Cannot move dist to $DESTDIR"
 
     for f in platform $PROG; do
-        logcmd cp $TMPDIR/$BUILDDIR/proto/bin/$f $DESTDIR/$PREFIX/bin \
+        logcmd cp $TMPDIR/$BUILDDIR/bin/$f $DESTDIR/$PREFIX/bin \
             || logerr "Cannot copy $f to $DESTDIR"
     done
 
