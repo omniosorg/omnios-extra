@@ -77,7 +77,7 @@
 | ooce/multimedia/minidlna	| 1.2.1		| https://sourceforge.net/projects/minidlna/files/minidlna/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.2.2		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosh		| 1.3.2		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/network/nsd		| 4.3.0		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/nsd		| 4.3.1		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn		| 2.4.8		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/rclone		| 1.51.0	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/smtp/postfix	| 3.5.0		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
