@@ -1,0 +1,14 @@
+Declare cgi_error noreturn 
+( https://github.com/gnosek/fcgiwrap/pull/43 )
+
+diff -wpruN '--exclude=*.orig' a~/fcgiwrap.c a/fcgiwrap.c
+--- a~/fcgiwrap.c	2020-04-11 00:23:07.624897087 +0000
++++ a/fcgiwrap.c	2020-04-11 00:24:01.457062312 +0000
+@@ -500,6 +500,7 @@ static bool is_allowed_program(const cha
+ 	return false;
+ }
+ 
++__attribute__((__noreturn__))
+ static void cgi_error(const char *message, const char *reason, const char *filename)
+ {
+ 	printf("Status: %s\r\nContent-Type: text/plain\r\n\r\n%s\r\n",

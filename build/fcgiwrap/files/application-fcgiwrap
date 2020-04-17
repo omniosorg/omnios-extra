@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+. /lib/svc/share/smf_include.sh
+
+PIDF=/var/opt/ooce/fcgiwrap/run/fcgiwrap.pid
+SOCKF=/var/opt/ooce/fcgiwrap/run/fcgiwrap.sock
+
+check_and_kill()
+{
+        PID=`head -1 $1`
+        kill -0 $PID > /dev/null 2>&1
+        [ $? -eq 0 ] && kill $PID
+        [ -S $SOCKF ] && /usr/bin/rm -f $SOCKF
+        [ -f $PIDF ] && /usr/bin/rm -f $PIDF
+}
+
+create_fcgiwrap_sock()
+{
+        /opt/ooce/sbin/fcgiwrap -s unix:$SOCKF &
+
+        RETVAL=$?
+        PID=$!
+        [ $RETVAL -eq 0 ] && echo $PID > $PIDF
+}
+
+case "$1" in
+'refresh')
+        [ -f $PIDF ] && check_and_kill $PIDF
+        create_fcgiwrap_sock
+        ;;
+
+'start')
+        create_fcgiwrap_sock
+        ;;
+
+'stop')
+        [ -f $PIDF ] && check_and_kill $PIDF
+        ;;
+
+*)
+        echo "Usage: $0 { start | stop | refresh }"
+        exit 1
+        ;;
+
+esac
+exit 0
+
+
