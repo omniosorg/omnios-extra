@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=openvpn
-VER=2.4.8
+VER=2.4.9
 PKG=ooce/network/openvpn
 LZOVER=2.10
 SUMMARY="OpenVPN"
