@@ -18,8 +18,8 @@
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox
-VER=6.1.4
-GSOAPVER=2.8.98
+VER=6.1.6
+GSOAPVER=2.8.101
 GSOAPDIR=gsoap-${GSOAPVER%.*}
 SUMMARY="VirtualBox"
 DESC="VirtualBox is a general-purpose full virtualiser for x86 hardware, "
@@ -29,8 +29,6 @@ if [ $RELVER -lt 151030 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
     exit 0
 fi
-
-set_gccver 8
 
 SKIP_LICENCES=GPLv2
 
