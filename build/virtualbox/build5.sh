@@ -19,7 +19,7 @@
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox  ##IGNORE##
 VER=5.2.40
-GSOAPVER=2.8.2.8.101
+GSOAPVER=2.8.101
 GSOAPDIR=gsoap-${GSOAPVER%.*}
 SUMMARY="VirtualBox"
 DESC="VirtualBox is a general-purpose full virtualiser for x86 hardware, "
