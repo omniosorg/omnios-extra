@@ -1,5 +1,6 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
+| ooce/application/fcgi2	| 2.4.2		| https://github.com/FastCGI-Archives/fcgi2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gitea	| 1.11.4	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/imagemagick	| 7.0.10-0	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.40.1	| https://graphviz.gitlab.io/_pages/Download/Download_source.html | [omniosorg](https://github.com/omniosorg)
