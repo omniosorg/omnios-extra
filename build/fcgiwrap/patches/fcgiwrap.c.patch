@@ -1,0 +1,14 @@
+Declare cgi_error noreturn 
+( https://github.com/gnosek/fcgiwrap/pull/43 )
+
+diff -wpruN '--exclude=*.orig' a~/fcgiwrap.c a/fcgiwrap.c
+--- a~/fcgiwrap.c	1970-01-01 00:00:00
++++ a/fcgiwrap.c	1970-01-01 00:00:00
+@@ -485,6 +485,7 @@ static void inherit_environment(void)
+ 	}
+ }
+ 
++__attribute__((__noreturn__))
+ static void cgi_error(const char *message, const char *reason, const char *filename)
+ {
+ 	printf("Status: %s\r\nContent-Type: text/plain\r\n\r\n%s\r\n",

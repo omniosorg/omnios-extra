@@ -1,0 +1,14 @@
+Add ldflags.patch to add support for LDFLAGS in Makefile.in
+( https://salsa.debian.org/debian/fcgiwrap/-/commit/edde79a295a27ce98fe77a5745c24f2ce88d8c7b )
+
+diff -wpruN '--exclude=*.orig' a~/Makefile.in a/Makefile.in
+--- a~/Makefile.in	1970-01-01 00:00:00
++++ a/Makefile.in	1970-01-01 00:00:00
+@@ -18,6 +18,7 @@ endif
+ 
+ LDLIBS = -lfcgi @systemd_LIBS@
+ CFLAGS = @AM_CFLAGS@
++LDFLAGS = @LDFLAGS@
+ 
+ fcgiwrap: fcgiwrap.c
+

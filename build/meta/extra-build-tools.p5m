@@ -17,6 +17,7 @@ depend fmri=ooce/developer/llvm-80 type=require
 depend fmri=ooce/developer/llvm-90 type=require
 depend fmri=ooce/developer/rust type=require
 depend fmri=ooce/library/cairo type=require
+depend fmri=ooce/library/fcgi2 type=require
 depend fmri=ooce/library/libev type=require
 depend fmri=ooce/library/libexif type=require
 depend fmri=ooce/library/libid3tag type=require
