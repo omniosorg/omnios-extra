@@ -12,5 +12,7 @@
 
 # Copyright 2020 OmniOS Community Edition. All rights reserved.
 
-license LICENSE.TERMS license=OMI
+# Drop 32bit binaries
+<transform path=$(PREFIX)/s?bin/i386 -> drop>
 
+license LICENSE.TERMS license=OMI
