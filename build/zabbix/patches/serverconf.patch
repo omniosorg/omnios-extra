@@ -1,0 +1,75 @@
+diff -wpruN '--exclude=*.orig' a~/conf/zabbix_server.conf a/conf/zabbix_server.conf
+--- a~/conf/zabbix_server.conf	1970-01-01 00:00:00
++++ a/conf/zabbix_server.conf	1970-01-01 00:00:00
+@@ -35,7 +35,7 @@
+ # Default:
+ # LogFile=
+ 
+-LogFile=/tmp/zabbix_server.log
++LogFile=/var/opt/ooce/zabbix/zabbix_server.log
+ 
+ ### Option: LogFileSize
+ #	Maximum size of log file in MB.
+@@ -44,7 +44,7 @@ LogFile=/tmp/zabbix_server.log
+ # Mandatory: no
+ # Range: 0-1024
+ # Default:
+-# LogFileSize=1
++LogFileSize=10
+ 
+ ### Option: DebugLevel
+ #	Specifies debug level:
+@@ -65,7 +65,7 @@ LogFile=/tmp/zabbix_server.log
+ #
+ # Mandatory: no
+ # Default:
+-# PidFile=/tmp/zabbix_server.pid
++PidFile=/var/opt/ooce/zabbix/zabbix_server.pid
+ 
+ ### Option: SocketDir
+ #	IPC socket directory.
+@@ -74,6 +74,7 @@ LogFile=/tmp/zabbix_server.log
+ # Mandatory: no
+ # Default:
+ # SocketDir=/tmp
++SocketDir=/var/opt/ooce/zabbix
+ 
+ ### Option: DBHost
+ #	Database host name.
+@@ -346,6 +347,7 @@ DBUser=zabbix
+ # Mandatory: no
+ # Default:
+ # SNMPTrapperFile=/tmp/zabbix_traps.tmp
++SNMPTrapperFile=/var/opt/ooce/zabbix/zabbix_traps.tmp
+ 
+ ### Option: StartSNMPTrapper
+ #	If 1, SNMP trapper process is started.
+@@ -520,7 +522,7 @@ Timeout=4
+ #
+ # Mandatory: no
+ # Default:
+-# FpingLocation=/usr/sbin/fping
++FpingLocation=/opt/ooce/sbin/fping
+ 
+ ### Option: Fping6Location
+ #	Location of fping6.
+@@ -612,15 +614,15 @@ LogSlowQueries=3000
+ 
+ ### Option: Include
+ #	You may include individual files or all files in a directory in the configuration file.
+-#	Installing Zabbix will create include directory in /usr/local/etc, unless modified during the compile time.
++#	Installing Zabbix will create include directory in /etc/opt/ooce/zabbix, unless modified during the compile time.
+ #
+ # Mandatory: no
+ # Default:
+ # Include=
+ 
+-# Include=/usr/local/etc/zabbix_server.general.conf
+-# Include=/usr/local/etc/zabbix_server.conf.d/
+-# Include=/usr/local/etc/zabbix_server.conf.d/*.conf
++# Include=/etc/opt/ooce/zabbix/zabbix_server.general.conf
++# Include=/etc/opt/ooce/zabbix/zabbix_server.conf.d/
++Include=/etc/opt/ooce/zabbix/zabbix_server.conf.d/*.conf
+ 
+ ### Option: SSLCertLocation
+ #	Location of SSL client certificates.

@@ -1,0 +1,50 @@
+diff -wpruN '--exclude=*.orig' a~/conf/zabbix_agentd.conf a/conf/zabbix_agentd.conf
+--- a~/conf/zabbix_agentd.conf	1970-01-01 00:00:00
++++ a/conf/zabbix_agentd.conf	1970-01-01 00:00:00
+@@ -8,7 +8,7 @@
+ #
+ # Mandatory: no
+ # Default:
+-# PidFile=/tmp/zabbix_agentd.pid
++PidFile=/var/opt/ooce/zabbix-agent/zabbix_agentd.pid
+ 
+ ### Option: LogType
+ #	Specifies where log messages are written to:
+@@ -27,7 +27,7 @@
+ # Default:
+ # LogFile=
+ 
+-LogFile=/tmp/zabbix_agentd.log
++LogFile=/var/opt/ooce/zabbix-agent/zabbix_agentd.log
+ 
+ ### Option: LogFileSize
+ #	Maximum size of log file in MB.
+@@ -36,7 +36,7 @@ LogFile=/tmp/zabbix_agentd.log
+ # Mandatory: no
+ # Range: 0-1024
+ # Default:
+-# LogFileSize=1
++LogFileSize=10
+ 
+ ### Option: DebugLevel
+ #	Specifies debug level:
+@@ -296,15 +296,15 @@ Hostname=Zabbix server
+ 
+ ### Option: Include
+ #	You may include individual files or all files in a directory in the configuration file.
+-#	Installing Zabbix will create include directory in /usr/local/etc, unless modified during the compile time.
++#	Installing Zabbix will create include directory in /etc/opt/ooce/zabbix, unless modified during the compile time.
+ #
+ # Mandatory: no
+ # Default:
+ # Include=
+ 
+-# Include=/usr/local/etc/zabbix_agentd.userparams.conf
+-# Include=/usr/local/etc/zabbix_agentd.conf.d/
+-# Include=/usr/local/etc/zabbix_agentd.conf.d/*.conf
++# Include=/etc/opt/ooce/zabbix/zabbix_agentd.userparams.conf
++# Include=/etc/opt/ooce/zabbix/zabbix_agentd.conf.d/
++Include=/etc/opt/ooce/zabbix/zabbix_agentd.conf.d/*.conf
+ 
+ ####### USER-DEFINED MONITORED PARAMETERS #######
+ 

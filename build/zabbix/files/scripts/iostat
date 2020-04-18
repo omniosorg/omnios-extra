@@ -1,0 +1,24 @@
+#!/bin/ksh
+
+period=58
+
+tmpd=/tmp/.zabbix
+[ -d $tmpd ] || mkdir $tmpd
+
+if [ -z "$1" ]; then
+	# Generate statistics
+	/usr/bin/iostat -xnr $period 2  | nawk -F, '
+		$11 == "device" { p++; print > "/tmp/.zabbix/iostat.h"; next }
+		p > 1 { print > sprintf("/tmp/.zabbix/iostat.%s", $11) }
+	'
+	exit 0
+fi
+
+typeset dsk=$1
+typeset -i stat=$2
+
+cut -d, -f$stat $tmpd/iostat.$dsk
+
+# r/s,w/s,kr/s,kw/s,wait,actv,wsvc_t,asvc_t,%w,%b,device
+# 0.0,1.5,0.0,0.7,0.0,0.0,0.0,0.1,0,0,data
+

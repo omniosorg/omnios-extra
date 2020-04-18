@@ -1,0 +1,47 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2020 OmniOS Community Edition. All rights reserved.
+
+group groupname=$(GROUP) gid=77
+user ftpuser=false username=$(AGENTUSER) uid=76 group=$(GROUP) \
+    gcos-field="$(PROG) User" home-dir=/var/$(PREFIX)-agent password=NP
+
+<transform file path=$(PREFIX)/sbin/zabbix_agentd \
+    -> set refresh_fmri network/zabbix:agent>
+
+<transform path=etc/$(PREFIX)/.*(?:server|proxy) -> drop>
+<transform path=$(PREFIX)/bin/zabbix_js -> drop>
+<transform path=$(PREFIX)/sbin/zabbix_(?:server|proxy) -> drop>
+<transform path=$(PREFIX)/share/man.*(?:server|proxy) -> drop>
+<transform path=$(PREFIX)/share/zabbix -> drop>
+<transform path=$(PREFIX)/(?:ui|sql) -> drop>
+
+<transform file path=etc -> set preserve true>
+<transform file path=etc -> set overlay allow>
+
+<transform path=lib/svc/manifest/application/zabbix-server -> drop>
+
+# Symlink binaries
+<transform file path=$(PREFIX)/(bin)/(.*) -> emit \
+    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
+
+# Symlink man pages
+<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
+    link path=$(OPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> >
+
+dir path=var/$(OPREFIX) owner=root group=bin mode=0755
+dir path=var/$(PREFIX)-agent owner=$(AGENTUSER) group=$(GROUP) mode=0755
+
+file files/crontab.agent path=var/spool/cron/crontabs/$(AGENTUSER) \
+    owner=root group=bin mode=0644 restart_fmri=svc:/system/cron:default
+
+license COPYING license=GPLv2
+

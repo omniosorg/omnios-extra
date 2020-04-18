@@ -18,6 +18,8 @@ extra.omnios ooce/application/php-common
 extra.omnios ooce/application/texlive
 extra.omnios ooce/application/tidy
 extra.omnios ooce/application/vagrant
+extra.omnios ooce/application/zabbix-agent
+extra.omnios ooce/application/zabbix-server
 extra.omnios ooce/audio/flac
 extra.omnios ooce/compress/lz4
 extra.omnios ooce/compress/pbzip2
