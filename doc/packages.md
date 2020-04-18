@@ -1,6 +1,5 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
-| ooce/library/fcgi2		| 2.4.2		| https://github.com/FastCGI-Archives/fcgi2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gitea	| 1.11.4	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/imagemagick	| 7.0.10-0	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.40.1	| https://graphviz.gitlab.io/_pages/Download/Download_source.html | [omniosorg](https://github.com/omniosorg)
@@ -50,6 +49,7 @@
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/bdw-gc		| 8.0.4		| https://www.hboehm.info/gc/gc_source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/cairo		| 1.16.0	| https://cairographics.org/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/fcgi2		| 2.4.2		| https://github.com/FastCGI-Archives/fcgi2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/fontconfig	| 2.13.1	| https://www.freedesktop.org/software/fontconfig/release/ https://www.freedesktop.org/wiki/Software/fontconfig/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/freetype2	| 2.10.1	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
