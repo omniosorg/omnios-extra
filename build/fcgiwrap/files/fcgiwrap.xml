@@ -24,7 +24,7 @@
 	type='service'
 	version='1'>
 
-	<instance name='default' enabled='false' >
+	<instance name='default' enabled='false'>
 
 	<dependency
 		name='loopback'
@@ -60,7 +60,7 @@
 	<exec_method
 	    type='method'
 	    name='start'
-	    exec='/lib/svc/method/application-fcgiwrap start'
+	    exec='/opt/ooce/sbin/fcgiwrap -s %{config/socket} -c %{config/children}'
 	    timeout_seconds='60'>
             <method_context security_flags="aslr">
 		<method_credential user='fcgiwrap' group='fcgiwrap'
@@ -71,14 +71,18 @@
 	<exec_method
 	    type='method'
 	    name='stop'
-	    exec='/lib/svc/method/application-fcgiwrap stop'
+	    exec=':kill'
 	    timeout_seconds='60' />
 
-	<exec_method
-	    type='method'
-	    name='refresh'
-	    exec='/lib/svc/method/application-fcgiwrap refresh'
-	    timeout_seconds='60' />
+	<property_group name='startd' type='framework'>
+		<propval name='duration' type='astring' value='child' />
+	</property_group>
+
+	<property_group name='config' type='application'>
+		<propval name='children' type='count' value='1' />
+		<propval name='socket' type='astring'
+		    value='unix:/var/opt/ooce/fcgiwrap/run/fcgiwrap.sock' />
+	</property_group>
 
 	</instance>
 
@@ -91,6 +95,7 @@
 			</loctext>
 		</common_name>
 	</template>
+
 </service>
 
 </service_bundle>

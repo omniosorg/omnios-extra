@@ -12,14 +12,15 @@
 
 # Copyright 2020 OmniOS Community Edition. All rights reserved.
 
+dir group=bin mode=0755 owner=root path=var/$(PREFIX)/$(PROG)
 dir group=$(PROG) mode=0750 owner=$(PROG) path=var/$(PREFIX)/$(PROG)/run
 
 <transform file path=$(PREFIX)/sbin/ \
-    -> set refresh_fmri svc:ooce/application/$(PROG)>
+    -> set refresh_fmri svc://ooce/application/$(PROG):default>
 
-group groupname=$(PROG)
-user ftpuser=false username=$(PROG) group=$(PROG) gcos-field="$(PROG) User" \
-    home-dir=/var/$(PREFIX)/$(PROG) password=NP
+group groupname=$(PROG) gid=88
+user ftpuser=false username=$(PROG) uid=88 group=$(PROG) \
+    gcos-field="$(PROG) User" home-dir=/var/$(PREFIX)/$(PROG) password=NP
 
-license files/COPYING license=NOSEK
+license LICENCE license=MIT
 
