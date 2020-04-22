@@ -1,0 +1,22 @@
+diff -wpruN '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -68128,6 +68128,7 @@ $as_echo "#define HAVE_AI_IDN 1" >>confd
+   case $host_alias in
+   *darwin*) PHP_SOCKETS_CFLAGS="$PHP_SOCKETS_CFLAGS -D__APPLE_USE_RFC_3542"
+   esac
++  PHP_SOCKETS_CFLAGS+=" -D_XPG4_2"
+ 
+   ext_builddir=ext/sockets
+   ext_srcdir=$abs_srcdir/ext/sockets
+diff -wpruN '--exclude=*.orig' a~/ext/sockets/config.m4 a/ext/sockets/config.m4
+--- a~/ext/sockets/config.m4	1970-01-01 00:00:00
++++ a/ext/sockets/config.m4	1970-01-01 00:00:00
+@@ -66,6 +66,7 @@ if test "$PHP_SOCKETS" != "no"; then
+   case $host_alias in
+   *darwin*) PHP_SOCKETS_CFLAGS="$PHP_SOCKETS_CFLAGS -D__APPLE_USE_RFC_3542"
+   esac
++  PHP_SOCKETS_CFLAGS="$PHP_SOCKETS_CFLAGS -D__XPG4_2"
+   PHP_NEW_EXTENSION(
+     [sockets],
+     [sockets.c multicast.c conversions.c sockaddr_conv.c sendrecvmsg.c],
