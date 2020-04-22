@@ -1,0 +1,35 @@
+#!/usr/bin/ksh
+
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+source /lib/svc/share/smf_include.sh
+
+typeset -r CONF_FILE="/etc/opt/ooce/nginx-1.18/nginx.conf"
+typeset -r PIDFILE="/var/opt/ooce/nginx/run/nginx-1.18.pid"
+typeset -r NGINX="/opt/ooce/nginx-1.18/sbin/nginx"
+
+[[ ! -f ${CONF_FILE} ]] && exit $SMF_EXIT_ERR_CONFIG
+
+case "$1" in
+start)
+        /bin/rm -f ${PIDFILE}
+        [ -d /tmp/.nginx ] || mkdir /tmp/.nginx
+        chmod 700 /tmp/.nginx
+        exec ${NGINX} 2>&1
+        ;;
+*)
+        echo "Unknown method."
+        exit $SMF_EXIT_ERR_FATAL
+        ;;
+esac
+
+# not reached

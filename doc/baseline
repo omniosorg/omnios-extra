@@ -102,6 +102,7 @@ extra.omnios ooce/runtime/tcl
 extra.omnios ooce/security/gnupg
 extra.omnios ooce/server/nginx
 extra.omnios ooce/server/nginx-116
+extra.omnios ooce/server/nginx-118
 extra.omnios ooce/server/nginx-common
 extra.omnios ooce/storage/minio
 extra.omnios ooce/storage/minio-mc
