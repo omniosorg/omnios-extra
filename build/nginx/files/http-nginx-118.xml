@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+    This file and its contents are supplied under the terms of the
+    Common Development and Distribution License ("CDDL"), version 1.0.
+    You may only use this file in accordance with the terms of version
+    1.0 of the CDDL.
+
+    A full copy of the text of the CDDL should have accompanied this
+    source. A copy of the CDDL is also available via the Internet at
+    http://www.illumos.org/license/CDDL.
+
+    Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+-->
+
+<service_bundle type="manifest" name="http:nginx118">
+<service name="network/http" type="service" version="1">
+    <instance name="nginx118" enabled="false">
+        <dependency name="network" grouping="require_all" restart_on="error" type="service">
+            <service_fmri value="svc:/milestone/network:default"/>
+        </dependency>
+        <dependency name="filesystem-local" grouping="require_all" restart_on="none" type="service">
+            <service_fmri value="svc:/system/filesystem/local:default"/>
+        </dependency>
+        <dependency name="autofs" grouping="optional_all" restart_on="error" type="service">
+            <service_fmri value="svc:/system/filesystem/autofs:default"/>
+        </dependency>
+        <exec_method
+            type="method"
+            name="start"
+            exec="/lib/svc/method/http-nginx-118 start"
+            timeout_seconds="60">
+            <method_context security_flags="aslr">
+                <method_credential user="nginx" group="nginx"
+                    privileges="basic,net_privaddr,!proc_info,!proc_session" />
+            </method_context>
+        </exec_method>
+        <exec_method
+            type="method"
+            name="stop"
+            exec="/opt/ooce/nginx-1.18/sbin/nginx -s quit"
+            timeout_seconds="60">
+        </exec_method>
+        <exec_method
+            type="method"
+            name="refresh"
+            exec="/opt/ooce/nginx-1.18/sbin/nginx -s reload"
+            timeout_seconds="60">
+        </exec_method>
+        <property_group name="startd" type="framework">
+            <propval name="ignore_error" type="astring" value="core,signal" />
+        </property_group>
+        <template> <common_name> <loctext xml:lang="C"> nginx 1.18 web server </loctext> </common_name>
+            <documentation>
+                <manpage title="nginx" section="8" manpath="/opt/ooce/nginx-1.18/share/man" />
+                <doc_link name="nginx.org" uri="http://nginx.org/" />
+            </documentation>
+        </template>
+    </instance>
+    <stability value="External" />
+</service>
+</service_bundle>
