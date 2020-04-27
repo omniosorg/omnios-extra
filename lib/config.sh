@@ -278,6 +278,16 @@ FCFLAGS[7]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[8]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[9]+=" -fno-aggressive-loop-optimizations"
 
+# Flags to enable particular standards; see standards(5)
+typeset -A STANDARDS
+
+STANDARDS[POSIX]="-D_POSIX_C_SOURCE=200112L -D_POSIX_PTHREAD_SEMANTICS"
+STANDARDS[XPG3]="-D_XOPEN_SOURCE"
+STANDARDS[XPG4]="-D_XOPEN_SOURCE -D_XOPEN_VERSION=1"
+STANDARDS[XPG4v2]="-D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED=1"
+STANDARDS[XPG5]="-D_XOPEN_SOURCE=500 -D__EXTENSIONS__=1 -D_XPG5"
+STANDARDS[XPG6]="-D_XOPEN_SOURCE=600 -D__EXTENSIONS__=1 -D_XPG6"
+
 # CFLAGS applies to both builds, 32/64 only gets applied to the respective
 # build
 CFLAGS=
