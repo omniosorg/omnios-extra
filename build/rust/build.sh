@@ -18,7 +18,7 @@
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.42.0
+VER=1.43.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
@@ -27,7 +27,7 @@ DESC+="prevents segfaults, and guarantees thread safety."
 # to build rust with a bootstrap binary package instead of the installed
 # rust, set BOOTSTRAP_VER=<bootstrap_rust_ver> env variable
 #
-# to use bundled LLVM instead of the bundled one, set BUNDLED_LLVM
+# to use bundled LLVM instead of the system one, set BUNDLED_LLVM
 #
 [ $RELVER -lt 151033 ] && LLVM_MAJVER=8.0 || LLVM_MAJVER=9.0
 
