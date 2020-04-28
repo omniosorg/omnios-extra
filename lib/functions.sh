@@ -479,6 +479,11 @@ reset_configure_opts() {
 }
 reset_configure_opts
 
+set_standard() {
+    [ -n "${STANDARDS[$1]}" ] || logerr "Unknown standard $1"
+    CPPFLAGS+=" ${STANDARDS[$1]}"
+}
+
 forgo_isaexec() {
     FORGO_ISAEXEC=1
     reset_configure_opts
