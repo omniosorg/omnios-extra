@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=bat
-VER=0.14.0
+VER=0.15.0
 PKG=ooce/util/bat
 SUMMARY="cat alternative"
 DESC="A cat(1) clone with wings"
