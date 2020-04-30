@@ -47,7 +47,7 @@ MAKE_INSTALL_ARGS="
 
 MAKE_INSTALL_TARGET="
     install
-    install-commandmode 
+    install-commandmode
     install-config
 "
 
@@ -57,7 +57,7 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-CONFIGURE_OPTS_64=" 
+CONFIGURE_OPTS_64="
     --prefix=$PREFIX
     --sysconfdir=/etc$PREFIX
     --localstatedir=/var$PREFIX
@@ -70,6 +70,7 @@ patch_source
 prep_build
 build
 strip_install
+add_notes README.install
 install_smf application $PROG.xml application-$PROG
 make_package
 clean_up

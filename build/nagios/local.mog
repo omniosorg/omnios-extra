@@ -12,7 +12,7 @@
 
 # Copyright 2020 OmniOS Community Edition. All rights reserved.
 
-# Create directories 
+# Create directories
 dir group=$(PROG) mode=0755 owner=$(PROG) path=var/log/$(PREFIX)
 dir group=$(PROG) mode=0755 owner=$(PROG) path=var/$(PREFIX)/run
 
@@ -28,6 +28,12 @@ dir group=$(PROG) mode=0755 owner=$(PROG) path=var/$(PREFIX)/run
 <transform dir file path=var/log/$(PREFIX) -> set owner $(PROG)>
 <transform dir file path=var/log/$(PREFIX) -> set group $(PROG)>
 
+# Additional files
+file files/README.md path=$(PREFIX)/share/README.md \
+    mode=0444 owner=root group=bin
+file files/nagios-nginx-example.conf \
+    mode=0444 path=etc/$(PREFIX)/nagios-nginx-example.conf
+
 # Symlink binaries
 <transform file path=$(PREFIX)/bin/(.*) -> emit \
     link path=$(OPREFIX)/bin/%<1> target=../$(PROG)/bin/%<1> >
@@ -35,9 +41,9 @@ dir group=$(PROG) mode=0755 owner=$(PROG) path=var/$(PREFIX)/run
 <transform file path=$(PREFIX)/bin/ \
     -> set restart_fmri svc://ooce/application/$(PROG):default>
 
-group groupname=nagcmd gid=121
-group groupname=$(PROG) gid=120
-user ftpuser=false username=$(PROG) group=$(PROG) uid=120 gcos-field="$(PROG) User" \
-    home-dir=/var/$(PREFIX) password=NP
+group groupname=$(PROG) gid=83
+group groupname=nagcmd gid=84
+user ftpuser=false username=$(PROG) group=$(PROG) uid=83 \
+    gcos-field="$(PROG) User" home-dir=/var/$(PREFIX) password=NP
 
 license LICENSE license=GPLv2
