@@ -42,7 +42,7 @@ MAKE_INSTALL_TARGET="
     install-root
 "
 
-CONFIGURE_OPTS_64=" 
+CONFIGURE_OPTS_64="
     --prefix=$PREFIX
 "
 
@@ -50,12 +50,12 @@ CFLAGS64+=" -I/opt/ooce/pgsql-12/include"
 LDFLAGS64+=" -L/opt/ooce/pgsql-12/lib -R/opt/ooce/pgsql-12/lib"
 
 init
-download_source $PROG $PROG $VER
+download_source nagios $PROG $VER
 patch_source
 prep_build
 build
 strip_install
-make_package
+make_package local.mog final.mog
 clean_up
 
 # Vim hints
