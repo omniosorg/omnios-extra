@@ -1,0 +1,102 @@
+diff -wpruN '--exclude=*.orig' a~/sample-config/nagios.cfg.in a/sample-config/nagios.cfg.in
+--- a~/sample-config/nagios.cfg.in	2019-08-20 17:29:34.000000000 +0000
++++ a/sample-config/nagios.cfg.in	2020-04-21 11:40:10.946565600 +0000
+@@ -15,7 +15,7 @@
+ # for historical purposes.  This should be the first option specified
+ # in the config file!!!
+ 
+-log_file=@localstatedir@/nagios.log
++log_file=/var/log/opt/ooce/nagios/nagios.log
+ 
+ 
+ 
+@@ -31,7 +31,7 @@ cfg_file=@sysconfdir@/objects/contacts.c
+ cfg_file=@sysconfdir@/objects/timeperiods.cfg
+ cfg_file=@sysconfdir@/objects/templates.cfg
+ 
+-# Definitions for monitoring the local (Linux) host
++# Definitions for monitoring the local (OmniOS) host
+ cfg_file=@sysconfdir@/objects/localhost.cfg
+ 
+ # Definitions for monitoring a Windows machine
+diff -wpruN '--exclude=*.orig' a~/sample-config/resource.cfg.in a/sample-config/resource.cfg.in
+--- a~/sample-config/resource.cfg.in	2019-08-20 17:29:34.000000000 +0000
++++ a/sample-config/resource.cfg.in	2020-04-21 11:40:48.223273582 +0000
+@@ -22,7 +22,7 @@
+ ###########################################################################
+ 
+ # Sets $USER1$ to be the path to the plugins
+-$USER1$=@libexecdir@
++$USER1$=/opt/ooce/nagios-plugins/libexec
+ 
+ # Sets $USER2$ to be the path to event handlers
+ #$USER2$=@libexecdir@/eventhandlers
+diff -wpruN '--exclude=*.orig' a~/sample-config/template-object/localhost.cfg.in a/sample-config/template-object/localhost.cfg.in
+--- a~/sample-config/template-object/localhost.cfg.in	2019-08-20 17:29:34.000000000 +0000
++++ a/sample-config/template-object/localhost.cfg.in	2020-04-21 11:38:45.112203565 +0000
+@@ -4,7 +4,7 @@
+ #
+ # NOTE: This config file is intended to serve as an *extremely* simple
+ #       example of how you can create configuration entries to monitor
+-#       the local (Linux) machine.
++#       the local (OmniOS) machine.
+ #
+ ###############################################################################
+ 
+@@ -20,9 +20,9 @@
+ 
+ define host {
+ 
+-    use                     linux-server            ; Name of host template to use
++    use                     omnios-server            ; Name of host template to use
+                                                     ; This host definition will inherit all variables that are defined
+-                                                    ; in (or inherited by) the linux-server host template definition.
++                                                    ; in (or inherited by) the omnios-server host template definition.
+     host_name               localhost
+     alias                   localhost
+     address                 127.0.0.1
+@@ -36,12 +36,12 @@ define host {
+ #
+ ###############################################################################
+ 
+-# Define an optional hostgroup for Linux machines
++# Define an optional hostgroup for OmniOS machines
+ 
+ define hostgroup {
+ 
+-    hostgroup_name          linux-servers           ; The name of the hostgroup
+-    alias                   Linux Servers           ; Long name of the group
++    hostgroup_name          omnios-servers           ; The name of the hostgroup
++    alias                   OmniOS Servers           ; Long name of the group
+     members                 localhost               ; Comma separated list of hosts that belong to this group
+ }
+ 
+diff -wpruN '--exclude=*.orig' a~/sample-config/template-object/templates.cfg.in a/sample-config/template-object/templates.cfg.in
+--- a~/sample-config/template-object/templates.cfg.in	2019-08-20 17:29:34.000000000 +0000
++++ a/sample-config/template-object/templates.cfg.in	2020-04-21 11:35:30.367025180 +0000
+@@ -61,19 +61,19 @@ define host {
+ 
+ 
+ 
+-# Linux host definition template
++# OmniOS host definition template
+ # This is NOT a real host, just a template!
+ 
+ define host {
+ 
+-    name                            linux-server            ; The name of this host template
++    name                            omnios-server            ; The name of this host template
+     use                             generic-host            ; This template inherits other values from the generic-host template
+-    check_period                    24x7                    ; By default, Linux hosts are checked round the clock
++    check_period                    24x7                    ; By default, OmniOS hosts are checked round the clock
+     check_interval                  5                       ; Actively check the host every 5 minutes
+     retry_interval                  1                       ; Schedule host check retries at 1 minute intervals
+-    max_check_attempts              10                      ; Check each Linux host 10 times (max)
+-    check_command                   check-host-alive        ; Default command to check Linux hosts
+-    notification_period             workhours               ; Linux admins hate to be woken up, so we only notify during the day
++    max_check_attempts              10                      ; Check each OmniOS host 10 times (max)
++    check_command                   check-host-alive        ; Default command to check OmniOS hosts
++    notification_period             workhours               ; OmniOS admins hate to be woken up, so we only notify during the day
+                                                             ; Note that the notification_period variable is being overridden from
+                                                             ; the value that is inherited from the generic-host template!
+     notification_interval           120                     ; Resend notifications every 2 hours

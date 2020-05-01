@@ -1,0 +1,181 @@
+#!/bin/sh
+#
+# Author : Jorge Sanchez Aymar (jsanchez@lanchile.cl)
+#
+# Original file : https://github.com/NagiosEnterprises/nagioscore/blob/master/startup/default-init.in
+#
+# Changelog :
+#
+# 1999-07-09 Karl DeBisschop <kdebisschop@infoplease.com>
+#  - setup for autoconf
+#  - add reload function
+# 1999-08-06 Ethan Galstad <egalstad@nagios.org>
+#  - Added configuration info for use with RedHat's chkconfig tool
+#    per Fran Boon's suggestion
+# 1999-08-13 Jim Popovitch <jimpop@rocketship.com>
+#  - added variable for nagios/var directory
+#  - cd into nagios/var directory before creating tmp files on startup
+# 1999-08-16 Ethan Galstad <egalstad@nagios.org>
+#  - Added test for rc.d directory as suggested by Karl DeBisschop
+# 2000-07-23 Karl DeBisschop <kdebisschop@users.sourceforge.net>
+#  - Clean out redhat macros and other dependencies
+# 2003-01-11 Ethan Galstad <egalstad@nagios.org>
+#  - Updated su syntax (Gary Miller)
+# 2020-04-01 Philip Brown <philip@pbdigital.org>
+#  - Trimmed down for use with SMF manifest file.
+#
+# Description: Starts and stops the Nagios monitor
+#              used to provide network services status.
+#
+
+. /lib/svc/share/smf_include.sh
+
+# Our install-time configuration.
+NagiosBin=/opt/ooce/nagios/bin/nagios
+NagiosCfgFile=/etc/opt/ooce/nagios/nagios.cfg
+NagiosCfgtestFile=/var/opt/ooce/nagios/nagios.configtest
+NagiosStatusFile=/var/opt/ooce/nagios/status.dat
+NagiosRetentionFile=/var/opt/ooce/nagios/retention.dat
+NagiosCommandFile=/var/opt/ooce/nagios/rw/nagios.cmd
+NagiosRunFile=/var/opt/ooce/nagios/run/nagios.lock
+NagiosLogFile=/var/log/opt/ooce/nagios/nagios.log
+NagiosCGIDir=/opt/ooce/nagios/sbin
+checkconfig="true"
+
+check_config ()
+{
+	if test "$checkconfig" != "true"; then
+		return 0
+	fi
+
+	echo "Running configuration check... "
+
+	rm -f "$NagiosCfgtestFile";
+	if ! touch $NagiosCfgtestFile; then
+		echo "ERROR: Could not create or update '$NagiosCfgtestFile'"
+		exit $SMF_EXIT_ERR_CONFIG
+	fi
+
+	TMPFILE=$(mktemp /tmp/.configtest.XXXXXXXX)
+	$NagiosBin -vp $NagiosCfgFile > "$TMPFILE"
+	WARN=`grep ^"Total Warnings:" "$TMPFILE" |awk -F: '{print \$2}' |sed s/' '//g`
+	ERR=`grep ^"Total Errors:" "$TMPFILE" |awk -F: '{print \$2}' |sed s/' '//g`
+
+	if test "$WARN" = "0" && test "${ERR}" = "0"; then
+		echo "OK - Configuration check verified" > $NagiosCfgtestFile
+		rm "$TMPFILE"
+		return 0
+	elif test "${ERR}" = "0"; then
+		# Write the errors to a file we can have a script watching for.
+		echo "WARNING: Warnings in config files - see log for details: $NagiosCfgtestFile" > $NagiosCfgtestFile
+		egrep -i "(^warning|^error)" "$TMPFILE" >> $NagiosCfgtestFile
+		rm "$TMPFILE"
+		return 0
+	else
+		# Write the errors to a file we can have a script watching for.
+		echo "ERROR: Errors in config files - see log for details: $NagiosCfgtestFile" > $NagiosCfgtestFile
+		egrep -i "(^warning|^error)" "$TMPFILE" >> $NagiosCfgtestFile
+		cat "$TMPFILE"
+		exit $SMF_EXIT_ERR_CONFIG
+	fi
+}
+
+
+status_nagios ()
+{
+	if test -x $NagiosCGIDir/daemonchk.cgi; then
+		if $NagiosCGIDir/daemonchk.cgi -l $NagiosRunFile > /dev/null 2>&1; then
+			return 0
+		fi
+	else
+		if [ "`ps -o comm= -p $NagiosPID`" = "$NagiosBin" ]; then
+			return 0
+		fi
+	fi
+
+	return 1
+}
+
+killproc_nagios ()
+{
+	kill -s "$1" $NagiosPID
+}
+
+pid_nagios ()
+{
+	if test ! -f $NagiosRunFile; then
+		echo "No lock file found in $NagiosRunFile"
+		return 1
+	fi
+
+	NagiosPID=`head -n 1 $NagiosRunFile`
+}
+
+# See how we were called.
+case "$1" in
+
+	start)
+		echo "Starting nagios: "
+
+		check_config
+
+		if test -f $NagiosRunFile; then
+			NagiosPID=`head -n 1 $NagiosRunFile`
+			if status_nagios; then
+				echo "another instance of nagios is already running."
+				exit $SMF_EXIT_ERR_FATAL
+			fi
+		fi
+
+		touch $NagiosLogFile $NagiosRetentionFile
+		rm -f $NagiosCommandFile
+		touch $NagiosRunFile
+		$NagiosBin -d $NagiosCfgFile
+
+		echo "done."
+		;;
+
+	stop)
+		echo "Stopping nagios: "
+
+		pid_nagios
+		if [ $? -eq 1 ]; then
+			exit $SMF_EXIT_OK
+		fi
+		killproc_nagios TERM
+
+		# now we have to wait for nagios to exit and remove its
+		# own NagiosRunFile, otherwise a following "start" could
+		# happen, and then the exiting nagios will remove the
+		# new NagiosRunFile, allowing multiple nagios daemons
+		# to (sooner or later) run - John Sellens
+		echo "Waiting for nagios to exit"
+		for i in {1..90}; do
+			if status_nagios > /dev/null; then
+				echo '.'
+				sleep 1
+			else
+				break
+			fi
+		done
+		if status_nagios > /dev/null; then
+			echo ""
+			echo "Warning - nagios did not exit in a timely manner - Killing it!"
+			killproc_nagios KILL
+		else
+			echo "done."
+		fi
+
+		rm -f $NagiosStatusFile $NagiosRunFile $NagiosCommandFile
+		;;
+
+	*)
+		echo "Usage: nagios {start|stop}"
+		exit 1
+		;;
+
+esac
+
+exit $SMF_EXIT_OK
+
+# End of this script

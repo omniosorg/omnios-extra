@@ -1,0 +1,49 @@
+# {{{ CDDL HEADER START
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+# Copyright 2020 OmniOS Community Edition. All rights reserved.
+
+# Create directories
+dir group=$(PROG) mode=0755 owner=$(PROG) path=var/log/$(PREFIX)
+dir group=$(PROG) mode=0755 owner=$(PROG) path=var/$(PREFIX)/run
+
+# Set permissions
+<transform file path=$(PREFIX)/bin/ -> set mode 0755>
+<transform file path=etc/$(PREFIX) -> set preserve renamenew>
+<transform dir file path=etc/$(PREFIX) -> set owner $(PROG)>
+<transform dir file path=etc/$(PREFIX) -> set group $(PROG)>
+<transform dir file path=var/$(PREFIX) -> set owner $(PROG)>
+<transform dir file path=var/$(PREFIX) -> set group $(PROG)>
+<transform dir file path=var/$(PREFIX)/rw -> set group nagcmd>
+<transform dir file path=var/$(PREFIX)/spool/checkresults -> set group nagcmd>
+<transform dir file path=var/log/$(PREFIX) -> set owner $(PROG)>
+<transform dir file path=var/log/$(PREFIX) -> set group $(PROG)>
+
+# Additional files
+file files/README.md path=$(PREFIX)/share/README.md \
+    mode=0444 owner=root group=bin
+file files/nagios-nginx-example.conf \
+    mode=0444 path=etc/$(PREFIX)/nagios-nginx-example.conf
+
+# Symlink binaries
+<transform file path=$(PREFIX)/bin/(.*) -> emit \
+    link path=$(OPREFIX)/bin/%<1> target=../$(PROG)/bin/%<1> >
+
+<transform file path=$(PREFIX)/bin/ \
+    -> set restart_fmri svc://ooce/application/$(PROG):default>
+
+group groupname=$(PROG) gid=83
+group groupname=nagcmd gid=84
+user ftpuser=false username=$(PROG) group=$(PROG) uid=83 \
+    gcos-field="$(PROG) User" home-dir=/var/$(PREFIX) password=NP
+
+license LICENSE license=GPLv2
