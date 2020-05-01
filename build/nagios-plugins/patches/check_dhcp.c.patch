@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/plugins-root/check_dhcp.c a/plugins-root/check_dhcp.c
+--- a~/plugins-root/check_dhcp.c	2019-12-04 22:53:08.000000000 +0000
++++ a/plugins-root/check_dhcp.c	2020-04-20 19:57:02.645330615 +0000
+@@ -82,7 +82,7 @@ const char *email = "devel@nagios-plugin
+ #include <signal.h>
+ #include <sys/dlpi.h>
+ #include <sys/poll.h>
+-#include <sys/stropts.h>
++#include <stropts.h>
+ 
+ #define bcopy(source, destination, length) memcpy(destination, source, length)
+ 

@@ -1,0 +1,11 @@
+diff -wpruN '--exclude=*.orig' a~/plugins-root/pst3.c a/plugins-root/pst3.c
+--- a~/plugins-root/pst3.c	2019-12-04 22:53:08.000000000 +0000
++++ a/plugins-root/pst3.c	2020-04-20 20:01:36.311284937 +0000
+@@ -230,6 +230,7 @@ try_again:
+ 
+       /* Remove newlines from args output - consistent with "normal" ps */
+       printf(" ");
++      int j = 0;
+       for (j=0;j<strlen(args);j++) {
+         if (args[j] != '\n') {
+           printf("%c", args[j]);
