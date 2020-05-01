@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=nagios
-VER=4.4.5
+VER=4.4.6
 PKG=ooce/application/nagios
 SUMMARY="Extremely powerful network monitoring system"
 DESC="Nagios is a host and service monitor designed to inform you of network \
