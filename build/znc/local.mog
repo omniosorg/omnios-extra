@@ -10,7 +10,8 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
 
 license LICENSE license=Apache2
 
@@ -23,13 +24,18 @@ group gid=67 groupname=$(PROG)
 user ftpuser=false gcos-field="ZNC Daemon Account" group=$(PROG) \
     uid=67 password=NP home-dir=/var/$(PREFIX) username=$(PROG)
 
+dir path=var/$(OPREFIX) owner=root group=bin mode=0755
+dir path=var/$(PREFIX) owner=root group=bin mode=0700
+dir path=var/$(PREFIX)/configs owner=root group=bin mode=0700
+dir path=etc/$(OPREFIX) owner=root group=bin mode=0755
+
+file files/$(PROG).conf path=var/$(PREFIX)/configs/$(PROG).conf \
+    mode=0600 owner=$(PROG) group=$(PROG)
+
 <transform file dir path=(var|etc)/$(PREFIX) -> set owner $(PROG)>
 <transform file dir path=(var|etc)/$(PREFIX) -> set group $(PROG)>
 <transform file path=(var|etc)/$(PREFIX) -> set mode 0600>
 <transform dir path=(var|etc)/$(PREFIX) -> set mode 0700>
-
-dir path=var/$(OPREFIX) owner=root group=bin mode=0755
-dir path=etc/$(OPREFIX) owner=root group=bin mode=0755
 
 link path=etc/$(PREFIX) target=/var/$(PREFIX)/configs
 
