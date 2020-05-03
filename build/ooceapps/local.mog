@@ -16,6 +16,8 @@ group groupname=$(PROG) gid=79
 user username=$(PROG) uid=79 group=$(PROG) gcos-field="OOCEapps User" \
     ftpuser=false home-dir=/var/$(PREFIX) password=NP
 
+dir group=$(PROG) mode=0755 owner=$(PROG) path=var/$(PREFIX)
+
 <transform path=etc/$(PREFIX) -> set owner $(PROG)>
 <transform path=etc/$(PREFIX) -> set group $(PROG)>
 <transform dir path=etc/$(PREFIX) -> set mode 0700>

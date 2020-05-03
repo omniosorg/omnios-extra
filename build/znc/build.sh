@@ -12,16 +12,17 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=znc
-VER=1.7.5
+VER=1.8.0
 VERHUMAN=$VER
 PKG=ooce/network/znc
 SUMMARY="$PROG - an advanced IRC bouncer"
-DESC="$SUMMARY"
+DESC="An advanced IRC bouncer that is left connected so an IRC client "
+DESC+="can disconnect/reconnect without losing the chat session"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -41,12 +42,6 @@ install_modules() {
     done
 }
 
-install_files() {
-    logcmd mkdir -p $DESTDIR/var/$PREFIX/configs || logerr "mkdir failed"
-    logcmd cp $SRCDIR/files/znc.conf $DESTDIR/var/$PREFIX/configs/ \
-        || logerr "-- failed to copy configuration file"
-}
-
 init
 download_source $PROG $PROG $VER
 patch_source
@@ -54,7 +49,6 @@ install_modules
 prep_build
 build
 strip_install
-install_files
 install_smf network znc.xml
 make_package
 clean_up

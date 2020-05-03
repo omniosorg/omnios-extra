@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=ooceapps
-VER=0.6.2
+VER=0.6.3
 PKG=ooce/ooceapps
 SUMMARY="OOCEapps"
 DESC="Web integrations for OmniOS"
@@ -50,7 +50,6 @@ CONFIGURE_OPTS_64="
 
 add_extra_files() {
     # copy config template
-    logcmd mkdir -p $DESTDIR/var/$PREFIX
     logcmd cp $DESTDIR/etc/$PREFIX/$PROG.conf.dist \
         $DESTDIR/etc/$PREFIX/$PROG.conf \
         || logerr "--- cannot copy config file template"
