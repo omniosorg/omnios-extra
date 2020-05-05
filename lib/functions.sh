@@ -358,6 +358,17 @@ if [ "$UID" = "0" ]; then
 fi
 
 #############################################################################
+# Utilities
+#############################################################################
+
+parallelise() {
+    local num="${1:-1}"
+    while [ "`jobs -rp | wc -l`" -ge "$num" ]; do
+        sleep 1
+    done
+}
+
+#############################################################################
 # Set up tools area
 #############################################################################
 
@@ -2309,20 +2320,25 @@ check_bmi() {
 
     [ -n "$BMI_EXPECTED" ] && return
 
-    logmsg "-- Checking for BMI instructions"
-    [ -f "$TMPDIR/rtime.files" ] || \
-        logcmd -p $FIND_ELF -fr $destdir/ > $TMPDIR/rtime.files
-
     # In the past, some programs have ended up containing BMI instructions
     # that will cause an illegal instruction error on pre-Haswell processors.
     # We explicitly check for this in the elf objects.
+
+    logmsg "-- Checking for BMI instructions"
+
+    [ -f "$TMPDIR/rtime.files" ] || \
+        logcmd -p $FIND_ELF -fr $destdir/ > $TMPDIR/rtime.files
+
     : > $TMPDIR/rtime.bmi
-    nawk '/^OBJECT/ { print $NF }' $TMPDIR/rtime.files | while read obj; do
+    while read obj; do
         [ -f "$destdir/$obj" ] || continue
-        dis $destdir/$obj 2>/dev/null | egrep -s '\<(mulx|lzcntq|shlx)\>' \
-        && echo "$obj has been built with BMI instructions" \
-        >> $TMPDIR/rtime.bmi
-    done
+        dis $destdir/$obj 2>/dev/null \
+            | $RIPGREP -wq --no-messages 'mulx|lzcntq|shlx' \
+            && echo "$obj has been built with BMI instructions" \
+            >> $TMPDIR/rtime.bmi &
+        parallelise $LCPUS
+    done < <(nawk '/^OBJECT/ { print $NF }' $TMPDIR/rtime.files)
+    wait
     if [ -s "$TMPDIR/rtime.bmi" ]; then
         cat $TMPDIR/rtime.bmi | tee -a $LOGFILE
         logerr "BMI instruction set found"
