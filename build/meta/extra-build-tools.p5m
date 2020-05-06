@@ -2,6 +2,8 @@ set name=pkg.fmri value=pkg://@PKGPUBLISHER@/ooce/extra-build-tools@11,5.11-@PVE
 set name=pkg.summary value="Tools required to build OmniOS extra"
 set name=pkg.description value="Tools required to build OmniOS extra"
 
+depend fmri=ooce/omnios-build-tools type=require
+
 depend fmri=driver/tuntap type=require
 depend fmri=ooce/application/graphviz type=require
 depend fmri=ooce/audio/flac type=require
