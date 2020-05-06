@@ -66,8 +66,7 @@ prep_build
 build
 install_go
 install_smf application application-$PROG.xml
-VER=${VER%T*}
-VER=${VER//-/.} make_package
+make_package
 clean_up
 
 # Vim hints

@@ -31,9 +31,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-NUMVER=${VER::$((${#VER} -1))}
-ALPHAVER=${VER:$((${#VER} -1))}
-VER=${NUMVER}.$(ord26 ${ALPHAVER}) make_package
+make_package
 clean_up
 
 # Vim hints
