@@ -1228,8 +1228,25 @@ make_package() {
             fi
     fi
 
+    # Version cleanup
+
+    [ -z "$VERHUMAN" ] && VERHUMAN="$VER"
+
+    local _VER=$VER
+    if [[ $VER =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T* ]]; then
+        ## Convert ISO-formatted time
+        VER=${VER%T*}
+        VER=${VER//-/.}
+    elif [[ $VER = *[a-z] ]]; then
+        ## Convert single trailing alpha character
+        VER="${VER:0: -1}.`ord26 ${VER: -1}`"
+    fi
+
     ## Strip leading zeros in version components.
     VER=`echo $VER | sed -e 's/\.0*\([1-9]\)/.\1/g;'`
+
+    [ "$VER" = "$_VER" ] || logmsg "--- Converted version '$_VER'  -> '$VER'"
+
     if [ -n "$FLAVOR" ]; then
         # We use FLAVOR instead of FLAVORSTR as we don't want the trailing dash
         FMRI="${PKG}-${FLAVOR}@${VER},${SUNOSVER}-${PVER}"
@@ -1258,7 +1275,6 @@ make_package() {
 
     # Package metadata
     logmsg "--- Generating package metadata"
-    [ -z "$VERHUMAN" ] && VERHUMAN="$VER"
     if [ "$OVERRIDE_SOURCE_URL" = "none" ]; then
         _ARC_SOURCE=
     elif [ -n "$OVERRIDE_SOURCE_URL" ]; then

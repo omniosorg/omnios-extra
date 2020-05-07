@@ -55,8 +55,7 @@ patch_source
 prep_build
 build
 install_go mc
-VER=${VER%T*}
-VER=${VER//-/.} make_package
+make_package
 clean_up
 
 # Vim hints
