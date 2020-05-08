@@ -27,7 +27,7 @@ diff -wpruN '--exclude=*.orig' a~/sample-config/resource.cfg.in a/sample-config/
  
  # Sets $USER1$ to be the path to the plugins
 -$USER1$=@libexecdir@
-+$USER1$=/opt/ooce/nagios-plugins/libexec
++$USER1$=/opt/ooce/nagios/libexec
  
  # Sets $USER2$ to be the path to event handlers
  #$USER2$=@libexecdir@/eventhandlers
@@ -100,3 +100,4 @@ diff -wpruN '--exclude=*.orig' a~/sample-config/template-object/templates.cfg.in
                                                              ; Note that the notification_period variable is being overridden from
                                                              ; the value that is inherited from the generic-host template!
      notification_interval           120                     ; Resend notifications every 2 hours
+

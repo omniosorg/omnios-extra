@@ -33,6 +33,10 @@ all be accessed via a web browser."
 
 set_arch 64
 
+RUN_DEPENDS_IPS="
+    ooce/application/nagios-common
+"
+
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
