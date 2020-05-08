@@ -27,6 +27,7 @@ set_arch 64
 BUILD_DEPENDS_IPS+="
     ooce/database/mariadb-104
     ooce/database/postgresql-12
+    ooce/application/nagios-common
 "
 
 RUN_DEPENDS_IPS+="
