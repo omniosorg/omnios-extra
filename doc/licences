@@ -3,7 +3,7 @@ Sun Binary License	Sun Microsystems, Inc. Binary Code License Agreement
 Sun			\ACopyright \(c\) [0-9]{4} Sun Microsystems, Inc.  All Rights Reserved.
 #
 GPLv2			(?i)GNU GENERAL PUBLIC LICENSE(?-i).*\n{1,2}.*Version 2,
-GPLv3			GNU GENERAL PUBLIC LICENSE.*\n.*Version 3,
+GPLv3			GNU GENERAL PUBLIC LICENSE.*\n{0,2}.*Version 3,
 LGPLv2			GNU LIBRARY GENERAL PUBLIC LICENSE.*\n.*Version 2,
 LGPLv2.1		GNU LESSER GENERAL PUBLIC LICENSE.*\n.*Version 2.1,
 LGPLv3			GNU LESSER GENERAL PUBLIC LICENSE.*\n.*Version 3,

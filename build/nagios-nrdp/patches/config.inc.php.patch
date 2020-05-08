@@ -1,0 +1,27 @@
+diff -wpruN '--exclude=*.orig' a~/server/config.inc.php a/server/config.inc.php
+--- a~/server/config.inc.php	2020-01-06 18:37:47.000000000 +0000
++++ a/server/config.inc.php	2020-05-06 10:45:09.495068426 +0000
+@@ -116,7 +116,7 @@ $cfg["nagios_command_group"] = "nagcmd";
+ //
+ // Full path to Nagios external command file
+ 
+-$cfg["command_file"] = "/usr/local/nagios/var/rw/nagios.cmd";
++$cfg["command_file"] = "/var/opt/ooce/nagios/rw/nagios.cmd";
+ 
+ 
+ 
+@@ -126,7 +126,7 @@ $cfg["command_file"] = "/usr/local/nagio
+ //
+ // Full path to check results spool directory
+ 
+-$cfg["check_results_dir"] = "/usr/local/nagios/var/spool/checkresults";
++$cfg["check_results_dir"] = "/var/opt/ooce/nagios/spool/checkresults";
+ 
+ 
+ 
+@@ -176,4 +176,4 @@ $cfg["debug"] = false;
+ //
+ // Where should the logs go?
+ 
+-$cfg["debug_log"] = "/usr/local/nrdp/server/debug.log";
++$cfg["debug_log"] = "/var/log/opt/ooce/nagios/nrdp-debug.log";
