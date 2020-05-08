@@ -1,0 +1,185 @@
+Making check in modules
+Making check in algorithms
+Making check in modes
+Making check in include
+Making check in lib
+Making check in src
+Algorithm: cast-128... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: gost... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: rijndael-128... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: twofish... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: arcfour... ok
+Modes:
+   stream: ok
+
+Algorithm: cast-256... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: loki97... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: rijndael-192... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: saferplus... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: wake... ok
+Modes:
+   stream: ok
+
+Algorithm: blowfish-compat... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: des... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: rijndael-256... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: serpent... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: xtea... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: blowfish... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: enigma... ok
+Modes:
+   stream: ok
+
+Algorithm: rc2... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+Algorithm: tripledes... ok
+Modes:
+   cbc: ok
+   cfb: ok
+   ctr: ok
+   ecb: ok
+   ncfb: ok
+   nofb: ok
+   ofb: ok
+
+PASS: ciphertest
+AES tests (CFB, nCFB, nOFB, CTR) were successful.
+PASS: aestest
+==================
+All 2 tests passed
+==================
+Making check in doc
