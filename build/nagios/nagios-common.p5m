@@ -1,0 +1,28 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+set name=pkg.fmri value=ooce/application/nagios-common@1.0-@PVER@
+set name=pkg.summary value="Common properties for nagios packages"
+set name=pkg.description value="Common nagios package"
+set name=pkg.human-version value=1.0
+
+dir  path=etc/opt/ooce/nagios owner=nagios group=nagios mode=0775
+dir  path=opt/ooce/nagios owner=root group=bin mode=0755
+dir  path=var/log/opt/ooce/nagios owner=nagios group=nagios mode=0775
+dir  path=var/opt/ooce/nagios owner=nagios group=nagios mode=0775
+
+group groupname=nagios gid=83
+user username=nagios ftpuser=false gcos-field="Nagios User" group=nagios \
+    home-dir=/var/opt/ooce/nagios password=NP uid=83
+
+license ../../LICENSE license=CDDL
+
