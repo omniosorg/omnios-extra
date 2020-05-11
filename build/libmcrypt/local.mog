@@ -12,7 +12,8 @@
 
 # Copyright 2020 OmniOS Community Edition. All rights reserved.
 
-# Drop 32bit binaries
-<transform path=$(PREFIX)/s?bin/i386 -> drop>
+# libmcrypt is only providing libmcrypt-config "binaries"
+# drop them
+<transform path=$(PREFIX)/s?bin -> drop>
 
 license COPYING.LIB license=LGPLv2.1

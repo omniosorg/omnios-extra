@@ -31,12 +31,6 @@ CONFIGURE_OPTS+="
     --mandir=$PREFIX/share/man
 "
 
-# Skip isaexec and deliver 64-bit binaries directly to bin and sbin
-# 32-bit binaries are stripped in local.mog
-CONFIGURE_OPTS_64+="
-    --bindir=$PREFIX/bin
-"
-
 init
 download_source $PROG $PROG $VER
 patch_source
