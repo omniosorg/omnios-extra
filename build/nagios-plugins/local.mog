@@ -12,4 +12,6 @@
 
 # Copyright 2020 OmniOS Community Edition. All rights reserved.
 
+<transform dir path=$(OPREFIX)/nagios/libexec -> set mode 0755>
+
 license COPYING license=GPLv3

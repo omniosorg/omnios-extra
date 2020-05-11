@@ -32,6 +32,7 @@ BUILD_DEPENDS_IPS+="
 RUN_DEPENDS_IPS+="
     ?pkg:/ooce/database/mariadb-104
     ?pkg:/ooce/database/postgresql-12
+    ooce/application/nagios-common
 "
 
 OPREFIX=$PREFIX
@@ -44,6 +45,7 @@ MAKE_INSTALL_TARGET="
 
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX
+    --libexecdir=$OPREFIX/nagios/libexec
 "
 
 CFLAGS64+=" -I/opt/ooce/pgsql-12/include"
