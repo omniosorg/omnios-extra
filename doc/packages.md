@@ -1,7 +1,7 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
 | ooce/application/fcgiwrap	| 1.1.0		| https://github.com/gnosek/fcgiwrap/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/gitea	| 1.11.4	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/gitea	| 1.11.5	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/imagemagick	| 7.0.10-6	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.44.0	| https://graphviz.gitlab.io/_pages/Download/Download_source.html | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mattermost	| 5.22.0	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
