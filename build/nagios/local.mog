@@ -13,11 +13,11 @@
 # Copyright 2020 OmniOS Community Edition. All rights reserved.
 
 # Create directories
-dir group=$(PROG) mode=0755 owner=$(PROG) path=var/log/$(PREFIX)
-dir group=$(PROG) mode=0755 owner=$(PROG) path=var/$(PREFIX)/run
+dir group=nagios mode=0775 owner=nagios path=var/log/$(PREFIX)
+dir group=nagios mode=0775 owner=nagios path=var/$(PREFIX)/run
 
 # Set permissions
-<transform file path=$(PREFIX)/bin/ -> set mode 0755>
+<transform dir file path=$(PREFIX) -> set mode 0755>
 <transform file path=etc/$(PREFIX) -> set preserve renamenew>
 <transform dir file path=etc/$(PREFIX) -> set owner $(PROG)>
 <transform dir file path=etc/$(PREFIX) -> set group $(PROG)>
@@ -31,8 +31,8 @@ dir group=$(PROG) mode=0755 owner=$(PROG) path=var/$(PREFIX)/run
 # Additional files
 file files/README.md path=$(PREFIX)/share/README.md \
     mode=0444 owner=root group=bin
-file files/nagios-nginx-example.conf \
-    mode=0444 path=etc/$(PREFIX)/nagios-nginx-example.conf
+file files/nagios-nginx-example.conf mode=0444 \
+    owner=nagios group=nagios path=etc/$(PREFIX)/nagios-nginx-example.conf
 
 # Symlink binaries
 <transform file path=$(PREFIX)/bin/(.*) -> emit \
@@ -41,9 +41,6 @@ file files/nagios-nginx-example.conf \
 <transform file path=$(PREFIX)/bin/ \
     -> set restart_fmri svc://ooce/application/$(PROG):default>
 
-group groupname=$(PROG) gid=83
 group groupname=nagcmd gid=84
-user ftpuser=false username=$(PROG) group=$(PROG) uid=83 \
-    gcos-field="$(PROG) User" home-dir=/var/$(PREFIX) password=NP
 
 license LICENSE license=GPLv2
