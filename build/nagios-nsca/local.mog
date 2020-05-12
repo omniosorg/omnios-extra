@@ -1,0 +1,24 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2020 OmniOS Community Edition. All rights reserved.
+
+# Set permissions
+<transform dir file path=etc/$(PREFIX) -> set mode 0775>
+<transform file path=etc/$(PREFIX) -> set preserve renamenew>
+<transform dir file path=etc/$(PREFIX) -> set owner nagios>
+<transform dir file path=etc/$(PREFIX) -> set group nagios>
+
+# Restart service on new binary
+<transform file path=$(PREFIX)/sbin/nsca \
+    -> set restart_fmri svc://ooce/application/nsca:default>
+
+license LICENSE.md license=GPLv2
+

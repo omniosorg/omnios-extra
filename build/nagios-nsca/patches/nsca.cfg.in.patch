@@ -1,0 +1,48 @@
+diff -wpruN '--exclude=*.orig' a~/sample-config/nsca.cfg.in a/sample-config/nsca.cfg.in
+--- a~/sample-config/nsca.cfg.in	2020-04-15 21:17:33.000000000 +0000
++++ a/sample-config/nsca.cfg.in	2020-05-02 10:39:34.485201669 +0000
+@@ -15,7 +15,7 @@ log_facility=@log_facility@
+ # directly into the checkresult directory.  Requires Nagios 3+
+ # For best results, mount dir on ramdisk.
+ 
+-#check_result_path=/usr/local/nagios/var/checkresults
++#check_result_path=/var/opt/ooce/nagios/spool/checkresults
+ 
+ 
+ # PID FILE
+@@ -23,7 +23,7 @@ log_facility=@log_facility@
+ # number.  The file is only written if the NSCA daemon is started by the root
+ # user as a single- or multi-process daemon.
+ 
+-pid_file=/var/run/nsca.pid
++pid_file=/var/opt/ooce/nagios/run/nsca.pid
+ 
+ 
+ 
+@@ -73,7 +73,7 @@ nsca_group=@nsca_grp@
+ # NOTE: if you specify this option, the command file will be opened
+ #       relative to this directory.
+ 
+-#nsca_chroot=/var/run/nagios/rw
++#nsca_chroot=/var/opt/ooce/nagios/rw
+ 
+ 
+ 
+@@ -90,7 +90,7 @@ debug=0
+ # This is the location of the Nagios command file that the daemon
+ # should write all service check results that it receives.
+ 
+-command_file=@localstatedir@/rw/nagios.cmd
++command_file=/var/opt/ooce/nagios/rw/nagios.cmd
+ 
+ 
+ # ALTERNATE DUMP FILE
+@@ -103,7 +103,7 @@ command_file=@localstatedir@/rw/nagios.c
+ # it starts Nagios.  Or you may simply choose to ignore any
+ # check results received while Nagios was not running...
+ 
+-alternate_dump_file=@localstatedir@/rw/nsca.dump
++alternate_dump_file=/var/opt/ooce/nagios/rw/nsca.dump
+ 
+ 
+ 
