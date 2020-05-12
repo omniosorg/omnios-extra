@@ -1,0 +1,30 @@
+# {{{ CDDL HEADER START
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+# Copyright 2020 OmniOS Community Edition. All rights reserved.
+
+# Create directories
+dir mode=0755 owner=root group=bin path=$(PREFIX)/nagios/nrdp/share
+
+# Additional files
+file files/README.md path=$(PREFIX)/nagios/nrdp/share/README.md \
+    mode=0444 owner=root group=bin
+
+file files/nrdp-nginx-example.conf \
+    path=$(PREFIX)/nagios/nrdp/share/nrdp-nginx-example.conf \
+    mode=0444 owner=root group=bin
+
+file files/send_nrdp-example.sh \
+    path=$(PREFIX)/nagios/nrdp/share/send_nrdp-example.sh \
+    mode=0444 owner=root group=bin
+
+license LICENSE.md license=GPLv3
