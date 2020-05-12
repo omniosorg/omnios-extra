@@ -7,6 +7,7 @@ extra.omnios ooce/application/mc
 extra.omnios ooce/application/nagios
 extra.omnios ooce/application/nagios-common
 extra.omnios ooce/application/nagios-nrdp
+extra.omnios ooce/application/nagios-nrpe
 extra.omnios ooce/application/nagios-plugins
 extra.omnios ooce/application/php-72
 extra.omnios ooce/application/php-73
