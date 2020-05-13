@@ -87,7 +87,7 @@ copy_man_page() {
     logcmd mkdir -p $DESTDIR$PREFIX/share/man/man8 || \
         logerr "--- creating man page directory failed"
 
-    logcmd cp $TMPDIR/$BUILDDIR/man/$PROG.8 $DESTDIR$PREFIX/share/man/man8 || \
+    logcmd cp $TMPDIR/$BUILDDIR/objs/$PROG.8 $DESTDIR$PREFIX/share/man/man8 || \
         logerr "--- copying man page failed"
 }
 
