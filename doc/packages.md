@@ -13,7 +13,7 @@
 | ooce/application/nagios-plugins | 2.3.3	| http://www.nagios-plugins.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-72	| 7.2.31	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-73	| 7.3.18	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-74	| 7.4.5		| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-74	| 7.4.6		| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20190410	| ftp://tug.org/historic/systems/texlive/2019/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/tidy		| 5.6.0		| https://github.com/htacg/tidy-html5/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/vagrant	| 2.2.7		| https://github.com/hashicorp/vagrant/releases | [omniosorg](https://github.com/omniosorg)
