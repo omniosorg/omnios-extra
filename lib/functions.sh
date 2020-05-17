@@ -2068,7 +2068,8 @@ python_build() {
 #############################################################################
 
 siteperl_to_vendor() {
-    logcmd mv $DESTDIR/usr/perl5/site_perl $DESTDIR/usr/perl5/vendor_perl \
+    logcmd mv $DESTDIR/$PREFIX/perl5/site_perl \
+        $DESTDIR/$PREFIX/perl5/vendor_perl \
         || logerr "can't move to vendor_perl"
 }
 
