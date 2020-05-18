@@ -119,6 +119,7 @@
 | ooce/system/znapzend		| 0.20.0	| https://github.com/oetiker/znapzend/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/zrepl		| 0.2.1		| https://github.com/zrepl/zrepl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 8.6.9		| https://sourceforge.net/projects/asciidoc/files/asciidoc/ | [omniosorg](https://github.com/omniosorg)
+| ooce/text/asciinema		| 2.0.2		| https://github.com/asciinema/asciinema/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/ripgrep		| 12.1.0	| https://github.com/BurntSushi/ripgrep/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/acmefetch		| 0.6.2		| https://github.com/oetiker/AcmeFetch/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/bat			| 0.15.1	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)

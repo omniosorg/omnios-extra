@@ -1974,9 +1974,22 @@ pre_python_64() {
     logmsg "prepping 64bit python build"
 }
 
+python_path_fixup() {
+    pushd $DESTDIR/$PREFIX/bin >/dev/null || return
+    for f in *; do
+        [ -f "$f" ] || continue
+        file "$f" | egrep -s 'executable.*python.*script' || continue
+        logmsg "Fixing python library path in $f"
+        sed -i "1a\\
+import sys; sys.path.insert(1, '$PREFIX/lib/python$PYTHONVER/vendor-packages')
+        " "$f"
+    done
+    popd >/dev/null
+}
+
 python_vendor_relocate() {
-    pushd $DESTDIR/usr/lib >/dev/null || logerr "python relocate pushd"
-    [ -d python$PYTHONVER/site-packages ] || continue
+    pushd $DESTDIR/$PREFIX/lib >/dev/null || logerr "python relocate pushd"
+    [ -d python$PYTHONVER/site-packages ] || return
     logmsg "Relocating python $PYTHONVER site to vendor-packages"
     if [ -d python$PYTHONVER/vendor-packages ]; then
         rsync -a python$PYTHONVER/site-packages/ \
@@ -2005,7 +2018,8 @@ python_build32() {
         logcmd $PYTHON ./setup.py build $PYBUILD32OPTS \
         || logerr "--- build failed"
     logmsg "--- setup.py (32) install"
-    logcmd $PYTHON ./setup.py install --root=$DESTDIR $PYINST32OPTS \
+    logcmd $PYTHON ./setup.py install \
+        --root=$DESTDIR --prefix=$PREFIX $PYINST32OPTS \
         || logerr "--- install failed"
 }
 
@@ -2018,7 +2032,8 @@ python_build64() {
         logcmd $PYTHON ./setup.py build $PYBUILD64OPTS \
         || logerr "--- build failed"
     logmsg "--- setup.py (64) install"
-    logcmd $PYTHON ./setup.py install --root=$DESTDIR $PYINST64OPTS \
+    logcmd $PYTHON ./setup.py install \
+        --root=$DESTDIR --prefix=$PREFIX $PYINST64OPTS \
         || logerr "--- install failed"
 }
 
@@ -2041,6 +2056,7 @@ python_build() {
     popd > /dev/null
 
     python_vendor_relocate
+    python_path_fixup
     python_compile
 }
 
@@ -2052,7 +2068,8 @@ python_build() {
 #############################################################################
 
 siteperl_to_vendor() {
-    logcmd mv $DESTDIR/usr/perl5/site_perl $DESTDIR/usr/perl5/vendor_perl \
+    logcmd mv $DESTDIR/$PREFIX/perl5/site_perl \
+        $DESTDIR/$PREFIX/perl5/vendor_perl \
         || logerr "can't move to vendor_perl"
 }
 

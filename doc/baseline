@@ -124,6 +124,7 @@ extra.omnios ooce/system/top
 extra.omnios ooce/system/znapzend
 extra.omnios ooce/system/zrepl
 extra.omnios ooce/text/asciidoc
+extra.omnios ooce/text/asciinema
 extra.omnios ooce/text/docbook-xsl
 extra.omnios ooce/text/ripgrep
 extra.omnios ooce/util/acmefetch
