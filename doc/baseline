@@ -133,5 +133,6 @@ extra.omnios ooce/util/fd
 extra.omnios ooce/util/gh
 extra.omnios ooce/util/jq
 extra.omnios ooce/util/xjobs
+extra.omnios ooce/util/zadm
 extra.omnios ooce/virtualization/virtualbox
 extra.omnios ooce/virtualization/virtualbox/additions
