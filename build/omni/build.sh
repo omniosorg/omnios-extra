@@ -17,25 +17,27 @@
 . ../../lib/functions.sh
 
 PROG=omni
-VER=1.3.6
+VER=1.3.7
 PKG=ooce/developer/omni
 SUMMARY="OmniOS build management utility"
 DESC=$SUMMARY
 PREFIX=/opt/ooce
-MIRROR="https://github.com/omniosorg/$PROG/archive"
-BUILDDIR="$PROG-$VER"
-TAR=gtar
+MIRROR="$OOCEGITHUB/$PROG/releases/download"
+
 XFORM_ARGS="-D PREFIX=$PREFIX"
 SKIP_CHECKSUM=1
 
+set_builddir $PROG-v$VER
+
 build() {
-    mkdir -p "$DESTDIR/$PREFIX/$PROG"
+    logcmd mkdir -p "$DESTDIR/$PREFIX/$PROG"
     ( cd $TMPDIR/$BUILDDIR; find . | cpio -pvmud "$DESTDIR/$PREFIX/$PROG/" )
-    sed -i "/OMNIVER/s/master/$VER/" $DESTDIR/$PREFIX/$PROG/bin/omni
+    logcmd sed -i "/OMNIVER/s/master/$VER/" $DESTDIR/$PREFIX/$PROG/bin/omni \
+        || logerr "Set version failed"
 }
 
 init
-download_source $VER $VER ""
+download_source v$VER $PROG v$VER
 prep_build
 build
 make_package
