@@ -1289,11 +1289,11 @@ make_package() {
         if [[ $_ARC_SOURCE = *\ * ]]; then
             _asindex=0
             for _as in $_ARC_SOURCE; do
-                pkgmeta "info.source-url.$_asindex" "$OOCEMIRROR/$_as"
+                pkgmeta "info.source-url.$_asindex" "$MIRROR/$_as"
                 ((_asindex++))
             done
         elif [ -n "$_ARC_SOURCE" ]; then
-            pkgmeta info.source-url "$OOCEMIRROR/$_ARC_SOURCE"
+            pkgmeta info.source-url "$MIRROR/$_ARC_SOURCE"
         fi
     ) > $MY_MOG_FILE
 
