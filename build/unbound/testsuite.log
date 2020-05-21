@@ -1,4 +1,4 @@
-Start of unbound 1.10.0 unit test.
+Start of unbound 1.10.1 unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -59,8 +59,8 @@ test slabhash functions
 test infra cache functions
 test sldns functions
 test message parse functions
-[0] did 10000 in 305.526 msec for 32730.438653 encode/sec size 615
-904144 checks ok.
+[0] did 10000 in 110.332 msec for 90635.536381 encode/sec size 615
+904028 checks ok.
 selftest successful (33 checks).
 -n ./testdata/acl.rpl 
 OK
