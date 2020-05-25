@@ -40,4 +40,5 @@ depend fmri=ooce/runtime/node-12 type=require
 depend fmri=ooce/runtime/ruby-26 type=require
 depend fmri=system/header/header-agp type=require
 depend fmri=system/header/header-usb type=require
+depend fmri=system/library/pcap type=require
 
