@@ -248,8 +248,9 @@ case $RELVER in
     15102[56])          DEFAULT_GCC_VER=6 ;;
     15102[78])          DEFAULT_GCC_VER=7 ;;
     151029|151030)      DEFAULT_GCC_VER=8; ILLUMOS_GCC_VER=4.4.4 ;;
-    15103[1-2])         DEFAULT_GCC_VER=8; ILLUMOS_GCC_VER=7 ;;
-    15103[3-5])         DEFAULT_GCC_VER=9; ILLUMOS_GCC_VER=7 ;;
+    15103[12])          DEFAULT_GCC_VER=8; ILLUMOS_GCC_VER=7 ;;
+    15103[34])          DEFAULT_GCC_VER=9; ILLUMOS_GCC_VER=7 ;;
+    15103[56])          DEFAULT_GCC_VER=10; ILLUMOS_GCC_VER=7 ;;
     *) logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
 
@@ -277,6 +278,7 @@ FCFLAGS[_]+=" -O2"
 FCFLAGS[7]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[8]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[9]+=" -fno-aggressive-loop-optimizations"
+FCFLAGS[10]+=" -fno-aggressive-loop-optimizations"
 
 # Flags to enable particular standards; see standards(5)
 typeset -A STANDARDS

@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -21,6 +21,9 @@ PKG=ooce/developer/llvm-80
 VER=8.0.1
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
+
+# This component does not yet build with gcc 10
+[ $GCCVER = 10 ] && set_gccver 9
 
 set_arch 64
 set_builddir $PROG-$VER.src

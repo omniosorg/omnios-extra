@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 #
 . ../../lib/functions.sh
 
@@ -22,6 +22,9 @@ VERHUMAN=$VER
 PKG=ooce/security/gnupg
 SUMMARY="$PROG - GNU Privacy Guard"
 DESC="$SUMMARY"
+
+# This component does not yet build with gcc 10
+[ $GCCVER = 10 ] && set_gccver 9
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"

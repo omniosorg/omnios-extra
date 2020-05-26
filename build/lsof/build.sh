@@ -22,6 +22,9 @@ VER=4.93.2
 SUMMARY="List open files"
 DESC="Report a list of all open files and the processes that opened them"
 
+# This component does not yet build with gcc 10
+[ $GCCVER = 10 ] && set_gccver 9
+
 SKIP_LICENCES=lsof
 
 OPREFIX=$PREFIX

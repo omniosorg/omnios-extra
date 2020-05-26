@@ -22,6 +22,9 @@ VER=2.2.0
 SUMMARY="htop"
 DESC="An interactive process viewer for Unix"
 
+# This component does not yet build with gcc 10
+[ $GCCVER = 10 ] && set_gccver 9
+
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
