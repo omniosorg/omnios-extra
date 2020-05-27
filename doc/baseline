@@ -32,7 +32,6 @@ extra.omnios ooce/database/postgresql-96
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/developer/autogen
 extra.omnios ooce/developer/ccache
-extra.omnios ooce/developer/clang-80
 extra.omnios ooce/developer/clang-90
 extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/compiler-rt-90
@@ -42,8 +41,6 @@ extra.omnios ooce/developer/flamegraph
 extra.omnios ooce/developer/go-113
 extra.omnios ooce/developer/go-114
 extra.omnios ooce/developer/gperf
-extra.omnios ooce/developer/llvm-8 r
-extra.omnios ooce/developer/llvm-80
 extra.omnios ooce/developer/llvm-90
 extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/omni

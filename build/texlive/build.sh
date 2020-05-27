@@ -23,6 +23,9 @@ PKG=ooce/application/texlive
 SUMMARY="TeX Live"
 DESC="LaTeX distribution"
 
+# This component does not yet build with gcc 10
+[ $GCCVER = 10 ] && set_gccver 9
+
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 

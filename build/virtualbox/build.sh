@@ -30,6 +30,9 @@ if [ $RELVER -lt 151030 ]; then
     exit 0
 fi
 
+# This component does not yet build with gcc 10
+[ $GCCVER = 10 ] && set_gccver 9
+
 SKIP_LICENCES=GPLv2
 
 MAJVER=${VER%.*}            # M.m

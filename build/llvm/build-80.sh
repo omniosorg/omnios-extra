@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -21,6 +21,11 @@ PKG=ooce/developer/llvm-80
 VER=8.0.1
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
+
+if [ $RELVER -ge 151035 ]; then
+    logmsg "--- $PKG is not built for r$RELVER"
+    exit 0
+fi
 
 set_arch 64
 set_builddir $PROG-$VER.src

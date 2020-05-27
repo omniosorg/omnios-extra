@@ -23,6 +23,9 @@ SUMMARY="fping - send ICMP echo probes to network hosts"
 DESC="fping is a program to send ICMP echo probes to network hosts, similar to "
 DESC+="ping, but much better performing when pinging multiple hosts."
 
+# This component does not yet build with gcc 10
+[ $GCCVER = 10 ] && set_gccver 9
+
 set_arch 64
 set_standard XPG6
 
