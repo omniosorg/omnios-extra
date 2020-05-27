@@ -3,3 +3,4 @@ minidlna.conf.patch
 minissdp.c.patch
 monitor.c.patch
 icons.c.patch
+setjmp_buffer.patch

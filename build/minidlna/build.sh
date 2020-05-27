@@ -23,9 +23,6 @@ PKG=ooce/multimedia/minidlna
 SUMMARY="MiniDLNA"
 DESC="DLNA/UPnP-AV media server"
 
-# This component does not yet build with gcc 10
-[ $GCCVER = 10 ] && set_gccver 9
-
 set_arch 64
 
 OPREFIX=$PREFIX
