@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2020 OmniOS Community Edition.  All rights reserved.
 
 . ../../lib/functions.sh
 
@@ -21,9 +21,6 @@ PKG=ooce/system/htop
 VER=2.2.0
 SUMMARY="htop"
 DESC="An interactive process viewer for Unix"
-
-# This component does not yet build with gcc 10
-[ $GCCVER = 10 ] && set_gccver 9
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
