@@ -1,0 +1,82 @@
+diff -wpruN '--exclude=*.orig' a~/g10/options.h a/g10/options.h
+--- a~/g10/options.h	1970-01-01 00:00:00
++++ a/g10/options.h	1970-01-01 00:00:00
+@@ -27,7 +27,7 @@
+ 
+ #ifndef EXTERN_UNLESS_MAIN_MODULE
+ /* Norcraft can't cope with common symbols */
+-#if defined (__riscos__) && !defined (INCLUDED_BY_MAIN_MODULE)
++#ifndef INCLUDED_BY_MAIN_MODULE
+ #define EXTERN_UNLESS_MAIN_MODULE extern
+ #else
+ #define EXTERN_UNLESS_MAIN_MODULE
+diff -wpruN '--exclude=*.orig' a~/include/cipher.h a/include/cipher.h
+--- a~/include/cipher.h	1970-01-01 00:00:00
++++ a/include/cipher.h	1970-01-01 00:00:00
+@@ -115,7 +115,7 @@ struct gcry_md_context {
+ typedef struct gcry_md_context *MD_HANDLE;
+ 
+ #ifndef EXTERN_UNLESS_MAIN_MODULE
+-#if defined (__riscos__) && !defined (INCLUDED_BY_MAIN_MODULE)
++#ifndef INCLUDED_BY_MAIN_MODULE
+ #define EXTERN_UNLESS_MAIN_MODULE extern
+ #else
+ #define EXTERN_UNLESS_MAIN_MODULE
+diff -wpruN '--exclude=*.orig' a~/include/iobuf.h a/include/iobuf.h
+--- a~/include/iobuf.h	1970-01-01 00:00:00
++++ a/include/iobuf.h	1970-01-01 00:00:00
+@@ -70,7 +70,7 @@ struct iobuf_struct {
+ };
+ 
+ #ifndef EXTERN_UNLESS_MAIN_MODULE
+-#if defined (__riscos__) && !defined (INCLUDED_BY_MAIN_MODULE)
++#ifndef INCLUDED_BY_MAIN_MODULE
+ #define EXTERN_UNLESS_MAIN_MODULE extern
+ #else
+ #define EXTERN_UNLESS_MAIN_MODULE 
+diff -wpruN '--exclude=*.orig' a~/include/memory.h a/include/memory.h
+--- a~/include/memory.h	1970-01-01 00:00:00
++++ a/include/memory.h	1970-01-01 00:00:00
+@@ -91,7 +91,7 @@ unsigned secmem_get_flags(void);
+ #define DBG_MEMSTAT   memory_stat_debug_mode
+ 
+ #ifndef EXTERN_UNLESS_MAIN_MODULE
+-#if defined (__riscos__) && !defined (INCLUDED_BY_MAIN_MODULE)
++#ifndef INCLUDED_BY_MAIN_MODULE
+ #define EXTERN_UNLESS_MAIN_MODULE extern
+ #else
+ #define EXTERN_UNLESS_MAIN_MODULE 
+diff -wpruN '--exclude=*.orig' a~/include/mpi.h a/include/mpi.h
+--- a~/include/mpi.h	1970-01-01 00:00:00
++++ a/include/mpi.h	1970-01-01 00:00:00
+@@ -36,7 +36,7 @@
+ #include "memory.h"
+ 
+ #ifndef EXTERN_UNLESS_MAIN_MODULE
+-#if defined (__riscos__) && !defined (INCLUDED_BY_MAIN_MODULE)
++#ifndef INCLUDED_BY_MAIN_MODULE
+ #define EXTERN_UNLESS_MAIN_MODULE extern
+ #else
+ #define EXTERN_UNLESS_MAIN_MODULE 
+diff -wpruN '--exclude=*.orig' a~/tools/bftest.c a/tools/bftest.c
+--- a~/tools/bftest.c	1970-01-01 00:00:00
++++ a/tools/bftest.c	1970-01-01 00:00:00
+@@ -26,6 +26,7 @@
+ #include <fcntl.h>
+ #endif
+ 
++#define INCLUDED_BY_MAIN_MODULE 1
+ #include "util.h"
+ #include "cipher.h"
+ #include "i18n.h"
+diff -wpruN '--exclude=*.orig' a~/tools/mpicalc.c a/tools/mpicalc.c
+--- a~/tools/mpicalc.c	1970-01-01 00:00:00
++++ a/tools/mpicalc.c	1970-01-01 00:00:00
+@@ -31,6 +31,7 @@
+ #include <stdlib.h>
+ #include <ctype.h>
+ 
++#define INCLUDED_BY_MAIN_MODULE 1
+ #include "util.h"
+ #include "mpi.h"
+ #include "i18n.h"
