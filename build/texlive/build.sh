@@ -18,13 +18,10 @@
 . ../../lib/functions.sh
 
 PROG=texlive
-VER=20190410
+VER=20200406
 PKG=ooce/application/texlive
 SUMMARY="TeX Live"
 DESC="LaTeX distribution"
-
-# This component does not yet build with gcc 10
-[ $GCCVER = 10 ] && set_gccver 9
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
@@ -98,7 +95,7 @@ config_tex() {
         || logerr '--- texlinks failed'
 
     # disable formats (unavailable engine)
-    for f in luajittex/luajittex; do
+    for f in luajittex/luajittex luajithbtex/luajithbtex; do
         PATH=$dir/bin:$PATH logcmd fmtutil-sys --cnffile $cnf --disablefmt $f
     done
 
@@ -122,9 +119,13 @@ init
 download_source $PROG $PROG $VER-source
 patch_source
 dl_dist
-run_autoreconf
 # texlive should be built out-of-tree
 prep_build autoconf -oot
+# Without specifying the shell as bash here, the generated
+# config.status is broken.
+# We already export SHELL=bash in config.sh but that doesn't seem
+# to be enough.
+CONFIGURE_CMD="/usr/bin/bash $TMPDIR/$PROG-$VER-source/configure"
 install_dist
 build
 config_tex
