@@ -1597,13 +1597,22 @@ install_smf() {
     pushd $DESTDIR > /dev/null
     logmsg "-- Installing SMF service ($mtype / $manifest / $method)"
 
-    logcmd svccfg validate $SRCDIR/files/$manifest \
+    typeset manifestf; typeset methodf; typeset dir
+    for dir in $SRCDIR/files $TMPDIR; do
+        [ -f "$dir/$manifest" ] && manifestf="$dir/$manifest"
+        [ -f "$dir/$method" ] && methodf="$dir/$method"
+    done
+
+    [ -z "$manifestf" ] && logerr "Could not locate $manifest"
+    [ -z "$methodf" ] && logerr "Could not locate $method"
+
+    logcmd svccfg validate $manifestf \
         || logerr "Manifest does not pass validation"
 
     # Manifest
     logcmd mkdir -p lib/svc/manifest/$mtype \
         || logerr "mkdir of $DESTDIR/lib/svc/manifest/$mtype failed"
-    logcmd cp $SRCDIR/files/$manifest lib/svc/manifest/$mtype/ \
+    logcmd cp $manifestf lib/svc/manifest/$mtype/ \
         || logerr "Cannot copy SMF manifest"
     logcmd chmod 0444 lib/svc/manifest/$mtype/$manifest
 
@@ -1611,7 +1620,7 @@ install_smf() {
     if [ -n "$method" ]; then
         logcmd mkdir -p lib/svc/method \
             || logerr "mkdir of $DESTDIR/lib/svc/method failed"
-        logcmd cp $SRCDIR/files/$method lib/svc/method/ \
+        logcmd cp $methodf lib/svc/method/ \
             || logerr "Cannot install SMF method"
         logcmd chmod 0555 lib/svc/method/$method
     fi
