@@ -46,6 +46,7 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DVERSION=$MAJVER
     -DsVERSION=$sMAJVER
+    -DDsVERSION=-$sMAJVER
 "
 
 CONFIGURE_OPTS_64=" \
@@ -98,6 +99,11 @@ patch_source
 prep_build
 build
 copy_man_page
+# For the mainline version, we don't use version suffixes on various files
+# so set the sVERSION tokens to the empty string.
+XFORM_ARGS="-DsVERSION= -DDsVERSION= $XFORM_ARGS"
+xform files/http-$PROG-template.xml > $TMPDIR/http-$PROG.xml
+xform files/http-$PROG-template > $TMPDIR/http-$PROG
 install_smf network http-$PROG.xml http-$PROG
 make_package
 clean_up
