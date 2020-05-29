@@ -99,12 +99,12 @@ PUBLISHER_EMAIL=sa@omniosce.org
 GITHUB=https://github.com
 OOCEGITHUB=$GITHUB/omniosorg
 # The main OOCE mirror
-OOCEMIRROR=https://mirrors.omniosce.org
+SRCMIRROR=https://mirrors.omniosce.org
 
 # The server or path from which to fetch source code and other files.
 # MIRROR may be overridden in lib/site.sh but defaults to the main OOCE mirror
 # If $MIRROR begins with a '/', it is treated as a local directory.
-MIRROR=$OOCEMIRROR
+MIRROR=$SRCMIRROR
 
 # The production IPS repository for this branch (may be overridden in site.sh)
 # Used for package contents diffing.

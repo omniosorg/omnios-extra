@@ -22,7 +22,8 @@ PKG=ooce/developer/omni
 SUMMARY="OmniOS build management utility"
 DESC=$SUMMARY
 PREFIX=/opt/ooce
-MIRROR="$OOCEGITHUB/$PROG/releases/download"
+
+set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
 XFORM_ARGS="-D PREFIX=$PREFIX"
 SKIP_CHECKSUM=1

@@ -22,7 +22,7 @@ PKG=ooce/util/zadm
 SUMMARY="zone admin tool"
 DESC="$PROG - $SUMMARY"
 
-MIRROR="https://github.com/omniosorg/$PROG/releases/download"
+set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
 SKIP_CHECKSUM=1
 
