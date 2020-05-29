@@ -1462,6 +1462,40 @@ publish_manifest()
     [ -n "$pkg" -a -z "$SKIP_PKG_DIFF" ] && diff_latest $pkg
 }
 
+build_xform_sed()
+{
+    XFORM_SED_CMD=
+
+    for kv in $XFORM_ARGS; do
+        typeset k=${kv%%=*}
+        typeset v=${kv#*=}
+        typeset _v
+
+        # Escape special characters.
+        # If $v contains wildcards like "*", then the following "echo"
+        # causes them to get expanded into filenames in the current
+        # directory. To avoid this, we temporarily disable globbing ...
+        set -o noglob
+        _v="`echo $v | sed '
+            s/[&$^\\]/\\\&/g
+        '`"
+        set +o noglob
+
+        XFORM_SED_CMD+="
+            s^\$(${k:2})^$_v^g
+        "
+    done
+}
+
+# Transform a file using the translations defined in $XFORM_ARGS
+xform() {
+    local file="$1"
+
+    [ -n "$XFORM_SED_CMD" ] || build_xform_sed
+
+    sed "$XFORM_SED_CMD" < $file
+}
+
 # Create a list of the items contained within a package in a format suitable
 # for comparing with previous versions. We don't care about changes in file
 # content, just whether items have been added, removed or had their attributes
