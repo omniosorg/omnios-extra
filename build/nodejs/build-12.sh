@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=node
-VER=12.16.3
+VER=12.17.0
 PKG=ooce/runtime/node-12
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
@@ -27,7 +27,10 @@ set_arch 64
 
 set_builddir $PROG-v$VER
 
-BUILD_DEPENDS_IPS="developer/gnu-binutils"
+BUILD_DEPENDS_IPS="
+    developer/gnu-binutils
+    runtime/python-27
+"
 
 MAJVER=${VER%%.*}
 
