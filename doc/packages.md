@@ -86,7 +86,7 @@
 | ooce/network/mosh		| 1.3.2		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nsd		| 4.3.1		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn		| 2.4.9		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/rclone		| 1.51.0	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/rclone		| 1.52.0	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/smtp/postfix	| 3.5.2		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/network/tcpdump		| 4.9.3		| https://www.tcpdump.org/release/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/unbound		| 1.10.1	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
