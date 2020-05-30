@@ -22,7 +22,7 @@ PKG=ooce/ooceapps
 SUMMARY="OOCEapps"
 DESC="Web integrations for OmniOS"
 
-MIRROR="https://github.com/omniosorg/$PROG/releases/download"
+set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
 SKIP_CHECKSUM=1
 

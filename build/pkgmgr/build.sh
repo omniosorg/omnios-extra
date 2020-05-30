@@ -22,7 +22,7 @@ PKG=ooce/developer/pkgmgr
 SUMMARY="IPS package manager"
 DESC="IPS package management/publishing tool"
 
-MIRROR="https://github.com/omniosorg/$PROG/releases/download"
+set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
 SKIP_CHECKSUM=1
 

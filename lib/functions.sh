@@ -1048,6 +1048,11 @@ extract_archive() {
     esac
 }
 
+set_mirror() {
+    MIRROR="$@"
+    SRCMIRROR="$@"
+}
+
 #############################################################################
 # Export source from github or local clone
 #############################################################################
@@ -1289,11 +1294,11 @@ make_package() {
         if [[ $_ARC_SOURCE = *\ * ]]; then
             _asindex=0
             for _as in $_ARC_SOURCE; do
-                pkgmeta "info.source-url.$_asindex" "$MIRROR/$_as"
+                pkgmeta "info.source-url.$_asindex" "$SRCMIRROR/$_as"
                 ((_asindex++))
             done
         elif [ -n "$_ARC_SOURCE" ]; then
-            pkgmeta info.source-url "$MIRROR/$_ARC_SOURCE"
+            pkgmeta info.source-url "$SRCMIRROR/$_ARC_SOURCE"
         fi
     ) > $MY_MOG_FILE
 

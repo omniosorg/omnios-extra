@@ -33,7 +33,8 @@ SUMMARY="Manage illumos LX zones" # One-liner, must be filled in
 DESC=$SUMMARY   # Longer description, must be filled in
 BUILDARCH=32    # or 64 or both ... for libraries we want both for tools 32 bit only
 PREFIX=/opt/ooce
-MIRROR="https://github.com/hadfl/$PROG/releases/download"
+
+set_mirror "$GITHUB/hadfl/$PROG/releases/download"
 
 SKIP_CHECKSUM=1
 
