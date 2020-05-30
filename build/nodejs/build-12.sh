@@ -27,7 +27,10 @@ set_arch 64
 
 set_builddir $PROG-v$VER
 
-BUILD_DEPENDS_IPS="developer/gnu-binutils"
+BUILD_DEPENDS_IPS="
+    developer/gnu-binutils
+    runtime/python-27
+"
 
 MAJVER=${VER%%.*}
 
