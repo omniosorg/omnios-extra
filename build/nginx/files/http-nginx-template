@@ -23,20 +23,28 @@
 
 #
 # Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 #
 
-source /lib/svc/share/smf_include.sh
+. /lib/svc/share/smf_include.sh
 
-typeset -r CONF_FILE="/etc/opt/ooce/nginx/nginx.conf"
-typeset -r PIDFILE="/var/opt/ooce/nginx/run/nginx.pid"
-typeset -r NGINX="/opt/ooce/nginx/sbin/nginx"
+if [ -z $SMF_FMRI ]; then
+	echo "SMF framework variables are not initialised."
+	exit $SMF_EXIT_ERR
+fi
 
-[[ ! -f ${CONF_FILE} ]] && exit $SMF_EXIT_ERR_CONFIG
+typeset -r CONF_FILE=`svcprop -c -p config/file $SMF_FMRI`
+typeset -r PIDFILE=`svcprop -c -p config/pidfile $SMF_FMRI`
+typeset -r NGINX=`svcprop -c -p config/exec $SMF_FMRI`
+
+[ ! -f "$CONF_FILE" ] && exit $SMF_EXIT_ERR_CONFIG
 
 case "$1" in
 start)
         /bin/rm -f ${PIDFILE}
+	# Once illumos supports SMF runtime directory creation (IPD 17)
+	# we can drop this entire method and create a temporary directory
+	# under /var/run from the manifest.
         [ -d /tmp/.nginx ] || mkdir /tmp/.nginx
         chmod 700 /tmp/.nginx
         exec ${NGINX} 2>&1
@@ -47,4 +55,6 @@ start)
         ;;
 esac
 
-# not reached
+# Not reached
+exit $SMF_EXIT_OK
+

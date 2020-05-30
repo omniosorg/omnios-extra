@@ -45,6 +45,7 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DVERSION=$MAJVER
     -DsVERSION=$sMAJVER
+    -DDsVERSION=-$sMAJVER
 "
 
 CONFIGURE_OPTS_64=" \
@@ -97,6 +98,8 @@ patch_source
 prep_build
 build
 copy_man_page
+xform files/http-nginx-template.xml > $TMPDIR/http-$PROG-$sMAJVER.xml
+xform files/http-nginx-template > $TMPDIR/http-$PROG-$sMAJVER
 install_smf network http-$PROG-$sMAJVER.xml http-$PROG-$sMAJVER
 make_package
 clean_up

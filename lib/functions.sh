@@ -1462,6 +1462,40 @@ publish_manifest()
     [ -n "$pkg" -a -z "$SKIP_PKG_DIFF" ] && diff_latest $pkg
 }
 
+build_xform_sed()
+{
+    XFORM_SED_CMD=
+
+    for kv in $XFORM_ARGS; do
+        typeset k=${kv%%=*}
+        typeset v=${kv#*=}
+        typeset _v
+
+        # Escape special characters.
+        # If $v contains wildcards like "*", then the following "echo"
+        # causes them to get expanded into filenames in the current
+        # directory. To avoid this, we temporarily disable globbing ...
+        set -o noglob
+        _v="`echo $v | sed '
+            s/[&$^\\]/\\\&/g
+        '`"
+        set +o noglob
+
+        XFORM_SED_CMD+="
+            s^\$(${k:2})^$_v^g
+        "
+    done
+}
+
+# Transform a file using the translations defined in $XFORM_ARGS
+xform() {
+    local file="$1"
+
+    [ -n "$XFORM_SED_CMD" ] || build_xform_sed
+
+    sed "$XFORM_SED_CMD" < $file
+}
+
 # Create a list of the items contained within a package in a format suitable
 # for comparing with previous versions. We don't care about changes in file
 # content, just whether items have been added, removed or had their attributes
@@ -1597,13 +1631,22 @@ install_smf() {
     pushd $DESTDIR > /dev/null
     logmsg "-- Installing SMF service ($mtype / $manifest / $method)"
 
-    logcmd svccfg validate $SRCDIR/files/$manifest \
+    typeset manifestf; typeset methodf; typeset dir
+    for dir in $SRCDIR/files $TMPDIR; do
+        [ -f "$dir/$manifest" ] && manifestf="$dir/$manifest"
+        [ -f "$dir/$method" ] && methodf="$dir/$method"
+    done
+
+    [ -z "$manifestf" ] && logerr "Could not locate $manifest"
+    [ -z "$methodf" ] && logerr "Could not locate $method"
+
+    logcmd svccfg validate $manifestf \
         || logerr "Manifest does not pass validation"
 
     # Manifest
     logcmd mkdir -p lib/svc/manifest/$mtype \
         || logerr "mkdir of $DESTDIR/lib/svc/manifest/$mtype failed"
-    logcmd cp $SRCDIR/files/$manifest lib/svc/manifest/$mtype/ \
+    logcmd cp $manifestf lib/svc/manifest/$mtype/ \
         || logerr "Cannot copy SMF manifest"
     logcmd chmod 0444 lib/svc/manifest/$mtype/$manifest
 
@@ -1611,7 +1654,7 @@ install_smf() {
     if [ -n "$method" ]; then
         logcmd mkdir -p lib/svc/method \
             || logerr "mkdir of $DESTDIR/lib/svc/method failed"
-        logcmd cp $SRCDIR/files/$method lib/svc/method/ \
+        logcmd cp $methodf lib/svc/method/ \
             || logerr "Cannot install SMF method"
         logcmd chmod 0555 lib/svc/method/$method
     fi
