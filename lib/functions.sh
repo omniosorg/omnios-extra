@@ -929,6 +929,47 @@ get_resource() {
     esac
 }
 
+set_checksum() {
+    typeset alg="$1"
+    typeset sum="$2"
+
+    digest -l | $EGREP -s "^$alg$" || logerr "Unknown checksum algorithm $alg"
+
+    CHECKSUM_VALUE="$alg:$sum"
+}
+
+verify_checksum() {
+    typeset found=0
+
+    logmsg "Verifying checksum of downloaded file."
+
+    if [[ "$CHECKSUM_VALUE" = *:* ]]; then
+        alg=${CHECKSUM_VALUE%:*}
+        sum=${CHECKSUM_VALUE#*:}
+        found=1
+    else
+        for alg in sha512 sha384 sha256; do
+            [ -f "$FILENAME.$alg" ] || get_resource $DLDIR/$FILENAME.$alg
+            [ -f "$FILENAME.$alg" ] || continue
+
+            sum=`awk '{print $1}' "$FILENAME.$alg"`
+            found=1
+            break
+        done
+    fi
+
+    if [ $found -eq 1 ]; then
+        typeset filesum=`digest -a $alg $FILENAME`
+        if [ "$sum" = "$filesum" ]; then
+            logmsg "Checksum verified using $alg"
+        else
+            logerr "Checksum of downloaded file does not match."
+        fi
+    else
+        logerr "Could not find checksum for download"
+    fi
+}
+
 #############################################################################
 # Download source tarball if needed and extract it
 #############################################################################
@@ -987,18 +1028,7 @@ download_source() {
     _ARC_SOURCE+="${_ARC_SOURCE:+ }$DLDIR/$FILENAME"
 
     # Fetch and verify the archive checksum
-    if [ -z "$SKIP_CHECKSUM" ]; then
-        logmsg "Verifying checksum of downloaded file."
-        if [ ! -f "$FILENAME.sha256" ]; then
-            get_resource $DLDIR/$FILENAME.sha256 \
-                || logerr "Unable to download SHA256 checksum file for $FILENAME"
-        fi
-        if [ -f "$FILENAME.sha256" ]; then
-            sum="`digest -a sha256 $FILENAME`"
-            [ "$sum" = "`cat $FILENAME.sha256`" ] \
-                || logerr "Checksum of downloaded file does not match."
-        fi
-    fi
+    [ -z "$SKIP_CHECKSUM" ] && verify_checksum
 
     # Extract the archive
     logmsg "Extracting archive: $FILENAME"
