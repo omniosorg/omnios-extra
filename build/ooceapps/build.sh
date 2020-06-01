@@ -23,8 +23,8 @@ SUMMARY="OOCEapps"
 DESC="Web integrations for OmniOS"
 
 set_mirror "$OOCEGITHUB/$PROG/releases/download"
-
-SKIP_CHECKSUM=1
+set_checksum sha256 \
+    33dffa18fcb0029199f3d43fe9579b36d5748b23fdc7acf00c3d9c68551adfe3
 
 # some perl modules require gnu-tar to unpack
 export PATH="/usr/gnu/bin:$PATH"

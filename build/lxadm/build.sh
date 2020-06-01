@@ -35,8 +35,8 @@ BUILDARCH=32    # or 64 or both ... for libraries we want both for tools 32 bit 
 PREFIX=/opt/ooce
 
 set_mirror "$GITHUB/hadfl/$PROG/releases/download"
-
-SKIP_CHECKSUM=1
+set_checksum sha256 \
+    9dd4f70767dd3d04e1df9b45e931cd71cb9868da3f7532395244ad23e2993dc4
 
 RUN_DEPENDS_IPS="system/zones/brand/lx"
 
