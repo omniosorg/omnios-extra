@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=omni
-VER=1.3.7
+VER=1.3.8
 PKG=ooce/developer/omni
 SUMMARY="OmniOS build management utility"
 DESC=$SUMMARY
@@ -26,7 +26,6 @@ PREFIX=/opt/ooce
 set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
 XFORM_ARGS="-D PREFIX=$PREFIX"
-SKIP_CHECKSUM=1
 
 set_builddir $PROG-v$VER
 

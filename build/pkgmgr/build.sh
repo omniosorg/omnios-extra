@@ -23,8 +23,8 @@ SUMMARY="IPS package manager"
 DESC="IPS package management/publishing tool"
 
 set_mirror "$OOCEGITHUB/$PROG/releases/download"
-
-SKIP_CHECKSUM=1
+set_checksum sha256 \
+    35d4c118e1b8863c0461ff20f14d08640a4906abf3b226c567c12cbe1e62bd87
 
 RUN_DEPENDS_IPS="network/rsync"
 [ $RELVER -lt 151033 ] && RUN_DEPENDS_IPS+=" runtime/perl-64"

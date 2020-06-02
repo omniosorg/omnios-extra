@@ -35,8 +35,8 @@ BUILDARCH=32    # or 64 or both ... for libraries we want both for tools 32 bit 
 PREFIX=/opt/ooce
 
 set_mirror "$GITHUB/hadfl/$PROG/releases/download"
-
-SKIP_CHECKSUM=1
+set_checksum sha256 \
+    55cc59ee33cd5bb7970bba8bbd5bfc542ce5b562a237b4ffbe67723e5aa0b3d7
 
 RUN_DEPENDS_IPS="
     driver/virtualization/kvm
