@@ -1551,7 +1551,7 @@ diff_package() {
             > $TMPDIR/pkgdiff.$$; then
                 echo
                 # Not anchored due to colour codes in file
-                egrep -v '(\-\-\-|\+\+\+|\@\@) ' $TMPDIR/pkgdiff.$$
+                $EGREP -v '(\-\-\-|\+\+\+|\@\@) ' $TMPDIR/pkgdiff.$$
                 note "Differences found between old and new packages"
                 ask_to_continue
         fi
@@ -1905,7 +1905,7 @@ check_buildlog() {
     logmsg "--- Checking logfile for errors (expect $expected)"
 
     errs="`grep 'error: ' $LOGFILE | \
-        egrep -cv 'pathspec.*did not match any file'`"
+        $EGREP -cv 'pathspec.*did not match any file'`"
 
     [ "$errs" -ne "$expected" ] \
         && logerr "Found $errs errors in logfile (expected $expected)"
@@ -1949,7 +1949,7 @@ run_testsuite() {
         if [ -n "$TESTSUITE_SED" ]; then
             sed "$TESTSUITE_SED" $op > $SRCDIR/$output
         elif [ -n "$TESTSUITE_FILTER" ]; then
-            egrep "$TESTSUITE_FILTER" $op > $SRCDIR/$output
+            $EGREP "$TESTSUITE_FILTER" $op > $SRCDIR/$output
         else
             cp $op $SRCDIR/$output
         fi
@@ -2211,7 +2211,7 @@ strip_install() {
     while read file; do
         # This will catch not-stripped as well.. just want to check it's a
         # strippable file.
-        file $file | egrep -s 'ELF.*stripped' || continue
+        file $file | $EGREP -s 'ELF.*stripped' || continue
         logmsg "------ stripping $file"
         MODE=$(stat -c %a "$file")
         logcmd chmod u+w "$file" || logerr -b "chmod failed: $file"
@@ -2224,7 +2224,7 @@ strip_install() {
 convert_ctf() {
     pushd $DESTDIR >/dev/null
     while read file; do
-        file $file | egrep -s 'ELF.*not stripped' || continue
+        file $file | $EGREP -s 'ELF.*not stripped' || continue
         logmsg "------ Converting CTF data for $file"
         MODE=$(stat -c %a "$file")
         logcmd chmod u+w "$file" || logerr -b "chmod failed: $file"

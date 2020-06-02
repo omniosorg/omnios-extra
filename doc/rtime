@@ -18,6 +18,7 @@ EXEC_STACK	.*
 NOSYMSORT	.*
 
 UNUSED_RPATH	/usr/gcc/[789]/lib.*\ from
+UNUSED_RPATH	/usr/gcc/10/lib.*\ from
 UNUSED_RPATH	/opt/ooce/lib.*\ from
 
 # Objects that used to contain system functionalty that has since
