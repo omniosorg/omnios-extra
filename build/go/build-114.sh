@@ -18,7 +18,7 @@
 
 PROG=go
 PKG=ooce/developer/go-114
-VER=1.14.3
+VER=1.14.4
 SUMMARY="The Go Programming Language"
 DESC="An open source programming language that makes it easy to build simple, "
 DESC+="reliable, and efficient software."
