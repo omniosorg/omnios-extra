@@ -933,6 +933,11 @@ set_checksum() {
     typeset alg="$1"
     typeset sum="$2"
 
+    if [ "$alg" = "none" ]; then
+        SKIP_CHECKSUM=1
+        return
+    fi
+
     digest -l | $EGREP -s "^$alg$" || logerr "Unknown checksum algorithm $alg"
 
     CHECKSUM_VALUE="$alg:$sum"
