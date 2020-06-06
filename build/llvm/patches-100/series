@@ -1,0 +1,7 @@
+CMakeLists.txt.patch
+cmake_config-ix.cmake.patch
+cmake_modules_AddLLVM.cmake.patch
+include_llvm-c_DataTypes.h.patch
+include_llvm_Analysis_ConstantFolding.h.patch
+tools_llvm-shlib_CMakeLists.txt.patch
+linkmap.patch
