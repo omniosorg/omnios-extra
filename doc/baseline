@@ -43,6 +43,7 @@ extra.omnios ooce/developer/flamegraph
 extra.omnios ooce/developer/go-113
 extra.omnios ooce/developer/go-114
 extra.omnios ooce/developer/gperf
+extra.omnios ooce/developer/gyp
 extra.omnios ooce/developer/llvm-100
 extra.omnios ooce/developer/llvm-90
 extra.omnios ooce/developer/ninja
