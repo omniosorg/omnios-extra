@@ -18,7 +18,7 @@
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.43.1
+VER=1.44.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
@@ -29,7 +29,10 @@ DESC+="prevents segfaults, and guarantees thread safety."
 #
 # to use bundled LLVM instead of the system one, set BUNDLED_LLVM
 #
-[ $RELVER -lt 151033 ] && LLVM_MAJVER=8.0 || LLVM_MAJVER=9.0
+LLVM_MAJVER=10.0
+
+# building miri fails currently, ignore it for now
+EXPECTED_BUILD_ERRS=2
 
 BUILDDIR=${PROG}c-${VER}-src
 
@@ -136,10 +139,10 @@ fix_checksums() {
     sed -e 's/1e732c2e3b4bd1561f11e0979bf9d20669a96eae7afe0deff9dfbb980ee47bf1/55abd8100db14a076dedbf84ce0f2db08158e1bd33ff1d4978bd3c4ad978f281/' ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json.orig > ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json
     cp ${WRKSRC}/vendor/libc/.cargo-checksum.json \
         ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig
-    sed -e 's/cd266cee38f25fe9ed896ba88ddd3530eca352c4d260671fb63d315890bc49e6/109a8e5a1638b09c4297e8e7ff95f35b4d16a3c0b42c8791b5fdd3f550612f8c/' ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig > ${WRKSRC}/vendor/libc/.cargo-checksum.json
+    sed -e 's/721e1609f429b472bc05c9284e15d6e73b39bbc5f79fff46690642342ed4c1cb/1cf80fac8e5edb960539eedd968aa981ebb54949d7a5c9bb3b4ed6ad5901f1b1/' ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig > ${WRKSRC}/vendor/libc/.cargo-checksum.json
     cp ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json \
           ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig
-    sed -e 's/59763fc255248b54fba5d0761d61093a73d51fa4cb400b0df1b5f339b9c2f48a/ba66d192421fd536ceddb50616c4c4aea06f4e39450eb0bc2bbbaed0b1e684c1/' ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig > ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json
+    sed -e 's/dbe2eb824252135e7a154805c148defb2142a26b0c2267f5b1033ad69f441e33/323987bb2d5b7ec6044b881b70f339472d886fc23bf212392b8a0158b15d3862/' ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig > ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json
 }
 
 get_bootstrap() {
