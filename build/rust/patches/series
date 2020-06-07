@@ -4,7 +4,6 @@ src_bootstrap_builder.rs.patch
 src_bootstrap_lib.rs.patch
 src_librustc__target_spec_solaris__base.rs.patch
 src_librustc__target_spec_x86__64__sun__solaris.rs.patch
-src_libstd_build.rs.patch
 src_libstd_sys_unix_thread.rs.patch
 src_llvm_cmake_modules_AddLLVM.cmake.patch
 src_llvm_CMakeLists.txt.patch
