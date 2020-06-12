@@ -7,6 +7,7 @@ depend fmri=developer/omnios-build-tools type=require
 depend fmri=ooce/application/tidy type=require
 depend fmri=ooce/compress/pbzip2 type=require
 depend fmri=ooce/compress/pigz type=require
+depend fmri=ooce/compress/zstd type=require
 depend fmri=ooce/developer/ccache type=require
 depend fmri=ooce/developer/cunit type=require
 depend fmri=ooce/developer/ninja type=require
