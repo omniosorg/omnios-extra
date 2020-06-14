@@ -12,7 +12,7 @@ The "OmniOS Extra IPS Repository" is open to all, anyone may submit a new packag
 
 1. [Requirements](#requirements)
 2. [Create the build environment](#create-the-build-environment)
-3. [Create a build directory and it's build files](#create-a-build-directory-and-it-s-build-files)
+3. [Create a build directory and it's build files](#create-a-build-directory-and-its-build-files)
 4. [Build the `helloworld` package](#build-the-helloworld-package)
 
 ### The "OmniOS Extra Build System"
@@ -30,11 +30,12 @@ The "OmniOS Extra IPS Repository" is open to all, anyone may submit a new packag
 11. [Providing messages at installation](#providing-messages-at-installation)
 12. [Making the source available to the build environment](#making-the-source-available-to-the-build-environment)
 13. [Managing licences](#managing-licences)
-14. [The build system's default "IPS Repository"](#the-build-system-s-default-ips-repository)
+14. [Adding package information to the build system](#adding-package-information-to-the-build-system)
+15. [The build system's default "IPS Repository"](#the-build-system-s-default-ips-repository)
 
 ### Tips for building specific types of packages
 
-1. [Building packages that share Common elements](#building-packages-that-share-common-elements)
+1. [Building packages that share common elements](#building-packages-that-share-common-elements)
 2. [Tips for building libraries](#tips-for-building-libraries)
 3. [Tips for Go packages](#tips-for-go-packages)
 4. [Tips for Perl packages](#tips-for-perl-packages)
@@ -55,7 +56,7 @@ The objective of this section is to prepare a build environment and introduce th
 
 1. [Requirements](#requirements)
 2. [Create the build environment](#create-the-build-environment)
-3. [Create a build directory and it's build files](#create-a-build-directory-and-it-s-build-files)
+3. [Create a build directory and it's build files](#create-a-build-directory-and-its-build-files)
 4. [Build the `helloworld` package](#build-the-helloworld-package)
 
 ## Requirements
@@ -65,10 +66,10 @@ To create packages for the "OmniOS Extra IPS Repository", the following is neces
 * Virtual or  physical system running the latest OmniOS release, preferably the  latest ["Bloody Release"](https://omniosce.org/about/stablevsbloody).
 * The system should have a minimum of 2GB of RAM.
 
-* "OmniOS [Build Tools](https://github.com/omniosorg/omnios-extra/blob/master/build/meta/extra-build-tools.p5m) & [Extra Build Tools](https://github.com/omniosorg/omnios-extra/blob/master/build/meta/extra-build-tools.p5m)": these can be installed with the following command:
+* "OmniOS [Build Tools](https://github.com/omniosorg/omnios-build/blob/master/build/meta/omnios-build-tools.p5m)": this can be installed with the following command:
 
 ```none
-# pkg install ooce/omnios-build ooce/extra-build-tools
+# pkg install ooce/omnios-build
 ```
 
 * A [GitHub](https://github.com/) account.
@@ -135,6 +136,8 @@ Once these empty files are created, the following templates can be used to creat
 ##### `build.sh`
 
 ```bash
+# {{{
+#
 #!/usr/bin/bash
 #
 # This file and its contents are supplied under the terms of the
@@ -145,7 +148,9 @@ Once these empty files are created, the following templates can be used to creat
 # A full copy of the text of the CDDL should have accompanied this
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
-
+#
+# }}}
+#
 # Copyright YYYY your name/organisation
 
 . ../../lib/functions.sh
@@ -160,6 +165,7 @@ message 'Hello, World!'"
 set_arch 64
 
 set_mirror "https://pbdigital.org/ips-src/"
+set_checksum sha256 "c6bdfebe1b9f27fc90a24348aa3492558d2bf5b0e2c366a9b6f9ec9f50b74917"
 
 # create package functions
 init
@@ -172,12 +178,12 @@ clean_up
 
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker
-
 ```
 
 ##### `local.mog`
 
 ```bash
+# {{{
 #
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.
@@ -188,10 +194,14 @@ clean_up
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-
+# }}}
+#
 # Copyright YYYY your name/organisation
 
 license LICENCE license=CDDL
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker
 ```
 
 The contents of these files will be discussed thoroughly in the ["OmniOS Extra Build System"](#the-omnios-extra-build-system) section.
@@ -268,7 +278,7 @@ Now is a good time to try out some of these options whilst building the `hellowo
 To uninstall the `helloworld` package and also remove the package from the "IPS Repository", issue the following commands from the `helloworld` build directory:
 
 ```none
-# pkg ununstall helloworld
+# pkg uninstall helloworld
 # pkgrepo -s ../../tmp.repo remove helloworld
 ```
 ## Conclusion
@@ -276,7 +286,7 @@ To uninstall the `helloworld` package and also remove the package from the "IPS 
 This concludes the introductory section. Next, much finer details of the "OmniOS Extra Build System" will be explored.
 
 # The "OmniOS Extra Build System"
-The "OmniOS Extra Build System" is framework designed as a convenient and standardized manner to build IPS Packages for OmniOS. It is highly recommended to read [Packaging and Delivering Software with the Image Packaging System](https://github.com/OpenIndiana/oi-docs/blob/master/docs/dev/pdf/ips-dev-guide.pdf), to fully understand finer details of The "OmniOS Extra Build System".
+The "OmniOS Extra Build System" is a framework designed as a convenient and standardised manner to build IPS Packages for OmniOS. It is highly recommended to read [Packaging and Delivering Software with the Image Packaging System](https://github.com/OpenIndiana/oi-docs/blob/master/docs/dev/pdf/ips-dev-guide.pdf), to fully understand the finer details of the "OmniOS Extra Build System".
 
 The main engine behind the "OmniOS Extra Build System" is the `lib/functions.sh` file. In this section, a best effort has been made to describe in detail the workings of the build system, however, if certains details have not been described sufficiently, it is advised to look at the code of `lib/functions.sh`, as well as [Packaging and Delivering Software with the Image Packaging System](https://github.com/OpenIndiana/oi-docs/blob/master/docs/dev/pdf/ips-dev-guide.pdf), to fill in the neccessary gaps.
 
@@ -293,7 +303,8 @@ The main engine behind the "OmniOS Extra Build System" is the `lib/functions.sh`
 11. [Providing messages at installation](#providing-messages-at-installation)
 12. [Making the source available to the build environment](#making-the-source-available-to-the-build-environment)
 13. [Managing licences](#managing-licences)
-14. [The build system's default "IPS Repository"](#the-build-system-s-default-ips-repository)
+14. [Adding package information to the build system](#adding-package-information-to-the-build-system)
+15. [The build system's default "IPS Repository"](#the-build-system-s-default-ips-repository)
 
 ## Package naming conventions
 
@@ -316,7 +327,7 @@ Other more complex packages should be installed under the `/opt/ooce/` directory
 #### Multiple Versions
 
 Further, the version number of the package should not be included unless more than one version of the software is being packaged.
-The naming scheme with `application-x.y` symbolizes that the application install directories contain a major version number. Meaning bugfix only releases would replace a previous version, but a new major version would NOT necessarily replace an existing one. Meaning you could install multiple versions of perl of python or even some obscure tool in parallel. The mediated symlinks allow you to coose the default version, but the other versions would still be accessible by using a direct path.
+The naming scheme with `application-x.y` symbolises that the application install directories contain a major version number. Meaning bugfix only releases would replace a previous version, but a new major version would NOT necessarily replace an existing one. Meaning you could install multiple versions of perl of python or even some obscure tool in parallel. The mediated symlinks allow you to coose the default version, but the other versions would still be accessible by using a direct path.
 
 ## Structure of an OmniOS package
 
@@ -409,7 +420,7 @@ Anything from the base install or the meta packages [extra-build-tools](https://
 
 ### Optional Build Dependencies
 
-If a packge dependency is required to build the package but is not necessary to install the package, this can be dropped when the software is packaged, via a `final.mog`. 
+If a package dependency is required to build the package but is not necessary to install the package, this can be dropped when the software is packaged, via a `final.mog`. 
 
 Include the package as normal in `BUILD_DEPENDS_IPS` directive and then use the following in the `build.sh`:
 
@@ -429,7 +440,7 @@ For an example see [here](https://github.com/omniosorg/omnios-extra/tree/master/
 
 ### Run dependencies
 
-Most all run dependencies should be auto-detected. It's better to let this happen than to hard code it. If it is absolutley necessary to define run dependencies, the directive that is placed in `build.sh` is as follow:
+Almost all run dependencies should be auto-detected. It's better to let this happen than to hard code it. If it is absolutely necessary to define run dependencies, the directive that is placed in `build.sh` is as follow:
 
 ```none
 RUN_DEPENDS_IPS+="
@@ -531,14 +542,14 @@ The best source for discovering more about using your own functions, is to brows
 
 If it is neccessary to supply patches for the build to complete, these go in the sub-directory `patches` of the `build/package-name` directory.
 
-Generally, one patch should be created for each modified file. The following command should be sufficient to create a patch. 
+Generally, one patch should be created for each functional change.. The following command should be sufficient to create a patch. 
 
 ```none
 $ gdiff -wpruN '--exclude=*.orig' a~/ a/ > description-of-patch.patch
 ```
 The patching may take place in the `build/package-name/tmp` directory, however the final patches must be transferred to the `patches` directory. 
 
-The filename of the patch should then be `echo`'d into a file named `series`, that resides int the `patches` directory. The file `series`, is used by the build system to apply the patches that are listed in this file. This is done in the order of the patches listed, so care must be taken, to list patches in order, as necessary for the build to complete,
+The filename of the patch should then be `echo`'d into a file named `series`, that resides in the `patches` directory. The file `series`, is used by the build system to apply the patches that are listed in this file. This is done in the order of the patches listed, so care must be taken, to list patches in order, as necessary for the build to complete,
 
 ```none
 $ echo description-of-patch.patch >> series
@@ -619,10 +630,10 @@ This should be placed after the "build function" declarations and before the `ma
 
 The omnios-extra build system has a mirror at https://mirrors.omniosce.org/ that maintains current source tarballs and checksums. It uses these to build it's packages. In the early stages of a build, this source tarball will not be available on the OmniOS mirror, and will be need to be made available for the build process.
 
-This can be done by using the `set_mirror` directive in `build.sh`. For example the source tarball for "Apache httpd 2.4.43" is available at the mirror: <https://downloads.apache.org/httpd/>. Therefore the `set_mirror` directive should be as follows:
+This can be done by using the `set_mirror` directive in `build.sh`. For example the source tarball for "Apache httpd 2.4.43" is available at the mirror: <https://downloads.apache.org/>. Therefore the `set_mirror` directive should be as follows:
 
 ```none
-set_mirror "https://downloads.apache.org/httpd/"
+set_mirror "https://downloads.apache.org/"
 ```
 Further in the `build.sh` file, the `download_source` directive should be as follows:
 
@@ -637,7 +648,7 @@ The above will be sufficient if the accompanying sha256 checksum file is availab
 If the checksum is not available, this can be included in the `build.sh` with the `set_checksum` directive. For example, had the "Apache httpd 2.4.43" checksum file not been available, the following `set_checksum` should be set:
 
 ```none
-set_checksum "a497652ab3fc81318cdc2a203090a999150d86461acff97c1065dc910fe10f43"
+set_checksum sha256 "a497652ab3fc81318cdc2a203090a999150d86461acff97c1065dc910fe10f43"
 ```
 
 ### Source tarballs via GitHub
@@ -680,24 +691,20 @@ Sometimes the tarball will extract to an un-expected directory. For example, som
 In this case, use the `BUILDDIR` directive, as follows:
 
 ```none
-BUILDIR="$PROG-$PROG-$VER" 
+set_builddir "$PROG-$PROG-$VER" 
 ```
 
 #### Source Directory
 
 Sometimes the source directory, where the `configure` script lies will not be where it is expected. For example, the `configure` script may not be in the root of the `$PROG-VER/` directory, but instead in `$PROG-VER/$PROG/`.
 
-In this case, use the `“EXTRACTED_SRC` directive, as follows:
-
-```none
-EXTRACTED_SRC+="/$PROG"` 
-```
+In this case. the above `set_builddir` should also take care of this.
 
 ## Managing licences
 
 ### Bundling a licence with the package
 
-All packages must be bundled with thier respective licence. To add a licence to the package being built, the licence must be included in the `local.mog` file. This is generally always the last line of text in the `local.mog` file and appears as follows:
+All packages must be bundled with their respective licence. To add a licence to the package being built, the licence must be included in the `local.mog` file. This is generally always the last line of text in the `local.mog` file and appears as follows:
 
 ```none
 license COPYING license=GPLv3
@@ -758,8 +765,16 @@ The licence may then be determined by the `tools/licence` utility.
 
 ### When all else fails
 
-As a last resort, you may consider mofifying the licence definition pattern in `doc/licences`. **You will need to let the maintaners explicitly aware of any changes to this file.**
+As a last resort, you may consider modifying the licence definition pattern in `doc/licences`. **You will need to let the maintainers explicitly aware of any changes to this file.**
 
+## Adding package information to the build system
+
+To keep the "OmniOS Build System" up-to-date, new packages need to be added to files in the `doc/` directory. This is intuitive and can be achieved by simply browsing the files that need to be changed and then edit according, with details from the package that is being added.
+
+The files that need editing are:
+
+* `docs/baseline`
+* `docs/packages.md`
 
 ## The build system's default "IPS Repository"
 
@@ -782,7 +797,7 @@ extra.omnios                origin   online F https://pkg.omniosce.org/bloody/ex
 ```
 
 # Tips for building specific types of packages
-1. [Building packages that share Common elements](#building-packages-that-share-common-elements)
+1. [Building packages that share common elements](#building-packages-that-share-common-elements)
 2. [Tips for building libraries](#tips-for-building-libraries)
 3. [Tips for Go packages](#tips-for-go-packages)
 4. [Tips for Perl packages](#tips-for-perl-packages)
@@ -791,22 +806,44 @@ extra.omnios                origin   online F https://pkg.omniosce.org/bloody/ex
 
 ## Building packages that share common elements
 
-Coming Soon!
+When building a package for software that has many components, it may arise that the software should be split into seperate packages. This presents a problem, when these packages share common elements, for example; the same user or directory strucure.
+
+The way to deal with this is to create a "*Common Package*" that the other packages can share. 
+
+A common package is simply a `.mog` file placed in the build directory of the main package that you are building. For example, the *Nagios* package, a `.mog` file named `nagios-common.p5m` is placed in the main build directory `build/nagios`. This file details the common elements shared with all the other *Nagios* packages.
+
+For the build system to recognise this file, this *Common Package* should be added **only** to the `doc/baseline` file. This should not be added to `doc/packages.md`.
+
+Examining the contents of `nagios-common.p5m` and other `xxxxxx-common.p5m` files should give you a better understanding to contributing these types of packages.
 
 ## Tips for building libraries
 
-make sure to update build/meta/extra-build-tools.p5m
+Building libraries follows the same outline as building packages, however there are a few extra considerations that need to be applied.
 
-make sure to edit docs/baseline
+### Build for both 32 & 64 bit
 
-make sure to edit docs/packages.md
+Libraries are built for both 32 & 64 bit architectures. This just requires omiting the `set_arch 64` directive from the standard `build.sh` file, that has been demonstrated in the "[Create a build directory and it's build files](https://gitea.bcn.pbdigital.org/philip/knowledge-base/wiki/Omnios%3A-Extra-Build-Packages#user-content-create-a-build-directory-and-its-build-files)" section.
 
-build for both 32 & 64 bit
+### Drop 32 bit binaries
 
-drop 32 bit binaries
+If a library installs 32 bit binaries, it is necessary to drop these before building the package. This can be set in the `local.mog` file, of the library being built. 
 
-> see `build/libmcrypt/` for example
-> 
+This should be possible to achieve, with a statment in the `local.mog` file, similar to the following:
+
+```
+# Drop 32bit binaries
+<transform path=$(PREFIX)/s?bin/i386 -> drop>
+```
+
+### Adding library information to the build system
+
+Similar to how information is added to `doc/...` files, when building a standard package, library packages need also to add information to the meta package `extra-build-tools`. Therefore the `build/meta/extra-build-tools.p5m` file will need editing.
+
+The complete list of files that need editing are:
+
+* `build/meta/extra-build-tools.p5m`
+* `docs/baseline`
+* `docs/packages.md`
 
 ## Tips for Go packages
 
@@ -919,4 +956,6 @@ git push origin master
 * [Packaging and Delivering Software with the
 Image Packaging System](https://github.com/OpenIndiana/oi-docs/blob/master/docs/dev/pdf/ips-dev-guide.pdf)
 * [Management of Systems and Services with Solaris Service Management Facility](https://www.oracle.com/technetwork/server-storage/solaris10/solaris-smf-wp-167901.pdf)
+
+
 
