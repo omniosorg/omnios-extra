@@ -66,10 +66,10 @@ To create packages for the "OmniOS Extra IPS Repository", the following is neces
 * Virtual or  physical system running the latest OmniOS release, preferably the  latest ["Bloody Release"](https://omniosce.org/about/stablevsbloody).
 * The system should have a minimum of 2GB of RAM.
 
-* "OmniOS [Build Tools](https://github.com/omniosorg/omnios-build/blob/master/build/meta/omnios-build-tools.p5m)": this can be installed with the following command:
+* "OmniOS [Extra Build Tools](https://github.com/omniosorg/omnios-extra/blob/master/build/meta/extra-build-tools.p5m)" This can be installed with the following command:
 
 ```none
-# pkg install ooce/omnios-build
+# pkg install ooce/extra-build-tools
 ```
 
 * A [GitHub](https://github.com/) account.
@@ -956,6 +956,4 @@ git push origin master
 * [Packaging and Delivering Software with the
 Image Packaging System](https://github.com/OpenIndiana/oi-docs/blob/master/docs/dev/pdf/ips-dev-guide.pdf)
 * [Management of Systems and Services with Solaris Service Management Facility](https://www.oracle.com/technetwork/server-storage/solaris10/solaris-smf-wp-167901.pdf)
-
-
 
