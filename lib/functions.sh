@@ -1072,6 +1072,7 @@ find_archive() {
 extract_archive() {
     local file="$1"; shift
     case $file in
+        *.tar.zst)          $ZSTD -dc $file | $TAR -xvf - $* ;;
         *.tar.xz)           $XZCAT $file | $TAR -xvf - $* ;;
         *.tar.bz2)          $BUNZIP2 -dc $file | $TAR -xvf - $* ;;
         *.tar.gz|*.tgz)     $GZIP -dc $file | $TAR -xvf - $* ;;

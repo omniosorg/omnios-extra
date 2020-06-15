@@ -21,6 +21,7 @@ extra.omnios ooce/audio/flac
 extra.omnios ooce/compress/lz4
 extra.omnios ooce/compress/pbzip2
 extra.omnios ooce/compress/pigz
+extra.omnios ooce/compress/zstd
 extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
 extra.omnios ooce/database/mariadb-103

@@ -181,6 +181,7 @@ TESTSUITE_MAKE=gmake
 TAR="gtar --no-same-permissions --no-same-owner"
 GZIP=/opt/ooce/bin/pigz
 BUNZIP2=/opt/ooce/bin/pbunzip2
+ZSTD=/opt/ooce/bin/zstd
 XZCAT=xzcat
 UNZIP=unzip
 AWK=gawk
