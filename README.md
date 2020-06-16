@@ -920,10 +920,8 @@ git remote -v
 To pull all the data from the remote into the local repository. Use the `fetch` and `merge` subcommands. Before doing this, check that the current branch is set to `master`.
 
 ```none
-git branch
 git checkout master
-git fetch upstream
-git merge upstream/master
+git pull upstream master
 ```
 
 **git fetch** only downloads new data from a remote repository - but it doesn't integrate any of this new data into the working files. 
@@ -937,7 +935,8 @@ After executing the above commands only the local repository will be up-to-date 
 Once the local repository is up-to-date, it is recommended to push this local repository to GitHub so that the fork of `omniosorg/omnios-extra` is also up-to-date.
 
 ```none
-git push origin master
+git checkout master
+git push
 ```
 
 ## Getting help
