@@ -56,6 +56,7 @@ extra.omnios ooce/editor/emacs
 extra.omnios ooce/editor/joe
 extra.omnios ooce/editor/nano
 extra.omnios ooce/extra-build-tools
+extra.omnios ooce/file/acltool
 extra.omnios ooce/file/lsof
 extra.omnios ooce/file/tree
 extra.omnios ooce/kvmadm
@@ -89,7 +90,6 @@ extra.omnios ooce/lxadm
 extra.omnios ooce/multimedia/exif
 extra.omnios ooce/multimedia/ffmpeg
 extra.omnios ooce/multimedia/minidlna
-extra.omnios ooce/network/acltool
 extra.omnios ooce/network/fping
 extra.omnios ooce/network/irssi
 extra.omnios ooce/network/mosh
