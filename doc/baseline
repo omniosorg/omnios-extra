@@ -89,12 +89,12 @@ extra.omnios ooce/lxadm
 extra.omnios ooce/multimedia/exif
 extra.omnios ooce/multimedia/ffmpeg
 extra.omnios ooce/multimedia/minidlna
+extra.omnios ooce/network/acltool
 extra.omnios ooce/network/fping
 extra.omnios ooce/network/irssi
 extra.omnios ooce/network/mosh
 extra.omnios ooce/network/nsd
 extra.omnios ooce/network/openvpn
-extra.omnios ooce/network/pnscan
 extra.omnios ooce/network/rclone
 extra.omnios ooce/network/smtp/postfix
 extra.omnios ooce/network/tcpdump
