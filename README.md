@@ -677,6 +677,19 @@ GitHub does not supply checksums for downloaded archives, so this can be workd a
 set_checksum "none"
 ```
 
+### Local source tarballs
+
+Sometimes it might be useful to be able to use "local" tarballs without having to go via a Mirror or a GitHub release.
+For example when doing development of the original source and wanting to test the OmniOSCE Extra build process without
+having to publish a temporary "release" every time.
+
+This can be accomplished by preparing a distribution tarball of the project and after having configured stuff per the
+instructions above (for a Mirror or GitHub release case) then - just before you run "./build.sh" - copy the tarball to
+the directory /tmp/build_$USER/$PACKAGE-$VERSION/ (see TMPDIR in lib/config.sh for the exact location of /tmp/build_$USER/).
+For this to work the "download_source" must have atleast tree arguments specified (download_source v$VER $PROG $VER) or it
+won't find the tarball).
+
+
 ### Exceptional cases regarding source tarballs
 
 
