@@ -310,7 +310,7 @@ The main engine behind the "OmniOS Extra Build System" is the `lib/functions.sh`
 
 ### Package catagories
 
-Search [docs/baseline](https://github.com/omniosorg/omnios-extra/blob/master/doc/baseline) fot a list of package categories, to determine which best fits the package that is being built.
+Search [doc/baseline](https://github.com/omniosorg/omnios-extra/blob/master/doc/baseline) fot a list of package categories, to determine which best fits the package that is being built.
 
 ### Installation directories
 
@@ -773,8 +773,8 @@ To keep the "OmniOS Build System" up-to-date, new packages need to be added to f
 
 The files that need editing are:
 
-* `docs/baseline`
-* `docs/packages.md`
+* `doc/baseline`
+* `doc/packages.md`
 
 ## The build system's default "IPS Repository"
 
@@ -842,8 +842,8 @@ Similar to how information is added to `doc/...` files, when building a standard
 The complete list of files that need editing are:
 
 * `build/meta/extra-build-tools.p5m`
-* `docs/baseline`
-* `docs/packages.md`
+* `doc/baseline`
+* `doc/packages.md`
 
 ## Tips for Go packages
 
@@ -866,9 +866,9 @@ Coming Soon! In the meantime, [browse the build scripts of Rust packages in the 
 
 ## Final tasks before submitting a package
 
-* Make sure that the package has been added to `docs/baseline`
+* Make sure that the package has been added to `doc/baseline`
 
-* Make sure that the package has been added to `docs/packages.md`
+* Make sure that the package has been added to `doc/packages.md`
 
 * If the package is a library, make sure that it has been added to `build/meta/extra-build-tools.p5m`
 
