@@ -145,6 +145,8 @@ patch_source
 prep_build
 build
 strip_install
+xform files/php-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
+xform files/php-template > $TMPDIR/$PROG-$sMAJVER
 install_smf application $PROG-$sMAJVER.xml $PROG-$sMAJVER
 make_package
 clean_up

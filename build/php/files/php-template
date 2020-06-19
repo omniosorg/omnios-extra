@@ -1,7 +1,5 @@
 #!/sbin/sh
 
-# {{{ CDDL HEADER
-#
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.
 # You may only use this file in accordance with the terms of version
@@ -10,13 +8,14 @@
 # A full copy of the text of the CDDL should have accompanied this
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
-# }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . /lib/svc/share/smf_include.sh
 
-PIDF=/var/opt/ooce/php/run/php-7.4-fpm.pid
+typeset -r CONF_FILE=`svcprop -c -p config/file $SMF_FMRI`
+typeset -r PIDFILE=`svcprop -c -p config/pidfile $SMF_FMRI`
+typeset -r EXEC=`svcprop -c -p config/exec $SMF_FMRI`
 
 check_and_kill()
 {
@@ -27,15 +26,15 @@ check_and_kill()
 
 case "$1" in
 'refresh')
-        [ -f $PIDF ] && kill -USR2 `head -1 $PIDF`
+        [ -f $PIDFILE ] && kill -USR2 `head -1 $PIDFILE`
         ;;
 
 'start')
-	/opt/ooce/php-7.4/sbin/php-fpm -c /etc/opt/ooce/php-7.4/php.ini
+	$EXEC -c $CONF_FILE
 	;;
 
 'stop')
-	[ -f $PIDF ] && check_and_kill $PIDF
+	[ -f $PIDFILE ] && check_and_kill $PIDFILE
 	# Need to kill the entire service contract to kill all php related
 	# processes
 	smf_kill_contract $2 TERM 1 30
