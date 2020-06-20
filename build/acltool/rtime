@@ -1,0 +1,12 @@
+#
+# libreadline needs either one of these termcap|curses|ncurses,
+# but is not linked with either one of them so gives build-time
+# errors like these:
+#
+# -- Checking ELF runtime attributes
+# ==== opt/ooce/bin/<program> ====
+#         unreferenced object=/lib/64/libtermcap.so.1; unused dependency of ...<program>  <remove lib or -zignore?>
+#
+UNREF_OBJ libtermcap\.so\.1
+UNREF_OBJ libcurses\.so\.1
+UNREF_OBJ libncurses\.so\.6
