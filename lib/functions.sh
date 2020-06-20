@@ -2422,10 +2422,21 @@ check_rtime() {
 
     logmsg "-- Checking ELF runtime attributes"
     logcmd -p $FIND_ELF -fr $destdir/ > $TMPDIR/rtime.files
+    DOCRTIMEFILE="$ROOTDIR/doc/rtime"
+    if [ -f "$SRCDIR/rtime" ]; then
+	TMPRTIMEFILE="${destdir}/rtime.tmp"
+	cat "$DOCRTIMEFILE" $SRCDIR/rtime >"$TMPRTIMEFILE"
+	RTIMEFILE="$TMPRTIMEFILE"
+    else
+	RTIMEFILE="$DOCRTIMEFILE"
+    fi
     logcmd $CHECK_RTIME \
-        -e $ROOTDIR/doc/rtime \
+        -e $RTIMEFILE \
         -E $TMPDIR/rtime.err \
         -f $TMPDIR/rtime.files
+    if [ "$TMPRTIMEFILE" != "" ]; then
+	rm -f "$TMPRTIMEFILE"
+    fi
     if [ -s "$TMPDIR/rtime.err" ]; then
         cat $TMPDIR/rtime.err | tee -a $LOGFILE
         logerr "ELF runtime problems detected"
