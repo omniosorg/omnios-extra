@@ -18,7 +18,7 @@
 
 PROG=php
 PKG=ooce/application/php-74
-VER=7.4.6
+VER=7.4.7
 SUMMARY="PHP 7.4"
 DESC="A popular general-purpose scripting language"
 
@@ -157,6 +157,8 @@ patch_source
 prep_build
 build
 strip_install
+xform files/php-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
+xform files/php-template > $TMPDIR/$PROG-$sMAJVER
 install_smf application $PROG-$sMAJVER.xml $PROG-$sMAJVER
 make_package
 clean_up
