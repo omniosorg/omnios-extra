@@ -1,0 +1,214 @@
+#!/bin/ksh
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source.  A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+__SCRIPTDIR="${0%/*}"
+
+cd $__SCRIPTDIR/..
+
+[ ! -d build -o ! -x build/buildctl ] && echo "Cannot find directory" && exit 1
+
+IPSROOT=https://pkg.omnios.org
+
+typeset -A targets
+typeset -a branches
+
+c_banner="`/usr/gnu/bin/tput setaf 6`"
+c_highlight="`/usr/gnu/bin/tput setaf 2`"
+c_error="`/usr/gnu/bin/tput setaf 1`"
+c_reset="`/usr/gnu/bin/tput sgr0`"
+
+setup()
+{
+    # Determine the current bloody release version as r1510XX.0
+    branch=`pkgrepo -s $IPSROOT/bloody/core list -H -F json SUNWcs \
+        | jq -r '.[0] | .branch'`
+    branch=${branch%%.*}
+    [ -z "$branch" ] && echo "Could not retrieve bloody branch" && exit 1
+    #echo "Bloody branch: $branch"
+    ((lts = branch - (branch + 2) % 8))
+    branches=(bloody r$((branch - 1)) r$((branch - 3)) r$lts)
+    #echo "Branches: ${branches[@]}"
+}
+
+ord26()
+{
+    typeset asc=`printf '%d' "'$1"`
+    ((asc -= 64))
+    [ $asc -gt 32 ] && ((asc -= 32))
+    echo $asc
+}
+
+cf()
+{
+    typeset vv1=(${1//./ })
+    typeset vv2=(${2//./ })
+
+    i=0
+    while [ $i -lt ${#vv1[@]} ]; do
+        [ -z "${vv2[$i]}" -o "${vv1[$i]}" -gt "${vv2[$i]}" ] && return 1
+        [ "${vv1[$i]}" -lt "${vv2[$i]}" ] && return 2
+        ((i++))
+    done
+    [ -n "${vv2[$i]}" ] && return 2
+    return 0
+}
+
+add_target()
+{
+    typeset pkg=$1
+    typeset build=$2
+    typeset dir="`dirname $build`"
+
+    if [[ $build = *.sh ]]; then
+        ver="`grep ^VER= $build | sed '
+            1 {
+                s/VER=//
+                s/ .*//
+                q
+            }'`"
+        case $pkg:$ver in
+            ooce/runtime/expect:*)
+                ver="`grep '^EXPECTVER=' $build | cut -d= -f2`"
+                ;;
+            */ntfs-3g:*)
+                ver=${ver//AR/}
+                ;;
+        esac
+
+        if [[ $ver == {4}([0-9])-{2}([0-9])-{2}([0-9])T* ]]; then
+            ## Convert ISO-formatted time
+            ver=${ver%T*}
+            ver=${ver//-/.}
+        elif [[ $ver = *[a-z] ]]; then
+            ## Convert single trailing alpha character
+            ver="${ver%[a-z]}.`ord26 ${ver#${ver%?}}`"
+        fi
+        ver=${ver//-/.}
+
+        ## Strip leading zeros in version components.
+        ver=`echo $ver | sed -e 's/\.0*\([1-9]\)/.\1/g;'`
+
+        targets[$pkg]=$ver
+    elif [[ $build = *.p5m ]]; then
+        egrep -q 'pkg.obsolete.*true' $build && return
+        egrep -q 'pkg.renamed.*true' $build && return
+        # No manifests of interest currently
+        #echo "P5M:`grep pkg.fmri $build`"
+        :
+    else
+        echo "Unknown target type"
+        exit 1
+    fi
+}
+
+extract_pkgs()
+{
+    grep 'PKG=' $1 | grep -v '##IGNORE##' | sed -e '
+        s/^ +//
+        s/ +#.+//
+        s/=/ /g
+    ' | nawk '$1 == "PKG" { print $2 }'
+}
+
+add_buildscripts()
+{
+    for build in `find build -name build\*.sh`; do
+        for PKG in `extract_pkgs $build`; do
+            add_target $PKG $build
+        done
+    done
+}
+
+add_targets()
+{
+    #echo "Finding build components..."
+    add_buildscripts
+}
+
+fetch_branches()
+{
+    for b in "${branches[@]}"; do
+        typeset -A $b
+        nameref data=$b
+        #echo "Retrieving package list for $b"
+        while IFS="	" read pkg ver; do
+            [ -n "${data[$pkg]}" ] || data[$pkg]="$ver"
+        done < <( \
+            pkgrepo -s $IPSROOT/$b/extra list -H -F json \
+                | jq -r '.[] | [.name, .release] | @tsv'
+        )
+    done
+}
+
+audit()
+{
+    pkgs=30
+    vers=15
+    printf "%-${pkgs}s %${vers}s %${vers}s %${vers}s %${vers}s %${vers}s\n" \
+        Package Version "${branches[@]}"
+    printf "%-${pkgs}s %${vers}s %${vers}s %${vers}s %${vers}s %${vers}s\n" \
+        ------- ------- ------ ------- ------- -------
+    for pkg in "${!targets[@]}"; do
+        ver="${targets[$pkg]}"
+        str=`printf "%-${pkgs}s %${vers}s" "${pkg#ooce/}" "$ver"`
+        ok=1
+        for b in "${branches[@]}"; do
+            nameref data=$b
+            pver="${data[$pkg]}"
+            cf "$ver" "$pver"
+            case $? in
+                0)  c="$c_highlight" ;;
+                1)  c="$c_error"
+                    if [ -z "${pver}" ]; then
+                        case $pkg in
+                            # socat is not published after r151030
+                            */socat) ;;
+                            # zadm is not published until r151034
+                            */zadm) ;;
+                            # gyp is not published until r151035
+                            */gyp) ;;
+                            # clang/llvm-80 is not published after r151032
+                            */clang-80|*/llvm-80) ;;
+                            *) ok=0 ;;
+                        esac
+                    else
+                        ok=0
+                    fi
+                    ;;
+                2)  c="$c_banner"; ok=0 ;;
+            esac
+            str+=`printf " %s%${vers}s" "$c" "${pver:---}"`
+        done
+        if [ $ok -eq 0 -o $new -eq 0 ]; then
+            echo "$str$c_reset"
+        fi
+    done
+}
+
+new=0
+while getopts "n" opt; do
+    case $opt in
+        n)  new=1 ;;
+        *)  echo "Syntax: audit [-n]"
+            exit 1
+            ;;
+    esac
+done
+
+setup
+add_targets
+fetch_branches
+audit
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker
