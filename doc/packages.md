@@ -75,7 +75,7 @@
 | ooce/library/libpng		| 1.6.37	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvorbis	| 1.3.6		| https://ftp.osuosl.org/pub/xiph/releases/vorbis/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvncserver	| 0.9.12	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libzip		| 1.7.0		| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libzip		| 1.7.1		| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/onig		| 6.9.5		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pango		| 1.44.7	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/protobuf		| 3.12.1	| https://github.com/protocolbuffers/protobuf/releases/ | [omniosorg](https://github.com/omniosorg)
