@@ -17,8 +17,8 @@
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.23.0
-MMCTLVER=$VER
+VER=5.24.2
+MMCTLVER=5.24
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
 DESC="All your team communication in one place, "
@@ -75,13 +75,17 @@ prep_build
 # building mmctl
 _prog=$PROG
 _builddir=$BUILDDIR
+_patchdir=$PATCHDIR
 PROG=mmctl
+PATCHDIR=patches-$PROG
 
 clone_go_source $PROG $_prog v$MMCTLVER
+patch_source
 build "ADVANCED_VET=FALSE"
 
 BUILDDIR=$_builddir
 PROG=$_prog
+PATCHDIR=$_patchdir
 
 #########################################################################
 
