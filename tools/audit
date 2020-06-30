@@ -189,19 +189,23 @@ audit()
             esac
             str+=`printf " %s%${vers}s" "$c" "${pver:---}"`
         done
-        if [ $ok -eq 0 -o $new -eq 0 ]; then
+        if [ $ok -eq 0 -o $full -eq 1 ] && \
+            [[ -z "$pattern" || "$pkg" == *${pattern}* ]]; then
             echo "$str$c_reset"
         fi
     done
 }
 
-new=0
-while getopts "n" opt; do
+USAGE="[+NAME?audit --- check packages against IPS repositories]"
+USAGE+="[f:full?Show all packages, not just problems]"
+USAGE+="[p:pkg?Show only packages matching pattern]:[<pattern>]"
+
+full=0
+pattern=
+while getopts "$USAGE" opt; do
     case $opt in
-        n)  new=1 ;;
-        *)  echo "Syntax: audit [-n]"
-            exit 1
-            ;;
+        f)  full=1 ;;
+        p)  full=1; pattern="$OPTARG" ;;
     esac
 done
 
