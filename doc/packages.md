@@ -130,6 +130,6 @@
 | ooce/util/gh			| 0.10.1	| https://github.com/cli/cli/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/jq			| 1.6		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/xjobs		| 20191217	| https://www.maier-komor.de/xjobs.html | [omniosorg](https://github.com/omniosorg)
-| ooce/util/zadm		| 0.1.0		| https://github.com/omniosorg/zadm/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/util/zadm		| 0.1.16	| https://github.com/omniosorg/zadm/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/virtualization/virtualbox-5 | 5.2.42	| https://www.virtualbox.org/wiki/Download_Old_Builds_5_2 | [omniosorg](https://github.com/omniosorg)
 | ooce/virtualization/virtualbox | 6.1.10	| https://www.virtualbox.org/wiki/Downloads | [omniosorg](https://github.com/omniosorg)
