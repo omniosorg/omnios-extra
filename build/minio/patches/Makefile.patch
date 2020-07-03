@@ -5,8 +5,8 @@ diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
  # Builds minio locally.
  build: checks
  	@echo "Building minio binary to './minio'"
--	@GO111MODULE=on CGO_ENABLED=0 go build -tags kqueue -trimpath  --ldflags $(BUILD_LDFLAGS) -o $(PWD)/minio 1>/dev/null
-+	@GO111MODULE=on CGO_ENABLED=1 go build -tags kqueue -trimpath  --ldflags $(BUILD_LDFLAGS) -o $(PWD)/minio 1>/dev/null
+-	@GO111MODULE=on CGO_ENABLED=0 go build -tags kqueue -trimpath --ldflags "$(LDFLAGS)" -o $(PWD)/minio 1>/dev/null
++	@GO111MODULE=on CGO_ENABLED=1 go build -tags kqueue -trimpath --ldflags "$(LDFLAGS)" -o $(PWD)/minio 1>/dev/null
  
  docker: build
  	@docker build -t $(TAG) . -f Dockerfile.dev

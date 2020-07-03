@@ -17,18 +17,17 @@
 . ../../lib/functions.sh
 
 PROG=zadm
-VER=0.1.0
+VER=0.1.16
 PKG=ooce/util/zadm
 SUMMARY="zone admin tool"
 DESC="$PROG - $SUMMARY"
 
 set_mirror "$OOCEGITHUB/$PROG/releases/download"
-set_checksum sha256 \
-    f0862f5bb815e7b288907d4f1992b7654e8736a69196b2fbc942ac03b73340e6
 
 RUN_DEPENDS_IPS="
     ooce/compress/pigz
     ooce/compress/pbzip2
+    ooce/compress/zstd
 "
 
 [ $RELVER -le 151030 ] && RUN_DEPENDS_IPS+=" ooce/network/socat" \

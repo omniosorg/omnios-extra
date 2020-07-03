@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=graphviz
-VER=2.44.0
+VER=2.44.1
 PKG=ooce/application/graphviz
 SUMMARY="graphviz"
 DESC="Graph visualisation software"
@@ -47,6 +47,7 @@ CONFIGURE_OPTS="
     --without-visio
     --includedir=$OPREFIX/include
     --libdir=$OPREFIX/lib/$ISAPART64
+    PS2PDF=/bin/true
 "
 
 CPPFLAGS+=" -I$OPREFIX/include"
