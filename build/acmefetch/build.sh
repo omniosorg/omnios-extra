@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=acmefetch
-VER=0.6.2
+VER=0.7.1
 PKG=ooce/util/acmefetch
 SUMMARY="AcmeFetch"
 DESC="A thin wrapper arount he ACME::Protocol library to fetch and maintain "
