@@ -22,5 +22,8 @@ link path=$(OPREFIX)/share/man/man1/$(PROG).1 \
 # zadm shall only be installed in the GZ
 set name=variant.opensolaris.zone value=global
 
+# drop stray "versioned" library paths that might be created
+<transform path=$(PREFIX)/lib/5\.[\d.]+(?:/|$) -> drop>
+
 license LICENSE license=GPLv3
 
