@@ -96,7 +96,7 @@
 | ooce/network/tcpdump		| 4.9.3		| https://www.tcpdump.org/release/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/unbound		| 1.10.1	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/znc		| 1.8.1		| https://github.com/znc/znc/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/ooceapps			| 0.7.1		| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/ooceapps			| 0.7.2		| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/print/cups		| 2.3.3		| https://github.com/apple/cups/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/expect		| 5.45.4	| https://sourceforge.net/projects/expect/files/Expect/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-8		| 8.17.0	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
