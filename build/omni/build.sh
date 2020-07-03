@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=omni
-VER=1.3.8
+VER=1.3.9
 PKG=ooce/developer/omni
 SUMMARY="OmniOS build management utility"
 DESC=$SUMMARY
@@ -32,8 +32,6 @@ set_builddir $PROG-v$VER
 build() {
     logcmd mkdir -p "$DESTDIR/$PREFIX/$PROG"
     ( cd $TMPDIR/$BUILDDIR; find . | cpio -pvmud "$DESTDIR/$PREFIX/$PROG/" )
-    logcmd sed -i "/OMNIVER/s/master/$VER/" $DESTDIR/$PREFIX/$PROG/bin/omni \
-        || logerr "Set version failed"
 }
 
 init
