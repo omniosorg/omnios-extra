@@ -97,6 +97,7 @@ PUBLISHER_EMAIL=sa@omniosce.org
 
 # The github repository root from which some packages are pulled
 GITHUB=https://github.com
+GITHUBAPI=https://api.github.com
 OOCEGITHUB=$GITHUB/omniosorg
 # The main OOCE mirror
 SRCMIRROR=https://mirrors.omniosce.org
@@ -182,6 +183,8 @@ TAR="gtar --no-same-permissions --no-same-owner"
 GZIP=/opt/ooce/bin/pigz
 BUNZIP2=/opt/ooce/bin/pbunzip2
 ZSTD=/opt/ooce/bin/zstd
+JQ=/opt/ooce/bin/jq
+CURL=/usr/bin/curl
 XZCAT=xzcat
 UNZIP=unzip
 AWK=gawk

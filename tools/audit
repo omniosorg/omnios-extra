@@ -17,6 +17,8 @@ cd $__SCRIPTDIR/..
 
 [ ! -d build -o ! -x build/buildctl ] && echo "Cannot find directory" && exit 1
 
+export PATH=/usr/bin:/opt/ooce/bin
+
 IPSROOT=https://pkg.omnios.org
 
 typeset -A targets
@@ -46,6 +48,26 @@ ord26()
     ((asc -= 64))
     [ $asc -gt 32 ] && ((asc -= 32))
     echo $asc
+}
+
+# This is a crude version of the function in funtions.sh that assumes
+# omniosorg for the github organisation. It may need extending in the
+# future.
+github_latest() {
+    typeset pkg="$1"
+    typeset ver="$2"
+
+    typeset ep=https://api.github.com/repos/omniosorg/${pkg##*/}/releases
+
+    typeset filter="map(select (.draft == false)"
+    if [ "$ver" != github-latest-prerelease ]; then
+        filter+=" | select (.prerelease == false)"
+    fi
+    filter+=") | first | .tag_name"
+
+    typeset tag=`curl -s $ep | jq -r "$filter"`
+
+    echo "${tag#v}"
 }
 
 cf()
@@ -82,6 +104,9 @@ add_target()
                 ;;
             */ntfs-3g:*)
                 ver=${ver//AR/}
+                ;;
+            *:github-latest*)
+                ver=`github_latest $pkg $ver`
                 ;;
         esac
 

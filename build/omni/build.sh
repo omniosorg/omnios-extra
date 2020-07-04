@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=omni
-VER=1.3.9
+VER=github-latest
 PKG=ooce/developer/omni
 SUMMARY="OmniOS build management utility"
 DESC=$SUMMARY
@@ -27,14 +27,13 @@ set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
 XFORM_ARGS="-D PREFIX=$PREFIX"
 
-set_builddir $PROG-v$VER
-
 build() {
     logcmd mkdir -p "$DESTDIR/$PREFIX/$PROG"
     ( cd $TMPDIR/$BUILDDIR; find . | cpio -pvmud "$DESTDIR/$PREFIX/$PROG/" )
 }
 
 init
+set_builddir $PROG-v$VER
 download_source v$VER $PROG v$VER
 prep_build
 build

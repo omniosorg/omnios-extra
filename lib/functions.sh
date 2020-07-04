@@ -601,6 +601,29 @@ init_repo() {
     fi
 }
 
+github_latest() {
+    logmsg "-- Retrieving latest release version from github"
+
+    [[ $MIRROR = $GITHUB/* ]] \
+        || logerr "Cannot use github latest without github mirror"
+
+    local repoprog=`echo $MIRROR | cut -d/ -f4-5`
+    local ep=$GITHUBAPI/repos/$repoprog/releases
+
+    local filter="map(select (.draft == false)"
+    if [ "$VER" != github-latest-prerelease ]; then
+        filter+=" | select (.prerelease == false)"
+    fi
+    filter+=") | first | .tag_name"
+
+    local tag=`$CURL -s $ep | $JQ -r "$filter"`
+    [ -n "$tag" -a "$tag" != "null" ] \
+        || logerr "--- Could not retrieve latest version from github"
+
+    VER="${tag#v}"
+    logmsg "--- Github release $tag, set VER=$VER"
+}
+
 init() {
     # Print out current settings
     logmsg "Package name: $PKG"
@@ -632,6 +655,8 @@ init() {
     elif [ -z "$DESC" ]; then
         logerr "DESC may not be empty. Please update your build script"
     fi
+
+    [[ "$VER" = github-latest* ]] && github_latest
 
     # Blank out the source code location
     _ARC_SOURCE=
