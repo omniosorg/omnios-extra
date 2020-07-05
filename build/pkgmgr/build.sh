@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=pkgmgr
-VER=0.3.1
+VER=github-latest
 PKG=ooce/developer/pkgmgr
 SUMMARY="IPS package manager"
 DESC="IPS package management/publishing tool"

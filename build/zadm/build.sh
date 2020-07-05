@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=zadm
-VER=0.1.17
+VER=github-latest-prerelease
 PKG=ooce/util/zadm
 SUMMARY="zone admin tool"
 DESC="$PROG - $SUMMARY"
