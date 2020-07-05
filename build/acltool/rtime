@@ -1,0 +1,7 @@
+
+# libreadline needs either one of libtermcap | libcurses | libncurses,
+# but is not linked with either one of them
+UNREF_OBJ libtermcap\.so\.1
+UNREF_OBJ libcurses\.so\.1
+UNREF_OBJ libncurses\.so\.6
+
