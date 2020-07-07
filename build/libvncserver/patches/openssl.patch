@@ -2,21 +2,15 @@ These two functions are deprecated and not required with OpenSSL 1.1. They
 are usually present as a nop but the OmniOS openssl is set to API version 1.0
 and above.
 
---- libvncserver-master/libvncclient/tls_openssl.c	2018-11-11 16:48:38.000000000 +0000
-+++ libvncserver-master~/libvncclient/tls_openssl.c	2018-11-16 16:30:01.247649992 +0000
-@@ -159,7 +159,5 @@
+diff -wpruN '--exclude=*.orig' a~/libvncclient/tls_openssl.c a/libvncclient/tls_openssl.c
+--- a~/libvncclient/tls_openssl.c	1970-01-01 00:00:00
++++ a/libvncclient/tls_openssl.c	1970-01-01 00:00:00
+@@ -101,8 +101,6 @@ static rfbBool InitLockingCb()
    for (i = 0; i < CRYPTO_num_locks(); i++)
-     MUTEX_INIT(mutex_buf[i]);
+     INIT_MUTEX(mutex_buf[i]);
  
 -  CRYPTO_set_locking_callback(locking_function);
 -  CRYPTO_set_id_callback(id_function);
    CRYPTO_set_dynlock_create_callback(dyn_create_function);
    CRYPTO_set_dynlock_lock_callback(dyn_lock_function);
-@@ -674,7 +673,5 @@
-     CRYPTO_set_dynlock_lock_callback(NULL);
-     CRYPTO_set_dynlock_destroy_callback(NULL);
- 
--    CRYPTO_set_locking_callback(NULL);
--    CRYPTO_set_id_callback(NULL);
- 
-     for (i = 0; i < CRYPTO_num_locks(); i++)
+   CRYPTO_set_dynlock_destroy_callback(dyn_destroy_function);
