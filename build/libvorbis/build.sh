@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=libvorbis
-VER=1.3.6
+VER=1.3.7
 PKG=ooce/library/libvorbis
 SUMMARY="libvorbis"
 DESC="Fully open, non-proprietary, patent-and-royalty-free, "

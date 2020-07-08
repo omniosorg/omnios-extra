@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=libvncserver
-VER=0.9.12
+VER=0.9.13
 PKG=ooce/library/libvncserver
 SUMMARY="libvncserver"
 DESC="A library for easy implementation of a VNC server."
@@ -42,10 +42,7 @@ CONFIGURE_OPTS="
     -DWITH_WEBSOCKETS=0
 "
 CONFIGURE_OPTS_32=
-CONFIGURE_OPTS_64="
-    -DJPEG_LIBRARY_RELEASE:FILEPATH=$PREFIX/lib/$ISAPART64/libjpeg.so
-    -DPNG_LIBRARY_RELEASE:FILEPATH=$PREFIX/lib/$ISAPART64/libpng.so
-"
+CONFIGURE_OPTS_64="-DCMAKE_LIBRARY_PATH=$PREFIX/lib/$ISAPART64"
 
 LDFLAGS32+=" -L$PREFIX/lib -R$PREFIX/lib"
 LDFLAGS64+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
