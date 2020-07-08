@@ -1,0 +1,15 @@
+
+Need this definition in order for the memset_s() function to be properly
+detected.
+
+gdiff -wpruN '--exclude=*.orig' a~/crypto/apr_crypto.c a/crypto/apr_crypto.c 
+--- a~/crypto/apr_crypto.c      2017-06-13 21:28:00.000000000 +0000
++++ a/crypto/apr_crypto.c       2020-03-29 10:34:13.727512747 +0000
+@@ -14,6 +14,8 @@
+  * limitations under the License.
+  */
+ 
++#define __STDC_WANT_LIB_EXT1__ 1
++
+ #include <ctype.h>
+ #include <stdio.h>

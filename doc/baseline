@@ -61,6 +61,7 @@ extra.omnios ooce/file/lsof
 extra.omnios ooce/file/tree
 extra.omnios ooce/kvmadm
 extra.omnios ooce/library/apr
+extra.omnios ooce/library/apr-util
 extra.omnios ooce/library/bdw-gc
 extra.omnios ooce/library/cairo
 extra.omnios ooce/library/fcgi2
