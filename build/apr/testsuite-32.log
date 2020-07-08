@@ -1,0 +1,276 @@
+APR Lock Performance Test
+==============
+
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (UNNESTED)          OK
+    Starting 1 threads    OK
+microseconds: 34046 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (NESTED)            OK
+    Starting 1 threads    OK
+microseconds: 34594 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (TIMED)             OK
+    Starting 1 threads    OK
+microseconds: 122224 usec
+apr_thread_rwlock_t Tests
+    Initializing the apr_thread_rwlock_t                    OK
+    Starting 1 threads    OK
+microseconds: 80933 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (UNNESTED)          OK
+    Starting 2 threads    OK
+microseconds: 238625 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (NESTED)            OK
+    Starting 2 threads    OK
+microseconds: 202500 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (TIMED)             OK
+    Starting 2 threads    OK
+microseconds: 269133 usec
+apr_thread_rwlock_t Tests
+    Initializing the apr_thread_rwlock_t                    OK
+    Starting 2 threads    OK
+microseconds: 7648541 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (UNNESTED)          OK
+    Starting 3 threads    OK
+microseconds: 447497 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (NESTED)            OK
+    Starting 3 threads    OK
+microseconds: 508611 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (TIMED)             OK
+    Starting 3 threads    OK
+microseconds: 845858 usec
+apr_thread_rwlock_t Tests
+    Initializing the apr_thread_rwlock_t                    OK
+    Starting 3 threads    OK
+microseconds: 11575853 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (UNNESTED)          OK
+    Starting 4 threads    OK
+microseconds: 636412 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (NESTED)            OK
+    Starting 4 threads    OK
+microseconds: 690211 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (TIMED)             OK
+    Starting 4 threads    OK
+microseconds: 1124537 usec
+apr_thread_rwlock_t Tests
+    Initializing the apr_thread_rwlock_t                    OK
+    Starting 4 threads    OK
+microseconds: 14951758 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (UNNESTED)          OK
+    Starting 5 threads    OK
+microseconds: 801857 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (NESTED)            OK
+    Starting 5 threads    OK
+microseconds: 813925 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (TIMED)             OK
+    Starting 5 threads    OK
+microseconds: 1431163 usec
+apr_thread_rwlock_t Tests
+    Initializing the apr_thread_rwlock_t                    OK
+    Starting 5 threads    OK
+microseconds: 19158469 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (UNNESTED)          OK
+    Starting 6 threads    OK
+microseconds: 1019147 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (NESTED)            OK
+    Starting 6 threads    OK
+microseconds: 1043864 usec
+apr_thread_mutex_t Tests
+    Initializing the apr_thread_mutex_t (TIMED)             OK
+    Starting 6 threads    OK
+microseconds: 1840229 usec
+apr_thread_rwlock_t Tests
+    Initializing the apr_thread_rwlock_t                    OK
+    Starting 6 threads    OK
+microseconds: 22844197 usec
+Trying proc mutexes with mechanism `default'...
+  mutex mechanism `default' is global in scope on this platform.
+Trying global mutexes with mechanism `default'...
+  no problem encountered...
+Trying proc mutexes with mechanism `flock'...
+  mutex mechanism `flock' is *NOT* global in scope on this platform.
+Trying global mutexes with mechanism `flock'...
+  no problem encountered...
+Trying proc mutexes with mechanism `sysvsem'...
+  mutex mechanism `sysvsem' is global in scope on this platform.
+Trying global mutexes with mechanism `sysvsem'...
+  no problem encountered...
+Trying proc mutexes with mechanism `posix'...
+  mutex mechanism `posix' is global in scope on this platform.
+Trying global mutexes with mechanism `posix'...
+  no problem encountered...
+Trying proc mutexes with mechanism `fcntl'...
+  mutex mechanism `fcntl' is *NOT* global in scope on this platform.
+Trying global mutexes with mechanism `fcntl'...
+  no problem encountered...
+Trying proc mutexes with mechanism `proc_pthread'...
+  mutex mechanism `proc_pthread' is global in scope on this platform.
+Trying global mutexes with mechanism `proc_pthread'...
+  no problem encountered...
+Trying proc mutexes with mechanism `default_timed'...
+  mutex mechanism `default_timed' is global in scope on this platform.
+Trying global mutexes with mechanism `default_timed'...
+  no problem encountered...
+testatomic          :  SUCCESS
+testdir             :  SUCCESS
+testdso             :  SUCCESS
+testdup             :  SUCCESS
+testencode          :  SUCCESS
+testenv             :  SUCCESS
+testescape          :  SUCCESS
+testfile            :  SUCCESS
+testfilecopy        :  SUCCESS
+testfileinfo        :  SUCCESS
+testflock           :  SUCCESS
+testfmt             :  SUCCESS
+testfnmatch         :  SUCCESS
+testargs            :  SUCCESS
+testhash            :  SUCCESS
+testipsub           :  SUCCESS
+testlock            :  SUCCESS
+testcond            :  SUCCESS
+testlfs             :  Line 78: Creation of large file (apparently not sparse)
+Line 114: Large file tests not enabled
+Line 133: Large file tests not enabled
+Line 146: Large file tests not enabled
+Line 204: Large file tests not enabled
+Line 179: Large file tests not enabled
+Line 232: Large file tests not enabled
+Line 259: Large file tests not enabled
+Line 286: Large file tests not enabled
+Line 302: Large file tests not enabled
+SUCCESS
+testmmap            :  SUCCESS
+testnames           :  SUCCESS
+testoc              :  SUCCESS
+testpath            :  SUCCESS
+testpipe            :  SUCCESS
+testpoll            :  SUCCESS
+testpools           :  SUCCESS
+testproc            :  SUCCESS
+testprocmutex       :  SUCCESS
+testrand            :  SUCCESS
+testsleep           :  SUCCESS
+testshm             :  SUCCESS
+testsock            :  SUCCESS
+testsockets         :  SUCCESS
+testsockopt         :  SUCCESS
+teststr             :  SUCCESS
+teststrnatcmp       :  SUCCESS
+testtable           :  SUCCESS
+testtemp            :  SUCCESS
+testthread          :  SUCCESS
+testtime            :  SUCCESS
+testud              :  SUCCESS
+testuser            :  SUCCESS
+testvsn             :  SUCCESS
+testskiplist        :  SUCCESS
+All tests passed.
+Creating a test file...
+Sending the file...
+apr_socket_sendfile() updated offset with 0
+apr_socket_sendfile() updated len with 370049
+bytes really sent: 370049
+After apr_socket_sendfile(), the kernel file pointer is at offset 0.
+client: apr_socket_sendfile() worked as expected!
+Waiting for a client to connect...
+Processing a client...
+server: apr_socket_sendfile() worked as expected!
+Creating a test file...
+Sending the file...
+Calling apr_socket_sendfile()...
+Headers (3):
+	15 bytes (1)
+	5 bytes (E)
+	80000 bytes (^)
+File: 200000 bytes from offset 0
+Trailers (3):
+	19 bytes
+	10 bytes
+	90000 bytes
+apr_socket_sendfile()->0, sent 145556 bytes
+Calling apr_socket_sendfile()...
+Headers (0):
+File: 134464 bytes from offset 65536
+Trailers (3):
+	19 bytes
+	10 bytes
+	90000 bytes
+apr_socket_sendfile()->11, sent 0 bytes
+Calling apr_socket_sendfile()...
+Headers (0):
+File: 134464 bytes from offset 65536
+Trailers (3):
+	19 bytes
+	10 bytes
+	90000 bytes
+apr_socket_sendfile()->0, sent 131072 bytes
+Calling apr_socket_sendfile()...
+Headers (0):
+File: 3392 bytes from offset 196608
+Trailers (3):
+	19 bytes
+	10 bytes
+	90000 bytes
+apr_socket_sendfile()->11, sent 0 bytes
+Calling apr_socket_sendfile()...
+Headers (0):
+File: 3392 bytes from offset 196608
+Trailers (3):
+	19 bytes
+	10 bytes
+	90000 bytes
+apr_socket_sendfile()->0, sent 93421 bytes
+After apr_socket_sendfile(), the kernel file pointer is at offset 0.
+client: apr_socket_sendfile() worked as expected!
+Waiting for a client to connect...
+Processing a client...
+server: apr_socket_sendfile() worked as expected!
+Creating a test file...
+Sending the file...
+Calling apr_socket_sendfile()...
+Headers (3):
+	15 bytes (1)
+	5 bytes (E)
+	80000 bytes (^)
+File: 200000 bytes from offset 0
+Trailers (3):
+	19 bytes
+	10 bytes
+	90000 bytes
+apr_socket_sendfile()->0, sent 145556 bytes
+Calling apr_socket_sendfile()...
+Headers (0):
+File: 134464 bytes from offset 65536
+Trailers (3):
+	19 bytes
+	10 bytes
+	90000 bytes
+apr_socket_sendfile()->0, sent 131072 bytes
+Calling apr_socket_sendfile()...
+Headers (0):
+File: 3392 bytes from offset 196608
+Trailers (3):
+	19 bytes
+	10 bytes
+	90000 bytes
+apr_socket_sendfile()->0, sent 93421 bytes
+After apr_socket_sendfile(), the kernel file pointer is at offset 0.
+client: apr_socket_sendfile() worked as expected!
+Waiting for a client to connect...
+Processing a client...
+server: apr_socket_sendfile() worked as expected!
