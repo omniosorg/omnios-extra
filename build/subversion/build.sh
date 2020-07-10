@@ -24,8 +24,6 @@ DESC="Subversion is a version control system designed to be \
 as similar to cvs(1) as possible, while fixing many \
 outstanding problems with cvs(1)."
 
-set_mirror "https://downloads.apache.org/"
-
 set_arch 64
 
 BUILD_DEPENDS_IPS+="
@@ -44,15 +42,14 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS_64=" 
     --prefix=$PREFIX
-    --enable-layout=opt
-    --with-apr=/opt/ooce/share/apr/amd64/apr-1-config
-    --with-apr-util=/opt/ooce/share/apu/amd64/apu-1-config
+    --with-apr=$OPREFIX/bin/$ISAPART64/apr-1-config
+    --with-apr-util=$OPREFIX/bin/$ISAPART64/apu-1-config
     --with-utf8proc=internal
     --without-serf
 "
 
 CFLAGS+=" -D__EXTENSIONS__"
-LDFLAGS+=" -L/opt/ooce/lib/amd64 -R/opt/ooce/lib/amd64"
+LDFLAGS+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
