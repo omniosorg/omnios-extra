@@ -19,7 +19,7 @@
 
 PROG=nginx
 PKG=ooce/server/nginx
-VER=1.19.0
+VER=1.19.1
 SUMMARY="nginx web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
