@@ -25,6 +25,7 @@ as similar to cvs(1) as possible, while fixing many \
 outstanding problems with cvs(1)."
 
 set_arch 64
+set_standard XPG6
 
 BUILD_DEPENDS_IPS+="
     ooce/library/apr
@@ -48,7 +49,6 @@ CONFIGURE_OPTS_64="
     --without-serf
 "
 
-CFLAGS+=" -D__EXTENSIONS__"
 LDFLAGS+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 init
