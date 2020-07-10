@@ -57,6 +57,7 @@
 | ooce/file/tree		| 1.8.0		| http://mama.indstate.edu/users/ice/tree/ | [omniosorg](https://github.com/omniosorg)
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/apr		| 1.7.0 	| https://downloads.apache.org/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/apr-util		| 1.6.1		| https://downloads.apache.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/bdw-gc		| 8.0.4		| https://www.hboehm.info/gc/gc_source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/cairo		| 1.16.0	| https://cairographics.org/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/fcgi2		| 2.4.2		| https://github.com/FastCGI-Archives/fcgi2/releases | [omniosorg](https://github.com/omniosorg)

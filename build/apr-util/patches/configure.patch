@@ -1,0 +1,14 @@
+gdiff -wpruN '--exclude=*.orig' a~/configure a/configure
+--- a~/configure        2017-10-18 15:51:43.000000000 +0000
++++ a/configure 2020-03-29 15:35:31.442125751 +0000
+@@ -17057,8 +17057,8 @@ fi
+ 
+ 
+   if test "x$APRUTIL_LDFLAGS" = "x"; then
+-    test "x$silent" != "xyes" && echo "  setting APRUTIL_LDFLAGS to \"-L$lib\""
+-    APRUTIL_LDFLAGS="-L$lib"
++    test "x$silent" != "xyes" && echo "  setting APRUTIL_LDFLAGS to \"-L$lib -R$lib\""
++    APRUTIL_LDFLAGS="-L$lib -R$lib"
+   else
+     apr_addto_bugger="-L$lib"
+     for i in $apr_addto_bugger; do
