@@ -30,6 +30,7 @@ set_standard XPG6
 BUILD_DEPENDS_IPS+="
     ooce/library/apr
     ooce/library/apr-util
+    ooce/library/serf
 "
 
 OPREFIX=$PREFIX
@@ -46,7 +47,6 @@ CONFIGURE_OPTS_64="
     --with-apr=$OPREFIX/bin/$ISAPART64/apr-1-config
     --with-apr-util=$OPREFIX/bin/$ISAPART64/apu-1-config
     --with-utf8proc=internal
-    --without-serf
 "
 
 LDFLAGS+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
