@@ -22,17 +22,19 @@ PKG=ooce/util/zadm
 SUMMARY="zone admin tool"
 DESC="$PROG - $SUMMARY"
 
+if [ $RELVER -lt 151034 ]; then
+    logmsg "--- $PKG is not built for r$RELVER"
+    exit 0
+fi
+
 set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
 RUN_DEPENDS_IPS="
+    network/socat
     ooce/compress/pigz
     ooce/compress/pbzip2
     ooce/compress/zstd
 "
-
-[ $RELVER -le 151030 ] && RUN_DEPENDS_IPS+=" ooce/network/socat" \
-    || RUN_DEPENDS_IPS+=" network/socat"
-[ $RELVER -lt 151033 ] && RUN_DEPENDS_IPS+=" runtime/perl-64"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
