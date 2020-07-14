@@ -85,6 +85,7 @@ extra.omnios ooce/library/libzip
 extra.omnios ooce/library/onig
 extra.omnios ooce/library/pango
 extra.omnios ooce/library/protobuf
+extra.omnios ooce/library/serf
 extra.omnios ooce/library/slang
 extra.omnios ooce/library/tiff
 extra.omnios ooce/library/unistring
