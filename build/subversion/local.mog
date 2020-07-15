@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 # Symlink binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
@@ -19,10 +19,10 @@
     link path=$(OPREFIX)/share/man/%<1>/%<2> \
         target=../../../$(PROG)/share/man/%<1>/%<2> >
 
-dir group=bin mode=0755 owner=subversion path=var/opt/ooce/subversion
+dir group=bin mode=0755 owner=$(PROG) path=var/$(PREFIX)
 
-group groupname=subversion gid=91
-user ftpuser=false username=subversion uid=91 group=subversion gcos-field="Subversion User" \
+group groupname=$(PROG) gid=91
+user ftpuser=false username=$(PROG) uid=91 group=$(PROG) gcos-field="Subversion User" \
     home-dir=/var/$(PREFIX) password=NP
 
 license LICENSE license=Apache2

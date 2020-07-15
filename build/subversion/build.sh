@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -44,8 +44,6 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS_64=" 
     --prefix=$PREFIX
-    --with-apr=$OPREFIX/bin/$ISAPART64/apr-1-config
-    --with-apr-util=$OPREFIX/bin/$ISAPART64/apu-1-config
     --with-utf8proc=internal
 "
 
