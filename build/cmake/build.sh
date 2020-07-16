@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=cmake
-VER=3.17.3
+VER=3.18.0
 PKG=ooce/developer/cmake
 SUMMARY="Build coordinator"
 DESC="An extensible system that manages the build process in a "

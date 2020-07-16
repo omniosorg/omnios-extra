@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=ffmpeg
-VER=4.3
+VER=4.3.1
 PKG=ooce/multimedia/ffmpeg
 SUMMARY="ffmpeg"
 DESC="A complete, cross-platform solution to record, "
