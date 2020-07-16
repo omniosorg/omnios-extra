@@ -19,7 +19,8 @@
     link path=$(OPREFIX)/share/man/%<1>/%<2> \
         target=../../../$(PROG)/share/man/%<1>/%<2> >
 
-dir group=bin mode=0755 owner=$(PROG) path=var/$(PREFIX)
+dir group=$(PROG) mode=0750 owner=$(PROG) path=var/$(PREFIX)
+dir group=$(PROG) mode=0750 owner=$(PROG) path=var/log/$(PREFIX)
 
 group groupname=$(PROG) gid=91
 user ftpuser=false username=$(PROG) uid=91 group=$(PROG) gcos-field="Subversion User" \
