@@ -112,7 +112,6 @@
 | ooce/runtime/tcl		| 8.6.10	| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/security/gnupg		| 1.4.23	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.19.1	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/server/nginx-116		| 1.16.1	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-118		| 1.18.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio		| 2020-07-14T19-14-30Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio-mc		| 2020-07-17T02-52-20Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
