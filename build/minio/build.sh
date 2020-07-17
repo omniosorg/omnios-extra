@@ -18,13 +18,13 @@
 
 PROG=minio
 PKG=ooce/storage/minio
-VER=2020-07-02T00-15-09Z
+VER=2020-07-14T19-14-30Z
 SUMMARY="MinIO server"
 DESC="A high Performance Object Storage released under Apache License v2.0. "
 DESC+="It is API compatible with Amazon S3 cloud storage service."
 
 set_arch 64
-set_gover 1.13
+set_gover 1.14
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
