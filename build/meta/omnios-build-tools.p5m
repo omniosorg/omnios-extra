@@ -16,6 +16,7 @@ depend fmri=ooce/library/freetype2 type=require
 depend fmri=ooce/print/cups type=require
 depend fmri=ooce/text/asciidoc type=require
 depend fmri=ooce/text/ripgrep type=require
+depend fmri=ooce/util/fd type=require
 depend fmri=ooce/util/jq type=require
 
 # These two are required to run the gcc testsuite.
