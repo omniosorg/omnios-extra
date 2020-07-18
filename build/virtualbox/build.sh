@@ -18,7 +18,8 @@
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox
-VER=6.1.10
+VER=6.1.12a
+# virtualbox does currently not build with later gsoap versions
 GSOAPVER=2.8.102
 GSOAPDIR=gsoap-${GSOAPVER%.*}
 SUMMARY="VirtualBox"
@@ -91,12 +92,16 @@ CONFIGURE_OPTS="
 "
 # gsoap does not build with parallel make
 NO_PARALLEL_MAKE=1
-build_dependency gsoap $GSOAPDIR gsoap gsoap_$GSOAPVER ""
+# gsoap 2.8.103+ wants gnu tools
+PATH="/usr/gnu/bin:$PATH" build_dependency gsoap $GSOAPDIR gsoap gsoap_$GSOAPVER ""
 NO_PARALLEL_MAKE=
 export GSOAP=$DEPROOT/usr
 export LD_LIBRARY_PATH+=":$GSOAP/lib"
 
 #########################################################################
+
+# virtualbox unpacks to directory w/o the trailing alpha character
+[[ $VER = *[a-z] ]] && set_builddir "$PROG-${VER:0: -1}"
 
 CONFIGURE_OPTS="
     --build-headless

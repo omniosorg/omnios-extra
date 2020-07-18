@@ -18,7 +18,7 @@
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox  ##IGNORE##
-VER=5.2.42
+VER=5.2.44
 GSOAPVER=2.8.102
 GSOAPDIR=gsoap-${GSOAPVER%.*}
 SUMMARY="VirtualBox"
