@@ -96,6 +96,7 @@ extra.omnios ooce/multimedia/minidlna
 extra.omnios ooce/network/fping
 extra.omnios ooce/network/irssi
 extra.omnios ooce/network/mosh
+extra.omnios ooce/network/mrtg
 extra.omnios ooce/network/nsd
 extra.omnios ooce/network/openvpn
 extra.omnios ooce/network/rclone
