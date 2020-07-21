@@ -12,8 +12,6 @@
 
 # Copyright 2020 OmniOS Community Edition.  All rights reserved.
 
-# Preserve configuration files
-<transform path=etc/$(PREFIX)/fonts/fonts.conf -> set preserve true>
 <transform path=etc/$(PREFIX)/fonts/fonts.conf.bak -> drop>
 
 # Drop 32bit binaries

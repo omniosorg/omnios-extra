@@ -33,6 +33,8 @@ BUILD_DEPENDS_IPS="
     ooce/library/freetype2
 "
 
+RUN_DEPENDS_IPS="ooce/fonts/liberation"
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
@@ -43,6 +45,7 @@ CONFIGURE_OPTS="
     --prefix=$PREFIX
     --sysconfdir=/etc$PREFIX
     --includedir=$OPREFIX/include
+    --with-default-fonts=$OPREFIX/share/fonts
     --with-cache-dir=/var/$PREFIX/cache
 "
 CONFIGURE_OPTS_32="
