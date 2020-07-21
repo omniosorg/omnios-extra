@@ -1,0 +1,11 @@
+diff -wpruN '--exclude=*.orig' a~/src/rrd_list.c a/src/rrd_list.c
+--- a~/src/rrd_list.c	1970-01-01 00:00:00
++++ a/src/rrd_list.c	1970-01-01 00:00:00
+@@ -1,6 +1,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <limits.h> /* For *_MAX. */
+ #include "rrd_config.h"
+ #ifdef _MSC_VER
+ #include "win32-glob.h"    /* from https://sourceforge.net/projects/sox/ */
