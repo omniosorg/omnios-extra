@@ -10,7 +10,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2020 OmniOS Community Edition.  All rights reserved.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 # Drop unwanted files
 <transform path=$(PREFIX)/share/graphviz/(?:demo|doc) -> drop>

@@ -10,7 +10,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition. All rights reserved.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 dir group=bin mode=0755 owner=root path=var/$(PREFIX)/$(PROG)
 dir group=$(PROG) mode=0750 owner=$(PROG) path=var/$(PREFIX)/$(PROG)/run

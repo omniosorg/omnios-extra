@@ -19,7 +19,7 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 dir group=bin owner=root path=var/$(OPREFIX)/$(PROG)/run
 
