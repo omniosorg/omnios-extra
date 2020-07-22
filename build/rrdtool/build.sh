@@ -34,7 +34,7 @@ XFORM_ARGS="
 "
 
 CONFIGURE_OPTS="
-    --disable-mmap
+    --with-rrd-default-font=LiberationMono-Regular
 "
 
 reset_configure_opts
