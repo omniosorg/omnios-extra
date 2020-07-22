@@ -1,5 +1,6 @@
 extra.omnios ooce/application/fcgiwrap
 extra.omnios ooce/application/gitea
+extra.omnios ooce/application/gnuplot
 extra.omnios ooce/application/graphviz
 extra.omnios ooce/application/imagemagick
 extra.omnios ooce/application/mattermost
