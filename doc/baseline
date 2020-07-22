@@ -1,5 +1,6 @@
 extra.omnios ooce/application/fcgiwrap
 extra.omnios ooce/application/gitea
+extra.omnios ooce/application/gnuplot
 extra.omnios ooce/application/graphviz
 extra.omnios ooce/application/imagemagick
 extra.omnios ooce/application/mattermost
@@ -60,6 +61,7 @@ extra.omnios ooce/extra-build-tools
 extra.omnios ooce/file/acltool
 extra.omnios ooce/file/lsof
 extra.omnios ooce/file/tree
+extra.omnios ooce/fonts/liberation
 extra.omnios ooce/kvmadm
 extra.omnios ooce/library/apr
 extra.omnios ooce/library/apr-util

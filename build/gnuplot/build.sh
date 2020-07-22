@@ -16,41 +16,35 @@
 
 . ../../lib/functions.sh
 
-PROG=groovy
-VER=3.0.5
-PKG=ooce/runtime/groovy-30
-SUMMARY="Groovy"
-DESC="Java-syntax-compatible object-oriented programming "
-DESC+="language for the Java platform."
+PROG=gnuplot
+VER=5.4.0
+PKG=ooce/application/gnuplot
+SUMMARY="gnuplot"
+DESC="A portable command-line driven graphing utility"
 
-RUN_DEPENDS_IPS="developer/java/openjdk8"
-
-MAJVER=${VER%.*}
-sMAJVER=${MAJVER//./}
-PATCHDIR=patches-$sMAJVER
+set_arch 64
+SKIP_LICENCES=gnuplot
 
 OPREFIX=$PREFIX
-PREFIX+=/$PROG-$MAJVER
+PREFIX+="/$PROG"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-    -DVERSION=$MAJVER
 "
 
-copy_package() {
-    logcmd mkdir -p $DESTDIR$PREFIX || logerr "mkdir failed"
-    logmsg "--- Copying groovy"
-    logcmd rsync -a $TMPDIR/$PROG-$VER/ $DESTDIR$PREFIX/ \
-        || logerr "rsync groovy"
-}
+reset_configure_opts
+
+CPPFLAGS+=" -I$OPREFIX/include"
+LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 init
-download_source $PROG apache-$PROG-binary-$VER
+download_source $PROG $PROG $VER
 patch_source
 prep_build
-copy_package
+build
+strip_install
 make_package
 clean_up
 

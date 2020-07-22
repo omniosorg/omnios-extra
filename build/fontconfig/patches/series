@@ -1,5 +1,3 @@
-01.arial-narrow.conf.patch
-02.cjk-fonts.conf.patch
 04.bitmap-hacks.patch
 05-uuid.patch
 10-do-not-update-mtime.patch
