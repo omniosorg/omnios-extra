@@ -11,7 +11,7 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2020 OmniOS Community Edition.  All rights reserved.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 # Skip dependency resolution for python components
 <transform file path=$(PREFIX)/share/opt-viewer/.*\.py$ \

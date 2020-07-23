@@ -11,7 +11,7 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2018 OmniOS Community Edition.  All rights reserved.
+# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 
 # Mediated binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \

@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition. All rights reserved.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 <transform dir path=$(PREFIX)/libexec -> set mode 0755>
 <transform dir path=var/$(PREFIX)-> set mode 0775>

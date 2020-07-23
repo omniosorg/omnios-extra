@@ -13,7 +13,7 @@
 # }}}
 
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2020 OmniOS Community Edition.  All rights reserved.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 

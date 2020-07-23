@@ -11,7 +11,7 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 # Drop 32bit binaries
 <transform path=$(PREFIX)/s?bin/i386 -> drop>

@@ -10,7 +10,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition. All rights reserved.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 # Create directories
 dir mode=0755 owner=root group=bin path=$(PREFIX)/nagios/nrdp/share

@@ -19,7 +19,7 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 
 dir group=postgres mode=0700 owner=postgres \

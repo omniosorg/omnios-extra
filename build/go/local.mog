@@ -11,7 +11,7 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2019 OmniOS Community Edition.  All rights reserved.
+# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
 dir group=bin mode=0755 owner=root path=$(OPREFIX)/bin
 

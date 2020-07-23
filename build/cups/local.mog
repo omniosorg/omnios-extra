@@ -11,7 +11,7 @@
 # }}}
 # CDDL HEADER START
 #
-# Copyright 2020 OmniOS Community Edition.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 # Symlink binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
