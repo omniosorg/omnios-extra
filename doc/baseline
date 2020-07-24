@@ -154,6 +154,7 @@ extra.omnios ooce/x11/library/libx11
 extra.omnios ooce/x11/library/libxau
 extra.omnios ooce/x11/library/libxcb
 extra.omnios ooce/x11/library/libxext
+extra.omnios ooce/x11/library/libxfixes
 extra.omnios ooce/x11/library/libxrandr
 extra.omnios ooce/x11/library/libxrender
 extra.omnios ooce/x11/library/xtrans
