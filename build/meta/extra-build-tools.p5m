@@ -40,6 +40,7 @@ depend fmri=ooce/library/slang type=require
 depend fmri=ooce/multimedia/ffmpeg type=require
 depend fmri=ooce/runtime/node-12 type=require
 depend fmri=ooce/runtime/ruby-26 type=require
+depend fmri=ooce/x11/header/x11-protocols type=require
 depend fmri=system/header/header-agp type=require
 depend fmri=system/header/header-usb type=require
 depend fmri=system/library/pcap type=require

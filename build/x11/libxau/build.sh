@@ -1,3 +1,5 @@
+#!/usr/bin/bash
+#
 # {{{ CDDL HEADER
 #
 # This file and its contents are supplied under the terms of the
@@ -12,14 +14,23 @@
 
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-XFORM_ARGS="-DPREFIX=${PREFIX#/}"
+. ../../../lib/functions.sh
 
-CONFIGURE_OPTS="--disable-static"
+PROG=libXau
+VER=1.0.9
+PKG=ooce/x11/library/libxau
+SUMMARY="libXau"
+DESC="X Authorization Protocol"
 
-addpath PKG_CONFIG_PATH $PREFIX/share/pkgconfig
+. $SRCDIR/../common.sh
 
-LDFLAGS32+=" -R$PREFIX/lib"
-LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
+init
+download_source x11/$PROG $PROG $VER
+prep_build
+patch_source
+build -ctf
+make_package
+clean_up
 
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker
