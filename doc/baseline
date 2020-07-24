@@ -148,3 +148,4 @@ extra.omnios ooce/util/xjobs
 extra.omnios ooce/util/zadm
 extra.omnios ooce/virtualization/virtualbox
 extra.omnios ooce/virtualization/virtualbox/additions
+extra.omnios ooce/x11/header/x11-protocols
