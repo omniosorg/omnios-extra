@@ -30,3 +30,12 @@ depend fmri=ooce/developer/dejagnu type=conditional \
 depend fmri=ooce/runtime/ruby-26 type=conditional \
     predicate=release/name@0.5.11-151033
 
+# Required to build openjdk11 from r151035 onwards
+depend fmri=ooce/x11/header/x11-protocols type=conditional \
+    predicate=release/name@0.5.11-151035
+depend fmri=ooce/x11/library/libxrandr type=conditional \
+    predicate=release/name@0.5.11-151035
+depend fmri=ooce/x11/library/libxtst type=conditional \
+    predicate=release/name@0.5.11-151035
+depend fmri=ooce/x11/library/libxt type=conditional \
+    predicate=release/name@0.5.11-151035
