@@ -1,0 +1,35 @@
+From 76e51a6343000165747b39228c0070bbbfa346ba Mon Sep 17 00:00:00 2001
+From: Arvind Umrao <arvind.umrao@oracle.com>
+Date: Tue, 8 May 2012 11:58:06 +0530
+Subject: [PATCH] 7162172
+
+diff -wpruN '--exclude=*.orig' a~/Xtranssock.c a/Xtranssock.c
+--- a~/Xtranssock.c	1970-01-01 00:00:00
++++ a/Xtranssock.c	1970-01-01 00:00:00
+@@ -1615,7 +1615,7 @@ TRANS(SocketINETConnect) (XtransConnInfo
+ 	 * only affect one of a set of addresses.
+ 	 */
+ 
+-	if (olderrno == ECONNREFUSED || olderrno == EINTR
++	if (olderrno == ECONNREFUSED 
+ #if defined(IPv6) && defined(AF_INET6)
+ 	  || (((addrlist->addr->ai_next != NULL) ||
+ 	        (addrlist->addr != addrlist->firstaddr)) &&
+@@ -1628,7 +1628,7 @@ TRANS(SocketINETConnect) (XtransConnInfo
+ #endif
+ 	    )
+ 	    res = TRANS_TRY_CONNECT_AGAIN;
+-	else if (olderrno == EWOULDBLOCK || olderrno == EINPROGRESS)
++	else if (olderrno == EWOULDBLOCK || olderrno == EINPROGRESS || olderrno == EINTR)
+ 	    res = TRANS_IN_PROGRESS;
+ 	else
+ 	{
+@@ -1917,7 +1917,7 @@ TRANS(SocketUNIXConnect) (XtransConnInfo
+ 	    if (olderrno == EWOULDBLOCK || olderrno == EINPROGRESS)
+ 		return TRANS_IN_PROGRESS;
+ 	    else if (olderrno == EINTR)
+-		return TRANS_TRY_CONNECT_AGAIN;
++		return TRANS_IN_PROGRESS;
+ 	    else if (olderrno == ENOENT || olderrno == ECONNREFUSED) {
+ 		/* If opening as abstract socket failed, try again normally */
+ 		if (abstract) {
