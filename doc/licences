@@ -16,7 +16,7 @@ OSCL			OPEN SOURCE CODE LICENSE.*\n.*Version 1
 #
 GCC runtime license	GCC RUNTIME LIBRARY EXCEPTION
 #
-MIT			Permission is hereby granted, free of charge(?s:.)*The above copyright notice and this permission notice(?s).*shall be.*included.*in.all.copies.or.substantial.portions.of.the.*Software.(?-s)$(?s:.)*THE SOFTWARE IS PROVIDED .AS IS., WITHOUT WARRANTY OF(?s:.)*ANY KIND,( EXPRESS( OR)?)?
+MIT			Permission is hereby granted, free of charge(?s:.)*The above copyright notice and this permission notice(?s).*shall.*be.*included.*in.all.copies.or.substantial.portions.of.the.*Software.(?-s)$(?s:.)*THE SOFTWARE IS PROVIDED .AS IS., WITHOUT WARRANTY OF(?s:.)*ANY(?s:.)KIND,( EXPRESS( OR)?)?
 old-MIT			"Old MIT"(?s:.)*Permission is hereby granted, without written agreement and without
 #
 # The original 4-clause BSD licence
