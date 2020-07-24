@@ -152,5 +152,6 @@
 | ooce/x11/library/libxi	| 1.7.10	| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libxrandr	| 1.5.2		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libxrender	| 0.9.10	| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
+| ooce/x11/library/libxt	| 1.2.0		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libxtst	| 1.2.3		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/xtrans	| 1.4.0		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)

@@ -160,5 +160,6 @@ extra.omnios ooce/x11/library/libxfixes
 extra.omnios ooce/x11/library/libxi
 extra.omnios ooce/x11/library/libxrandr
 extra.omnios ooce/x11/library/libxrender
+extra.omnios ooce/x11/library/libxt
 extra.omnios ooce/x11/library/libxtst
 extra.omnios ooce/x11/library/xtrans
