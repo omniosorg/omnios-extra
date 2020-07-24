@@ -150,6 +150,7 @@ extra.omnios ooce/virtualization/virtualbox
 extra.omnios ooce/virtualization/virtualbox/additions
 extra.omnios ooce/x11/header/x11-protocols
 extra.omnios ooce/x11/header/xcb-protocols
+extra.omnios ooce/x11/library/libice
 extra.omnios ooce/x11/library/libx11
 extra.omnios ooce/x11/library/libxau
 extra.omnios ooce/x11/library/libxcb
