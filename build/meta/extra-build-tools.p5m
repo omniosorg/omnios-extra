@@ -45,6 +45,8 @@ depend fmri=ooce/x11/header/xcb-protocols type=require
 depend fmri=ooce/x11/library/libx11 type=require
 depend fmri=ooce/x11/library/libxau type=require
 depend fmri=ooce/x11/library/libxcb type=require
+depend fmri=ooce/x11/library/libxext type=require
+depend fmri=ooce/x11/library/libxrender type=require
 depend fmri=ooce/x11/library/xtrans type=require
 depend fmri=system/header/header-agp type=require
 depend fmri=system/header/header-usb type=require
