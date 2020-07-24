@@ -153,4 +153,5 @@ extra.omnios ooce/x11/header/xcb-protocols
 extra.omnios ooce/x11/library/libx11
 extra.omnios ooce/x11/library/libxau
 extra.omnios ooce/x11/library/libxcb
+extra.omnios ooce/x11/library/libxext
 extra.omnios ooce/x11/library/xtrans
