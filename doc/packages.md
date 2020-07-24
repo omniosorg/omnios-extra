@@ -143,4 +143,5 @@
 | ooce/x11/header/x11-protocols	| 2020.1	| https://www.x.org/archive/individual/proto/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/header/xcb-protocols	| 1.14		| https://www.x.org/archive/individual/proto/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libxau	| 1.0.9		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
+| ooce/x11/library/libxcb	| 1.14		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/xtrans	| 1.4.0		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
