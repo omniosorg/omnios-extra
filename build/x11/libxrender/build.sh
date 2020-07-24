@@ -1,3 +1,5 @@
+#!/usr/bin/bash
+#
 # {{{ CDDL HEADER
 #
 # This file and its contents are supplied under the terms of the
@@ -12,19 +14,27 @@
 
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-if [ $RELVER -lt 151035 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
+. ../../../lib/functions.sh
 
-XFORM_ARGS="-DPREFIX=${PREFIX#/}"
+PROG=libXrender
+VER=0.9.10
+PKG=ooce/x11/library/libxrender
+SUMMARY="libXrender"
+DESC="X Render extension library"
 
-CONFIGURE_OPTS="--disable-static"
+. $SRCDIR/../common.sh
 
-addpath PKG_CONFIG_PATH $PREFIX/share/pkgconfig
+BUILD_DEPENDS_IPS="ooce/x11/library/libx11"
 
-LDFLAGS32+=" -R$PREFIX/lib"
-LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
+SKIP_LICENCES=MIT
+
+init
+download_source x11/$PROG $PROG $VER
+prep_build
+patch_source
+build -ctf
+make_package
+clean_up
 
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker
