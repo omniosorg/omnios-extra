@@ -39,7 +39,10 @@ CONFIGURE_OPTS="
 
 reset_configure_opts
 
+CPPFLAGS+=" -I/usr/include/python${PYTHONVER}m"
 LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
+
+export PYTHON
 
 init
 download_source $PROG $PROG $VER
