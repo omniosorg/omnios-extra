@@ -17,8 +17,8 @@
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.25.0
-MMCTLVER=$VER
+VER=5.25.1
+MMCTLVER=5.25.0
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
 DESC="All your team communication in one place, "
