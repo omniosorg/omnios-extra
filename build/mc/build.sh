@@ -18,7 +18,7 @@
 
 PROG=mc
 PKG=ooce/application/mc
-VER=4.8.24
+VER=4.8.25
 SUMMARY="Midnight Commander"
 DESC="A feature rich full-screen text mode application that allows you to copy, "
 DESC+="move and delete files and whole directory trees, search for files and run "
