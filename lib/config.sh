@@ -201,7 +201,7 @@ CHECK_RTIME=/opt/onbld/bin/check_rtime
 PFEXEC=sudo
 
 CTFCONVERT=/opt/onbld/bin/i386/ctfconvert
-CTFCONVERTFLAGS=-l
+CTFCONVERTFLAGS=-mi
 PKGSEND=/usr/bin/pkgsend
 PKGLINT=/usr/bin/pkglint
 PKGMOGRIFY=/usr/bin/pkgmogrify
