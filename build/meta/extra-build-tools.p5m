@@ -36,6 +36,7 @@ depend fmri=ooce/library/onig type=require
 depend fmri=ooce/library/pango type=require
 depend fmri=ooce/library/protobuf type=require
 depend fmri=ooce/library/tiff type=require
+depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require
 depend fmri=ooce/multimedia/ffmpeg type=require
 depend fmri=ooce/runtime/node-12 type=require
