@@ -1,4 +1,4 @@
-Start of unbound 1.10.1 unit test.
+Start of unbound 1.11.0+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -59,707 +59,357 @@ test slabhash functions
 test infra cache functions
 test sldns functions
 test message parse functions
-[0] did 10000 in 110.332 msec for 90635.536381 encode/sec size 615
-904028 checks ok.
+[0] did 10000 in 143.51 msec for 69681.555292 encode/sec size 615
+904336 checks ok.
 selftest successful (33 checks).
--n ./testdata/acl.rpl 
-OK
--n ./testdata/auth_nsec3_ent.rpl 
-OK
--n ./testdata/auth_nsec3_wild.rpl 
-OK
--n ./testdata/auth_xfr.rpl 
-OK
--n ./testdata/auth_xfr_host.rpl 
-OK
--n ./testdata/auth_xfr_ixfr.rpl 
-OK
--n ./testdata/auth_xfr_ixfrisaxfr.rpl 
-OK
--n ./testdata/auth_xfr_ixfrmismatch.rpl 
-OK
--n ./testdata/auth_xfr_ixfrnotimpl.rpl 
-OK
--n ./testdata/auth_xfr_notify.rpl 
-OK
--n ./testdata/auth_xfr_probesoa.rpl 
-OK
--n ./testdata/auth_zonefile.rpl 
-OK
--n ./testdata/auth_zonefile_dnssec.rpl 
-OK
--n ./testdata/auth_zonefile_dnssec_fail.rpl 
-OK
--n ./testdata/auth_zonefile_down.rpl 
-OK
--n ./testdata/auth_zonefile_noup.rpl 
-OK
--n ./testdata/auth_zonefile_root.rpl 
-OK
--n ./testdata/autotrust_10key.rpl 
-OK
--n ./testdata/autotrust_addpend_2exceed.rpl 
-OK
--n ./testdata/autotrust_addpend_early.rpl 
-OK
--n ./testdata/autotrust_addpend_nosign.rpl 
-OK
--n ./testdata/autotrust_addpend_nosignnew.rpl 
-OK
--n ./testdata/autotrust_addpend_once.rpl 
-OK
--n ./testdata/autotrust_addpend_twice.rpl 
-OK
--n ./testdata/autotrust_init.rpl 
-OK
--n ./testdata/autotrust_init_ds.rpl 
-OK
--n ./testdata/autotrust_init_fail.rpl 
-OK
--n ./testdata/autotrust_init_failsig.rpl 
-OK
--n ./testdata/autotrust_init_legacy.rpl 
-OK
--n ./testdata/autotrust_init_sigs.rpl 
-OK
--n ./testdata/autotrust_init_zsk.rpl 
-OK
--n ./testdata/autotrust_missing.rpl 
-OK
--n ./testdata/autotrust_missing_all.rpl 
-OK
--n ./testdata/autotrust_missing_returns.rpl 
-OK
--n ./testdata/autotrust_probefail.rpl 
-OK
--n ./testdata/autotrust_probefailsig.rpl 
-OK
--n ./testdata/autotrust_revoked_use.rpl 
-OK
--n ./testdata/autotrust_revoked_with_invalid.rpl 
-OK
--n ./testdata/autotrust_revtp.rpl 
-OK
--n ./testdata/autotrust_revtp_read.rpl 
-OK
--n ./testdata/autotrust_revtp_use.rpl 
-OK
--n ./testdata/autotrust_rollalgo.rpl 
-OK
--n ./testdata/autotrust_rollalgo_unknown.rpl 
-OK
--n ./testdata/autotrust_rollover.rpl 
-OK
--n ./testdata/autotrust_valid_use.rpl 
-OK
--n ./testdata/black_data.rpl 
-OK
--n ./testdata/black_dnskey.rpl 
-OK
--n ./testdata/black_ds.rpl 
-OK
--n ./testdata/black_ds_entry.rpl 
-OK
--n ./testdata/black_ent.rpl 
-OK
--n ./testdata/black_key_entry.rpl 
-OK
--n ./testdata/black_prime.rpl 
-OK
--n ./testdata/black_prime_entry.rpl 
-OK
--n ./testdata/chaos_trustanchor.rpl 
-OK
--n ./testdata/dlv_anchor.rpl 
-OK
--n ./testdata/dlv_ask_higher.rpl 
-OK
--n ./testdata/dlv_below_ta.rpl 
-OK
--n ./testdata/dlv_delegation.rpl 
-OK
--n ./testdata/dlv_ds_lookup.rpl 
-OK
--n ./testdata/dlv_insecure.rpl 
-OK
--n ./testdata/dlv_insecure_negcache.rpl 
-OK
--n ./testdata/dlv_keyretry.rpl 
-OK
--n ./testdata/dlv_negnx.rpl 
-OK
--n ./testdata/dlv_optout.rpl 
-OK
--n ./testdata/dlv_remove.rpl 
-OK
--n ./testdata/dlv_remove_empty.rpl 
-OK
--n ./testdata/dlv_remove_nodel.rpl 
-OK
--n ./testdata/dlv_remove_pos.rpl 
-OK
--n ./testdata/dlv_unused.rpl 
-OK
--n ./testdata/dns64_lookup.rpl 
-OK
--n ./testdata/domain_insec_dlv.rpl 
-OK
--n ./testdata/domain_insec_ds.rpl 
-OK
--n ./testdata/edns_keepalive.rpl 
-OK
--n ./testdata/fetch_glue.rpl 
-OK
--n ./testdata/fetch_glue_cname.rpl 
-OK
--n ./testdata/fwd.rpl 
-OK
--n ./testdata/fwd_0ttlservfail.rpl 
-OK
--n ./testdata/fwd_any.rpl 
-OK
--n ./testdata/fwd_cached.rpl 
-OK
--n ./testdata/fwd_droptoomany.rpl 
-OK
--n ./testdata/fwd_error.rpl 
-OK
--n ./testdata/fwd_jostle.rpl 
-OK
--n ./testdata/fwd_jostle_out.rpl 
-OK
--n ./testdata/fwd_lrudrop.rpl 
-OK
--n ./testdata/fwd_minimal.rpl 
-OK
--n ./testdata/fwd_no_cache.rpl 
-OK
--n ./testdata/fwd_notcached.rpl 
-OK
--n ./testdata/fwd_timeout.rpl 
-OK
--n ./testdata/fwd_two.rpl 
-OK
--n ./testdata/fwddlv_parse.rpl 
-OK
--n ./testdata/iter_class_any.rpl 
-OK
--n ./testdata/iter_cname_cache.rpl 
-OK
--n ./testdata/iter_cname_double.rpl 
-OK
--n ./testdata/iter_cname_nx.rpl 
-OK
--n ./testdata/iter_cname_qnamecopy.rpl 
-OK
--n ./testdata/iter_cycle.rpl 
-OK
--n ./testdata/iter_cycle_noh.rpl 
-OK
--n ./testdata/iter_dname_insec.rpl 
-OK
--n ./testdata/iter_dname_yx.rpl 
-OK
--n ./testdata/iter_dnsseclame_bug.rpl 
-OK
--n ./testdata/iter_dnsseclame_ds.rpl 
-OK
--n ./testdata/iter_dnsseclame_ds_ok.rpl 
-OK
--n ./testdata/iter_dnsseclame_ta.rpl 
-OK
--n ./testdata/iter_dnsseclame_ta_ok.rpl 
-OK
--n ./testdata/iter_domain_sale.rpl 
-OK
--n ./testdata/iter_domain_sale_nschange.rpl 
-OK
--n ./testdata/iter_donotq127.rpl 
-OK
--n ./testdata/iter_dp_turnsuseless.rpl 
-OK
--n ./testdata/iter_ds_locate_ns.rpl 
-OK
--n ./testdata/iter_ds_locate_ns_cname.rpl 
-OK
--n ./testdata/iter_ds_locate_ns_detach.rpl 
-OK
--n ./testdata/iter_ds_locate_ns_nosoa.rpl 
-OK
--n ./testdata/iter_ds_referral.rpl 
-OK
--n ./testdata/iter_ds_reply.rpl 
-OK
--n ./testdata/iter_emptydp.rpl 
-OK
--n ./testdata/iter_emptydp_for_glue.rpl 
-OK
--n ./testdata/iter_fwdfirst.rpl 
-OK
--n ./testdata/iter_fwdfirstequal.rpl 
-OK
--n ./testdata/iter_fwdstub.rpl 
-OK
--n ./testdata/iter_fwdstubroot.rpl 
-OK
--n ./testdata/iter_got6only.rpl 
-OK
--n ./testdata/iter_hint_lame.rpl 
-OK
--n ./testdata/iter_lame_aaaa.rpl 
-OK
--n ./testdata/iter_lame_noaa.rpl 
-OK
--n ./testdata/iter_lame_nosoa.rpl 
-OK
--n ./testdata/iter_lamescrub.rpl 
-OK
--n ./testdata/iter_mod.rpl 
-OK
--n ./testdata/iter_ns_badip.rpl 
-OK
--n ./testdata/iter_ns_spoof.rpl 
-OK
--n ./testdata/iter_pc_a.rpl 
-OK
--n ./testdata/iter_pc_aaaa.rpl 
-OK
--n ./testdata/iter_pcdiff.rpl 
-OK
--n ./testdata/iter_pcdirect.rpl 
-OK
--n ./testdata/iter_pclame.rpl 
-OK
--n ./testdata/iter_pcname.rpl 
-OK
--n ./testdata/iter_pcnamech.rpl 
-OK
--n ./testdata/iter_pcnamechrec.rpl 
-OK
--n ./testdata/iter_pcnamerec.rpl 
-OK
--n ./testdata/iter_pcttl.rpl 
-OK
--n ./testdata/iter_prefetch.rpl 
-OK
--n ./testdata/iter_prefetch_change.rpl 
-OK
--n ./testdata/iter_prefetch_change2.rpl 
-OK
--n ./testdata/iter_prefetch_childns.rpl 
-OK
--n ./testdata/iter_prefetch_fail.rpl 
-OK
--n ./testdata/iter_prefetch_ns.rpl 
-OK
--n ./testdata/iter_primenoglue.rpl 
-OK
--n ./testdata/iter_privaddr.rpl 
-OK
--n ./testdata/iter_ranoaa_lame.rpl 
-OK
--n ./testdata/iter_reclame_one.rpl 
-OK
--n ./testdata/iter_reclame_two.rpl 
-OK
--n ./testdata/iter_recurse.rpl 
-OK
--n ./testdata/iter_req_qname.rpl 
-OK
--n ./testdata/iter_resolve.rpl 
-OK
--n ./testdata/iter_resolve_minimised.rpl 
-OK
--n ./testdata/iter_resolve_minimised_nx.rpl 
-OK
--n ./testdata/iter_resolve_minimised_refused.rpl 
-OK
--n ./testdata/iter_resolve_minimised_timeout.rpl 
-OK
--n ./testdata/iter_scrub_cname_an.rpl 
-OK
--n ./testdata/iter_scrub_dname_insec.rpl 
-OK
--n ./testdata/iter_scrub_dname_rev.rpl 
-OK
--n ./testdata/iter_scrub_dname_sec.rpl 
-OK
--n ./testdata/iter_scrub_ns.rpl 
-OK
--n ./testdata/iter_scrub_ns_fwd.rpl 
-OK
--n ./testdata/iter_scrub_ns_side.rpl 
-OK
--n ./testdata/iter_soamin.rpl 
-OK
--n ./testdata/iter_stub_leak.rpl 
-OK
--n ./testdata/iter_stub_noroot.rpl 
-OK
--n ./testdata/iter_stubfirst.rpl 
-OK
--n ./testdata/iter_stublastresort.rpl 
-OK
--n ./testdata/iter_timeout_ra_aaaa.rpl 
-OK
--n ./testdata/local_acl_override.rpl 
-OK
--n ./testdata/local_acl_taglist.rpl 
-OK
--n ./testdata/local_acl_taglist_action.rpl 
-OK
--n ./testdata/local_cname.rpl 
-OK
--n ./testdata/local_ds.rpl 
-OK
--n ./testdata/local_nodefault.rpl 
-OK
--n ./testdata/local_transparent_sametype.rpl 
-OK
--n ./testdata/local_typetransparent.rpl 
-OK
--n ./testdata/localdata.rpl 
-OK
--n ./testdata/net_signed_servfail.rpl 
-OK
--n ./testdata/nomem_cnametopos.rpl 
-OK
--n ./testdata/refuse_xfr.rpl 
-OK
--n ./testdata/root_key_sentinel.rpl 
-OK
--n ./testdata/rpz_axfr.rpl 
-OK
--n ./testdata/rpz_ixfr.rpl 
-OK
--n ./testdata/rpz_qname.rpl 
-OK
--n ./testdata/rpz_qname_override.rpl 
-OK
--n ./testdata/rpz_respip.rpl 
-OK
--n ./testdata/rpz_respip_override.rpl 
-OK
--n ./testdata/rrset_rettl.rpl 
-OK
--n ./testdata/rrset_untrusted.rpl 
-OK
--n ./testdata/rrset_updated.rpl 
-OK
--n ./testdata/serve_expired.rpl 
-OK
--n ./testdata/serve_expired_client_timeout.rpl 
-OK
--n ./testdata/serve_expired_reply_ttl.rpl 
-OK
--n ./testdata/serve_expired_servfail.rpl 
-OK
--n ./testdata/serve_expired_ttl.rpl 
-OK
--n ./testdata/serve_expired_ttl_client_timeout.rpl 
-OK
--n ./testdata/serve_expired_zerottl.rpl 
-OK
--n ./testdata/stop_nxdomain.rpl 
-OK
--n ./testdata/stop_nxdomain_minimised.rpl 
-OK
--n ./testdata/trust_cname_chain.rpl 
-OK
--n ./testdata/ttl_max.rpl 
-OK
--n ./testdata/ttl_min.rpl 
-OK
--n ./testdata/ttl_msg.rpl 
-OK
--n ./testdata/val_adbit.rpl 
-OK
--n ./testdata/val_adcopy.rpl 
-OK
--n ./testdata/val_anchor_nx.rpl 
-OK
--n ./testdata/val_anchor_nx_nosig.rpl 
-OK
--n ./testdata/val_ans_dsent.rpl 
-OK
--n ./testdata/val_ans_nx.rpl 
-OK
--n ./testdata/val_any.rpl 
-OK
--n ./testdata/val_any_cname.rpl 
-OK
--n ./testdata/val_any_dname.rpl 
-OK
--n ./testdata/val_cname_loop1.rpl 
-OK
--n ./testdata/val_cname_loop2.rpl 
-OK
--n ./testdata/val_cname_loop3.rpl 
-OK
--n ./testdata/val_cnameinsectopos.rpl 
-OK
--n ./testdata/val_cnamenx_dblnsec.rpl 
-OK
--n ./testdata/val_cnamenx_rcodenx.rpl 
-OK
--n ./testdata/val_cnameqtype.rpl 
-OK
--n ./testdata/val_cnametocloser.rpl 
-OK
--n ./testdata/val_cnametocloser_nosig.rpl 
-OK
--n ./testdata/val_cnametocnamewctoposwc.rpl 
-OK
--n ./testdata/val_cnametodname.rpl 
-OK
--n ./testdata/val_cnametodnametocnametopos.rpl 
-OK
--n ./testdata/val_cnametoinsecure.rpl 
-OK
--n ./testdata/val_cnametonodata.rpl 
-OK
--n ./testdata/val_cnametonodata_nonsec.rpl 
-OK
--n ./testdata/val_cnametonsec.rpl 
-OK
--n ./testdata/val_cnametonx.rpl 
-OK
--n ./testdata/val_cnametooptin.rpl 
-OK
--n ./testdata/val_cnametooptout.rpl 
-OK
--n ./testdata/val_cnametopos.rpl 
-OK
--n ./testdata/val_cnametoposnowc.rpl 
-OK
--n ./testdata/val_cnametoposwc.rpl 
-OK
--n ./testdata/val_cnamewctonodata.rpl 
-OK
--n ./testdata/val_cnamewctonx.rpl 
-OK
--n ./testdata/val_cnamewctoposwc.rpl 
-OK
--n ./testdata/val_deleg_nons.rpl 
-OK
--n ./testdata/val_dnametoolong.rpl 
-OK
--n ./testdata/val_dnametopos.rpl 
-OK
--n ./testdata/val_dnametoposwc.rpl 
-OK
--n ./testdata/val_dnamewc.rpl 
-OK
--n ./testdata/val_ds_afterprime.rpl 
-OK
--n ./testdata/val_ds_cname.rpl 
-OK
--n ./testdata/val_ds_cnamesub.rpl 
-OK
--n ./testdata/val_dsnsec.rpl 
-OK
--n ./testdata/val_entds.rpl 
-OK
--n ./testdata/val_faildnskey.rpl 
-OK
--n ./testdata/val_faildnskey_ok.rpl 
-OK
--n ./testdata/val_fwdds.rpl 
-OK
--n ./testdata/val_keyprefetch.rpl 
-OK
--n ./testdata/val_keyprefetch_verify.rpl 
-OK
--n ./testdata/val_mal_wc.rpl 
-OK
--n ./testdata/val_negcache_ds.rpl 
-OK
--n ./testdata/val_negcache_dssoa.rpl 
-OK
--n ./testdata/val_negcache_nodata.rpl 
-OK
--n ./testdata/val_negcache_nta.rpl 
-OK
--n ./testdata/val_negcache_nxdomain.rpl 
-OK
--n ./testdata/val_noadwhennodo.rpl 
-OK
--n ./testdata/val_nodata.rpl 
-OK
--n ./testdata/val_nodata_ent.rpl 
-OK
--n ./testdata/val_nodata_entnx.rpl 
-OK
--n ./testdata/val_nodata_entwc.rpl 
-OK
--n ./testdata/val_nodata_failsig.rpl 
-OK
--n ./testdata/val_nodata_failwc.rpl 
-OK
--n ./testdata/val_nodata_hasdata.rpl 
-OK
--n ./testdata/val_nodata_zonecut.rpl 
-OK
--n ./testdata/val_nodatawc.rpl 
-OK
--n ./testdata/val_nodatawc_badce.rpl 
-OK
--n ./testdata/val_nodatawc_nodeny.rpl 
-OK
--n ./testdata/val_nodatawc_one.rpl 
-OK
--n ./testdata/val_nokeyprime.rpl 
-OK
--n ./testdata/val_nsec3_b1_nameerror.rpl 
-OK
--n ./testdata/val_nsec3_b1_nameerror_noce.rpl 
-OK
--n ./testdata/val_nsec3_b1_nameerror_nonc.rpl 
-OK
--n ./testdata/val_nsec3_b1_nameerror_nowc.rpl 
-OK
--n ./testdata/val_nsec3_b21_nodataent.rpl 
-OK
--n ./testdata/val_nsec3_b21_nodataent_wr.rpl 
-OK
--n ./testdata/val_nsec3_b2_nodata.rpl 
-OK
--n ./testdata/val_nsec3_b2_nodata_nons.rpl 
-OK
--n ./testdata/val_nsec3_b3_optout.rpl 
-OK
--n ./testdata/val_nsec3_b3_optout_negcache.rpl 
-OK
--n ./testdata/val_nsec3_b3_optout_noce.rpl 
-OK
--n ./testdata/val_nsec3_b3_optout_nonc.rpl 
-OK
--n ./testdata/val_nsec3_b4_wild.rpl 
-OK
--n ./testdata/val_nsec3_b4_wild_wr.rpl 
-OK
--n ./testdata/val_nsec3_b5_wcnodata.rpl 
-OK
--n ./testdata/val_nsec3_b5_wcnodata_noce.rpl 
-OK
--n ./testdata/val_nsec3_b5_wcnodata_nonc.rpl 
-OK
--n ./testdata/val_nsec3_b5_wcnodata_nowc.rpl 
-OK
--n ./testdata/val_nsec3_cname_ds.rpl 
-OK
--n ./testdata/val_nsec3_cname_par.rpl 
-OK
--n ./testdata/val_nsec3_cname_sub.rpl 
-OK
--n ./testdata/val_nsec3_cnametocnamewctoposwc.rpl 
-OK
--n ./testdata/val_nsec3_entnodata_optout.rpl 
-OK
--n ./testdata/val_nsec3_entnodata_optout_badopt.rpl 
-OK
--n ./testdata/val_nsec3_entnodata_optout_match.rpl 
-OK
--n ./testdata/val_nsec3_iter_high.rpl 
-OK
--n ./testdata/val_nsec3_nodatawccname.rpl 
-OK
--n ./testdata/val_nsec3_nods.rpl 
-OK
--n ./testdata/val_nsec3_nods_badopt.rpl 
-OK
--n ./testdata/val_nsec3_nods_badsig.rpl 
-OK
--n ./testdata/val_nsec3_nods_negcache.rpl 
-OK
--n ./testdata/val_nsec3_nods_soa.rpl 
-OK
--n ./testdata/val_nsec3_optout_ad.rpl 
-OK
--n ./testdata/val_nsec3_optout_cache.rpl 
-OK
--n ./testdata/val_nsec3_wcany.rpl 
-OK
--n ./testdata/val_nsec3_wcany_nodeny.rpl 
-OK
--n ./testdata/val_nx.rpl 
-OK
--n ./testdata/val_nx_failwc.rpl 
-OK
--n ./testdata/val_nx_nodeny.rpl 
-OK
--n ./testdata/val_nx_nowc.rpl 
-OK
--n ./testdata/val_nx_nsec3_collision.rpl 
-OK
--n ./testdata/val_nx_nsec3_params.rpl 
-OK
--n ./testdata/val_nx_overreach.rpl 
-OK
--n ./testdata/val_pos_truncns.rpl 
-OK
--n ./testdata/val_positive.rpl 
-OK
--n ./testdata/val_positive_nosigs.rpl 
-OK
--n ./testdata/val_positive_wc.rpl 
-OK
--n ./testdata/val_positive_wc_nodeny.rpl 
-OK
--n ./testdata/val_qds_badanc.rpl 
-OK
--n ./testdata/val_qds_oneanc.rpl 
-OK
--n ./testdata/val_qds_twoanc.rpl 
-OK
--n ./testdata/val_refer_unsignadd.rpl 
-OK
--n ./testdata/val_referd.rpl 
-OK
--n ./testdata/val_referglue.rpl 
-OK
--n ./testdata/val_rrsig.rpl 
-OK
--n ./testdata/val_secds.rpl 
-OK
--n ./testdata/val_secds_nosig.rpl 
-OK
--n ./testdata/val_spurious_ns.rpl 
-OK
--n ./testdata/val_stub_noroot.rpl 
-OK
--n ./testdata/val_stubds.rpl 
-OK
--n ./testdata/val_ta_algo_dnskey.rpl 
-OK
--n ./testdata/val_ta_algo_dnskey_dp.rpl 
-OK
--n ./testdata/val_ta_algo_missing.rpl 
-OK
--n ./testdata/val_ta_algo_missing_dp.rpl 
-OK
--n ./testdata/val_twocname.rpl 
-OK
--n ./testdata/val_unalgo_anchor.rpl 
-OK
--n ./testdata/val_unalgo_dlv.rpl 
-OK
--n ./testdata/val_unalgo_ds.rpl 
-OK
--n ./testdata/val_unsec_cname.rpl 
-OK
--n ./testdata/val_unsecds.rpl 
-OK
--n ./testdata/val_unsecds_negcache.rpl 
-OK
--n ./testdata/val_unsecds_qtypeds.rpl 
-OK
--n ./testdata/val_wild_pos.rpl 
-OK
--n ./testdata/version_bind.rpl 
-OK
--n ./testdata/version_bind_hide.rpl 
-OK
--n ./testdata/views.rpl 
-OK
+./testdata/acl.rpl OK
+./testdata/auth_nsec3_ent.rpl OK
+./testdata/auth_nsec3_wild.rpl OK
+./testdata/auth_xfr.rpl OK
+./testdata/auth_xfr_host.rpl OK
+./testdata/auth_xfr_ixfr.rpl OK
+./testdata/auth_xfr_ixfrisaxfr.rpl OK
+./testdata/auth_xfr_ixfrmismatch.rpl OK
+./testdata/auth_xfr_ixfrnotimpl.rpl OK
+./testdata/auth_xfr_notify.rpl OK
+./testdata/auth_xfr_probesoa.rpl OK
+./testdata/auth_zonefile.rpl OK
+./testdata/auth_zonefile_dnssec.rpl OK
+./testdata/auth_zonefile_dnssec_fail.rpl OK
+./testdata/auth_zonefile_down.rpl OK
+./testdata/auth_zonefile_noup.rpl OK
+./testdata/auth_zonefile_root.rpl OK
+./testdata/autotrust_10key.rpl OK
+./testdata/autotrust_addpend_2exceed.rpl OK
+./testdata/autotrust_addpend_early.rpl OK
+./testdata/autotrust_addpend_nosign.rpl OK
+./testdata/autotrust_addpend_nosignnew.rpl OK
+./testdata/autotrust_addpend_once.rpl OK
+./testdata/autotrust_addpend_twice.rpl OK
+./testdata/autotrust_init.rpl OK
+./testdata/autotrust_init_ds.rpl OK
+./testdata/autotrust_init_fail.rpl OK
+./testdata/autotrust_init_failsig.rpl OK
+./testdata/autotrust_init_legacy.rpl OK
+./testdata/autotrust_init_sigs.rpl OK
+./testdata/autotrust_init_zsk.rpl OK
+./testdata/autotrust_missing.rpl OK
+./testdata/autotrust_missing_all.rpl OK
+./testdata/autotrust_missing_returns.rpl OK
+./testdata/autotrust_probefail.rpl OK
+./testdata/autotrust_probefailsig.rpl OK
+./testdata/autotrust_revoked_use.rpl OK
+./testdata/autotrust_revoked_with_invalid.rpl OK
+./testdata/autotrust_revtp.rpl OK
+./testdata/autotrust_revtp_read.rpl OK
+./testdata/autotrust_revtp_use.rpl OK
+./testdata/autotrust_rollalgo.rpl OK
+./testdata/autotrust_rollalgo_unknown.rpl OK
+./testdata/autotrust_rollover.rpl OK
+./testdata/autotrust_valid_use.rpl OK
+./testdata/black_data.rpl OK
+./testdata/black_dnskey.rpl OK
+./testdata/black_ds.rpl OK
+./testdata/black_ds_entry.rpl OK
+./testdata/black_ent.rpl OK
+./testdata/black_key_entry.rpl OK
+./testdata/black_prime.rpl OK
+./testdata/black_prime_entry.rpl OK
+./testdata/chaos_trustanchor.rpl OK
+./testdata/dlv_anchor.rpl OK
+./testdata/dlv_ask_higher.rpl OK
+./testdata/dlv_below_ta.rpl OK
+./testdata/dlv_delegation.rpl OK
+./testdata/dlv_ds_lookup.rpl OK
+./testdata/dlv_insecure.rpl OK
+./testdata/dlv_insecure_negcache.rpl OK
+./testdata/dlv_keyretry.rpl OK
+./testdata/dlv_negnx.rpl OK
+./testdata/dlv_optout.rpl OK
+./testdata/dlv_remove.rpl OK
+./testdata/dlv_remove_empty.rpl OK
+./testdata/dlv_remove_nodel.rpl OK
+./testdata/dlv_remove_pos.rpl OK
+./testdata/dlv_unused.rpl OK
+./testdata/dns64_lookup.rpl OK
+./testdata/domain_insec_dlv.rpl OK
+./testdata/domain_insec_ds.rpl OK
+./testdata/edns_keepalive.rpl OK
+./testdata/fetch_glue.rpl OK
+./testdata/fetch_glue_cname.rpl OK
+./testdata/fwd.rpl OK
+./testdata/fwd_0ttlservfail.rpl OK
+./testdata/fwd_any.rpl OK
+./testdata/fwd_cached.rpl OK
+./testdata/fwd_droptoomany.rpl OK
+./testdata/fwd_error.rpl OK
+./testdata/fwd_jostle.rpl OK
+./testdata/fwd_jostle_out.rpl OK
+./testdata/fwd_lrudrop.rpl OK
+./testdata/fwd_minimal.rpl OK
+./testdata/fwd_no_cache.rpl OK
+./testdata/fwd_notcached.rpl OK
+./testdata/fwd_timeout.rpl OK
+./testdata/fwd_two.rpl OK
+./testdata/fwddlv_parse.rpl OK
+./testdata/iter_class_any.rpl OK
+./testdata/iter_cname_cache.rpl OK
+./testdata/iter_cname_double.rpl OK
+./testdata/iter_cname_nx.rpl OK
+./testdata/iter_cname_qnamecopy.rpl OK
+./testdata/iter_cycle.rpl OK
+./testdata/iter_cycle_noh.rpl OK
+./testdata/iter_dname_insec.rpl OK
+./testdata/iter_dname_yx.rpl OK
+./testdata/iter_dnsseclame_bug.rpl OK
+./testdata/iter_dnsseclame_ds.rpl OK
+./testdata/iter_dnsseclame_ds_ok.rpl OK
+./testdata/iter_dnsseclame_ta.rpl OK
+./testdata/iter_dnsseclame_ta_ok.rpl OK
+./testdata/iter_domain_sale.rpl OK
+./testdata/iter_domain_sale_nschange.rpl OK
+./testdata/iter_donotq127.rpl OK
+./testdata/iter_dp_turnsuseless.rpl OK
+./testdata/iter_ds_locate_ns.rpl OK
+./testdata/iter_ds_locate_ns_cname.rpl OK
+./testdata/iter_ds_locate_ns_detach.rpl OK
+./testdata/iter_ds_locate_ns_nosoa.rpl OK
+./testdata/iter_ds_referral.rpl OK
+./testdata/iter_ds_reply.rpl OK
+./testdata/iter_emptydp.rpl OK
+./testdata/iter_emptydp_for_glue.rpl OK
+./testdata/iter_fwdfirst.rpl OK
+./testdata/iter_fwdfirstequal.rpl OK
+./testdata/iter_fwdstub.rpl OK
+./testdata/iter_fwdstubroot.rpl OK
+./testdata/iter_got6only.rpl OK
+./testdata/iter_hint_lame.rpl OK
+./testdata/iter_lame_aaaa.rpl OK
+./testdata/iter_lame_noaa.rpl OK
+./testdata/iter_lame_nosoa.rpl OK
+./testdata/iter_lamescrub.rpl OK
+./testdata/iter_mod.rpl OK
+./testdata/iter_ns_badip.rpl OK
+./testdata/iter_ns_spoof.rpl OK
+./testdata/iter_pc_a.rpl OK
+./testdata/iter_pc_aaaa.rpl OK
+./testdata/iter_pcdiff.rpl OK
+./testdata/iter_pcdirect.rpl OK
+./testdata/iter_pclame.rpl OK
+./testdata/iter_pcname.rpl OK
+./testdata/iter_pcnamech.rpl OK
+./testdata/iter_pcnamechrec.rpl OK
+./testdata/iter_pcnamerec.rpl OK
+./testdata/iter_pcttl.rpl OK
+./testdata/iter_prefetch.rpl OK
+./testdata/iter_prefetch_change.rpl OK
+./testdata/iter_prefetch_change2.rpl OK
+./testdata/iter_prefetch_childns.rpl OK
+./testdata/iter_prefetch_fail.rpl OK
+./testdata/iter_prefetch_ns.rpl OK
+./testdata/iter_primenoglue.rpl OK
+./testdata/iter_privaddr.rpl OK
+./testdata/iter_ranoaa_lame.rpl OK
+./testdata/iter_reclame_one.rpl OK
+./testdata/iter_reclame_two.rpl OK
+./testdata/iter_recurse.rpl OK
+./testdata/iter_req_qname.rpl OK
+./testdata/iter_resolve.rpl OK
+./testdata/iter_resolve_minimised.rpl OK
+./testdata/iter_resolve_minimised_nx.rpl OK
+./testdata/iter_resolve_minimised_refused.rpl OK
+./testdata/iter_resolve_minimised_timeout.rpl OK
+./testdata/iter_scrub_cname_an.rpl OK
+./testdata/iter_scrub_dname_insec.rpl OK
+./testdata/iter_scrub_dname_rev.rpl OK
+./testdata/iter_scrub_dname_sec.rpl OK
+./testdata/iter_scrub_ns.rpl OK
+./testdata/iter_scrub_ns_fwd.rpl OK
+./testdata/iter_scrub_ns_side.rpl OK
+./testdata/iter_soamin.rpl OK
+./testdata/iter_stub_leak.rpl OK
+./testdata/iter_stub_noroot.rpl OK
+./testdata/iter_stubfirst.rpl OK
+./testdata/iter_stublastresort.rpl OK
+./testdata/iter_timeout_ra_aaaa.rpl OK
+./testdata/local_acl_override.rpl OK
+./testdata/local_acl_taglist.rpl OK
+./testdata/local_acl_taglist_action.rpl OK
+./testdata/local_cname.rpl OK
+./testdata/local_ds.rpl OK
+./testdata/local_nodefault.rpl OK
+./testdata/local_transparent_sametype.rpl OK
+./testdata/local_typetransparent.rpl OK
+./testdata/localdata.rpl OK
+./testdata/net_signed_servfail.rpl OK
+./testdata/nomem_cnametopos.rpl OK
+./testdata/refuse_xfr.rpl OK
+./testdata/root_key_sentinel.rpl OK
+./testdata/rpz_axfr.rpl OK
+./testdata/rpz_ixfr.rpl OK
+./testdata/rpz_qname.rpl OK
+./testdata/rpz_qname_override.rpl OK
+./testdata/rpz_respip.rpl OK
+./testdata/rpz_respip_override.rpl OK
+./testdata/rrset_rettl.rpl OK
+./testdata/rrset_untrusted.rpl OK
+./testdata/rrset_updated.rpl OK
+./testdata/serve_expired.rpl OK
+./testdata/serve_expired_client_timeout.rpl OK
+./testdata/serve_expired_reply_ttl.rpl OK
+./testdata/serve_expired_servfail.rpl OK
+./testdata/serve_expired_ttl.rpl OK
+./testdata/serve_expired_ttl_client_timeout.rpl OK
+./testdata/serve_expired_zerottl.rpl OK
+./testdata/stop_nxdomain.rpl OK
+./testdata/stop_nxdomain_minimised.rpl OK
+./testdata/trust_cname_chain.rpl OK
+./testdata/ttl_max.rpl OK
+./testdata/ttl_min.rpl OK
+./testdata/ttl_msg.rpl OK
+./testdata/val_adbit.rpl OK
+./testdata/val_adcopy.rpl OK
+./testdata/val_anchor_nx.rpl OK
+./testdata/val_anchor_nx_nosig.rpl OK
+./testdata/val_ans_dsent.rpl OK
+./testdata/val_ans_nx.rpl OK
+./testdata/val_any.rpl OK
+./testdata/val_any_cname.rpl OK
+./testdata/val_any_dname.rpl OK
+./testdata/val_cname_loop1.rpl OK
+./testdata/val_cname_loop2.rpl OK
+./testdata/val_cname_loop3.rpl OK
+./testdata/val_cnameinsectopos.rpl OK
+./testdata/val_cnamenx_dblnsec.rpl OK
+./testdata/val_cnamenx_rcodenx.rpl OK
+./testdata/val_cnameqtype.rpl OK
+./testdata/val_cnametocloser.rpl OK
+./testdata/val_cnametocloser_nosig.rpl OK
+./testdata/val_cnametocnamewctoposwc.rpl OK
+./testdata/val_cnametodname.rpl OK
+./testdata/val_cnametodnametocnametopos.rpl OK
+./testdata/val_cnametoinsecure.rpl OK
+./testdata/val_cnametonodata.rpl OK
+./testdata/val_cnametonodata_nonsec.rpl OK
+./testdata/val_cnametonsec.rpl OK
+./testdata/val_cnametonx.rpl OK
+./testdata/val_cnametooptin.rpl OK
+./testdata/val_cnametooptout.rpl OK
+./testdata/val_cnametopos.rpl OK
+./testdata/val_cnametoposnowc.rpl OK
+./testdata/val_cnametoposwc.rpl OK
+./testdata/val_cnamewctonodata.rpl OK
+./testdata/val_cnamewctonx.rpl OK
+./testdata/val_cnamewctoposwc.rpl OK
+./testdata/val_deleg_nons.rpl OK
+./testdata/val_dnametoolong.rpl OK
+./testdata/val_dnametopos.rpl OK
+./testdata/val_dnametoposwc.rpl OK
+./testdata/val_dnamewc.rpl OK
+./testdata/val_ds_afterprime.rpl OK
+./testdata/val_ds_cname.rpl OK
+./testdata/val_ds_cnamesub.rpl OK
+./testdata/val_dsnsec.rpl OK
+./testdata/val_entds.rpl OK
+./testdata/val_faildnskey.rpl OK
+./testdata/val_faildnskey_ok.rpl OK
+./testdata/val_fwdds.rpl OK
+./testdata/val_keyprefetch.rpl OK
+./testdata/val_keyprefetch_verify.rpl OK
+./testdata/val_mal_wc.rpl OK
+./testdata/val_negcache_ds.rpl OK
+./testdata/val_negcache_dssoa.rpl OK
+./testdata/val_negcache_nodata.rpl OK
+./testdata/val_negcache_nta.rpl OK
+./testdata/val_negcache_nxdomain.rpl OK
+./testdata/val_noadwhennodo.rpl OK
+./testdata/val_nodata.rpl OK
+./testdata/val_nodata_ent.rpl OK
+./testdata/val_nodata_entnx.rpl OK
+./testdata/val_nodata_entwc.rpl OK
+./testdata/val_nodata_failsig.rpl OK
+./testdata/val_nodata_failwc.rpl OK
+./testdata/val_nodata_hasdata.rpl OK
+./testdata/val_nodata_zonecut.rpl OK
+./testdata/val_nodatawc.rpl OK
+./testdata/val_nodatawc_badce.rpl OK
+./testdata/val_nodatawc_nodeny.rpl OK
+./testdata/val_nodatawc_one.rpl OK
+./testdata/val_nokeyprime.rpl OK
+./testdata/val_nsec3_b1_nameerror.rpl OK
+./testdata/val_nsec3_b1_nameerror_noce.rpl OK
+./testdata/val_nsec3_b1_nameerror_nonc.rpl OK
+./testdata/val_nsec3_b1_nameerror_nowc.rpl OK
+./testdata/val_nsec3_b21_nodataent.rpl OK
+./testdata/val_nsec3_b21_nodataent_wr.rpl OK
+./testdata/val_nsec3_b2_nodata.rpl OK
+./testdata/val_nsec3_b2_nodata_nons.rpl OK
+./testdata/val_nsec3_b3_optout.rpl OK
+./testdata/val_nsec3_b3_optout_negcache.rpl OK
+./testdata/val_nsec3_b3_optout_noce.rpl OK
+./testdata/val_nsec3_b3_optout_nonc.rpl OK
+./testdata/val_nsec3_b4_wild.rpl OK
+./testdata/val_nsec3_b4_wild_wr.rpl OK
+./testdata/val_nsec3_b5_wcnodata.rpl OK
+./testdata/val_nsec3_b5_wcnodata_noce.rpl OK
+./testdata/val_nsec3_b5_wcnodata_nonc.rpl OK
+./testdata/val_nsec3_b5_wcnodata_nowc.rpl OK
+./testdata/val_nsec3_cname_ds.rpl OK
+./testdata/val_nsec3_cname_par.rpl OK
+./testdata/val_nsec3_cname_sub.rpl OK
+./testdata/val_nsec3_cnametocnamewctoposwc.rpl OK
+./testdata/val_nsec3_entnodata_optout.rpl OK
+./testdata/val_nsec3_entnodata_optout_badopt.rpl OK
+./testdata/val_nsec3_entnodata_optout_match.rpl OK
+./testdata/val_nsec3_iter_high.rpl OK
+./testdata/val_nsec3_nodatawccname.rpl OK
+./testdata/val_nsec3_nods.rpl OK
+./testdata/val_nsec3_nods_badopt.rpl OK
+./testdata/val_nsec3_nods_badsig.rpl OK
+./testdata/val_nsec3_nods_negcache.rpl OK
+./testdata/val_nsec3_nods_soa.rpl OK
+./testdata/val_nsec3_optout_ad.rpl OK
+./testdata/val_nsec3_optout_cache.rpl OK
+./testdata/val_nsec3_wcany.rpl OK
+./testdata/val_nsec3_wcany_nodeny.rpl OK
+./testdata/val_nx.rpl OK
+./testdata/val_nx_failwc.rpl OK
+./testdata/val_nx_nodeny.rpl OK
+./testdata/val_nx_nowc.rpl OK
+./testdata/val_nx_nsec3_collision.rpl OK
+./testdata/val_nx_nsec3_params.rpl OK
+./testdata/val_nx_overreach.rpl OK
+./testdata/val_pos_truncns.rpl OK
+./testdata/val_positive.rpl OK
+./testdata/val_positive_nosigs.rpl OK
+./testdata/val_positive_wc.rpl OK
+./testdata/val_positive_wc_nodeny.rpl OK
+./testdata/val_qds_badanc.rpl OK
+./testdata/val_qds_oneanc.rpl OK
+./testdata/val_qds_twoanc.rpl OK
+./testdata/val_refer_unsignadd.rpl OK
+./testdata/val_referd.rpl OK
+./testdata/val_referglue.rpl OK
+./testdata/val_rrsig.rpl OK
+./testdata/val_secds.rpl OK
+./testdata/val_secds_nosig.rpl OK
+./testdata/val_spurious_ns.rpl OK
+./testdata/val_stub_noroot.rpl OK
+./testdata/val_stubds.rpl OK
+./testdata/val_ta_algo_dnskey.rpl OK
+./testdata/val_ta_algo_dnskey_dp.rpl OK
+./testdata/val_ta_algo_missing.rpl OK
+./testdata/val_ta_algo_missing_dp.rpl OK
+./testdata/val_twocname.rpl OK
+./testdata/val_unalgo_anchor.rpl OK
+./testdata/val_unalgo_dlv.rpl OK
+./testdata/val_unalgo_ds.rpl OK
+./testdata/val_unsec_cname.rpl OK
+./testdata/val_unsecds.rpl OK
+./testdata/val_unsecds_negcache.rpl OK
+./testdata/val_unsecds_qtypeds.rpl OK
+./testdata/val_wild_pos.rpl OK
+./testdata/version_bind.rpl OK
+./testdata/version_bind_hide.rpl OK
+./testdata/views.rpl OK
 test OK
