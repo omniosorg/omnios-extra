@@ -204,6 +204,8 @@ audit()
                             */gyp) ;;
                             # clang/llvm-80 is not published after r151032
                             */clang-80|*/llvm-80) ;;
+                            # X11 headers/libraries are not published until r151035
+                            */x11/*) ;;
                             *) ok=0 ;;
                         esac
                     else
