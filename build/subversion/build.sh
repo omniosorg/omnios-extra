@@ -54,7 +54,7 @@ download_source $PROG $PROG $VER
 prep_build
 build
 strip_install
-install_smf network subversion.xml
+install_smf application $PROG.xml
 make_package
 clean_up
 
