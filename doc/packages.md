@@ -36,7 +36,7 @@
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
 | ooce/developer/clang-90	| 9.0.1		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/clang-100	| 10.0.1	| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/cmake		| 3.18.0	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/cmake		| 3.18.1	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-90	| 9.0.1		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-100 | 10.0.1	| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
