@@ -35,7 +35,7 @@
 | ooce/developer/autogen	| 5.18.16	| https://ftp.gnu.org/gnu/autogen/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
 | ooce/developer/clang-90	| 9.0.1		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/clang-100	| 10.0.0	| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/clang-100	| 10.0.1	| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cmake		| 3.18.0	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-90	| 9.0.1		| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-100 | 10.0.0	| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
