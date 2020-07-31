@@ -1,5 +1,5 @@
---- a~/_deps/pkg/mod/github.com/muesli/termenv@v0.4.0/syscall_unix.go	Thu Feb 20 18:02:27 2020
-+++ a/_deps/pkg/mod/github.com/muesli/termenv@v0.4.0/syscall_unix.go	Thu Feb 20 18:03:24 2020
+--- a~/_deps/pkg/mod/github.com/muesli/termenv@v0.6.0/syscall_unix.go	Thu Feb 20 18:02:27 2020
++++ a/_deps/pkg/mod/github.com/muesli/termenv@v0.6.0/syscall_unix.go	Thu Feb 20 18:03:24 2020
 @@ -1,11 +1,12 @@
 -// +build !linux,!windows,!plan9,!solaris
 +// +build !linux,!windows,!plan9

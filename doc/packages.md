@@ -135,7 +135,7 @@
 | ooce/util/acmefetch		| 0.7.1		| https://github.com/oetiker/AcmeFetch/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/bat			| 0.15.4	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/fd			| 7.3.0		| https://github.com/sharkdp/fd/releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/util/gh			| 0.11.0	| https://github.com/cli/cli/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/util/gh			| 0.11.1	| https://github.com/cli/cli/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/jq			| 1.6		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/xjobs		| 20200726	| https://www.maier-komor.de/xjobs.html | [omniosorg](https://github.com/omniosorg)
 | ooce/util/zadm		| github-latest-prerelease	| https://github.com/omniosorg/zadm/releases/ | [omniosorg](https://github.com/omniosorg)
