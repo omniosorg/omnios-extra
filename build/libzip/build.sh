@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=libzip
-VER=1.7.1
+VER=1.7.3
 PKG=ooce/library/libzip
 SUMMARY="libzip"
 DESC="A C library for reading, creating and modifying zip archives"
@@ -44,17 +44,17 @@ CONFIGURE_OPTS_32="
     -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/amd64
+    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/$ISAPART64
 "
 
 LDFLAGS32+=" -R$OPREFIX/lib"
-LDFLAGS64+=" -R$OPREFIX/lib/amd64"
+LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
 prep_build cmake
 patch_source
-build
+build -ctf
 make_package
 clean_up
 

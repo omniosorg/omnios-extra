@@ -69,7 +69,6 @@ XFORM_ARGS="
 "
 
 export RUSTARCH=x86_64-sun-solaris
-export RUSTFLAGS="-C linker=$CC"
 export GNUAR=/bin/gar
 
 # Required to enable the POSIX 1003.6 style getpwuid_r() prototype
@@ -90,12 +89,9 @@ CONFIGURE_OPTS_64="
 CONFIGURE_OPTS+="
     --enable-vendor
     --enable-extended
-    --default-linker=$CC
-    --set rust.default-linker=$CC
     --set target.$RUSTARCH.cc=$CC
     --set target.$RUSTARCH.cxx=$CXX
     --set target.$RUSTARCH.ar=$GNUAR
-    --set target.$RUSTARCH.linker=$CC
     --enable-rpath
     --enable-ninja
     --disable-codegen-tests
@@ -109,27 +105,16 @@ CONFIGURE_OPTS+="
 if [ -n "$SYSTEM_LLVM_PATH" ]; then
     CONFIGURE_OPTS+="
         --enable-llvm-link-shared
-        --llvm-root=$SYSTEM_LLVM_PATH
+        --llvm-config=$SYSTEM_LLVM_PATH/bin/llvm-config
     "
-    export LD_LIBRARY_PATH="$SYSTEM_LLVM_PATH/lib"
+    llvm_lib="`$SYSTEM_LLVM_PATH/bin/llvm-config --libdir`"
+    export RUSTFLAGS="-C link-arg=-L$llvm_lib -C link-arg=-R$llvm_lib"
 fi
 
 save_function make_install _make_install
 make_install() {
     mkdir -p $DESTDIR/$PREFIX
     _make_install "$@"
-}
-
-fix_runpaths() {
-    pushd $DESTDIR/$PREFIX >/dev/null
-
-    rpath="$PREFIX/lib:/usr/lib/64:/usr/gcc/$DEFAULT_GCC_VER/lib/$ISAPART64"
-    [ -n "$SYSTEM_LLVM_PATH" ] && rpath+=":$SYSTEM_LLVM_PATH/lib"
-    for f in bin/{cargo,rls,rustc,rustdoc} lib/*.so* lib/rustlib/$RUSTARCH/*/*.so*; do
-        logcmd /usr/bin/elfedit -e "dyn:runpath $rpath" $f
-    done
-
-    popd >/dev/null
 }
 
 fix_checksums() {
@@ -166,7 +151,6 @@ patch_source
 fix_checksums
 prep_build
 build
-fix_runpaths
 make_package
 clean_up
 
