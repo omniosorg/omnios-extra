@@ -18,7 +18,9 @@
 
 PROG=vagrant
 PKG=ooce/application/vagrant
-VER=2.2.7
+VER=2.2.9
+# latest release from https://github.com/hashicorp/vagrant-installers/releases
+INSTVER=2.2.6
 SUMMARY="Vagrant"
 DESC="Build and distribute virtualized development environments"
 
@@ -84,7 +86,7 @@ install() {
 init
 clone_github_source $PROG "$GITHUB/hashicorp/$PROG" v$VER
 clone_github_source $PROG-installers \
-    "$GITHUB/hashicorp/$PROG-installers" v$VER+master
+    "$GITHUB/hashicorp/$PROG-installers" v$INSTVER
 patch_source
 prep_build
 build

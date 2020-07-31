@@ -17,7 +17,7 @@
 | ooce/application/php-74	| 7.4.8		| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20200406	| ftp://tug.org/historic/systems/texlive/2020/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/tidy		| 5.6.0		| https://github.com/htacg/tidy-html5/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/vagrant	| 2.2.7		| https://github.com/hashicorp/vagrant/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/vagrant	| 2.2.9		| https://github.com/hashicorp/vagrant/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/audio/flac		| 1.3.3		| https://ftp.osuosl.org/pub/xiph/releases/flac/ https://xiph.org/flac/changelog.html | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/lz4		| 1.9.2		| https://github.com/lz4/lz4/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pbzip2		| 1.1.13	| https://launchpad.net/pbzip2/+download | [omniosorg](https://github.com/omniosorg)
