@@ -5,7 +5,7 @@ Fix xattr build.
 diff -wpruN '--exclude=*.orig' a~/vendor/libc/src/unix/solarish/mod.rs a/vendor/libc/src/unix/solarish/mod.rs
 --- a~/vendor/libc/src/unix/solarish/mod.rs	1970-01-01 00:00:00
 +++ a/vendor/libc/src/unix/solarish/mod.rs	1970-01-01 00:00:00
-@@ -1056,6 +1056,8 @@ pub const EOWNERDEAD: ::c_int = 58;
+@@ -1165,6 +1165,8 @@ pub const EOWNERDEAD: ::c_int = 58;
  pub const ENOTRECOVERABLE: ::c_int = 59;
  pub const ENOSTR: ::c_int = 60;
  pub const ENODATA: ::c_int = 61;
@@ -14,3 +14,20 @@ diff -wpruN '--exclude=*.orig' a~/vendor/libc/src/unix/solarish/mod.rs a/vendor/
  pub const ETIME: ::c_int = 62;
  pub const ENOSR: ::c_int = 63;
  pub const ENONET: ::c_int = 64;
+@@ -2524,6 +2524,16 @@
+ 
+     pub fn ntp_adjtime(buf: *mut timex) -> ::c_int;
+     pub fn ntp_gettime(buf: *mut ntptimeval) -> ::c_int;
++
++    pub fn pthread_attr_get_np(
++        tid: ::pthread_t,
++        attr: *mut ::pthread_attr_t,
++    ) -> ::c_int;
++    pub fn pthread_attr_getstack(
++        attr: *const ::pthread_attr_t,
++        stackaddr: *mut *mut ::c_void,
++        stacksize: *mut ::size_t,
++    ) -> ::c_int;
+ }
+ 
+ mod compat;
