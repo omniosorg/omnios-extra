@@ -15,3 +15,4 @@ src_tools_rust-installer_install-template.sh.patch
 vendor_backtrace-sys_src_libbacktrace_configure.patch
 vendor_libc_src_unix_solaris_mod.rs.patch
 vendor_rand-0.6.1_src_rngs_os.rs.patch
+vendor_stacker_src_mod.rs.patch

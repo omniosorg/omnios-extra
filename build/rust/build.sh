@@ -18,7 +18,7 @@
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.44.1
+VER=1.45.1
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
@@ -30,9 +30,6 @@ DESC+="prevents segfaults, and guarantees thread safety."
 # to use bundled LLVM instead of the system one, set BUNDLED_LLVM
 #
 LLVM_MAJVER=10.0
-
-# building miri fails currently, ignore it for now
-EXPECTED_BUILD_ERRS=2
 
 BUILDDIR=${PROG}c-${VER}-src
 
@@ -124,10 +121,13 @@ fix_checksums() {
     sed -e 's/1e732c2e3b4bd1561f11e0979bf9d20669a96eae7afe0deff9dfbb980ee47bf1/55abd8100db14a076dedbf84ce0f2db08158e1bd33ff1d4978bd3c4ad978f281/' ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json.orig > ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json
     cp ${WRKSRC}/vendor/libc/.cargo-checksum.json \
         ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig
-    sed -e 's/721e1609f429b472bc05c9284e15d6e73b39bbc5f79fff46690642342ed4c1cb/1cf80fac8e5edb960539eedd968aa981ebb54949d7a5c9bb3b4ed6ad5901f1b1/' ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig > ${WRKSRC}/vendor/libc/.cargo-checksum.json
+    sed -e 's/721e1609f429b472bc05c9284e15d6e73b39bbc5f79fff46690642342ed4c1cb/a697442216894083fca6afde37b6d1908708544cf58f6041455b675661ddbe45/' ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig > ${WRKSRC}/vendor/libc/.cargo-checksum.json
     cp ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json \
-          ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig
+        ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig
     sed -e 's/dbe2eb824252135e7a154805c148defb2142a26b0c2267f5b1033ad69f441e33/323987bb2d5b7ec6044b881b70f339472d886fc23bf212392b8a0158b15d3862/' ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig > ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json
+    cp ${WRKSRC}/vendor/stacker/.cargo-checksum.json \
+        ${WRKSRC}/vendor/stacker/.cargo-checksum.json.orig
+    sed -e 's/0f3602e048ab4bc5304226b9c171aee46bd58d0e354ead9c7d2ba6ac6d6f262f/883f18c0884d70d1c9204e06ee3512d31b6f6cea30af8c7cb89ad9a9854ea4bb/' ${WRKSRC}/vendor/stacker/.cargo-checksum.json.orig > ${WRKSRC}/vendor/stacker/.cargo-checksum.json
 }
 
 get_bootstrap() {

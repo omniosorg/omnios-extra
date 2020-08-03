@@ -3,7 +3,7 @@ $NetBSD: patch-src_tools_rls_src_server_io.rs,v 1.1 2018/12/21 23:12:34 he Exp $
 diff -wpruN '--exclude=*.orig' a~/src/tools/rls/rls/src/server/io.rs a/src/tools/rls/rls/src/server/io.rs
 --- a~/src/tools/rls/rls/src/server/io.rs	1970-01-01 00:00:00
 +++ a/src/tools/rls/rls/src/server/io.rs	1970-01-01 00:00:00
-@@ -7,7 +7,7 @@ use crate::lsp_data::{LSPNotification, L
+@@ -5,7 +5,7 @@ use crate::lsp_data::{LSPNotification, L
  
  use std::fmt;
  use std::io::{self, BufRead, Write};
@@ -12,7 +12,7 @@ diff -wpruN '--exclude=*.orig' a~/src/tools/rls/rls/src/server/io.rs a/src/tools
  use std::sync::Arc;
  
  use jsonrpc_core::{self as jsonrpc, response, version, Id};
-@@ -171,13 +171,13 @@ pub trait Output: Sync + Send + Clone +
+@@ -169,13 +169,13 @@ pub trait Output: Sync + Send + Clone +
  /// An output that sends notifications and responses on `stdout`.
  #[derive(Clone)]
  pub(super) struct StdioOutput {
@@ -28,7 +28,7 @@ diff -wpruN '--exclude=*.orig' a~/src/tools/rls/rls/src/server/io.rs a/src/tools
      }
  }
  
-@@ -194,7 +194,7 @@ impl Output for StdioOutput {
+@@ -192,7 +192,7 @@ impl Output for StdioOutput {
      }
  
      fn provide_id(&self) -> RequestId {
