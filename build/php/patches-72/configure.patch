@@ -1,9 +1,9 @@
 Adjust for non-standard location of OmniOS' gmp.h include file
 
-diff -ru php-7.2.5~/configure php-7.2.5/configure
---- php-7.2.5~/configure	Tue Apr 24 15:10:05 2018
-+++ php-7.2.5/configure	Fri Apr 27 14:01:29 2018
-@@ -38772,7 +38772,7 @@
+diff -wpruN '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -39068,7 +39068,7 @@ if test "$PHP_GMP" != "no"; then
    MACHINE_INCLUDES=$($CC -dumpmachine)
  
    for i in $PHP_GMP /usr/local /usr; do

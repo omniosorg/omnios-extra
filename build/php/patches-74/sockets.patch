@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/configure a/configure
 --- a~/configure	1970-01-01 00:00:00
 +++ a/configure	1970-01-01 00:00:00
-@@ -68128,6 +68128,7 @@ $as_echo "#define HAVE_AI_IDN 1" >>confd
+@@ -68194,6 +68194,7 @@ $as_echo "#define HAVE_AI_IDN 1" >>confd
    case $host_alias in
    *darwin*) PHP_SOCKETS_CFLAGS="$PHP_SOCKETS_CFLAGS -D__APPLE_USE_RFC_3542"
    esac
