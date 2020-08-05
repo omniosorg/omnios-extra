@@ -26,12 +26,12 @@ set_arch 64
 
 BUILD_DEPENDS_IPS+="
     ooce/database/mariadb-104
-    ooce/database/postgresql-12
+    ooce/database/postgresql-$PGSQLVER
 "
 
 RUN_DEPENDS_IPS+="
     ?pkg:/ooce/database/mariadb-104
-    ?pkg:/ooce/database/postgresql-12
+    ?pkg:/ooce/database/postgresql-$PGSQLVER
     ooce/application/nagios-common
 "
 
@@ -48,8 +48,8 @@ CONFIGURE_OPTS_64="
     --libexecdir=$OPREFIX/nagios/libexec
 "
 
-CFLAGS64+=" -I/opt/ooce/pgsql-12/include"
-LDFLAGS64+=" -L/opt/ooce/pgsql-12/lib -R/opt/ooce/pgsql-12/lib"
+CFLAGS64+=" -I$OPREFIX/pgsql-$PGSQLVER/include"
+LDFLAGS64+=" -L$OPREFIX/pgsql-$PGSQLVER/lib -R$OPREFIX/pgsql-$PGSQLVER/lib"
 
 init
 download_source nagios $PROG $VER

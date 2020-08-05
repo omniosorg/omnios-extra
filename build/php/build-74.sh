@@ -85,12 +85,15 @@ CONFIGURE_OPTS_64="
     --with-bz2=/usr
     --with-curl
     --enable-gd
+    --enable-sockets
+    --enable-bcmath
 
     --with-db4=$OPREFIX
     --with-lmdb=$OPREFIX
     --with-jpeg
     --with-png
     --with-freetype
+    --with-pgsql=$OPREFIX/pgsql-$PGSQLVER
 
     --enable-fpm
     --with-fpm-user=php
