@@ -13,7 +13,7 @@
 | ooce/application/nagios-nsca	| 2.10.0	| https://github.com/NagiosEnterprises/nsca/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-plugins | 2.3.3	| http://www.nagios-plugins.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-72	| 7.2.33	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-73	| 7.3.20	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-73	| 7.3.21	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-74	| 7.4.8		| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20200406	| ftp://tug.org/historic/systems/texlive/2020/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/tidy		| 5.6.0		| https://github.com/htacg/tidy-html5/releases | [omniosorg](https://github.com/omniosorg)
