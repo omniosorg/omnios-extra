@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+
+<service_bundle type='manifest' name='zabbix:server'>
+
+<service
+	name='network/zabbix'
+	type='service'
+	version='1'>
+
+	<instance name='server' enabled='false'>
+
+	<dependency name='paths'
+	    grouping='require_all'
+	    restart_on='error'
+	    type='path'>
+		<service_fmri
+		   value='file://localhost/etc/$(PREFIX)/zabbix_server.conf' />
+	</dependency>
+
+	<dependency
+		name='loopback'
+		grouping='require_any'
+		restart_on='error'
+		type='service'>
+		<service_fmri value='svc:/network/loopback' />
+	</dependency>
+
+	<dependency
+		name='network'
+		grouping='optional_all'
+		restart_on='error'
+		type='service'>
+		<service_fmri value='svc:/milestone/network' />
+	</dependency>
+
+	<dependency
+	    name='filesystem_local'
+	    grouping='require_all'
+	    restart_on='none'
+	    type='service'>
+		<service_fmri value='svc:/system/filesystem/local:default' />
+	</dependency>
+
+	<dependent
+		name='zabbixserver_multi-user'
+		grouping='optional_all'
+		restart_on='none'>
+		<service_fmri value='svc:/milestone/multi-user' />
+	</dependent>
+
+	<exec_method
+	    type='method'
+	    name='start'
+	    exec='/$(PREFIX)/sbin/zabbix_server'
+	    timeout_seconds='30'>
+	    <method_context security_flags='aslr'>
+		<method_credential user='$(USER)' group='$(GROUP)'
+		    privileges='basic,!proc_info,!proc_session,!file_link_any' />
+	    </method_context>
+	</exec_method>
+
+	<exec_method
+	    type='method'
+	    name='stop'
+	    exec=':kill'
+	    timeout_seconds='60' />
+
+	<exec_method
+	    type='method'
+	    name='refresh'
+	    exec=':true'
+	    timeout_seconds='60' />
+
+	</instance>
+
+	<stability value='Unstable' />
+
+	<template>
+		<common_name>
+			<loctext xml:lang='C'>
+				Zabbix Server
+			</loctext>
+		</common_name>
+	</template>
+</service>
+
+</service_bundle>

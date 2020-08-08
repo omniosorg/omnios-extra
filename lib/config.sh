@@ -269,8 +269,9 @@ esac
 [ $RELVER -lt 151029 ] && DEFAULT_PYTHON_VER=$PYTHON2VER \
     || DEFAULT_PYTHON_VER=$PYTHON3VER
 
-# Default postgres version to bundle into packages which use the libraries
+# Default database versions to bundle into packages which use the libraries
 PGSQLVER=12
+MARIASQLVER=10.4
 
 # Options to turn compiler features on and off. Associative array keyed by
 # compiler version or _ for all versions.

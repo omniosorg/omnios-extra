@@ -1,0 +1,15 @@
+#!/bin/ksh
+
+echo '{"data":['
+
+first=1
+/usr/bin/iostat -xnr | awk -F, 'NR > 2 { print $NF }' | while read hdd; do
+	[ $first -eq 1 ] && first=0 || echo ,
+	echo "  { \"{#DISKNAME}\":\"$hdd\" }\\c"
+done
+echo
+
+echo ']}'
+
+exit 0
+

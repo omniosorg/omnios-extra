@@ -1,0 +1,24 @@
+diff -wpruN '--exclude=*.orig' a~/m4/libevent.m4 a/m4/libevent.m4
+--- a~/m4/libevent.m4	1970-01-01 00:00:00
++++ a/m4/libevent.m4	1970-01-01 00:00:00
+@@ -62,7 +62,7 @@ AC_HELP_STRING([--with-libevent@<:@=DIR@
+ 
+ 	AC_MSG_CHECKING(for libevent support)
+ 
+-	LIBEVENT_LIBS="-levent"
++	LIBEVENT_LIBS="-lev"
+ 
+ 	if test -n "$_libevent_dir_set" -o -f /usr/include/event.h; then
+ 		found_libevent="yes"
+diff -wpruN '--exclude=*.orig' a~/src/libs/zbxipcservice/ipcservice.c a/src/libs/zbxipcservice/ipcservice.c
+--- a~/src/libs/zbxipcservice/ipcservice.c	1970-01-01 00:00:00
++++ a/src/libs/zbxipcservice/ipcservice.c	1970-01-01 00:00:00
+@@ -1078,7 +1078,7 @@ static void ipc_service_event_log_cb(int
+  ******************************************************************************/
+ static void	ipc_service_init_libevent(void)
+ {
+-	event_set_log_callback(ipc_service_event_log_cb);
++	//event_set_log_callback(ipc_service_event_log_cb);
+ }
+ 
+ /******************************************************************************

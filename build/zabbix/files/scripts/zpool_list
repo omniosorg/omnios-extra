@@ -1,0 +1,13 @@
+#!/bin/ksh
+
+echo "{"
+echo "\"data\":["
+
+first=1
+/usr/sbin/zpool list -H -o name | while read name; do
+	[ $first -eq 1 ] && first=0 || echo ","
+	echo "{ \"{#POOL}\":\"$name\"}"
+done
+
+echo "]}"
+

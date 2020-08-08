@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/m4/pthread.m4 a/m4/pthread.m4
+--- a~/m4/pthread.m4	1970-01-01 00:00:00
++++ a/m4/pthread.m4	1970-01-01 00:00:00
+@@ -103,7 +103,7 @@ AC_HELP_STRING([--with-libpthread@<:@=DI
+ 	)
+ 
+ 	AC_CHECK_HEADER([pthread.h],[found_libpthread=yes])
+-	LIBPTHREAD_LIBS="-lpthread"
++	LIBPTHREAD_LIBS=""
+ 	AC_MSG_CHECKING(for process shared libpthread support)
+ 
+ 	if test -n "$_libpthread_dir_set" -o "x$found_libpthread" = xyes; then
