@@ -1,0 +1,53 @@
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License, Version 1.0 only
+# (the "License").  You may not use this file except in compliance
+# with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+
+# Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright (c) 2013 by Delphix. All rights reserved.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+<transform dir  path=var/$(PREFIX) -> set owner named>
+<transform dir  path=var/$(PREFIX) -> set group named>
+
+dir group=bin mode=0755 owner=root path=etc/$(PREFIX)
+dir group=named mode=0755 owner=named path=var/$(PREFIX)/namedb
+dir group=named mode=0755 owner=named path=var/$(PREFIX)/namedb/master
+
+<transform file path=etc/$(PREFIX) -> set preserve renamenew>
+
+# Additional files
+file files/named.conf \
+	path=etc/$(PREFIX)/named.conf \
+	mode=0644 owner=root group=bin
+file files/empty.db \
+	path=var/$(PREFIX)/namedb/master/empty.db \
+	mode=0644 owner=named group=named
+file files/localhost-forward.db \
+	path=var/$(PREFIX)/namedb/master/localhost-forward.db \
+	mode=0644 owner=named group=named
+file files/localhost-reverse.db \
+	path=var/$(PREFIX)/namedb/master/localhost-reverse.db \
+	mode=0644 owner=named group=named
+file files/named.root \
+	path=var/$(PREFIX)/namedb/master/named.root \
+	mode=0644 owner=named group=named
+
+# Add BIND group and user
+group groupname=named gid=93
+user ftpuser=false username=named uid=93 group=named gcos-field="BIND User" \
+    home-dir=/var/$(PREFIX) password=NP
+
+license COPYRIGHT license="ISC/MPLv2"

@@ -1,0 +1,24 @@
+diff -wpruN '--exclude=*.orig' a~/config.threads.in a/config.threads.in
+--- a~/config.threads.in	1970-01-01 00:00:00
++++ a/config.threads.in	1970-01-01 00:00:00
+@@ -97,7 +97,7 @@ then
+ 	# Search for / configure pthreads in a system-dependent fashion.
+ 	#
+ 	case "$host" in
+-		*-freebsd*)
++		*-freebsd*|*-solaris*)
+ 			# We don't want to set -lpthread as that break
+ 			# the ability to choose threads library at final
+ 			# link time and is not valid for all architectures.
+diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
+--- a~/configure.ac	1970-01-01 00:00:00
++++ a/configure.ac	1970-01-01 00:00:00
+@@ -1242,7 +1242,7 @@ then
+ 			CCNOOPT="$CCNOOPT -pthread"
+ 			;;
+ 		*-solaris*)
+-			LIBS="$LIBS -lthread"
++			#LIBS="$LIBS -lthread"
+ 			;;
+ 		*-ibm-aix*)
+ 			STD_CDEFINES="$STD_CDEFINES -D_THREAD_SAFE"
