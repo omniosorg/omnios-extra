@@ -105,6 +105,9 @@ add_target()
             */ntfs-3g:*)
                 ver=${ver//AR/}
                 ;;
+            */munin:*)
+                pkg+=-server
+                ;;
             */zabbix:*)
                 pkg+=-server
                 ;;

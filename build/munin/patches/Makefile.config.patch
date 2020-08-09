@@ -1,0 +1,138 @@
+diff -wpruN '--exclude=*.orig' a~/Makefile.config a/Makefile.config
+--- a~/Makefile.config	1970-01-01 00:00:00
++++ a/Makefile.config	1970-01-01 00:00:00
+@@ -17,10 +17,10 @@
+ #
+ # the base of the Munin installation.
+ #
+-PREFIX     = $(DESTDIR)/opt/munin
++PREFIX     = $(DESTDIR)/opt/ooce/munin
+ 
+ # Where Munin keeps its configurations (server.conf, client.conf, ++)
+-CONFDIR    = $(DESTDIR)/etc/opt/munin
++CONFDIR    = $(DESTDIR)/etc/opt/ooce/munin
+ 
+ # Server only - where to put munin-cron
+ BINDIR     = $(PREFIX)/bin
+@@ -32,7 +32,7 @@ SBINDIR    = $(PREFIX)/sbin
+ DOCDIR     = $(PREFIX)/doc
+ 
+ # Where to put man pages
+-MANDIR     = $(PREFIX)/man
++MANDIR     = $(PREFIX)/share/man
+ 
+ # Where to put internal binaries and plugin repository
+ LIBDIR     = $(PREFIX)/lib
+@@ -42,10 +42,10 @@ HTMLDIR    = $(PREFIX)/www/docs
+ CGIDIR     = $(PREFIX)/www/cgi
+ 
+ # Where to put internal data for master (RRD, internal files, ...)
+-DBDIR      = $(DESTDIR)/var/opt/munin
++DBDIR      = $(DESTDIR)/var/opt/ooce/munin
+ 
+ # Where to put internal data for node (plugin state, ...)
+-DBDIRNODE  = $(DESTDIR)/var/opt/munin-node
++DBDIRNODE  = $(DESTDIR)/var/opt/ooce/munin-node
+ 
+ # Client only - Where the spool files are written. Must be writable by
+ # group "munin", and should be preserved between reboots
+@@ -56,11 +56,11 @@ SPOOLDIR   = $(DBDIR)/spool
+ PLUGSTATE  = $(DBDIRNODE)/plugin-state
+ 
+ # Where Munin should place its logs.
+-LOGDIR     = $(PREFIX)/log/munin
++LOGDIR     = $(DESTDIR)/var/log/opt/ooce/munin
+ 
+ # Location of PID files and other statefiles. On the server, must be
+ # writable by the user "munin".
+-STATEDIR   = $(DESTDIR)/var/run/munin
++STATEDIR   = $(DESTDIR)/var/opt/ooce/munin/run
+ 
+ # The perl interpreter to use
+ PERL       := $(shell which perl)
+@@ -89,13 +89,13 @@ JAVALIBDIR = $(LIBDIR)
+ # On Linux /bin/sh, SunOS/Solaris /usr/xpg4/bin/sh or /bin/ksh
+ # In general: bash or ksh will work
+ #
+-GOODSH     := $(shell PATH=`getconf PATH 2>/dev/null || echo $(PATH)` LANG=C sh -c 'type sh | sed "s/.* //"')
++GOODSH     := /bin/bash
+ 
+ # Path of bash for bash specific plugins
+ BASH       := /bin/bash
+ 
+ # Server only - Where to install the perl libraries
+-PERLLIB    = $(DESTDIR)$(shell $(PERL) -V:sitelib | cut -d"'" -f2)
++PERLLIB    = $(LIBDIR)
+ 
+ # Client only - Install plugins for this architecture
+ # the LANG=C makes tr work as expected, not regarding any locale it
+@@ -105,7 +105,7 @@ OSTYPE     := $(shell uname | LANG=C tr
+ 
+ # How to figure out the hostname. (Only used in default configuration
+ # files)
+-HOSTNAME   := $(shell hostname)
++HOSTNAME   := omnios
+ 
+ # What is the safest way to create a tempfile.
+ # Default is to figure it out by testing various methods.
+@@ -126,33 +126,33 @@ PLUGINUSER := nobody
+ CGIUSER := nobody
+ 
+ # Which command to use to check if the USER and GROUP to run Munin as, exists.
+-ifneq ($(shell which getent),)
+-    # "getent" works on most modern OS
+-    CHECKUSER_COMMAND := getent passwd $(USER)
+-    CHECKGROUP_COMMAND := getent group $(GROUP)
+-else
+-    ifeq ($(OSTYPE),darwin)
+-        # This should work for OSX 10.5 (Leopard) or later
+-        CHECKUSER_COMMAND := dscl . -read /Users/$(USER)
+-        CHECKGROUP_COMMAND := dscl . -read /Groups/$(GROUP)
+-    else
+-        ifeq ($(OSTYPE),cygwin)
+-            CHECKUSER_COMMAND := id $(USER)
+-            CHECKGROUP_COMMAND := grep ^$(GROUP): /etc/group
+-        else
+-            ifeq ($(OSTYPE),hp-ux)
+-                CHECKUSER_COMMAND := pwget -n $(USER)
+-                CHECKGROUP_COMMAND := grget -n $(GROUP)
+-            else
+-                $(warning Missing test for user existence on this platform. Skipping this check and hoping for the best ...)
+-                CHECKUSER_COMMAND := true
+-                CHECKGROUP_COMMAND := true
+-            endif
+-        endif
+-    endif
+-endif
+-CHECKUSER  := $(shell $(CHECKUSER_COMMAND) >/dev/null 2>/dev/null || (echo "echo User $(USER) nonexistent. Create the user and retry; exit 2"))
+-CHECKGROUP := $(shell $(CHECKGROUP_COMMAND) >/dev/null 2>/dev/null || (echo "echo Group $(GROUP) nonexistent. Create the group and retry; exit 2"))
++#ifneq ($(shell which getent),)
++#    # "getent" works on most modern OS
++#    CHECKUSER_COMMAND := getent passwd $(USER)
++#    CHECKGROUP_COMMAND := getent group $(GROUP)
++#else
++#    ifeq ($(OSTYPE),darwin)
++#        # This should work for OSX 10.5 (Leopard) or later
++#        CHECKUSER_COMMAND := dscl . -read /Users/$(USER)
++#        CHECKGROUP_COMMAND := dscl . -read /Groups/$(GROUP)
++#    else
++#        ifeq ($(OSTYPE),cygwin)
++#            CHECKUSER_COMMAND := id $(USER)
++#            CHECKGROUP_COMMAND := grep ^$(GROUP): /etc/group
++#        else
++#            ifeq ($(OSTYPE),hp-ux)
++#                CHECKUSER_COMMAND := pwget -n $(USER)
++#                CHECKGROUP_COMMAND := grget -n $(GROUP)
++#            else
++#                $(warning Missing test for user existence on this platform. Skipping this check and hoping for the best ...)
++#                CHECKUSER_COMMAND := true
++#                CHECKGROUP_COMMAND := true
++#            endif
++#        endif
++#    endif
++#endif
++#CHECKUSER  := $(shell $(CHECKUSER_COMMAND) >/dev/null 2>/dev/null || (echo "echo User $(USER) nonexistent. Create the user and retry; exit 2"))
++#CHECKGROUP := $(shell $(CHECKGROUP_COMMAND) >/dev/null 2>/dev/null || (echo "echo Group $(GROUP) nonexistent. Create the group and retry; exit 2"))
+ 
+ CHOWN      := chown
+ CHMOD      := chmod
