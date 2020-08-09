@@ -105,6 +105,9 @@ add_target()
             */ntfs-3g:*)
                 ver=${ver//AR/}
                 ;;
+            */zabbix:*)
+                pkg+=-server
+                ;;
             *:github-latest*)
                 ver=`github_latest $pkg $ver`
                 ;;
