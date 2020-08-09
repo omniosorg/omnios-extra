@@ -94,7 +94,7 @@ for f in agent server; do
     xform files/$PROG-$f.xml > $TMPDIR/$PROG-$f.xml
     install_smf application $PROG-$f.xml
     [ "$f" = server ] && add_notes README.server-install
-    PKG=$PKG-$f make_package $f.mog
+    PKG=$PKG-$f make_package $f.mog ##IGNORE##
 done
 
 clean_up
