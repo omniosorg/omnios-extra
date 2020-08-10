@@ -25,6 +25,7 @@
 dir group=bin mode=0755 owner=root path=etc/$(PREFIX)
 dir group=named mode=0755 owner=named path=var/$(PREFIX)/namedb
 dir group=named mode=0755 owner=named path=var/$(PREFIX)/namedb/master
+dir group=named mode=0755 owner=named path=var/log/$(PREFIX)
 
 <transform file path=etc/$(PREFIX) -> set preserve renamenew>
 

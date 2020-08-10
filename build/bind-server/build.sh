@@ -27,6 +27,80 @@ set_arch 64
 
 SKIP_LICENCES="*"
 
+HARDLINK_TARGETS="
+    opt/ooce/bin/isc-config.sh
+    opt/ooce/sbin/named
+    opt/ooce/share/man/man1/isc-config.sh.1
+    opt/ooce/share/man/man3/lwres_resutil.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_buffer.3
+    opt/ooce/share/man/man3/lwres_config.3
+    opt/ooce/share/man/man3/lwres_config.3
+    opt/ooce/share/man/man3/lwres_config.3
+    opt/ooce/share/man/man3/lwres_config.3
+    opt/ooce/share/man/man3/lwres_config.3
+    opt/ooce/share/man/man3/lwres_context.3
+    opt/ooce/share/man/man3/lwres_context.3
+    opt/ooce/share/man/man3/lwres_context.3
+    opt/ooce/share/man/man3/lwres_context.3
+    opt/ooce/share/man/man3/lwres_context.3
+    opt/ooce/share/man/man3/lwres_context.3
+    opt/ooce/share/man/man3/lwres_context.3
+    opt/ooce/share/man/man3/lwres_gethostent.3
+    opt/ooce/share/man/man3/lwres_gethostent.3
+    opt/ooce/share/man/man3/lwres_getaddrinfo.3
+    opt/ooce/share/man/man3/lwres_getipnode.3
+    opt/ooce/share/man/man3/lwres_gabn.3
+    opt/ooce/share/man/man3/lwres_gabn.3
+    opt/ooce/share/man/man3/lwres_gabn.3
+    opt/ooce/share/man/man3/lwres_gabn.3
+    opt/ooce/share/man/man3/lwres_gabn.3
+    opt/ooce/share/man/man3/lwres_gabn.3
+    opt/ooce/share/man/man3/lwres_resutil.3
+    opt/ooce/share/man/man3/lwres_gethostent.3
+    opt/ooce/share/man/man3/lwres_gethostent.3
+    opt/ooce/share/man/man3/lwres_gethostent.3
+    opt/ooce/share/man/man3/lwres_gethostent.3
+    opt/ooce/share/man/man3/lwres_gethostent.3
+    opt/ooce/share/man/man3/lwres_gethostent.3
+    opt/ooce/share/man/man3/lwres_getipnode.3
+    opt/ooce/share/man/man3/lwres_getipnode.3
+    opt/ooce/share/man/man3/lwres_resutil.3
+    opt/ooce/share/man/man3/lwres_gnba.3
+    opt/ooce/share/man/man3/lwres_gnba.3
+    opt/ooce/share/man/man3/lwres_gnba.3
+    opt/ooce/share/man/man3/lwres_gnba.3
+    opt/ooce/share/man/man3/lwres_gnba.3
+    opt/ooce/share/man/man3/lwres_gnba.3
+    opt/ooce/share/man/man3/lwres_hstrerror.3
+    opt/ooce/share/man/man3/lwres_packet.3
+    opt/ooce/share/man/man3/lwres_packet.3
+    opt/ooce/share/man/man3/lwres_inetntop.3
+    opt/ooce/share/man/man3/lwres_noop.3
+    opt/ooce/share/man/man3/lwres_noop.3
+    opt/ooce/share/man/man3/lwres_noop.3
+    opt/ooce/share/man/man3/lwres_noop.3
+    opt/ooce/share/man/man3/lwres_noop.3
+    opt/ooce/share/man/man3/lwres_noop.3
+    opt/ooce/share/man/man3/lwres_gethostent.3
+    opt/ooce/share/man/man3/lwres_gethostent.3
+    opt/ooce/share/man/man3/lwres_resutil.3
+"
+
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
