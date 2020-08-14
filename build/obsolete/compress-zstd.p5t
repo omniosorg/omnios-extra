@@ -1,0 +1,3 @@
+set name=pkg.fmri value=pkg://@PKGPUBLISHER@/ooce/compress/zstd@1.4.5,@SUNOSVER@-@PVER@
+set name=pkg.renamed value=true
+depend fmri=pkg:/compress/zstd type=require

@@ -32,10 +32,10 @@ set_mirror "$OOCEGITHUB/$PROG/releases/download"
 # Curl 7.71 is required as zadm uses the '%{json}' token
 RUN_DEPENDS_IPS="
     web/curl@7.71.1
-    network/socat
     ooce/compress/pigz
     ooce/compress/pbzip2
-    ooce/compress/zstd
+    network/socat
+    compress/zstd
 "
 
 OPREFIX=$PREFIX

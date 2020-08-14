@@ -182,7 +182,7 @@ TESTSUITE_MAKE=gmake
 TAR="gtar --no-same-permissions --no-same-owner"
 GZIP=/opt/ooce/bin/pigz
 BUNZIP2=/opt/ooce/bin/pbunzip2
-ZSTD=/opt/ooce/bin/zstd
+[ $RELVER -ge 151035 ] && ZSTD=/usr/bin/zstd || ZSTD=/opt/ooce/bin/zstd
 JQ=/opt/ooce/bin/jq
 CURL=/usr/bin/curl
 XZCAT=xzcat

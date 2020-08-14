@@ -7,7 +7,6 @@ depend fmri=developer/omnios-build-tools type=require
 depend fmri=ooce/application/tidy type=require
 depend fmri=ooce/compress/pbzip2 type=require
 depend fmri=ooce/compress/pigz type=require
-depend fmri=ooce/compress/zstd type=require
 depend fmri=ooce/developer/ccache type=require
 depend fmri=ooce/developer/cunit type=require
 depend fmri=ooce/developer/ninja type=require
@@ -18,6 +17,9 @@ depend fmri=ooce/text/asciidoc type=require
 depend fmri=ooce/text/ripgrep type=require
 depend fmri=ooce/util/fd type=require
 depend fmri=ooce/util/jq type=require
+
+# zstd was moved to core in r151035.
+depend type=require-any fmri=pkg:/compress/zstd fmri=pkg:/ooce/compress/zstd
 
 # These two are required to run the gcc testsuite.
 # Only part of ooce/omnios-build-tools from r151030 onwards.
