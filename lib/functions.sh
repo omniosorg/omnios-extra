@@ -721,6 +721,7 @@ verify_depends() {
     # add go as a build dependency if $GOVER is set
     [ -n "$GOVER" ] && BUILD_DEPENDS_IPS+=" ooce/developer/go-${GOVER//./}"
     for i in $BUILD_DEPENDS_IPS; do
+        logmsg "-- Checking for build dependency $i"
         # Trim indicators to get the true name (see make_package for details)
         case ${i:0:1} in
             \=|\?)
@@ -730,13 +731,13 @@ verify_depends() {
                 # If it's an exclude, we should error if it's installed rather
                 # than missing
                 i=${i:1}
-                pkg info $i > /dev/null 2<&1 && \
-                    logerr "--- $i should not be installed during build."
+                logcmd pkg info -q $i \
+                    && logerr "--- $i should not be installed during build."
                 continue
                 ;;
         esac
-        pkg info $i > /dev/null 2<&1 ||
-            ask_to_install "$i" "--- Build-time dependency $i not found"
+        logcmd pkg info -q $i \
+            || ask_to_install "$i" "--- Build-time dependency $i not found"
     done
 }
 
@@ -2248,7 +2249,7 @@ build_install() {
 test_if_core() {
     logmsg "Testing whether $MODNAME is in core"
     logmsg "--- Ensuring ${PKG} is not installed"
-    if logcmd pkg info ${PKG}; then
+    if logcmd pkg info -q ${PKG}; then
         logerr "------ Package ${PKG} appears to be installed.  Please uninstall it."
     else
         logmsg "------ Not installed, good."
@@ -2601,6 +2602,26 @@ save_function() {
     local ORIG_FUNC=$(declare -f $1)
     local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
     eval "$NEWNAME_FUNC"
+}
+
+pkg_ver() {
+    local src="$1"
+    local script="${2:-build.sh}"
+
+    src=$ROOTDIR/build/$src/$script
+    [ -f $src ] || logerr "pkg_ver: cannot locate source"
+    local ver=`sed -n '/^VER=/ {
+                s/.*=//
+                p
+                q
+        }' $src`
+    [ -n "$ver" ] || logerr "No version found."
+    echo $ver
+}
+
+inherit_ver() {
+    VER=`pkg_ver "$@"`
+    logmsg "-- inherited version '$VER'"
 }
 
 # Vim hints
