@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=emacs
-VER=26.3
+VER=27.1
 PKG=ooce/editor/emacs
 SUMMARY="Emacs editor"
 DESC="An extensible, customizable, free/libre text editor - and more."
