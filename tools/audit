@@ -32,13 +32,13 @@ c_reset="`/usr/gnu/bin/tput sgr0`"
 setup()
 {
     # Determine the current bloody release version as r1510XX.0
-    branch=`pkgrepo -s $IPSROOT/bloody/core list -H -F json SUNWcs \
+    bbranch=`pkgrepo -s $IPSROOT/bloody/core list -H -F json SUNWcs \
         | jq -r '.[0] | .branch'`
-    branch=${branch%%.*}
-    [ -z "$branch" ] && echo "Could not retrieve bloody branch" && exit 1
-    #echo "Bloody branch: $branch"
-    ((lts = branch - (branch + 2) % 8))
-    branches=(bloody r$((branch - 1)) r$((branch - 3)) r$lts)
+    bbranch=${bbranch%%.*}
+    [ -z "$bbranch" ] && echo "Could not retrieve bloody branch" && exit 1
+    #echo "Bloody branch: $bbranch"
+    ((lts = bbranch - (bbranch + 2) % 8))
+    branches=(bloody r$((bbranch - 1)) r$((bbranch - 3)) r$lts)
     #echo "Branches: ${branches[@]}"
 }
 
@@ -191,32 +191,32 @@ audit()
         str=`printf "%-${pkgs}s %${vers}s" "${pkg#ooce/}" "$ver"`
         ok=1
         for b in "${branches[@]}"; do
+            [ $b = bloody ] && r=$bbranch || r=${b#r}
             nameref data=$b
             pver="${data[$pkg]}"
             cf "$ver" "$pver"
             case $? in
                 0)  c="$c_highlight" ;;
                 1)  c="$c_error"
-                    if [ -z "${pver}" ]; then
-                        case $pkg in
-                            # socat is not published after r151030
-                            */socat) ;;
-                            # lz4 and zstd are not published after r151034
-                            */lz4) ;;
-                            */zstd) ;;
-                            # zadm is not published until r151034
-                            */zadm) ;;
-                            # gyp is not published until r151035
-                            */gyp) ;;
-                            # clang/llvm-80 is not published after r151032
-                            */clang-80|*/llvm-80) ;;
-                            # X11 headers/libraries are not published until r151035
-                            */x11/*) ;;
-                            *) ok=0 ;;
-                        esac
-                    else
-                        ok=0
-                    fi
+                    case $pkg:$pver in
+                        # socat was not published for r151032/34 and was added
+                        # back as a renamed package in r151035
+                        */socat:) [[ $r = 15103[24] ]] || ok=0 ;;
+                        # zadm is not published until r151034
+                        */zadm:) [ $r -lt 151034 ] || ok=0 ;;
+                        # gyp is not published until r151035
+                        */gyp:) [ $r -lt 151035 ] || ok=0 ;;
+                        # clang/llvm-80 is not published after r151034
+                        */clang-80:|*/llvm-80:) [ $r -gt 151034 ] || ok=0 ;;
+                        # X11 headers/libraries are not published until r151035
+                        */x11/*:) [ $r -lt 151035 ] || ok=0 ;;
+                        # pango is stuck on 1.44 on r151030 due to the
+                        # older version of glib2 there.
+                        */pango:1.44*)
+                            [ $r = 151030 ] || ok=0
+                            ;;
+                        *) ok=0 ;;
+                    esac
                     ;;
                 2)  c="$c_banner"; ok=0 ;;
             esac
