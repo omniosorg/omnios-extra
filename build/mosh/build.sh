@@ -22,7 +22,11 @@ PKG=ooce/network/mosh
 SUMMARY="mosh - mobile shell"
 DESC="Remote terminal application that allows roaming"
 
-BUILD_DEPENDS_IPS="ooce/library/protobuf"
+# The protobuf ABI changes frequently. Lock the version pulled into each
+# build of mosh.
+PBUFVER=`pkg_ver protobuf`
+BUILD_DEPENDS_IPS="=ooce/library/protobuf@${PBUFVER%.*}"
+RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
 
 set_arch 64
 
