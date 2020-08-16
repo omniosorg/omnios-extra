@@ -36,7 +36,7 @@ RUNPATH=$VARPATH/run
 
 BUILD_DEPENDS_IPS="
     ooce/developer/cmake
-    ooce/compress/lz4
+    compress/lz4
 "
 
 XFORM_ARGS="

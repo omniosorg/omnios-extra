@@ -7,7 +7,6 @@ depend fmri=ooce/omnios-build-tools type=require
 depend fmri=driver/tuntap type=require
 depend fmri=ooce/application/graphviz type=require
 depend fmri=ooce/audio/flac type=require
-depend fmri=ooce/compress/lz4 type=require
 depend fmri=ooce/database/bdb type=require
 depend fmri=ooce/database/lmdb type=require
 depend fmri=ooce/database/mariadb-104 type=require
@@ -44,6 +43,9 @@ depend fmri=ooce/runtime/ruby-26 type=require
 depend fmri=system/header/header-agp type=require
 depend fmri=system/header/header-usb type=require
 depend fmri=system/library/pcap type=require
+
+# lz4 was moved to core in r151035.
+depend type=require-any fmri=pkg:/compress/lz4 fmri=pkg:/ooce/compress/lz4
 
 # Required to build x11 libraries from r151035 onwards
 depend fmri=ooce/x11/header/xcb-protocols type=conditional \

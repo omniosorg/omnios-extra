@@ -201,6 +201,9 @@ audit()
                         case $pkg in
                             # socat is not published after r151030
                             */socat) ;;
+                            # lz4 and zstd are not published after r151034
+                            */lz4) ;;
+                            */zstd) ;;
                             # zadm is not published until r151034
                             */zadm) ;;
                             # gyp is not published until r151035

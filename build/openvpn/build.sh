@@ -32,7 +32,7 @@ PREFIX+="/$PROG"
 CONFPATH=/etc$PREFIX
 VARPATH=/var$OPREFIX/$PROG
 
-BUILD_DEPENDS_IPS="driver/tuntap ooce/compress/lz4"
+BUILD_DEPENDS_IPS="driver/tuntap compress/lz4"
 RUN_DEPENDS_IPS="driver/tuntap"
 
 XFORM_ARGS="
@@ -77,8 +77,11 @@ CONFIGURE_OPTS="
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
-export LZ4_CFLAGS="-I$OPREFIX/include"
-export LZ4_LIBS="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64 -llz4"
+if [ $RELVER -lt 151035 ]; then
+    # lz4 was moved to core in r151035
+    export LZ4_CFLAGS="-I$OPREFIX/include"
+    export LZ4_LIBS="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64 -llz4"
+fi
 
 download_source $PROG $PROG $VER
 patch_source
