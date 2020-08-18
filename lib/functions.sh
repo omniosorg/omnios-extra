@@ -2026,9 +2026,14 @@ run_testsuite() {
 
 build_dependency() {
     typeset merge=0
-    case $1 in
-        -merge)     merge=1; shift ;;
-    esac
+    typeset buildargs=
+    while [[ "$1" = -* ]]; do
+        case $1 in
+            -merge)     merge=1 ;;
+            -ctf)       buildargs+=" -ctf" ;;
+        esac
+        shift
+    done
     typeset dep="$1"
     typeset dir="$2"
     typeset dldir="$3"
@@ -2043,6 +2048,7 @@ build_dependency() {
     # Adjust variables so that download, patch and build work correctly
     BUILDDIR="$dir"
     PATCHDIR="patches-$dep"
+    [ ! -d "$PATCHDIR" -a -d "patches-$ver" ] && PATCHDIR="patches-$ver"
     if [ $merge -eq 0 ]; then
         DEPROOT=$TMPDIR/_deproot
         DESTDIR=$DEPROOT
@@ -2054,7 +2060,7 @@ build_dependency() {
     download_source "$dldir" "$prog" "$ver" "$TMPDIR"
     patch_source
     note -n "-- Building dependency $dep"
-    build
+    build $buildargs
 
     # Restore variables
     BUILDDIR=$_BUILDDIR
@@ -2287,17 +2293,20 @@ convert_ctf() {
     pushd $DESTDIR >/dev/null
     while read file; do
         file $file | $EGREP -s 'ELF.*not stripped' || continue
-        logmsg "------ Converting CTF data for $file"
         typeset tf="$file.$$"
         rm -f "$tf"
-        if logcmd $CTFCONVERT $CTFCONVERTFLAGS -l "$PROG-$VER" -o "$tf" "$file"
-        then
-            if [ -s "$tf" ]; then
-                typeset mode=`stat -c %a "$file"`
-                logcmd chmod u+w "$file" || logerr -b "chmod u+w failed: $file"
-                logcmd cp "$tf" "$file" || logerr -b "copy failed: $file"
-                logcmd chmod $mode "$file" || logerr -b "chmod failed: $file"
-            fi
+        if $CTFDUMP -h "$file" 1>/dev/null 2>&1; then
+            #logmsg "------ CTF data already present for $file"
+            :
+        elif logcmd $CTFCONVERT $CTFCONVERTFLAGS \
+          -l "$PROG-$VER" -o "$tf" "$file" && [ -s "$tf" ]; then
+            logmsg "------ Converting CTF data for $file"
+            typeset mode=`stat -c %a "$file"`
+            logcmd chmod u+w "$file" || logerr -b "chmod u+w failed: $file"
+            logcmd cp "$tf" "$file" || logerr -b "copy failed: $file"
+            logcmd chmod $mode "$file" || logerr -b "chmod failed: $file"
+        else
+            logmsg "------ Failed to convert CTF data for $file"
         fi
         logcmd rm -f "$tf"
         logcmd strip -x "$file"
@@ -2594,14 +2603,39 @@ clean_up() {
 }
 
 #############################################################################
-# Helper function that will let you save a predefined function so you can
-# override it and call it later
+# Helper functions to save and restore variables and functions
 #############################################################################
 
 save_function() {
     local ORIG_FUNC=$(declare -f $1)
     local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
     eval "$NEWNAME_FUNC"
+}
+
+save_variable() {
+    local var=$1
+    declare -n _var=$var
+    declare -g __save__$var="$_var"
+}
+
+restore_variable() {
+    local var=$1
+    declare -n _var=__save__$var
+    declare -g $var="$_var"
+}
+
+save_buildenv() {
+    local opt
+    for opt in $BUILDENV_OPTS; do
+        save_variable $opt
+    done
+}
+
+restore_buildenv() {
+    local opt
+    for opt in $BUILDENV_OPTS; do
+        restore_variable $opt
+    done
 }
 
 pkg_ver() {
