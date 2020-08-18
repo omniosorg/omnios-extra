@@ -1,0 +1,50 @@
+--- a/docs/conf/httpd.conf.in
++++ b/docs/conf/httpd.conf.in
+@@ -74,8 +74,8 @@
+ # It is usually good practice to create a dedicated user and group for
+ # running httpd, as with most system services.
+ #
+-User daemon
+-Group daemon
++User webservd
++Group webservd
+ 
+ </IfModule>
+ 
+@@ -106,6 +106,7 @@
+ # If your host doesn't have a registered DNS name, enter its IP address here.
+ #
+ #ServerName www.example.com:@@Port@@
++ServerName 127.0.0.1
+ 
+ #
+ # Deny access to the entirety of your server's filesystem. You must
+@@ -371,7 +371,7 @@
+ # necessary.
+ 
+ # Server-pool management (MPM specific)
+-#Include @rel_sysconfdir@/extra/httpd-mpm.conf
++Include @rel_sysconfdir@/extra/httpd-mpm.conf
+ 
+ # Multi-language error messages
+ #Include @rel_sysconfdir@/extra/httpd-multilang-errordoc.conf
+@@ -398,7 +398,7 @@
+ #Include @rel_sysconfdir@/extra/httpd-dav.conf
+ 
+ # Various default settings
+-#Include @rel_sysconfdir@/extra/httpd-default.conf
++Include @rel_sysconfdir@/extra/httpd-default.conf
+ 
+ # Configure mod_proxy_html to understand HTML4/XHTML1
+ <IfModule proxy_html_module>
+--- a/docs/conf/extra/httpd-default.conf.in~	2020-08-18 23:09:56.014646393 +0000
++++ b/docs/conf/extra/httpd-default.conf.in	2020-08-18 23:10:16.985576699 +0000
+@@ -52,7 +52,7 @@
+ # Set to one of:  Full | OS | Minor | Minimal | Major | Prod
+ # where Full conveys the most information, and Prod the least.
+ #
+-ServerTokens Full
++ServerTokens Prod
+ 
+ #
+ # Optionally add a line containing the server version and virtual host

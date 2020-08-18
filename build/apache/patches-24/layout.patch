@@ -1,0 +1,31 @@
+diff -wpruN '--exclude=*.orig' a~/config.layout a/config.layout
+--- a~/config.layout	1970-01-01 00:00:00
++++ a/config.layout	1970-01-01 00:00:00
+@@ -419,3 +419,27 @@
+     proxycachedir:   ${localstatedir}/cache/apache2
+ </Layout>
+ 
++# OOCE Layout - the actual prefix is specified as an argument to configure
++<Layout OOCE>
++    prefix:        /opt/ooce/apache-XX
++    exec_prefix:   ${prefix}
++    bindir:        ${exec_prefix}/bin
++    sbindir:       ${exec_prefix}/bin
++    libdir:        ${exec_prefix}/lib
++    libexecdir:    ${exec_prefix}/libexec
++    mandir:        ${exec_prefix}/man
++    sysconfdir:    /etc${prefix}
++    datadir:       /var${prefix}
++    installbuilddir: ${prefix}/build
++    errordir:      ${datadir}/error
++    iconsdir:      ${datadir}/icons
++    htdocsdir:     ${datadir}/htdocs
++    manualdir:     ${prefix}/manual
++    cgidir:        ${datadir}/cgi-bin
++    includedir:    ${exec_prefix}/include
++    localstatedir: ${prefix}
++    runtimedir:    ${datadir}/run
++    logfiledir:    /var/log${prefix}
++    proxycachedir: ${datadir}/proxy
++</Layout>
++

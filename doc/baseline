@@ -124,6 +124,7 @@ extra.omnios ooce/runtime/ruby-26
 extra.omnios ooce/runtime/ruby-27
 extra.omnios ooce/runtime/tcl
 extra.omnios ooce/security/gnupg
+extra.omnios ooce/server/apache-24
 extra.omnios ooce/server/nginx
 extra.omnios ooce/server/nginx-116
 extra.omnios ooce/server/nginx-118
