@@ -2603,14 +2603,39 @@ clean_up() {
 }
 
 #############################################################################
-# Helper function that will let you save a predefined function so you can
-# override it and call it later
+# Helper functions to save and restore variables and functions
 #############################################################################
 
 save_function() {
     local ORIG_FUNC=$(declare -f $1)
     local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
     eval "$NEWNAME_FUNC"
+}
+
+save_variable() {
+    local var=$1
+    declare -n _var=$var
+    declare -g __save__$var="$_var"
+}
+
+restore_variable() {
+    local var=$1
+    declare -n _var=__save__$var
+    declare -g $var="$_var"
+}
+
+save_buildenv() {
+    local opt
+    for opt in $BUILDENV_OPTS; do
+        save_variable $opt
+    done
+}
+
+restore_buildenv() {
+    local opt
+    for opt in $BUILDENV_OPTS; do
+        restore_variable $opt
+    done
 }
 
 pkg_ver() {

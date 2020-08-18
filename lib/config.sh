@@ -236,6 +236,17 @@ DONT_REMOVE_INSTALL_DIR=
 #############################################################################
 # C compiler options - these can be overridden by a build script
 #############################################################################
+
+# The list of options which define the build environment
+BUILDENV_OPTS="
+    CONFIGURE_OPTS CONFIGURE_OPTS_32 CONFIGURE_OPTS_64
+    CONFIGURE_OPTS_WS_32 CONFIGURE_OPTS_WS_64
+    CFLAGS CFLAGS32 CFLAGS64
+    CXXFLAGS CXXFLAGS32 CXXFLAGS64
+    CPPFLAGS CPPFLAGS32 CPPFLAGS64
+    LDFLAGS LDFLAGS32 LDFLAGS64
+"
+
 # isaexec(3C) variants
 # These variables will be passed to the build to construct multi-arch
 # binary and lib directories in DESTDIR
