@@ -200,6 +200,7 @@ CHECK_RTIME=/opt/onbld/bin/check_rtime
 # Command for privilege escalation. Can be overridden in site.sh
 PFEXEC=sudo
 
+CTFDUMP=/opt/onbld/bin/i386/ctfdump
 CTFCONVERT=/opt/onbld/bin/i386/ctfconvert
 CTFCONVERTFLAGS=-mi
 PKGSEND=/usr/bin/pkgsend
