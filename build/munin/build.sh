@@ -132,9 +132,12 @@ for i in node server; do
     PKG=ooce/application/munin-$i ##IGNORE##
     PKGE=`url_encode $PKG`
     SUMMARY="munin - $i"
-    if [ "$i" = node ]; then
-        xform files/$PROG-$i.xml > $TMPDIR/$PROG-$i.xml
-        DESTDIR=$DESTDIR/node install_smf application $PROG-$i.xml
+    xform files/$PROG-$i.xml > $TMPDIR/$PROG-$i.xml
+    if [ -f files/$PROG-$i ]; then
+        DESTDIR=$DESTDIR/$i install_smf -oocemethod \
+            ooce $PROG-$i.xml $PROG-$i
+    else
+        DESTDIR=$DESTDIR/$i install_smf ooce $PROG-$i.xml
     fi
     DESTDIR=$DESTDIR/$i make_package $i.mog
 done
