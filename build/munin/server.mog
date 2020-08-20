@@ -1,0 +1,39 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2020 OmniOS Community Edition.  All rights reserved.
+
+# Symlink binaries
+<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
+    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
+
+# Symlink man pages
+<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
+    link path=$(OPREFIX)/share/man/%<1>/%<2> \
+    target=../../../$(PROG)/share/man/%<1>/%<2> >
+
+<transform file path=etc -> set preserve true>
+
+<transform path=var/$(PREFIX) -> set group $(GROUP)>
+<transform path=var/$(PREFIX) -> set owner $(USER)>
+<transform path=var/log/$(PREFIX) -> set group $(GROUP)>
+<transform path=var/log/$(PREFIX) -> set owner $(USER)>
+<transform path=$(PREFIX)/www/docs -> set group $(GROUP)>
+<transform path=$(PREFIX)/www/docs -> set owner $(USER)>
+<transform path=var/$(PREFIX)/cgi-tmp$ -> set group nobody>
+<transform path=var/$(PREFIX)/cgi-tmp$ -> set owner nobody>
+
+<transform path=var/$(OPREFIX)/$(PROG)-node -> drop>
+
+depend type=require fmri=ooce/application/munin-node
+depend type=require fmri=ooce/database/rrdtool
+
+license COPYING license=GPLv2
+

@@ -1,0 +1,22 @@
+# list taken from INSTALL
+requires 'Time::HiRes';
+requires 'Storable';
+requires 'Digest::MD5';
+requires 'HTML::Template';
+requires 'Storable';
+requires 'Text::Balanced';
+requires 'Params::Validate';
+requires 'TimeDate';
+requires 'Net::SSLeay';
+requires 'Getopt::Long';
+requires 'File::Copy::Recursive';
+requires 'CGI::Fast';
+requires 'IO::Socket::INET6';
+requires 'Log::Log4perl';
+requires 'IPC::Shareable';
+requires 'Log::Dispatch';
+requires 'Log::Dispatch::FileRotate';
+requires 'MIME::Lite';
+requires 'Mail::Sender';
+requires 'Mail::Sendmail';
+requires 'MailTools';

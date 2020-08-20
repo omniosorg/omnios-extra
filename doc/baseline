@@ -5,6 +5,8 @@ extra.omnios ooce/application/graphviz
 extra.omnios ooce/application/imagemagick
 extra.omnios ooce/application/mattermost
 extra.omnios ooce/application/mc
+extra.omnios ooce/application/munin-node
+extra.omnios ooce/application/munin-server
 extra.omnios ooce/application/nagios
 extra.omnios ooce/application/nagios-common
 extra.omnios ooce/application/nagios-nrdp

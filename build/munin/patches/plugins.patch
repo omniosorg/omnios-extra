@@ -1,0 +1,35 @@
+diff -wpruN '--exclude=*.orig' a~/plugins/node.d.sunos/if_.in a/plugins/node.d.sunos/if_.in
+--- a~/plugins/node.d.sunos/if_.in	1970-01-01 00:00:00
++++ a/plugins/node.d.sunos/if_.in	1970-01-01 00:00:00
+@@ -56,7 +56,7 @@ fi
+ 
+ if [ "$1" = "suggest" ]; then
+ 	if [ -x /usr/bin/kstat ]; then
+-		kstat -p -m '/^(?!unix)/' -n '/^(?!mac$)/' -s rbytes64 | awk -F: '{ print $3 }'
++		kstat -p -s rbytes64 | awk -F: '{ print $3 }'
+ 		exit 0
+ 	else
+ 		exit 1
+@@ -85,7 +85,7 @@ if [ "$1" = "config" ]; then
+ 	print_warning obytes
+ 	print_critical obytes
+ 	exit 0
+-fi;
++fi
+ 
+-kstat -p -m '/^(?!unix)/' -n $INTERFACE -s '*bytes64' | sed \
+-	's/.*\(.bytes\)64./\1.value /'
++kstat -C -c net -n $INTERFACE -s rbytes64 | sed 's/.*\(.bytes\)64./\1.value /'
++kstat -C -c net -n $INTERFACE -s obytes64 | sed 's/.*\(.bytes\)64./\1.value /'
+diff -wpruN '--exclude=*.orig' a~/plugins/node.d.sunos/iostat.in a/plugins/node.d.sunos/iostat.in
+--- a~/plugins/node.d.sunos/iostat.in	1970-01-01 00:00:00
++++ a/plugins/node.d.sunos/iostat.in	1970-01-01 00:00:00
+@@ -118,6 +118,6 @@ while(<IOSTAT>){
+ close(IOSTAT);
+ 
+ foreach $dev ('disk','tape','nfs') {
+-    print $dev,"w.value ", (defined($bwi{$dev}) ? $bwi{$dev} : "U"), "\n";
+-    print $dev,"r.value ", (defined($bri{$dev}) ? $bri{$dev} : "U"), "\n";
++    print $dev,"w.value ", (defined($bwi{$dev}) ? int ($bwi{$dev}) : "U"), "\n";
++    print $dev,"r.value ", (defined($bri{$dev}) ? int ($bri{$dev}) : "U"), "\n";
+ }

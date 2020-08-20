@@ -1,0 +1,39 @@
+diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -33,7 +33,7 @@ PODMAN8          := build/master/doc/mun
+ PODMAN5          := build/master/doc/munin.conf node/doc/munin-node.conf
+ PYTHON_LINT_CALL ?= python3 -m flake8
+ CONFVAR_SUBSTITUTION_FILES = \
+-	master/blib/libdoc/Munin\:\:Master\:\:HTMLOld.3pm \
++	master/blib/libdoc/Munin\:\:Master\:\:HTMLOld.3 \
+ 	master/blib/lib/Munin/Master/HTMLOld.pm \
+ 	node/blib/sbin/munin-node-configure \
+ 	node/blib/sbin/munin-node \
+@@ -98,7 +98,6 @@ install-pre: $(MAKEFILES)
+ 	mkdir -p $(STATEDIR)
+ 	mkdir -p $(SPOOLDIR)
+ 	mkdir -p $(CONFDIR)
+-	$(CHOWN) $(USER) $(LOGDIR) $(STATEDIR) $(SPOOLDIR)
+ 
+ install-master-prime: $(INFILES_MASTER) install-pre install-master
+ 	mkdir -p $(CONFDIR)/templates
+@@ -114,10 +113,8 @@ install-master-prime: $(INFILES_MASTER)
+ 	mkdir -p $(DBDIR)/cgi-tmp
+ 	mkdir -p $(CGIDIR)
+ 
+-	$(CHOWN) $(USER) $(HTMLDIR) $(DBDIR)
+ 	$(CHMOD) 0755 $(DBDIR)
+ 
+-	$(CHOWN) $(CGIUSER) $(DBDIR)/cgi-tmp
+ 	$(CHMOD) 0755 $(DBDIR)/cgi-tmp
+ 
+ 	for p in master/www/*.tmpl ;  do \
+@@ -159,7 +156,6 @@ install-plugins-prime: install-plugins b
+ 	mkdir -p $(LIBDIR)/plugins
+ 	mkdir -p $(PLUGSTATE)
+ 
+-	$(CHOWN) root:root $(PLUGSTATE)
+ 	$(CHMOD) 0755 $(PLUGSTATE)
+ 	$(CHMOD) 0755 $(CONFDIR)/plugin-conf.d
+ 

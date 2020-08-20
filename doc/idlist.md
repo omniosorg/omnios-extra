@@ -31,6 +31,7 @@
 | illumos	| 75	| openldap
 | extra		| 76	| zabbixa (agent)
 | extra		| 77	| zabbix
+| extra		| 78	| munin
 | extra		| 79	| ooceapps
 | illumos	| 80	| webservd
 | extra		| 81	| nginx
@@ -78,6 +79,7 @@
 | illumos	| 70	| mysql
 | illumos	| 75	| openldap
 | extra		| 77	| zabbix
+| extra		| 78	| munin
 | extra		| 79	| ooceapps
 | illumos	| 80	| webservd
 | extra		| 81	| nginx

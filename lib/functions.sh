@@ -1691,6 +1691,14 @@ EOM
 #############################################################################
 
 install_smf() {
+    typeset methodpath=lib/svc/method
+    while [[ "$1" = -* ]]; do
+        case "$1" in
+            -oocemethod) methodpath+="/ooce" ;;
+        esac
+        shift
+    done
+
     mtype="${1:?type}"
     manifest="${2:?manifest}"
     method="$3"
@@ -1719,11 +1727,11 @@ install_smf() {
 
     # Method
     if [ -n "$method" ]; then
-        logcmd mkdir -p lib/svc/method \
-            || logerr "mkdir of $DESTDIR/lib/svc/method failed"
-        logcmd cp $methodf lib/svc/method/ \
+        logcmd mkdir -p $methodpath \
+            || logerr "mkdir of $DESTDIR/$methodpath failed"
+        logcmd cp $methodf $methodpath/ \
             || logerr "Cannot install SMF method"
-        logcmd chmod 0555 lib/svc/method/$method
+        logcmd chmod 0555 $methodpath/$method
     fi
 
     popd > /dev/null
