@@ -18,30 +18,26 @@
 
 PROG=ninja
 PKG=ooce/developer/ninja
-VER=1.10.0
+VER=1.10.1
 SUMMARY="Ninja"
 DESC="A small build system with a focus on speed"
 
 set_arch 64
 
-CONFIGURE_CMD="./configure.py"
+CONFIGURE_OPTS_64="
+    -DCMAKE_INSTALL_PREFIX=$PREFIX
+    -DCMAKE_BUILD_TYPE=Release
+"
 
-CONFIGURE_OPTS_64="--bootstrap"
-
-make_prog64() { :; }
-
-make_install() {
-    logmsg "--- make install"
-    mkdir -p $DESTDIR$PREFIX/bin
-    logcmd cp $TMPDIR/$BUILDDIR/$PROG $DESTDIR$PREFIX/bin \
-        || logerr "--- Make install failed"
-}
+TESTSUITE_MAKE="./ninja_test"
+MAKE_TESTSUITE_ARGS=
 
 init
 download_source $PROG "v$VER"
 patch_source
-prep_build
+prep_build cmake
 build
+run_testsuite "" "build.64"
 make_package
 clean_up
 
