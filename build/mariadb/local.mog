@@ -27,7 +27,7 @@ dir group=mysql mode=0700 owner=mysql path=var/$(PREFIX)/data
 <transform file path=etc/$(PREFIX)/ -> set preserve true>
 
 # Mediated binaries
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
+<transform file link path=$(PREFIX)/(s?bin)/(.*) -> emit \
     link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
     mediator=$(PROG) mediator-version=$(VERSION) >
 

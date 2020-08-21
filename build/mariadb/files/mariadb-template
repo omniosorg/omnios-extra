@@ -44,7 +44,7 @@ fi
 create_database() {
 	[ -d "$datadir/mysql" ] && return
 	echo "*** No existing database found, creating now"
-	$rootdir/bin/mysql_install_db \
+	$rootdir/bin/mariadb-install-db \
 	    --datadir="$datadir" \
 	    --auth-root-authentication-method=socket \
 	    --auth-root-socket-user=`id -un`
@@ -53,7 +53,7 @@ create_database() {
 start_mariadb() {
 	pidfile="$datadir/`uname -n`.pid"
 	echo "Starting mariadb with datadir=$datadir"
-	$rootdir/bin/mysqld_safe --datadir="$datadir" --pid-file="$pidfile" &
+	$rootdir/bin/mariadbd-safe --datadir="$datadir" --pid-file="$pidfile" &
 }
 
 case "$1" in
