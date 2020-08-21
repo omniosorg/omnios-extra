@@ -120,7 +120,7 @@
 | ooce/server/nginx		| 1.19.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-118		| 1.18.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio		| 2020-08-18T19-41-00Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/storage/minio-mc		| 2020-08-08T02-33-58Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/storage/minio-mc		| 2020-08-20T00-23-01Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/file-system/ntfs-3g | 2017.3.23AR.5 | https://jp-andre.pagesperso-orange.fr/openindiana-ntfs-3g.html https://www.tuxera.com/community/open-source-ntfs-3g/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/htop		| 2.2.0		| https://hisham.hm/htop/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/mbuffer		| 20200505	| https://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
