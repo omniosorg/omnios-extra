@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=pango
-VER=1.46.0
+VER=1.46.1
 PKG=ooce/library/pango
 SUMMARY="pango"
 DESC="Pango is a library for laying out and rendering of text"
