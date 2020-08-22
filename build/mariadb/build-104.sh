@@ -45,6 +45,7 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DVERSION=$MAJVER
     -DsVERSION=$sMAJVER
+    -DUSER=mysql -DGROUP=mysql
 "
 
 CFLAGS+=" -O3 -I$OPREFIX/include -I/usr/include/gssapi"
@@ -124,16 +125,6 @@ CONFIGURE_OPTS_WS="
     -DWITH_PIC=1
 "
 
-save_function make_install _make_install
-make_install() {
-    _make_install
-    logcmd mkdir -p $DESTDIR/$CONFPATH
-    sed < $SRCDIR/files/my.cnf > $DESTDIR/$CONFPATH/my.cnf "
-        s/%MAJVER%/$MAJVER/g
-        s/%sMAJVER%/$sMAJVER/g
-    "
-}
-
 init
 download_source $PROG $PROG $VER
 patch_source
@@ -141,7 +132,11 @@ prep_build cmake
 build
 strip_install
 add_notes README.install
-install_smf application $PROG-$sMAJVER.xml $PROG-$sMAJVER
+logcmd mkdir -p $DESTDIR/$CONFPATH
+xform files/my.cnf > $DESTDIR/$CONFPATH/my.cnf
+xform files/mariadb-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
+xform files/mariadb-template > $TMPDIR/$PROG-$sMAJVER
+install_smf -oocemethod ooce $PROG-$sMAJVER.xml $PROG-$sMAJVER
 make_package
 clean_up
 
