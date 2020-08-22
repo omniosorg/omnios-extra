@@ -13,7 +13,6 @@ depend fmri=ooce/database/mariadb-104 type=require
 depend fmri=ooce/database/postgresql-12 type=require
 depend fmri=ooce/developer/clang-90 type=require
 depend fmri=ooce/developer/cmake type=require
-depend fmri=ooce/developer/go-113 type=require
 depend fmri=ooce/developer/go-114 type=require
 depend fmri=ooce/developer/gperf type=require
 depend fmri=ooce/developer/llvm-90 type=require
