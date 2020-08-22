@@ -17,8 +17,8 @@
 . ../../lib/functions.sh
 
 PROG=go
-PKG=ooce/developer/go-113
-VER=1.13.15
+PKG=ooce/developer/go-115
+VER=1.15
 SUMMARY="The Go Programming Language"
 DESC="An open source programming language that makes it easy to build simple, "
 DESC+="reliable, and efficient software."
@@ -26,8 +26,7 @@ DESC+="reliable, and efficient software."
 BUILDDIR=$PROG
 
 set_arch 64
-# need to use go 1.13+ which supports GOOS=illumos
-set_gover 1.13
+set_gover 1.14
 
 MAJVER=`echo $VER | perl -pe '($_) = /(\d+\.\d+)/'`
 sMAJVER=${MAJVER//./}
