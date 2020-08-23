@@ -1,0 +1,26 @@
+diff -wpruN '--exclude=*.orig' a~/compiler/options.pas a/compiler/options.pas
+--- a~/compiler/options.pas	1970-01-01 00:00:00
++++ a/compiler/options.pas	1970-01-01 00:00:00
+@@ -3369,8 +3369,8 @@ begin
+        foundfn:=exepath+fn
+      else
+ {$else}
+-      if CfgFileExists('/etc/'+fn) then
+-       foundfn:='/etc/'+fn
++      if CfgFileExists('/etc/opt/ooce/fpc/'+fn) then
++       foundfn:='/etc/opt/ooce/fpc/'+fn
+      else
+ {$endif}
+       check_configfile:=false;
+diff -wpruN '--exclude=*.orig' a~/compiler/utils/samplecfg a/compiler/utils/samplecfg
+--- a~/compiler/utils/samplecfg	1970-01-01 00:00:00
++++ a/compiler/utils/samplecfg	1970-01-01 00:00:00
+@@ -43,7 +43,7 @@ if [ -w "$sysdir" ] ; then
+   fpccfgfile="$sysdir"/fpc.cfg
+   fppkgfile="$sysdir"/fppkg.cfg
+   defaultfile="$sysdir"/fppkg/default
+-  compilerconfigdir="-d CompilerConfigDir=$sysdir/fppkg"
++  compilerconfigdir="-d CompilerConfigDir=/etc/opt/ooce/fpc/fppkg"
+   fppkgconfdir=$sysdir/fppkg/conf.d
+ else
+   echo No write premission in $sysdir.
