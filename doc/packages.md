@@ -101,6 +101,7 @@
 | ooce/multimedia/exif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/exif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/ffmpeg	| 4.3.1		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/minidlna	| 1.2.1		| https://sourceforge.net/projects/minidlna/files/minidlna/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/bind-911		| 9.11.22	| https://downloads.isc.org/isc/bind9 | [omniosorg](https://github.com/omniosorg)
 | ooce/network/cyrus-imapd	| 3.2.3		| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/fping		| 5.0		| https://github.com/schweikert/fping/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.2.2		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)

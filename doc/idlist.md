@@ -22,6 +22,7 @@
 | illumos	| 50	| gdm
 | illumos	| 51	| zfssnap
 | illumos	| 52	| upnp
+| extra		| 53	| named
 | extra		| 54	| unbound
 | extra		| 55	| nsd
 | illumos	| 60	| xvm
@@ -73,6 +74,7 @@
 | extra		| 45	| sasl
 | illumos	| 50	| gdm
 | illumos	| 52	| upnp
+| extra		| 53	| named
 | extra		| 54	| unbound
 | extra		| 55	| nsd
 | illumos	| 60	| xvm

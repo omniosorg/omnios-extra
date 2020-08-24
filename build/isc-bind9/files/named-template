@@ -1,0 +1,47 @@
+#!/sbin/sh
+
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+. /lib/svc/share/smf_include.sh
+
+if [ -z $SMF_FMRI ]; then
+	echo "SMF framework variables are not initialized."
+	exit $SMF_EXIT_ERR_FATAL
+fi
+
+conf_file="`svcprop -p config/file $SMF_FMRI`"
+rndc_key="`svcprop -p config/rndc_key $SMF_FMRI`"
+exec="`svcprop -p config/exec $SMF_FMRI`"
+
+create_rndc_key() {
+	[ -s $rndc_key ] && return
+	echo "*** No existing rndc.key found. Creating key now. ***"
+	/$(PREFIX)/sbin/rndc-confgen -a
+}
+
+start_named() {
+	echo "Starting named daemon"
+	$exec -C $conf_file &
+}
+
+case "$1" in
+	start)
+		create_rndc_key
+		start_named
+		;;
+	*)
+		echo "Usage $0 {start}"
+		exit $SMF_EXIT_ERR_FATAL
+		;;
+esac
+
+exit $SMF_EXIT_OK

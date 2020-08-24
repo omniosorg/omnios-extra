@@ -1,0 +1,54 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+#
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+# Mediated binaries
+<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
+    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
+    mediator=$(PROG) mediator-version=$(VERSION) >
+
+# Mediated man pages
+<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
+    link path=$(OPREFIX)/share/man/%<1>/%<2> \
+    target=../../../$(PROG)-$(VERSION)/share/man/%<1>/%<2> \
+    mediator=$(PROG) mediator-version=$(VERSION) >
+
+# Restart fmri service
+<transform file path=$(PREFIX)/sbin/named \
+    -> set restart_fmri svc:/ooce/network/dns:named$(sVERSION)>
+
+# Set permissions for directories
+<transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
+<transform dir  path=var/opt/ooce/named -> set owner $(USER)>
+dir group=bin mode=0755 owner=$(USER) path=$(VARPATH)/namedb
+dir group=bin mode=0755 owner=$(USER) path=$(VARPATH)/namedb/master
+
+# Additional files
+file ./tmp/named-$(sVERSION).conf \
+	path=etc/$(PREFIX)/named.conf \
+	mode=0644 owner=root group=bin
+file files/rndc.key \
+	path=etc/$(PREFIX)/rndc.key \
+	mode=0600 owner=$(USER) group=$(USER)
+file files/empty.db \
+	path=$(VARPATH)/namedb/master/empty.db \
+	mode=0644 owner=root group=bin
+file files/localhost-forward.db \
+	path=$(VARPATH)/namedb/master/localhost-forward.db \
+	mode=0644 owner=root group=bin
+file files/localhost-reverse.db \
+	path=$(VARPATH)/namedb/master/localhost-reverse.db \
+	mode=0644 owner=root group=bin
+file files/named.root \
+	path=$(VARPATH)/namedb/master/named.root \
+	mode=0644 owner=root group=bin
+
+license COPYRIGHT license="ISC/MPLv2"
