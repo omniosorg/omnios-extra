@@ -24,13 +24,21 @@ DESC="Subversion is a version control system designed to be \
 as similar to cvs(1) as possible, while fixing many \
 outstanding problems with cvs(1)."
 
+# Hard-coded here for now. If we eventually ship more apache modules, or ship
+# more than one apache version, this will need restructuring.
+APACHEVER=2.4
+sAPACHEVER=${APACHEVER//./}
+
 set_arch 64
 set_standard XPG6
+
+SKIP_RTIME=1
 
 BUILD_DEPENDS_IPS+="
     ooce/library/apr
     ooce/library/apr-util
     ooce/library/serf
+    ooce/server/apache-$sAPACHEVER
 "
 
 OPREFIX=$PREFIX
@@ -39,12 +47,16 @@ PREFIX+="/$PROG"
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
+    -DAPACHE_VER=$APACHEVER
+    -DAPACHE_SVER=$sAPACHEVER
     -DPROG=$PROG
 "
 
-CONFIGURE_OPTS_64=" 
+CONFIGURE_OPTS_64="
     --prefix=$PREFIX
     --with-utf8proc=internal
+    --disable-mod-activation
+    --with-apxs=$OPREFIX/apache-$APACHEVER/bin/apxs
 "
 
 LDFLAGS+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
@@ -55,7 +67,13 @@ prep_build
 build
 strip_install
 install_smf application $PROG.xml
-make_package
+make_package svn.mog
+
+PKG=ooce/server/apache-$sAPACHEVER/modules/subversion
+SUMMARY="Subversion module for Apache Web Server $APACHEVER"
+DESC="$SUMMARY"
+make_package module.mog
+
 clean_up
 
 # Vim hints

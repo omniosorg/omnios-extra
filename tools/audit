@@ -111,6 +111,10 @@ add_target()
             */zabbix:*)
                 pkg+=-server
                 ;;
+            */modules/subversion:*)
+                aver="`grep '^APACHEVER=' $build | cut -d= -f2`"
+                pkg=ooce/server/apache-${aver//./}/modules/subversion
+                ;;
             *:github-latest*)
                 ver=`github_latest $pkg $ver`
                 ;;
@@ -191,7 +195,8 @@ audit()
         ------- ------- ------ ------- ------- -------
     for pkg in "${!targets[@]}"; do
         ver="${targets[$pkg]}"
-        str=`printf "%-${pkgs}s %${vers}s" "${pkg#ooce/}" "$ver"`
+        spkg=${pkg#ooce/}
+        str=`printf "%-${pkgs}s %${vers}s" "${spkg: -$pkgs}" "$ver"`
         ok=1
         for b in "${branches[@]}"; do
             [ $b = bloody ] && r=$bbranch || r=${b#r}
