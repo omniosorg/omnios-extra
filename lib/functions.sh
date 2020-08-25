@@ -2471,6 +2471,8 @@ check_libabi() {
 check_rtime() {
     local destdir="$1"
 
+    [ -n "$SKIP_RTIME" ] && return
+
     logmsg "-- Checking ELF runtime attributes"
     logcmd -p $FIND_ELF -fr $destdir/ > $TMPDIR/rtime.files
 
