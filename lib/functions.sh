@@ -718,8 +718,6 @@ verify_depends() {
     if [ -z "$BUILD_DEPENDS_IPS" -a -n "$DEPENDS_IPS" ]; then
         BUILD_DEPENDS_IPS=$DEPENDS_IPS
     fi
-    # add go as a build dependency if $GOVER is set
-    [ -n "$GOVER" ] && BUILD_DEPENDS_IPS+=" ooce/developer/go-${GOVER//./}"
     for i in $BUILD_DEPENDS_IPS; do
         logmsg "-- Checking for build dependency $i"
         # Trim indicators to get the true name (see make_package for details)
