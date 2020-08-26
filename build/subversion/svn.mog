@@ -26,4 +26,7 @@ group groupname=$(PROG) gid=91
 user ftpuser=false username=$(PROG) uid=91 group=$(PROG) gcos-field="Subversion User" \
     home-dir=/var/$(PREFIX) password=NP
 
+<transform path=$(PREFIX)/libexec -> drop>
+
 license LICENSE license=Apache2
+
