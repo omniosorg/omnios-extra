@@ -30,6 +30,11 @@ user ftpuser=false username=$(USER) uid=77 group=$(GROUP) \
 dir path=var/$(OPREFIX) owner=root group=bin mode=0755
 dir path=var/$(PREFIX) owner=$(USER) group=$(GROUP) mode=0755
 
+link path=$(PREFIX)/sbin/zabbix_server target=zabbix_server.pgsql \
+	mediator=zabbix mediator-implementation=pgsql mediator-priority=vendor
+link path=$(PREFIX)/sbin/zabbix_server target=zabbix_server.mariadb \
+	mediator=zabbix mediator-implementation=mariadb
+
 license COPYING license=GPLv2
 
 depend type=require fmri=ooce/application/zabbix-agent
