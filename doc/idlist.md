@@ -69,6 +69,7 @@
 | illumos	| 25	| smmsp
 | extra		| 27	| postfix
 | extra		| 28	| postdrop
+| extra		| 45	| sasl
 | illumos	| 50	| gdm
 | illumos	| 52	| upnp
 | extra		| 54	| unbound

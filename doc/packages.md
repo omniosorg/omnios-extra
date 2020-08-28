@@ -87,6 +87,7 @@
 | ooce/library/onig		| 6.9.5		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pango		| 1.46.1	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/protobuf		| 3.13.0	| https://github.com/protocolbuffers/protobuf/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/security/libsasl2 | 2.1.27	| https://github.com/cyrusimap/cyrus-sasl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/serf		| 1.3.9 	| https://downloads.apache.org/serf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/slang		| 2.3.2		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/tiff		| 4.1.0		| https://download.osgeo.org/libtiff/ https://libtiff.gitlab.io/libtiff/ | [omniosorg](https://github.com/omniosorg)

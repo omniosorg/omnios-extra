@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/saslauthd/saslauthd-main.c a/saslauthd/saslauthd-main.c
+--- a~/saslauthd/saslauthd-main.c	1970-01-01 00:00:00
++++ a/saslauthd/saslauthd-main.c	1970-01-01 00:00:00
+@@ -252,7 +252,7 @@ int main(int argc, char **argv) {
+ 	}
+ 
+ 	/* Create our working directory */
+-	if (mkdir(run_path, 0755) == -1 && errno != EEXIST) {
++	if (mkdir(run_path, 0710) == -1 && errno != EEXIST) {
+ 		logger(L_ERR, L_FUNC, "can not mkdir: %s", run_path);
+ 		logger(L_ERR, L_FUNC, "Check to make sure the parent directory exists and is");
+ 		logger(L_ERR, L_FUNC, "writeable by the user this process runs as.");
