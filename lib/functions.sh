@@ -2066,9 +2066,9 @@ build_dependency() {
         DEPROOT=$DESTDIR
     fi
 
+    note -n "-- Building dependency $dep"
     download_source "$dldir" "$prog" "$ver" "$TMPDIR"
     patch_source
-    note -n "-- Building dependency $dep"
     build $buildargs
 
     # Restore variables
