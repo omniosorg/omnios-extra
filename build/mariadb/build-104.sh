@@ -34,6 +34,8 @@ LOGPATH=/var/log$PREFIX
 VARPATH=/var$PREFIX
 RUNPATH=$VARPATH/run
 
+SKIP_RTIME=1
+
 BUILD_DEPENDS_IPS="
     ooce/developer/cmake
     compress/lz4
@@ -125,12 +127,23 @@ CONFIGURE_OPTS_WS="
     -DWITH_PIC=1
 "
 
+# Make ISA binaries for mysql_config, to allow software to find the
+# right settings for 32/64-bit when pkg-config is not used.
+make_isa_stub() {
+    pushd $DESTDIR$PREFIX/bin >/dev/null
+    logcmd mkdir -p $ISAPART64
+    logcmd mv mysql_config $ISAPART64/ || logerr "mv mysql_config"
+    make_isaexec_stub_arch $ISAPART64 $PREFIX/bin
+    popd >/dev/null
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build cmake
 build
 strip_install
+make_isa_stub
 add_notes README.install
 logcmd mkdir -p $DESTDIR/$CONFPATH
 xform files/my.cnf > $DESTDIR/$CONFPATH/my.cnf
