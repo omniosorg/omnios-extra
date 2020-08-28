@@ -1769,15 +1769,18 @@ make_isa_stub() {
         if [ -d $DESTDIR$PREFIX/$DIR ]; then
             logmsg "--- $DIR"
             pushd $DESTDIR$PREFIX/$DIR > /dev/null
-            make_isaexec_stub_arch $ISAPART
-            make_isaexec_stub_arch $ISAPART64
+            make_isaexec_stub_arch $ISAPART $PREFIX/$DIR
+            make_isaexec_stub_arch $ISAPART64 $PREFIX/$DIR
             popd > /dev/null
         fi
     done
 }
 
 make_isaexec_stub_arch() {
-    for file in $1/*; do
+    typeset isa="$1"
+    typeset dir="$2"
+
+    for file in $isa/*; do
         [ -f "$file" ] || continue
         if [ -z "$STUBLINKS" -a -h "$file" ]; then
             # Symbolic link. If it's relative to within the same ARCH
@@ -1805,8 +1808,8 @@ make_isaexec_stub_arch() {
         logmsg "------ $file"
         # Run the makeisa.sh script - build a 32-bit isa stub
         CC=$CC CFLAGS="-m32 -O2" \
-            logcmd $MYDIR/makeisa.sh $PREFIX/$DIR $file \
-            || logerr "--- Failed to make isaexec stub for $DIR/$file"
+            logcmd $MYDIR/makeisa.sh $dir $file \
+            || logerr "--- Failed to make isaexec stub for $dir/$file"
     done
 }
 
