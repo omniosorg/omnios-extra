@@ -35,8 +35,8 @@ umask 022
 # scripts
 #############################################################################
 
-BASEPATH=/usr/ccs/bin:/usr/bin:/usr/sbin:/usr/gnu/bin:/usr/sfw/bin:/opt/ooce/bin
-export PATH=$BASEPATH
+# Set a basic path - it will be modified once config.sh is loaded
+PATH=/usr/bin:/usr/sbin:/usr/gnu/bin
 
 #############################################################################
 # Process command line options
@@ -338,6 +338,9 @@ SRCDIR=$PWD/`dirname $0`
 . $MYDIR/config.sh
 [ -f $MYDIR/site.sh ] && . $MYDIR/site.sh
 BASE_TMPDIR=$TMPDIR
+
+BASEPATH=/usr/ccs/bin:$USRBIN:/usr/sbin:$OOCEBIN:$GNUBIN:$SFWBIN
+export PATH=$BASEPATH
 
 # Platform information, e.g. 5.11
 SUNOSVER=`uname -r`
