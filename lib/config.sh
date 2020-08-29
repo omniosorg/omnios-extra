@@ -175,39 +175,49 @@ PERL_MAKE_TEST=1
 #############################################################################
 # Paths to common tools
 #############################################################################
-WGET=wget
-PATCH=gpatch
-MAKE=gmake
-TESTSUITE_MAKE=gmake
-TAR="gtar --no-same-permissions --no-same-owner"
-GZIP=/opt/ooce/bin/pigz
-BUNZIP2=/opt/ooce/bin/pbunzip2
-[ $RELVER -ge 151035 ] && ZSTD=/usr/bin/zstd || ZSTD=/opt/ooce/bin/zstd
-JQ=/opt/ooce/bin/jq
-CURL=/usr/bin/curl
-XZCAT=xzcat
-UNZIP=unzip
-AWK=gawk
-GIT=git
-EGREP=/usr/bin/egrep
-RIPGREP=/opt/ooce/bin/rg
-FD=/opt/ooce/bin/fd
-CMAKE=/opt/ooce/bin/cmake
-MESON_MAKE=/opt/ooce/bin/ninja
-REALPATH=/usr/gnu/bin/realpath
-FIND_ELF=/opt/onbld/bin/find_elf
-CHECK_RTIME=/opt/onbld/bin/check_rtime
-# Command for privilege escalation. Can be overridden in site.sh
-PFEXEC=sudo
+USRBIN=/usr/bin
+OOCEBIN=/opt/ooce/bin
+SFWBIN=/usr/sfw/bin
+ONBLDBIN=/opt/onbld/bin
+GNUBIN=/usr/gnu/bin
 
-CTFDUMP=/opt/onbld/bin/i386/ctfdump
-CTFCONVERT=/opt/onbld/bin/i386/ctfconvert
+AWK=$USRBIN/gawk
+CURL=$USRBIN/curl
+EGREP=$USRBIN/egrep
+GIT=$USRBIN/git
+MAKE=$USRBIN/gmake
+PATCH=$USRBIN/gpatch
+TAR="$USRBIN/gtar --no-same-permissions --no-same-owner"
+TESTSUITE_MAKE=$USRBIN/gmake
+UNZIP=$USRBIN/unzip
+WGET=$USRBIN/wget
+XZCAT=$USRBIN/xzcat
+[ $RELVER -ge 151035 ] && ZSTD=$USRBIN/zstd || ZSTD=$OOCEBIN/zstd
+
+ # Command for privilege escalation. Can be overridden in site.sh
+PFEXEC=$USRBIN/sudo
+
+PKGSEND=$USRBIN/pkgsend
+PKGLINT=$USRBIN/pkglint
+PKGMOGRIFY=$USRBIN/pkgmogrify
+PKGFMT=$USRBIN/pkgfmt
+PKGDEPEND=$USRBIN/pkgdepend
+
+BUNZIP2=$OOCEBIN/pbunzip2
+CMAKE=$OOCEBIN/cmake
+FD=$OOCEBIN/fd
+GZIP=$OOCEBIN/pigz
+JQ=$OOCEBIN/jq
+MESON_MAKE=$OOCEBIN/ninja
+RIPGREP=$OOCEBIN/rg
+
+REALPATH=$GNUBIN/realpath
+
+FIND_ELF=$ONBLDBIN/find_elf
+CHECK_RTIME=$ONBLDBIN/check_rtime
+CTFDUMP=$ONBLDBIN/i386/ctfdump
+CTFCONVERT=$ONBLDBIN/i386/ctfconvert
 CTFCONVERTFLAGS=-mi
-PKGSEND=/usr/bin/pkgsend
-PKGLINT=/usr/bin/pkglint
-PKGMOGRIFY=/usr/bin/pkgmogrify
-PKGFMT=/usr/bin/pkgfmt
-PKGDEPEND=/usr/bin/pkgdepend
 
 # Figure out number of logical CPUs for use with parallel gmake jobs (-j)
 # Default to 1.5*nCPUs as we assume the build machine is 100% devoted to
