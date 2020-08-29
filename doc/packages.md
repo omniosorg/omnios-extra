@@ -128,7 +128,6 @@
 | ooce/system/mbuffer		| 20200505	| https://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/smartmontools	| 7.1		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/sysstat		| 20151012	| https://www.maier-komor.de/sysstat.html | [omniosorg](https://github.com/omniosorg)
-| ooce/system/test/iozone	| 3.489		| http://www.iozone.org/src/current/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/top		| 3.8		| https://sourceforge.net/projects/unixtop/files/unixtop/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/znapzend		| 0.20.0	| https://github.com/oetiker/znapzend/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/zrepl		| 0.3.0		| https://github.com/zrepl/zrepl/releases | [omniosorg](https://github.com/omniosorg)
