@@ -18,30 +18,19 @@
 
 PROG=htop
 PKG=ooce/system/htop
-VER=2.2.0
+VER=3.0.0
 SUMMARY="htop"
 DESC="An interactive process viewer for Unix"
 
-OPREFIX=$PREFIX
-PREFIX+=/$PROG
-
 set_arch 64
 
-XFORM_ARGS="
-    -DPREFIX=${PREFIX#/}
-    -DOPREFIX=${OPREFIX#/}
-    -DPROG=$PROG
-    -DVERSION=$VER
-"
-
-CONFIGURE_OPTS_64="
-    --prefix=$PREFIX
-"
+XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 init
-download_source $PROG $PROG $VER
+download_source $PROG $VER
 patch_source
 prep_build
+run_autoreconf -fi
 build
 make_package
 clean_up
