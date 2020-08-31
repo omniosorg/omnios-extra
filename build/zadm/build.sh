@@ -35,8 +35,11 @@ RUN_DEPENDS_IPS="
     ooce/compress/pigz
     ooce/compress/pbzip2
     network/socat
-    compress/zstd
 "
+
+# zstd has been moved to core from r151035 on
+[ $RELVER -ge 151035 ] && RUN_DEPENDS_IPS+=" compress/zstd" \
+    || RUN_DEPENDS_IPS+=" ooce/compress/zstd"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
