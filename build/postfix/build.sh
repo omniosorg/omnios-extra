@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=postfix
-VER=3.5.6
+VER=3.5.7
 PKG=ooce/network/smtp/postfix
 SUMMARY="Postfix MTA"
 DESC="Wietse Venema's mail server alternative to sendmail"
@@ -47,6 +47,8 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=${PROG}
 "
+
+SKIP_RTIME=1
 
 configure64() {
     logmsg "--- configure (make makefiles)"
