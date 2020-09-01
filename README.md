@@ -1,6 +1,6 @@
 # Building OmniOS Packages
 ## Introduction
-The purpose of this document is to introduce building packages for the "OmniOS Extra IPS Repository". 
+The purpose of this document is to introduce building packages for the "OmniOS Extra IPS Repository".
 
 The "OmniOS Extra IPS Repository" offers a simple way for administrators to install applications. Like everything else about the OmniOS Community Edition project, it is a volunteer effort. It is important to keep this in mind when reading this
 document.
@@ -96,7 +96,7 @@ The "OmniOS Extra IPS Repository" consists of the following 4 directories:
 | build | This is where all the build and associated files reside.
 | doc | This is where auxiliary files reside, for the management of the "OmniOS Extra IPS Repository".
 | lib | This is where the build system framework tools reside.
-| tools | This is where auxiliary programs reside, for use in checking package builds. 
+| tools | This is where auxiliary programs reside, for use in checking package builds.
 
 ## Create a build directory and it's build files
 
@@ -218,9 +218,9 @@ From the current `helloworld` directory, the `helloworld` package can be built f
 $ ./build.sh
 ```
 
-**Note:** No special priveleges are need to create a package from the build system. Nor is it advised to create packages as the `root` user.
+**Note:** No special privileges are need to create a package from the build system. Nor is it advised to create packages as the `root` user.
 
-This will build the `hellowworld` package, through all it's various stages, terminating with the publishing of the `helloworld` package.
+This will build the `helloworld` package, through all it's various stages, terminating with the publishing of the `helloworld` package.
 
 The default "IPS Repository", for the build system, that all packages will be published to, resides at the root directory of the cloned "OmniOS Extra IPS Repository". The root directory of this default "IPS Repository" is named `tmp.repo`.
 
@@ -243,7 +243,7 @@ Next, all that is needed, is to install the package:
 To verfify the complete build process, run the `helloworld` program.
 
 ```none
-$ helloworld 
+$ helloworld
 Hello, World!
 ```
 
@@ -271,7 +271,7 @@ To gain more control over the build procedure, many options have been added to t
 |./build.sh -x | | download and extract source only
 |./build.sh -xx | | as -x but also apply patches
 
-Now is a good time to try out some of these options whilst building the `helloworld` package. 
+Now is a good time to try out some of these options whilst building the `helloworld` package.
 
 ### Uninstall and remove the `helloworld` package from the default "IPS Repository"
 
@@ -288,7 +288,7 @@ This concludes the introductory section. Next, much finer details of the "OmniOS
 # The "OmniOS Extra Build System"
 The "OmniOS Extra Build System" is a framework designed as a convenient and standardised manner to build IPS Packages for OmniOS. It is highly recommended to read [Packaging and Delivering Software with the Image Packaging System](https://github.com/OpenIndiana/oi-docs/blob/master/docs/dev/pdf/ips-dev-guide.pdf), to fully understand the finer details of the "OmniOS Extra Build System".
 
-The main engine behind the "OmniOS Extra Build System" is the `lib/functions.sh` file. In this section, a best effort has been made to describe in detail the workings of the build system, however, if certains details have not been described sufficiently, it is advised to look at the code of `lib/functions.sh`, as well as [Packaging and Delivering Software with the Image Packaging System](https://github.com/OpenIndiana/oi-docs/blob/master/docs/dev/pdf/ips-dev-guide.pdf), to fill in the neccessary gaps.
+The main engine behind the "OmniOS Extra Build System" is the `lib/functions.sh` file. In this section, a best effort has been made to describe in detail the workings of the build system, however, if certains details have not been described sufficiently, it is advised to look at the code of `lib/functions.sh`, as well as [Packaging and Delivering Software with the Image Packaging System](https://github.com/OpenIndiana/oi-docs/blob/master/docs/dev/pdf/ips-dev-guide.pdf), to fill in the necessary gaps.
 
 1. [Package naming conventions](#package-naming-conventions)
 2. [Structure of an OmniOS package](#structure-of-an-omnios-package)
@@ -310,13 +310,13 @@ The main engine behind the "OmniOS Extra Build System" is the `lib/functions.sh`
 
 ### Package catagories
 
-Search [doc/baseline](https://github.com/omniosorg/omnios-extra/blob/master/doc/baseline) fot a list of package categories, to determine which best fits the package that is being built.
+Search [doc/baseline](https://github.com/omniosorg/omnios-extra/blob/master/doc/baseline) for a list of package categories, to determine which best fits the package that is being built.
 
 ### Installation directories
 
 #### Simple packages
 
-Simple packages that do not include sub-directories such as `include`, `lib` & `share` can be installed directly into the root `/opt/ooce` directory. 
+Simple packages that do not include sub-directories such as `include`, `lib` & `share` can be installed directly into the root `/opt/ooce` directory.
 
 This can be done by omiting the `--prefix=` option in the `CONFIGURE_OPTS` directive of `build.sh`.
 
@@ -327,7 +327,7 @@ Other more complex packages should be installed under the `/opt/ooce/` directory
 #### Multiple Versions
 
 Further, the version number of the package should not be included unless more than one version of the software is being packaged.
-The naming scheme with `application-x.y` symbolises that the application install directories contain a major version number. Meaning bugfix only releases would replace a previous version, but a new major version would NOT necessarily replace an existing one. Meaning you could install multiple versions of perl of python or even some obscure tool in parallel. The mediated symlinks allow you to coose the default version, but the other versions would still be accessible by using a direct path.
+The naming scheme with `application-x.y` symbolises that the application install directories contain a major version number. Meaning bugfix only releases would replace a previous version, but a new major version would NOT necessarily replace an existing one. Meaning you could install multiple versions of perl of python or even some obscure tool in parallel. The mediated symlinks allow you to choose the default version, but the other versions would still be accessible by using a direct path.
 
 ## Structure of an OmniOS package
 
@@ -338,7 +338,7 @@ The "OmniOS Extra Repository" contains prime quality packages to enhance your Om
 | Purpose | Location |
 | :------ |:-------- |
 | immutable package files | /opt/ooce/package(-x.y)
-| configuraton files | /etc/opt/ooce/package(-x.y) 
+| configuration files | /etc/opt/ooce/package(-x.y)
 | log files | /var/log/ooce/package(-x.y)
 | other var files | /var/opt/ooce/package(-x.y)
 | mediated symlinks provide access to binaries |  /opt/ooce/bin
@@ -349,7 +349,7 @@ The "OmniOS Extra Repository" contains prime quality packages to enhance your Om
 
 ### `local.mog`
 
-The `local.mog` file is a way to transform package manifests programatically. This allows you to transform the contents of the package in reliable and reapeatble ways. IPS uses `pkgmogrify` to achieve these changes.
+The `local.mog` file is a way to transform package manifests programatically. This allows you to transform the contents of the package in reliable and repeatable ways. IPS uses `pkgmogrify` to achieve these changes.
 
 In the `local.mog` file it is possible to change ownership and permissions on files, drop certain files from a package, make sure certain files do not get overwritten with newer versions. It also allows the creation of users and groups and even to adjust system services when a package has this requirement.
 
@@ -391,9 +391,9 @@ user ftpuser=false username=gitea uid=86 group=$(PROG) \
 
 All these directives will be processed via the `pkgmogrify` utility.
 
-The first is of particular interest as it creates a new user and group for the system. 
+The first is of particular interest as it creates a new user and group for the system.
 
-Following this, is mainly setting ownership and permissions on files. 
+Following this, is mainly setting ownership and permissions on files.
 
 However of note, the line with `set preserve true` tells the build system not to overwrite files in the corresponding directory. In this case, old files will be left untouched and new files will be added with the prefix `.new`
 
@@ -401,7 +401,7 @@ It is beyond the scope of this document to describe in full detail the workings 
 
 ### `lib/global-transforms.mog`
 
-The "Omnios Build System" will automatically apply a number of transformations to a package being created via the `lib/global-transforms.mog` file. It is reccommended to study this file to appreciate, which changes are being made. 
+The "Omnios Build System" will automatically apply a number of transformations to a package being created via the `lib/global-transforms.mog` file. It is recommended to study this file to appreciate, which changes are being made.
 
 
 ## Build and run dependencies
@@ -420,7 +420,7 @@ Anything from the base install or the meta packages [extra-build-tools](https://
 
 ### Optional Build Dependencies
 
-If a package dependency is required to build the package but is not necessary to install the package, this can be dropped when the software is packaged, via a `final.mog`. 
+If a package dependency is required to build the package but is not necessary to install the package, this can be dropped when the software is packaged, via a `final.mog`.
 
 Include the package as normal in `BUILD_DEPENDS_IPS` directive and then use the following in the `build.sh`:
 
@@ -467,7 +467,7 @@ These will be applied to the `CONFIGURE_CMD` for **both** 32 and 64 bit builds.
 
 Architecture independent configure flags may also be set with the `CONFIGURE_OPTS_32` and `CONFIGURE_OPTS_64` directives.
 
-`libs/fuctions.sh` can provide a working example of how these directives are applied.
+`lib/functions.sh` can provide a working example of how these directives are applied.
 
 ## Make directives
 
@@ -496,7 +496,7 @@ Like the `CONFIGURE_OPTS` directive, these apply to **both** 32 and 64 bit build
 
 Architecture independent configure flags may also be set with the `MAKE_INSTALL_XXXXXX_32` and `MAKE_INSTALL_XXXXXX_64` directives.
 
-`libs/fuctions.sh` can provide a working example of how these directives are applied.
+`lib/functions.sh` can provide a working example of how these directives are applied.
 
 ## Linker directives
 
@@ -514,7 +514,7 @@ Like the `CONFIGURE_OPTS` directive, the directives without the architecture pre
 
 Architecture independent configure flags have also been set in the above example with the `XXFLAGS32` and `XXFLAGS64` directives.
 
-`libs/fuctions.sh` can provide a working example of how these directives are applied.
+`lib/functions.sh` can provide a working example of how these directives are applied.
 
 ## Using your own functions in `build.sh`
 
@@ -532,7 +532,7 @@ build() {
 
 In the above example, the package being built is from *PHP* source code. There is no `./configure` or `make` processes and the contents can simply be copied into the `$DESTDIR` and then packaged by the build system.
 
-This is a case of overriding a function, however it is also possible to create any functions that are necessary and place them in the right order amongst the "build fuctions" of the `build.sh` file.
+This is a case of overriding a function, however it is also possible to create any functions that are necessary and place them in the right order amongst the "build functions" of the `build.sh` file.
 
 The best source for discovering more about using your own functions, is to browse the `build.sh` of other packages.
 
@@ -542,12 +542,12 @@ The best source for discovering more about using your own functions, is to brows
 
 If it is neccessary to supply patches for the build to complete, these go in the sub-directory `patches` of the `build/package-name` directory.
 
-Generally, one patch should be created for each functional change.. The following command should be sufficient to create a patch. 
+Generally, one patch should be created for each functional change.. The following command should be sufficient to create a patch.
 
 ```none
 $ gdiff -wpruN '--exclude=*.orig' a~/ a/ > description-of-patch.patch
 ```
-The patching may take place in the `build/package-name/tmp` directory, however the final patches must be transferred to the `patches` directory. 
+The patching may take place in the `build/package-name/tmp` directory, however the final patches must be transferred to the `patches` directory.
 
 The filename of the patch should then be `echo`'d into a file named `series`, that resides in the `patches` directory. The file `series`, is used by the build system to apply the patches that are listed in this file. This is done in the order of the patches listed, so care must be taken, to list patches in order, as necessary for the build to complete,
 
@@ -579,7 +579,7 @@ The output from the command demonstrates that the patches have been re-based cor
 
 The "Service Management Facility" (SMF) replaces `init.d` scripts in OmniOS (and other illumos based distributions). SMF creates a unified model for services and service management.
 
-If it is neccessary to include an SMF manifest with the package, the associated *Manifest* & *Method* files should be placed in the `files` sub-directory of the `build/package-name` directory. 
+If it is neccessary to include an SMF manifest with the package, the associated *Manifest* & *Method* files should be placed in the `files` sub-directory of the `build/package-name` directory.
 
 It is preferably, however not always possible, that only a *Manifiest* file should be included.
 
@@ -596,7 +596,7 @@ It is beyond the scope of this document to describe in full detail the workings 
 
 ## Providing messages at installation
 
-When providing a package which requires manual integration steps, it may be necessary to inform the end user of this situation. IPS has a facility to display a message during package installation to inform the end user of any important considerations that should be taken. 
+When providing a package which requires manual integration steps, it may be necessary to inform the end user of this situation. IPS has a facility to display a message during package installation to inform the end user of any important considerations that should be taken.
 
 This is done by creating a text file and placing it in the `files` sub-directory of the `build/package-name` directory. An example text file that informs an end user, that they must read the installed `IMPORTANT.txt` file, would be similar to the following:
 
@@ -607,8 +607,8 @@ This is done by creating a text file and placing it in the `files` sub-directory
 Installation Notes
 ------------------
 
-For instructions on how to configure and integrate 
-this program with the system, please read 
+For instructions on how to configure and integrate
+this program with the system, please read
 /opt/ooce/package-name/share/IMPORTANT.txt
 
 ------------------
@@ -643,7 +643,7 @@ download_source $PROG $PROG $VER
 
 #### Checksums:
 
-The above will be sufficient if the accompanying sha256 checksum file is available in the same directory as the tarball. 
+The above will be sufficient if the accompanying sha256 checksum file is available in the same directory as the tarball.
 
 If the checksum is not available, this can be included in the `build.sh` with the `set_checksum` directive. For example, had the "Apache httpd 2.4.43" checksum file not been available, the following `set_checksum` should be set:
 
@@ -691,7 +691,7 @@ Sometimes the tarball will extract to an un-expected directory. For example, som
 In this case, use the `BUILDDIR` directive, as follows:
 
 ```none
-set_builddir "$PROG-$PROG-$VER" 
+set_builddir "$PROG-$PROG-$VER"
 ```
 
 #### Source Directory
@@ -724,7 +724,7 @@ This will return the licence type.
 
 Licence definitions can be viewed in `doc/licences`.
 
-These definitions cover most open source licences. 
+These definitions cover most open source licences.
 
 If the licence is not detected, it is possible to use the `SKIP_LICENCES` directive, followed by the licence type, in `build.sh`. For example:
 
@@ -806,9 +806,9 @@ extra.omnios                origin   online F https://pkg.omniosce.org/bloody/ex
 
 ## Building packages that share common elements
 
-When building a package for software that has many components, it may arise that the software should be split into seperate packages. This presents a problem, when these packages share common elements, for example; the same user or directory strucure.
+When building a package for software that has many components, it may arise that the software should be split into separate packages. This presents a problem, when these packages share common elements, for example; the same user or directory structure.
 
-The way to deal with this is to create a "*Common Package*" that the other packages can share. 
+The way to deal with this is to create a "*Common Package*" that the other packages can share.
 
 A common package is simply a `.mog` file placed in the build directory of the main package that you are building. For example, the *Nagios* package, a `.mog` file named `nagios-common.p5m` is placed in the main build directory `build/nagios`. This file details the common elements shared with all the other *Nagios* packages.
 
@@ -826,9 +826,9 @@ Libraries are built for both 32 & 64 bit architectures. This just requires omiti
 
 ### Drop 32 bit binaries
 
-If a library installs 32 bit binaries, it is necessary to drop these before building the package. This can be set in the `local.mog` file, of the library being built. 
+If a library installs 32 bit binaries, it is necessary to drop these before building the package. This can be set in the `local.mog` file, of the library being built.
 
-This should be possible to achieve, with a statment in the `local.mog` file, similar to the following:
+This should be possible to achieve, with a statement in the `local.mog` file, similar to the following:
 
 ```
 # Drop 32bit binaries
@@ -891,7 +891,7 @@ After the initial commit of the `git-branch` has been uploaded, it is possible t
 git push origin `git-branch`
 ```
 
-Viewing the new branch online at <https://github.com>, it is now possible to create a new pull request. To the right of the "Branch" menu, click "New pull request" to submit the new package to OmniOS. 
+Viewing the new branch online at <https://github.com>, it is now possible to create a new pull request. To the right of the "Branch" menu, click "New pull request" to submit the new package to OmniOS.
 
 ## Keeping updated with upstream omnios-extra
 
@@ -926,11 +926,11 @@ git fetch upstream
 git merge upstream/master
 ```
 
-**git fetch** only downloads new data from a remote repository - but it doesn't integrate any of this new data into the working files. 
+**git fetch** only downloads new data from a remote repository - but it doesn't integrate any of this new data into the working files.
 
 **git merge** is where the fetched data is pulled into the working files.
 
-After executing the above commands only the local repository will be up-to-date with the remote upstream `omniosorg/omnios-extra` repository. 
+After executing the above commands only the local repository will be up-to-date with the remote upstream `omniosorg/omnios-extra` repository.
 
 ### Updating GitHub fork with local repository
 
