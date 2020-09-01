@@ -766,16 +766,23 @@ run_aclocal() { run_inbuild aclocal "$@"; }
 #############################################################################
 
 prep_build() {
-    typeset style=${1:-autoconf}
-    typeset flags="$2"
+    typeset style=${1:-autoconf}; shift
 
-    for flag in "$flags"; do
+    for flag in "$@"; do
         case $flag in
             -oot)
                 OUT_OF_TREE_BUILD=1
                 ;;
             -keep)
                 DONT_REMOVE_INSTALL_DIR=1
+                ;;
+            -autoreconf)
+                [ $style = autoconf ] \
+                    || logerr "-autoreconf is only valid for autoconf builds"
+                RUN_AUTORECONF=1
+                ;;
+            -*)
+                logerr "Unknown prep_build flag - $flag"
                 ;;
         esac
     done
@@ -1843,9 +1850,16 @@ make_clean() {
     ) 2>&1 | sed 's/error: /errorclean: /' | pipelog >/dev/null
 }
 
+configure_autoreconf() {
+    [ -f configure -a -f configure.ac ] \
+        && [ ! configure.ac -nt configure ] && return
+    run_autoreconf -fi
+}
+
 configure32() {
     logmsg "--- configure (32-bit)"
     eval set -- $CONFIGURE_OPTS_WS_32 $CONFIGURE_OPTS_WS
+    [ -n "$RUN_AUTORECONF" ] && configure_autoreconf
     PCPATH=
     [ -n "$PKG_CONFIG_PATH" ] && addpath PCPATH "$PKG_CONFIG_PATH"
     [ -n "$PKG_CONFIG_PATH32" ] && addpath PCPATH "$PKG_CONFIG_PATH32"
@@ -1863,6 +1877,7 @@ configure32() {
 configure64() {
     logmsg "--- configure (64-bit)"
     eval set -- $CONFIGURE_OPTS_WS_64 $CONFIGURE_OPTS_WS
+    [ -n "$RUN_AUTORECONF" ] && configure_autoreconf
     PCPATH=
     [ -n "$PKG_CONFIG_PATH" ] && addpath PCPATH "$PKG_CONFIG_PATH"
     [ -n "$PKG_CONFIG_PATH64" ] && addpath PCPATH "$PKG_CONFIG_PATH64"
