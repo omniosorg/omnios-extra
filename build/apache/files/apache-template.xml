@@ -51,36 +51,28 @@
 		<service_fmri value='svc:/milestone/multi-user' />
 	</dependent>
 
+	<method_context security_flags="aslr">
+		<method_credential user='$(USER)' group='$(GROUP)'
+		    privileges='basic,net_privaddr,!proc_info,!proc_session,!file_link_any' />
+	</method_context>
+
 	<exec_method
 	    type='method'
 	    name='start'
 	    exec='%{config/exec} -k %m -f %{config/file}'
-	    timeout_seconds='60'>
-            <method_context security_flags="aslr">
-		<method_credential user='$(USER)' group='$(USER)'
-		    privileges='basic,net_privaddr,!proc_info,!proc_session,!file_link_any' />
-	    </method_context>
-	</exec_method>
+	    timeout_seconds='60' />
 
 	<exec_method
 	    type='method'
 	    name='stop'
 	    exec='%{config/exec} -k %m -f %{config/file}'
-	    timeout_seconds='300' >
-            <method_context>
-		<method_credential user='$(USER)' group='$(USER)'/>
-	    </method_context>
-	</exec_method>
+	    timeout_seconds='300' />
 
 	<exec_method
 	    type='method'
 	    name='refresh'
 	    exec='%{config/exec} -k graceful -f %{config/file}'
-	    timeout_seconds='300' >
-            <method_context>
-		<method_credential user='$(USER)' group='$(USER)'/>
-	    </method_context>
-	</exec_method>
+	    timeout_seconds='300' />
 
 	<property_group name="config" type="application">
 	    <propval name="file" type="astring"
@@ -92,7 +84,7 @@
 	<template>
 		<common_name>
 			<loctext xml:lang='C'>
-			apache $(VERSION)
+				apache $(VERSION)
 			</loctext>
 		</common_name>
 	</template>
