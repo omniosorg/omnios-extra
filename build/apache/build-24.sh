@@ -41,7 +41,8 @@ XFORM_ARGS="
     -DUSER=webservd -DGROUP=webservd
 "
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS_64=
+CONFIGURE_OPTS="
     --enable-layout=OOCE
     --prefix=$PREFIX
 
@@ -60,6 +61,8 @@ CONFIGURE_OPTS_64="
     --enable-headers
     --enable-rewrite
 "
+
+[ $RELVER -ge 151035 ] && CONFIGURE_OPTS+=" --enable-brotli"
 
 init
 download_source $PROG httpd $VER
