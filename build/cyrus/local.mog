@@ -1,0 +1,63 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+license COPYING license="BSD with attribution to CMU/MIT/others"
+license ../icu/LICENSE license=modified-BSD
+license ../jansson-$(JANSSON)/LICENSE license=MIT
+license ../libical-$(ICAL)/LICENSE.MPL2.txt license=MPLv2
+
+group groupname=$(GROUP) gid=89
+user ftpuser=false username=$(USER) uid=89 group=$(GROUP) \
+    gcos-field="$(PROG) User" home-dir=/var/$(PREFIX) password=NP
+
+<transform path=$(PREFIX)/s?bin/i386 -> drop>
+
+# Move Perl modules to major version path
+<transform path=.*/site_perl -> edit path site_perl perl>
+<transform path=.*/perl/((5\.\d+)\.\d+) -> edit path /perl/%<1> /perl/%<2> >
+
+# Link binaries
+# As per the packaging guide at
+#    https://www.cyrusimap.org/imap/download/packagers.html
+# The commands that start with ctl_ are renamed to cyr_ when linked into
+# the shared bin directory.
+<transform file path=$(PREFIX)/(s?bin)/ctl_(.*) -> emit \
+    link path=$(OPREFIX)/%<1>/cyr_%<2> target=../$(PROG)/%<1>/ctl_%<2> >
+<transform file path=$(PREFIX)/(s?bin)/((?!ctl_).*) -> emit \
+    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
+
+# Link man pages
+<transform file path=$(PREFIX)/share/man/(man\d)/ctl_(.*) -> emit \
+    link path=$(OPREFIX)/share/man/%<1>/cyr_%<2> \
+    target=../../../$(PROG)/share/man/%<1>/ctl_%<2> >
+<transform file path=$(PREFIX)/share/man/(man\d)/((?!ctl_).*) -> emit \
+    link path=$(OPREFIX)/share/man/%<1>/%<2> \
+    target=../../../$(PROG)/share/man/%<1>/%<2> >
+
+# Rename the 'master' man page - the name is too generic and conflicts
+<transform path=$(OPREFIX)/share/man/man8/master \
+    -> edit path master cyrus-master >
+
+dir path=var/$(PREFIX) owner=$(USER) group=$(GROUP) mode=0755
+dir path=var/$(PREFIX)/db owner=$(USER) group=$(GROUP) mode=0750
+dir path=var/$(PREFIX)/sieve owner=$(USER) group=$(GROUP) mode=0750
+dir path=var/$(PREFIX)/socket owner=$(USER) group=$(GROUP) mode=0755
+dir path=var/$(PREFIX)/tmp owner=$(USER) group=$(GROUP) mode=0750
+
+dir group=bin mode=0755 owner=root path=etc/$(OPREFIX)
+dir group=bin mode=0755 owner=root path=etc/$(PREFIX)
+
+file ../cyrus.conf path=etc/$(PREFIX)/cyrus.conf owner=root group=bin \
+    mode=0644 overlay=true preserve=renamenew
+file ../imapd.conf path=etc/$(PREFIX)/imapd.conf owner=root group=cyrus \
+    mode=0640 overlay=true preserve=renamenew
+

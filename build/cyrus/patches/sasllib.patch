@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/cmulocal/sasl2.m4 a/cmulocal/sasl2.m4
+--- a~/cmulocal/sasl2.m4	1970-01-01 00:00:00
++++ a/cmulocal/sasl2.m4	1970-01-01 00:00:00
+@@ -398,7 +398,7 @@ if test ${with_staticsasl} != "no"; then
+ fi
+ 
+ if test -d ${with_sasl}; then
+-  ac_cv_sasl_where_lib=${with_sasl}/lib
++  ac_cv_sasl_where_lib=${with_sasl}/lib/amd64
+   ac_cv_sasl_where_inc=${with_sasl}/include
+ 
+   DYNSASLFLAGS="-I$ac_cv_sasl_where_inc"

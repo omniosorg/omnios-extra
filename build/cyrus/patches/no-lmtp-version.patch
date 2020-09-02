@@ -1,0 +1,16 @@
+diff -wpruN '--exclude=*.orig' a~/imap/lmtpd.c a/imap/lmtpd.c
+--- a~/imap/lmtpd.c	1970-01-01 00:00:00
++++ a/imap/lmtpd.c	1970-01-01 00:00:00
+@@ -214,9 +214,9 @@ int service_init(int argc __attribute__(
+         dupelim = config_getswitch(IMAPOPT_DUPLICATESUPPRESSION);
+ 
+ #ifdef USE_SIEVE
+-        mylmtp.addheaders = xzmalloc(2 * sizeof(struct addheader));
+-        mylmtp.addheaders[0].name = "X-Sieve";
+-        mylmtp.addheaders[0].body = SIEVE_VERSION;
++        //mylmtp.addheaders = xzmalloc(2 * sizeof(struct addheader));
++        //mylmtp.addheaders[0].name = "X-Sieve";
++        //mylmtp.addheaders[0].body = SIEVE_VERSION;
+ #else
+         if (dupelim)
+ #endif

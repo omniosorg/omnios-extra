@@ -1,0 +1,44 @@
+#!/usr/bin/ksh -p
+
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+. /lib/svc/share/smf_include.sh
+
+if [ -z "$SMF_FMRI" ]; then
+        echo "This script can only be invoked by smf(5)"
+        exit $SMF_EXIT_ERR_NOSMF
+fi
+
+[ "$1" = start ] || exit $SMF_EXIT_ERR_FATAL
+
+var="$2"
+
+# Add 'cyrus' to the 'sasl' group if not already present
+
+cgrp=`groups cyrus`
+if echo $cgrp | egrep -sw sasl; then
+	echo "Cyrus is already in the 'sasl' group"
+else
+	echo "Adding cyrus to the 'sasl' group"
+	usermod -G sasl,`echo $cgrp | tr ' ' ','` cyrus
+fi
+
+# Create temporary directory on tmpfs and set the owner as cyrus
+if mkdir -p $var && chown cyrus:cyrus $var && chmod 755 $var; then
+	echo "Successfully created $var"
+else
+	echo "Failed to create $var"
+	exit $SMF_EXIT_ERR_FATAL
+fi
+
+exit $SMF_EXIT_OK
+

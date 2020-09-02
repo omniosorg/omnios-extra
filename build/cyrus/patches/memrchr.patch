@@ -1,0 +1,25 @@
+diff -wpruN '--exclude=*.orig' a~/imap/conversations.c a/imap/conversations.c
+--- a~/imap/conversations.c	1970-01-01 00:00:00
++++ a/imap/conversations.c	1970-01-01 00:00:00
+@@ -513,6 +513,21 @@ EXPORTED int conversations_commit(struct
+     return r;
+ }
+ 
++static void *
++memrchr(const void *s, int c, size_t n)
++{
++    const unsigned char *cp;
++
++    if (n != 0) {
++	cp = (unsigned char *)s + n;
++	do {
++	    if (*(--cp) == (unsigned char)c)
++		return (void *)cp;
++	} while (--n != 0);
++    }
++    return NULL;
++}
++
+ static int check_msgid(const char *msgid, size_t len, size_t *lenp)
+ {
+     if (msgid == NULL)

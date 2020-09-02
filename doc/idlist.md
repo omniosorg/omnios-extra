@@ -41,6 +41,7 @@
 | extra		| 86	| gitea
 | extra		| 87	| minio
 | extra		| 88	| fcgiwrap
+| extra		| 89	| cyrus
 | extra		| 90	| postgres
 | extra		| 91	| subversion
 | omnios	| 92	| sshd
@@ -91,6 +92,7 @@
 | extra		| 86	| gitea
 | extra		| 87	| minio
 | extra		| 88	| fcgiwrap
+| extra		| 89	| cyrus
 | extra		| 90	| postgres
 | extra		| 91	| subversion
 | omnios	| 92	| sshd

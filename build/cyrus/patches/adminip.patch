@@ -1,0 +1,145 @@
+diff -wpruN '--exclude=*.orig' a~/imap/global.c a/imap/global.c
+--- a~/imap/global.c	1970-01-01 00:00:00
++++ a/imap/global.c	1970-01-01 00:00:00
+@@ -1119,3 +1119,69 @@ EXPORTED int saslprops_set_tls(struct sa
+ 
+     return SASL_OK;
+ }
++
++EXPORTED int
++check_admin_ip(in_addr_t ip)
++{
++       const char *val = config_getstring(IMAPOPT_ADMINS_IP);
++       size_t len;
++       char *buf = NULL;
++
++       /* Not in config file, accept login. */
++       if (!val || !strlen(val))
++               return 1;
++
++       syslog(LOG_DEBUG, "check_admin_ip() = [%s]", val);
++       syslog(LOG_DEBUG, "IP = %#x", ip);
++
++       if (ip == -1)
++               return 0;
++
++       while (*val)
++       {
++               char *p, *q;
++               in_addr_t net;
++               uint32_t mask;
++
++               for (p = (char *) val; *p && !isspace((int) *p); p++)
++                       ;
++               len = p - val;
++               free(buf);
++               buf = malloc(len + 1);
++               if (!buf)
++                   break;
++               memcpy(buf, val, len);
++               buf[len] = '\0';
++
++               if (!(q = strchr(buf, '/')))
++                       mask = 0xffffffff;
++               else
++               {
++                       int bits;
++
++                       *q++ = '\0';
++
++                       bits = atoi(q);
++
++                       if (bits > 32)
++                               mask = 0xffffffff;
++                       else if (!bits)
++                               mask = 0;
++                       else
++                               mask = htonl(0xffffffff << (32 - bits));
++               }
++               net = inet_addr(buf);
++
++               syslog(LOG_DEBUG, "Net: %#x, Mask: %#x", net, mask);
++
++               if (net != -1 && (ip & mask) == net)
++                       return 1;
++
++               val = p;
++               while (*val && isspace((int) *val))
++                       val++;
++       }
++       free(buf);
++       return 0;
++}
++
+diff -wpruN '--exclude=*.orig' a~/imap/global.h a/imap/global.h
+--- a~/imap/global.h	1970-01-01 00:00:00
++++ a/imap/global.h	1970-01-01 00:00:00
+@@ -191,4 +191,6 @@ extern int capa_is_disabled(const char *
+ 
+ extern int cmd_cancelled(int insearch);
+ 
++extern int check_admin_ip(in_addr_t);
++
+ #endif /* INCLUDED_GLOBAL_H */
+diff -wpruN '--exclude=*.orig' a~/imap/imapd.c a/imap/imapd.c
+--- a~/imap/imapd.c	1970-01-01 00:00:00
++++ a/imap/imapd.c	1970-01-01 00:00:00
+@@ -181,6 +181,7 @@ static struct protgroup *protin = NULL;
+ static const char *imapd_clienthost = "[local]";
+ static int imapd_logfd = -1;
+ char *imapd_userid = NULL, *proxy_userid = NULL;
++in_addr_t remoteipaddr = -1;
+ static char *imapd_magicplus = NULL;
+ struct auth_state *imapd_authstate = 0;
+ static int imapd_userisadmin = 0;
+@@ -785,6 +786,7 @@ static void imapd_reset(void)
+     cyrus_reset_stdio();
+ 
+     imapd_clienthost = "[local]";
++    remoteipaddr = -1;
+     if (imapd_logfd != -1) {
+         close(imapd_logfd);
+         imapd_logfd = -1;
+@@ -937,6 +939,9 @@ int service_main(int argc __attribute__(
+     /* Find out name of client host */
+     imapd_clienthost = get_clienthost(0, &localip, &remoteip);
+ 
++    if (remoteip)
++        remoteipaddr = inet_addr(remoteip);
++
+     if (localip && remoteip) {
+         buf_setcstr(&saslprops.ipremoteport, remoteip);
+         buf_setcstr(&saslprops.iplocalport, localip);
+@@ -2839,6 +2844,18 @@ static void cmd_login(char *tag, char *u
+ 
+     if (checklimits(tag)) return;
+ 
++    if ((imapd_userisadmin || imapd_userisproxyadmin) &&
++       !check_admin_ip(remoteipaddr))
++    {
++       prot_printf(imapd_out, "%s NO Login failed: 0x412\r\n", tag);
++       syslog(LOG_NOTICE, "login: %s %s%s rejected from non-admin IP",
++              imapd_clienthost,
++              imapd_userid, imapd_magicplus ? imapd_magicplus : "");
++
++       buf_free(&passwdbuf);
++       return;
++    }
++
+     prot_printf(imapd_out, "%s OK [CAPABILITY ", tag);
+     capa_response(CAPA_PREAUTH|CAPA_POSTAUTH);
+     prot_printf(imapd_out, "] %s\r\n", reply);
+diff -wpruN '--exclude=*.orig' a~/lib/imapoptions a/lib/imapoptions
+--- a~/lib/imapoptions	1970-01-01 00:00:00
++++ a/lib/imapoptions	1970-01-01 00:00:00
+@@ -121,6 +121,10 @@ are listed with ``<none>''.
+    administrators to create top-level mailboxes visible to users,
+    but not writable by users. */
+ 
++{ "admins_ip", "", STRING, "2.3.17" }
++/* The list of IPv4 subnets from which administrative logins are permitted.
++   Subnets are in CIDR x.x.x.x/nn notation; separate each with a space. */
++
+ { "afspts_localrealms", NULL, STRING, "2.3.17" }
+ /* The list of realms which are to be treated as local, and thus stripped
+    during identifier canonicalization (for the AFSPTS ptloader module).
