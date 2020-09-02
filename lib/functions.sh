@@ -423,6 +423,8 @@ set_gover() {
     GOROOT_BOOTSTRAP="$GO_PATH"
     # go binaries contain BMI instructions even when built on an older CPU
     BMI_EXPECTED=1
+    # skip rtime check for go builds
+    SKIP_RTIME=1
     export PATH GOROOT_BOOTSTRAP
 
     BUILD_DEPENDS_IPS+=" ooce/developer/go-${GOVER//./}"
