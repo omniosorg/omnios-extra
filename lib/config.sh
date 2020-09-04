@@ -152,7 +152,7 @@ TRIPLET64=x86_64-pc-solaris2.11
 #############################################################################
 
 # Perl versions we currently build against
-PERLVER="`perl -V:version | cut -d"'" -f2`"
+PERLVER=`perl -MConfig -e 'print $Config{version}'`
 SPERLVER=${PERLVER%.*}
 
 # Full paths to bins
