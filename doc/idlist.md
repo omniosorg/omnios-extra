@@ -41,6 +41,7 @@
 | extra		| 86	| gitea
 | extra		| 87	| minio
 | extra		| 88	| fcgiwrap
+| extra		| 89	| cyrus
 | extra		| 90	| postgres
 | extra		| 91	| subversion
 | omnios	| 92	| sshd
@@ -69,6 +70,7 @@
 | illumos	| 25	| smmsp
 | extra		| 27	| postfix
 | extra		| 28	| postdrop
+| extra		| 45	| sasl
 | illumos	| 50	| gdm
 | illumos	| 52	| upnp
 | extra		| 54	| unbound
@@ -90,6 +92,7 @@
 | extra		| 86	| gitea
 | extra		| 87	| minio
 | extra		| 88	| fcgiwrap
+| extra		| 89	| cyrus
 | extra		| 90	| postgres
 | extra		| 91	| subversion
 | omnios	| 92	| sshd

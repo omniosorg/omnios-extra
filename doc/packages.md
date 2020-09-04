@@ -70,8 +70,11 @@
 | ooce/library/fontconfig	| 2.13.1	| https://www.freedesktop.org/software/fontconfig/release/ https://www.freedesktop.org/wiki/Software/fontconfig/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/freetype2	| 2.10.2	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/icu4c		| 67.1		| https://github.com/unicode-org/icu/releases | Currently used solely by cyrus-imapd
+| ooce/library/jansson		| 2.13.1	| https://github.com/akheron/jansson/releases | Currently used solely by cyrus-imapd
 | ooce/library/libarchive	| 3.4.3		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libgd		| 2.3.0		| https://github.com/libgd/libgd/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libical		| 3.0.8		| https://github.com/libical/libical/releases | Currently used solely by cyrus-imapd
 | ooce/library/libev		| 4.33		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libexif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/libexif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libid3tag	| 0.15.1b	| https://sourceforge.net/projects/mad/files/libid3tag/ | [omniosorg](https://github.com/omniosorg)
@@ -87,6 +90,7 @@
 | ooce/library/onig		| 6.9.5		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pango		| 1.46.1	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/protobuf		| 3.13.0	| https://github.com/protocolbuffers/protobuf/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/security/libsasl2 | 2.1.27	| https://github.com/cyrusimap/cyrus-sasl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/serf		| 1.3.9 	| https://downloads.apache.org/serf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/slang		| 2.3.2		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/tiff		| 4.1.0		| https://download.osgeo.org/libtiff/ https://libtiff.gitlab.io/libtiff/ | [omniosorg](https://github.com/omniosorg)
@@ -95,6 +99,7 @@
 | ooce/multimedia/exif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/exif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/ffmpeg	| 4.3.1		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/minidlna	| 1.2.1		| https://sourceforge.net/projects/minidlna/files/minidlna/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/cyrus-imapd	| 3.2.3		| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/fping		| 5.0		| https://github.com/schweikert/fping/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.2.2		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosh		| 1.3.2		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)

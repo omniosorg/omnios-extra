@@ -95,6 +95,7 @@ extra.omnios ooce/library/libzip
 extra.omnios ooce/library/onig
 extra.omnios ooce/library/pango
 extra.omnios ooce/library/protobuf
+extra.omnios ooce/library/security/libsasl2
 extra.omnios ooce/library/serf
 extra.omnios ooce/library/slang
 extra.omnios ooce/library/tiff
@@ -103,6 +104,7 @@ extra.omnios ooce/lxadm
 extra.omnios ooce/multimedia/exif
 extra.omnios ooce/multimedia/ffmpeg
 extra.omnios ooce/multimedia/minidlna
+extra.omnios ooce/network/cyrus-imapd
 extra.omnios ooce/network/fping
 extra.omnios ooce/network/irssi
 extra.omnios ooce/network/mosh

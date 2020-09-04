@@ -1,0 +1,58 @@
+diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
+--- a~/configure.ac	1970-01-01 00:00:00
++++ a/configure.ac	1970-01-01 00:00:00
+@@ -803,30 +803,33 @@ case "$with_mysql" in
+      LDFLAGS=$save_LDFLAGS
+      ;;
+     *)
+-     if test -d ${with_mysql}/lib/mysql; then
+-	CMU_ADD_LIBPATH_TO(${with_mysql}/lib/mysql, LIB_MYSQL)
+-     elif test -d ${with_mysql}/mysql/lib; then
+-	CMU_ADD_LIBPATH_TO(${with_mysql}/mysql/lib, LIB_MYSQL)
+-     elif test -d ${with_mysql}/lib; then
+-	CMU_ADD_LIBPATH_TO(${with_mysql}/lib, LIB_MYSQL)
+-     else
+-	CMU_ADD_LIBPATH_TO(${with_mysql}, LIB_MYSQL)
+-     fi
++     #if test -d ${with_mysql}/lib/mysql; then
++     #   CMU_ADD_LIBPATH_TO(${with_mysql}/lib/mysql, LIB_MYSQL)
++     #elif test -d ${with_mysql}/mysql/lib; then
++     #   CMU_ADD_LIBPATH_TO(${with_mysql}/mysql/lib, LIB_MYSQL)
++     #elif test -d ${with_mysql}/lib; then
++     #   CMU_ADD_LIBPATH_TO(${with_mysql}/lib, LIB_MYSQL)
++     #else
++     #   CMU_ADD_LIBPATH_TO(${with_mysql}, LIB_MYSQL)
++     #fi
+ 
++     #LIB_MYSQL="$LIB_MYSQL -lmysqlclient"
++     LIB_MYSQL=`mysql_config --libs`
+      LIB_MYSQL_DIR=$LIB_MYSQL
+-     LIB_MYSQL="$LIB_MYSQL -lmysqlclient"
+ 
+-     if test -d ${with_mysql}/include/mysql; then
+-         CPPFLAGS="${CPPFLAGS} -I${with_mysql}/include/mysql"
+-     elif test -d ${with_mysql}/mysql/include; then
+-         CPPFLAGS="${CPPFLAGS} -I${with_mysql}/mysql/include"
+-     elif test -d ${with_mysql}/include; then
+-         CPPFLAGS="${CPPFLAGS} -I${with_mysql}/include"
+-     elif test -d ${prefix}/include/mysql; then
+-         CPPFLAGS="${CPPFLAGS} -I${prefix}/include/mysql"
+-     else
+-         CPPFLAGS="${CPPFLAGS} -I${with_mysql}"
+-     fi
++     #if test -d ${with_mysql}/include/mysql; then
++     #    CPPFLAGS="${CPPFLAGS} -I${with_mysql}/include/mysql"
++     #elif test -d ${with_mysql}/mysql/include; then
++     #    CPPFLAGS="${CPPFLAGS} -I${with_mysql}/mysql/include"
++     #elif test -d ${with_mysql}/include; then
++     #    CPPFLAGS="${CPPFLAGS} -I${with_mysql}/include"
++     #elif test -d ${prefix}/include/mysql; then
++     #    CPPFLAGS="${CPPFLAGS} -I${prefix}/include/mysql"
++     #else
++     #    CPPFLAGS="${CPPFLAGS} -I${with_mysql}"
++     #fi
++
++     CPPFLAGS+=" `mysql_config --include`"
+ 
+        save_LDFLAGS=$LDFLAGS
+        LDFLAGS="$LDFLAGS $LIB_MYSQL_DIR"

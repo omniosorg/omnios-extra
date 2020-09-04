@@ -25,6 +25,11 @@ problem()
 	err=1
 }
 
+pver()
+{
+	grep "^$1=" $build | cut -d= -f2
+}
+
 typeset -A targets
 
 add_target()
@@ -43,6 +48,11 @@ add_target()
 		case $pkg:$ver in
 			ooce/runtime/expect:*)
 				ver="`grep '^EXPECTVER=' $build | cut -d= -f2`"
+				;;
+			*/cyrus-imapd:*)
+				targets["ooce/library/icu4c"]=`pver ICUVER`
+				targets["ooce/library/jansson"]=`pver JANSSONVER`
+				targets["ooce/library/libical"]=`pver ICALVER`
 				;;
 		esac
 		targets[$pkg]=$ver

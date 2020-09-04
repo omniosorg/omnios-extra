@@ -1,0 +1,5 @@
+sql-quieter.patch
+configure-mysql.patch
+filterlibs.patch
+saslauthd-man.patch
+saslauthd-perms.patch

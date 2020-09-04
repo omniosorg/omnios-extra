@@ -1,0 +1,21 @@
+diff -wpruN '--exclude=*.orig' a~/lib/util.c a/lib/util.c
+--- a~/lib/util.c	1970-01-01 00:00:00
++++ a/lib/util.c	1970-01-01 00:00:00
+@@ -572,9 +572,17 @@ static int _copyfile_helper(const char *
+ 
+     if (keeptime) {
+         struct timeval tv[2];
++#ifdef __sun
++	tv[0].tv_sec = sbuf.st_atime;
++	tv[0].tv_usec = 0;
++ 	tv[1].tv_sec = sbuf.st_mtime;
++ 	tv[1].tv_usec = 0;
++        if (futimesat(destfd, NULL, tv)) {
++#else
+         TIMESPEC_TO_TIMEVAL(&tv[0], &sbuf.st_atim);
+         TIMESPEC_TO_TIMEVAL(&tv[1], &sbuf.st_mtim);
+         if (futimes(destfd, tv)) {
++#endif
+             syslog(LOG_ERR, "IOERROR: setting times on %s: %m", to);
+             r = -1;
+         }

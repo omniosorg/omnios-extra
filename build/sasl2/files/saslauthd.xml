@@ -1,9 +1,9 @@
-<?xml version="1.0"?>
-<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
 <!--
 
     This file and its contents are supplied under the terms of the
-    Common Development and Distribution License ("CDDL"), version 1.0.
+    Common Development and Distribution License ('CDDL'), version 1.0.
     You may only use this file in accordance with the terms of version
     1.0 of the CDDL.
 
@@ -15,10 +15,10 @@
 
 -->
 
-<service_bundle type='manifest' name='http:apache$(sVERSION)'>
-<service name="network/http" type="service" version="1">
+<service_bundle type='manifest' name='saslauthd'>
+<service name='system/saslauthd' type='service' version='1'>
 
-<instance name='apache$(sVERSION)' enabled='false'>
+	<create_default_instance enabled='false'/>
 
 	<dependency
 	    name='loopback'
@@ -45,53 +45,50 @@
 	</dependency>
 
 	<dependent
-	    name='apache$(sVERSION)_multi-user'
+	    name='saslauthd_multi-user'
 	    grouping='optional_all'
 	    restart_on='none'>
 		<service_fmri value='svc:/milestone/multi-user' />
 	</dependent>
 
-	<method_context security_flags="aslr">
-		<method_credential user='$(USER)' group='$(GROUP)'
-		    privileges='basic,net_privaddr,!proc_info,!proc_session,!file_link_any' />
+	<method_context security_flags='aslr'>
+		<method_credential user='root' group='sasl'
+                  privileges='basic,!proc_info,!proc_session,!file_link_any' />
 	</method_context>
 
 	<exec_method
 	    type='method'
 	    name='start'
-	    exec='%{config/exec} -k %m -f %{config/file}'
+	    exec='/$(PREFIX)/sbin/saslauthd -a %{config/mech} -c -m %{config/dir}'
 	    timeout_seconds='60' />
 
 	<exec_method
 	    type='method'
 	    name='stop'
-	    exec='%{config/exec} -k %m -f %{config/file}'
-	    timeout_seconds='300' />
+	    exec=':kill'
+	    timeout_seconds='180' />
 
 	<exec_method
 	    type='method'
 	    name='refresh'
-	    exec='%{config/exec} -k graceful -f %{config/file}'
-	    timeout_seconds='300' />
+	    exec=':kill -HUP'
+	    timeout_seconds='60' />
 
-	<property_group name="config" type="application">
-	    <propval name="file" type="astring"
-		value="/etc/$(PREFIX)/httpd.conf"/>
-            <propval name="exec" type="astring"
-                value="/$(PREFIX)/bin/apachectl"/>
+	<property_group name='config' type='application'>
+		<propval name='mech' type='astring' value='pam'/>
+		<propval name='dir' type='astring'
+		    value='/var/run/saslauthd'/>
 	</property_group>
+
+	<stability value='External' />
 
 	<template>
 		<common_name>
 			<loctext xml:lang='C'>
-				apache $(VERSION)
+				Cyrus SaSL authentication Server
 			</loctext>
 		</common_name>
 	</template>
-
-</instance>
-
-<stability value='External' />
 
 </service>
 </service_bundle>

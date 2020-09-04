@@ -766,16 +766,23 @@ run_aclocal() { run_inbuild aclocal "$@"; }
 #############################################################################
 
 prep_build() {
-    typeset style=${1:-autoconf}
-    typeset flags="$2"
+    typeset style=${1:-autoconf}; shift
 
-    for flag in "$flags"; do
+    for flag in "$@"; do
         case $flag in
             -oot)
                 OUT_OF_TREE_BUILD=1
                 ;;
             -keep)
                 DONT_REMOVE_INSTALL_DIR=1
+                ;;
+            -autoreconf)
+                [ $style = autoconf ] \
+                    || logerr "-autoreconf is only valid for autoconf builds"
+                RUN_AUTORECONF=1
+                ;;
+            -*)
+                logerr "Unknown prep_build flag - $flag"
                 ;;
         esac
     done
@@ -1769,15 +1776,18 @@ make_isa_stub() {
         if [ -d $DESTDIR$PREFIX/$DIR ]; then
             logmsg "--- $DIR"
             pushd $DESTDIR$PREFIX/$DIR > /dev/null
-            make_isaexec_stub_arch $ISAPART
-            make_isaexec_stub_arch $ISAPART64
+            make_isaexec_stub_arch $ISAPART $PREFIX/$DIR
+            make_isaexec_stub_arch $ISAPART64 $PREFIX/$DIR
             popd > /dev/null
         fi
     done
 }
 
 make_isaexec_stub_arch() {
-    for file in $1/*; do
+    typeset isa="$1"
+    typeset dir="$2"
+
+    for file in $isa/*; do
         [ -f "$file" ] || continue
         if [ -z "$STUBLINKS" -a -h "$file" ]; then
             # Symbolic link. If it's relative to within the same ARCH
@@ -1805,8 +1815,8 @@ make_isaexec_stub_arch() {
         logmsg "------ $file"
         # Run the makeisa.sh script - build a 32-bit isa stub
         CC=$CC CFLAGS="-m32 -O2" \
-            logcmd $MYDIR/makeisa.sh $PREFIX/$DIR $file \
-            || logerr "--- Failed to make isaexec stub for $DIR/$file"
+            logcmd $MYDIR/makeisa.sh $dir $file \
+            || logerr "--- Failed to make isaexec stub for $dir/$file"
     done
 }
 
@@ -1840,9 +1850,16 @@ make_clean() {
     ) 2>&1 | sed 's/error: /errorclean: /' | pipelog >/dev/null
 }
 
+configure_autoreconf() {
+    [ -f configure -a -f configure.ac ] \
+        && [ ! configure.ac -nt configure ] && return
+    run_autoreconf -fi
+}
+
 configure32() {
     logmsg "--- configure (32-bit)"
     eval set -- $CONFIGURE_OPTS_WS_32 $CONFIGURE_OPTS_WS
+    [ -n "$RUN_AUTORECONF" ] && configure_autoreconf
     PCPATH=
     [ -n "$PKG_CONFIG_PATH" ] && addpath PCPATH "$PKG_CONFIG_PATH"
     [ -n "$PKG_CONFIG_PATH32" ] && addpath PCPATH "$PKG_CONFIG_PATH32"
@@ -1860,6 +1877,7 @@ configure32() {
 configure64() {
     logmsg "--- configure (64-bit)"
     eval set -- $CONFIGURE_OPTS_WS_64 $CONFIGURE_OPTS_WS
+    [ -n "$RUN_AUTORECONF" ] && configure_autoreconf
     PCPATH=
     [ -n "$PKG_CONFIG_PATH" ] && addpath PCPATH "$PKG_CONFIG_PATH"
     [ -n "$PKG_CONFIG_PATH64" ] && addpath PCPATH "$PKG_CONFIG_PATH64"

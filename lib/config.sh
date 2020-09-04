@@ -152,7 +152,7 @@ TRIPLET64=x86_64-pc-solaris2.11
 #############################################################################
 
 # Perl versions we currently build against
-PERLVER="`perl -V:version | cut -d"'" -f2`"
+PERLVER=`perl -MConfig -e 'print $Config{version}'`
 SPERLVER=${PERLVER%.*}
 
 # Full paths to bins
@@ -249,6 +249,7 @@ DONT_REMOVE_INSTALL_DIR=
 
 # The list of options which define the build environment
 BUILDENV_OPTS="
+    CONFIGURE_CMD
     CONFIGURE_OPTS CONFIGURE_OPTS_32 CONFIGURE_OPTS_64
     CONFIGURE_OPTS_WS_32 CONFIGURE_OPTS_WS_64
     CFLAGS CFLAGS32 CFLAGS64
