@@ -1,3 +1,2 @@
 direct_io_unix.go.patch
-zc_mmf_unix.go.patch
 Makefile.patch
