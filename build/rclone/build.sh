@@ -18,13 +18,13 @@
 
 PROG=rclone
 PKG=ooce/network/rclone
-VER=1.52.3
+VER=1.53.0
 SUMMARY="rsync for cloud storage"
 DESC="A command line program to sync files and directories to and from "
 DESC+="different cloud storage providers"
 
 set_arch 64
-set_gover 1.14
+set_gover 1.15
 
 GOOS=illumos
 GOARCH=amd64
