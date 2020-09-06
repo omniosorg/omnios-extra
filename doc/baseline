@@ -154,6 +154,7 @@ extra.omnios ooce/util/acmefetch
 extra.omnios ooce/util/bat
 extra.omnios ooce/util/fd
 extra.omnios ooce/util/gh
+extra.omnios ooce/util/hyperfine
 extra.omnios ooce/util/jq
 extra.omnios ooce/util/xjobs
 extra.omnios ooce/util/zadm
