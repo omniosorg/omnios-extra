@@ -40,6 +40,7 @@ BUILD_DEPENDS_IPS="
     library/pcre
     ooce/database/bdb
     ooce/database/lmdb
+    ooce/library/security/libsasl2
 "
 
 XFORM_ARGS="
@@ -52,7 +53,10 @@ SKIP_RTIME=1
 
 configure64() {
     logmsg "--- configure (make makefiles)"
-    logcmd $MAKE makefiles CCARGS='-m64 -DUSE_TLS -DHAS_DB -DHAS_LMDB -DNO_NIS \
+    LIBDIR=${OPREFIX}/lib/${ISAPART64}
+    logcmd $MAKE makefiles CCARGS='-m64 \
+        -DUSE_TLS -DHAS_DB -DHAS_LMDB -DNO_NIS \
+        -DUSE_SASL_AUTH -DUSE_CYRUS_SASL \
         -DDEF_COMMAND_DIR=\"'${PREFIX}/sbin'\" \
         -DDEF_CONFIG_DIR=\"'${CONFPATH}'\" \
         -DDEF_DAEMON_DIR=\"'${PREFIX}/libexec/postfix'\" \
@@ -60,9 +64,11 @@ configure64() {
         -DDEF_NEWALIAS_PATH=\"'${PREFIX}/bin/newaliases'\" \
         -DDEF_MANPAGE_DIR=\"'${PREFIX}/share/man'\" \
         -DDEF_SENDMAIL_PATH=\"'${PREFIX}/sbin/sendmail'\" \
-        -I'${OPREFIX}/include \
-        AUXLIBS="-R${OPREFIX}/lib/${ISAPART64} -L${OPREFIX}/lib/${ISAPART64} -ldb -lssl -lcrypto" \
-        AUXLIBS_LMDB="-R${OPREFIX}/lib/${ISAPART64} -L${OPREFIX}/lib/${ISAPART64} -llmdb" \
+        -I'${OPREFIX}/include' \
+        -I'${OPREFIX}/include/sasl' \
+        ' \
+        AUXLIBS="-R$LIBDIR -L$LIBDIR -ldb -lsasl2 -lssl -lcrypto" \
+        AUXLIBS_LMDB="-R$LIBDIR -L$LIBDIR -llmdb" \
             || logerr "Failed make makefiles command"
 }
 

@@ -1,26 +1,14 @@
-# CDDL HEADER START
 #
-# The contents of this file are subject to the terms of the
-# Common Development and Distribution License, Version 1.0 only
-# (the "License").  You may not use this file except in compliance
-# with the License.
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
 #
-# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
-# or http://www.opensolaris.org/os/licensing.
-# See the License for the specific language governing permissions
-# and limitations under the License.
-#
-# When distributing Covered Code, include this CDDL HEADER in each
-# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
-# If applicable, add the following below this CDDL HEADER, with the
-# fields enclosed by brackets "[]" replaced with your own identifying
-# information: Portions Copyright [yyyy] [name of copyright owner]
-#
-# CDDL HEADER END
-#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
 #
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
 
 group gid=27 groupname=$(PROG)
 group gid=28 groupname=postdrop
@@ -40,8 +28,10 @@ user ftpuser=false gcos-field="Postfix Reserved UID" group=$(PROG) \
 <transform file path=$(PREFIX)/sbin/postdrop -> set mode 2555>
 <transform file path=$(PREFIX)/sbin/postqueue -> set mode 2555>
 <transform file path=etc/$(OPREFIX)/$(PROG)/.* -> set preserve true>
-<transform file path=$(PREFIX)/sbin -> set restart_fmri svc:/network/smtp/$(PROG):default>
-<transform file path=$(PREFIX)/libexec -> set restart_fmri svc:/network/smtp/$(PROG):default>
+<transform file path=$(PREFIX)/sbin -> \
+    set restart_fmri svc:/network/smtp/$(PROG):default>
+<transform file path=$(PREFIX)/libexec -> \
+    set restart_fmri svc:/network/smtp/$(PROG):default>
 
 # Mediated symlinks
 link path=usr/bin/mailq mediator=mta mediator-implementation=$(PROG) \
@@ -62,7 +52,8 @@ link path=etc/aliases mediator=mta mediator-implementation=$(PROG) \
 
 # Mediated man pages
 <transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(OPREFIX)/share/man/%<1>/%<2> target=../../../$(PROG)/share/man/%<1>/%<2> \
+    link path=$(OPREFIX)/share/man/%<1>/%<2> \
+    target=../../../$(PROG)/share/man/%<1>/%<2> \
     mediator=mta mediator-priority=site mediator-implementation=$(PROG) >
 
 license LICENSE license=IPL
