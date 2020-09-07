@@ -1,0 +1,29 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+license LICENSE license=OpenLDAP
+
+<transform path=$(PREFIX)/s?bin/i386 -> drop>
+<transform path=etc/.*\.default$ -> drop>
+<transform path=.*\.la$ -> drop>
+
+<transform file path=etc/$(PREFIX)/.*\. -> set preserve renamenew>
+<transform file path=etc/$(PREFIX)/.*\. -> set overlay allow>
+
+<transform file path=etc/$(PREFIX)/slapd\. -> set mode 0640>
+<transform file path=etc/$(PREFIX)/slapd\. -> set owner root>
+<transform file path=etc/$(PREFIX)/slapd\. -> set group $(GROUP)>
+
+<transform file dir path=var/$(PREFIX) -> set owner $(USER)>
+<transform file dir path=var/$(PREFIX) -> set group $(GROUP)>
+dir group=$(GROUP) mode=0700 owner=$(USER) path=var/$(PREFIX)/openldap-data
+
