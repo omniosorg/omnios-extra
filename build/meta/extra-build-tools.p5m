@@ -16,14 +16,15 @@ depend fmri=ooce/developer/freepascal type=require
 depend fmri=ooce/developer/go-114 type=require
 depend fmri=ooce/developer/go-115 type=require
 depend fmri=ooce/developer/gperf type=require
-depend fmri=ooce/developer/llvm-90 type=require
 depend fmri=ooce/developer/llvm-100 type=require
+depend fmri=ooce/developer/llvm-90 type=require
 depend fmri=ooce/developer/rust type=require
-depend fmri=ooce/developer/subversion type=require
+depend fmri=ooce/fonts/liberation type=require
 depend fmri=ooce/library/apr type=require
 depend fmri=ooce/library/apr-util type=require
 depend fmri=ooce/library/cairo type=require
 depend fmri=ooce/library/fcgi2 type=require
+depend fmri=ooce/library/libgd type=require
 depend fmri=ooce/library/libev type=require
 depend fmri=ooce/library/libexif type=require
 depend fmri=ooce/library/libgif type=require
@@ -31,20 +32,22 @@ depend fmri=ooce/library/libid3tag type=require
 depend fmri=ooce/library/libidl type=require
 depend fmri=ooce/library/libjpeg-turbo type=require
 depend fmri=ooce/library/libmcrypt type=require
+depend fmri=ooce/library/libogg type=require
 depend fmri=ooce/library/libpng type=require
 depend fmri=ooce/library/libvncserver type=require
 depend fmri=ooce/library/libvorbis type=require
 depend fmri=ooce/library/onig type=require
 depend fmri=ooce/library/pango type=require
 depend fmri=ooce/library/protobuf type=require
-depend fmri=ooce/library/tiff type=require
 depend fmri=ooce/library/security/libsasl2 type=require
 depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require
+depend fmri=ooce/library/tiff type=require
 depend fmri=ooce/multimedia/ffmpeg type=require
 depend fmri=ooce/runtime/node-12 type=require
 depend fmri=ooce/runtime/ruby-26 type=require
 depend fmri=ooce/server/apache-24 type=require
+depend fmri=ooce/text/docbook-xsl type=require
 depend fmri=system/header/header-agp type=require
 depend fmri=system/header/header-usb type=require
 depend fmri=system/library/pcap type=require
@@ -55,8 +58,16 @@ depend type=require-any fmri=pkg:/compress/lz4 fmri=pkg:/ooce/compress/lz4
 # Required to build x11 libraries from r151035 onwards
 depend fmri=ooce/x11/header/xcb-protocols type=conditional \
     predicate=release/name@0.5.11-151035
+depend fmri=ooce/x11/header/x11-protocols type=conditional \
+    predicate=release/name@0.5.11-151035
 depend fmri=ooce/x11/library/libxfixes type=conditional \
     predicate=release/name@0.5.11-151035
 depend fmri=ooce/x11/library/xtrans type=conditional \
+    predicate=release/name@0.5.11-151035
+depend fmri=ooce/x11/library/libx11 type=conditional \
+    predicate=release/name@0.5.11-151035
+depend fmri=ooce/x11/library/libxau type=conditional \
+    predicate=release/name@0.5.11-151035
+depend fmri=ooce/x11/library/libxcb type=conditional \
     predicate=release/name@0.5.11-151035
 
