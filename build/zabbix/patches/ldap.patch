@@ -1,0 +1,42 @@
+diff -ru zabbix-5.0.3~/m4/ldap.m4 zabbix-5.0.3/m4/ldap.m4
+--- zabbix-5.0.3~/m4/ldap.m4	2020-05-10 17:36:06.000000000 +0000
++++ zabbix-5.0.3/m4/ldap.m4	2020-09-08 11:32:58.409332339 +0000
+@@ -96,7 +96,7 @@
+         else
+                 if test -f $_libldap_with/include/ldap.h; then
+                         LDAP_INCDIR=$_libldap_with/include
+-                        LDAP_LIBDIR=$_libldap_with/lib
++                        LDAP_LIBDIR=$_libldap_with/lib/amd64
+                         _ldap_dir_lib="$LDAP_LIBDIR"
+ 
+                         found_ldap="yes"
+@@ -111,7 +111,7 @@
+                 AC_MSG_RESULT(yes)
+                 LDAP_CPPFLAGS="-I$LDAP_INCDIR"
+                 LDAP_LDFLAGS="-L$LDAP_LIBDIR"
+-                LDAP_LIBS="-lldap -llber $LDAP_LIBS"
++                LDAP_LIBS="-lldap_r -llber $LDAP_LIBS"
+ 
+                 if test "x$enable_static" = "xyes"; then
+                         LDAP_LIBS="$LDAP_LIBS -lgnutls -lpthread -lsasl2"
+@@ -120,7 +120,7 @@
+                         test "x$static_linking_support" = "xno" -a -z "$_ldap_dir_lib" && AC_MSG_ERROR(["Compiler not support statically linked libs from default folders"])
+ 
+                         if test "x$static_linking_support" = "xno"; then
+-                                LDAP_LIBS=`echo "$LDAP_LIBS"|sed "s|-lldap|$_ldap_dir_lib/libldap.a|g"|sed "s|-llber|$_ldap_dir_lib/liblber.a|g"`
++                                LDAP_LIBS=`echo "$LDAP_LIBS"|sed "s|-lldap_r|$_ldap_dir_lib/libldap.a|g"|sed "s|-llber|$_ldap_dir_lib/liblber.a|g"`
+                         fi
+ 
+                         # without SSL and SASL
+diff -ru zabbix-5.0.3~/m4/libcurl.m4 zabbix-5.0.3/m4/libcurl.m4
+--- zabbix-5.0.3~/m4/libcurl.m4	2020-05-10 17:36:06.000000000 +0000
++++ zabbix-5.0.3/m4/libcurl.m4	2020-09-08 11:31:37.832202708 +0000
+@@ -176,7 +176,7 @@
+ 												-lssl|-lcrypto)
+ 													test "x$want_openssl" = "xyes" && i="$OPENSSL_LIBS"
+ 											;;
+-												-lldap|-lldap_r|-llber)
++												-lldap_r|-llber)
+ 													test "x$want_ldap" = "xyes" && i="$LDAP_LIBS"
+ 											;;
+ 												-l*)
