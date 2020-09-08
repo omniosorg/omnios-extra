@@ -55,7 +55,7 @@ configure64() {
     logmsg "--- configure (make makefiles)"
     LIBDIR=${OPREFIX}/lib/${ISAPART64}
     logcmd $MAKE makefiles CCARGS='-m64 \
-        -DUSE_TLS -DHAS_DB -DHAS_LMDB -DNO_NIS \
+        -DUSE_TLS -DHAS_DB -DHAS_LMDB -DNO_NIS -DHAS_LDAP \
         -DUSE_SASL_AUTH -DUSE_CYRUS_SASL \
         -DDEF_COMMAND_DIR=\"'${PREFIX}/sbin'\" \
         -DDEF_CONFIG_DIR=\"'${CONFPATH}'\" \
@@ -68,6 +68,7 @@ configure64() {
         -I'${OPREFIX}/include/sasl' \
         ' \
         AUXLIBS="-R$LIBDIR -L$LIBDIR -ldb -lsasl2 -lssl -lcrypto" \
+        AUXLIBS_LDAP="-lldap_r -llber" \
         AUXLIBS_LMDB="-R$LIBDIR -L$LIBDIR -llmdb" \
             || logerr "Failed make makefiles command"
 }
