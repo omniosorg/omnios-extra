@@ -34,6 +34,9 @@ CONFIGURE_OPTS="
     --with-crypto
     --without-pgsql
     --with-gdbm
+    --with-ldap=ldap_r
+    --with-lber=lber
+    --with-ldap-include=$PREFIX/include
 "
 
 CONFIGURE_OPTS_32+="
