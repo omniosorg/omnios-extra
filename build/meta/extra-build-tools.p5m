@@ -33,6 +33,7 @@ depend fmri=ooce/library/libmcrypt type=require
 depend fmri=ooce/library/libvncserver type=require
 depend fmri=ooce/library/libvorbis type=require
 depend fmri=ooce/library/onig type=require
+depend fmri=ooce/library/openldap type=require
 depend fmri=ooce/library/pango type=require
 depend fmri=ooce/library/protobuf type=require
 depend fmri=ooce/library/tiff type=require
