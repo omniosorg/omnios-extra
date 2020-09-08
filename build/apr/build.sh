@@ -46,6 +46,7 @@ make_install32() {
 
 init
 download_source $PROG $PROG $VER
+patch_source
 prep_build
 build -ctf
 run_testsuite
