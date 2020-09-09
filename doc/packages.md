@@ -77,6 +77,7 @@
 | ooce/library/libical		| 3.0.8		| https://github.com/libical/libical/releases | Currently used solely by cyrus-imapd
 | ooce/library/libev		| 4.33		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libexif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/libexif/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libgif		| 5.2.1		| https://sourceforge.net/projects/giflib/files/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libid3tag	| 0.15.1b	| https://sourceforge.net/projects/mad/files/libid3tag/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libidl		| 0.8.14	| https://download.gnome.org/sources/libIDL/cache.json https://download.gnome.org/sources/libIDL/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libjpeg-turbo	| 2.0.5		| https://sourceforge.net/projects/libjpeg-turbo/files/ | [omniosorg](https://github.com/omniosorg)
