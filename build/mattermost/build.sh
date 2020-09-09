@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.26.1
+VER=5.26.2
 MMCTLVER=5.26.0
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
@@ -25,7 +25,7 @@ DESC="All your team communication in one place, "
 DESC+="instantly searchable and accessible anywhere."
 
 set_arch 64
-set_gover 1.14
+set_gover 1.15
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
