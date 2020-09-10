@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=znc
-VER=1.8.1
+VER=1.8.2
 VERHUMAN=$VER
 PKG=ooce/network/znc
 SUMMARY="$PROG - an advanced IRC bouncer"

@@ -18,12 +18,12 @@
 
 PROG=gh
 PKG=ooce/util/gh
-VER=0.11.1
+VER=0.12.0
 SUMMARY="github-cli"
 DESC="The GitHub CLI tool"
 
 set_arch 64
-set_gover 1.14
+set_gover 1.15
 
 GOOS=illumos
 GOARCH=amd64
