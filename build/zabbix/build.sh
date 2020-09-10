@@ -57,6 +57,7 @@ CONFIGURE_OPTS="
     --with-libcurl
     --with-libxml2
     --with-openssl
+    --with-ldap=$OPREFIX
 "
 
 # See https://support.zabbix.com/browse/ZBX-18210

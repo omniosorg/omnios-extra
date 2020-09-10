@@ -90,6 +90,7 @@ CONFIGURE_OPTS_64="
 
     --with-db4=$OPREFIX
     --with-lmdb=$OPREFIX
+    --with-ldap=$OPREFIX
     --with-jpeg
     --with-png
     --with-freetype
@@ -101,6 +102,7 @@ CONFIGURE_OPTS_64="
 "
 
 CPPFLAGS+=" -I/usr/include/gmp"
+#CPPFLAGS+=" -I$OPREFIX/include"
 LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 save_function configure64 _configure64

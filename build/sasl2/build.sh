@@ -58,6 +58,7 @@ CONFIGURE_OPTS="
     --enable-plain
     --enable-login
     --enable-sql
+    --with-ldap
     --with-mysql=$PREFIX/mariadb-$MARIASQLVER
     --without-pgsql
     --with-gss_impl=mit

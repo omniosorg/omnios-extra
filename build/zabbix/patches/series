@@ -4,3 +4,4 @@ agentconf.patch
 serverconf.patch
 signal.patch
 procstate.patch
+ldap.patch

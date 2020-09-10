@@ -1,0 +1,57 @@
+
+Use the thread-safe LDAP library by default. This also prevents a conflict
+with the illumos libldap in /usr/lib.
+
+--- src/ext/ldap/config.m4~	2020-09-08 10:17:21.392114780 +0000
++++ src/ext/ldap/config.m4	2020-09-08 10:19:23.907423697 +0000
+@@ -70,10 +70,10 @@
+ 
+   if test -f $LDAP_LIBDIR/liblber.a || test -f $LDAP_LIBDIR/liblber.$SHLIB_SUFFIX_NAME || test -f $LDAP_LIBDIR/$MACHINE_INCLUDES/liblber.a || test -f $LDAP_LIBDIR/$MACHINE_INCLUDES/liblber.$SHLIB_SUFFIX_NAME; then
+     PHP_ADD_LIBRARY_WITH_PATH(lber, $LDAP_LIBDIR, LDAP_SHARED_LIBADD)
+-    PHP_ADD_LIBRARY_WITH_PATH(ldap, $LDAP_LIBDIR, LDAP_SHARED_LIBADD)
++    PHP_ADD_LIBRARY_WITH_PATH(ldap_r, $LDAP_LIBDIR, LDAP_SHARED_LIBADD)
+ 
+   elif test -f $LDAP_LIBDIR/libldap.$SHLIB_SUFFIX_NAME || test -f $LDAP_LIBDIR/libldap.$SHLIB_SUFFIX_NAME.3 || test -f $LDAP_LIBDIR/$MACHINE_INCLUDES/libldap.$SHLIB_SUFFIX_NAME || test -f $LDAP_LIBDIR/$MACHINE_INCLUDES/libldap.$SHLIB_SUFFIX_NAME.3 || test -f $LDAP_LIBDIR/libldap.3.dylib; then
+-    PHP_ADD_LIBRARY_WITH_PATH(ldap, $LDAP_LIBDIR, LDAP_SHARED_LIBADD)
++    PHP_ADD_LIBRARY_WITH_PATH(ldap_r, $LDAP_LIBDIR, LDAP_SHARED_LIBADD)
+ 
+   elif test -f $LDAP_LIBDIR/libclntsh.$SHLIB_SUFFIX_NAME.12.1 || test -f $LDAP_LIBDIR/$MACHINE_INCLUDES/libclntsh.$SHLIB_SUFFIX_NAME.12.1; then
+     PHP_ADD_LIBRARY_WITH_PATH(clntsh, $LDAP_LIBDIR, LDAP_SHARED_LIBADD)
+--- src/configure~	2020-09-08 10:29:39.602318875 +0000
++++ src/configure	2020-09-08 10:29:56.808531620 +0000
+@@ -42807,7 +42807,7 @@
+ 
+ 
+   if test "$ext_shared" = "yes"; then
+-    LDAP_SHARED_LIBADD="-lldap $LDAP_SHARED_LIBADD"
++    LDAP_SHARED_LIBADD="-lldap_r $LDAP_SHARED_LIBADD"
+     if test -n "$LDAP_LIBDIR"; then
+ 
+   if test "$LDAP_LIBDIR" != "/usr/$PHP_LIBDIR" && test "$LDAP_LIBDIR" != "/usr/lib"; then
+@@ -42891,7 +42891,7 @@
+   case ldap in
+   c|c_r|pthread*) ;;
+   *)
+-      LIBS="-lldap $LIBS"
++      LIBS="-lldap_r $LIBS"
+    ;;
+   esac
+ 
+@@ -42906,7 +42906,7 @@
+ 
+ 
+   if test "$ext_shared" = "yes"; then
+-    LDAP_SHARED_LIBADD="-lldap $LDAP_SHARED_LIBADD"
++    LDAP_SHARED_LIBADD="-lldap_r $LDAP_SHARED_LIBADD"
+     if test -n "$LDAP_LIBDIR"; then
+ 
+   if test "$LDAP_LIBDIR" != "/usr/$PHP_LIBDIR" && test "$LDAP_LIBDIR" != "/usr/lib"; then
+@@ -42990,7 +42990,7 @@
+   case ldap in
+   c|c_r|pthread*) ;;
+   *)
+-      LIBS="-lldap $LIBS"
++      LIBS="-lldap_r $LIBS"
+    ;;
+   esac
+ 

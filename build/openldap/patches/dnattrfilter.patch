@@ -1,0 +1,16 @@
+
+Always include DN filter output value, even if it is false.
+
+diff -wpruN '--exclude=*.orig' a~/libraries/libldap/filter.c a/libraries/libldap/filter.c
+--- a~/libraries/libldap/filter.c	1970-01-01 00:00:00
++++ a/libraries/libldap/filter.c	1970-01-01 00:00:00
+@@ -668,6 +668,9 @@ put_simple_filter(
+ 				rc = ber_printf( ber, "tb",
+ 					LDAP_FILTER_EXT_DNATTRS, (ber_int_t) 1 );
+ 			}
++			else
++				rc = ber_printf( ber, "tb",
++					LDAP_FILTER_EXT_DNATTRS, (ber_int_t) 0 );
+ 
+ 			if( rc != -1 ) { 
+ 				rc = ber_printf( ber, /*"{"*/ "N}" );

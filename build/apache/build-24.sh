@@ -58,6 +58,8 @@ CONFIGURE_OPTS="
 
     --enable-authn-dbm
     --enable-auth-digest
+    --enable-authnz-ldap
+    --enable-ldap
     --enable-headers
     --enable-rewrite
 "
