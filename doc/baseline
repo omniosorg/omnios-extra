@@ -82,6 +82,7 @@ extra.omnios ooce/library/libarchive
 extra.omnios ooce/library/libev
 extra.omnios ooce/library/libexif
 extra.omnios ooce/library/libgd
+extra.omnios ooce/library/libgif
 extra.omnios ooce/library/libid3tag
 extra.omnios ooce/library/libidl
 extra.omnios ooce/library/libjpeg-turbo
@@ -91,6 +92,7 @@ extra.omnios ooce/library/libpciaccess
 extra.omnios ooce/library/libpng
 extra.omnios ooce/library/libvncserver
 extra.omnios ooce/library/libvorbis
+extra.omnios ooce/library/libwebp
 extra.omnios ooce/library/libzip
 extra.omnios ooce/library/onig
 extra.omnios ooce/library/pango

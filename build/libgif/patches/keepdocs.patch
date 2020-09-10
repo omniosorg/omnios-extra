@@ -1,0 +1,15 @@
+
+Without this patch, `make clean` removes man pages and then the 64-bit
+build tries to re-create them with tools that aren't in OmniOS.
+
+--- src/Makefile~	2020-09-09 22:34:55.361149115 +0000
++++ src/Makefile	2020-09-09 22:35:32.729072147 +0000
+@@ -82,7 +82,7 @@
+ 	rm -f $(UTILS) $(TARGET) libgetarg.a libgif.a libgif.so libutil.a libutil.so *.o
+ 	rm -f libgif.so.$(LIBMAJOR).$(LIBMINOR).$(LIBPOINT)
+ 	rm -f libgif.so.$(LIBMAJOR)
+-	rm -fr doc/*.1 *.html doc/staging
++	#rm -fr doc/*.1 *.html doc/staging
+ 
+ check: all
+ 	$(MAKE) -C tests
