@@ -20,48 +20,78 @@ information: Portions Copyright [yyyy] [name of copyright owner]
 
 CDDL HEADER END
 -->
-
 <!--
     Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
     Use is subject to license terms.
 -->
-<service_bundle type="manifest" name="postgresql10">
-    <service name="ooce/database/postgresql10" type="service" version="1">
-        <dependency name="filesystem-local" grouping="require_all" restart_on="error" type="service">
-            <service_fmri value="svc:/system/filesystem/local:default"/>
+<service_bundle type="manifest"
+                name="postgresql10">
+
+    <service name="ooce/database/postgresql10"
+             type="service"
+             version="1">
+
+        <dependency name="filesystem-local"
+                    grouping="require_all"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/system/filesystem/local:default" />
         </dependency>
-        <exec_method
-            type="method"
-            name="start"
-            exec="/opt/ooce/pgsql-10/bin/pg_ctl -D %{datadir} -w start"
-            timeout_seconds="60">
+
+        <exec_method type="method"
+                     name="start"
+                     exec="/opt/ooce/pgsql-10/bin/pg_ctl -D %{datadir} -w start"
+                     timeout_seconds="60">
             <method_context security_flags="aslr">
-                <method_credential user="postgres" group="postgres" />
+                <method_credential user="postgres"
+                                   group="postgres" />
             </method_context>
         </exec_method>
-        <exec_method
-            type="method"
-            name="stop"
-            exec="/opt/ooce/pgsql-10/bin/pg_ctl -D %{datadir} stop"
-            timeout_seconds="60">
+
+        <exec_method type="method"
+                     name="stop"
+                     exec="/opt/ooce/pgsql-10/bin/pg_ctl -D %{datadir} stop"
+                     timeout_seconds="60">
             <method_context>
-                <method_credential user="postgres" group="postgres" />
+                <method_credential user="postgres"
+                                   group="postgres" />
             </method_context>
         </exec_method>
-        <property_group name="startd" type="framework">
-            <propval name="duration" type="astring" value="contract"/>
+
+        <property_group name="startd"
+                        type="framework">
+            <propval name="duration"
+                     type="astring"
+                     value="contract" />
         </property_group>
-        <instance name="default" enabled="false">
-            <property_group name="application" type="application">
-                <propval name="datadir" type="astring" value="/var/opt/ooce/pgsql/pgsql-10"/>
+
+        <instance name="default"
+                  enabled="false">
+
+            <property_group name="application"
+                            type="application">
+                <propval name="datadir"
+                         type="astring"
+                         value="/var/opt/ooce/pgsql/pgsql-10" />
             </property_group>
+
         </instance>
+
         <stability value="External" />
-        <template> <common_name> <loctext xml:lang="C"> PostgreSQL 10 </loctext> </common_name>
+
+        <template>
+            <common_name>
+                <loctext xml:lang="C">PostgreSQL 10</loctext>
+            </common_name>
             <documentation>
-                <manpage title="postgres" section="1" manpath="/opt/ooce/pgsql-10/share/man" />
-                <doc_link name="postgresql.org" uri="https://www.postgresql.org/" />
+                <manpage title="postgres"
+                         section="1"
+                         manpath="/opt/ooce/pgsql-10/share/man" />
+                <doc_link name="postgresql.org"
+                          uri="https://www.postgresql.org/" />
             </documentation>
         </template>
+
     </service>
+
 </service_bundle>

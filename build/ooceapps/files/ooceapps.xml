@@ -20,48 +20,70 @@ information: Portions Copyright [yyyy] [name of copyright owner]
 
 CDDL HEADER END
 -->
-
 <!--
     Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
     Use is subject to license terms.
 -->
-<service_bundle type="manifest" name="ooceapps">
-<service name="ooce/ooceapps" type="service" version="1">
-    <create_default_instance enabled="false" />
-    <dependency name="network" grouping="require_all" restart_on="error" type="service">
-        <service_fmri value="svc:/milestone/network:default"/>
-    </dependency>
-    <dependency name="filesystem-local" grouping="require_all" restart_on="none" type="service">
-        <service_fmri value="svc:/system/filesystem/local:default"/>
-    </dependency>
-    <dependency name="autofs" grouping="optional_all" restart_on="error" type="service">
-        <service_fmri value="svc:/system/filesystem/autofs:default"/>
-    </dependency>
-    <dependency name="config-file" grouping="require_all" restart_on="refresh" type="path">
-        <service_fmri value="file://localhost/etc/opt/ooce/ooceapps/ooceapps.conf" />
-    </dependency>
-    <method_context>
-        <method_credential user="ooceapps" group="ooceapps" />
-    </method_context>
-    <exec_method
-        type="method"
-        name="start"
-        exec="/opt/ooce/ooceapps/bin/ooceapps prefork -m production -l http://127.0.0.1:8000 &amp;"
-        timeout_seconds="60">
-    </exec_method>
-    <exec_method
-        type="method"
-        name="stop"
-        exec=":kill"
-        timeout_seconds="60">
-    </exec_method>
-    <stability value="Unstable" />
-    <template>
-        <common_name>
-            <loctext xml:lang="C">
-            Mattermost integrations for OmniOS Community Edition (OmniOSce) Association.
-            </loctext>
-        </common_name>
-    </template>
-</service>
+<service_bundle type="manifest"
+                name="ooceapps">
+
+    <service name="ooce/ooceapps"
+             type="service"
+             version="1">
+
+        <create_default_instance enabled="false" />
+
+        <dependency name="network"
+                    grouping="require_all"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/milestone/network:default" />
+        </dependency>
+
+        <dependency name="filesystem-local"
+                    grouping="require_all"
+                    restart_on="none"
+                    type="service">
+            <service_fmri value="svc:/system/filesystem/local:default" />
+        </dependency>
+
+        <dependency name="autofs"
+                    grouping="optional_all"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/system/filesystem/autofs:default" />
+        </dependency>
+
+        <dependency name="config-file"
+                    grouping="require_all"
+                    restart_on="refresh"
+                    type="path">
+            <service_fmri value="file://localhost/etc/opt/ooce/ooceapps/ooceapps.conf" />
+        </dependency>
+        <method_context>
+            <method_credential user="ooceapps"
+                               group="ooceapps" />
+        </method_context>
+
+        <exec_method type="method"
+                     name="start"
+                     exec="/opt/ooce/ooceapps/bin/ooceapps prefork -m production -l http://127.0.0.1:8000 &amp;"
+                     timeout_seconds="60"></exec_method>
+
+        <exec_method type="method"
+                     name="stop"
+                     exec=":kill"
+                     timeout_seconds="60"></exec_method>
+
+        <stability value="Unstable" />
+
+        <template>
+            <common_name>
+                <loctext xml:lang="C">Mattermost integrations for OmniOS
+                Community Edition (OmniOSce) Association.</loctext>
+            </common_name>
+        </template>
+
+    </service>
+
 </service_bundle>

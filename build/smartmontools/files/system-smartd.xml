@@ -20,52 +20,66 @@ information: Portions Copyright [yyyy] [name of copyright owner]
 
 CDDL HEADER END
 -->
-
 <!--
     Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
     Use is subject to license terms.
 -->
-<service_bundle type="manifest" name="smartd">
-<service name="system/smartd" type="service" version="1">
-    <create_default_instance
-        enabled="false" />
+<service_bundle type="manifest"
+                name="smartd">
 
-    <single_instance/>
+    <service name="system/smartd"
+             type="service"
+             version="1">
 
-    <dependency name="filesystem-local" grouping="require_all" restart_on="none" type="service">
-        <service_fmri value="svc:/system/filesystem/local:default"/>
-    </dependency>
-    <dependency name="autofs" grouping="optional_all" restart_on="error" type="service">
-        <service_fmri value="svc:/system/filesystem/autofs:default"/>
-    </dependency>
-    <dependency name="config-file" grouping="require_all" restart_on="refresh" type="path">
-        <service_fmri value="file://localhost/etc/opt/ooce/smartmontools/smartd.conf" />
-    </dependency>
+        <create_default_instance enabled="false" />
 
-    <exec_method
-        type="method"
-        name="start"
-        exec="/opt/ooce/sbin/smartd --pidfile=/var/opt/ooce/smartmontools/run/smartd.pid --savestates=/var/opt/ooce/smartmontools/"
-        timeout_seconds="60">
-        <method_context security_flags="aslr">
-            <method_credential
-                user='root'
-                group='root' />
-        </method_context>
-    </exec_method>
-    <exec_method
-        type="method"
-        name="stop"
-        exec=":kill"
-        timeout_seconds="60">
-    </exec_method>
+        <single_instance />
 
-    <stability value="Unstable" />
+        <dependency name="filesystem-local"
+                    grouping="require_all"
+                    restart_on="none"
+                    type="service">
+            <service_fmri value="svc:/system/filesystem/local:default" />
+        </dependency>
 
-    <template>
-        <common_name>
-            <loctext xml:lang="C"> smartmontools - Control and monitor storage systems using SMART </loctext>
-        </common_name>
-    </template>
-</service>
+        <dependency name="autofs"
+                    grouping="optional_all"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/system/filesystem/autofs:default" />
+        </dependency>
+
+        <dependency name="config-file"
+                    grouping="require_all"
+                    restart_on="refresh"
+                    type="path">
+            <service_fmri value="file://localhost/etc/opt/ooce/smartmontools/smartd.conf" />
+        </dependency>
+
+        <exec_method type="method"
+                     name="start"
+                     exec="/opt/ooce/sbin/smartd --pidfile=/var/opt/ooce/smartmontools/run/smartd.pid --savestates=/var/opt/ooce/smartmontools/"
+                     timeout_seconds="60">
+            <method_context security_flags="aslr">
+                <method_credential user="root"
+                                   group="root" />
+            </method_context>
+        </exec_method>
+
+        <exec_method type="method"
+                     name="stop"
+                     exec=":kill"
+                     timeout_seconds="60"></exec_method>
+
+        <stability value="Unstable" />
+
+        <template>
+            <common_name>
+                <loctext xml:lang="C">smartmontools - Control and monitor
+                storage systems using SMART</loctext>
+            </common_name>
+        </template>
+
+    </service>
+
 </service_bundle>

@@ -1,9 +1,9 @@
-<?xml version='1.0'?>
-<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
 <!--
 
     This file and its contents are supplied under the terms of the
-    Common Development and Distribution License ('CDDL'), version 1.0.
+    Common Development and Distribution License ("CDDL"), version 1.0.
     You may only use this file in accordance with the terms of version
     1.0 of the CDDL.
 
@@ -14,95 +14,88 @@
     Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 -->
+<service_bundle type="manifest"
+                name="openldap">
 
-<service_bundle type='manifest' name='openldap'>
+    <service name="network/openldap"
+             type="service"
+             version="1">
 
-<service name='network/openldap' type='service' version='1'>
+        <instance name="slapd"
+                  enabled="false">
 
-	<instance name='slapd' enabled='false'>
+            <dependency name="loopback"
+                        grouping="require_any"
+                        restart_on="error"
+                        type="service">
+                <service_fmri value="svc:/network/loopback" />
+            </dependency>
 
-	<dependency
-	    name='loopback'
-	    grouping='require_any'
-	    restart_on='error'
-	    type='service'>
-		<service_fmri value='svc:/network/loopback' />
-	</dependency>
+            <dependency name="network"
+                        grouping="optional_all"
+                        restart_on="error"
+                        type="service">
+                <service_fmri value="svc:/milestone/network" />
+            </dependency>
 
-	<dependency
-	    name='network'
-	    grouping='optional_all'
-	    restart_on='error'
-	    type='service'>
-		<service_fmri value='svc:/milestone/network' />
-	</dependency>
+            <dependency name="filesystem_local"
+                        grouping="require_all"
+                        restart_on="none"
+                        type="service">
+                <service_fmri value="svc:/system/filesystem/local:default" />
+            </dependency>
 
-	<dependency
-	    name='filesystem_local'
-	    grouping='require_all'
-	    restart_on='none'
-	    type='service'>
-		<service_fmri value='svc:/system/filesystem/local:default' />
-	</dependency>
+            <dependent name="openldap-server_multi-user"
+                       grouping="optional_all"
+                       restart_on="none">
+                <service_fmri value="svc:/milestone/multi-user" />
+            </dependent>
+            <method_context security_flags="aslr">
+                <method_credential user="$(USER)"
+                                   group="$(GROUP)"
+                                   privileges="basic,net_privaddr,!proc_info,!proc_session,!file_link_any" />
+            </method_context>
 
-	<dependent
-	    name='openldap-server_multi-user'
-	    grouping='optional_all'
-	    restart_on='none'>
-		<service_fmri value='svc:/milestone/multi-user' />
-	</dependent>
+            <exec_method type="method"
+                         name="start"
+                         exec="/$(PREFIX)/libexec/slapd -f %{config/file} -h '%{config/urls}'"
+                         timeout_seconds="60"></exec_method>
 
-	<method_context security_flags='aslr'>
-		<method_credential user='$(USER)' group='$(GROUP)'
-    privileges='basic,net_privaddr,!proc_info,!proc_session,!file_link_any' />
-	</method_context>
+            <exec_method type="method"
+                         name="stop"
+                         exec=":kill"
+                         timeout_seconds="300"></exec_method>
 
-	<exec_method
-	    type='method'
-	    name='start'
-	    exec='/$(PREFIX)/libexec/slapd -f %{config/file} -h "%{config/urls}"'
-	    timeout_seconds='60'>
-	</exec_method>
+            <exec_method type="method"
+                         name="refresh"
+                         exec=":kill -HUP"
+                         timeout_seconds="60"></exec_method>
 
-	<exec_method
-	    type='method'
-	    name='stop'
-	    exec=':kill'
-	    timeout_seconds='300'>
-	</exec_method>
+            <property_group name="config"
+                            type="application">
+                <propval name="file"
+                         type="astring"
+                         value="/etc/$(PREFIX)/slapd.conf" />
+                <property name="urls"
+                          type="astring">
+                    <astring_list>
+                        <value_node value="ldapi:///" />
+                        <value_node value="ldap:///" />
+                        <value_node value="ldaps:///" />
+                    </astring_list>
+                </property>
+            </property_group>
 
-	<exec_method
-	    type='method'
-	    name='refresh'
-	    exec=':kill -HUP'
-	    timeout_seconds='60'>
-	</exec_method>
+        </instance>
 
-	<property_group name='config' type='application'>
-		<propval name='file' type='astring'
-		    value='/etc/$(PREFIX)/slapd.conf'/>
-		<property name='urls' type='astring'>
-			<astring_list>
-				<value_node value='ldapi:///' />
-				<value_node value='ldap:///' />
-				<value_node value='ldaps:///' />
-			</astring_list>
-		</property>
-	</property_group>
+        <stability value="External" />
 
-	</instance>
+        <template>
+            <common_name>
+                <loctext xml:lang="C">Openldap LDAP Server</loctext>
+            </common_name>
+        </template>
 
-	<stability value='External' />
-
-	<template>
-		<common_name>
-			<loctext xml:lang='C'>
-				Openldap LDAP Server
-			</loctext>
-		</common_name>
-	</template>
-
-</service>
+    </service>
 
 </service_bundle>
-
