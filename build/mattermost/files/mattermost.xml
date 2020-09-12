@@ -20,41 +20,61 @@ information: Portions Copyright [yyyy] [name of copyright owner]
 
 CDDL HEADER END
 -->
+<service_bundle type="manifest"
+                name="mattermost:default">
 
-<service_bundle type="manifest" name="mattermost:default">
-<service name="ooce/application/mattermost" type="service" version="1">
-    <create_default_instance enabled="false" />
-        <dependency name='network' grouping='require_all' restart_on="error" type="service">
-            <service_fmri value='svc:/milestone/network:default' />
+    <service name="ooce/application/mattermost"
+             type="service"
+             version="1">
+
+        <create_default_instance enabled="false" />
+
+        <dependency name="network"
+                    grouping="require_all"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/milestone/network:default" />
         </dependency>
-        <dependency name="filesystem-local" grouping="require_all" restart_on="none" type="service">
-            <service_fmri value="svc:/system/filesystem/local:default"/>
+
+        <dependency name="filesystem-local"
+                    grouping="require_all"
+                    restart_on="none"
+                    type="service">
+            <service_fmri value="svc:/system/filesystem/local:default" />
         </dependency>
-        <dependency name='config-file' grouping='require_all' restart_on='refresh' type='path'>
-            <service_fmri value='file://localhost/etc/opt/ooce/mattermost/config.json' />
+
+        <dependency name="config-file"
+                    grouping="require_all"
+                    restart_on="refresh"
+                    type="path">
+            <service_fmri value="file://localhost/etc/opt/ooce/mattermost/config.json" />
         </dependency>
-        <exec_method
-            type="method"
-            name="start"
-            exec="/opt/ooce/mattermost/bin/mattermost -c /etc/opt/ooce/mattermost/config.json &amp;"
-            timeout_seconds="60">
+
+        <exec_method type="method"
+                     name="start"
+                     exec="/opt/ooce/mattermost/bin/mattermost -c /etc/opt/ooce/mattermost/config.json &amp;"
+                     timeout_seconds="60">
             <method_context security_flags="aslr">
-                <method_credential user='mattermost' group='mattermost' />
+                <method_credential user="mattermost"
+                                   group="mattermost" />
             </method_context>
         </exec_method>
-        <exec_method
-            type="method"
-            name="stop"
-            exec=":kill"
-            timeout_seconds="60">
-        </exec_method>
+
+        <exec_method type="method"
+                     name="stop"
+                     exec=":kill"
+                     timeout_seconds="60"></exec_method>
+
         <stability value="Unstable" />
+
         <template>
             <common_name>
-                <loctext xml:lang="C">
-                    Mattermost - All your team communication in one place, instantly searchable and accessible anywhere.
-                </loctext>
+                <loctext xml:lang="C">Mattermost - All your team communication
+                in one place, instantly searchable and accessible
+                anywhere.</loctext>
             </common_name>
         </template>
-</service>
+
+    </service>
+
 </service_bundle>

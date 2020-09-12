@@ -1,0 +1,55 @@
+#!/bin/ksh
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+tidy=/opt/ooce/bin/tidy
+__SCRIPTDIR="${0%/*}"
+
+ELEMENTS=(
+        '<service '
+        '<create_default_instance'
+        '<single_instance'
+        '<instance'
+        '<dependency'
+        '<dependent'
+        '<exec_method'
+        '<property_group'
+        '<template'
+        '<stability'
+        '<\/service'
+        '<\/instance'
+)
+
+echo "PROCESSING: $1"
+
+# tidy manifest according to doc/tidy.conf
+$tidy -q -config $__SCRIPTDIR/../doc/tidy.conf -m $1
+if [ $? -gt 0 ]; then
+    echo "An error occurred processing $1!"
+    exit 0
+fi
+
+# use only double quotes in manifest and check for nested quotes
+gsed -i 's/'"'"'/"/g' $1
+gsed 's/[^"]//g' $1 | awk '{ if(length !=2 && length !=0) print \
+    "WARNING: may contain nested quotes!";}'
+
+# introduce spacing for readability between elements
+for i in "${ELEMENTS[@]}"
+do
+    gsed -i "/$i/s/^/\n/" $1
+    if [ $? -gt 0 ]; then
+        echo "An error occurred processing $1!"
+        exit 0
+    fi
+done
+

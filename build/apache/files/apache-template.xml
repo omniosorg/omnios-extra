@@ -14,85 +14,83 @@
     Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 -->
+<service_bundle type="manifest"
+                name="http:apache$(sVERSION)">
 
-<service_bundle type='manifest' name='http:apache$(sVERSION)'>
-<service name="network/http" type="service" version="1">
+    <service name="network/http"
+             type="service"
+             version="1">
 
-<instance name='apache$(sVERSION)' enabled='false'>
+        <instance name="apache$(sVERSION)"
+                  enabled="false">
 
-	<dependency
-	    name='loopback'
-	    grouping='require_any'
-	    restart_on='error'
-	    type='service'>
-		<service_fmri value='svc:/network/loopback' />
-	</dependency>
+            <dependency name="loopback"
+                        grouping="require_any"
+                        restart_on="error"
+                        type="service">
+                <service_fmri value="svc:/network/loopback" />
+            </dependency>
 
-	<dependency
-	    name='network'
-	    grouping='optional_all'
-	    restart_on='error'
-	    type='service'>
-		<service_fmri value='svc:/milestone/network' />
-	</dependency>
+            <dependency name="network"
+                        grouping="optional_all"
+                        restart_on="error"
+                        type="service">
+                <service_fmri value="svc:/milestone/network" />
+            </dependency>
 
-	<dependency
-	    name='filesystem_local'
-	    grouping='require_all'
-	    restart_on='none'
-	    type='service'>
-		<service_fmri value='svc:/system/filesystem/local:default' />
-	</dependency>
+            <dependency name="filesystem_local"
+                        grouping="require_all"
+                        restart_on="none"
+                        type="service">
+                <service_fmri value="svc:/system/filesystem/local:default" />
+            </dependency>
 
-	<dependent
-	    name='apache$(sVERSION)_multi-user'
-	    grouping='optional_all'
-	    restart_on='none'>
-		<service_fmri value='svc:/milestone/multi-user' />
-	</dependent>
+            <dependent name="apache$(sVERSION)_multi-user"
+                       grouping="optional_all"
+                       restart_on="none">
+                <service_fmri value="svc:/milestone/multi-user" />
+            </dependent>
+            <method_context security_flags="aslr">
+                <method_credential user="$(USER)"
+                                   group="$(GROUP)"
+                                   privileges="basic,net_privaddr,!proc_info,!proc_session,!file_link_any" />
+            </method_context>
 
-	<method_context security_flags="aslr">
-		<method_credential user='$(USER)' group='$(GROUP)'
-		    privileges='basic,net_privaddr,!proc_info,!proc_session,!file_link_any' />
-	</method_context>
+            <exec_method type="method"
+                         name="start"
+                         exec="%{config/exec} -k %m -f %{config/file}"
+                         timeout_seconds="60" />
 
-	<exec_method
-	    type='method'
-	    name='start'
-	    exec='%{config/exec} -k %m -f %{config/file}'
-	    timeout_seconds='60' />
+            <exec_method type="method"
+                         name="stop"
+                         exec="%{config/exec} -k %m -f %{config/file}"
+                         timeout_seconds="300" />
 
-	<exec_method
-	    type='method'
-	    name='stop'
-	    exec='%{config/exec} -k %m -f %{config/file}'
-	    timeout_seconds='300' />
+            <exec_method type="method"
+                         name="refresh"
+                         exec="%{config/exec} -k graceful -f %{config/file}"
+                         timeout_seconds="300" />
 
-	<exec_method
-	    type='method'
-	    name='refresh'
-	    exec='%{config/exec} -k graceful -f %{config/file}'
-	    timeout_seconds='300' />
+            <property_group name="config"
+                            type="application">
+                <propval name="file"
+                         type="astring"
+                         value="/etc/$(PREFIX)/httpd.conf" />
+                <propval name="exec"
+                         type="astring"
+                         value="/$(PREFIX)/bin/apachectl" />
+            </property_group>
 
-	<property_group name="config" type="application">
-	    <propval name="file" type="astring"
-		value="/etc/$(PREFIX)/httpd.conf"/>
-            <propval name="exec" type="astring"
-                value="/$(PREFIX)/bin/apachectl"/>
-	</property_group>
+            <template>
+                <common_name>
+                    <loctext xml:lang="C">apache $(VERSION)</loctext>
+                </common_name>
+            </template>
 
-	<template>
-		<common_name>
-			<loctext xml:lang='C'>
-				apache $(VERSION)
-			</loctext>
-		</common_name>
-	</template>
+        </instance>
 
-</instance>
+        <stability value="External" />
 
-<stability value='External' />
+    </service>
 
-</service>
 </service_bundle>
-
