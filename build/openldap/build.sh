@@ -72,6 +72,17 @@ CONFIGURE_OPTS_64+="
     --enable-overlays=mod
 "
 
+# On older OmniOS releases where the compiler outputs 32-bit objects by
+# default, libtool creates some intermediate objects as 32-bit during the
+# 64-bit build.
+if [ $RELVER -lt 151034 ]; then
+    save_function configure64 _configure64
+    configure64() {
+        _configure64 "$@"
+        sed -i '/^no_builtin_flag=/s/-/-m64 &/' libtool
+    }
+fi
+
 init
 download_source $PROG $PROG $VER
 patch_source
