@@ -18,7 +18,7 @@
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox
-VER=6.1.12a
+VER=6.1.14a
 # virtualbox does currently not build with later gsoap versions
 GSOAPVER=2.8.102
 GSOAPDIR=gsoap-${GSOAPVER%.*}
@@ -67,6 +67,9 @@ RUN_DEPENDS_IPS="
 
 set_arch 64
 
+# virtualbox unpacks to directory w/o the trailing alpha character
+[[ $VER = *[a-z] ]] && set_builddir "$PROG-${VER:0: -1}"
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
@@ -99,9 +102,6 @@ export GSOAP=$DEPROOT/usr
 export LD_LIBRARY_PATH+=":$GSOAP/lib"
 
 #########################################################################
-
-# virtualbox unpacks to directory w/o the trailing alpha character
-[[ $VER = *[a-z] ]] && set_builddir "$PROG-${VER:0: -1}"
 
 CONFIGURE_OPTS="
     --build-headless
