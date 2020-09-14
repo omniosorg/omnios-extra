@@ -169,6 +169,7 @@ build -ctf
 for f in cyrus.conf imapd.conf cyrus.xml cyrus-setup; do
     xform files/$f > $TMPDIR/$f
 done
+install_inetservices
 install_smf -oocemethod ooce $PROG.xml cyrus-setup
 make_package
 clean_up
