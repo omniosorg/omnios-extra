@@ -88,6 +88,7 @@
 <transform dir path=lib/svc/manifest/.*$ -> set group sys>
 <transform dir path=etc$ -> drop>
 <transform dir path=etc/inet$ -> set group sys>
+<transform dir path=etc/inet/services\.d$ -> set group sys>
 <transform dir path=etc/opt$ -> drop>
 
 # This should only ever be in libiconv, but other GNU packages install it
@@ -119,6 +120,9 @@
 # man pages should trigger a whatis database rebuild
 <transform file link path=opt/ooce/share/man/.*\.\d[a-z]*$ -> \
     add restart_fmri svc:/system/update-man-index:default>
+
+<transform file path=etc/inet/services\.d -> \
+    add restart_fmri svc:/system/config-assemble:services>
 
 # Transforms to set facet.devel on files useful to developers only.
 
