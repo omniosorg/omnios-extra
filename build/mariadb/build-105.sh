@@ -137,6 +137,37 @@ make_isa_stub() {
     popd >/dev/null
 }
 
+build_manifests() {
+    generate_manifest $TMPDIR/manifest.all
+
+    # Include in the client package:
+    # - libmaria*
+    # - libmysqlclient*
+    # - include dir without the server subdir
+    # - mysql_config + mariadb_config with man pages
+    # - mysql and mariadb binary with man pages
+    # - drop /etc/opt and lib/svc
+    sed -En "
+        \@/libmaria@p
+        \@/libmysqlclient@p
+        \@/include/.*/server@d
+        \@/include@p
+        /_config/p
+        /pkgconfig/p
+        \@/mysql @p
+        \@/mariadb @p
+        \@/mysql\.1@p
+        \@/mariadb\.1@p
+        /^dir .*(etc|var|share|plugin)/d
+        /^dir .*(mariadb-$MAJVER|bin|lib)/p
+    " < $TMPDIR/manifest.all | \
+        sort -u > $TMPDIR/manifest.client
+    # The server manifest is the lines from manifest.all that do not appear
+    # in manifest.client
+    sort -u $TMPDIR/manifest.all | \
+        comm -23 - $TMPDIR/manifest.client > $TMPDIR/manifest.server
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
@@ -150,7 +181,9 @@ xform files/my.cnf > $DESTDIR/$CONFPATH/my.cnf
 xform files/mariadb-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
 xform files/mariadb-template > $TMPDIR/$PROG-$sMAJVER
 install_smf -oocemethod ooce $PROG-$sMAJVER.xml $PROG-$sMAJVER
-make_package
+build_manifests
+PKG=${PKG/database/library} make_package -seed $TMPDIR/manifest.client
+make_package -seed $TMPDIR/manifest.server server.mog
 clean_up
 
 # Vim hints

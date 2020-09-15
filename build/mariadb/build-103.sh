@@ -105,7 +105,7 @@ xform files/my.cnf > $DESTDIR/$CONFPATH/my.cnf
 xform files/mariadb-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
 xform files/mariadb-template > $TMPDIR/$PROG-$sMAJVER
 install_smf -oocemethod ooce $PROG-$sMAJVER.xml $PROG-$sMAJVER
-make_package
+make_package server.mog
 clean_up
 
 # Vim hints
