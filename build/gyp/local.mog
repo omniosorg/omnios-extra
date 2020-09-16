@@ -11,3 +11,9 @@
 
 license LICENSE license=modified-BSD
 
+# gyp can use either importlib_metadata or metadata (the latter from
+# newer python). Dependency resolution with python 3.7 fails to find the
+# latter.
+<transform file path=.*/bin/gyp$ -> \
+    set pkg.depend.bypass-generate .*metadata.* >
+
