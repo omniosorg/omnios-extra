@@ -25,12 +25,12 @@ DESC="This is the nagios-plugins package for Nagios."
 set_arch 64
 
 BUILD_DEPENDS_IPS+="
-    ooce/database/mariadb-104
+    ooce/library/mariadb-${MARIASQLVER//./}
     ooce/database/postgresql-$PGSQLVER
 "
 
 RUN_DEPENDS_IPS+="
-    ?pkg:/ooce/database/mariadb-104
+    ?pkg:/ooce/library/mariadb-${MARIASQLVER//./}
     ?pkg:/ooce/database/postgresql-$PGSQLVER
     ooce/application/nagios-common
 "
