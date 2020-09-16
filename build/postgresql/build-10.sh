@@ -78,7 +78,7 @@ prep_build
 build
 #run_testsuite check-world
 install_smf database $PROG-$sMAJVER.xml
-make_package
+make_package server.mog
 clean_up
 
 # Vim hints

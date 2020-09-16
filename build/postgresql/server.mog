@@ -19,21 +19,11 @@
 # CDDL HEADER END
 #
 #
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 
-# Drop html documentation
-<transform path=$(PREFIX)/share/doc/html -> drop >
+dir group=postgres mode=0700 owner=postgres \
+    path=var/opt/ooce/pgsql/pgsql-$(VERSION)
 
-# Mediated binaries
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../pgsql-$(VERSION)/%<1>/%<2> \
-    mediator=$(PROG) mediator-version=$(VERSION) >
-
-# Mediated man pages
-<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(OPREFIX)/share/man/%<1>/%<2> \
-    target=../../../pgsql-$(VERSION)/share/man/%<1>/%<2> \
-    mediator=$(PROG) mediator-version=$(VERSION) >
-
-license COPYRIGHT license=postgresql
+<transform file path=$(PREFIX)/(lib|bin)/ \
+    -> set restart_fmri svc:/ooce/database/$(PROG)$(sVERSION):default>
