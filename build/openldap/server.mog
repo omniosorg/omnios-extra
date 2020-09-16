@@ -10,24 +10,5 @@
 
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-<transform path=$(PREFIX)/bin -> drop>
-<transform path=$(OPREFIX)/(?:include|lib/) -> drop>
-<transform dir path=$(OPREFIX)/lib -> drop>
-<transform file path=etc/$(PREFIX)/ldap\.conf -> drop>
-<transform path=$(PREFIX)/share/man/man1 -> drop>
-<transform path=$(PREFIX)/share/man/man3 -> drop>
-<transform path=$(PREFIX)/share/man/man5/(?:ldap|ldif) -> drop>
-
-# Link other binaries
-<transform file link path=$(PREFIX)/(sbin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
-
-# Link man pages
-<transform file path=$(PREFIX)/(share/man/man\d/.*) -> emit \
-    link path=$(OPREFIX)/%<1> target=../../../$(PROG)/%<1> >
-
-# Because the libraries are shipped in the client package, resolution of the
-# server binary dependencies fails
-<transform file path=$(PREFIX)/libexec -> \
-    default pkg.depend.bypass-generate .* >
+dir group=$(GROUP) mode=0700 owner=$(USER) path=var/$(PREFIX)/openldap-data
 

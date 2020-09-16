@@ -36,6 +36,7 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPREFIX=${PREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
     -DUSER=openldap -DGROUP=openldap
 "
 
@@ -83,15 +84,30 @@ if [ $RELVER -lt 151034 ]; then
     }
 fi
 
+build_manifests() {
+    manifest_start $TMPDIR/manifest.client
+    manifest_add_dir $OPREFIX/lib $ISAPART64
+    manifest_add_dir $PREFIX/bin
+    manifest_add_dir $OPREFIX/include
+    manifest_add_dir $PREFIX/share/man man1 man3
+    manifest_add $PREFIX/share/man/man5 ldap.conf.5 ldif.5
+    manifest_add etc$PREFIX ldap.conf
+    manifest_finalise $OPREFIX etc$OPREFIX
+
+    manifest_uniq $TMPDIR/manifest.{server,client}
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build -ctf
-PKG=ooce/library/openldap make_package client.mog
 xform files/$PROG.xml > $TMPDIR/$PROG.xml
 install_smf -oocemethod ooce $PROG.xml
-RUN_DEPENDS_IPS="pkg:/ooce/library/openldap" make_package server.mog
+build_manifests
+PKG=${PKG/network/library} SUMMARY+=" - clients and libraries" \
+    make_package -seed $TMPDIR/manifest.client
+make_package -seed $TMPDIR/manifest.server server.mog
 clean_up
 
 # Vim hints
