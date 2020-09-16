@@ -26,12 +26,12 @@ set_arch 64
 
 BUILD_DEPENDS_IPS+="
     ooce/library/mariadb-${MARIASQLVER//./}
-    ooce/database/postgresql-$PGSQLVER
+    ooce/library/postgresql-$PGSQLVER
 "
 
 RUN_DEPENDS_IPS+="
     ?pkg:/ooce/library/mariadb-${MARIASQLVER//./}
-    ?pkg:/ooce/database/postgresql-$PGSQLVER
+    ?pkg:/ooce/library/postgresql-$PGSQLVER
     ooce/application/nagios-common
 "
 

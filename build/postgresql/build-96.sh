@@ -46,6 +46,8 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=pgsql-$MAJVER
+    -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
     -DVERSION=$MAJVER
     -DsVERSION=$sMAJVER
 "
@@ -78,7 +80,7 @@ prep_build
 build
 #run_testsuite check-world
 install_smf database $PROG-$sMAJVER.xml
-make_package
+make_package server.mog
 clean_up
 
 # Vim hints

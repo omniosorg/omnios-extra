@@ -29,7 +29,7 @@ PREFIX+="/$PROG"
 set_arch 64
 
 BUILD_DEPENDS_IPS+="
-    ooce/database/postgresql-${PGSQLVER//./}
+    ooce/library/postgresql-${PGSQLVER//./}
     ooce/library/mariadb-${MARIASQLVER//./}
 "
 
