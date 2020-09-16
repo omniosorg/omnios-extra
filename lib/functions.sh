@@ -1314,7 +1314,7 @@ make_package() {
     P5M_INT3=$TMPDIR/${PKGE}.p5m.int.3
     P5M_FINAL=$TMPDIR/${PKGE}.p5m
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
-    GLOBAL_MOG_FILE=$MYDIR/global-transforms.mog
+    GLOBAL_MOG_FILE=$MYDIR/mog/global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
 
     # Version cleanup
@@ -1379,7 +1379,7 @@ make_package() {
 
     # Transforms
     logmsg "--- Applying transforms"
-    logcmd -p $PKGMOGRIFY \
+    logcmd -p $PKGMOGRIFY -I $MYDIR/mog \
         $XFORM_ARGS \
         $P5M_INT \
         $MY_MOG_FILE \
