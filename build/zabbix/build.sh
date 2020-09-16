@@ -30,7 +30,7 @@ set_arch 64
 
 BUILD_DEPENDS_IPS+="
     ooce/database/postgresql-${PGSQLVER//./}
-    ooce/database/mariadb-${MARIASQLVER//./}
+    ooce/library/mariadb-${MARIASQLVER//./}
 "
 
 XFORM_ARGS="
