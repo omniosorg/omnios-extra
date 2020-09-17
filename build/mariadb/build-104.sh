@@ -161,7 +161,8 @@ install_smf -oocemethod ooce $PROG-$sMAJVER.xml $PROG-$sMAJVER
 build_manifests
 PKG=${PKG/database/library} SUMMARY+=" client and libraries" \
     make_package -seed $TMPDIR/manifest.client
-make_package -seed $TMPDIR/manifest.server server.mog
+RUN_DEPENDS_IPS=${PKG/database/library} \
+    make_package -seed $TMPDIR/manifest.server server.mog
 clean_up
 
 # Vim hints
