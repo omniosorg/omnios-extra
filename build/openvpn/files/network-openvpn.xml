@@ -37,7 +37,7 @@ Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
         <exec_method type="method"
                      name="start"
-                     exec="/opt/ooce/openvpn/sbin/openvpn --cd /etc/opt/ooce/openvpn --config "/etc/opt/ooce/openvpn/%i.conf" --daemon openvpn:%i --log-append "/var/log/opt/ooce/openvpn/%i.log""
+                     exec="/opt/ooce/openvpn/sbin/openvpn --cd /etc/opt/ooce/openvpn --config /etc/opt/ooce/openvpn/%i.conf --daemon openvpn:%i --log-append /var/log/opt/ooce/openvpn/%i.log"
                      timeout_seconds="60">
             <method_context security_flags="aslr">
                 <method_credential user="root"
