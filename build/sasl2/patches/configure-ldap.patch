@@ -5,7 +5,7 @@ with the illumos libldap in /usr/lib.
 diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
 --- a~/configure.ac	1970-01-01 00:00:00
 +++ a/configure.ac	1970-01-01 00:00:00
-@@ -728,8 +728,8 @@
+@@ -728,8 +728,8 @@ fi
  
  LDAP_LIBS=""
  if test "$with_ldap" != no; then
