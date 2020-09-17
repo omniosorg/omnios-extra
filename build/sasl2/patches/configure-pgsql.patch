@@ -1,0 +1,58 @@
+diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
+--- a~/configure.ac	1970-01-01 00:00:00
++++ a/configure.ac	1970-01-01 00:00:00
+@@ -882,30 +882,33 @@ case "$with_pgsql" in
+      LDFLAGS=$save_LDFLAGS
+      ;;
+     *)
+-     if test -d ${with_pgsql}/lib/pgsql; then
+-	CMU_ADD_LIBPATH_TO(${with_pgsql}/lib/pgsql, LIB_PGSQL)
+-     elif test -d ${with_pgsql}/pgsql/lib; then
+-	CMU_ADD_LIBPATH_TO(${with_pgsql}/pgsql/lib, LIB_PGSQL)
+-     elif test -d ${with_pgsql}/lib; then
+-	CMU_ADD_LIBPATH_TO(${with_pgsql}/lib, LIB_PGSQL)
+-     else
+-	CMU_ADD_LIBPATH_TO(${with_pgsql}, LIB_PGSQL)
+-     fi
++     #if test -d ${with_pgsql}/lib/pgsql; then
++     #   CMU_ADD_LIBPATH_TO(${with_pgsql}/lib/pgsql, LIB_PGSQL)
++     #elif test -d ${with_pgsql}/pgsql/lib; then
++     #   CMU_ADD_LIBPATH_TO(${with_pgsql}/pgsql/lib, LIB_PGSQL)
++     #elif test -d ${with_pgsql}/lib; then
++     #   CMU_ADD_LIBPATH_TO(${with_pgsql}/lib, LIB_PGSQL)
++     #else
++     #   CMU_ADD_LIBPATH_TO(${with_pgsql}, LIB_PGSQL)
++     #fi
+ 
++     _lib=`pg_config --libdir`
++     LIB_PGSQL="-L$_lib -R$_lib -lpq"
+      LIB_PGSQL_DIR=$LIB_PGSQL
+-     LIB_PGSQL="$LIB_PGSQL -lpq"
+ 
+-     if test -d ${with_pgsql}/include/pgsql; then
+-         CPPFLAGS="${CPPFLAGS} -I${with_pgsql}/include/pgsql"
+-     elif test -d ${with_pgsql}/pgsql/include; then
+-         CPPFLAGS="${CPPFLAGS} -I${with_pgsql}/pgsql/include"
+-     elif test -d ${with_pgsql}/include; then
+-         CPPFLAGS="${CPPFLAGS} -I${with_pgsql}/include"
+-     elif test -d ${prefix}/include; then
+-         CPPFLAGS="${CPPFLAGS} -I${prefix}/include"
+-     else
+-         CPPFLAGS="${CPPFLAGS} -I${with_pgsql}"
+-     fi
++     #if test -d ${with_pgsql}/include/pgsql; then
++     #    CPPFLAGS="${CPPFLAGS} -I${with_pgsql}/include/pgsql"
++     #elif test -d ${with_pgsql}/pgsql/include; then
++     #    CPPFLAGS="${CPPFLAGS} -I${with_pgsql}/pgsql/include"
++     #elif test -d ${with_pgsql}/include; then
++     #    CPPFLAGS="${CPPFLAGS} -I${with_pgsql}/include"
++     #elif test -d ${prefix}/include; then
++     #    CPPFLAGS="${CPPFLAGS} -I${prefix}/include"
++     #else
++     #    CPPFLAGS="${CPPFLAGS} -I${with_pgsql}"
++     #fi
++
++     CPPFLAGS+=" `pg_config --cppflags` -I`pg_config --includedir`"
+ 
+ 
+        save_LDFLAGS=$LDFLAGS

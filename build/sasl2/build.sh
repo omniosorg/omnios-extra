@@ -36,14 +36,11 @@ SKIP_LICENCES='*'
 # in the path.
 PATH=$GNUBIN:$PATH
 
-# configure runs mysql_config to determine the proper library path for
-# mariadb. Set the correct mariadb version path first so that it will find
-# the isaexec mysql_config which will return the correct paths depending on
-# 32/64-bit build.
-PATH=$PREFIX/mariadb-$MARIASQLVER/bin:$PATH
-
-# NB: pgsql is currently only shipped 64-bit so cannot be used here
-#    --with-pgsql=$PREFIX/pgsql-$PGSQLVER
+# configure runs mysql_config/pg_config to determine the proper paths
+# for the database libraries. To avoid having to rely on a particular
+# mediator value for the installed packages, set the explicitly versioned
+# bin directories first in the PATH.
+PATH=$PREFIX/mariadb-$MARIASQLVER/bin:$PREFIX/pgsql-$PGSQLVER/bin:$PATH
 
 ETCDIR=/etc$PREFIX/sasl2
 VARDIR=/var$PREFIX/sasl2
@@ -60,7 +57,7 @@ CONFIGURE_OPTS="
     --enable-sql
     --with-ldap
     --with-mysql=$PREFIX/mariadb-$MARIASQLVER
-    --without-pgsql
+    --with-pgsql=$PREFIX/pgsql-$PGSQLVER
     --with-gss_impl=mit
 
     --enable-auth-sasldb
@@ -87,6 +84,8 @@ tests() {
         || logerr "$PROG was not built with lmdb"
     [ `grep -c 'lmysqlclient... yes' $SRCDIR/build.log` = 2 ] \
         || logerr "$PROG was not built with mariadb"
+    [ `grep -c 'lpq... yes' $SRCDIR/build.log` = 2 ] \
+        || logerr "$PROG was not built with postgres"
 }
 
 init

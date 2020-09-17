@@ -25,5 +25,7 @@ license LICENSE license=OpenLDAP
 
 <transform file dir path=var/$(PREFIX) -> set owner $(USER)>
 <transform file dir path=var/$(PREFIX) -> set group $(GROUP)>
-dir group=$(GROUP) mode=0700 owner=$(USER) path=var/$(PREFIX)/openldap-data
+
+<include binlink.mog>
+<include manlink.mog>
 

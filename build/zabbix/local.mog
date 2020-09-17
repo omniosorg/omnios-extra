@@ -1,3 +1,4 @@
+#
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.
 # You may only use this file in accordance with the terms of version
@@ -6,19 +7,14 @@
 # A full copy of the text of the CDDL should have accompanied this
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
-# CDDL HEADER START
-#
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-# Drop html documentation
-<transform path=$(PREFIX)/share/doc/html -> drop>
+# Copyright 2020 OmniOS Community Edition. All rights reserved.
 
-# Drop 32-bit binaries
-<transform path=$(PREFIX)/bin/i386/(?!pg_config) -> drop>
-<transform path=$(OPREFIX)/bin/(i386|amd64) -> drop>
+<transform file path=etc -> set preserve true>
+<transform file path=etc -> set overlay allow>
 
-<include mediated-binlink.mog>
-<include mediated-manlink.mog>
+<include binlink.mog>
+<include manlink.mog>
 
-license COPYRIGHT license=postgresql
+license COPYING license=GPLv2
 

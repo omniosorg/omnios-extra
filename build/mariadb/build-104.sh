@@ -134,6 +134,17 @@ make_isa_stub() {
     popd >/dev/null
 }
 
+build_manifests() {
+    manifest_start $TMPDIR/manifest.client
+    manifest_add_dir $PREFIX/include mysql
+    manifest_add_dir $PREFIX/lib pkgconfig $ISAPART64 $ISAPART64/pkgconfig
+    manifest_add $PREFIX/bin '.*(mysql|mariadb)_config' mysql mariadb
+    manifest_add $PREFIX/man/man1 mariadb.1 mysql.1 mysql_config.1
+    manifest_finalise $OPREFIX
+
+    manifest_uniq $TMPDIR/manifest.{server,client}
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
@@ -147,7 +158,10 @@ xform files/my.cnf > $DESTDIR/$CONFPATH/my.cnf
 xform files/mariadb-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
 xform files/mariadb-template > $TMPDIR/$PROG-$sMAJVER
 install_smf -oocemethod ooce $PROG-$sMAJVER.xml $PROG-$sMAJVER
-make_package
+build_manifests
+PKG=${PKG/database/library} SUMMARY+=" client and libraries" \
+    make_package -seed $TMPDIR/manifest.client
+make_package -seed $TMPDIR/manifest.server server.mog
 clean_up
 
 # Vim hints

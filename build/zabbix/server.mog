@@ -16,17 +16,6 @@ user ftpuser=false username=$(USER) uid=77 group=$(GROUP) \
 <transform file path=$(PREFIX)/sbin/zabbix_server \
     -> set refresh_fmri network/zabbix:server>
 
-<transform path=etc/$(PREFIX)/.*(?:agent|proxy) -> drop>
-<transform path=$(PREFIX)/bin/zabbix_(?:get|sender) -> drop>
-<transform path=$(PREFIX)/sbin/zabbix_(?:agent|proxy) -> drop>
-<transform path=$(PREFIX)/share/man.*(?:agent|proxy|get|sender) -> drop>
-<transform path=$(PREFIX)/scripts -> drop>
-
-<transform file path=etc -> set preserve true>
-<transform file path=etc -> set overlay allow>
-
-<transform path=lib/svc/manifest/application/zabbix-agent -> drop>
-
 dir path=var/$(OPREFIX) owner=root group=bin mode=0755
 dir path=var/$(PREFIX) owner=$(USER) group=$(GROUP) mode=0755
 
@@ -34,8 +23,6 @@ link path=$(PREFIX)/sbin/zabbix_server target=zabbix_server.pgsql \
 	mediator=zabbix mediator-implementation=pgsql mediator-priority=vendor
 link path=$(PREFIX)/sbin/zabbix_server target=zabbix_server.mariadb \
 	mediator=zabbix mediator-implementation=mariadb
-
-license COPYING license=GPLv2
 
 depend type=require fmri=ooce/application/zabbix-agent
 depend type=require fmri=ooce/network/fping

@@ -283,13 +283,13 @@ ask_to_install() {
 }
 
 ask_to_pkglint() {
-    ask_to_continue_ "" "Do you want to run pkglint at this time?" \
+    ask_to_continue_ "" "Do you want to run pkglint?" \
         "y/n" "[yYnN]"
     [[ "$REPLY" == "y" || "$REPLY" == "Y" ]]
 }
 
 ask_to_testsuite() {
-    ask_to_continue_ "" "Do you want to run the test-suite at this time?" \
+    ask_to_continue_ "" "Do you want to run the test-suite?" \
         "y/n" "[yYnN]"
     [[ "$REPLY" == "y" || "$REPLY" == "Y" ]]
 }
@@ -1249,6 +1249,91 @@ pkgmeta() {
     echo set name=$1 value=\"$2\"
 }
 
+# Start building a partial manifest
+#   manifest_start <filename>
+manifest_start() {
+    PARTMF="$1"
+    SEEDMF=$TMPDIR/manifest.seed
+    :>$PARTMF
+    generate_manifest $SEEDMF
+}
+
+# Add a directory, and the files directly underneath, to a partial manifest.
+# Optional arguments indicate sub-directories to recurse one level into.
+#   manifest_add_dir <directory> [subdir]...
+manifest_add_dir() {
+    typeset dir=${1#/}; shift
+    logmsg "---- Adding dir '$dir'"
+    (
+        $RIPGREP "^dir.* path=$dir(\$|\\s)" $SEEDMF
+        $RIPGREP "^(file|link|hardlink).* path=$dir/[^/]+(\$|\\s)" $SEEDMF
+    ) >> $PARTMF
+    for d in "$@"; do
+        manifest_add_dir "$dir/$d"
+    done
+}
+
+# Add a file/link/hardlink to a partial manifest.
+#   manifest_add <directory> <pattern> [pattern]...
+manifest_add() {
+    typeset dir=${1#/}; shift
+
+    for f in "$@"; do
+        $RIPGREP "^(file|link|hardlink).* path=$dir/$f(\$|\\s)" $SEEDMF
+    done >> $PARTMF
+}
+
+# Finalise a partial manifest.
+# Takes care of adding any necessary 'dir' actions to support files which
+# have been added and sorts the result, removing duplicate lines. Only
+# directories under one of the provided prefixes are included
+#   manifest_finalise <prefix> [prefix]...
+manifest_finalise() {
+    typeset tf=`mktemp`
+    logcmd cp $PARTMF $tf
+
+    typeset prefix
+    for prefix in "$@"; do
+        prefix=${prefix#/}
+        logmsg "--- determining implicit directories for $prefix"
+        $RIPGREP "^dir.* path=$prefix(\$|\\s)" $SEEDMF >> $tf
+        $RIPGREP "(file|link|hardlink).* path=$prefix/" $PARTMF \
+            | sed "
+                s^.*path=$prefix/^^
+                s^/[^/]*$^^
+        " | sort -u | while read dir; do
+            logmsg "---- $dir"
+            while :; do
+                $RIPGREP "^dir.* path=$prefix/$dir(\$|\\s)" $SEEDMF >> $tf
+                [[ $dir = */* ]] || break
+                dir=`dirname $dir`
+            done
+        done
+    done
+    sort -u < $tf > $PARTMF
+    rm -f $tf
+}
+
+# Create a manifest file containing all of the lines that are not present
+# in the manifests given.
+#   manifest_uniq <new manifest> <old manifest> [old manifest]...
+manifest_uniq() {
+    typeset dst="$1"; shift
+
+    typeset tf=`mktemp`
+    typeset mftmp=`mktemp`
+    typeset seedtmp=`mktemp`
+    sort -u < $SEEDMF > $seedtmp
+
+    for mf in "$@"; do
+        sort -u < $mf > $mftmp
+        logcmd -p comm -13 $mftmp $seedtmp > $tf
+        logcmd mv $tf $seedtmp
+    done
+    logcmd mv $seedtmp $dst
+    rm -f $tf $mftmp
+}
+
 generate_manifest() {
     typeset outf="$1"
 
@@ -1271,6 +1356,8 @@ generate_manifest() {
 
 make_package() {
     logmsg "-- building package $PKG"
+
+    PKGE=`url_encode $PKG`
 
     typeset seed_manifest=
     while [[ "$1" = -* ]]; do
@@ -1314,7 +1401,7 @@ make_package() {
     P5M_INT3=$TMPDIR/${PKGE}.p5m.int.3
     P5M_FINAL=$TMPDIR/${PKGE}.p5m
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
-    GLOBAL_MOG_FILE=$MYDIR/global-transforms.mog
+    GLOBAL_MOG_FILE=$MYDIR/mog/global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
 
     # Version cleanup
@@ -1379,7 +1466,7 @@ make_package() {
 
     # Transforms
     logmsg "--- Applying transforms"
-    logcmd -p $PKGMOGRIFY \
+    logcmd -p $PKGMOGRIFY -I $MYDIR/mog \
         $XFORM_ARGS \
         $P5M_INT \
         $MY_MOG_FILE \

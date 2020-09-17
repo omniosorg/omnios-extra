@@ -10,9 +10,6 @@
 #
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-dir group=mysql mode=0700 owner=mysql path=var/$(PREFIX)
-dir group=mysql mode=0700 owner=mysql path=var/$(PREFIX)/data
-
 # Drop unwanted directories
 <transform path=.*/sql-bench -> drop>
 <transform path=.*/mysql-test -> drop>
@@ -33,9 +30,6 @@ dir group=mysql mode=0700 owner=mysql path=var/$(PREFIX)/data
     link path=$(OPREFIX)/share/man/%<1>/%<2> \
     target=../../../$(PROG)-$(VERSION)/man/%<1>/%<2> \
     mediator=$(PROG) mediator-version=$(VERSION) >
-
-<transform file path=$(PREFIX)/bin/mysqld$ \
-    -> set restart_fmri svc:/ooce/database/$(PROG)$(sVERSION):default>
 
 license COPYING license=GPLv2
 

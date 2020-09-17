@@ -19,7 +19,7 @@ The "OmniOS Extra IPS Repository" is open to all, anyone may submit a new packag
 
 1. [Package naming conventions](#package-naming-conventions)
 2. [Structure of an OmniOS package](#structure-of-an-omnios-package)
-3. [The `local.mog` and `lib/global-transforms.mog` files](#the-local-mog-and-lib-global-transforms-mog-files)
+3. [The `local.mog` and `lib/mog/global-transforms.mog` files](#the-local-mog-and-lib-mog-global-transforms-mog-files)
 4. [Build and run dependencies](#build-and-run-dependencies)
 5. [Configure directives](#configure-directives)
 6. [Make directives](#make-directives)
@@ -292,7 +292,7 @@ The main engine behind the "OmniOS Extra Build System" is the `lib/functions.sh`
 
 1. [Package naming conventions](#package-naming-conventions)
 2. [Structure of an OmniOS package](#structure-of-an-omnios-package)
-3. [The `local.mog` and `lib/global-transforms.mog` files](#the-local-mog-and-lib-global-transforms-mog-files)
+3. [The `local.mog` and `lib/mog/global-transforms.mog` files](#the-local-mog-and-lib-mog-global-transforms-mog-files)
 4. [Build and run dependencies](#build-and-run-dependencies)
 5. [Configure directives](#configure-directives)
 6. [Make directives](#make-directives)
@@ -345,7 +345,7 @@ The "OmniOS Extra Repository" contains prime quality packages to enhance your Om
 | mediated symlinks provide access to manual pages |  /opt/ooce/share/man*
 
 
-## The `local.mog` and `lib/global-transforms.mog` files
+## The `local.mog` and `lib/mog/global-transforms.mog` files
 
 ### `local.mog`
 
@@ -399,9 +399,9 @@ However of note, the line with `set preserve true` tells the build system not to
 
 It is beyond the scope of this document to describe in full detail the workings of how `pkgmogify` deals with the `local.mog` file, therefore it is recommended to read in detail Chapter 8 of [Packaging and Delivering Software with the Image Packaging System](https://github.com/OpenIndiana/oi-docs/blob/master/docs/dev/pdf/ips-dev-guide.pdf), to best take advantage of the `local.mog` file.
 
-### `lib/global-transforms.mog`
+### `lib/mog/global-transforms.mog`
 
-The "Omnios Build System" will automatically apply a number of transformations to a package being created via the `lib/global-transforms.mog` file. It is recommended to study this file to appreciate, which changes are being made.
+The "Omnios Build System" will automatically apply a number of transformations to a package being created via the `lib/mog/global-transforms.mog` file. It is recommended to study this file to appreciate, which changes are being made.
 
 
 ## Build and run dependencies

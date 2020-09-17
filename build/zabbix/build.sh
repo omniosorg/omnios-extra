@@ -29,14 +29,15 @@ PREFIX+="/$PROG"
 set_arch 64
 
 BUILD_DEPENDS_IPS+="
-    ooce/database/postgresql-${PGSQLVER//./}
-    ooce/database/mariadb-${MARIASQLVER//./}
+    ooce/library/postgresql-${PGSQLVER//./}
+    ooce/library/mariadb-${MARIASQLVER//./}
 "
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPREFIX=${PREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
     -DVER=$VER
     -DUSER=zabbix -DGROUP=zabbix -DAGENTUSER=zabbixa
 "
@@ -124,6 +125,22 @@ restore_buildenv
 
 note -n "Packaging"
 
+build_manifests() {
+    manifest_start $TMPDIR/mf.agent
+    manifest_add $PREFIX/bin zabbix_get zabbix_sender
+    manifest_add $PREFIX/sbin zabbix_agentd
+    manifest_add $PREFIX/share/man/man1 zabbix_get.1 zabbix_sender.1
+    manifest_add $PREFIX/share/man/man8 zabbix_agentd.8
+    manifest_add_dir $PREFIX/scripts
+    manifest_add_dir $PREFIX/alertscripts
+    manifest_add_dir $PREFIX/externalscripts
+    manifest_add etc$PREFIX 'zabbix_agentd.*'
+    manifest_add lib/svc/manifest/application zabbix-agent.xml
+    manifest_finalise $OPREFIX etc$OPREFIX
+
+    manifest_uniq $TMPDIR/mf.{server,agent}
+}
+
 # Move the zabbix server binaries, ready for mediation
 logcmd mv $DESTDIR/$PREFIX/sbin/zabbix_server{,.pgsql} || logerr "mv pgsql"
 logcmd cp ${DESTDIR}_mariadb/$PREFIX/sbin/zabbix_server \
@@ -132,9 +149,13 @@ logcmd cp ${DESTDIR}_mariadb/$PREFIX/sbin/zabbix_server \
 for f in agent server; do
     xform files/$PROG-$f.xml > $TMPDIR/$PROG-$f.xml
     install_smf application $PROG-$f.xml
-    [ "$f" = server ] && add_notes README.server-install
-    PKG=$PKG-$f make_package $f.mog ##IGNORE##
 done
+
+add_notes README.server-install
+
+build_manifests
+PKG=$PKG-agent make_package -seed $TMPDIR/mf.agent agent.mog ##IGNORE##
+PKG=$PKG-server make_package -seed $TMPDIR/mf.server server.mog ##IGNORE##
 
 clean_up
 
