@@ -24,8 +24,6 @@ SUMMARY="PostgreSQL 12"
 DESC="The World's Most Advanced Open Source Relational Database"
 
 SKIP_LICENCES=postgresql
-# too many TZ related hardlinks
-SKIP_HARDLINK=1
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
@@ -38,7 +36,7 @@ LOGPATH=/var/log$PREFIX
 VARPATH=/var$PREFIX
 RUNPATH=$VARPATH/run
 
-set_arch 64
+reset_configure_opts
 
 RUN_DEPENDS_IPS="ooce/database/postgresql-common"
 
@@ -52,24 +50,23 @@ XFORM_ARGS="
     -DsVERSION=$sMAJVER
 "
 
-PKGDIFF_HELPER="
-    \@/share/timezone/@d
-"
-
 CFLAGS+=" -O3"
 
 CONFIGURE_OPTS="
+    --prefix=$PREFIX
+    --sysconfdir=$CONFPATH
+    --localstatedir=$VARPATH
     --enable-thread-safety
     --with-openssl
     --with-libxml
     --with-xslt
     --with-readline
+    --without-systemd
+    --with-system-tzdata=/usr/share/lib/zoneinfo
 "
 
-CONFIGURE_OPTS_64="
-    --prefix=$PREFIX
-    --sysconfdir=$CONFPATH
-    --localstatedir=$VARPATH
+CONFIGURE_OPTS_64+="
+    --bindir=$PREFIX/bin
     --enable-dtrace DTRACEFLAGS=\"-64\"
 "
 
@@ -82,9 +79,8 @@ build_manifests() {
     manifest_add_dir $PREFIX/include libpq
     manifest_add_dir $PREFIX/lib/pkgconfig
     manifest_add_dir $PREFIX/lib/$ISAPART64/pkgconfig
-    manifest_add $PREFIX/lib 'libpq\..*' 'libecpg.*' 'libpgtypes.*'
-    manifest_add $PREFIX/lib/$ISAPART64 'libpq\..*' 'libecpg.*' 'libpgtypes.*'
-    manifest_add $PREFIX/bin pg_config psql ecpg
+    manifest_add $PREFIX/lib '.*lib(pq|ecpg|pgtypes|pgcommon|pgport).*'
+    manifest_add $PREFIX/bin '.*pg_config' psql ecpg
     manifest_add $PREFIX/share/man/man1 pg_config.1 psql.1 ecpg.1
     manifest_add $PREFIX/share psqlrc.sample
     manifest_finalise $OPREFIX
@@ -92,11 +88,22 @@ build_manifests() {
     manifest_uniq $TMPDIR/manifest.{server,client}
 }
 
+# Make ISA binaries for pg_config, to allow software to find the
+# right settings for 32/64-bit when pkg-config is not used.
+make_isa_stub() {
+    pushd $DESTDIR$PREFIX/bin >/dev/null
+    logcmd mkdir -p $ISAPART64
+    logcmd mv pg_config $ISAPART64/ || logerr "mv pg_config"
+    make_isaexec_stub_arch $ISAPART64 $PREFIX/bin
+    popd >/dev/null
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+make_isa_stub
 #run_testsuite check-world
 install_smf database $PROG-$sMAJVER.xml
 build_manifests
