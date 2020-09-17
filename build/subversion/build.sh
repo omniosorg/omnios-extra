@@ -69,7 +69,7 @@ strip_install
 install_smf application $PROG.xml
 make_package svn.mog
 
-PKG=ooce/server/apache-$sAPACHEVER/modules/subversion
+PKG=ooce/server/apache-$sAPACHEVER/modules/subversion ##IGNORE##
 SUMMARY="Subversion module for Apache Web Server $APACHEVER"
 DESC="$SUMMARY"
 make_package module.mog
