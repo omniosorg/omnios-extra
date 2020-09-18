@@ -38,8 +38,6 @@ RUNPATH=$VARPATH/run
 
 reset_configure_opts
 
-RUN_DEPENDS_IPS="ooce/database/postgresql-common"
-
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
@@ -109,7 +107,8 @@ install_smf database $PROG-$sMAJVER.xml
 build_manifests
 PKG=${PKG/database/library} SUMMARY+=" client and libraries" \
     make_package -seed $TMPDIR/manifest.client
-make_package -seed $TMPDIR/manifest.server server.mog
+RUN_DEPENDS_IPS="ooce/database/postgresql-common" \
+    make_package -seed $TMPDIR/manifest.server server.mog
 clean_up
 
 # Vim hints
