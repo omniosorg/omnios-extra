@@ -1,0 +1,22 @@
+From dfc9d8802e1ac37c27d4ea98ab2d40642508a55f Mon Sep 17 00:00:00 2001
+From: Dominik Hassler <hadfl@omnios.org>
+Date: Wed, 16 Sep 2020 15:25:25 +0000
+Subject: [PATCH] restore missing '# CONFFILE' tag
+
+---
+ bin/acmefetch | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bin/acmefetch b/bin/acmefetch
+index e89ce08..0af4fc3 100755
+--- a/bin/acmefetch
++++ b/bin/acmefetch
+@@ -36,7 +36,7 @@ sub main()
+     if($opt{man})      { pod2usage(-exitstatus => 0, -verbose => 2) }
+     if($opt{version})  { print "acmefetch $VERSION\n"; exit(0) }
+ 
+-    my $cfg = loadCfg($opt{cfg} // $FindBin::RealBin.'/../etc/acmefetch.cfg');
++    my $cfg = loadCfg($opt{cfg} // $FindBin::RealBin.'/../etc/acmefetch.cfg'); # CONFFILE
+ 
+ 
+     getCertificates($cfg);
