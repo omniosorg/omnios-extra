@@ -56,11 +56,14 @@ add_manifests() {
 }
 
 extract_pkgs() {
-    grep 'PKG=' $1 | grep -v '##IGNORE##' | sed -e '
-        s/^ +//
-        s/ +#.+//
-        s/=/ /g
-    ' | nawk '$1 == "PKG" { print $2 }'
+    sed -En '
+        /##IGNORE##/d
+        /\<PKG=[^[:space:]]+[[:space:]]*(#.*)?$/ {
+            s/.*PKG=/PKG=/
+            s/[[:space:]]+#.+//
+            s/=/ /g
+            p
+    }' $1 | nawk '$1 == "PKG" { print $2 }'
 }
 
 add_buildscripts() {

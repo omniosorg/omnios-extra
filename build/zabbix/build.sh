@@ -154,8 +154,8 @@ done
 add_notes README.server-install
 
 build_manifests
-PKG=$PKG-agent make_package -seed $TMPDIR/mf.agent agent.mog ##IGNORE##
-PKG=$PKG-server make_package -seed $TMPDIR/mf.server server.mog ##IGNORE##
+PKG=$PKG-agent make_package -seed $TMPDIR/mf.agent agent.mog
+PKG=$PKG-server make_package -seed $TMPDIR/mf.server server.mog
 
 clean_up
 
