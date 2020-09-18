@@ -1,0 +1,23 @@
+From 179eb8dbdb47688be6b6a55b21782b4e82d3639b Mon Sep 17 00:00:00 2001
+From: Andy Fiddaman <andy@omniosce.org>
+Date: Thu, 17 Sep 2020 14:28:42 +0100
+Subject: [PATCH] Need to leave 6 trailing X characters for mkstemp() (#2592)
+
+When calling `mkstemp()`, the last 6 characters of the path template should be left unchanged, as `XXXXXX`, and not replaced with random data.
+---
+ MagickCore/resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/MagickCore/resource.c b/MagickCore/resource.c
+index 0a502d0583..86c603d32f 100644
+--- a/MagickCore/resource.c
++++ b/MagickCore/resource.c
+@@ -598,7 +598,7 @@ MagickExport int AcquireUniqueFileResource(char *path)
+       Get temporary pathname.
+     */
+     (void) GetPathTemplate(path);
+-    key=GetRandomKey(random_info,strlen(MagickPathTemplate));
++    key=GetRandomKey(random_info,strlen(MagickPathTemplate)-6);
+     p=path+strlen(path)-strlen(MagickPathTemplate);
+     datum=GetStringInfoDatum(key);
+     for (j=0; j < (ssize_t) GetStringInfoLength(key); j++)
