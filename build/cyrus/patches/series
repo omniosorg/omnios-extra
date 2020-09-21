@@ -3,3 +3,4 @@ memrchr.patch
 no-lmtp-version.patch
 adminip.patch
 sasllib.patch
+httpd-serverinfo.patch
