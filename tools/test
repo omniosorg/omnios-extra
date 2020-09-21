@@ -54,6 +54,10 @@ add_target()
 				targets["ooce/library/jansson"]=`pver JANSSONVER`
 				targets["ooce/library/libical"]=`pver ICALVER`
 				;;
+			*/imagemagick:*)
+				targets["ooce/library/libde265"]=`pver LIBDE265VER`
+				targets["ooce/library/libheif"]=`pver LIBHEIFVER`
+				;;
 		esac
 		targets[$pkg]=$ver
 	elif [[ $build = *.p5m ]]; then

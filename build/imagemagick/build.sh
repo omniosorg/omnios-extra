@@ -24,6 +24,12 @@ DESC="Use $PROG to create, edit, compose, or convert bitmap images. It can "
 DESC+="read and write images in a variety of formats (over 200) including "
 DESC+="PNG, JPEG, GIF, HEIC, TIFF, DPX, EXR, WebP, Postscript, PDF, and SVG."
 
+LIBDE265VER=1.0.6
+LIBHEIFVER=1.8.0
+
+OPREFIX=$PREFIX
+PREFIX+=/$PROG
+
 SKIP_LICENCES=ImageMagick
 
 BUILD_DEPENDS_IPS="
@@ -34,37 +40,89 @@ BUILD_DEPENDS_IPS="
     ooce/library/libpng
     ooce/library/pango
     ooce/library/tiff
+    ooce/library/libwebp
     ooce/application/graphviz
 "
-
-OPREFIX=$PREFIX
-PREFIX+=/$PROG
-
-set_arch 64
-
-TESTSUITE_FILTER='^[A-Z#][A-Z ]'
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DLIBDE265=$LIBDE265VER
+    -DLIBHEIF=$LIBHEIFVER
 "
+
+set_arch 64
+
+init
+prep_build
+
+#########################################################################
+# Download and build bundled dependencies
+
+save_buildenv
+CONFIGURE_OPTS+=" --disable-sherlock265 --disable-encoder --disable-dec265"
+build_dependency libde265 libde265-$LIBDE265VER $PROG/heif \
+    libde265 $LIBDE265VER
+restore_buildenv
+
+export libde265_CFLAGS="-I$DEPROOT$PREFIX/include"
+export libde265_LIBS="-L$DEPROOT$PREFIX/lib -R$PREFIX/lib -lde265"
+# To find libjpeg
+CPPFLAGS+=" -I$OPREFIX/include"
+LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64"
+
+CONFIGURE_OPTS+=" --disable-examples --disable-go"
+build_dependency libheif libheif-$LIBHEIFVER $PROG/heif \
+    libheif $LIBHEIFVER
+restore_buildenv
+
+# Remove static archives and libtool helpers from the dependency root.
+logcmd $FD -e la -e a . $DEPROOT -X rm
+
+#########################################################################
+
+note -n "Building $PROG"
+
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --sysconfdir=/etc$PREFIX
     --enable-hdri
     --with-modules
+    --with-heic
     --disable-static
 "
 
-CFLAGS+=" -I$OPREFIX/include"
+CFLAGS+=" -I$DEPROOT$PREFIX/include"
 LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
-init
+addpath PKG_CONFIG_PATH64 $DEPROOT$PREFIX/lib/pkgconfig
+CPPFLAGS+=" -I$DEPROOT$PREFIX/include"
+LDFLAGS64+=" -L$DEPROOT$PREFIX/lib -R$PREFIX/lib"
+
+save_function make_install _make_install
+make_install() {
+    _make_install "$@"
+
+    # Copy in the dependency libraries
+
+    pushd $DEPROOT$PREFIX/lib >/dev/null
+    for lib in libde265* libheif*; do
+        [[ $lib = *.so.* && -f $lib && ! -h $lib ]] || continue
+        tgt=`echo $lib | cut -d. -f1-3`
+        logmsg "--- installing library $lib -> $tgt"
+        logcmd cp $lib $DESTDIR/$PREFIX/lib/$tgt || logerr "cp $tgt"
+        # Also copy the libraries to the build area so they can be found by
+        # the testsuite
+        logcmd cp $lib $TMPDIR/$BUILDDIR/MagickCore/.libs/$tgt
+    done
+    popd >/dev/null
+}
+
 download_source $PROG $PROG $VER
 patch_source
-prep_build
 build
 strip_install
 run_testsuite check
