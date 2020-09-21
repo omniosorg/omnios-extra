@@ -1,0 +1,46 @@
+From de1ae6b7dfceb8575e9b22d283cbd5c0e9f45f45 Mon Sep 17 00:00:00 2001
+From: Dominik Hassler <hadfl@omnios.org>
+Date: Mon, 21 Sep 2020 16:13:42 +0000
+Subject: [PATCH] Revert "Disclaimer added (#23)"
+
+This reverts commit cb54149fc1d0c6599efe47fcafb2946c83c7bd27.
+---
+ bin/acmefetch | 16 ----------------
+ 1 file changed, 16 deletions(-)
+
+diff --git a/bin/acmefetch b/bin/acmefetch
+index 0af4fc3..0cf11f6 100755
+--- a/bin/acmefetch
++++ b/bin/acmefetch
+@@ -40,21 +40,6 @@ sub main()
+ 
+ 
+     getCertificates($cfg);
+-
+-    #display disclaimer
+-    unless ($opt{checkonly}) {
+-        print "
+-    ############################################################################
+-    #   NOTE:
+-    #        To activate new certificates you need to restart your webserver. For Nginx try this:
+-    #        Check it first with
+-    #        `nginx -t`
+-    #        Then restart it
+-    #        `/etc/init.d/nginx restart`
+-    #        and finally check its state
+-    #        `/etc/init.d/nginx status`
+-    ############################################################################\n"
+-    }
+ }
+ 
+ main;
+@@ -503,6 +488,5 @@ S<Tobias Oetiker E<lt>tobi@oetiker.chE<gt>>
+ 
+  2016-01-20 to Initial Version
+  2016-05-09 to Updated to Protocol::ACME 0.12
+- 2019-07-11 sa Disclaimer added
+ 
+ =cut
+-- 
+2.28.0
+
