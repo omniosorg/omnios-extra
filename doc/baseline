@@ -102,7 +102,6 @@ extra.omnios ooce/library/serf
 extra.omnios ooce/library/slang
 extra.omnios ooce/library/tiff
 extra.omnios ooce/library/unistring
-extra.omnios ooce/lxadm
 extra.omnios ooce/multimedia/exif
 extra.omnios ooce/multimedia/ffmpeg
 extra.omnios ooce/multimedia/minidlna
