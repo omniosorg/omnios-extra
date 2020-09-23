@@ -34,6 +34,9 @@ DESC=$SUMMARY   # Longer description, must be filled in
 BUILDARCH=32    # or 64 or both ... for libraries we want both for tools 32 bit only
 PREFIX=/opt/ooce
 
+# lxadm has been superseded by zadm
+[ $RELVER -ge 151035 ] && exit 0
+
 set_mirror "$GITHUB/hadfl/$PROG/releases/download"
 set_checksum sha256 \
     9dd4f70767dd3d04e1df9b45e931cd71cb9868da3f7532395244ad23e2993dc4
