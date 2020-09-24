@@ -77,7 +77,7 @@ build_manifests() {
     manifest_add_dir $PREFIX/include libpq
     manifest_add_dir $PREFIX/lib/pkgconfig
     manifest_add_dir $PREFIX/lib/$ISAPART64/pkgconfig
-    manifest_add $PREFIX/lib '.*lib(pq|ecpg|pgtypes|pgcommon|pgport).*'
+    manifest_add $PREFIX/lib '.*lib(pq\.|ecpg|pgtypes|pgcommon|pgport).*'
     manifest_add $PREFIX/bin '.*pg_config' psql ecpg
     manifest_add $PREFIX/share/man/man1 pg_config.1 psql.1 ecpg.1
     manifest_add $PREFIX/share psqlrc.sample
@@ -103,7 +103,8 @@ prep_build
 build
 make_isa_stub
 #run_testsuite check-world
-install_smf database $PROG-$sMAJVER.xml
+xform files/postgres.xml > $TMPDIR/$PROG-$sMAJVER.xml
+install_smf ooce $PROG-$sMAJVER.xml
 build_manifests
 PKG=${PKG/database/library} SUMMARY+=" client and libraries" \
     make_package -seed $TMPDIR/manifest.client

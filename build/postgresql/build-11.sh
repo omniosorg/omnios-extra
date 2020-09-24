@@ -91,7 +91,8 @@ prep_build
 build
 make_isa_stub
 #run_testsuite check-world
-install_smf database $PROG-$sMAJVER.xml
+xform files/postgres.xml > $TMPDIR/$PROG-$sMAJVER.xml
+install_smf ooce $PROG-$sMAJVER.xml
 make_package server.mog
 clean_up
 
