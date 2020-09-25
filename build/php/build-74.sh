@@ -47,6 +47,7 @@ BUILD_DEPENDS_IPS="
     ooce/library/freetype2
     ooce/library/libjpeg-turbo
     ooce/library/libpng
+    ooce/library/libzip
     ooce/library/onig
 "
 RUN_DEPENDS_IPS="ooce/application/php-common"
@@ -87,6 +88,8 @@ CONFIGURE_OPTS_64="
     --enable-gd
     --enable-sockets
     --enable-bcmath
+    --enable-exif
+    --with-zip
 
     --with-db4=$OPREFIX
     --with-lmdb=$OPREFIX
@@ -102,7 +105,7 @@ CONFIGURE_OPTS_64="
 "
 
 CPPFLAGS+=" -I/usr/include/gmp"
-#CPPFLAGS+=" -I$OPREFIX/include"
+CPPFLAGS+=" -I$OPREFIX/libzip/include"
 LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 save_function configure64 _configure64
