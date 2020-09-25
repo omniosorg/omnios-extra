@@ -465,7 +465,7 @@ set_rubyver() {
 reset_configure_opts() {
     # If it's the global default (/usr), we want sysconfdir to be /etc
     # otherwise put it under PREFIX
-    [ $PREFIX = "/usr" ] && SYSCONFDIR=/etc || SYSCONFDIR=$PREFIX/etc
+    [ $PREFIX = "/usr" ] && SYSCONFDIR=/etc || SYSCONFDIR=/etc$PREFIX
 
     CONFIGURE_OPTS_32="
         --prefix=$PREFIX
