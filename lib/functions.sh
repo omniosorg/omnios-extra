@@ -1360,12 +1360,14 @@ make_package() {
     PKGE=`url_encode $PKG`
 
     typeset seed_manifest=
+    typeset -i legacy=0
     while [[ "$1" = -* ]]; do
         case "$1" in
             -seed)  [ -n "$2" -a -f "$2" ] \
                         || logerr "Seed manifest '$2' not found"
                     seed_manifest=$2; shift
                     ;;
+            -legacy) legacy=1 ;;
             *)      logerr "Unknown option to make_package - $1" ;;
         esac
         shift
@@ -1453,6 +1455,8 @@ make_package() {
         pkgmeta pkg.description     "$DESCSTR"
         pkgmeta publisher           "$PUBLISHER_EMAIL"
         pkgmeta pkg.human-version   "$VERHUMAN"
+        [ $legacy -eq 1 -a $RELVER -ge 151035 ] \
+            && pkgmeta pkg.legacy true
         if [[ $_ARC_SOURCE = *\ * ]]; then
             _asindex=0
             for _as in $_ARC_SOURCE; do
