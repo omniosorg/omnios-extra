@@ -46,6 +46,7 @@ depend fmri=ooce/library/security/libsasl2 type=require
 depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require
 depend fmri=ooce/library/tiff type=require
+depend fmri=ooce/library/unbound type=require
 depend fmri=ooce/multimedia/ffmpeg type=require
 depend fmri=ooce/runtime/node-12 type=require
 depend fmri=ooce/runtime/ruby-26 type=require

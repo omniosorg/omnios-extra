@@ -33,7 +33,7 @@ XFORM_ARGS="
 
 BUILD_DEPENDS_IPS="ooce/library/libev"
 
-set_arch 64
+forgo_isaexec
 
 CONFIGURE_OPTS="
     --sysconfdir=/etc$OPREFIX
@@ -41,8 +41,14 @@ CONFIGURE_OPTS="
     --with-libevent=/opt/ooce
     --with-pthreads
 "
+CONFIGURE_OPTS_64+="
+    --libdir=$PREFIX/lib/$ISAPART64
+"
+CONFIGURE_OPTS_32+="
+    --with-libunbound-only
+"
 
-LDFLAGS="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS64="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 export MAKE
 
 TESTSUITE_SED="/libtool/d"
@@ -56,6 +62,16 @@ fixup_config() {
     ' $DESTDIR/etc$PREFIX/unbound.conf
 }
 
+build_manifests() {
+    manifest_start $TMPDIR/manifest.client
+    manifest_add_dir $PREFIX/lib pkgconfig $ISAPART64 $ISAPART64/pkgconfig
+    manifest_add_dir $PREFIX/share/man/man3
+    manifest_add_dir $PREFIX/include
+    manifest_finalise $OPREFIX
+
+    manifest_uniq $TMPDIR/manifest.{server,client}
+}
+
 init
 download_source $PROG $PROG $VER
 prep_build
@@ -64,7 +80,10 @@ build
 run_testsuite
 install_smf network dns-unbound.xml
 fixup_config
-make_package
+build_manifests
+PKG=${PKG/network/library} SUMMARY+=" libraries" \
+    make_package -seed $TMPDIR/manifest.client
+make_package -seed $TMPDIR/manifest.server server.mog
 clean_up
 
 # Vim hints
