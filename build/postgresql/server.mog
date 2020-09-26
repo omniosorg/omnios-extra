@@ -13,6 +13,8 @@
 dir group=postgres mode=0700 owner=postgres \
     path=var/opt/ooce/pgsql/pgsql-$(VERSION)
 
-<transform file path=$(PREFIX)/(lib|bin)/ \
+<transform file path=$(PREFIX)/(?:lib|bin)/ \
     -> set restart_fmri svc:/ooce/database/$(PROG)$(sVERSION):default>
+
+<transform link mediator=$(MEDIATOR) -> set mediator-priority vendor>
 
