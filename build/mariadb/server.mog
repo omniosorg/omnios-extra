@@ -16,3 +16,5 @@ dir group=mysql mode=0700 owner=mysql path=var/$(PREFIX)/data
 <transform file path=$(PREFIX)/bin/mysqld$ \
     -> set restart_fmri svc:/ooce/database/$(PROG)$(sVERSION):default>
 
+<transform link mediator=$(PROG) -> set mediator-priority vendor>
+
