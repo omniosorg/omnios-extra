@@ -115,6 +115,14 @@ add_target()
                 aver="`grep '^APACHEVER=' $build | cut -d= -f2`"
                 pkg=ooce/server/apache-${aver//./}/modules/subversion
                 ;;
+            */php-XX/*:*)
+                pver=`grep '^PHPVERSIONS=' $build | cut -d= -f2 \
+                    | cut -d '"' -f2`
+                for p in $pver; do
+                    targets[${pkg/XX/${p//./}}]=$ver
+                done
+                pkg=
+                ;;
             *:github-latest*)
                 ver=`github_latest $pkg $ver`
                 ;;
@@ -133,7 +141,7 @@ add_target()
         ## Strip leading zeros in version components.
         ver=`echo $ver | sed -e 's/\.0*\([1-9]\)/.\1/g;'`
 
-        targets[$pkg]=$ver
+        [ -n "$pkg" ] && targets[$pkg]=$ver
     elif [[ $build = *.p5m ]]; then
         egrep -q 'pkg.obsolete.*true' $build && return
         egrep -q 'pkg.renamed.*true' $build && return
