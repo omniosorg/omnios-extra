@@ -1,0 +1,12 @@
+diff -u imagick-3.4.4~/imagemagick.m4 imagick-3.4.4/imagemagick.m4
+--- imagick-3.4.4~/imagemagick.m4	2019-05-02 15:31:59.000000000 +0000
++++ imagick-3.4.4/imagemagick.m4	2020-09-28 20:01:24.591692450 +0000
+@@ -123,7 +123,7 @@
+   AC_MSG_RESULT([found in $IM_WAND_BINARY])
+ 
+ # This is used later for cflags and libs
+-  export PKG_CONFIG_PATH="${IM_IMAGEMAGICK_PREFIX}/${PHP_LIBDIR}/pkgconfig"
++  export PKG_CONFIG_PATH="${IM_IMAGEMAGICK_PREFIX}/${PHP_LIBDIR}/amd64/pkgconfig"
+   
+ # Check version
+ #
