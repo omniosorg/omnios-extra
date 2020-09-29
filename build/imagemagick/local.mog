@@ -11,17 +11,14 @@
 
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-# Symlink binaries
-<transform file link path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
-
-# Symlink man pages
-<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(OPREFIX)/share/man/%<1>/%<2> \
-    target=../../../$(PROG)/share/man/%<1>/%<2> >
+# Drop 32-bit binaries, other than *-config scripts
+<transform path=$(PREFIX)/bin/i386/(?!.*-config) -> drop>
 
 # Drop html documentation
-<transform path=$(PREFIX)/share/doc -> drop >
+<transform path=$(PREFIX)/share/doc -> drop>
+
+<include binlink.mog>
+<include manlink.mog>
 
 license LICENSE license=ImageMagick
 license ../libde265-$(LIBDE265)/COPYING license=LGPLv3
