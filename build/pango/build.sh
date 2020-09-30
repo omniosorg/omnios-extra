@@ -17,14 +17,14 @@
 . ../../lib/functions.sh
 
 PROG=pango
-VER=1.46.2
+VER=1.47.0
 PKG=ooce/library/pango
 SUMMARY="pango"
 DESC="Pango is a library for laying out and rendering of text"
 
 # Dependencies
-HARFBUZZVER=2.6.8
-FRIBIDIVER=1.0.9
+HARFBUZZVER=2.7.2
+FRIBIDIVER=1.0.10
 
 BUILD_DEPENDS_IPS="
     ooce/library/fontconfig
