@@ -108,15 +108,6 @@ CONFIGURE_OPTS_64="
 
 EXPECTED_OPTIONS="CAIRO CAIRO_FREETYPE CAIRO_PDF CAIRO_PS CAIRO_PNG FREETYPE"
 
-# meson will not re-configure without --wipe and will not --wipe unless it
-# has already been configured. Until the framework is updated to automatically
-# use separate directories for each arch, wipe the build directory between
-# builds.
-make_clean() {
-    logmsg "--- make (dist)clean"
-    [ -d $TMPDIR/$BUILDDIR ] && logcmd rm -rf $TMPDIR/$BUILDDIR
-}
-
 fixup() {
     # Meson strips runpaths when it installs objects, something which a lot
     # of different projects have had to patch around, see:

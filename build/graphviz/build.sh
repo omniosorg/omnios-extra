@@ -45,6 +45,7 @@ CONFIGURE_OPTS="
     --disable-static
     --disable-python2
     --without-visio
+    --disable-php
     --includedir=$OPREFIX/include
     --libdir=$OPREFIX/lib/$ISAPART64
     PS2PDF=/bin/true

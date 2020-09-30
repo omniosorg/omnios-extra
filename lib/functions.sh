@@ -817,8 +817,10 @@ prep_build() {
             ;;
         meson)
             OUT_OF_TREE_BUILD=1
+            MULTI_BUILD=1
             MAKE="$MESON_MAKE"
             TESTSUITE_MAKE="$MESON_MAKE"
+            MAKE_TESTSUITE_ARGS=
             CONFIGURE_CMD="$PYTHONLIB/python$PYTHONVER/bin/meson setup"
             CONFIGURE_CMD+=" $TMPDIR/$BUILDDIR"
             ;;
@@ -2093,14 +2095,17 @@ build() {
         shift
     done
     [ -n "$MULTI_BUILD" ] && logmsg "--- Using multiple build directories"
-    typeset _BUILDDIR=$BUILDDIR
+    save_variable BUILDDIR
     for b in $BUILDORDER; do
-        if [ -n "$MULTI_BUILD" ]; then
-            BUILDDIR+="/build.$b"
-            mkdir -p $TMPDIR/$BUILDDIR
+        if [[ $BUILDARCH =~ ^($b|both)$ ]]; then
+            if [ -n "$MULTI_BUILD" ]; then
+                BUILDDIR+="/build.$b"
+                mkdir -p $TMPDIR/$BUILDDIR
+                MULTI_BUILD_LAST=$BUILDDIR
+            fi
+            build$b
+            restore_variable BUILDDIR
         fi
-        [[ $BUILDARCH =~ ^($b|both)$ ]] && build$b
-        BUILDDIR=$_BUILDDIR
     done
 
     [ -n "$ENABLE_CTF" ] && convert_ctf
@@ -2148,7 +2153,11 @@ run_testsuite() {
     local dir="$2"
     local output="${3:-testsuite.log}"
     if [ -z "$SKIP_TESTSUITE" ] && ( [ -n "$BATCH" ] || ask_to_testsuite ); then
-        pushd $TMPDIR/$BUILDDIR/$dir > /dev/null
+        if [ -z "$MULTI_BUILD" ]; then
+            pushd $TMPDIR/$BUILDDIR/$dir > /dev/null
+        else
+            pushd $TMPDIR/$MULTI_BUILD_LAST/$dir > /dev/null
+        fi
         logmsg "Running testsuite"
         op=`mktemp`
         eval set -- $MAKE_TESTSUITE_ARGS_WS
