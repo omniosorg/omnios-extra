@@ -18,7 +18,7 @@
 
 PROG=php
 PKG=ooce/application/php-74
-VER=7.4.10
+VER=7.4.11
 SUMMARY="PHP 7.4"
 DESC="A popular general-purpose scripting language"
 
