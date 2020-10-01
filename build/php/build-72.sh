@@ -18,7 +18,7 @@
 
 PROG=php
 PKG=ooce/application/php-72
-VER=7.2.33
+VER=7.2.34
 SUMMARY="PHP 7.2"
 DESC="A popular general-purpose scripting language"
 
@@ -148,7 +148,7 @@ strip_install
 xform files/php-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
 xform files/php-template > $TMPDIR/$PROG-$sMAJVER
 install_smf application $PROG-$sMAJVER.xml $PROG-$sMAJVER
-make_package
+make_package -legacy
 clean_up
 
 # Vim hints
