@@ -17,15 +17,15 @@
 . ../../lib/functions.sh
 
 PROG=ImageMagick
-VER=7.0.10-30
+VER=7.0.10-31
 PKG=ooce/application/imagemagick
 SUMMARY="$PROG - Convert, Edit, or Compose Bitmap Images"
 DESC="Use $PROG to create, edit, compose, or convert bitmap images. It can "
 DESC+="read and write images in a variety of formats (over 200) including "
 DESC+="PNG, JPEG, GIF, HEIC, TIFF, DPX, EXR, WebP, Postscript, PDF, and SVG."
 
-LIBDE265VER=1.0.6
-LIBHEIFVER=1.8.0
+LIBDE265VER=1.0.7
+LIBHEIFVER=1.9.1
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG

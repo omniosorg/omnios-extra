@@ -17,13 +17,14 @@
 . ../../lib/functions.sh
 
 PROG=groovy
-VER=3.0.5
+VER=3.0.6
 PKG=ooce/runtime/groovy-30
 SUMMARY="Groovy"
 DESC="Java-syntax-compatible object-oriented programming "
 DESC+="language for the Java platform."
 
-RUN_DEPENDS_IPS="developer/java/openjdk8"
+[ $RELVER -ge 151035 ] && RUN_DEPENDS_IPS="runtime/java/openjdk11" \
+    || RUN_DEPENDS_IPS="developer/java/openjdk8"
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
