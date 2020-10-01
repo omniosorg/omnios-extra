@@ -18,16 +18,19 @@
 . ../../lib/functions.sh
 
 PROG=mbuffer
-VER=20200505
+VER=20200929
 PKG=ooce/system/mbuffer
 SUMMARY="$PROG - measuring buffer"
 DESC="$PROG is a tool for buffering data streams"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
+    -DPREFIX=${PREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 set_arch 64
