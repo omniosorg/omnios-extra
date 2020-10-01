@@ -2095,7 +2095,7 @@ build() {
         shift
     done
     [ -n "$MULTI_BUILD" ] && logmsg "--- Using multiple build directories"
-    save_variable BUILDDIR
+    typeset _BUILDDIR=$BUILDDIR
     for b in $BUILDORDER; do
         if [[ $BUILDARCH =~ ^($b|both)$ ]]; then
             if [ -n "$MULTI_BUILD" ]; then
@@ -2104,7 +2104,7 @@ build() {
                 MULTI_BUILD_LAST=$BUILDDIR
             fi
             build$b
-            restore_variable BUILDDIR
+            BUILDDIR=$_BUILDDIR
         fi
     done
 
