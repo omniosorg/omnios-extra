@@ -18,7 +18,7 @@
 
 PROG=gitea
 PKG=ooce/application/gitea
-VER=1.12.4
+VER=1.12.5
 SUMMARY="Git with a cup of tea"
 DESC="Git with a cup of tea, painless self-hosted git service"
 
@@ -72,12 +72,7 @@ install() {
 
     logcmd mkdir -p $DESTDIR/etc/$PREFIX || logerr "mkdir etc"
     logcmd mkdir -p $DESTDIR/var/$PREFIX/{custom,data} || logerr "mk data"
-    logcmd ln -s ../../../log$PREFIX $DESTDIR/var/$PREFIX/log \
-        || logerr "log link"
-    logcmd mkdir -p $DESTDIR/var/log/$PREFIX || logerr "mkdir log"
 
-    logcmd cp $SRCDIR/files/app.ini $DESTDIR/etc/$PREFIX/app.ini \
-        || logerr "cp app.ini"
     logcmd cp $TMPDIR/$BUILDDIR/custom/conf/app.ini.sample \
         $DESTDIR/etc/$PREFIX/ || logerr "cp app.ini.sample"
 
