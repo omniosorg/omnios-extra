@@ -29,10 +29,24 @@ DESC+="and various other functions. Warning: Some of these tools access "
 DESC+="the internals of your system and the incorrect usage of them may "
 DESC+="render your system inoperable."
 
+OPREFIX=$PREFIX
+PREFIX+=/$PROG
+
 set_arch 64
+
+XFORM_ARGS="
+    -DOPREFIX=${OPREFIX#/}
+    -DPREFIX=${PREFIX#/}
+    -DPROG=$PROG
+    -DPKGROOT=$PROG
+"
 
 CONFIGURE_OPTS="
     --disable-static
+"
+
+CONFIGURE_OPTS_64+="
+    --libdir=$PREFIX/lib/$ISAPART64
 "
 
 init

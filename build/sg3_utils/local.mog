@@ -12,3 +12,8 @@
 
 license BSD_LICENSE license=simplified-BSD
 
+<transform path=.*scsi[^/]*$ -> drop>
+
+<include binlink.mog>
+<include manlink.mog>
+
