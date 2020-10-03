@@ -149,7 +149,7 @@
 | ooce/text/asciinema		| 2.0.2		| https://github.com/asciinema/asciinema/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/ripgrep		| 12.1.1	| https://github.com/BurntSushi/ripgrep/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/acmefetch		| 0.7.5		| https://github.com/oetiker/AcmeFetch/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/util/bat			| 0.15.4	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/util/bat			| 0.16.0	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/fd			| 7.3.0		| https://github.com/sharkdp/fd/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/gh			| 1.0.0		| https://github.com/cli/cli/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/hyperfine		| 1.10.0	| https://github.com/sharkdp/hyperfine/releases/ | [omniosorg](https://github.com/omniosorg)

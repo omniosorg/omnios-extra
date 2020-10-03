@@ -17,15 +17,18 @@
 . ../../lib/functions.sh
 
 PROG=bat
-VER=0.15.4
+VER=0.16.0
 PKG=ooce/util/bat
-SUMMARY="cat alternative"
-DESC="A cat(1) clone with wings"
+SUMMARY="A cat clone with wings"
+DESC="A cat(1) clone with syntax highlighting and Git integration."
 
 # clang is a build-time requirement for 0.12.x
-CLANGVER=9.0
+CLANGVER=10.0
 
-BUILD_DEPENDS_IPS="ooce/developer/rust ooce/developer/clang-${CLANGVER//./}"
+BUILD_DEPENDS_IPS="
+    ooce/developer/rust
+    ooce/developer/clang-${CLANGVER//./}
+"
 
 set_arch 64
 
