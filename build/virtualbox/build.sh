@@ -116,6 +116,10 @@ CONFIGURE_OPTS="
     --enable-webservice
 "
 
+# virtualbox does currently not build with openjdk11
+# disable it for releases where openjdk11 is the default
+[ $RELVER -ge 151035 ] && CONFIGURE_OPTS+=" --disable-java"
+
 save_function configure64 _configure64
 configure64() {
     sed -i "/^GSOAP=.*/s||GSOAP=$GSOAP|" configure
