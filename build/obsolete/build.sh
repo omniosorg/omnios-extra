@@ -17,10 +17,12 @@
 . ../../lib/functions.sh
 
 PROG=conditional-obsolete
-PKG=conditional-obsolete ##IGNORE##
 
+PKG=ooce/obsolete/network/socat
 [ $RELVER -ge 151031 ] && publish_manifest "" network-socat.p5t
+PKG=ooce/obsolete/compress/lz4
 [ $RELVER -ge 151035 ] && publish_manifest "" compress-lz4.p5t
+PKG=ooce/obsolete/compress/zstd
 [ $RELVER -ge 151035 ] && publish_manifest "" compress-zstd.p5t
 
 # Vim hints
