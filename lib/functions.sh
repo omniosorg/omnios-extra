@@ -1174,6 +1174,8 @@ clone_github_source() {
 
     $GIT -C $prog show --shortstat
 
+    _ARC_SOURCE+="${_ARC_SOURCE:+ }$src/tree/$branch"
+
     popd > /dev/null
 }
 
@@ -1462,7 +1464,11 @@ make_package() {
         if [[ $_ARC_SOURCE = *\ * ]]; then
             _asindex=0
             for _as in $_ARC_SOURCE; do
-                pkgmeta "info.source-url.$_asindex" "$SRCMIRROR/$_as"
+                if [[ $_as = *://* ]]; then
+                    pkgmeta "info.source-url.$_asindex" "$_as"
+                else
+                    pkgmeta "info.source-url.$_asindex" "$SRCMIRROR/$_as"
+                fi
                 ((_asindex++))
             done
         elif [ -n "$_ARC_SOURCE" ]; then
