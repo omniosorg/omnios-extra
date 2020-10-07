@@ -1,3 +1,2 @@
 runereader_posix.go.patch
-termenv_unix.go.patch
-syscall_unix.go.patch
+constants_solaris.patch
