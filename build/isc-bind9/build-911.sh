@@ -36,8 +36,9 @@ sMAJVER=${MAJVER//./}       # Mm
 PATCHDIR=patches-$sMAJVER
 
 OPREFIX=$PREFIX
-PREFIX+=/$PROG-$MAJVER
-VARPATH=/var$OPREFIX/named/named-$sMAJVER
+PREFIX+=/named-$MAJVER
+CONFPATH=/etc$PREFIX
+VARPATH=/var$OPREFIX/named/named-$MAJVER
 
 HARDLINK_TARGETS="
     ${PREFIX#/}/bin/isc-config.sh
@@ -59,8 +60,9 @@ HARDLINK_TARGETS="
 "
 
 XFORM_ARGS="
-    -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
+    -DPREFIX=${PREFIX#/}
+    -DCONFPATH=${CONFPATH#/}
     -DVARPATH=${VARPATH#/}
     -DPROG=$PROG
     -DVERSION=$MAJVER
@@ -75,7 +77,7 @@ CONFIGURE_OPTS="
     --sbindir=$PREFIX/sbin
     --libdir=$PREFIX/lib
     --includedir=$PREFIX/include
-    --sysconfdir=/etc$PREFIX
+    --sysconfdir=$CONFPATH
     --localstatedir=$VARPATH
     --with-libtool
     --with-openssl
