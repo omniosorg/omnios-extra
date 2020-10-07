@@ -1342,7 +1342,6 @@ generate_manifest() {
     [ -n "$DESTDIR" -a -d "$DESTDIR" ] || logerr "DESTDIR does not exist"
 
     check_symlinks "$DESTDIR"
-    [ -z "$BATCH" ] && check_libabi "$DESTDIR" "$PKG"
     [ -z "$BATCH" ] && [ $RELVER -ge 151033 ] && check_rtime "$DESTDIR"
     check_bmi "$DESTDIR"
     logmsg "--- Generating package manifest from $DESTDIR"
@@ -1443,6 +1442,7 @@ make_package() {
         logcmd touch $P5M_INT || \
             logerr "------ Failed to create empty manifest"
     fi
+    [ -z "$BATCH" ] && check_libabi "$PKG" "$P5M_INT"
 
     # Package metadata
     logmsg "--- Generating package metadata"
@@ -2565,13 +2565,15 @@ extract_libabis() {
 }
 
 check_libabi() {
-    local destdir="$1"
-    local pkg="$2"
+    local pkg="$1"
+    local mf="$2"
 
     logmsg "-- Checking for library ABI changes"
 
     # Build list of libraries and ABIs from this package on disk
-    logcmd -p find "$destdir" -type f -name lib\*.so.\* > $TMPDIR/libs.$$
+    nawk '
+        $1 == "file" && $2 ~ /.so.[0-9]/ { print $2 }
+    ' < $mf > $TMPDIR/libs.$$
     extract_libabis cla__new $TMPDIR/libs.$$
     logcmd rm -f $TMPDIR/libs.$$
 
