@@ -83,10 +83,10 @@
                             type="application">
                 <propval name="file"
                          type="astring"
-                         value="/etc/$(PREFIX)/named.conf" />
+                         value="/$(CONFPATH)/named.conf" />
                 <propval name="rndc_key"
                          type="astring"
-                         value="/etc/$(PREFIX)/rndc.key" />
+                         value="/$(CONFPATH)/rndc.key" />
                 <propval name="exec"
                          type="astring"
                          value="/$(PREFIX)/sbin/named" />

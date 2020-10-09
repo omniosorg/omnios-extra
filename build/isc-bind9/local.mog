@@ -12,13 +12,13 @@
 
 # Mediated binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
+    link path=$(OPREFIX)/%<1>/%<2> target=../named-$(VERSION)/%<1>/%<2> \
     mediator=$(PROG) mediator-version=$(VERSION) >
 
 # Mediated man pages
 <transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
     link path=$(OPREFIX)/share/man/%<1>/%<2> \
-    target=../../../$(PROG)-$(VERSION)/share/man/%<1>/%<2> \
+    target=../../../named-$(VERSION)/share/man/%<1>/%<2> \
     mediator=$(PROG) mediator-version=$(VERSION) >
 
 # Restart fmri service
@@ -26,29 +26,46 @@
     -> set restart_fmri svc:/ooce/network/dns:named$(sVERSION)>
 
 # Set permissions for directories
-<transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
-<transform dir  path=var/opt/ooce/named -> set owner $(USER)>
-dir group=bin mode=0755 owner=$(USER) path=$(VARPATH)/namedb
-dir group=bin mode=0755 owner=$(USER) path=$(VARPATH)/namedb/master
+<transform file path=$(CONFPATH) -> set preserve renamenew>
+<transform dir  path=$(CONFPATH) -> set owner $(USER)>
+<transform dir  path=$(CONFPATH) -> set group $(GROUP)>
+<transform dir  path=$(CONFPATH) -> set mode 0770>
+<transform file  path=$(CONFPATH)/bind.keys -> set owner $(USER)>
+<transform file  path=$(CONFPATH)/bind.keys -> set group $(GROUP)>
+<transform file  path=$(CONFPATH)/bind.keys -> set mode 0660>
+<transform dir  path=var/$(OPREFIX)/named -> set owner $(USER)>
+<transform dir  path=var/$(OPREFIX)/named -> set group $(GROUP)>
+<transform dir  path=var/$(OPREFIX)/named -> set mode 0770>
+<transform dir  path=$(VARPATH) -> set owner $(USER)>
+<transform dir  path=$(VARPATH) -> set group $(GROUP)>
+<transform dir  path=$(VARPATH) -> set mode 0770>
+<transform dir  path=$(VARPATH)/run -> set owner $(USER)>
+<transform dir  path=$(VARPATH)/run -> set group $(GROUP)>
+<transform dir  path=$(VARPATH)/run -> set mode 0770>
+dir group=$(GROUP) mode=0770 owner=$(USER) path=$(VARPATH)/namedb
+dir group=$(GROUP) mode=0770 owner=$(USER) path=$(VARPATH)/namedb/master
 
 # Additional files
 file ./tmp/named-$(sVERSION).conf \
-	path=etc/$(PREFIX)/named.conf \
-	mode=0644 owner=root group=bin
+	path=$(CONFPATH)/named.conf \
+	mode=0660 owner=$(USER) group=$(GROUP)
+file files/rfc.zones \
+	path=$(CONFPATH)/rfc.zones \
+	mode=0660 owner=$(USER) group=$(GROUP)
 file files/rndc.key \
-	path=etc/$(PREFIX)/rndc.key \
-	mode=0600 owner=$(USER) group=$(USER)
+	path=$(CONFPATH)/rndc.key \
+	mode=0660 owner=$(USER) group=$(GROUP)
 file files/empty.db \
-	path=$(VARPATH)/namedb/master/empty.db \
-	mode=0644 owner=root group=bin
+	path=$(VARPATH)/namedb/empty.db \
+	mode=0660 owner=$(USER) group=$(GROUP)
 file files/localhost-forward.db \
-	path=$(VARPATH)/namedb/master/localhost-forward.db \
-	mode=0644 owner=root group=bin
+	path=$(VARPATH)/namedb/localhost-forward.db \
+	mode=0660 owner=$(USER) group=$(GROUP)
 file files/localhost-reverse.db \
-	path=$(VARPATH)/namedb/master/localhost-reverse.db \
-	mode=0644 owner=root group=bin
+	path=$(VARPATH)/namedb/localhost-reverse.db \
+	mode=0660 owner=$(USER) group=$(GROUP)
 file files/named.root \
-	path=$(VARPATH)/namedb/master/named.root \
-	mode=0644 owner=root group=bin
+	path=$(VARPATH)/namedb/named.root \
+	mode=0660 owner=$(USER) group=$(GROUP)
 
 license COPYRIGHT license="ISC/MPLv2"
