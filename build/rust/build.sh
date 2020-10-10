@@ -18,7 +18,7 @@
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.46.0
+VER=1.47.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
@@ -33,24 +33,21 @@ LLVM_MAJVER=10.0
 
 BUILDDIR=${PROG}c-${VER}-src
 
+OPREFIX=$PREFIX
+PREFIX+=/$PROG
+
 BUILD_DEPENDS_IPS="developer/gnu-binutils"
-[ -z "$BOOTSTRAP_VER" ] && BUILD_DEPENDS_IPS+=" ooce/developer/rust"
+
+if [ -z "$RUST_BOOTSTRAP" ]; then
+    BUILD_DEPENDS_IPS+=" ooce/developer/rust"
+    RUST_BOOTSTRAP=$PREFIX
+fi
 
 if [ -z "$BUNDLED_LLVM" ]; then
     SYSTEM_LLVM_PATH="/opt/ooce/llvm-$LLVM_MAJVER"
     RUN_DEPENDS_IPS="ooce/developer/llvm-${LLVM_MAJVER//./}"
     BUILD_DEPENDS_IPS+=" $RUN_DEPENDS_IPS"
 fi
-
-MAJVER=${VER%.*}            # M.m
-sMAJVER=${MAJVER//./}       # Mm
-
-OPREFIX=$PREFIX
-PREFIX+=/$PROG
-CONFPATH=/etc$PREFIX
-LOGPATH=/var/log$OPREFIX/$PROG
-VARPATH=/var$OPREFIX/$PROG
-RUNPATH=$VARPATH/run
 
 # rust build requires the final install directory to be present
 [ -d "$PREFIX" ] || logcmd $PFEXEC mkdir -p $PREFIX
@@ -61,34 +58,28 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-    -DVERSION=$MAJVER
-    -DsVERSION=$sMAJVER
 "
 
-export RUSTARCH=x86_64-sun-solaris
-export GNUAR=/bin/gar
+SKIP_RTIME=1
 
-# Required to enable the POSIX 1003.6 style getpwuid_r() prototype
-# __EXTENSIONS__ - Need struct timeval from sys/time.h
-#                  and struct procset_t from sys/procset.h
-CFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS -D__EXTENSIONS__"
-CXXFLAGS+=" -D_POSIX_PTHREAD_SEMANTICS"
-export CFLAGS CXXFLAGS
+RUSTARCH=x86_64-unknown-illumos
 
 CONFIGURE_CMD="$PYTHON src/bootstrap/configure.py"
 
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX
-    --sysconfdir=$CONFPATH
-    --localstatedir=$VARPATH
+    --sysconfdir=/etc$PREFIX
+    --localstatedir=/var$PREFIX
 "
 
 CONFIGURE_OPTS+="
     --enable-vendor
     --enable-extended
+    --build=$RUSTARCH
+    --target=$RUSTARCH
     --set target.$RUSTARCH.cc=$CC
     --set target.$RUSTARCH.cxx=$CXX
-    --set target.$RUSTARCH.ar=$GNUAR
+    --set target.$RUSTARCH.ar=gar
     --enable-rpath
     --enable-ninja
     --disable-codegen-tests
@@ -97,6 +88,7 @@ CONFIGURE_OPTS+="
     --disable-docs
     --release-channel=stable
     --python=$PYTHON
+    --local-rust-root=$RUST_BOOTSTRAP
 "
 
 if [ -n "$SYSTEM_LLVM_PATH" ]; then
@@ -110,45 +102,13 @@ fi
 
 save_function make_install _make_install
 make_install() {
-    mkdir -p $DESTDIR/$PREFIX
+    logcmd mkdir -p $DESTDIR/$PREFIX || logerr "failed to create directory"
     _make_install "$@"
 }
 
-fix_checksums() {
-    WRKSRC="$TMPDIR/$BUILDDIR"
-    cp ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json \
-        ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json.orig
-    sed -e 's/1e732c2e3b4bd1561f11e0979bf9d20669a96eae7afe0deff9dfbb980ee47bf1/55abd8100db14a076dedbf84ce0f2db08158e1bd33ff1d4978bd3c4ad978f281/' ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json.orig > ${WRKSRC}/vendor/rand-0.6.1/.cargo-checksum.json
-    cp ${WRKSRC}/vendor/libc/.cargo-checksum.json \
-        ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig
-    sed -e 's/8a4234e9fcf8f4a64ffcf74ff0bce3e6afa7601cd824e5e9eb6c5c41f709d084/9f1ffc271e548faf6dfabf7bd6301fd9566aae2fc1ff7d03d9d8050ca6ad52b0/' ${WRKSRC}/vendor/libc/.cargo-checksum.json.orig > ${WRKSRC}/vendor/libc/.cargo-checksum.json
-    cp ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json \
-        ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig
-    sed -e 's/dbe2eb824252135e7a154805c148defb2142a26b0c2267f5b1033ad69f441e33/323987bb2d5b7ec6044b881b70f339472d886fc23bf212392b8a0158b15d3862/' ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json.orig > ${WRKSRC}/vendor/backtrace-sys/.cargo-checksum.json
-    cp ${WRKSRC}/vendor/stacker/.cargo-checksum.json \
-        ${WRKSRC}/vendor/stacker/.cargo-checksum.json.orig
-    sed -e 's/0f3602e048ab4bc5304226b9c171aee46bd58d0e354ead9c7d2ba6ac6d6f262f/883f18c0884d70d1c9204e06ee3512d31b6f6cea30af8c7cb89ad9a9854ea4bb/' ${WRKSRC}/vendor/stacker/.cargo-checksum.json.orig > ${WRKSRC}/vendor/stacker/.cargo-checksum.json
-}
-
-get_bootstrap() {
-    if [ -n "$BOOTSTRAP_VER" ]; then
-        # Download and extract the bootstrap binary package
-        STRAPVER=$BOOTSTRAP_VER-$RUSTARCH
-        BUILDDIR=$PROG-$STRAPVER download_source $PROG $PROG $STRAPVER
-        BOOTSTRAP_PATH=$TMPDIR/$PROG-$STRAPVER
-    else
-        BOOTSTRAP_PATH=$PREFIX
-    fi
-
-    CONFIGURE_OPTS+=" --local-rust-root=$BOOTSTRAP_PATH "
-    export RUSTC=$BOOTSTRAP_PATH/bin/rustc
-}
-
 init
-get_bootstrap
 download_source $PROG ${PROG}c $VER-src
 patch_source
-fix_checksums
 prep_build
 build
 make_package
