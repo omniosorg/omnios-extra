@@ -1,4 +1,4 @@
-Start of unbound 1.11.0+libevent unit test.
+Start of unbound 1.12.0+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -59,8 +59,8 @@ test slabhash functions
 test infra cache functions
 test sldns functions
 test message parse functions
-[0] did 10000 in 143.51 msec for 69681.555292 encode/sec size 615
-904336 checks ok.
+[0] did 10000 in 127.795 msec for 78250.322783 encode/sec size 615
+903837 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl OK
 ./testdata/auth_nsec3_ent.rpl OK
@@ -116,24 +116,9 @@ selftest successful (33 checks).
 ./testdata/black_prime.rpl OK
 ./testdata/black_prime_entry.rpl OK
 ./testdata/chaos_trustanchor.rpl OK
-./testdata/dlv_anchor.rpl OK
-./testdata/dlv_ask_higher.rpl OK
-./testdata/dlv_below_ta.rpl OK
-./testdata/dlv_delegation.rpl OK
-./testdata/dlv_ds_lookup.rpl OK
-./testdata/dlv_insecure.rpl OK
-./testdata/dlv_insecure_negcache.rpl OK
-./testdata/dlv_keyretry.rpl OK
-./testdata/dlv_negnx.rpl OK
-./testdata/dlv_optout.rpl OK
-./testdata/dlv_remove.rpl OK
-./testdata/dlv_remove_empty.rpl OK
-./testdata/dlv_remove_nodel.rpl OK
-./testdata/dlv_remove_pos.rpl OK
-./testdata/dlv_unused.rpl OK
 ./testdata/dns64_lookup.rpl OK
-./testdata/domain_insec_dlv.rpl OK
 ./testdata/domain_insec_ds.rpl OK
+./testdata/edns_client_tag.rpl OK
 ./testdata/edns_keepalive.rpl OK
 ./testdata/fetch_glue.rpl OK
 ./testdata/fetch_glue_cname.rpl OK
@@ -151,7 +136,6 @@ selftest successful (33 checks).
 ./testdata/fwd_notcached.rpl OK
 ./testdata/fwd_timeout.rpl OK
 ./testdata/fwd_two.rpl OK
-./testdata/fwddlv_parse.rpl OK
 ./testdata/iter_class_any.rpl OK
 ./testdata/iter_cname_cache.rpl OK
 ./testdata/iter_cname_double.rpl OK
@@ -402,7 +386,6 @@ selftest successful (33 checks).
 ./testdata/val_ta_algo_missing_dp.rpl OK
 ./testdata/val_twocname.rpl OK
 ./testdata/val_unalgo_anchor.rpl OK
-./testdata/val_unalgo_dlv.rpl OK
 ./testdata/val_unalgo_ds.rpl OK
 ./testdata/val_unsec_cname.rpl OK
 ./testdata/val_unsecds.rpl OK
