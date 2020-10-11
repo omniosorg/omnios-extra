@@ -25,5 +25,7 @@ PKG=ooce/obsolete/compress/lz4
 PKG=ooce/obsolete/compress/zstd
 [ $RELVER -ge 151035 ] && publish_manifest "" compress-zstd.p5t
 
+exit 0
+
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker
