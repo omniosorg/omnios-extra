@@ -1250,7 +1250,12 @@ EOM
 }
 
 pkgmeta() {
-    echo set name=$1 value=\"$2\"
+    typeset key="$1"
+    typeset val="$2"
+
+    [[ $key = info.source-url* && ! $val = *://* ]] \
+        && val="$SRCMIRROR/$val"
+    echo set name=$key value=\"$val\"
 }
 
 # Start building a partial manifest
@@ -1464,15 +1469,11 @@ make_package() {
         if [[ $_ARC_SOURCE = *\ * ]]; then
             _asindex=0
             for _as in $_ARC_SOURCE; do
-                if [[ $_as = *://* ]]; then
-                    pkgmeta "info.source-url.$_asindex" "$_as"
-                else
-                    pkgmeta "info.source-url.$_asindex" "$SRCMIRROR/$_as"
-                fi
+                pkgmeta "info.source-url.$_asindex" "$_as"
                 ((_asindex++))
             done
         elif [ -n "$_ARC_SOURCE" ]; then
-            pkgmeta info.source-url "$SRCMIRROR/$_ARC_SOURCE"
+            pkgmeta info.source-url "$_ARC_SOURCE"
         fi
     ) > $MY_MOG_FILE
 
