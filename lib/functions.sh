@@ -2579,7 +2579,7 @@ check_libabi() {
 
     # Build list of libraries and ABIs from this package on disk
     nawk '
-        $1 == "file" && $2 ~ /.so.[0-9]/ { print $2 }
+        $1 == "file" && $2 ~ /\.so\.[0-9]/ { print $2 }
     ' < $mf > $TMPDIR/libs.$$
     extract_libabis cla__new $TMPDIR/libs.$$
     logcmd rm -f $TMPDIR/libs.$$

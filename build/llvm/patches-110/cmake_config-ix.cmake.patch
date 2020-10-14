@@ -5,7 +5,7 @@ Do not generate invalid llvm-config in pkgsrc.
 diff -wpruN '--exclude=*.orig' a~/cmake/config-ix.cmake a/cmake/config-ix.cmake
 --- a~/cmake/config-ix.cmake	1970-01-01 00:00:00
 +++ a/cmake/config-ix.cmake	1970-01-01 00:00:00
-@@ -129,7 +129,7 @@ if(NOT LLVM_USE_SANITIZER MATCHES "Memor
+@@ -141,7 +141,7 @@ if(NOT LLVM_USE_SANITIZER MATCHES "Memor
      endif()
      if(LLVM_ENABLE_TERMINFO)
        set(HAVE_TERMINFO 0)

@@ -25,6 +25,8 @@ DESC="A collection of modular and reusable compiler and toolchain technologies"
 set_arch 64
 set_builddir $PROG-$VER.src
 
+SKIP_RTIME=1
+
 MAJVER=${VER%.*}
 PATCHDIR=patches-${MAJVER//./}
 
@@ -36,7 +38,6 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
     -DVERSION=$MAJVER
-    -DLICENCE=Apache2
 "
 
 CMAKE="cmake -G Ninja"

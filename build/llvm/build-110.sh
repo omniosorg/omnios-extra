@@ -17,21 +17,15 @@
 . ../../lib/functions.sh
 
 PROG=llvm
-PKG=ooce/developer/llvm-80
-VER=8.0.1
+PKG=ooce/developer/llvm-110
+VER=11.0.0
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
-
-if [ $RELVER -ge 151035 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
 
 set_arch 64
 set_builddir $PROG-$VER.src
 
-LIC=UIUC
-SKIP_LICENCES=$LIC
+SKIP_RTIME=1
 
 MAJVER=${VER%.*}
 PATCHDIR=patches-${MAJVER//./}
@@ -44,7 +38,6 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
     -DVERSION=$MAJVER
-    -DLICENCE=$LIC
 "
 
 CMAKE="cmake -G Ninja"
@@ -62,7 +55,6 @@ CONFIGURE_OPTS_WS_64="
     -DLLVM_INCLUDE_BENCHMARKS=OFF
     -DLLVM_INSTALL_UTILS=ON
     -DLLVM_LINK_LLVM_DYLIB=ON
-    -DPYTHON_EXECUTABLE=\"$PYTHON\"
 "
 
 init
