@@ -27,6 +27,8 @@ DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
 set_arch 64
 set_builddir $PROG-$VER.src
 
+SKIP_RTIME=1
+
 MAJVER=${VER%.*}
 PATCHDIR=patches-${MAJVER//./}
 
@@ -45,8 +47,9 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG-$MAJVER
+    -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
     -DVERSION=$MAJVER
-    -DLICENCE=Apache2
 "
 
 CMAKE="cmake -G Ninja"

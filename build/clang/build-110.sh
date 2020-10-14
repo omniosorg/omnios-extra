@@ -17,31 +17,28 @@
 . ../../lib/functions.sh
 
 PROG=clang
-PKG=ooce/developer/clang-80
-VER=8.0.1
+PKG=ooce/developer/clang-110
+VER=11.0.0
 SUMMARY="C language family frontend for LLVM"
 DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
 DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
 
-if [ $RELVER -ge 151035 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
+set_arch 64
+set_builddir $PROG-$VER.src
+
+SKIP_RTIME=1
 
 MAJVER=${VER%.*}
 PATCHDIR=patches-${MAJVER//./}
 
 BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}"
 # Using the = prefix to require the specific matching version of llvm
-# need gcc until compiler-rt ships its own crtbegin, crtend objects
-RUN_DEPENDS_IPS="=$BUILD_DEPENDS_IPS@$MAJVER developer/gcc$GCCVER"
-
-set_arch 64
-set_builddir cfe-$VER.src
-
-LIC=UIUC
-SKIP_LICENCES=$LIC
+RUN_DEPENDS_IPS="
+    =$BUILD_DEPENDS_IPS@$MAJVER
+    =ooce/developer/compiler-rt-${MAJVER//./}@$MAJVER
+    ooce/developer/compiler-rt-${MAJVER//./}
+"
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
@@ -50,8 +47,9 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG-$MAJVER
+    -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
     -DVERSION=$MAJVER
-    -DLICENCE=$LIC
 "
 
 CMAKE="cmake -G Ninja"
@@ -67,12 +65,13 @@ CONFIGURE_OPTS_WS_64="
     -DCMAKE_CXX_LINK_FLAGS=\"$LDFLAGS64\"
     -DGCC_INSTALL_PREFIX=\"$GCCPATH\"
     -DCLANG_DEFAULT_LINKER=\"/usr/bin/ld\"
+    -DCLANG_DEFAULT_RTLIB=compiler-rt
     -DLLVM_CONFIG=\"$OPREFIX/llvm-$MAJVER/bin/llvm-config\"
     -DPYTHON_EXECUTABLE=\"$PYTHON\"
 "
 
 init
-download_source $PROG $BUILDDIR
+download_source $PROG $PROG $VER.src
 patch_source
 prep_build cmake
 build
