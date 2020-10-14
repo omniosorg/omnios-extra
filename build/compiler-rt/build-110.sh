@@ -17,15 +17,10 @@
 . ../../lib/functions.sh
 
 PROG=compiler-rt
-PKG=ooce/developer/compiler-rt-90
-VER=9.0.1
+PKG=ooce/developer/compiler-rt-110
+VER=11.0.0
 SUMMARY="LLVM runtime libraries"
 DESC="Implementation for the runtime compiler support libraries"
-
-if [ $RELVER -ge 151035 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
 
 MAJVER=${VER%.*}
 PATCHDIR=patches-${MAJVER//./}
@@ -36,7 +31,6 @@ set_builddir $PROG-$VER.src
 
 CMAKE="cmake -G Ninja"
 MAKE=/opt/ooce/bin/ninja
-TESTSUITE_MAKE=$MAKE
 
 CONFIGURE_OPTS_32=
 CONFIGURE_OPTS_64=
