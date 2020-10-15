@@ -23,7 +23,7 @@ SUMMARY="A cat clone with wings"
 DESC="A cat(1) clone with syntax highlighting and Git integration."
 
 # clang is a build-time requirement for 0.12.x
-CLANGVER=10.0
+CLANGVER=11.0
 
 BUILD_DEPENDS_IPS="
     ooce/developer/rust
