@@ -22,6 +22,11 @@ VER=9.0.1
 SUMMARY="LLVM runtime libraries"
 DESC="Implementation for the runtime compiler support libraries"
 
+if [ $RELVER -ge 151035 ]; then
+    logmsg "--- $PKG is not built for r$RELVER"
+    exit 0
+fi
+
 MAJVER=${VER%.*}
 PATCHDIR=patches-${MAJVER//./}
 

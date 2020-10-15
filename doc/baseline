@@ -45,10 +45,10 @@ extra.omnios ooce/database/rrdtool
 extra.omnios ooce/developer/autogen
 extra.omnios ooce/developer/ccache
 extra.omnios ooce/developer/clang-100
-extra.omnios ooce/developer/clang-90
+extra.omnios ooce/developer/clang-110
 extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/compiler-rt-100
-extra.omnios ooce/developer/compiler-rt-90
+extra.omnios ooce/developer/compiler-rt-110
 extra.omnios ooce/developer/cunit
 extra.omnios ooce/developer/dejagnu
 extra.omnios ooce/developer/flamegraph
@@ -58,7 +58,7 @@ extra.omnios ooce/developer/go-115
 extra.omnios ooce/developer/gperf
 extra.omnios ooce/developer/gyp
 extra.omnios ooce/developer/llvm-100
-extra.omnios ooce/developer/llvm-90
+extra.omnios ooce/developer/llvm-110
 extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr
