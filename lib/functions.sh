@@ -1172,7 +1172,7 @@ clone_github_source() {
         logcmd $GIT -C $prog clean -fdx
     fi
 
-    $GIT -C $prog show --shortstat
+    $GIT -C $prog --no-pager show --shortstat
 
     _ARC_SOURCE+="${_ARC_SOURCE:+ }$src/tree/$branch"
 
