@@ -82,9 +82,16 @@ restore_variable BUILDDIR
 clone_github_source "$PROG-server" "$GITHUB/$PROG/$PROG-server" v$VER
 clone_github_source "$PROG-webapp" "$GITHUB/$PROG/$PROG-webapp" v$VER
 build mmctl "ADVANCED_VET=FALSE"
-export LDFLAGS=" -R$OPREFIX/lib/$ISAPART64"
+
+if [ $RELVER -lt 151033 ]; then
+    export PKG_CONFIG_PATH="$PKG_CONFIG_PATH32"
+    export LDFLAGS=" -R$OPREFIX/lib"
+else
+    export LDFLAGS=" -R$OPREFIX/lib/$ISAPART64"
+fi
 build $PROG-webapp build
 export LDFLAGS=
+
 build $PROG-server build-illumos package
 install
 install_smf application $PROG.xml
