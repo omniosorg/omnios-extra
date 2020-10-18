@@ -1,1 +1,3 @@
 Cargo.toml.patch
+libc_0.2.79.patch
+no_jemallocator.patch
