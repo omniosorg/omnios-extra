@@ -7,6 +7,6 @@ diff -wpruN '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
  codegen-units = 1
 +
 +[patch.crates-io]
-+nix = { git = "https://github.com/hadfl/nix", branch = "illumos" }
++nix = { git = "https://github.com/jasonbking/nix", branch = "illumos" }
 +ctrlc = { git = "https://github.com/hadfl/rust-ctrlc", branch = "illumos" }
 +users = { git = "https://github.com/hadfl/rust-users", branch = "illumos" }
