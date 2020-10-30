@@ -14,14 +14,8 @@ group groupname=$(GROUP) gid=78
 user ftpuser=false username=$(USER) uid=78 group=$(GROUP) \
     gcos-field="$(PROG) User" home-dir=/var/$(PREFIX) password=NP
 
-# Symlink binaries
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
-
-# Symlink man pages
-<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(OPREFIX)/share/man/%<1>/%<2> \
-    target=../../../$(PROG)/share/man/%<1>/%<2> >
+<include binlink.mog>
+<include manlink.mog>
 
 <transform file path=$(PREFIX)/lib/plugins/ \
     -> set pkg.depend.bypass-generate .*>

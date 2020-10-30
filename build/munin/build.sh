@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=munin
-VER=2.0.64
+VER=2.0.65
 PKG=ooce/application/munin
 SUMMARY="munin"
 DESC="A networked resource monitoring tool that can help "
@@ -30,7 +30,9 @@ set_arch 64
 SKIP_LICENCES=GPLv2
 
 # some perl modules require gnu-tar to unpack
-export PATH="/usr/gnu/bin:$PATH"
+# set PATH to default pgsql version as the mediated version
+# might be changed by the user
+export PATH="$PREFIX/pgsql-$PGSQLVER/bin:$GNUBIN:$PATH"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -40,6 +42,7 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
     -DUSER=munin -DGROUP=munin
+    -DPKGROOT=$PROG
 "
 
 reset_configure_opts
