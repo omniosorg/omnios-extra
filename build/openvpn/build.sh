@@ -85,6 +85,7 @@ fi
 
 download_source $PROG $PROG $VER
 patch_source
+run_autoreconf -i
 build
 install_config
 install_smf network network-openvpn.xml
