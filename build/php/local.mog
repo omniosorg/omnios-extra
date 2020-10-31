@@ -1,4 +1,3 @@
-# {{{ CDDL HEADER
 #
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.
@@ -8,15 +7,11 @@
 # A full copy of the text of the CDDL should have accompanied this
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
-# }}}
-# CDDL HEADER START
 #
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 
-# Mediated binaries
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
-    mediator=$(PROG) mediator-version=$(VERSION) >
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+
+<include mediated-binlink.mog>
 
 # Mediated man pages
 <transform file path=$(PREFIX)/$(PROG)/man/(man\d)/(.*) -> emit \

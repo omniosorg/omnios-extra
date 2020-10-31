@@ -18,7 +18,7 @@
 
 PROG=php
 PKG=ooce/application/php-74
-VER=7.4.11
+VER=7.4.12
 SUMMARY="PHP 7.4"
 DESC="A popular general-purpose scripting language"
 
@@ -56,6 +56,8 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG-$MAJVER
+    -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
     -DVERSION=$MAJVER
     -DsVERSION=$sMAJVER
 "
