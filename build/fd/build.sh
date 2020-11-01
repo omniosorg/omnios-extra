@@ -31,33 +31,13 @@ BUILD_DEPENDS_IPS=ooce/developer/rust
 
 set_arch 64
 
-build() {
-    logmsg "Building 64-bit"
-    pushd $TMPDIR/$BUILDDIR >/dev/null
-    args="--release"
-    logcmd cargo build $args || logerr "build failed"
-    popd >/dev/null
-}
-
-install() {
-    logmsg "Installing"
-    pushd $TMPDIR/$BUILDDIR >/dev/null
-
-    logcmd mkdir -p $DESTDIR/$PREFIX/bin
-    logcmd cp target/release/fd $DESTDIR/$PREFIX/bin/fd || logerr "cp failed"
-
-    logcmd mkdir -p $DESTDIR/$PREFIX/share/man/man1
-    logcmd cp doc/fd.1 $DESTDIR/$PREFIX/share/man/man1/ || logerr "cp failed"
-
-    popd >/dev/null
-}
-
 init
 download_source $PROG v$VER
 patch_source
 prep_build
-build
-install
+build_rust
+install_rust
+strip_install
 make_package
 clean_up
 

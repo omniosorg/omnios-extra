@@ -25,42 +25,22 @@ DESC+="directory for a regex pattern while respecting your gitignore rules"
 
 BUILD_DEPENDS_IPS=ooce/developer/rust
 # libpcre2 is included with OmniOS as of r151029 and ripgrep can use it
-[ $RELVER -ge 151029 ] && BUILD_DEPENDS_IPS+=" library/pcre2"
+if [ $RELVER -ge 151029 ]; then
+    BUILD_DEPENDS_IPS+=" library/pcre2"
+    args="--features pcre2"
+fi
 
 set_arch 64
 
 SKIP_LICENCES=UNLICENSE
 
-build() {
-    logmsg "Building 64-bit"
-    pushd $TMPDIR/$BUILDDIR >/dev/null
-    args="--release"
-    [ $RELVER -ge 151029 ] && args+=" --features pcre2"
-    logcmd cargo build $args || logerr "build failed"
-    popd >/dev/null
-}
-
-install() {
-    logmsg "Installing"
-    pushd $TMPDIR/$BUILDDIR >/dev/null
-
-    logcmd mkdir -p $DESTDIR/$PREFIX/bin
-    logcmd cp target/release/rg $DESTDIR/$PREFIX/bin/rg || logerr "cp failed"
-    logcmd strip -x $DESTDIR/$PREFIX/bin/rg
-
-    logcmd mkdir -p $DESTDIR/$PREFIX/share/man/man1
-    logcmd cp target/release/build/ripgrep-*/out/rg.1 \
-        $DESTDIR/$PREFIX/share/man/man1/ || logerr "cp failed"
-
-    popd >/dev/null
-}
-
 init
 download_source $PROG $VER
 patch_source
 prep_build
-build
-install
+build_rust $args
+PROG=rg install_rust
+strip_install
 make_package
 clean_up
 
