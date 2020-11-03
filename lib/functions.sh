@@ -1889,6 +1889,29 @@ install_go() {
 }
 
 #############################################################################
+# Install a rust binary
+#############################################################################
+
+install_rust() {
+    logmsg "Installing $PROG"
+
+    logcmd mkdir -p "$DESTDIR/$PREFIX/bin" \
+        || logerr "Failed to create install dir"
+    logcmd cp $TMPDIR/$BUILDDIR/target/release/$PROG \
+        $DESTDIR/$PREFIX/bin/$PROG || logerr "Failed to install binary"
+
+    for f in `$FD "^$PROG\.1\$" $TMPDIR/$BUILDDIR`; do
+        logmsg "Found man page at $f"
+
+        logcmd mkdir -p "$DESTDIR/$PREFIX/share/man/man1" \
+            || logerr "Failed to create man install dir"
+        logcmd cp $f $DESTDIR/$PREFIX/share/man/man1/$PROG.1 \
+            || logerr "Failed to install man page"
+        break
+    done
+}
+
+#############################################################################
 # Make isaexec stub binaries
 #############################################################################
 
@@ -2335,6 +2358,20 @@ python_build() {
     python_vendor_relocate
     python_path_fixup
     python_compile
+}
+
+#############################################################################
+# Build function for rust utils
+#############################################################################
+
+build_rust() {
+    logmsg "Building 64-bit"
+
+    pushd $TMPDIR/$BUILDDIR >/dev/null
+
+    logcmd $CARGO build --release $@ || logerr "build failed"
+
+    popd >/dev/null
 }
 
 #############################################################################

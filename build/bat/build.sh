@@ -34,34 +34,13 @@ set_arch 64
 
 export LIBCLANG_PATH="$PREFIX/clang-$CLANGVER/lib"
 
-build() {
-    logmsg "Building 64-bit"
-    pushd $TMPDIR/$BUILDDIR >/dev/null
-    args="--release"
-    logcmd cargo build $args || logerr "build failed"
-    popd >/dev/null
-}
-
-install() {
-    logmsg "Installing"
-    pushd $TMPDIR/$BUILDDIR >/dev/null
-
-    logcmd mkdir -p $DESTDIR/$PREFIX/bin
-    logcmd cp target/release/bat $DESTDIR/$PREFIX/bin/bat || logerr "cp failed"
-
-    logcmd mkdir -p $DESTDIR/$PREFIX/share/man/man1
-    logcmd cp target/release/build/bat-*/out/assets/manual/bat.1 \
-        $DESTDIR/$PREFIX/share/man/man1/ || logerr "cp failed"
-
-    popd >/dev/null
-}
-
 init
 download_source $PROG v$VER
 patch_source
 prep_build
-build
-install
+build_rust
+install_rust
+strip_install
 make_package
 clean_up
 
