@@ -4,7 +4,7 @@
 | ooce/application/gitea	| 1.12.5	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gnuplot	| 5.4.0		| https://sourceforge.net/projects/gnuplot/files/gnuplot/ http://www.gnuplot.info/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.44.1	| https://www2.graphviz.org/Packages/stable/portable_source/ https://graphviz.org/download/source/ | [omniosorg](https://github.com/omniosorg)
-| ooce/application/imagemagick	| 7.0.10-34	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/application/imagemagick	| 7.0.10-35	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mattermost	| 5.28.1	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.25	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/munin	| 2.0.65	| http://downloads.munin-monitoring.org/munin/stable/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
@@ -76,7 +76,7 @@
 | ooce/library/icu4c		| 67.1		| https://github.com/unicode-org/icu/releases | Currently used solely by cyrus-imapd
 | ooce/library/jansson		| 2.13.1	| https://github.com/akheron/jansson/releases | Currently used solely by cyrus-imapd
 | ooce/library/libarchive	| 3.4.3		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libde265		| 1.0.7		| https://github.com/strukturag/libde265/releases | Currently used solely by ImageMagick
+| ooce/library/libde265		| 1.0.8		| https://github.com/strukturag/libde265/releases | Currently used solely by ImageMagick
 | ooce/library/libdwarf		| 20201020	| https://www.prevanders.net/dwarf.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libgd		| 2.3.0		| https://github.com/libgd/libgd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libical		| 3.0.8		| https://github.com/libical/libical/releases | Currently used solely by cyrus-imapd
