@@ -100,6 +100,7 @@ CONFIGURE_OPTS_64="
     --with-png
     --with-freetype
     --with-pgsql=$OPREFIX/pgsql-$PGSQLVER
+    --with-pdo-pgsql=$OPREFIX/pgsql-$PGSQLVER
 
     --enable-fpm
     --with-fpm-user=php
