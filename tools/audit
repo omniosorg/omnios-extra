@@ -225,8 +225,10 @@ audit()
                         */zadm:) [ $r -lt 151034 ] || ok=0 ;;
                         # gyp is not published until r151035
                         */gyp:) [ $r -lt 151035 ] || ok=0 ;;
-                        # clang/llvm-80 is not published after r151034
-                        */clang-80:|*/llvm-80:) [ $r -gt 151034 ] || ok=0 ;;
+                        # clang/llvm-80, clang/llvm/compiler-rt-90 and lxadm
+                        # are not published after r151034
+                        */clang-[89]0:|*/llvm-[89]0:|*/compiler-rt-90:|*/lxadm:)
+                            [ $r -gt 151034 ] || ok=0 ;;
                         # X11 headers/libraries are not published until r151035
                         */x11/*:) [ $r -lt 151035 ] || ok=0 ;;
                         # pango is stuck on 1.44 on r151030 due to the
