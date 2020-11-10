@@ -14,7 +14,7 @@
 <transform path=.*/sql-bench -> drop>
 <transform path=.*/mysql-test -> drop>
 <transform path=.*/support-files/policy -> drop>
-<transform path=$(PREFIX)/bin/i386/(?!mysql_config) -> drop>
+<transform path=$(PREFIX)/bin/i386/(?![^_]+_config) -> drop>
 
 <transform file path=etc/$(PREFIX)/ -> set group mysql>
 <transform file path=etc/$(PREFIX)/ -> set mode 0640>
