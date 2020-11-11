@@ -5,4 +5,4 @@ si_kernel.patch
 05-no-pie.patch
 08-dtrace-invalid-conversion.patch
 cfi.patch
-fix_arch_detection.patch
+mariadb_config.patch
