@@ -95,7 +95,7 @@
 | ooce/library/libvncserver	| 0.9.13	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libwebp		| 1.1.0		| https://developers.google.com/speed/webp/download | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libzip		| 1.7.3		| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/onig		| 6.9.5		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/onig		| 6.9.6		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pango		| 1.47.0	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/protobuf		| 3.13.0	| https://github.com/protocolbuffers/protobuf/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/security/libsasl2 | 2.1.27	| https://github.com/cyrusimap/cyrus-sasl/releases | [omniosorg](https://github.com/omniosorg)
