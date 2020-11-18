@@ -1,7 +1,7 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
 | ooce/application/fcgiwrap	| 1.1.0		| https://github.com/gnosek/fcgiwrap/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/gitea	| 1.12.5	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/gitea	| 1.12.6	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gnuplot	| 5.4.0		| https://sourceforge.net/projects/gnuplot/files/gnuplot/ http://www.gnuplot.info/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.44.1	| https://www2.graphviz.org/Packages/stable/portable_source/ https://graphviz.org/download/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/imagemagick	| 7.0.10-37	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
@@ -135,8 +135,8 @@
 | ooce/server/apache-24		| 2.4.46	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.19.4	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-118		| 1.18.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/storage/minio		| 2020-11-10T21-02-24Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/storage/minio-mc		| 2020-10-03T02-54-56Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/storage/minio		| 2020-11-13T20-10-18Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/storage/minio-mc		| 2020-11-17T00-39-14Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/file-system/ntfs-3g | 2017.3.23AR.5 | https://jp-andre.pagesperso-orange.fr/openindiana-ntfs-3g.html https://www.tuxera.com/community/open-source-ntfs-3g/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/htop		| 3.0.2		| https://github.com/htop-dev/htop/releases https://htop.dev/downloads.html#sources | [omniosorg](https://github.com/omniosorg)
 | ooce/system/mbuffer		| 20200929	| https://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
