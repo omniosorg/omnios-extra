@@ -21,7 +21,7 @@
 #
 # Copyright (c) 2015 by Delphix. All rights reserved.
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 #
 #############################################################################
 # Configuration for the build system
@@ -286,7 +286,8 @@ esac
 
 PYTHON2VER=2.7
 case $RELVER in
-    15103[3-9])         PYTHON3VER=3.7 ;;
+    15103[7-9])         PYTHON3VER=3.9 ;;
+    15103[3-6])         PYTHON3VER=3.7 ;;
     *)                  PYTHON3VER=3.5 ;;
 esac
 # Specify default Python version for building packages
