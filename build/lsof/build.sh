@@ -18,7 +18,7 @@
 
 PROG=lsof
 PKG=ooce/file/lsof
-VER=4.93.2
+VER=4.94.0
 SUMMARY="List open files"
 DESC="Report a list of all open files and the processes that opened them"
 
