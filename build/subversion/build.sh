@@ -32,7 +32,7 @@ sAPACHEVER=${APACHEVER//./}
 set_arch 64
 set_standard XPG6
 
-SKIP_RTIME=1
+SKIP_RTIME_CHECK=1
 
 BUILD_DEPENDS_IPS+="
     ooce/library/apr

@@ -26,7 +26,7 @@ OPREFIX="$PREFIX"
 PREFIX+="/$PROG"
 
 SKIP_LICENCES=OpenLDAP
-SKIP_RTIME=1
+SKIP_RTIME_CHECK=1
 
 # Setting this variable in the environment makes mkversion use a constant
 # string in the LDAP version rather than the hostname and build path.

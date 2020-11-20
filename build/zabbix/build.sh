@@ -42,7 +42,7 @@ XFORM_ARGS="
     -DUSER=zabbix -DGROUP=zabbix -DAGENTUSER=zabbixa
 "
 
-SKIP_RTIME=1
+SKIP_RTIME_CHECK=1
 
 pgconfig=$OPREFIX/pgsql-$PGSQLVER/bin/pg_config
 mariaconfig=$OPREFIX/mariadb-$MARIASQLVER/bin/mariadb_config
