@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/arg.c a/arg.c
+--- a~/arg.c	2020-11-10 19:00:21.000000000 +0000
++++ a/arg.c	2020-11-19 21:40:18.819000177 +0000
+@@ -29,6 +29,8 @@
+  * 4. This notice may not be removed or altered.
+  */
+ 
++#include <limits.h> /* For *_MAX. */
++
+ #ifndef lint
+ static char copyright[] =
+ "@(#) Copyright 1994 Purdue Research Foundation.\nAll rights reserved.\n";
