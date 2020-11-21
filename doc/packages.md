@@ -115,7 +115,7 @@
 | ooce/network/nsd		| 4.3.3		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openldap		| 2.4.53	| https://www.openldap.org/software/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn		| 2.5.0		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/rclone		| 1.53.2	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/rclone		| 1.53.3	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/smtp/postfix	| 3.5.8		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/network/tcpdump		| 4.9.3		| https://www.tcpdump.org/release/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/unbound		| 1.12.0	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
