@@ -86,7 +86,7 @@
 | ooce/library/libheif		| 1.9.1		| https://github.com/strukturag/libheif/releases | Currently used solely by ImageMagick
 | ooce/library/libid3tag	| 0.15.1b	| https://sourceforge.net/projects/mad/files/libid3tag/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libidl		| 0.8.14	| https://download.gnome.org/sources/libIDL/cache.json https://download.gnome.org/sources/libIDL/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libjpeg-turbo	| 2.0.5		| https://sourceforge.net/projects/libjpeg-turbo/files/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libjpeg-turbo	| 2.0.6		| https://sourceforge.net/projects/libjpeg-turbo/files/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libmcrypt	| 2.5.8		| https://sourceforge.net/projects/mcrypt/files/Libmcrypt/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libogg		| 1.3.4		| https://ftp.osuosl.org/pub/xiph/releases/ogg/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libpciaccess	| 0.16		| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
@@ -97,7 +97,7 @@
 | ooce/library/libzip		| 1.7.3		| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/onig		| 6.9.6		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pango		| 1.48.0	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/protobuf		| 3.13.0	| https://github.com/protocolbuffers/protobuf/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/protobuf		| 3.14.0	| https://github.com/protocolbuffers/protobuf/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/security/libsasl2 | 2.1.27	| https://github.com/cyrusimap/cyrus-sasl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/serf		| 1.3.9 	| https://downloads.apache.org/serf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/slang		| 2.3.2		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)
