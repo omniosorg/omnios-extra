@@ -603,10 +603,11 @@ trap 'build_end' EXIT
 #############################################################################
 
 libtool_nostdlib() {
-    FILE=$1
-    EXTRAS=$2
-    logcmd perl -pi -e 's#(\$CC.*\$compiler_flags)#$1 -nostdlib '"$EXTRAS"'#g;' $FILE ||
-        logerr "--- Patching libtool:$FILE for -nostdlib support failed"
+    FILE="$1"
+    EXTRAS="$2"
+    logcmd perl -pi -e \
+        's#(\$CC.*\$compiler_flags)#$1 -nostdlib '"$EXTRAS"'#g;' $FILE \
+        || logerr "--- Patching libtool:$FILE for -nostdlib support failed"
 }
 
 #############################################################################
@@ -2067,7 +2068,7 @@ make_prog() {
     eval set -- $MAKE_ARGS_WS
     [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
     if [ -n "$LIBTOOL_NOSTDLIB" ]; then
-        libtool_nostdlib $LIBTOOL_NOSTDLIB $LIBTOOL_NOSTDLIB_EXTRAS
+        libtool_nostdlib "$LIBTOOL_NOSTDLIB" "$LIBTOOL_NOSTDLIB_EXTRAS"
     fi
     logmsg "--- make"
     logcmd $MAKE $MAKE_JOBS $MAKE_ARGS "$@" $MAKE_TARGET \
