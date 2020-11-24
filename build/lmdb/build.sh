@@ -36,6 +36,8 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
+MAKE_ARGS+=" -e"
+
 MAKE_INSTALL_ARGS="
     prefix=$PREFIX
     includedir=$OPREFIX/include
@@ -56,11 +58,13 @@ MAKE_INSTALL_ARGS_64="
 configure32() {
     export XCFLAGS="$CFLAGS $CFLAGS32"
     export LDFLAGS="$LDFLAGS $LDFLAGS32"
+    export SOLIBS="-lssp_ns"
 }
 
 configure64() { 
     export XCFLAGS="$CFLAGS $CFLAGS64"
     export LDFLAGS="$LDFLAGS $LDFLAGS64"
+    export SOLIBS=
 }
 
 init
