@@ -30,6 +30,7 @@ XFORM_ARGS="
 CONFIGURE_OPTS+="
     --mandir=$PREFIX/share/man
 "
+LDFLAGS32+=" -lssp_ns"
 
 init
 download_source $PROG $PROG $VER
