@@ -36,6 +36,7 @@ CONFIGURE_OPTS_WS_32="
     APU=$PREFIX/bin/$ISAPART/apu-1-config
     CFLAGS=\"$CFLAGS $CFLAGS32\"
     LINKFLAGS=\"$LDFLAGS $LDFLAGS32\"
+    LIBS=\"-lssp_ns\"
 "
 CONFIGURE_OPTS_WS_64="
     APR=$PREFIX/bin/$ISAPART64/apr-1-config
