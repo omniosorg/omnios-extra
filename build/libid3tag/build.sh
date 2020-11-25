@@ -25,6 +25,7 @@ DESC="ID3 tag manipulation library."
 CONFIGURE_OPTS="
     --disable-static
 "
+LDFLAGS32+=" -lssp_ns"
 
 init
 download_source $PROG $PROG $VER
