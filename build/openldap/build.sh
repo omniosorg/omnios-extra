@@ -72,6 +72,7 @@ CONFIGURE_OPTS_64+="
     --enable-modules
     --enable-overlays=mod
 "
+LDFLAGS32+=" -lssp_ns"
 
 # On older OmniOS releases where the compiler outputs 32-bit objects by
 # default, libtool creates some intermediate objects as 32-bit during the
