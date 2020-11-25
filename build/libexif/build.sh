@@ -36,6 +36,7 @@ CONFIGURE_OPTS_32="
 CONFIGURE_OPTS_64="
     --libdir=$OPREFIX/lib/$ISAPART64
 "
+LDFLAGS32+=" -lssp_ns"
 
 init
 download_source $PROG $PROG $VER
