@@ -105,7 +105,7 @@
 | ooce/library/unistring	| 0.9.10	| https://ftp.gnu.org/gnu/libunistring/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/exif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/exif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/ffmpeg	| 4.3.1		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
-| ooce/multimedia/minidlna	| 1.2.1		| https://sourceforge.net/projects/minidlna/files/minidlna/ | [omniosorg](https://github.com/omniosorg)
+| ooce/multimedia/minidlna	| 1.3.0		| https://sourceforge.net/projects/minidlna/files/minidlna/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/bind-911		| 9.11.24	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/cyrus-imapd	| 3.2.4		| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/fping		| 5.0		| https://github.com/schweikert/fping/releases | [omniosorg](https://github.com/omniosorg)
