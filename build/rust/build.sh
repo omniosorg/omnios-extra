@@ -60,7 +60,7 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-SKIP_RTIME=1
+SKIP_RTIME_CHECK=1
 
 RUSTARCH=x86_64-unknown-illumos
 

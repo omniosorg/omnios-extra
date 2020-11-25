@@ -24,6 +24,8 @@ DESC="X protocol C-language Binding (XCB): Protocol descriptions"
 
 . $SRCDIR/../common.sh
 
+RUN_DEPENDS_IPS="runtime/python-$PYTHONPKGVER"
+
 # required to pick up python3
 export PYTHON
 

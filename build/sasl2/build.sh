@@ -29,7 +29,7 @@ XFORM_ARGS="
 
 set_standard XPG6
 
-SKIP_RTIME=1
+SKIP_RTIME_CHECK=1
 SKIP_LICENCES='*'
 
 # Sasl runs make recursively and does not honour $MAKE - put GNU first

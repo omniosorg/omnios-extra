@@ -33,7 +33,7 @@ PREFIX+=/$PROG
 reset_configure_opts
 
 SKIP_LICENCES=ImageMagick
-SKIP_RTIME=1
+SKIP_RTIME_CHECK=1
 
 BUILD_DEPENDS_IPS="
     library/libxml2

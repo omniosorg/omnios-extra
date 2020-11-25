@@ -25,7 +25,7 @@ DESC="A collection of modular and reusable compiler and toolchain technologies"
 set_arch 64
 set_builddir $PROG-$VER.src
 
-SKIP_RTIME=1
+SKIP_RTIME_CHECK=1
 
 MAJVER=${VER%.*}
 PATCHDIR=patches-${MAJVER//./}

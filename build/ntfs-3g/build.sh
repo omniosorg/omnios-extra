@@ -52,6 +52,7 @@ CONFIGURE_OPTS_64="
     --sbindir=$PREFIX/sbin
     --libdir=$OPREFIX/lib/$ISAPART64
 "
+LDFLAGS32+=" -lssp_ns"
 
 save_function make_install _make_install
 make_install() {

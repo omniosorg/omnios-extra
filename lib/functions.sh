@@ -391,6 +391,23 @@ init_tools
 # Compiler version
 #############################################################################
 
+SSPFLAGS=
+set_ssp() {
+    [ $RELVER -lt 151037 ] && return
+    case "$1" in
+        none)   SSPFLAGS=; SKIP_SSP_CHECK=1 ;;
+        strong) SSPFLAGS="-fstack-protector-strong" ;;
+        basic)  SSPFLAGS="-fstack-protector" ;;
+        all)    SSPFLAGS="-fstack-protector-all" ;;
+        *)      logerr "Unknown stack protector variant ($1)" ;;
+    esac
+    local LCFLAGS=`echo $CFLAGS | sed 's/-fstack-protector[^ ]*//'`
+    local LCXXFLAGS=`echo $CXXFLAGS | sed 's/-fstack-protector[^ ]*//'`
+    CFLAGS="$LCFLAGS $SSPFLAGS"
+    CXXFLAGS="$LCFLAGS $SSPFLAGS"
+    [ -z "$2" ] && logmsg "-- Set stack protection to '$1'"
+}
+
 set_gccver() {
     GCCVER="$1"
     [ -z "$2" ] && logmsg "-- Setting GCC version to $GCCVER"
@@ -407,6 +424,8 @@ set_gccver() {
 
     CFLAGS="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
     CXXFLAGS="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
+
+    set_ssp strong $2
 }
 
 set_gccver $DEFAULT_GCC_VER -q
@@ -424,7 +443,7 @@ set_gover() {
     # go binaries contain BMI instructions even when built on an older CPU
     BMI_EXPECTED=1
     # skip rtime check for go builds
-    SKIP_RTIME=1
+    SKIP_RTIME_CHECK=1
     export PATH GOROOT_BOOTSTRAP
 
     BUILD_DEPENDS_IPS+=" ooce/developer/go-${GOVER//./}"
@@ -584,10 +603,11 @@ trap 'build_end' EXIT
 #############################################################################
 
 libtool_nostdlib() {
-    FILE=$1
-    EXTRAS=$2
-    logcmd perl -pi -e 's#(\$CC.*\$compiler_flags)#$1 -nostdlib '"$EXTRAS"'#g;' $FILE ||
-        logerr "--- Patching libtool:$FILE for -nostdlib support failed"
+    FILE="$1"
+    EXTRAS="$2"
+    logcmd perl -pi -e \
+        's#(\$CC.*\$compiler_flags)#$1 -nostdlib '"$EXTRAS"'#g;' $FILE \
+        || logerr "--- Patching libtool:$FILE for -nostdlib support failed"
 }
 
 #############################################################################
@@ -1349,7 +1369,11 @@ generate_manifest() {
     [ -n "$DESTDIR" -a -d "$DESTDIR" ] || logerr "DESTDIR does not exist"
 
     check_symlinks "$DESTDIR"
-    [ -z "$BATCH" ] && [ $RELVER -ge 151033 ] && check_rtime "$DESTDIR"
+    if [ -z "$BATCH" ]; then
+        [ $RELVER -ge 151033 -a -z "$SKIP_RTIME_CHECK" ] \
+            && check_rtime "$DESTDIR"
+        [ $RELVER -ge 151037 -a -z "$SKIP_SSP_CHECK" ] && check_ssp "$DESTDIR"
+    fi
     check_bmi "$DESTDIR"
     logmsg "--- Generating package manifest from $DESTDIR"
     typeset GENERATE_ARGS=
@@ -2044,7 +2068,7 @@ make_prog() {
     eval set -- $MAKE_ARGS_WS
     [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
     if [ -n "$LIBTOOL_NOSTDLIB" ]; then
-        libtool_nostdlib $LIBTOOL_NOSTDLIB $LIBTOOL_NOSTDLIB_EXTRAS
+        libtool_nostdlib "$LIBTOOL_NOSTDLIB" "$LIBTOOL_NOSTDLIB_EXTRAS"
     fi
     logmsg "--- make"
     logcmd $MAKE $MAKE_JOBS $MAKE_ARGS "$@" $MAKE_TARGET \
@@ -2660,13 +2684,18 @@ check_libabi() {
 # ELF checks
 #############################################################################
 
+rtime_files() {
+    local destdir="$1"
+
+    [ -f "$TMPDIR/rtime.files" ] && return
+    logcmd -p $FIND_ELF -fr $destdir/ > $TMPDIR/rtime.files
+}
+
 check_rtime() {
     local destdir="$1"
 
-    [ -n "$SKIP_RTIME" ] && return
-
     logmsg "-- Checking ELF runtime attributes"
-    logcmd -p $FIND_ELF -fr $destdir/ > $TMPDIR/rtime.files
+    rtime_files "$destdir"
 
     cp $ROOTDIR/doc/rtime $TMPDIR/rtime.cfg
     [ -f $SRCDIR/rtime ] && cat $SRCDIR/rtime >> $TMPDIR/rtime.cfg
@@ -2682,6 +2711,27 @@ check_rtime() {
     fi
 }
 
+check_ssp() {
+    local destdir="$1"
+
+    logmsg "-- Checking stack smashing protection"
+    rtime_files "$destdir"
+
+    : > $TMPDIR/rtime.ssp
+    while read obj; do
+        [ -f "$destdir/$obj" ] || continue
+        nm $destdir/$obj | egrep -s '__stack_chk_guard' \
+            || echo "$obj does not include stack smashing protection" \
+            >> $TMPDIR/rtime.ssp &
+        parallelise $LCPUS
+    done < <(nawk '/^OBJECT/ { print $NF }' $TMPDIR/rtime.files)
+    wait
+    if [ -s "$TMPDIR/rtime.ssp" ]; then
+        cat $TMPDIR/rtime.ssp | tee -a $LOGFILE
+        logerr "Found object(s) without SSP"
+    fi
+}
+
 check_bmi() {
     local destdir="$1"
 
@@ -2692,9 +2742,7 @@ check_bmi() {
     # We explicitly check for this in the elf objects.
 
     logmsg "-- Checking for BMI instructions"
-
-    [ -f "$TMPDIR/rtime.files" ] || \
-        logcmd -p $FIND_ELF -fr $destdir/ > $TMPDIR/rtime.files
+    rtime_files "$destdir"
 
     : > $TMPDIR/rtime.bmi
     while read obj; do

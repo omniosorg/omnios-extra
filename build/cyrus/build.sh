@@ -30,7 +30,7 @@ OPREFIX="$PREFIX"
 PREFIX+="/$PROG"
 
 SKIP_LICENCES='*attribution*'
-SKIP_RTIME=1
+SKIP_RTIME_CHECK=1
 
 set_arch 64
 set_builddir $PROG-imapd-$VER
