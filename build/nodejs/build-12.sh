@@ -48,6 +48,8 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG-$MAJVER
+    -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
     -DVERSION=$MAJVER
 "
 # node contains BMI instructions even when built on an older CPU
