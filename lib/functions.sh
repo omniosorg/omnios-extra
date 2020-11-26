@@ -320,6 +320,12 @@ ord26() {
     echo $ASCII
 }
 
+set_coredir() {
+    # Change the core pattern so that core files contain all available
+    # information and are stored centrally in the provided directory
+    coreadm -P all -p $1/core.%f.%t
+}
+
 #############################################################################
 # Some initialization
 #############################################################################
@@ -338,6 +344,8 @@ SRCDIR=$PWD/`dirname $0`
 . $MYDIR/config.sh
 [ -f $MYDIR/site.sh ] && . $MYDIR/site.sh
 BASE_TMPDIR=$TMPDIR
+
+set_coredir $TMPDIR
 
 BASEPATH=/usr/ccs/bin:$USRBIN:/usr/sbin:$OOCEBIN:$GNUBIN:$SFWBIN
 export PATH=$BASEPATH
@@ -701,6 +709,9 @@ init() {
     [ -n "$PROG" ] || logerr "\$PROG is not defined for this package."
     [ "$TMPDIR" = "$BASE_TMPDIR" ] && TMPDIR="$BASE_TMPDIR/$PROG-$VER"
     [ "$DTMPDIR" = "$BASE_TMPDIR" ] && DTMPDIR="$TMPDIR"
+
+    # Update the core file directory
+    set_coredir $TMPDIR
 
     init_repo
     pkgrepo get -s $PKGSRVR > /dev/null 2>&1 || \
