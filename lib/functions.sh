@@ -1984,11 +1984,11 @@ make_isaexec_stub_arch() {
         fi
         # Skip if we already made a stub for this file
         [ -f "$file" ] && continue
-        logmsg "------ $file"
-        # Run the makeisa.sh script - build a 32-bit isa stub
-        CC=$CC CFLAGS="-m32 -O2" \
-            logcmd $MYDIR/makeisa.sh $dir $file \
+        logmsg "---- Creating ISA stub for $file"
+        logcmd $CC $CFLAGS $CFLAGS32 -o $file \
+            -DFALLBACK_PATH="$dir/$file" $MYDIR/isastub.c \
             || logerr "--- Failed to make isaexec stub for $dir/$file"
+        logcmd strip -x $file
     done
 }
 
