@@ -64,7 +64,7 @@ CONFIGURE_OPTS_64=" \
 init
 download_source $PROG $PROG v$VER
 prep_build
-build
+build -noctf    # ctfconvert does currently not work
 strip_install
 make_package
 clean_up
