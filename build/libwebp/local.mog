@@ -12,15 +12,6 @@
 
 license COPYING license=modified-BSD
 
-# Drop 32bit binaries
-<transform path=$(PREFIX)/s?bin/i386 -> drop>
-
-# Symlink binaries
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
-
-# Symlink man pages
-<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(OPREFIX)/share/man/%<1>/%<2> \
-    target=../../../$(PROG)/share/man/%<1>/%<2> >
+<include binlink.mog>
+<include manlink.mog>
 
