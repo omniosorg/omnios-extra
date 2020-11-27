@@ -103,12 +103,6 @@ config_tex() {
         || logerr '--- fmtutil-sys failed'
 }
 
-make_install() {
-    logmsg "--- make install"
-    logcmd $MAKE DESTDIR=$DESTDIR install-strip \
-        || logerr "--- Make install failed"
-}
-
 CFLAGS+=" -I$OPREFIX/include"
 LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 # export required, otherwise build will fail
@@ -128,6 +122,7 @@ prep_build autoconf -oot
 CONFIGURE_CMD="/usr/bin/bash $TMPDIR/$PROG-$VER-source/configure"
 install_dist
 build
+strip_install
 config_tex
 make_package
 clean_up
