@@ -22,6 +22,8 @@ PKG=ooce/database/lmdb
 SUMMARY="lmdb"
 DESC="Lightning Memory-Mapped Database"
 
+forgo_isaexec
+
 SKIP_LICENCES=OpenLDAP
 
 PROGUCVER=${PROG^^}_$VER
@@ -34,6 +36,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 MAKE_ARGS+=" -e"
@@ -44,14 +47,10 @@ MAKE_INSTALL_ARGS="
 "
 
 MAKE_INSTALL_ARGS_32="
-    bindir=$PREFIX/bin/$ISAPART
-    sbindir=$PREFIX/sbin/$ISAPART
     libdir=$OPREFIX/lib
 "
 
 MAKE_INSTALL_ARGS_64="
-    bindir=$PREFIX/bin
-    sbindir=$PREFIX/sbin
     libdir=$OPREFIX/lib/$ISAPART64
 "
 
