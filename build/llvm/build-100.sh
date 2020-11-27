@@ -62,7 +62,7 @@ init
 download_source $PROG $PROG $VER.src
 patch_source
 prep_build cmake
-build
+build -noctf    # C++
 run_testsuite check-all
 make_package
 clean_up
