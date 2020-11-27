@@ -55,7 +55,7 @@ init
 download_source $PROG $PROG "$VER.source"
 patch_source
 prep_build
-build
+build -noctf
 make_package
 clean_up
 
