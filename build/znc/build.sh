@@ -47,7 +47,7 @@ download_source $PROG $PROG $VER
 patch_source
 install_modules
 prep_build
-build
+build -noctf    # C++
 strip_install
 install_smf network znc.xml
 make_package
