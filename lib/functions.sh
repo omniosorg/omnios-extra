@@ -345,7 +345,11 @@ export PATH=$BASEPATH
 # Platform information, e.g. 5.11
 SUNOSVER=`uname -r`
 
+MYSCRIPT=${BASH_SOURCE[1]##*/}
+[[ $MYSCRIPT = build*.sh ]] && LOGFILE=$PWD/${MYSCRIPT/%.sh/.log}
+
 [ -f "$LOGFILE" ] && mv $LOGFILE $LOGFILE.1
+
 process_opts $@
 shift $((OPTIND - 1))
 
