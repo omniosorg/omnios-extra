@@ -231,7 +231,7 @@ make_install() {
 
 download_source $PROG $PROG $VER
 patch_source
-build
+build -noctf
 make_package vbox.mog
 
 # package the additions
