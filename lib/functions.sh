@@ -320,6 +320,12 @@ ord26() {
     echo $ASCII
 }
 
+set_coredir() {
+    # Change the core pattern so that core files contain all available
+    # information and are stored centrally in the provided directory
+    coreadm -P all -p $1/core.%f.%t
+}
+
 #############################################################################
 # Some initialization
 #############################################################################
@@ -338,6 +344,8 @@ SRCDIR=$PWD/`dirname $0`
 . $MYDIR/config.sh
 [ -f $MYDIR/site.sh ] && . $MYDIR/site.sh
 BASE_TMPDIR=$TMPDIR
+
+set_coredir $TMPDIR
 
 BASEPATH=/usr/ccs/bin:$USRBIN:/usr/sbin:$OOCEBIN:$GNUBIN:$SFWBIN
 export PATH=$BASEPATH
@@ -705,6 +713,9 @@ init() {
     [ -n "$PROG" ] || logerr "\$PROG is not defined for this package."
     [ "$TMPDIR" = "$BASE_TMPDIR" ] && TMPDIR="$BASE_TMPDIR/$PROG-$VER"
     [ "$DTMPDIR" = "$BASE_TMPDIR" ] && DTMPDIR="$TMPDIR"
+
+    # Update the core file directory
+    set_coredir $TMPDIR
 
     init_repo
     pkgrepo get -s $PKGSRVR > /dev/null 2>&1 || \
@@ -2140,18 +2151,19 @@ make_install_in() {
 }
 
 build() {
+    local ctf=${CTF_DEFAULT:-0}
+
     while [[ "$1" = -* ]]; do
         case "$1" in
-            -ctf)
-                CFLAGS+=" -gdwarf-2"
-                ENABLE_CTF=1
-                ;;
-            -multi)
-                MULTI_BUILD=1
-                ;;
+            -ctf)   ctf=1 ;;
+            -noctf) ctf=0 ;;
+            -multi) MULTI_BUILD=1 ;;
         esac
         shift
     done
+
+    [ $ctf -eq 1 ] && CFLAGS+=" $CTF_CFLAGS"
+
     [ -n "$MULTI_BUILD" ] && logmsg "--- Using multiple build directories"
     typeset _BUILDDIR=$BUILDDIR
     for b in $BUILDORDER; do
@@ -2166,7 +2178,7 @@ build() {
         fi
     done
 
-    [ -n "$ENABLE_CTF" ] && convert_ctf
+    [ $ctf -eq 1 ] && convert_ctf
 }
 
 check_buildlog() {
@@ -2517,26 +2529,42 @@ strip_install() {
 
 convert_ctf() {
     pushd $DESTDIR >/dev/null
+
+    local ctftag='---- CTF:'
+
     while read file; do
-        file $file | $EGREP -s 'ELF.*not stripped' || continue
-        typeset mode=`stat -c %a "$file"`
-        typeset tf="$file.$$"
-        rm -f "$tf"
+        file $file | $EGREP -s ':	ELF' || continue
+
         if $CTFDUMP -h "$file" 1>/dev/null 2>&1; then
-            #logmsg "------ CTF data already present for $file"
-            :
-        elif logcmd $CTFCONVERT $CTFCONVERTFLAGS \
-          -l "$PROG-$VER" -o "$tf" "$file" && [ -s "$tf" ]; then
-            logmsg "------ Converting CTF data for $file"
-            logcmd chmod u+w "$file" || logerr -b "chmod u+w failed: $file"
-            logcmd cp "$tf" "$file" || logerr -b "copy failed: $file"
-        else
-            logmsg "------ Failed to convert CTF data for $file"
+            continue
         fi
+
+        typeset mode=`stat -c %a "$file"`
+        logcmd chmod u+w "$file" || logerr -b "chmod u+w failed: $file"
+        typeset tf="$file.$$"
+
+        if logcmd $CTFCONVERT $CTF_FLAGS -l "$PROG-$VER" -o "$tf" "$file"; then
+            if [ -s "$tf" ]; then
+                logcmd cp "$tf" "$file"
+                if [ -z "$BATCH" -o -n "$CTF_AUDIT" ]; then
+                    logmsg -n "$ctftag $file" \
+                        "`$CTFDUMP -S $file | \
+                        nawk '/number of types/{print $6}'` types"
+                else
+                    logmsg "$ctftag converted $file"
+                fi
+            else
+                logmsg "$ctftag no DWARF data $file"
+            fi
+        else
+            logmsg "$ctftag failed $file"
+        fi
+
         logcmd rm -f "$tf"
         logcmd strip -x "$file"
         logcmd chmod $mode "$file" || logerr -b "chmod failed: $file"
     done < <(find . -depth -type f -perm -0100)
+
     popd >/dev/null
 }
 

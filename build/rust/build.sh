@@ -110,7 +110,7 @@ init
 download_source $PROG ${PROG}c $VER-src
 patch_source
 prep_build
-build
+build -noctf
 make_package
 clean_up
 

@@ -75,7 +75,7 @@ init
 download_source $PROG "$PROG$VER.src"
 patch_source
 prep_build
-build
+build -noctf
 LC_ALL=en_US.UTF-8 make_package
 clean_up
 

@@ -32,12 +32,16 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
+# ffmpeg contains BMI instructions even when built on an older CPU
+BMI_EXPECTED=1
+
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --incdir=$OPREFIX/include
     --disable-static
     --enable-shared
-    --strip=gstrip
+    --disable-debug
+    --disable-stripping
 "
 CONFIGURE_OPTS_32="
     --libdir=$OPREFIX/lib
@@ -54,6 +58,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+strip_install
 make_package
 clean_up
 

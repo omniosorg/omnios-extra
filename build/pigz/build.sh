@@ -32,7 +32,13 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-configure64() { :; }
+configure64() {
+    MAKE_ARGS_WS="
+        -e
+        CFLAGS=\"$CFLAGS64 $CFLAGS\"
+        LIBS=\"-lm -lz\"
+    "
+}
 
 make_install64() {
     logmsg "--- make install"

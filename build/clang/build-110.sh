@@ -74,7 +74,8 @@ init
 download_source $PROG $PROG $VER.src
 patch_source
 prep_build cmake
-build
+build -noctf    # C++
+strip_install
 make_package
 clean_up
 

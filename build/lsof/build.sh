@@ -39,6 +39,11 @@ XFORM_ARGS="
     -DVERSION=$VER
 "
 
+MAKE_ARGS_WS="
+    -e
+    DEBUG=\"$CTF_CFLAGS $SSPFLAGS\"
+"
+
 configure64() {
     logmsg "--- configure (64-bit)"
     yes | logcmd ./Configure solaris || logerr "--- Configure failed"

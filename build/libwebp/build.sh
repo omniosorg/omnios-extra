@@ -23,6 +23,8 @@ SUMMARY="libwebp"
 DESC="WebP - A modern image format that provides lossless and lossy compression"
 DESC+=" for images on the web"
 
+forgo_isaexec
+
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
@@ -37,23 +39,22 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS="
     --disable-static
     --prefix=$PREFIX
     --includedir=$OPREFIX/include
+    --bindir=$PREFIX/bin
+    --sbindir=$PREFIX/sbin
     --enable-everything
 "
 CONFIGURE_OPTS_WS_32="
-    --bindir=$PREFIX/bin/$ISAPART
-    --sbindir=$PREFIX/sbin/$ISAPART
     --libdir=$OPREFIX/lib
     LDFLAGS=\"-L$OPREFIX/lib -R$OPREFIX/lib\"
 "
 CONFIGURE_OPTS_WS_64="
-    --bindir=$PREFIX/bin
-    --sbindir=$PREFIX/sbin
     --libdir=$OPREFIX/lib/$ISAPART64
     LDFLAGS=\"-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64\"
 "

@@ -49,7 +49,7 @@ init
 download_source $PROG $BUILDDIR
 patch_source
 prep_build cmake
-build
+build -noctf
 make_package
 clean_up
 
