@@ -2255,6 +2255,7 @@ build_dependency() {
         case $1 in
             -merge)     merge=1 ;;
             -ctf)       buildargs+=" -ctf" ;;
+            -noctf)     buildargs+=" -noctf" ;;
         esac
         shift
     done
