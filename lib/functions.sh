@@ -2319,7 +2319,7 @@ python_path_fixup() {
     pushd $DESTDIR/$PREFIX/bin >/dev/null || return
     for f in *; do
         [ -f "$f" ] || continue
-        file "$f" | egrep -s 'executable.*python.*script' || continue
+        file "$f" | $EGREP -s 'executable.*python.*script' || continue
         logmsg "Fixing python library path in $f"
         sed -i "1a\\
 import sys; sys.path.insert(1, '$PREFIX/lib/python$PYTHONVER/vendor-packages')
@@ -2535,6 +2535,11 @@ convert_ctf() {
 
     while read file; do
         file $file | $EGREP -s ':	ELF' || continue
+
+        if [ -n "$CTFSKIP" ] && echo $file | $EGREP -s "$CTFSKIP"; then
+            logmsg "$ctftag skipped $file"
+            continue
+        fi
 
         if $CTFDUMP -h "$file" 1>/dev/null 2>&1; then
             continue
@@ -2758,7 +2763,7 @@ check_ssp() {
     : > $TMPDIR/rtime.ssp
     while read obj; do
         [ -f "$destdir/$obj" ] || continue
-        nm $destdir/$obj | egrep -s '__stack_chk_guard' \
+        nm $destdir/$obj | $EGREP -s '__stack_chk_guard' \
             || echo "$obj does not include stack smashing protection" \
             >> $TMPDIR/rtime.ssp &
         parallelise $LCPUS
