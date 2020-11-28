@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -21,6 +21,10 @@ VER=1.3.3
 PKG=ooce/audio/flac
 SUMMARY="flac"
 DESC="Free Lossless Audio Codec"
+
+forgo_isaexec
+CTFSKIP="libFLAC\+\+\.so" # C++ object
+CTF_FLAGS+=" -m"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -34,6 +38,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS="
@@ -41,13 +46,9 @@ CONFIGURE_OPTS="
     --includedir=$OPREFIX/include
 "
 CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
-    --sbindir=$PREFIX/sbin/$ISAPART
     --libdir=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    --bindir=$PREFIX/bin
-    --sbindir=$PREFIX/sbin
     --libdir=$OPREFIX/lib/$ISAPART64
     --build=$TRIPLET64
 "
