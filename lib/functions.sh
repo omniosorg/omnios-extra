@@ -2559,6 +2559,11 @@ convert_ctf() {
             fi
         else
             logmsg "$ctftag failed $file"
+            if [ -n "$CTF_AUDIT" ]; then
+                logcmd mkdir -p $BASE_TMPDIR/ctfobj
+                typeset f=${file:2}
+                logcmd cp $file $BASE_TMPDIR/ctfobj/${f//\//_}
+            fi
         fi
 
         logcmd rm -f "$tf"
