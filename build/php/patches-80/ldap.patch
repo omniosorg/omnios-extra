@@ -1,0 +1,59 @@
+
+Use the thread-safe LDAP library by default. This also prevents a conflict
+with the illumos libldap in /usr/lib.
+
+diff -wpruN '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -45083,7 +45083,7 @@ fi
+ 
+ 
+   if test "$ext_shared" = "yes"; then
+-    LDAP_SHARED_LIBADD="-lldap $LDAP_SHARED_LIBADD"
++    LDAP_SHARED_LIBADD="-lldap_r $LDAP_SHARED_LIBADD"
+     if test -n "$LDAP_LIBDIR"; then
+ 
+   if test "$LDAP_LIBDIR" != "/usr/$PHP_LIBDIR" && test "$LDAP_LIBDIR" != "/usr/lib"; then
+@@ -45167,7 +45167,7 @@ fi
+   case ldap in
+   c|c_r|pthread*) ;;
+   *)
+-      LIBS="-lldap $LIBS"
++      LIBS="-lldap_r $LIBS"
+    ;;
+   esac
+ 
+@@ -45182,7 +45182,7 @@ fi
+ 
+ 
+   if test "$ext_shared" = "yes"; then
+-    LDAP_SHARED_LIBADD="-lldap $LDAP_SHARED_LIBADD"
++    LDAP_SHARED_LIBADD="-lldap_r $LDAP_SHARED_LIBADD"
+     if test -n "$LDAP_LIBDIR"; then
+ 
+   if test "$LDAP_LIBDIR" != "/usr/$PHP_LIBDIR" && test "$LDAP_LIBDIR" != "/usr/lib"; then
+@@ -45266,7 +45266,7 @@ fi
+   case ldap in
+   c|c_r|pthread*) ;;
+   *)
+-      LIBS="-lldap $LIBS"
++      LIBS="-lldap_r $LIBS"
+    ;;
+   esac
+ 
+diff -wpruN '--exclude=*.orig' a~/ext/ldap/config.m4 a/ext/ldap/config.m4
+--- a~/ext/ldap/config.m4	1970-01-01 00:00:00
++++ a/ext/ldap/config.m4	1970-01-01 00:00:00
+@@ -70,10 +70,10 @@ if test "$PHP_LDAP" != "no"; then
+ 
+   if test -f $LDAP_LIBDIR/liblber.a || test -f $LDAP_LIBDIR/liblber.$SHLIB_SUFFIX_NAME || test -f $LDAP_LIBDIR/$MACHINE_INCLUDES/liblber.a || test -f $LDAP_LIBDIR/$MACHINE_INCLUDES/liblber.$SHLIB_SUFFIX_NAME; then
+     PHP_ADD_LIBRARY_WITH_PATH(lber, $LDAP_LIBDIR, LDAP_SHARED_LIBADD)
+-    PHP_ADD_LIBRARY_WITH_PATH(ldap, $LDAP_LIBDIR, LDAP_SHARED_LIBADD)
++    PHP_ADD_LIBRARY_WITH_PATH(ldap_r, $LDAP_LIBDIR, LDAP_SHARED_LIBADD)
+ 
+   elif test -f $LDAP_LIBDIR/libldap.$SHLIB_SUFFIX_NAME || test -f $LDAP_LIBDIR/libldap.$SHLIB_SUFFIX_NAME.3 || test -f $LDAP_LIBDIR/$MACHINE_INCLUDES/libldap.$SHLIB_SUFFIX_NAME || test -f $LDAP_LIBDIR/$MACHINE_INCLUDES/libldap.$SHLIB_SUFFIX_NAME.3 || test -f $LDAP_LIBDIR/libldap.3.dylib; then
+-    PHP_ADD_LIBRARY_WITH_PATH(ldap, $LDAP_LIBDIR, LDAP_SHARED_LIBADD)
++    PHP_ADD_LIBRARY_WITH_PATH(ldap_r, $LDAP_LIBDIR, LDAP_SHARED_LIBADD)
+ 
+   elif test -f $LDAP_LIBDIR/libclntsh.$SHLIB_SUFFIX_NAME.12.1 || test -f $LDAP_LIBDIR/$MACHINE_INCLUDES/libclntsh.$SHLIB_SUFFIX_NAME.12.1; then
+     PHP_ADD_LIBRARY_WITH_PATH(clntsh, $LDAP_LIBDIR, LDAP_SHARED_LIBADD)
