@@ -11,15 +11,6 @@
 
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-# Symlink binaries
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
-
-# Symlink man pages
-<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(OPREFIX)/share/man/%<1>/%<2> \
-    target=../../../$(PROG)/share/man/%<1>/%<2> >
-
 <transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
 
 # fix group and permissions
@@ -34,6 +25,9 @@
     -> add restart_fmri svc:/application/cups/in-lpd:default>
 
 <transform path=etc/dbus-1 -> drop>
+
+<include binlink.mog>
+<include manlink.mog>
 
 license LICENSE license=Apache2
 
