@@ -23,29 +23,18 @@ SUMMARY="FactCGI Library"
 DESC="FastCGI.com fcgi2 Development Kit fork from \
 http://repo.or.cz/fcgi2.git + last snapshot"
 
-SKIP_LICENCES=OMI
+forgo_isaexec
+CTFSKIP="libfcgi\+\+\.so\.0\.0\.0" # C++ object
 
-XFORM_ARGS="-DPREFIX=${PREFIX#/}"
+SKIP_LICENCES=OMI
 
 # SHELL gets overwritten with CONFIG_SHELL
 export CONFIG_SHELL=$SHELL
 
-# Skip isaexec and deliver 64-bit binaries directly to bin and sbin
-# 32-bit binaries are stripped in local.mog
-CONFIGURE_OPTS_64+=" --bindir=$PREFIX/bin"
-
-# $MAKE distclean wipes configure; rerun autoreconf
-save_function configure64 _configure64
-configure64() {
-    run_autoreconf -i
-    _configure64
-}
-
 init
 download_source $PROG $VER
-run_autoreconf -i
 patch_source
-prep_build
+prep_build autoconf -autoreconf
 build
 strip_install
 make_package
