@@ -512,7 +512,12 @@ reset_configure_opts() {
             --libdir=$PREFIX/lib
             --libexecdir=$PREFIX/libexec
         "
-        CONFIGURE_OPTS_64="$CONFIGURE_OPTS_32"
+        CONFIGURE_OPTS_64+="
+            --bindir=$PREFIX/bin
+            --sbindir=$PREFIX/sbin
+            --libdir=$PREFIX/lib/$ISAPART64
+            --libexecdir=$PREFIX/libexec/$ISAPART64
+        "
     else
         CONFIGURE_OPTS_32+="
             --bindir=$PREFIX/bin/$ISAPART
