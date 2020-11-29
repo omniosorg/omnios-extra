@@ -18,7 +18,7 @@
 
 PROG=ninja
 PKG=ooce/developer/ninja
-VER=1.10.1
+VER=1.10.2
 SUMMARY="Ninja"
 DESC="A small build system with a focus on speed"
 
@@ -37,7 +37,7 @@ download_source $PROG "v$VER"
 patch_source
 prep_build cmake
 build -noctf    # C++
-run_testsuite "" "build.64"
+run_testsuite
 make_package
 clean_up
 

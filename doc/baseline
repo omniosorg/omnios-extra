@@ -19,6 +19,7 @@ extra.omnios ooce/application/php-73
 extra.omnios ooce/application/php-73/imagick
 extra.omnios ooce/application/php-74
 extra.omnios ooce/application/php-74/imagick
+extra.omnios ooce/application/php-80
 extra.omnios ooce/application/php-common
 extra.omnios ooce/application/texlive
 extra.omnios ooce/application/tidy
