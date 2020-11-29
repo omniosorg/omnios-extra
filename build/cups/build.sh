@@ -30,6 +30,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS="
@@ -42,6 +43,7 @@ CONFIGURE_OPTS="
     --with-smfmanifestdir=/lib/svc/manifest/application
     --with-cups-user=lp
     --with-cups-group=lp
+    --enable-debug
     --disable-static
     --disable-gnutls
     --without-bundledir

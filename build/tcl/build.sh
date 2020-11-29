@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -34,6 +34,7 @@ PATCHDIR+=-$PROG
 SKIP_LICENCES=BSD-style
 
 set_arch 64
+CTF_FLAGS+=" -m"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}

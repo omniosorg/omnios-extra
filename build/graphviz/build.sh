@@ -28,6 +28,7 @@ PREFIX+="/$PROG"
 SKIP_LICENCES=Eclipse
 
 set_arch 64
+CTF_FLAGS+=" -m"
 
 BUILD_DEPENDS_IPS="
     ooce/library/pango

@@ -23,24 +23,20 @@ PKG=ooce/security/gnupg
 SUMMARY="$PROG - GNU Privacy Guard"
 DESC="$SUMMARY"
 
+set_arch 64
+CTF_FLAGS+=" -m"
+
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 reset_configure_opts
-
-# Build 64-bit only and skip the arch-specific directories
-BUILDARCH=64
-# GCC can't handle the assembly files that come with the source.
-CONFIGURE_OPTS="
-    --bindir=$PREFIX/bin
-    --libdir=$PREFIX/lib
-    --disable-asm
-"
 
 init
 download_source $PROG $PROG $VER

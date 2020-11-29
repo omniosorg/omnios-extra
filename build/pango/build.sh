@@ -26,6 +26,8 @@ DESC="Pango is a library for laying out and rendering of text"
 HARFBUZZVER=2.7.2
 FRIBIDIVER=1.0.10
 
+CTFSKIP="hb-"   # merged C++ binaries from harfbuzz
+
 BUILD_DEPENDS_IPS="
     ooce/library/fontconfig
     ooce/library/freetype2
@@ -68,7 +70,7 @@ prep_build
 ######################################################################
 
 EXPECTED_OPTIONS="CAIRO CAIRO_FT FONTCONFIG FREETYPE GLIB"
-build_dependency -merge harfbuzz harfbuzz-$HARFBUZZVER \
+build_dependency -merge -noctf harfbuzz harfbuzz-$HARFBUZZVER \
     harfbuzz harfbuzz $HARFBUZZVER
 
 export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/harfbuzz"

@@ -40,7 +40,7 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-build
+build -noctf    # C++
 make_package
 clean_up
 

@@ -23,6 +23,9 @@ PKG=ooce/application/texlive
 SUMMARY="TeX Live"
 DESC="LaTeX distribution"
 
+set_arch 64
+CTF_FLAGS+=" -m"
+
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
@@ -41,8 +44,6 @@ set_builddir $PROG-$VER-source
 
 # texlive doesn't check for gmake
 export MAKE
-
-set_arch 64
 
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX

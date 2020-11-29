@@ -39,6 +39,7 @@ VARPATH=/var$PREFIX
 RUNPATH=$VARPATH/run
 
 set_arch 64
+CTF_FLAGS+=" -m"
 
 RUN_DEPENDS_IPS="ooce/database/postgresql-common"
 
