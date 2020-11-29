@@ -218,9 +218,7 @@ FIND_ELF=$ONBLDBIN/find_elf
 CHECK_RTIME=$ONBLDBIN/check_rtime
 CTFDUMP=$ONBLDBIN/i386/ctfdump
 CTFCONVERT=$ONBLDBIN/i386/ctfconvert
-# For now, we need to universally allow missing debug data
-# see https://www.illumos.org/issues/13337
-CTF_FLAGS=-m
+CTF_FLAGS=
 CTF_CFLAGS="-gdwarf-2"
 
 # Enable CTF by default from r151037 on

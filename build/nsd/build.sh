@@ -42,6 +42,7 @@ XFORM_ARGS="
 BUILD_DEPENDS_IPS="ooce/library/libev"
 
 set_arch 64
+CTF_FLAGS+=" -m"
 
 CONFIGURE_OPTS="
     --sysconfdir=/etc$OPREFIX

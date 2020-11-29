@@ -22,6 +22,9 @@ PKG=ooce/ooceapps
 SUMMARY="OOCEapps"
 DESC="Web integrations for OmniOS"
 
+set_arch 64
+CTFSKIP="Parser\.so"
+
 set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
 # some perl modules require gnu-tar to unpack
@@ -32,13 +35,12 @@ RUN_DEPENDS_IPS="ooce/application/texlive"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
 "
-
-set_arch 64
 
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX

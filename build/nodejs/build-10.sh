@@ -24,6 +24,7 @@ DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
 DESC+="It is intended for writing scalable network programs such as web servers."
 
 set_arch 64
+CTF_FLAGS+=" -m"
 
 set_builddir $PROG-v$VER
 

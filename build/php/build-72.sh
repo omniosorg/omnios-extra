@@ -23,6 +23,7 @@ SUMMARY="PHP 7.2"
 DESC="A popular general-purpose scripting language"
 
 set_arch 64
+CTF_FLAGS+=" -m"
 
 SKIP_LICENCES=PHP
 

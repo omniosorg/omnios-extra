@@ -38,6 +38,7 @@ XFORM_ARGS="
 "
 
 set_arch 64
+CTF_FLAGS+=" -m"
 
 init
 download_source $PROG $PROG $VER
