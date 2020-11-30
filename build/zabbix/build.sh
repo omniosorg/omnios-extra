@@ -60,6 +60,9 @@ CONFIGURE_OPTS="
     --with-openssl
     --with-ldap=$OPREFIX
 "
+CONFIGURE_OPTS_64+="
+    --libdir=$PREFIX/lib
+"
 
 # See https://support.zabbix.com/browse/ZBX-18210
 # and https://support.zabbix.com/browse/ZBX-16928
