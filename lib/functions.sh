@@ -57,7 +57,7 @@ process_opts() {
     SKIP_TESTSUITE=
     SKIP_CHECKSUM=
     EXTRACT_MODE=0
-    while getopts "bcDiPptsf:ha:d:Llr:x" opt; do
+    while getopts "bciPptsf:ha:d:Llr:x" opt; do
         case $opt in
             h)
                 show_usage
@@ -133,7 +133,6 @@ Usage: $0 [-blt] [-f FLAVOR] [-h] [-a 32|64|both] [-d DEPVER]
   -b        : batch mode (exit on errors without asking)
   -c        : use 'ccache' to speed up (re-)compilation
   -d DEPVER : specify an extra dependency version (no default)
-  -D        : collect package diff output in batch mode
   -f FLAVOR : build a specific package flavor
   -h        : print this help text
   -i        : autoinstall mode (install build deps)
