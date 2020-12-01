@@ -42,6 +42,10 @@ XFORM_ARGS="
     -DsVERSION=$sMAJVER
 "
 
+CONFIGURE_OPTS_64+="
+    --libdir=$PREFIX/lib
+"
+
 CFLAGS="-I/usr/include/gmp"
 
 init

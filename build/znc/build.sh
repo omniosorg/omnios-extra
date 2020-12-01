@@ -26,6 +26,7 @@ DESC+="can disconnect/reconnect without losing the chat session"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
@@ -41,6 +42,10 @@ install_modules() {
         logcmd cp $f $TMPDIR/$BUILDDIR/modules/
     done
 }
+
+CONFIGURE_OPTS_64+="
+    --libdir=$PREFIX/lib
+"
 
 init
 download_source $PROG $PROG $VER

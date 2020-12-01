@@ -27,6 +27,8 @@ DESC+="PNG, JPEG, GIF, HEIC, TIFF, DPX, EXR, WebP, Postscript, PDF, and SVG."
 LIBDE265VER=1.0.8
 LIBHEIFVER=1.9.1
 
+CTFSKIP="libMagick\+\+" # C++ object
+
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
@@ -65,7 +67,7 @@ prep_build
 
 save_buildenv
 CONFIGURE_OPTS+=" --disable-sherlock265 --disable-encoder --disable-dec265"
-build_dependency libde265 libde265-$LIBDE265VER $PROG/heif \
+build_dependency -noctf libde265 libde265-$LIBDE265VER $PROG/heif \
     libde265 $LIBDE265VER
 restore_buildenv
 
@@ -84,7 +86,7 @@ LDFLAGS32+=" -L$OPREFIX/lib"
 LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64"
 
 CONFIGURE_OPTS+=" --disable-examples --disable-go"
-build_dependency libheif libheif-$LIBHEIFVER $PROG/heif \
+build_dependency -noctf libheif libheif-$LIBHEIFVER $PROG/heif \
     libheif $LIBHEIFVER
 restore_buildenv
 save_function _configure64 configure64

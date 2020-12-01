@@ -360,6 +360,7 @@ diffpkg() {
     repo="$PKGSRVR"
 
     [ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
+    : > $TMPDIR/pkg.diff
 
     pkgrepo -s $repo list | nawk '
         $1 == "PUBLISHER" { next }

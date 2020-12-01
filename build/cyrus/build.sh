@@ -53,9 +53,7 @@ prep_build autoconf -autoreconf
 # Download and build bundled dependencies
 
 save_buildenv
-CONFIGURE_OPTS_64=
 
-CONFIGURE_OPTS="--prefix=$PREFIX --libdir=$PREFIX/lib/$ISAPART64"
 build_dependency -ctf jansson jansson-$JANSSONVER $PROG/jansson v$JANSSONVER
 
 CONFIGURE_OPTS+=" --disable-tests --disable-samples"
@@ -116,7 +114,7 @@ CONFIGURE_OPTS="
     --enable-idled
     --with-sasl=$OPREFIX
 "
-CONFIGURE_OPTS_64+=" --libdir=$PREFIX/lib/$ISAPART64"
+CONFIGURE_OPTS_64+=" --libexecdir=$PREFIX/libexec"
 
 save_function make_install _make_install
 make_install() {

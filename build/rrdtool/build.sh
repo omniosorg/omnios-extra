@@ -41,7 +41,10 @@ CONFIGURE_OPTS="
 
 reset_configure_opts
 
-CPPFLAGS+=" -I/usr/include/python${PYTHONVER}m"
+CONFIGURE_OPTS_64+="
+    --libdir=$PREFIX/lib
+"
+
 LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
 
 export PYTHON

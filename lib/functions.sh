@@ -1757,10 +1757,9 @@ diff_package() {
             <(pkgitems -g $PKGSRVR $fmri) \
             >> $of; then
                     logmsg -e "----- $fmri has changed"
-                    mv $of $TMPDIR/pkg.diff
-        else
-            rm -f $of
+                    cat $of >> $TMPDIR/pkg.diff
         fi
+        rm -f $of
     else
         logmsg "--- Comparing old package with new"
         if ! gdiff -U0 --color=always --minimal \

@@ -236,6 +236,11 @@ audit()
                         */pango:1.44*)
                             [ $r = 151030 ] || ok=0
                             ;;
+                        # pango is stuck on 1.47 on r151034 due to the older
+                        # version of meson there.
+                        */pango:1.47*)
+                            [ $r = 151034 ] || ok=0
+                            ;;
                         *) ok=0 ;;
                     esac
                     ;;
