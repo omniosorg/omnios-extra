@@ -6,7 +6,7 @@ diff -wpruN '--exclude=*.orig' a~/tools/genv8constants.py a/tools/genv8constants
  try:
    pipe = subprocess.Popen([ 'objdump', '-z', '-D', sys.argv[2] ],
 -      bufsize=-1, stdout=subprocess.PIPE).stdout
-+      bufsize=-1, stdout=subprocess.PIPE, text=True).stdout
++      bufsize=-1, stdout=subprocess.PIPE, universal_newlines=True).stdout
  except OSError as e:
    if e.errno == errno.ENOENT:
      print('''
