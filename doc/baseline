@@ -14,7 +14,6 @@ extra.omnios ooce/application/nagios-nrdp
 extra.omnios ooce/application/nagios-nrpe
 extra.omnios ooce/application/nagios-nsca
 extra.omnios ooce/application/nagios-plugins
-extra.omnios ooce/application/php-72 l
 extra.omnios ooce/application/php-73
 extra.omnios ooce/application/php-73/imagick
 extra.omnios ooce/application/php-74
