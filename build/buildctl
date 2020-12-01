@@ -94,8 +94,8 @@ $0
     list-build [grep pattern]      - sorted in build order
     list-built [grep pattern]      - show package build status
     build <pkg>
-    build [-e|E|-D] all
-    build [-e|E|-D] parallel <num> - start/continue parallel build
+    build [-e|E] all
+    build [-e|E] parallel <num>    - start/continue parallel build
     build continue                 - continue interrupted build
     build from <pkg>               - build <pkg> then those after
     baseline [create [repo]]       - check or create pkg baseline
@@ -103,7 +103,6 @@ $0
 
 Options:
 
-    -D                             - record any package content differences
     -e                             - also build packages flagged as expensive
     -E                             - force (re-)build of expensive packages
 
@@ -481,7 +480,6 @@ count_expensive() {
 set_batch_build_flags() {
     build_flags="-b -t -l"
     [ -n "$USE_CCACHE" ] && build_flags+=" -c"
-    [ -n "$KEEP_DIFFS" ] && build_flags+=" -D"
     export BATCH=1  # So logerr() exits without prompting
     export SKIP_PKG_DIFF=1
     export SKIP_PKGLINT=1
@@ -682,7 +680,6 @@ case "$1" in
             case $1 in
                 -e) BUILD_EXPENSIVE=1 ;;
                 -c) USE_CCACHE=1 ;;
-                -D) KEEP_DIFFS=1 ;;
                 -E)
                     # Force (re)build of expensive packages
                     remove_expensive
