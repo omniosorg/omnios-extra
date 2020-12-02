@@ -73,7 +73,7 @@
 | ooce/library/fontconfig	| 2.13.1	| https://www.freedesktop.org/software/fontconfig/release/ https://www.freedesktop.org/wiki/Software/fontconfig/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/freetype2	| 2.10.4	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/icu4c		| 67.1		| https://github.com/unicode-org/icu/releases | Currently used solely by cyrus-imapd
+| ooce/library/icu4c		| 68.1		| https://github.com/unicode-org/icu/releases | Currently used solely by cyrus-imapd
 | ooce/library/jansson		| 2.13.1	| https://github.com/akheron/jansson/releases | Currently used solely by cyrus-imapd
 | ooce/library/libarchive	| 3.4.3		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libde265		| 1.0.8		| https://github.com/strukturag/libde265/releases | Currently used solely by ImageMagick
@@ -107,7 +107,7 @@
 | ooce/multimedia/ffmpeg	| 4.3.1		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/minidlna	| 1.3.0		| https://sourceforge.net/projects/minidlna/files/minidlna/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/bind-911		| 9.11.25	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/cyrus-imapd	| 3.2.4		| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/network/cyrus-imapd	| 3.2.5		| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/fping		| 5.0		| https://github.com/schweikert/fping/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.2.2		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosh		| 1.3.2		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)

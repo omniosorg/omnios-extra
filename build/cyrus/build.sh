@@ -17,13 +17,13 @@
 . ../../lib/functions.sh
 
 PROG=cyrus
-VER=3.2.4
+VER=3.2.5
 PKG=ooce/network/cyrus-imapd
 SUMMARY="Cyrus IMAP is an email, contacts and calendar server"
 DESC="$SUMMARY"
 
 JANSSONVER=2.13.1
-ICUVER=67.1
+ICUVER=68.1
 ICALVER=3.0.8
 
 OPREFIX="$PREFIX"
