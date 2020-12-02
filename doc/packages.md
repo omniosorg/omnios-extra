@@ -77,7 +77,7 @@
 | ooce/library/jansson		| 2.13.1	| https://github.com/akheron/jansson/releases | Currently used solely by cyrus-imapd
 | ooce/library/libarchive	| 3.4.3		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libde265		| 1.0.8		| https://github.com/strukturag/libde265/releases | Currently used solely by ImageMagick
-| ooce/library/libdwarf		| 20201020	| https://www.prevanders.net/dwarf.html | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libdwarf		| 20201201	| https://www.prevanders.net/dwarf.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libgd		| 2.3.0		| https://github.com/libgd/libgd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libical		| 3.0.8		| https://github.com/libical/libical/releases | Currently used solely by cyrus-imapd
 | ooce/library/libev		| 4.33		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
