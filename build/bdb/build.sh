@@ -54,7 +54,8 @@ CONFIGURE_OPTS_64="
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
-LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib -lssp_ns"
+LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib"
+[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
 LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 export EXTLIBS=-lm
