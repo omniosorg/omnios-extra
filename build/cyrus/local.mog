@@ -61,3 +61,7 @@ file ../cyrus.conf path=etc/$(PREFIX)/cyrus.conf owner=root group=bin \
 file ../imapd.conf path=etc/$(PREFIX)/imapd.conf owner=root group=cyrus \
     mode=0640 overlay=true preserve=renamenew
 
+# Restart services on upgrade
+<transform file path=$(PREFIX)/libexec \
+    -> set restart_fmri svc:/network/cyrus:default>
+
