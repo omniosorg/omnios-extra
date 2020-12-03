@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=unbound
-VER=1.12.0
+VER=1.13.0
 PKG=ooce/network/unbound
 SUMMARY="DNS resolver"
 DESC="Unbound is a validating, recursive, caching DNS resolver."
@@ -39,6 +39,7 @@ CONFIGURE_OPTS="
     --sysconfdir=/etc$OPREFIX
     --with-run-dir=/var$PREFIX
     --with-libevent=/opt/ooce
+    --with-libnghttp2
     --with-pthreads
 "
 CONFIGURE_OPTS_64+="
