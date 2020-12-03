@@ -2709,11 +2709,12 @@ check_libabi() {
     rm -f $TMPDIR/libs.$$
 
     # Compare
+    typeset change=0
     for k in "${!cla__new[@]}"; do
         [ "${cla__new[$k]}" = "${cla__prev[$k]}" ] && continue
         # The list of ABIs has changed. Make sure that all of the old versions
         # are present in the new.
-        logmsg -n "--- $lib ABI change, ${cla__prev[$k]} -> ${cla__new[$k]}"
+        logmsg -n "--- $k ABI change, ${cla__prev[$k]} -> ${cla__new[$k]}"
         local prev new flag
         for prev in ${cla__prev[$k]}; do
             flag=0
@@ -2721,9 +2722,11 @@ check_libabi() {
                 [ "$prev" = "$new" ] && flag=1
             done
             [ "$flag" -eq 1 ] && continue
-            logerr "--- $lib.so.$prev missing from new package"
+            change=1
+            logmsg -e "--- $k.so.$prev missing from new package"
         done
     done
+    [ $change -eq 1 ] && logerr "--- old ABI libraries missing"
 }
 
 #############################################################################
