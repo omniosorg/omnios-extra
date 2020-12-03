@@ -37,6 +37,9 @@ CONFIGURE_OPTS="
     ac_cv_func_inotify_init1=no
 "
 
+CPPFLAGS+=" -D_REENTRANT"
+CFLAGS+=" -D_REENTRANT"
+
 init
 download_source $PROG $PROG $VER
 prep_build
