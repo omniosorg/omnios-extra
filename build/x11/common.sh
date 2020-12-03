@@ -23,7 +23,8 @@ CONFIGURE_OPTS="--disable-static"
 
 addpath PKG_CONFIG_PATH $PREFIX/share/pkgconfig
 
-LDFLAGS32+=" -R$PREFIX/lib -lssp_ns"
+LDFLAGS32+=" -R$PREFIX/lib"
+[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
 LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
 
 # Vim hints

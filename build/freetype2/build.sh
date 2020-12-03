@@ -44,7 +44,7 @@ CONFIGURE_OPTS_64="
     --bindir=$PREFIX/bin
     --libdir=$PREFIX/lib/$ISAPART64
 "
-LDFLAGS32+=" -lssp_ns"
+[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
 
 init
 download_source ${PROG}2 $PROG $VER

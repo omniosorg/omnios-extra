@@ -57,7 +57,7 @@ MAKE_INSTALL_ARGS_64="
 configure32() {
     export XCFLAGS="$CFLAGS $CFLAGS32"
     export LDFLAGS="$LDFLAGS $LDFLAGS32"
-    export SOLIBS="-lssp_ns"
+    [ $RELVER -ge 151037 ] && export SOLIBS="-lssp_ns"
 }
 
 configure64() { 

@@ -36,8 +36,8 @@ CONFIGURE_OPTS_WS_32="
     APU=$PREFIX/bin/$ISAPART/apu-1-config
     CFLAGS=\"$CFLAGS $CFLAGS32 $CTF_CFLAGS\"
     LINKFLAGS=\"$LDFLAGS $LDFLAGS32\"
-    LIBS=\"-lssp_ns\"
 "
+[ $RELVER -ge 151037 ] && CONFIGURE_OPTS_WS_32+=" LIBS=\"-lssp_ns\""
 CONFIGURE_OPTS_WS_64="
     APR=$PREFIX/bin/$ISAPART64/apr-1-config
     APU=$PREFIX/bin/$ISAPART64/apu-1-config
