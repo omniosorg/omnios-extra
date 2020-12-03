@@ -17,10 +17,12 @@
 . ../../lib/functions.sh
 
 PROG=libdwarf
-VER=20201020
+VER=20201201
 PKG=ooce/library/libdwarf
 SUMMARY="Dwarf Library and utility"
 DESC="library for accessing DWARF debug info in ELF objects"
+
+forgo_isaexec
 
 SKIP_LICENCES='*'
 
@@ -29,13 +31,9 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-CONFIGURE_OPTS="
-    --prefix=$PREFIX
+CONFIGURE_OPTS+="
     --enable-shared
     --disable-static
-"
-CONFIGURE_OPTS_64+="
-    --bindir=$PREFIX/bin
 "
 
 init

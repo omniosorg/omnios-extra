@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=nsd
-VER=4.3.3
+VER=4.3.4
 PKG=ooce/network/nsd
 SUMMARY="Authoritative DNS server"
 DESC="The NLnet Labs Name Server Daemon (NSD) is an authoritative "
@@ -35,8 +35,7 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DsPREFIX=${sPREFIX#/}
     -DPROG=$PROG
-    -DVERSION=$MAJVER
-    -DsVERSION=$sMAJVER
+    -DPKGROOT=$PROG-$MAJVER
 "
 
 BUILD_DEPENDS_IPS="ooce/library/libev"
