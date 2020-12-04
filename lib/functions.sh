@@ -2539,7 +2539,8 @@ convert_ctf() {
     while read file; do
         file $file | $EGREP -s ':	ELF' || continue
 
-        if [ -n "$CTFSKIP" ] && echo $file | $EGREP -s "$CTFSKIP"; then
+        if [ -f $SRCDIR/files/ctf.skip ] \
+          && echo $file | $EGREP -qf $SRCDIR/files/ctf.skip; then
             logmsg "$ctftag skipped $file"
             continue
         fi
@@ -2552,13 +2553,15 @@ convert_ctf() {
         logcmd chmod u+w "$file" || logerr -b "chmod u+w failed: $file"
         typeset tf="$file.$$"
 
-        if logcmd $CTFCONVERT $CTF_FLAGS -l "$PROG-$VER" -o "$tf" "$file"; then
+        typeset flags="$CTF_FLAGS"
+        [ -f $SRCDIR/files/ctf.ignore ] && flags+=" -M$SRCDIR/files/ctf.ignore"
+        if logcmd $CTFCONVERT $flags -l "$PROG-$VER" -o "$tf" "$file"; then
             if [ -s "$tf" ]; then
                 logcmd cp "$tf" "$file"
                 if [ -z "$BATCH" -o -n "$CTF_AUDIT" ]; then
                     logmsg -n "$ctftag $file" \
                         "`$CTFDUMP -S $file | \
-                        nawk '/number of types/{print $6}'` types"
+                        nawk '/number of functions/{print $6}'` function(s)"
                 else
                     logmsg "$ctftag converted $file"
                 fi
@@ -2566,7 +2569,7 @@ convert_ctf() {
                 logmsg "$ctftag no DWARF data $file"
             fi
         else
-            logmsg "$ctftag failed $file"
+            logmsg -e "$ctftag failed $file"
             if [ -n "$CTF_AUDIT" ]; then
                 logcmd mkdir -p $BASE_TMPDIR/ctfobj
                 typeset f=${file:2}
