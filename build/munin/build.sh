@@ -26,7 +26,6 @@ DESC+="analyse resource trends."
 [ $RELVER -lt 151033 ] && RUN_DEPENDS_IPS+=" runtime/perl-64"
 
 set_arch 64
-CTFSKIP="Parser\.so"
 
 SKIP_LICENCES=GPLv2
 

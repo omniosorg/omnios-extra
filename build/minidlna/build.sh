@@ -25,7 +25,6 @@ DESC="DLNA/UPnP-AV media server"
 
 set_arch 64
 set_standard XPG6
-CTF_FLAGS+=" -m"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"

@@ -25,8 +25,6 @@ DESC="The World's Most Advanced Open Source Relational Database"
 
 SKIP_LICENCES=postgresql
 
-CTF_FLAGS+=" -m"
-
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
 PATCHDIR=patches-$sMAJVER
