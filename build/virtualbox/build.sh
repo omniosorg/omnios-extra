@@ -166,6 +166,8 @@ VBoxVNC_INCS = /opt/ooce/include
 VBOX_GSOAP_CXX_LIBS = libgsoapssl++ libz
 VBOX_GSOAP_INCS = $DEPROOT/usr/include
 
+VBOX_DO_STRIP =
+
 EOF
     logmsg "--- building VirtualBox"
     . ./env.sh
