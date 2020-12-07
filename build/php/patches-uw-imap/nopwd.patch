@@ -1,0 +1,19 @@
+
+By default, this refuses to build with support for unencrypted passwords
+over non-TLS streams unless you confirm during build. To build a library
+that can do this, the check is disabled.
+
+diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -588,8 +588,8 @@ sslunix sslsco:
+ 	@echo ++ SSLTYPE=$(SSLTYPE).nopwd
+ 	@echo +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 	@echo
+-	@echo Do you want to continue this build anyway?  Type y or n please:
+-	@$(SH) -c 'read x; case "$$x" in y) exit 0;; *) (make nounenc;exit 1);; esac'
++	#@echo Do you want to continue this build anyway?  Type y or n please:
++	#@$(SH) -c 'read x; case "$$x" in y) exit 0;; *) (make nounenc;exit 1);; esac'
+ 
+ nounenc:
+ 	@echo +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
