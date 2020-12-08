@@ -18,11 +18,14 @@
 
 PROG=htop
 PKG=ooce/system/htop
-VER=3.0.2
+VER=3.0.3
 SUMMARY="htop"
 DESC="An interactive process viewer for Unix"
 
 set_arch 64
+
+# need stack_t, timestruc_t, label_t, ...
+set_standard XPG6
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
