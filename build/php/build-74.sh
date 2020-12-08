@@ -62,6 +62,37 @@ XFORM_ARGS="
     -DsVERSION=$sMAJVER
 "
 
+init
+prep_build
+
+######################################################################
+# Build dependencies
+
+save_buildenv
+save_function make_install _make_install
+
+make_install() {
+    logcmd mkdir -p $DESTDIR/lib $DESTDIR/include
+    logcmd cp c-client/c-client.a $DESTDIR/lib/libc-client.a \
+        || logerr "Installation of libc-client.a failed"
+    logcmd cp c-client/*.h $DESTDIR/include/ \
+        || logerr "Installation of c-client headers failed"
+}
+
+CONFIGURE_CMD=/bin/true \
+    NO_PARALLEL_MAKE=1 \
+    MAKE_TARGET=gso \
+    MAKE_ARGS="SSLLIB=/usr/lib/64 SSLTYPE=unix" \
+    MAKE_ARGS_WS="EXTRACFLAGS=\"$CFLAGS $CFLAGS64 -I/usr/include/openssl\"" \
+    build_dependency uw-imap panda-imap-master uw-imap panda-imap master
+
+save_function _make_install make_install
+restore_buildenv
+
+note -n "Building $PROG $VER"
+
+######################################################################
+
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX
     --sysconfdir=$CONFPATH
@@ -81,17 +112,21 @@ CONFIGURE_OPTS_64="
     --enable-pcntl
     --with-openssl
     --with-gmp
+    --with-mysql=mysqlnd
     --with-mysqli=mysqlnd
     --with-pdo-mysql=mysqlnd
     --with-zlib=/usr
     --with-zlib-dir=/usr
     --with-bz2=/usr
+    --with-readline=/usr
     --with-curl
     --enable-gd
     --enable-sockets
     --enable-bcmath
     --enable-exif
     --with-zip
+    --with-imap=$DEPROOT
+    --with-imap-ssl=/usr
 
     --with-db4=$OPREFIX
     --with-lmdb=$OPREFIX
@@ -162,10 +197,8 @@ upload_tmp_dir = /tmp
     popd >/dev/null
 }
 
-init
 download_source $PROG $PROG $VER
 patch_source
-prep_build
 build
 strip_install
 xform files/php-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
