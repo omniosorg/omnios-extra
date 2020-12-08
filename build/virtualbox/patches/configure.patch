@@ -4,7 +4,7 @@ ooce/library/libpng
 diff -wpruN '--exclude=*.orig' a~/configure a/configure
 --- a~/configure	1970-01-01 00:00:00
 +++ a/configure	1970-01-01 00:00:00
-@@ -131,8 +131,8 @@ MAKESELF="makeself"
+@@ -132,8 +132,8 @@ INCZ=""
  LIBZ="-lz"
  INCLZF="/usr/include/liblzf"
  LIBLZF="-llzf"
@@ -15,7 +15,7 @@ diff -wpruN '--exclude=*.orig' a~/configure a/configure
  INCDEVMAPPER=""
  LIBDEVMAPPER="-ldevmapper"
  CXX_FLAGS=""
-@@ -146,8 +146,8 @@ if [ "$OS" = "freebsd" ]; then
+@@ -147,8 +147,8 @@ if [ "$OS" = "freebsd" ]; then
  else
    INCCURL=""
    LIBCURL="-lcurl"
