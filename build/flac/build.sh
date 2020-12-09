@@ -23,8 +23,6 @@ SUMMARY="flac"
 DESC="Free Lossless Audio Codec"
 
 forgo_isaexec
-CTFSKIP="libFLAC\+\+\.so" # C++ object
-CTF_FLAGS+=" -m"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"

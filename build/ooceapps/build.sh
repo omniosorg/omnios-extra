@@ -23,7 +23,6 @@ SUMMARY="OOCEapps"
 DESC="Web integrations for OmniOS"
 
 set_arch 64
-CTFSKIP="Parser\.so"
 
 set_mirror "$OOCEGITHUB/$PROG/releases/download"
 

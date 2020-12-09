@@ -24,7 +24,6 @@ DESC="FastCGI.com fcgi2 Development Kit fork from \
 http://repo.or.cz/fcgi2.git + last snapshot"
 
 forgo_isaexec
-CTFSKIP="libfcgi\+\+\.so\.0\.0\.0" # C++ object
 
 SKIP_LICENCES=OMI
 

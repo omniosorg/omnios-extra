@@ -24,7 +24,6 @@ SUMMARY="TeX Live"
 DESC="LaTeX distribution"
 
 set_arch 64
-CTF_FLAGS+=" -m"
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG

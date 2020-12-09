@@ -24,7 +24,6 @@ SUMMARY="$PROG - GNU Privacy Guard"
 DESC="$SUMMARY"
 
 set_arch 64
-CTF_FLAGS+=" -m"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"

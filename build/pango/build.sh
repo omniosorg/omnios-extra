@@ -26,8 +26,6 @@ DESC="Pango is a library for laying out and rendering of text"
 HARFBUZZVER=2.7.2
 FRIBIDIVER=1.0.10
 
-CTFSKIP="hb-"   # merged C++ binaries from harfbuzz
-
 BUILD_DEPENDS_IPS="
     ooce/library/fontconfig
     ooce/library/freetype2

@@ -34,7 +34,6 @@ PATCHDIR+=-$PROG
 SKIP_LICENCES=BSD-style
 
 set_arch 64
-CTF_FLAGS+=" -m"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}

@@ -27,8 +27,6 @@ DESC+="PNG, JPEG, GIF, HEIC, TIFF, DPX, EXR, WebP, Postscript, PDF, and SVG."
 LIBDE265VER=1.0.8
 LIBHEIFVER=1.9.1
 
-CTFSKIP="libMagick\+\+" # C++ object
-
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
