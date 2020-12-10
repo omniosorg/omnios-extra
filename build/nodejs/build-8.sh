@@ -12,8 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
+# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 #
 . ../../lib/functions.sh
 
@@ -25,7 +24,6 @@ DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
 DESC+="It is intended for writing scalable network programs such as web servers."
 
 set_arch 64
-CTF_FLAGS+=" -m"
 
 set_builddir $PROG-v$VER
 
@@ -51,17 +49,20 @@ XFORM_ARGS="
     -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
     -DVERSION=$MAJVER
 "
-# node contains BMI instructions even when built on an older CPU
-BMI_EXPECTED=1
 
-CONFIGURE_OPTS_64=" \
-    --with-dtrace \
-    --dest-cpu=x64 \
-    --prefix=$PREFIX \
+CONFIGURE_OPTS_64=
+CONFIGURE_OPTS="
+    --prefix=$PREFIX
+    --with-dtrace
+    --dest-cpu=x64
+    --shared-nghttp2
+    --shared-openssl
+    --shared-zlib
 "
 
 init
 download_source $PROG $PROG v$VER
+patch_source
 prep_build
 build
 strip_install
