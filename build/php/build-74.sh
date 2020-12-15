@@ -37,8 +37,7 @@ PATCHDIR=patches-$sMAJVER
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
 CONFPATH=/etc$PREFIX
-LOGPATH=/var/log$OPREFIX/$PROG
-VARPATH=/var$OPREFIX/$PROG
+VARPATH=/var$PREFIX
 RUNPATH=$VARPATH/run
 
 BUILD_DEPENDS_IPS="
@@ -97,7 +96,7 @@ CONFIGURE_OPTS_64="
     --prefix=$PREFIX
     --sysconfdir=$CONFPATH
     --localstatedir=$VARPATH
-    --with-config-file-path=$CONFPATH/php.ini
+    --with-config-file-path=$CONFPATH
 
     --disable-libgcc
     --with-iconv
