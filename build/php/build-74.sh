@@ -97,7 +97,7 @@ CONFIGURE_OPTS_64="
     --prefix=$PREFIX
     --sysconfdir=$CONFPATH
     --localstatedir=$VARPATH
-    --with-config-file-path=$CONFPATH/php.ini
+    --with-config-file-path=$CONFPATH
 
     --disable-libgcc
     --with-iconv
