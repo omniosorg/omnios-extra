@@ -18,7 +18,7 @@
 
 PROG=gh
 PKG=ooce/util/gh
-VER=1.3.1
+VER=1.4.0
 SUMMARY="github-cli"
 DESC="The GitHub CLI tool"
 
@@ -31,21 +31,14 @@ export GOOS GOARCH
 
 RUN_DEPENDS_IPS="developer/versioning/git"
 
-build() {
-    pushd $TMPDIR/$BUILDDIR > /dev/null
-
-    logmsg "Building 64-bit"
-    logcmd $MAKE || logerr "Build failed"
-
-    popd >/dev/null
-}
+CONFIGURE_CMD="/bin/true"
+MAKE_INSTALL_ARGS="prefix=$PREFIX"
 
 init
 clone_go_source cli cli v$VER
 patch_source
 prep_build
-build
-install_go bin/$PROG
+build -noctf
 make_package
 clean_up
 

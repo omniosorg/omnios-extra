@@ -11,6 +11,6 @@
 # Copyright 2020 OmniOS Community Edition. All rights reserved.
 
 # Symlink binaries
-<transform file link hardlink path=$(PREFIX)/(s?bin)/(.*) -> emit \
+<transform file link hardlink path=$(PREFIX)/(s?bin)/([^/]+)$ -> emit \
     link path=$(OPREFIX)/%<1>/%<2> target=../$(PKGROOT)/%<1>/%<2> >
 
