@@ -7,6 +7,7 @@ set name=pkg.summary value="Common php package"
 
 dir group=bin mode=0755 owner=root path=var/opt/ooce
 dir group=bin mode=0755 owner=php  path=var/opt/ooce/php
+dir group=bin mode=0755 owner=php  path=var/opt/ooce/php/run
 dir group=bin mode=0755 owner=php  path=var/log/opt/ooce/php
 dir group=bin mode=0755 owner=root path=opt/ooce/bin
 
