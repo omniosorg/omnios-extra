@@ -75,6 +75,7 @@
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/icu4c		| 68.1		| https://github.com/unicode-org/icu/releases | Currently used solely by cyrus-imapd
 | ooce/library/jansson		| 2.13.1	| https://github.com/akheron/jansson/releases | Currently used solely by cyrus-imapd
+| ooce/library/json-c		| 0.15		| https://s3.amazonaws.com/json-c_releases/releases/index.html https://github.com/json-c/json-c/wiki | [omniosorg](https://github.com/omniosorg)
 | ooce/library/ldns		| 1.7.1		| https://nlnetlabs.nl/downloads/ldns/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libarchive	| 3.4.3		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libde265		| 1.0.8		| https://github.com/strukturag/libde265/releases | Currently used solely by ImageMagick
