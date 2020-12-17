@@ -96,6 +96,7 @@ extra.omnios ooce/library/libmcrypt
 extra.omnios ooce/library/libogg
 extra.omnios ooce/library/libpciaccess
 extra.omnios ooce/library/libpng
+extra.omnios ooce/library/libuv
 extra.omnios ooce/library/libvncserver
 extra.omnios ooce/library/libvorbis
 extra.omnios ooce/library/libwebp
