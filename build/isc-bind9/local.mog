@@ -10,17 +10,6 @@
 #
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-# Mediated binaries
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../named-$(VERSION)/%<1>/%<2> \
-    mediator=$(PROG) mediator-version=$(VERSION) >
-
-# Mediated man pages
-<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(OPREFIX)/share/man/%<1>/%<2> \
-    target=../../../named-$(VERSION)/share/man/%<1>/%<2> \
-    mediator=$(PROG) mediator-version=$(VERSION) >
-
 # Restart fmri service
 <transform file path=$(PREFIX)/sbin/named \
     -> set restart_fmri svc:/ooce/network/dns:named$(sVERSION)>
@@ -68,4 +57,8 @@ file files/named.root \
 	path=$(VARPATH)/namedb/named.root \
 	mode=0660 owner=$(USER) group=$(GROUP)
 
-license COPYRIGHT license="ISC/MPLv2"
+<include mediated-binlink.mog>
+<include mediated-manlink.mog>
+
+license LICENSE license=MPLv2
+

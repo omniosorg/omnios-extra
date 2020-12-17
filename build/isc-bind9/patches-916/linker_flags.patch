@@ -1,0 +1,16 @@
+diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
+--- a~/configure.ac	1970-01-01 00:00:00
++++ a/configure.ac	1970-01-01 00:00:00
+@@ -377,12 +377,6 @@ AC_PROG_CC_C99
+ # Using Solaris linker with gcc on Solaris breaks Thread Local Storage
+ #
+ AS_CASE([$host],
+-	[*-solaris*],[
+-	    AS_IF([test "$GCC" = "yes"],
+-		  [LDFLAGS="$LDFLAGS -zrelax=transtls"
+-		   AC_MSG_WARN([When using GNU C Compiler on Solaris, -zrelax=transtls linker flag is used to fix bug in Thread Local Storage])
+-		  ])
+-	],
+ 	[*-darwin*],[LDFLAGS="$LDFLAGS -Wl,-flat_namespace"])
+ 
+ #
