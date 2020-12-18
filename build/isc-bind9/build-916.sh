@@ -90,7 +90,8 @@ download_source $PROG $PROG $VER
 patch_source
 xform files/named.conf-template > $TMPDIR/named-$sMAJVER.conf
 prep_build autoconf -autoreconf
-build -ctf
+build
+strip_install
 xform files/named-template.xml > $TMPDIR/named-$sMAJVER.xml
 xform files/named-template > $TMPDIR/named-$sMAJVER
 install_smf -oocemethod ooce named-$sMAJVER.xml named-$sMAJVER
