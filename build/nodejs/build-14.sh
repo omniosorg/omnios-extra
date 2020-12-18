@@ -61,8 +61,8 @@ CONFIGURE_OPTS="
     --shared-nghttp2
     --shared-openssl
     --shared-zlib
-    --shared-brotli
 "
+[ $RELVER -ge 151035 ] && CONFIGURE_OPTS+=" --shared-brotli"
 
 init
 download_source $PROG $PROG v$VER
