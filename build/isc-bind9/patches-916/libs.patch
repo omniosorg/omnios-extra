@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/config.threads.in a/config.threads.in
+--- a~/config.threads.in	1970-01-01 00:00:00
++++ a/config.threads.in	1970-01-01 00:00:00
+@@ -88,7 +88,7 @@ then
+ 	# Search for / configure pthreads in a system-dependent fashion.
+ 	#
+ 	case "$host" in
+-		*-freebsd*)
++		*-freebsd*|*-solaris*)
+ 			# We don't want to set -lpthread as that break
+ 			# the ability to choose threads library at final
+ 			# link time and is not valid for all architectures.

@@ -535,8 +535,11 @@ reset_configure_opts() {
 reset_configure_opts
 
 set_standard() {
-    [ -n "${STANDARDS[$1]}" ] || logerr "Unknown standard $1"
-    CPPFLAGS+=" ${STANDARDS[$1]}"
+    typeset st="$1"
+    typeset var="${2:-CPPFLAGS}"
+    [ -n "${STANDARDS[$st]}" ] || logerr "Unknown standard $st"
+    declare -n _var=$var
+    _var+=" ${STANDARDS[$st]}"
 }
 
 forgo_isaexec() {

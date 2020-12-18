@@ -18,16 +18,23 @@
 . ../../lib/functions.sh
 
 PROG=bind
-VER=9.11.26
-PKG=ooce/network/bind-911
+VER=9.16.10
+PKG=ooce/network/bind-916
 SUMMARY="ISC BIND DNS Server & Tools"
 DESC="Server & Client Utilities for DNS"
+
+BUILD_DEPENDS_IPS="
+    ooce/database/lmdb
+    ooce/library/json-c
+    ooce/library/libuv
+"
 
 RUN_DEPENDS_IPS="
     ooce/network/bind-common
 "
 
 set_arch 64
+set_standard XPG4v2 CFLAGS
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
@@ -37,25 +44,6 @@ OPREFIX=$PREFIX
 PREFIX+=/named-$MAJVER
 CONFPATH=/etc$PREFIX
 VARPATH=/var$OPREFIX/named/named-$MAJVER
-
-HARDLINK_TARGETS="
-    ${PREFIX#/}/bin/isc-config.sh
-    ${PREFIX#/}/sbin/named
-    ${PREFIX#/}/share/man/man1/isc-config.sh.1
-    ${PREFIX#/}/share/man/man3/lwres_resutil.3
-    ${PREFIX#/}/share/man/man3/lwres_buffer.3
-    ${PREFIX#/}/share/man/man3/lwres_config.3
-    ${PREFIX#/}/share/man/man3/lwres_context.3
-    ${PREFIX#/}/share/man/man3/lwres_gethostent.3
-    ${PREFIX#/}/share/man/man3/lwres_getaddrinfo.3
-    ${PREFIX#/}/share/man/man3/lwres_getipnode.3
-    ${PREFIX#/}/share/man/man3/lwres_gabn.3
-    ${PREFIX#/}/share/man/man3/lwres_gnba.3
-    ${PREFIX#/}/share/man/man3/lwres_hstrerror.3
-    ${PREFIX#/}/share/man/man3/lwres_packet.3
-    ${PREFIX#/}/share/man/man3/lwres_inetntop.3
-    ${PREFIX#/}/share/man/man3/lwres_noop.3
-"
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
@@ -88,17 +76,21 @@ CONFIGURE_OPTS="
     --enable-shared
     --disable-static
     --without-python
-    --with-zlib=/usr
+    --with-zlib=yes
+    --with-libxml2=yes
+    --with-json-c=yes
+    --with-lmdb=$OPREFIX
 "
+
+# for lmdb
+LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
 patch_source
 xform files/named.conf-template > $TMPDIR/named-$sMAJVER.conf
-prep_build
-run_autoreconf -fi
-build
-strip_install
+prep_build autoconf -autoreconf
+build -ctf
 xform files/named-template.xml > $TMPDIR/named-$sMAJVER.xml
 xform files/named-template > $TMPDIR/named-$sMAJVER
 install_smf -oocemethod ooce named-$sMAJVER.xml named-$sMAJVER
