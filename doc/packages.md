@@ -40,7 +40,7 @@
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
 | ooce/developer/clang-100	| 10.0.1	| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/clang-110	| 11.0.0	| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/cmake		| 3.19.1	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/cmake		| 3.19.2	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-100 | 10.0.1	| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-110 | 11.0.0	| https://releases.llvm.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
@@ -75,7 +75,7 @@
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/icu4c		| 68.1		| https://github.com/unicode-org/icu/releases | Currently used solely by cyrus-imapd
 | ooce/library/jansson		| 2.13.1	| https://github.com/akheron/jansson/releases | Currently used solely by cyrus-imapd
-| ooce/library/json-c		| 0.15		| https://s3.amazonaws.com/json-c_releases/releases/index.html https://github.com/json-c/json-c/wiki | [omniosorg](https://github.com/omniosorg)
+| ooce/library/json-c		| 0.15		| https://github.com/json-c/json-c/releases https://github.com/json-c/json-c/wiki | [omniosorg](https://github.com/omniosorg)
 | ooce/library/ldns		| 1.7.1		| https://nlnetlabs.nl/downloads/ldns/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libarchive	| 3.4.3		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libde265		| 1.0.8		| https://github.com/strukturag/libde265/releases | Currently used solely by ImageMagick
