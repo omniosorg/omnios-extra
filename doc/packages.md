@@ -140,7 +140,7 @@
 | ooce/server/apache-24		| 2.4.46	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.19.6	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-118		| 1.18.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/storage/minio		| 2020-11-19T23-48-16Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/storage/minio		| 2020-12-18T03-27-42Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio-mc		| 2020-11-17T00-39-14Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/file-system/ntfs-3g | 2017.3.23AR.5 | https://jp-andre.pagesperso-orange.fr/openindiana-ntfs-3g.html https://www.tuxera.com/community/open-source-ntfs-3g/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/htop		| 3.0.3		| https://github.com/htop-dev/htop/releases https://htop.dev/downloads.html#sources | [omniosorg](https://github.com/omniosorg)
