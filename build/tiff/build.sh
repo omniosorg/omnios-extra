@@ -17,13 +17,15 @@
 . ../../lib/functions.sh
 
 PROG=tiff
-VER=4.1.0
+VER=4.2.0
 PKG=ooce/library/tiff
 SUMMARY="LibTIFF - TIFF Library and Utilities"
 DESC="Support for the Tag Image File Format (TIFF), a widely used format "
 DESC+="for storing image data."
 
 SKIP_LICENCES=BSD-like
+
+forgo_isaexec
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -32,22 +34,13 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
-CONFIGURE_OPTS="
-    --disable-static
+CONFIGURE_OPTS+="
     --prefix=$PREFIX
-    --includedir=$OPREFIX/include
-"
-CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
-    --sbindir=$PREFIX/sbin/$ISAPART
-    --libdir=$OPREFIX/lib
-"
-CONFIGURE_OPTS_64="
     --bindir=$PREFIX/bin
-    --sbindir=$PREFIX/sbin
-    --libdir=$OPREFIX/lib/$ISAPART64
+    --disable-static
 "
 
 init
