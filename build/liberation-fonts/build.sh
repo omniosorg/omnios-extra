@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=liberation-fonts
-VER=2.1.1
+VER=2.1.2
 PKG=ooce/fonts/liberation
 SUMMARY="Liberation fonts"
 DESC="A collection which aims to provide document layout compatibility "

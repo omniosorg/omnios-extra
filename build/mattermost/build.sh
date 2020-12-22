@@ -24,11 +24,6 @@ SUMMARY="$PROG"
 DESC="All your team communication in one place, "
 DESC+="instantly searchable and accessible anywhere."
 
-### FIXME ###
-# mattermost-webapp does currently not have any 5.30.x release tags
-# use the release branch until release tags are present
-MMWABRANCH=release-${VER%.*}
-
 set_arch 64
 set_gover 1.15
 set_nodever 12
@@ -85,7 +80,7 @@ restore_variable BUILDDIR
 # use clone_github_source instead of clone_go_source
 # since mattermost bundles its dependencies
 clone_github_source "$PROG-server" "$GITHUB/$PROG/$PROG-server" v$VER
-clone_github_source "$PROG-webapp" "$GITHUB/$PROG/$PROG-webapp" $MMWABRANCH
+clone_github_source "$PROG-webapp" "$GITHUB/$PROG/$PROG-webapp" v$VER
 build mmctl "ADVANCED_VET=FALSE"
 
 if [ $RELVER -lt 151033 ]; then
