@@ -1,0 +1,15 @@
+patch sent upstream:
+https://github.com/htop-dev/htop/pull/423
+
+diff -wpruN '--exclude=*.orig' a~/solaris/SolarisProcess.c a/solaris/SolarisProcess.c
+--- a~/solaris/SolarisProcess.c	1970-01-01 00:00:00
++++ a/solaris/SolarisProcess.c	1970-01-01 00:00:00
+@@ -101,7 +101,7 @@ void SolarisProcess_writeField(const Pro
+    RichString_appendWide(str, attr, buffer);
+ }
+ 
+-long SolarisProcess_compareByKey(const void* v1, const void* v2, ProcessField key) {
++long SolarisProcess_compareByKey(const Process* v1, const Process* v2, ProcessField key) {
+    const SolarisProcess* p1 = (const SolarisProcess*)v1;
+    const SolarisProcess* p2 = (const SolarisProcess*)v2;
+ 
