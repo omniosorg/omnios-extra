@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=libarchive
-VER=3.4.3
+VER=3.5.1
 PKG=ooce/library/libarchive
 SUMMARY="libarchive"
 DESC="Multi-format archive and compression library"
@@ -25,25 +25,22 @@ DESC="Multi-format archive and compression library"
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
+forgo_isaexec
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
-reset_configure_opts
-
-CONFIGURE_OPTS="
-    --prefix=$PREFIX
+CONFIGURE_OPTS+="
     --disable-static
 "
-
-CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
+CONFIGURE_OPTS_32+="
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64="
-    --bindir=$PREFIX/bin
+CONFIGURE_OPTS_64+="
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
