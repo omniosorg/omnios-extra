@@ -1,0 +1,19 @@
+diff -wpruN '--exclude=*.orig' a~/libgst/cint.c a/libgst/cint.c
+--- a~/libgst/cint.c	1970-01-01 00:00:00
++++ a/libgst/cint.c	1970-01-01 00:00:00
+@@ -396,6 +396,15 @@ my_putenv (const char *str)
+   return (putenv (clone));
+ }
+ 
++/*
++ * From smalltalk-3.2.91/libgst/cint.c (known issue and fixed in 3.2.91alpha):
++ * On FreeBSD and other BSDs there is the environ but it is not
++ * declared in header. Import it like this.
++ */
++#if !HAVE_DECL_ENVIRON
++extern char **environ;
++#endif
++
+ static char **
+ get_environ (void)
+ {

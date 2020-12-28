@@ -1,0 +1,14 @@
+replace absolute symlink pointing to the proto area with a relative symlink
+
+diff -wpruN '--exclude=*.orig' a~/doc/Makefile.in a/doc/Makefile.in
+--- a~/doc/Makefile.in	1970-01-01 00:00:00
++++ a/doc/Makefile.in	1970-01-01 00:00:00
+@@ -1018,7 +1018,7 @@ uninstall-local:
+ 
+ install-data-local: install-man
+ 	rm -f $(DESTDIR)$(man1dir)/gst-reload.1
+-	$(LN_S) $(DESTDIR)$(man1dir)/gst-load.1 $(DESTDIR)$(man1dir)/gst-reload.1
++	$(LN_S) gst-load.1 $(DESTDIR)$(man1dir)/gst-reload.1
+ 
+ $(srcdir)/blox.texi: $(top_srcdir)/packages/blox/tk/stamp-classes
+ 	files=`$(GST_PACKAGE) $(patsubst %, %/package.xml, $(^D)) \
