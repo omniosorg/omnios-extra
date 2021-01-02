@@ -1,0 +1,146 @@
+## ------------------------------- ##
+## GNU Smalltalk 3.2.5 test suite. ##
+## ------------------------------- ##
+  1: arrays.st                                       ok
+  2: classes.st                                      ok
+  3: blocks.st                                       ok
+  4: sets.st                                         ok
+  5: processes.st                                    ok
+  6: exceptions.st                                   FAILED (testsuite.at:32)
+  7: intmath.st                                      ok
+  8: floatmath.st                                    ok
+  9: dates.st                                        ok
+ 10: objects.st                                      ok
+ 11: strings.st                                      ok
+ 12: chars.st                                        ok
+ 13: objdump.st                                      ok
+ 14: delays.st                                       ok
+ 15: geometry.st                                     ok
+ 16: cobjects.st                                     ok
+ 17: compiler.st                                     ok
+ 18: fileext.st                                      ok
+ 19: mutate.st                                       ok
+ 20: untrusted.st                                    ok
+ 21: getopt.st                                       ok
+ 22: quit.st                                         ok
+ 23: pools.st                                        ok
+ 24: shape.st                                        ok
+ 25: streams.st                                      ok
+ 26: ackermann.st                                    ok
+ 27: ary3.st                                         ok
+ 28: except.st                                       ok
+ 29: fibo.st                                         ok
+ 30: hash.st                                         ok
+ 31: hash2.st                                        ok
+ 32: heapsort.st                                     ok
+ 33: lists.st                                        ok
+ 34: lists1.st                                       ok
+ 35: lists2.st                                       ok
+ 36: matrix.st                                       ok
+ 37: methcall.st                                     ok
+ 38: nestedloop.st                                   ok
+ 39: objinst.st                                      ok
+ 40: prodcons.st                                     ok
+ 41: random-bench.st                                 ok
+ 42: sieve.st                                        ok
+ 43: strcat.st                                       ok
+ 44: stcompiler.st                                   ok
+ 45: SUnit                                           ok
+ 46: Parser                                          ok
+ANSI compliancy tests.
+ 47: ArrayANSITest                                   ok
+ 48: ArrayFactoryANSITest                            ok
+ 49: BagANSITest                                     ok
+ 50: BagFactoryANSITest                              ok
+ 51: BooleanANSITest                                 ok
+ 52: ByteArrayANSITest                               ok
+ 53: ByteArrayFactoryANSITest                        ok
+ 54: CharacterANSITest                               ok
+ 55: CharacterFactoryANSITest                        ok
+ 56: DateAndTimeANSITest                             ok
+ 57: DateAndTimeFactoryANSITest                      ok
+ 58: DictionaryANSITest                              ok
+ 59: DictionaryFactoryANSITest                       ok
+ 60: DurationANSITest                                ok
+ 61: DurationFactoryANSITest                         ok
+ 62: DyadicValuableANSITest                          ok
+ 63: ErrorANSITest                                   ok
+ 64: ErrorClassANSITest                              ok
+ 65: ExceptionANSITest                               ok
+ 66: ExceptionClassANSITest                          ok
+ 67: ExceptionSetANSITest                            ok
+ 68: FailedMessageANSITest                           ok
+ 69: FileStreamFactoryANSITest                       ok
+ 70: FloatANSITest                                   ok
+ 71: FloatCharacterizationANSITest                   ok
+ 72: FractionANSITest                                ok
+ 73: FractionFactoryANSITest                         ok
+ 74: IdentityDictionaryANSITest                      ok
+ 75: IdentityDictionaryFactoryANSITest               ok
+ 76: IntegerANSITest                                 ok
+ 77: IntervalANSITest                                ok
+ 78: IntervalFactoryANSITest                         ok
+ 79: MessageNotUnderstoodANSITest                    ok
+ 80: MessageNotUnderstoodSelectorANSITest            ok
+ 81: MonadicBlockANSITest                            ok
+ 82: NilANSITest                                     ok
+ 83: NiladicBlockANSITest                            ok
+ 84: NotificationANSITest                            ok
+ 85: NotificationClassANSITest                       ok
+ 86: ObjectANSITest                                  ok
+ 87: ObjectClassANSITest                             ok
+ 88: OrderedCollectionANSITest                       ok
+ 89: OrderedCollectionFactoryANSITest                ok
+ 90: ReadFileStreamANSITest                          ok
+ 91: ReadStreamANSITest                              ok
+ 92: ReadStreamFactoryANSITest                       ok
+ 93: ReadWriteStreamANSITest                         ok
+ 94: ReadWriteStreamFactoryANSITest                  ok
+ 95: ScaledDecimalANSITest                           ok
+ 96: SelectorANSITest                                ok
+ 97: SetANSITest                                     ok
+ 98: SetFactoryANSITest                              ok
+ 99: SortedCollectionANSITest                        ok
+100: SortedCollectionFactoryANSITest                 ok
+101: StringANSITest                                  ok
+102: StringFactoryANSITest                           ok
+103: SymbolANSITest                                  ok
+104: TranscriptANSITest                              ok
+105: WarningANSITest                                 ok
+106: WarningClassANSITest                            ok
+107: WriteFileStreamANSITest                         ok
+108: WriteStreamANSITest                             ok
+109: WriteStreamFactoryANSITest                      ok
+110: ZeroDivideANSITest                              ok
+111: ZeroDivideFactoryANSITest                       ok
+112: Announcements                                   ok
+113: Complex                                         ok
+114: Continuations                                   ok
+115: DBD-MySQL                                       skipped (testsuite.at:153)
+116: DBD-SQLite                                      ok
+117: DebugTools                                      ok
+118: DhbNumericalMethods                             ok
+119: Digest                                          ok
+120: GDBM                                            skipped (testsuite.at:158)
+121: Iconv                                           FAILED (testsuite.at:159)
+122: Magritte                                        ok
+123: ROE                                             ok
+124: SandstoneDb                                     ok
+125: Seaside-Core                                    ok
+126: Sockets                                         expected failure (testsuite.at:164)
+127: Sport                                           ok
+128: Swazoo                                          ok
+129: XML-XMLParser                                   ok
+130: XML-Expat                                       ok
+131: ZLib                                            ok
+## ------------- ##
+## Test results. ##
+## ------------- ##
+ERROR: 129 tests were run,
+3 failed (1 expected failure).
+2 tests were skipped.
+## -------------------------- ##
+## testsuite.log was created. ##
+## -------------------------- ##
+   To: <help-smalltalk@gnu.org>
+   Subject: [GNU Smalltalk 3.2.5] testsuite: 6 121 failed
