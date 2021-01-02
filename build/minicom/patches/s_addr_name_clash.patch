@@ -1,0 +1,31 @@
+s_addr is defined in netinet/in.h
+
+diff -wpruN '--exclude=*.orig' a~/src/main.c a/src/main.c
+--- a~/src/main.c	1970-01-01 00:00:00
++++ a/src/main.c	1970-01-01 00:00:00
+@@ -185,8 +185,8 @@ static void term_socket_connect_tcp(void
+   if (!s)
+     return;
+ 
+-  char *s_addr = s + strlen(SOCKET_PREFIX_TCP);
+-  char *s_port = strchr(s_addr, ':');
++  char *src_addr = s + strlen(SOCKET_PREFIX_TCP);
++  char *s_port = strchr(src_addr, ':');
+   if (!s_port) {
+     fprintf(stderr, "No port given\n");
+     return;
+@@ -194,11 +194,11 @@ static void term_socket_connect_tcp(void
+   *s_port = 0;
+   s_port++;
+ 
+-  if (strlen(s_addr) == 0)
+-    s_addr = "localhost";
++  if (strlen(src_addr) == 0)
++    src_addr = "localhost";
+ 
+   struct addrinfo *result;
+-  int r = getaddrinfo(s_addr, s_port, &hints, &result);
++  int r = getaddrinfo(src_addr, s_port, &hints, &result);
+   if (r) {
+     fprintf(stderr, "Name resolution failed: %s\n", gai_strerror(r));
+     return;
