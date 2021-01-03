@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.48.0
+VER=1.49.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."

@@ -2,10 +2,10 @@ configure checks whether the default port is available on the build system
 disable the check as we don't want to end up with a build system dependant
 configuration of the default port
 
-diff -wpruN '--exclude=*.orig' a~/configure.in a/configure.in
---- a~/configure.in	1970-01-01 00:00:00
-+++ a/configure.in	1970-01-01 00:00:00
-@@ -251,14 +251,9 @@ AC_MSG_CHECKING(for default serial port
+diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
+--- a~/configure.ac	1970-01-01 00:00:00
++++ a/configure.ac	1970-01-01 00:00:00
+@@ -253,14 +253,9 @@ AC_MSG_CHECKING(for default serial port
  
  if test "x$DFL_PORT" != x
  then

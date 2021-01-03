@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=minicom
-VER=2.7.1
+VER=2.8
 PKG=ooce/terminal/minicom
 SUMMARY="$PROG - terminal emulator"
 DESC="$PROG is a text-based modem control and terminal emulator "
@@ -41,8 +41,7 @@ CONFIGURE_OPTS="--enable-dfl-port=/dev/cua/b"
 init
 download_source $PROG $PROG v$VER
 patch_source
-prep_build
-run_autoreconf -fi
+prep_build autoconf -autoreconf
 build
 strip_install
 make_package
