@@ -1,0 +1,39 @@
+diff -wpruN '--exclude=*.orig' a~/fdname.c a/fdname.c
+--- a~/fdname.c	1970-01-01 00:00:00
++++ a/fdname.c	1970-01-01 00:00:00
+@@ -232,7 +232,10 @@ int sockname(int fd, FILE *outfile, char
+    /*Linux struct ifreq ifc = {{{ 0 }}};*/
+    struct ifreq ifc = {{ 0 }};
+ #endif
++
++#ifndef __sun
+    int rc;
++#endif
+ 
+ #if defined(SO_PROTOCOL) || defined(SO_PROTOTYPE)
+    optlen = sizeof(proto);
+@@ -254,12 +257,22 @@ int sockname(int fd, FILE *outfile, char
+ 
+ #if defined(SO_PROTOCOL) || defined(SO_PROTOTYPE)
+ #if HAVE_GETPROTOBYNUMBER_R
++#ifdef __sun
++   protoentp = getprotobynumber_r(proto, &protoent, protoname, sizeof(protoname));
++#else
+    rc = getprotobynumber_r(proto, &protoent, protoname, sizeof(protoname), &protoentp);
++#endif
+    if (protoentp == NULL) {
++#ifdef __sun
++      Warn1("sockname(): getprotobynumber_r(proto=%d, ...)", proto);
++#else
+       Warn2("sockname(): getprotobynumber_r(proto=%d, ...): %s",
+ 	    proto, strerror(rc));
++#endif
+-   }
+-   strncpy(protoname, protoentp->p_name, sizeof(protoname));
++      sprintf(protoname, "proto%d", proto);
++   }
++   else
++      strncpy(protoname, protoentp->p_name, sizeof(protoname));
+ #elif HAVE_GETPROTOBYNUMBER
+    protoentp = getprotobynumber(proto);
+    strncpy(protoname, protoentp->p_name, sizeof(protoname));

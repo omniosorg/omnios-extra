@@ -12,21 +12,21 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=socat
-VER=1.7.3.4
-VERHUMAN=$VER
+VER=1.7.4.0
 PKG=ooce/network/socat
 SUMMARY="Multipurpose socket relay"
-DESC="socat is a relay for bidirectional data transfer between two independent data channels."
+DESC="socat is a relay for bidirectional data transfer "
+DESC+="between two independent data channels."
 
 # socat was moved to omnios core from r151031 on
 [ $RELVER -ge 151031 ] && exit 0
 
-BUILDARCH=64
+set_arch 64
 
 CONFIGURE_OPTS="
     --bindir=$PREFIX/bin
