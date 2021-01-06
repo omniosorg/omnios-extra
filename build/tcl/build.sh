@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=tcl
-VER=8.6.10
+VER=8.6.11
 EXPECTVER=5.45.4
 PKG=ooce/runtime/tcl
 SUMMARY="Tool Command Language"
@@ -39,12 +39,14 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
     -DVERSION=$MAJVER
 "
 
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX
     --enable-man-symlinks
+    --mandir=$PREFIX/share/man
     --enable-64bit
 "
 
@@ -100,6 +102,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS_64="

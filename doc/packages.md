@@ -136,7 +136,7 @@
 | ooce/runtime/ruby-25		| 2.5.8		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-26		| 2.6.6		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-27		| 2.7.2		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
-| ooce/runtime/tcl		| 8.6.10	| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/runtime/tcl		| 8.6.11	| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/security/gnupg		| 1.4.23	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24		| 2.4.46	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.19.6	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
