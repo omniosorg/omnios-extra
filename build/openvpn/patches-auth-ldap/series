@@ -1,0 +1,3 @@
+ldap.patch
+openssl.patch
+no_export-dynamic.patch

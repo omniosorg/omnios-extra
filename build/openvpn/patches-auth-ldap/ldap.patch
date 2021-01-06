@@ -1,0 +1,17 @@
+diff -wpruN '--exclude=*.orig' a~/aclocal.m4 a/aclocal.m4
+--- a~/aclocal.m4	1970-01-01 00:00:00
++++ a/aclocal.m4	1970-01-01 00:00:00
+@@ -243,11 +243,11 @@ AC_DEFUN([OD_OPENLDAP],[
+ 	OLD_LIBS="${LIBS}"
+ 	OLD_CFLAGS="${CFLAGS}"
+ 
+-	LDAP_LIBS="-lldap -llber"
++	LDAP_LIBS="-lldap_r -llber"
+ 	LDAP_CFLAGS=""
+ 
+ 	if test x"${with_openldap}" != x; then
+-		LDAP_LIBS="${LDAP_LIBS} -L${with_openldap}/lib"
++		LDAP_LIBS="${LDAP_LIBS} -L${with_openldap}/lib/amd64 -R${with_openldap}/lib/amd64"
+ 		LDAP_CFLAGS="${LDAP_CFLAGS} -I${with_openldap}/include"
+ 	fi
+ 
