@@ -8,12 +8,12 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 group gid=27 groupname=$(PROG)
 group gid=28 groupname=postdrop
 user ftpuser=false gcos-field="Postfix Reserved UID" group=$(PROG) \
-    uid=27 password=NP username=$(PROG)
+    uid=27 password=NP username=$(PROG) group-list=sasl
 
 <transform dir path=var/lib/$(PROG) -> set owner $(PROG)>
 <transform dir path=var/lib/$(PROG) -> set group $(PROG)>
