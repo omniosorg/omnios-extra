@@ -9,7 +9,7 @@
 # source.  A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 __SCRIPTDIR="${0%/*}"
 
@@ -99,6 +99,9 @@ add_target()
                 q
             }'`"
         case $pkg:$ver in
+            ooce/network/openvpn-auth-ldap:*)
+                ver="`grep '^AUTHLDAPVER=' $build | cut -d= -f2`"
+                ;;
             ooce/runtime/expect:*)
                 ver="`grep '^EXPECTVER=' $build | cut -d= -f2`"
                 ;;
@@ -223,6 +226,8 @@ audit()
                         */socat:) [[ $r = 15103[24] ]] || ok=0 ;;
                         # zadm is not published until r151034
                         */zadm:) [ $r -lt 151034 ] || ok=0 ;;
+                        # openvpn-auth-ldap is not published until r151034
+                        */openvpn-auth-ldap:) [ $r -lt 151034 ] || ok=0 ;;
                         # gyp is not published until r151035
                         */gyp:) [ $r -lt 151035 ] || ok=0 ;;
                         # clang/llvm-80, clang/llvm/compiler-rt-90 and lxadm

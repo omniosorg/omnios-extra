@@ -9,7 +9,7 @@
 # source.  A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2017 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 __SCRIPTDIR="${0%/*}"
 
@@ -46,6 +46,9 @@ add_target()
 				q
 			}'`"
 		case $pkg:$ver in
+			ooce/network/openvpn-auth-ldap:*)
+				ver="`grep '^AUTHLDAPVER=' $build | cut -d= -f2`"
+				;;
 			ooce/runtime/expect:*)
 				ver="`grep '^EXPECTVER=' $build | cut -d= -f2`"
 				;;
@@ -139,7 +142,6 @@ check_packages_md()
 			shell/bash-patchlvl)	continue ;;
 			shell/bash)		continue ;;
 			*/virtualbox-5)		continue ;;
-			*/openvpn-auth-ldap)	continue ;;
 		esac
 
 		if [ -n "${targets[$pkg]}" ]; then

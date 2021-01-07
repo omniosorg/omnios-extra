@@ -10,9 +10,8 @@
 
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-file ./tmp/openvpn-auth-ldap-auth-ldap-$(AUTHLDAP)/auth-ldap.conf \
-    path=etc/$(PREFIX)/auth-ldap.conf owner=root group=bin \
-    mode=0644 preserve=renamenew
+file ../src/auth-ldap.conf path=etc/$(PREFIX)/auth-ldap.conf \
+    owner=root group=bin mode=0644 preserve=renamenew
 
-license ../openvpn-auth-ldap-auth-ldap-$(AUTHLDAP)/LICENSE license=modified-BSD
+license LICENSE license=modified-BSD
 
