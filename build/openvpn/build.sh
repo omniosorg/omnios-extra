@@ -25,6 +25,7 @@ DESC="Flexible VPN solutions to secure your data communications, whether it's "
 DESC+="for Internet privacy, remote access for employees, securing IoT, "
 DESC+="or for networking Cloud data centers"
 
+# PLUGIN VERSIONS
 # source from https://github.com/skvadrik/re2c (required to build auth-ldap)
 RE2CVER=2.0.3
 AUTHLDAPVER=2.0.4
@@ -35,13 +36,13 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 BUILD_DEPENDS_IPS="driver/tuntap compress/lz4"
+RUN_DEPENDS_IPS="driver/tuntap"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG -DVER=$VER
     -DPKGROOT=$PROG
-    -DAUTHLDAP=$AUTHLDAPVER
 "
 
 set_arch 64
@@ -84,57 +85,73 @@ patch_source
 run_autoreconf -i
 build
 install_smf ooce network-openvpn.xml
-
-#########################################################################
-
-# Download and build additional plugins
-
-#########################################################################
-
-# Download and build re2c which is required to build auth-ldap
-build_dependency -noctf re2c re2c-$RE2CVER $PROG/re2c re2c $RE2CVER # C++
-export PATH+=":$DEPROOT/$PREFIX/bin"
+make_package $PROG.mog
 
 #########################################################################
 
 # Download and build auth-ldap plugin
-PLUGIN=auth-ldap
-LIBDIR=$OPREFIX/lib/$ISAPART64/$PROG/plugins
 
-save_function configure64 _configure64
-configure64() {
-    run_inbuild "./regen.sh"
-    _configure64
+#########################################################################
+
+PROG=auth-ldap
+VER=$AUTHLDAPVER
+PKG=ooce/network/openvpn-auth-ldap
+SUMMARY="OpenVPN Auth-LDAP Plugin"
+DESC="username/password authentication via LDAP for OpenVPN 2.x."
+
+if [ $RELVER -lt 151034 ]; then
+    logmsg "--- $PKG is not built for r$RELVER"
+    exit 0
+fi
+
+OVPNDIR=$DESTDIR$OPREFIX/include
+LIBDIR=$OPREFIX/lib/$ISAPART64/openvpn/plugins
+
+PATCHDIR=patches-$PROG
+RUN_DEPENDS_IPS="ooce/network/openvpn"
+
+set_arch 64
+set_builddir openvpn-$PROG-$PROG-$VER
+
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
+    -DPROG=$PROG -DVER=$VER
+"
+
+init
+prep_build
+
+#########################################################################
+
+# Download and build re2c which is required to build auth-ldap
+build_dependency -noctf re2c re2c-$RE2CVER openvpn/re2c re2c $RE2CVER # C++
+export PATH+=":$DEPROOT/$PREFIX/bin"
+
+#########################################################################
+
+save_function make_install64 _make_install64
+make_install64() {
+    # the install target does not create the directory
+    [ -d $DESTDIR$LIBDIR ] || mkdir -p $DESTDIR$LIBDIR || logerr "mkdir failed"
+
+    _make_install64
 }
 
 CONFIGURE_OPTS_64="
     --libdir=$LIBDIR
     --with-openldap=$OPREFIX
-    --with-openvpn=$DESTDIR/$OPREFIX/include
+    --with-openvpn=$OVPNDIR
     OBJC=$CC
     OBJCFLAGS=-std=gnu11
 "
 CFLAGS+=" -fPIC"
 
-build_dependency -merge $PLUGIN $PROG-$PLUGIN-$PLUGIN-$AUTHLDAPVER \
-    $PROG/$PLUGIN $PLUGIN $AUTHLDAPVER
-
-#########################################################################
-
-manifest_start $TMPDIR/manifest.$PLUGIN
-manifest_add $LIBDIR $PROG-$PLUGIN.so
-manifest_finalise
-
-manifest_uniq $TMPDIR/manifest.{$PROG,$PLUGIN}
-
-RUN_DEPENDS_IPS="ooce/network/openvpn" \
-    PKG=$PKG-auth-ldap SUMMARY="OpenVPN Auth-LDAP Plugin" \
-    DESC="username/password authentication via LDAP for OpenVPN 2.x." \
-    make_package -seed $TMPDIR/manifest.$PLUGIN $PLUGIN.mog
-
-RUN_DEPENDS_IPS="driver/tuntap" \
-    make_package -seed $TMPDIR/manifest.$PROG $PROG.mog
-
+download_source openvpn/$PROG $PROG $VER
+patch_source
+run_inbuild "./regen.sh"
+build
+make_package $PROG.mog
 clean_up
 
 # Vim hints
