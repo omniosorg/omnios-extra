@@ -139,6 +139,7 @@ check_packages_md()
 			shell/bash-patchlvl)	continue ;;
 			shell/bash)		continue ;;
 			*/virtualbox-5)		continue ;;
+			*/openvpn-auth-ldap)	continue ;;
 		esac
 
 		if [ -n "${targets[$pkg]}" ]; then

@@ -1,0 +1,40 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+
+dir group=root mode=0700 owner=root path=var/$(PREFIX)
+dir group=root mode=0700 owner=root path=var/log/$(PREFIX)
+dir group=bin mode=0700 owner=root path=etc/$(PREFIX)
+
+file ./tmp/$(PROG)-$(VER)/sample/sample-config-files/server.conf \
+    path=etc/$(PREFIX)/server.conf owner=root group=bin \
+    mode=0644 preserve=renamenew
+file ./tmp/$(PROG)-$(VER)/sample/sample-config-files/client.conf \
+    path=etc/$(PREFIX)/client.conf owner=root group=bin \
+    mode=0644 preserve=renamenew
+
+<transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
+<transform dir path=etc/$(PREFIX)$ -> set mode 0700>
+<transform path=etc/$(PREFIX) -> set owner root>
+
+<transform file path=$(PREFIX)/sbin/ \
+    -> add restart_fmri svc:/ooce/network/$(PROG):server>
+<transform file path=$(PREFIX)/sbin/ \
+    -> add restart_fmri svc:/ooce/network/$(PROG):client>
+
+# drop docs
+<transform path=$(PREFIX)/share/doc -> drop>
+
+<include manlink.mog>
+
+license COPYING license=Various
+license COPYRIGHT.GPL license=GPLv2
+

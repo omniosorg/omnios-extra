@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/aclocal.m4 a/aclocal.m4
+--- a~/aclocal.m4	1970-01-01 00:00:00
++++ a/aclocal.m4	1970-01-01 00:00:00
+@@ -457,7 +457,7 @@ AC_DEFUN([TR_OPENSSL],[
+ 				AC_LANG_PROGRAM([
+ 						#include <openssl/ssl.h>
+ 					], [
+-						CRYPTO_set_id_callback(NULL);
++						SSL_new(NULL);
+ 					])
+ 				], [
+ 					# Failed

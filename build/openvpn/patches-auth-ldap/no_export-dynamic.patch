@@ -1,0 +1,11 @@
+diff -wpruN '--exclude=*.orig' a~/platform.m4 a/platform.m4
+--- a~/platform.m4	1970-01-01 00:00:00
++++ a/platform.m4	1970-01-01 00:00:00
+@@ -97,7 +97,6 @@ AC_DEFUN(OD_CONFIG_PLUGIN, [
+ 	    PLUGIN_LD="${CC} -shared"
+ 	    PLUGIN_LD_FLAGS=""
+ 	    PLUGIN_SUFFIX=".so"
+-	    LDFLAGS="-export-dynamic"
+ 	    ;;
+     esac
+ 
