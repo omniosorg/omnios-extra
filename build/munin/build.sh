@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=munin
-VER=2.0.65
+VER=2.0.66
 PKG=ooce/application/munin
 SUMMARY="munin"
 DESC="A networked resource monitoring tool that can help "
