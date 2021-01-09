@@ -28,7 +28,7 @@ dir group=$(PROG) mode=0755 owner=$(PROG) path=var/$(PREFIX)
 <transform file path=$(PREFIX)/(?:bin|lib)/ \
     -> set restart_fmri svc:/ooce/ooceapps:default>
 <transform file path=$(PREFIX)/(?:bin|lib)/ \
-    -> set restart_fmri svc:/ooce/fenix:default>
+    -> add restart_fmri svc:/ooce/fenix:default>
 
 # drop stray "versioned" library paths that might be created
 <transform path=$(PREFIX)/lib/5\.[\d.]+(?:/|$) -> drop>
