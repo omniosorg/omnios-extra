@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -49,9 +49,11 @@ CONFIGURE_OPTS_64="
 
 add_extra_files() {
     # copy config template
-    logcmd cp $DESTDIR/etc/$PREFIX/$PROG.conf.dist \
-        $DESTDIR/etc/$PREFIX/$PROG.conf \
-        || logerr "--- cannot copy config file template"
+    for f in $PROG fenix; do
+        logcmd cp $DESTDIR/etc/$PREFIX/$f.conf.dist \
+            $DESTDIR/etc/$PREFIX/$f.conf \
+            || logerr "--- cannot copy $f"
+    done
 }
 
 init
@@ -60,7 +62,8 @@ patch_source
 prep_build
 build
 add_extra_files
-install_smf network ooceapps.xml
+install_smf ooce ooceapps.xml
+install_smf ooce fenix.xml
 make_package
 clean_up
 

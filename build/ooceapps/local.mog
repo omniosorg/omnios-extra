@@ -1,4 +1,3 @@
-# {{{ CDDL HEADER
 #
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.
@@ -8,9 +7,8 @@
 # A full copy of the text of the CDDL should have accompanied this
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
-# }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 group groupname=$(PROG) gid=79
 user username=$(PROG) uid=79 group=$(PROG) gcos-field="OOCEapps User" \
@@ -21,14 +19,16 @@ dir group=$(PROG) mode=0755 owner=$(PROG) path=var/$(PREFIX)
 <transform path=etc/$(PREFIX) -> set owner $(PROG)>
 <transform path=etc/$(PREFIX) -> set group $(PROG)>
 <transform dir path=etc/$(PREFIX) -> set mode 0700>
-<transform file path=etc/$(PREFIX)/$(PROG).conf$ -> set mode 0400>
-<transform file path=etc/$(PREFIX)/$(PROG).conf$ -> set preserve true>
+<transform file path=etc/$(PREFIX)/.+\.conf$ -> set mode 0400>
+<transform file path=etc/$(PREFIX)/.+\.conf$ -> set preserve true>
 
 <transform dir path=var/$(PREFIX) -> set owner $(PROG)>
 <transform dir path=var/$(PREFIX) -> set group $(PROG)>
 
 <transform file path=$(PREFIX)/(?:bin|lib)/ \
     -> set restart_fmri svc:/ooce/ooceapps:default>
+<transform file path=$(PREFIX)/(?:bin|lib)/ \
+    -> set restart_fmri svc:/ooce/fenix:default>
 
 # drop stray "versioned" library paths that might be created
 <transform path=$(PREFIX)/lib/5\.[\d.]+(?:/|$) -> drop>
