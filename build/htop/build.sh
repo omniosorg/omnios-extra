@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=htop
 PKG=ooce/system/htop
-VER=3.0.4
+VER=3.0.5
 SUMMARY="htop"
 DESC="An interactive process viewer for Unix"
 
