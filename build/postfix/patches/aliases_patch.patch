@@ -1,0 +1,21 @@
+diff -wpruN '--exclude=*.orig' a~/conf/main.cf a/conf/main.cf
+--- a~/conf/main.cf	1970-01-01 00:00:00
++++ a/conf/main.cf	1970-01-01 00:00:00
+@@ -398,7 +398,7 @@ unknown_local_recipient_reject_code = 55
+ # "postfix reload" to eliminate the delay.
+ #
+ #alias_maps = dbm:/etc/aliases
+-#alias_maps = hash:/etc/aliases
++alias_maps = hash:/etc/opt/ooce/postfix/aliases
+ #alias_maps = hash:/etc/aliases, nis:mail.aliases
+ #alias_maps = netinfo:/aliases
+ 
+@@ -409,7 +409,7 @@ unknown_local_recipient_reject_code = 55
+ #
+ #alias_database = dbm:/etc/aliases
+ #alias_database = dbm:/etc/mail/aliases
+-#alias_database = hash:/etc/aliases
++alias_database = hash:/etc/opt/ooce/postfix/aliases
+ #alias_database = hash:/etc/aliases, hash:/opt/majordomo/aliases
+ 
+ # ADDRESS EXTENSIONS (e.g., user+foo)

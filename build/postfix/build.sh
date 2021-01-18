@@ -13,12 +13,12 @@
 # }}}
 
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=postfix
-VER=3.5.8
+VER=3.5.9
 PKG=ooce/network/smtp/postfix
 SUMMARY="Postfix MTA"
 DESC="Wietse Venema's mail server alternative to sendmail"
@@ -53,10 +53,12 @@ XFORM_ARGS="
 
 SKIP_RTIME_CHECK=1
 
+MAKE_INSTALL_TARGET=non-interactive-package
+
 configure64() {
     logmsg "--- configure (make makefiles)"
     LIBDIR=${OPREFIX}/lib/${ISAPART64}
-    logcmd $MAKE makefiles CCARGS='-m64 \
+    logcmd $MAKE makefiles CCARGS="$CFLAGS $CFLAGS64"' \
         -DUSE_TLS -DHAS_DB -DHAS_LMDB -DNO_NIS -DHAS_LDAP \
         -DHAS_SQLITE -DHAS_MYSQL -DHAS_PGSQL -DUSE_SASL_AUTH -DUSE_CYRUS_SASL \
         -DDEF_COMMAND_DIR=\"'${PREFIX}/sbin'\" \
@@ -71,12 +73,14 @@ configure64() {
         -I'${OPREFIX}/mariadb-${MARIASQLVER}/include/mysql' \
         -I'${OPREFIX}/pgsql-${PGSQLVER}/include' \
         ' \
-        AUXLIBS="-R$LIBDIR -L$LIBDIR -ldb -lsasl2 -lssl -lcrypto" \
+        OPT='-O2' \
+        AUXLIBS="-L$LIBDIR -R$LIBDIR -ldb -lsasl2 -lssl -lcrypto" \
         AUXLIBS_LDAP="-lldap_r -llber" \
         AUXLIBS_SQLITE="-lsqlite3" \
-        AUXLIBS_MYSQL="-L${OPREFIX}/mariadb-${MARIASQLVER}/lib/${ISAPART64} -R ${OPREFIX}/mariadb-${MARIASQLVER}/lib/${ISAPART64} -lmysqlclient" \
-        AUXLIBS_PGSQL="-L${OPREFIX}/pgsql-${PGSQLVER}/lib/${ISAPART64} -R ${OPREFIX}/pgsql-${PGSQLVER}/lib/${ISAPART64} -lpq" \
-        AUXLIBS_LMDB="-R$LIBDIR -L$LIBDIR -llmdb" \
+        AUXLIBS_MYSQL="-L${OPREFIX}/mariadb-${MARIASQLVER}/lib/${ISAPART64} -R${OPREFIX}/mariadb-${MARIASQLVER}/lib/${ISAPART64} -lmysqlclient" \
+        AUXLIBS_PGSQL="-L${OPREFIX}/pgsql-${PGSQLVER}/lib/${ISAPART64} -R${OPREFIX}/pgsql-${PGSQLVER}/lib/${ISAPART64} -lpq" \
+        AUXLIBS_LMDB="-llmdb" \
+        AUXLIBS_PCRE="-lpcre" \
             || logerr "Failed make makefiles command"
 }
 
@@ -86,24 +90,13 @@ make_clean() {
         || logmsg "--- *** WARNING *** make (dist)clean Failed"
 }
 
-# Overriding this because "install" for postfix is interactive
-make_install() {
-    logmsg "--- make install"
-    logcmd /bin/sh postfix-install -non-interactive install_root=${DESTDIR} \
-        || logerr "--- Make install failed"
-
-    logmsg "--- change default aliases paths"
-    logcmd perl -i -pe "s!^#(alias_(?:maps|database)\\s+=\\s+hash:)/etc/aliases\$!\$1${CONFPATH}/aliases!" \
-        $DESTDIR$CONFPATH/main.cf || logerr "-- modifying main.cf failed"
-}
-
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-build
+MAKE_INSTALL_ARGS="install_root=${DESTDIR}" build
 strip_install
-install_smf network smtp-postfix.xml
+install_smf ooce smtp-postfix.xml
 make_package
 clean_up
 
