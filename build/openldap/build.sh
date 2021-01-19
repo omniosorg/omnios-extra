@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=openldap
-VER=2.4.56
+VER=2.4.57
 PKG=ooce/network/openldap
 SUMMARY="open-source LDAP implementation"
 DESC="Open-source implementation of the Lightweight Directory Access Protocol"
@@ -73,6 +73,8 @@ CONFIGURE_OPTS_64+="
     --enable-overlays=mod
 "
 [ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
+
+MAKE_INSTALL_ARGS+=" STRIP="
 
 # On older OmniOS releases where the compiler outputs 32-bit objects by
 # default, libtool creates some intermediate objects as 32-bit during the
