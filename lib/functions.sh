@@ -1392,11 +1392,10 @@ generate_manifest() {
 
     check_symlinks "$DESTDIR"
     if [ -z "$BATCH" ]; then
-        [ $RELVER -ge 151033 -a -z "$SKIP_RTIME_CHECK" ] \
-            && check_rtime "$DESTDIR"
-        [ $RELVER -ge 151037 -a -z "$SKIP_SSP_CHECK" ] && check_ssp "$DESTDIR"
+        [ $RELVER -ge 151033 -a -z "$SKIP_RTIME_CHECK" ] && check_rtime
+        [ $RELVER -ge 151037 -a -z "$SKIP_SSP_CHECK" ] && check_ssp
     fi
-    check_bmi "$DESTDIR"
+    check_bmi
     logmsg "--- Generating package manifest from $DESTDIR"
     typeset GENERATE_ARGS=
     if [ -n "$HARDLINK_TARGETS" ]; then
@@ -2515,80 +2514,6 @@ test_if_core() {
 }
 
 #############################################################################
-# Scan the destination install and strip the non-stipped ELF objects
-#############################################################################
-
-strip_install() {
-    logmsg "Stripping installation"
-    pushd $DESTDIR > /dev/null || logerr "Cannot change to $DESTDIR"
-    while read file; do
-        # This will catch not-stripped as well.. just want to check it's a
-        # strippable file.
-        file $file | $EGREP -s 'ELF.*stripped' || continue
-        logmsg "------ stripping $file"
-        MODE=$(stat -c %a "$file")
-        logcmd chmod u+w "$file" || logerr -b "chmod failed: $file"
-        logcmd strip -x "$file" || logerr -b "strip failed: $file"
-        logcmd chmod $MODE "$file" || logerr -b "chmod failed: $file"
-    done < <(find . -depth -type f -perm -0100)
-    popd > /dev/null
-}
-
-convert_ctf() {
-    pushd $DESTDIR >/dev/null
-
-    local ctftag='---- CTF:'
-
-    while read file; do
-        file $file | $EGREP -s ':	ELF' || continue
-
-        if [ -f $SRCDIR/files/ctf.skip ] \
-          && echo $file | $EGREP -qf $SRCDIR/files/ctf.skip; then
-            logmsg "$ctftag skipped $file"
-            continue
-        fi
-
-        if $CTFDUMP -h "$file" 1>/dev/null 2>&1; then
-            continue
-        fi
-
-        typeset mode=`stat -c %a "$file"`
-        logcmd chmod u+w "$file" || logerr -b "chmod u+w failed: $file"
-        typeset tf="$file.$$"
-
-        typeset flags="$CTF_FLAGS"
-        [ -f $SRCDIR/files/ctf.ignore ] && flags+=" -M$SRCDIR/files/ctf.ignore"
-        if logcmd $CTFCONVERT $flags -l "$PROG-$VER" -o "$tf" "$file"; then
-            if [ -s "$tf" ]; then
-                logcmd cp "$tf" "$file"
-                if [ -z "$BATCH" -o -n "$CTF_AUDIT" ]; then
-                    logmsg -n "$ctftag $file" \
-                        "`$CTFDUMP -S $file | \
-                        nawk '/number of functions/{print $6}'` function(s)"
-                else
-                    logmsg "$ctftag converted $file"
-                fi
-            else
-                logmsg "$ctftag no DWARF data $file"
-            fi
-        else
-            logmsg -e "$ctftag failed $file"
-            if [ -n "$CTF_AUDIT" ]; then
-                logcmd mkdir -p $BASE_TMPDIR/ctfobj
-                typeset f=${file:2}
-                logcmd cp $file $BASE_TMPDIR/ctfobj/${f//\//_}
-            fi
-        fi
-
-        logcmd rm -f "$tf"
-        logcmd strip -x "$file"
-        logcmd chmod $mode "$file" || logerr -b "chmod failed: $file"
-    done < <(find . -depth -type f -perm -0100)
-
-    popd >/dev/null
-}
-
-#############################################################################
 # Check for dangling symlinks
 #############################################################################
 
@@ -2736,21 +2661,90 @@ check_libabi() {
 }
 
 #############################################################################
-# ELF checks
+# ELF operations
 #############################################################################
 
 rtime_files() {
-    local destdir="$1"
-
     [ -f "$TMPDIR/rtime.files" ] && return
-    logcmd -p $FIND_ELF -fr $destdir/ > $TMPDIR/rtime.files
+    logcmd -p $FIND_ELF -fr $DESTDIR/ > $TMPDIR/rtime.files
+}
+
+rtime_objects() {
+    rtime_files
+    nawk '/^OBJECT/ { print $NF }' $TMPDIR/rtime.files
+}
+
+strip_install() {
+    logmsg "Stripping installation"
+
+    pushd $DESTDIR > /dev/null || logerr "Cannot change to $DESTDIR"
+    while read file; do
+        logmsg "------ stripping $file"
+        MODE=$(stat -c %a "$file")
+        logcmd chmod u+w "$file" || logerr -b "chmod failed: $file"
+        logcmd strip -x "$file" || logerr -b "strip failed: $file"
+        logcmd chmod $MODE "$file" || logerr -b "chmod failed: $file"
+    done < <(rtime_objects)
+    popd > /dev/null
+}
+
+convert_ctf() {
+    logmsg "Converting DWARF to CTF"
+
+    pushd $DESTDIR > /dev/null || logerr "Cannot change to $DESTDIR"
+
+    local ctftag='---- CTF:'
+
+    while read file; do
+        if [ -f $SRCDIR/files/ctf.skip ] \
+          && echo $file | $EGREP -qf $SRCDIR/files/ctf.skip; then
+            logmsg "$ctftag skipped $file"
+            continue
+        fi
+
+        if $CTFDUMP -h "$file" 1>/dev/null 2>&1; then
+            continue
+        fi
+
+        typeset mode=`stat -c %a "$file"`
+        logcmd chmod u+w "$file" || logerr -b "chmod u+w failed: $file"
+        typeset tf="$file.$$"
+
+        typeset flags="$CTF_FLAGS"
+        [ -f $SRCDIR/files/ctf.ignore ] && flags+=" -M$SRCDIR/files/ctf.ignore"
+        if logcmd $CTFCONVERT $flags -l "$PROG-$VER" -o "$tf" "$file"; then
+            if [ -s "$tf" ]; then
+                logcmd cp "$tf" "$file"
+                if [ -z "$BATCH" -o -n "$CTF_AUDIT" ]; then
+                    logmsg -n "$ctftag $file" \
+                        "`$CTFDUMP -S $file | \
+                        nawk '/number of functions/{print $6}'` function(s)"
+                else
+                    logmsg "$ctftag converted $file"
+                fi
+            else
+                logmsg "$ctftag no DWARF data $file"
+            fi
+        else
+            logmsg -e "$ctftag failed $file"
+            if [ -n "$CTF_AUDIT" ]; then
+                logcmd mkdir -p $BASE_TMPDIR/ctfobj
+                typeset f=${file:2}
+                logcmd cp $file $BASE_TMPDIR/ctfobj/${f//\//_}
+            fi
+        fi
+
+        logcmd rm -f "$tf"
+        logcmd strip -x "$file"
+        logcmd chmod $mode "$file" || logerr -b "chmod failed: $file"
+    done < <(rtime_objects)
+
+    popd >/dev/null
 }
 
 check_rtime() {
-    local destdir="$1"
-
     logmsg "-- Checking ELF runtime attributes"
-    rtime_files "$destdir"
+    rtime_files
 
     cp $ROOTDIR/doc/rtime $TMPDIR/rtime.cfg
     [ -f $SRCDIR/rtime ] && cat $SRCDIR/rtime >> $TMPDIR/rtime.cfg
@@ -2767,19 +2761,16 @@ check_rtime() {
 }
 
 check_ssp() {
-    local destdir="$1"
-
     logmsg "-- Checking stack smashing protection"
-    rtime_files "$destdir"
 
     : > $TMPDIR/rtime.ssp
     while read obj; do
-        [ -f "$destdir/$obj" ] || continue
-        nm $destdir/$obj | $EGREP -s '__stack_chk_guard' \
+        [ -f "$DESTDIR/$obj" ] || continue
+        nm $DESTDIR/$obj | $EGREP -s '__stack_chk_guard' \
             || echo "$obj does not include stack smashing protection" \
             >> $TMPDIR/rtime.ssp &
         parallelise $LCPUS
-    done < <(nawk '/^OBJECT/ { print $NF }' $TMPDIR/rtime.files)
+    done < <(rtime_objects)
     wait
     if [ -s "$TMPDIR/rtime.ssp" ]; then
         cat $TMPDIR/rtime.ssp | tee -a $LOGFILE
@@ -2788,8 +2779,6 @@ check_ssp() {
 }
 
 check_bmi() {
-    local destdir="$1"
-
     [ -n "$BMI_EXPECTED" ] && return
 
     # In the past, some programs have ended up containing BMI instructions
@@ -2797,17 +2786,16 @@ check_bmi() {
     # We explicitly check for this in the elf objects.
 
     logmsg "-- Checking for BMI instructions"
-    rtime_files "$destdir"
 
     : > $TMPDIR/rtime.bmi
     while read obj; do
-        [ -f "$destdir/$obj" ] || continue
-        dis $destdir/$obj 2>/dev/null \
+        [ -f "$DESTDIR/$obj" ] || continue
+        dis $DESTDIR/$obj 2>/dev/null \
             | $RIPGREP -wq --no-messages 'mulx|lzcntq|shlx' \
             && echo "$obj has been built with BMI instructions" \
             >> $TMPDIR/rtime.bmi &
         parallelise $LCPUS
-    done < <(nawk '/^OBJECT/ { print $NF }' $TMPDIR/rtime.files)
+    done < <(rtime_objects)
     wait
     if [ -s "$TMPDIR/rtime.bmi" ]; then
         cat $TMPDIR/rtime.bmi | tee -a $LOGFILE
