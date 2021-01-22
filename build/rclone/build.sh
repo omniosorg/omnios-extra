@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=rclone
 PKG=ooce/network/rclone
-VER=1.53.3
+VER=1.53.4
 SUMMARY="rsync for cloud storage"
 DESC="A command line program to sync files and directories to and from "
 DESC+="different cloud storage providers"
@@ -33,7 +33,7 @@ export GOOS GOARCH
 XFORM_ARGS="-DPROG=$PROG"
 
 # rclone build wants GNU cp
-export PATH="/usr/gnu/bin:$PATH"
+export PATH="$GNUBIN:$PATH"
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
