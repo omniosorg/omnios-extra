@@ -13,12 +13,12 @@
 # }}}
 #
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=bind
-VER=9.16.10
+VER=9.16.11
 PKG=ooce/network/bind-916
 SUMMARY="ISC BIND DNS Server & Tools"
 DESC="Server & Client Utilities for DNS"
