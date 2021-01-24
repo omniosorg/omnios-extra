@@ -117,6 +117,10 @@
 <transform dir file link hardlink path=opt/ooce/.+/man(/.+)? -> \
     default facet.doc.man true>
 
+# Set the doc.man facet on pod pages
+<transform dir file link hardlink path=.*\.pod$ -> \
+    default facet.doc.man true>
+
 # man pages should trigger a whatis database rebuild
 <transform file link path=opt/ooce/share/man/.*\.\d[a-z]*$ -> \
     add restart_fmri svc:/system/update-man-index:default>
