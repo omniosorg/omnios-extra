@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=pango
-VER=1.48.0
+VER=1.48.1
 PKG=ooce/library/pango
 SUMMARY="pango"
 DESC="Pango is a library for laying out and rendering of text"
@@ -76,7 +76,7 @@ export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/harfbuzz"
 ######################################################################
 
 EXPECTED_OPTIONS=""
-build_dependency -merge fribidi fribidi-$FRIBIDIVER \
+build_dependency -merge -noctf fribidi fribidi-$FRIBIDIVER \
     fribidi fribidi $FRIBIDIVER
 export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/fribidi"
 
@@ -125,16 +125,16 @@ fixup() {
     rpath64="/usr/gcc/$GCCVER/lib/$ISAPART64:$PREFIX/lib/$ISAPART64"
     for obj in $P/bin/* $P/lib/*.so* $P/lib/$ISAPART64/*.so*; do
         [ -f "$obj" ] || continue
-        if ! elfdump -d $obj | egrep -s RPATH; then
-            logmsg "--- fixing runpath for $obj"
-            if file $obj | egrep -s 'ELF 64-bit'; then
-                logcmd elfedit -e "dyn:value -s RUNPATH $rpath64" $obj
-            elif file $obj | egrep -s 'ELF 32-bit'; then
-                logcmd elfedit -e "dyn:value -s RUNPATH $rpath32" $obj
-            else
-                file $obj
-                logerr "BAD"
-            fi
+        logmsg "--- fixing runpath for $obj"
+        if file $obj | egrep -s 'ELF 64-bit'; then
+            logcmd elfedit -e "dyn:value -s RPATH $rpath64" $obj
+            logcmd elfedit -e "dyn:value -s RUNPATH $rpath64" $obj
+        elif file $obj | egrep -s 'ELF 32-bit'; then
+            logcmd elfedit -e "dyn:value -s RPATH $rpath32" $obj
+            logcmd elfedit -e "dyn:value -s RUNPATH $rpath32" $obj
+        else
+            file $obj
+            logerr "BAD"
         fi
     done
     popd >/dev/null
