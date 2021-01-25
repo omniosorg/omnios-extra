@@ -24,7 +24,7 @@
 | ooce/application/zabbix	| 5.2.3		| https://www.zabbix.com/download_sources | [omniosorg](https://github.com/omniosorg)
 | ooce/audio/flac		| 1.3.3		| https://ftp.osuosl.org/pub/xiph/releases/flac/ https://xiph.org/flac/changelog.html | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pbzip2		| 1.1.13	| https://launchpad.net/pbzip2/+download | [omniosorg](https://github.com/omniosorg)
-| ooce/compress/pigz		| 2.4		| https://zlib.net/pigz/ | [omniosorg](https://github.com/omniosorg)
+| ooce/compress/pigz		| 2.5		| https://zlib.net/pigz/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/bdb		| 5.3.28	| http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/database/lmdb		| 0.9.24	| https://github.com/LMDB/lmdb/releases https://symas.com/lmdb/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-103	| 10.3.27	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)

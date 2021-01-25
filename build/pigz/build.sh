@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=pigz
 PKG=ooce/compress/pigz
-VER=2.4
+VER=2.5
 SUMMARY=$PROG
 DESC="Parallel implementation of gzip for modern "
 DESC+="multi-processor, multi-core machines"
