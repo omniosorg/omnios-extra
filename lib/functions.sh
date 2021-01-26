@@ -2665,7 +2665,6 @@ check_libabi() {
 #############################################################################
 
 rtime_files() {
-    [ -f "$TMPDIR/rtime.files" ] && return
     logcmd -p $FIND_ELF -fr $DESTDIR/ > $TMPDIR/rtime.files
 }
 
