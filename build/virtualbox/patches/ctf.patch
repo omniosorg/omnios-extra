@@ -58,35 +58,43 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3
  
  ## Compile C source.
  # @param    $(target)   Normalized main target name.
-@@ -122,6 +145,7 @@ define TOOL_GCC3PLAIN_COMPILE_C_CMDS
+@@ -122,6 +145,9 @@ define TOOL_GCC3PLAIN_COMPILE_C_CMDS
  		$(flags) -fpreprocessed -x c\
  		-o $(obj)\
  		-
++if ($(OOCEVER) >= 151034)
 +	$(QUIET)$(TOOL_CTFCONVERT) -mki -l vbox $(obj)
++endif
  	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
  endef
  else # !KBUILD_USE_KOBJCACHE
-@@ -132,6 +156,7 @@ define TOOL_GCC3PLAIN_COMPILE_C_CMDS
+@@ -132,6 +156,9 @@ define TOOL_GCC3PLAIN_COMPILE_C_CMDS
  		-Wp,-MD,$(dep) -Wp,-MT,$(obj) -Wp,-MP\
  		-o $(obj)\
  		$(abspath $(source))
++if ($(OOCEVER) >= 151034)
 +	$(QUIET)$(TOOL_CTFCONVERT) -mki -l vbox $(obj)
++endif
  	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
  endef
  endif # !KBUILD_USE_KOBJCACHE
-@@ -166,6 +191,7 @@ define TOOL_GCC3PLAIN_COMPILE_CXX_CMDS
+@@ -166,6 +191,9 @@ define TOOL_GCC3PLAIN_COMPILE_CXX_CMDS
  		$(flags) -fpreprocessed -x c++\
  		-o $(obj)\
  		-
++if ($(OOCEVER) >= 151034)
 +	$(QUIET)$(TOOL_CTFCONVERT) -mki -l vbox $(obj)
++endif
  	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
  endef
  else # !KBUILD_USE_KOBJCACHE
-@@ -176,6 +202,7 @@ define TOOL_GCC3PLAIN_COMPILE_CXX_CMDS
+@@ -176,6 +202,9 @@ define TOOL_GCC3PLAIN_COMPILE_CXX_CMDS
  		-Wp,-MD,$(dep) -Wp,-MT,$(obj) -Wp,-MP\
  		-o $(obj)\
  		$(abspath $(source))
++if ($(OOCEVER) >= 151034)
 +	$(QUIET)$(TOOL_CTFCONVERT) -mki -l vbox $(obj)
++endif
  	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
  endef
  endif # !KBUILD_USE_KOBJCACHE
@@ -176,19 +184,23 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GXX3PLAIN.kmk a/kBuild/tools/GXX3
  
  ## Compile C source.
  # @param    $(target)   Normalized main target name.
-@@ -137,6 +159,7 @@ else
+@@ -137,6 +159,9 @@ else
  		-o $(obj)\
  		$(abspath $(source))
  endif
++if ($(OOCEVER) >= 151034)
 +	$(QUIET)$(TOOL_CTFCONVERT) -mki -l vbox $(obj)
++endif
  	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
  endef
  
-@@ -231,6 +254,8 @@ define TOOL_GXX3PLAIN_COMPILE_AS_CMDS
+@@ -231,6 +254,10 @@ define TOOL_GXX3PLAIN_COMPILE_AS_CMDS
  		-Wp,-MD,$(dep) -Wp,-MT,$(obj) -Wp,-MP\
  		-o $(obj)\
  		$(abspath $(source))
++if ($(OOCEVER) >= 151034)
 +	-$(QUIET)$(TOOL_CTFCONVERT) -mki -l vbox $(obj)
++endif
 +	-$(QUIET)strip -x $(obj)
  	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
  endef
