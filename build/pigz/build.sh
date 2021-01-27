@@ -36,6 +36,7 @@ configure64() {
     MAKE_ARGS_WS="
         -e
         CFLAGS=\"$CFLAGS64 $CFLAGS\"
+        LDFLAGS=\"$LDFLAGS64 $LDFLAGS\"
         LIBS=\"-lm -lz\"
     "
 }
