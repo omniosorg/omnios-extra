@@ -2441,6 +2441,7 @@ set_python_version() {
     PYTHON=$PYTHONPATH/bin/python$PYTHONVER
     PYTHONLIB=$PYTHONPATH/lib
     PYTHONVENDOR=$PYTHONLIB/python$PYTHONVER/vendor-packages
+    PYTHONSITE=$PYTHONLIB/python$PYTHONVER/site-packages
 }
 
 pre_python_32() {
@@ -2465,20 +2466,34 @@ import sys; sys.path.insert(1, '$PREFIX/lib/python$PYTHONVER/vendor-packages')
 }
 
 python_vendor_relocate() {
-    pushd $DESTDIR/$PREFIX/lib >/dev/null || logerr "python relocate pushd"
-    [ -d python$PYTHONVER/site-packages ] || return
-    logmsg "Relocating python $PYTHONVER site to vendor-packages"
-    if [ -d python$PYTHONVER/vendor-packages ]; then
-        rsync -a python$PYTHONVER/site-packages/ \
-            python$PYTHONVER/vendor-packages/ \
+    [ -d $DESTDIR/$PYTHONSITE ] || return
+    logmsg "Relocating python $PYTHONVER site-packages to vendor-packages"
+    if [ -d $DESTDIR$PYTHONVENDOR ]; then
+        rsync -a $DESTDIR$PYTHONSITE/ $DESTDIR$PYTHONVENDOR/ \
             || logerr "python: cannot copy from site to vendor-packages"
-        rm -rf python$PYTHONVER/site-packages \
-            || logerr "python: cannot remove site-packages directory"
+        rm -rf $DESTDIR$PYTHONSITE
     else
-        mv python$PYTHONVER/site-packages/ python$PYTHONVER/vendor-packages/ \
+        mv $DESTDIR$PYTHONSITE/ $DESTDIR$PYTHONVENDOR/ \
             || logerr "python: cannot move from site to vendor-packages"
     fi
-    popd >/dev/null
+
+    # Any packages which are delivered to vendor-packages are managed by IPS.
+    # However, we need to take extra precautions to prevent the python `pip`
+    # package manager from interfering with files here, potentially breaking
+    # `pkg`. The IPS-delivered pip is patched to help with this, but there
+    # is still the chance that and end user will somehow try running a
+    # vanilla version of pip. Therefore, we convert the enhanced package
+    # metadata in the form of an egg-info directory, into a plain metadata
+    # file, which prevents pip from touching it.
+
+    for d in $DESTDIR$PYTHONVENDOR/*.egg-info; do
+        [ -d "$d" ] || continue
+        logmsg "-- Flattening `basename $d`"
+        typeset tf=`mktemp`
+        logcmd mv $d/PKG-INFO $tf || logerr "Could not mv $d/PKG-INFO"
+        logcmd rm -rf $d/
+        logcmd mv $tf $d || logerr "Could not create $d"
+    done
 }
 
 python_compile() {
