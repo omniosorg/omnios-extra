@@ -9,7 +9,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . /lib/svc/share/smf_include.sh
 
@@ -20,6 +20,9 @@ fi
 
 rootdir="`svcprop -p application/root $SMF_FMRI`"
 datadir="`svcprop -p application/datadir $SMF_FMRI`"
+config="`svcprop -p application/config $SMF_FMRI 2>/dev/null`"
+[ -n "$config" ] || config="/etc$rootdir/my.cnf"
+
 
 if [ -z "$rootdir" ]; then
 	echo "application/rootdir property is not set on this instance"
@@ -53,7 +56,8 @@ create_database() {
 start_mariadb() {
 	pidfile="$datadir/`uname -n`.pid"
 	echo "Starting mariadb with datadir=$datadir"
-	$rootdir/bin/mariadbd-safe --datadir="$datadir" --pid-file="$pidfile" &
+	$rootdir/bin/mariadbd-safe --defaults-file="$config" \
+	    --datadir="$datadir" --pid-file="$pidfile" &
 }
 
 case "$1" in

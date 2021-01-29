@@ -11,7 +11,7 @@ A full copy of the text of the CDDL should have accompanied this
 source. A copy of the CDDL is also available via the Internet at
 http://www.illumos.org/license/CDDL.
 
-Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 -->
 <service_bundle type="manifest"
@@ -21,77 +21,70 @@ Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
              type="service"
              version="1">
 
-        <instance name="default"
-                  enabled="false">
+        <dependency name="loopback"
+                    grouping="require_any"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/network/loopback" />
+        </dependency>
 
-            <dependency name="paths"
-                        grouping="require_all"
-                        restart_on="error"
-                        type="path">
-                <service_fmri value="file://localhost/etc/$(PREFIX)/my.cnf" />
-            </dependency>
+        <dependency name="network"
+                    grouping="optional_all"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/milestone/network" />
+        </dependency>
 
-            <dependency name="loopback"
-                        grouping="require_any"
-                        restart_on="error"
-                        type="service">
-                <service_fmri value="svc:/network/loopback" />
-            </dependency>
+        <dependency name="filesystem_local"
+                    grouping="require_all"
+                    restart_on="none"
+                    type="service">
+            <service_fmri value="svc:/system/filesystem/local:default" />
+        </dependency>
 
-            <dependency name="network"
-                        grouping="optional_all"
-                        restart_on="error"
-                        type="service">
-                <service_fmri value="svc:/milestone/network" />
-            </dependency>
+        <dependent name="mariadb$(sVERSION)_multi-user"
+                   grouping="optional_all"
+                   restart_on="none">
+            <service_fmri value="svc:/milestone/multi-user" />
+        </dependent>
 
-            <dependency name="filesystem_local"
-                        grouping="require_all"
-                        restart_on="none"
-                        type="service">
-                <service_fmri value="svc:/system/filesystem/local:default" />
-            </dependency>
+        <method_context security_flags="aslr">
+            <method_credential user="$(USER)" group="$(GROUP)" />
+        </method_context>
 
-            <dependent name="mariadb$(sVERSION)_multi-user"
-                       grouping="optional_all"
-                       restart_on="none">
-                <service_fmri value="svc:/milestone/multi-user" />
-            </dependent>
+        <exec_method type="method"
+                     name="start"
+                     exec="%{application/method} %m"
+                     timeout_seconds="60">
+        </exec_method>
 
-            <exec_method type="method"
-                         name="start"
-                         exec="%{application/method} %m"
-                         timeout_seconds="60">
-                <method_context security_flags="aslr">
-                    <method_credential user="$(USER)"
-                                       group="$(GROUP)" />
-                </method_context>
-            </exec_method>
+        <exec_method type="method"
+                     name="stop"
+                     exec=":kill"
+                     timeout_seconds="60" />
 
-            <exec_method type="method"
-                         name="stop"
-                         exec=":kill"
-                         timeout_seconds="60" />
+        <exec_method type="method"
+                     name="refresh"
+                     exec=":kill -HUP"
+                     timeout_seconds="60" />
 
-            <exec_method type="method"
-                         name="refresh"
-                         exec=":kill -HUP"
-                         timeout_seconds="60" />
+        <property_group name="application"
+                        type="application">
+            <propval name="config"
+                     type="astring"
+                     value="/etc/$(PREFIX)/my.cnf" />
+            <propval name="datadir"
+                     type="astring"
+                     value="/var/$(PREFIX)/data" />
+            <propval name="root"
+                     type="astring"
+                     value="/$(PREFIX)" />
+            <propval name="method"
+                     type="astring"
+                     value="/lib/svc/method/ooce/mariadb-$(sVERSION)" />
+        </property_group>
 
-            <property_group name="application"
-                            type="application">
-                <propval name="datadir"
-                         type="astring"
-                         value="/var/$(PREFIX)/data" />
-                <propval name="root"
-                         type="astring"
-                         value="/$(PREFIX)" />
-                <propval name="method"
-                         type="astring"
-                         value="/lib/svc/method/ooce/mariadb-$(sVERSION)" />
-            </property_group>
-
-        </instance>
+        <instance name="default" enabled="false" />
 
         <stability value="External" />
 
