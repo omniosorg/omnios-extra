@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=libwebp
-VER=1.1.0
+VER=1.2.0
 PKG=ooce/library/libwebp
 SUMMARY="libwebp"
 DESC="WebP - A modern image format that provides lossless and lossy compression"
