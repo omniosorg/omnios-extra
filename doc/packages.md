@@ -14,7 +14,7 @@
 | ooce/application/nagios-nrpe	| 4.0.3		| https://github.com/NagiosEnterprises/nrpe/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nsca	| 2.10.0	| https://github.com/NagiosEnterprises/nsca/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-plugins | 2.3.3	| http://www.nagios-plugins.org/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-73	| 7.3.26	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-73	| 7.3.27	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-74	| 7.4.14	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-80	| 8.0.1		| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-XX/imagick	| 3.4.4	| https://github.com/Imagick/imagick/releases | [omniosorg](https://github.com/omniosorg)
