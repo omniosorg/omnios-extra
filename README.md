@@ -231,7 +231,7 @@ It is a good idea to install the package, to see the full process of the build s
 First, the build systems "IPS Repository" needs to be imported on the local system. This can be done by importing the `tmp.repo` as a secondary "OmniOS Extra IPS Repository". This can be achieved from the `helloworld` directory as follows:
 
 ```none
-# pkg set-publisher -g ../../tmp.repo extra.omnios
+# pkg set-publisher -g ../../tmp.repo local.omnios
 ```
 
 Next, all that is needed, is to install the package:
@@ -780,10 +780,27 @@ The files that need editing are:
 
 The default “IPS Repository”, for the build system, that all packages will be published to, resides at the root directory of the cloned “OmniOS Extra IPS Repository”. The root directory of this default “IPS Repository” is named `tmp.repo`.
 
-The build systems “IPS Repository” may be imported on the local system. This is done by importing the `tmp.repo` as a secondary “OmniOS Extra IPS Repository”. This can be achieved as follows:
+The build systems “IPS Repository” may be imported on the local system. This is done by importing the `tmp.repo` either as a secondary “OmniOS Extra IPS Repository” (but in that case the signature-policy must be set to ignore), or a local.omnios publisher can be added. This can be achieved as follows:
 
 ```none
-# pkg set-publisher -g /path/to/github/repos/omnios-extra/tmp.repo extra.omnios
+# cd /path/to/github/repos/omnios-extra/lib/
+# cp site.sh.template site.sh
+```
+
+Change the line that defines PKGPUBLISHER :
+
+```none
+diff site.sh site.sh.template 
+12c12
+< PKGPUBLISHER=local.omnios
+---
+> #PKGPUBLISHER=extra.omnios
+```
+
+Then add the publisher :
+
+```none
+# pkg set-publisher -g /path/to/github/repos/omnios-extra/tmp.repo local.omnios
 ```
 
 With this set, the list of publishers should look similar to the following:
@@ -792,7 +809,7 @@ With this set, the list of publishers should look similar to the following:
 $ pkg publisher
 PUBLISHER                   TYPE     STATUS P LOCATION
 omnios                      origin   online F https://pkg.omniosce.org/bloody/core/
-extra.omnios                origin   online F file:///path/to/github/repos/omnios-extra/tmp.repo/
+local.omnios                origin   online F file:///path/to/github/repos/omnios-extra/tmp.repo/
 extra.omnios                origin   online F https://pkg.omniosce.org/bloody/extra/
 ```
 
