@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=ntfs-3g
-VER=2017.3.23AR.5
+VER=2017.3.23AR.6
 PKG=ooce/system/file-system/ntfs-3g
 SUMMARY="${PROG^^} - Read-Write NTFS Driver"
 DESC="A stable, full-featured, read-write NTFS driver for Linux, Android, "
@@ -35,6 +35,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS="
