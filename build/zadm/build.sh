@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -29,27 +29,21 @@ fi
 
 set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
-# Curl 7.71 is required as zadm uses the '%{json}' token
-RUN_DEPENDS_IPS="
-    web/curl@7.71.1
-    ooce/compress/pigz
-    ooce/compress/pbzip2
-    network/socat
-"
-
-# zstd has been moved to core from r151035 on
-[ $RELVER -ge 151035 ] && RUN_DEPENDS_IPS+=" compress/zstd" \
-    || RUN_DEPENDS_IPS+=" ooce/compress/zstd"
+RUN_DEPENDS_IPS="network/socat"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 set_arch 64
 
+# the Zstd module contains BMI instructions even when built on an older CPU
+BMI_EXPECTED=1
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS_64="
