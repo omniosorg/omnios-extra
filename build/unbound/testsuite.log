@@ -1,4 +1,4 @@
-Start of unbound 1.13.0+libevent unit test.
+Start of unbound 1.13.1+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -59,9 +59,9 @@ test slabhash functions
 test infra cache functions
 test sldns functions
 test message parse functions
-[0] did 10000 in 109.593 msec for 91246.703713 encode/sec size 615
+[0] did 10000 in 116.047 msec for 86171.982042 encode/sec size 615
 test services/outside_network.c:reuse_tcp_select_id
-1296572 checks ok.
+1296956 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl OK
 ./testdata/auth_nsec3_ent.rpl OK
@@ -229,6 +229,9 @@ selftest successful (33 checks).
 ./testdata/localdata.rpl OK
 ./testdata/net_signed_servfail.rpl OK
 ./testdata/nomem_cnametopos.rpl OK
+./testdata/nsid_ascii.rpl OK
+./testdata/nsid_hex.rpl OK
+./testdata/nsid_not_set.rpl OK
 ./testdata/refuse_xfr.rpl OK
 ./testdata/root_key_sentinel.rpl OK
 ./testdata/rpz_axfr.rpl OK
@@ -247,6 +250,7 @@ selftest successful (33 checks).
 ./testdata/serve_expired_ttl.rpl OK
 ./testdata/serve_expired_ttl_client_timeout.rpl OK
 ./testdata/serve_expired_zerottl.rpl OK
+./testdata/serve_original_ttl.rpl OK
 ./testdata/stop_nxdomain.rpl OK
 ./testdata/stop_nxdomain_minimised.rpl OK
 ./testdata/trust_cname_chain.rpl OK
