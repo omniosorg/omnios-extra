@@ -13,13 +13,13 @@
 # }}}
 
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=postgresql
 PKG=ooce/database/postgresql-12
-VER=12.5
+VER=12.6
 SUMMARY="PostgreSQL 12"
 DESC="The World's Most Advanced Open Source Relational Database"
 
