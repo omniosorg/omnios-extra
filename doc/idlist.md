@@ -29,6 +29,7 @@
 | extra		| 67	| znc
 | illumos	| 70	| mysql
 | illumos	| 71	| lp
+| extra		| 72	| haproxy
 | illumos	| 75	| openldap
 | extra		| 76	| zabbixa (agent)
 | extra		| 77	| zabbix
@@ -81,6 +82,7 @@
 | illumos	| 65	| netadm
 | extra		| 67	| znc
 | illumos	| 70	| mysql
+| extra		| 72	| haproxy
 | illumos	| 75	| openldap
 | extra		| 77	| zabbix
 | extra		| 78	| munin
