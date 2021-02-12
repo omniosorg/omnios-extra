@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=subversion
-VER=1.14.0
+VER=1.14.1
 PKG=ooce/developer/subversion
 SUMMARY="Subversion is an open source version control system"
 DESC="Subversion is a version control system designed to be \
