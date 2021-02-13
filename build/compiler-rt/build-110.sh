@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=compiler-rt
 PKG=ooce/developer/compiler-rt-110
-VER=11.0.0
+VER=11.0.1
 SUMMARY="LLVM runtime libraries"
 DESC="Implementation for the runtime compiler support libraries"
 
@@ -30,7 +30,7 @@ BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}"
 set_builddir $PROG-$VER.src
 
 CMAKE="cmake -G Ninja"
-MAKE=/opt/ooce/bin/ninja
+MAKE=$NINJA
 
 CONFIGURE_OPTS_32=
 CONFIGURE_OPTS_64=

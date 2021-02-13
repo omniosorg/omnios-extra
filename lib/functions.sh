@@ -860,8 +860,8 @@ prep_build() {
         meson)
             OUT_OF_TREE_BUILD=1
             MULTI_BUILD=1
-            MAKE="$MESON_MAKE"
-            TESTSUITE_MAKE="$MESON_MAKE"
+            MAKE="$NINJA"
+            TESTSUITE_MAKE="$NINJA"
             MAKE_TESTSUITE_ARGS=
             CONFIGURE_CMD="$PYTHONLIB/python$PYTHONVER/bin/meson setup"
             CONFIGURE_CMD+=" $TMPDIR/$BUILDDIR"

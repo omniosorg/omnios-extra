@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=llvm
 PKG=ooce/developer/llvm-110
-VER=11.0.0
+VER=11.0.1
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 
@@ -41,8 +41,7 @@ XFORM_ARGS="
 "
 
 CMAKE="cmake -G Ninja"
-MAKE=/opt/ooce/bin/ninja
-TESTSUITE_MAKE=$MAKE
+MAKE=$NINJA
 
 CONFIGURE_OPTS_64=
 CONFIGURE_OPTS_WS_64="
@@ -62,7 +61,6 @@ download_source $PROG $PROG $VER.src
 patch_source
 prep_build cmake
 build -noctf    # C++
-run_testsuite check-all
 make_package
 clean_up
 
