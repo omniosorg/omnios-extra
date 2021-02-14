@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+CDDL HEADER START
+
+The contents of this file are subject to the terms of the
+Common Development and Distribution License (the "License").
+You may not use this file except in compliance with the License.
+
+You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+or http://www.opensolaris.org/os/licensing.
+See the License for the specific language governing permissions
+and limitations under the License.
+
+When distributing Covered Code, include this CDDL HEADER in each
+file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+If applicable, add the following below this CDDL HEADER, with the
+fields enclosed by brackets "[]" replaced with your own identifying
+information: Portions Copyright [yyyy] [name of copyright owner]
+
+CDDL HEADER END
+-->
+<!--
+    Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
+    Use is subject to license terms.
+    Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+-->
+<service_bundle type="manifest"
+                name="$(PROG)">
+
+    <service name="ooce/network/$(PROG)"
+             type="service"
+             version="1">
+
+        <create_default_instance enabled="false" />
+
+        <dependency name="network"
+                    grouping="require_all"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/milestone/network:default" />
+        </dependency>
+
+        <dependency name="filesystem-local"
+                    grouping="require_all"
+                    restart_on="none"
+                    type="service">
+            <service_fmri value="svc:/system/filesystem/local:default" />
+        </dependency>
+
+        <dependency name="autofs"
+                    grouping="optional_all"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/system/filesystem/autofs:default" />
+        </dependency>
+
+        <dependent name="$(PROG)_multi-user"
+                   grouping="optional_all"
+                   restart_on="none">
+            <service_fmri value="svc:/milestone/multi-user" />
+        </dependent>
+
+        <method_context security_flags="aslr">
+            <method_credential user="haproxy"
+                               group="haproxy"
+                               privileges="basic,net_privaddr,!proc_info,!proc_session" />
+        </method_context>
+
+        <exec_method type="method"
+                     name="start"
+                     exec="%{config/exec} -D -f %{config/file} -p %{config/pidfile}"
+                     timeout_seconds="60"></exec_method>
+
+        <exec_method type="method"
+                     name="stop"
+                     exec=":kill"
+                     timeout_seconds="60" />
+
+        <property_group name="startd"
+                        type="framework">
+            <propval name="ignore_error"
+                     type="astring"
+                     value="core,signal" />
+        </property_group>
+
+        <property_group name="config"
+                        type="application">
+            <propval name="file"
+                     type="astring"
+                     value="/etc/$(PREFIX)/$(PROG)/$(PROG).cfg" />
+            <propval name="pidfile"
+                     type="astring"
+                     value="/var/$(PREFIX)/$(PROG)/run/$(PROG).pid" />
+            <propval name="exec"
+                     type="astring"
+                     value="/$(PREFIX)/sbin/$(PROG)" />
+        </property_group>
+
+        <stability value="External" />
+
+        <template>
+            <common_name>
+                <loctext xml:lang="C">haproxy TCP/HTTP Load Balancer</loctext>
+            </common_name>
+            <documentation>
+                <doc_link name="haproxy.org"
+                          uri="https://haproxy.org/" />
+            </documentation>
+        </template>
+
+    </service>
+
+</service_bundle>
