@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=nagios-nrdp
-VER=2.0.3
+VER=2.0.4
 PKG=ooce/application/nagios-nrdp
 SUMMARY="Nagios Remote Data Processor"
 DESC="NRDP is a flexible data transport mechanism and processor \

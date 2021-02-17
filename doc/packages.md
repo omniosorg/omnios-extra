@@ -10,7 +10,7 @@
 | ooce/application/munin	| 2.0.66	| http://downloads.munin-monitoring.org/munin/stable/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mutt		| 2.0.5		| http://www.mutt.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios	| 4.4.6		| https://github.com/NagiosEnterprises/nagioscore/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/nagios-nrdp	| 2.0.3 	| https://github.com/NagiosEnterprises/nrdp/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/nagios-nrdp	| 2.0.4 	| https://github.com/NagiosEnterprises/nrdp/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nrpe	| 4.0.3		| https://github.com/NagiosEnterprises/nrpe/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nsca	| 2.10.0	| https://github.com/NagiosEnterprises/nsca/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-plugins | 2.3.3	| http://www.nagios-plugins.org/download/ | [omniosorg](https://github.com/omniosorg)
