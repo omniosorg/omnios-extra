@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=libuv
-VER=1.40.0
+VER=1.41.0
 PKG=ooce/library/libuv
 SUMMARY=$PROG
 DESC="Multi-platform support library with a focus on asynchronous I/O."
