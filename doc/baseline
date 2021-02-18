@@ -53,8 +53,8 @@ extra.omnios ooce/developer/cunit
 extra.omnios ooce/developer/dejagnu
 extra.omnios ooce/developer/flamegraph
 extra.omnios ooce/developer/freepascal
-extra.omnios ooce/developer/go-114
 extra.omnios ooce/developer/go-115
+extra.omnios ooce/developer/go-116
 extra.omnios ooce/developer/gperf
 extra.omnios ooce/developer/gyp
 extra.omnios ooce/developer/llvm-100

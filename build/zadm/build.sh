@@ -48,6 +48,7 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX
+    --sysconfdir=/etc$PREFIX
     --localstatedir=/var$PREFIX
 "
 
