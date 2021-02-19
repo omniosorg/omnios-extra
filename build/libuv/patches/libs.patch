@@ -1,0 +1,16 @@
+
+libdl is a stub library and does not need to be linked with libuv.
+
+Upstream PR: https://github.com/libuv/libuv/pull/3113
+
+--- a/configure.ac~	2021-02-19 11:07:12.020704131 +0000
++++ a/configure.ac	2021-02-19 11:07:32.536717197 +0000
+@@ -42,7 +42,7 @@
+     LIBS="$LIBS $PTHREAD_LIBS"
+     CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
+ ])
+-AC_CHECK_LIB([dl], [dlopen])
++AC_SEARCH_LIBS([dlopen], [dl])
+ AC_SEARCH_LIBS([kstat_lookup], [kstat])
+ AC_SEARCH_LIBS([gethostbyname], [nsl])
+ AC_SEARCH_LIBS([perfstat_cpu], [perfstat])
