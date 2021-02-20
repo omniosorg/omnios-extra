@@ -26,7 +26,14 @@ CONFIGURE_OPTS+="
     --disable-static
 "
 
-TESTSUITE_FILTER='^ok |^not ok|failed'
+TESTSUITE_SED='
+    # Remove test numbers
+    s/ [0-9][0-9]* - / - /
+    /^ok/p
+    /^not ok/p
+    /failed/p
+    d
+'
 
 init
 download_source $PROG v$VER
