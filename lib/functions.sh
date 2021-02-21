@@ -2711,8 +2711,10 @@ convert_ctf() {
         typeset tf="$file.$$"
 
         typeset flags="$CTF_FLAGS"
-        [ $RELVER -ge 151037 -a -f $SRCDIR/files/ctf.ignore ] \
-            && flags+=" -M$SRCDIR/files/ctf.ignore"
+        if [ -f $SRCDIR/files/ctf.ignore ]; then
+            [ $RELVER -ge 151037 ] && flags+=" -M$SRCDIR/files/ctf.ignore" \
+                || flags+=" -m"
+        fi
         if logcmd $CTFCONVERT $flags -l "$PROG-$VER" -o "$tf" "$file"; then
             if [ -s "$tf" ]; then
                 logcmd cp "$tf" "$file"
