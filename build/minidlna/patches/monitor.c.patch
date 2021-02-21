@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/monitor.c a/monitor.c
 --- a~/monitor.c	1970-01-01 00:00:00
 +++ a/monitor.c	1970-01-01 00:00:00
-@@ -531,17 +531,21 @@ monitor_insert_directory(int fd, char *n
+@@ -550,17 +550,21 @@ monitor_insert_directory(int fd, char *n
  	{
  		if( e->d_name[0] == '.' )
  			continue;

@@ -60,7 +60,7 @@ default_config() {
      || logerr "Failed to copy default config file"
 }
 
-CFLAGS+=" -D__OmniOS__ -I$OPREFIX/include"
+CPPFLAGS+=" -D__OmniOS__ -I$OPREFIX/include"
 LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64 -lsocket -lsendfile"
 
 init
