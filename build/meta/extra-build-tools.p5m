@@ -54,7 +54,10 @@ depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require
 depend fmri=ooce/library/tiff type=require
 depend fmri=ooce/library/unbound type=require
+depend fmri=ooce/multimedia/dav1d type=require
 depend fmri=ooce/multimedia/ffmpeg type=require
+depend fmri=ooce/multimedia/x264 type=require
+depend fmri=ooce/multimedia/x265 type=require
 depend fmri=ooce/runtime/node-12 type=require
 depend fmri=ooce/runtime/ruby-26 type=require
 depend fmri=ooce/server/apache-24 type=require

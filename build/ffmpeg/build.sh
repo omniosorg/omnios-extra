@@ -30,6 +30,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 # ffmpeg contains BMI instructions even when built on an older CPU
@@ -42,6 +43,14 @@ CONFIGURE_OPTS="
     --enable-shared
     --disable-debug
     --disable-stripping
+    --enable-libdav1d
+    --enable-libfontconfig
+    --enable-libfreetype
+    --enable-libvorbis
+    --enable-libwebp
+    --enable-gpl
+    --enable-libx264
+    --enable-libx265
 "
 CONFIGURE_OPTS_32="
     --libdir=$OPREFIX/lib
@@ -50,6 +59,8 @@ CONFIGURE_OPTS_64="
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
+# to find x264.h for builtin check
+CPPFLAGS+=" -I$OPREFIX/include"
 LDFLAGS32+=" -R$OPREFIX/lib"
 LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
 
