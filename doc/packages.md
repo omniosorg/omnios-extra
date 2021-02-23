@@ -106,6 +106,7 @@
 | ooce/library/slang		| 2.3.2		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/tiff		| 4.2.0		| https://download.osgeo.org/libtiff/ https://libtiff.gitlab.io/libtiff/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/unistring	| 0.9.10	| https://ftp.gnu.org/gnu/libunistring/ | [omniosorg](https://github.com/omniosorg)
+| ooce/multimedia/dav1d		| 0.8.2		| https://downloads.videolan.org/pub/videolan/dav1d/ https://www.videolan.org/projects/dav1d.html | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/exif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/exif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/ffmpeg	| 4.3.1		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/minidlna	| 1.3.0		| https://sourceforge.net/projects/minidlna/files/minidlna/ | [omniosorg](https://github.com/omniosorg)
