@@ -7,12 +7,8 @@
 # A full copy of the text of the CDDL should have accompanied this
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
-#
+
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-<include binlink.mog>
-<include manlink.mog>
-
-license COPYING.LGPLv2.1 license=LGPLv2.1
-license COPYING.GPLv2 license=GPLv2
+license COPYING license=simplified-BSD
 

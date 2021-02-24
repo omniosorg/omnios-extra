@@ -1,0 +1,7 @@
+patch-CMakeLists.txt
+patch-common_cpu.cpp
+patch-common_cpu.h
+patch-common_quant.cpp
+patch-encoder_analysis.cpp
+patch-encoder_encoder.cpp
+omnios.patch

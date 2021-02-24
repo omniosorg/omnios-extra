@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/common/version.cpp a/source/common/version.cpp
+--- a~/common/version.cpp	1970-01-01 00:00:00
++++ a/common/version.cpp	1970-01-01 00:00:00
+@@ -67,6 +67,8 @@
+ #define ONOS    "[Cygwin]"
+ #elif __APPLE__
+ #define ONOS    "[Mac OS X]"
++#elif __sun
++#define ONOS    "[OmniOS]"
+ #else
+ #define ONOS    "[Unk-OS]"
+ #endif

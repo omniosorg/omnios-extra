@@ -1,0 +1,19 @@
+diff -wpruN '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -1087,11 +1087,12 @@ elif [ "$thread" != "no" ] ; then
+             cc_check pthread.h -lc "pthread_create(0,0,0,0);" && thread="posix" && libpthread="-lc"
+             ;;
+         *)
+-            if cc_check pthread.h -lpthread "pthread_create(0,0,0,0);" ; then
++            if cc_check pthread.h "" "pthread_create(0,0,0,0);" ; then
++               thread="posix"
++               libpthread=""
++            elif cc_check pthread.h -lpthread "pthread_create(0,0,0,0);"; then
+                thread="posix"
+                libpthread="-lpthread"
+-            else
+-                cc_check pthread.h "" "pthread_create(0,0,0,0);" && thread="posix" && libpthread=""
+             fi
+             ;;
+     esac
