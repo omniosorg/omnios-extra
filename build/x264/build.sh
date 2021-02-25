@@ -33,7 +33,11 @@ CONFIGURE_OPTS="
     --enable-shared
 "
 CONFIGURE_OPTS_32+="
+    --enable-pic
     --disable-asm
+"
+CONFIGURE_OPTS_64+="
+    --host=$TRIPLET64
 "
 
 MAKE_INSTALL_ARGS="-e INSTALL=$GNUBIN/install"
