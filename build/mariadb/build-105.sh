@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=mariadb
-VER=10.5.8
+VER=10.5.9
 PKG=ooce/database/mariadb-105
 SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
