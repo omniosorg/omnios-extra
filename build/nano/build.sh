@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=nano
-VER=5.5
+VER=5.6
 PKG=ooce/editor/nano
 SUMMARY="nano editor"
 DESC="GNU implementation of nano, a text editor emulating pico"
