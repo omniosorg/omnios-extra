@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=ffmpeg
-VER=4.3.1
+VER=4.3.2
 PKG=ooce/multimedia/ffmpeg
 SUMMARY="ffmpeg"
 DESC="A complete, cross-platform solution to record, "
