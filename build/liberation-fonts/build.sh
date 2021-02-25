@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=liberation-fonts
-VER=2.1.2
+VER=2.1.3
 PKG=ooce/fonts/liberation
 SUMMARY="Liberation fonts"
 DESC="A collection which aims to provide document layout compatibility "
