@@ -43,7 +43,6 @@ CONFIGURE_OPTS="
     --enable-shared
     --disable-debug
     --disable-stripping
-    --enable-libdav1d
     --enable-libfontconfig
     --enable-libfreetype
     --enable-libvorbis
@@ -52,6 +51,7 @@ CONFIGURE_OPTS="
     --enable-libx264
     --enable-libx265
 "
+[ $RELVER -ge 151036 ] && CONFIGURE_OPTS+=" --enable-libdav1d"
 CONFIGURE_OPTS_32="
     --libdir=$OPREFIX/lib
 "
