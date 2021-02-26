@@ -7,7 +7,7 @@
 | ooce/application/imagemagick	| 7.0.10-52	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mattermost	| 5.32.1	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.26	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
-| ooce/application/munin	| 2.0.66	| http://downloads.munin-monitoring.org/munin/stable/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
+| ooce/application/munin	| 2.0.67	| http://downloads.munin-monitoring.org/munin/stable/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mutt		| 2.0.5		| http://www.mutt.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios	| 4.4.6		| https://github.com/NagiosEnterprises/nagioscore/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nrdp	| 2.0.4 	| https://github.com/NagiosEnterprises/nrdp/releases | [omniosorg](https://github.com/omniosorg)
