@@ -121,7 +121,7 @@
 | ooce/network/mrtg		| 2.17.7	| https://oss.oetiker.ch/mrtg/pub/?M=D | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nsd		| 4.3.5		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openldap		| 2.4.57	| https://www.openldap.org/software/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/openvpn		| 2.5.0		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/openvpn		| 2.5.1		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn-auth-ldap | 2.0.4	| https://github.com/threerings/openvpn-auth-ldap/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/rclone		| 1.54.0	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/smtp/postfix	| 3.5.9		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
