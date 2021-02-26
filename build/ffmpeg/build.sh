@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=ffmpeg
-VER=4.3.1
+VER=4.3.2
 PKG=ooce/multimedia/ffmpeg
 SUMMARY="ffmpeg"
 DESC="A complete, cross-platform solution to record, "
@@ -43,7 +43,6 @@ CONFIGURE_OPTS="
     --enable-shared
     --disable-debug
     --disable-stripping
-    --enable-libdav1d
     --enable-libfontconfig
     --enable-libfreetype
     --enable-libvorbis
@@ -52,6 +51,7 @@ CONFIGURE_OPTS="
     --enable-libx264
     --enable-libx265
 "
+[ $RELVER -ge 151036 ] && CONFIGURE_OPTS+=" --enable-libdav1d"
 CONFIGURE_OPTS_32="
     --libdir=$OPREFIX/lib
 "

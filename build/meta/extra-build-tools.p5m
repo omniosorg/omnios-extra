@@ -54,7 +54,6 @@ depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require
 depend fmri=ooce/library/tiff type=require
 depend fmri=ooce/library/unbound type=require
-depend fmri=ooce/multimedia/dav1d type=require
 depend fmri=ooce/multimedia/ffmpeg type=require
 depend fmri=ooce/multimedia/x264 type=require
 depend fmri=ooce/multimedia/x265 type=require
@@ -84,4 +83,8 @@ depend fmri=ooce/x11/library/libxau type=conditional \
     predicate=release/name@0.5.11-151035
 depend fmri=ooce/x11/library/libxcb type=conditional \
     predicate=release/name@0.5.11-151035
+
+# Added support to ffmpeg from r151036 onwards
+depend fmri=ooce/multimedia/dav1d type=conditional \
+    predicate=release/name@0.5.11-151036
 
