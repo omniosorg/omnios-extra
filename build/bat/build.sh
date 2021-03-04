@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=bat
-VER=0.17.1
+VER=0.18.0
 PKG=ooce/util/bat
 SUMMARY="A cat clone with wings"
 DESC="A cat(1) clone with syntax highlighting and Git integration."
@@ -32,6 +32,8 @@ BUILD_DEPENDS_IPS="
 
 set_arch 64
 
+# ansi_colours wants gnu-ar
+export AR="$USRBIN/gar"
 export LIBCLANG_PATH="$PREFIX/clang-$CLANGVER/lib"
 
 init
