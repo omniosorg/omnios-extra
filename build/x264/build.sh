@@ -47,22 +47,9 @@ CFLAGS+=" -O3"
 [ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
 LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
 
-# the x264 utility can use libavformat to support further input formats.
-# instead of adding a circular build time dependency we check whether
-# the build detected libavformat.
-EXPECTED_OPTIONS="LAVF"
-
-test_config() {
-    for flag in $EXPECTED_OPTIONS; do
-        egrep -s "HAVE_$flag 1" config.h || logerr "HAVE_$flag not set"
-    done
-}
-
-save_function configure64 _configure64
-configure64() {
-    _configure64
-    test_config
-}
+# we don't want x264 to have a (circular) runtime dependency on ffmpeg
+PKG_CONFIG_PATH32=
+PKG_CONFIG_PATH64=
 
 init
 download_source $PROG $PROG-stable $VER
