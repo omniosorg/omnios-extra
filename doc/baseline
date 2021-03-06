@@ -109,7 +109,7 @@ extra.omnios ooce/library/openldap
 extra.omnios ooce/library/pango
 extra.omnios ooce/library/postgresql-12
 extra.omnios ooce/library/postgresql-13
-extra.omnios ooce/library/protobuf
+extra.omnios ooce/library/protobuf o
 extra.omnios ooce/library/security/libsasl2
 extra.omnios ooce/library/serf
 extra.omnios ooce/library/slang

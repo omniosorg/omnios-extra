@@ -1,0 +1,2 @@
+set name=pkg.fmri value=pkg://@PKGPUBLISHER@/ooce/library/protobuf@3.14.0,@SUNOSVER@-@PVER@
+set name=pkg.obsolete value=true
