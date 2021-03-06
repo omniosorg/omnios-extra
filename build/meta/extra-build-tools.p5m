@@ -48,7 +48,6 @@ depend fmri=ooce/library/libzip type=require
 depend fmri=ooce/library/onig type=require
 depend fmri=ooce/library/openldap type=require
 depend fmri=ooce/library/pango type=require
-depend fmri=ooce/library/protobuf type=require
 depend fmri=ooce/library/security/libsasl2 type=require
 depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require

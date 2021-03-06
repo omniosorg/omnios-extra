@@ -61,6 +61,9 @@ add_target()
 				targets["ooce/library/libde265"]=`pver LIBDE265VER`
 				targets["ooce/library/libheif"]=`pver LIBHEIFVER`
 				;;
+			*/mosh:*)
+				targets["ooce/library/protobuf"]=`pver PBUFVER`
+				;;
 		esac
 		targets[$pkg]=$ver
 	elif [[ $build = *.p5m ]]; then
