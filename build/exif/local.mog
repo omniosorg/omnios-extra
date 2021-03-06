@@ -1,4 +1,3 @@
-# {{{ CDDL HEADER
 #
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.
@@ -8,13 +7,11 @@
 # A full copy of the text of the CDDL should have accompanied this
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
-# }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYING license=LGPLv2.1
 
-link path=$(OPREFIX)/bin/$(PROG) target=../$(PROG)/bin/$(PROG)
-link path=$(OPREFIX)/share/man/man1/$(PROG).1 \
-    target=../../../$(PROG)/share/man/man1/$(PROG).1
+<include binlink.mog>
+<include manlink.mog>
 
