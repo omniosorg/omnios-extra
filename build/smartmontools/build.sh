@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -42,6 +42,8 @@ CONFIGURE_OPTS="
     --with-gnupg=$OOCEBIN/gpg
     --with-scriptpath=$USRBIN:$OOCEBIN
 "
+
+MAKE_ARGS_WS="BUILD_INFO='\"(OmniOS r$RELVER)\"'"
 
 init
 download_source $PROG $PROG $VER
