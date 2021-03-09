@@ -7,11 +7,10 @@ Date:   Tue Jun 23 09:01:53 2020 -0400
 
     httpd.c: obey 'serverinfo' option when constructing the HTML body of error responses
 
-diff --git a/imap/httpd.c b/imap/httpd.c
-index 4ee0e0741..4044fa13d 100644
---- a/imap/httpd.c
-+++ b/imap/httpd.c
-@@ -3629,7 +3629,7 @@ EXPORTED void error_response(long code, struct transaction_t *txn)
+diff -wpruN '--exclude=*.orig' a~/imap/httpd.c a/imap/httpd.c
+--- a~/imap/httpd.c	1970-01-01 00:00:00
++++ a/imap/httpd.c	1970-01-01 00:00:00
+@@ -3630,7 +3630,7 @@ EXPORTED void error_response(long code,
      }
  
      if (txn->error.desc) {
@@ -20,7 +19,7 @@ index 4ee0e0741..4044fa13d 100644
          char *port = NULL;
          unsigned level = 0;
  
-@@ -3639,9 +3639,7 @@ EXPORTED void error_response(long code, struct transaction_t *txn)
+@@ -3640,9 +3640,7 @@ EXPORTED void error_response(long code,
              host = (char *) hdr[0];
              if ((port = strchr(host, ':'))) *port++ = '\0';
          }
@@ -31,7 +30,7 @@ index 4ee0e0741..4044fa13d 100644
          if (!port) {
              port = (buf_len(&saslprops.iplocalport)) ?
                  strchr(buf_cstring(&saslprops.iplocalport), ';')+1 : "";
-@@ -3656,10 +3654,14 @@ EXPORTED void error_response(long code, struct transaction_t *txn)
+@@ -3657,10 +3655,14 @@ EXPORTED void error_response(long code,
          buf_printf_markup(html, level++, "<body>");
          buf_printf_markup(html, level, "<h1>%s</h1>", error_message(code)+4);
          buf_printf_markup(html, level, "<p>%s</p>", txn->error.desc);
