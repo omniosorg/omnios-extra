@@ -12,19 +12,19 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=cyrus
-VER=3.2.5
+VER=3.2.6
 PKG=ooce/network/cyrus-imapd
 SUMMARY="Cyrus IMAP is an email, contacts and calendar server"
 DESC="$SUMMARY"
 
 JANSSONVER=2.13.1
-ICUVER=68.1
-ICALVER=3.0.8
+ICUVER=68.2
+ICALVER=3.0.9
 
 OPREFIX="$PREFIX"
 PREFIX+="/$PROG"
