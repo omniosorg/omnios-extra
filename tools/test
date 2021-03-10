@@ -58,7 +58,6 @@ add_target()
 				targets["ooce/library/libical"]=`pver ICALVER`
 				;;
 			*/imagemagick:*)
-				targets["ooce/library/libde265"]=`pver LIBDE265VER`
 				targets["ooce/library/libheif"]=`pver LIBHEIFVER`
 				;;
 			*/mosh:*)

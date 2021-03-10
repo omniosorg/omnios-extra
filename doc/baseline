@@ -85,6 +85,7 @@ extra.omnios ooce/library/guile
 extra.omnios ooce/library/json-c
 extra.omnios ooce/library/ldns
 extra.omnios ooce/library/libarchive
+extra.omnios ooce/library/libde265
 extra.omnios ooce/library/libdwarf
 extra.omnios ooce/library/libev
 extra.omnios ooce/library/libexif
