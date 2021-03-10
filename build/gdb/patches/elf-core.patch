@@ -1,0 +1,335 @@
+# illumos-specific core file processing.
+
+diff -wpruN '--exclude=*.orig' a~/bfd/elf-bfd.h a/bfd/elf-bfd.h
+--- a~/bfd/elf-bfd.h	1970-01-01 00:00:00
++++ a/bfd/elf-bfd.h	1970-01-01 00:00:00
+@@ -1348,6 +1348,11 @@ struct elf_backend_data
+   bfd_boolean (*elf_backend_grok_freebsd_prstatus)
+     (bfd *, Elf_Internal_Note *);
+ 
++  /* This function, if defined, is called when an NT_LWPSTATUS
++     note is found in a core file.  */
++  bfd_boolean (*elf_backend_grok_lwpstatus)
++    (bfd *, Elf_Internal_Note *);
++
+   /* This function, if defined, is called to write a note to a corefile.  */
+   char *(*elf_backend_write_core_note)
+     (bfd *abfd, char *buf, int *bufsiz, int note_type, ...);
+diff -wpruN '--exclude=*.orig' a~/bfd/elfxx-target.h a/bfd/elfxx-target.h
+--- a~/bfd/elfxx-target.h	1970-01-01 00:00:00
++++ a/bfd/elfxx-target.h	1970-01-01 00:00:00
+@@ -624,6 +624,9 @@
+ #ifndef elf_backend_grok_psinfo
+ #define elf_backend_grok_psinfo			NULL
+ #endif
++#ifndef elf_backend_grok_lwpstatus
++#define elf_backend_grok_lwpstatus			NULL
++#endif
+ #ifndef elf_backend_grok_freebsd_prstatus
+ #define elf_backend_grok_freebsd_prstatus	NULL
+ #endif
+@@ -875,6 +878,7 @@ static struct elf_backend_data elfNN_bed
+   elf_backend_sort_relocs_p,
+   elf_backend_grok_prstatus,
+   elf_backend_grok_psinfo,
++  elf_backend_grok_lwpstatus,
+   elf_backend_grok_freebsd_prstatus,
+   elf_backend_write_core_note,
+   elf_backend_lookup_section_flags_hook,
+diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
+--- a~/include/elf/common.h	1970-01-01 00:00:00
++++ a/include/elf/common.h	1970-01-01 00:00:00
+@@ -712,6 +712,33 @@
+ #define NT_OPENBSD_WCOOKIE	23
+ 
+ 
++/* Note segments for core files on illumos systems.  Note name
++   must start with "CORE".  */
++#define ILLUMOS_NT_PRSTATUS    1
++#define ILLUMOS_NT_PRFPREG     2
++#define ILLUMOS_NT_PRPSINFO    3
++#define ILLUMOS_NT_PRXREG      4
++#define ILLUMOS_NT_PLATFORM    5
++#define ILLUMOS_NT_AUXV        6
++#define ILLUMOS_NT_GWINDOWS    7
++#define ILLUMOS_NT_ASRS        8
++#define ILLUMOS_NT_LDT         9
++#define ILLUMOS_NT_PSTATUS    10
++#define ILLUMOS_NT_PSINFO     13
++#define ILLUMOS_NT_PRCRED     14
++#define ILLUMOS_NT_UTSNAME    15
++#define ILLUMOS_NT_LWPSTATUS  16
++#define ILLUMOS_NT_LWPSINFO   17
++#define ILLUMOS_NT_PRPRIV     18
++#define ILLUMOS_NT_PRPRIVINFO 19
++#define ILLUMOS_NT_CONTENT    20
++#define ILLUMOS_NT_ZONENAME   21
++#define ILLUMOS_NT_FDINFO     22
++#define ILLUMOS_NT_SPYMASTER  23
++#define ILLUMOS_NT_SECFLAGS   24
++#define ILLUMOS_NT_LWPNAME    25
++#define ILLUMOS_NT_UPANIC     26
++
+ /* Note segments for core files on SPU systems.  Note name
+    must start with "SPU/".  */
+ 
+--- gdb-10.1.unpatched/bfd/elf.c	2020-10-24 04:23:02.000000000 +0000
++++ gdb-10.1/bfd/elf.c	2021-03-12 12:51:26.573521290 +0000
+@@ -44,6 +44,7 @@
+ #include "libiberty.h"
+ #include "safe-ctype.h"
+ #include "elf-linux-core.h"
++#include "illumos-offsets.h"
+ 
+ #ifdef CORE_HEADER
+ #include CORE_HEADER
+@@ -9670,7 +9671,10 @@
+ static bfd_boolean
+ elfcore_grok_prfpreg (bfd *abfd, Elf_Internal_Note *note)
+ {
++  asection *sect = bfd_get_section_by_name (abfd, ".reg2");
++  if (sect == NULL)
+   return elfcore_make_note_pseudosection (abfd, ".reg2", note);
++  return TRUE;
+ }
+ 
+ /* Linux dumps the Intel SSE regs in a note named "LINUX" with a note
+@@ -10292,6 +10296,9 @@
+ 
+ #if defined (HAVE_LWPSTATUS_T)
+     case NT_LWPSTATUS:
++      if (bed->elf_backend_grok_lwpstatus)
++	if ((*bed->elf_backend_grok_lwpstatus) (abfd, note))
++	  return TRUE;
+       return elfcore_grok_lwpstatus (abfd, note);
+ #endif
+ 
+@@ -10991,6 +10998,216 @@
+   return TRUE;
+ }
+ 
++#include <sys/types.h>
++#include <sys/elf.h>
++#include <sys/procfs.h>
++#include <sys/regset.h>
++#include <sys/auxv.h>
++
++static bfd_boolean
++elfcore_grok_illumos_note (bfd *abfd, Elf_Internal_Note *note)
++{
++  asection *sect = NULL;
++  size_t prfpregset_size;
++  size_t prgregset_size;
++  size_t prgregset_offset;
++  char reg2_section_name[16] = { 0 };
++
++#ifdef DEBUG
++  static const char* note_type[] = { "NONE (0)", "NT_PRSTATUS", "NT_PRFPREG",
++    "NT_PRPSINFO", "NT_PRXREG", "NT_PLATFORM", "NT_AUXV", "NT_GWINDOWS",
++    "NT_ASRS", "NT_LDT", "NT_PSTATUS", "INVALID (11)", "INVALID (12)",
++    "NT_PSINFO", "NT_PRCRED", "NT_UTSNAME", "NT_LWPSTATUS", "NT_LWPSINFO",
++    "NT_PRPRIV", "NT_PRPRIVINFO", "NT_CONTENT", "NT_ZONENAME",
++    "NT_FDINFO", "NT_SPYMASTER", "NT_SECFLAGS", "NT_LWPNAME", "NT_UPANIC",
++    NULL };
++#endif
++
++  if (note == NULL)
++    return TRUE;
++
++  /*
++   * core files are identified as 32- or 64-bit by the size of the descsz which
++   * matches the sizeof() the type appropriate for that note type (e.g.,
++   * prstatus_t for ILLUMOS_NT_PRSTATUS) for the corresponding architecture on
++   * illumos. The core file bitness may differ from the bitness of gdb itself,
++   * so fixed values are used instead of sizeof(). Appropriate fixed offsets
++   * are also used to obtain data from the note.
++   */
++
++  switch ((int) note->type)
++  {
++    case ILLUMOS_NT_PRSTATUS:
++      if (note->descsz == SIZEOF_PRSTATUS_T_32)
++      {
++        prgregset_size = SIZEOF_PRGREGSET_T_32;
++        prgregset_offset = OFFSET_PRSTATUS_T_PR_REG_32;
++
++        elf_tdata (abfd)->core->signal =
++          bfd_get_16 (abfd, note->descdata + OFFSET_PRSTATUS_T_PR_CURSIG_32);
++        elf_tdata (abfd)->core->pid =
++          bfd_get_32 (abfd, note->descdata + OFFSET_PRSTATUS_T_PR_PID_32);
++      }
++      else if (note->descsz == SIZEOF_PRSTATUS_T_64)
++      {
++        prgregset_size = SIZEOF_PRGREGSET_T_64;
++        prgregset_offset = OFFSET_PRSTATUS_T_PR_REG_64;
++
++        elf_tdata (abfd)->core->signal =
++          bfd_get_16 (abfd, note->descdata + OFFSET_PRSTATUS_T_PR_CURSIG_64);
++        elf_tdata (abfd)->core->pid =
++          bfd_get_32 (abfd, note->descdata + OFFSET_PRSTATUS_T_PR_PID_64);
++      }
++
++      sect = bfd_get_section_by_name (abfd, ".reg");
++      if (sect != NULL)
++        sect->size = prgregset_size;
++
++      return _bfd_elfcore_make_pseudosection (abfd, ".reg",
++          prgregset_size, note->descpos + prgregset_offset);
++
++    case ILLUMOS_NT_PRPSINFO:
++      if (note->descsz == SIZEOF_PRPSINFO_T_32)
++      {
++        elf_tdata (abfd)->core->program = _bfd_elfcore_strndup(abfd,
++            note->descdata + OFFSET_PRPSINFO_T_PR_FNAME_32, PRFNSZ);
++        elf_tdata (abfd)->core->command = _bfd_elfcore_strndup(abfd,
++            note->descdata + OFFSET_PRPSINFO_T_PR_PSARGS_32, PRARGSZ);
++      }
++      else if (note->descsz == SIZEOF_PRPSINFO_T_64)
++      {
++        elf_tdata (abfd)->core->program = _bfd_elfcore_strndup(abfd,
++            note->descdata + OFFSET_PRPSINFO_T_PR_FNAME_64, PRFNSZ);
++        elf_tdata (abfd)->core->command = _bfd_elfcore_strndup(abfd,
++            note->descdata + OFFSET_PRPSINFO_T_PR_PSARGS_64, PRARGSZ);
++      }
++      break;
++
++    case ILLUMOS_NT_PSINFO:
++      if (note->descsz == SIZEOF_PSINFO_T_32)
++      {
++        elf_tdata (abfd)->core->program = _bfd_elfcore_strndup(abfd,
++	    note->descdata + OFFSET_PSINFO_T_PR_FNAME_32, PRFNSZ);
++        elf_tdata (abfd)->core->command = _bfd_elfcore_strndup(abfd,
++	    note->descdata + OFFSET_PSINFO_T_PR_PSARGS_32, PRARGSZ);
++      }
++      else if (note->descsz == SIZEOF_PSINFO_T_64)
++      {
++        elf_tdata (abfd)->core->program = _bfd_elfcore_strndup(abfd,
++	    note->descdata + OFFSET_PSINFO_T_PR_FNAME_64, PRFNSZ);
++        elf_tdata (abfd)->core->command = _bfd_elfcore_strndup(abfd,
++	    note->descdata + OFFSET_PSINFO_T_PR_PSARGS_64, PRARGSZ);
++      }
++      break;
++
++    case ILLUMOS_NT_LWPSTATUS:
++
++	/* These two have the same offsets in both 32- and 64-bit */
++        elf_tdata (abfd)->core->lwpid = bfd_get_32(abfd,
++	    note->descdata + OFFSET_LWPSTATUS_T_PR_LWPID_32);
++        elf_tdata (abfd)->core->signal = bfd_get_16(abfd,
++	    note->descdata + OFFSET_LWPSTATUS_T_PR_CURSIG_32);
++
++        (void) snprintf (reg2_section_name, 16, "%s/%i", ".reg2",
++            *(int*)(note->descdata + OFFSET_LWPSTATUS_T_PR_LWPID_32));
++
++        if (note->descsz == SIZEOF_LWPSTATUS_T_32)
++        {
++          prfpregset_size = SIZEOF_PRFPREGSET_T_32;
++          prgregset_size = SIZEOF_PRGREGSET_T_32;
++
++          sect = bfd_get_section_by_name (abfd, ".reg");
++          if (sect != NULL)
++            sect->size = prgregset_size;
++          else
++          {
++            if ((_bfd_elfcore_make_pseudosection (abfd, ".reg",
++                    prgregset_size,
++                    note->descpos + OFFSET_LWPSTATUS_T_PR_REG_32)) != TRUE)
++              return FALSE;
++          }
++          sect = bfd_get_section_by_name (abfd, reg2_section_name);
++
++          if (sect != NULL)
++          {
++            sect->size = prfpregset_size;
++            sect->filepos = note->descpos + OFFSET_LWPSTATUS_T_PR_FPREG_32;
++            sect->alignment_power = 2;
++            return TRUE;
++          }
++          else
++            return _bfd_elfcore_make_pseudosection (abfd, ".reg2",
++                prfpregset_size,
++		note->descpos + OFFSET_LWPSTATUS_T_PR_FPREG_32);
++        }
++        else if (note->descsz == SIZEOF_LWPSTATUS_T_64)
++        {
++          prfpregset_size = SIZEOF_PRFPREGSET_T_64;
++          prgregset_size = SIZEOF_PRGREGSET_T_64;
++
++          sect = bfd_get_section_by_name (abfd, ".reg");
++          if (sect != NULL)
++            sect->size = prgregset_size;
++          else
++          {
++            if ((_bfd_elfcore_make_pseudosection (abfd, ".reg",
++                    prgregset_size,
++                    note->descpos + OFFSET_LWPSTATUS_T_PR_REG_64)) != TRUE)
++              return FALSE;
++          }
++          sect = bfd_get_section_by_name (abfd, reg2_section_name);
++
++          if (sect != NULL)
++          {
++            sect->size = prfpregset_size;
++            sect->filepos = note->descpos + OFFSET_LWPSTATUS_T_PR_FPREG_64;
++            sect->alignment_power = 2;
++            return TRUE;
++          }
++          else
++            return _bfd_elfcore_make_pseudosection (abfd, ".reg2",
++                prfpregset_size,
++		note->descpos + OFFSET_LWPSTATUS_T_PR_FPREG_64);
++        }
++      break;
++
++    case ILLUMOS_NT_LWPSINFO:
++        if (note->descsz == SIZEOF_LWPSINFO_T_32)
++        {
++          elf_tdata (abfd)->core->lwpid = bfd_get_32(abfd,
++	      note->descdata + OFFSET_LWPSINFO_T_PR_LWPID_32);
++        }
++        else if (note->descsz == SIZEOF_LWPSINFO_T_64)
++        {
++          elf_tdata (abfd)->core->lwpid = bfd_get_32(abfd,
++	      note->descdata + OFFSET_LWPSINFO_T_PR_LWPID_64);
++        }
++        break;
++
++    default:
++      break;
++  }
++
++  return TRUE;
++}
++
++/*
++ * for name starting with "CORE" this may be either a illumos
++ * core file or a gdb-generated core file.  Do illumos-specific
++ * processing on selected note types first with
++ * elfcore_grok_illumos_note(), then process the note
++ * in elfcore_grok_note().
++ */
++static bfd_boolean
++call_elfcore_grok_illumos_note (bfd *abfd, Elf_Internal_Note *note)
++{
++  if (! elfcore_grok_illumos_note (abfd, note)) {
++    return FALSE;
++  } else {
++    return elfcore_grok_note (abfd, note);
++  }
++}
++
+ static bfd_boolean
+ elfcore_grok_openbsd_note (bfd *abfd, Elf_Internal_Note *note)
+ {
+@@ -12089,7 +12306,10 @@
+ 	      GROKER_ELEMENT ( "OpenBSD", elfcore_grok_openbsd_note),
+ 	      GROKER_ELEMENT ("QNX", elfcore_grok_nto_note),
+ 	      GROKER_ELEMENT ("SPU/", elfcore_grok_spu_note),
+-	      GROKER_ELEMENT ("GNU", elfobj_grok_gnu_note)
++	      GROKER_ELEMENT ("GNU", elfobj_grok_gnu_note),
++#if defined(__sun) || defined(__SVR4)
++	      GROKER_ELEMENT ("CORE", call_elfcore_grok_illumos_note)
++#endif
+ 	    };
+ #undef GROKER_ELEMENT
+ 	    int i;
