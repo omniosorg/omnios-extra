@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=libgd
-VER=2.3.1
+VER=2.3.2
 PKG=ooce/library/libgd
 SUMMARY="libgd"
 DESC="GD is an open source code library for the dynamic creation of images by "

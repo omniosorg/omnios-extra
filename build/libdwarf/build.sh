@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=libdwarf
-VER=20201201
+VER=20210305
 PKG=ooce/library/libdwarf
 SUMMARY="Dwarf Library and utility"
 DESC="library for accessing DWARF debug info in ELF objects"
