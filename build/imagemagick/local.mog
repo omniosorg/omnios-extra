@@ -9,7 +9,7 @@
 # http://www.illumos.org/license/CDDL.
 #
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 # Drop 32-bit binaries, other than *-config scripts
 <transform path=$(PREFIX)/bin/i386/(?!.*-config) -> drop>
@@ -21,6 +21,4 @@
 <include manlink.mog>
 
 license LICENSE license=ImageMagick
-license ../libde265-$(LIBDE265)/COPYING license=LGPLv3
-license ../libheif-$(LIBHEIF)/COPYING license=LGPLv3
 
