@@ -25,9 +25,9 @@ DESC+="file format decoder and encoder"
 
 BUILD_DEPENDS_IPS="
     ooce/library/libde265
-    ooce/multimedia/dav1d
     ooce/multimedia/x265
 "
+[ $RELVER -ge 151036 ] && BUILD_DEPENDS_IPS+=" ooce/multimedia/dav1d"
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
