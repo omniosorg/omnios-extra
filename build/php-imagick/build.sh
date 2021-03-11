@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -23,6 +23,13 @@ SUMMARY="The Imagick PHP extension"
 DESC="The Imagick PHP extension"
 
 PHPVERSIONS="7.3 7.4"
+
+# The ImageMagick ABI changes frequently. Lock the version
+# pulled into each build of php-imagick.
+IMGKVER=`pkg_ver imagemagick`
+IMGKVER=${IMGKVER//-/.}
+BUILD_DEPENDS_IPS="=ooce/application/imagemagick@$IMGKVER"
+RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
 
 set_arch 64
 set_builddir imagick-$VER
@@ -54,7 +61,7 @@ for p in $PHPVERSIONS; do
     PATH="$PREFIX/php-$p/bin:$PATH" build
     strip_install
     PKG=${PKG/XX/${p//./}} \
-        RUN_DEPENDS_IPS="${PKG%/*}" \
+        RUN_DEPENDS_IPS+=" ${PKG%/*}" \
         DESC+=" $p" \
         make_package
 done
