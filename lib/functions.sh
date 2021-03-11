@@ -1566,7 +1566,10 @@ make_package() {
                 \=)
                     DEPTYPE="incorporate"
                     i=${i:1}
-                    EXTRA=" facet.version-lock.$i=true"
+                    shopt -s extglob
+                    typeset facet=${i##pkg:+(/)}
+                    facet=${facet%@*}
+                    EXTRA=" facet.version-lock.$facet=true"
                     ;;
                 \?)
                     DEPTYPE="optional"
