@@ -31,6 +31,7 @@ PREFIX+="/$PROG"
 BUILD_DEPENDS_IPS="
     library/fontconfig
     library/freetype2
+    library/libheif
     library/libjpeg-turbo
     library/libpng
     library/tiff

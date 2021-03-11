@@ -30,10 +30,11 @@ depend fmri=ooce/library/apr-util type=require
 depend fmri=ooce/library/cairo type=require
 depend fmri=ooce/library/fcgi2 type=require
 depend fmri=ooce/library/json-c type=require
-depend fmri=ooce/library/libgd type=require
 depend fmri=ooce/library/libev type=require
 depend fmri=ooce/library/libexif type=require
+depend fmri=ooce/library/libgd type=require
 depend fmri=ooce/library/libgif type=require
+depend fmri=ooce/library/libheif type=require
 depend fmri=ooce/library/libid3tag type=require
 depend fmri=ooce/library/libidl type=require
 depend fmri=ooce/library/libjpeg-turbo type=require

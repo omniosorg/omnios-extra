@@ -85,11 +85,13 @@ extra.omnios ooce/library/guile
 extra.omnios ooce/library/json-c
 extra.omnios ooce/library/ldns
 extra.omnios ooce/library/libarchive
+extra.omnios ooce/library/libde265
 extra.omnios ooce/library/libdwarf
 extra.omnios ooce/library/libev
 extra.omnios ooce/library/libexif
 extra.omnios ooce/library/libgd
 extra.omnios ooce/library/libgif
+extra.omnios ooce/library/libheif
 extra.omnios ooce/library/libid3tag
 extra.omnios ooce/library/libidl
 extra.omnios ooce/library/libjpeg-turbo

@@ -7,18 +7,11 @@
 # A full copy of the text of the CDDL should have accompanied this
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
-#
 
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-# Drop 32-bit binaries, other than *-config scripts
-<transform path=$(PREFIX)/bin/i386/(?!.*-config) -> drop>
+license COPYING license=LGPLv3
 
-# Drop html documentation
-<transform path=$(PREFIX)/share/doc -> drop>
-
-<include binlink.mog>
-<include manlink.mog>
-
-license LICENSE license=ImageMagick
+# drop tools
+<transform path=$(PREFIX)/bin -> drop>
 

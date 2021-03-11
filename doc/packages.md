@@ -4,7 +4,7 @@
 | ooce/application/gitea	| 1.13.4	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gnuplot	| 5.4.1		| https://sourceforge.net/projects/gnuplot/files/gnuplot/ http://www.gnuplot.info/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.44.1	| https://www2.graphviz.org/Packages/stable/portable_source/ https://graphviz.org/download/source/ | [omniosorg](https://github.com/omniosorg)
-| ooce/application/imagemagick	| 7.0.10-52	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/application/imagemagick	| 7.0.11-3	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mattermost	| 5.32.1	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.26	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/munin	| 2.0.67	| http://downloads.munin-monitoring.org/munin/stable/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
@@ -78,14 +78,14 @@
 | ooce/library/json-c		| 0.15		| https://github.com/json-c/json-c/releases https://github.com/json-c/json-c/wiki | [omniosorg](https://github.com/omniosorg)
 | ooce/library/ldns		| 1.7.1		| https://nlnetlabs.nl/downloads/ldns/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libarchive	| 3.5.1		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libde265		| 1.0.8		| https://github.com/strukturag/libde265/releases | Currently used solely by ImageMagick
+| ooce/library/libde265		| 1.0.8		| https://github.com/strukturag/libde265/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libdwarf		| 20210305	| https://www.prevanders.net/dwarf.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libgd		| 2.3.2		| https://github.com/libgd/libgd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libical		| 3.0.9		| https://github.com/libical/libical/releases | Currently used solely by cyrus-imapd
 | ooce/library/libev		| 4.33		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libexif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/libexif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libgif		| 5.2.1		| https://sourceforge.net/projects/giflib/files/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libheif		| 1.10.0	| https://github.com/strukturag/libheif/releases | Currently used solely by ImageMagick
+| ooce/library/libheif		| 1.11.0	| https://github.com/strukturag/libheif/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libid3tag	| 0.15.1b	| https://sourceforge.net/projects/mad/files/libid3tag/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libidl		| 0.8.14	| https://download.gnome.org/sources/libIDL/cache.json https://download.gnome.org/sources/libIDL/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libjpeg-turbo	| 2.0.6		| https://sourceforge.net/projects/libjpeg-turbo/files/ | [omniosorg](https://github.com/omniosorg)
