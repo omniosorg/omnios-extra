@@ -1,0 +1,10 @@
+features-i386.patch
+syscalls.patch
+elf-core.patch
+#
+fix-null-ptr.patch
+no-docs.patch
+remove-core-warning.patch
+lwp-exit.patch
+force-bash.patch
+fix-attach.patch
