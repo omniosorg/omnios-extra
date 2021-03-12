@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/cmd/os-readdir_other.go a/cmd/os-readdir_other.go
+--- a~/cmd/os-readdir_other.go	2021-03-12 10:59:11.250819769 +0000
++++ a/cmd/os-readdir_other.go	2021-03-12 11:02:19.276402816 +0000
+@@ -126,7 +126,7 @@ func readDirN(dirPath string, count int)
+ 						isSysErrTooManySymlinks(err) {
+ 						continue
+ 					}
+-					return err
++					return nil, err
+ 				}
+
+ 				// Ignore symlinked directories.
