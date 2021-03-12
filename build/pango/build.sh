@@ -40,6 +40,7 @@ XFORM_ARGS="
 "
 
 LDFLAGS32+=" -L$PREFIX/lib -R$PREFIX/lib"
+[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
 LDFLAGS64+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
 
 export MAKE
