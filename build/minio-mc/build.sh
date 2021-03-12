@@ -18,14 +18,14 @@
 
 PROG=minio-mc
 PKG=ooce/storage/minio-mc
-VER=2021-01-16T02-45-34Z
+VER=2021-03-12T03-36-59Z
 SUMMARY="MinIO client"
 DESC="A modern alternative to UNIX commands like ls, cat, cp, mirror, diff, "
 DESC+="find etc. It supports filesystems and Amazon S3 compatible cloud "
 DESC+="storage service (AWS Signature v2 and v4)"
 
 set_arch 64
-set_gover 1.15
+set_gover 1.16
 
 GOOS=illumos
 GOARCH=amd64

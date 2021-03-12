@@ -19,6 +19,7 @@ depend fmri=ooce/library/postgresql-13 type=require
 depend fmri=ooce/developer/clang-110 type=require
 depend fmri=ooce/developer/freepascal type=require
 depend fmri=ooce/developer/go-115 type=require
+depend fmri=ooce/developer/go-116 type=require
 depend fmri=ooce/developer/gperf type=require
 depend fmri=ooce/developer/llvm-100 type=require
 depend fmri=ooce/developer/llvm-110 type=require
