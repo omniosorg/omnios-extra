@@ -218,8 +218,15 @@ FIND_ELF=$ONBLDBIN/find_elf
 CHECK_RTIME=$ONBLDBIN/check_rtime
 CTFDUMP=$ONBLDBIN/i386/ctfdump
 CTFCONVERT=$ONBLDBIN/i386/ctfconvert
+CTFSTABS=$ONBLDBIN/i386/ctfstabs
+CW=$ONBLDBIN/i386/cw
+GENOFFSETS=$ONBLDBIN/genoffsets
 CTF_FLAGS=
 CTF_CFLAGS="-gdwarf-2"
+GENOFFSETS_CFLAGS="
+    $CTF_CFLAGS
+    -W0,-xdbggen=no%usedonly
+"
 
 # Enable CTF by default from r151037 on
 [ $RELVER -ge 151037 ] && CTF_DEFAULT=1
