@@ -1,4 +1,5 @@
 sql-quieter.patch
+ldapdb-quieter.patch
 configure-mysql.patch
 configure-pgsql.patch
 configure-ldap.patch
