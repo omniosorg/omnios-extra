@@ -75,7 +75,7 @@ CDDL HEADER END
 
             <exec_method type="method"
                          name="stop"
-                         exec="%{config/exec} -s quit"
+                         exec="%{config/exec} -s stop"
                          timeout_seconds="60" />
 
             <exec_method type="method"
