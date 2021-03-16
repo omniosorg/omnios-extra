@@ -1,3 +1,17 @@
+diff -wpruN '--exclude=*.orig' a~/lib/auxprop.c a/lib/auxprop.c
+--- a~/lib/auxprop.c	1970-01-01 00:00:00
++++ a/lib/auxprop.c	1970-01-01 00:00:00
+@@ -822,8 +822,10 @@ int sasl_auxprop_add_plugin(const char *
+     }
+ 
+     if(result != SASL_OK) {
++        if(result != SASL_NOMECH) {
+ 	_sasl_log(NULL, SASL_LOG_ERR, "auxpropfunc error %s\n",
+ 		  sasl_errstring(result, NULL, NULL));
++        }
+ 	return result;
+     }
+ 
 diff -wpruN '--exclude=*.orig' a~/plugins/sql.c a/plugins/sql.c
 --- a~/plugins/sql.c	1970-01-01 00:00:00
 +++ a/plugins/sql.c	1970-01-01 00:00:00
@@ -55,3 +69,12 @@ diff -wpruN '--exclude=*.orig' a~/plugins/sql.c a/plugins/sql.c
  	return -1;
      }
  
+@@ -1349,7 +1349,7 @@ int sql_auxprop_plug_init(const sasl_uti
+     if (!settings->sql_engine->name) return SASL_NOMECH;
+ 
+     if (!sql_exists(settings->sql_select)) {
+-	utils->log(utils->conn, SASL_LOG_ERR, "sql_select option missing");
++	utils->log(utils->conn, SASL_LOG_DEBUG, "sql_select option missing");
+ 	utils->free(settings);	
+ 	return SASL_NOMECH;
+     }
