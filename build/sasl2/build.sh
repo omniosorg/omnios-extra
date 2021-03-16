@@ -55,6 +55,7 @@ CONFIGURE_OPTS="
     --enable-plain
     --enable-login
     --enable-sql
+    --enable-ldapdb \
     --with-ldap
     --with-mysql=$PREFIX/mariadb-$MARIASQLVER
     --with-pgsql=$PREFIX/pgsql-$PGSQLVER
