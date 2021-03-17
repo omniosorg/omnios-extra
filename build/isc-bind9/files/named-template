@@ -30,7 +30,7 @@ create_rndc_key() {
 
 start_named() {
 	echo "Starting named daemon"
-	$exec -C $conf_file &
+	$exec -c $conf_file &
 }
 
 case "$1" in
