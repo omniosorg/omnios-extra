@@ -144,7 +144,7 @@
 | ooce/runtime/tcl		| 8.6.11	| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/security/gnupg		| 1.4.23	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24		| 2.4.46	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
-| ooce/server/haproxy		| 2.3.6		| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
+| ooce/server/haproxy		| 2.3.7		| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.19.8	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-118		| 1.18.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio		| 2021-03-12T00-00-47Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
