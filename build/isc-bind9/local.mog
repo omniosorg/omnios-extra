@@ -35,7 +35,7 @@ dir group=$(GROUP) mode=0770 owner=$(USER) path=$(VARPATH)/namedb
 dir group=$(GROUP) mode=0770 owner=$(USER) path=$(VARPATH)/namedb/master
 
 # Additional files
-file ./tmp/named-$(sVERSION).conf \
+file ../named-$(sVERSION).conf \
 	path=$(CONFPATH)/named.conf \
 	mode=0660 owner=$(USER) group=$(GROUP)
 file files/rfc.zones \
