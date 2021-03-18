@@ -17,15 +17,15 @@
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.32.1
-MMCTLVER=5.32.0
+VER=5.33.0
+MMCTLVER=5.33.0
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
 DESC="All your team communication in one place, "
 DESC+="instantly searchable and accessible anywhere."
 
 set_arch 64
-set_gover 1.15
+set_gover 1.16
 set_nodever 12
 
 BUILD_DEPENDS_IPS="
