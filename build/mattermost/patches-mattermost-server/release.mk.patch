@@ -1,6 +1,6 @@
 diff -wpruN '--exclude=*.orig' a~/build/release.mk a/build/release.mk
---- a~/build/release.mk	2020-12-06 11:30:45.256700855 +0000
-+++ a/build/release.mk	2020-12-06 12:32:45.975705747 +0000
+--- a~/build/release.mk	1970-01-01 00:00:00
++++ a/build/release.mk	1970-01-01 00:00:00
 @@ -1,5 +1,9 @@
  dist: | check-style test package
  
@@ -11,7 +11,7 @@ diff -wpruN '--exclude=*.orig' a~/build/release.mk a/build/release.mk
  build-linux:
  	@echo Build Linux amd64
  ifeq ($(BUILDER_GOOS_GOARCH),"linux_amd64")
-@@ -112,121 +116,7 @@
+@@ -112,121 +116,7 @@ endif
  		cp ../manifest.txt $(DIST_PATH); \
  	fi
  
