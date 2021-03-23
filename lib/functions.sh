@@ -1456,6 +1456,31 @@ generate_manifest() {
         || logerr "------ Failed to generate manifest"
 }
 
+convert_version() {
+    declare -n var=$1
+    local _var=$var
+
+    if [[ $var =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T* ]]; then
+        ## Convert ISO-formatted time
+        var=${var%T*}
+        var=${var//-/.}
+    elif [[ $var = *[a-z] ]]; then
+        ## Convert single trailing alpha character
+        var="${var:0: -1}.`ord26 ${var: -1}`"
+    elif [[ $var = *p[0-9] ]]; then
+        ## Convert trailing pX
+        var=${var//p/.}
+    elif [[ $var = *-P[0-9] ]]; then
+        # Convert trailing -P (as used by ISC bind)
+        var=${var//-P/.}
+    fi
+
+    ## Strip leading zeros in version components.
+    var=`echo $var | sed -e 's/\.0*\([0-9]\)/.\1/g;'`
+
+    [ "$var" = "$_var" ] || logmsg "--- Converted version '$_var' -> '$var'"
+}
+
 make_package() {
     logmsg "-- building package $PKG"
 
@@ -1511,20 +1536,7 @@ make_package() {
 
     [ -z "$VERHUMAN" ] && VERHUMAN="$VER"
 
-    local _VER=$VER
-    if [[ $VER =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T* ]]; then
-        ## Convert ISO-formatted time
-        VER=${VER%T*}
-        VER=${VER//-/.}
-    elif [[ $VER = *[a-z] ]]; then
-        ## Convert single trailing alpha character
-        VER="${VER:0: -1}.`ord26 ${VER: -1}`"
-    fi
-
-    ## Strip leading zeros in version components.
-    VER=`echo $VER | sed -e 's/\.0*\([0-9]\)/.\1/g;'`
-
-    [ "$VER" = "$_VER" ] || logmsg "--- Converted version '$_VER'  -> '$VER'"
+    convert_version VER
 
     if [ -n "$FLAVOR" ]; then
         # We use FLAVOR instead of FLAVORSTR as we don't want the trailing dash
