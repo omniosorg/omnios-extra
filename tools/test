@@ -60,6 +60,9 @@ add_target()
 			*/mosh:*)
 				targets["ooce/library/protobuf"]=`pver PBUFVER`
 				;;
+			*/zadm:*)
+				targets["ooce/application/novnc"]=`pver NOVNCVER`
+				;;
 		esac
 		targets[$pkg]=$ver
 	elif [[ $build = *.p5m ]]; then
