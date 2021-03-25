@@ -1110,7 +1110,7 @@ download_source() {
     else
         logmsg "--- Found $FILENAME"
     fi
-    _ARC_SOURCE+="${_ARC_SOURCE:+ }$DLDIR/$FILENAME"
+    _ARC_SOURCE+="${_ARC_SOURCE:+ }$SRCMIRROR/$DLDIR/$FILENAME"
 
     # Fetch and verify the archive checksum
     [ -z "$SKIP_CHECKSUM" ] && verify_checksum
