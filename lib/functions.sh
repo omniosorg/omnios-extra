@@ -1067,7 +1067,7 @@ verify_checksum() {
 #
 # E.g.
 #       download_source myprog myprog 1.2.3 will try:
-#       http://mirrors.omniosce.org/myprog/myprog-1.2.3.tar.gz
+#       http://mirrors.omnios.org/myprog/myprog-1.2.3.tar.gz
 download_source() {
     local DLDIR="$1"; shift
     local PROG="$1"; shift
@@ -1110,7 +1110,7 @@ download_source() {
     else
         logmsg "--- Found $FILENAME"
     fi
-    _ARC_SOURCE+="${_ARC_SOURCE:+ }$DLDIR/$FILENAME"
+    _ARC_SOURCE+="${_ARC_SOURCE:+ }$SRCMIRROR/$DLDIR/$FILENAME"
 
     # Fetch and verify the archive checksum
     [ -z "$SKIP_CHECKSUM" ] && verify_checksum

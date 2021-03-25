@@ -22,4 +22,5 @@ set name=variant.opensolaris.zone value=global
 <include manlink.mog>
 
 license LICENSE license=GPLv3
+license ../noVNC-$(NOVNCVER)/LICENSE.txt license=MPLv2
 

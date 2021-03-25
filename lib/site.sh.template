@@ -6,7 +6,7 @@
 #
 
 # The web server or local directory from which source files are fetched.
-#MIRROR=https://mirrors.omniosce.org
+#MIRROR=https://mirrors.omnios.org
 
 # Package publisher
 #PKGPUBLISHER=extra.omnios
@@ -16,7 +16,7 @@
 #PKGSRVR=file://$ROOTDIR/tmp.repo/
 
 # The production IPS repository for this branch; used for package contents diff
-#IPS_REPO=https://pkg.omniosce.org/r$RELVER/extra
+#IPS_REPO=https://pkg.omnios.org/r$RELVER/extra
 
 # TMPDIR is used for source archives and build directories
 # DTMPDIR is used for constructing package file trees for publication
