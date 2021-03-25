@@ -63,7 +63,7 @@ The objective of this section is to prepare a build environment and introduce th
 
 To create packages for the "OmniOS Extra IPS Repository", the following is necessary:
 
-* Virtual or  physical system running the latest OmniOS release, preferably the  latest ["Bloody Release"](https://omniosce.org/about/stablevsbloody).
+* Virtual or physical system running the latest OmniOS release, preferably the latest ["Bloody Release"](https://omnios.org/about/stablevsbloody).
 * The system should have a minimum of 2GB of RAM.
 
 * "OmniOS [Extra Build Tools](https://github.com/omniosorg/omnios-extra/blob/master/build/meta/extra-build-tools.p5m)" This can be installed with the following command:
@@ -628,7 +628,7 @@ This should be placed after the "build function" declarations and before the `ma
 
 #### Mirrors:
 
-The omnios-extra build system has a mirror at https://mirrors.omniosce.org/ that maintains current source tarballs and checksums. It uses these to build it's packages. In the early stages of a build, this source tarball will not be available on the OmniOS mirror, and will be need to be made available for the build process.
+The omnios-extra build system has a mirror at https://mirrors.omnios.org/ that maintains current source tarballs and checksums. It uses these to build it's packages. In the early stages of a build, this source tarball will not be available on the OmniOS mirror, and will be need to be made available for the build process.
 
 This can be done by using the `set_mirror` directive in `build.sh`. For example the source tarball for "Apache httpd 2.4.43" is available at the mirror: <https://downloads.apache.org/>. Therefore the `set_mirror` directive should be as follows:
 
@@ -808,9 +808,9 @@ With this set, the list of publishers should look similar to the following:
 ```none
 $ pkg publisher
 PUBLISHER                   TYPE     STATUS P LOCATION
-omnios                      origin   online F https://pkg.omniosce.org/bloody/core/
+omnios                      origin   online F https://pkg.omnios.org/bloody/core/
 local.omnios                origin   online F file:///path/to/github/repos/omnios-extra/tmp.repo/
-extra.omnios                origin   online F https://pkg.omniosce.org/bloody/extra/
+extra.omnios                origin   online F https://pkg.omnios.org/bloody/extra/
 ```
 
 # Tips for building specific types of packages
