@@ -25,6 +25,7 @@ DESC+="size and correctness"
 
 forgo_isaexec
 
+[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
 LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
 
 init
