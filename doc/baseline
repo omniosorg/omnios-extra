@@ -153,9 +153,9 @@ extra.omnios ooce/runtime/node-10
 extra.omnios ooce/runtime/node-12
 extra.omnios ooce/runtime/node-14
 extra.omnios ooce/runtime/node-8
-extra.omnios ooce/runtime/ruby-25
 extra.omnios ooce/runtime/ruby-26
 extra.omnios ooce/runtime/ruby-27
+extra.omnios ooce/runtime/ruby-30
 extra.omnios ooce/runtime/tcl
 extra.omnios ooce/security/gnupg
 extra.omnios ooce/server/apache-24
