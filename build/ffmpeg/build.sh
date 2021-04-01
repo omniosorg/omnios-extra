@@ -50,7 +50,7 @@ CONFIGURE_OPTS="
     --enable-gpl
     --enable-libx264
     --enable-libx265
-    --enable-openssl
+	--enable-gnutls
 "
 [ $RELVER -ge 151036 ] && CONFIGURE_OPTS+=" --enable-libdav1d"
 CONFIGURE_OPTS_32="
