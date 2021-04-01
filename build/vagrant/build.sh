@@ -18,7 +18,7 @@
 
 PROG=vagrant
 PKG=ooce/application/vagrant
-VER=2.2.14
+VER=2.2.15
 # latest release from https://github.com/hashicorp/vagrant-installers/releases
 INSTVER=2.2.6
 SUMMARY="Vagrant"
@@ -55,7 +55,7 @@ build() {
 
     popd >/dev/null
     pushd $TMPDIR/$BUILDDIR/$PROG-installers/substrate/launcher/ >/dev/null
-    
+
     logmsg "Build Vagrant Installers"
     GOPATH=$TMPDIR/$BUILDDIR/$PROG-installers/substrate/launcher/
     logcmd go get github.com/kardianos/osext \
