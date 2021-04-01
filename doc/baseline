@@ -107,6 +107,7 @@ extra.omnios ooce/library/libwebp
 extra.omnios ooce/library/libzip
 extra.omnios ooce/library/mariadb-104
 extra.omnios ooce/library/mariadb-105
+extra.omnios ooce/library/nettle
 extra.omnios ooce/library/onig
 extra.omnios ooce/library/openldap
 extra.omnios ooce/library/pango
