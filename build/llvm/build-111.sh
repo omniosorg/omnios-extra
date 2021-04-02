@@ -16,13 +16,11 @@
 
 . ../../lib/functions.sh
 
-PROG=clang
-PKG=ooce/developer/clang-110
-VER=11.0.1
-SUMMARY="C language family frontend for LLVM"
-DESC="The Clang project provides a language front-end and tooling "
-DESC+="infrastructure for languages in the C language family (C, C++, "
-DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
+PROG=llvm
+PKG=ooce/developer/llvm-111
+VER=11.1.0
+SUMMARY="Low Level Virtual Machine compiler infrastructure"
+DESC="A collection of modular and reusable compiler and toolchain technologies"
 
 set_arch 64
 set_builddir $PROG-$VER.src
@@ -32,14 +30,6 @@ SKIP_RTIME_CHECK=1
 MAJVER=${VER%.*}
 PATCHDIR=patches-${MAJVER//./}
 
-BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}"
-# Using the = prefix to require the specific matching version of llvm
-RUN_DEPENDS_IPS="
-    =$BUILD_DEPENDS_IPS@$MAJVER
-    =ooce/developer/compiler-rt-${MAJVER//./}@$MAJVER
-    ooce/developer/compiler-rt-${MAJVER//./}
-"
-
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
 
@@ -47,12 +37,10 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-    -DPKGROOT=$PROG-$MAJVER
-    -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
     -DVERSION=$MAJVER
 "
 
-CMAKE="cmake -G Ninja"
+CMAKE+=" -G Ninja"
 MAKE=$NINJA
 
 CONFIGURE_OPTS_64=
@@ -62,11 +50,10 @@ CONFIGURE_OPTS_WS_64="
     -DCMAKE_C_COMPILER=\"$CC\"
     -DCMAKE_CXX_COMPILER=\"$CXX\"
     -DCMAKE_CXX_LINK_FLAGS=\"$LDFLAGS64\"
-    -DGCC_INSTALL_PREFIX=\"$GCCPATH\"
-    -DCLANG_DEFAULT_LINKER=\"/usr/bin/ld\"
-    -DCLANG_DEFAULT_RTLIB=compiler-rt
-    -DLLVM_CONFIG=\"$OPREFIX/llvm-$MAJVER/bin/llvm-config\"
-    -DPYTHON_EXECUTABLE=\"$PYTHON\"
+    -DLLVM_BUILD_LLVM_DYLIB=ON
+    -DLLVM_INCLUDE_BENCHMARKS=OFF
+    -DLLVM_INSTALL_UTILS=ON
+    -DLLVM_LINK_LLVM_DYLIB=ON
 "
 
 init
