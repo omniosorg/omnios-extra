@@ -17,8 +17,8 @@
 . ../../lib/functions.sh
 
 PROG=clang
-PKG=ooce/developer/clang-110
-VER=11.0.1
+PKG=ooce/developer/clang-111
+VER=11.1.0
 SUMMARY="C language family frontend for LLVM"
 DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
@@ -52,7 +52,7 @@ XFORM_ARGS="
     -DVERSION=$MAJVER
 "
 
-CMAKE="cmake -G Ninja"
+CMAKE+=" -G Ninja"
 MAKE=$NINJA
 
 CONFIGURE_OPTS_64=
