@@ -17,8 +17,8 @@
 . ../../lib/functions.sh
 
 PROG=llvm
-PKG=ooce/developer/llvm-110
-VER=11.0.1
+PKG=ooce/developer/llvm-111
+VER=11.1.0
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 
@@ -40,7 +40,7 @@ XFORM_ARGS="
     -DVERSION=$MAJVER
 "
 
-CMAKE="cmake -G Ninja"
+CMAKE+=" -G Ninja"
 MAKE=$NINJA
 
 CONFIGURE_OPTS_64=
@@ -61,6 +61,7 @@ download_source $PROG $PROG $VER.src
 patch_source
 prep_build cmake
 build -noctf    # C++
+strip_install
 make_package
 clean_up
 

@@ -29,7 +29,7 @@ DESC+="prevents segfaults, and guarantees thread safety."
 #
 # to use bundled LLVM instead of the system one, set BUNDLED_LLVM
 #
-LLVM_MAJVER=11.0
+LLVM_MAJVER=11.1
 
 BUILDDIR=${PROG}c-${VER}-src
 

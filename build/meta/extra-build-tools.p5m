@@ -23,7 +23,7 @@ depend fmri=ooce/developer/go-115 type=require
 depend fmri=ooce/developer/go-116 type=require
 depend fmri=ooce/developer/gperf type=require
 depend fmri=ooce/developer/llvm-100 type=require
-depend fmri=ooce/developer/llvm-110 type=require
+depend fmri=ooce/developer/llvm-111 type=require
 depend fmri=ooce/developer/subversion type=require
 depend fmri=ooce/editor/emacs type=require
 depend fmri=ooce/fonts/liberation type=require
