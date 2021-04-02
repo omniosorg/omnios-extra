@@ -17,8 +17,8 @@
 . ../../lib/functions.sh
 
 PROG=compiler-rt
-PKG=ooce/developer/compiler-rt-110
-VER=11.0.1
+PKG=ooce/developer/compiler-rt-111
+VER=11.1.0
 SUMMARY="LLVM runtime libraries"
 DESC="Implementation for the runtime compiler support libraries"
 
@@ -29,7 +29,7 @@ BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}"
 
 set_builddir $PROG-$VER.src
 
-CMAKE="cmake -G Ninja"
+CMAKE+=" -G Ninja"
 MAKE=$NINJA
 
 CONFIGURE_OPTS_32=
