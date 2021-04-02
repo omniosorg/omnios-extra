@@ -739,8 +739,8 @@ init() {
     logcmd mkdir -p $TMPDIR
     [ -h $SRCDIR/tmp ] && rm -f $SRCDIR/tmp
     logcmd ln -sf $TMPDIR $SRCDIR/tmp
-    [ -h $SRCDIR/tmp/src ] && rm -f $SRCDIR/tmp/src
-    logcmd ln -sf $BUILDDIR $SRCDIR/tmp/src
+    [ -h $TMPDIR/src ] && rm -f $TMPDIR/src
+    logcmd ln -sf $BUILDDIR $TMPDIR/src
 }
 
 set_builddir() {
@@ -876,11 +876,11 @@ prep_build() {
     fi
 
     # Create symbolic links to build area
-    [ -h $SRCDIR/tmp/build ] && rm -f $SRCDIR/tmp/build
-    logcmd ln -sf $BUILDDIR $SRCDIR/tmp/build
+    [ -h $TMPDIR/build ] && rm -f $TMPDIR/build
+    logcmd ln -sf $BUILDDIR $TMPDIR/build
     # ... and to DESTDIR
-    [ -h $SRCDIR/tmp/pkg ] && rm -f $SRCDIR/tmp/pkg
-    logcmd ln -sf $DESTDIR $SRCDIR/tmp/pkg
+    [ -h $TMPDIR/pkg ] && rm -f $TMPDIR/pkg
+    logcmd ln -sf ${DESTDIR##*/} $TMPDIR/pkg
 }
 
 #############################################################################
