@@ -1,0 +1,6 @@
+gosthash94.c
+gosthash94-meta.c
+streebog.c
+streebog-meta.c
+hmac-gosthash94.c
+hmac-streebog.c

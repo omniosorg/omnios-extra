@@ -31,6 +31,7 @@ depend fmri=ooce/library/apr type=require
 depend fmri=ooce/library/apr-util type=require
 depend fmri=ooce/library/cairo type=require
 depend fmri=ooce/library/fcgi2 type=require
+depend fmri=ooce/library/gnutls type=require
 depend fmri=ooce/library/json-c type=require
 depend fmri=ooce/library/libev type=require
 depend fmri=ooce/library/libexif type=require
@@ -48,6 +49,7 @@ depend fmri=ooce/library/libvncserver type=require
 depend fmri=ooce/library/libvorbis type=require
 depend fmri=ooce/library/libwebp type=require
 depend fmri=ooce/library/libzip type=require
+depend fmri=ooce/library/nettle type=require
 depend fmri=ooce/library/onig type=require
 depend fmri=ooce/library/openldap type=require
 depend fmri=ooce/library/pango type=require

@@ -42,12 +42,6 @@ CONFIGURE_OPTS="
     --with-libnghttp2
     --with-pthreads
 "
-CONFIGURE_OPTS_64+="
-    --libdir=$PREFIX/lib/$ISAPART64
-"
-CONFIGURE_OPTS_32+="
-    --with-libunbound-only
-"
 
 LDFLAGS64="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 export MAKE

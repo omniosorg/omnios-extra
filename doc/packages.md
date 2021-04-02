@@ -74,6 +74,7 @@
 | ooce/library/fcgi2		| 2.4.2		| https://github.com/FastCGI-Archives/fcgi2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/fontconfig	| 2.13.1	| https://www.freedesktop.org/software/fontconfig/release/ https://www.freedesktop.org/wiki/Software/fontconfig/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/freetype2	| 2.10.4	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/gnutls		| 3.6.15	| https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/ https://www.gnutls.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/icu4c		| 68.2		| https://github.com/unicode-org/icu/releases | Currently used solely by cyrus-imapd
 | ooce/library/jansson		| 2.13.1	| https://github.com/akheron/jansson/releases | Currently used solely by cyrus-imapd
@@ -100,6 +101,7 @@
 | ooce/library/libvncserver	| 0.9.13	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libwebp		| 1.2.0		| https://developers.google.com/speed/webp/download | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libzip		| 1.7.3		| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/nettle		| 3.7.2		| https://ftp.gnu.org/gnu/nettle/ https://www.lysator.liu.se/~nisse/nettle/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/onig		| 6.9.6		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pango		| 1.48.4	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/protobuf		| 3.15.5	| https://github.com/protocolbuffers/protobuf/releases/ | Currently used solely by mosh
