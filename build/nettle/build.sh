@@ -29,6 +29,7 @@ CONFIGURE_OPTS="
     --disable-static
     --disable-openssl
 "
+[ $RELVER -lt 151034 ] && CONFIGURE_OPTS+=" --disable-assembler"
 
 CPPFLAGS+=" -I/usr/include/gmp"
 LDFLAGS32+=" -R$PREFIX/lib"
