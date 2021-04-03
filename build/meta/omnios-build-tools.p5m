@@ -43,3 +43,8 @@ depend fmri=ooce/x11/library/libxtst type=conditional \
     predicate=release/name@0.5.11-151035
 depend fmri=ooce/x11/library/libxt type=conditional \
     predicate=release/name@0.5.11-151035
+
+# Required to build python 3.9 from 3.9.3
+depend fmri=ooce/developer/autoconf-archive type=conditional \
+    predicate=release/name@0.5.11-151037
+
