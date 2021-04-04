@@ -136,6 +136,7 @@ extra.omnios ooce/network/fping
 extra.omnios ooce/network/irssi
 extra.omnios ooce/network/mosh
 extra.omnios ooce/network/mrtg
+extra.omnios ooce/network/nicstat
 extra.omnios ooce/network/nsd
 extra.omnios ooce/network/openldap
 extra.omnios ooce/network/openvpn
