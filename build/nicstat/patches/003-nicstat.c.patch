@@ -1,0 +1,32 @@
+taken from: https://github.com/oracle/solaris-userland
+
+Fix tcp and udp statistics around kstat uint32 wrap.
+
+These changes passed back upstream although
+the upstream looks dormant or dead at this time.
+https://github.com/scotte/nicstat/issues/2
+
+diff -wpruN '--exclude=*.orig' a~/nicstat.c a/nicstat.c
+--- a~/nicstat.c	1970-01-01 00:00:00
++++ a/nicstat.c	1970-01-01 00:00:00
+@@ -1811,8 +1811,18 @@ update_timestr(time_t *tptr)
+ 	(void) strftime(g_timestr, sizeof (g_timestr), "%H:%M:%S", tm);
+ }
+ 
+-#define	TCPSTAT(field)	(g_tcp_new->field - g_tcp_old->field)
+-#define	UDPSTAT(field)	(g_udp_new->field - g_udp_old->field)
++static uint32_t
++tcpudpstat(uint32_t new, uint32_t old)
++{
++	if (new < old)
++		return((UINT32_MAX - old) + new);
++	else
++		return(new - old);
++}
++
++#define	TCPSTAT(field)	tcpudpstat(((g_tcp_new)->field), ((g_tcp_old)->field))
++
++#define	UDPSTAT(field)	tcpudpstat(((g_udp_new)->field), ((g_udp_old)->field))
+ 
+ static void
+ print_tcp()
