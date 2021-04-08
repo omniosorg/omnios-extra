@@ -12,7 +12,7 @@ The "OmniOS Extra IPS Repository" is open to all, anyone may submit a new packag
 
 1. [Requirements](#requirements)
 2. [Create the build environment](#create-the-build-environment)
-3. [Create a build directory and it's build files](#create-a-build-directory-and-its-build-files)
+3. [Create a build directory and its build files](#create-a-build-directory-and-its-build-files)
 4. [Build the `helloworld` package](#build-the-helloworld-package)
 
 ### The "OmniOS Extra Build System"
@@ -56,7 +56,7 @@ The objective of this section is to prepare a build environment and introduce th
 
 1. [Requirements](#requirements)
 2. [Create the build environment](#create-the-build-environment)
-3. [Create a build directory and it's build files](#create-a-build-directory-and-its-build-files)
+3. [Create a build directory and its build files](#create-a-build-directory-and-its-build-files)
 4. [Build the `helloworld` package](#build-the-helloworld-package)
 
 ## Requirements
@@ -98,13 +98,13 @@ The "OmniOS Extra IPS Repository" consists of the following 4 directories:
 | lib | This is where the build system framework tools reside.
 | tools | This is where auxiliary programs reside, for use in checking package builds.
 
-## Create a build directory and it's build files
+## Create a build directory and its build files
 
 In this section, the ubiquitous `helloworld` will be packaged for OmniOS.
 
 ### Create a `git branch` and a build directory
 
-Before creating any new package, it is necessary to create a new `git branch` for it's build files. The reason being, is that when the package is later submitted for inclusion into the "OmniOS Extra IPS Repository", only a "Pull Request" from a `git branch` will be accepted.
+Before creating any new package, it is necessary to create a new `git branch` for its build files. The reason being, is that when the package is later submitted for inclusion into the "OmniOS Extra IPS Repository", only a "Pull Request" from a `git branch` will be accepted.
 
 Name the `git branch` after the package name.
 
@@ -220,7 +220,7 @@ $ ./build.sh
 
 **Note:** No special privileges are need to create a package from the build system. Nor is it advised to create packages as the `root` user.
 
-This will build the `helloworld` package, through all it's various stages, terminating with the publishing of the `helloworld` package.
+This will build the `helloworld` package, through all its various stages, terminating with the publishing of the `helloworld` package.
 
 The default "IPS Repository", for the build system, that all packages will be published to, resides at the root directory of the cloned "OmniOS Extra IPS Repository". The root directory of this default "IPS Repository" is named `tmp.repo`.
 
@@ -628,7 +628,7 @@ This should be placed after the "build function" declarations and before the `ma
 
 #### Mirrors:
 
-The omnios-extra build system has a mirror at https://mirrors.omnios.org/ that maintains current source tarballs and checksums. It uses these to build it's packages. In the early stages of a build, this source tarball will not be available on the OmniOS mirror, and will be need to be made available for the build process.
+The omnios-extra build system has a mirror at https://mirrors.omnios.org/ that maintains current source tarballs and checksums. It uses these to build its packages. In the early stages of a build, this source tarball will not be available on the OmniOS mirror, and will be need to be made available for the build process.
 
 This can be done by using the `set_mirror` directive in `build.sh`. For example the source tarball for "Apache httpd 2.4.43" is available at the mirror: <https://downloads.apache.org/>. Therefore the `set_mirror` directive should be as follows:
 
@@ -839,7 +839,7 @@ Building libraries follows the same outline as building packages, however there 
 
 ### Build for both 32 & 64 bit
 
-Libraries are built for both 32 & 64 bit architectures. This just requires omiting the `set_arch 64` directive from the standard `build.sh` file, that has been demonstrated in the "[Create a build directory and it's build files](https://gitea.bcn.pbdigital.org/philip/knowledge-base/wiki/Omnios%3A-Extra-Build-Packages#user-content-create-a-build-directory-and-its-build-files)" section.
+Libraries are built for both 32 & 64 bit architectures. This just requires omiting the `set_arch 64` directive from the standard `build.sh` file, that has been demonstrated in the "[Create a build directory and its build files](https://gitea.bcn.pbdigital.org/philip/knowledge-base/wiki/Omnios%3A-Extra-Build-Packages#user-content-create-a-build-directory-and-its-build-files)" section.
 
 ### Drop 32 bit binaries
 
