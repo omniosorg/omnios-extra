@@ -2668,7 +2668,8 @@ check_libabi() {
 #############################################################################
 
 rtime_files() {
-    logcmd -p $FIND_ELF -fr $DESTDIR/ > $TMPDIR/rtime.files
+    # `find_elf` invokes `elfedit` and expects it to be the illumos one.
+    PATH=$USRBIN logcmd -p $FIND_ELF -fr $DESTDIR/ > $TMPDIR/rtime.files
 }
 
 rtime_objects() {
