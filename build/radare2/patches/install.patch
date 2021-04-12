@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/libr/Makefile a/libr/Makefile
+--- a~/libr/Makefile	1970-01-01 00:00:00
++++ a/libr/Makefile	1970-01-01 00:00:00
+@@ -239,7 +239,7 @@ install: install-includes install-pkgcon
+ 	  echo " ${DESTDIR}${LIBDIR}/$$FILE"; ${INSTALL_DATA} $$FILE "${DESTDIR}${LIBDIR}" ; done || true
+ 	# plugins
+ 	@${INSTALL_DIR} "${DESTDIR}${LIBDIR}/radare2/${VERSION}"
+-	@for FILE in `find */p -perm -u+x -type f | grep -v exe | grep -v dll | grep ${EXT_SO}`; \
++	-@for FILE in `find */p -perm -u+x -type f | grep -v exe | grep -v dll | grep ${EXT_SO}`; \
+ 	  do echo " ${DESTDIR}${LIBDIR}/radare2/${VERSION}/$$FILE"; \
+ 	  ${INSTALL_LIB} "$$FILE" "${DESTDIR}${LIBDIR}/radare2/${VERSION}" ; done
+ 	cd "${DESTDIR}${LIBDIR}/radare2" ; ln -fs "${VERSION}" last
