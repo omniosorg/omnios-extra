@@ -12,39 +12,33 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=irssi
-VER=1.2.2
-VERHUMAN=$VER
+VER=1.2.3
 PKG=ooce/network/irssi
 SUMMARY="Irssi"
 DESC="Text-mode modular chat client"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
+set_arch 64
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-"
-
-# Build 64-bit only and skip the arch-specific directories
-set_arch 64
-
-CONFIGURE_OPTS="
-    --sysconfdir=/etc$PREFIX
-    --bindir=$PREFIX/bin
-    --libdir=$PREFIX/lib
+    -DPKGROOT=$PROG
 "
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-build
+build -ctf
 make_package
 clean_up
 
