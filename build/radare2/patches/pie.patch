@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/binr/rules.mk a/binr/rules.mk
+--- a~/binr/rules.mk	1970-01-01 00:00:00
++++ a/binr/rules.mk	1970-01-01 00:00:00
+@@ -4,7 +4,7 @@ include ../../shlr/zip/deps.mk
+ include ../../shlr/sdb.mk
+ 
+ ifeq (,$(findstring tcc,${CC}))
+-CFLAGS+=-pie
++#CFLAGS+=-pie
+ endif
+ CFLAGS+=-I$(LTOP)/include
+ 
