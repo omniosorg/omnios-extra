@@ -231,6 +231,8 @@ audit()
                         */zadm:) [ $r -lt 151034 ] || ok=0 ;;
                         # openvpn-auth-ldap is not published until r151034
                         */openvpn-auth-ldap:) [ $r -lt 151034 ] || ok=0 ;;
+                        # radare2 is not published until r151034
+                        */radare2:) [ $r -lt 151034 ] || ok=0 ;;
                         # gyp is not published until r151035
                         */gyp:) [ $r -lt 151035 ] || ok=0 ;;
                         # dav1d is not published until r151036
