@@ -9,7 +9,7 @@
 # http://www.illumos.org/license/CDDL.
 #
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 license $(PROG)/LICENSE license=MIT
 
@@ -32,4 +32,7 @@ link path=var/$(PREFIX)/log target=../../../log/$(PREFIX)
 <transform dir path=var/$(PREFIX) -> set group $(PROG)>
 
 <transform dir path=var/$(PREFIX)/data -> set mode 0700>
+
+<transform file path=$(PREFIX)/bin -> \
+    set restart_fmri svc:/system/gitea:default>
 
