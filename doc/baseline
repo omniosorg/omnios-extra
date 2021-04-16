@@ -45,8 +45,8 @@ extra.omnios ooce/database/rrdtool
 extra.omnios ooce/developer/autoconf-archive
 extra.omnios ooce/developer/autogen
 extra.omnios ooce/developer/ccache
-extra.omnios ooce/developer/clang-100
 extra.omnios ooce/developer/clang-111
+extra.omnios ooce/developer/clang-120
 extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/compiler-rt-100
 extra.omnios ooce/developer/compiler-rt-111

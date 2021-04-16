@@ -5,7 +5,7 @@ Don't add /usr/local/include by default on Solaris.
 diff -wpruN '--exclude=*.orig' a~/lib/Frontend/InitHeaderSearch.cpp a/lib/Frontend/InitHeaderSearch.cpp
 --- a~/lib/Frontend/InitHeaderSearch.cpp	1970-01-01 00:00:00
 +++ a/lib/Frontend/InitHeaderSearch.cpp	1970-01-01 00:00:00
-@@ -224,6 +224,7 @@ void InitHeaderSearch::AddDefaultCInclud
+@@ -229,6 +229,7 @@ void InitHeaderSearch::AddDefaultCInclud
      case llvm::Triple::PS4:
      case llvm::Triple::ELFIAMCU:
      case llvm::Triple::Fuchsia:
