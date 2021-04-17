@@ -1,0 +1,26 @@
+diff -wpruN '--exclude=*.orig' a~/tools/llvm-jitlink/CMakeLists.txt a/tools/llvm-jitlink/CMakeLists.txt
+--- a~/tools/llvm-jitlink/CMakeLists.txt	1970-01-01 00:00:00
++++ a/tools/llvm-jitlink/CMakeLists.txt	1970-01-01 00:00:00
+@@ -24,4 +24,9 @@ add_llvm_tool(llvm-jitlink
+   llvm-jitlink-macho.cpp
+   )
+ 
++# We need to link libsocket on illumos
++if(${CMAKE_SYSTEM_NAME} MATCHES "SunOS")
++  target_link_libraries(llvm-jitlink PRIVATE socket nsl)
++endif()
++
+ export_executable_symbols(llvm-jitlink)
+diff -wpruN '--exclude=*.orig' a~/tools/llvm-jitlink/llvm-jitlink-executor/CMakeLists.txt a/tools/llvm-jitlink/llvm-jitlink-executor/CMakeLists.txt
+--- a~/tools/llvm-jitlink/llvm-jitlink-executor/CMakeLists.txt	1970-01-01 00:00:00
++++ a/tools/llvm-jitlink/llvm-jitlink-executor/CMakeLists.txt	1970-01-01 00:00:00
+@@ -11,4 +11,9 @@ add_llvm_utility(llvm-jitlink-executor
+   intrinsics_gen
+ )
+ 
++# We need to link libsocket on illumos
++if(${CMAKE_SYSTEM_NAME} MATCHES "SunOS")
++  target_link_libraries(llvm-jitlink-executor PRIVATE socket)
++endif()
++
+ export_executable_symbols(llvm-jitlink-executor)

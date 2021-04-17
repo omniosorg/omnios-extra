@@ -7,7 +7,7 @@ which assumes __float128.
 diff -wpruN '--exclude=*.orig' a~/lib/Basic/Targets/OSTargets.h a/lib/Basic/Targets/OSTargets.h
 --- a~/lib/Basic/Targets/OSTargets.h	1970-01-01 00:00:00
 +++ a/lib/Basic/Targets/OSTargets.h	1970-01-01 00:00:00
-@@ -436,12 +436,22 @@ protected:
+@@ -443,12 +443,22 @@ protected:
      Builder.defineMacro("__ELF__");
      if (Opts.POSIXThreads)
        Builder.defineMacro("_REENTRANT");
@@ -30,7 +30,7 @@ diff -wpruN '--exclude=*.orig' a~/lib/Basic/Targets/OSTargets.h a/lib/Basic/Targ
    }
  };
  
-@@ -610,22 +620,15 @@ protected:
+@@ -627,22 +637,15 @@ protected:
      Builder.defineMacro("__ELF__");
      Builder.defineMacro("__svr4__");
      Builder.defineMacro("__SVR4");

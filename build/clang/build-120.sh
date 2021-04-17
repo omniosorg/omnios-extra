@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=clang
-PKG=ooce/developer/clang-100
-VER=10.0.1
+PKG=ooce/developer/clang-120
+VER=12.0.0
 SUMMARY="C language family frontend for LLVM"
 DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
@@ -52,9 +52,8 @@ XFORM_ARGS="
     -DVERSION=$MAJVER
 "
 
-CMAKE="cmake -G Ninja"
-MAKE=/opt/ooce/bin/ninja
-TESTSUITE_MAKE=$MAKE
+CMAKE+=" -G Ninja"
+MAKE=$NINJA
 
 CONFIGURE_OPTS_64=
 CONFIGURE_OPTS_WS_64="

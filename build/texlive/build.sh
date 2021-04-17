@@ -13,12 +13,12 @@
 # }}}
 
 # Copyright 2014 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=texlive
-VER=20200406
+VER=20210325
 PKG=ooce/application/texlive
 SUMMARY="TeX Live"
 DESC="LaTeX distribution"

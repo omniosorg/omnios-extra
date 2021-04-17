@@ -10,7 +10,7 @@ Test removing -Bdynamic for golang.
 diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.cpp a/lib/Driver/ToolChains/Solaris.cpp
 --- a~/lib/Driver/ToolChains/Solaris.cpp	1970-01-01 00:00:00
 +++ a/lib/Driver/ToolChains/Solaris.cpp	1970-01-01 00:00:00
-@@ -49,8 +49,29 @@ void solaris::Linker::ConstructJob(Compi
+@@ -50,8 +50,29 @@ void solaris::Linker::ConstructJob(Compi
                                     const InputInfoList &Inputs,
                                     const ArgList &Args,
                                     const char *LinkingOutput) const {
@@ -19,7 +19,7 @@ diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.cpp a/lib/Driver
  
 +  // XXX: assumes pkgsrc layout
 +  std::string LibPath;
-+  LibPath = llvm::sys::path::parent_path(D.getInstalledDir());
++  LibPath = llvm::sys::path::parent_path(D.getInstalledDir()).str();
 +  LibPath += "/lib/";
 +
 +  std::string SysPath = "/usr/lib/";
@@ -40,7 +40,7 @@ diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.cpp a/lib/Driver
    // Demangle C++ names in errors
    CmdArgs.push_back("-C");
  
-@@ -63,7 +84,6 @@ void solaris::Linker::ConstructJob(Compi
+@@ -64,7 +85,6 @@ void solaris::Linker::ConstructJob(Compi
      CmdArgs.push_back("-Bstatic");
      CmdArgs.push_back("-dn");
    } else {
@@ -48,7 +48,7 @@ diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.cpp a/lib/Driver
      if (Args.hasArg(options::OPT_shared)) {
        CmdArgs.push_back("-shared");
      }
-@@ -84,9 +104,9 @@ void solaris::Linker::ConstructJob(Compi
+@@ -85,9 +105,9 @@ void solaris::Linker::ConstructJob(Compi
    if (!Args.hasArg(options::OPT_nostdlib, options::OPT_nostartfiles)) {
      if (!Args.hasArg(options::OPT_shared))
        CmdArgs.push_back(
@@ -60,7 +60,7 @@ diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.cpp a/lib/Driver
  
      const Arg *Std = Args.getLastArg(options::OPT_std_EQ, options::OPT_ansi);
      bool HaveAnsi = false;
-@@ -101,16 +121,14 @@ void solaris::Linker::ConstructJob(Compi
+@@ -102,16 +122,14 @@ void solaris::Linker::ConstructJob(Compi
      // Use values-Xc.o for -ansi, -std=c*, -std=iso9899:199409.
      if (HaveAnsi || (LangStd && !LangStd->isGNUMode()))
        values_X = "values-Xc.o";
@@ -73,13 +73,13 @@ diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.cpp a/lib/Driver
        values_xpg = "values-xpg4.o";
      CmdArgs.push_back(
 -        Args.MakeArgString(getToolChain().GetFilePath(values_xpg)));
-+        Args.MakeArgString(SysPath + values_xpg));
 -    CmdArgs.push_back(
 -        Args.MakeArgString(getToolChain().GetFilePath("crtbegin.o")));
++        Args.MakeArgString(SysPath + values_xpg));
    }
  
    getToolChain().AddFilePathLibArgs(Args, CmdArgs);
-@@ -122,30 +142,22 @@ void solaris::Linker::ConstructJob(Compi
+@@ -123,30 +141,22 @@ void solaris::Linker::ConstructJob(Compi
    AddLinkerInputs(getToolChain(), Inputs, Args, CmdArgs, JA);
  
    if (!Args.hasArg(options::OPT_nostdlib, options::OPT_nodefaultlibs)) {
@@ -118,7 +118,7 @@ diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.cpp a/lib/Driver
  
    getToolChain().addProfileRTLibs(Args, CmdArgs);
  
-@@ -174,26 +186,9 @@ Solaris::Solaris(const Driver &D, const
+@@ -176,26 +186,9 @@ Solaris::Solaris(const Driver &D, const
                   const ArgList &Args)
      : Generic_ELF(D, Triple, Args) {
  

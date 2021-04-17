@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/tools/lto/lto.exports a/tools/lto/lto.exports
 --- a~/tools/lto/lto.exports	1970-01-01 00:00:00
 +++ a/tools/lto/lto.exports	1970-01-01 00:00:00
-@@ -41,12 +41,6 @@ lto_codegen_optimize
+@@ -43,12 +43,6 @@ lto_codegen_optimize
  lto_codegen_compile_optimized
  lto_codegen_set_should_internalize
  lto_codegen_set_should_embed_uselists
@@ -17,7 +17,7 @@ diff -wpruN '--exclude=*.orig' a~/tools/lto/lto.exports a/tools/lto/lto.exports
 diff -wpruN '--exclude=*.orig' a~/tools/remarks-shlib/Remarks.exports a/tools/remarks-shlib/Remarks.exports
 --- a~/tools/remarks-shlib/Remarks.exports	1970-01-01 00:00:00
 +++ a/tools/remarks-shlib/Remarks.exports	1970-01-01 00:00:00
-@@ -1,24 +1,0 @@
+@@ -1,25 +1,0 @@
 -LLVMRemarkStringGetData
 -LLVMRemarkStringGetLen
 -LLVMRemarkDebugLocGetSourceFilePath
@@ -37,6 +37,7 @@ diff -wpruN '--exclude=*.orig' a~/tools/remarks-shlib/Remarks.exports a/tools/re
 -LLVMRemarkEntryGetFirstArg
 -LLVMRemarkEntryGetNextArg
 -LLVMRemarkParserCreateYAML
+-LLVMRemarkParserCreateBitstream
 -LLVMRemarkParserGetNext
 -LLVMRemarkParserHasError
 -LLVMRemarkParserGetErrorMessage
