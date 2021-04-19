@@ -8,14 +8,12 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-# drop .bat files
-<transform file path=.*\.bat$ -> drop>
+# drop .bat files and leftovers from patching
+<transform file path=$(PREFIX)/bin/.+\.(?:bat|orig)$ -> drop>
 
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
-    mediator=$(PROG) mediator-version=$(VERSION) >
+<include mediated-binlink.mog>
 
 license LICENSE license=Apache2
 

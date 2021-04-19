@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=groovy
-VER=3.0.7
+VER=3.0.8
 PKG=ooce/runtime/groovy-30
 SUMMARY="Groovy"
 DESC="Java-syntax-compatible object-oriented programming "
@@ -38,6 +38,8 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
     -DVERSION=$MAJVER
+    -DPKGROOT=$PROG-$MAJVER
+    -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
 "
 
 copy_package() {

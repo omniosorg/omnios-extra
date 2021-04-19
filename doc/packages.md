@@ -139,7 +139,7 @@
 | ooce/print/cups		| 2.3.3op2	| https://github.com/OpenPrinting/cups/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/expect		| 5.45.4	| https://sourceforge.net/projects/expect/files/Expect/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/gnu-smalltalk	| 3.2.5		| https://ftp.gnu.org/gnu/smalltalk/ | [omniosorg](https://github.com/omniosorg)
-| ooce/runtime/groovy-30	| 3.0.7		| https://groovy.apache.org/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/runtime/groovy-30	| 3.0.8		| https://groovy.apache.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-8		| 8.17.0	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-10		| 10.24.1	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-12		| 12.22.1	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
