@@ -18,7 +18,7 @@
 
 PROG=zrepl
 PKG=ooce/system/zrepl
-VER=0.3.1
+VER=0.4.0
 SUMMARY="$PROG - ZFS replication"
 DESC="$PROG is a one-stop, integrated solution for ZFS replication"
 
@@ -26,13 +26,13 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.15
+set_gover 1.16
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-    -DVERSION=$VER
+    -DPKGROOT=$PROG
 "
 
 GOOS=illumos

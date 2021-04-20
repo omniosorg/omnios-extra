@@ -18,7 +18,7 @@
 
 PROG=minio-mc
 PKG=ooce/storage/minio-mc
-VER=2021-03-12T03-36-59Z
+VER=2021-03-23T05-46-11Z
 SUMMARY="MinIO client"
 DESC="A modern alternative to UNIX commands like ls, cat, cp, mirror, diff, "
 DESC+="find etc. It supports filesystems and Amazon S3 compatible cloud "
