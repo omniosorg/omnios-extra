@@ -32,7 +32,8 @@ PREFIX+="/$PROG"
 GOOS=illumos
 GOARCH=amd64
 MINIO_RELEASE=RELEASE
-export GOOS GOARCH MINIO_RELEASE
+VERS="`echo $VER | $PERL -pe 's/(T\d\d)-(\d\d)-(\d\dZ)$/\1:\2:\3/'`"
+export GOOS GOARCH MINIO_RELEASE VERS
 
 BUILD_DEPENDS_IPS="developer/versioning/git"
 
@@ -45,12 +46,8 @@ XFORM_ARGS="
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
-    LDFLAGS=" \
-    -s -w -X github.com/$PROG/$PROG/cmd.Version=$VER \
-    -X github.com/$PROG/$PROG/cmd.ReleaseTag=RELEASE.$VER \
-    "
     logmsg "Building 64-bit"
-    logcmd $MAKE LDFLAGS="$LDFLAGS" || logerr "Build failed"
+    logcmd $MAKE || logerr "Build failed"
 
     # $PROG version <ver>
     [ "`./$PROG --version | awk '{print $3}'`" = "$MINIO_RELEASE.$VER" ] \
