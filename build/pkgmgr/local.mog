@@ -14,6 +14,9 @@ license LICENSE license=GPLv3
 
 <transform file path=etc/$(PREFIX)/$(PROG).conf$ -> set preserve true>
 
+# drop stray "versioned" library paths that might be created
+<transform path=$(PREFIX)/lib/5\.[\d.]+(?:/|$) -> drop>
+
 <include binlink.mog>
 <include manlink.mog>
 

@@ -167,7 +167,7 @@ extra.omnios ooce/server/apache-24
 extra.omnios ooce/server/apache-24/modules/subversion
 extra.omnios ooce/server/haproxy
 extra.omnios ooce/server/nginx
-extra.omnios ooce/server/nginx-118
+extra.omnios ooce/server/nginx-120
 extra.omnios ooce/server/nginx-common
 extra.omnios ooce/storage/minio
 extra.omnios ooce/storage/minio-mc
