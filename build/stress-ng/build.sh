@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=stress-ng
-VER=0.12.06
+VER=0.12.07
 PKG=ooce/util/stress-ng
 SUMMARY="Stress test a computer system in various selectable ways"
 DESC="$PROG - $SUMMARY"
@@ -51,7 +51,7 @@ init
 download_source $PROG V$VER
 prep_build
 patch_source
-build -noctf    # https://www.illumos.org/issues/13698
+build
 strip_install
 make_package
 clean_up
