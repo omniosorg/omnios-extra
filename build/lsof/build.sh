@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -21,9 +21,6 @@ PKG=ooce/file/lsof
 VER=4.94.0
 SUMMARY="List open files"
 DESC="Report a list of all open files and the processes that opened them"
-
-# This component does not yet build with gcc 10
-[ $GCCVER = 10 ] && set_gccver 9
 
 SKIP_LICENCES=lsof
 
