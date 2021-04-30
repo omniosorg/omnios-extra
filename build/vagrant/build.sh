@@ -18,7 +18,7 @@
 
 PROG=vagrant
 PKG=ooce/application/vagrant
-VER=2.2.15
+VER=2.2.16
 # latest release from https://github.com/hashicorp/vagrant-installers/releases
 INSTVER=2.2.6
 SUMMARY="Vagrant"
@@ -32,7 +32,7 @@ PREFIX+=/$PROG
 
 set_arch 64
 set_gover 1.15
-set_rubyver 2.6
+set_rubyver 2.7
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
