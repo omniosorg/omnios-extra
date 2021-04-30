@@ -24,7 +24,7 @@ DESC="$PROG - $SUMMARY"
 
 NOVNCVER=1.2.0
 
-if [ $RELVER -lt 151034 ]; then
+if [ $RELVER -le 151036 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
     exit 0
 fi
