@@ -222,9 +222,12 @@ CTFSTABS=$ONBLDBIN/i386/ctfstabs
 CW=$ONBLDBIN/i386/cw
 GENOFFSETS=$ONBLDBIN/genoffsets
 CTF_FLAGS=
-CTF_CFLAGS="-gdwarf-2"
+typeset -A CTFCFLAGS
+CTFCFLAGS[_]="-gdwarf-2"
+CTFCFLAGS[10]="-gstrict-dwarf"
+CTFCFLAGS[11]="-gstrict-dwarf"
 GENOFFSETS_CFLAGS="
-    $CTF_CFLAGS
+    ${CTFCFLAGS[_]}
     -W0,-xdbggen=no%usedonly
 "
 
@@ -320,11 +323,12 @@ FCFLAGS[_]+=" -O2"
 # "gcc has a rather aggressive optimization on by default that infers loop
 #  bounds based on undefined behaviour (!!).  This can lead to some VERY
 #  surprising optimisations -- ones that may be technically correct in the
-#  strictest sense but also result in incorrect program behavior."
+#  strictest sense but also result in incorrect program behaviour."
 FCFLAGS[7]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[8]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[9]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[10]+=" -fno-aggressive-loop-optimizations"
+FCFLAGS[11]+=" -fno-aggressive-loop-optimizations"
 
 # Flags to enable particular standards; see standards(5)
 typeset -A STANDARDS

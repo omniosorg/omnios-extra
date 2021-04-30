@@ -435,6 +435,7 @@ set_gccver() {
 
     CFLAGS="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
     CXXFLAGS="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
+    CTF_CFLAGS="${CTFCFLAGS[_]} ${CTFCFLAGS[$GCCVER]}"
 
     set_ssp strong $2
 }
