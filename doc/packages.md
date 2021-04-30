@@ -16,7 +16,7 @@
 | ooce/application/nagios-plugins | 2.3.3	| http://www.nagios-plugins.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/novnc	| 1.2.0		| https://github.com/novnc/noVNC/releases | Currently used solely by zadm
 | ooce/application/php-73	| 7.3.27	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-74	| 7.4.16	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-74	| 7.4.18	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-80	| 8.0.5		| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-XX/imagick	| 3.4.4	| https://github.com/Imagick/imagick/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20210325	| ftp://tug.org/historic/systems/texlive/2021/ | [omniosorg](https://github.com/omniosorg)
