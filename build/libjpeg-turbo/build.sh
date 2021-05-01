@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=libjpeg-turbo
-VER=2.0.6
+VER=2.1.0
 PKG=ooce/library/libjpeg-turbo
 SUMMARY="libjpeg-turbo"
 DESC="SIMD-accelerated libjpeg-compatible JPEG codec library"
@@ -46,14 +46,14 @@ CONFIGURE_OPTS_32="
     -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/amd64
+    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/$ISAPART64
 "
 
 init
 download_source $PROG $PROG $VER
 prep_build cmake
 patch_source
-build
+build -ctf
 make_package
 clean_up
 
