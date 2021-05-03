@@ -12,19 +12,20 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=asciidoc
-VER=8.6.9
-VERHUMAN=$VER
+VER=9.1.0
 PKG=ooce/text/asciidoc
 SUMMARY="AsciiDoc - text based documentation"
 DESC="$SUMMARY"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
+set_arch 64
 
 XFORM_ARGS=" -DOPREFIX=$OPREFIX -DPREFIX=$PREFIX"
 
@@ -34,11 +35,10 @@ RUN_DEPENDS_IPS="ooce/text/docbook-xsl"
 # the source.
 REMOVE_PREVIOUS=1
 
-# Build 32-bit only and skip the arch-specific directories
-BUILDARCH=32
+SKIP_LICENCES='*'
+
 CONFIGURE_OPTS="
     --sysconfdir=/etc/$OPREFIX
-    --bindir=$PREFIX/bin
 "
 
 reset_configure_opts
