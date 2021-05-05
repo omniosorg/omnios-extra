@@ -38,6 +38,7 @@ setup()
     [ -z "$bbranch" ] && echo "Could not retrieve bloody branch" && exit 1
     #echo "Bloody branch: $bbranch"
     ((lts = bbranch - (bbranch + 2) % 8))
+    [ $lts -ge $((bbranch - 3)) ] && ((lts = lts - 8))
     branches=(bloody r$((bbranch - 1)) r$((bbranch - 3)) r$lts)
     #echo "Branches: ${branches[@]}"
 }
