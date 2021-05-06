@@ -73,6 +73,9 @@ CONFIGURE_OPTS+="
 
 # GNU Smalltalk does not find gmp headers
 CPPFLAGS+=" -I/usr/include/gmp"
+
+LDFLAGS32+=" -R$OPREFIX/lib"
+LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
 [ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
 
 # create package functions
