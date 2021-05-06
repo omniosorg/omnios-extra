@@ -38,6 +38,7 @@ setup()
     [ -z "$bbranch" ] && echo "Could not retrieve bloody branch" && exit 1
     #echo "Bloody branch: $bbranch"
     ((lts = bbranch - (bbranch + 2) % 8))
+    [ $lts -ge $((bbranch - 3)) ] && ((lts = lts - 8))
     branches=(bloody r$((bbranch - 1)) r$((bbranch - 3)) r$lts)
     #echo "Branches: ${branches[@]}"
 }
@@ -228,7 +229,9 @@ audit()
                         # back as a renamed package in r151035
                         */socat:) [[ $r = 15103[24] ]] || ok=0 ;;
                         # zadm is not published until r151034
-                        */zadm:) [ $r -le 151036 ] || ok=0 ;;
+                        */zadm:) [ $r -le 151034 ] || ok=0 ;;
+                        # zadm version is locked for r151036
+                        */zadm:0.8.*) [ $r = 151036 ] || ok=0 ;;
                         # openvpn-auth-ldap is not published until r151034
                         */openvpn-auth-ldap:) [ $r -lt 151034 ] || ok=0 ;;
                         # radare2 is not published until r151034
