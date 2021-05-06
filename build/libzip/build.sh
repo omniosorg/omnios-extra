@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -45,6 +45,7 @@ CONFIGURE_OPTS_32="
 "
 CONFIGURE_OPTS_64="
     -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/$ISAPART64
+    -DNettle_LIBRARY=$OPREFIX/lib/$ISAPART64/libnettle.so
 "
 
 LDFLAGS32+=" -R$OPREFIX/lib"
