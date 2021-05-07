@@ -49,7 +49,7 @@
 | ooce/developer/dejagnu	| 1.6.2		| https://ftp.gnu.org/gnu/dejagnu/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/freepascal	| 3.2.0		| https://sourceforge.net/projects/freepascal/files/Source/ https://www.freepascal.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/gdb		| 10.2		| https://ftp.gnu.org/gnu/gdb/ | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/go-115		| 1.15.11	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/go-115		| 1.15.12	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-116		| 1.16.3	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/gperf		| 3.1		| https://ftp.gnu.org/pub/gnu/gperf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-111	| 11.1.0	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
