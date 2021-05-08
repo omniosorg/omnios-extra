@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=lmdb
-VER=0.9.28
+VER=0.9.29
 PKG=ooce/database/lmdb
 SUMMARY="lmdb"
 DESC="Lightning Memory-Mapped Database"
