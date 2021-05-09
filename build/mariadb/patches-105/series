@@ -1,9 +1,7 @@
 reorder_includes.patch
 missing_concurrency.patch
-si_kernel.patch
 04-dtrace.patch
 05-no-pie.patch
 08-dtrace-invalid-conversion.patch
 cfi.patch
 mariadb_config.patch
-fix_cmake_syntax_error.patch
