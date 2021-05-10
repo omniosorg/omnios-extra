@@ -32,6 +32,7 @@ depend fmri=ooce/library/apr-util type=require
 depend fmri=ooce/library/cairo type=require
 depend fmri=ooce/library/fcgi2 type=require
 depend fmri=ooce/library/gnutls type=require
+depend fmri=ooce/library/jansson type=require
 depend fmri=ooce/library/json-c type=require
 depend fmri=ooce/library/libev type=require
 depend fmri=ooce/library/libexif type=require

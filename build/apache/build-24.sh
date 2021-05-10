@@ -62,6 +62,9 @@ CONFIGURE_OPTS="
     --enable-ldap
     --enable-headers
     --enable-rewrite
+
+    --with-jansson="$OPREFIX"
+    --enable-md
 "
 
 [ $RELVER -ge 151035 ] && CONFIGURE_OPTS+=" --enable-brotli"
