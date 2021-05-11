@@ -32,8 +32,6 @@ fi
 _MIRROR=$MIRROR
 set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
-RUN_DEPENDS_IPS="network/socat"
-
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
