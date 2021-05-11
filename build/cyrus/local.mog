@@ -12,7 +12,6 @@
 
 license COPYING license="BSD with attribution to CMU/MIT/others"
 license ../icu/LICENSE license=modified-BSD
-license ../jansson-$(JANSSON)/LICENSE license=MIT
 license ../libical-$(ICAL)/LICENSE.MPL2.txt license=MPLv2
 
 group groupname=$(GROUP) gid=89
