@@ -22,7 +22,6 @@ PKG=ooce/network/cyrus-imapd
 SUMMARY="Cyrus IMAP is an email, contacts and calendar server"
 DESC="$SUMMARY"
 
-JANSSONVER=2.13.1
 ICUVER=68.2
 ICALVER=3.0.9
 
@@ -41,20 +40,17 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DUSER=cyrus -DGROUP=cyrus
     -DRUNDIR=var/run/cyrus
-    -DJANSSON=$JANSSONVER
     -DICU=$ICUVER
     -DICAL=$ICALVER
 "
 
 init
-prep_build autoconf -autoreconf
+prep_build
 
 #########################################################################
 # Download and build bundled dependencies
 
 save_buildenv
-
-build_dependency -ctf jansson jansson-$JANSSONVER $PROG/jansson v$JANSSONVER
 
 CONFIGURE_OPTS+=" --disable-tests --disable-samples"
 build_dependency -ctf icu4c icu/source $PROG/icu icu4c-${ICUVER//./_}-src
@@ -123,7 +119,7 @@ make_install() {
     # Copy in the dependency libraries
 
     pushd $deplib >/dev/null
-    for lib in libical* libjansson* libicu*; do
+    for lib in libical* libicu*; do
         [[ $lib = *.so.* && -f $lib && ! -h $lib ]] || continue
         tgt=`echo $lib | cut -d. -f1-3`
         logmsg "--- installing library $lib -> $tgt"
