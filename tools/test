@@ -54,7 +54,6 @@ add_target()
 				;;
 			*/cyrus-imapd:*)
 				targets["ooce/library/icu4c"]=`pver ICUVER`
-				targets["ooce/library/jansson"]=`pver JANSSONVER`
 				targets["ooce/library/libical"]=`pver ICALVER`
 				;;
 			*/mosh:*)
