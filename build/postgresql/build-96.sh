@@ -19,7 +19,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-96
-VER=9.6.21
+VER=9.6.22
 SUMMARY="PostgreSQL 9.6"
 DESC="The World's Most Advanced Open Source Relational Database"
 
