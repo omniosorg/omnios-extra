@@ -19,7 +19,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-12
-VER=12.6
+VER=12.7
 SUMMARY="PostgreSQL 12"
 DESC="The World's Most Advanced Open Source Relational Database"
 
