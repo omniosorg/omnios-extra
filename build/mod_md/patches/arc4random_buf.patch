@@ -1,0 +1,22 @@
+Patch origin: in-house
+Patch status: fixes: md_crypt.c:86:5: error: implicit declaration of function 'arc4random_buf' [-Werror=implicit-function-declaration]
+Although this should be in stdlib.h which is include
+
+diff -wpruN '--exclude=*.orig' a~/configure a/configure
+--- a~/configure   Mon Mar  8 16:27:00 2021
++++ a/configure    Thu May 13 16:34:07 2021
+@@ -15077,14 +15077,7 @@
+ done
+
+
+-# we'd like to use this, if it exists
+-ac_fn_c_check_func "$LINENO" "arc4random_buf" "ac_cv_func_arc4random_buf"
+-if test "x$ac_cv_func_arc4random_buf" = xyes; then :
+-  CFLAGS="$CFLAGS -DMD_HAVE_ARC4RANDOM"
+-fi
+
+-
+-
+ # Checks for typedefs, structures, and compiler characteristics.
+ ac_fn_c_find_intX_t "$LINENO" "32" "ac_cv_c_int32_t"
+ case $ac_cv_c_int32_t in #(

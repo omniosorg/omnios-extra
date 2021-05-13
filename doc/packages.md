@@ -151,6 +151,7 @@
 | ooce/security/gnupg		| 1.4.23	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24		| 2.4.47	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24/modules/fcgid | 2.3.9	| https://downloads.apache.org/httpd/mod_fcgid/ | [omniosorg](https://github.com/omniosorg)
+| ooce/server/apache-24/modules/md | 2.4.0	| https://github.com/icing/mod_md
 | ooce/server/haproxy		| 2.3.10	| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.19.10	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-120		| 1.20.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
