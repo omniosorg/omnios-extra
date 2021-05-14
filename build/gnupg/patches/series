@@ -1,1 +1,2 @@
-multiple_symbols.patch
+02-disable-t-protect.patch
+03-disable-hanging-tests.patch
