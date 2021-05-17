@@ -1,3 +1,5 @@
 layout.patch
 priv_drop.patch
 httpd.conf.patch
+upstream-md-sync-part1.patch
+upstream-md-sync-part2.patch

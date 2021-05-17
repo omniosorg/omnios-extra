@@ -72,7 +72,7 @@ CONFIGURE_OPTS="
 init
 download_source $PROG httpd $VER
 patch_source
-prep_build
+prep_build autoconf -autoreconf
 build -ctf
 xform files/apache-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
 install_smf ooce $PROG-$sMAJVER.xml

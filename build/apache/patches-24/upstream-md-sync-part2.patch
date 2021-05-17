@@ -1,0 +1,167 @@
+Patch origin: upstream
+Patch status: upstream
+
+Early pull form upstream mod_md sync
+
+From 7da5270ffe75101b19e1ca31b287c5afa2d44e8a Mon Sep 17 00:00:00 2001
+From: Gregg Lewis Smith <gsmith@apache.org>
+Date: Thu, 13 May 2021 20:14:00 +0000
+Subject: [PATCH] Update Win32 command line makefiles for r1889793
+
+git-svn-id: https://svn.apache.org/repos/asf/httpd/httpd/branches/2.4.x@1889869 13f79535-47bb-0310-9956-ffa450edef68
+---
+ libhttpd.mak          | 12 ++++++++++++
+ modules/md/mod_md.mak | 18 +++++++++---------
+ 2 files changed, 21 insertions(+), 9 deletions(-)
+
+diff --git a/libhttpd.mak b/libhttpd.mak
+index 031c033e511..b8872ce2ba7 100644
+--- a/libhttpd.mak
++++ b/libhttpd.mak
+@@ -82,6 +82,7 @@ CLEAN :
+ 	-@erase "$(INTDIR)\request.obj"
+ 	-@erase "$(INTDIR)\scoreboard.obj"
+ 	-@erase "$(INTDIR)\service.obj"
++	-@erase "$(INTDIR)\ssl.obj"
+ 	-@erase "$(INTDIR)\util.obj"
+ 	-@erase "$(INTDIR)\util_cfgtree.obj"
+ 	-@erase "$(INTDIR)\util_cookies.obj"
+@@ -200,6 +201,7 @@ LINK32_OBJS= \
+ 	"$(INTDIR)\provider.obj" \
+ 	"$(INTDIR)\scoreboard.obj" \
+ 	"$(INTDIR)\service.obj" \
++	"$(INTDIR)\ssl.obj" \
+ 	"$(INTDIR)\libhttpd.res" \
+ 	".\srclib\apr\Release\libapr-1.lib" \
+ 	".\srclib\apr-iconv\Release\libapriconv-1.lib" \
+@@ -280,6 +282,7 @@ CLEAN :
+ 	-@erase "$(INTDIR)\request.obj"
+ 	-@erase "$(INTDIR)\scoreboard.obj"
+ 	-@erase "$(INTDIR)\service.obj"
++	-@erase "$(INTDIR)\ssl.obj"
+ 	-@erase "$(INTDIR)\util.obj"
+ 	-@erase "$(INTDIR)\util_cfgtree.obj"
+ 	-@erase "$(INTDIR)\util_cookies.obj"
+@@ -405,6 +408,7 @@ LINK32_OBJS= \
+ 	"$(INTDIR)\provider.obj" \
+ 	"$(INTDIR)\scoreboard.obj" \
+ 	"$(INTDIR)\service.obj" \
++	"$(INTDIR)\ssl.obj" \
+ 	"$(INTDIR)\libhttpd.res" \
+ 	".\srclib\apr\Debug\libapr-1.lib" \
+ 	".\srclib\apr-iconv\Debug\libapriconv-1.lib" \
+@@ -485,6 +489,7 @@ CLEAN :
+ 	-@erase "$(INTDIR)\request.obj"
+ 	-@erase "$(INTDIR)\scoreboard.obj"
+ 	-@erase "$(INTDIR)\service.obj"
++	-@erase "$(INTDIR)\ssl.obj"
+ 	-@erase "$(INTDIR)\util.obj"
+ 	-@erase "$(INTDIR)\util_cfgtree.obj"
+ 	-@erase "$(INTDIR)\util_cookies.obj"
+@@ -605,6 +610,7 @@ LINK32_OBJS= \
+ 	"$(INTDIR)\provider.obj" \
+ 	"$(INTDIR)\scoreboard.obj" \
+ 	"$(INTDIR)\service.obj" \
++	"$(INTDIR)\ssl.obj" \
+ 	"$(INTDIR)\libhttpd.res"
+ 
+ "$(OUTDIR)\libhttpd.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+@@ -1146,6 +1152,12 @@ SOURCE=.\server\mpm\winnt\service.c
+ 	$(CPP) $(CPP_PROJ) $(SOURCE)
+ 
+ 
++SOURCE=.\server\ssl.c
++
++"$(INTDIR)\ssl.obj" : $(SOURCE) "$(INTDIR)" ".\include\os.h" ".\include\ap_config_layout.h"
++	$(CPP) $(CPP_PROJ) $(SOURCE)
++
++
+ SOURCE=.\server\util_expr_parse.y
+ 
+ !IF  "$(CFG)" == "libhttpd - Win32 Release"
+diff --git a/modules/md/mod_md.mak b/modules/md/mod_md.mak
+index b39d36507ef..30b3730a55e 100644
+--- a/modules/md/mod_md.mak
++++ b/modules/md/mod_md.mak
+@@ -65,11 +65,11 @@ CLEAN :
+ 	-@erase "$(INTDIR)\md_acme_authz.obj"
+ 	-@erase "$(INTDIR)\md_acme_drive.obj"
+ 	-@erase "$(INTDIR)\md_acme_order.obj"
+-	-@erase "$(INTDIR)\md_acmev1_drive.obj"
+ 	-@erase "$(INTDIR)\md_acmev2_drive.obj"
+ 	-@erase "$(INTDIR)\md_core.obj"
+ 	-@erase "$(INTDIR)\md_crypt.obj"
+ 	-@erase "$(INTDIR)\md_curl.obj"
++	-@erase "$(INTDIR)\md_event.obj"
+ 	-@erase "$(INTDIR)\md_http.obj"
+ 	-@erase "$(INTDIR)\md_json.obj"
+ 	-@erase "$(INTDIR)\md_jws.obj"
+@@ -152,6 +152,7 @@ LINK32_OBJS= \
+ 	"$(INTDIR)\md_core.obj" \
+ 	"$(INTDIR)\md_crypt.obj" \
+ 	"$(INTDIR)\md_curl.obj" \
++	"$(INTDIR)\md_event.obj" \
+ 	"$(INTDIR)\md_http.obj" \
+ 	"$(INTDIR)\md_json.obj" \
+ 	"$(INTDIR)\md_jws.obj" \
+@@ -169,7 +170,6 @@ LINK32_OBJS= \
+ 	"$(INTDIR)\md_acme_authz.obj" \
+ 	"$(INTDIR)\md_acme_drive.obj" \
+ 	"$(INTDIR)\md_acme_order.obj" \
+-	"$(INTDIR)\md_acmev1_drive.obj" \
+ 	"$(INTDIR)\md_acmev2_drive.obj" \
+ 	"$(INTDIR)\mod_md.res" \
+ 	"..\..\srclib\apr\Release\libapr-1.lib" \
+@@ -224,11 +224,11 @@ CLEAN :
+ 	-@erase "$(INTDIR)\md_acme_authz.obj"
+ 	-@erase "$(INTDIR)\md_acme_drive.obj"
+ 	-@erase "$(INTDIR)\md_acme_order.obj"
+-	-@erase "$(INTDIR)\md_acmev1_drive.obj"
+ 	-@erase "$(INTDIR)\md_acmev2_drive.obj"
+ 	-@erase "$(INTDIR)\md_core.obj"
+ 	-@erase "$(INTDIR)\md_crypt.obj"
+ 	-@erase "$(INTDIR)\md_curl.obj"
++	-@erase "$(INTDIR)\md_event.obj"
+ 	-@erase "$(INTDIR)\md_http.obj"
+ 	-@erase "$(INTDIR)\md_json.obj"
+ 	-@erase "$(INTDIR)\md_jws.obj"
+@@ -311,6 +311,7 @@ LINK32_OBJS= \
+ 	"$(INTDIR)\md_core.obj" \
+ 	"$(INTDIR)\md_crypt.obj" \
+ 	"$(INTDIR)\md_curl.obj" \
++	"$(INTDIR)\md_event.obj" \
+ 	"$(INTDIR)\md_http.obj" \
+ 	"$(INTDIR)\md_json.obj" \
+ 	"$(INTDIR)\md_jws.obj" \
+@@ -328,7 +329,6 @@ LINK32_OBJS= \
+ 	"$(INTDIR)\md_acme_authz.obj" \
+ 	"$(INTDIR)\md_acme_drive.obj" \
+ 	"$(INTDIR)\md_acme_order.obj" \
+-	"$(INTDIR)\md_acmev1_drive.obj" \
+ 	"$(INTDIR)\md_acmev2_drive.obj" \
+ 	"$(INTDIR)\mod_md.res" \
+ 	"..\..\srclib\apr\Debug\libapr-1.lib" \
+@@ -490,11 +490,6 @@ SOURCE=./md_acme_order.c
+ "$(INTDIR)\md_acme_order.obj" : $(SOURCE) "$(INTDIR)"
+ 
+ 
+-SOURCE=./md_acmev1_drive.c
+-
+-"$(INTDIR)\md_acmev1_drive.obj" : $(SOURCE) "$(INTDIR)"
+-
+-
+ SOURCE=./md_acmev2_drive.c
+ 
+ "$(INTDIR)\md_acmev2_drive.obj" : $(SOURCE) "$(INTDIR)"
+@@ -515,6 +510,11 @@ SOURCE=./md_curl.c
+ "$(INTDIR)\md_curl.obj" : $(SOURCE) "$(INTDIR)"
+ 
+ 
++SOURCE=./md_event.c
++
++"$(INTDIR)\md_event.obj" : $(SOURCE) "$(INTDIR)"
++
++
+ SOURCE=./md_http.c
+ 
+ "$(INTDIR)\md_http.obj" : $(SOURCE) "$(INTDIR)"
