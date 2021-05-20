@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=bind
-VER=9.11.31
+VER=9.11.32
 PKG=ooce/network/bind-911
 SUMMARY="ISC BIND DNS Server & Tools"
 DESC="Server & Client Utilities for DNS"
