@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=fpc
-VER=3.2.0
+VER=3.2.2
 PKG=ooce/developer/freepascal
 SUMMARY="Free Pascal compiler"
 DESC="Mature, versatile, open source Pascal compiler"
@@ -26,6 +26,8 @@ DESC="Mature, versatile, open source Pascal compiler"
 BUILD_DEPENDS_IPS="ooce/developer/freepascal"
 
 set_arch 64
+
+SKIP_RTIME_CHECK=1
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
