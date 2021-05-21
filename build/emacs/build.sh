@@ -53,6 +53,7 @@ CONFIGURE_OPTS="
 # emacs is not network facing, or run with elevated privileges, this is
 # not a security concern.
 LDFLAGS="-z,aslr=disable"
+LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
