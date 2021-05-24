@@ -512,14 +512,14 @@ SKIP: dtls/dtls
 SKIP: dtls/dtls-resume
 FAIL: fastopen.sh
 SKIP: pkgconfig.sh
-FAIL: starttls.sh
-FAIL: starttls-ftp.sh
-FAIL: starttls-smtp.sh
-FAIL: starttls-lmtp.sh
-FAIL: starttls-pop3.sh
-FAIL: starttls-xmpp.sh
-FAIL: starttls-nntp.sh
-FAIL: starttls-sieve.sh
+SKIP: starttls.sh
+SKIP: starttls-ftp.sh
+SKIP: starttls-smtp.sh
+SKIP: starttls-lmtp.sh
+SKIP: starttls-pop3.sh
+SKIP: starttls-xmpp.sh
+SKIP: starttls-nntp.sh
+SKIP: starttls-sieve.sh
 SKIP: ocsp-tests/ocsp-tls-connection
 SKIP: ocsp-tests/ocsp-must-staple-connection
 SKIP: ocsp-tests/ocsp-test
@@ -556,8 +556,8 @@ FAIL: dh-fips-approved.sh
 PASS: danetool.sh
 # TOTAL: 423
 # PASS:  367
-# SKIP:  32
+# SKIP:  40
 # XFAIL: 0
-# FAIL:  24
+# FAIL:  16
 # XPASS: 0
 # ERROR: 0
