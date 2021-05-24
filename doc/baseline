@@ -155,10 +155,9 @@ extra.omnios ooce/print/cups
 extra.omnios ooce/runtime/expect
 extra.omnios ooce/runtime/gnu-smalltalk
 extra.omnios ooce/runtime/groovy-30
-extra.omnios ooce/runtime/node-10
 extra.omnios ooce/runtime/node-12
 extra.omnios ooce/runtime/node-14
-extra.omnios ooce/runtime/node-8
+extra.omnios ooce/runtime/node-16
 extra.omnios ooce/runtime/ruby-26
 extra.omnios ooce/runtime/ruby-27
 extra.omnios ooce/runtime/ruby-30

@@ -12,24 +12,27 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
-#
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+
 . ../../lib/functions.sh
 
 PROG=node
-VER=8.17.0
-PKG=ooce/runtime/node-8
+VER=16.2.0
+PKG=ooce/runtime/node-16
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
 DESC+="It is intended for writing scalable network programs such as web servers."
 
 set_arch 64
 
-set_builddir $PROG-v$VER
-
-BUILD_DEPENDS_IPS="developer/gnu-binutils"
-
 MAJVER=${VER%%.*}
+
+set_builddir $PROG-v$VER
+PATCHDIR=patches-$MAJVER
+
+BUILD_DEPENDS_IPS="
+    developer/gnu-binutils
+"
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
@@ -59,12 +62,13 @@ CONFIGURE_OPTS="
     --shared-openssl
     --shared-zlib
 "
+[ $RELVER -ge 151035 ] && CONFIGURE_OPTS+=" --shared-brotli"
 
 init
 download_source $PROG $PROG v$VER
 patch_source
 prep_build
-build
+build -noctf    # ctfconvert does currently not work
 strip_install
 make_package
 clean_up
