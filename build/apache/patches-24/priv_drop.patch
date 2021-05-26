@@ -25,7 +25,7 @@ diff -wpruN '--exclude=*.orig' a~/server/main.c a/server/main.c
      APR_OPTIONAL_FN_TYPE(ap_signal_server) *signal_server;
      int rc = OK;
  
-@@ -815,6 +818,20 @@ int main(int argc, const char * const ar
+@@ -815,6 +818,21 @@ int main(int argc, const char * const ar
  
          ap_run_optional_fn_retrieve();
  
@@ -41,6 +41,7 @@ diff -wpruN '--exclude=*.orig' a~/server/main.c a/server/main.c
 +                             APLOGNO(00021) "Unable to drop unneeded privilege.");
 +                destroy_and_exit_process(process, 1);
 +            }
++            priv_freeset(tset);
 +        }
 +
          ap_main_state = AP_SQ_MS_RUN_MPM;
