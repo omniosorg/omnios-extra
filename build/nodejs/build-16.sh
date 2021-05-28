@@ -23,26 +23,31 @@ SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
 DESC+="It is intended for writing scalable network programs such as web servers."
 
+if [ $RELVER -lt 151036 ]; then
+    logmsg "--- $PKG is not built for r$RELVER"
+    exit 0
+fi
+
 set_arch 64
+set_builddir $PROG-v$VER
+
+BUILD_DEPENDS_IPS="
+    developer/gnu-binutils
+"
 
 MAJVER=${VER%%.*}
 
-set_builddir $PROG-v$VER
+OPREFIX=$PREFIX
+PREFIX+=/$PROG-$MAJVER
+
 PATCHDIR=patches-$MAJVER
 
 BUILD_DEPENDS_IPS="
     developer/gnu-binutils
 "
 
-OPREFIX=$PREFIX
-PREFIX+=/$PROG-$MAJVER
-
 # objdump is needed to build nodejs
-[ $RELVER -ge 151033 ] && TRIPLET=$TRIPLET64 || TRIPLET=$TRIPLET32
-PATH+=":/usr/gnu/$TRIPLET/bin"
-
-CXXFLAGS+="-ffunction-sections -fdata-sections"
-MAKE_ARGS="CC=$CC"
+PATH+=":/usr/gnu/$TRIPLET64/bin"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -57,12 +62,11 @@ CONFIGURE_OPTS_64=
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --with-dtrace
-    --dest-cpu=x64
     --shared-nghttp2
     --shared-openssl
     --shared-zlib
+    --shared-brotli
 "
-[ $RELVER -ge 151035 ] && CONFIGURE_OPTS+=" --shared-brotli"
 
 init
 download_source $PROG $PROG v$VER
