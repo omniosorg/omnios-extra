@@ -53,7 +53,7 @@
             <method_context security_flags="aslr">
                 <method_credential user="$(USER)"
                                    group="$(GROUP)"
-                                   privileges="basic,net_privaddr,!proc_info,!proc_session,!file_link_any" />
+                                   privileges="basic,net_privaddr,!proc_info,!file_link_any" />
             </method_context>
 
             <exec_method type="method"
