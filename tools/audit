@@ -242,6 +242,8 @@ audit()
                         */gyp:) [ $r -lt 151035 ] || ok=0 ;;
                         # dav1d is not published until r151036
                         */dav1d:) [ $r -lt 151036 ] || ok=0 ;;
+                        # node-16 is not published until r151036
+                        */node-16:) [ $r -lt 151036 ] || ok=0 ;;
                         # clang/llvm-80, clang/llvm/compiler-rt-90 and lxadm
                         # are not published after r151034
                         */clang-[89]0:|*/llvm-[89]0:|*/compiler-rt-90:|*/lxadm:)
