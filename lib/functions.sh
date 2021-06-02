@@ -749,6 +749,10 @@ set_builddir() {
     EXTRACTED_SRC="$1"
 }
 
+set_patchdir() {
+    PATCHDIR="$1"
+}
+
 #############################################################################
 # Verify any dependencies
 #############################################################################
@@ -2919,10 +2923,24 @@ save_variable() {
     declare -g __save__$var="$_var"
 }
 
+save_variables() {
+    local var
+    for var in $*; do
+        save_variable $var
+    done
+}
+
 restore_variable() {
     local var=$1
     declare -n _var=__save__$var
     declare -g $var="$_var"
+}
+
+restore_variables() {
+    local var
+    for var in $*; do
+        restore_variable $var
+    done
 }
 
 save_buildenv() {
