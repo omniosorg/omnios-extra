@@ -53,13 +53,19 @@
             <method_context security_flags="aslr">
                 <method_credential user="$(USER)"
                                    group="$(GROUP)"
-                                   privileges="basic,net_privaddr,!proc_info,!file_link_any" />
+                                   limit_privileges="basic,net_privaddr,!proc_info,!file_link_any" />
             </method_context>
 
             <exec_method type="method"
                          name="start"
                          exec="%{config/exec} -k %m -f %{config/file}"
-                         timeout_seconds="60" />
+                         timeout_seconds="60">
+                <method_context security_flags="aslr">
+                    <method_credential user="$(USER)"
+                                       group="$(GROUP)"
+                                       privileges="basic,net_privaddr,!proc_info,!proc_session,!file_link_any" />
+                </method_context>
+            </exec_method>
 
             <exec_method type="method"
                          name="stop"
