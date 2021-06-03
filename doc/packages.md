@@ -84,7 +84,7 @@
 | ooce/library/ldns		| 1.7.1		| https://nlnetlabs.nl/downloads/ldns/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libarchive	| 3.5.1		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libde265		| 1.0.8		| https://github.com/strukturag/libde265/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libdwarf		| 20210305	| https://www.prevanders.net/dwarf.html | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libdwarf		| 20210528	| https://www.prevanders.net/dwarf.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libgd		| 2.3.2		| https://github.com/libgd/libgd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libical		| 3.0.10		| https://github.com/libical/libical/releases | Currently used solely by cyrus-imapd
 | ooce/library/libev		| 4.33		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
