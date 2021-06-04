@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=libdwarf
-VER=20210305
+VER=20210528
 PKG=ooce/library/libdwarf
 SUMMARY="Dwarf Library and utility"
 DESC="library for accessing DWARF debug info in ELF objects"
