@@ -136,6 +136,9 @@ CONFIGURE_OPTS_64="
     --with-fpm-group=php
 "
 
+# opcache-jit does not build on r151030
+[ $RELVER -lt 151036 ] && CONFIGURE_OPTS_64+=" --disable-opcache-jit"
+
 CPPFLAGS+=" -I/usr/include/gmp"
 CPPFLAGS+=" -I$OPREFIX/libzip/include"
 LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
