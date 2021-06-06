@@ -25,6 +25,9 @@ DESC+="reliable, and efficient software."
 
 BUILDDIR=$PROG
 
+# The tests currently fail when built with gcc11
+((GCCVER == 11)) && set_gccver 10
+
 set_arch 64
 set_gover 1.15
 
