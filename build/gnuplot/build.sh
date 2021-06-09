@@ -12,29 +12,28 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=gnuplot
-VER=5.4.1
+VER=5.4.2
 PKG=ooce/application/gnuplot
 SUMMARY="gnuplot"
 DESC="A portable command-line driven graphing utility"
 
-set_arch 64
 SKIP_LICENCES=gnuplot
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
+set_arch 64
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
 "
-
-reset_configure_opts
 
 CPPFLAGS+=" -I$OPREFIX/include"
 LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
@@ -43,8 +42,7 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-build
-strip_install
+build -ctf
 make_package
 clean_up
 

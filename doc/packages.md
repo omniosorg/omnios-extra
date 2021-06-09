@@ -2,7 +2,7 @@
 | :------ | :------ | :--- | :--------- |
 | ooce/application/fcgiwrap	| 1.1.0		| https://github.com/gnosek/fcgiwrap/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gitea	| 1.14.2	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/gnuplot	| 5.4.1		| https://sourceforge.net/projects/gnuplot/files/gnuplot/ http://www.gnuplot.info/ | [omniosorg](https://github.com/omniosorg)
+| ooce/application/gnuplot	| 5.4.2		| https://sourceforge.net/projects/gnuplot/files/gnuplot/ http://www.gnuplot.info/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.44.1	| https://www2.graphviz.org/Packages/stable/portable_source/ https://graphviz.org/download/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/imagemagick	| 7.0.11-3	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mattermost	| 5.35.2	| https://docs.mattermost.com/administration/version-archive.html#mattermost-team-edition-server-archive | [omniosorg](https://github.com/omniosorg)
