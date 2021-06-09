@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=nettle
-VER=3.7.2
+VER=3.7.3
 PKG=ooce/library/nettle
 SUMMARY="$PROG - low-level cryptographic library"
 DESC="Cryptographic library that is designed to fit easily in more or "
