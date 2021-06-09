@@ -176,7 +176,7 @@
 | ooce/util/jq			| 1.6		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/ncdu		| 1.15.1	| https://dev.yorhel.nl/download | [jclulow](https://github.com/jclulow)
 | ooce/util/rargs		| 0.3.0		| https://github.com/lotabout/rargs/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/util/stress-ng		| 0.12.09	| https://github.com/ColinIanKing/stress-ng/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/util/stress-ng		| 0.12.10	| https://github.com/ColinIanKing/stress-ng/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/xjobs		| 20200726	| https://www.maier-komor.de/xjobs.html | [omniosorg](https://github.com/omniosorg)
 | ooce/util/zadm		| github-latest	| https://github.com/omniosorg/zadm/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/virtualization/virtualbox-5 | 5.2.44	| https://www.virtualbox.org/wiki/Download_Old_Builds_5_2 | [omniosorg](https://github.com/omniosorg)
