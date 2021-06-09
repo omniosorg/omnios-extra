@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.35.1
+VER=5.35.2
 MMCTLVER=5.35.0
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
@@ -26,9 +26,9 @@ DESC+="instantly searchable and accessible anywhere."
 
 set_arch 64
 set_gover 1.16
-set_nodever 12
+set_nodever 14
 
-BUILD_DEPENDS_IPS="
+BUILD_DEPENDS_IPS+="
     ooce/library/libpng
 "
 
