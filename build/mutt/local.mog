@@ -8,11 +8,11 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYRIGHT license=mutt
 
-<transform path=$(PREFIX)/share/(doc|info) -> drop>
+<transform path=$(PREFIX)/share/(?:doc|info) -> drop>
 <transform file path=etc.*\.dist$ -> drop>
 <transform file path=etc -> set preserve renamenew>
 
