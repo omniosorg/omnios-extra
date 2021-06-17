@@ -1,0 +1,74 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+#
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+
+license LICENSE license=GPLv2
+license ../LICENCE.talloc license=LGPLv3
+
+# Create user and group
+group groupname=$(GROUP) gid=$(GID)
+user ftpuser=false username=$(USER) uid=$(UID) group=$(GROUP) \
+    gcos-field="RADIUS Daemon" \
+    home-dir=/var/$(PREFIX) password=NP
+
+# Skip dependency resolution for python components
+<transform file path=.*/python/(?:example|radiusd)\.py$ \
+    -> set pkg.depend.bypass-generate .*>
+
+# Drop docs
+<transform path=$(PREFIX)/share/doc -> drop>
+
+# Drop rc.radiusd
+<transform path=$(PREFIX)/sbin/rc.radiusd -> drop>
+
+# Drop talloc header and .pc
+<transform file path=.*/talloc.(?:pc|h)$ -> drop>
+
+# Drop static libs
+<transform file path=.*\.a$ -> drop>
+
+# Drop example certificates and bootstrap
+<transform file path=etc/$(PREFIX)/certs/.*~$ -> drop>
+<transform file path=etc/$(PREFIX)/certs/(?:dh|bootstrap) -> drop>
+<transform file \
+    path=etc/$(PREFIX)/certs/.*\.(?:key|csr|crl|crt|der|old|pem|p12|0|1) \
+    -> drop>
+<transform file path=etc/$(PREFIX)/certs/(?:serial|index\.txt) -> drop>
+
+# Copy default configuration files to distrib/ and set preserve on originals
+<transform dir path=etc/$(PREFIX)/(.*)$ -> emit \
+    dir path=X/etc/$(PREFIX)/distrib/%<1> \
+    owner=%(owner) group=%(group) mode=%(mode)>
+<transform file path=etc/$(PREFIX)/(.*)$ -> emit \
+    file %(path) path=X/etc/$(PREFIX)/distrib/%<1> \
+    owner=%(owner) group=%(group) mode=%(mode)>
+<transform link path=etc/$(PREFIX)/(.*)$ -> emit \
+    link path=X/etc/$(PREFIX)/distrib/%<1> target=%(target)>
+<transform link file path=etc/$(PREFIX) -> set preserve true>
+<transform path=X/ -> edit path X/ "">
+
+# Correct permissions and add home directory
+dir path=var/$(PREFIX) owner=$(USER) group=$(GROUP) mode=0750
+
+<transform file dir path=var/log/$(PREFIX) -> set owner $(USER)>
+<transform file dir path=var/log/$(PREFIX) -> set group $(GROUP)>
+<transform file dir path=var/log/$(PREFIX) -> set mode 0755>
+
+<transform file dir path=etc/$(PREFIX) -> set group $(GROUP)>
+<transform dir path=etc/$(PREFIX)$ -> set mode 0750>
+
+<include binlink.mog>
+<include manlink.mog>
+
+# Restart service on upgrade
+<transform file path=$(PREFIX)/sbin/ \
+    -> set restart_fmri svc:/network/radius:$(PROG)>
+
