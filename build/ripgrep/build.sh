@@ -12,18 +12,19 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=ripgrep
-VER=12.1.1
+VER=13.0.0
 PKG=ooce/text/ripgrep
 SUMMARY="Fast line-oriented search tool"
 DESC="A fast line-oriented search tool that recursively searches your current "
 DESC+="directory for a regex pattern while respecting your gitignore rules"
 
 BUILD_DEPENDS_IPS=ooce/developer/rust
+
 # libpcre2 is included with OmniOS as of r151029 and ripgrep can use it
 if [ $RELVER -ge 151029 ]; then
     BUILD_DEPENDS_IPS+=" library/pcre2"
