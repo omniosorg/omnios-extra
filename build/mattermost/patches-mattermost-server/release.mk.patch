@@ -11,31 +11,18 @@ diff -wpruN '--exclude=*.orig' a~/build/release.mk a/build/release.mk
  build-linux:
  	@echo Build Linux amd64
  ifeq ($(BUILDER_GOOS_GOARCH),"linux_amd64")
-@@ -112,121 +116,7 @@ endif
- 		cp ../manifest.txt $(DIST_PATH); \
- 	fi
+@@ -125,110 +129,7 @@ endif
+ 		done; \
+ 	done
  
--	@# Import Mattermost plugin public key
--	gpg --import build/plugin-production-public-key.gpg
--
--	@# Download prepackaged plugins
--	mkdir -p tmpprepackaged
--	@cd tmpprepackaged && for plugin_package in $(PLUGIN_PACKAGES) ; do \
--		for ARCH in "osx-amd64" "windows-amd64" "linux-amd64" ; do \
--			curl -f -O -L https://plugins-store.test.mattermost.com/release/$$plugin_package-$$ARCH.tar.gz; \
--			curl -f -O -L https://plugins-store.test.mattermost.com/release/$$plugin_package-$$ARCH.tar.gz.sig; \
--		done; \
--	done
--
 -
 -	@# ----- PLATFORM SPECIFIC -----
 -
 -	@# Make osx package
-+	@# Make illumos package
- 	@# Copy binary
+-	@# Copy binary
 -ifeq ($(BUILDER_GOOS_GOARCH),"darwin_amd64")
- 	cp $(GOBIN)/mattermost $(DIST_PATH)/bin # from native bin dir, not cross-compiled
- 	cp $(GOBIN)/platform $(DIST_PATH)/bin # from native bin dir, not cross-compiled
+-	cp $(GOBIN)/mattermost $(DIST_PATH)/bin # from native bin dir, not cross-compiled
+-	cp $(GOBIN)/platform $(DIST_PATH)/bin # from native bin dir, not cross-compiled
 -else
 -	cp $(GOBIN)/darwin_amd64/mattermost $(DIST_PATH)/bin # from cross-compiled bin dir
 -	cp $(GOBIN)/darwin_amd64/platform $(DIST_PATH)/bin # from cross-compiled bin dir
@@ -67,7 +54,8 @@ diff -wpruN '--exclude=*.orig' a~/build/release.mk a/build/release.mk
 -	rm -f $(DIST_PATH)/prepackaged_plugins/*
 -
 -	@# Make windows package
--	@# Copy binary
++	@# Make illumos package
+ 	@# Copy binary
 -ifeq ($(BUILDER_GOOS_GOARCH),"windows_amd64")
 -	cp $(GOBIN)/mattermost.exe $(DIST_PATH)/bin # from native bin dir, not cross-compiled
 -	cp $(GOBIN)/platform.exe $(DIST_PATH)/bin # from native bin dir, not cross-compiled
@@ -104,8 +92,8 @@ diff -wpruN '--exclude=*.orig' a~/build/release.mk a/build/release.mk
 -	@# Make linux package
 -	@# Copy binary
 -ifeq ($(BUILDER_GOOS_GOARCH),"linux_amd64")
--	cp $(GOBIN)/mattermost $(DIST_PATH)/bin # from native bin dir, not cross-compiled
--	cp $(GOBIN)/platform $(DIST_PATH)/bin # from native bin dir, not cross-compiled
+ 	cp $(GOBIN)/mattermost $(DIST_PATH)/bin # from native bin dir, not cross-compiled
+ 	cp $(GOBIN)/platform $(DIST_PATH)/bin # from native bin dir, not cross-compiled
 -else
 -	cp $(GOBIN)/linux_amd64/mattermost $(DIST_PATH)/bin # from cross-compiled bin dir
 -	cp $(GOBIN)/linux_amd64/platform $(DIST_PATH)/bin # from cross-compiled bin dir
@@ -134,3 +122,4 @@ diff -wpruN '--exclude=*.orig' a~/build/release.mk a/build/release.mk
 -	@#rm -f $(DIST_PATH)/bin/mattermost
 -
 -	rm -rf tmpprepackaged
+-	rm -rf dist/mattermost
