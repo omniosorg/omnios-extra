@@ -2246,7 +2246,7 @@ build() {
         fi
     done
 
-    [ $ctf -eq 1 ] && convert_ctf
+    [ $ctf -eq 1 ] && convert_ctf "$DESTDIR"
 }
 
 check_buildlog() {
@@ -2725,12 +2725,14 @@ check_libabi() {
 #############################################################################
 
 rtime_files() {
+    local dir="${1:-$DESTDIR}"
+
     # `find_elf` invokes `elfedit` and expects it to be the illumos one.
-    PATH=$USRBIN logcmd -p $FIND_ELF -fr $DESTDIR/ > $TMPDIR/rtime.files
+    PATH=$USRBIN logcmd -p $FIND_ELF -fr $dir/ > $TMPDIR/rtime.files
 }
 
 rtime_objects() {
-    rtime_files
+    rtime_files "$@"
     nawk '/^OBJECT/ { print $NF }' $TMPDIR/rtime.files
 }
 
@@ -2749,9 +2751,11 @@ strip_install() {
 }
 
 convert_ctf() {
+    local dir="${1:-$DESTDIR}"
+
     logmsg "Converting DWARF to CTF"
 
-    pushd $DESTDIR > /dev/null || logerr "Cannot change to $DESTDIR"
+    pushd $dir > /dev/null || logerr "Cannot change to $dir"
 
     local ctftag='---- CTF:'
 
@@ -2801,7 +2805,7 @@ convert_ctf() {
         logcmd rm -f "$tf"
         logcmd strip -x "$file"
         logcmd chmod $mode "$file" || logerr -b "chmod failed: $file"
-    done < <(rtime_objects)
+    done < <(rtime_objects "$dir")
 
     popd >/dev/null
 }
