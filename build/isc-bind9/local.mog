@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 # Restart fmri service
 <transform file path=$(PREFIX)/sbin/named \
@@ -31,8 +31,11 @@
 <transform dir  path=$(VARPATH)/run -> set owner $(USER)>
 <transform dir  path=$(VARPATH)/run -> set group $(GROUP)>
 <transform dir  path=$(VARPATH)/run -> set mode 0770>
+dir group=$(GROUP) mode=0770 owner=$(USER) path=var/$(OPREFIX)/named
+dir group=$(GROUP) mode=0770 owner=$(USER) path=$(VARPATH)
 dir group=$(GROUP) mode=0770 owner=$(USER) path=$(VARPATH)/namedb
 dir group=$(GROUP) mode=0770 owner=$(USER) path=$(VARPATH)/namedb/master
+dir group=$(GROUP) mode=0770 owner=$(USER) path=$(VARPATH)/run
 
 # Additional files
 file ../named-$(sVERSION).conf \
