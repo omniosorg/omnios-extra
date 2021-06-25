@@ -18,7 +18,7 @@
 | ooce/application/php-73	| 7.3.28	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-74	| 7.4.20	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-80	| 8.0.7		| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-XX/imagick	| 3.4.4	| https://github.com/Imagick/imagick/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-XX/imagick	| 3.5.0	| https://github.com/Imagick/imagick/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20210325	| ftp://tug.org/historic/systems/texlive/2021/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/tidy		| 5.6.0		| https://github.com/htacg/tidy-html5/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/vagrant	| 2.2.16	| https://github.com/hashicorp/vagrant/releases | [omniosorg](https://github.com/omniosorg)

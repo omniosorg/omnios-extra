@@ -17,12 +17,12 @@
 . ../../lib/functions.sh
 
 PROG=php-imagick
-VER=3.4.4
+VER=3.5.0
 PKG=ooce/application/php-XX/imagick
 SUMMARY="The Imagick PHP extension"
 DESC="The Imagick PHP extension"
 
-PHPVERSIONS="7.3 7.4"
+PHPVERSIONS="7.3 7.4 8.0"
 
 # The ImageMagick ABI changes frequently. Lock the version
 # pulled into each build of php-imagick.
