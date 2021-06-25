@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=libzip
-VER=1.7.3
+VER=1.8.0
 PKG=ooce/library/libzip
 SUMMARY="libzip"
 DESC="A C library for reading, creating and modifying zip archives"
@@ -33,6 +33,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS="
