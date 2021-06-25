@@ -18,7 +18,7 @@
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.52.1
+VER=1.53.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
@@ -37,11 +37,6 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 BUILD_DEPENDS_IPS="developer/gnu-binutils"
-
-if [ -z "$RUST_BOOTSTRAP" ]; then
-    BUILD_DEPENDS_IPS+=" ooce/developer/rust"
-    RUST_BOOTSTRAP=$PREFIX
-fi
 
 if [ -z "$BUNDLED_LLVM" ]; then
     SYSTEM_LLVM_PATH="/opt/ooce/llvm-$LLVM_MAJVER"
@@ -88,7 +83,6 @@ CONFIGURE_OPTS+="
     --disable-docs
     --release-channel=stable
     --python=$PYTHON
-    --local-rust-root=$RUST_BOOTSTRAP
 "
 
 if [ -n "$SYSTEM_LLVM_PATH" ]; then
