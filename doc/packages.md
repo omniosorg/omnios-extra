@@ -57,7 +57,7 @@
 | ooce/developer/ninja		| 1.10.2	| https://github.com/ninja-build/ninja/releases https://ninja-build.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| github-latest	| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| github-latest	| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/radare2	| 5.3.0		| https://github.com/radareorg/radare2/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/radare2	| 5.3.1		| https://github.com/radareorg/radare2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/rust		| 1.53.0	| https://forge.rust-lang.org/infra/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/subversion	| 1.14.1	| https://downloads.apache.org/subversion/ | [omniosorg](https://github.com/omniosorg)
 | ooce/driver/fuse		| 1.4		| https://github.com/jurikm/illumos-fusefs/releases | [omniosorg](https://github.com/omniosorg)
