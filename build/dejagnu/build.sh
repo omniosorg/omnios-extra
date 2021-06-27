@@ -12,27 +12,32 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=dejagnu
-VER=1.6.2
+VER=1.6.3
 PKG=ooce/developer/dejagnu
 SUMMARY="DejaGnu"
 DESC="DejaGnu is a framework for testing other programs"
 
 [ $RELVER -lt 151030 ] && exit 0
 
-set_arch 64
-
 BUILD_DEPENDS_IPS="ooce/runtime/expect"
-RUN_DEPENDS_IPS="ooce/runtime/expect"
+RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-XFORM_ARGS=" -D OPREFIX=$OPREFIX -D PREFIX=$PREFIX"
+set_arch 64
+
+XFORM_ARGS="
+    -DOPREFIX=${OPREFIX#/}
+    -DPREFIX=${PREFIX#/}
+    -DPROG=$PROG
+    -DPKGROOT=$PROG
+"
 
 init
 download_source $PROG $PROG $VER
