@@ -1,7 +1,7 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
 | ooce/application/fcgiwrap	| 1.1.0		| https://github.com/gnosek/fcgiwrap/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/gitea	| 1.14.2	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/gitea	| 1.14.3	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gnuplot	| 5.4.2		| https://sourceforge.net/projects/gnuplot/files/gnuplot/ http://www.gnuplot.info/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.44.1	| https://www2.graphviz.org/Packages/stable/portable_source/ https://graphviz.org/download/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/imagemagick	| 7.1.0-1	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
@@ -46,7 +46,7 @@
 | ooce/developer/compiler-rt-111 | 11.1.0	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-120 | 12.0.0	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/dejagnu	| 1.6.2		| https://ftp.gnu.org/gnu/dejagnu/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/dejagnu	| 1.6.3		| https://ftp.gnu.org/gnu/dejagnu/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/freepascal	| 3.2.2		| https://sourceforge.net/projects/freepascal/files/Source/ https://www.freepascal.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/gdb		| 10.2		| https://ftp.gnu.org/gnu/gdb/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-115		| 1.15.13	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
@@ -176,7 +176,7 @@
 | ooce/util/jq			| 1.6		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/ncdu		| 1.15.1	| https://dev.yorhel.nl/download | [jclulow](https://github.com/jclulow)
 | ooce/util/rargs		| 0.3.0		| https://github.com/lotabout/rargs/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/util/stress-ng		| 0.12.10	| https://github.com/ColinIanKing/stress-ng/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/util/stress-ng		| 0.12.11	| https://github.com/ColinIanKing/stress-ng/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/xjobs		| 20200726	| https://www.maier-komor.de/xjobs.html | [omniosorg](https://github.com/omniosorg)
 | ooce/util/zadm		| github-latest	| https://github.com/omniosorg/zadm/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/virtualization/virtualbox-5 | 5.2.44	| https://www.virtualbox.org/wiki/Download_Old_Builds_5_2 | [omniosorg](https://github.com/omniosorg)
