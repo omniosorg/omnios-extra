@@ -22,7 +22,7 @@
 #
 # Copyright (c) 2014 by Delphix. All rights reserved.
 # Copyright 2015 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
 
@@ -57,51 +57,9 @@ process_opts() {
     SKIP_TESTSUITE=
     SKIP_CHECKSUM=
     EXTRACT_MODE=0
-    while getopts "bciPptsf:ha:d:Llr:x" opt; do
+    MOG_TEST=
+    while getopts "bcimPpstf:ha:d:Llr:x" opt; do
         case $opt in
-            h)
-                show_usage
-                exit
-                ;;
-            \?)
-                show_usage
-                exit 2
-                ;;
-            l)
-                SKIP_PKGLINT=1
-                ;;
-            L)
-                SKIP_HARDLINK=1
-                ;;
-            p)
-                SCREENOUT=1
-                ;;
-            P)
-                REBASE_PATCHES=1
-                ;;
-            b)
-                BATCH=1 # Batch mode - exit on error
-                SKIP_PKG_DIFF=1
-                ;;
-            c)
-                USE_CCACHE=1
-                ;;
-            i)
-                AUTOINSTALL=1
-                ;;
-            t)
-                SKIP_TESTSUITE=1
-                ;;
-            s)
-                SKIP_CHECKSUM=1
-                ;;
-            f)
-                FLAVOR="$OPTARG"
-                OLDFLAVOR="$OPTARG" # Used to see if the script overrides
-                ;;
-            r)
-                PKGSRVR=$OPTARG
-                ;;
             a)
                 BUILDARCH=$OPTARG
                 OLDBUILDARCH=$OPTARG # Used to see if the script overrides the
@@ -112,8 +70,50 @@ process_opts() {
                     exit 2
                 fi
                 ;;
+            b)
+                BATCH=1 # Batch mode - exit on error
+                SKIP_PKG_DIFF=1
+                ;;
+            c)
+                USE_CCACHE=1
+                ;;
             d)
                 DEPVER=$OPTARG
+                ;;
+            f)
+                FLAVOR="$OPTARG"
+                OLDFLAVOR="$OPTARG" # Used to see if the script overrides
+                ;;
+            \?|h)
+                show_usage
+                exit
+                ;;
+            i)
+                AUTOINSTALL=1
+                ;;
+            l)
+                SKIP_PKGLINT=1
+                ;;
+            L)
+                SKIP_HARDLINK=1
+                ;;
+            m)
+                MOG_TEST=1
+                ;;
+            P)
+                REBASE_PATCHES=1
+                ;;
+            p)
+                SCREENOUT=1
+                ;;
+            r)
+                PKGSRVR=$OPTARG
+                ;;
+            s)
+                SKIP_CHECKSUM=1
+                ;;
+            t)
+                SKIP_TESTSUITE=1
                 ;;
             x)
                 (( EXTRACT_MODE++ ))
@@ -138,12 +138,13 @@ Usage: $0 [-blt] [-f FLAVOR] [-h] [-a 32|64|both] [-d DEPVER]
   -i        : autoinstall mode (install build deps)
   -l        : skip pkglint check
   -L        : skip hardlink target check
+  -m        : re-generate final mog from local.mog (mog test mode)
   -p        : output all commands to the screen as well as log file
   -P        : re-base patches on latest source
   -r REPO   : specify the IPS repo to use
               (default: $PKGSRVR)
-  -t        : skip test suite
   -s        : skip checksum comparison
+  -t        : skip test suite
   -x        : download and extract source only
   -xx       : as -x but also apply patches
 
@@ -670,8 +671,15 @@ github_latest() {
 }
 
 init() {
+    # Ensure key variables are set
+    for var in PKG SUMMARY DESC; do
+        declare -n _var=$var
+        [ -n "$_var" ] || logerr "$var may not be empty."
+    done
+
     # Print out current settings
     logmsg "Package name: $PKG"
+
     # Selected flavor
     if [ -z "$FLAVOR" ]; then
         logmsg "Selected flavor: None (use -f to specify a flavor)"
@@ -682,23 +690,19 @@ init() {
         logmsg "NOTICE - The flavor was overridden by the build script."
         logmsg "The flavor specified on the command line was: $OLDFLAVOR"
     fi
+
     # Build arch
     logmsg "Selected build arch: $BUILDARCH"
     if [ -n "$OLDBUILDARCH" -a "$OLDBUILDARCH" != "$BUILDARCH" ]; then
         logmsg "NOTICE - The build arch was overridden by the build script."
         logmsg "The build arch specified on the command line was: $OLDFLAVOR"
     fi
+
     # Extra dependency version
     if [ -z "$DEPVER" ]; then
         logmsg "Extra dependency: None (use -d to specify a version)"
     else
         logmsg "Extra dependency: $DEPVER"
-    fi
-    # Ensure SUMMARY and DESC are non-empty
-    if [ -z "$SUMMARY" ]; then
-        logerr "SUMMARY may not be empty. Please update your build script"
-    elif [ -z "$DESC" ]; then
-        logerr "DESC may not be empty. Please update your build script"
     fi
 
     [[ "$VER" = github-latest* ]] && github_latest
@@ -724,6 +728,31 @@ init() {
 
     # Update the core file directory
     set_coredir $TMPDIR
+
+    # We might need to encode some special chars
+    PKGE=$(url_encode $PKG)
+    # For DESTDIR the '%' can cause problems for some install scripts
+    PKGD=${PKGE//%/_}
+    DESTDIR=$TMPDIR/${PKGD}_pkg
+
+    P5M_FINAL=$TMPDIR/$PKGE.p5m
+    P5M_GEN=$P5M_FINAL.gen
+    P5M_MOG=$P5M_FINAL.mog
+    P5M_DEPGEN=$P5M_FINAL.dep
+
+    if [ -n "$MOG_TEST" ]; then
+        DONT_REMOVE_INSTALL_DIR=1
+        SKIP_TESTSUITE=1
+        if [ ! -r $P5M_GEN ]; then
+            note -e "mog test - no previous mog file found, full build."
+            MOG_TEST=
+        else
+            logmsg -n "mog test - found previous mog file, skipping build."
+            SKIP_DOWNLOAD=1
+            SKIP_PATCH_SOURCE=1
+            SKIP_BUILD=1
+        fi
+    fi
 
     init_repo
     pkgrepo get -s $PKGSRVR > /dev/null 2>&1 || \
@@ -839,12 +868,8 @@ prep_build() {
     # Get the current date/time for the package timestamp
     DATETIME=`TZ=UTC /usr/bin/date +"%Y%m%dT%H%M%SZ"`
 
-    logmsg "--- Creating temporary install dir"
-    # We might need to encode some special chars
-    PKGE=$(url_encode $PKG)
-    # For DESTDIR the '%' can cause problems for some install scripts
-    PKGD=${PKGE//%/_}
-    DESTDIR=$DTMPDIR/${PKGD}_pkg
+    logmsg "--- Creating temporary installation directory"
+
     if [ -z "$DONT_REMOVE_INSTALL_DIR" ]; then
         logcmd chmod -R u+w $DESTDIR > /dev/null 2>&1
         logcmd rm -rf $DESTDIR || \
@@ -990,6 +1015,7 @@ rebase_patches() {
 }
 
 patch_source() {
+    [ -n "$SKIP_PATCH_SOURCE" ] && return
     [ -n "$REBASE_PATCHES" ] && rebase_patches
     apply_patches
     [ $EXTRACT_MODE -ge 1 ] && exit 0
@@ -1074,6 +1100,8 @@ verify_checksum() {
 #       download_source myprog myprog 1.2.3 will try:
 #       http://mirrors.omnios.org/myprog/myprog-1.2.3.tar.gz
 download_source() {
+    [ -n "$SKIP_DOWNLOAD" ] && return
+
     local DLDIR="$1"; shift
     local PROG="$1"; shift
     local VER="$1"; shift
@@ -1456,10 +1484,6 @@ make_package() {
     [ $RELVER -ge 151027 ] && PVER=$RELVER.$DASHREV || PVER=$DASHREV.$RELVER
 
     # Temporary file paths
-    P5M_INT=$TMPDIR/${PKGE}.p5m.int
-    P5M_INT2=$TMPDIR/${PKGE}.p5m.int.2
-    P5M_INT3=$TMPDIR/${PKGE}.p5m.int.3
-    P5M_FINAL=$TMPDIR/${PKGE}.p5m
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
     GLOBAL_MOG_FILE=$MYDIR/mog/global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
@@ -1490,16 +1514,40 @@ make_package() {
         FMRI="${PKG}@${VER},${SUNOSVER}-${PVER}"
     fi
 
-    if [ -n "$seed_manifest" ]; then
-        logcmd cp $seed_manifest $P5M_INT || logerr "seed copy failed"
-    elif [ -n "$DESTDIR" ]; then
-        generate_manifest $P5M_INT
-    else
-        logmsg "--- Looks like a meta-package. Creating empty manifest"
-        logcmd touch $P5M_INT || \
-            logerr "------ Failed to create empty manifest"
+    # Mog files are transformed in several stages
+    #
+    #        $DESTDIR           +---------+
+    #   `pkgsend generate` ---> |.p5m.gen |
+    #                           +---------+
+    #                                |
+    #        +--------+              v
+    #        |.p5m.mog| <------ `pkgmogrify`
+    #        +--------+
+    #            |
+    #            v                 +---------+
+    #   `pkgdepend generate` ----> |.p5m.dep |
+    #                              +---------+
+    #                                   |
+    #   +-------------+                 v
+    #   |.p5m.dep.res | <------ `pkgdepend resolve`
+    #   +-------------+
+    #            |
+    #            v               +-------------+
+    #       `pkgmogrify` ------> |.p5m (final) |
+    #                            +-------------+
+
+    if [ -z "$MOG_TEST" ]; then
+        if [ -n "$seed_manifest" ]; then
+            logcmd cp $seed_manifest $P5M_GEN || logerr "seed copy failed"
+        elif [ -n "$DESTDIR" ]; then
+            generate_manifest $P5M_GEN
+        else
+            logmsg "--- Looks like a meta-package. Creating empty manifest"
+            logcmd touch $P5M_GEN || \
+                logerr "------ Failed to create empty manifest"
+        fi
+        [ -z "$BATCH" ] && check_libabi "$PKG" "$P5M_GEN"
     fi
-    [ -z "$BATCH" ] && check_libabi "$PKG" "$P5M_INT"
 
     # Package metadata
     logmsg "--- Generating package metadata"
@@ -1531,29 +1579,29 @@ make_package() {
     logmsg "--- Applying transforms"
     logcmd -p $PKGMOGRIFY -I $MYDIR/mog \
         $XFORM_ARGS \
-        $P5M_INT \
+        $P5M_GEN \
         $MY_MOG_FILE \
         $GLOBAL_MOG_FILE \
         $LOCAL_MOG_FILE \
         $EXTRA_MOG_FILE \
         $NOTES_MOG_FILE \
-        | $PKGFMT -u > $P5M_INT2
+        | $PKGFMT -u > $P5M_MOG
 
     if [ -n "$DESTDIR" ]; then
         check_licences
         [ -z "$SKIP_HARDLINK" -a -z "$BATCH" ] \
-            && check_hardlinks "$P5M_INT2" "$HARDLINK_TARGETS"
+            && check_hardlinks "$P5M_MOG" "$HARDLINK_TARGETS"
     fi
 
     logmsg "--- Resolving dependencies"
     (
         set -e
-        logcmd -p $PKGDEPEND generate -md $DESTDIR -d $SRCDIR $P5M_INT2 \
-            > $P5M_INT3
-        logcmd $PKGDEPEND resolve -m $P5M_INT3
+        logcmd -p $PKGDEPEND generate -md $DESTDIR -d $SRCDIR $P5M_MOG \
+            > $P5M_DEPGEN
+        logcmd $PKGDEPEND resolve -m $P5M_DEPGEN
     ) || logerr "--- Dependency resolution failed"
     logmsg "--- Detected dependencies"
-    grep '^depend ' $P5M_INT3.res | while read line; do
+    grep '^depend ' $P5M_DEPGEN.res | while read line; do
         logmsg "$line"
     done
     echo > "$MANUAL_DEPS"
@@ -1603,7 +1651,7 @@ make_package() {
             # ugly grep, but pkgmogrify doesn't seem to provide any way to add
             # actions while avoiding duplicates (except maybe by running it
             # twice, using drop transform on the first run)
-            if grep -q "^depend .*fmri=[^ ]*$depname" "${P5M_INT3}.res"; then
+            if grep -q "^depend .*fmri=[^ ]*$depname" "${P5M_DEPGEN}.res"; then
                 autoresolved=true
             else
                 autoresolved=false
@@ -1618,7 +1666,7 @@ make_package() {
             fi
         done
     fi
-    logcmd -p $PKGMOGRIFY $XFORM_ARGS "${P5M_INT3}.res" \
+    logcmd -p $PKGMOGRIFY $XFORM_ARGS "${P5M_DEPGEN}.res" \
         "$MANUAL_DEPS" $FINAL_MOG_FILE | $PKGFMT -u > $P5M_FINAL
     logmsg "--- Final dependencies"
     grep '^depend ' $P5M_FINAL | while read line; do
@@ -2164,6 +2212,8 @@ make_install_in() {
 }
 
 build() {
+    [ -n "$SKIP_BUILD" ] && return
+
     local ctf=${CTF_DEFAULT:-0}
 
     while [[ "$1" = -* ]]; do
@@ -2262,6 +2312,8 @@ run_testsuite() {
 #############################################################################
 
 build_dependency() {
+    [ -n "$SKIP_BUILD" ] && return
+
     typeset merge=0
     typeset buildargs=
     while [[ "$1" = -* ]]; do
@@ -2872,7 +2924,7 @@ check_licences() {
                 if (split($0, a, /"/) != 3) split($0, a, "=")
                 print $2, a[2]
             }
-        ' $P5M_INT2)
+        ' $P5M_MOG)
 
     if [ "${#errs[@]}" -gt 0 ]; then
         for e in "${errs[@]}"; do
@@ -2899,7 +2951,7 @@ clean_up() {
         logcmd rm -rf $DESTDIR || \
             logerr "Failed to remove temporary install directory"
         logmsg "--- Cleaning up temporary manifest and transform files"
-        logcmd rm -f $P5M_INT $P5M_INT2 $P5M_INT3 $P5M_INT3.res \
+        logcmd rm -f $P5M_GEN $P5M_MOG $P5M_DEPGEN $P5M_DEPGEN.res $P5M_FINAL \
             $MY_MOG_FILE $MANUAL_DEPS || \
             logerr "Failed to remove temporary manifest and transform files"
         logmsg "Done."
