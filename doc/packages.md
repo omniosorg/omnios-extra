@@ -144,7 +144,7 @@
 | ooce/runtime/node-14		| 14.17.1	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-16		| 16.3.0	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-26		| 2.6.8		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
-| ooce/runtime/ruby-27		| 2.7.3		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
+| ooce/runtime/ruby-27		| 2.7.4		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-30		| 3.0.1		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/tcl		| 8.6.11	| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/security/gnupg		| 2.3.1		| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)

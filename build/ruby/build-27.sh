@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=ruby
-VER=2.7.3
+VER=2.7.4
 PKG=ooce/runtime/ruby-27
 SUMMARY="Ruby"
 DESC="A dynamic, open source programming language "
@@ -46,7 +46,7 @@ CONFIGURE_OPTS_64+="
     --libdir=$PREFIX/lib
 "
 
-CFLAGS="-I/usr/include/gmp"
+CPPFLAGS+=" -I/usr/include/gmp"
 
 init
 download_source $PROG $PROG $VER
