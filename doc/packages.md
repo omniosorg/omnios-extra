@@ -151,7 +151,7 @@
 | ooce/server/apache-24		| 2.4.48	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24/modules/fcgid | 2.3.9	| https://downloads.apache.org/httpd/mod_fcgid/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/haproxy		| 2.4.1	| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
-| ooce/server/nginx		| 1.21.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/server/nginx		| 1.21.1	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-120		| 1.20.1	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio		| 2021-04-18T19-26-29Z	| https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio-mc		| 2021-03-23T05-46-11Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
