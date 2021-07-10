@@ -41,7 +41,7 @@
 | ooce/developer/autogen	| 5.18.16	| https://ftp.gnu.org/gnu/autogen/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
 | ooce/developer/clang-111	| 11.1.0	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/clang-120	| 12.0.0	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/clang-120	| 12.0.1	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cmake		| 3.20.5	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-111 | 11.1.0	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-120 | 12.0.1	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
