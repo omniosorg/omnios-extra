@@ -98,7 +98,7 @@
 | ooce/library/libogg		| 1.3.5		| https://ftp.osuosl.org/pub/xiph/releases/ogg/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libpciaccess	| 0.16		| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
 | ooce/library/libpng		| 1.6.37	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libuv		| 1.41.0	| https://github.com/libuv/libuv/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libuv		| 1.41.1	| https://github.com/libuv/libuv/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvorbis	| 1.3.7		| https://ftp.osuosl.org/pub/xiph/releases/vorbis/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvncserver	| 0.9.13	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libwebp		| 1.2.0		| https://developers.google.com/speed/webp/download | [omniosorg](https://github.com/omniosorg)
