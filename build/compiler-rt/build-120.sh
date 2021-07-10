@@ -18,7 +18,7 @@
 
 PROG=compiler-rt
 PKG=ooce/developer/compiler-rt-120
-VER=12.0.0
+VER=12.0.1
 SUMMARY="LLVM runtime libraries"
 DESC="Implementation for the runtime compiler support libraries"
 
