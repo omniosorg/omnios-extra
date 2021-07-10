@@ -174,7 +174,7 @@
 | ooce/util/gh			| 1.12.1		| https://github.com/cli/cli/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/hyperfine		| 1.11.0	| https://github.com/sharkdp/hyperfine/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/jq			| 1.6		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/util/ncdu		| 1.15.1	| https://dev.yorhel.nl/download | [jclulow](https://github.com/jclulow)
+| ooce/util/ncdu		| 1.16		| https://dev.yorhel.nl/download | [jclulow](https://github.com/jclulow)
 | ooce/util/rargs		| 0.3.0		| https://github.com/lotabout/rargs/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/stress-ng		| 0.12.12	| https://github.com/ColinIanKing/stress-ng/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/xjobs		| 20200726	| https://www.maier-komor.de/xjobs.html | [omniosorg](https://github.com/omniosorg)
