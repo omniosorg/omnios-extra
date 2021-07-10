@@ -13,12 +13,12 @@
 # }}}
 #
 # Copyright 1995-2013 OETIKER+PARTNER AG  All rights reserved.
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=znapzend
-VER=0.20.0
+VER=0.21.0
 PKG=ooce/system/znapzend
 SUMMARY="A ZFS-aware backup script"
 DESC="Take snapshots and transfer them to a second pool, "
@@ -35,6 +35,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS_64="
