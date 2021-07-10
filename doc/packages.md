@@ -21,7 +21,7 @@
 | ooce/application/php-XX/imagick	| 3.5.0	| https://github.com/Imagick/imagick/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20210325	| ftp://tug.org/historic/systems/texlive/2021/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/tidy		| 5.6.0		| https://github.com/htacg/tidy-html5/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/vagrant	| 2.2.16	| https://github.com/hashicorp/vagrant/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/vagrant	| 2.2.17	| https://github.com/hashicorp/vagrant/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/zabbix	| 5.4.1		| https://www.zabbix.com/download_sources | [omniosorg](https://github.com/omniosorg)
 | ooce/audio/flac		| 1.3.3		| https://ftp.osuosl.org/pub/xiph/releases/flac/ https://xiph.org/flac/changelog.html | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pbzip2		| 1.1.13	| https://launchpad.net/pbzip2/+download | [omniosorg](https://github.com/omniosorg)

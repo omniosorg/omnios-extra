@@ -18,14 +18,11 @@
 
 PROG=vagrant
 PKG=ooce/application/vagrant
-VER=2.2.16
+VER=2.2.17
 # latest release from https://github.com/hashicorp/vagrant-installers/releases
 INSTVER=2.2.6
 SUMMARY="Vagrant"
 DESC="Build and distribute virtualized development environments"
-
-# vagrant 2.2.11+ requires net-ssh >= 6.2.0.rc1 which is a pre-release
-GEM_INSTALL_ARGS="--prerelease"
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
@@ -74,7 +71,7 @@ install() {
     GEM_PATH="$EMBEDDED_DIR"/gems/$VER \
     GEM_HOME="$GEM_PATH" \
     GEMRC="$EMBEDDED_DIR"/etc/gemrc \
-    logcmd gem install $PROG-$VER.gem $GEM_INSTALL_ARGS --no-document \
+    logcmd gem install $PROG-$VER.gem --no-document \
         || logerr "Install failed"
 
     logmsg "Create embedded manifest with version number"
