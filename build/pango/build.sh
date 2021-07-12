@@ -17,13 +17,13 @@
 . ../../lib/functions.sh
 
 PROG=pango
-VER=1.48.5
+VER=1.48.7
 PKG=ooce/library/pango
 SUMMARY="pango"
 DESC="Pango is a library for laying out and rendering of text"
 
 # Dependencies
-HARFBUZZVER=2.7.2
+HARFBUZZVER=2.8.2
 FRIBIDIVER=1.0.10
 
 BUILD_DEPENDS_IPS="
@@ -68,7 +68,7 @@ prep_build
 
 ######################################################################
 
-EXPECTED_OPTIONS="CAIRO CAIRO_FT FONTCONFIG FREETYPE GLIB"
+EXPECTED_OPTIONS="CAIRO CAIRO_FT FREETYPE GLIB"
 build_dependency -merge -noctf harfbuzz harfbuzz-$HARFBUZZVER \
     harfbuzz harfbuzz $HARFBUZZVER
 

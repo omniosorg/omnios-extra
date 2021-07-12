@@ -138,8 +138,7 @@ ok - idle_ref
 ok - idle_starvation
 ok - idna_toascii
 ok - ip4_addr
-not ok - ip6_addr_link_local
-# Assertion failed in test/test-ip6-addr.c on line 75: 0 == uv_if_indextoname(iface_index, scoped_addr, &scoped_addr_len)
+ok - ip6_addr_link_local
 ok - ip6_pton
 ok - ipc_closed_handle
 ok - ipc_heavy_traffic_deadlock_bug
@@ -361,7 +360,7 @@ ok - udp_mmsg
 ok - udp_multicast_interface
 ok - udp_multicast_interface6
 not ok - udp_multicast_join
-not ok - udp_multicast_join6
+ok - udp_multicast_join6 # SKIP No external IPv6 interface available
 ok - udp_multicast_ttl
 ok - udp_no_autobind
 ok - udp_open
@@ -383,6 +382,7 @@ ok - udp_try_send
 ok - uname
 ok - unref_in_prepare_cb
 ok - utf8_decode1
+ok - utf8_decode1_overrun
 ok - walk_handles
 ok - watcher_cross_stop
 ok - we_get_signal

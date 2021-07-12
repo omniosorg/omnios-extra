@@ -19,7 +19,7 @@
 . ../../lib/functions.sh
 
 PROG=ncdu
-VER=1.15.1
+VER=1.16
 PKG=ooce/util/ncdu
 SUMMARY="$PROG - NCurses Disk Usage"
 DESC='Disk usage analyzer with an ncurses interface'

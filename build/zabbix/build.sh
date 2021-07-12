@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=zabbix
-VER=5.4.1
+VER=5.4.2
 PKG=ooce/application/zabbix
 SUMMARY="enterprise-class open source distributed monitoring solution"
 DESC="Zabbix is software that monitors numerous parameters of a network "

@@ -18,7 +18,7 @@
 
 PROG=llvm
 PKG=ooce/developer/llvm-120
-VER=12.0.0
+VER=12.0.1
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 

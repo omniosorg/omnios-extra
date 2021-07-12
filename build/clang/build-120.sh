@@ -18,7 +18,7 @@
 
 PROG=clang
 PKG=ooce/developer/clang-120
-VER=12.0.0
+VER=12.0.1
 SUMMARY="C language family frontend for LLVM"
 DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
@@ -32,10 +32,11 @@ SKIP_RTIME_CHECK=1
 MAJVER=${VER%.*}
 PATCHDIR=patches-${MAJVER//./}
 
-BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}"
 # Using the = prefix to require the specific matching version of llvm
+BUILD_DEPENDS_IPS="=ooce/developer/llvm-${MAJVER//./}@$VER"
+
 RUN_DEPENDS_IPS="
-    =$BUILD_DEPENDS_IPS@$MAJVER
+    =ooce/developer/llvm-${MAJVER//./}@$MAJVER
     =ooce/developer/compiler-rt-${MAJVER//./}@$MAJVER
     ooce/developer/compiler-rt-${MAJVER//./}
 "
