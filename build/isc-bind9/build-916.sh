@@ -38,7 +38,7 @@ set_standard XPG4v2 CFLAGS
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
-PATCHDIR=patches-$sMAJVER
+set_patchdir patches-$sMAJVER
 
 OPREFIX=$PREFIX
 PREFIX+=/named-$MAJVER

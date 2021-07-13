@@ -30,7 +30,7 @@ set_builddir $PROG-$VER.src
 SKIP_RTIME_CHECK=1
 
 MAJVER=${VER%.*}
-PATCHDIR=patches-${MAJVER//./}
+set_patchdir patches-${MAJVER//./}
 
 # Using the = prefix to require the specific matching version of llvm
 BUILD_DEPENDS_IPS="=ooce/developer/llvm-${MAJVER//./}@$VER"

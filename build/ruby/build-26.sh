@@ -25,7 +25,7 @@ DESC+="with a focus on simplicity and productivity."
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
-PATCHDIR=patches-$sMAJVER
+set_patchdir patches-$sMAJVER
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER

@@ -23,11 +23,11 @@ SUMMARY="LLVM runtime libraries"
 DESC="Implementation for the runtime compiler support libraries"
 
 MAJVER=${VER%.*}
-PATCHDIR=patches-${MAJVER//./}
 
 BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}"
 
 set_builddir $PROG-$VER.src
+set_patchdir patches-${MAJVER//./}
 
 CMAKE+=" -G Ninja"
 MAKE=$NINJA

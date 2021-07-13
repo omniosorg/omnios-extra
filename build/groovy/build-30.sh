@@ -28,7 +28,7 @@ DESC+="language for the Java platform."
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
-PATCHDIR=patches-$sMAJVER
+set_patchdir patches-$sMAJVER
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
