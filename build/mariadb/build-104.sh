@@ -28,7 +28,7 @@ DESC+="MySQL relational database management system"
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
-PATCHDIR=patches-$sMAJVER
+set_patchdir patches-$sMAJVER
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER

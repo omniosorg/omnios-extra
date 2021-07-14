@@ -33,7 +33,7 @@ set_gover 1.15
 
 MAJVER=`echo $VER | perl -pe '($_) = /(\d+\.\d+)/'`
 sMAJVER=${MAJVER//./}
-PATCHDIR=patches-$sMAJVER
+set_patchdir patches-$sMAJVER
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER

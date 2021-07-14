@@ -28,7 +28,7 @@ set_builddir $PROG-$VER.src
 SKIP_RTIME_CHECK=1
 
 MAJVER=${VER%.*}
-PATCHDIR=patches-${MAJVER//./}
+set_patchdir patches-${MAJVER//./}
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER

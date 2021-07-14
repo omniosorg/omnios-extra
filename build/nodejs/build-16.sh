@@ -28,19 +28,18 @@ if [ $RELVER -lt 151036 ]; then
     exit 0
 fi
 
+MAJVER=${VER%%.*}
+
 set_arch 64
 set_builddir $PROG-v$VER
+set_patchdir patches-$MAJVER
 
 BUILD_DEPENDS_IPS="
     developer/gnu-binutils
 "
 
-MAJVER=${VER%%.*}
-
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
-
-PATCHDIR=patches-$MAJVER
 
 BUILD_DEPENDS_IPS="
     developer/gnu-binutils

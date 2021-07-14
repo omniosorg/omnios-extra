@@ -50,7 +50,7 @@ build() {
 
     note -n "Building $prog"
 
-    PATCHDIR=patches-$prog BUILDDIR+=/$prog patch_source
+    BUILDDIR+=/$prog patch_source patches-$prog
 
     pushd $TMPDIR/$BUILDDIR/$prog > /dev/null
     logcmd $MAKE "$@" || logerr "Build failed"

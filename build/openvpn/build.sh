@@ -107,7 +107,7 @@ fi
 OVPNDIR=$DESTDIR$OPREFIX/include
 LIBDIR=$OPREFIX/lib/$ISAPART64/openvpn/plugins
 
-PATCHDIR=patches-$PROG
+set_patchdir patches-$PROG
 RUN_DEPENDS_IPS="ooce/network/openvpn"
 
 set_arch 64

@@ -918,16 +918,16 @@ prep_build() {
 #############################################################################
 
 check_for_patches() {
-    if [ -z "$1" ]; then
-        logmsg "Checking for patches in $PATCHDIR/"
-    else
-        logmsg "Checking for patches in $PATCHDIR/ ($1)"
-    fi
-    if [ ! -d "$SRCDIR/$PATCHDIR" ]; then
+    local patchdir="$1"; shift
+    local reason="$1"; shift
+
+    logmsg "Checking for patches in $patchdir/ ($reason)"
+
+    if [ ! -d "$SRCDIR/$patchdir" ]; then
         logmsg "--- No patches directory found"
         return 1
     fi
-    if [ ! -f "$SRCDIR/$PATCHDIR/series" ]; then
+    if [ ! -f "$SRCDIR/$patchdir/series" ]; then
         logmsg "--- No series file (list of patches) found"
         return 1
     fi
@@ -935,36 +935,39 @@ check_for_patches() {
 }
 
 patch_file() {
-    local FILENAME=$1
-    shift
-    ARGS=$@
-    if [ ! -f $SRCDIR/$PATCHDIR/$FILENAME ]; then
-        logmsg "--- Patch file $FILENAME not found. Skipping patch."
+    local patchdir="${1:?patchdir}"; shift
+    local filename="${1:?filename}"; shift
+
+    if [ ! -f $SRCDIR/$patchdir/$filename ]; then
+        logmsg "--- Patch file $filename not found; skipping patch"
         return
     fi
+
     # Note - if -p is specified more than once, then the last one takes
     # precedence, so we can specify -p1 at the beginning to default to -p1.
     # -t - don't ask questions
     # -N - don't try to apply a reverse patch
-    if ! logcmd $PATCH -p1 -t -N $ARGS < $SRCDIR/$PATCHDIR/$FILENAME; then
-        logerr "--- Patch $FILENAME failed"
+    if ! logcmd $PATCH -p1 -t -N "$@" < $SRCDIR/$patchdir/$filename; then
+        logerr "--- Patch $filename failed"
     else
-        logmsg "--- Applied patch $FILENAME"
+        logmsg "--- Applied patch $filename"
     fi
 }
 
 apply_patches() {
-    if ! check_for_patches "in order to apply them"; then
+    local patchdir="${1:-$PATCHDIR}"
+
+    if ! check_for_patches $patchdir "in order to apply them"; then
         logmsg "--- Not applying any patches"
     else
         logmsg "Applying patches"
         # Read the series file for patch filenames
-        exec 3<"$SRCDIR/$PATCHDIR/series" # Open the series file with handle 3
+        exec 3<"$SRCDIR/$patchdir/series" # Open the series file with handle 3
         pushd $TMPDIR/$BUILDDIR > /dev/null
         while read LINE <&3 ; do
             [[ $LINE = \#* ]] && continue
             # Split Line into filename+args
-            patch_file $LINE
+            patch_file $patchdir $LINE
         done
         popd > /dev/null
         exec 3<&- # Close the file
@@ -972,23 +975,25 @@ apply_patches() {
 }
 
 rebase_patches() {
-    if ! check_for_patches "in order to re-base them"; then
+    local patchdir="${1:-$PATCHDIR}"
+
+    if ! check_for_patches $patchdir "in order to re-base them"; then
         logerr "--- No patches to re-base"
         return
     fi
 
     logmsg "Re-basing patches"
     # Read the series file for patch filenames
-    exec 3<"$SRCDIR/$PATCHDIR/series"
+    exec 3<"$SRCDIR/$patchdir/series"
     pushd $TMPDIR > /dev/null
     rsync -ac --delete $BUILDDIR/ $BUILDDIR.unpatched/
     while read LINE <&3 ; do
         [[ $LINE = \#* ]] && continue
-        patchfile="$SRCDIR/$PATCHDIR/`echo $LINE | awk '{print $1}'`"
+        patchfile="$SRCDIR/$patchdir/${LINE%% *}"
         rsync -ac --delete $BUILDDIR/ $BUILDDIR~/
         (
             cd $BUILDDIR
-            patch_file $LINE
+            patch_file $patchdir $LINE
         )
         mv $patchfile $patchfile~
         # Extract the original patch header text
@@ -1011,14 +1016,14 @@ rebase_patches() {
     popd > /dev/null
     exec 3<&- # Close the file
     # Now the patches have been re-based, -pX is no longer required.
-    sed -i 's/ -p.*//' "$SRCDIR/$PATCHDIR/series"
+    sed -i 's/ -p.*//' "$SRCDIR/$patchdir/series"
 }
 
 patch_source() {
     [ -n "$SKIP_PATCH_SOURCE" ] && return
-    [ -n "$REBASE_PATCHES" ] && rebase_patches
-    apply_patches
-    [ $EXTRACT_MODE -ge 1 ] && exit 0
+    [ -n "$REBASE_PATCHES" ] && rebase_patches "$@"
+    apply_patches "$@"
+    [ -z "$*" -a $EXTRACT_MODE -ge 1 ] && exit 0
 }
 
 #############################################################################
@@ -2241,7 +2246,7 @@ build() {
         fi
     done
 
-    [ $ctf -eq 1 ] && convert_ctf
+    [ $ctf -eq 1 ] && convert_ctf "$DESTDIR"
 }
 
 check_buildlog() {
@@ -2330,15 +2335,12 @@ build_dependency() {
     typeset prog="$4"
     typeset ver="$5"
 
-    # Preserve the current variables
-    typeset _BUILDDIR=$BUILDDIR
-    typeset _PATCHDIR=$PATCHDIR
-    typeset _DESTDIR=$DESTDIR
+    save_variable BUILDDIR __builddep__
+    save_variable DESTDIR __builddep__
 
-    # Adjust variables so that download, patch and build work correctly
     BUILDDIR="$dir"
-    PATCHDIR="patches-$dep"
-    [ ! -d "$PATCHDIR" -a -d "patches-$ver" ] && PATCHDIR="patches-$ver"
+    local patchdir="patches-$dep"
+    [ ! -d "$patchdir" -a -d "patches-$ver" ] && patchdir="patches-$ver"
     if [ $merge -eq 0 ]; then
         DEPROOT=$TMPDIR/_deproot
         DESTDIR=$DEPROOT
@@ -2349,13 +2351,11 @@ build_dependency() {
 
     note -n "-- Building dependency $dep"
     download_source "$dldir" "$prog" "$ver" "$TMPDIR"
-    patch_source
+    patch_source $patchdir
     build $buildargs
 
-    # Restore variables
-    BUILDDIR=$_BUILDDIR
-    PATCHDIR=$_PATCHDIR
-    DESTDIR=$_DESTDIR
+    restore_variable BUILDDIR __builddep__
+    restore_variable DESTDIR __builddep__
 }
 
 #############################################################################
@@ -2725,12 +2725,14 @@ check_libabi() {
 #############################################################################
 
 rtime_files() {
+    local dir="${1:-$DESTDIR}"
+
     # `find_elf` invokes `elfedit` and expects it to be the illumos one.
-    PATH=$USRBIN logcmd -p $FIND_ELF -fr $DESTDIR/ > $TMPDIR/rtime.files
+    PATH=$USRBIN logcmd -p $FIND_ELF -fr $dir/ > $TMPDIR/rtime.files
 }
 
 rtime_objects() {
-    rtime_files
+    rtime_files "$@"
     nawk '/^OBJECT/ { print $NF }' $TMPDIR/rtime.files
 }
 
@@ -2749,9 +2751,11 @@ strip_install() {
 }
 
 convert_ctf() {
+    local dir="${1:-$DESTDIR}"
+
     logmsg "Converting DWARF to CTF"
 
-    pushd $DESTDIR > /dev/null || logerr "Cannot change to $DESTDIR"
+    pushd $dir > /dev/null || logerr "Cannot change to $dir"
 
     local ctftag='---- CTF:'
 
@@ -2801,7 +2805,7 @@ convert_ctf() {
         logcmd rm -f "$tf"
         logcmd strip -x "$file"
         logcmd chmod $mode "$file" || logerr -b "chmod failed: $file"
-    done < <(rtime_objects)
+    done < <(rtime_objects "$dir")
 
     popd >/dev/null
 }
@@ -2971,8 +2975,9 @@ save_function() {
 
 save_variable() {
     local var=$1
+    local prefix=${2:-__save__}
     declare -n _var=$var
-    declare -g __save__$var="$_var"
+    declare -g $prefix$var="$_var"
 }
 
 save_variables() {
@@ -2984,7 +2989,8 @@ save_variables() {
 
 restore_variable() {
     local var=$1
-    declare -n _var=__save__$var
+    local prefix=${2:-__save__}
+    declare -n _var=$prefix$var
     declare -g $var="$_var"
 }
 

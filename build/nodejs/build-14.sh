@@ -28,7 +28,7 @@ set_arch 64
 MAJVER=${VER%%.*}
 
 set_builddir $PROG-v$VER
-PATCHDIR=patches-$MAJVER
+set_patchdir patches-$MAJVER
 
 BUILD_DEPENDS_IPS="
     developer/gnu-binutils

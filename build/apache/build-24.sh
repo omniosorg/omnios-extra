@@ -27,7 +27,7 @@ DESC="The Apache HTTP Server Project web server, version $MAJVER"
 set_arch 64
 set_builddir httpd-$VER
 
-PATCHDIR=patches-$sMAJVER
+set_patchdir patches-$sMAJVER
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
