@@ -1,0 +1,12 @@
+
+------------------------------------------------------------------
+Freeradius Server Installation Notes
+------------------------------------------------------------------
+
+To generate example SSL certificates for this installation, change
+directory to /etc/opt/ooce/freeradius/certs and run:
+
+	gmake
+
+------------------------------------------------------------------
+
