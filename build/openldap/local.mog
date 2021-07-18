@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 license LICENSE license=OpenLDAP
 
@@ -25,6 +25,12 @@ license LICENSE license=OpenLDAP
 
 <transform file dir path=var/$(PREFIX) -> set owner $(USER)>
 <transform file dir path=var/$(PREFIX) -> set group $(GROUP)>
+
+# OmniOS only provides the thread-safe libldap_r.so. libldap.so et al. are
+# linked to this.
+<transform file path=$(OPREFIX)/lib/(?:amd64/)?libldap-(.*)$ -> emit \
+    link path=%(path) target=libldap_r-%<1> >
+<transform file path=$(OPREFIX)/lib/(?:amd64/)?libldap- -> drop>
 
 <include binlink.mog>
 <include manlink.mog>
