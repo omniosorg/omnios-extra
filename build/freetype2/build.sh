@@ -13,15 +13,15 @@
 # }}}
 
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=freetype
-VER=2.10.4
+VER=2.11.0
 PKG=ooce/library/freetype2
-SUMMARY="A Free, High-Quality, and Portable Font Engine"
-DESC="$SUMMARY"
+SUMMARY="$PROG"
+DESC="A Free, High-Quality, and Portable Font Engine"
 
 # we don't want freetype2 to have any runtime dependencies
 # on omnios-extra packages. since openjdk bundles freetype2 and
