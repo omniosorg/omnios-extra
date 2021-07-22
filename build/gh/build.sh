@@ -18,7 +18,7 @@
 
 PROG=gh
 PKG=ooce/util/gh
-VER=1.12.1
+VER=1.13.1
 SUMMARY="github-cli"
 DESC="The GitHub CLI tool"
 
@@ -31,7 +31,9 @@ export GOOS GOARCH
 
 RUN_DEPENDS_IPS="developer/versioning/git"
 
-CONFIGURE_CMD="/bin/true"
+# No configure
+configure64() { :; }
+
 MAKE_INSTALL_ARGS="prefix=$PREFIX"
 
 init
