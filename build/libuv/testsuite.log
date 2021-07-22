@@ -164,6 +164,9 @@ ok - metrics_idle_time
 ok - metrics_idle_time_thread
 ok - metrics_idle_time_zero
 ok - multiple_listen
+ok - not_readable_nor_writable_on_read_error
+ok - not_readable_on_eof
+ok - not_writable_after_shutdown
 ok - open_osfhandle_valid_handle
 ok - pipe_bind_error_addrinuse
 ok - pipe_bind_error_addrnotavail
@@ -214,6 +217,7 @@ ok - semaphore_3
 ok - shutdown_close_pipe
 ok - shutdown_close_tcp
 ok - shutdown_eof
+ok - shutdown_simultaneous
 ok - shutdown_twice
 ok - signal_close_loop_alive
 ok - signal_multiple_loops
