@@ -26,6 +26,11 @@ SUMMARY="FreeRADIUS $MAJVER"
 DESC="The open source implementation of RADIUS, an IETF protocol for AAA "
 DESC+="(Authorisation, Authentication, and Accounting)."
 
+if [ $RELVER -lt 151036 ]; then
+    logmsg "--- $PKG is not built for r$RELVER"
+    exit 0
+fi
+
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
