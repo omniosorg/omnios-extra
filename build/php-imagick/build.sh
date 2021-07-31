@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=php-imagick
-VER=3.5.0
+VER=3.5.1
 PKG=ooce/application/php-XX/imagick
 SUMMARY="The Imagick PHP extension"
 DESC="The Imagick PHP extension"
