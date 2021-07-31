@@ -18,7 +18,7 @@
 
 PROG=vagrant
 PKG=ooce/application/vagrant
-VER=2.2.17
+VER=2.2.18
 # latest release from https://github.com/hashicorp/vagrant-installers/releases
 INSTVER=2.2.6
 SUMMARY="Vagrant"

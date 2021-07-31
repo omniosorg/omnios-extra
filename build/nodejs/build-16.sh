@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=node
-VER=16.5.0
+VER=16.6.0
 PKG=ooce/runtime/node-16
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
@@ -40,13 +40,6 @@ BUILD_DEPENDS_IPS="
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
-
-BUILD_DEPENDS_IPS="
-    developer/gnu-binutils
-"
-
-# objdump is needed to build nodejs
-PATH+=":/usr/gnu/$TRIPLET64/bin"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
