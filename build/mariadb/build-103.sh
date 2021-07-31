@@ -100,7 +100,7 @@ CONFIGURE_OPTS_WS_64="
 init
 download_source $PROG $PROG $VER
 patch_source
-prep_build cmake
+prep_build cmake+ninja
 build
 strip_install
 logcmd mkdir -p $DESTDIR/$CONFPATH
