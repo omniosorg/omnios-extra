@@ -881,11 +881,17 @@ prep_build() {
     [ -n "$OUT_OF_TREE_BUILD" ] \
         && CONFIGURE_CMD=$TMPDIR/$BUILDDIR/$CONFIGURE_CMD
 
+    local _cmakeopts=
     case "$style" in
+        cmake+ninja)
+            _cmakeopts="-GNinja"
+            MAKE=$NINJA
+            TESTSUITE_MAKE=$MAKE
+            ;& # fallthrough
         cmake)
             OUT_OF_TREE_BUILD=1
             MULTI_BUILD=1
-            CONFIGURE_CMD="$CMAKE $TMPDIR/$BUILDDIR"
+            CONFIGURE_CMD="$CMAKE $_cmakeopts $TMPDIR/$BUILDDIR"
             ;;
         meson)
             OUT_OF_TREE_BUILD=1
