@@ -43,16 +43,30 @@ install_modules() {
     done
 }
 
-CONFIGURE_OPTS_64+="
-    --libdir=$PREFIX/lib
+CONFIGURE_OPTS="
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX=$PREFIX
 "
+
+CONFIGURE_OPTS_64="
+    -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib
+"
+LDFLAGS+=" -lsocket"
+LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
+
+tests() {
+    for key in SSL IPv6 Zlib; do
+        $EGREP " $key *: yes" $LOGFILE || logerr "$key was not included"
+    done
+}
 
 init
 download_source $PROG $PROG $VER
 patch_source
 install_modules
-prep_build
+prep_build cmake+ninja
 build -noctf    # C++
+tests
 strip_install
 install_smf network znc.xml
 make_package
