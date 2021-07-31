@@ -27,17 +27,13 @@ DESC="DejaGnu is a framework for testing other programs"
 BUILD_DEPENDS_IPS="ooce/runtime/expect"
 RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
 
-OPREFIX=$PREFIX
-PREFIX+="/$PROG"
+# This package is just installed at the top level PREFIX and delivers most
+# of its files to /opt/ooce/share/dejagnu/
+# Moving it under a package prefix breaks things since the binaries expect
+# to be able to find things relative to themselves, and the gcc testsuite
+# expects to find it in /opt/ooce/bin.
 
 set_arch 64
-
-XFORM_ARGS="
-    -DOPREFIX=${OPREFIX#/}
-    -DPREFIX=${PREFIX#/}
-    -DPROG=$PROG
-    -DPKGROOT=$PROG
-"
 
 init
 download_source $PROG $PROG $VER
