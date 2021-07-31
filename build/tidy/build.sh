@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=tidy
-VER=5.6.0
+VER=5.8.0
 PKG=ooce/application/tidy
 SUMMARY="tidy"
 DESC="Application that corrects and cleans up HTML and XML documents by "
@@ -48,7 +48,7 @@ LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
 init
 download_source $PROG $VER
 patch_source
-prep_build cmake
+prep_build cmake+ninja
 build
 make_package
 clean_up
