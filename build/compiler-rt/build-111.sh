@@ -29,9 +29,6 @@ BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}"
 set_builddir $PROG-$VER.src
 set_patchdir patches-${MAJVER//./}
 
-CMAKE+=" -G Ninja"
-MAKE=$NINJA
-
 CONFIGURE_OPTS_32=
 CONFIGURE_OPTS_64=
 CONFIGURE_OPTS_WS="
@@ -47,7 +44,7 @@ CONFIGURE_OPTS_WS="
 init
 download_source $PROG $BUILDDIR
 patch_source
-prep_build cmake
+prep_build cmake+ninja
 build -noctf
 make_package
 clean_up

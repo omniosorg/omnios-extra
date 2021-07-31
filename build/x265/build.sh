@@ -25,9 +25,6 @@ DESC+="into the H.265/MPEG-H HEVC compression format"
 
 set_builddir $PROG-$VER/source
 
-CMAKE+=" -G Ninja"
-MAKE=$NINJA
-
 CONFIGURE_OPTS_32="
     -DLIB_INSTALL_DIR=lib
 "
@@ -100,7 +97,7 @@ init
 download_source $PROG $VER
 patch_source
 fix_version
-prep_build cmake
+prep_build cmake+ninja
 build -noctf    # C++
 strip_install
 make_package

@@ -40,9 +40,6 @@ XFORM_ARGS="
     -DVERSION=$MAJVER
 "
 
-CMAKE+=" -G Ninja"
-MAKE=$NINJA
-
 CONFIGURE_OPTS_64=
 CONFIGURE_OPTS_WS_64="
     -DCMAKE_INSTALL_PREFIX=$PREFIX
@@ -59,7 +56,7 @@ CONFIGURE_OPTS_WS_64="
 init
 download_source $PROG $PROG $VER.src
 patch_source
-prep_build cmake
+prep_build cmake+ninja
 build -noctf    # C++
 strip_install
 make_package

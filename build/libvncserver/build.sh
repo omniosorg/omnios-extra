@@ -62,7 +62,7 @@ make_install64() {
 init
 download_source $PROG "LibVNCServer" $VER
 patch_source
-prep_build cmake
+prep_build cmake+ninja
 build
 make_package
 clean_up

@@ -51,7 +51,7 @@ CONFIGURE_OPTS_64="
 
 init
 download_source $PROG $PROG $VER
-prep_build cmake
+prep_build cmake+ninja
 patch_source
 build -ctf
 make_package

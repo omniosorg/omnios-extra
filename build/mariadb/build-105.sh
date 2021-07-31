@@ -151,7 +151,7 @@ build_manifests() {
 init
 download_source $PROG $PROG $VER
 patch_source
-prep_build cmake
+prep_build cmake+ninja
 build
 strip_install
 make_isa_stub
