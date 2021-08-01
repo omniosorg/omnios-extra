@@ -47,16 +47,15 @@ Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
                    restart_on="none">
             <service_fmri value="svc:/milestone/multi-user" />
         </dependent>
-
         <method_context security_flags="aslr">
-            <method_credential user="$(USER)" group="$(GROUP)" />
+            <method_credential user="$(USER)"
+                               group="$(GROUP)" />
         </method_context>
 
         <exec_method type="method"
                      name="start"
                      exec="%{application/method} %m"
-                     timeout_seconds="60">
-        </exec_method>
+                     timeout_seconds="60"></exec_method>
 
         <exec_method type="method"
                      name="stop"
@@ -84,7 +83,8 @@ Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
                      value="/lib/svc/method/ooce/mariadb-$(sVERSION)" />
         </property_group>
 
-        <instance name="default" enabled="false" />
+        <instance name="default"
+                  enabled="false" />
 
         <stability value="External" />
 

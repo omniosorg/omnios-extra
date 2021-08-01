@@ -77,6 +77,7 @@ Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
                      timeout_seconds="60"></exec_method>
         <!--
 
+
         <property_group name="startd" type="framework">
                 <propval name="duration" type="astring" value="child" />
         </property_group>
