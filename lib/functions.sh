@@ -878,6 +878,8 @@ prep_build() {
             logerr "Failed to create temporary install dir"
     fi
 
+    rm -f "$TMPDIR/frag.mog"
+
     [ -n "$OUT_OF_TREE_BUILD" ] \
         && CONFIGURE_CMD=$TMPDIR/$BUILDDIR/$CONFIGURE_CMD
 
@@ -1473,12 +1475,14 @@ make_package() {
     [ -z "$LOCAL_MOG_FILE" -a -f $SRCDIR/local.mog ] && LOCAL_MOG_FILE=local.mog
     typeset EXTRA_MOG_FILE="$1"
     typeset FINAL_MOG_FILE="$2"
+    typeset FRAG_MOG_FILE=
     [[ -n "$LOCAL_MOG_FILE" && ! "$LOCAL_MOG_FILE" = /* ]] \
         && LOCAL_MOG_FILE="$SRCDIR/$LOCAL_MOG_FILE"
     [[ -n "$EXTRA_MOG_FILE" && ! "$EXTRA_MOG_FILE" = /* ]] \
         && EXTRA_MOG_FILE="$SRCDIR/$EXTRA_MOG_FILE"
     [[ -n "$FINAL_MOG_FILE" && ! "$FINAL_MOG_FILE" = /* ]] \
         && FINAL_MOG_FILE="$SRCDIR/$FINAL_MOG_FILE"
+    [ -s "$TMPDIR/frag.mog" ] && FRAG_MOG_FILE=$TMPDIR/frag.mog
 
     case $BUILDARCH in
         32) BUILDSTR="32bit-" ;;
@@ -1595,7 +1599,7 @@ make_package() {
         $GLOBAL_MOG_FILE \
         $LOCAL_MOG_FILE \
         $EXTRA_MOG_FILE \
-        $NOTES_MOG_FILE \
+        $FRAG_MOG_FILE \
         | $PKGFMT -u > $P5M_MOG
 
     if [ -n "$DESTDIR" ]; then
@@ -1879,6 +1883,10 @@ EOM
     done
 }
 
+mog_fragment() {
+    cat >> $TMPDIR/frag.mog
+}
+
 #############################################################################
 # Add some release notes
 #############################################################################
@@ -1899,11 +1907,7 @@ add_notes() {
     local tgt=${NOTES_LOCATION#/}
     logcmd mkdir -p $tgt
     logcmd cp $SRCDIR/files/$file $tgt/$PKGD || logerr "Cannot copy to $tgt"
-    if [ -z "$NOTES_MOG_FILE" ]; then
-        NOTES_MOG_FILE=$TMPDIR/notes.mog
-        :>$NOTES_MOG_FILE
-    fi
-    cat << EOM >> $NOTES_MOG_FILE
+    cat << EOM | mog_fragment
 <transform file path=$tgt/$PKGD\$ -> set release-note feature/pkg/self@$ver>
 <transform file path=$tgt/$PKGD\$ -> set must-display true>
 EOM
@@ -1962,25 +1966,48 @@ install_smf() {
 }
 
 #############################################################################
-# Install an /etc/inet/services fragment
+# Install fragment files
 #############################################################################
 
+install_fragment() {
+    typeset src="${1?src}"
+    typeset dst="${2?dst}"
+    typeset tgt="${PKG//\//:}"
+
+    [ -f "$SRCDIR/files/$src" ] || logerr "fragment files/$src not found"
+
+    typeset fragfile=`mktemp -p $TMPDIR`
+
+    xform "$SRCDIR/files/$src" > "$fragfile"
+
+    cat << EOM | mog_fragment
+file ../${fragfile##*/} path=$dst/$tgt owner=root group=sys mode=0444
+EOM
+}
+
 install_inetservices() {
-    typeset frag="${1:-services}"
-
     [ $RELVER -ge 151035 ] || return
+    install_fragment "${1:-services}" /etc/inet/services.d
+}
 
-    pushd $DESTDIR > /dev/null
-    logmsg "-- Installing /etc/inet/services fragment - $frag"
+install_authattr() {
+    install_fragment "${1:-auth_attr}" /etc/security/auth_attr.d
+}
 
-    [ -f "$SRCDIR/files/$frag" ] || logerr "files/$frag not found"
+install_execattr() {
+    install_fragment "${1:-exec_attr}" /etc/security/exec_attr.d
+}
 
-    logcmd mkdir -p etc/inet/services.d || logerr "mkdir failed"
+install_profattr() {
+    install_fragment "${1:-prof_attr}" /etc/security/prof_attr.d
+}
 
-    logcmd cp $SRCDIR/files/$frag etc/inet/services.d/${PKG//\//:} \
-        || logerr "copy failed"
+install_userattr() {
+    install_fragment "${1:-user_attr}" /etc/user_attr.d
+}
 
-    popd > /dev/null
+install_system() {
+    install_fragment "${1:-system}" /etc/system.d
 }
 
 #############################################################################
