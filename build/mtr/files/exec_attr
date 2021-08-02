@@ -1,0 +1,1 @@
+Forced Privilege:solaris:cmd:::/$(MTR_PACKET_PATH):privs=net_icmpaccess,net_rawaccess
