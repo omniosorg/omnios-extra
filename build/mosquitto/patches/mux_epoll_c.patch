@@ -1,0 +1,10 @@
+--- a/src/mux_epoll.c	Wed Aug  4 12:43:36 2021
++++ b/src/mux_epoll.c	Wed Aug  4 12:44:11 2021
+@@ -28,6 +28,7 @@
+ #include <assert.h>
+ #ifndef WIN32
+ #ifdef WITH_EPOLL
++#include <signal.h>
+ #include <sys/epoll.h>
+ #define MAX_EVENTS 1000
+ #endif

@@ -1,0 +1,32 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+
+license epl-v20 license=EPLv2
+
+# Create user and group
+group groupname=$(GROUP) gid=$(GID)
+user ftpuser=false username=$(USER) uid=$(UID) group=$(GROUP) \
+    gcos-field="mosquitto daemon" \
+    home-dir=/var/$(PREFIX) password=NP
+
+<transform file path=etc/$(PREFIX)/.+\.conf$ -> set preserve renamenew>
+
+# Correct permissions and add home and log directories
+dir path=var/$(PREFIX) owner=$(USER) group=$(GROUP) mode=0750
+dir path=var/log/$(PREFIX) owner=$(USER) group=$(GROUP) mode=0750
+
+<transform file dir path=etc/$(PREFIX) -> set group $(GROUP)>
+<transform dir path=etc/$(PREFIX)$ -> set mode 0750>
+
+<include binlink.mog>
+<include manlink.mog>
+
