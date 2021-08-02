@@ -60,7 +60,6 @@ CDDL HEADER END
                    restart_on="none">
             <service_fmri value="svc:/milestone/multi-user" />
         </dependent>
-
         <method_context security_flags="aslr">
             <method_credential user="haproxy"
                                group="haproxy"

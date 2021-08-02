@@ -37,9 +37,9 @@
                     type="service">
             <service_fmri value="svc:/system/filesystem/local:default" />
         </dependency>
-
         <method_context security_flags="aslr">
-            <method_credential user="postgres" group="postgres" />
+            <method_credential user="postgres"
+                               group="postgres" />
         </method_context>
 
         <exec_method type="method"
