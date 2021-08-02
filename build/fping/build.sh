@@ -35,6 +35,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+install_execattr
 make_package
 clean_up
 
