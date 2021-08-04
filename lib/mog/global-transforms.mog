@@ -128,6 +128,12 @@
 <transform file path=etc/inet/services\.d -> \
     add restart_fmri svc:/system/config-assemble:services>
 
+<transform file path=etc/security/(?:auth|exec|prof)_attr\.d -> \
+    add restart_fmri svc:/system/rbac:default>
+
+<transform file path=etc/user_attr\.d -> \
+    add restart_fmri svc:/system/rbac:default>
+
 # Transforms to set facet.devel on files useful to developers only.
 
 # header files

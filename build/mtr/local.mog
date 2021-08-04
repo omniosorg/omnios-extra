@@ -10,9 +10,12 @@
 
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-<transform file path=$(PREFIX)/sbin/fping -> set user root>
-<transform file path=$(PREFIX)/sbin/fping -> set group bin>
-<transform file path=$(PREFIX)/sbin/fping -> set mode 04555>
+license COPYING license=GPLv2
+license BSDCOPYING license=modified-BSD
 
-license COPYING license=fping
+<transform path=$(PREFIX)/share/bash -> drop>
+<transform path=$(PREFIX)/sbin/mtr$ -> edit path sbin bin>
+
+<transform path=$(MTR_PACKET_PATH)$ -> set mode 04755>
+<transform path=$(MTR_PACKET_PATH)$ -> set owner root>
 

@@ -1,0 +1,1 @@
+Forced Privilege:solaris:cmd:::/$(PREFIX)/sbin/fping:privs=net_icmpaccess,net_rawaccess

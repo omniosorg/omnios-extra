@@ -12,28 +12,39 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
-PROG=fping
-VER=5.0
-PKG=ooce/network/fping
-SUMMARY="fping - send ICMP echo probes to network hosts"
-DESC="fping is a program to send ICMP echo probes to network hosts, similar to "
-DESC+="ping, but much better performing when pinging multiple hosts."
+PROG=mtr
+VER=0.94
+PKG=ooce/network/mtr
+SUMMARY="mtr - network diagnostic tool"
+DESC="mtr combines the functionality of the traceroute and ping programs into "
+DESC+="a single network diagnostic tool."
 
 set_arch 64
 set_standard XPG6
 
-SKIP_LICENCES=fping
-XFORM_ARGS="-DPREFIX=${PREFIX#/}"
-CONFIGURE_OPTS="--bindir=$PREFIX/bin"
+MTR_PACKET_PATH=$PREFIX/sbin/mtr-packet
+
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DMTR_PACKET_PATH=${MTR_PACKET_PATH#/}
+"
+
+CONFIGURE_OPTS+="
+    --without-gtk
+"
+LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
+export MAKE
+
+CFLAGS+=" -DMTR_PACKET_PATH=\\\"$MTR_PACKET_PATH\\\""
 
 init
-download_source $PROG $PROG $VER
+download_source $PROG v$VER
 patch_source
-prep_build
+prep_build autoconf -autoreconf
 build
 install_execattr
 make_package
