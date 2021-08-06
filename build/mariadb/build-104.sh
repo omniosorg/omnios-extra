@@ -17,14 +17,11 @@
 . ../../lib/functions.sh
 
 PROG=mariadb
-VER=10.4.20
+VER=10.4.21
 PKG=ooce/database/mariadb-104
 SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
 DESC+="MySQL relational database management system"
-
-# This component does not yet build with gcc11
-((GCCVER == 11)) && set_gccver 10
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
