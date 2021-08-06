@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=mrtg
-VER=2.17.7
+VER=2.17.8
 PKG=ooce/network/mrtg
 SUMMARY="Multi Router Traffic Grapher"
 DESC="Monitor SNMP network devices and draw pretty pictures showing "
@@ -34,6 +34,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS="
