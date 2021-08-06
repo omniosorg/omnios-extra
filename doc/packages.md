@@ -45,6 +45,7 @@
 | ooce/developer/cmake		| 3.21.1	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-111 | 11.1.0	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-120 | 12.0.1	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/cscope		| 15.9		| https://cscope.sourceforge.net/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/dejagnu	| 1.6.3		| https://ftp.gnu.org/gnu/dejagnu/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/freepascal	| 3.2.2		| https://sourceforge.net/projects/freepascal/files/Source/ https://www.freepascal.org/ | [omniosorg](https://github.com/omniosorg)
