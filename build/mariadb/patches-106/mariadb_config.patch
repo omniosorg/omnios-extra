@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/libmariadb/mariadb_config/CMakeLists.txt a/libmariadb/mariadb_config/CMakeLists.txt
+--- a~/libmariadb/mariadb_config/CMakeLists.txt	1970-01-01 00:00:00
++++ a/libmariadb/mariadb_config/CMakeLists.txt	1970-01-01 00:00:00
+@@ -59,7 +59,7 @@ ENDIF()
+ # Installation
+ #
+ INSTALL(TARGETS mariadb_config
+-        DESTINATION "bin"
++        DESTINATION "${INSTALL_BINDIR}"
+         COMPONENT Development)
+ 
+ INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/libmariadb.pc

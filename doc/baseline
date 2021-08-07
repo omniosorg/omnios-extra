@@ -35,6 +35,7 @@ extra.omnios ooce/database/lmdb
 extra.omnios ooce/database/mariadb-103
 extra.omnios ooce/database/mariadb-104
 extra.omnios ooce/database/mariadb-105
+extra.omnios ooce/database/mariadb-106
 extra.omnios ooce/database/postgresql-10 l
 extra.omnios ooce/database/postgresql-11
 extra.omnios ooce/database/postgresql-12
