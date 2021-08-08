@@ -51,6 +51,7 @@ extra.omnios ooce/developer/clang-120
 extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/compiler-rt-111
 extra.omnios ooce/developer/compiler-rt-120
+extra.omnios ooce/developer/cscope
 extra.omnios ooce/developer/cunit
 extra.omnios ooce/developer/dejagnu
 extra.omnios ooce/developer/flamegraph
