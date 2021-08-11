@@ -1,0 +1,14 @@
+--- a/src/CMakeLists.txt	Mon Aug  2 14:52:17 2021
++++ b/src/CMakeLists.txt	Mon Aug  2 14:57:46 2021
+@@ -211,9 +211,9 @@
+ if (UNIX)
+ 	if (APPLE)
+ 		set_target_properties(mosquitto PROPERTIES LINK_FLAGS "-Wl,-exported_symbols_list -Wl,${mosquitto_SOURCE_DIR}/src/linker-macosx.syms")
+-	else (APPLE)
++	elseif (NOT CMAKE_SYSTEM_NAME STREQUAL SunOS)
+ 		set_target_properties(mosquitto PROPERTIES LINK_FLAGS "-Wl,-dynamic-list=${mosquitto_SOURCE_DIR}/src/linker.syms")
+-	endif (APPLE)
++	endif ()
+ endif (UNIX)
+ 
+ install(TARGETS mosquitto RUNTIME DESTINATION "${CMAKE_INSTALL_SBINDIR}")
