@@ -65,7 +65,8 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build cmake
 build
-install_smf network mosquitto.xml
+xform files/mosquitto.xml > $TMPDIR/$PROG.xml
+install_smf network $PROG.xml
 make_package
 clean_up
 
