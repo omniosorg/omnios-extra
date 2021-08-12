@@ -40,11 +40,11 @@
 
         <exec_method type="method"
                      name="start"
-                     exec="/opt/ooce/mosquitto/sbin/mosquitto -d"
+                     exec="/$(PREFIX)/sbin/mosquitto -d -c /etc/$(PREFIX)/mosquitto.conf"
                      timeout_seconds="60">
             <method_context security_flags="aslr">
-                <method_credential user="mosquitto"
-                                   group="mosquitto"
+                <method_credential user="$(USER)"
+                                   group="$(GROUP)"
                                    privileges="basic,!proc_info,!proc_session" />
             </method_context>
         </exec_method>
