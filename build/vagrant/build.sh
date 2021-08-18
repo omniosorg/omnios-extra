@@ -28,7 +28,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.15
+set_gover 1.16
 set_rubyver 2.7
 
 XFORM_ARGS="
@@ -54,7 +54,9 @@ build() {
     pushd $TMPDIR/$BUILDDIR/$PROG-installers/substrate/launcher/ >/dev/null
 
     logmsg "Build Vagrant Installers"
-    GOPATH=$TMPDIR/$BUILDDIR/$PROG-installers/substrate/launcher/
+    GOPATH=$TMPDIR/$BUILDDIR/$PROG-installers/substrate/launcher/_deps
+    GO111MODULE=auto
+    export GOPATH GO111MODULE
     logcmd go get github.com/kardianos/osext \
         || logerr "Get dependency for Vagrant Installers failed"
     logcmd go build -o $PROG || logerr "Build Vagrant Installers failed"
