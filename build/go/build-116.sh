@@ -29,7 +29,7 @@ BUILDDIR=$PROG
 ((GCCVER == 11)) && set_gccver 10
 
 set_arch 64
-set_gover 1.15
+set_gover 1.16
 
 MAJVER=`echo $VER | perl -pe '($_) = /(\d+\.\d+)/'`
 sMAJVER=${MAJVER//./}

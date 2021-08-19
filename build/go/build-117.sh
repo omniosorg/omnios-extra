@@ -17,19 +17,16 @@
 . ../../lib/functions.sh
 
 PROG=go
-PKG=ooce/developer/go-115
-VER=1.15.15
+PKG=ooce/developer/go-117
+VER=1.17
 SUMMARY="The Go Programming Language"
 DESC="An open source programming language that makes it easy to build simple, "
 DESC+="reliable, and efficient software."
 
 BUILDDIR=$PROG
 
-# The tests currently fail when built with gcc11
-((GCCVER == 11)) && set_gccver 10
-
 set_arch 64
-set_gover 1.15
+set_gover 1.16
 
 MAJVER=`echo $VER | perl -pe '($_) = /(\d+\.\d+)/'`
 sMAJVER=${MAJVER//./}
