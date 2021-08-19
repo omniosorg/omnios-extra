@@ -1,4 +1,4 @@
-Start of unbound 1.13.1+libevent unit test.
+Start of unbound 1.13.2+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -58,10 +58,19 @@ test lruhash functions
 test slabhash functions
 test infra cache functions
 test sldns functions
-test message parse functions
-[0] did 10000 in 116.047 msec for 86171.982042 encode/sec size 615
+test zonemd functions
+test services/authzone.c:auth_zone_generate_zonemd_hash
+test services/authzone.c:auth_zone_generate_zonemd_check
+test services/authzone.c:auth_zone_verify_zonemd
+test tcp_reuse functions
 test services/outside_network.c:reuse_tcp_select_id
-1296956 checks ok.
+test services/outside_network.c:reuse_tcp_insert
+test services/outside_network.c:reuse_tcp_lru_touch
+test services/outside_network.c:reuse_tcp_remove_tree_list
+test services/outside_network.c:reuse_tcp_lru_snip
+test message parse functions
+[0] did 10000 in 103.413 msec for 96699.641244 encode/sec size 615
+1297128 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl OK
 ./testdata/auth_nsec3_ent.rpl OK
@@ -80,6 +89,24 @@ selftest successful (33 checks).
 ./testdata/auth_zonefile_down.rpl OK
 ./testdata/auth_zonefile_noup.rpl OK
 ./testdata/auth_zonefile_root.rpl OK
+./testdata/auth_zonemd_anchor.rpl OK
+./testdata/auth_zonemd_anchor_fail.rpl OK
+./testdata/auth_zonemd_chain.rpl OK
+./testdata/auth_zonemd_chain_fail.rpl OK
+./testdata/auth_zonemd_file.rpl OK
+./testdata/auth_zonemd_file_fail.rpl OK
+./testdata/auth_zonemd_insecure.rpl OK
+./testdata/auth_zonemd_insecure_absent.rpl OK
+./testdata/auth_zonemd_insecure_absent_reject.rpl OK
+./testdata/auth_zonemd_insecure_fail.rpl OK
+./testdata/auth_zonemd_nokey.rpl OK
+./testdata/auth_zonemd_permissive_mode.rpl OK
+./testdata/auth_zonemd_xfr.rpl OK
+./testdata/auth_zonemd_xfr_anchor.rpl OK
+./testdata/auth_zonemd_xfr_anchor_fail.rpl OK
+./testdata/auth_zonemd_xfr_chain.rpl OK
+./testdata/auth_zonemd_xfr_chain_fail.rpl OK
+./testdata/auth_zonemd_xfr_fail.rpl OK
 ./testdata/autotrust_10key.rpl OK
 ./testdata/autotrust_addpend_2exceed.rpl OK
 ./testdata/autotrust_addpend_early.rpl OK
@@ -240,6 +267,7 @@ selftest successful (33 checks).
 ./testdata/rpz_qname_override.rpl OK
 ./testdata/rpz_respip.rpl OK
 ./testdata/rpz_respip_override.rpl OK
+./testdata/rpz_rootwc.rpl OK
 ./testdata/rrset_rettl.rpl OK
 ./testdata/rrset_untrusted.rpl OK
 ./testdata/rrset_updated.rpl OK

@@ -137,7 +137,7 @@
 | ooce/network/rclone		| 1.56.0	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/smtp/postfix	| 3.6.2		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/network/tcpdump		| 4.9.3		| https://www.tcpdump.org/release/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/unbound		| 1.13.1	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/unbound		| 1.13.2	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/znc		| 1.8.2		| https://github.com/znc/znc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/ooceapps			| github-latest	| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/print/cups		| 2.3.3op2	| https://github.com/OpenPrinting/cups/releases | [omniosorg](https://github.com/omniosorg)
