@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/cmd/os-readdir_other.go a/cmd/os-readdir_other.go
+--- a~/cmd/os-readdir_other.go	1970-01-01 00:00:00
++++ a/cmd/os-readdir_other.go	1970-01-01 00:00:00
+@@ -96,7 +96,7 @@ func readDirWithOpts(dirPath string, opt
+ 
+ 	maxEntries := 1000
+ 	if opts.count > 0 && opts.count < maxEntries {
+-		maxEntries = count
++		maxEntries = opts.count
+ 	}
+ 
+ 	done := false
