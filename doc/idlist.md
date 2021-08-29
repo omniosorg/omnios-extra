@@ -27,6 +27,7 @@
 | extra		| 55	| nsd
 | illumos	| 60	| xvm
 | extra		| 67	| znc
+| extra		| 69	| listmonk
 | illumos	| 70	| mysql
 | illumos	| 71	| lp
 | extra		| 72	| haproxy
@@ -83,6 +84,7 @@
 | illumos	| 60	| xvm
 | illumos	| 65	| netadm
 | extra		| 67	| znc
+| extra		| 69	| listmonk
 | illumos	| 70	| mysql
 | extra		| 72	| haproxy
 | extra		| 73	| mosquitto
