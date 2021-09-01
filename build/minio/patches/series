@@ -1,2 +1,2 @@
-direct_io_unix.go.patch
+os-readdir.patch
 Makefile.patch
