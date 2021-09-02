@@ -84,7 +84,7 @@ diff -wpruN '--exclude=*.orig' a~/imap/global.h a/imap/global.h
 diff -wpruN '--exclude=*.orig' a~/imap/imapd.c a/imap/imapd.c
 --- a~/imap/imapd.c	1970-01-01 00:00:00
 +++ a/imap/imapd.c	1970-01-01 00:00:00
-@@ -181,6 +181,7 @@ static struct protgroup *protin = NULL;
+@@ -180,6 +180,7 @@ static struct protgroup *protin = NULL;
  static const char *imapd_clienthost = "[local]";
  static int imapd_logfd = -1;
  char *imapd_userid = NULL, *proxy_userid = NULL;
@@ -92,7 +92,7 @@ diff -wpruN '--exclude=*.orig' a~/imap/imapd.c a/imap/imapd.c
  static char *imapd_magicplus = NULL;
  struct auth_state *imapd_authstate = 0;
  static int imapd_userisadmin = 0;
-@@ -785,6 +786,7 @@ static void imapd_reset(void)
+@@ -807,6 +808,7 @@ static void imapd_reset(void)
      cyrus_reset_stdio();
  
      imapd_clienthost = "[local]";
@@ -100,7 +100,7 @@ diff -wpruN '--exclude=*.orig' a~/imap/imapd.c a/imap/imapd.c
      if (imapd_logfd != -1) {
          close(imapd_logfd);
          imapd_logfd = -1;
-@@ -937,6 +939,9 @@ int service_main(int argc __attribute__(
+@@ -954,6 +956,9 @@ int service_main(int argc __attribute__(
      /* Find out name of client host */
      imapd_clienthost = get_clienthost(0, &localip, &remoteip);
  
@@ -110,7 +110,7 @@ diff -wpruN '--exclude=*.orig' a~/imap/imapd.c a/imap/imapd.c
      if (localip && remoteip) {
          buf_setcstr(&saslprops.ipremoteport, remoteip);
          buf_setcstr(&saslprops.iplocalport, localip);
-@@ -2839,6 +2844,18 @@ static void cmd_login(char *tag, char *u
+@@ -2774,6 +2779,18 @@ static void cmd_login(char *tag, char *u
  
      if (checklimits(tag)) return;
  
