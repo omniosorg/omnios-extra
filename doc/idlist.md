@@ -16,6 +16,7 @@
 | illumos	| 25	| smmsp
 | omnios	| 18	| dhcpserv
 | extra		| 19	| minidlna
+| omnios	| 23	| chrony
 | omnios	| 26	| dma
 | extra		| 27	| postfix
 | illumos	| 37	| listen
@@ -72,6 +73,7 @@
 | illumos	| 14	| sysadmin
 | extra		| 19	| minidlna
 | illumos	| 20	| games
+| omnios	| 23	| chrony
 | illumos	| 25	| smmsp
 | extra		| 27	| postfix
 | extra		| 28	| postdrop
