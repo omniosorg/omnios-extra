@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=groovy
-VER=3.0.8
+VER=3.0.9
 PKG=ooce/runtime/groovy-30
 SUMMARY="Groovy"
 DESC="Java-syntax-compatible object-oriented programming "
