@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=jansson
-VER=2.13.1
+VER=2.14
 PKG=ooce/library/jansson
 SUMMARY="jansson"
 DESC="C library for encoding, decoding and manipulating JSON data"
