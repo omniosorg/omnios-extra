@@ -39,10 +39,12 @@ XFORM_ARGS="
     -DVER=$VER
 "
 
-# No configure
-CONFIGURE_CMD="/usr/bin/true"
-
 MAKE_TARGET=all
+
+configure64() {
+    logmsg "--- Generating Makefile"
+    logcmd fpcmake Makefile.fpc || logerr "failed to generate Makefile"
+}
 
 save_function make_install _make_install
 make_install() {
