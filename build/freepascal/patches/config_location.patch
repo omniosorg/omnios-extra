@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/compiler/options.pas a/compiler/options.pas
 --- a~/compiler/options.pas	1970-01-01 00:00:00
 +++ a/compiler/options.pas	1970-01-01 00:00:00
-@@ -3369,8 +3369,8 @@ begin
+@@ -3383,8 +3383,8 @@ begin
         foundfn:=exepath+fn
       else
  {$else}
