@@ -444,6 +444,16 @@ set_gccver() {
 set_gccver $DEFAULT_GCC_VER -q
 
 #############################################################################
+# OpenSSL version
+#############################################################################
+
+set_opensslver() {
+    [ -d /usr/ssl-$1 ] || logerr "Unknown OpenSSL version $1"
+    FORCE_OPENSSL_VERSION=$1
+    logmsg "-- Setting OpenSSL version to $FORCE_OPENSSL_VERSION"
+}
+
+#############################################################################
 # Go version
 #############################################################################
 
@@ -762,7 +772,7 @@ init() {
     if [ -n "$FORCE_OPENSSL_VERSION" ]; then
         CFLAGS="-I/usr/ssl-$FORCE_OPENSSL_VERSION/include $CFLAGS"
         LDFLAGS32="-L/usr/ssl-$FORCE_OPENSSL_VERSION/lib $LDFLAGS32"
-        LDFLAGS64="-L/usr/ssl-$FORCE_OPENSSL_VERSION/lib/amd64 $LDFLAGS64"
+        LDFLAGS64="-L/usr/ssl-$FORCE_OPENSSL_VERSION/lib/$ISAPART64 $LDFLAGS64"
     fi
 
     # Create symbolic links to build area
