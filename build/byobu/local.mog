@@ -1,0 +1,33 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2021 Sebastien Perreault
+
+license COPYING license=GPLv3
+
+# drop unwanted and linux specific stuff
+<transform path=etc/$(OPREFIX)/profile\.d -> drop>
+<transform path=$(PREFIX)/share/(?:dbus|doc) -> drop>
+<transform path=$(PREFIX)/share/$(PROG)/(?:desktop|pixmaps|tests) -> drop>
+<transform path=$(PREFIX)/bin/(?!$(PROG)) -> drop>
+<transform path=$(PREFIX)/share/man/man1/(?!$(PROG)) -> drop>
+
+<transform file path=etc/$(PREFIX) -> set preserve renamenew>
+
+# Skip dependency resolution for python components
+<transform file path=$(PREFIX)/lib/byobu/include/[^/]+\.py$ \
+    -> set pkg.depend.bypass-generate .*>
+
+# byobu works with either screen or tmux
+depend type=require-any fmri=pkg:/terminal/screen fmri=pkg:/terminal/tmux
+
+<include binlink.mog>
+<include manlink.mog>
+
