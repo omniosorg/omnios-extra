@@ -17,7 +17,7 @@
 . ../../../lib/functions.sh
 
 PROG=xorgproto
-VER=2021.4
+VER=2021.5
 PKG=ooce/x11/header/x11-protocols
 SUMMARY="xorgproto"
 DESC="X Window System protocol definitions"
