@@ -17,13 +17,15 @@
 . ../../lib/functions.sh
 
 PROG=libgd
-VER=2.3.2
+VER=2.3.3
 PKG=ooce/library/libgd
 SUMMARY="libgd"
 DESC="GD is an open source code library for the dynamic creation of images by "
 DESC+="programmers"
 
 SKIP_LICENCES=libgd
+
+forgo_isaexec
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -41,6 +43,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS="
@@ -49,11 +52,9 @@ CONFIGURE_OPTS="
     --includedir=$OPREFIX/include
 "
 CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
     --libdir=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    --bindir=$PREFIX/bin
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
