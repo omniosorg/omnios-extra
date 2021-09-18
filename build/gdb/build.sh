@@ -18,7 +18,7 @@
 
 PROG=gdb
 PKG=ooce/developer/gdb
-VER=10.2
+VER=11.1
 SUMMARY="$PROG - GNU Debugger"
 DESC="The GNU debugger"
 
@@ -50,9 +50,12 @@ CONFIGURE_OPTS="
     --with-python=$PYTHON
 "
 
-CPPFLAGS+=" -D_REENTRANT"
+export CPPFLAGS+=" -D_REENTRANT -I/usr/include/gmp"
 
 export PATH=$GNUBIN:$PATH
+
+# gdb has large enumerations
+CTF_FLAGS+=" -s"
 
 # Generate illumos data files describing system calls and structures
 # found in core files.

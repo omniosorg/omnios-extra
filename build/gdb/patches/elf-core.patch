@@ -3,79 +3,22 @@
 diff -wpruN '--exclude=*.orig' a~/bfd/elf-bfd.h a/bfd/elf-bfd.h
 --- a~/bfd/elf-bfd.h	1970-01-01 00:00:00
 +++ a/bfd/elf-bfd.h	1970-01-01 00:00:00
-@@ -1348,6 +1348,11 @@ struct elf_backend_data
-   bfd_boolean (*elf_backend_grok_freebsd_prstatus)
+@@ -1377,6 +1377,11 @@ struct elf_backend_data
+   bool (*elf_backend_grok_freebsd_prstatus)
      (bfd *, Elf_Internal_Note *);
  
 +  /* This function, if defined, is called when an NT_LWPSTATUS
 +     note is found in a core file.  */
-+  bfd_boolean (*elf_backend_grok_lwpstatus)
++  bool (*elf_backend_grok_lwpstatus)
 +    (bfd *, Elf_Internal_Note *);
 +
    /* This function, if defined, is called to write a note to a corefile.  */
    char *(*elf_backend_write_core_note)
      (bfd *abfd, char *buf, int *bufsiz, int note_type, ...);
-diff -wpruN '--exclude=*.orig' a~/bfd/elfxx-target.h a/bfd/elfxx-target.h
---- a~/bfd/elfxx-target.h	1970-01-01 00:00:00
-+++ a/bfd/elfxx-target.h	1970-01-01 00:00:00
-@@ -624,6 +624,9 @@
- #ifndef elf_backend_grok_psinfo
- #define elf_backend_grok_psinfo			NULL
- #endif
-+#ifndef elf_backend_grok_lwpstatus
-+#define elf_backend_grok_lwpstatus			NULL
-+#endif
- #ifndef elf_backend_grok_freebsd_prstatus
- #define elf_backend_grok_freebsd_prstatus	NULL
- #endif
-@@ -875,6 +878,7 @@ static struct elf_backend_data elfNN_bed
-   elf_backend_sort_relocs_p,
-   elf_backend_grok_prstatus,
-   elf_backend_grok_psinfo,
-+  elf_backend_grok_lwpstatus,
-   elf_backend_grok_freebsd_prstatus,
-   elf_backend_write_core_note,
-   elf_backend_lookup_section_flags_hook,
-diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
---- a~/include/elf/common.h	1970-01-01 00:00:00
-+++ a/include/elf/common.h	1970-01-01 00:00:00
-@@ -712,6 +712,33 @@
- #define NT_OPENBSD_WCOOKIE	23
- 
- 
-+/* Note segments for core files on illumos systems.  Note name
-+   must start with "CORE".  */
-+#define ILLUMOS_NT_PRSTATUS    1
-+#define ILLUMOS_NT_PRFPREG     2
-+#define ILLUMOS_NT_PRPSINFO    3
-+#define ILLUMOS_NT_PRXREG      4
-+#define ILLUMOS_NT_PLATFORM    5
-+#define ILLUMOS_NT_AUXV        6
-+#define ILLUMOS_NT_GWINDOWS    7
-+#define ILLUMOS_NT_ASRS        8
-+#define ILLUMOS_NT_LDT         9
-+#define ILLUMOS_NT_PSTATUS    10
-+#define ILLUMOS_NT_PSINFO     13
-+#define ILLUMOS_NT_PRCRED     14
-+#define ILLUMOS_NT_UTSNAME    15
-+#define ILLUMOS_NT_LWPSTATUS  16
-+#define ILLUMOS_NT_LWPSINFO   17
-+#define ILLUMOS_NT_PRPRIV     18
-+#define ILLUMOS_NT_PRPRIVINFO 19
-+#define ILLUMOS_NT_CONTENT    20
-+#define ILLUMOS_NT_ZONENAME   21
-+#define ILLUMOS_NT_FDINFO     22
-+#define ILLUMOS_NT_SPYMASTER  23
-+#define ILLUMOS_NT_SECFLAGS   24
-+#define ILLUMOS_NT_LWPNAME    25
-+#define ILLUMOS_NT_UPANIC     26
-+
- /* Note segments for core files on SPU systems.  Note name
-    must start with "SPU/".  */
- 
---- gdb-10.1.unpatched/bfd/elf.c	2020-10-24 04:23:02.000000000 +0000
-+++ gdb-10.1/bfd/elf.c	2021-03-12 12:51:26.573521290 +0000
-@@ -44,6 +44,7 @@
+diff -wpruN '--exclude=*.orig' a~/bfd/elf.c a/bfd/elf.c
+--- a~/bfd/elf.c	1970-01-01 00:00:00
++++ a/bfd/elf.c	1970-01-01 00:00:00
+@@ -44,6 +44,7 @@ SECTION
  #include "libiberty.h"
  #include "safe-ctype.h"
  #include "elf-linux-core.h"
@@ -83,29 +26,29 @@ diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
  
  #ifdef CORE_HEADER
  #include CORE_HEADER
-@@ -9670,7 +9671,10 @@
- static bfd_boolean
+@@ -9700,7 +9701,10 @@ elfcore_make_note_pseudosection (bfd *ab
+ static bool
  elfcore_grok_prfpreg (bfd *abfd, Elf_Internal_Note *note)
  {
 +  asection *sect = bfd_get_section_by_name (abfd, ".reg2");
 +  if (sect == NULL)
    return elfcore_make_note_pseudosection (abfd, ".reg2", note);
-+  return TRUE;
++  return true;
  }
  
  /* Linux dumps the Intel SSE regs in a note named "LINUX" with a note
-@@ -10292,6 +10296,9 @@
+@@ -10348,6 +10352,9 @@ elfcore_grok_note (bfd *abfd, Elf_Intern
  
  #if defined (HAVE_LWPSTATUS_T)
      case NT_LWPSTATUS:
 +      if (bed->elf_backend_grok_lwpstatus)
 +	if ((*bed->elf_backend_grok_lwpstatus) (abfd, note))
-+	  return TRUE;
++	  return true;
        return elfcore_grok_lwpstatus (abfd, note);
  #endif
  
-@@ -10991,6 +10998,216 @@
-   return TRUE;
+@@ -11064,6 +11071,216 @@ elfcore_grok_openbsd_procinfo (bfd *abfd
+   return true;
  }
  
 +#include <sys/types.h>
@@ -114,7 +57,7 @@ diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
 +#include <sys/regset.h>
 +#include <sys/auxv.h>
 +
-+static bfd_boolean
++static bool
 +elfcore_grok_illumos_note (bfd *abfd, Elf_Internal_Note *note)
 +{
 +  asection *sect = NULL;
@@ -134,7 +77,7 @@ diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
 +#endif
 +
 +  if (note == NULL)
-+    return TRUE;
++    return true;
 +
 +  /*
 +   * core files are identified as 32- or 64-bit by the size of the descsz which
@@ -233,8 +176,8 @@ diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
 +          {
 +            if ((_bfd_elfcore_make_pseudosection (abfd, ".reg",
 +                    prgregset_size,
-+                    note->descpos + OFFSET_LWPSTATUS_T_PR_REG_32)) != TRUE)
-+              return FALSE;
++                    note->descpos + OFFSET_LWPSTATUS_T_PR_REG_32)) != true)
++              return false;
 +          }
 +          sect = bfd_get_section_by_name (abfd, reg2_section_name);
 +
@@ -243,7 +186,7 @@ diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
 +            sect->size = prfpregset_size;
 +            sect->filepos = note->descpos + OFFSET_LWPSTATUS_T_PR_FPREG_32;
 +            sect->alignment_power = 2;
-+            return TRUE;
++            return true;
 +          }
 +          else
 +            return _bfd_elfcore_make_pseudosection (abfd, ".reg2",
@@ -262,8 +205,8 @@ diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
 +          {
 +            if ((_bfd_elfcore_make_pseudosection (abfd, ".reg",
 +                    prgregset_size,
-+                    note->descpos + OFFSET_LWPSTATUS_T_PR_REG_64)) != TRUE)
-+              return FALSE;
++                    note->descpos + OFFSET_LWPSTATUS_T_PR_REG_64)) != true)
++              return false;
 +          }
 +          sect = bfd_get_section_by_name (abfd, reg2_section_name);
 +
@@ -272,7 +215,7 @@ diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
 +            sect->size = prfpregset_size;
 +            sect->filepos = note->descpos + OFFSET_LWPSTATUS_T_PR_FPREG_64;
 +            sect->alignment_power = 2;
-+            return TRUE;
++            return true;
 +          }
 +          else
 +            return _bfd_elfcore_make_pseudosection (abfd, ".reg2",
@@ -298,7 +241,7 @@ diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
 +      break;
 +  }
 +
-+  return TRUE;
++  return true;
 +}
 +
 +/*
@@ -308,20 +251,20 @@ diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
 + * elfcore_grok_illumos_note(), then process the note
 + * in elfcore_grok_note().
 + */
-+static bfd_boolean
++static bool
 +call_elfcore_grok_illumos_note (bfd *abfd, Elf_Internal_Note *note)
 +{
 +  if (! elfcore_grok_illumos_note (abfd, note)) {
-+    return FALSE;
++    return false;
 +  } else {
 +    return elfcore_grok_note (abfd, note);
 +  }
 +}
 +
- static bfd_boolean
+ static bool
  elfcore_grok_openbsd_note (bfd *abfd, Elf_Internal_Note *note)
  {
-@@ -12089,7 +12306,10 @@
+@@ -12224,7 +12441,10 @@ elf_parse_notes (bfd *abfd, char *buf, s
  	      GROKER_ELEMENT ( "OpenBSD", elfcore_grok_openbsd_note),
  	      GROKER_ELEMENT ("QNX", elfcore_grok_nto_note),
  	      GROKER_ELEMENT ("SPU/", elfcore_grok_spu_note),
@@ -333,3 +276,61 @@ diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
  	    };
  #undef GROKER_ELEMENT
  	    int i;
+diff -wpruN '--exclude=*.orig' a~/bfd/elfxx-target.h a/bfd/elfxx-target.h
+--- a~/bfd/elfxx-target.h	1970-01-01 00:00:00
++++ a/bfd/elfxx-target.h	1970-01-01 00:00:00
+@@ -624,6 +624,9 @@
+ #ifndef elf_backend_grok_psinfo
+ #define elf_backend_grok_psinfo			NULL
+ #endif
++#ifndef elf_backend_grok_lwpstatus
++#define elf_backend_grok_lwpstatus			NULL
++#endif
+ #ifndef elf_backend_grok_freebsd_prstatus
+ #define elf_backend_grok_freebsd_prstatus	NULL
+ #endif
+@@ -875,6 +878,7 @@ static const struct elf_backend_data elf
+   elf_backend_sort_relocs_p,
+   elf_backend_grok_prstatus,
+   elf_backend_grok_psinfo,
++  elf_backend_grok_lwpstatus,
+   elf_backend_grok_freebsd_prstatus,
+   elf_backend_write_core_note,
+   elf_backend_lookup_section_flags_hook,
+diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
+--- a~/include/elf/common.h	1970-01-01 00:00:00
++++ a/include/elf/common.h	1970-01-01 00:00:00
+@@ -733,6 +733,33 @@
+ #define NT_OPENBSD_WCOOKIE	23
+ 
+ 
++/* Note segments for core files on illumos systems.  Note name
++   must start with "CORE".  */
++#define ILLUMOS_NT_PRSTATUS    1
++#define ILLUMOS_NT_PRFPREG     2
++#define ILLUMOS_NT_PRPSINFO    3
++#define ILLUMOS_NT_PRXREG      4
++#define ILLUMOS_NT_PLATFORM    5
++#define ILLUMOS_NT_AUXV        6
++#define ILLUMOS_NT_GWINDOWS    7
++#define ILLUMOS_NT_ASRS        8
++#define ILLUMOS_NT_LDT         9
++#define ILLUMOS_NT_PSTATUS    10
++#define ILLUMOS_NT_PSINFO     13
++#define ILLUMOS_NT_PRCRED     14
++#define ILLUMOS_NT_UTSNAME    15
++#define ILLUMOS_NT_LWPSTATUS  16
++#define ILLUMOS_NT_LWPSINFO   17
++#define ILLUMOS_NT_PRPRIV     18
++#define ILLUMOS_NT_PRPRIVINFO 19
++#define ILLUMOS_NT_CONTENT    20
++#define ILLUMOS_NT_ZONENAME   21
++#define ILLUMOS_NT_FDINFO     22
++#define ILLUMOS_NT_SPYMASTER  23
++#define ILLUMOS_NT_SECFLAGS   24
++#define ILLUMOS_NT_LWPNAME    25
++#define ILLUMOS_NT_UPANIC     26
++
+ /* Note segments for core files on SPU systems.  Note name
+    must start with "SPU/".  */
+ 

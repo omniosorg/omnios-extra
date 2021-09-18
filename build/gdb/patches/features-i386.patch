@@ -1,20 +1,27 @@
 diff -wpruN '--exclude=*.orig' a~/gdb/features/Makefile a/gdb/features/Makefile
 --- a~/gdb/features/Makefile	1970-01-01 00:00:00
 +++ a/gdb/features/Makefile	1970-01-01 00:00:00
-@@ -228,6 +228,13 @@ FEATURE_XMLFILES = aarch64-core.xml \
- 	i386/64bit-pkeys.xml \
- 	i386/64bit-sse.xml \
- 	i386/x32-core.xml \
-+	i386/32bit-illumos.xml \
-+	i386/64bit-illumos.xml \
+@@ -106,6 +106,11 @@ OUTPUTS = $(patsubst %,$(outdir)/%.dat,$
+ # --enable-targets=all GDB.  You can override this by passing XMLTOC
+ # to make on the command line.
+ XMLTOC = \
 +	i386/amd64-avx-illumos.xml \
 +	i386/amd64-illumos.xml \
 +	i386/i386-avx-illumos.xml \
 +	i386/i386-illumos.xml \
 +	i386/i386-mmx-illumos.xml \
+ 	microblaze-with-stack-protect.xml \
+ 	microblaze.xml \
+ 	mips-dsp-linux.xml \
+@@ -231,6 +236,8 @@ FEATURE_XMLFILES = aarch64-core.xml \
+ 	i386/64bit-pkeys.xml \
+ 	i386/64bit-sse.xml \
+ 	i386/x32-core.xml \
++	i386/32bit-illumos.xml \
++	i386/64bit-illumos.xml \
+ 	riscv/rv32e-xregs.xml \
  	riscv/32bit-cpu.xml \
  	riscv/32bit-fpu.xml \
- 	riscv/64bit-cpu.xml \
 diff -wpruN '--exclude=*.orig' a~/gdb/features/i386/32bit-illumos.xml a/gdb/features/i386/32bit-illumos.xml
 --- a~/gdb/features/i386/32bit-illumos.xml	1970-01-01 00:00:00
 +++ a/gdb/features/i386/32bit-illumos.xml	1970-01-01 00:00:00
