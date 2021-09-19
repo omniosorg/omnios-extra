@@ -17,31 +17,30 @@
 . ../../lib/functions.sh
 
 PROG=asciidoc
-VER=9.1.0
+VER=9.1.1
 PKG=ooce/text/asciidoc
-SUMMARY="AsciiDoc - text based documentation"
-DESC="$SUMMARY"
+SUMMARY="text based documentation"
+DESC="AsciiDoc - $SUMMARY"
+
+RUN_DEPENDS_IPS="ooce/text/docbook-xsl"
+
+SKIP_LICENCES='GPLv2'
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 set_arch 64
 
-XFORM_ARGS=" -DOPREFIX=$OPREFIX -DPREFIX=$PREFIX"
-
-RUN_DEPENDS_IPS="ooce/text/docbook-xsl"
-
-# Building twice fails due to xmllint failure. Always use a fresh copy of
-# the source.
-REMOVE_PREVIOUS=1
-
-SKIP_LICENCES='*'
+XFORM_ARGS="
+    -DOPREFIX=${OPREFIX#/}
+    -DPREFIX=${PREFIX#/}
+    -DPROG=$PROG
+    -DPKGROOT=$PROG
+"
 
 CONFIGURE_OPTS="
     --sysconfdir=/etc/$OPREFIX
 "
-
-reset_configure_opts
 
 init
 download_source $PROG $PROG $VER
