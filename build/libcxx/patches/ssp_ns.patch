@@ -1,0 +1,14 @@
+diff -wpruN '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
+--- a~/CMakeLists.txt	1970-01-01 00:00:00
++++ a/CMakeLists.txt	1970-01-01 00:00:00
+@@ -764,6 +764,10 @@ function(cxx_link_system_libraries targe
+     target_link_libraries(${target} PRIVATE atomic)
+   endif()
+ 
++  if (LIBCXX_LINK_SSP_NS)
++    target_link_libraries(${target} PRIVATE ssp_ns)
++  endif()
++
+   if (MINGW)
+     target_link_libraries(${target} PRIVATE "${MINGW_LIBRARIES}")
+   endif()
