@@ -15,11 +15,6 @@ license COPYRIGHT license=GPLv2
 # Skip dependency detection for python scripts
 <transform file path=.*\.py -> set pkg.depend.bypass-generate .* >
 
-link path=$(OPREFIX)/bin/a2x target=../asciidoc/bin/a2x
-link path=$(OPREFIX)/bin/asciidoc target=../asciidoc/bin/asciidoc
-
-link path=$(OPREFIX)/share/man/man1/a2x.1 \
-    target=../../../asciidoc/share/man/man1/a2x.1
-link path=$(OPREFIX)/share/man/man1/asciidoc.1 \
-    target=../../../asciidoc/share/man/man1/asciidoc.1
+<include binlink.mog>
+<include manlink.mog>
 
