@@ -187,6 +187,7 @@ extra.omnios ooce/system/sysstat
 extra.omnios ooce/system/top
 extra.omnios ooce/system/znapzend
 extra.omnios ooce/system/zrepl
+extra.omnios ooce/terminal/byobu
 extra.omnios ooce/terminal/minicom
 extra.omnios ooce/text/asciidoc
 extra.omnios ooce/text/asciinema
