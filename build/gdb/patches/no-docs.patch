@@ -2,7 +2,7 @@
 diff -wpruN '--exclude=*.orig' a~/gdb/Makefile.in a/gdb/Makefile.in
 --- a~/gdb/Makefile.in	1970-01-01 00:00:00
 +++ a/gdb/Makefile.in	1970-01-01 00:00:00
-@@ -1564,7 +1564,7 @@ COMMON_OBS = $(DEPFILES) $(CONFIG_OBS) $
+@@ -1592,7 +1592,7 @@ COMMON_OBS = $(DEPFILES) $(CONFIG_OBS) $
  	$(SUBDIR_TARGET_OBS) \
  	$(SUBDIR_GCC_COMPILE_OBS)
  
