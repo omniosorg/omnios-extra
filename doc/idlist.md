@@ -53,6 +53,7 @@
 | omnios	| 92	| sshd
 | illumos	| 95	| svctag
 | illumos	| 96	| unknown
+| pkg5		| 97	| pkg5srv
 
 ### Groups
 
@@ -110,4 +111,5 @@
 | omnios	| 92	| sshd
 | illumos	| 95	| slocate
 | illumos	| 96	| unknown
+| pkg5		| 97	| pkg5srv
 
