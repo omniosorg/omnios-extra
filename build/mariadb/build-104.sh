@@ -41,6 +41,8 @@ BUILD_DEPENDS_IPS="
     compress/lz4
 "
 
+RUN_DEPENDS_IPS="ooce/database/mariadb-common"
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}

@@ -32,7 +32,7 @@ SKIP_RTIME_CHECK=1
 # string in the LDAP version rather than the hostname and build path.
 export SOURCE_DATE_EPOCH=`date +%s`
 
-XFORM_ARGS="
+XFORM_ARGS+="
     -DOPREFIX=${OPREFIX#/}
     -DPREFIX=${PREFIX#/}
     -DPROG=$PROG

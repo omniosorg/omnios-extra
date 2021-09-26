@@ -159,3 +159,6 @@
 <transform dir path=var/opt/ooce$ -> set group bin>
 <transform dir path=var/opt/ooce$ -> set mode 0755>
 
+# All users should be blocked from ftp access by default
+<transform user -> default ftpuser false>
+

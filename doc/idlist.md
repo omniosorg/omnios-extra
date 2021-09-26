@@ -1,4 +1,6 @@
 
+\* - was delivered by illumos prior to r151040
+
 ### Users
 
 | source | uid | username
@@ -29,17 +31,17 @@
 | illumos	| 60	| xvm
 | extra		| 67	| znc
 | extra		| 69	| listmonk
-| illumos	| 70	| mysql
+| extra\*	| 70	| mysql
 | illumos	| 71	| lp
 | extra		| 72	| haproxy
 | extra		| 73	| mosquitto
 | extra		| 74	| radius
-| illumos	| 75	| openldap
+| extra\*	| 75	| openldap
 | extra		| 76	| zabbixa (agent)
 | extra		| 77	| zabbix
 | extra		| 78	| munin
 | extra		| 79	| ooceapps
-| illumos	| 80	| webservd
+| extra\*	| 80	| webservd
 | extra		| 81	| nginx
 | extra		| 82	| php
 | extra		| 83	| nagios
@@ -87,15 +89,15 @@
 | illumos	| 65	| netadm
 | extra		| 67	| znc
 | extra		| 69	| listmonk
-| illumos	| 70	| mysql
+| extra\*	| 70	| mysql
 | extra		| 72	| haproxy
 | extra		| 73	| mosquitto
 | extra		| 74	| radius
-| illumos	| 75	| openldap
+| extra\*	| 75	| openldap
 | extra		| 77	| zabbix
 | extra		| 78	| munin
 | extra		| 79	| ooceapps
-| illumos	| 80	| webservd
+| extra\*	| 80	| webservd
 | extra		| 81	| nginx
 | extra		| 82	| php
 | extra		| 83	| nagios

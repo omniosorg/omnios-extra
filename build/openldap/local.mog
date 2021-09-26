@@ -10,6 +10,11 @@
 
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
+$(GATE_SYSUSER)group gid=75 groupname=$(GROUP)
+$(GATE_SYSUSER)user ftpuser=false gcos-field="OpenLDAP user" \
+    group=$(GROUP) uid=75 password=NP username=$(USER) \
+    home-dir=/var/$(PREFIX)
+
 license LICENSE license=OpenLDAP
 
 <transform path=$(PREFIX)/s?bin/i386 -> drop>
