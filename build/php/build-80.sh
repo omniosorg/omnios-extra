@@ -18,7 +18,7 @@
 
 PROG=php
 PKG=ooce/application/php-80
-VER=8.0.10
+VER=8.0.11
 SUMMARY="PHP 8.0"
 DESC="A popular general-purpose scripting language"
 
@@ -117,7 +117,6 @@ CONFIGURE_OPTS_64="
     --with-readline=/usr
     --with-curl
     --enable-gd
-    --with-external-gd
     --enable-sockets
     --enable-bcmath
     --enable-exif
