@@ -8,7 +8,12 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+
+$(GATE_SYSUSER)group gid=80 groupname=$(GROUP)
+$(GATE_SYSUSER)user ftpuser=false gcos-field="Apache user" \
+    group=$(GROUP) uid=80 password=NP username=$(USER) \
+    home-dir=/var/$(PREFIX)
 
 # Mediated binaries
 <transform file \

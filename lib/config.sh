@@ -258,6 +258,26 @@ MAKE_TESTSUITE_ARGS_WS=
 # script when testing to speed up building a package
 DONT_REMOVE_INSTALL_DIR=
 
+XFORM_ARGS=
+
+# Prior to release r151040, some users and groups were provided as part of the
+# default system passwd file and they were used by packages. Those packages
+# did not provide user or group actions for these since they were present in
+# every system by default.
+# As of r151040, the default system files under /etc do not include these users
+# and groups; packages must now provide them. We don't want to provide them
+# on previous releases though as downgrading a package to a version prior to
+# this change will result in the users being removed. Any systems being
+# upgraded to r151040 from a previous release will keep the users and then
+# a package update will overwrite them. Since the users are included in the
+# earliest available package for r151040, it should not be possible for anyone
+# to downgrade and shoot themselves in the foot.
+if [ $RELVER -ge 151040 ]; then
+    XFORM_ARGS+=" -DGATE_SYSUSER="
+else
+    XFORM_ARGS+=" -DGATE_SYSUSER=#"
+fi
+
 #############################################################################
 # C compiler options - these can be overridden by a build script
 #############################################################################

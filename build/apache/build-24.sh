@@ -32,7 +32,7 @@ set_patchdir patches-$sMAJVER
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
 
-XFORM_ARGS="
+XFORM_ARGS+="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG

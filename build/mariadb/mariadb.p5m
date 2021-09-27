@@ -1,0 +1,14 @@
+set name=pkg.fmri value=ooce/database/mariadb-common@1.0.0-@PVER@
+set name=variant.arch value=i386
+set name=variant.opensolaris.zone value=global value=nonglobal
+set name=description value="Common mariadb package"
+set name=pkg.description value="Common mariadb package"
+set name=pkg.summary value="Common mariadb package"
+
+$(GATE_SYSUSER)group groupname=mysql gid=70
+$(GATE_SYSUSER)user username=mysql ftpuser=false gcos-field="MariaDB User" \
+    group=mysql home-dir=/var/opt/ooce/mariadb password=NP uid=70
+
+dir group=bin mode=0755 owner=root path=var/opt/ooce
+dir group=mysql mode=0755 owner=mysql path=var/opt/ooce/mariadb
+

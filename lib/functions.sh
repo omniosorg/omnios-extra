@@ -1755,9 +1755,15 @@ publish_manifest()
 
     [ -n "$root" ] && root="-d $root"
 
-    translate_manifest $pmf $pmf.final
+    translate_manifest $pmf $pmf.xlate
+
+    logmsg "--- Applying transforms"
+    logcmd -p $PKGMOGRIFY $XFORM_ARGS $pmf.xlate  > $pmf.final
 
     logmsg "Publishing from $pmf.final"
+
+    fgrep -q '$(' $pmf.final \
+        && logerr "------ Manifest contains unresolved variables"
 
     if [ -z "$SKIP_PKGLINT" ] && ( [ -n "$BATCH" ] || ask_to_pkglint ); then
         run_pkglint $PKGSRVR $pmf.final
