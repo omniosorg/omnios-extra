@@ -1755,21 +1755,26 @@ publish_manifest()
 
     [ -n "$root" ] && root="-d $root"
 
-    translate_manifest $pmf $pmf.xlate
+    TMPDIR="$BASE_TMPDIR/${pmf##*/}"
+    logcmd mkdir -p $TMPDIR || logerr "Could not mkdir $TMPDIR"
+
+    local tmpf=$TMPDIR/manifest
+
+    translate_manifest $pmf $tmpf.xlate
 
     logmsg "--- Applying transforms"
-    logcmd -p $PKGMOGRIFY $XFORM_ARGS $pmf.xlate  > $pmf.final
+    logcmd -p $PKGMOGRIFY $XFORM_ARGS $tmpf.xlate  > $tmpf.final
 
-    logmsg "Publishing from $pmf.final"
+    logmsg "Publishing from $tmpf.final"
 
-    fgrep -q '$(' $pmf.final \
+    fgrep -q '$(' $tmpf.final \
         && logerr "------ Manifest contains unresolved variables"
 
     if [ -z "$SKIP_PKGLINT" ] && ( [ -n "$BATCH" ] || ask_to_pkglint ); then
-        run_pkglint $PKGSRVR $pmf.final
+        run_pkglint $PKGSRVR $tmpf.final
     fi
 
-    logcmd pkgsend -s $PKGSRVR publish $root $pmf.final \
+    logcmd pkgsend -s $PKGSRVR publish $root $tmpf.final \
         || logerr "pkgsend failed"
     [ -n "$pkg" -a -z "$SKIP_PKG_DIFF" ] && diff_latest $pkg
 }
