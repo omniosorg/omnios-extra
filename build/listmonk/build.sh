@@ -18,7 +18,7 @@
 
 PROG=listmonk
 PKG=ooce/application/listmonk
-VER=1.1.0
+VER=2.0.0
 SUMMARY="$PROG"
 DESC="Self-hosted newsletter & mailing list manager"
 
@@ -40,6 +40,12 @@ GOOS=illumos
 GOARCH=amd64
 export GOOS GOARCH
 
+# build expects GNU touch
+export PATH=$GNUBIN:$PATH
+
+# parallel make is currently broken
+NO_PARALLEL_MAKE=1
+
 configure64() {
     note -n "-- installing yarn"
 
@@ -47,10 +53,7 @@ configure64() {
     logcmd npm install --prefix $TMPDIR/$BUILDDIR/_deps yarn \
         || logerr "installing yarn failed"
 
-    PATH+=":$TMPDIR/$BUILDDIR/_deps/node_modules/yarn/bin"
-    note -n "-- building dependencies"
-    logcmd $MAKE deps || logerr "Building dependencies failed"
-    PATH+=":$TMPDIR/$BUILDDIR/_deps/bin"
+    export YARN=$TMPDIR/$BUILDDIR/_deps/node_modules/yarn/bin/yarn
 }
 
 make_install64() {
