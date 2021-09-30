@@ -37,6 +37,7 @@
 | ooce/database/postgresql-11	| 11.13		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-12	| 12.8		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-13	| 13.4		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/postgresql-14	| 14.0		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-96	| 9.6.23	| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/rrdtool		| 1.7.2		| https://oss.oetiker.ch/rrdtool/pub/?M=D | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/autoconf-archive | 2021.02.19	| https://ftp.gnu.org/gnu/autoconf-archive/ | [omniosorg](https://github.com/omniosorg)
