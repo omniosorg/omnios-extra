@@ -20,6 +20,7 @@ extra.omnios ooce/application/php-73/imagick
 extra.omnios ooce/application/php-74
 extra.omnios ooce/application/php-74/imagick
 extra.omnios ooce/application/php-80
+extra.omnios ooce/application/php-80/imagick
 extra.omnios ooce/application/php-common
 extra.omnios ooce/application/texlive
 extra.omnios ooce/application/tidy
@@ -37,6 +38,7 @@ extra.omnios ooce/database/mariadb-103
 extra.omnios ooce/database/mariadb-104
 extra.omnios ooce/database/mariadb-105
 extra.omnios ooce/database/mariadb-106
+extra.omnios ooce/database/mariadb-common
 extra.omnios ooce/database/postgresql-10 l
 extra.omnios ooce/database/postgresql-11
 extra.omnios ooce/database/postgresql-12
@@ -115,6 +117,7 @@ extra.omnios ooce/library/libwebp
 extra.omnios ooce/library/libzip
 extra.omnios ooce/library/mariadb-104
 extra.omnios ooce/library/mariadb-105
+extra.omnios ooce/library/mariadb-106
 extra.omnios ooce/library/nettle
 extra.omnios ooce/library/onig
 extra.omnios ooce/library/openldap
