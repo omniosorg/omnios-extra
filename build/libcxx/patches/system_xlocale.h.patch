@@ -1,0 +1,15 @@
+diff -wpruN '--exclude=*.orig' a~/src/support/solaris/xlocale.cpp a/src/support/solaris/xlocale.cpp
+--- a~/src/support/solaris/xlocale.cpp	1970-01-01 00:00:00
++++ a/src/support/solaris/xlocale.cpp	1970-01-01 00:00:00
+@@ -8,10 +8,9 @@
+ 
+ #ifdef __sun__
+ 
+-#include "__support/solaris/xlocale.h"
++#include <xlocale.h>
+ #include <stdarg.h>
+ #include <stdio.h>
+-#include <sys/localedef.h>
+ 
+ extern "C" {
+ 
