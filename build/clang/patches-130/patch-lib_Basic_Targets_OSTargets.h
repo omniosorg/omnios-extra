@@ -30,7 +30,7 @@ diff -wpruN '--exclude=*.orig' a~/lib/Basic/Targets/OSTargets.h a/lib/Basic/Targ
    }
  };
  
-@@ -620,22 +630,15 @@ protected:
+@@ -628,22 +638,15 @@ protected:
      Builder.defineMacro("__ELF__");
      Builder.defineMacro("__svr4__");
      Builder.defineMacro("__SVR4");

@@ -8,5 +8,5 @@ diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.cpp a/lib/Driver
 -  const char *Exec = Args.MakeArgString(getToolChain().GetProgramPath("as"));
 +  const char *Exec = Args.MakeArgString(getToolChain().GetProgramPath("gas"));
    C.addCommand(std::make_unique<Command>(JA, *this, ResponseFileSupport::None(),
-                                          Exec, CmdArgs, Inputs));
+                                          Exec, CmdArgs, Inputs, Output));
  }
