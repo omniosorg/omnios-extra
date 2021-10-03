@@ -18,7 +18,7 @@
 
 PROG=libcxx
 PKG=ooce/library/libcxx
-VER=12.0.1
+VER=13.0.0
 SUMMARY="C++ standard library"
 DESC="libc++ is a new implementation of the C++ standard library, "
 DESC+="targeting C++11 and above."
