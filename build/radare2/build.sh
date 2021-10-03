@@ -18,7 +18,7 @@
 
 PROG=radare2
 PKG=ooce/developer/radare2
-VER=5.3.1
+VER=5.4.2
 SUMMARY="A low-level software forensics tool"
 DESC="$PROG - $SUMMARY"
 
@@ -34,6 +34,7 @@ set_arch 64
 set_standard XPG6 CFLAGS
 
 export PATH=$GNUBIN:$PATH
+CFLAGS+=" -fPIC"
 LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64 -L$OPREFIX/lib/$ISAPART64"
 LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
 # Some of the libraries have large enumerations
