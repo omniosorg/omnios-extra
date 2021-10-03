@@ -5,7 +5,7 @@ Don't implement sys/regset.h workaround, fix source instead.
 diff -wpruN '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
 --- a~/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/CMakeLists.txt	1970-01-01 00:00:00
-@@ -961,7 +961,7 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "(Fre
+@@ -942,7 +942,7 @@ endif()
  
  if( ${CMAKE_SYSTEM_NAME} MATCHES SunOS )
     # special hack for Solaris to handle crazy system sys/regset.h

@@ -17,8 +17,8 @@
 . ../../lib/functions.sh
 
 PROG=llvm
-PKG=ooce/developer/llvm-111
-VER=11.1.0
+PKG=ooce/developer/llvm-130
+VER=13.0.0
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 

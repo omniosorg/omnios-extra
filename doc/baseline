@@ -64,8 +64,8 @@ extra.omnios ooce/developer/go-116
 extra.omnios ooce/developer/go-117
 extra.omnios ooce/developer/gperf
 extra.omnios ooce/developer/gyp
-extra.omnios ooce/developer/llvm-111
 extra.omnios ooce/developer/llvm-120
+extra.omnios ooce/developer/llvm-130
 extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr
