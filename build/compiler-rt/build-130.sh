@@ -17,8 +17,8 @@
 . ../../lib/functions.sh
 
 PROG=compiler-rt
-PKG=ooce/developer/compiler-rt-111
-VER=11.1.0
+PKG=ooce/developer/compiler-rt-130
+VER=13.0.0
 SUMMARY="LLVM runtime libraries"
 DESC="Implementation for the runtime compiler support libraries"
 
