@@ -5,16 +5,16 @@ Disable components that aren't ready for SunOS yet.
 diff -wpruN '--exclude=*.orig' a~/cmake/config-ix.cmake a/cmake/config-ix.cmake
 --- a~/cmake/config-ix.cmake	1970-01-01 00:00:00
 +++ a/cmake/config-ix.cmake	1970-01-01 00:00:00
-@@ -621,7 +621,7 @@ set(COMPILER_RT_SANITIZERS_TO_BUILD all
+@@ -656,7 +656,7 @@ set(COMPILER_RT_SANITIZERS_TO_BUILD all
  list_replace(COMPILER_RT_SANITIZERS_TO_BUILD all "${ALL_SANITIZERS}")
  
  if (SANITIZER_COMMON_SUPPORTED_ARCH AND NOT LLVM_USE_SANITIZER AND
--    (OS_NAME MATCHES "Android|Darwin|Linux|FreeBSD|NetBSD|OpenBSD|Fuchsia|SunOS" OR
-+    (OS_NAME MATCHES "Android|Darwin|Linux|FreeBSD|NetBSD|OpenBSD|Fuchsia" OR
+-    (OS_NAME MATCHES "Android|Darwin|Linux|FreeBSD|NetBSD|Fuchsia|SunOS" OR
++    (OS_NAME MATCHES "Android|Darwin|Linux|FreeBSD|NetBSD|Fuchsia" OR
      (OS_NAME MATCHES "Windows" AND NOT CYGWIN AND
          (NOT MINGW OR CMAKE_CXX_COMPILER_ID MATCHES "Clang"))))
    set(COMPILER_RT_HAS_SANITIZER_COMMON TRUE)
-@@ -642,7 +642,7 @@ else()
+@@ -676,7 +676,7 @@ else()
    set(COMPILER_RT_HAS_ASAN FALSE)
  endif()
  
@@ -23,21 +23,21 @@ diff -wpruN '--exclude=*.orig' a~/cmake/config-ix.cmake a/cmake/config-ix.cmake
    set(COMPILER_RT_ASAN_HAS_STATIC_RUNTIME TRUE)
  else()
    set(COMPILER_RT_ASAN_HAS_STATIC_RUNTIME FALSE)
-@@ -685,7 +685,7 @@ else()
+@@ -726,7 +726,7 @@ else()
  endif()
  
  if (PROFILE_SUPPORTED_ARCH AND NOT LLVM_USE_SANITIZER AND
--    OS_NAME MATCHES "Darwin|Linux|FreeBSD|Windows|Android|Fuchsia|SunOS|NetBSD")
-+    OS_NAME MATCHES "Darwin|Linux|FreeBSD|Windows|Android|Fuchsia|NetBSD")
+-    OS_NAME MATCHES "Darwin|Linux|FreeBSD|Windows|Android|Fuchsia|SunOS|NetBSD|AIX")
++    OS_NAME MATCHES "Darwin|Linux|FreeBSD|Windows|Android|Fuchsia|NetBSD|AIX")
    set(COMPILER_RT_HAS_PROFILE TRUE)
  else()
    set(COMPILER_RT_HAS_PROFILE FALSE)
-@@ -699,7 +699,7 @@ else()
+@@ -740,7 +740,7 @@ else()
  endif()
  
  if (COMPILER_RT_HAS_SANITIZER_COMMON AND UBSAN_SUPPORTED_ARCH AND
--    OS_NAME MATCHES "Darwin|Linux|FreeBSD|NetBSD|OpenBSD|Windows|Android|Fuchsia|SunOS")
-+    OS_NAME MATCHES "Darwin|Linux|FreeBSD|NetBSD|OpenBSD|Windows|Android|Fuchsia")
+-    OS_NAME MATCHES "Darwin|Linux|FreeBSD|NetBSD|Windows|Android|Fuchsia|SunOS")
++    OS_NAME MATCHES "Darwin|Linux|FreeBSD|NetBSD|Windows|Android|Fuchsia")
    set(COMPILER_RT_HAS_UBSAN TRUE)
  else()
    set(COMPILER_RT_HAS_UBSAN FALSE)

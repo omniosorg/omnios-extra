@@ -17,8 +17,8 @@
 . ../../lib/functions.sh
 
 PROG=clang
-PKG=ooce/developer/clang-111
-VER=11.1.0
+PKG=ooce/developer/clang-130
+VER=13.0.0
 SUMMARY="C language family frontend for LLVM"
 DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "

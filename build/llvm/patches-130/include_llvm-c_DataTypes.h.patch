@@ -5,8 +5,8 @@ Don't implement sys/regset.h workaround, fix source instead.
 diff -wpruN '--exclude=*.orig' a~/include/llvm-c/DataTypes.h a/include/llvm-c/DataTypes.h
 --- a~/include/llvm-c/DataTypes.h	1970-01-01 00:00:00
 +++ a/include/llvm-c/DataTypes.h	1970-01-01 00:00:00
-@@ -81,4 +81,27 @@ typedef signed int ssize_t;
- #define HUGE_VALF (float)HUGE_VAL
+@@ -77,4 +77,27 @@ typedef signed int ssize_t;
+ # define UINT64_MAX 0xffffffffffffffffULL
  #endif
  
 +#if defined(__sun)
