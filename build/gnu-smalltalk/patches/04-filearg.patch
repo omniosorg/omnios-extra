@@ -1,0 +1,18 @@
+commit 589b4354c34dd2bb2f57960a13910a12176119cf
+Author: Tino Calancha <[hidden email]>
+Date:   Thu Mar 25 15:46:18 2021 +0100
+
+     * main.c (long_options): Option "file" requires an argument
+
+diff -wpruN '--exclude=*.orig' a~/main.c a/main.c
+--- a~/main.c	1970-01-01 00:00:00
++++ a/main.c	1970-01-01 00:00:00
+@@ -135,7 +135,7 @@ static const struct option long_options[
+   {"core-dump", 0, 0, 'c'},
+   {"declaration-trace", 0, 0, 'D'},
+   {"execution-trace", 0, 0, 'E'},
+-  {"file", 0, 0, 'f'},
++  {"file", 1, 0, 'f'},
+   {"kernel-directory", 1, 0, OPT_KERNEL_DIR},
+   {"no-user-files", 0, 0, OPT_NO_USER},
+   {"no-gc-message", 0, 0, 'g'},
