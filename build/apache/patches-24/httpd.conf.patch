@@ -1,6 +1,19 @@
---- a/docs/conf/httpd.conf.in
-+++ b/docs/conf/httpd.conf.in
-@@ -74,8 +74,8 @@
+diff -wpruN '--exclude=*.orig' a~/docs/conf/extra/httpd-default.conf.in a/docs/conf/extra/httpd-default.conf.in
+--- a~/docs/conf/extra/httpd-default.conf.in	1970-01-01 00:00:00
++++ a/docs/conf/extra/httpd-default.conf.in	1970-01-01 00:00:00
+@@ -52,7 +52,7 @@ AccessFileName .htaccess
+ # Set to one of:  Full | OS | Minor | Minimal | Major | Prod
+ # where Full conveys the most information, and Prod the least.
+ #
+-ServerTokens Full
++ServerTokens Prod
+ 
+ #
+ # Optionally add a line containing the server version and virtual host
+diff -wpruN '--exclude=*.orig' a~/docs/conf/httpd.conf.in a/docs/conf/httpd.conf.in
+--- a~/docs/conf/httpd.conf.in	1970-01-01 00:00:00
++++ a/docs/conf/httpd.conf.in	1970-01-01 00:00:00
+@@ -74,8 +74,8 @@ Listen @@Port@@
  # It is usually good practice to create a dedicated user and group for
  # running httpd, as with most system services.
  #
@@ -11,7 +24,7 @@
  
  </IfModule>
  
-@@ -106,6 +106,7 @@
+@@ -106,6 +106,7 @@ ServerAdmin you@example.com
  # If your host doesn't have a registered DNS name, enter its IP address here.
  #
  #ServerName www.example.com:@@Port@@
@@ -19,7 +32,7 @@
  
  #
  # Deny access to the entirety of your server's filesystem. You must
-@@ -371,7 +371,7 @@
+@@ -370,7 +371,7 @@ LogLevel warn
  # necessary.
  
  # Server-pool management (MPM specific)
@@ -28,7 +41,7 @@
  
  # Multi-language error messages
  #Include @rel_sysconfdir@/extra/httpd-multilang-errordoc.conf
-@@ -398,7 +398,7 @@
+@@ -397,7 +398,7 @@ LogLevel warn
  #Include @rel_sysconfdir@/extra/httpd-dav.conf
  
  # Various default settings
@@ -37,14 +50,3 @@
  
  # Configure mod_proxy_html to understand HTML4/XHTML1
  <IfModule proxy_html_module>
---- a/docs/conf/extra/httpd-default.conf.in~	2020-08-18 23:09:56.014646393 +0000
-+++ b/docs/conf/extra/httpd-default.conf.in	2020-08-18 23:10:16.985576699 +0000
-@@ -52,7 +52,7 @@
- # Set to one of:  Full | OS | Minor | Minimal | Major | Prod
- # where Full conveys the most information, and Prod the least.
- #
--ServerTokens Full
-+ServerTokens Prod
- 
- #
- # Optionally add a line containing the server version and virtual host
