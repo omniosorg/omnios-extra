@@ -24,6 +24,11 @@ DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
 DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
 
+if [ $RELVER -lt 151036 ]; then
+    logmsg "--- $PKG is not built for r$RELVER"
+    exit 0
+fi
+
 set_arch 64
 set_builddir $PROG-$VER.src
 

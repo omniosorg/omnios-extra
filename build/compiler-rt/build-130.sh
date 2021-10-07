@@ -22,6 +22,11 @@ VER=13.0.0
 SUMMARY="LLVM runtime libraries"
 DESC="Implementation for the runtime compiler support libraries"
 
+if [ $RELVER -lt 151036 ]; then
+    logmsg "--- $PKG is not built for r$RELVER"
+    exit 0
+fi
+
 MAJVER=${VER%.*}
 
 BUILD_DEPENDS_IPS="ooce/developer/llvm-${MAJVER//./}"

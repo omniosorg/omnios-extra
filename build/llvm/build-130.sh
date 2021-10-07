@@ -22,6 +22,11 @@ VER=13.0.0
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 
+if [ $RELVER -lt 151036 ]; then
+    logmsg "--- $PKG is not built for r$RELVER"
+    exit 0
+fi
+
 set_arch 64
 set_builddir $PROG-$VER.src
 

@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=asciinema
-VER=2.0.2
+VER=2.1.0
 PKG=ooce/text/asciinema
 SUMMARY="asciinema terminal recorder"
 DESC="A lightweight, purely text-based approach to terminal recording"

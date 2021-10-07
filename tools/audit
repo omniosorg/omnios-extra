@@ -250,6 +250,9 @@ audit()
                         # are not published after r151034
                         */clang-[89]0:|*/llvm-[89]0:|*/compiler-rt-90:|*/lxadm:)
                             [ $r -gt 151034 ] || ok=0 ;;
+                        # clang/llvm/compiler-rt-130 are not published until r151036
+                        */clang-130:|*/llvm-130:|*/compiler-rt-130:)
+                            [ $r -lt 151036 ] || ok=0 ;;
                         # X11 headers/libraries are not published until r151035
                         */x11/*:) [ $r -lt 151035 ] || ok=0 ;;
                         # pango is stuck on 1.44 on r151030 due to the
