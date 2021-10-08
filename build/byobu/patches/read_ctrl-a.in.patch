@@ -1,0 +1,19 @@
+diff -wpruN '--exclude=*.orig' a~/usr/bin/byobu-ctrl-a.in a/usr/bin/byobu-ctrl-a.in
+--- a~/usr/bin/byobu-ctrl-a.in	2017-09-25 11:25:23.000000000 +0000
++++ a/usr/bin/byobu-ctrl-a.in	2021-10-08 05:36:20.226004935 +0000
+@@ -85,12 +85,11 @@ while [ -z "$bind_to" ]; do
+ 	echo "  - You can press F9 and choose your escape character"
+ 	echo "  - You can run 'byobu-ctrl-a' at any time to change your selection"
+ 	echo
+-	printf "Select [1 or 2]: "
+-	s=$(head -n1)
++	read -p "Select [1 or 2]: " s
+ 	echo
+ 	case "$s" in
+-		1) bind_to="screen"; break;;
+-		2) bind_to="emacs"; break;;
++      1*) bind_to="screen"; break;;
++      2*) bind_to="emacs"; break;;
+ 	esac
+ done
+ 

@@ -53,6 +53,7 @@ fix_shebang() {
 
 init
 download_source $PROG ${PROG}_$VER.orig
+patch_source
 fix_shebang
 prep_build
 build
