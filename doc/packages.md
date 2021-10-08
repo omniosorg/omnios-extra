@@ -53,7 +53,7 @@
 | ooce/developer/freepascal	| 3.2.2		| https://sourceforge.net/projects/freepascal/files/Source/ https://www.freepascal.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/gdb		| 11.1		| https://ftp.gnu.org/gnu/gdb/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-116		| 1.16.9	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/go-117		| 1.17.1	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/go-117		| 1.17.2	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/gperf		| 3.1		| https://ftp.gnu.org/pub/gnu/gperf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-120	| 12.0.1	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-130	| 13.0.0	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
