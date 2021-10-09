@@ -18,7 +18,7 @@
 
 PROG=freeradius
 PKG=ooce/server/freeradius
-VER=3.0.24
+VER=3.0.25
 TALLOCVER=2.3.3
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm

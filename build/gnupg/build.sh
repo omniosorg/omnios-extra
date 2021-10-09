@@ -25,11 +25,11 @@ DESC="A complete and free implementation of the OpenPGP standard"
 # we don't track the versions in doc/packages.md
 # check for updates when gnupg is updated
 LIBGPGERRORVER=1.42
-LIBGCRYPTVER=1.9.3
-LIBKSBAVER=1.5.1
+LIBGCRYPTVER=1.9.4
+LIBKSBAVER=1.6.0
 LIBASSUANVER=2.5.5
 NPTHVER=1.6
-PINENTRYVER=1.1.1
+PINENTRYVER=1.2.0
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
