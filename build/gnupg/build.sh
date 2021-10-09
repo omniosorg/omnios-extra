@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=gnupg
-VER=2.3.1
+VER=2.3.2
 PKG=ooce/security/gnupg
 SUMMARY="$PROG - GNU Privacy Guard"
 DESC="A complete and free implementation of the OpenPGP standard"
