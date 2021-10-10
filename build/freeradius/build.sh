@@ -74,8 +74,8 @@ note -n "Building $PROG"
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --sysconfdir=/etc$PREFIX
-    --with-logdir=/var/log/$PREFIX
-    --localstatedir=/var/$PREFIX
+    --with-logdir=/var/log$PREFIX
+    --localstatedir=/var$PREFIX
     --with-raddbdir=/etc$PREFIX
     --libdir=$PREFIX/lib/$ISAPART64
     --with-talloc-include-dir=$DESTDIR$PREFIX/include
