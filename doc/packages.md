@@ -132,7 +132,7 @@
 | ooce/network/mrtg		| 2.17.8	| https://oss.oetiker.ch/mrtg/pub/?M=D | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mtr		| 0.94		| https://github.com/traviscross/mtr/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nicstat		| 1.95		| https://sourceforge.net/projects/nicstat/files/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/nsd		| 4.3.7		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/nsd		| 4.3.8		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openldap		| 2.4.58	| https://www.openldap.org/software/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn		| 2.5.4		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn-auth-ldap | 2.0.4	| https://github.com/threerings/openvpn-auth-ldap/releases | [omniosorg](https://github.com/omniosorg)
