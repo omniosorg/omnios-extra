@@ -1,7 +1,7 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
 | ooce/application/fcgiwrap	| 1.1.0		| https://github.com/gnosek/fcgiwrap/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/gitea	| 1.15.3	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/gitea	| 1.15.4	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gnuplot	| 5.4.2		| https://sourceforge.net/projects/gnuplot/files/gnuplot/ http://www.gnuplot.info/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.44.1	| https://www2.graphviz.org/Packages/stable/portable_source/ https://graphviz.org/download/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/imagemagick	| 7.1.0-1	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
@@ -132,7 +132,7 @@
 | ooce/network/mrtg		| 2.17.8	| https://oss.oetiker.ch/mrtg/pub/?M=D | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mtr		| 0.94		| https://github.com/traviscross/mtr/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nicstat		| 1.95		| https://sourceforge.net/projects/nicstat/files/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/nsd		| 4.3.7		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/nsd		| 4.3.8		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openldap		| 2.4.58	| https://www.openldap.org/software/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn		| 2.5.4		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn-auth-ldap | 2.0.4	| https://github.com/threerings/openvpn-auth-ldap/releases | [omniosorg](https://github.com/omniosorg)
@@ -184,7 +184,7 @@
 | ooce/util/jq			| 1.6		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/ncdu		| 1.16		| https://dev.yorhel.nl/download | [jclulow](https://github.com/jclulow)
 | ooce/util/rargs		| 0.3.0		| https://github.com/lotabout/rargs/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/util/stress-ng		| 0.13.04	| https://github.com/ColinIanKing/stress-ng/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/util/stress-ng		| 0.13.05	| https://github.com/ColinIanKing/stress-ng/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/xjobs		| 20200726	| https://www.maier-komor.de/xjobs.html | [omniosorg](https://github.com/omniosorg)
 | ooce/util/zadm		| github-latest	| https://github.com/omniosorg/zadm/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/virtualization/virtualbox-5 | 5.2.44	| https://www.virtualbox.org/wiki/Download_Old_Builds_5_2 | [omniosorg](https://github.com/omniosorg)
