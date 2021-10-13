@@ -17,8 +17,8 @@
 . ../../lib/functions.sh
 
 PROG=mattermost
-VER=5.39.0
-MMCTLVER=5.39.0
+VER=6.0.0
+MMCTLVER=6.0.0
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
 DESC="All your team communication in one place, "
@@ -52,6 +52,8 @@ build() {
 
     BUILDDIR+=/$prog patch_source patches-$prog
 
+    export GOPATH=$TMPDIR/$BUILDDIR/$prog/_deps
+
     pushd $TMPDIR/$BUILDDIR/$prog > /dev/null
     logcmd $MAKE "$@" || logerr "Build failed"
     popd >/dev/null
@@ -74,11 +76,9 @@ install() {
 
 init
 prep_build
-save_variable BUILDDIR
-clone_go_source mmctl $PROG v$MMCTLVER
-restore_variable BUILDDIR
 # use clone_github_source instead of clone_go_source
 # since mattermost bundles its dependencies
+clone_github_source "mmctl" "$GITHUB/$PROG/mmctl" v$MMCTLVER
 clone_github_source "$PROG-server" "$GITHUB/$PROG/$PROG-server" v$VER
 clone_github_source "$PROG-webapp" "$GITHUB/$PROG/$PROG-webapp" v$VER
 build mmctl "ADVANCED_VET=FALSE"
@@ -92,7 +92,7 @@ fi
 build $PROG-webapp build
 export LDFLAGS=
 
-build $PROG-server build-illumos package
+build $PROG-server build-illumos package-illumos
 install
 install_smf application $PROG.xml
 make_package
