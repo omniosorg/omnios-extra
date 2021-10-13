@@ -6,7 +6,7 @@
 diff -wpruN '--exclude=*.orig' a~/tool/config.guess a/tool/config.guess
 --- a~/tool/config.guess	1970-01-01 00:00:00
 +++ a/tool/config.guess	1970-01-01 00:00:00
-@@ -398,19 +398,9 @@ case "$UNAME_MACHINE:$UNAME_SYSTEM:$UNAM
+@@ -409,19 +409,9 @@ case "$UNAME_MACHINE:$UNAME_SYSTEM:$UNAM
  	echo i386-pc-auroraux"$UNAME_RELEASE"
  	exit ;;
      i86pc:SunOS:5.*:* | i86xen:SunOS:5.*:*)

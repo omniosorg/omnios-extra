@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
@@ -27,6 +27,10 @@ Requires that nrpe be running on the remote host (either as a standalone \
 daemon or as a service under inetd)."
 
 set_arch 64
+
+# configure uses 'openssl dhparam -C' to generate code and that option has been
+# removed in OpenSSL 3; stick with 1.1 for now.
+[ "$OPENSSLVER" = 3 ] && set_opensslver 1.1
 
 BUILDDIR=nrpe-$VER
 
@@ -63,6 +67,7 @@ CONFIGURE_OPTS_64="
     --localstatedir=/var/$PREFIX
     --with-logdir=/var/log/$PREFIX
     --enable-command-args
+    ac_cv_path_sslbin=$OPENSSLPATH/bin/openssl
 "
 
 init

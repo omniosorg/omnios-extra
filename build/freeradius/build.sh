@@ -52,6 +52,7 @@ XFORM_ARGS="
 set_builddir $PROG-server-$VER
 set_arch 64
 set_standard XPG4v2
+[ "$OPENSSLVER" = 3 ] && set_opensslver 1.1
 
 init
 prep_build

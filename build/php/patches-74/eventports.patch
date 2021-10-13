@@ -4,17 +4,17 @@ Fix for PHP bug https://bugs.php.net/bug.php?id=66694
 diff -wpruN '--exclude=*.orig' a~/sapi/fpm/fpm/events/port.c a/sapi/fpm/fpm/events/port.c
 --- a~/sapi/fpm/fpm/events/port.c	1970-01-01 00:00:00
 +++ a/sapi/fpm/fpm/events/port.c	1970-01-01 00:00:00
-@@ -122,6 +122,7 @@ static int fpm_event_port_wait(struct fp
+@@ -123,6 +123,7 @@ static int fpm_event_port_wait(struct fp
  	t.tv_nsec = (timeout % 1000) * 1000 * 1000;
  
  	/* wait for inconming event or timeout. We want at least one event or timeout */
 +again:
  	nget = 1;
- 	ret = port_getn(pfd, events, nevents, &nget, &t);
- 	if (ret < 0) {
-@@ -131,17 +132,31 @@ static int fpm_event_port_wait(struct fp
- 			zlog(ZLOG_WARNING, "poll() returns %d", errno);
- 			return -1;
+ 	events[0].portev_user = (void *)-1; /* so we can double check that an event was returned */
+ 
+@@ -144,17 +145,31 @@ static int fpm_event_port_wait(struct fp
+ 			 */
+ 			nget = 0;
  		}
 +
 +		if (errno == EINTR)

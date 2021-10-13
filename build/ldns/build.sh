@@ -25,6 +25,8 @@ DESC="$PROG DNS programming library and drill utility"
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
+[ "$OPENSSLVER" = 3 ] && set_opensslver 1.1
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}

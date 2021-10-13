@@ -76,7 +76,7 @@ CONFIGURE_OPTS_64="
     --enable-libxml
     --with-gettext
     --enable-pcntl
-    --with-openssl
+    --with-openssl=$OPENSSLPATH
     --with-gmp
     --with-mysqli=mysqlnd
     --with-pdo-mysql=mysqlnd

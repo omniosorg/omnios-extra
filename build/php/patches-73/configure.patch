@@ -3,7 +3,7 @@ Adjust for non-standard location of OmniOS' gmp.h include file
 diff -wpruN '--exclude=*.orig' a~/configure a/configure
 --- a~/configure	1970-01-01 00:00:00
 +++ a/configure	1970-01-01 00:00:00
-@@ -39409,7 +39409,7 @@ if test "$PHP_GMP" != "no"; then
+@@ -39412,7 +39412,7 @@ if test "$PHP_GMP" != "no"; then
    MACHINE_INCLUDES=$($CC -dumpmachine)
  
    for i in $PHP_GMP /usr/local /usr; do
