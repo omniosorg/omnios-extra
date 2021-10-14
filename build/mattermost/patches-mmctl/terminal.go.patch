@@ -1,0 +1,54 @@
+diff -wpruN '--exclude=*.orig' a~/vendor/github.com/isacikgoz/prompt/term/terminal.go a/vendor/github.com/isacikgoz/prompt/term/terminal.go
+--- a~/vendor/github.com/isacikgoz/prompt/term/terminal.go	1970-01-01 00:00:00
++++ a/vendor/github.com/isacikgoz/prompt/term/terminal.go	1970-01-01 00:00:00
+@@ -4,8 +4,7 @@ import (
+ 	"bufio"
+ 	"bytes"
+ 	"io"
+-	"syscall"
+-	"unsafe"
++	"golang.org/x/sys/unix"
+ 
+ 	"github.com/fatih/color"
+ )
+@@ -18,7 +17,7 @@ var (
+ )
+ 
+ type terminalState struct {
+-	term   syscall.Termios
++	term   unix.Termios
+ 	reader *bufio.Reader
+ 	buf    *bytes.Buffer
+ }
+@@ -46,16 +45,17 @@ func Init(r Reader, w Writer) error {
+ 	reader = r
+ 	writer = w
+ 	state = newTerminalState(reader)
+-	if _, _, err := syscall.Syscall6(syscall.SYS_IOCTL, uintptr(reader.Fd()), ioctlReadTermios, uintptr(unsafe.Pointer(&state.term)), 0, 0, 0); err != 0 {
+-		return err
++	termios, erro := unix.IoctlGetTermios(int(reader.Fd()), unix.TCGETS)
++	if erro != nil {
++		return erro
+ 	}
+ 
+-	newState := state.term
++	state.term = *termios
+ 	// syscall.ECHO | syscall.ECHONL | syscall.ICANON to disable echo
+ 	// syscall.ISIG is to catch keys like ctr-c or ctrl-d
+-	newState.Lflag &^= syscall.ECHO | syscall.ECHONL | syscall.ICANON | syscall.ISIG
++	termios.Lflag &^= unix.ECHO | unix.ECHONL | unix.ICANON | unix.ISIG
+ 
+-	if _, _, err := syscall.Syscall6(syscall.SYS_IOCTL, uintptr(reader.Fd()), ioctlWriteTermios, uintptr(unsafe.Pointer(&newState)), 0, 0, 0); err != 0 {
++	if err := unix.IoctlSetTermios(int(reader.Fd()), unix.TCSETS, termios); err != nil {
+ 		return err
+ 	}
+ 	_, err := writer.Write([]byte(hideCursor))
+@@ -64,7 +64,7 @@ func Init(r Reader, w Writer) error {
+ 
+ // Close restores the terminal state
+ func Close() error {
+-	if _, _, err := syscall.Syscall6(syscall.SYS_IOCTL, uintptr(reader.Fd()), ioctlWriteTermios, uintptr(unsafe.Pointer(&state.term)), 0, 0, 0); err != 0 {
++	if err := unix.IoctlSetTermios(int(reader.Fd()), unix.TCSETS, &state.term); err != nil {
+ 		return err
+ 	}
+ 	_, err := writer.Write([]byte(showCursor))
