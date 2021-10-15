@@ -23,16 +23,17 @@ SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
 DESC+="It is intended for writing scalable network programs such as web servers."
 
+MAJVER=${VER%%.*}
+
 set_arch 64
 
 set_builddir $PROG-v$VER
+set_patchdir patches-$MAJVER
 
 BUILD_DEPENDS_IPS="
     developer/gnu-binutils
     runtime/python-27
 "
-
-MAJVER=${VER%%.*}
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER

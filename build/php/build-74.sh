@@ -82,7 +82,9 @@ CONFIGURE_CMD=/bin/true \
     NO_PARALLEL_MAKE=1 \
     MAKE_TARGET=gso \
     MAKE_ARGS="SSLLIB=/usr/lib/64 SSLTYPE=unix" \
-    MAKE_ARGS_WS="EXTRACFLAGS=\"$CFLAGS $CFLAGS64 -I/usr/include/openssl\"" \
+    MAKE_ARGS_WS="
+        EXTRACFLAGS=\"-I$OPENSSLPATH/include/openssl $CFLAGS $CFLAGS64\"
+    " \
     build_dependency uw-imap panda-imap-master uw-imap panda-imap master
 
 save_function _make_install make_install

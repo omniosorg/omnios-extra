@@ -48,6 +48,8 @@ CONFIGURE_OPTS_64+="
 
 CPPFLAGS+=" -I/usr/include/gmp"
 
+[ "$OPENSSLVER" = 3 ] && CPPFLAGS+=" -DHAVE_TS_VERIFY_CTS_SET_CERTS"
+
 init
 download_source $PROG $PROG $VER
 patch_source

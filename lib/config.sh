@@ -331,6 +331,15 @@ esac
 [ $RELVER -lt 151029 ] && DEFAULT_PYTHON_VER=$PYTHON2VER \
     || DEFAULT_PYTHON_VER=$PYTHON3VER
 
+# Specify expected openssl mediator setting
+if [ $RELVER -ge 151041 ]; then
+    EXP_OPENSSLVER=3
+elif [ $RELVER -ge 151027 ]; then
+    EXP_OPENSSLVER=1.1
+else
+    EXP_OPENSSLVER=1.0
+fi
+
 # Default database versions to bundle into packages which use the libraries
 PGSQLVER=12
 MARIASQLVER=10.4
