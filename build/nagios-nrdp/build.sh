@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=nagios-nrdp
-VER=2.0.4
+VER=2.0.5
 PKG=ooce/application/nagios-nrdp
 SUMMARY="Nagios Remote Data Processor"
 DESC="NRDP is a flexible data transport mechanism and processor \
