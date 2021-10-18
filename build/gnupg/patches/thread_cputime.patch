@@ -6,8 +6,8 @@ with gethrvtime().
  release r151041 onwards).
 
 diff -wpruN '--exclude=*.orig' a~/agent/protect.c a/agent/protect.c
---- a~/agent/protect.c	2021-10-06 10:35:51.000000000 +0000
-+++ a/agent/protect.c	2021-10-18 13:05:41.105730376 +0000
+--- a~/agent/protect.c	1970-01-01 00:00:00
++++ a/agent/protect.c	1970-01-01 00:00:00
 @@ -131,6 +131,9 @@ calibrate_get_time (struct calibrate_tim
                     &data->creation_time, &data->exit_time,
                     &data->kernel_time, &data->user_time);
@@ -17,4 +17,4 @@ diff -wpruN '--exclude=*.orig' a~/agent/protect.c a/agent/protect.c
 +  data->ticks = (clock_t)(tmp * CLOCKS_PER_SEC / 1000000000);
  #elif defined (USE_CLOCK_GETTIME)
    struct timespec tmp;
-
+ 
