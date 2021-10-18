@@ -59,6 +59,8 @@ SKIP_RTIME_CHECK=1
 
 RUSTARCH=x86_64-unknown-illumos
 
+[ $RELVER -ge 151041 ] && ar=$USRBIN/ar || ar=$USRBIN/gar
+
 CONFIGURE_CMD="$PYTHON src/bootstrap/configure.py"
 
 CONFIGURE_OPTS_64="
@@ -74,7 +76,7 @@ CONFIGURE_OPTS+="
     --target=$RUSTARCH
     --set target.$RUSTARCH.cc=$CC
     --set target.$RUSTARCH.cxx=$CXX
-    --set target.$RUSTARCH.ar=gar
+    --set target.$RUSTARCH.ar=$ar
     --enable-rpath
     --enable-ninja
     --disable-codegen-tests
