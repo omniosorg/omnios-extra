@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=hyperfine
-VER=1.11.0
+VER=1.12.0
 PKG=ooce/util/hyperfine
 SUMMARY="benchmarking tool"
 DESC="$PROG is a command-line benchmarking tool that provides statistics about command execution time."
