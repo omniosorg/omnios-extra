@@ -15,7 +15,7 @@
 | ooce/application/nagios-nrpe	| 4.0.3		| https://github.com/NagiosEnterprises/nrpe/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nsca	| 2.10.0	| https://github.com/NagiosEnterprises/nsca/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-plugins | 2.3.3	| http://www.nagios-plugins.org/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/application/novnc	| 1.2.0		| https://github.com/novnc/noVNC/releases | Currently used solely by zadm
+| ooce/application/novnc	| 1.3.0		| https://github.com/novnc/noVNC/releases | Currently used solely by zadm
 | ooce/application/php-73	| 7.3.31	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-74	| 7.4.24	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-80	| 8.0.12	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
@@ -61,7 +61,7 @@
 | ooce/developer/omni		| github-latest	| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| github-latest	| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/radare2	| 5.4.2		| https://github.com/radareorg/radare2/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/rust		| 1.55.0	| https://forge.rust-lang.org/infra/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/rust		| 1.56.0	| https://forge.rust-lang.org/infra/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/subversion	| 1.14.1	| https://downloads.apache.org/subversion/ | [omniosorg](https://github.com/omniosorg)
 | ooce/driver/fuse		| 1.4		| https://github.com/jurikm/illumos-fusefs/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/emacs		| 27.2		| https://ftp.gnu.org/gnu/emacs/ https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html#Releases | [omniosorg](https://github.com/omniosorg)
