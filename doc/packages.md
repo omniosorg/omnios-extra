@@ -1,7 +1,7 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
 | ooce/application/fcgiwrap	| 1.1.0		| https://github.com/gnosek/fcgiwrap/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/gitea	| 1.15.4	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/gitea	| 1.15.5	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gnuplot	| 5.4.2		| https://sourceforge.net/projects/gnuplot/files/gnuplot/ http://www.gnuplot.info/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.44.1	| https://www2.graphviz.org/Packages/stable/portable_source/ https://graphviz.org/download/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/imagemagick	| 7.1.0-1	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
@@ -17,13 +17,13 @@
 | ooce/application/nagios-plugins | 2.3.3	| http://www.nagios-plugins.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/novnc	| 1.3.0		| https://github.com/novnc/noVNC/releases | Currently used solely by zadm
 | ooce/application/php-73	| 7.3.31	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-74	| 7.4.24	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-74	| 7.4.25	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-80	| 8.0.12	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-XX/imagick	| 3.5.1	| https://github.com/Imagick/imagick/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20210325	| ftp://tug.org/historic/systems/texlive/2021/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/tidy		| 5.8.0		| https://github.com/htacg/tidy-html5/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/vagrant	| 2.2.18	| https://github.com/hashicorp/vagrant/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/zabbix	| 5.4.5		| https://www.zabbix.com/download_sources | [omniosorg](https://github.com/omniosorg)
+| ooce/application/zabbix	| 5.4.6		| https://www.zabbix.com/download_sources | [omniosorg](https://github.com/omniosorg)
 | ooce/audio/flac		| 1.3.3		| https://ftp.osuosl.org/pub/xiph/releases/flac/ https://xiph.org/flac/changelog.html | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pbzip2		| 1.1.13	| https://launchpad.net/pbzip2/+download | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pigz		| 2.6		| https://zlib.net/pigz/ | [omniosorg](https://github.com/omniosorg)
@@ -148,7 +148,7 @@
 | ooce/runtime/groovy-30	| 3.0.9		| https://groovy.apache.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-12		| 12.22.7	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-14		| 14.18.1	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/runtime/node-16		| 16.11.1	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/runtime/node-16		| 16.12.0	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-26		| 2.6.8		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-27		| 2.7.4		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-30		| 3.0.2		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
