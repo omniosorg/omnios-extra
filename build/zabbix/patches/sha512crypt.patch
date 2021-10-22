@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/src/libs/zbxcrypto/sha512crypt.c a/src/libs/zbxcrypto/sha512crypt.c
+--- a~/src/libs/zbxcrypto/sha512crypt.c	1970-01-01 00:00:00
++++ a/src/libs/zbxcrypto/sha512crypt.c	1970-01-01 00:00:00
+@@ -5,6 +5,8 @@ Released into the Public Domain by Ulric
+ 
+ #ifdef __linux__
+ 	#include <endian.h>
++#elif defined (__illumos__)
++	#include <endian.h>
+ #elif __hpux
+ /* Nothing to do in HP-UX */
+ #elif _AIX

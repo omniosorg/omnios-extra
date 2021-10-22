@@ -5,3 +5,4 @@ serverconf.patch
 signal.patch
 procstate.patch
 ldap.patch
+sha512crypt.patch
