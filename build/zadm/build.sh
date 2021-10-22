@@ -22,7 +22,7 @@ PKG=ooce/util/zadm
 SUMMARY="zone admin tool"
 DESC="$PROG - $SUMMARY"
 
-NOVNCVER=1.2.0
+NOVNCVER=1.3.0
 
 if [ $RELVER -le 151036 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
@@ -67,8 +67,8 @@ bundle_novnc() {
     logcmd mkdir -p $DESTDIR$PREFIX/novnc || logerr "mkdir novnc failed"
 
     pushd $TMPDIR/$BUILDDIR >/dev/null
-    logcmd rsync -a vnc.html app core vendor $DESTDIR$PREFIX/novnc/ \
-        || logerr "rsync failed"
+    logcmd rsync -a vnc.html package.json app core vendor \
+        $DESTDIR$PREFIX/novnc/ || logerr "rsync failed"
     popd >/dev/null
 
     restore_variable EXTRACTED_SRC
