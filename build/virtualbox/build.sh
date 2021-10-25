@@ -18,7 +18,7 @@
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox
-VER=6.1.26
+VER=6.1.28
 # virtualbox does currently not build with later gsoap versions
 GSOAPVER=2.8.102
 GSOAPDIR=gsoap-${GSOAPVER%.*}
@@ -30,9 +30,6 @@ if [ $RELVER -lt 151030 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
     exit 0
 fi
-
-# This component does not yet build with gcc11
-((GCCVER == 11)) && set_gccver 10
 
 SKIP_LICENCES=GPLv2
 
