@@ -323,7 +323,7 @@ ord26() {
 set_coredir() {
     # Change the core pattern so that core files contain all available
     # information and are stored centrally in the provided directory
-    coreadm -P all -p $1/core.%f.%t
+    coreadm -P all -p $1/core.%f.%t.%p
 }
 
 #############################################################################
