@@ -1,0 +1,15 @@
+
+Open upstream at https://dev.gnupg.org/T5671
+
+diff -wpruN '--exclude=*.orig' a~/common/homedir.c a/common/homedir.c
+--- a~/common/homedir.c	1970-01-01 00:00:00
++++ a/common/homedir.c	1970-01-01 00:00:00
+@@ -68,6 +68,8 @@
+  * text was read.  */
+ #if __linux__
+ # define MYPROC_SELF_EXE "/proc/self/exe"
++#elif __illumos__
++# define MYPROC_SELF_EXE "/proc/self/path/a.out"
+ #else /* Assume *BSD*/
+ # define MYPROC_SELF_EXE "/proc/curproc/file"
+ #endif
