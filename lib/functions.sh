@@ -323,7 +323,7 @@ ord26() {
 set_coredir() {
     # Change the core pattern so that core files contain all available
     # information and are stored centrally in the provided directory
-    coreadm -P all -p $1/core.%f.%t
+    coreadm -P all -p $1/core.%f.%t.%p
 }
 
 #############################################################################
@@ -902,6 +902,7 @@ prep_build() {
             _cmakeopts="-GNinja"
             MAKE=$NINJA
             TESTSUITE_MAKE=$MAKE
+            MAKE_TESTSUITE_ARGS=
             ;& # fallthrough
         cmake)
             OUT_OF_TREE_BUILD=1
@@ -911,8 +912,8 @@ prep_build() {
         meson)
             OUT_OF_TREE_BUILD=1
             MULTI_BUILD=1
-            MAKE="$NINJA"
-            TESTSUITE_MAKE="$NINJA"
+            MAKE=$NINJA
+            TESTSUITE_MAKE=$MAKE
             MAKE_TESTSUITE_ARGS=
             CONFIGURE_CMD="$PYTHONLIB/python$PYTHONVER/bin/meson setup"
             CONFIGURE_CMD+=" $TMPDIR/$BUILDDIR"
