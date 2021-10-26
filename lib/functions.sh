@@ -1000,7 +1000,7 @@ rebase_patches() {
     local patchdir="${1:-$PATCHDIR}"
 
     if ! check_for_patches $patchdir "in order to re-base them"; then
-        logerr "--- No patches to re-base"
+        logmsg -e "--- No patches to re-base"
         return
     fi
 
