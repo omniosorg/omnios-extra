@@ -1,0 +1,26 @@
+original patch taken from
+
+From 3220617fec508aabbbc226a87a165c21fb72e913 Mon Sep 17 00:00:00 2001
+From: Martin Pitt <martin@piware.de>
+Date: Tue, 21 Sep 2021 08:33:25 +0200
+Subject: [PATCH] webpack: Avoid md4 hash for OpenSSL 3 compatibility
+
+CentOS/RHEL 9 switched to OpenSSL 3, which does not support the `md4`
+hash any more. webpack 5 hardcodes that in no less than 21 places, so
+monkey-patch `crypto.createHash()` to substitute sha256 for md4.
+
+Hack to work around https://github.com/webpack/webpack/issues/13572
+diff -wpruN '--exclude=*.orig' a/gitea~/webpack.config.js a/gitea/webpack.config.js
+--- a~/webpack.config.js	1970-01-01 00:00:00
++++ a/webpack.config.js	1970-01-01 00:00:00
+@@ -7,6 +7,10 @@ import MonacoWebpackPlugin from 'monaco-
+ import VueLoader from 'vue-loader';
+ import EsBuildLoader from 'esbuild-loader';
+ import {resolve, parse, dirname} from 'path';
++// HACK: OpenSSL 3 does not support md4 any more, but webpack hardcodes it all over the place: https://github.com/webpack/webpack/issues/13572
++import crypto from 'crypto';
++const crypto_orig_createHash = crypto.createHash;
++crypto.createHash = algorithm => crypto_orig_createHash(algorithm == "md4" ? "sha256" : algorithm);
+ import webpack from 'webpack';
+ import {fileURLToPath} from 'url';
+ 
