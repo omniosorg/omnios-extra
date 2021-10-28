@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/functions.sh
 
 PROG=nagios-nsca
-VER=2.10.0
+VER=2.10.1
 PKG=ooce/application/nagios-nsca
 SUMMARY="Nagios Service Check Acceptor"
 DESC="The Nagios Service Check Acceptor (NSCA) is used to send service check \

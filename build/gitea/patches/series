@@ -1,2 +1,3 @@
 esbuild-loader.patch
 lib_pg_illumos.patch
+webpack_no_md4.patch

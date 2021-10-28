@@ -9,9 +9,9 @@ diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
  
  GOARCH := $(shell go env GOARCH)
  GOOS := $(shell go env GOOS)
-@@ -59,7 +59,7 @@ verify-healing:
- # Builds minio locally.
- build: checks
+@@ -58,7 +58,7 @@ verify-healing: ## verify healing and re
+ 
+ build: checks ## builds minio to $(PWD)
  	@echo "Building minio binary to './minio'"
 -	@GO111MODULE=on CGO_ENABLED=0 go build -tags kqueue -trimpath --ldflags "$(LDFLAGS)" -o $(PWD)/minio 1>/dev/null
 +	@GO111MODULE=on CGO_ENABLED=1 go build -tags kqueue -trimpath --ldflags "$(LDFLAGS)" -o $(PWD)/minio 1>/dev/null

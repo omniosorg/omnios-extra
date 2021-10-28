@@ -1,0 +1,83 @@
+From 3e7da36a465196a2ed079088aa0be685e670be93 Mon Sep 17 00:00:00 2001
+From: shirou <shirou.faw@gmail.com>
+Date: Sat, 9 Oct 2021 14:17:22 +0000
+Subject: [PATCH] [mem][solaris] fix wrong variable name.
+
+diff -wpruN '--exclude=*.orig' a~/_deps/pkg/mod/github.com/shirou/gopsutil/v3@v3.21.9/mem/mem_solaris.go a/_deps/pkg/mod/github.com/shirou/gopsutil/v3@v3.21.9/mem/mem_solaris.go
+--- a~/_deps/pkg/mod/github.com/shirou/gopsutil/v3@v3.21.9/mem/mem_solaris.go	1970-01-01 00:00:00
++++ a/_deps/pkg/mod/github.com/shirou/gopsutil/v3@v3.21.9/mem/mem_solaris.go	1970-01-01 00:00:00
+@@ -122,7 +122,7 @@ func nonGlobalZoneMemoryCapacity() (uint
+ 	return memSizeBytes, nil
+ }
+ 
+-const swapsCommand = "swap"
++const swapCommand = "swap"
+ 
+ // The blockSize as reported by `swap -l`. See https://docs.oracle.com/cd/E23824_01/html/821-1459/fsswap-52195.html
+ const blockSize = 512
+@@ -141,13 +141,13 @@ func SwapDevices() ([]*SwapDevice, error
+ }
+ 
+ func SwapDevicesWithContext(ctx context.Context) ([]*SwapDevice, error) {
+-	swapsCommandPath, err := exec.LookPath(swapsCommand)
++	swapCommandPath, err := exec.LookPath(swapCommand)
+ 	if err != nil {
+ 		return nil, fmt.Errorf("could not find command %q: %w", swapCommand, err)
+ 	}
+-	output, err := invoke.CommandWithContext(swapsCommandPath, "-l")
++	output, err := invoke.CommandWithContext(ctx, swapCommandPath, "-l")
+ 	if err != nil {
+-		return nil, fmt.Errorf("could not execute %q: %w", swapsCommand, err)
++		return nil, fmt.Errorf("could not execute %q: %w", swapCommand, err)
+ 	}
+ 
+ 	return parseSwapsCommandOutput(string(output))
+@@ -156,22 +156,22 @@ func SwapDevicesWithContext(ctx context.
+ func parseSwapsCommandOutput(output string) ([]*SwapDevice, error) {
+ 	lines := strings.Split(output, "\n")
+ 	if len(lines) == 0 {
+-		return nil, fmt.Errorf("could not parse output of %q: no lines in %q", swapsCommand, output)
++		return nil, fmt.Errorf("could not parse output of %q: no lines in %q", swapCommand, output)
+ 	}
+ 
+ 	// Check header headerFields are as expected.
+ 	headerFields := strings.Fields(lines[0])
+ 	if len(headerFields) < freeBlocksCol {
+-		return nil, fmt.Errorf("couldn't parse %q: too few fields in header %q", swapsCommand, lines[0])
++		return nil, fmt.Errorf("couldn't parse %q: too few fields in header %q", swapCommand, lines[0])
+ 	}
+ 	if headerFields[nameCol] != "swapfile" {
+-		return nil, fmt.Errorf("couldn't parse %q: expected %q to be %q", swapsCommand, headerFields[nameCol], "swapfile")
++		return nil, fmt.Errorf("couldn't parse %q: expected %q to be %q", swapCommand, headerFields[nameCol], "swapfile")
+ 	}
+ 	if headerFields[totalBlocksCol] != "blocks" {
+-		return nil, fmt.Errorf("couldn't parse %q: expected %q to be %q", swapsCommand, headerFields[totalBlocksCol], "blocks")
++		return nil, fmt.Errorf("couldn't parse %q: expected %q to be %q", swapCommand, headerFields[totalBlocksCol], "blocks")
+ 	}
+ 	if headerFields[freeBlocksCol] != "free" {
+-		return nil, fmt.Errorf("couldn't parse %q: expected %q to be %q", swapsCommand, headerFields[freeBlocksCol], "free")
++		return nil, fmt.Errorf("couldn't parse %q: expected %q to be %q", swapCommand, headerFields[freeBlocksCol], "free")
+ 	}
+ 
+ 	var swapDevices []*SwapDevice
+@@ -181,17 +181,17 @@ func parseSwapsCommandOutput(output stri
+ 		}
+ 		fields := strings.Fields(line)
+ 		if len(fields) < freeBlocksCol {
+-			return nil, fmt.Errorf("couldn't parse %q: too few fields", swapsCommand)
++			return nil, fmt.Errorf("couldn't parse %q: too few fields", swapCommand)
+ 		}
+ 
+ 		totalBlocks, err := strconv.ParseUint(fields[totalBlocksCol], 10, 64)
+ 		if err != nil {
+-			return nil, fmt.Errorf("couldn't parse 'Size' column in %q: %w", swapsCommand, err)
++			return nil, fmt.Errorf("couldn't parse 'Size' column in %q: %w", swapCommand, err)
+ 		}
+ 
+ 		freeBlocks, err := strconv.ParseUint(fields[freeBlocksCol], 10, 64)
+ 		if err != nil {
+-			return nil, fmt.Errorf("couldn't parse 'Used' column in %q: %w", swapsCommand, err)
++			return nil, fmt.Errorf("couldn't parse 'Used' column in %q: %w", swapCommand, err)
+ 		}
+ 
+ 		swapDevices = append(swapDevices, &SwapDevice{
