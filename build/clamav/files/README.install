@@ -1,0 +1,25 @@
+
+-------------------------
+ClamAV Installation Notes
+-------------------------
+
+This package provides two services which are disabled by default.
+
+To enable automatic pattern updates (including the initial update), enable
+the freshclam service:
+
+	svcadm enable clamav:freshclam
+
+results will be logged to syslog with the local6 facility. This can be
+changed by modifying /etc/opt/ooce/clamav/freshclam.conf
+
+The second service is the persistent scanner, clamd. Enable this via:
+
+	svcadm enable clamav:clamd
+
+This will enable use of the `clamdscan` command to do on-demand scanning of
+files and directories without having to load the database into memory each
+time.
+
+--------------------------
+

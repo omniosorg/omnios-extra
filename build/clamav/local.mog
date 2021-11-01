@@ -1,0 +1,40 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+
+license COPYING.txt license=GPLv2
+
+license COPYING/COPYING.LGPL license=COPYING.LGPL
+license COPYING/COPYING.YARA license=COPYING.YARA
+license COPYING/COPYING.bzip2 license=COPYING.bzip2
+license COPYING/COPYING.curl license=COPYING.curl
+license COPYING/COPYING.file license=COPYING.file
+license COPYING/COPYING.getopt license=COPYING.getopt
+license COPYING/COPYING.llvm license=COPYING.llvm
+license COPYING/COPYING.lzma license=COPYING.lzma
+license COPYING/COPYING.pcre license=COPYING.pcre
+license COPYING/COPYING.regex license=COPYING.regex
+license COPYING/COPYING.unrar license=COPYING.unrar
+license COPYING/COPYING.zlib license=COPYING.zlib
+
+group groupname=$(GROUP) gid=68
+user username=$(USER) ftpuser=false gcos-field="ClamAV User" group=$(GROUP) \
+    home-dir=/var/$(PREFIX) password=NP uid=68
+
+<transform path=$(PREFIX)/share/doc -> drop>
+<transform path=.*milter -> drop>
+<transform file path=etc/$(PREFIX)/.+\.conf$ -> set preserve true>
+
+dir path=var/$(PREFIX) mode=0755 owner=$(USER) group=$(GROUP)
+
+<include binlink.mog>
+<include manlink.mog>
+

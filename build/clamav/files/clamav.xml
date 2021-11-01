@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+
+This file and its contents are supplied under the terms of the
+Common Development and Distribution License ("CDDL"), version 1.0.
+You may only use this file in accordance with the terms of version
+1.0 of the CDDL.
+
+A full copy of the text of the CDDL should have accompanied this
+source. A copy of the CDDL is also available via the Internet at
+http://www.illumos.org/license/CDDL.
+
+Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+
+-->
+<service_bundle type="manifest"
+                name="clamav:default">
+
+    <service name="system/clamav"
+             type="service"
+             version="1">
+
+        <dependency name="filesystem_local"
+                    grouping="require_all"
+                    restart_on="none"
+                    type="service">
+            <service_fmri value="svc:/system/filesystem/local:default" />
+        </dependency>
+
+        <dependency name="multi_user"
+                    grouping="require_all"
+                    restart_on="none"
+                    type="service">
+            <service_fmri value="svc:/milestone/multi-user:default" />
+        </dependency>
+
+        <dependency name="loopback"
+                    grouping="require_any"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/network/loopback" />
+        </dependency>
+
+        <dependency name="network"
+                    grouping="optional_all"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/milestone/network" />
+        </dependency>
+        <method_context security_flags="aslr">
+            <method_credential user="$(USER)"
+                               group="$(GROUP)"
+                               privileges="basic" />
+        </method_context>
+
+        <instance name="clamd"
+                  enabled="false">
+
+            <dependency name="config_data"
+                        grouping="require_all"
+                        restart_on="none"
+                        type="path">
+                <service_fmri value="file://localhost/etc/$(PREFIX)/clamd.conf" />
+            </dependency>
+
+            <dependent name="clamd_multi-user-server"
+                       grouping="optional_all"
+                       restart_on="none">
+                <service_fmri value="svc:/milestone/multi-user-server" />
+            </dependent>
+
+            <exec_method type="method"
+                         name="start"
+                         exec="/$(PREFIX)/sbin/clamd"
+                         timeout_seconds="60" />
+
+            <exec_method type="method"
+                         name="stop"
+                         exec=":kill"
+                         timeout_seconds="60" />
+
+            <exec_method type="method"
+                         name="refresh"
+                         exec=":kill -HUP"
+                         timeout_seconds="60" />
+
+        </instance>
+
+        <instance name="freshclam"
+                  enabled="false">
+
+            <dependency name="config_data"
+                        grouping="require_all"
+                        restart_on="none"
+                        type="path">
+                <service_fmri value="file://localhost/etc/$(PREFIX)/freshclam.conf" />
+            </dependency>
+
+            <dependent name="freshclam_multi-user-server"
+                       grouping="optional_all"
+                       restart_on="none">
+                <service_fmri value="svc:/milestone/multi-user-server" />
+            </dependent>
+
+            <exec_method type="method"
+                         name="start"
+                         exec="/$(PREFIX)/bin/freshclam -d"
+                         timeout_seconds="60" />
+
+            <exec_method type="method"
+                         name="stop"
+                         exec=":kill"
+                         timeout_seconds="60" />
+
+            <exec_method type="method"
+                         name="refresh"
+                         exec=":kill -HUP"
+                         timeout_seconds="60" />
+
+        </instance>
+
+        <stability value="Unstable" />
+
+        <template>
+            <common_name>
+                <loctext xml:lang="C">Clam Anti-Virus</loctext>
+            </common_name>
+        </template>
+
+    </service>
+
+</service_bundle>
