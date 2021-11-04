@@ -41,8 +41,6 @@ BUILD_DEPENDS_IPS="
     compress/lz4
 "
 
-RUN_DEPENDS_IPS="ooce/database/mariadb-common"
-
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
@@ -163,7 +161,7 @@ install_smf -oocemethod ooce $PROG-$sMAJVER.xml $PROG-$sMAJVER
 build_manifests
 PKG=${PKG/database/library} SUMMARY+=" client and libraries" \
     make_package -seed $TMPDIR/manifest.client
-RUN_DEPENDS_IPS=${PKG/database/library} \
+RUN_DEPENDS_IPS="${PKG/database/library} ooce/database/mariadb-common" \
     make_package -seed $TMPDIR/manifest.server server.mog
 clean_up
 
