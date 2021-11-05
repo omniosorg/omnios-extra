@@ -1,0 +1,64 @@
+--- clamd.conf.sample	2021-08-27 22:41:31.000000000 +0000
++++ clamd.conf	2021-11-01 16:15:53.652764585 +0000
+@@ -1,12 +1,7 @@
+ ##
+-## Example config file for the Clam AV daemon
+ ## Please read the clamd.conf(5) manual before editing this file.
+ ##
+ 
+-
+-# Comment or remove the line below.
+-Example
+-
+ # Uncomment this option to enable logging.
+ # LogFile must be writable for the user running daemon.
+ # A full path is required.
+@@ -41,7 +36,7 @@
+ 
+ # Use system logger (can work together with LogFile).
+ # Default: no
+-#LogSyslog yes
++LogSyslog yes
+ 
+ # Specify the type of syslog messages - please refer to 'man syslog'
+ # for facility names.
+@@ -74,7 +69,7 @@
+ # It is recommended that the directory where this file is stored is
+ # also owned by root to keep other users from tampering with it.
+ # Default: disabled
+-#PidFile /var/run/clamd.pid
++PidFile /var/$(PREFIX)/clamd.pid
+ 
+ # Optional path to the global temporary directory.
+ # Default: system specific (usually /tmp or /var/tmp).
+@@ -82,7 +77,7 @@
+ 
+ # Path to the database directory.
+ # Default: hardcoded (depends on installation options)
+-#DatabaseDirectory /var/lib/clamav
++#DatabaseDirectory /var/$(PREFIX)
+ 
+ # Only load the official signatures published by the ClamAV project.
+ # Default: no
+@@ -93,7 +88,7 @@
+ 
+ # Path to a local socket file the daemon will listen on.
+ # Default: disabled (must be specified by a user)
+-#LocalSocket /tmp/clamd.socket
++LocalSocket /tmp/clamd.socket
+ 
+ # Sets the group ownership on the unix socket.
+ # Default: disabled (the primary group of the user running clamd)
+@@ -176,8 +171,10 @@
+ # Don't scan files and directories matching regex
+ # This directive can be used multiple times
+ # Default: scan all
+-#ExcludePath ^/proc/
+-#ExcludePath ^/sys/
++ExcludePath ^/proc/
++ExcludePath ^/system/
++ExcludePath ^/dev/
++ExcludePath ^/devices/
+ 
+ # Maximum depth directories are scanned at.
+ # Default: 15

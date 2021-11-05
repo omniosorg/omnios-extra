@@ -2317,6 +2317,10 @@ check_buildlog() {
 
     [ "$errs" -ne "$expected" ] \
         && logerr "Found $errs errors in logfile (expected $expected)"
+
+    [[ $CONFIGURE_CMD == *cmake* ]] \
+        && $EGREP -s 'compiler identification is unknown' $LOGFILE \
+        && logerr "cmake could not correctly identify the compiler"
 }
 
 build32() {

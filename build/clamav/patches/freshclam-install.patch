@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/freshclam/CMakeLists.txt a/freshclam/CMakeLists.txt
+--- a~/freshclam/CMakeLists.txt	1970-01-01 00:00:00
++++ a/freshclam/CMakeLists.txt	1970-01-01 00:00:00
+@@ -49,7 +49,7 @@ else()
+ endif()
+ 
+ # Install an empty database directory
+-INSTALL(CODE "FILE(MAKE_DIRECTORY \${ENV}\${CMAKE_INSTALL_PREFIX}/\${DATABASE_DIRECTORY})" COMPONENT programs)
++INSTALL(CODE "FILE(MAKE_DIRECTORY \$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/\${DATABASE_DIRECTORY})" COMPONENT programs)
+ 
+ # Now we rename freshclam-bin executable to freshclam using target properties
+ set_target_properties( freshclam-bin

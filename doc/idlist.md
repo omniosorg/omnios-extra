@@ -30,6 +30,7 @@
 | extra		| 55	| nsd
 | illumos	| 60	| xvm
 | extra		| 67	| znc
+| extra		| 68	| clamav
 | extra		| 69	| listmonk
 | extra\*	| 70	| mysql
 | illumos	| 71	| lp
@@ -89,6 +90,7 @@
 | illumos	| 60	| xvm
 | illumos	| 65	| netadm
 | extra		| 67	| znc
+| extra		| 68	| clamav
 | extra		| 69	| listmonk
 | extra\*	| 70	| mysql
 | extra		| 72	| haproxy
