@@ -1,0 +1,16 @@
+diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
+--- a~/configure.ac	1970-01-01 00:00:00
++++ a/configure.ac	1970-01-01 00:00:00
+@@ -1076,10 +1076,10 @@ else
+     ])
+ 
+    if test -n "$alpine_LDAPINCLUDE" ; then
+-	CPPFLAGS="$CPPFLAGS -I${alpine_LDAPINCLUDE}/include"
++	CPPFLAGS="$CPPFLAGS -I${alpine_LDAPINCLUDE}"
+    fi
+    if test -n "$alpine_LDAPLIB" ; then
+-	LDFLAGS="$LDFLAGS -L${alpine_LDAPLIB}/lib"
++	LDFLAGS="$LDFLAGS -L${alpine_LDAPLIB} -R${alpine_LDAPLIB}"
+    fi
+ fi
+ 
