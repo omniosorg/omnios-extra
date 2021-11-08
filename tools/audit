@@ -244,8 +244,8 @@ audit()
                         */dav1d:) [ $r -lt 151036 ] || ok=0 ;;
                         # node-16 is not published until r151036
                         */node-16:) [ $r -lt 151036 ] || ok=0 ;;
-                        # freeradius is not published until r151036
-                        */freeradius:) [ $r -lt 151036 ] || ok=0 ;;
+                        # freeradius and clamav are not published until r151036
+                        */freeradius:|*/clamav:) [ $r -lt 151036 ] || ok=0 ;;
                         # clang/llvm-80, clang/llvm/compiler-rt-90 and lxadm
                         # are not published after r151034
                         */clang-[89]0:|*/llvm-[89]0:|*/compiler-rt-90:|*/lxadm:)
