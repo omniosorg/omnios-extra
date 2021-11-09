@@ -110,7 +110,6 @@ CONFIGURE_OPTS_64="
     --enable-pcntl
     --with-openssl
     --with-gmp
-    --with-mysql=mysqlnd
     --with-mysqli=mysqlnd
     --with-pdo-mysql=mysqlnd
     --with-zlib=/usr
@@ -119,6 +118,8 @@ CONFIGURE_OPTS_64="
     --with-readline=/usr
     --with-curl
     --enable-gd
+    --with-jpeg
+    --with-freetype
     --enable-sockets
     --enable-bcmath
     --enable-exif
@@ -143,6 +144,20 @@ CONFIGURE_OPTS_64="
 CPPFLAGS+=" -I/usr/include/gmp"
 CPPFLAGS+=" -I$OPREFIX/libzip/include"
 LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+
+save_function configure64 _configure64
+function configure64() {
+    _configure64 "$@"
+    for tok in \
+        HAVE_CURL HAVE_IMAP HAVE_LDAP \
+        HAVE_GD_BMP HAVE_GD_FREETYPE HAVE_GD_JPG HAVE_GD_PNG \
+        MYSQLI_USE_MYSQLND PDO_USE_MYSQLND \
+        HAVE_PDO_PGSQL HAVE_PGSQL \
+    ; do
+        $EGREP -s "define $tok 1" $TMPDIR/$BUILDDIR/main/php_config.h \
+            || logerr "Feature $tok is not enabled"
+    done
+}
 
 make_install() {
     logmsg "--- make install"
