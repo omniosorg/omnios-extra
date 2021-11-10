@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/src/password-store.sh a/src/password-store.sh
+--- a~/src/password-store.sh	1970-01-01 00:00:00
++++ a/src/password-store.sh	1970-01-01 00:00:00
+@@ -492,7 +492,7 @@ cmd_edit() {
+ 	local passfile="$PREFIX/$path.gpg"
+ 	set_git "$passfile"
+ 
+-	tmpdir #Defines $SECURE_TMPDIR
++	tmpdir nowarn #Defines $SECURE_TMPDIR
+ 	local tmp_file="$(mktemp -u "$SECURE_TMPDIR/XXXXXX")-${path//\//-}.txt"
+ 
+ 	local action="Add"
