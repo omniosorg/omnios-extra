@@ -1,6 +1,6 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
-| ooce/application/alpine	| 2.25		| http://alpine.x10host.com/alpine/release/ | [omniosorg](https://github.com/omniosorg)
+| ooce/application/alpine	| 2.25		| https://alpine.x10host.com/alpine/release/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/fcgiwrap	| 1.1.0		| https://github.com/gnosek/fcgiwrap/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gitea	| 1.15.6	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gnuplot	| 5.4.2		| https://sourceforge.net/projects/gnuplot/files/gnuplot/ http://www.gnuplot.info/ | [omniosorg](https://github.com/omniosorg)
@@ -173,7 +173,7 @@
 | ooce/system/top		| 3.8		| https://sourceforge.net/projects/unixtop/files/unixtop/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/znapzend		| 0.21.0	| https://github.com/oetiker/znapzend/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/zrepl		| 0.4.0		| https://github.com/zrepl/zrepl/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/terminal/byobu		| 5.133		| https://launchpad.net/byobu/ | [omniosorg](https://github.com/omniosorg)
+| ooce/terminal/byobu		| 5.133		| https://launchpad.net/byobu/+download https://launchpad.net/byobu/ | [omniosorg](https://github.com/omniosorg)
 | ooce/terminal/minicom		| 2.8		| https://salsa.debian.org/api/v4/projects/minicom-team%2Fminicom/repository/tags/ https://salsa.debian.org/minicom-team/minicom/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 9.1.1		| https://github.com/asciidoc-py/asciidoc-py/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciinema		| 2.1.0		| https://github.com/asciinema/asciinema/releases | [omniosorg](https://github.com/omniosorg)
