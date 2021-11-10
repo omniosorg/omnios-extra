@@ -7,7 +7,7 @@ diff -wpruN '--exclude=*.orig' a~/cmake/plugin.cmake a/cmake/plugin.cmake
      ADD_LIBRARY(${target} STATIC ${SOURCES})
 -    DTRACE_INSTRUMENT(${target})
 +    #DTRACE_INSTRUMENT(${target})
-     ADD_DEPENDENCIES(${target} GenError ${ARG_DEPENDENCIES})
+     ADD_DEPENDENCIES(${target} GenError ${ARG_DEPENDS})
      RESTRICT_SYMBOL_EXPORTS(${target})
      IF(WITH_EMBEDDED_SERVER AND (NOT ARG_NOT_EMBEDDED))
 @@ -155,7 +155,7 @@ MACRO(MYSQL_ADD_PLUGIN)
