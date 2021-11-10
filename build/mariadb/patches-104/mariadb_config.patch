@@ -1,6 +1,6 @@
 diff -wpruN '--exclude=*.orig' a~/libmariadb/mariadb_config/CMakeLists.txt a/libmariadb/mariadb_config/CMakeLists.txt
---- a~/libmariadb/mariadb_config/CMakeLists.txt	2020-11-01 23:38:08.000000000 +0000
-+++ a/libmariadb/mariadb_config/CMakeLists.txt	2020-11-10 07:55:53.714820409 +0000
+--- a~/libmariadb/mariadb_config/CMakeLists.txt	1970-01-01 00:00:00
++++ a/libmariadb/mariadb_config/CMakeLists.txt	1970-01-01 00:00:00
 @@ -59,7 +59,7 @@ ENDIF()
  # Installation
  #

@@ -9,7 +9,7 @@ and we do not rely on dwarf data in the target 32-bit binaries.
 diff -wpruN '--exclude=*.orig' a~/mysys/my_context.c a/mysys/my_context.c
 --- a~/mysys/my_context.c	1970-01-01 00:00:00
 +++ a/mysys/my_context.c	1970-01-01 00:00:00
-@@ -455,7 +455,7 @@ my_context_spawn(struct my_context *c, v
+@@ -462,7 +462,7 @@ my_context_spawn(struct my_context *c, v
      (
       "movl %%esp, (%[save])\n\t"
       "movl %[stack], %%esp\n\t"
