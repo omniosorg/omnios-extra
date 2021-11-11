@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=mariadb
-VER=10.5.12
+VER=10.5.13
 PKG=ooce/database/mariadb-105
 SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
@@ -139,7 +139,7 @@ build_manifests() {
     manifest_add_dir $PREFIX/include mysql
     manifest_add_dir $PREFIX/lib pkgconfig $ISAPART64 $ISAPART64/pkgconfig
     manifest_add $PREFIX/bin '.*(mysql|mariadb)_config' mysql mariadb
-    manifest_add $PREFIX/man/man1 mariadb.1 mysql.1 mysql_config.1
+    manifest_add $PREFIX/man/man1 mariadb.1 mysql.1 '(mysql|mariadb)_config.1'
     manifest_finalise $OPREFIX
 
     manifest_uniq $TMPDIR/manifest.{server,client}

@@ -1,2 +1,3 @@
 getopt.patch
 mkdir.patch
+no_warn_dev_shm.patch

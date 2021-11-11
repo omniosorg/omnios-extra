@@ -53,13 +53,15 @@ XFORM_ARGS="
     -DVERSION=$MAJVER
 "
 
+# node contains BMI instructions even when built on an older CPU
+BMI_EXPECTED=1
+
 CONFIGURE_OPTS_64=
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --with-dtrace
     --dest-cpu=x64
     --shared-nghttp2
-    --shared-openssl
     --shared-zlib
 "
 [ $RELVER -ge 151035 ] && CONFIGURE_OPTS+=" --shared-brotli"
