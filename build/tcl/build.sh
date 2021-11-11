@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=tcl
-VER=8.6.11
+VER=8.6.12
 EXPECTVER=5.45.4
 PKG=ooce/runtime/tcl
 SUMMARY="Tool Command Language"
