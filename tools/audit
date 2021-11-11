@@ -255,6 +255,8 @@ audit()
                             [ $r -lt 151036 ] || ok=0 ;;
                         # X11 headers/libraries are not published until r151035
                         */x11/*:) [ $r -lt 151035 ] || ok=0 ;;
+                        # mariadb-106 is not published until r151038
+                        */mariadb-106:) [ $r -lt 151038 ] || ok=0 ;;
                         # pango is stuck on 1.44 on r151030 due to the
                         # older version of glib2 there.
                         */pango:1.44*)
