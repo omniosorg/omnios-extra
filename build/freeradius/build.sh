@@ -52,7 +52,6 @@ XFORM_ARGS="
 set_builddir $PROG-server-$VER
 set_arch 64
 set_standard XPG4v2
-[ "$OPENSSLVER" = 3 ] && set_opensslver 1.1
 
 init
 prep_build
@@ -95,6 +94,7 @@ CPPFLAGS+=" -I$OPREFIX/include"
 LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 download_source $PROG "$PROG-server" $VER
+patch_source
 MAKE_INSTALL_ARGS="R=$DESTDIR" build -ctf
 xform files/freeradius-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
 install_smf ooce $PROG-$sMAJVER.xml
