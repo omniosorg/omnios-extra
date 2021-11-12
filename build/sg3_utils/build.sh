@@ -18,7 +18,7 @@
 . ../../lib/functions.sh
 
 PROG=sg3_utils
-VER=1.46
+VER=1.47
 PKG=ooce/system/sg3_utils
 SUMMARY="the sg3-utils SCSI utilities"
 DESC="Collection of utilities for devices that use the SCSI command set. "
