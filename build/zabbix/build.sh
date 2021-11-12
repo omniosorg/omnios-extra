@@ -139,9 +139,10 @@ build_manifests() {
     manifest_add_dir $PREFIX/externalscripts
     manifest_add etc$PREFIX 'zabbix_agentd.*'
     manifest_add lib/svc/manifest/application zabbix-agent.xml
-    manifest_finalise $OPREFIX etc$OPREFIX
+    manifest_finalise $TMPDIR/mf.agent $OPREFIX etc$OPREFIX
 
     manifest_uniq $TMPDIR/mf.{server,agent}
+    manifest_finalise $TMPDIR/mf.server $OPREFIX etc$OPREFIX
 }
 
 # Move the zabbix server binaries, ready for mediation

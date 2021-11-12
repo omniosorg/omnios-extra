@@ -1398,17 +1398,21 @@ manifest_add() {
 # Takes care of adding any necessary 'dir' actions to support files which
 # have been added and sorts the result, removing duplicate lines. Only
 # directories under one of the provided prefixes are included
-#   manifest_finalise <prefix> [prefix]...
+#   manifest_finalise <manifest> <prefix> [prefix]...
 manifest_finalise() {
+    typeset mf=${1:?mf}; shift
     typeset tf=`mktemp`
-    logcmd cp $PARTMF $tf
+
+    logmsg "-- Finalising ${mf##*/}"
+
+    logcmd cp $mf $tf || logerr "cp $mf $tf"
 
     typeset prefix
     for prefix in "$@"; do
         prefix=${prefix#/}
         logmsg "--- determining implicit directories for $prefix"
         $RIPGREP "^dir.* path=$prefix(\$|\\s)" $SEEDMF >> $tf
-        $RIPGREP "(file|link|hardlink).* path=$prefix/" $PARTMF \
+        $RIPGREP "(file|link|hardlink).* path=$prefix/" $mf \
             | sed "
                 s^.*path=$prefix/^^
                 s^/[^/]*$^^
@@ -1421,7 +1425,7 @@ manifest_finalise() {
             done
         done
     done
-    sort -u < $tf > $PARTMF
+    sort -u < $tf > $mf
     rm -f $tf
 }
 

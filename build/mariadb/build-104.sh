@@ -140,9 +140,10 @@ build_manifests() {
     manifest_add_dir $PREFIX/lib pkgconfig $ISAPART64 $ISAPART64/pkgconfig
     manifest_add $PREFIX/bin '.*(mysql|mariadb)_config' mysql mariadb
     manifest_add $PREFIX/man/man1 mariadb.1 mysql.1 mysql_config.1
-    manifest_finalise $OPREFIX
+    manifest_finalise $TMPDIR/manifest.client $OPREFIX
 
     manifest_uniq $TMPDIR/manifest.{server,client}
+    manifest_finalise $TMPDIR/manifest.server $OPREFIX etc
 }
 
 init

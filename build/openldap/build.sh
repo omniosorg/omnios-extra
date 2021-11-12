@@ -95,9 +95,10 @@ build_manifests() {
     manifest_add_dir $PREFIX/share/man man1 man3
     manifest_add $PREFIX/share/man/man5 ldap.conf.5 ldif.5
     manifest_add etc$PREFIX ldap.conf
-    manifest_finalise $OPREFIX etc$OPREFIX
+    manifest_finalise $TMPDIR/manifest.client $OPREFIX etc$OPREFIX
 
     manifest_uniq $TMPDIR/manifest.{server,client}
+    manifest_finalise $TMPDIR/manifest.server $OPREFIX etc$OPREFIX
 }
 
 init

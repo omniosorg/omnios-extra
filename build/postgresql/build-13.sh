@@ -81,9 +81,10 @@ build_manifests() {
     manifest_add $PREFIX/bin '.*pg_config' psql ecpg
     manifest_add $PREFIX/share/man/man1 pg_config.1 psql.1 ecpg.1
     manifest_add $PREFIX/share psqlrc.sample
-    manifest_finalise $OPREFIX
+    manifest_finalise $TMPDIR/manifest.client $OPREFIX
 
     manifest_uniq $TMPDIR/manifest.{server,client}
+    manifest_finalise $TMPDIR/manifest.server $OPREFIX etc
 }
 
 # Make ISA binaries for pg_config, to allow software to find the
