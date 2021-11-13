@@ -66,7 +66,7 @@ process_opts() {
                                      # BUILDARCH variable
                 if [[ ! "$BUILDARCH" =~ ^(32|64|both)$ ]]; then
                     echo "Invalid build architecture specified: $BUILDARCH"
-                    show_usage
+                    show_synopsis; show_usage
                     exit 2
                 fi
                 ;;
@@ -85,7 +85,7 @@ process_opts() {
                 OLDFLAVOR="$OPTARG" # Used to see if the script overrides
                 ;;
             \?|h)
-                show_usage
+                show_synopsis; show_usage
                 exit
                 ;;
             i)
@@ -125,10 +125,14 @@ process_opts() {
 #############################################################################
 # Show usage information
 #############################################################################
-show_usage() {
-cat << EOM
-
+show_synopsis() {
+    cat << EOM
 Usage: $0 [-blt] [-f FLAVOR] [-h] [-a 32|64|both] [-d DEPVER]
+EOM
+}
+
+show_usage() {
+    cat << EOM
   -a ARCH   : build 32/64 bit only, or both (default: both)
   -b        : batch mode (exit on errors without asking)
   -c        : use 'ccache' to speed up (re-)compilation
@@ -147,7 +151,6 @@ Usage: $0 [-blt] [-f FLAVOR] [-h] [-a 32|64|both] [-d DEPVER]
   -t        : skip test suite
   -x        : download and extract source only
   -xx       : as -x but also apply patches
-
 EOM
 }
 
@@ -358,7 +361,7 @@ MYSCRIPT=${BASH_SOURCE[1]##*/}
 
 [ -f "$LOGFILE" ] && mv $LOGFILE $LOGFILE.1
 
-process_opts $@
+[ -z "$NO_PROCESS_OPTS" ] && process_opts $@
 shift $((OPTIND - 1))
 
 #############################################################################
@@ -611,7 +614,7 @@ OPENSSLPATH=/usr/ssl-$OPENSSLVER
 # Print startup message
 #############################################################################
 
-logmsg "===== Build started at `date` ====="
+[ -z "$NO_PROCESS_OPTS" ] && logmsg "===== Build started at `date` ====="
 
 print_elapsed() {
     typeset s=$1
