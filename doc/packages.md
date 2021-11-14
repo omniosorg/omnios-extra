@@ -175,7 +175,7 @@
 | ooce/system/zrepl		| 0.4.0		| https://github.com/zrepl/zrepl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/terminal/byobu		| 5.133		| https://launchpad.net/byobu/+download https://launchpad.net/byobu/ | [omniosorg](https://github.com/omniosorg)
 | ooce/terminal/minicom		| 2.8		| https://salsa.debian.org/api/v4/projects/minicom-team%2Fminicom/repository/tags/ https://salsa.debian.org/minicom-team/minicom/ | [omniosorg](https://github.com/omniosorg)
-| ooce/text/asciidoc		| 9.1.1		| https://github.com/asciidoc-py/asciidoc-py/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/text/asciidoc		| 10.0.2	| https://pypi.org/project/asciidoc | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciinema		| 2.1.0		| https://github.com/asciinema/asciinema/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/ripgrep		| 13.0.0	| https://github.com/BurntSushi/ripgrep/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/acmefetch		| 0.7.5		| https://github.com/oetiker/AcmeFetch/releases | [omniosorg](https://github.com/omniosorg)

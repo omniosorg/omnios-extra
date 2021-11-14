@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=asciidoc
-VER=9.1.1
+VER=10.0.2
 PKG=ooce/text/asciidoc
 SUMMARY="text based documentation"
 DESC="AsciiDoc - $SUMMARY"
@@ -26,27 +26,20 @@ RUN_DEPENDS_IPS="ooce/text/docbook-xsl"
 
 SKIP_LICENCES='GPLv2'
 
-OPREFIX=$PREFIX
-PREFIX+="/$PROG"
-
 set_arch 64
 
-XFORM_ARGS="
-    -DOPREFIX=${OPREFIX#/}
-    -DPREFIX=${PREFIX#/}
-    -DPROG=$PROG
-    -DPKGROOT=$PROG
-"
-
-CONFIGURE_OPTS="
-    --sysconfdir=/etc/$OPREFIX
-"
+extract_licence() {
+    logmsg "-- extracting licence"
+    sed '1,/^## LICENSE/d' < $TMPDIR/$BUILDDIR/README.md \
+        > $TMPDIR/$BUILDDIR/LICENCE
+}
 
 init
 download_source $PROG $PROG $VER
+extract_licence
 patch_source
 prep_build
-build
+python_build
 make_package
 clean_up
 
