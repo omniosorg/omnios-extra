@@ -11,13 +11,13 @@ diff -wpruN '--exclude=*.orig' a~/build/release.mk a/build/release.mk
  build-linux:
  	@echo Build Linux amd64
  ifeq ($(BUILDER_GOOS_GOARCH),"linux_amd64")
-@@ -105,19 +109,17 @@
+@@ -134,18 +138,6 @@
  		cp ../manifest.txt $(DIST_PATH); \
  	fi
  
 -	@# Import Mattermost plugin public key
 -	gpg --import build/plugin-production-public-key.gpg
- 
+-
 -	@# Download prepackaged plugins
 -	mkdir -p tmpprepackaged
 -	@cd tmpprepackaged && for plugin_package in $(PLUGIN_PACKAGES) ; do \
@@ -26,16 +26,23 @@ diff -wpruN '--exclude=*.orig' a~/build/release.mk a/build/release.mk
 -			curl -f -O -L https://plugins-store.test.mattermost.com/release/$$plugin_package-$$ARCH.tar.gz.sig; \
 -		done; \
 -	done
+-
+ package-general:
+ 	@# Create needed directories
+ 	mkdir -p $(DIST_PATH_GENERIC)/bin
+@@ -184,6 +176,15 @@
+ 	done
+ endif
  
 +package-illumos: package-prep
 +	@# Create needed directories
 +	mkdir -p $(DIST_PATH)/bin
 +	mkdir -p $(DIST_PATH)/logs
 +	mkdir -p $(DIST_PATH)/prepackaged_plugins
- 
++
 +	@# Copy binary
 +	cp $(GOBIN)/mattermost $(DIST_PATH)/bin # from native bin dir, not cross-compiled
 +
- package-osx: package-prep
- 	@# Create needed directories
- 	mkdir -p $(DIST_PATH_OSX)/bin
+ package-osx-amd64: package-prep
+ 	DIST_PATH_GENERIC=$(DIST_PATH_OSX_AMD64) CURRENT_PACKAGE_ARCH=darwin_amd64 PLUGIN_ARCH=osx-amd64 MMCTL_PLATFORM="Darwin" MM_BIN_NAME=mattermost $(MAKE) package-general
+ 	@# Package
