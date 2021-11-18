@@ -32,11 +32,14 @@
 # scripts
 #############################################################################
 
-[ -n "$LIBDIR" ] || LIBDIR=$(realpath ${BASH_SOURCE[0]%/*})
-ROOTDIR=${LIBDIR%/*}
+# Set a basic path - it will be modified once config.sh is loaded
+export PATH=/usr/bin:/usr/sbin:/usr/gnu/bin
 
-. $LIBDIR/config.sh
-[ -f $LIBDIR/site.sh ] && . $LIBDIR/site.sh
+[ -n "$BLIBDIR" ] || BLIBDIR=$(realpath ${BASH_SOURCE[0]%/*})
+ROOTDIR=${BLIBDIR%/*}
+
+. $BLIBDIR/config.sh
+[ -f $BLIBDIR/site.sh ] && . $BLIBDIR/site.sh
 mkdir -p $TMPDIR
 BASE_TMPDIR=$TMPDIR
 
@@ -162,7 +165,7 @@ EOM
 print_config() {
     cat << EOM
 
-LIBDIR:                 $LIBDIR
+BLIBDIR:                $BLIBDIR
 ROOTDIR:                $ROOTDIR
 TMPDIR:                 $TMPDIR
 DTMPDIR:                $DTMPDIR
@@ -256,6 +259,11 @@ ask_to_continue_() {
         echo -n "continue? ($STR) "
         read
     done
+}
+
+function print_elapsed {
+    typeset s=$1
+    printf '%dh%dm%ds' $((s/3600)) $((s%3600/60)) $((s%60))
 }
 
 ask_to_continue() {
@@ -1455,7 +1463,7 @@ make_package() {
 
     # Temporary file paths
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
-    GLOBAL_MOG_FILE=$LIBDIR/mog/global-transforms.mog
+    GLOBAL_MOG_FILE=$BLIBDIR/mog/global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
 
     # Version cleanup
@@ -1547,7 +1555,7 @@ make_package() {
 
     # Transforms
     logmsg "--- Applying transforms"
-    logcmd -p $PKGMOGRIFY -I $LIBDIR/mog \
+    logcmd -p $PKGMOGRIFY -I $BLIBDIR/mog \
         $XFORM_ARGS \
         $P5M_GEN \
         $MY_MOG_FILE \
@@ -2080,7 +2088,7 @@ make_isaexec_stub_arch() {
         [ -f "$file" ] && continue
         logmsg "---- Creating ISA stub for $file"
         logcmd $CC $CFLAGS $CFLAGS32 -o $file \
-            -DFALLBACK_PATH="$dir/$file" $LIBDIR/isastub.c \
+            -DFALLBACK_PATH="$dir/$file" $BLIBDIR/isastub.c \
             || logerr "--- Failed to make isaexec stub for $dir/$file"
         strip_files "$file"
     done

@@ -323,12 +323,12 @@ baseline() {
     ' | sed 's/ *$//' | sort > $TMPDIR/baseline.$$
 
     if [ $mode = create ]; then
-        mv $TMPDIR/baseline.$$ $MYDIR/../doc/baseline
+        mv $TMPDIR/baseline.$$ $ROOTDIR/doc/baseline
         echo "Created baseline in doc/baseline"
         return
     fi
     note "Checking baseline"
-    if ! diff -U0 $MYDIR/../doc/baseline $TMPDIR/baseline.$$; then
+    if ! diff -U0 $ROOTDIR/doc/baseline $TMPDIR/baseline.$$; then
         logerr "Package list does not match baseline"
     fi
     rm -f $TMPDIR/baseline.$$
@@ -608,6 +608,8 @@ parallel_build() {
 
     stop_built_listener
     wait
+
+    logmsg "Total build time: $(print_elapsed $((`date +%s` - build_start)))"
 }
 
 usage() {
@@ -769,8 +771,6 @@ case "$1" in
         ;;
 esac
 
-# Set PKG before exit so that the elapsed time is labelled properly
-PKG="Total build"
 
 # Vim hints
 # vim:ts=4:sw=4:et:

@@ -18,10 +18,12 @@
 #
 umask 022
 
-LIBDIR=$(realpath ${BASH_SOURCE[0]%/*})
+export PATH=/usr/bin:/usr/sbin:/usr/gnu/bin
+
+BLIBDIR=$(realpath ${BASH_SOURCE[0]%/*})
 SRCDIR=$PWD/`dirname $0`
 
-. $LIBDIR/functions.sh
+. $BLIBDIR/functions.sh
 
 if ((UID == 0)); then
     if [ -n "$ROOT_OK" ]; then
@@ -46,6 +48,7 @@ if [ -z "$_BUILDCTL_CHECKED_REQUIREMENTS" ]; then
      basic_build_requirements
 else
     OPENSSLVER=$EXP_OPENSSLVER
+    OPENSSLPATH=/usr/ssl-$OPENSSLVER
 fi
 
 init_tools
@@ -58,11 +61,6 @@ reset_configure_opts
 #############################################################################
 
 logmsg "===== Build started at `date` ====="
-
-function print_elapsed {
-    typeset s=$1
-    printf '%dh%dm%ds' $((s/3600)) $((s%3600/60)) $((s%60))
-}
 
 function build_end {
     typeset rv=$?
