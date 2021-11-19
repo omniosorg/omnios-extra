@@ -1,4 +1,3 @@
-#
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.
 # You may only use this file in accordance with the terms of version
@@ -13,7 +12,8 @@
 # drop unwanted stuff
 <transform file path=$(PREFIX)/share/texmf-var/.*\.log$ -> drop>
 
-<transform file path=$(PREFIX)/share/texmf-dist/(?:doc|scripts|asymptote|source) \
+<transform file \
+    path=$(PREFIX)/share/texmf-dist/(?:doc|scripts|asymptote|source) \
     -> set pkg.depend.bypass-generate .*>
 
 license LICENSE.TL license=TeXLive

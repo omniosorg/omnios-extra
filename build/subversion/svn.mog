@@ -23,8 +23,8 @@ dir group=$(PROG) mode=0750 owner=$(PROG) path=var/$(PREFIX)
 dir group=$(PROG) mode=0750 owner=$(PROG) path=var/log/$(PREFIX)
 
 group groupname=$(PROG) gid=91
-user ftpuser=false username=$(PROG) uid=91 group=$(PROG) gcos-field="Subversion User" \
-    home-dir=/var/$(PREFIX) password=NP
+user ftpuser=false username=$(PROG) uid=91 group=$(PROG) \
+    gcos-field="Subversion User" home-dir=/var/$(PREFIX) password=NP
 
 <transform path=$(PREFIX)/libexec -> drop>
 
