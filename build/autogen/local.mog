@@ -20,3 +20,4 @@ license COPYING license="GPLv3"
 # Symlink man pages
 <transform file path=$(PREFIX)/(share/man/man\d/.*) -> emit \
     link path=$(OPREFIX)/%<1> target=../../../$(PROG)/%<1> >
+

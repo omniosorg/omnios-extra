@@ -13,3 +13,4 @@
 <transform file path=.*\.a$ -> drop>
 
 license LICENSE license=Apache2
+

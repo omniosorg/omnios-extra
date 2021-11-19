@@ -44,3 +44,4 @@ file files/nagios-nginx-example.conf mode=0444 \
 group groupname=nagcmd gid=84
 
 license LICENSE license=GPLv2
+

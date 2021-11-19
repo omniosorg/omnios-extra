@@ -28,3 +28,4 @@ file files/send_nrdp-example.sh \
     mode=0444 owner=root group=bin
 
 license LICENSE.md license=GPLv3
+

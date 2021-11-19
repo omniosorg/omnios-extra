@@ -16,3 +16,4 @@
     link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2>>
 
 license $(PREFIX)/LICENCE license=CDDL
+

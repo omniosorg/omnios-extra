@@ -17,3 +17,4 @@
 <transform path=$(PREFIX)/s?bin -> drop>
 
 license COPYING.LIB license=LGPLv2.1
+

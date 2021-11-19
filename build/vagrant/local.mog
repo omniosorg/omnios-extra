@@ -19,3 +19,4 @@
 license $(PROG)/LICENSE license=MIT
 
 link path=$(OPREFIX)/bin/$(PROG) target=../$(PROG)/bin/$(PROG)
+
