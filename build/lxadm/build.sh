@@ -23,7 +23,7 @@
 # Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=lxadm      # App name
 VER=0.1.6      # App version

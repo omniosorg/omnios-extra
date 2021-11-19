@@ -14,7 +14,7 @@
 #
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PKG=ooce/multimedia/exif
 VER=0.6.21

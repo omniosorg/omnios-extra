@@ -13,7 +13,7 @@
 # }}}
 
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=acltool
 VER=1.16.2

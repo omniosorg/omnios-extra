@@ -15,7 +15,7 @@
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 # Copyright 2020 Stephen Gregoratto
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=hyperfine
 VER=1.12.0

@@ -14,7 +14,7 @@
 
 # Copyright 2021 Sebastien Perreault
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=byobu
 VER=5.133

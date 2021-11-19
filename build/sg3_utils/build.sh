@@ -15,7 +15,7 @@
 # Copyright 2020 Carsten Grzemba
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=sg3_utils
 VER=1.47

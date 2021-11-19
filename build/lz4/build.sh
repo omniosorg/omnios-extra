@@ -14,7 +14,7 @@
 
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=lz4
 PKG=ooce/compress/lz4

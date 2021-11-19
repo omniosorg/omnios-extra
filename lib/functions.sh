@@ -23,10 +23,7 @@
 # Copyright (c) 2014 by Delphix. All rights reserved.
 # Copyright 2015 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
 #
-
-umask 022
 
 #############################################################################
 # functions.sh
@@ -35,8 +32,16 @@ umask 022
 # scripts
 #############################################################################
 
-# Set a basic path - it will be modified once config.sh is loaded
-PATH=/usr/bin:/usr/sbin:/usr/gnu/bin
+[ -n "$LIBDIR" ] || LIBDIR=$(realpath ${BASH_SOURCE[0]%/*})
+ROOTDIR=${LIBDIR%/*}
+
+. $LIBDIR/config.sh
+[ -f $LIBDIR/site.sh ] && . $LIBDIR/site.sh
+mkdir -p $TMPDIR
+BASE_TMPDIR=$TMPDIR
+
+BASEPATH=/usr/ccs/bin:$USRBIN:/usr/sbin:$OOCEBIN:$GNUBIN:$SFWBIN
+export PATH=$BASEPATH
 
 #############################################################################
 # Process command line options
@@ -157,7 +162,6 @@ EOM
 print_config() {
     cat << EOM
 
-MYDIR:                  $MYDIR
 LIBDIR:                 $LIBDIR
 ROOTDIR:                $ROOTDIR
 TMPDIR:                 $TMPDIR
@@ -300,6 +304,7 @@ ask_to_testsuite() {
 #############################################################################
 # URL encoding for package names, at least
 #############################################################################
+
 # This isn't real URL encoding, just a couple of common substitutions
 url_encode() {
     [ $# -lt 1 ] && logerr "Not enough arguments to url_encode()"
@@ -330,52 +335,6 @@ set_coredir() {
 }
 
 #############################################################################
-# Some initialization
-#############################################################################
-
-# The dir where this file is located - used for sourcing further files
-MYDIR=$PWD/`dirname $BASH_SOURCE[0]`
-LIBDIR="`realpath $MYDIR`"
-ROOTDIR="`dirname $LIBDIR`"
-# The dir where this file was sourced from - this will be the directory of the
-# build script
-SRCDIR=$PWD/`dirname $0`
-
-#############################################################################
-# Load configuration options
-#############################################################################
-. $MYDIR/config.sh
-[ -f $MYDIR/site.sh ] && . $MYDIR/site.sh
-BASE_TMPDIR=$TMPDIR
-
-set_coredir $TMPDIR
-
-BASEPATH=/usr/ccs/bin:$USRBIN:/usr/sbin:$OOCEBIN:$GNUBIN:$SFWBIN
-export PATH=$BASEPATH
-
-# Platform information, e.g. 5.11
-SUNOSVER=`uname -r`
-
-MYSCRIPT=${BASH_SOURCE[1]##*/}
-[[ $MYSCRIPT = build*.sh ]] && LOGFILE=$PWD/${MYSCRIPT/%.sh/.log}
-
-[ -f "$LOGFILE" ] && mv $LOGFILE $LOGFILE.1
-
-[ -z "$NO_PROCESS_OPTS" ] && process_opts $@
-shift $((OPTIND - 1))
-
-#############################################################################
-# Running as root is not safe
-#############################################################################
-if [ "$UID" = "0" ]; then
-    if [ -n "$ROOT_OK" ]; then
-        logmsg "--- Running as root, but ROOT_OK is set; continuing"
-    else
-        logerr "--- You should not run this as root"
-    fi
-fi
-
-#############################################################################
 # Utilities
 #############################################################################
 
@@ -399,8 +358,6 @@ init_tools() {
         logcmd ln -sf /bin/false $TMPDIR/tools/$cmd || logerr "ln $cmd failed"
     done
 }
-
-init_tools
 
 #############################################################################
 # Compiler version
@@ -443,8 +400,6 @@ set_gccver() {
 
     set_ssp strong $2
 }
-
-set_gccver $DEFAULT_GCC_VER -q
 
 #############################################################################
 # OpenSSL version
@@ -550,7 +505,6 @@ reset_configure_opts() {
         "
     fi
 }
-reset_configure_opts
 
 set_standard() {
     typeset st="$1"
@@ -571,7 +525,24 @@ set_arch() {
     forgo_isaexec
 }
 
-BasicRequirements() {
+check_mediators() {
+    OPENSSLVER=`pkg mediator -H openssl 2>/dev/null| awk '{print $3}'`
+    if [ "$OPENSSLVER" != "$EXP_OPENSSLVER" ]; then
+        if [ -n "$OPENSSL_TEST" ]; then
+            logmsg -h "--- OpenSSL version $OPENSSLVER but OPENSSL_TEST is set"
+        else
+            logerr "--- OpenSSL $OPENSSLVER should not be used for build"
+        fi
+    fi
+    OPENSSLPATH=/usr/ssl-$OPENSSLVER
+
+    typeset _med=`pkg mediator -H python3 2>/dev/null| awk '{print $3}'`
+    if [ -n "$_med" -a "$_med" != "$PYTHON3VER" ]; then
+        logerr "--- Python3 mediator is set incorrectly ($_med)"
+    fi
+}
+
+basic_build_requirements() {
     local needed=""
     [ -x $GCCPATH/bin/gcc ] || needed+=" developer/gcc$GCCVER"
     [ -x /usr/bin/ar ] || needed+=" developer/object-file"
@@ -593,45 +564,8 @@ BasicRequirements() {
            ask_to_install $i "--- Build-time dependency $i not found"
         done
     fi
+    check_mediators
 }
-BasicRequirements
-
-#############################################################################
-# Check the OpenSSL mediator
-#############################################################################
-
-OPENSSLVER=`pkg mediator -H openssl 2>/dev/null| awk '{print $3}'`
-if [ "$OPENSSLVER" != "$EXP_OPENSSLVER" ]; then
-    if [ -n "$OPENSSL_TEST" ]; then
-        logmsg -h "--- OpenSSL version $OPENSSLVER but OPENSSL_TEST is set"
-    else
-        logerr "--- OpenSSL version $OPENSSLVER should not be used for build"
-    fi
-fi
-OPENSSLPATH=/usr/ssl-$OPENSSLVER
-
-#############################################################################
-# Print startup message
-#############################################################################
-
-[ -z "$NO_PROCESS_OPTS" ] && logmsg "===== Build started at `date` ====="
-
-print_elapsed() {
-    typeset s=$1
-    printf '%dh%dm%ds' $((s/3600)) $((s%3600/60)) $((s%60))
-}
-
-build_end() {
-    rv=$?
-    if [ -n "$PKG" -a -n "$build_start" ]; then
-        logmsg "Time: $PKG - $(print_elapsed $((`date +%s` - build_start)))"
-        build_start=
-    fi
-    exit $rv
-}
-
-build_start=`date +%s`
-trap 'build_end' EXIT
 
 #############################################################################
 # Libtool -nostdlib hacking
@@ -1521,7 +1455,7 @@ make_package() {
 
     # Temporary file paths
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
-    GLOBAL_MOG_FILE=$MYDIR/mog/global-transforms.mog
+    GLOBAL_MOG_FILE=$LIBDIR/mog/global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
 
     # Version cleanup
@@ -1613,7 +1547,7 @@ make_package() {
 
     # Transforms
     logmsg "--- Applying transforms"
-    logcmd -p $PKGMOGRIFY -I $MYDIR/mog \
+    logcmd -p $PKGMOGRIFY -I $LIBDIR/mog \
         $XFORM_ARGS \
         $P5M_GEN \
         $MY_MOG_FILE \
@@ -1745,8 +1679,7 @@ make_package() {
     return 0
 }
 
-translate_manifest()
-{
+translate_manifest() {
     local src=$1
     local dst=$2
 
@@ -1758,8 +1691,7 @@ translate_manifest()
         " < $src > $dst
 }
 
-publish_manifest()
-{
+publish_manifest() {
     local pkg=$1
     local pmf=$2
     local root=$3
@@ -1790,8 +1722,7 @@ publish_manifest()
     [ -n "$pkg" -a -z "$SKIP_PKG_DIFF" ] && diff_latest $pkg
 }
 
-build_xform_sed()
-{
+build_xform_sed() {
     XFORM_SED_CMD=
 
     for kv in $XFORM_ARGS; do
@@ -1884,7 +1815,8 @@ diff_packages() {
                 # Not anchored due to colour codes in file
                 $EGREP -v '(\-\-\-|\+\+\+|\@\@) ' $TMPDIR/pkgdiff.$$
                 note "Differences found between old and new packages"
-                ask_to_continue
+                rm -f $TMPDIR/pkgdiff.$$
+                [ -z "$PKGDIFF_NOASK" ] && ask_to_continue
         fi
         rm -f $TMPDIR/pkgdiff.$$
     fi
@@ -2148,7 +2080,7 @@ make_isaexec_stub_arch() {
         [ -f "$file" ] && continue
         logmsg "---- Creating ISA stub for $file"
         logcmd $CC $CFLAGS $CFLAGS32 -o $file \
-            -DFALLBACK_PATH="$dir/$file" $MYDIR/isastub.c \
+            -DFALLBACK_PATH="$dir/$file" $LIBDIR/isastub.c \
             || logerr "--- Failed to make isaexec stub for $dir/$file"
         logcmd strip -x $file
     done
@@ -2455,7 +2387,6 @@ set_python_version() {
     PYTHONLIB=$PYTHONPATH/lib
     PYTHONVENDOR=$PYTHONLIB/python$PYTHONVER/vendor-packages
 }
-set_python_version $DEFAULT_PYTHON_VER
 
 pre_python_32() {
     logmsg "prepping 32bit python build"

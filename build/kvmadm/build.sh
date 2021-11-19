@@ -23,7 +23,7 @@
 # Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=kvmadm     # App name
 VER=0.12.3      # App version

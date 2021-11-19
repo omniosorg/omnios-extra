@@ -14,7 +14,7 @@
 
 # Copyright 2021 OmniOS Community Edition.  All rights reserved.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=zabbix
 VER=5.4.7

@@ -14,7 +14,7 @@
 
 __SCRIPTDIR="${0%/*}"
 
-NO_PROCESS_OPTS=1 . $__SCRIPTDIR/../lib/functions.sh
+. $__SCRIPTDIR/../lib/functions.sh
 
 srcrepo=$IPS_REPO
 dstrepo=$PKGSRVR
@@ -60,7 +60,7 @@ Package diff - $PKGDIFF_HELPER
 ============================================================================
 EOM
 
-diff_packages "$srcrepo" "$srcfmri" "$dstrepo" "$dstfmri"
+PKGDIFF_NOASK=1 diff_packages "$srcrepo" "$srcfmri" "$dstrepo" "$dstfmri"
 
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker

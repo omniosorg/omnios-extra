@@ -10,7 +10,10 @@ fi
 
 BUILD_EXPENSIVE=0
 build_flags=
-NO_PROCESS_OPTS=1 . ../lib/functions.sh
+. ../lib/functions.sh
+
+basic_build_requirements
+export _BUILDCTL_CHECKED_REQUIREMENTS=1
 
 # targets maps any valid package name to its full package name.
 declare -A targets
@@ -652,6 +655,7 @@ esac
 # Process the common build options by calling process_opts from functions.sh
 # This will set variables based on the options seen.
 process_opts "$@"
+shift $((OPTIND - 1))
 # Construct the arguments to be passed to child build.sh scripts.
 [ -n "$BATCH" ] && build_flags+="-b "
 [ -n "$SKIP_PKGLINT" ] && build_flags+="-l "

@@ -15,7 +15,7 @@
 # Copyright 2018 Thomas Merkel
 # Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=libpciaccess
 VER=0.16
