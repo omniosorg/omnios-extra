@@ -27,7 +27,7 @@ user ftpuser=false gcos-field="Postfix Reserved UID" group=$(PROG) \
 <transform file path=$(PREFIX)/sbin/postdrop -> set group postdrop>
 <transform file path=$(PREFIX)/sbin/postdrop -> set mode 2555>
 <transform file path=$(PREFIX)/sbin/postqueue -> set mode 2555>
-<transform file path=etc/$(OPREFIX)/$(PROG)/.* -> set preserve true>
+<transform file path=etc/$(OPREFIX)/$(PROG)/ -> set preserve true>
 <transform file path=$(PREFIX)/sbin -> \
     set restart_fmri svc:/network/smtp/$(PROG):default>
 <transform file path=$(PREFIX)/libexec -> \
