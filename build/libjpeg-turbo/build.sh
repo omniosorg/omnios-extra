@@ -17,7 +17,7 @@
 . ../../lib/functions.sh
 
 PROG=libjpeg-turbo
-VER=2.1.1
+VER=2.1.2
 PKG=ooce/library/libjpeg-turbo
 SUMMARY="libjpeg-turbo"
 DESC="SIMD-accelerated libjpeg-compatible JPEG codec library"
