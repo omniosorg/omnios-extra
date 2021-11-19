@@ -10,7 +10,7 @@
 
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-license $(PROG)/LICENSE license=MIT
+license LICENSE license=MIT
 
 dir path=etc/$(PREFIX) owner=root group=bin
 

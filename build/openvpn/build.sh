@@ -105,7 +105,7 @@ if [ $RELVER -lt 151034 ]; then
 fi
 
 OVPNDIR=$DESTDIR$OPREFIX/include
-LIBDIR=$OPREFIX/lib/$ISAPART64/openvpn/plugins
+PLUGINDIR=$OPREFIX/lib/$ISAPART64/openvpn/plugins
 
 set_patchdir patches-$PROG
 RUN_DEPENDS_IPS="ooce/network/openvpn"
@@ -133,13 +133,13 @@ export PATH+=":$DEPROOT/$PREFIX/bin"
 save_function make_install64 _make_install64
 make_install64() {
     # the install target does not create the directory
-    [ -d $DESTDIR$LIBDIR ] || mkdir -p $DESTDIR$LIBDIR || logerr "mkdir failed"
+    logcmd mkdir -p $DESTDIR$PLUGINDIR || logerr "mkdir failed"
 
     _make_install64
 }
 
 CONFIGURE_OPTS_64="
-    --libdir=$LIBDIR
+    --libdir=$PLUGINDIR
     --with-openldap=$OPREFIX
     --with-openvpn=$OVPNDIR
     OBJC=$CC

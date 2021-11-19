@@ -17,5 +17,5 @@ user ftpuser=false username=$(PROG) uid=87 group=$(PROG) \
 
 dir group=$(PROG) mode=0750 owner=$(PROG) path=var/$(PREFIX)
 
-license $(PROG)/LICENSE license=AGPLv3
+license LICENSE license=AGPLv3
 

@@ -10,5 +10,5 @@
 
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-license $(PROG)/COPYING license=MIT
+license COPYING license=MIT
 
