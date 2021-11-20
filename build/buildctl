@@ -471,6 +471,7 @@ parallel_build() {
     set_batch_build_flags
 
     note "Starting parallel build with $threads thread(s)"
+    date
 
     build_start=`date +%s`
 
@@ -612,6 +613,7 @@ parallel_build() {
     stop_built_listener
     wait
 
+    date
     logmsg "Total build time: $(print_elapsed $((`date +%s` - build_start)))"
 }
 
