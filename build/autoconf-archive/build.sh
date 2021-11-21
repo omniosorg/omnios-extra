@@ -14,7 +14,7 @@
 
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=autoconf-archive
 VER=2021.02.19

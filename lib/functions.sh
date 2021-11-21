@@ -23,10 +23,7 @@
 # Copyright (c) 2014 by Delphix. All rights reserved.
 # Copyright 2015 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
 #
-
-umask 022
 
 #############################################################################
 # functions.sh
@@ -36,7 +33,18 @@ umask 022
 #############################################################################
 
 # Set a basic path - it will be modified once config.sh is loaded
-PATH=/usr/bin:/usr/sbin:/usr/gnu/bin
+export PATH=/usr/bin:/usr/sbin:/usr/gnu/bin
+
+[ -n "$BLIBDIR" ] || BLIBDIR=$(realpath ${BASH_SOURCE[0]%/*})
+ROOTDIR=${BLIBDIR%/*}
+
+. $BLIBDIR/config.sh
+[ -f $BLIBDIR/site.sh ] && . $BLIBDIR/site.sh
+mkdir -p $TMPDIR
+BASE_TMPDIR=$TMPDIR
+
+BASEPATH=/usr/ccs/bin:$USRBIN:/usr/sbin:$OOCEBIN:$GNUBIN:$SFWBIN
+export PATH=$BASEPATH
 
 #############################################################################
 # Process command line options
@@ -66,7 +74,7 @@ process_opts() {
                                      # BUILDARCH variable
                 if [[ ! "$BUILDARCH" =~ ^(32|64|both)$ ]]; then
                     echo "Invalid build architecture specified: $BUILDARCH"
-                    show_usage
+                    show_synopsis; show_usage
                     exit 2
                 fi
                 ;;
@@ -85,7 +93,7 @@ process_opts() {
                 OLDFLAVOR="$OPTARG" # Used to see if the script overrides
                 ;;
             \?|h)
-                show_usage
+                show_synopsis; show_usage
                 exit
                 ;;
             i)
@@ -125,10 +133,14 @@ process_opts() {
 #############################################################################
 # Show usage information
 #############################################################################
-show_usage() {
-cat << EOM
-
+show_synopsis() {
+    cat << EOM
 Usage: $0 [-blt] [-f FLAVOR] [-h] [-a 32|64|both] [-d DEPVER]
+EOM
+}
+
+show_usage() {
+    cat << EOM
   -a ARCH   : build 32/64 bit only, or both (default: both)
   -b        : batch mode (exit on errors without asking)
   -c        : use 'ccache' to speed up (re-)compilation
@@ -147,15 +159,13 @@ Usage: $0 [-blt] [-f FLAVOR] [-h] [-a 32|64|both] [-d DEPVER]
   -t        : skip test suite
   -x        : download and extract source only
   -xx       : as -x but also apply patches
-
 EOM
 }
 
 print_config() {
     cat << EOM
 
-MYDIR:                  $MYDIR
-LIBDIR:                 $LIBDIR
+BLIBDIR:                $BLIBDIR
 ROOTDIR:                $ROOTDIR
 TMPDIR:                 $TMPDIR
 DTMPDIR:                $DTMPDIR
@@ -251,6 +261,11 @@ ask_to_continue_() {
     done
 }
 
+function print_elapsed {
+    typeset s=$1
+    printf '%dh%dm%ds' $((s/3600)) $((s%3600/60)) $((s%60))
+}
+
 ask_to_continue() {
     ask_to_continue_ "${1}" "Do you wish to continue anyway?" "y/n" "[yYnN]"
     if [[ "$REPLY" == "n" || "$REPLY" == "N" ]]; then
@@ -297,6 +312,7 @@ ask_to_testsuite() {
 #############################################################################
 # URL encoding for package names, at least
 #############################################################################
+
 # This isn't real URL encoding, just a couple of common substitutions
 url_encode() {
     [ $# -lt 1 ] && logerr "Not enough arguments to url_encode()"
@@ -327,52 +343,6 @@ set_coredir() {
 }
 
 #############################################################################
-# Some initialization
-#############################################################################
-
-# The dir where this file is located - used for sourcing further files
-MYDIR=$PWD/`dirname $BASH_SOURCE[0]`
-LIBDIR="`realpath $MYDIR`"
-ROOTDIR="`dirname $LIBDIR`"
-# The dir where this file was sourced from - this will be the directory of the
-# build script
-SRCDIR=$PWD/`dirname $0`
-
-#############################################################################
-# Load configuration options
-#############################################################################
-. $MYDIR/config.sh
-[ -f $MYDIR/site.sh ] && . $MYDIR/site.sh
-BASE_TMPDIR=$TMPDIR
-
-set_coredir $TMPDIR
-
-BASEPATH=/usr/ccs/bin:$USRBIN:/usr/sbin:$OOCEBIN:$GNUBIN:$SFWBIN
-export PATH=$BASEPATH
-
-# Platform information, e.g. 5.11
-SUNOSVER=`uname -r`
-
-MYSCRIPT=${BASH_SOURCE[1]##*/}
-[[ $MYSCRIPT = build*.sh ]] && LOGFILE=$PWD/${MYSCRIPT/%.sh/.log}
-
-[ -f "$LOGFILE" ] && mv $LOGFILE $LOGFILE.1
-
-process_opts $@
-shift $((OPTIND - 1))
-
-#############################################################################
-# Running as root is not safe
-#############################################################################
-if [ "$UID" = "0" ]; then
-    if [ -n "$ROOT_OK" ]; then
-        logmsg "--- Running as root, but ROOT_OK is set; continuing"
-    else
-        logerr "--- You should not run this as root"
-    fi
-fi
-
-#############################################################################
 # Utilities
 #############################################################################
 
@@ -396,8 +366,6 @@ init_tools() {
         logcmd ln -sf /bin/false $TMPDIR/tools/$cmd || logerr "ln $cmd failed"
     done
 }
-
-init_tools
 
 #############################################################################
 # Compiler version
@@ -440,8 +408,6 @@ set_gccver() {
 
     set_ssp strong $2
 }
-
-set_gccver $DEFAULT_GCC_VER -q
 
 #############################################################################
 # OpenSSL version
@@ -547,7 +513,6 @@ reset_configure_opts() {
         "
     fi
 }
-reset_configure_opts
 
 set_standard() {
     typeset st="$1"
@@ -568,7 +533,24 @@ set_arch() {
     forgo_isaexec
 }
 
-BasicRequirements() {
+check_mediators() {
+    OPENSSLVER=`pkg mediator -H openssl 2>/dev/null| awk '{print $3}'`
+    if [ "$OPENSSLVER" != "$EXP_OPENSSLVER" ]; then
+        if [ -n "$OPENSSL_TEST" ]; then
+            logmsg -h "--- OpenSSL version $OPENSSLVER but OPENSSL_TEST is set"
+        else
+            logerr "--- OpenSSL $OPENSSLVER should not be used for build"
+        fi
+    fi
+    OPENSSLPATH=/usr/ssl-$OPENSSLVER
+
+    typeset _med=`pkg mediator -H python3 2>/dev/null| awk '{print $3}'`
+    if [ -n "$_med" -a "$_med" != "$PYTHON3VER" ]; then
+        logerr "--- Python3 mediator is set incorrectly ($_med)"
+    fi
+}
+
+basic_build_requirements() {
     local needed=""
     [ -x $GCCPATH/bin/gcc ] || needed+=" developer/gcc$GCCVER"
     [ -x /usr/bin/ar ] || needed+=" developer/object-file"
@@ -590,45 +572,8 @@ BasicRequirements() {
            ask_to_install $i "--- Build-time dependency $i not found"
         done
     fi
+    check_mediators
 }
-BasicRequirements
-
-#############################################################################
-# Check the OpenSSL mediator
-#############################################################################
-
-OPENSSLVER=`pkg mediator -H openssl 2>/dev/null| awk '{print $3}'`
-if [ "$OPENSSLVER" != "$EXP_OPENSSLVER" ]; then
-    if [ -n "$OPENSSL_TEST" ]; then
-        logmsg -h "--- OpenSSL version $OPENSSLVER but OPENSSL_TEST is set"
-    else
-        logerr "--- OpenSSL version $OPENSSLVER should not be used for build"
-    fi
-fi
-OPENSSLPATH=/usr/ssl-$OPENSSLVER
-
-#############################################################################
-# Print startup message
-#############################################################################
-
-logmsg "===== Build started at `date` ====="
-
-print_elapsed() {
-    typeset s=$1
-    printf '%dh%dm%ds' $((s/3600)) $((s%3600/60)) $((s%60))
-}
-
-build_end() {
-    rv=$?
-    if [ -n "$PKG" -a -n "$build_start" ]; then
-        logmsg "Time: $PKG - $(print_elapsed $((`date +%s` - build_start)))"
-        build_start=
-    fi
-    exit $rv
-}
-
-build_start=`date +%s`
-trap 'build_end' EXIT
 
 #############################################################################
 # Libtool -nostdlib hacking
@@ -965,11 +910,10 @@ patch_file() {
         return
     fi
 
-    # Note - if -p is specified more than once, then the last one takes
-    # precedence, so we can specify -p1 at the beginning to default to -p1.
-    # -t - don't ask questions
-    # -N - don't try to apply a reverse patch
-    if ! logcmd $PATCH -p1 -t -N "$@" < $SRCDIR/$patchdir/$filename; then
+    # Note - if --strip is specified more than once, then the last one takes
+    # precedence, so we can specify --strip at the beginning to set the default.
+    if ! logcmd $PATCH --batch --forward --strip=1 "$@" \
+        < $SRCDIR/$patchdir/$filename; then
         logerr "--- Patch $filename failed"
     else
         logmsg "--- Applied patch $filename"
@@ -981,19 +925,19 @@ apply_patches() {
 
     if ! check_for_patches $patchdir "in order to apply them"; then
         logmsg "--- Not applying any patches"
-    else
-        logmsg "Applying patches"
-        # Read the series file for patch filenames
-        exec 3<"$SRCDIR/$patchdir/series" # Open the series file with handle 3
-        pushd $TMPDIR/$BUILDDIR > /dev/null
-        while read LINE <&3 ; do
-            [[ $LINE = \#* ]] && continue
-            # Split Line into filename+args
-            patch_file $patchdir $LINE
-        done
-        popd > /dev/null
-        exec 3<&- # Close the file
+        return
     fi
+
+    logmsg "Applying patches"
+    pushd $TMPDIR/$EXTRACTED_SRC > /dev/null
+    exec 3<"$SRCDIR/$patchdir/series" || logerr "Could not open patch series"
+    while read LINE <&3; do
+        [[ $LINE = \#* ]] && continue
+        # Split Line into filename+args
+        patch_file $patchdir $LINE
+    done
+    exec 3<&-
+    popd > /dev/null
 }
 
 rebase_patches() {
@@ -1004,39 +948,57 @@ rebase_patches() {
         return
     fi
 
-    logmsg "Re-basing patches"
+    logmsg "-- Re-basing patches"
+
+    local xsrcdir=$TMPDIR/$EXTRACTED_SRC
+    local root=${xsrcdir%/*}
+    local dir=${xsrcdir##*/}
+
+    pushd $root > /dev/null || logerr "chdir $root failed"
+    logmsg "Archiving unpatched $dir"
+    logcmd rsync -ac --delete $dir{,.unpatched}/ || logerr "rsync $dir failed"
+
     # Read the series file for patch filenames
-    exec 3<"$SRCDIR/$patchdir/series"
-    pushd $TMPDIR > /dev/null
-    rsync -ac --delete $BUILDDIR/ $BUILDDIR.unpatched/
-    while read LINE <&3 ; do
+    # Use a separate file handle so that logerr() can be used in the loop
+    exec 3<"$SRCDIR/$patchdir/series" || logerr "Could not open patch series"
+    while read LINE <&3; do
         [[ $LINE = \#* ]] && continue
-        patchfile="$SRCDIR/$patchdir/${LINE%% *}"
-        rsync -ac --delete $BUILDDIR/ $BUILDDIR~/
-        (
-            cd $BUILDDIR
-            patch_file $patchdir $LINE
-        )
-        mv $patchfile $patchfile~
+
+        local patchfile="$SRCDIR/$patchdir/${LINE%% *}"
+        [ -f $patchfile ] || continue
+
+        logcmd rsync -ac --delete $dir{,~}/ || logerr "rsync $dir~ failed"
+        ( cd $dir && patch_file $patchdir $LINE )
+        logcmd mv $patchfile{,~} || logerr "mv $patchfile{,~}"
         # Extract the original patch header text
         sed -n '
             /^---/q
             /^diff -/q
             p
             ' < $patchfile~ > $patchfile
-        # Generate new patch and normalise the header lines so that they do
-        # not change with each run.
-        gdiff -wpruN --exclude='*.orig' $BUILDDIR~ $BUILDDIR | sed '
-            /^diff -wpruN/,/^\+\+\+ / {
-                s% [^ ~/]*\(~*\)/% a\1/%g
-                s%[0-9][0-9][0-9][0-9]-[0-9].*%1970-01-01 00:00:00%
-            }
-        ' >> $patchfile
-        rm -f $patchfile~
+        gdiff -wpruN --exclude='*.orig' $dir{~,} >> $patchfile
+        local stat=$?
+        if ((stat != 1)); then
+            logcmd mv $patchfile{~,}
+            logerr "Could not generate new patch ($stat)"
+        else
+            logcmd rm -f $patchfile~
+            # Normalise the header lines so that they do not change with each
+            # run.
+            sed -i '
+                    /^diff -wpruN/,/^\+\+\+ / {
+                        s% [^ ~/]*\(~*\)/% a\1/%g
+                        s%[0-9][0-9][0-9][0-9]-[0-9].*%1970-01-01 00:00:00%
+                    }
+                ' $patchfile
+        fi
     done
-    rsync -ac --delete $BUILDDIR.unpatched/ $BUILDDIR/
+    exec 3<&-
+
+    logmsg "Restoring unpatched $dir"
+    logcmd rsync -ac --delete $dir{.unpatched,}/ || logerr "rsync $dir failed"
     popd > /dev/null
-    exec 3<&- # Close the file
+
     # Now the patches have been re-based, -pX is no longer required.
     sed -i 's/ -p.*//' "$SRCDIR/$patchdir/series"
 }
@@ -1057,13 +1019,8 @@ patch_source() {
 get_resource() {
     local RESOURCE=$1
     case ${MIRROR:0:1} in
-        /)
-            logcmd cp $MIRROR/$RESOURCE .
-            ;;
-        *)
-            URLPREFIX=$MIRROR
-            $WGET -a $LOGFILE $URLPREFIX/$RESOURCE
-            ;;
+        /)  logcmd cp $MIRROR/$RESOURCE . ;;
+        *)  $WGET -a $LOGFILE $MIRROR/$RESOURCE ;;
     esac
 }
 
@@ -1293,7 +1250,7 @@ clone_go_source() {
 
     clone_github_source $prog "$GITHUB/$src/$prog" $branch
 
-    BUILDDIR+=/$prog
+    set_builddir "$BUILDDIR/$prog"
 
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
@@ -1398,17 +1355,21 @@ manifest_add() {
 # Takes care of adding any necessary 'dir' actions to support files which
 # have been added and sorts the result, removing duplicate lines. Only
 # directories under one of the provided prefixes are included
-#   manifest_finalise <prefix> [prefix]...
+#   manifest_finalise <manifest> <prefix> [prefix]...
 manifest_finalise() {
+    typeset mf=${1:?mf}; shift
     typeset tf=`mktemp`
-    logcmd cp $PARTMF $tf
+
+    logmsg "-- Finalising ${mf##*/}"
+
+    logcmd cp $mf $tf || logerr "cp $mf $tf"
 
     typeset prefix
     for prefix in "$@"; do
         prefix=${prefix#/}
         logmsg "--- determining implicit directories for $prefix"
         $RIPGREP "^dir.* path=$prefix(\$|\\s)" $SEEDMF >> $tf
-        $RIPGREP "(file|link|hardlink).* path=$prefix/" $PARTMF \
+        $RIPGREP "(file|link|hardlink).* path=$prefix/" $mf \
             | sed "
                 s^.*path=$prefix/^^
                 s^/[^/]*$^^
@@ -1421,7 +1382,7 @@ manifest_finalise() {
             done
         done
     done
-    sort -u < $tf > $PARTMF
+    sort -u < $tf > $mf
     rm -f $tf
 }
 
@@ -1514,7 +1475,7 @@ make_package() {
 
     # Temporary file paths
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
-    GLOBAL_MOG_FILE=$MYDIR/mog/global-transforms.mog
+    GLOBAL_MOG_FILE=$BLIBDIR/mog/global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
 
     # Version cleanup
@@ -1606,7 +1567,7 @@ make_package() {
 
     # Transforms
     logmsg "--- Applying transforms"
-    logcmd -p $PKGMOGRIFY -I $MYDIR/mog \
+    logcmd -p $PKGMOGRIFY -I $BLIBDIR/mog \
         $XFORM_ARGS \
         $P5M_GEN \
         $MY_MOG_FILE \
@@ -1738,8 +1699,7 @@ make_package() {
     return 0
 }
 
-translate_manifest()
-{
+translate_manifest() {
     local src=$1
     local dst=$2
 
@@ -1751,8 +1711,7 @@ translate_manifest()
         " < $src > $dst
 }
 
-publish_manifest()
-{
+publish_manifest() {
     local pkg=$1
     local pmf=$2
     local root=$3
@@ -1783,8 +1742,7 @@ publish_manifest()
     [ -n "$pkg" -a -z "$SKIP_PKG_DIFF" ] && diff_latest $pkg
 }
 
-build_xform_sed()
-{
+build_xform_sed() {
     XFORM_SED_CMD=
 
     for kv in $XFORM_ARGS; do
@@ -1817,6 +1775,10 @@ xform() {
     sed "$XFORM_SED_CMD" < $file
 }
 
+#############################################################################
+# Package diffing
+#############################################################################
+
 # Create a list of the items contained within a package in a format suitable
 # for comparing with previous versions. We don't care about changes in file
 # content, just whether items have been added, removed or had their attributes
@@ -1843,35 +1805,48 @@ pkgitems() {
     "
 }
 
-diff_package() {
-    local fmri="$1"
-    xfmri=${fmri%@*}
+diff_packages() {
+    local srcrepo="${1:?}"
+    local srcfmri="${2:?}"
+    local dstrepo="${3:?}"
+    local dstfmri="${4:?}"
 
     if [ -n "$BATCH" ]; then
         of=$TMPDIR/pkg.diff.$$
         echo "Package: $fmri" > $of
         if ! gdiff -u \
-            <(pkgitems -g $IPS_REPO $xfmri) \
-            <(pkgitems -g $PKGSRVR $fmri) \
+            <(pkgitems -g $srcrepo $srcfmri) \
+            <(pkgitems -g $dstrepo $dstfmri) \
             >> $of; then
-                    logmsg -e "----- $fmri has changed"
-                    cat $of >> $TMPDIR/pkg.diff
+                    logmsg -e "----- $srcfmri has changed"
+                    mv $of $TMPDIR/pkg.diff
+                    return 1
+        else
+            rm -f $of
+            return 0
         fi
-        rm -f $of
     else
         logmsg "--- Comparing old package with new"
         if ! gdiff -U0 --color=always --minimal \
-            <(pkgitems -g $IPS_REPO $xfmri) \
-            <(pkgitems -g $PKGSRVR $fmri) \
+            <(pkgitems -g $srcrepo $srcfmri) \
+            <(pkgitems -g $dstrepo $dstfmri) \
             > $TMPDIR/pkgdiff.$$; then
                 echo
                 # Not anchored due to colour codes in file
                 $EGREP -v '(\-\-\-|\+\+\+|\@\@) ' $TMPDIR/pkgdiff.$$
                 note "Differences found between old and new packages"
-                ask_to_continue
+                rm -f $TMPDIR/pkgdiff.$$
+                [ -z "$PKGDIFF_NOASK" ] && ask_to_continue
         fi
         rm -f $TMPDIR/pkgdiff.$$
     fi
+}
+
+diff_package() {
+    local fmri="$1"
+    local xfmri=${fmri%@*}
+
+    diff_packages $IPS_REPO $xfmri $PKGSRVR $fmri
 }
 
 diff_latest() {
@@ -2125,9 +2100,9 @@ make_isaexec_stub_arch() {
         [ -f "$file" ] && continue
         logmsg "---- Creating ISA stub for $file"
         logcmd $CC $CFLAGS $CFLAGS32 -o $file \
-            -DFALLBACK_PATH="$dir/$file" $MYDIR/isastub.c \
+            -DFALLBACK_PATH="$dir/$file" $BLIBDIR/isastub.c \
             || logerr "--- Failed to make isaexec stub for $dir/$file"
-        logcmd strip -x $file
+        strip_files "$file"
     done
 }
 
@@ -2398,9 +2373,10 @@ build_dependency() {
     typeset ver="$5"
 
     save_variable BUILDDIR __builddep__
+    save_variable EXTRACTED_SRC __builddep__
     save_variable DESTDIR __builddep__
 
-    BUILDDIR="$dir"
+    set_builddir "$dir"
     local patchdir="patches-$dep"
     [ ! -d "$patchdir" -a -d "patches-$ver" ] && patchdir="patches-$ver"
     if [ $merge -eq 0 ]; then
@@ -2417,6 +2393,7 @@ build_dependency() {
     build $buildargs
 
     restore_variable BUILDDIR __builddep__
+    restore_variable EXTRACTED_SRC __builddep__
     restore_variable DESTDIR __builddep__
 }
 
@@ -2432,7 +2409,6 @@ set_python_version() {
     PYTHONLIB=$PYTHONPATH/lib
     PYTHONVENDOR=$PYTHONLIB/python$PYTHONVER/vendor-packages
 }
-set_python_version $DEFAULT_PYTHON_VER
 
 pre_python_32() {
     logmsg "prepping 32bit python build"
@@ -2786,6 +2762,22 @@ check_libabi() {
 # ELF operations
 #############################################################################
 
+strip_files() {
+    [ -n "$SKIP_STRIP" ] && return
+    local mode
+    for f in "$@"; do
+        mode=
+        if [ ! -w "$f" ]; then
+            mode=$(stat -c %a "$f")
+            logcmd chmod u+w "$f" || logerr -b "chmod failed: $f (u+w)"
+        fi
+        logcmd strip -x "$f" || logerr "strip $f failed"
+        if [ -n "$mode" ]; then
+            logcmd chmod $mode "$f" || logerr -b "chmod failed: $f ($mode)"
+        fi
+    done
+}
+
 rtime_files() {
     local dir="${1:-$DESTDIR}"
 
@@ -2804,10 +2796,7 @@ strip_install() {
     pushd $DESTDIR > /dev/null || logerr "Cannot change to $DESTDIR"
     while read file; do
         logmsg "------ stripping $file"
-        MODE=$(stat -c %a "$file")
-        logcmd chmod u+w "$file" || logerr -b "chmod failed: $file"
-        logcmd strip -x "$file" || logerr -b "strip failed: $file"
-        logcmd chmod $MODE "$file" || logerr -b "chmod failed: $file"
+        strip_files "$file"
     done < <(rtime_objects)
     popd > /dev/null
 }
@@ -2825,7 +2814,7 @@ convert_ctf() {
         if [ -f $SRCDIR/files/ctf.skip ] \
           && echo $file | $EGREP -qf $SRCDIR/files/ctf.skip; then
             logmsg "$ctftag skipped $file"
-            logcmd strip -x "$file"
+            strip_files "$file"
             continue
         fi
 
@@ -2833,8 +2822,11 @@ convert_ctf() {
             continue
         fi
 
-        typeset mode=`stat -c %a "$file"`
-        logcmd chmod u+w "$file" || logerr -b "chmod u+w failed: $file"
+        typeset mode=
+        if [ ! -w "$file" ]; then
+            mode=`stat -c %a "$file"`
+            logcmd chmod u+w "$file" || logerr -b "chmod u+w failed: $file"
+        fi
         typeset tf="$file.$$"
 
         typeset flags="$CTF_FLAGS"
@@ -2865,8 +2857,10 @@ convert_ctf() {
         fi
 
         logcmd rm -f "$tf"
-        logcmd strip -x "$file"
-        logcmd chmod $mode "$file" || logerr -b "chmod failed: $file"
+        strip_files "$file"
+        if [ -n "$mode" ]; then
+            logcmd chmod $mode "$file" || logerr -b "chmod failed: $file"
+        fi
     done < <(rtime_objects "$dir")
 
     popd >/dev/null
@@ -2921,7 +2915,7 @@ check_bmi() {
     while read obj; do
         [ -f "$DESTDIR/$obj" ] || continue
         dis $DESTDIR/$obj 2>/dev/null \
-            | $RIPGREP -wq --no-messages 'mulx|lzcntq|shlx' \
+            | $RIPGREP -wq --no-messages 'mulx|lzcnt|shlx' \
             && echo "$obj has been built with BMI instructions" \
             >> $TMPDIR/rtime.bmi &
         parallelise $LCPUS

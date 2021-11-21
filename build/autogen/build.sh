@@ -14,7 +14,7 @@
 
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=autogen
 VER=5.18.16

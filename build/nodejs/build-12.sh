@@ -14,7 +14,7 @@
 
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=node
 VER=12.22.7

@@ -16,7 +16,7 @@
 # Copyright 2016-2018 Jim Klimov
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=ccache
 VER=3.6

@@ -14,7 +14,7 @@
 
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=php
 PKG=ooce/application/php-73

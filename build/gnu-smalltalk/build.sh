@@ -15,7 +15,7 @@
 # Copyright 2020 David Stes
 # GNU Smalltalk latest stable 3.2.5 with some patches from 3.2.91 alpha
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=gnu-smalltalk
 VER=3.2.5

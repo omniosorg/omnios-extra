@@ -14,7 +14,7 @@
 
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=mrtg
 VER=2.17.8

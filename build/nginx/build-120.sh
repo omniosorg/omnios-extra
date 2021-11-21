@@ -15,7 +15,7 @@
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=nginx
 PKG=ooce/server/nginx-120

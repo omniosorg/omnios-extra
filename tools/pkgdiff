@@ -1,0 +1,66 @@
+#!/usr/bin/bash
+
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+__SCRIPTDIR="${0%/*}"
+
+. $__SCRIPTDIR/../lib/functions.sh
+
+srcrepo=$IPS_REPO
+dstrepo=$PKGSRVR
+
+usage() {
+    cat << EOM
+tools/pkgdiff [options] <pkg>
+
+Options:
+    -s <source repository>
+        (default: $IPS_REPO)
+    -d <dest repository>
+        (default $PKGSRVR)
+    -p <source package>
+        (default same as destination package)
+    -x <sed expression>
+
+EOM
+    exit
+}
+
+while getopts "d:hp:s:x:" opt; do
+    case $opt in
+        s)  srcrepo="$OPTARG" ;;
+        d)  dstrepo="$OPTARG" ;;
+        p)  srcfmri="$OPTARG" ;;
+        x)  export PKGDIFF_HELPER="$OPTARG" ;;
+        h)  usage ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+(($# == 1)) || usage
+
+dstfmri="$1"
+[ -z "$srcfmri" ] && srcfmri="$dstfmri"
+
+cat << EOM
+============================================================================
+Package diff - $PKGDIFF_HELPER
+    `printf "%40s : %s" $srcrepo $srcfmri`
+    `printf "%40s : %s" $dstrepo $dstfmri`
+============================================================================
+EOM
+
+PKGDIFF_NOASK=1 diff_packages "$srcrepo" "$srcfmri" "$dstrepo" "$dstfmri"
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker

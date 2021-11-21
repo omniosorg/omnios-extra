@@ -14,7 +14,7 @@
 
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=mattermost
 VER=6.1.0
@@ -50,13 +50,16 @@ build() {
 
     note -n "Building $prog"
 
-    BUILDDIR+=/$prog patch_source patches-$prog
+    EXTRACTED_SRC+=/$prog patch_source patches-$prog
 
     export GOPATH=$TMPDIR/$BUILDDIR/$prog/_deps
 
     pushd $TMPDIR/$BUILDDIR/$prog > /dev/null
     logcmd $MAKE "$@" || logerr "Build failed"
     popd >/dev/null
+
+    logmsg "Fixing permissions on $prog dependencies"
+    logcmd chmod -R u+w $GOPATH
 }
 
 install() {

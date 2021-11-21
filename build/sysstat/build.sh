@@ -15,7 +15,7 @@
 # Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
 # Use is subject to license terms.
 #
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=sysstat
 VER=20151012

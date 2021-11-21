@@ -16,7 +16,7 @@
 # Copyright 2021 Oxide Computer Company
 #
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=ncdu
 VER=1.16

@@ -30,3 +30,4 @@
     link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
 
 license LICENSE license=libpng
+

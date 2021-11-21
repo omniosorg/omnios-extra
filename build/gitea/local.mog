@@ -11,7 +11,7 @@
 
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-license $(PROG)/LICENSE license=MIT
+license LICENSE license=MIT
 
 group groupname=$(PROG) gid=86
 user ftpuser=false username=gitea uid=86 group=$(PROG) \

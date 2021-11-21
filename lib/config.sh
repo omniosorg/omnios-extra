@@ -21,7 +21,7 @@
 #
 # Copyright (c) 2015 by Delphix. All rights reserved.
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 #
 #############################################################################
 # Configuration for the build system
@@ -78,6 +78,9 @@ if [[ ! "$RELVER" =~ ^151[0-9]{3}$ ]]; then
     echo "Unable to determine release version (got $RELVER)"
     exit 1
 fi
+
+# Platform information, e.g. 5.11
+SUNOSVER=`uname -r`
 
 # Default branch
 DASHREV=0
@@ -324,7 +327,8 @@ PYTHON2VER=2.7
 case $RELVER in
     15103[3-6])         PYTHON3VER=3.7 ;;
     15103[7-9])         PYTHON3VER=3.9 ;;
-    15104*)             PYTHON3VER=3.9 ;;
+    151040)             PYTHON3VER=3.9 ;;
+    15104[1-9])         PYTHON3VER=3.10 ;;
     *)                  PYTHON3VER=3.5 ;;
 esac
 # Specify default Python version for building packages

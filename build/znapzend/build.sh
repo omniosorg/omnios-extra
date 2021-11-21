@@ -15,7 +15,7 @@
 # Copyright 1995-2013 OETIKER+PARTNER AG  All rights reserved.
 # Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=znapzend
 VER=0.21.0

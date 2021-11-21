@@ -14,7 +14,7 @@
 #
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=guile
 VER=2.0.14
