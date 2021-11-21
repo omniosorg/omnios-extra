@@ -34,6 +34,10 @@
 # a build error is detected, set this.
 #NOKILL_ON_ERROR=1
 
+# If you want the entire build to attempt to continue to completion when
+# a build error is detected, set this.
+#NOABORT_ON_ERROR=1
+
 # To use a proxy for source code retrieval.
 #export http_proxy=http://192.168.1.1:8080/
 #export https_proxy=http://192.168.1.1:8080/
