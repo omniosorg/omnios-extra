@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=bdw-gc
-VER=8.0.4
+VER=8.0.6
 PKG=ooce/library/bdw-gc
 SUMMARY="A garbage collector for C and C++"
 DESC="$SUMMARY"

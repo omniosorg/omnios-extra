@@ -18,7 +18,7 @@
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox
-VER=6.1.28
+VER=6.1.30
 # virtualbox does currently not build with later gsoap versions
 GSOAPVER=2.8.102
 GSOAPDIR=gsoap-${GSOAPVER%.*}
