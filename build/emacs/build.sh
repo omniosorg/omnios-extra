@@ -40,7 +40,6 @@ XFORM_ARGS="
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --without-x
-    --without-gnutls
     --with-gif=no
     ac_cv_sys_long_file_names=yes
     ac_cv_header_sys_inotify_h=no
