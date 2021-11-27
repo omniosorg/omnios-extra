@@ -355,8 +355,16 @@ diffpkg() {
 }
 
 hashline="`printf -- '#%.0s' {1..79}`"
+ljs=
 job_status() {
     local _stat="$*"
+
+    if [ -z "$_stat" ]; then
+        local now=`date +%s`
+        [ -n "$ljs" ] && ((now - ljs < 60)) && return
+        ljs=$now
+    fi
+
     elapsed=$((`date +%s` - build_start))
     logmsg -h "$hashline"
     logmsg -h "-- Job status $_stat-- `print_elapsed $elapsed` --"
@@ -375,73 +383,84 @@ job_status() {
         logmsg -h "`printf "    [%d] %8d - (%5ds) %s\n" \
             "$i" "${slots[$i]}" "$tm" "$e${slotdesc[$i]}"`"
     done
+    for b in ${builderr[@]}; do
+        logmsg -e "`printf "           *** BUILD ERROR ***         %s\n" \
+            $b`"
+    done
     logmsg -h "$hashline"
 }
 
 # Reap a finished job
 reap_slot() {
-    typeset -i i=$1
-
-    wait "${slots[$i]}"
-    typeset s=$?
-    typeset job="${slottgt[$i]}"
+    typeset slot="$1"
+    typeset stat="$2"
+    typeset job="${slottgt[$slot]}"
     typeset -i ret=0
-    case $s in
-        0)  logmsg -n "-- Job $i ($job) terminated normally"
+
+    case $stat in
+        0)  logmsg -n "-- Job $slot ($job) terminated normally"
             ;;
-        141)
-            # Jobs sometimes terminate with 141 (SIGPIPE) but have
-            # actually run to completion. We don't know why this
-            # happens yet, but treat this as a successful run for now.
-            # If the build or publication has not worked, the baseline
-            # check will catch it.
-            logmsg -n "-- Job $i ($job) terminated with SIGPIPE"
-            ;;
-        *)  logmsg -e "-- Job $i ($job) terminated with status $s"
-            note -e "***** BUILD ERROR ***** ($job/$s)"
-            builderr+=($job/$s)
+        *)  logmsg -e "-- Job $slot ($job) terminated with status $stat"
+            note -e "***** BUILD ERROR ***** ($job/$stat)"
+            builderr+=($job)
             ret=1
             ;;
     esac
-    slots[$i]=
+    unset slots[$slot]
     return $ret
+}
+
+drain() {
+    note -e "Got SIGUSR1, draining..."
+    trap - SIGUSR1
 }
 
 nextslot=
 wait_for_slot() {
-    nextslot=
-    while :; do
-        for i in `seq 0 $threads`; do
-            # Idle slot? Just return the slot number
-            [ -z "${slots[$i]}" ] && nextslot=$i && return
-            # Job finished?
-            kill -0 "${slots[$i]}" 2>/dev/null && continue
-            # Yes, reap it
-            reap_slot $i && nextslot=$i
-            return
-        done
-        # Print status summary each minute (approx.)
-        [ `date +%S` -eq 0 ] && job_status
-        sleep 1
+    # Check for any idle slots
+    for i in `seq 0 $threads`; do
+        [ -z "${slots[$i]}" ] && nextslot=$i && return
     done
+
+    typeset slot=
+    typeset -i stat=0
+
+    # Wait for a slot to terminate
+    while :; do
+        wait -fn -p pid ${slots[*]}
+        stat=$?
+        (( stat == 169 )) && continue               # SIGINFO
+        (( stat == 144 )) && nextslot= && return    # SIGUSR1
+        [ -n "$pid" ] || continue
+        slot=${slotpid[$pid]}
+        [ -n "$slot" ] && break
+        logmsg -n "Unknown pid $pid terminated $s"
+    done
+
+    if reap_slot $slot $stat; then
+        nextslot=$slot
+    elif [ -n "$NOABORT_ON_ERROR" ]; then
+        nextslot=$slot
+    else
+        nextslot=
+    fi
 }
 
 wait_for_jobs() {
     local msg="$1"
-    while :; do
-        typeset -i running=0
-        for i in `seq 0 $threads`; do
-            [ -n "${slots[$i]}" ] || continue
-            if ! kill -0 "${slots[$i]}" 2>/dev/null; then
-                # Job has finished
-                reap_slot $i
-            else
-                ((running++))
-            fi
-        done
-        [ "$running" -eq 0 ] && break
-        [ `date +%S` -eq 0 ] && job_status "($msg) "
-        sleep 1
+
+    typeset slot=
+    typeset -i stat=0
+
+    while (( ${#slots[*]} > 0 )); do
+        wait -fn -p pid ${slots[*]}
+        stat=$?
+        (( stat == 169 )) && continue               # SIGINFO
+        (( stat == 144 )) && continue               # SIGUSR1
+        [ -n "$pid" ] || continue
+        slot=${slotpid[$pid]}
+        [ -n "$slot" ] && reap_slot $slot $stat
+        job_status "($msg) "
     done
 }
 
@@ -471,6 +490,7 @@ parallel_build() {
     set_batch_build_flags
 
     note "Starting parallel build with $threads thread(s)"
+    date
 
     build_start=`date +%s`
 
@@ -483,6 +503,7 @@ parallel_build() {
     init_repo
 
     declare -A slots
+    declare -A slotpid
     declare -A slottgt
     declare -A slotdesc
     declare -A slotstart
@@ -497,6 +518,9 @@ parallel_build() {
     done
 
     pkgcount=${#queue[@]}
+
+    trap 'job_status SIGINFO' SIGINFO
+    trap drain SIGUSR1
 
     while [ ${#queue[@]} -gt 0 ]; do
         # Pop tgt off queue
@@ -586,9 +610,11 @@ parallel_build() {
         note -h "($pkgnum/$pkgcount) Building $tgt (slot $nextslot)"
         logprefix="[$nextslot] " build $tgt &
         slots[$nextslot]=$!
+        slotpid[$!]=$nextslot
         slottgt[$nextslot]=$tgt
         slotdesc[$nextslot]="`printf "(%3d/%d) %s" $pkgnum $pkgcount $tgt`"
         slotstart[$nextslot]=`date +%s`
+        job_status
     done
 
     if [ -n "$builderr" -a -z "$NOKILL_ON_ERROR" ]; then
@@ -612,6 +638,7 @@ parallel_build() {
     stop_built_listener
     wait
 
+    date
     logmsg "Total build time: $(print_elapsed $((`date +%s` - build_start)))"
 }
 
