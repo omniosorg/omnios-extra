@@ -2494,6 +2494,12 @@ python_vendor_relocate() {
         logcmd rm -rf $d/
         logcmd mv $tf $d || logerr "Could not create $d"
     done
+
+    for d in $DESTDIR$PYTHONVENDOR/*.dist-info; do
+        [ -d "$d" ] || continue
+        logmsg "-- Setting INSTALLER for `basename $d`"
+        echo pkg >$d/INSTALLER
+    done
 }
 
 python_compile() {
@@ -2501,34 +2507,41 @@ python_compile() {
     logcmd $PYTHON -m compileall $DESTDIR
 }
 
-python_build32() {
-    ISALIST=i386
-    export ISALIST
-    pre_python_32
-    logmsg "--- setup.py (32) build"
-    CFLAGS="$CFLAGS $CFLAGS32" LDFLAGS="$LDFLAGS $LDFLAGS32" \
-        logcmd $PYTHON ./setup.py $PYGLOBALOPTS \
-        build $PYBUILDOPTS $PYBUILD32OPTS \
+python_pep518() {
+    logmsg "-- PEP518 build"
+    logcmd $PYTHON -mpip install \
+        --no-deps --isolated --no-input --exists-action=a \
+        --disable-pip-version-check --root=$DESTDIR . \
         || logerr "--- build failed"
-    logmsg "--- setup.py (32) install"
+}
+
+python_setuppy() {
+    logmsg "-- setup.py build"
+    logcmd $PYTHON ./setup.py $PYGLOBALOPTS build $PYBUILDOPTS \
+        || logerr "--- build failed"
     logcmd $PYTHON ./setup.py install --root=$DESTDIR \
-        --prefix=$PREFIX $PYINSTOPTS $PYINST32OPTS \
+        --prefix=$PREFIX $PYINSTOPTS \
         || logerr "--- install failed"
 }
 
+python_build32() {
+    export ISALIST=i386
+    pre_python_32
+    [ -f setup.py ] && backend=setuppy || backend=pep518
+    CFLAGS="$CFLAGS $CFLAGS32" LDFLAGS="$LDFLAGS $LDFLAGS32" \
+        PYBUILDOPTS="$PYBUILDOPTS $PYBUILDOPTS32" \
+        PYINSTOPTS="$PYINSTOPTS $PYINST32OPTS" \
+        python_$backend
+}
+
 python_build64() {
-    ISALIST="amd64 i386"
-    export ISALIST
+    export ISALIST="amd64 i386"
     pre_python_64
-    logmsg "--- setup.py (64) build"
+    [ -f setup.py ] && backend=setuppy || backend=pep518
     CFLAGS="$CFLAGS $CFLAGS64" LDFLAGS="$LDFLAGS $LDFLAGS64" \
-        logcmd $PYTHON ./setup.py $PYGLOBALOPTS \
-        build $PYBUILDOPTS $PYBUILD64OPTS \
-        || logerr "--- build failed"
-    logmsg "--- setup.py (64) install"
-    logcmd $PYTHON ./setup.py install --root=$DESTDIR \
-        --prefix=$PREFIX $PYINSTOPTS $PYINST64OPTS \
-        || logerr "--- install failed"
+        PYBUILDOPTS="$PYBUILDOPTS $PYBUILDOPTS64" \
+        PYINSTOPTS="$PYINSTOPTS $PYINST64OPTS" \
+        python_$backend
 }
 
 python_build() {
@@ -2540,17 +2553,11 @@ python_build() {
 
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
-    # Some projects have adopted PEP 518 and ship a pyproject.toml file to
-    # describe the build requirements etc. In that case, we can create a stub
-    # setup.py
-    if [ ! -f setup.py ]; then
-        [ -f pyproject.toml ] || logerr "No setup.py or pyproject.toml"
-        logmsg "Created shim setup.py for PEP518 project"
-        echo "import setuptools; setuptools.setup()" > setup.py
-    fi
-
     # we only ship 64 bit python3
     [[ $PYTHONVER = 3.* ]] && BUILDARCH=64
+
+    [ -f setup.py -o -f pyproject.toml ] \
+        || logerr "Don't know how to build this project"
 
     for b in $BUILDORDER; do
         [[ $BUILDARCH =~ ^($b|both)$ ]] && python_build$b
