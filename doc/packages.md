@@ -25,6 +25,7 @@
 | ooce/application/texlive	| 20210325	| ftp://tug.org/historic/systems/texlive/2021/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/tidy		| 5.8.0		| https://github.com/htacg/tidy-html5/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/vagrant	| 2.2.19	| https://github.com/hashicorp/vagrant/tags | [omniosorg](https://github.com/omniosorg)
+| ooce/application/vaultwarden	| 1.24.0	| https://github.com/dani-garcia/vaultwarden/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/zabbix	| 6.0.3		| https://www.zabbix.com/download_sources | [omniosorg](https://github.com/omniosorg)
 | ooce/audio/flac		| 1.3.4		| https://ftp.osuosl.org/pub/xiph/releases/flac/ https://xiph.org/flac/changelog.html | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pbzip2		| 1.1.13	| https://launchpad.net/pbzip2/+download | [omniosorg](https://github.com/omniosorg)
