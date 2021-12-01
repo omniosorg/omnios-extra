@@ -85,7 +85,7 @@
 | ooce/library/icu4c		| 69.1		| https://github.com/unicode-org/icu/releases | Currently used solely by cyrus-imapd
 | ooce/library/jansson		| 2.14		| https://github.com/akheron/jansson/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/json-c		| 0.15		| https://github.com/json-c/json-c/tags https://github.com/json-c/json-c/wiki | [omniosorg](https://github.com/omniosorg)
-| ooce/library/ldns		| 1.7.1		| https://nlnetlabs.nl/downloads/ldns/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/ldns		| 1.8.0		| https://nlnetlabs.nl/downloads/ldns/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libarchive	| 3.5.2		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libcxx		| 13.0.0	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libde265		| 1.0.8		| https://github.com/strukturag/libde265/releases | [omniosorg](https://github.com/omniosorg)

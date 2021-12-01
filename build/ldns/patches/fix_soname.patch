@@ -1,0 +1,34 @@
+From bc9d017f6fd8b6b5d2ff6e4489a2931d0aab8184 Mon Sep 17 00:00:00 2001
+From: Willem Toorop <willem@nlnetlabs.nl>
+Date: Mon, 29 Nov 2021 21:49:15 +0100
+Subject: [PATCH] Fix soname!
+
+diff -wpruN '--exclude=*.orig' a~/Changelog a/Changelog
+--- a~/Changelog	1970-01-01 00:00:00
++++ a/Changelog	1970-01-01 00:00:00
+@@ -1,3 +1,7 @@
++1.8.1	2021-12-??
++	* bugfix #146: ldns-1.7.1 had soname 3.0, so ldns-1.8.x soname
++	  needs to larger.
++
+ 1.8.0	2021-11-26
+ 	* bugfix #38: Print "line" before line number when printing
+ 	  zone parse errors. Thanks Petr Špaček.
+diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
+--- a~/configure.ac	1970-01-01 00:00:00
++++ a/configure.ac	1970-01-01 00:00:00
+@@ -27,10 +27,11 @@ AC_SUBST(LDNS_VERSION_MICRO, [VERSION_MI
+ #
+ # ldns-1.6.17 and before had a .so with version same as VERSION_INFO
+ # ldns-1.7.0 had libversion 2:0:0
+-# ldns-1.7.1 had libversion 3:0:1
+-# ldns-1.8.0 has libversion 4:0:2
++# ldns-1.7.1 had libversion 3:0:0 (though it should have had 3:0:1)
++# ldns-1.8.0 had libversion 4:0:2 (though it should have had 4:0:1)
++# ldns-1.8.1 has libversion 5:0:2
+ #
+-AC_SUBST(VERSION_INFO, [4:0:2])
++AC_SUBST(VERSION_INFO, [5:0:2])
+ 
+ AC_AIX
+ if test "$ac_cv_header_minix_config_h" = "yes"; then
