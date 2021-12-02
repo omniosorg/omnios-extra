@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 # Symlink binaries
 <transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
@@ -27,6 +27,10 @@ user ftpuser=false username=$(PROG) uid=91 group=$(PROG) \
     gcos-field="Subversion User" home-dir=/var/$(PREFIX) password=NP
 
 <transform path=$(PREFIX)/libexec -> drop>
+
+# Move Perl modules to major version path
+<transform path=$(PREFIX)/lib/site_perl/((5\.\d+)\.\d+) -> \
+    edit path $(PREFIX)/lib/site_perl/%<1> $(PREFIX)/lib/site_perl/%<2> >
 
 license LICENSE license=Apache2
 
