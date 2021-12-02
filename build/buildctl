@@ -430,6 +430,7 @@ wait_for_slot() {
         wait -fn -p pid ${slots[*]}
         stat=$?
         (( stat == 169 )) && continue               # SIGINFO
+        (( stat == 141 )) && continue               # SIGPIPE
         (( stat == 144 )) && nextslot= && return    # SIGUSR1
         [ -n "$pid" ] || continue
         slot=${slotpid[$pid]}
@@ -456,6 +457,7 @@ wait_for_jobs() {
         wait -fn -p pid ${slots[*]}
         stat=$?
         (( stat == 169 )) && continue               # SIGINFO
+        (( stat == 141 )) && continue               # SIGPIPE
         (( stat == 144 )) && continue               # SIGUSR1
         [ -n "$pid" ] || continue
         slot=${slotpid[$pid]}
