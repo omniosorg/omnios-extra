@@ -56,13 +56,19 @@ CONFIGURE_OPTS_64="
     --prefix=$PREFIX
     --with-utf8proc=internal
     --disable-mod-activation
+    --with-swig
     --with-apxs=$OPREFIX/apache-$APACHEVER/bin/apxs
 "
 
 LDFLAGS+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS+=" -L$PREFIX/lib -R$PREFIX/lib"
+
+MAKE_TARGET="all swig-pl"
+MAKE_INSTALL_TARGET+=" install-swig-pl"
 
 init
 download_source $PROG $PROG $VER
+patch_source
 prep_build
 build
 strip_install
