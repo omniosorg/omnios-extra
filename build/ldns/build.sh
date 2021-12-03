@@ -64,7 +64,6 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-run_autoreconf -fi
 build
 make_isa_stub
 make_package
