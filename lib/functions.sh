@@ -46,6 +46,8 @@ BASE_TMPDIR=$TMPDIR
 BASEPATH=/usr/ccs/bin:$USRBIN:/usr/sbin:$OOCEBIN:$GNUBIN:$SFWBIN
 export PATH=$BASEPATH
 
+set -o pipefail
+
 #############################################################################
 # Process command line options
 #############################################################################
@@ -1496,7 +1498,7 @@ make_package() {
 
     # Temporary file paths
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
-    GLOBAL_MOG_FILE=$BLIBDIR/mog/global-transforms.mog
+    GLOBAL_MOG_FILE=global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
 
     # Version cleanup
@@ -1588,15 +1590,25 @@ make_package() {
 
     # Transforms
     logmsg "--- Applying transforms"
-    logcmd -p $PKGMOGRIFY -I $BLIBDIR/mog \
+    exec 3>"$TMPDIR/mog.stderr"
+    logcmd -p $PKGMOGRIFY -P /dev/fd/3 -I $BLIBDIR/mog \
         $XFORM_ARGS \
         $P5M_GEN \
         $MY_MOG_FILE \
-        $GLOBAL_MOG_FILE \
         $LOCAL_MOG_FILE \
+        $GLOBAL_MOG_FILE \
         $EXTRA_MOG_FILE \
         $FRAG_MOG_FILE \
-        | $PKGFMT -u > $P5M_MOG
+        | $PKGFMT -u > $P5M_MOG \
+        || logerr "pkgmogrify failed"
+    exec 3>&-
+
+    if [ -z "$BATCH" -a -s "$TMPDIR/mog.stderr" ]; then
+        cat "$TMPDIR/mog.stderr" | while read l; do
+            logmsg -e "$l"
+        done
+        logerr "Warnings from mogrify process"
+    fi
 
     if [ -n "$DESTDIR" ]; then
         check_licences
