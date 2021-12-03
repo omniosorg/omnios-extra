@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=munin
-VER=2.0.67
+VER=2.0.69
 PKG=ooce/application/munin
 SUMMARY="munin"
 DESC="A networked resource monitoring tool that can help "
