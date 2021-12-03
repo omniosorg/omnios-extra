@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=cups
-VER=2.3.3op2
+VER=2.4.0
 PKG=ooce/print/cups
 SUMMARY="Common UNIX Printing System"
 DESC="Standards-based, open source printing system for UNIX operating systems"
@@ -25,6 +25,9 @@ DESC="Standards-based, open source printing system for UNIX operating systems"
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 VARDIR="/var$PREFIX"
+
+# getpwuid_r
+set_standard XPG6
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -45,7 +48,6 @@ CONFIGURE_OPTS="
     --with-cups-group=lp
     --enable-debug
     --disable-static
-    --disable-gnutls
     --without-bundledir
     --without-icondir
     --without-menudir

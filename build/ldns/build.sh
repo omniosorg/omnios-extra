@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=ldns
-VER=1.7.1
+VER=1.8.0
 PKG=ooce/library/ldns
 SUMMARY=$PROG
 DESC="$PROG DNS programming library and drill utility"
@@ -64,6 +64,7 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
+run_autoreconf -fi
 build
 make_isa_stub
 make_package

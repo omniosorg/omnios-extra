@@ -18,7 +18,7 @@
 
 PROG=htop
 PKG=ooce/system/htop
-VER=3.1.1
+VER=3.1.2
 SUMMARY="htop"
 DESC="An interactive process viewer for Unix"
 
@@ -30,9 +30,9 @@ set_standard XPG6
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 init
-download_source $PROG $VER
+download_source $PROG $PROG $VER
 patch_source
-prep_build "" -autoreconf
+prep_build
 build
 make_package
 clean_up
