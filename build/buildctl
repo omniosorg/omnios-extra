@@ -415,6 +415,18 @@ drain() {
     trap - SIGUSR1
 }
 
+clear_slots() {
+    typeset -i stat="$1"
+    typeset -i i=
+
+    logmsg -n "Clearing slots with status $stat"
+
+    for i in `seq 0 $threads`; do
+        [ -z "${slots[$i]}" ] && continue
+        reap_slot $i $stat
+    done
+}
+
 nextslot=
 wait_for_slot() {
     # Check for any idle slots
@@ -432,6 +444,11 @@ wait_for_slot() {
         (( stat == 169 )) && continue               # SIGINFO
         (( stat == 141 )) && continue               # SIGPIPE
         (( stat == 144 )) && nextslot= && return    # SIGUSR1
+        if (( stat == 127 )); then                  # No jobs left
+            clear_slots $stat
+            nextslot=0
+            return
+        fi
         [ -n "$pid" ] || continue
         slot=${slotpid[$pid]}
         [ -n "$slot" ] && break
@@ -459,6 +476,10 @@ wait_for_jobs() {
         (( stat == 169 )) && continue               # SIGINFO
         (( stat == 141 )) && continue               # SIGPIPE
         (( stat == 144 )) && continue               # SIGUSR1
+        if (( stat == 127 )); then                  # No jobs left
+            clear_slots $stat
+            break
+        fi
         [ -n "$pid" ] || continue
         slot=${slotpid[$pid]}
         [ -n "$slot" ] && reap_slot $slot $stat
