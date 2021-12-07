@@ -10,6 +10,7 @@ depend fmri=ooce/application/graphviz type=require
 depend fmri=ooce/application/imagemagick type=require
 depend fmri=ooce/application/php-74 type=require
 depend fmri=ooce/application/php-80 type=require
+depend fmri=ooce/application/php-81 type=require
 depend fmri=ooce/audio/flac type=require
 depend fmri=ooce/database/bdb type=require
 depend fmri=ooce/database/lmdb type=require
