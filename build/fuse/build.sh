@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -27,9 +27,9 @@ set_gccver $ILLUMOS_GCC_VER
 set_arch 64
 set_builddir "illumos-${PROG}fs-Version-$VER/kernel"
 
-MAKE=/usr/bin/dmake
+MAKE=$USRBIN/dmake
 # build requires ctf tools
-PATH+=":/opt/onbld/bin/i386"
+PATH+=":$ONBLDBIN/$ISAPART"
 
 # override CFLAGS for kernel module; flags taken from:
 # https://github.com/omniosorg/illumos-kvm/blob/master/Makefile#L105
@@ -45,6 +45,8 @@ if [ $RELVER -ge 151032 ]; then
     CFLAGS+=" -mindirect-branch=thunk-extern -mindirect-branch-register"
 fi
 export CFLAGS
+
+export LDFLAGS+=" -ztype=kmod"
 
 # No configure
 configure64() { :; }
