@@ -9,7 +9,7 @@ diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
  
  GOARCH := $(shell go env GOARCH)
  GOOS := $(shell go env GOOS)
-@@ -58,7 +58,7 @@ verify-healing: ## verify healing and re
+@@ -76,7 +76,7 @@ verify-healing: ## verify healing and re
  
  build: checks ## builds minio to $(PWD)
  	@echo "Building minio binary to './minio'"
