@@ -23,14 +23,6 @@ SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
 
-#
-# to build rust with a bootstrap binary package instead of the installed
-# rust, set BOOTSTRAP_VER=<bootstrap_rust_ver> env variable
-#
-# to use bundled LLVM instead of the system one, set BUNDLED_LLVM
-#
-[ $RELVER -ge 151036 ] && LLVM_MAJVER=13.0 || LLVM_MAJVER=12.0
-
 BUILDDIR=${PROG}c-${VER}-src
 
 OPREFIX=$PREFIX
@@ -38,10 +30,16 @@ PREFIX+=/$PROG
 
 BUILD_DEPENDS_IPS="developer/gnu-binutils"
 
-if [ -z "$BUNDLED_LLVM" ]; then
+if [ $RELVER -lt 151041 ]; then
+    [ $RELVER -ge 151036 ] && LLVM_MAJVER=13.0 || LLVM_MAJVER=12.0
+
     SYSTEM_LLVM_PATH="/opt/ooce/llvm-$LLVM_MAJVER"
     RUN_DEPENDS_IPS="ooce/developer/llvm-${LLVM_MAJVER//./}"
     BUILD_DEPENDS_IPS+=" $RUN_DEPENDS_IPS"
+
+    ar=$USRBIN/gar
+else
+    ar=$USRBIN/ar
 fi
 
 # rust build requires the final install directory to be present
@@ -58,8 +56,6 @@ XFORM_ARGS="
 SKIP_RTIME_CHECK=1
 
 RUSTARCH=x86_64-unknown-illumos
-
-[ $RELVER -ge 151041 ] && ar=$USRBIN/ar || ar=$USRBIN/gar
 
 CONFIGURE_CMD="$PYTHON src/bootstrap/configure.py"
 
