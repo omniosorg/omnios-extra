@@ -45,7 +45,7 @@
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
 | ooce/developer/clang-120	| 12.0.1	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/clang-130	| 13.0.0	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/cmake		| 3.22.0	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/cmake		| 3.22.1	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-120 | 12.0.1	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/compiler-rt-130 | 13.0.0	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cscope		| 15.9		| https://sourceforge.net/projects/cscope/files/cscope/ | [omniosorg](https://github.com/omniosorg)
