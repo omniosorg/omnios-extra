@@ -22,7 +22,7 @@ PKG=ooce/application/php-XX/imagick
 SUMMARY="The Imagick PHP extension"
 DESC="The Imagick PHP extension"
 
-PHPVERSIONS="7.3 7.4 8.0"
+PHPVERSIONS="7.4 8.0 8.1"
 
 # The ImageMagick ABI changes frequently. Lock the version
 # pulled into each build of php-imagick.
