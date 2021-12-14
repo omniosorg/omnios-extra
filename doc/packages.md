@@ -110,7 +110,7 @@
 | ooce/library/libzip		| 1.8.0		| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/nettle		| 3.7.3		| https://ftp.gnu.org/gnu/nettle/ https://www.lysator.liu.se/~nisse/nettle/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/onig		| 6.9.7.1	| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/pango		| 1.50.0	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/pango		| 1.50.1	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/protobuf		| 3.15.5	| https://github.com/protocolbuffers/protobuf/releases/ | Currently used solely by mosh
 | ooce/library/security/libsasl2 | 2.1.27	| https://github.com/cyrusimap/cyrus-sasl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/serf		| 1.3.9 	| https://downloads.apache.org/serf/ | [omniosorg](https://github.com/omniosorg)
