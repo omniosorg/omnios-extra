@@ -99,3 +99,7 @@ depend fmri=ooce/multimedia/dav1d type=conditional \
 depend fmri=ooce/developer/llvm-13 type=conditional \
     predicate=release/name@0.5.11-151036
 
+# some packages use clang to build from r151041 onwards
+depend fmri=ooce/developer/clang-13 type=conditional \
+    predicate=release/name@0.5.11-151041
+
