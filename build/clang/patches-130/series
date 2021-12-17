@@ -1,6 +1,8 @@
-02-gas.patch
-patch-lib_Basic_Targets_OSTargets.h
-patch-lib_Driver_ToolChains_Solaris.cpp
-patch-lib_Frontend_InitHeaderSearch.cpp
-no_symbolic-functions.patch
-no_version-script.patch
+0001-use-gas.patch
+0002-no-ssp-linking.patch
+0003-default-preprocessor-definition.patch
+0004-no-usr-local-include.patch
+0005-add-rpath-for-libstdcxx.patch
+0006-no-version-script.patch
+0007-no-symbolic-functions.patch
+0008-add-__illumos__-preprocessor-definition.patch

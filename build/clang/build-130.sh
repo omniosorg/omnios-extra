@@ -40,11 +40,7 @@ set_patchdir patches-${MAJVER//./}
 # Using the = prefix to require the specific matching version of llvm
 BUILD_DEPENDS_IPS="=ooce/developer/llvm-${MAJVER//./}@$VER"
 
-RUN_DEPENDS_IPS="
-    =ooce/developer/llvm-${MAJVER//./}@$MAJVER
-    =ooce/developer/compiler-rt-${MAJVER//./}@$MAJVER
-    ooce/developer/compiler-rt-${MAJVER//./}
-"
+RUN_DEPENDS_IPS="=ooce/developer/llvm-${MAJVER//./}@$MAJVER"
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
@@ -60,16 +56,17 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS_64=
 CONFIGURE_OPTS_WS_64="
-    -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_C_COMPILER=\"$CC\"
     -DCMAKE_CXX_COMPILER=\"$CXX\"
+    -DCMAKE_C_LINK_FLAGS=\"$LDFLAGS64\"
     -DCMAKE_CXX_LINK_FLAGS=\"$LDFLAGS64\"
     -DGCC_INSTALL_PREFIX=\"$GCCPATH\"
-    -DCLANG_DEFAULT_LINKER=\"/usr/bin/ld\"
-    -DCLANG_DEFAULT_RTLIB=compiler-rt
-    -DLLVM_CONFIG=\"$OPREFIX/llvm-$MAJVER/bin/llvm-config\"
-    -DPYTHON_EXECUTABLE=\"$PYTHON\"
+    -DCLANG_DEFAULT_LINKER=/usr/bin/ld
+    -DCLANG_DEFAULT_RTLIB=libgcc
+    -DCLANG_DEFAULT_CXX_STDLIB=libstdc++
+    -DLLVM_DIR=\"$OPREFIX/llvm-$MAJVER/lib/cmake/llvm\"
 "
 
 init

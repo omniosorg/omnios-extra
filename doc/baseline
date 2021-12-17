@@ -54,7 +54,6 @@ extra.omnios ooce/developer/clang-120
 extra.omnios ooce/developer/clang-130
 extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/compiler-rt-120
-extra.omnios ooce/developer/compiler-rt-130
 extra.omnios ooce/developer/cscope
 extra.omnios ooce/developer/cunit
 extra.omnios ooce/developer/dejagnu
@@ -96,7 +95,6 @@ extra.omnios ooce/library/jansson
 extra.omnios ooce/library/json-c
 extra.omnios ooce/library/ldns
 extra.omnios ooce/library/libarchive
-extra.omnios ooce/library/libcxx
 extra.omnios ooce/library/libde265
 extra.omnios ooce/library/libdwarf
 extra.omnios ooce/library/libev
