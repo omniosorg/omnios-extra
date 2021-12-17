@@ -16,11 +16,13 @@
 
 . ../../lib/build.sh
 
-PROG=llvm
-PKG=ooce/developer/llvm-130
+PROG=clang
+PKG=ooce/developer/clang-13
 VER=13.0.0
-SUMMARY="Low Level Virtual Machine compiler infrastructure"
-DESC="A collection of modular and reusable compiler and toolchain technologies"
+SUMMARY="C language family frontend for LLVM"
+DESC="The Clang project provides a language front-end and tooling "
+DESC+="infrastructure for languages in the C language family (C, C++, "
+DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
 
 if [ $RELVER -lt 151036 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
@@ -32,8 +34,14 @@ set_builddir $PROG-$VER.src
 
 SKIP_RTIME_CHECK=1
 
-MAJVER=${VER%.*}
-set_patchdir patches-${MAJVER//./}
+MAJVER=${VER%%.*}
+MINVER=${VER%.*}
+set_patchdir patches-$MAJVER
+
+# Using the = prefix to require the specific matching version of llvm
+BUILD_DEPENDS_IPS="=ooce/developer/llvm-$MAJVER@$VER"
+
+RUN_DEPENDS_IPS="=ooce/developer/llvm-$MAJVER@$MINVER"
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
@@ -55,10 +63,11 @@ CONFIGURE_OPTS_WS_64="
     -DCMAKE_CXX_COMPILER=\"$CXX\"
     -DCMAKE_C_LINK_FLAGS=\"$LDFLAGS64\"
     -DCMAKE_CXX_LINK_FLAGS=\"$LDFLAGS64\"
-    -DLLVM_BUILD_LLVM_DYLIB=ON
-    -DLLVM_INCLUDE_BENCHMARKS=OFF
-    -DLLVM_INSTALL_UTILS=ON
-    -DLLVM_LINK_LLVM_DYLIB=ON
+    -DGCC_INSTALL_PREFIX=\"$GCCPATH\"
+    -DCLANG_DEFAULT_LINKER=/usr/bin/ld
+    -DCLANG_DEFAULT_RTLIB=libgcc
+    -DCLANG_DEFAULT_CXX_STDLIB=libstdc++
+    -DLLVM_DIR=\"$OPREFIX/llvm-$MAJVER/lib/cmake/llvm\"
 "
 
 init

@@ -1,0 +1,3 @@
+set name=pkg.fmri value=pkg://@PKGPUBLISHER@/ooce/developer/llvm-130@13.0.0,@SUNOSVER@-@PVER@
+set name=pkg.renamed value=true
+depend fmri=pkg:/ooce/developer/llvm-13 type=require

@@ -95,7 +95,7 @@ depend fmri=ooce/x11/library/libxcb type=conditional \
 depend fmri=ooce/multimedia/dav1d type=conditional \
     predicate=release/name@0.5.11-151036
 
-# Added llvm/clang 13.0 from r151036 onwards
-depend fmri=ooce/developer/llvm-130 type=conditional \
+# Added llvm/clang 13 from r151036 onwards
+depend fmri=ooce/developer/llvm-13 type=conditional \
     predicate=release/name@0.5.11-151036
 
