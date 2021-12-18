@@ -135,7 +135,7 @@
 | ooce/network/nicstat		| 1.95		| https://sourceforge.net/projects/nicstat/files/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nsd		| 4.3.9		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openldap		| 2.4.58	| https://www.openldap.org/software/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/openvpn		| 2.5.4		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/openvpn		| 2.5.5		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn-auth-ldap | 2.0.4	| https://github.com/threerings/openvpn-auth-ldap/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/rclone		| 1.57.0	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/smtp/postfix	| 3.6.3		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
