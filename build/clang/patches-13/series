@@ -1,8 +1,8 @@
-0001-use-gas.patch
-0002-no-ssp-linking.patch
-0003-default-preprocessor-definition.patch
-0004-no-usr-local-include.patch
-0005-add-rpath-for-libstdcxx.patch
-0006-no-version-script.patch
-0007-no-symbolic-functions.patch
-0008-add-__illumos__-preprocessor-definition.patch
+use-gas.patch
+no-ssp-linking.patch
+default-preprocessor-definition.patch
+no-usr-local-include.patch
+add-rpath-for-gcc-libs.patch
+no-version-script.patch
+no-symbolic-functions.patch
+add-__illumos__-preprocessor-definition.patch
