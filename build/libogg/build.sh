@@ -22,6 +22,8 @@ PKG=ooce/library/libogg
 SUMMARY="libogg"
 DESC="Multimedia container format"
 
+[ $RELVER -ge 151041 ] && set_clangver
+
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 CONFIGURE_OPTS="
