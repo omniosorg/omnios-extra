@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=node
-VER=12.22.7
+VER=12.22.8
 PKG=ooce/runtime/node-12
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "

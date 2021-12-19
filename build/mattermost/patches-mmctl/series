@@ -1,4 +1,3 @@
 no_vendor_update.patch
 utils_unix.go.patch
-lib_pg_illumos.patch
 terminal.go.patch
