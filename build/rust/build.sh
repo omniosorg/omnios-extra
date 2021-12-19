@@ -31,7 +31,7 @@ PREFIX+=/$PROG
 BUILD_DEPENDS_IPS="developer/gnu-binutils"
 
 if [ $RELVER -lt 151041 ]; then
-    [ $RELVER -ge 151036 ] && LLVM_MAJVER=13.0 || LLVM_MAJVER=12.0
+    [ $RELVER -ge 151036 ] && LLVM_MAJVER=13 || LLVM_MAJVER=12.0
 
     SYSTEM_LLVM_PATH="/opt/ooce/llvm-$LLVM_MAJVER"
     RUN_DEPENDS_IPS="ooce/developer/llvm-${LLVM_MAJVER//./}"

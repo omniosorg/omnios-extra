@@ -16,13 +16,11 @@
 
 . ../../lib/build.sh
 
-PROG=clang
-PKG=ooce/developer/clang-130
+PROG=llvm
+PKG=ooce/developer/llvm-13
 VER=13.0.0
-SUMMARY="C language family frontend for LLVM"
-DESC="The Clang project provides a language front-end and tooling "
-DESC+="infrastructure for languages in the C language family (C, C++, "
-DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
+SUMMARY="Low Level Virtual Machine compiler infrastructure"
+DESC="A collection of modular and reusable compiler and toolchain technologies"
 
 if [ $RELVER -lt 151036 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
@@ -30,21 +28,13 @@ if [ $RELVER -lt 151036 ]; then
 fi
 
 set_arch 64
+[ $RELVER -ge 151041 ] && set_clangver 13
 set_builddir $PROG-$VER.src
 
 SKIP_RTIME_CHECK=1
 
-MAJVER=${VER%.*}
-set_patchdir patches-${MAJVER//./}
-
-# Using the = prefix to require the specific matching version of llvm
-BUILD_DEPENDS_IPS="=ooce/developer/llvm-${MAJVER//./}@$VER"
-
-RUN_DEPENDS_IPS="
-    =ooce/developer/llvm-${MAJVER//./}@$MAJVER
-    =ooce/developer/compiler-rt-${MAJVER//./}@$MAJVER
-    ooce/developer/compiler-rt-${MAJVER//./}
-"
+MAJVER=${VER%%.*}
+set_patchdir patches-$MAJVER
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
@@ -60,16 +50,16 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS_64=
 CONFIGURE_OPTS_WS_64="
-    -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_C_COMPILER=\"$CC\"
     -DCMAKE_CXX_COMPILER=\"$CXX\"
+    -DCMAKE_C_LINK_FLAGS=\"$LDFLAGS64\"
     -DCMAKE_CXX_LINK_FLAGS=\"$LDFLAGS64\"
-    -DGCC_INSTALL_PREFIX=\"$GCCPATH\"
-    -DCLANG_DEFAULT_LINKER=\"/usr/bin/ld\"
-    -DCLANG_DEFAULT_RTLIB=compiler-rt
-    -DLLVM_CONFIG=\"$OPREFIX/llvm-$MAJVER/bin/llvm-config\"
-    -DPYTHON_EXECUTABLE=\"$PYTHON\"
+    -DLLVM_BUILD_LLVM_DYLIB=ON
+    -DLLVM_INCLUDE_BENCHMARKS=OFF
+    -DLLVM_INSTALL_UTILS=ON
+    -DLLVM_LINK_LLVM_DYLIB=ON
 "
 
 init

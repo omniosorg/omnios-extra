@@ -10,7 +10,7 @@
 
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright 2016 Jim Klimov
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 license LICENSE.adoc license=Various
 license GPL-3.0.txt license=GPLv3
@@ -21,6 +21,8 @@ link target=$(PROG) path=$(PREFIX)/bin/cpp
 link target=$(PROG) path=$(PREFIX)/bin/i386-pc-solaris2.11-c++
 link target=$(PROG) path=$(PREFIX)/bin/i386-pc-solaris2.11-g++
 link target=$(PROG) path=$(PREFIX)/bin/i386-pc-solaris2.11-gcc
+link target=$(PROG) path=$(PREFIX)/bin/clang
+link target=$(PROG) path=$(PREFIX)/bin/clang++
 
 link target=../$(PROG)/bin/$(PROG) path=$(OPREFIX)/bin/$(PROG)
 

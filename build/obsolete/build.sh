@@ -24,6 +24,10 @@ PKG=ooce/obsolete/compress/lz4
 [ $RELVER -ge 151035 ] && publish_manifest "" compress-lz4.p5t
 PKG=ooce/obsolete/compress/zstd
 [ $RELVER -ge 151035 ] && publish_manifest "" compress-zstd.p5t
+PKG=ooce/obsolete/developer/clang-130
+[ $RELVER -ge 151036 ] && publish_manifest "" developer-clang-130.p5t
+PKG=ooce/obsolete/developer/llvm-130
+[ $RELVER -ge 151036 ] && publish_manifest "" developer-llvm-130.p5t
 
 exit 0
 

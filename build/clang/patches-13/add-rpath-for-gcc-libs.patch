@@ -1,0 +1,36 @@
+diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.cpp a/lib/Driver/ToolChains/Solaris.cpp
+--- a~/lib/Driver/ToolChains/Solaris.cpp	1970-01-01 00:00:00
++++ a/lib/Driver/ToolChains/Solaris.cpp	1970-01-01 00:00:00
+@@ -125,6 +125,7 @@ void solaris::Linker::ConstructJob(Compi
+   if (!Args.hasArg(options::OPT_nostdlib, options::OPT_nodefaultlibs)) {
+     if (getToolChain().ShouldLinkCXXStdlib(Args))
+       getToolChain().AddCXXStdlibLibArgs(Args, CmdArgs);
++    static_cast<const Solaris &>(getToolChain()).AddGCCLibRPath(Args, CmdArgs);
+     CmdArgs.push_back("-lgcc_s");
+     CmdArgs.push_back("-lc");
+     if (!Args.hasArg(options::OPT_shared)) {
+@@ -277,3 +278,11 @@ void Solaris::addLibStdCxxIncludePaths(
+                            TripleStr, Multilib.includeSuffix(), DriverArgs,
+                            CC1Args);
+ }
++
++void Solaris::AddGCCLibRPath(const ArgList &Args,
++                             ArgStringList &CmdArgs) const {
++  StringRef LibSuffix = getSolarisLibSuffix(getTriple());
++  std::string MajVer = GCCInstallation.getVersion().MajorStr;
++  CmdArgs.push_back(Args.MakeArgString(StringRef("-R")
++    + "/usr/gcc/" + MajVer + "/lib" + LibSuffix));
++}
+diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.h a/lib/Driver/ToolChains/Solaris.h
+--- a~/lib/Driver/ToolChains/Solaris.h	1970-01-01 00:00:00
++++ a/lib/Driver/ToolChains/Solaris.h	1970-01-01 00:00:00
+@@ -62,6 +62,9 @@ public:
+   addLibStdCxxIncludePaths(const llvm::opt::ArgList &DriverArgs,
+                            llvm::opt::ArgStringList &CC1Args) const override;
+ 
++  void AddGCCLibRPath(const llvm::opt::ArgList &Args,
++                      llvm::opt::ArgStringList &CmdArgs) const;
++
+   SanitizerMask getSupportedSanitizers() const override;
+   unsigned GetDefaultDwarfVersion() const override { return 2; }
+ 

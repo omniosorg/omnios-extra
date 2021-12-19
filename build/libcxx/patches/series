@@ -1,4 +1,0 @@
-include_____config.patch
-src_filesystem_directory__iterator.cpp.patch
-ssp_ns.patch
-system_xlocale.h.patch

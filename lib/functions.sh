@@ -409,6 +409,27 @@ set_gccver() {
     set_ssp strong $2
 }
 
+set_clangver() {
+    CLANGVER="$1"
+    [ -z "$2" ] && logmsg "-- Setting clang version to $CLANGVER"
+    CLANGPATH="/opt/ooce/clang-$CLANGVER"
+    CC="$CLANGPATH/bin/clang"
+    CXX="$CLANGPATH/bin/clang++"
+    [ -x "$CC" ] || logerr "Unknown compiler version $CLANGVER"
+    PATH="$CLANGPATH/bin:$BASEPATH"
+    if [ -n "$USE_CCACHE" ]; then
+        [ -x $CCACHE_PATH/ccache ] || logerr "Ccache is not installed"
+        PATH="$CCACHE_PATH:$PATH"
+    fi
+    export CC CXX CLANGVER CLANGPATH PATH
+
+    CFLAGS="${FCFLAGS[_]}"
+    CXXFLAGS="${FCFLAGS[_]}"
+    CTF_CFLAGS="${CTFCFLAGS[_]}"
+
+    set_ssp strong $2
+}
+
 #############################################################################
 # OpenSSL version
 #############################################################################
