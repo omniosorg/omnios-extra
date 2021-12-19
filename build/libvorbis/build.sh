@@ -25,14 +25,16 @@ DESC+="general-purpose compressed audio format"
 
 BUILD_DEPENDS_IPS="ooce/library/libogg"
 
+[ $RELVER -ge 151041 ] && set_clangver
+
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 CONFIGURE_OPTS="
     --disable-static
 "
 
-LDFLAGS32+=" -L$PREFIX/lib -R$PREFIX/lib"
-LDFLAGS64+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
+LDFLAGS32+=" -Wl,-R$PREFIX/lib"
+LDFLAGS64+=" -Wl,-R$PREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
