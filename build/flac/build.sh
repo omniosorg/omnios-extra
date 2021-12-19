@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -23,6 +23,7 @@ SUMMARY="flac"
 DESC="Free Lossless Audio Codec"
 
 forgo_isaexec
+[ $RELVER -ge 151041 ] && set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -52,8 +53,8 @@ CONFIGURE_OPTS_64="
 "
 
 CFLAGS+=" -I$OPREFIX/include"
-LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS32+=" -L$OPREFIX/lib -Wl,-R$OPREFIX/lib"
+LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -Wl,-R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
