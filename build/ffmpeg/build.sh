@@ -23,6 +23,15 @@ SUMMARY="ffmpeg"
 DESC="A complete, cross-platform solution to record, "
 DESC+="convert and stream audio and video."
 
+if [ $RELVER -ge 151041 ]; then
+    set_clangver
+
+    CONFIGURE_OPTS="
+        --cc=$CC
+        --cxx=$CXX
+    "
+fi
+
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
@@ -36,7 +45,7 @@ XFORM_ARGS="
 # ffmpeg contains BMI instructions even when built on an older CPU
 BMI_EXPECTED=1
 
-CONFIGURE_OPTS="
+CONFIGURE_OPTS+="
     --prefix=$PREFIX
     --incdir=$OPREFIX/include
     --disable-static
@@ -62,8 +71,8 @@ CONFIGURE_OPTS_64="
 
 # to find x264.h for builtin check
 CPPFLAGS+=" -I$OPREFIX/include"
-LDFLAGS32+=" -R$OPREFIX/lib"
-LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS32+=" -Wl,-R$OPREFIX/lib"
+LDFLAGS64+=" -Wl,-R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
