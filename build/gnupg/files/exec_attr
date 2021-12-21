@@ -1,0 +1,1 @@
+Forced Privilege:solaris:cmd:::/$(PREFIX)/bin/gpg:privs=proc_lock_memory

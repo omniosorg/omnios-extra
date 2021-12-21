@@ -113,6 +113,7 @@ PATH+=":$DEPROOT$PREFIX/bin"
 download_source $PROG $PROG $VER
 patch_source
 build -ctf
+install_execattr
 run_testsuite check
 make_package
 clean_up
