@@ -12,24 +12,29 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
-# Use is subject to license terms.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 #
 . ../../lib/build.sh
 
 PROG=sysstat
 VER=20151012
-VERHUMAN=$VER
 PKG=ooce/system/sysstat
 SUMMARY="System statistics"
 DESC="Key system statistics at a glance"
 
-OPREFIX=$PREFIX
-PREFIX+="/$PROG"
-XFORM_ARGS=" -DOPREFIX=${OPREFIX#/} -DPROG=$PROG"
+set_arch 64
+[ $RELVER -ge 151041 ] && set_clangver
 
-# Build 64-bit only and skip the arch-specific directories
-BUILDARCH=64
+OPREFIX=$PREFIX
+PREFIX+=/$PROG
+
+XFORM_ARGS="
+    -DOPREFIX=${OPREFIX#/}
+    -DPREFIX=${PREFIX#/}
+    -DPROG=$PROG
+    -DPKGROOT=$PROG
+"
+
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX
 "
