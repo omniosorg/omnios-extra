@@ -410,7 +410,7 @@ set_gccver() {
 }
 
 set_clangver() {
-    CLANGVER="$1"
+    CLANGVER="${1:-$DEFAULT_CLANG_VER}"
     [ -z "$2" ] && logmsg "-- Setting clang version to $CLANGVER"
     CLANGPATH="/opt/ooce/clang-$CLANGVER"
     CC="$CLANGPATH/bin/clang"
