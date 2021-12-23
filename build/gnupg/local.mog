@@ -12,16 +12,25 @@
 
 license COPYING license=GPLv3
 license COPYING.other license=simplified-BSD
-license ../libgpg-error-$(GPGERROR)/COPYING.LIB license=LGPLv2.1
-license ../libgcrypt-$(GCRYPT)/COPYING.LIB license=LGPLv2.1
+license ../libgpg-error-$(GPGERROR)/COPYING.LIB license=LGPLv2.1/libgpgerror
+license ../libgcrypt-$(GCRYPT)/COPYING.LIB license=LGPLv2.1/libgcrypt
 license ../libksba-$(KSBA)/COPYING.LGPLv3 license=LGPLv3
-license ../libassuan-$(ASSUAN)/COPYING.LIB license=LGPLv2.1
-license ../npth-$(NPTH)/COPYING.LIB license=LGPLv2.1
+license ../libassuan-$(ASSUAN)/COPYING.LIB license=LGPLv2.1/libsassuan
+license ../npth-$(NPTH)/COPYING.LIB license=LGPLv2.1/npth
 license ../pinentry-$(PINENTRY)/COPYING license=GPLv2
 
 dir group=bin mode=0755 owner=root path=etc/$(PREFIX)
 
 <transform path=$(PREFIX)/share/(?:doc|info) -> drop>
+
+# gpg needs the proc_lock_memory privilege in order to be able to lock a
+# memory segment. If it can't do that, it utters
+#    gpg: Warning: using insecure memory!
+# Using the illumos forced privileges feature, we afford it the additional
+# privilege by making it setuid root and installing an exec_attr entry
+# to add just the necessary privilege. See files/exec_attr.
+<transform path=$(PREFIX)/bin/gpg$ -> set owner root>
+<transform path=$(PREFIX)/bin/gpg$ -> set mode 04755>
 
 <include binlink.mog>
 <include manlink.mog>
