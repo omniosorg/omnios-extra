@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=gnupg
-VER=2.3.3
+VER=2.3.4
 PKG=ooce/security/gnupg
 SUMMARY="$PROG - GNU Privacy Guard"
 DESC="A complete and free implementation of the OpenPGP standard"

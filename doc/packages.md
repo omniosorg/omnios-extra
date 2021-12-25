@@ -152,7 +152,7 @@
 | ooce/runtime/ruby-27		| 2.7.5		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-30		| 3.0.3		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/tcl		| 8.6.12	| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/security/gnupg		| 2.3.3		| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/security/gnupg		| 2.3.4		| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24		| 2.4.51	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24/modules/fcgid | 2.3.9	| https://downloads.apache.org/httpd/mod_fcgid/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/freeradius	| 3.0.25	| https://github.com/FreeRADIUS/freeradius-server/releases https://freeradius.org/releases | [omniosorg](https://github.com/omniosorg)
