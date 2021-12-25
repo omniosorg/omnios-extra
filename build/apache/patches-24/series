@@ -1,4 +1,3 @@
 layout.patch
 priv_drop.patch
 httpd.conf.patch
-openssl3.patch
