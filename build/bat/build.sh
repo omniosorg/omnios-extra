@@ -22,19 +22,14 @@ PKG=ooce/util/bat
 SUMMARY="A cat clone with wings"
 DESC="A cat(1) clone with syntax highlighting and Git integration."
 
-# clang is a build-time requirement for 0.12.x
-CLANGVER=12.0
-
 BUILD_DEPENDS_IPS="
     ooce/developer/rust
-    ooce/developer/clang-${CLANGVER//./}
 "
 
 set_arch 64
 
 # ansi_colours wants gnu-ar
 export AR="$USRBIN/gar"
-export LIBCLANG_PATH="$PREFIX/clang-$CLANGVER/lib"
 
 init
 download_source $PROG v$VER
