@@ -69,7 +69,7 @@
 | ooce/editor/nano		| 6.0		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
 | ooce/file/acltool		| 1.16.2	| https://github.com/ptrrkssn/acltool/releases | [Peter Eriksson](https://github.com/ptrrkssn)
 | ooce/file/lsof		| 4.94.0	| https://github.com/lsof-org/lsof/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/file/tree		| 1.8.0		| http://mama.indstate.edu/users/ice/tree/ | [omniosorg](https://github.com/omniosorg)
+| ooce/file/tree		| 2.0.0		| http://mama.indstate.edu/users/ice/tree/ | [omniosorg](https://github.com/omniosorg)
 | ooce/fonts/liberation		| 2.1.5		| https://github.com/liberationfonts/liberation-fonts/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/kvmadm			| 0.12.3	| https://github.com/hadfl/kvmadm/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/apr		| 1.7.0 	| https://downloads.apache.org/apr/ | [omniosorg](https://github.com/omniosorg)

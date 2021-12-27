@@ -1,0 +1,92 @@
+struct comment is defined in /usr/include/pwd.h under an __EXTENSIONS__ guard
+however the source requires other definitions under __EXTENSIONS__
+
+diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
+--- a~/info.c	1970-01-01 00:00:00
++++ a/info.c	1970-01-01 00:00:00
+@@ -14,9 +14,9 @@ extern const struct linedraw *linedraw;
+ 
+ struct infofile *infostack = NULL;
+ 
+-struct comment *new_comment(struct pattern *phead, char **line, int lines)
++struct comment_ *new_comment(struct pattern *phead, char **line, int lines)
+ {
+-  struct comment *com = xmalloc(sizeof(struct comment));
++  struct comment_ *com = xmalloc(sizeof(struct comment_));
+   com->pattern = phead;
+   com->desc = xmalloc(sizeof(char *) * (lines+1));
+   int i;
+@@ -30,7 +30,7 @@ struct infofile *new_infofile(char *path
+ {
+   char buf[PATH_MAX];
+   struct infofile *inf;
+-  struct comment *chead = NULL, *cend = NULL, *com;
++  struct comment_ *chead = NULL, *cend = NULL, *com;
+   struct pattern *phead = NULL, *pend = NULL, *p;
+   char *line[PATH_MAX];
+   FILE *fp;
+@@ -98,7 +98,7 @@ void push_infostack(struct infofile *inf
+ struct infofile *pop_infostack(void)
+ {
+   struct infofile *inf = infostack;
+-  struct comment *cn, *cc;
++  struct comment_ *cn, *cc;
+   struct pattern *p, *c;
+   infostack = infostack->next;
+ 
+@@ -123,10 +123,10 @@ struct infofile *pop_infostack(void)
+  * Returns an info pointer if a path matches a pattern.
+  * top == 1 if called in a directory with a .info file.
+  */
+-struct comment *infocheck(char *path, char *name, int top)
++struct comment_ *infocheck(char *path, char *name, int top)
+ {
+   struct infofile *inf = infostack;
+-  struct comment *com;
++  struct comment_ *com;
+   struct pattern *p;
+ 
+   if (inf == NULL) return NULL;
+diff -wpruN '--exclude=*.orig' a~/tree.c a/tree.c
+--- a~/tree.c	1970-01-01 00:00:00
++++ a/tree.c	1970-01-01 00:00:00
+@@ -770,7 +770,7 @@ struct _info *getinfo(char *name, char *
+ 
+ struct _info **read_dir(char *dir, int *n, int infotop)
+ {
+-  struct comment *com;
++  struct comment_ *com;
+   static char *path = NULL;
+   static long pathsize;
+   struct _info **dl, *info;
+diff -wpruN '--exclude=*.orig' a~/tree.h a/tree.h
+--- a~/tree.h	1970-01-01 00:00:00
++++ a/tree.h	1970-01-01 00:00:00
+@@ -172,15 +172,15 @@ struct ignorefile {
+ };
+ 
+ /* info.c */
+-struct comment {
++struct comment_ {
+   struct pattern *pattern;
+   char **desc;
+-  struct comment *next;
++  struct comment_ *next;
+ };
+ 
+ struct infofile {
+   char *path;
+-  struct comment *comments;
++  struct comment_ *comments;
+   struct infofile *next;
+ };
+ 
+@@ -296,7 +296,7 @@ struct ignorefile *pop_filterstack(void)
+ struct infofile *new_infofile(char *path);
+ void push_infostack(struct infofile *inf);
+ struct infofile *pop_infostack(void);
+-struct comment *infocheck(char *path, char *name, int top);
++struct comment_ *infocheck(char *path, char *name, int top);
+ void printcomment(int line, int lines, char *s);
+ 
+ /* list.c */
