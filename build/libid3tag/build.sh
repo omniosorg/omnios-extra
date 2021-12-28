@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -21,6 +21,8 @@ VER=0.15.1b
 PKG=ooce/library/libid3tag
 SUMMARY="libid3tag"
 DESC="ID3 tag manipulation library."
+
+[ $RELVER -ge 151041 ] && set_clangver
 
 CONFIGURE_OPTS="
     --disable-static

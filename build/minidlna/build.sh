@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 #
 . ../../lib/build.sh
 
@@ -25,6 +25,7 @@ DESC="DLNA/UPnP-AV media server"
 
 set_arch 64
 set_standard XPG6
+[ $RELVER -ge 151041 ] && set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -61,7 +62,8 @@ default_config() {
 }
 
 CPPFLAGS+=" -D__OmniOS__ -I$OPREFIX/include"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64 -lsocket -lsendfile"
+LDFLAGS64+=" -Wl,-L$OPREFIX/lib/$ISAPART64 -Wl,-R$OPREFIX/lib/$ISAPART64"
+LDFLAGS64+=" -lsocket -lsendfile"
 
 init
 prep_build

@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -34,6 +34,7 @@ XFORM_ARGS="
 "
 
 set_arch 64
+[ $RELVER -ge 151041 ] && set_clangver
 
 install_modules() {
     for f in $SRCDIR/files/*.cpp; do
@@ -46,13 +47,14 @@ install_modules() {
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=$PREFIX
+    -DCMAKE_SKIP_RPATH=ON
 "
 
 CONFIGURE_OPTS_64="
-    -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib
+    -DCMAKE_INSTALL_LIBDIR=lib
 "
 LDFLAGS+=" -lsocket"
-LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS64+=" -Wl,-R$OPREFIX/lib/$ISAPART64"
 
 tests() {
     for key in SSL IPv6 Zlib; do

@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -21,6 +21,8 @@ VER=0.6.21
 PKG=ooce/library/libexif
 SUMMARY="libexif"
 DESC="Reads and writes EXIF metainformation from and to image files."
+
+[ $RELVER -ge 151041 ] && set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"

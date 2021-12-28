@@ -28,7 +28,7 @@ if [ $RELVER -lt 151036 ]; then
 fi
 
 set_arch 64
-[ $RELVER -ge 151041 ] && set_clangver 13
+[ $RELVER -ge 151041 ] && set_clangver
 set_builddir $PROG-$VER.src
 
 SKIP_RTIME_CHECK=1

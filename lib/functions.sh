@@ -410,9 +410,9 @@ set_gccver() {
 }
 
 set_clangver() {
-    CLANGVER="$1"
+    CLANGVER="${1:-$DEFAULT_CLANG_VER}"
     [ -z "$2" ] && logmsg "-- Setting clang version to $CLANGVER"
-    CLANGPATH="/opt/ooce/clang-$CLANGVER"
+    CLANGPATH="/opt/ooce/llvm-$CLANGVER"
     CC="$CLANGPATH/bin/clang"
     CXX="$CLANGPATH/bin/clang++"
     [ -x "$CC" ] || logerr "Unknown compiler version $CLANGVER"

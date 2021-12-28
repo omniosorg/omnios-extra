@@ -30,7 +30,7 @@ if [ $RELVER -lt 151036 ]; then
 fi
 
 set_arch 64
-[ $RELVER -ge 151041 ] && set_clangver 13
+[ $RELVER -ge 151041 ] && set_clangver
 set_builddir $PROG-$VER.src
 
 SKIP_RTIME_CHECK=1
@@ -45,13 +45,13 @@ BUILD_DEPENDS_IPS="=ooce/developer/llvm-$MAJVER@$VER"
 RUN_DEPENDS_IPS="=ooce/developer/llvm-$MAJVER@$MINVER"
 
 OPREFIX=$PREFIX
-PREFIX+=/$PROG-$MAJVER
+PREFIX+=/llvm-$MAJVER
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-    -DPKGROOT=$PROG-$MAJVER
+    -DPKGROOT=llvm-$MAJVER
     -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
     -DVERSION=$MAJVER
 "
@@ -68,8 +68,11 @@ CONFIGURE_OPTS_WS_64="
     -DCLANG_DEFAULT_LINKER=/usr/bin/ld
     -DCLANG_DEFAULT_RTLIB=libgcc
     -DCLANG_DEFAULT_CXX_STDLIB=libstdc++
-    -DLLVM_DIR=\"$OPREFIX/llvm-$MAJVER/lib/cmake/llvm\"
+    -DLLVM_DIR=\"$PREFIX/lib/cmake/llvm\"
 "
+# we want to end up with '$ORIGIN/../lib' as runpath and not with
+# '$PREFIX/lib:$ORIGIN/../lib'; yet we need to find libLLVM during build time
+export LD_LIBRARY_PATH="$PREFIX/lib"
 
 init
 download_source $PROG $PROG $VER.src

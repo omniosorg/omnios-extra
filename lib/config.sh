@@ -323,6 +323,8 @@ case $RELVER in
     *) logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
 
+DEFAULT_CLANG_VER=13
+
 PYTHON2VER=2.7
 case $RELVER in
     15103[3-6])         PYTHON3VER=3.7 ;;

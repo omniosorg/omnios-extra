@@ -8,12 +8,10 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 license LICENSE license=GPLv3
 
-link path=$(OPREFIX)/bin/$(PROG) target=../$(PROG)/bin/$(PROG)
-
-link path=$(OPREFIX)/share/man/man1m/$(PROG).1m \
-    target=../../../$(PROG)/share/man/man1m/$(PROG).1m
+<include binlink.mog>
+<include manlink.mog>
 

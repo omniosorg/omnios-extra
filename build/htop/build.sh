@@ -23,6 +23,7 @@ SUMMARY="htop"
 DESC="An interactive process viewer for Unix"
 
 set_arch 64
+[ $RELVER -ge 151041 ] && set_clangver
 
 # need stack_t, timestruc_t, label_t, ...
 set_standard XPG6
