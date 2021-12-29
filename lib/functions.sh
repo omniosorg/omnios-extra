@@ -2856,7 +2856,7 @@ convert_ctf() {
         fi
 
         typeset mode=
-        if [ ! -w "$file" ]; then
+        if [ ! -w "$file" -o -u "$file" -o -g "$file" -o -k "$file" ]; then
             mode=`stat -c %a "$file"`
             logcmd chmod u+w "$file" || logerr -b "chmod u+w failed: $file"
         fi
