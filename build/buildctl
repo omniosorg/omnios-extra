@@ -610,7 +610,6 @@ parallel_build() {
                     while [ `count_expensive` -gt $ETHROTTLE ]; do
                         wait_for_slot
                     done
-                    break
                 else
                     logmsg -n "-- $tgt, relocating to $newloc/${#queue[@]}"
                     _queue=("${queue[@]:0:newloc}")
