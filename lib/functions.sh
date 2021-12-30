@@ -46,8 +46,6 @@ BASE_TMPDIR=$TMPDIR
 BASEPATH=/usr/ccs/bin:$USRBIN:/usr/sbin:$OOCEBIN:$GNUBIN:$SFWBIN
 export PATH=$BASEPATH
 
-set -o pipefail
-
 #############################################################################
 # Process command line options
 #############################################################################
@@ -1599,8 +1597,8 @@ make_package() {
         $GLOBAL_MOG_FILE \
         $EXTRA_MOG_FILE \
         $FRAG_MOG_FILE \
-        | $PKGFMT -u > $P5M_MOG \
-        || logerr "pkgmogrify failed"
+        | $PKGFMT -u > $P5M_MOG
+    (( PIPESTATUS[0] == 0 )) || logerr "pkgmogrify failed"
     exec 3>&-
 
     if [ -z "$BATCH" -a -s "$TMPDIR/mog.stderr" ]; then
