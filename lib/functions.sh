@@ -881,7 +881,7 @@ prep_build() {
             MAKE=$NINJA
             TESTSUITE_MAKE=$MAKE
             MAKE_TESTSUITE_ARGS=
-            CONFIGURE_CMD="$PYTHONLIB/python$PYTHONVER/bin/meson setup"
+            CONFIGURE_CMD="/usr/lib/python$PYTHONVER/bin/meson setup"
             CONFIGURE_CMD+=" $TMPDIR/$BUILDDIR"
             ;;
     esac
@@ -1496,7 +1496,7 @@ make_package() {
 
     # Temporary file paths
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
-    GLOBAL_MOG_FILE=$BLIBDIR/mog/global-transforms.mog
+    GLOBAL_MOG_FILE=global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
 
     # Version cleanup
@@ -1588,15 +1588,25 @@ make_package() {
 
     # Transforms
     logmsg "--- Applying transforms"
-    logcmd -p $PKGMOGRIFY -I $BLIBDIR/mog \
+    exec 3>"$TMPDIR/mog.stderr"
+    logcmd -p $PKGMOGRIFY -P /dev/fd/3 -I $BLIBDIR/mog \
         $XFORM_ARGS \
         $P5M_GEN \
         $MY_MOG_FILE \
-        $GLOBAL_MOG_FILE \
         $LOCAL_MOG_FILE \
+        $GLOBAL_MOG_FILE \
         $EXTRA_MOG_FILE \
         $FRAG_MOG_FILE \
         | $PKGFMT -u > $P5M_MOG
+    (( PIPESTATUS[0] == 0 )) || logerr "pkgmogrify failed"
+    exec 3>&-
+
+    if [ -z "$BATCH" -a -s "$TMPDIR/mog.stderr" ]; then
+        cat "$TMPDIR/mog.stderr" | while read l; do
+            logmsg -e "$l"
+        done
+        logerr "Warnings from mogrify process"
+    fi
 
     if [ -n "$DESTDIR" ]; then
         check_licences
@@ -2437,10 +2447,11 @@ build_dependency() {
 set_python_version() {
     PYTHONVER=$1
     PYTHONPKGVER=${PYTHONVER//./}
-    PYTHONPATH=/usr
-    PYTHON=$PYTHONPATH/bin/python$PYTHONVER
+    PYTHONPATH=$PREFIX
+    PYTHON=/usr/bin/python$PYTHONVER
     PYTHONLIB=$PYTHONPATH/lib
     PYTHONVENDOR=$PYTHONLIB/python$PYTHONVER/vendor-packages
+    PYTHONSITE=$PYTHONLIB/python$PYTHONVER/site-packages
 }
 
 pre_python_32() {
@@ -2465,20 +2476,40 @@ import sys; sys.path.insert(1, '$PREFIX/lib/python$PYTHONVER/vendor-packages')
 }
 
 python_vendor_relocate() {
-    pushd $DESTDIR/$PREFIX/lib >/dev/null || logerr "python relocate pushd"
-    [ -d python$PYTHONVER/site-packages ] || return
-    logmsg "Relocating python $PYTHONVER site to vendor-packages"
-    if [ -d python$PYTHONVER/vendor-packages ]; then
-        rsync -a python$PYTHONVER/site-packages/ \
-            python$PYTHONVER/vendor-packages/ \
+    [ -d $DESTDIR/$PYTHONSITE ] || return
+    logmsg "Relocating python $PYTHONVER site-packages to vendor-packages"
+    if [ -d $DESTDIR$PYTHONVENDOR ]; then
+        rsync -a $DESTDIR$PYTHONSITE/ $DESTDIR$PYTHONVENDOR/ \
             || logerr "python: cannot copy from site to vendor-packages"
-        rm -rf python$PYTHONVER/site-packages \
-            || logerr "python: cannot remove site-packages directory"
+        rm -rf $DESTDIR$PYTHONSITE
     else
-        mv python$PYTHONVER/site-packages/ python$PYTHONVER/vendor-packages/ \
+        mv $DESTDIR$PYTHONSITE/ $DESTDIR$PYTHONVENDOR/ \
             || logerr "python: cannot move from site to vendor-packages"
     fi
-    popd >/dev/null
+
+    # Any packages which are delivered to vendor-packages are managed by IPS.
+    # However, we need to take extra precautions to prevent the python `pip`
+    # package manager from interfering with files here, potentially breaking
+    # `pkg`. The IPS-delivered pip is patched to help with this, but there
+    # is still the chance that and end user will somehow try running a
+    # vanilla version of pip. Therefore, we convert the enhanced package
+    # metadata in the form of an egg-info directory, into a plain metadata
+    # file, which prevents pip from touching it.
+
+    for d in $DESTDIR$PYTHONVENDOR/*.egg-info; do
+        [ -d "$d" ] || continue
+        logmsg "-- Flattening `basename $d`"
+        typeset tf=`mktemp`
+        logcmd mv $d/PKG-INFO $tf || logerr "Could not mv $d/PKG-INFO"
+        logcmd rm -rf $d/
+        logcmd mv $tf $d || logerr "Could not create $d"
+    done
+
+    for d in $DESTDIR$PYTHONVENDOR/*.dist-info; do
+        [ -d "$d" ] || continue
+        logmsg "-- Setting INSTALLER for `basename $d`"
+        echo pkg >$d/INSTALLER
+    done
 }
 
 python_compile() {
@@ -2486,32 +2517,41 @@ python_compile() {
     logcmd $PYTHON -m compileall $DESTDIR
 }
 
-python_build32() {
-    ISALIST=i386
-    export ISALIST
-    pre_python_32
-    logmsg "--- setup.py (32) build"
-    CFLAGS="$CFLAGS $CFLAGS32" LDFLAGS="$LDFLAGS $LDFLAGS32" \
-        logcmd $PYTHON ./setup.py build $PYBUILD32OPTS \
+python_pep518() {
+    logmsg "-- PEP518 build"
+    logcmd $PYTHON -mpip install \
+        --no-deps --isolated --no-input --exists-action=a \
+        --disable-pip-version-check --root=$DESTDIR . \
         || logerr "--- build failed"
-    logmsg "--- setup.py (32) install"
-    logcmd $PYTHON ./setup.py install \
-        --root=$DESTDIR --prefix=$PREFIX $PYINST32OPTS \
+}
+
+python_setuppy() {
+    logmsg "-- setup.py build"
+    logcmd $PYTHON ./setup.py $PYGLOBALOPTS build $PYBUILDOPTS \
+        || logerr "--- build failed"
+    logcmd $PYTHON ./setup.py install --root=$DESTDIR \
+        --prefix=$PREFIX $PYINSTOPTS \
         || logerr "--- install failed"
 }
 
+python_build32() {
+    export ISALIST=i386
+    pre_python_32
+    [ -f setup.py ] && backend=setuppy || backend=pep518
+    CFLAGS="$CFLAGS $CFLAGS32" LDFLAGS="$LDFLAGS $LDFLAGS32" \
+        PYBUILDOPTS="$PYBUILDOPTS $PYBUILDOPTS32" \
+        PYINSTOPTS="$PYINSTOPTS $PYINST32OPTS" \
+        python_$backend
+}
+
 python_build64() {
-    ISALIST="amd64 i386"
-    export ISALIST
+    export ISALIST="amd64 i386"
     pre_python_64
-    logmsg "--- setup.py (64) build"
+    [ -f setup.py ] && backend=setuppy || backend=pep518
     CFLAGS="$CFLAGS $CFLAGS64" LDFLAGS="$LDFLAGS $LDFLAGS64" \
-        logcmd $PYTHON ./setup.py build $PYBUILD64OPTS \
-        || logerr "--- build failed"
-    logmsg "--- setup.py (64) install"
-    logcmd $PYTHON ./setup.py install \
-        --root=$DESTDIR --prefix=$PREFIX $PYINST64OPTS \
-        || logerr "--- install failed"
+        PYBUILDOPTS="$PYBUILDOPTS $PYBUILDOPTS64" \
+        PYINSTOPTS="$PYINSTOPTS $PYINST64OPTS" \
+        python_$backend
 }
 
 python_build() {
@@ -2525,6 +2565,9 @@ python_build() {
 
     # we only ship 64 bit python3
     [[ $PYTHONVER = 3.* ]] && BUILDARCH=64
+
+    [ -f setup.py -o -f pyproject.toml ] \
+        || logerr "Don't know how to build this project"
 
     for b in $BUILDORDER; do
         [[ $BUILDARCH =~ ^($b|both)$ ]] && python_build$b

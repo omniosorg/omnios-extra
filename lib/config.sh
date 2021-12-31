@@ -231,7 +231,8 @@ CTFCFLAGS[10]="-gstrict-dwarf"
 CTFCFLAGS[11]="-gstrict-dwarf"
 GENOFFSETS_CFLAGS="
     ${CTFCFLAGS[_]}
-    -W0,-xdbggen=no%usedonly
+    -_gcc=-fno-eliminate-unused-debug-symbols
+    -_gcc=-fno-eliminate-unused-debug-types
 "
 
 # Enable CTF by default from r151037 on

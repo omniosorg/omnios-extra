@@ -29,7 +29,7 @@ if [ $RELVER -le 151036 ]; then
     exit 0
 fi
 
-_MIRROR=$MIRROR
+save_variables MIRROR SRCMIRROR
 set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
 OPREFIX=$PREFIX
@@ -59,7 +59,7 @@ CONFIGURE_OPTS_64="
 bundle_novnc() {
     note -n "Bundling noVNC"
 
-    set_mirror $_MIRROR
+    restore_variables MIRROR SRCMIRROR
     save_variable EXTRACTED_SRC
     set_builddir noVNC-$NOVNCVER
 

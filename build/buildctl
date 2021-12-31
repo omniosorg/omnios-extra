@@ -335,11 +335,14 @@ baseline() {
 }
 
 diffpkg() {
-    filter="${1:-.}"
-    repo="$PKGSRVR"
+    typeset filter="${1:-.}"
+    typeset repo="$PKGSRVR"
+    typeset op=$TMPDIR/batch.diff
 
     [ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
     : > $TMPDIR/pkg.diff
+
+    cp /dev/null $op
 
     pkgrepo -s $repo list | nawk '
         $1 == "PUBLISHER" { next }
@@ -350,7 +353,7 @@ diffpkg() {
         }
     ' | sort | egrep "$filter" | while read pkg; do
         logmsg "--- $pkg"
-        BATCH=1 diff_package $pkg
+        BATCH=1 diff_package $pkg || cat $TMPDIR/pkg.diff >> $op
     done
 }
 
@@ -415,6 +418,18 @@ drain() {
     trap - SIGUSR1
 }
 
+clear_slots() {
+    typeset -i stat="$1"
+    typeset -i i=
+
+    logmsg -n "Clearing slots with status $stat"
+
+    for i in `seq 0 $threads`; do
+        [ -z "${slots[$i]}" ] && continue
+        reap_slot $i $stat
+    done
+}
+
 nextslot=
 wait_for_slot() {
     # Check for any idle slots
@@ -430,7 +445,13 @@ wait_for_slot() {
         wait -fn -p pid ${slots[*]}
         stat=$?
         (( stat == 169 )) && continue               # SIGINFO
+        (( stat == 141 )) && continue               # SIGPIPE
         (( stat == 144 )) && nextslot= && return    # SIGUSR1
+        if (( stat == 127 )); then                  # No jobs left
+            clear_slots $stat
+            nextslot=0
+            return
+        fi
         [ -n "$pid" ] || continue
         slot=${slotpid[$pid]}
         [ -n "$slot" ] && break
@@ -456,7 +477,12 @@ wait_for_jobs() {
         wait -fn -p pid ${slots[*]}
         stat=$?
         (( stat == 169 )) && continue               # SIGINFO
+        (( stat == 141 )) && continue               # SIGPIPE
         (( stat == 144 )) && continue               # SIGUSR1
+        if (( stat == 127 )); then                  # No jobs left
+            clear_slots $stat
+            break
+        fi
         [ -n "$pid" ] || continue
         slot=${slotpid[$pid]}
         [ -n "$slot" ] && reap_slot $slot $stat
@@ -587,7 +613,6 @@ parallel_build() {
                     while [ `count_expensive` -gt $ETHROTTLE ]; do
                         wait_for_slot
                     done
-                    break
                 else
                     logmsg -n "-- $tgt, relocating to $newloc/${#queue[@]}"
                     _queue=("${queue[@]:0:newloc}")

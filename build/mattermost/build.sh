@@ -45,6 +45,31 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
+# Unfortunately, the mattermost webapp has a number of dependencies which are
+# specified with ssh:// URLs for accessing github. npm is unable to retrieve
+# these unless the build user has an SSH key for accessing github, and that key
+# cannot be protected with a passphrase.
+# To work around this, we create a git config file that does URL rewrites to
+# translate these back to https://github.com/ and a small git stub to force use
+# of that config file since 'npm' strips the environment before invoking git.
+gitenv() {
+    GITCONFIG=$TMPDIR/gitconfig
+    : > $GITCONFIG
+    logcmd git config -f $GITCONFIG url."github.com/".insteadOf git@github.com/
+    logcmd git config -f $GITCONFIG url."https://".insteadOf ssh://
+
+    GITBIN=$TMPDIR/gitbin
+    logcmd rm -rf $GITBIN
+    logcmd mkdir $GITBIN || logerr "Cannot create $GITBIN"
+    cat << EOM > $GITBIN/git
+#!/bin/sh
+GIT_CONFIG_GLOBAL=$GITCONFIG /usr/bin/git "\$@"
+EOM
+    logcmd chmod +x $GITBIN/git
+
+    PATH="$GITBIN:$PATH"
+}
+
 build() {
     prog="$1"; shift
 
@@ -79,6 +104,7 @@ install() {
 
 init
 prep_build
+gitenv
 # use clone_github_source instead of clone_go_source
 # since mattermost bundles its dependencies
 clone_github_source "mmctl" "$GITHUB/$PROG/mmctl" v$MMCTLVER
