@@ -881,7 +881,7 @@ prep_build() {
             MAKE=$NINJA
             TESTSUITE_MAKE=$MAKE
             MAKE_TESTSUITE_ARGS=
-            CONFIGURE_CMD="$PYTHONLIB/python$PYTHONVER/bin/meson setup"
+            CONFIGURE_CMD="/usr/lib/python$PYTHONVER/bin/meson setup"
             CONFIGURE_CMD+=" $TMPDIR/$BUILDDIR"
             ;;
     esac
@@ -2447,8 +2447,8 @@ build_dependency() {
 set_python_version() {
     PYTHONVER=$1
     PYTHONPKGVER=${PYTHONVER//./}
-    PYTHONPATH=/usr
-    PYTHON=$PYTHONPATH/bin/python$PYTHONVER
+    PYTHONPATH=$PREFIX
+    PYTHON=/usr/bin/python$PYTHONVER
     PYTHONLIB=$PYTHONPATH/lib
     PYTHONVENDOR=$PYTHONLIB/python$PYTHONVER/vendor-packages
     PYTHONSITE=$PYTHONLIB/python$PYTHONVER/site-packages
