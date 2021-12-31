@@ -17,8 +17,8 @@
 . ../../lib/build.sh
 
 PROG=ruby
-VER=2.6.9
-PKG=ooce/runtime/ruby-26
+VER=3.1.0
+PKG=ooce/runtime/ruby-31
 SUMMARY="Ruby"
 DESC="A dynamic, open source programming language "
 DESC+="with a focus on simplicity and productivity."
@@ -47,6 +47,8 @@ CONFIGURE_OPTS_64+="
 "
 
 CPPFLAGS+=" -I/usr/include/gmp"
+
+[ "$OPENSSLVER" = 3 ] && CPPFLAGS+=" -DHAVE_TS_VERIFY_CTS_SET_CERTS"
 
 init
 download_source $PROG $PROG $VER
