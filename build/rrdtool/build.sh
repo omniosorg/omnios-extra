@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -53,6 +53,8 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
+# autoconf used to truncate the python version at 3 characters
+run_autoreconf -fi
 build
 strip_install
 make_package
