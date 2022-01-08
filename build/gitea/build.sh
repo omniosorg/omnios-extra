@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=gitea
 PKG=ooce/application/gitea
-VER=1.15.8
+VER=1.15.9
 SUMMARY="Git with a cup of tea"
 DESC="Git with a cup of tea, painless self-hosted git service"
 
@@ -40,7 +40,7 @@ XFORM_ARGS="
 RUN_DEPENDS_IPS=developer/versioning/git
 
 # gitea build wants GNU grep from 1.11.x on
-export PATH="/usr/gnu/bin:$PATH"
+export PATH="$GNUBIN:$PATH"
 
 GOOS=illumos
 GOARCH=amd64
