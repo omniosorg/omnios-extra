@@ -11,7 +11,7 @@ diff -wpruN '--exclude=*.orig' a~/doc/mutt.man a/doc/mutt.man
  .SH OPTIONS
  .TP
  .BI \-A " alias"
-@@ -277,9 +274,6 @@ System mapping between MIME types and fi
+@@ -284,9 +281,6 @@ System mapping between MIME types and fi
  .TP
  .I @bindir@/mutt_dotlock
  The privileged dotlocking program.
