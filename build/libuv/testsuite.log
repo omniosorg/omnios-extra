@@ -55,6 +55,7 @@ ok - fs_event_no_callback_after_close
 ok - fs_event_no_callback_on_close
 ok - fs_event_ref
 ok - fs_event_start_and_close
+ok - fs_event_stop_in_cb
 ok - fs_event_watch_dir
 ok - fs_event_watch_dir_recursive # SKIP Recursive directory watching not supported on this platform.
 ok - fs_event_watch_file
@@ -140,6 +141,8 @@ ok - idna_toascii
 ok - ip4_addr
 ok - ip6_addr_link_local
 ok - ip6_pton
+ok - ip6_sin6_len
+ok - ip_name
 ok - ipc_closed_handle
 ok - ipc_heavy_traffic_deadlock_bug
 ok - ipc_listen_after_write
@@ -165,7 +168,6 @@ ok - metrics_idle_time_thread
 ok - metrics_idle_time_zero
 ok - multiple_listen
 ok - not_readable_nor_writable_on_read_error
-ok - not_readable_on_eof
 ok - not_writable_after_shutdown
 ok - open_osfhandle_valid_handle
 ok - pipe_bind_error_addrinuse
@@ -207,6 +209,7 @@ ok - process_title_threadsafe # SKIP uv_(get|set)_process_title is not implement
 ok - queue_foreach_delete
 ok - random_async
 ok - random_sync
+ok - readable_on_eof
 ok - ref
 ok - req_type_name
 ok - run_nowait
@@ -354,6 +357,7 @@ ok - udp_alloc_cb_fail
 ok - udp_bind
 ok - udp_bind_reuseaddr
 ok - udp_connect
+ok - udp_connect6
 ok - udp_create_early
 ok - udp_create_early_bad_bind
 ok - udp_create_early_bad_domain
