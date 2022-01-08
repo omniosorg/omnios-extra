@@ -2487,28 +2487,10 @@ python_vendor_relocate() {
             || logerr "python: cannot move from site to vendor-packages"
     fi
 
-    # Any packages which are delivered to vendor-packages are managed by IPS.
-    # However, we need to take extra precautions to prevent the python `pip`
-    # package manager from interfering with files here, potentially breaking
-    # `pkg`. The IPS-delivered pip is patched to help with this, but there
-    # is still the chance that and end user will somehow try running a
-    # vanilla version of pip. Therefore, we convert the enhanced package
-    # metadata in the form of an egg-info directory, into a plain metadata
-    # file, which prevents pip from touching it.
-
-    for d in $DESTDIR$PYTHONVENDOR/*.egg-info; do
-        [ -d "$d" ] || continue
-        logmsg "-- Flattening `basename $d`"
-        typeset tf=`mktemp`
-        logcmd mv $d/PKG-INFO $tf || logerr "Could not mv $d/PKG-INFO"
-        logcmd rm -rf $d/
-        logcmd mv $tf $d || logerr "Could not create $d"
-    done
-
-    for d in $DESTDIR$PYTHONVENDOR/*.dist-info; do
+    for d in $DESTDIR$PYTHONVENDOR/*.{egg,dist}-info; do
         [ -d "$d" ] || continue
         logmsg "-- Setting INSTALLER for `basename $d`"
-        echo pkg >$d/INSTALLER
+        echo pkg > $d/INSTALLER
     done
 }
 
