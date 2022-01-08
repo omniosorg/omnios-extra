@@ -13,20 +13,18 @@
 # }}}
 
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nginx
 PKG=ooce/server/nginx
-VER=1.21.4
+VER=1.21.5
 SUMMARY="nginx web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
 # Brotli source from https://github.com/google/ngx_brotli
 BROTLIVER=1.0.0rc
-
-LOCAL_MOG_FILE=local-mainline.mog
 
 set_arch 64
 
@@ -47,9 +45,11 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
+    -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
     -DVERSION=$MAJVER
-    -DsVERSION=$sMAJVER
-    -DDsVERSION=-$sMAJVER
+    -DsVERSION=
+    -DDsVERSION=
 "
 
 CONFIGURE_OPTS_64=
@@ -121,9 +121,6 @@ brotli
 prep_build
 build -ctf
 copy_man_page
-# For the mainline version, we don't use version suffixes on various files
-# so set the sVERSION tokens to the empty string.
-XFORM_ARGS="-DsVERSION= -DDsVERSION= $XFORM_ARGS"
 xform files/http-$PROG-template.xml > $TMPDIR/http-$PROG.xml
 xform files/http-$PROG-template > $TMPDIR/http-$PROG
 install_smf network http-$PROG.xml http-$PROG
