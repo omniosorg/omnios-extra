@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=bat
-VER=0.18.3
+VER=0.19.0
 PKG=ooce/util/bat
 SUMMARY="A cat clone with wings"
 DESC="A cat(1) clone with syntax highlighting and Git integration."
