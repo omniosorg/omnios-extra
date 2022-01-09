@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=zrepl
 PKG=ooce/system/zrepl
-VER=0.4.0
+VER=0.5.0
 SUMMARY="$PROG - ZFS replication"
 DESC="$PROG is a one-stop, integrated solution for ZFS replication"
 
@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.16
+set_gover 1.17
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
