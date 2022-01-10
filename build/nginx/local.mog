@@ -8,18 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
-
-# Mediated binaries
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)-$(VERSION)/%<1>/%<2> \
-    mediator=$(PROG) mediator-version=$(VERSION) >
-
-# Mediated man pages
-<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(OPREFIX)/share/man/%<1>/%<2> \
-    target=../../../$(PROG)-$(VERSION)/share/man/%<1>/%<2> \
-    mediator=$(PROG) mediator-version=$(VERSION) >
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 <transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
 <transform dir  path=var/$(OPREFIX)/$(PROG) -> set owner $(PROG)>
@@ -28,5 +17,9 @@
     -> set restart_fmri svc:/network/http:$(PROG)$(sVERSION)>
 
 license LICENSE license=simplified-BSD
-$(BROTLI_ONLY)license ../ngx_brotli-$(BROTLI)/LICENSE license=simplified-BSD
+$(BROTLI_ONLY)license ../ngx_brotli-$(BROTLI)/LICENSE \
+    license=simplified-BSD/ngx_brotli
+
+<include mediated-binlink.mog>
+<include mediated-manlink.mog>
 

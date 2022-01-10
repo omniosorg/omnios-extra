@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=asciidoc
-VER=10.1.0
+VER=10.1.1
 PKG=ooce/text/asciidoc
 SUMMARY="text based documentation"
 DESC="AsciiDoc - $SUMMARY"

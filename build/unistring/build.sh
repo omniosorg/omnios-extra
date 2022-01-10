@@ -12,30 +12,32 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=unistring
-VER=0.9.10
+VER=1.0
 PKG=ooce/library/unistring
 SUMMARY="Unicode string manipulation library"
-DESC="$SUMMARY"
-BUILDDIR=lib$PROG-$VER
+DESC="libunistring - $SUMMARY"
 
 [ $RELVER -lt 151030 ] && exit 0
 
+set_builddir lib$PROG-$VER
+
+TESTSUITE_FILTER="^[A-Z#][A-Z ]"
+
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
-CONFIGURE_OPTS="
-    --disable-namespacing
-"
+CONFIGURE_OPTS="--disable-namespacing"
 
 init
 download_source $PROG lib$PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_package
 clean_up
 
