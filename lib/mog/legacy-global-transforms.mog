@@ -1,0 +1,199 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License, Version 1.0 only
+# (the "License").  You may not use this file except in compliance
+# with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+# Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
+# Copyright (c) 2014 by Delphix. All rights reserved.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+#
+
+#
+# Default permissions and ownership
+#
+
+# For kernel/drv, set .conf files to mode 0644; assume all other files there
+# are drivers, and give them mode 0755 and reboot-needed. Note that this only
+# affects things found in /kernel or /usr/kernel and not the drivers which are
+# delivered under /opt/onbld/closed or those delivered into /tftpboot by kayak.
+<transform file path=(usr/)?kernel/drv/.+\.conf -> default mode 0644>
+<transform file path=(usr/)?kernel/drv/.+ -> default mode 0755>
+<transform file path=(usr/)?kernel/.+(?<!\.conf)$ -> default reboot-needed true>
+
+# shared objects should generally have mode 0755
+<transform file path=.*lib/.*\.so(\.|$) -> default mode 0755>
+
+# Catch some of the collections of largely read-only files
+<transform file path=opt/ooce/([^/]+/)?share/ -> default mode 0444>
+
+<transform file dir -> default owner root>
+<transform file dir -> default group bin>
+<transform file -> default mode 0644>
+<transform dir -> default mode 0755>
+
+# Overrides
+<transform file dir path=(lib|var)/svc/manifest/ -> set group sys>
+<transform file dir path=(usr/)?kernel -> set group sys>
+<transform file dir path=usr/gnu/share$ -> set group sys>
+<transform file dir path=usr/lib/devfsadm -> set group sys>
+<transform file dir path=usr/lib/mdb -> set group sys>
+
+<transform file path=opt/ooce/([^/]+/)?lib/(amd64/)?pkgconfig$ -> \
+    set group other>
+<transform file dir path=opt/ooce/([^/]+/)?share/aclocal$ -> set group other>
+<transform file dir path=opt/ooce/([^/]+/)?/share/doc$ -> set group other>
+<transform file dir path=opt/ooce/([^/]+/)?/share/locale -> set group other>
+<transform file dir path=var/opt/ooce/[^/]+/lib$ -> set group other>
+
+#
+# Drops
+#
+
+# These always exist due to SUNWcs, so we never need to include them
+<transform dir path=dev$ -> drop>
+<transform dir path=etc$ -> drop>
+<transform dir path=etc/cron.d$ -> drop>
+<transform dir path=etc/default$ -> drop>
+<transform dir path=etc/devices$ -> drop>
+<transform dir path=etc/inet$ -> drop>
+<transform dir path=etc/inet/services.d$ -> drop>
+<transform dir path=etc/init.d$ -> drop>
+<transform dir path=etc/logadm.d$ -> drop>
+<transform dir path=etc/opt$ -> drop>
+<transform dir path=etc/sasl$ -> drop>
+<transform dir path=etc/security$ -> drop>
+<transform dir path=etc/security/(auth|exec|prof)_attr.d$ -> drop>
+<transform dir path=etc/skel$ -> drop>
+<transform dir path=etc/system.d$ -> drop>
+<transform dir path=etc/user_attr.d$ -> drop>
+<transform dir path=etc/versions$ -> drop>
+<transform dir path=kernel$ -> drop>
+<transform dir path=kernel/drv$ -> drop>
+<transform dir path=kernel/drv/amd64$ -> drop>
+<transform dir path=lib$ -> drop>
+<transform dir path=(lib|var)/svc$ -> drop>
+<transform dir path=(lib|var)/svc/manifest$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/application$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/application/management$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/application/security$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/device$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/milestone$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/network$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/platform$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/site$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/system$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/system/device$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/system/filesystem$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/system/security$ -> drop>
+<transform dir path=(lib|var)/svc/manifest/system/svc$ -> drop>
+<transform dir path=(lib|var)/svc/method$ -> drop>
+<transform dir path=(lib|var)/svc/seed$ -> drop>
+<transform dir path=opt$ -> drop>
+<transform dir path=sbin$ -> drop>
+<transform dir path=usr$ -> drop>
+<transform dir path=usr/bin$ -> drop>
+<transform dir path=usr/bin/amd64$ -> drop>
+<transform dir path=usr/bin/i86$ -> drop>
+<transform dir path=usr/kernel$ -> drop>
+<transform dir path=usr/kernel/drv$ -> drop>
+<transform dir path=usr/kernel/drv/amd64$ -> drop>
+<transform dir path=usr/lib$ -> drop>
+<transform dir path=usr/lib/amd64$ -> drop>
+<transform dir path=usr/lib/devfsadm$ -> drop>
+<transform dir path=usr/lib/devfsadm/linkmod$ -> drop>
+<transform dir path=usr/platform$ -> drop>
+<transform dir path=usr/sbin$ -> drop>
+<transform dir path=usr/sbin/amd64$ -> drop>
+<transform dir path=usr/sbin/i86$ -> drop>
+<transform dir path=usr/share$ -> drop>
+<transform dir path=usr/share/lib$ -> drop>
+<transform dir path=usr/share/man$ -> drop>
+<transform dir path=usr/share/man/man1$ -> drop>
+<transform dir path=usr/share/man/man1m$ -> drop>
+<transform dir path=usr/share/man/man4$ -> drop>
+<transform dir path=usr/share/man/man5$ -> drop>
+<transform dir path=usr/share/man/man7d$ -> drop>
+<transform dir path=usr/share/man/man7fs$ -> drop>
+<transform dir path=var$ -> drop>
+<transform dir path=var/log$ -> drop>
+<transform dir path=var/opt$ -> drop>
+
+<transform path=usr/gnu/share/info -> drop>
+<transform path=usr/share/info -> drop>
+# libtool archives
+<transform file link path=(.*/)?lib/.*\.la$ -> drop>
+# This should only ever be in libiconv, but other GNU packages install it
+<transform file path=usr/gnu/lib/charset.alias$ -> drop>
+<transform file path=usr/lib/charset.alias$ -> drop>
+<transform file path=usr/lib/amd64/charset.alias$ -> drop>
+# Drop compiled optimised python files
+<transform file path=.*\.pyo$ -> drop>
+
+#
+# Non-global zones should not have content in kernel or usr/kernel
+#
+
+<transform path=(usr/)?kernel(/|$) -> emit \
+    set name=variant.opensolaris.zone value=global value=nonglobal >
+<transform path=(usr/)?kernel(/|$) -> set variant.opensolaris.zone global>
+
+#
+# Warnings and errors
+#
+
+<transform file path=(usr/)?lib/.+\.a$ -> print WARNING: static library %(path)>
+# Nothing should try to deliver to temporary directories
+<transform path=(tmp|var/(tmp|run))/ -> \
+    exit 1 Bad path in '%(action.name) path=%(path)'>
+
+#
+# Facets
+#
+
+<transform path=opt/ooce/.+/man(/.+)? -> default facet.doc.man true>
+<transform path=.*\.pod$ -> default facet.doc.man true>
+
+<transform path=opt/ooce.*/include(/|$) -> default facet.devel true>
+<transform file path=.*lib/.+\.a$ -> default facet.devel true>
+<transform path=.*/pkgconfig(/.+\.pc)?$ -> default facet.devel true>
+<transform file path=.*lib/(amd64/)?cmake/.+\.cmake$ -> \
+    default facet.devel true>
+
+#
+# Restarts
+#
+
+<transform file path=(lib|var)/svc/manifest/.*\.xml$ -> \
+    add restart_fmri svc:/system/manifest-import:default>
+
+<transform file link path=opt/ooce/([^/]+/)?share/man/.*\.\d[a-z]*$ -> \
+    add restart_fmri svc:/system/update-man-index:default>
+
+<transform file path=etc/inet/services\.d -> \
+    add restart_fmri svc:/system/config-assemble:services>
+
+<transform file path=etc/security/(auth|exec|prof)_attr\.d -> \
+    add restart_fmri svc:/system/rbac:default>
+
+<transform file path=etc/user_attr\.d -> \
+    add restart_fmri svc:/system/rbac:default>
+
+# All users should be blocked from ftp access by default
+<transform user -> default ftpuser false>
+

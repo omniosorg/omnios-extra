@@ -1496,7 +1496,8 @@ make_package() {
 
     # Temporary file paths
     MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
-    GLOBAL_MOG_FILE=global-transforms.mog
+    [ $RELVER -ge 151041 ] && GLOBAL_MOG_FILE=global-transforms.mog \
+        || GLOBAL_MOG_FILE=legacy-global-transforms.mog
     MY_MOG_FILE=$TMPDIR/${PKGE}.mog
 
     # Version cleanup
