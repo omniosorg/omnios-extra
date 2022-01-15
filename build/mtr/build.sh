@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=mtr
-VER=0.94
+VER=0.95
 PKG=ooce/network/mtr
 SUMMARY="mtr - network diagnostic tool"
 DESC="mtr combines the functionality of the traceroute and ping programs into "
