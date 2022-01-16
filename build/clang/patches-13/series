@@ -6,4 +6,6 @@ no-default-libgcc_s-linking.patch
 add-rpath-for-libstdcxx.patch
 no-version-script.patch
 no-symbolic-functions.patch
+no-sanitizer-runtime-lib-linking.patch
+no-default-libm-linking.patch
 add-__illumos__-preprocessor-definition.patch
