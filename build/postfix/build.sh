@@ -18,12 +18,13 @@
 . ../../lib/build.sh
 
 PROG=postfix
-VER=3.6.3
+VER=3.6.4
 PKG=ooce/network/smtp/postfix
 SUMMARY="Postfix MTA"
 DESC="Wietse Venema's mail server alternative to sendmail"
 
 set_arch 64
+[ $RELVER -ge 151041 ] && set_clangver
 
 SKIP_LICENCES=IPL
 
@@ -74,11 +75,11 @@ configure64() {
         -I'${OPREFIX}/pgsql-${PGSQLVER}/include' \
         ' \
         OPT='-O2' \
-        AUXLIBS="-L$LIBDIR -R$LIBDIR -ldb -lsasl2 -lssl -lcrypto" \
+        AUXLIBS="-L$LIBDIR -Wl,-R$LIBDIR -ldb -lsasl2 -lssl -lcrypto" \
         AUXLIBS_LDAP="-lldap_r -llber" \
         AUXLIBS_SQLITE="-lsqlite3" \
-        AUXLIBS_MYSQL="-L${OPREFIX}/mariadb-${MARIASQLVER}/lib/${ISAPART64} -R${OPREFIX}/mariadb-${MARIASQLVER}/lib/${ISAPART64} -lmysqlclient" \
-        AUXLIBS_PGSQL="-L${OPREFIX}/pgsql-${PGSQLVER}/lib/${ISAPART64} -R${OPREFIX}/pgsql-${PGSQLVER}/lib/${ISAPART64} -lpq" \
+        AUXLIBS_MYSQL="-L${OPREFIX}/mariadb-${MARIASQLVER}/lib/${ISAPART64} -Wl,-R${OPREFIX}/mariadb-${MARIASQLVER}/lib/${ISAPART64} -lmysqlclient" \
+        AUXLIBS_PGSQL="-L${OPREFIX}/pgsql-${PGSQLVER}/lib/${ISAPART64} -Wl,-R${OPREFIX}/pgsql-${PGSQLVER}/lib/${ISAPART64} -lpq" \
         AUXLIBS_LMDB="-llmdb" \
         AUXLIBS_PCRE="-lpcre" \
             || logerr "Failed make makefiles command"

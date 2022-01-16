@@ -21,7 +21,7 @@
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
 # Copyright (c) 2014 by Delphix. All rights reserved.
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 #
 
 #
@@ -60,6 +60,7 @@
 <transform file dir path=opt/ooce/([^/]+/)?/share/doc$ -> set group other>
 <transform file dir path=opt/ooce/([^/]+/)?/share/locale -> set group other>
 <transform file dir path=var/opt/ooce/[^/]+/lib$ -> set group other>
+<transform file dir path=var/lib$ -> set group other>
 
 #
 # Drops
