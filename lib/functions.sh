@@ -2517,24 +2517,43 @@ python_setuppy() {
         || logerr "--- install failed"
 }
 
+python_backend() {
+    typeset backend=
+
+    if [ -n "$PYTHON_BUILD_BACKEND" ]; then
+        backend=$PYTHON_BUILD_BACKEND
+    elif [ -f pyproject.toml ]; then
+        backend=pep518
+        # Warn if the project has both in case we wish to force one or the
+        # other.
+        [ -f setup.py ] && \
+            logmsg -n "Project has both pyproject.toml and setup.py," \
+            "using PEP518"
+    elif [ -f setup.py ]; then
+        backend=setuppy
+    else
+        logerr "-- Could not determine python build backend to use"
+    fi
+
+    python_$backend "$@"
+}
+
 python_build32() {
     export ISALIST=i386
     pre_python_32
-    [ -f setup.py ] && backend=setuppy || backend=pep518
     CFLAGS="$CFLAGS $CFLAGS32" LDFLAGS="$LDFLAGS $LDFLAGS32" \
         PYBUILDOPTS="$PYBUILDOPTS $PYBUILDOPTS32" \
         PYINSTOPTS="$PYINSTOPTS $PYINST32OPTS" \
-        python_$backend
+        python_backend
 }
 
 python_build64() {
     export ISALIST="amd64 i386"
     pre_python_64
-    [ -f setup.py ] && backend=setuppy || backend=pep518
     CFLAGS="$CFLAGS $CFLAGS64" LDFLAGS="$LDFLAGS $LDFLAGS64" \
         PYBUILDOPTS="$PYBUILDOPTS $PYBUILDOPTS64" \
         PYINSTOPTS="$PYINSTOPTS $PYINST64OPTS" \
-        python_$backend
+        python_backend
 }
 
 python_build() {
