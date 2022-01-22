@@ -38,6 +38,9 @@ XFORM_ARGS="
     -DVERSION=$VER
 "
 
+# For bsdtar, needed to unpack boxes
+RUN_DEPENDS_IPS="ooce/library/libarchive"
+
 PKGDIFFPATH="${PREFIX#/}/embedded/gems"
 PKGDIFF_HELPER="
     s:$PKGDIFFPATH/[0-9.]*:$PKGDIFFPATH/VERSION:
