@@ -11,7 +11,7 @@ diff -wpruN '--exclude=*.orig' a~/build/release.mk a/build/release.mk
  build-linux:
  	@echo Build Linux amd64
  ifeq ($(BUILDER_GOOS_GOARCH),"linux_amd64")
-@@ -134,18 +138,6 @@
+@@ -134,18 +138,6 @@ endif
  		cp ../manifest.txt $(DIST_PATH); \
  	fi
  
@@ -30,7 +30,7 @@ diff -wpruN '--exclude=*.orig' a~/build/release.mk a/build/release.mk
  package-general:
  	@# Create needed directories
  	mkdir -p $(DIST_PATH_GENERIC)/bin
-@@ -184,6 +176,15 @@
+@@ -185,6 +177,15 @@ else
  	done
  endif
  
@@ -44,5 +44,5 @@ diff -wpruN '--exclude=*.orig' a~/build/release.mk a/build/release.mk
 +	cp $(GOBIN)/mattermost $(DIST_PATH)/bin # from native bin dir, not cross-compiled
 +
  package-osx-amd64: package-prep
- 	DIST_PATH_GENERIC=$(DIST_PATH_OSX_AMD64) CURRENT_PACKAGE_ARCH=darwin_amd64 PLUGIN_ARCH=osx-amd64 MMCTL_PLATFORM="Darwin" MM_BIN_NAME=mattermost $(MAKE) package-general
+ 	DIST_PATH_GENERIC=$(DIST_PATH_OSX_AMD64) CURRENT_PACKAGE_ARCH=darwin_amd64 PLUGIN_ARCH=osx-amd64 MMCTL_PLATFORM="Darwin-x86_64" MM_BIN_NAME=mattermost $(MAKE) package-general
  	@# Package

@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/package-lock.json a/package-lock.json
+--- a~/package-lock.json	1970-01-01 00:00:00
++++ a/package-lock.json	1970-01-01 00:00:00
+@@ -28957,7 +28957,7 @@
+     "node_modules/mmjstool": {
+       "version": "1.0.0",
+       "resolved": "git+ssh://git@github.com/mattermost/mattermost-utilities.git#17ee7abdc0ccaec5d432123fcabc7fe73abe33ac",
+-      "integrity": "sha512-wHUORQrEsVFMgSBJvkXnRPJ1/PpcyNP9B+SHzN35/Y0tGvRqGAN+ZwIPBewIq91b5iEZWxRZX1ufrDnI0rAOwg==",
++      "integrity": "sha512-zfhfE1GH3uedf2eA/tfkFRyS7GnxMne2tEdnhdKFbs7CQe4DkNCmgWYb6MZCsPNaVHNYqnteyUYgtMuhiK51og==",
+       "dev": true,
+       "dependencies": {
+         "@typescript-eslint/typescript-estree": "5.7.0",

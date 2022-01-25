@@ -2,7 +2,7 @@
 diff -wpruN '--exclude=*.orig' a~/vendor/github.com/fsnotify/fsnotify/fen.go a/vendor/github.com/fsnotify/fsnotify/fen.go
 --- a~/vendor/github.com/fsnotify/fsnotify/fen.go	1970-01-01 00:00:00
 +++ a/vendor/github.com/fsnotify/fsnotify/fen.go	1970-01-01 00:00:00
-@@ -6,32 +6,367 @@
+@@ -7,32 +7,367 @@
  
  package fsnotify
  

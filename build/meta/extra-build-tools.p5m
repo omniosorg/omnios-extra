@@ -63,7 +63,7 @@ depend fmri=ooce/library/unbound type=require
 depend fmri=ooce/multimedia/ffmpeg type=require
 depend fmri=ooce/multimedia/x264 type=require
 depend fmri=ooce/multimedia/x265 type=require
-depend fmri=ooce/runtime/node-14 type=require
+depend fmri=ooce/runtime/node-16 type=require
 depend fmri=ooce/runtime/ruby-30 type=require
 depend fmri=ooce/server/apache-24 type=require
 depend fmri=ooce/text/docbook-xsl type=require
