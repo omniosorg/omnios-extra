@@ -26,7 +26,7 @@ diff -wpruN '--exclude=*.orig' a~/bfd/elf.c a/bfd/elf.c
  
  #ifdef CORE_HEADER
  #include CORE_HEADER
-@@ -9700,7 +9701,10 @@ elfcore_make_note_pseudosection (bfd *ab
+@@ -9709,7 +9710,10 @@ elfcore_make_note_pseudosection (bfd *ab
  static bool
  elfcore_grok_prfpreg (bfd *abfd, Elf_Internal_Note *note)
  {
@@ -37,7 +37,7 @@ diff -wpruN '--exclude=*.orig' a~/bfd/elf.c a/bfd/elf.c
  }
  
  /* Linux dumps the Intel SSE regs in a note named "LINUX" with a note
-@@ -10348,6 +10352,9 @@ elfcore_grok_note (bfd *abfd, Elf_Intern
+@@ -10357,6 +10361,9 @@ elfcore_grok_note (bfd *abfd, Elf_Intern
  
  #if defined (HAVE_LWPSTATUS_T)
      case NT_LWPSTATUS:
@@ -47,7 +47,7 @@ diff -wpruN '--exclude=*.orig' a~/bfd/elf.c a/bfd/elf.c
        return elfcore_grok_lwpstatus (abfd, note);
  #endif
  
-@@ -11064,6 +11071,216 @@ elfcore_grok_openbsd_procinfo (bfd *abfd
+@@ -11073,6 +11080,216 @@ elfcore_grok_openbsd_procinfo (bfd *abfd
    return true;
  }
  
@@ -264,7 +264,7 @@ diff -wpruN '--exclude=*.orig' a~/bfd/elf.c a/bfd/elf.c
  static bool
  elfcore_grok_openbsd_note (bfd *abfd, Elf_Internal_Note *note)
  {
-@@ -12224,7 +12441,10 @@ elf_parse_notes (bfd *abfd, char *buf, s
+@@ -12233,7 +12450,10 @@ elf_parse_notes (bfd *abfd, char *buf, s
  	      GROKER_ELEMENT ( "OpenBSD", elfcore_grok_openbsd_note),
  	      GROKER_ELEMENT ("QNX", elfcore_grok_nto_note),
  	      GROKER_ELEMENT ("SPU/", elfcore_grok_spu_note),
@@ -300,7 +300,7 @@ diff -wpruN '--exclude=*.orig' a~/bfd/elfxx-target.h a/bfd/elfxx-target.h
 diff -wpruN '--exclude=*.orig' a~/include/elf/common.h a/include/elf/common.h
 --- a~/include/elf/common.h	1970-01-01 00:00:00
 +++ a/include/elf/common.h	1970-01-01 00:00:00
-@@ -733,6 +733,33 @@
+@@ -734,6 +734,33 @@
  #define NT_OPENBSD_WCOOKIE	23
  
  
