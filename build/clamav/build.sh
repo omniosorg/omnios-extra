@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=clamav
-VER=0.104.1
+VER=0.104.2
 PKG=ooce/system/clamav
 SUMMARY="Clam Anti-virus"
 DESC="$PROG is an open-source antivirus engine for detecting trojans, "
