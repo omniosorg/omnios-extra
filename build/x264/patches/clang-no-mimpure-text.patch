@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -1320,7 +1320,7 @@ if [ "$pic" = "yes" ] ; then
+     [[ "$ASFLAGS" != *"-DPIC"* ]] && ASFLAGS="$ASFLAGS -DPIC"
+     # resolve textrels in the x86 asm
+     cc_check stdio.h "-shared -Wl,-Bsymbolic" && SOFLAGS="$SOFLAGS -Wl,-Bsymbolic"
+-    [ $SYS = SunOS -a "$ARCH" = "X86" ] && SOFLAGS="$SOFLAGS -mimpure-text"
++    [ $cc_base != clang -a $SYS = SunOS -a "$ARCH" = "X86" ] && SOFLAGS="$SOFLAGS -mimpure-text"
+ fi
+ 
+ if [ "$debug" != "yes" -a "$gprof" != "yes" ]; then

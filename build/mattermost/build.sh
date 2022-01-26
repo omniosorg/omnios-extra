@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=mattermost
-VER=6.2.1
-MMCTLVER=6.2.0
+VER=6.3.1
+MMCTLVER=6.3.0
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
 DESC="All your team communication in one place, "
@@ -26,7 +26,7 @@ DESC+="instantly searchable and accessible anywhere."
 
 set_arch 64
 set_gover 1.17
-set_nodever 14
+set_nodever 16
 
 BUILD_DEPENDS_IPS+="
     ooce/library/libpng

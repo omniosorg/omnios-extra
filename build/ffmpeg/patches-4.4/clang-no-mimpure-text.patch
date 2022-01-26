@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/configure a/configure
 --- a~/configure	1970-01-01 00:00:00
 +++ a/configure	1970-01-01 00:00:00
-@@ -5473,7 +5473,7 @@ case $target_os in
+@@ -5351,7 +5351,7 @@ case $target_os in
          ;;
      sunos)
          SHFLAGS='-shared -Wl,-h,$$(@F)'

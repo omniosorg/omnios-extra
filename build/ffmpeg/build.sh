@@ -12,16 +12,20 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=ffmpeg
-VER=4.4.1
+VER=5.0
 PKG=ooce/multimedia/ffmpeg
 SUMMARY="ffmpeg"
 DESC="A complete, cross-platform solution to record, "
 DESC+="convert and stream audio and video."
+
+# Previous versions that also need to be built and packaged since compiled
+# software may depend on it.
+PVERS="4.4.1"
 
 if [ $RELVER -ge 151041 ]; then
     set_clangver
@@ -75,9 +79,25 @@ LDFLAGS32+=" -Wl,-R$OPREFIX/lib"
 LDFLAGS64+=" -Wl,-R$OPREFIX/lib/$ISAPART64"
 
 init
+prep_build
+
+# Build previous versions
+for pver in $PVERS; do
+    note -n "Building previous version: $pver"
+    set_builddir $PROG-$pver
+    save_variable CONFIGURE_OPTS
+    CONFIGURE_OPTS+=" --disable-programs --disable-doc"
+    download_source $PROG $PROG $pver
+    patch_source patches-`echo $pver | cut -d. -f1-2`
+    build
+    restore_variable CONFIGURE_OPTS
+done
+
+note -n "Building current version: $VER"
+
+set_builddir $PROG-$VER
 download_source $PROG $PROG $VER
 patch_source
-prep_build
 build
 strip_install
 make_package

@@ -28,7 +28,7 @@ PREFIX+=/$PROG
 set_arch 64
 set_gover 1.17
 # gitea 1.11.x requires node.js
-set_nodever 14
+set_nodever 16
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
