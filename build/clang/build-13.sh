@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -59,12 +59,13 @@ XFORM_ARGS="
 CONFIGURE_OPTS_64=
 CONFIGURE_OPTS_WS_64="
     -DCMAKE_BUILD_TYPE=Release
-    -DCMAKE_INSTALL_PREFIX=$PREFIX
+    -DCMAKE_INSTALL_PREFIX=\"$PREFIX\"
     -DCMAKE_C_COMPILER=\"$CC\"
     -DCMAKE_CXX_COMPILER=\"$CXX\"
     -DCMAKE_C_LINK_FLAGS=\"$LDFLAGS64\"
     -DCMAKE_CXX_LINK_FLAGS=\"$LDFLAGS64\"
     -DGCC_INSTALL_PREFIX=\"$GCCPATH\"
+    -DCLANG_VENDOR=\"OmniOS/$RELVER\"
     -DCLANG_DEFAULT_LINKER=/usr/bin/ld
     -DCLANG_DEFAULT_RTLIB=libgcc
     -DCLANG_DEFAULT_CXX_STDLIB=libstdc++
