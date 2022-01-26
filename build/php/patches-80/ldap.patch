@@ -5,7 +5,7 @@ with the illumos libldap in /usr/lib.
 diff -wpruN '--exclude=*.orig' a~/configure a/configure
 --- a~/configure	1970-01-01 00:00:00
 +++ a/configure	1970-01-01 00:00:00
-@@ -45083,7 +45083,7 @@ fi
+@@ -45112,7 +45112,7 @@ fi
  
  
    if test "$ext_shared" = "yes"; then
@@ -14,16 +14,16 @@ diff -wpruN '--exclude=*.orig' a~/configure a/configure
      if test -n "$LDAP_LIBDIR"; then
  
    if test "$LDAP_LIBDIR" != "/usr/$PHP_LIBDIR" && test "$LDAP_LIBDIR" != "/usr/lib"; then
-@@ -45167,7 +45167,7 @@ fi
+@@ -45196,7 +45196,7 @@ fi
    case ldap in
-   c|c_r|pthread*) ;;
+   c|c_r) ;;
    *)
 -      LIBS="-lldap $LIBS"
 +      LIBS="-lldap_r $LIBS"
     ;;
    esac
  
-@@ -45182,7 +45182,7 @@ fi
+@@ -45211,7 +45211,7 @@ fi
  
  
    if test "$ext_shared" = "yes"; then
@@ -32,9 +32,9 @@ diff -wpruN '--exclude=*.orig' a~/configure a/configure
      if test -n "$LDAP_LIBDIR"; then
  
    if test "$LDAP_LIBDIR" != "/usr/$PHP_LIBDIR" && test "$LDAP_LIBDIR" != "/usr/lib"; then
-@@ -45266,7 +45266,7 @@ fi
+@@ -45295,7 +45295,7 @@ fi
    case ldap in
-   c|c_r|pthread*) ;;
+   c|c_r) ;;
    *)
 -      LIBS="-lldap $LIBS"
 +      LIBS="-lldap_r $LIBS"

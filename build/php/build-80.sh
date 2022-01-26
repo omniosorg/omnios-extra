@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=php
 PKG=ooce/application/php-80
-VER=8.0.14
+VER=8.0.15
 SUMMARY="PHP 8.0"
 DESC="A popular general-purpose scripting language"
 
