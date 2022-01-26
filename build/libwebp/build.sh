@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libwebp
-VER=1.2.1
+VER=1.2.2
 PKG=ooce/library/libwebp
 SUMMARY="libwebp"
 DESC="WebP - A modern image format that provides lossless and lossy compression"
