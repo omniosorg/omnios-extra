@@ -130,7 +130,7 @@
 | ooce/network/irssi		| 1.2.3		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosh		| 1.3.2		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosquitto	| 2.0.14	| https://mosquitto.org/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/mrtg		| 2.17.8	| https://oss.oetiker.ch/mrtg/pub/?M=D | [omniosorg](https://github.com/omniosorg)
+| ooce/network/mrtg		| 2.17.10	| https://oss.oetiker.ch/mrtg/pub/?M=D | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mtr		| 0.95		| https://github.com/traviscross/mtr/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nicstat		| 1.95		| https://sourceforge.net/projects/nicstat/files/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nsd		| 4.3.9		| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
