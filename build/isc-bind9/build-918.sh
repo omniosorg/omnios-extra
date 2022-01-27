@@ -18,8 +18,8 @@
 . ../../lib/build.sh
 
 PROG=bind
-VER=9.16.25
-PKG=ooce/network/bind-916
+VER=9.18.0
+PKG=ooce/network/bind-918
 SUMMARY="ISC BIND DNS Server & Tools"
 DESC="Server & Client Utilities for DNS"
 
@@ -44,6 +44,11 @@ OPREFIX=$PREFIX
 PREFIX+=/named-$MAJVER
 CONFPATH=/etc$PREFIX
 VARPATH=/var$OPREFIX/named/named-$MAJVER
+
+HARDLINK_TARGETS="
+    ${PREFIX#/}/bin/named-checkzone
+    ${PREFIX#/}/sbin/tsig-keygen
+"
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
@@ -91,7 +96,6 @@ patch_source
 xform files/named.conf-template > $TMPDIR/named-$sMAJVER.conf
 prep_build autoconf -autoreconf
 build
-strip_install
 xform files/named-template.xml > $TMPDIR/named-$sMAJVER.xml
 xform files/named-template > $TMPDIR/named-$sMAJVER
 install_smf -oocemethod ooce named-$sMAJVER.xml named-$sMAJVER

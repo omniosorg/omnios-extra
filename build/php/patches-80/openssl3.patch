@@ -1,7 +1,7 @@
-diff -u php-8.0.11~/ext/openssl/openssl.c php-8.0.11/ext/openssl/openssl.c
---- php-8.0.11~/ext/openssl/openssl.c	2021-09-21 17:07:44.000000000 +0000
-+++ php-8.0.11/ext/openssl/openssl.c	2021-10-13 20:56:20.788688977 +0000
-@@ -1221,7 +1221,9 @@
+diff -wpruN '--exclude=*.orig' a~/ext/openssl/openssl.c a/ext/openssl/openssl.c
+--- a~/ext/openssl/openssl.c	1970-01-01 00:00:00
++++ a/ext/openssl/openssl.c	1970-01-01 00:00:00
+@@ -1221,7 +1221,9 @@ PHP_MINIT_FUNCTION(openssl)
  	REGISTER_LONG_CONSTANT("OPENSSL_CMS_NOSIGS", CMS_NOSIGS, CONST_CS|CONST_PERSISTENT);
  
  	REGISTER_LONG_CONSTANT("OPENSSL_PKCS1_PADDING", RSA_PKCS1_PADDING, CONST_CS|CONST_PERSISTENT);

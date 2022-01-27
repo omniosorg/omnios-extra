@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
 --- a~/configure.ac	1970-01-01 00:00:00
 +++ a/configure.ac	1970-01-01 00:00:00
-@@ -377,12 +377,6 @@ AC_PROG_CC_C99
+@@ -379,12 +379,6 @@ AC_PROG_CC_C99
  # Using Solaris linker with gcc on Solaris breaks Thread Local Storage
  #
  AS_CASE([$host],
