@@ -319,8 +319,8 @@ case $RELVER in
     15103[12])          DEFAULT_GCC_VER=8; ILLUMOS_GCC_VER=7 ;;
     15103[34])          DEFAULT_GCC_VER=9; ILLUMOS_GCC_VER=7 ;;
     15103[5-8])         DEFAULT_GCC_VER=10; ILLUMOS_GCC_VER=7 ;;
-    151039)             DEFAULT_GCC_VER=11; ILLUMOS_GCC_VER=7 ;;
-    15104*)             DEFAULT_GCC_VER=11; ILLUMOS_GCC_VER=7 ;;
+    151039|151040)      DEFAULT_GCC_VER=11; ILLUMOS_GCC_VER=7 ;;
+    15104*)             DEFAULT_GCC_VER=11; ILLUMOS_GCC_VER=10 ;;
     *) logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
 
