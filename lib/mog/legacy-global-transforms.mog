@@ -56,9 +56,6 @@
 
 <transform file path=opt/ooce/([^/]+/)?lib/(amd64/)?pkgconfig$ -> \
     set group other>
-<transform file dir path=opt/ooce/([^/]+/)?share/aclocal$ -> set group other>
-<transform file dir path=opt/ooce/([^/]+/)?/share/doc$ -> set group other>
-<transform file dir path=opt/ooce/([^/]+/)?/share/locale -> set group other>
 <transform file dir path=var/opt/ooce/[^/]+/lib$ -> set group other>
 <transform file dir path=var/lib$ -> set group other>
 
