@@ -36,7 +36,6 @@ extra.omnios ooce/compress/pigz
 extra.omnios ooce/compress/zstd r
 extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
-extra.omnios ooce/database/mariadb-103
 extra.omnios ooce/database/mariadb-104
 extra.omnios ooce/database/mariadb-105
 extra.omnios ooce/database/mariadb-106
