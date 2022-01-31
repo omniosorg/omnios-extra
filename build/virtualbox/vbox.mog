@@ -9,14 +9,14 @@
 # http://www.illumos.org/license/CDDL.
 # CDDL HEADER START
 #
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 set name=variant.opensolaris.zone value="global"
 
 <transform path=_additions -> drop>
 
 license opt/$(PROG)/LICENSE license=GPLv2
-license ../$(GSOAPDIR)/GPLv2_license.txt license=GPLv2
+license ../$(GSOAPDIR)/GPLv2_license.txt license=GPLv2/gSOAP
 
 driver name=vboxdrv
 driver name=vboxflt

@@ -22,7 +22,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/Installer/solaris/Makefile.kmk a/src/
  	$(LN_SYMLINK) -f ./pkginstall.sh $(VBOX_PATH_SI_SCRATCH_PKG)/opt/VirtualBox/ipsinstall.sh
  	$(SED) -e "s/_HARDENED_/$(if $(VBOX_WITH_HARDENED),hardened,)/" \
  		--output $(VBOX_PATH_SI_SCRATCH_PKG)/opt/VirtualBox/vboxconfig.sh \
-@@ -631,9 +628,6 @@ $(VBOX_PATH_SI_SCRATCH)/dist-copy.ts: \
+@@ -632,9 +629,6 @@ $(VBOX_PATH_SI_SCRATCH)/dist-copy.ts: \
  	$(if-expr defined(VBOX_WITH_QTGUI) \
  	,$(NLTAB)$(LN_SYMLINK) ../rdesktop-vrdp-keymaps/ $(VBOX_PATH_SI_SCRATCH_PKG)/opt/VirtualBox/$(VBOX_SI_ARCH)/rdesktop-vrdp-keymaps,)
  
@@ -32,7 +32,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/Installer/solaris/Makefile.kmk a/src/
  	$(if-expr !defined(VBOX_OSE) && defined(VBOX_WITH_VBOXSDL) \
  	,$(INSTALL) -s -m 0644 $(PATH_DEVTOOLS_TRG)/libsdl/v1.2.13/lib/libSDL-1.2.so.0.11.2 \
  		$(VBOX_PATH_SI_SCRATCH_PKG)/opt/VirtualBox/$(VBOX_SI_ARCH)/libSDL-1.2.so.0,)
-@@ -700,7 +694,7 @@ $(VBOX_PATH_SI_SCRATCH)/dist-copy.ts: \
+@@ -701,7 +695,7 @@ $(VBOX_PATH_SI_SCRATCH)/dist-copy.ts: \
  # Creates the System V style installer package.
  #
  solaris-package:: $(VBOX_PATH_SI_SCRATCH)/$(PKG_FILENAME).pkg

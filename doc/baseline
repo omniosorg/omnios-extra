@@ -36,7 +36,6 @@ extra.omnios ooce/compress/pigz
 extra.omnios ooce/compress/zstd r
 extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
-extra.omnios ooce/database/mariadb-103
 extra.omnios ooce/database/mariadb-104
 extra.omnios ooce/database/mariadb-105
 extra.omnios ooce/database/mariadb-106
@@ -84,7 +83,6 @@ extra.omnios ooce/file/acltool
 extra.omnios ooce/file/lsof
 extra.omnios ooce/file/tree
 extra.omnios ooce/fonts/liberation
-extra.omnios ooce/kvmadm
 extra.omnios ooce/library/apr
 extra.omnios ooce/library/apr-util
 extra.omnios ooce/library/bdw-gc

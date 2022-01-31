@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -36,14 +36,12 @@ PATH+=":$ONBLDBIN/$ISAPART"
 # omitting gcc version specific flags; removing -Werror for now.
 MAKE_ARGS=-e
 CFLAGS+=" -fident -fno-builtin -fno-asm -nodefaultlibs -Wall"
-CFLAGS+=" -Wno-unknown-pragmas -Wno-unused -fno-inline-functions -m64"
+CFLAGS+=" -Wno-unknown-pragmas -Wno-unused -fno-inline-functions"
 CFLAGS+=" -mcmodel=kernel -fno-shrink-wrap -g -O2 -fno-inline -ffreestanding"
-CFLAGS+=" -fno-strict-aliasing -Wpointer-arith -gdwarf-2 -std=gnu99"
-CFLAGS+=" -mno-red-zone"
-if [ $RELVER -ge 151032 ]; then
-    # From r151032, the kernel is built with retpolines
-    CFLAGS+=" -mindirect-branch=thunk-extern -mindirect-branch-register"
-fi
+CFLAGS+=" -fno-strict-aliasing -Wpointer-arith -std=gnu99 -mno-red-zone"
+# From r151032, the kernel is built with retpolines
+[ $RELVER -ge 151032 ] \
+    && CFLAGS+=" -mindirect-branch=thunk-extern -mindirect-branch-register"
 export CFLAGS
 
 export LDFLAGS+=" -ztype=kmod"

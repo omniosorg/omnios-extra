@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox
-VER=6.1.30
+VER=6.1.32
 # virtualbox does currently not build with later gsoap versions
 GSOAPVER=2.8.102
 GSOAPDIR=gsoap-${GSOAPVER%.*}
@@ -31,7 +31,7 @@ if [ $RELVER -lt 151030 ]; then
     exit 0
 fi
 
-SKIP_LICENCES=GPLv2
+SKIP_LICENCES=GPLv2/gSOAP
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
@@ -164,6 +164,10 @@ VBOX_GSOAP_CXX_LIBS = libgsoapssl++ libz
 VBOX_GSOAP_INCS = $DEPROOT/usr/include
 
 VBOX_DO_STRIP =
+
+# link kernel modules -ztype=kmod
+TEMPLATE_VBOXR0DRV_LDFLAGS = -r -ztype=kmod
+TEMPLATE_VBOXGUESTR0_LDFLAGS = -r -ztype=kmod
 
 EOF
     logmsg "--- building VirtualBox"

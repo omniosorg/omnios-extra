@@ -12,22 +12,24 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=cups
-VER=2.4.0
+VER=2.4.1
 PKG=ooce/print/cups
 SUMMARY="Common UNIX Printing System"
 DESC="Standards-based, open source printing system for UNIX operating systems"
 
-OPREFIX=$PREFIX
-PREFIX+="/$PROG"
-VARDIR="/var$PREFIX"
+[ $RELVER -ge 151041 ] && set_clangver
 
 # getpwuid_r
 set_standard XPG6
+
+OPREFIX=$PREFIX
+PREFIX+="/$PROG"
+VARDIR="/var$PREFIX"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -66,8 +68,8 @@ CONFIGURE_OPTS_64="
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
-LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib -lsocket"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64 -lsocket"
+LDFLAGS32+=" -L$OPREFIX/lib -Wl,-R$OPREFIX/lib -lsocket"
+LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -Wl,-R$OPREFIX/lib/$ISAPART64 -lsocket"
 
 save_function configure32 _configure32
 configure32(){

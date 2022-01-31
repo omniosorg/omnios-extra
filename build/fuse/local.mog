@@ -8,9 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
-
-set name=variant.opensolaris.zone value="global"
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 driver name=fuse \
     devlink=type=ddi_pseudo;name=fuse\t\D \
