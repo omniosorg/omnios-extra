@@ -146,7 +146,7 @@
 | ooce/runtime/gnu-smalltalk	| 3.2.5		| https://ftp.gnu.org/gnu/smalltalk/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/groovy-30	| 3.0.9		| https://groovy.apache.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-12		| 12.22.9	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/runtime/node-14		| 14.18.3	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/runtime/node-14		| 14.19.0	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-16		| 16.13.2	| https://nodejs.org/en/download/releases/ https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-27		| 2.7.5		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-30		| 3.0.3		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
