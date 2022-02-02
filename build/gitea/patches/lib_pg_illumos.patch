@@ -4,9 +4,9 @@ Date: Thu, 27 May 2021 15:52:30 -0400
 Subject: [PATCH] Fix build for illumos and solaris
 
 From Go 1.13, the illumos build tag implies the solaris build tag (but it's better use both to clarify)
-diff -wpruN '--exclude=*.orig' a~/vendor/github.com/lib/pq/user_other.go a/vendor/github.com/lib/pq/user_other.go
---- a~/vendor/github.com/lib/pq/user_other.go	1970-01-01 00:00:00
-+++ a/vendor/github.com/lib/pq/user_other.go	1970-01-01 00:00:00
+diff -wpruN '--exclude=*.orig' a~/_deps/pkg/mod/github.com/lib/pq@v1.10.2/user_other.go a/_deps/pkg/mod/github.com/lib/pq@v1.10.2/user_other.go
+--- a~/_deps/pkg/mod/github.com/lib/pq@v1.10.2/user_other.go	1970-01-01 00:00:00
++++ a/_deps/pkg/mod/github.com/lib/pq@v1.10.2/user_other.go	1970-01-01 00:00:00
 @@ -1,6 +1,6 @@
  // Package pq is a pure Go Postgres driver for the database/sql package.
  
@@ -15,9 +15,9 @@ diff -wpruN '--exclude=*.orig' a~/vendor/github.com/lib/pq/user_other.go a/vendo
  
  package pq
  
-diff -wpruN '--exclude=*.orig' a~/vendor/github.com/lib/pq/user_posix.go a/vendor/github.com/lib/pq/user_posix.go
---- a~/vendor/github.com/lib/pq/user_posix.go	1970-01-01 00:00:00
-+++ a/vendor/github.com/lib/pq/user_posix.go	1970-01-01 00:00:00
+diff -wpruN '--exclude=*.orig' a~/_deps/pkg/mod/github.com/lib/pq@v1.10.2/user_posix.go a/_deps/pkg/mod/github.com/lib/pq@v1.10.2/user_posix.go
+--- a~/_deps/pkg/mod/github.com/lib/pq@v1.10.2/user_posix.go	1970-01-01 00:00:00
++++ a/_deps/pkg/mod/github.com/lib/pq@v1.10.2/user_posix.go	1970-01-01 00:00:00
 @@ -1,6 +1,6 @@
  // Package pq is a pure Go Postgres driver for the database/sql package.
  
