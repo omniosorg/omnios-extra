@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition.  All rights reserved.
+# Copyright 2022 OmniOS Community Edition.  All rights reserved.
 
 . ../../lib/build.sh
 
 PROG=zabbix
-VER=5.4.9
+VER=5.4.10
 PKG=ooce/application/zabbix
 SUMMARY="enterprise-class open source distributed monitoring solution"
 DESC="Zabbix is software that monitors numerous parameters of a network "
