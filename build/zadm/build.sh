@@ -22,7 +22,7 @@ PKG=ooce/util/zadm
 SUMMARY="zone admin tool"
 DESC="$PROG - $SUMMARY"
 
-NOVNCVER=1.3.0
+NOVNCVER=1.2.0
 
 if [ $RELVER -le 151036 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
