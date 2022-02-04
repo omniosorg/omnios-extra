@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=mattermost
-VER=6.3.2
+VER=6.3.3
 MMCTLVER=6.3.0
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
