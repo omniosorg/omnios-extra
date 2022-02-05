@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,7 +22,7 @@ PKG=ooce/util/zadm
 SUMMARY="zone admin tool"
 DESC="$PROG - $SUMMARY"
 
-NOVNCVER=1.2.0
+NOVNCVER=1.3.0
 
 if [ $RELVER -le 151036 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
@@ -64,6 +64,7 @@ bundle_novnc() {
     set_builddir noVNC-$NOVNCVER
 
     download_source novnc v$NOVNCVER
+    [ $RELVER -lt 151041 ] && patch_source patches-novnc
     logcmd mkdir -p $DESTDIR$PREFIX/novnc || logerr "mkdir novnc failed"
 
     pushd $TMPDIR/$BUILDDIR >/dev/null
