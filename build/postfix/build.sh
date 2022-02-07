@@ -13,12 +13,12 @@
 # }}}
 
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=postfix
-VER=3.6.4
+VER=3.7.0
 PKG=ooce/network/smtp/postfix
 SUMMARY="Postfix MTA"
 DESC="Wietse Venema's mail server alternative to sendmail"
@@ -38,7 +38,7 @@ PREFIX+="/$PROG"
 CONFPATH="/etc$PREFIX"
 
 BUILD_DEPENDS_IPS="
-    library/pcre
+    library/pcre2
     ooce/database/bdb
     ooce/database/lmdb
     ooce/library/postgresql-${PGSQLVER//./}
@@ -81,7 +81,7 @@ configure64() {
         AUXLIBS_MYSQL="-L${OPREFIX}/mariadb-${MARIASQLVER}/lib/${ISAPART64} -Wl,-R${OPREFIX}/mariadb-${MARIASQLVER}/lib/${ISAPART64} -lmysqlclient" \
         AUXLIBS_PGSQL="-L${OPREFIX}/pgsql-${PGSQLVER}/lib/${ISAPART64} -Wl,-R${OPREFIX}/pgsql-${PGSQLVER}/lib/${ISAPART64} -lpq" \
         AUXLIBS_LMDB="-llmdb" \
-        AUXLIBS_PCRE="-lpcre" \
+        AUXLIBS_PCRE="-lpcre2" \
             || logerr "Failed make makefiles command"
 }
 
