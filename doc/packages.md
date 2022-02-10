@@ -80,7 +80,7 @@
 | ooce/library/freetype2	| 2.11.1	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/gnutls		| 3.6.16	| https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/ https://www.gnutls.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/icu4c		| 69.1		| https://github.com/unicode-org/icu/releases | Currently used solely by cyrus-imapd
+| ooce/library/icu4c		| 70.1		| https://github.com/unicode-org/icu/releases | Currently used solely by cyrus-imapd
 | ooce/library/jansson		| 2.14		| https://github.com/akheron/jansson/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/json-c		| 0.15		| https://github.com/json-c/json-c/tags https://github.com/json-c/json-c/wiki | [omniosorg](https://github.com/omniosorg)
 | ooce/library/ldns		| 1.8.1		| https://nlnetlabs.nl/downloads/ldns/ | [omniosorg](https://github.com/omniosorg)
@@ -88,7 +88,7 @@
 | ooce/library/libde265		| 1.0.8		| https://github.com/strukturag/libde265/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libdwarf		| 20210528	| https://www.prevanders.net/dwarf.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libgd		| 2.3.3		| https://github.com/libgd/libgd/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libical		| 3.0.10	| https://github.com/libical/libical/releases | Currently used solely by cyrus-imapd
+| ooce/library/libical		| 3.0.14	| https://github.com/libical/libical/releases | Currently used solely by cyrus-imapd
 | ooce/library/libev		| 4.33		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libexif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/libexif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libgif		| 5.2.1		| https://sourceforge.net/projects/giflib/files/ | [omniosorg](https://github.com/omniosorg)
@@ -123,7 +123,7 @@
 | ooce/network/bind-911		| 9.11.36	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/bind-916		| 9.16.25	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/bind-918		| 9.18.0	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/cyrus-imapd	| 3.4.2		| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/network/cyrus-imapd	| 3.4.3		| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/fping		| 5.1		| https://github.com/schweikert/fping/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.2.3		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosh		| 1.3.2		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)
