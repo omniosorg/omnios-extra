@@ -1,4 +1,4 @@
-Start of unbound 1.14.0+libevent unit test.
+Start of unbound 1.15.0+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -69,8 +69,8 @@ test services/outside_network.c:reuse_tcp_lru_touch
 test services/outside_network.c:reuse_tcp_remove_tree_list
 test services/outside_network.c:reuse_tcp_lru_snip
 test message parse functions
-[0] did 10000 in 614.236 msec for 16280.387343 encode/sec size 615
-1297920 checks ok.
+[0] did 10000 in 85.31 msec for 117219.552221 encode/sec size 615
+1297250 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl OK
 ./testdata/auth_nsec3_ent.rpl OK
@@ -147,6 +147,7 @@ selftest successful (33 checks).
 ./testdata/chaos_trustanchor.rpl OK
 ./testdata/dns64_lookup.rpl OK
 ./testdata/domain_insec_ds.rpl OK
+./testdata/edns_attached_once_per_upstream.rpl OK
 ./testdata/edns_client_string.rpl OK
 ./testdata/edns_client_string_opcode.rpl OK
 ./testdata/edns_keepalive.rpl OK
@@ -259,6 +260,7 @@ selftest successful (33 checks).
 ./testdata/net_signed_servfail.rpl OK
 ./testdata/nomem_cnametopos.rpl OK
 ./testdata/nsid_ascii.rpl OK
+./testdata/nsid_bogus.rpl OK
 ./testdata/nsid_hex.rpl OK
 ./testdata/nsid_not_set.rpl OK
 ./testdata/refuse_xfr.rpl OK
@@ -275,6 +277,7 @@ selftest successful (33 checks).
 ./testdata/rpz_respip_override.rpl OK
 ./testdata/rpz_respip_tcponly.rpl OK
 ./testdata/rpz_rootwc.rpl OK
+./testdata/rpz_signal_nxdomain_ra.rpl OK
 ./testdata/rrset_rettl.rpl OK
 ./testdata/rrset_untrusted.rpl OK
 ./testdata/rrset_updated.rpl OK
