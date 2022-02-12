@@ -36,7 +36,7 @@
 | ooce/database/mariadb-106	| 10.6.5	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-10	| 10.20		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-11	| 11.15		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
-| ooce/database/postgresql-12	| 12.9		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/postgresql-12	| 12.10		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-13	| 13.5		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-14	| 14.1		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/rrdtool		| 1.7.2		| https://oss.oetiker.ch/rrdtool/pub/?M=D | [omniosorg](https://github.com/omniosorg)
