@@ -1,0 +1,49 @@
+
+In https://repo.or.cz/alpine.git?a=commit;h=4d77713f495bc1e797393cb05e88f17f7
+alpine switch to generating message IDs using the built in oauth2 random
+UUID generator. Unfortunately this is not very robust as it uses a sequence
+of calls to random(), which is seeded.
+
+Duplicate message IDs have been seen in the wild, use libuuid instead.
+
+diff --git a/imap/src/c-client/oauth2_aux.c b/imap/src/c-client/oauth2_aux.c
+index d2ad6ce..ca0fadb 100644
+--- a/imap/src/c-client/oauth2_aux.c
++++ b/imap/src/c-client/oauth2_aux.c
+@@ -24,30 +24,20 @@
+ #include "json.h"
+ #include "oauth2_aux.h"
+ 
++#include <uuid/uuid.h>
++
+ /* we generate something like a guid, but not care about
+  * anything, but that it is really random.
+  */
+ char *oauth2_generate_state(void)
+ {
+-  char rv[37];
++  char rv[UUID_PRINTABLE_STRING_LENGTH];
++  uuid_t uu;
+   int i;
+ 
+   rv[0] = '\0';
+-  for(i = 0; i < 4; i++)
+-     sprintf(rv + strlen(rv), "%x", (unsigned int) (random() % 256));
+-  sprintf(rv + strlen(rv), "%c", '-');
+-  for(i = 0; i < 2; i++)
+-     sprintf(rv + strlen(rv), "%x", (unsigned int) (random() % 256));
+-  sprintf(rv + strlen(rv), "%c", '-');
+-  for(i = 0; i < 2; i++)
+-     sprintf(rv + strlen(rv), "%x", (unsigned int) (random() % 256));
+-  sprintf(rv + strlen(rv), "%c", '-');
+-  for(i = 0; i < 2; i++)
+-     sprintf(rv + strlen(rv), "%x", (unsigned int) (random() % 256));
+-  sprintf(rv + strlen(rv), "%c", '-');
+-  for(i = 0; i < 6; i++)
+-     sprintf(rv + strlen(rv), "%x", (unsigned int) (random() % 256));
+-  rv[36] = '\0';
++  uuid_generate(uu);
++  uuid_unparse_lower(uu, rv);
+   return cpystr(rv);
+ }
+ 

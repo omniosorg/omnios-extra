@@ -48,6 +48,8 @@ CONFIGURE_OPTS="
     --with-ldap-lib-dir=$OPREFIX/lib/$ISAPART64
 "
 
+export LIBS=-luuid
+
 init
 download_source $PROG $PROG $VER
 prep_build autoconf -autoreconf
