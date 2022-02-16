@@ -8,7 +8,7 @@
 | ooce/application/imagemagick	| 7.1.0-22	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/links	| 2.25		| http://links.twibright.com/download.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/listmonk	| 2.1.0		| https://github.com/knadh/listmonk/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/mattermost	| 6.3.3		| https://github.com/mattermost/mattermost-server/releases https://docs.mattermost.com/upgrade/version-archive.html#mattermost-team-edition | [omniosorg](https://github.com/omniosorg)
+| ooce/application/mattermost	| 6.4.0		| https://github.com/mattermost/mattermost-server/releases https://docs.mattermost.com/upgrade/version-archive.html#mattermost-team-edition | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.27	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/munin	| 2.0.69	| https://github.com/munin-monitoring/munin/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mutt		| 2.2.0		| http://www.mutt.org/download.html | [omniosorg](https://github.com/omniosorg)
@@ -17,7 +17,7 @@
 | ooce/application/nagios-nrpe	| 4.0.3		| https://github.com/NagiosEnterprises/nrpe/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nsca	| 2.10.1	| https://github.com/NagiosEnterprises/nsca/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-plugins | 2.3.3	| http://www.nagios-plugins.org/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/application/novnc	| 1.2.0		| https://github.com/novnc/noVNC/releases | Currently used solely by zadm
+| ooce/application/novnc	| 1.3.0		| https://github.com/novnc/noVNC/releases | Currently used solely by zadm
 | ooce/application/php-74	| 7.4.27	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-80	| 8.0.15	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-81	| 8.1.2		| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
