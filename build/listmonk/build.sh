@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=listmonk
 PKG=ooce/application/listmonk
-VER=2.0.0
+VER=2.1.0
 SUMMARY="$PROG"
 DESC="Self-hosted newsletter & mailing list manager"
 

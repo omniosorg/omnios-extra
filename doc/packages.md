@@ -7,7 +7,7 @@
 | ooce/application/graphviz	| 2.44.1	| https://www2.graphviz.org/Packages/stable/portable_source/ https://graphviz.org/download/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/imagemagick	| 7.1.0-22	| https://imagemagick.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/links	| 2.25		| http://links.twibright.com/download.php | [omniosorg](https://github.com/omniosorg)
-| ooce/application/listmonk	| 2.0.0		| https://github.com/knadh/listmonk/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/listmonk	| 2.1.0		| https://github.com/knadh/listmonk/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mattermost	| 6.3.3		| https://github.com/mattermost/mattermost-server/releases https://docs.mattermost.com/upgrade/version-archive.html#mattermost-team-edition | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.27	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/munin	| 2.0.69	| https://github.com/munin-monitoring/munin/releases | [omniosorg](https://github.com/omniosorg)
