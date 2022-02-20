@@ -57,7 +57,7 @@ CONFIGURE_OPTS="
     --enable-thread-safety
     --with-openssl
     --with-libxml
-    --with-xslt
+    --with-libxslt
     --with-readline
     --without-systemd
     --with-system-tzdata=/usr/share/lib/zoneinfo

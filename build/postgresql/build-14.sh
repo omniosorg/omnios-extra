@@ -57,8 +57,9 @@ CONFIGURE_OPTS="
     --localstatedir=$VARPATH
     --enable-thread-safety
     --with-openssl
+    --with-lz4
     --with-libxml
-    --with-xslt
+    --with-libxslt
     --with-readline
     --without-systemd
     --with-system-tzdata=/usr/share/lib/zoneinfo
