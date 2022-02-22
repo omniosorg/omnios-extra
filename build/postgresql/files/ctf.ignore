@@ -1,1 +1,6 @@
 dynloader.c
+regcomp.c
+regerror.c
+regexec.c
+regfree.c
+regstrlcpy.c
