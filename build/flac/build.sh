@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=flac
-VER=1.3.3
+VER=1.3.4
 PKG=ooce/audio/flac
 SUMMARY="flac"
 DESC="Free Lossless Audio Codec"
