@@ -57,7 +57,7 @@ CONFIGURE_OPTS="
     --enable-thread-safety
     --with-openssl
     --with-libxml
-    --with-xslt
+    --with-libxslt
     --with-readline
     --without-systemd
     --with-system-tzdata=/usr/share/lib/zoneinfo
@@ -74,9 +74,11 @@ MAKE_INSTALL_TARGET=install-world
 
 build_manifests() {
     manifest_start $TMPDIR/manifest.client
-    manifest_add_dir $PREFIX/include libpq
+    manifest_add_dir $PREFIX/include '.*'
     manifest_add_dir $PREFIX/lib/pkgconfig
     manifest_add_dir $PREFIX/lib/$ISAPART64/pkgconfig
+    manifest_add_dir $PREFIX/lib/pgxs '.*'
+    manifest_add_dir $PREFIX/lib/$ISAPART64/pgxs '.*'
     manifest_add $PREFIX/lib '.*lib(pq\.|ecpg|pgtypes|pgcommon|pgport).*'
     manifest_add $PREFIX/bin '.*pg_config' psql ecpg
     manifest_add $PREFIX/share/man/man1 pg_config.1 psql.1 ecpg.1

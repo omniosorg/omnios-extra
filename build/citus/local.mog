@@ -10,17 +10,5 @@
 #
 # Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
-# Drop html documentation
-<transform path=$(PREFIX)/share/doc/html -> drop>
-
-<transform path=$(PREFIX)/lib(?:/amd64)?/pgxs(?:/|$) -> set facet.devel true>
-
-# Drop 32-bit binaries
-<transform path=$(PREFIX)/bin/i386/(?!pg_config) -> drop>
-<transform path=$(OPREFIX)/bin/(i386|amd64) -> drop>
-
-<include mediated-binlink.mog>
-<include mediated-manlink.mog>
-
-license COPYRIGHT license=postgresql
+license LICENSE license=AGPLv3
 

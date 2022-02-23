@@ -30,6 +30,7 @@
 | ooce/compress/pbzip2		| 1.1.13	| https://launchpad.net/pbzip2/+download | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pigz		| 2.7		| https://zlib.net/pigz/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/bdb		| 5.3.28	| http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html | [omniosorg](https://github.com/omniosorg)
+| ooce/database/citus-XX	| 10.2.4	| https://github.com/citusdata/citus/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/database/lmdb		| 0.9.29	| https://github.com/LMDB/lmdb/tags https://symas.com/lmdb/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-104	| 10.4.22	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-105	| 10.5.13	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)

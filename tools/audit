@@ -130,6 +130,14 @@ add_target()
                 done
                 pkg=
                 ;;
+            */citus-XX:*)
+                pver=`grep '^PGVERSIONS=' $build | cut -d= -f2 \
+                    | cut -d '"' -f2`
+                for p in $pver; do
+                    targets[${pkg/XX/${p//./}}]=$ver
+                done
+                pkg=
+                ;;
             *:github-latest*)
                 ver=`github_latest $pkg $ver`
                 ;;
