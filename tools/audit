@@ -130,7 +130,7 @@ add_target()
                 done
                 pkg=
                 ;;
-            */citus-XX:*)
+            */postgresql-XX/*:*)
                 pver=`grep '^PGVERSIONS=' $build | cut -d= -f2 \
                     | cut -d '"' -f2`
                 for p in $pver; do
