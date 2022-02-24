@@ -394,6 +394,8 @@ set_gccver() {
     GCCPATH="/opt/gcc-$GCCVER"
     GCC="$GCCPATH/bin/gcc"
     GXX="$GCCPATH/bin/g++"
+    CC=$GCC
+    CXX=$GXX
     [ -x "$GCC" ] || logerr "Unknown compiler version $GCCVER"
     PATH="$GCCPATH/bin:$BASEPATH"
     if [ -n "$USE_CCACHE" ]; then
