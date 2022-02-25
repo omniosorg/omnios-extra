@@ -34,6 +34,13 @@ set_arch 64
 
 SKIP_LICENCES=AGPLv3
 
+# lz4 was in omnios-extra until 151035
+if [ $RELVER -lt 151035 ]; then
+    CFLAGS+=" -I$OPREFIX/include"
+    LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+fi
+
+
 init
 download_source $PROG v$VER
 patch_source
