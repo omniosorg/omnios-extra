@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=citus
-PKG=ooce/database/citus-XX
+PKG=ooce/database/postgresql-XX/citus
 VER=10.2.4
 SUMMARY="Citus PostgreSQL XX extension"
 DESC="Transforms PostgreSQL XX into a distributed database"
