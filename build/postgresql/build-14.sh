@@ -29,7 +29,7 @@ SKIP_LICENCES=postgresql
 # and set PATH to point to the correct llvm/clang version for
 # the postgres JIT code, but we want to build with gcc.
 set_clangver
-set_gccver $DEFAULT_GCC_VER
+BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
