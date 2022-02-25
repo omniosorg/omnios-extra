@@ -33,6 +33,8 @@ BUILD_DEPENDS_IPS="
     ooce/library/libogg
 "
 
+TESTSUITE_SED='/seek.*frame/s/[0-9][0-9]*/XX/g'
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
@@ -61,6 +63,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_package
 clean_up
 

@@ -70,6 +70,12 @@ CONFIGURE_OPTS_64+="
     --enable-dtrace DTRACEFLAGS=-64
 "
 
+# lz4 was in omnios-extra until 151035
+if [ $RELVER -lt 151035 ]; then
+    LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib"
+    LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+fi
+
 # need to build world to get e.g. man pages in
 MAKE_TARGET=world
 MAKE_INSTALL_TARGET=install-world

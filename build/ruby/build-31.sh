@@ -43,6 +43,7 @@ XFORM_ARGS="
 "
 
 CONFIGURE_OPTS_64+="
+    --disable-install-doc
     --libdir=$PREFIX/lib
 "
 
