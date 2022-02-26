@@ -32,6 +32,7 @@ MAKE=$NINJA
 CONFIGURE_OPTS_64="
     --prefix=$PREFIX
     --generator=Ninja
+    --system-curl
 "
 
 init
