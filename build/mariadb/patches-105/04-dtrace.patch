@@ -31,7 +31,7 @@ diff -wpruN '--exclude=*.orig' a~/cmake/plugin.cmake a/cmake/plugin.cmake
 diff -wpruN '--exclude=*.orig' a~/extra/mariabackup/CMakeLists.txt a/extra/mariabackup/CMakeLists.txt
 --- a~/extra/mariabackup/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/extra/mariabackup/CMakeLists.txt	1970-01-01 00:00:00
-@@ -90,6 +90,8 @@ IF(NOT HAVE_SYSTEM_REGEX)
+@@ -89,6 +89,8 @@ IF(NOT HAVE_SYSTEM_REGEX)
    TARGET_LINK_LIBRARIES(mariadb-backup pcre2-posix)
  ENDIF()
  
