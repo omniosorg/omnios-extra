@@ -348,8 +348,8 @@ else
 fi
 
 # Default database versions to bundle into packages which use the libraries
-PGSQLVER=12
-MARIASQLVER=10.4
+PGSQLVER=14
+MARIASQLVER=10.6
 
 # Options to turn compiler features on and off. Associative array keyed by
 # compiler version or _ for all versions.
