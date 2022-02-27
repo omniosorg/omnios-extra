@@ -1,0 +1,3 @@
+no-RTLD_DEEPBIND.patch
+use-full-path.patch
+ExecGetJunkAttribute.patch

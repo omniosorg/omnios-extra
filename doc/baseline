@@ -46,9 +46,11 @@ extra.omnios ooce/database/postgresql-11
 extra.omnios ooce/database/postgresql-12
 extra.omnios ooce/database/postgresql-13
 extra.omnios ooce/database/postgresql-13/citus
+extra.omnios ooce/database/postgresql-13/mysql_fdw
 extra.omnios ooce/database/postgresql-13/pg_repack
 extra.omnios ooce/database/postgresql-14
 extra.omnios ooce/database/postgresql-14/citus
+extra.omnios ooce/database/postgresql-14/mysql_fdw
 extra.omnios ooce/database/postgresql-14/pg_repack
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/database/rrdtool
