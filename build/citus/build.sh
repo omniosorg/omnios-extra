@@ -61,9 +61,8 @@ for v in $PGVERSIONS; do
         SUMMARY=${SUMMARY/XX/$v} \
         DESC=${DESC/XX/$v} \
         make_package
+    clean_up
 done
-
-clean_up
 
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker
