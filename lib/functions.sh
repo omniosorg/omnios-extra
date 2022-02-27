@@ -2164,9 +2164,12 @@ make_clean() {
         CLEAN_SOURCE=
         return
     fi
+
+    eval set -- $MAKE_CLEAN_ARGS_WS
     logmsg "--- make (dist)clean"
     (
-        $MAKE distclean || $MAKE clean
+        $MAKE $MAKE_CLEAN_ARGS "$@" distclean \
+            || $MAKE $MAKE_CLEAN_ARGS "$@" clean
     ) 2>&1 | sed 's/error: /errorclean: /' | pipelog >/dev/null
 }
 
