@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=cyrus-sasl
-VER=2.1.27
+VER=2.1.28
 PKG=ooce/library/security/libsasl2
 SUMMARY="Simple Authentication and Security Layer (SASL)"
 DESC="$SUMMARY shared library and plugins"
