@@ -4,4 +4,4 @@ reorder_includes.patch
 08-dtrace-invalid-conversion.patch
 auth_socket.diff
 cfi.patch
-mariadb_config.patch
+openssl3.patch
