@@ -16,33 +16,50 @@
 
 . ../../lib/build.sh
 
-PROG=citus
-PKG=ooce/database/postgresql-XX/citus
-VER=10.2.4
-SUMMARY="Citus PostgreSQL XX extension"
-DESC="Transforms PostgreSQL XX into a distributed database"
+PROG=mysql_fdw
+PKG=ooce/database/postgresql-XX/mysql_fdw
+VER=2.7.0
+SUMMARY="MySQL PostgreSQL XX foreign data wrapper"
+DESC="Allow PostgreSQL XX to access data in a MySQL database"
 
 PGVERSIONS="13 14"
 
-DEF_BUILD_DEPENDS_IPS="ooce/library/postgresql-XX"
-DEF_RUN_DEPENDS_IPS="ooce/database/postgresql-XX"
+DEF_RUN_DEPENDS_IPS="
+ooce/database/postgresql-XX
+ooce/library/mariadb-${MARIASQLVER//./}
+"
 
 OPREFIX=$PREFIX
 OPATH=$PATH
 
 set_arch 64
+set_builddir mysql_fdw-REL-${VER//./_}
 
-SKIP_LICENCES=AGPLv3
+SKIP_LICENCES=modified-BSD
 
-# lz4 was in omnios-extra until 151035
-if [ $RELVER -lt 151035 ]; then
-    CFLAGS+=" -I$OPREFIX/include"
-    LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
-fi
+# No configure
+configure64() { :; }
 
+MAKE_ARGS="
+USE_PGXS=1
+MYSQL_LIBNAME=$OPREFIX/mariadb-$MARIASQLVER/lib/$ISAPART64/libmysqlclient.so
+"
+
+MAKE_INSTALL_ARGS="
+USE_PGXS=1
+"
+
+MAKE_CLEAN_ARGS="
+USE_PGXS=1
+"
+
+BUILD_DEPENDS_IPS="ooce/library/mariadb-${MARIASQLVER//./}"
+for v in $PGVERSIONS; do
+    BUILD_DEPENDS_IPS+=" ooce/library/postgresql-$v"
+done
 
 init
-download_source $PROG v$VER
+download_source $PROG REL-${VER//./_}
 patch_source
 
 for v in $PGVERSIONS; do
@@ -51,10 +68,6 @@ for v in $PGVERSIONS; do
     # Make sure the right pg_config is used.
     export PATH="$PREFIX/bin:$OPATH"
 
-    reset_configure_opts
-    BUILD_DEPENDS_IPS=${DEF_RUN_DEPENDS_IPS/XX/$v} \
-
-    prep_build
     build
     PKG=${PKG/XX/$v} \
         RUN_DEPENDS_IPS=${DEF_RUN_DEPENDS_IPS/XX/$v} \
