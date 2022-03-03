@@ -67,7 +67,7 @@ for v in $PGVERSIONS; do
             -DMEDIATOR=postgresql -DMEDIATOR_VERSION=$v
             -DVERSION=$v
             -DsVERSION=$v
-        "
+        " \
         make_package
     clean_up
 done
