@@ -1,5 +1,3 @@
-#!/usr/bin/bash
-#
 # {{{ CDDL HEADER
 #
 # This file and its contents are supplied under the terms of the
@@ -14,32 +12,17 @@
 
 # Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/build.sh
+PGVERSIONS="13 14"
 
-PROG=bat
-VER=0.20.0
-PKG=ooce/util/bat
-SUMMARY="A cat clone with wings"
-DESC="A cat(1) clone with syntax highlighting and Git integration."
-
-BUILD_DEPENDS_IPS="
-    ooce/developer/rust
-"
+for v in $PGVERSIONS; do
+    BUILD_DEPENDS_IPS+=" ooce/library/postgresql-$v"
+done
+DEF_RUN_DEPENDS_IPS="ooce/database/postgresql-XX"
 
 set_arch 64
 
-# ansi_colours wants gnu-ar
-export AR="$USRBIN/gar"
-
-init
-download_source $PROG v$VER
-patch_source
-prep_build
-build_rust
-install_rust
-strip_install
-make_package
-clean_up
+OPREFIX=$PREFIX
+OPATH=$PATH
 
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker

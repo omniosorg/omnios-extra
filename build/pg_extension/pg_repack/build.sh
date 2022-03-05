@@ -14,35 +14,23 @@
 
 # Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/build.sh
+. ../../../lib/build.sh
 
-PROG=citus
-PKG=ooce/database/postgresql-XX/citus
-VER=10.2.4
-SUMMARY="Citus PostgreSQL XX extension"
-DESC="Transforms PostgreSQL XX into a distributed database"
+PROG=pg_repack
+PKG=ooce/database/postgresql-XX/pg_repack
+VER=1.4.7
+SUMMARY="PostgreSQL XX online table repacking extension"
+DESC="Reorganize tables in PostgreSQL XX databases with minimal locks"
 
-PGVERSIONS="13 14"
+. $SRCDIR/../common.sh
 
-DEF_BUILD_DEPENDS_IPS="ooce/library/postgresql-XX"
-DEF_RUN_DEPENDS_IPS="ooce/database/postgresql-XX"
+set_builddir pg_repack-ver_$VER
 
-OPREFIX=$PREFIX
-OPATH=$PATH
-
-set_arch 64
-
-SKIP_LICENCES=AGPLv3
-
-# lz4 was in omnios-extra until 151035
-if [ $RELVER -lt 151035 ]; then
-    CFLAGS+=" -I$OPREFIX/include"
-    LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
-fi
-
+# No configure
+configure64() { :; }
 
 init
-download_source $PROG v$VER
+download_source $PROG ver_$VER
 patch_source
 
 for v in $PGVERSIONS; do
@@ -51,15 +39,21 @@ for v in $PGVERSIONS; do
     # Make sure the right pg_config is used.
     export PATH="$PREFIX/bin:$OPATH"
 
-    reset_configure_opts
-    BUILD_DEPENDS_IPS=${DEF_RUN_DEPENDS_IPS/XX/$v} \
-
     prep_build
     build
     PKG=${PKG/XX/$v} \
         RUN_DEPENDS_IPS=${DEF_RUN_DEPENDS_IPS/XX/$v} \
         SUMMARY=${SUMMARY/XX/$v} \
         DESC=${DESC/XX/$v} \
+        XFORM_ARGS="
+            -DPREFIX=${PREFIX#/}
+            -DOPREFIX=${OPREFIX#/}
+            -DPROG=$PROG
+            -DPKGROOT=pgsql-$v
+            -DMEDIATOR=postgresql -DMEDIATOR_VERSION=$v
+            -DVERSION=$v
+            -DsVERSION=$v
+        " \
         make_package
     clean_up
 done

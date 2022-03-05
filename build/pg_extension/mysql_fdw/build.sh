@@ -14,7 +14,7 @@
 
 # Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/build.sh
+. ../../../lib/build.sh
 
 PROG=mysql_fdw
 PKG=ooce/database/postgresql-XX/mysql_fdw
@@ -22,17 +22,11 @@ VER=2.7.0
 SUMMARY="MySQL PostgreSQL XX foreign data wrapper"
 DESC="Allow PostgreSQL XX to access data in a MySQL database"
 
-PGVERSIONS="13 14"
+. $SRCDIR/../common.sh
 
-DEF_RUN_DEPENDS_IPS="
-ooce/database/postgresql-XX
-ooce/library/mariadb-${MARIASQLVER//./}
-"
+BUILD_DEPENDS_IPS+=" ooce/library/mariadb-${MARIASQLVER//./}"
+DEF_RUN_DEPENDS_IPS+=" ooce/library/mariadb-${MARIASQLVER//./}"
 
-OPREFIX=$PREFIX
-OPATH=$PATH
-
-set_arch 64
 set_builddir mysql_fdw-REL-${VER//./_}
 
 SKIP_LICENCES=modified-BSD
@@ -41,22 +35,11 @@ SKIP_LICENCES=modified-BSD
 configure64() { :; }
 
 MAKE_ARGS="
-USE_PGXS=1
-MYSQL_LIBNAME=$OPREFIX/mariadb-$MARIASQLVER/lib/$ISAPART64/libmysqlclient.so
+    USE_PGXS=1
+    MYSQL_LIBNAME=$OPREFIX/mariadb-$MARIASQLVER/lib/$ISAPART64/libmysqlclient.so
 "
-
-MAKE_INSTALL_ARGS="
-USE_PGXS=1
-"
-
-MAKE_CLEAN_ARGS="
-USE_PGXS=1
-"
-
-BUILD_DEPENDS_IPS="ooce/library/mariadb-${MARIASQLVER//./}"
-for v in $PGVERSIONS; do
-    BUILD_DEPENDS_IPS+=" ooce/library/postgresql-$v"
-done
+MAKE_INSTALL_ARGS="USE_PGXS=1"
+MAKE_CLEAN_ARGS="USE_PGXS=1"
 
 init
 download_source $PROG REL-${VER//./_}
@@ -68,6 +51,7 @@ for v in $PGVERSIONS; do
     # Make sure the right pg_config is used.
     export PATH="$PREFIX/bin:$OPATH"
 
+    prep_build
     build
     PKG=${PKG/XX/$v} \
         RUN_DEPENDS_IPS=${DEF_RUN_DEPENDS_IPS/XX/$v} \

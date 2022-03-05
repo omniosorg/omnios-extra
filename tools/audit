@@ -131,7 +131,7 @@ add_target()
                 pkg=
                 ;;
             */postgresql-XX/*:*)
-                pver=`grep '^PGVERSIONS=' $build | cut -d= -f2 \
+                pver=`grep '^PGVERSIONS=' $dir/../common.sh | cut -d= -f2 \
                     | cut -d '"' -f2`
                 for p in $pver; do
                     targets[${pkg/XX/${p//./}}]=$ver
@@ -213,8 +213,8 @@ fetch_branches()
 
 audit()
 {
-    pkgs=30
-    vers=15
+    pkgs=32
+    vers=12
     printf "%-${pkgs}s %${vers}s %${vers}s %${vers}s %${vers}s %${vers}s\n" \
         Package Version "${branches[@]}"
     printf "%-${pkgs}s %${vers}s %${vers}s %${vers}s %${vers}s %${vers}s\n" \
