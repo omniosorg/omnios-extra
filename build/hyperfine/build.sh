@@ -12,16 +12,17 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 # Copyright 2020 Stephen Gregoratto
 
 . ../../lib/build.sh
 
 PROG=hyperfine
-VER=1.12.0
+VER=1.13.0
 PKG=ooce/util/hyperfine
 SUMMARY="benchmarking tool"
-DESC="$PROG is a command-line benchmarking tool that provides statistics about command execution time."
+DESC="$PROG is a command-line benchmarking tool that provides "
+DESC+="statistics about command execution time."
 
 BUILD_DEPENDS_IPS=ooce/developer/rust
 

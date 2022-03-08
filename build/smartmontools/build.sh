@@ -12,16 +12,17 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=smartmontools
-VER=7.2
-VERHUMAN=$VER
+VER=7.3
 PKG=ooce/system/smartmontools
 SUMMARY="smartmontools"
 DESC="Control and monitor storage systems using SMART"
+
+[ $RELVER -ge 151041 ] && set_clangver
 
 RUN_DEPENDS_IPS=ooce/security/gnupg
 
