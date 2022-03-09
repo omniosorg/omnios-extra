@@ -24,8 +24,6 @@ DESC="dnsmasq is a lightweight, easy to configure DNS forwarder, designed to "
 DESC+="provide DNS (and optionally DHCP and TFTP) services to a small-scale network."
 
 set_arch 64
-set_mirror 'https://thekelleys.org.uk/'
-set_checksum sha256 '28d52cfc9e2004ac4f85274f52b32e1647b4dbc9761b82e7de1e41c49907eb08'
 
 BASEDIR=$PREFIX/$PROG
 CONFFILE=/etc$BASEDIR/$PROG.conf
@@ -41,8 +39,21 @@ copy_sample_config() {
         || logerr "copying configs failed"
 }
 
-# No configure
-configure64() { :; }
+configure64() {
+    MAKE_ARGS_WS="
+        CC=$CC
+        CFLAGS=\"-DNO_IPSET $CFLAGS $CFLAGS64\"
+        LDFLAGS=\"$LDFLAGS $LDFLAGS64\"
+        PREFIX=$PREFIX
+        MANDIR=$PREFIX/share/man
+        sunos_libs=\"-lnsl -lsocket\"
+    "
+
+    MAKE_INSTALL_ARGS_WS="
+        PREFIX=$PREFIX
+        MANDIR=$PREFIX/share/man
+    "
+}
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -54,20 +65,6 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-MAKE_ARGS_WS="
-    CC=$CC
-    CFLAGS=\"-DNO_IPSET $CFLAGS $CFLAGS64 $CTF_CFLAGS\"
-    LDFLAGS=\"$LDFLAGS $LDFLAGS64\"
-    PREFIX=$PREFIX
-    MANDIR=$PREFIX/share/man
-    sunos_libs=\"-lnsl -lsocket\"
-"
-
-MAKE_INSTALL_ARGS_WS="
-    PREFIX=$PREFIX
-    MANDIR=$PREFIX/share/man
-"
-
 init
 download_source "$PROG" "$PROG" "$VER"
 patch_source
@@ -75,7 +72,7 @@ prep_build
 build
 copy_sample_config
 xform files/$PROG.xml > $TMPDIR/$PROG.xml
-install_smf network $PROG.xml
+install_smf ooce $PROG.xml
 make_package
 clean_up
 

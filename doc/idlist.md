@@ -28,6 +28,7 @@
 | extra		| 53	| named
 | extra		| 54	| unbound
 | extra		| 55	| nsd
+| extra		| 56	| dnsmasq
 | illumos	| 60	| xvm
 | extra		| 67	| znc
 | extra		| 68	| clamav
@@ -87,6 +88,7 @@
 | extra		| 53	| named
 | extra		| 54	| unbound
 | extra		| 55	| nsd
+| extra		| 56	| dnsmasq
 | illumos	| 60	| xvm
 | illumos	| 65	| netadm
 | extra		| 67	| znc

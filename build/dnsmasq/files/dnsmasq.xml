@@ -14,15 +14,13 @@
     Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 -->
 <service_bundle type="manifest"
-                name="network:dnsmasq">
+                name="network:dns:dnsmasq">
 
-    <service name="network/dnsmasq"
+        <service name="network/dns/dnsmasq"
              type="service"
              version="1">
 
         <create_default_instance enabled="false" />
-
-        <single_instance />
 
         <dependency name="network"
                     grouping="require_all"
