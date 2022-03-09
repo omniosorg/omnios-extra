@@ -1,0 +1,13 @@
+diff -wpruN '--exclude=*.orig' a~/src/bpf.c a/src/bpf.c
+--- a~/src/bpf.c.orig	2022-03-07 00:00:00.000000000 +0000
++++ a/src/bpf.c	2022-03-07 00:00:00.000000000 +0000
+@@ -31,7 +31,9 @@
+ #  include <net/if_var.h> 
+ #endif
+ #include <netinet/in_var.h>
++#if defined(HAVE_BSD_NETWORK)
+ #include <netinet6/in6_var.h>
++#endif
+ 
+ #ifndef SA_SIZE
+ #define SA_SIZE(sa)                                             \

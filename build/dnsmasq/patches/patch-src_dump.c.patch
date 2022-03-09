@@ -1,0 +1,13 @@
+diff -wpruN '--exclude=*.orig' a~/src/dump.c a/src/dump.c
+--- a~/src/dump.c.orig	2022-03-07 00:00:00.000000000 +0000
++++ a/src/dump.c	2022-03-07 00:00:00.000000000 +0000
+@@ -148,6 +148,9 @@ void dump_packet(int mask, void *packet,
+       ip.ip_v = IPVERSION;
+       ip.ip_hl = sizeof(struct ip) / 4;
+       ip.ip_len = htons(sizeof(struct ip) + sizeof(struct udphdr) + len); 
++#ifndef IPDEFTTL
++#define IPDEFTTL	64
++#endif
+       ip.ip_ttl = IPDEFTTL;
+       ip.ip_p = IPPROTO_UDP;
+       
