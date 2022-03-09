@@ -152,6 +152,7 @@ extra.omnios ooce/network/bind-918
 extra.omnios ooce/network/bind-common
 extra.omnios ooce/network/bwm-ng
 extra.omnios ooce/network/cyrus-imapd
+extra.omnios ooce/network/dnscrypt-proxy
 extra.omnios ooce/network/dnsmasq
 extra.omnios ooce/network/fping
 extra.omnios ooce/network/irssi
