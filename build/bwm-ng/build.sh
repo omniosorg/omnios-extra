@@ -18,16 +18,15 @@
 
 PROG=bwm-ng
 VER=0.6.3
-PKG=ooce/network/$PROG
+PKG=ooce/network/bwm-ng
 SUMMARY="CLI network and disk io monitor"
 DESC="small and simple console-based live network and disk io bandwidth monitor"
 
 set_arch 64
-set_mirror "$GITHUB/vgropp/$PROG/archive"
-set_checksum "none"
 
 init
-download_source v$VER $PROG $VER
+download_source $PROG v$VER
+patch_source
 prep_build
 run_inbuild "./autogen.sh"
 build
