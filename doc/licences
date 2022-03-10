@@ -26,5 +26,7 @@ BSD			Redistribution and use in source and binary forms, with or without(?s).*mo
 modified-BSD		Redistribution and use in source and binary forms, with or without(?s).*modification,.*are(?-s) permitted provided that the following(?s).*conditions.*are.*met:.*(?-s)[1\*#]?\.? ?Redistributions of source code must retain(?s:.)*[2\*#]?\.? ?Redistributions in binary form must reproduce(?s:.)*[3\*#]?\.? ?(Neither )?[Tt]he names? of (?s).*prior.*written.*permission\. *(?-s)\n.*\n.*THIS SOFTWARE
 # The simplified 2-clause BSD licence
 simplified-BSD		Redistribution and use in source and binary forms, with or without(?s).*modification,.*are(?-s) permitted provided that the following(?s).*conditions.*are.*met:.*(?-s)[1\*#]\.? Redistributions of source code must retain(?s:.)*[2\*#]\.? Redistributions in binary form must reproduce(?s).*provided.*(by|with).*the.* distribution\.(?-s)\n.*\n.*THIS SOFTWARE
-#
+# Eclipse
 EPLv2			Eclipse Public License - v 2.0
+# ISC
+ISC			^ISC (?i)License(?-i)
