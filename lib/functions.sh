@@ -1439,6 +1439,7 @@ generate_manifest() {
         [ $RELVER -ge 151033 -a -z "$SKIP_RTIME_CHECK" ] && check_rtime
         [ $RELVER -ge 151037 -a -z "$SKIP_SSP_CHECK" ] && check_ssp
     fi
+    check_soname
     check_bmi
     logmsg "--- Generating package manifest from $DESTDIR"
     typeset GENERATE_ARGS=
@@ -2869,8 +2870,16 @@ rtime_files() {
 }
 
 rtime_objects() {
+    typeset -i full=0
+    [ "$1" = -f ] && full=1 && shift
     rtime_files "$@"
-    nawk '/^OBJECT/ { print $NF }' $TMPDIR/rtime.files
+    if ((full)); then
+        # OBJECT 32 DYN  NOVERDEF <path>
+        # -> <path> <type> <bits>
+        nawk '/^OBJECT/ { print $NF, $3, $2 }' $TMPDIR/rtime.files
+    else
+        nawk '/^OBJECT/ { print $NF }' $TMPDIR/rtime.files
+    fi
 }
 
 strip_install() {
@@ -2982,6 +2991,43 @@ check_ssp() {
     if [ -s "$TMPDIR/rtime.ssp" ]; then
         cat $TMPDIR/rtime.ssp | tee -a $LOGFILE
         logerr "Found object(s) without SSP"
+    fi
+}
+
+check_soname() {
+    # Use with caution, shipped libraries should almost always be properly
+    # versioned
+    [ -n "$NO_SONAME_EXPECTED" ] && return
+
+    logmsg "-- Checking for SONAME"
+    typeset if=$SRCDIR/files/soname.ignore
+    [ -f "$if" ] || if=
+    : > $TMPDIR/rtime.soname
+    while read obj type _; do
+        [ -f "$DESTDIR/$obj" ] || continue
+        case $type in
+            EXEC)
+                if $ELFEDIT -re 'dyn:tag needed' "$DESTDIR/$obj" \
+                    | egrep 'NEEDED.*\.so$'; then
+                    if [ -z "$if" ] || ! egrep -s "^${obj#/}\$" $if; then
+                        echo "$obj has an unqualified dependency" \
+                            >> $TMPDIR/rtime.soname
+                    fi
+                fi ;;
+            DYN)
+                if ! $ELFEDIT -re 'dyn:tag soname' "$DESTDIR/$obj" \
+                    >/dev/null 2>&1; then
+                    if [ -z "$if" ] || ! egrep -s "^${obj#/}\$" $if; then
+                        echo "$obj is missing an SONAME" \
+                            >> $TMPDIR/rtime.soname
+                    fi
+                fi ;;
+        esac &
+        parallelise $LCPUS
+    done < <(rtime_objects -f)
+    if [ -s "$TMPDIR/rtime.soname" ]; then
+        cat $TMPDIR/rtime.soname | tee -a $LOGFILE
+        logerr "Found SONAME problems"
     fi
 }
 
