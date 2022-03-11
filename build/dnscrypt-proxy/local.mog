@@ -8,8 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
-
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 group groupname=$(GROUP) gid=57
 user ftpuser=false username=$(USER) uid=57 group=$(GROUP) \
@@ -19,7 +18,7 @@ user ftpuser=false username=$(USER) uid=57 group=$(GROUP) \
 dir group=$(GROUP) mode=0770 owner=$(USER) path=var/$(BASEDIR)
 
 <transform file path=etc/ -> set preserve renamenew>
-<transform file path=$(PREFIX)/sbin -> \
+<transform file path=$(PREFIX)/bin -> \
     set restart_fmri svc:/network/dns/$(PROG):default >
 
 license LICENSE license=ISC
