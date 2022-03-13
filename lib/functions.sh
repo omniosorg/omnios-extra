@@ -459,6 +459,8 @@ set_gover() {
     BMI_EXPECTED=1
     # skip rtime check for go builds
     SKIP_RTIME_CHECK=1
+    # skip SSP check for go builds
+    SKIP_SSP_CHECK=1
     export PATH GOROOT_BOOTSTRAP
 
     BUILD_DEPENDS_IPS+=" ooce/developer/go-${GOVER//./}"
