@@ -1438,8 +1438,8 @@ generate_manifest() {
     if [ -z "$BATCH" ]; then
         [ $RELVER -ge 151033 -a -z "$SKIP_RTIME_CHECK" ] && check_rtime
         [ $RELVER -ge 151037 -a -z "$SKIP_SSP_CHECK" ] && check_ssp
+        check_soname
     fi
-    check_soname
     check_bmi
     logmsg "--- Generating package manifest from $DESTDIR"
     typeset GENERATE_ARGS=
