@@ -3027,6 +3027,7 @@ check_soname() {
         esac &
         parallelise $LCPUS
     done < <(rtime_objects -f)
+    wait
     if [ -s "$TMPDIR/rtime.soname" ]; then
         cat $TMPDIR/rtime.soname | tee -a $LOGFILE
         logerr "Found SONAME problems"
