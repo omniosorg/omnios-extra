@@ -47,6 +47,7 @@ ok - fs_chmod
 ok - fs_chown
 ok - fs_copyfile
 ok - fs_event_close_in_callback
+ok - fs_event_close_with_pending_delete_event
 ok - fs_event_close_with_pending_event
 ok - fs_event_error_reporting
 ok - fs_event_getpath
@@ -143,7 +144,6 @@ ok - ip6_addr_link_local
 ok - ip6_pton
 ok - ip6_sin6_len
 ok - ip_name
-ok - ipc_closed_handle
 ok - ipc_heavy_traffic_deadlock_bug
 ok - ipc_listen_after_write
 ok - ipc_listen_before_write
@@ -233,6 +233,7 @@ ok - spawn_auto_unref
 ok - spawn_closed_process_io
 ok - spawn_detached
 ok - spawn_empty_env # SKIP doesn't work with DYLD_LIBRARY_PATH/LD_LIBRARY_PATH/LIBPATH
+ok - spawn_exercise_sigchld_issue
 ok - spawn_exit_code
 ok - spawn_fails
 ok - spawn_fails_check_for_waitpid_cleanup
