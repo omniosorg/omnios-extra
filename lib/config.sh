@@ -187,6 +187,7 @@ GNUBIN=/usr/gnu/bin
 AWK=$USRBIN/gawk
 CURL=$USRBIN/curl
 EGREP=$USRBIN/egrep
+ELFEDIT=$USRBIN/elfedit
 GIT=$USRBIN/git
 MAKE=$USRBIN/gmake
 PATCH=$USRBIN/gpatch
