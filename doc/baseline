@@ -57,11 +57,9 @@ extra.omnios ooce/database/rrdtool
 extra.omnios ooce/developer/autoconf-archive
 extra.omnios ooce/developer/autogen
 extra.omnios ooce/developer/ccache
-extra.omnios ooce/developer/clang-120
 extra.omnios ooce/developer/clang-13
 extra.omnios ooce/developer/clang-130 r
 extra.omnios ooce/developer/cmake
-extra.omnios ooce/developer/compiler-rt-120
 extra.omnios ooce/developer/cscope
 extra.omnios ooce/developer/cunit
 extra.omnios ooce/developer/dejagnu
@@ -72,7 +70,6 @@ extra.omnios ooce/developer/go-116
 extra.omnios ooce/developer/go-117
 extra.omnios ooce/developer/gperf
 extra.omnios ooce/developer/gyp
-extra.omnios ooce/developer/llvm-120
 extra.omnios ooce/developer/llvm-13
 extra.omnios ooce/developer/llvm-130 r
 extra.omnios ooce/developer/ninja
