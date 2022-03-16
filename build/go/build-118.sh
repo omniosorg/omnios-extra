@@ -17,14 +17,14 @@
 . ../../lib/build.sh
 
 PROG=go
-PKG=ooce/developer/go-116
-VER=1.16.15
+PKG=ooce/developer/go-118
+VER=1.18
 SUMMARY="The Go Programming Language"
 DESC="An open source programming language that makes it easy to build simple, "
 DESC+="reliable, and efficient software."
 
 set_arch 64
-set_gover 1.16
+set_gover 1.17
 set_builddir $PROG
 
 MAJVER=`echo $VER | perl -pe '($_) = /(\d+\.\d+)/'`
