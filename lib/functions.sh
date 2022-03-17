@@ -3000,6 +3000,7 @@ check_soname() {
     # Use with caution, shipped libraries should almost always be properly
     # versioned
     [ -n "$NO_SONAME_EXPECTED" ] && return
+    [ "$GOOS/$GOARCH" = "illumos/amd64" ] && return
 
     logmsg "-- Checking for SONAME"
     typeset if=$SRCDIR/files/soname.ignore
