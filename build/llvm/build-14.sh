@@ -12,23 +12,30 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=llvm
-PKG=ooce/developer/llvm-120
-VER=12.0.1
+PKG=ooce/developer/llvm-14
+VER=14.0.0rc4
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 
+if [ $RELVER -lt 151041 ]; then
+    logmsg "--- $PKG is not built for r$RELVER"
+    exit 0
+fi
+
 set_arch 64
-set_builddir $PROG-$VER.src
+set_clangver
+set_builddir $PROG-project-$VER.src/$PROG
 
 SKIP_RTIME_CHECK=1
+NO_SONAME_EXPECTED=1
 
-MAJVER=${VER%.*}
-set_patchdir patches-${MAJVER//./}
+MAJVER=${VER%%.*}
+set_patchdir patches-$MAJVER
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
@@ -44,10 +51,11 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS_64=
 CONFIGURE_OPTS_WS_64="
-    -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_C_COMPILER=\"$CC\"
     -DCMAKE_CXX_COMPILER=\"$CXX\"
+    -DCMAKE_C_LINK_FLAGS=\"$LDFLAGS64\"
     -DCMAKE_CXX_LINK_FLAGS=\"$LDFLAGS64\"
     -DLLVM_BUILD_LLVM_DYLIB=ON
     -DLLVM_INCLUDE_BENCHMARKS=OFF
@@ -56,12 +64,13 @@ CONFIGURE_OPTS_WS_64="
 "
 
 init
-download_source $PROG $PROG $VER.src
+download_source $PROG $PROG-project $VER.src
 patch_source
 prep_build cmake+ninja
 build -noctf    # C++
 strip_install
-make_package
+VERHUMAN=$VER
+VER=${VER%rc*} make_package
 clean_up
 
 # Vim hints

@@ -415,9 +415,9 @@ set_clangver() {
     CLANGVER="${1:-$DEFAULT_CLANG_VER}"
     [ -z "$2" ] && logmsg "-- Setting clang version to $CLANGVER"
     CLANGPATH="/opt/ooce/llvm-$CLANGVER"
-    CC="$CLANGPATH/bin/clang"
-    CXX="$CLANGPATH/bin/clang++"
-    [ -x "$CC" ] || logerr "Unknown compiler version $CLANGVER"
+    CC="clang"
+    CXX="clang++"
+    [ -x "$CLANGPATH/bin/$CC" ] || logerr "Unknown compiler version $CLANGVER"
     PATH="$CLANGPATH/bin:$BASEPATH"
     if [ -n "$USE_CCACHE" ]; then
         [ -x $CCACHE_PATH/ccache ] || logerr "Ccache is not installed"

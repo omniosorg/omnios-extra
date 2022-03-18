@@ -18,7 +18,6 @@ depend fmri=ooce/developer/freepascal type=require
 depend fmri=ooce/developer/gdb type=require
 depend fmri=ooce/developer/go-117 type=require
 depend fmri=ooce/developer/gperf type=require
-depend fmri=ooce/developer/llvm-120 type=require
 depend fmri=ooce/developer/subversion type=require
 depend fmri=ooce/editor/emacs type=require
 depend fmri=ooce/fonts/liberation type=require
@@ -99,4 +98,8 @@ depend fmri=ooce/developer/llvm-13 type=conditional \
 # some packages use clang to build from r151038 onwards
 depend fmri=ooce/developer/clang-13 type=conditional \
     predicate=release/name@0.5.11-151038
+
+# Added llvm/clang 14 from r151041 onwards
+depend fmri=ooce/developer/llvm-14 type=conditional \
+    predicate=release/name@0.5.11-151041
 
