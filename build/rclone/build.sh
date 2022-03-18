@@ -24,11 +24,7 @@ DESC="A command line program to sync files and directories to and from "
 DESC+="different cloud storage providers"
 
 set_arch 64
-set_gover 1.17
-
-GOOS=illumos
-GOARCH=amd64
-export GOOS GOARCH
+set_gover
 
 XFORM_ARGS="-DPROG=$PROG"
 

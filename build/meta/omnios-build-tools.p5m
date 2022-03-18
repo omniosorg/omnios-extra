@@ -32,7 +32,8 @@ depend fmri=ooce/developer/dejagnu type=conditional \
     predicate=release/name@0.5.11-151030
 
 # Required to run the bison testsuite
-depend type=require-any fmri=ooce/runtime/ruby-26 fmri=ooce/runtime/ruby-27
+depend type=require-any fmri=ooce/runtime/ruby-27 fmri=ooce/runtime/ruby-30 \
+    fmri=ooce/runtime/ruby-31
 
 # Required to build openjdk11 from r151035 onwards
 depend fmri=ooce/x11/header/x11-protocols type=conditional \

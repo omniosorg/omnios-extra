@@ -24,7 +24,7 @@ DESC="A flexible DNS proxy, with support for modern encrypted DNS protocols"
 DESC+=" such as DNSCrypt v2 and DNS-over-HTTP/2."
 
 set_arch 64
-set_gover 1.17
+set_gover
 
 BASEDIR=$PREFIX/$PROG
 CONFFILE=/etc$BASEDIR/$PROG.conf
@@ -39,10 +39,6 @@ XFORM_ARGS="
     -DGROUP=dnscrypt
     -DPROG=$PROG
 "
-
-GOOS=illumos
-GOARCH=amd64
-export GOOS GOARCH
 
 build() {
     pushd $TMPDIR/$BUILDDIR/$PROG > /dev/null

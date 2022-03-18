@@ -450,18 +450,20 @@ set_opensslver() {
 #############################################################################
 
 set_gover() {
-    GOVER="$1"
+    GOVER="${1:-$DEFAULT_GO_VER}"
     logmsg "-- Setting Go version to $GOVER"
     GO_PATH="/opt/ooce/go-$GOVER"
     PATH="$GO_PATH/bin:$PATH"
     GOROOT_BOOTSTRAP="$GO_PATH"
+    GOOS=illumos
+    GOARCH=amd64
     # go binaries contain BMI instructions even when built on an older CPU
     BMI_EXPECTED=1
     # skip rtime check for go builds
     SKIP_RTIME_CHECK=1
     # skip SSP check for go builds
     SKIP_SSP_CHECK=1
-    export PATH GOROOT_BOOTSTRAP
+    export PATH GOROOT_BOOTSTRAP GOOS GOARCH
 
     BUILD_DEPENDS_IPS+=" ooce/developer/go-${GOVER//./}"
 }
@@ -471,7 +473,7 @@ set_gover() {
 #############################################################################
 
 set_nodever() {
-    NODEVER="$1"
+    NODEVER="${1:-$DEFAULT_NODE_VER}"
     logmsg "-- Setting node.js version to $NODEVER"
     NODEPATH="/opt/ooce/node-$NODEVER"
     PATH="$NODEPATH/bin:$PATH"
@@ -485,7 +487,7 @@ set_nodever() {
 #############################################################################
 
 set_rubyver() {
-    RUBYVER="$1"
+    RUBYVER="${1:-$DEFAULT_RUBY_VER}"
     logmsg "-- Setting Ruby version to $RUBYVER"
     RUBYPATH="/opt/ooce/ruby-$RUBYVER"
     PATH="$RUBYPATH/bin:$PATH"
