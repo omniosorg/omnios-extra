@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/configure a/configure
 --- a~/configure	1970-01-01 00:00:00
 +++ a/configure	1970-01-01 00:00:00
-@@ -72801,6 +72801,7 @@ printf "%s\n" "#define ANC_CREDS_CMSGCRE
+@@ -72804,6 +72804,7 @@ printf "%s\n" "#define ANC_CREDS_CMSGCRE
    case $host_alias in
    *darwin*) PHP_SOCKETS_CFLAGS="$PHP_SOCKETS_CFLAGS -D__APPLE_USE_RFC_3542"
    esac
@@ -12,7 +12,7 @@ diff -wpruN '--exclude=*.orig' a~/configure a/configure
 diff -wpruN '--exclude=*.orig' a~/ext/sockets/config.m4 a/ext/sockets/config.m4
 --- a~/ext/sockets/config.m4	1970-01-01 00:00:00
 +++ a/ext/sockets/config.m4	1970-01-01 00:00:00
-@@ -94,6 +94,7 @@ if test "$PHP_SOCKETS" != "no"; then
+@@ -97,6 +97,7 @@ if test "$PHP_SOCKETS" != "no"; then
    case $host_alias in
    *darwin*) PHP_SOCKETS_CFLAGS="$PHP_SOCKETS_CFLAGS -D__APPLE_USE_RFC_3542"
    esac
