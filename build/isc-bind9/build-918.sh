@@ -18,7 +18,7 @@
 . ../../lib/build.sh
 
 PROG=bind
-VER=9.18.0
+VER=9.18.1
 PKG=ooce/network/bind-918
 SUMMARY="ISC BIND DNS Server & Tools"
 DESC="Server & Client Utilities for DNS"
@@ -35,6 +35,9 @@ RUN_DEPENDS_IPS="
 
 set_arch 64
 set_standard XPG4v2 CFLAGS
+
+# configure complains about make not being GNU make
+export MAKE
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
