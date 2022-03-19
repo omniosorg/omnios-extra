@@ -8,7 +8,7 @@ Drops extra privilege which was given via SMF manifest file.
 diff -wpruN '--exclude=*.orig' a~/server/main.c a/server/main.c
 --- a~/server/main.c	1970-01-01 00:00:00
 +++ a/server/main.c	1970-01-01 00:00:00
-@@ -45,6 +45,8 @@
+@@ -46,6 +46,8 @@
  #include <unistd.h>
  #endif
  
@@ -17,7 +17,7 @@ diff -wpruN '--exclude=*.orig' a~/server/main.c a/server/main.c
  /* WARNING: Win32 binds http_main.c dynamically to the server. Please place
   *          extern functions and global data in another appropriate module.
   *
-@@ -480,6 +482,7 @@ int main(int argc, const char * const ar
+@@ -502,6 +504,7 @@ int main(int argc, const char * const ar
      apr_status_t rv;
      module **mod;
      const char *opt_arg;
@@ -25,7 +25,7 @@ diff -wpruN '--exclude=*.orig' a~/server/main.c a/server/main.c
      APR_OPTIONAL_FN_TYPE(ap_signal_server) *signal_server;
      int rc = OK;
  
-@@ -815,6 +818,21 @@ int main(int argc, const char * const ar
+@@ -837,6 +840,21 @@ int main(int argc, const char * const ar
  
          ap_run_optional_fn_retrieve();
  
