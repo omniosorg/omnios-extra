@@ -26,9 +26,9 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.17
+set_gover
 # gitea 1.11.x requires node.js
-set_nodever 16
+set_nodever
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -41,10 +41,6 @@ RUN_DEPENDS_IPS=developer/versioning/git
 
 # gitea build wants GNU grep from 1.11.x on
 export PATH="$GNUBIN:$PATH"
-
-GOOS=illumos
-GOARCH=amd64
-export GOOS GOARCH
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null

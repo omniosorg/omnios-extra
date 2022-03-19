@@ -23,11 +23,7 @@ SUMMARY="github-cli"
 DESC="The GitHub CLI tool"
 
 set_arch 64
-set_gover 1.17
-
-GOOS=illumos
-GOARCH=amd64
-export GOOS GOARCH
+set_gover
 
 RUN_DEPENDS_IPS="developer/versioning/git"
 

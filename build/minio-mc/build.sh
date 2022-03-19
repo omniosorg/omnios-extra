@@ -25,12 +25,9 @@ DESC+="find etc. It supports filesystems and Amazon S3 compatible cloud "
 DESC+="storage service (AWS Signature v2 and v4)"
 
 set_arch 64
-set_gover 1.17
+set_gover
 
-GOOS=illumos
-GOARCH=amd64
-MC_RELEASE=RELEASE
-export GOOS GOARCH MC_RELEASE
+export MC_RELEASE=RELEASE
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null

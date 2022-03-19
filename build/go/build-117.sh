@@ -24,7 +24,7 @@ DESC="An open source programming language that makes it easy to build simple, "
 DESC+="reliable, and efficient software."
 
 set_arch 64
-set_gover 1.16
+set_gover
 set_builddir $PROG
 
 MAJVER=`echo $VER | perl -pe '($_) = /(\d+\.\d+)/'`

@@ -26,8 +26,8 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.17
-set_nodever 16
+set_gover
+set_nodever
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -35,10 +35,6 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DPKGROOT=$PROG
 "
-
-GOOS=illumos
-GOARCH=amd64
-export GOOS GOARCH
 
 # build expects GNU touch
 export PATH=$GNUBIN:$PATH

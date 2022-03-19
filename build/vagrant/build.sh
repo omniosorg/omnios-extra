@@ -28,8 +28,8 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.17
-set_rubyver 3.0
+set_gover
+set_rubyver
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}

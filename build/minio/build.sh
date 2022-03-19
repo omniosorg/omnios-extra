@@ -24,16 +24,14 @@ DESC="A high Performance Object Storage released under Apache License v2.0. "
 DESC+="It is API compatible with Amazon S3 cloud storage service."
 
 set_arch 64
-set_gover 1.17
+set_gover
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-GOOS=illumos
-GOARCH=amd64
 MINIO_RELEASE=RELEASE
 VERS="`echo $VER | $PERL -pe 's/(T\d\d)-(\d\d)-(\d\dZ)$/\1:\2:\3/'`"
-export GOOS GOARCH MINIO_RELEASE VERS
+export MINIO_RELEASE VERS
 
 BUILD_DEPENDS_IPS="developer/versioning/git"
 

@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.17
+set_gover
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -34,10 +34,6 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DPKGROOT=$PROG
 "
-
-GOOS=illumos
-GOARCH=amd64
-export GOOS GOARCH
 
 build() {
     pushd $TMPDIR/$BUILDDIR >/dev/null
