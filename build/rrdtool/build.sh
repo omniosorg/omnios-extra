@@ -17,32 +17,32 @@
 . ../../lib/build.sh
 
 PROG=rrdtool
-VER=1.7.2
+VER=1.8.0
 PKG=ooce/database/rrdtool
 SUMMARY="Round-Robin Database Tool"
 DESC="High performance data logging and graphing system for time series data."
 
 [ $RELVER -lt 151033 ] && RUN_DEPENDS_IPS+=" runtime/perl-64"
 
-set_arch 64
-
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
+set_arch 64
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS="
     --with-rrd-default-font=LiberationMono-Regular
+    --disable-ruby
 "
-
-reset_configure_opts
-
 CONFIGURE_OPTS_64+="
     --libdir=$PREFIX/lib
+    --with-tcllib=$OPREFIX/tcl/lib
 "
 
 LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
@@ -53,8 +53,6 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-# autoconf used to truncate the python version at 3 characters
-run_autoreconf -fi
 build
 strip_install
 make_package
