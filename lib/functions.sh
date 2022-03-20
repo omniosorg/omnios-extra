@@ -1537,6 +1537,7 @@ make_package() {
     [ -z "$VERHUMAN" ] && VERHUMAN="$VER"
 
     convert_version VER
+    convert_version PVER
 
     if [ -n "$FLAVOR" ]; then
         # We use FLAVOR instead of FLAVORSTR as we don't want the trailing dash
