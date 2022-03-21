@@ -8,16 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
-
-# Symlink binaries
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
-
-# Symlink man pages
-<transform file path=$(PREFIX)/share/man/(man\d)/(.*) -> emit \
-    link path=$(OPREFIX)/share/man/%<1>/%<2> \
-    target=../../../$(PROG)/share/man/%<1>/%<2> >
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 # Drop additional documentation
 <transform path=$(PREFIX)/share/doc -> drop>
@@ -28,6 +19,9 @@
 # Move Perl modules to major version path
 <transform path=$(PREFIX)/lib/perl/((5\.\d+)\.\d+) -> \
     edit path $(PREFIX)/lib/perl/%<1> $(PREFIX)/lib/perl/%<2> >
+
+<include binlink.mog>
+<include manlink.mog>
 
 license LICENSE license=GPLv2
 

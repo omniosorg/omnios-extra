@@ -36,7 +36,7 @@ diff -wpruN '--exclude=*.orig' a~/conf/zabbix_server.conf a/conf/zabbix_server.c
  
  ### Option: DBHost
  #	Database host name.
-@@ -372,6 +373,7 @@ DBUser=zabbix
+@@ -381,6 +382,7 @@ DBUser=zabbix
  # Mandatory: no
  # Default:
  # SNMPTrapperFile=/tmp/zabbix_traps.tmp
@@ -44,7 +44,7 @@ diff -wpruN '--exclude=*.orig' a~/conf/zabbix_server.conf a/conf/zabbix_server.c
  
  ### Option: StartSNMPTrapper
  #	If 1, SNMP trapper process is started.
-@@ -553,7 +555,7 @@ Timeout=4
+@@ -562,7 +564,7 @@ Timeout=4
  #
  # Mandatory: no
  # Default:
@@ -53,7 +53,7 @@ diff -wpruN '--exclude=*.orig' a~/conf/zabbix_server.conf a/conf/zabbix_server.c
  
  ### Option: Fping6Location
  #	Location of fping6.
-@@ -645,15 +647,15 @@ LogSlowQueries=3000
+@@ -654,15 +656,15 @@ LogSlowQueries=3000
  
  ### Option: Include
  #	You may include individual files or all files in a directory in the configuration file.

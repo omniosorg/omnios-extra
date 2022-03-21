@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/m4/libevent.m4 a/m4/libevent.m4
 --- a~/m4/libevent.m4	1970-01-01 00:00:00
 +++ a/m4/libevent.m4	1970-01-01 00:00:00
-@@ -62,7 +62,7 @@ AC_HELP_STRING([--with-libevent@<:@=DIR@
+@@ -64,7 +64,7 @@ AC_HELP_STRING([--with-libevent@<:@=DIR@
  
  	AC_MSG_CHECKING(for libevent support)
  
@@ -13,7 +13,7 @@ diff -wpruN '--exclude=*.orig' a~/m4/libevent.m4 a/m4/libevent.m4
 diff -wpruN '--exclude=*.orig' a~/src/libs/zbxipcservice/ipcservice.c a/src/libs/zbxipcservice/ipcservice.c
 --- a~/src/libs/zbxipcservice/ipcservice.c	1970-01-01 00:00:00
 +++ a/src/libs/zbxipcservice/ipcservice.c	1970-01-01 00:00:00
-@@ -1080,7 +1080,7 @@ static void ipc_service_event_log_cb(int
+@@ -1026,7 +1026,7 @@ static void ipc_service_event_log_cb(int
   ******************************************************************************/
  static void	ipc_service_init_libevent(void)
  {

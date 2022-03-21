@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/m4/ldap.m4 a/m4/ldap.m4
 --- a~/m4/ldap.m4	1970-01-01 00:00:00
 +++ a/m4/ldap.m4	1970-01-01 00:00:00
-@@ -96,7 +96,7 @@ AC_HELP_STRING([--with-ldap@<:@=DIR@:>@]
+@@ -95,7 +95,7 @@ AC_HELP_STRING([--with-ldap@<:@=DIR@:>@]
          else
                  if test -f $_libldap_with/include/ldap.h; then
                          LDAP_INCDIR=$_libldap_with/include
@@ -10,16 +10,16 @@ diff -wpruN '--exclude=*.orig' a~/m4/ldap.m4 a/m4/ldap.m4
                          _ldap_dir_lib="$LDAP_LIBDIR"
  
                          found_ldap="yes"
-@@ -111,7 +111,7 @@ AC_HELP_STRING([--with-ldap@<:@=DIR@:>@]
-                 AC_MSG_RESULT(yes)
-                 LDAP_CPPFLAGS="-I$LDAP_INCDIR"
-                 LDAP_LDFLAGS="-L$LDAP_LIBDIR"
+@@ -116,7 +116,7 @@ AC_HELP_STRING([--with-ldap@<:@=DIR@:>@]
+                         AC_DEFINE(HAVE_LDAP_SOURCEIP, 1, [Define to 1 if SourceIP is supported.])
+                 fi
+ 
 -                LDAP_LIBS="-lldap -llber $LDAP_LIBS"
 +                LDAP_LIBS="-lldap_r -llber $LDAP_LIBS"
  
                  if test "x$enable_static" = "xyes"; then
                          LDAP_LIBS="$LDAP_LIBS -lgnutls -lpthread -lsasl2"
-@@ -120,7 +120,7 @@ AC_HELP_STRING([--with-ldap@<:@=DIR@:>@]
+@@ -125,7 +125,7 @@ AC_HELP_STRING([--with-ldap@<:@=DIR@:>@]
                          test "x$static_linking_support" = "xno" -a -z "$_ldap_dir_lib" && AC_MSG_ERROR(["Compiler not support statically linked libs from default folders"])
  
                          if test "x$static_linking_support" = "xno"; then
