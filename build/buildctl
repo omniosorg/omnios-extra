@@ -383,11 +383,11 @@ job_status() {
         elif [ $tm -lt 70 ]; then
             e='+'
         fi
-        logmsg -h "`printf "    [%d] %8d - (%5ds) %s\n" \
+        logmsg -h "`printf "    [%2d] %8d - (%5ds) %s\n" \
             "$i" "${slots[$i]}" "$tm" "$e${slotdesc[$i]}"`"
     done
     for b in ${builderr[@]}; do
-        logmsg -e "`printf "           *** BUILD ERROR ***         %s\n" \
+        logmsg -e "`printf "            *** BUILD ERROR ***         %s\n" \
             $b`"
     done
     logmsg -h "$hashline"
