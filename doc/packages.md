@@ -48,7 +48,7 @@
 | ooce/developer/autogen	| 5.18.16	| https://ftp.gnu.org/gnu/autogen/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
 | ooce/developer/clang-13	| 13.0.1	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/clang-14	| 14.0.0rc4	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/clang-14	| 14.0.0	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cmake		| 3.22.3	| https://cmake.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cscope		| 15.9		| https://sourceforge.net/projects/cscope/files/cscope/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
