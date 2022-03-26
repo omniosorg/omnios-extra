@@ -18,7 +18,7 @@
 
 PROG=llvm
 PKG=ooce/developer/llvm-14
-VER=14.0.0rc4
+VER=14.0.0
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 
@@ -69,8 +69,7 @@ patch_source
 prep_build cmake+ninja
 build -noctf    # C++
 strip_install
-VERHUMAN=$VER
-VER=${VER%rc*} make_package
+make_package
 clean_up
 
 # Vim hints
