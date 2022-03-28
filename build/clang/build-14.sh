@@ -18,7 +18,7 @@
 
 PROG=clang
 PKG=ooce/developer/clang-14
-VER=14.0.0rc4
+VER=14.0.0
 SUMMARY="C language family frontend for LLVM"
 DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
@@ -41,7 +41,7 @@ MINVER=${VER%.*}
 set_patchdir patches-$MAJVER
 
 # Using the = prefix to require the specific matching version of llvm
-BUILD_DEPENDS_IPS="=ooce/developer/llvm-$MAJVER@${VER%rc*}"
+BUILD_DEPENDS_IPS="=ooce/developer/llvm-$MAJVER@$VER"
 
 RUN_DEPENDS_IPS="=ooce/developer/llvm-$MAJVER@$MINVER"
 
@@ -82,8 +82,7 @@ patch_source
 prep_build cmake+ninja
 build -noctf    # C++
 strip_install
-VERHUMAN=$VER
-VER=${VER%rc*} make_package
+make_package
 clean_up
 
 # Vim hints
