@@ -12,19 +12,19 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=pango
-VER=1.50.3
+VER=1.50.6
 PKG=ooce/library/pango
 SUMMARY="pango"
 DESC="Pango is a library for laying out and rendering of text"
 
 # Dependencies
-HARFBUZZVER=2.9.1
-FRIBIDIVER=1.0.10
+HARFBUZZVER=4.2.0
+FRIBIDIVER=1.0.11
 
 BUILD_DEPENDS_IPS="
     ooce/library/fontconfig

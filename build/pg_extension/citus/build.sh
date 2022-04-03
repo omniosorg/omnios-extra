@@ -18,7 +18,7 @@
 
 PROG=citus
 PKG=ooce/database/postgresql-XX/citus
-VER=10.2.4
+VER=10.2.5
 SUMMARY="Citus PostgreSQL XX extension"
 DESC="Transforms PostgreSQL XX into a distributed database"
 
