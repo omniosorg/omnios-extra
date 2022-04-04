@@ -83,7 +83,7 @@
 | ooce/library/freetype2	| 2.12.0	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/gnutls		| 3.6.16	| https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/ https://www.gnutls.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/icu4c		| 70.1		| https://github.com/unicode-org/icu/releases | Currently used solely by cyrus-imapd
+| ooce/library/icu4c		| 70.1		| https://github.com/unicode-org/icu/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/jansson		| 2.14		| https://github.com/akheron/jansson/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/json-c		| 0.15		| https://github.com/json-c/json-c/tags https://github.com/json-c/json-c/wiki | [omniosorg](https://github.com/omniosorg)
 | ooce/library/ldns		| 1.8.1		| https://nlnetlabs.nl/downloads/ldns/ | [omniosorg](https://github.com/omniosorg)
