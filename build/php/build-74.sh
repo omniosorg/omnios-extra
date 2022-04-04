@@ -44,6 +44,7 @@ BUILD_DEPENDS_IPS="
     ooce/database/bdb
     ooce/database/lmdb
     ooce/library/freetype2
+    ooce/library/icu4c
     ooce/library/libjpeg-turbo
     ooce/library/libpng
     ooce/library/libzip
@@ -102,6 +103,7 @@ CONFIGURE_OPTS_64="
 
     --disable-libgcc
     --with-iconv
+    --enable-intl
     --enable-dtrace
     --enable-ftp
     --enable-mbstring
