@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=emacs
-VER=27.2
+VER=28.1
 PKG=ooce/editor/emacs
 SUMMARY="Emacs editor"
 DESC="An extensible, customizable, free/libre text editor - and more."
