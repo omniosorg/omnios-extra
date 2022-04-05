@@ -22,7 +22,6 @@ PKG=ooce/network/cyrus-imapd
 SUMMARY="Cyrus IMAP is an email, contacts and calendar server"
 DESC="$SUMMARY"
 
-ICUVER=70.1
 ICALVER=3.0.14
 
 OPREFIX="$PREFIX"
@@ -40,7 +39,6 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DUSER=cyrus -DGROUP=cyrus
     -DRUNDIR=var/run/cyrus
-    -DICU=$ICUVER
     -DICAL=$ICALVER
 "
 
@@ -49,26 +47,6 @@ prep_build
 
 #########################################################################
 # Download and build bundled dependencies
-
-save_buildenv
-
-CONFIGURE_OPTS+=" --disable-tests --disable-samples"
-build_dependency -ctf icu4c icu/source $PROG/icu icu4c-${ICUVER//./_}-src
-
-restore_buildenv
-
-depinc=$DEPROOT$PREFIX/include
-deplib=$DEPROOT$PREFIX/lib/$ISAPART64
-
-addpath PKG_CONFIG_PATH64 $deplib/pkgconfig
-
-CPPFLAGS+=" -I$depinc"
-LDFLAGS64+=" -L$deplib"
-
-CPPFLAGS+=" -I$OPREFIX/include"
-LDFLAGS+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
-
-LDFLAGS+=" -R$PREFIX/lib/$ISAPART64"
 
 ## Build ical dependency, which uses cmake
 
@@ -89,6 +67,18 @@ RUN_AUTORECONF=
 build_dependency libical libical-$ICALVER $PROG/libical libical $ICALVER
 
 restore_buildenv
+
+depinc=$DEPROOT$PREFIX/include
+deplib=$DEPROOT$PREFIX/lib/$ISAPART64
+
+addpath PKG_CONFIG_PATH64 $deplib/pkgconfig
+
+CPPFLAGS+=" -I$depinc"
+LDFLAGS64+=" -L$deplib"
+
+CPPFLAGS+=" -I$OPREFIX/include"
+LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
 
 #########################################################################
 
@@ -119,7 +109,7 @@ make_install() {
     # Copy in the dependency libraries
 
     pushd $deplib >/dev/null
-    for lib in libical* libicu*; do
+    for lib in libical*; do
         [[ $lib = *.so.* && -f $lib && ! -h $lib ]] || continue
         tgt=`echo $lib | cut -d. -f1-3`
         logmsg "--- installing library $lib -> $tgt"

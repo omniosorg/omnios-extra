@@ -8,10 +8,9 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYING license="BSD with attribution to CMU/MIT/others"
-license ../icu/LICENSE license=modified-BSD
 license ../libical-$(ICAL)/LICENSE.MPL2.txt license=MPLv2
 
 group groupname=$(GROUP) gid=89

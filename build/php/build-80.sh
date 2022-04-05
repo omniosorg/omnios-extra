@@ -43,6 +43,7 @@ RUNPATH=/var$OPREFIX/$PROG/run
 BUILD_DEPENDS_IPS="
     ooce/database/bdb
     ooce/database/lmdb
+    ooce/library/icu4c
     ooce/library/libgd
     ooce/library/libzip
     ooce/library/onig
@@ -100,6 +101,7 @@ CONFIGURE_OPTS_64="
 
     --disable-libgcc
     --with-iconv
+    --enable-intl
     --enable-dtrace
     --enable-ftp
     --enable-mbstring
