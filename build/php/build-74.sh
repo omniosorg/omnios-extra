@@ -40,7 +40,12 @@ CONFPATH=/etc$PREFIX
 VARPATH=/var$PREFIX
 RUNPATH=/var$OPREFIX/$PROG/run
 
+# The icu4c ABI changes frequently. Lock the version
+# pulled into each build of php.
+ICUVER=`pkg_ver icu4c`
+ICUVER=${ICUVER%%.*}
 BUILD_DEPENDS_IPS="
+    =ooce/library/icu4c@$ICUVER
     ooce/database/bdb
     ooce/database/lmdb
     ooce/library/freetype2
@@ -50,7 +55,10 @@ BUILD_DEPENDS_IPS="
     ooce/library/libzip
     ooce/library/onig
 "
-RUN_DEPENDS_IPS="ooce/application/php-common"
+RUN_DEPENDS_IPS="
+    =ooce/library/icu4c@$ICUVER
+    ooce/application/php-common
+"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
