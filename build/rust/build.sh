@@ -18,7 +18,7 @@
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.59.0
+VER=1.60.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
@@ -54,6 +54,7 @@ XFORM_ARGS="
 "
 
 SKIP_RTIME_CHECK=1
+NO_SONAME_EXPECTED=1
 
 RUSTARCH=x86_64-unknown-illumos
 
