@@ -24,6 +24,13 @@ DESC="$SUMMARY"
 
 ICALVER=3.0.14
 
+# The icu4c ABI changes frequently. Lock the version
+# pulled into each build of cyrus-imapd.
+ICUVER=`pkg_ver icu4c`
+ICUVER=${ICUVER%%.*}
+BUILD_DEPENDS_IPS="=ooce/library/icu4c@$ICUVER"
+RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
+
 OPREFIX="$PREFIX"
 PREFIX+="/$PROG"
 
