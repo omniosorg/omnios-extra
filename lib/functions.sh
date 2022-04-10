@@ -1113,6 +1113,9 @@ verify_checksum() {
 download_source() {
     [ -n "$SKIP_DOWNLOAD" ] && return
 
+    typeset -i record_arc=1
+    [ "$1" = "-norecord" ] && { record_arc=0; shift; }
+
     local DLDIR="$1"; shift
     local PROG="$1"; shift
     local VER="$1"; shift
@@ -1154,7 +1157,8 @@ download_source() {
     else
         logmsg "--- Found $FILENAME"
     fi
-    _ARC_SOURCE+="${_ARC_SOURCE:+ }$SRCMIRROR/$DLDIR/$FILENAME"
+    ((record_arc)) && \
+        _ARC_SOURCE+="${_ARC_SOURCE:+ }$SRCMIRROR/$DLDIR/$FILENAME"
 
     # Fetch and verify the archive checksum
     [ -z "$SKIP_CHECKSUM" ] && verify_checksum
