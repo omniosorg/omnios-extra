@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+
+This file and its contents are supplied under the terms of the
+Common Development and Distribution License ("CDDL"), version 1.0.
+You may only use this file in accordance with the terms of version
+1.0 of the CDDL.
+
+A full copy of the text of the CDDL should have accompanied this
+source. A copy of the CDDL is also available via the Internet at
+http://www.illumos.org/license/CDDL.
+
+Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+
+-->
+<service_bundle type="manifest"
+                name="application:vaultwarden">
+
+    <service name="application/vaultwarden"
+             type="service"
+             version="1">
+
+        <create_default_instance enabled="false" />
+
+        <dependency name="network"
+                    grouping="require_all"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/milestone/network:default" />
+        </dependency>
+
+        <dependency name="filesystem"
+                    grouping="require_all"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/system/filesystem/local" />
+        </dependency>
+
+        <exec_method name="start"
+                     type="method"
+                     exec="$(EXECFILE) &amp;"
+                     timeout_seconds="60">
+            <method_context working_directory="/var/$(BASEDIR)"
+                            security_flags="aslr">
+                <method_credential user="$(USER)"
+                                   group="$(GROUP)"
+                                   privileges="basic,!proc_info,!proc_session" />
+            </method_context>
+        </exec_method>
+
+        <exec_method name="stop"
+                     type="method"
+                     exec=":kill"
+                     timeout_seconds="60" />
+
+        <stability value="Evolving" />
+
+        <template>
+            <common_name>
+                <loctext xml:lang="C">vaultwarden</loctext>
+            </common_name>
+            <description>
+                <loctext xml:lang="C">Password Manager</loctext>
+            </description>
+        </template>
+
+    </service>
+
+</service_bundle>

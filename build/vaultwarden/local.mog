@@ -1,0 +1,39 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+
+group groupname=$(GROUP) gid=66
+user ftpuser=false username=$(USER) uid=66 group=$(GROUP) \
+    gcos-field="vaultwarden - Password Manager" \
+    home-dir=/var/$(BASEDIR) passwd=NP
+
+<transform dir path=var/$(BASEDIR) -> set mode 0770>
+<transform dir path=var/$(BASEDIR) -> set owner $(USER)>
+<transform dir path=var/$(BASEDIR) -> set group $(GROUP)>
+
+dir path=var/$(BASEDIR)/data owner=$(USER) group=$(GROUP) mode=0770
+
+# Create configuration file
+file etc/$(BASEDIR)/env.template path=etc/$(BASEDIR)/env \
+    owner=root group=$(GROUP) mode=0640 preserve=renamenew
+link path=var/$(BASEDIR)/.env \
+    target=../../../../etc/$(BASEDIR)/env
+
+<transform file path=$(PREFIX)/bin -> \
+    set restart_fmri svc:/network/$(PROG):default >
+
+license vaultwarden/LICENSE.txt license=GPLv3
+# bitwarden/web, from which the vaultwarden web-vault is derived, is
+# dual-licensed under GPLv3 and a custom bitwarden licence. Some pieces are,
+# however, only licensed under the bitwarden licence.
+license ../bitwarden/LICENSE_GPL.txt license=GPLv3/bitwarden
+license ../bitwarden/LICENSE_BITWARDEN.txt license=bitwarden
+
