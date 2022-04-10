@@ -7,13 +7,16 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 # drop unwanted stuff
 <transform file path=$(PREFIX)/share/texmf-var/.*\.log$ -> drop>
 
 <transform file \
     path=$(PREFIX)/share/texmf-dist/(?:doc|scripts|asymptote|source) \
+    -> set pkg.depend.bypass-generate .*>
+<transform file \
+    path=$(PREFIX)/share/texmf-dist/tex/generic/pgfplots/lua/prepcontour(?:_cli)?\.lua$ \
     -> set pkg.depend.bypass-generate .*>
 
 license LICENSE.TL license=TeXLive

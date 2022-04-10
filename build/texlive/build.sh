@@ -13,12 +13,12 @@
 # }}}
 
 # Copyright 2014 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=texlive
-VER=20210325
+VER=20220321
 PKG=ooce/application/texlive
 SUMMARY="TeX Live"
 DESC="LaTeX distribution"
@@ -104,7 +104,7 @@ config_tex() {
 }
 
 CFLAGS+=" -I$OPREFIX/include"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
 # export required, otherwise build will fail
 # /usr/lib/$ISAPART64/pkgconfig for mpfr
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH64:/usr/lib/$ISAPART64/pkgconfig"
