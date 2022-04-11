@@ -2609,6 +2609,65 @@ python_build() {
     python_compile
 }
 
+pyvenv_build() {
+    typeset venv=$DESTDIR/$PREFIX
+    typeset pkg=${1:?pkg}
+    typeset ver=${2:?ver}
+
+    logmsg "Preparing virtual python environment"
+    logcmd $PYTHON -mvenv --system-site-packages --without-pip $venv \
+        || logerr "python venv set up failed"
+
+    logcmd rm -f $venv/bin/[aA]ctivate*
+
+    typeset constrain=
+    [ -f $SRCDIR/files/constraints -a -z "$REBASE_PATCHES" ] \
+        && constrain="-c $SRCDIR/files/constraints"
+
+    logmsg "-- installing $pkg"
+    VIRTUAL_ENV=$venv logcmd $venv/bin/python$PYTHONVER -mpip \
+        --disable-pip-version-check \
+        --require-virtualenv \
+        --no-input \
+        install $constrain $pkg==$ver \
+        || logerr "pip install $pkg ($ver) failed"
+
+    if [ -n "$REBASE_PATCHES" ]; then
+        VIRTUAL_ENV=$venv logcmd -p $venv/bin/python$PYTHONVER -mpip freeze \
+            --local \
+            | egrep -v "^$pkg=" > $SRCDIR/files/constraints
+        sed -i '1i\
+## This file was auto-generated and can be updated with ./build.sh -P
+        ' $SRCDIR/files/constraints
+    fi
+
+    pushd $venv >/dev/null || logerr "pushd $venv"
+    for b in bin/*; do
+        [ -f "$b" ] || continue
+        [ -h "$b" ] && continue
+        file "$b" | egrep -s 'python.*script$' || continue
+        logmsg "Fixing shebang in $b"
+        sed -i "1s^$DESTDIR^^" "$b"
+    done
+    popd >/dev/null
+
+    # The bundled python modules each have their own licence
+    SKIP_LICENCES='bundled/*'
+    pushd $DESTDIR >/dev/null || logerr "pushd $DESTDIR"
+    for d in ${PREFIX#/}/lib/python$PYTHONVER/site-packages/*-info; do
+        [ -d "$d" ] || continue
+        pushd "$d" >/dev/null || logerr "pushd $d"
+        pkg=`basename $d | cut -d- -f1`
+        logmsg "-- collecting licences for $pkg"
+        for l in LICEN[CS]E* COPYING; do
+            [ -f "$l" ] || continue
+            echo "license $d/$l license=bundled/$pkg/$l" | mog_fragment
+        done
+        popd >/dev/null
+    done
+    popd >/dev/null
+}
+
 #############################################################################
 # Build function for rust utils
 #############################################################################
