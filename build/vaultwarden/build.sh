@@ -41,7 +41,6 @@ EXECFILE=$PREFIX/bin/$PROG
 BMI_EXPECTED=1
 CARGO_ARGS="--features sqlite,mysql,postgresql"
 BUILD_DEPENDS_IPS="
-    database/sqlite-3
     ooce/library/mariadb-${MARIASQLVER//./}
     ooce/library/postgresql-${PGSQLVER//./}
 "
