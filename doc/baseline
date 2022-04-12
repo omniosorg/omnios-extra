@@ -200,6 +200,7 @@ extra.omnios ooce/storage/minio-mc
 extra.omnios ooce/system/clamav
 extra.omnios ooce/system/file-system/ntfs-3g
 extra.omnios ooce/system/htop
+extra.omnios ooce/system/management/ansible
 extra.omnios ooce/system/mbuffer
 extra.omnios ooce/system/sg3_utils
 extra.omnios ooce/system/smartmontools
