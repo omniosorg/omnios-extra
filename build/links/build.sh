@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=links
-VER=2.25
+VER=2.26
 PKG=ooce/application/links
 SUMMARY="Text mode web browser"
 DESC="$PROG - $SUMMARY"
