@@ -457,13 +457,18 @@ set_gover() {
     GOROOT_BOOTSTRAP="$GO_PATH"
     GOOS=illumos
     GOARCH=amd64
+
+    [ "$TMPDIR" = "$BASE_TMPDIR" ] \
+        && GOCACHE="$BASE_TMPDIR/$PROG-$VER/go-build" \
+        || GOCACHE="$TMPDIR/go-build"
+
     # go binaries contain BMI instructions even when built on an older CPU
     BMI_EXPECTED=1
     # skip rtime check for go builds
     SKIP_RTIME_CHECK=1
     # skip SSP check for go builds
     SKIP_SSP_CHECK=1
-    export PATH GOROOT_BOOTSTRAP GOOS GOARCH
+    export PATH GOROOT_BOOTSTRAP GOOS GOARCH GOCACHE
 
     BUILD_DEPENDS_IPS+=" ooce/developer/go-${GOVER//./}"
 }
