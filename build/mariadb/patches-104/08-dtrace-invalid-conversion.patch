@@ -13,7 +13,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/filesort.cc a/sql/filesort.cc
 diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
 --- a~/sql/handler.cc	1970-01-01 00:00:00
 +++ a/sql/handler.cc	1970-01-01 00:00:00
-@@ -6484,18 +6484,18 @@ int handler::ha_external_lock(THD *thd,
+@@ -6487,18 +6487,18 @@ int handler::ha_external_lock(THD *thd,
    {
      if (lock_type == F_RDLCK)
      {
@@ -38,7 +38,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
      }
    }
  
-@@ -6756,7 +6756,7 @@ int handler::ha_write_row(const uchar *b
+@@ -6759,7 +6759,7 @@ int handler::ha_write_row(const uchar *b
    DBUG_ENTER("handler::ha_write_row");
    DEBUG_SYNC_C("ha_write_row_start");
  
@@ -47,7 +47,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
    mark_trx_read_write();
    increment_statistics(&SSV::ha_write_count);
  
-@@ -6804,7 +6804,7 @@ int handler::ha_update_row(const uchar *
+@@ -6808,7 +6808,7 @@ int handler::ha_update_row(const uchar *
    DBUG_ASSERT(new_data == table->record[0]);
    DBUG_ASSERT(old_data == table->record[1]);
  
@@ -56,7 +56,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
    mark_trx_read_write();
    increment_statistics(&SSV::ha_update_count);
    if (table->s->long_unique_table &&
-@@ -6885,7 +6885,7 @@ int handler::ha_delete_row(const uchar *
+@@ -6890,7 +6890,7 @@ int handler::ha_delete_row(const uchar *
    DBUG_ASSERT(buf == table->record[0] ||
                buf == table->record[1]);
  
@@ -65,7 +65,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
    mark_trx_read_write();
    increment_statistics(&SSV::ha_delete_count);
  
-@@ -6939,7 +6939,7 @@ int handler::ha_direct_update_rows(ha_ro
+@@ -6945,7 +6945,7 @@ int handler::ha_direct_update_rows(ha_ro
  {
    int error;
  
@@ -74,7 +74,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
    mark_trx_read_write();
  
    error = direct_update_rows(update_rows, found_rows);
-@@ -6966,7 +6966,7 @@ int handler::ha_direct_delete_rows(ha_ro
+@@ -6972,7 +6972,7 @@ int handler::ha_direct_delete_rows(ha_ro
    /* Ensure we are not using binlog row */
    DBUG_ASSERT(!table->in_use->is_current_stmt_binlog_format_row());
  
@@ -98,7 +98,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sp_head.cc a/sql/sp_head.cc
 diff -wpruN '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_class.h
 --- a~/sql/sql_class.h	1970-01-01 00:00:00
 +++ a/sql/sql_class.h	1970-01-01 00:00:00
-@@ -6649,7 +6649,7 @@ inline int handler::ha_read_first_row(uc
+@@ -6650,7 +6650,7 @@ inline int handler::ha_read_first_row(uc
  inline int handler::ha_write_tmp_row(uchar *buf)
  {
    int error;
@@ -107,7 +107,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_class.h
    increment_statistics(&SSV::ha_tmp_write_count);
    TABLE_IO_WAIT(tracker, m_psi, PSI_TABLE_WRITE_ROW, MAX_KEY, 0,
                  { error= write_row(buf); })
-@@ -6660,7 +6660,7 @@ inline int handler::ha_write_tmp_row(uch
+@@ -6661,7 +6661,7 @@ inline int handler::ha_write_tmp_row(uch
  inline int handler::ha_delete_tmp_row(uchar *buf)
  {
    int error;
@@ -116,7 +116,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_class.h
    increment_statistics(&SSV::ha_tmp_delete_count);
    TABLE_IO_WAIT(tracker, m_psi, PSI_TABLE_DELETE_ROW, MAX_KEY, 0,
                  { error= delete_row(buf); })
-@@ -6671,7 +6671,7 @@ inline int handler::ha_delete_tmp_row(uc
+@@ -6672,7 +6672,7 @@ inline int handler::ha_delete_tmp_row(uc
  inline int handler::ha_update_tmp_row(const uchar *old_data, uchar *new_data)
  {
    int error;
