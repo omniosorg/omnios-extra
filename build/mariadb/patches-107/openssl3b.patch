@@ -1,0 +1,167 @@
+
+See https://jira.mariadb.org/browse/MDEV-28339
+
+Here are just enough fixes for running mariadb with openssl 3.0.2, stopping
+short of reworking aspects of the API and plugin infrastructure.
+
+diff -wpruN '--exclude=*.orig' a~/include/mysql/service_md5.h a/include/mysql/service_md5.h
+--- a~/include/mysql/service_md5.h	1970-01-01 00:00:00
++++ a/include/mysql/service_md5.h	1970-01-01 00:00:00
+@@ -58,6 +58,9 @@ void my_md5_init(void *context);
+ void my_md5_input(void *context, const unsigned char *buf, size_t len);
+ void my_md5_result(void *context, unsigned char *digest);
+ 
++void *my_md5_alloc(void);
++void my_md5_free(void *);
++
+ #endif
+ 
+ #ifdef __cplusplus
+diff -wpruN '--exclude=*.orig' a~/mysys_ssl/my_crypt.cc a/mysys_ssl/my_crypt.cc
+--- a~/mysys_ssl/my_crypt.cc	1970-01-01 00:00:00
++++ a/mysys_ssl/my_crypt.cc	1970-01-01 00:00:00
+@@ -42,6 +42,9 @@ public:
+   EVP_CIPHER_CTX* ctx;
+   MyCTX()
+   {
++#if defined(HAVE_OPENSSL) && OPENSSL_VERSION_NUMBER >= 0x10100000L
++    ctx = EVP_CIPHER_CTX_new();
++#else
+ #if CTX_ALIGN > 0
+     uintptr_t p= ((uintptr_t)ctx_buf + (CTX_ALIGN - 1)) & ~(CTX_ALIGN - 1);
+     ctx = reinterpret_cast<EVP_CIPHER_CTX*>(p);
+@@ -50,10 +53,15 @@ public:
+ #endif
+ 
+     EVP_CIPHER_CTX_init(ctx);
++#endif
+   }
+   virtual ~MyCTX()
+   {
++#if defined(HAVE_OPENSSL) && OPENSSL_VERSION_NUMBER >= 0x10100000L
++    EVP_CIPHER_CTX_free(ctx);
++#else
+     EVP_CIPHER_CTX_reset(ctx);
++#endif
+     ERR_remove_state(0);
+   }
+ 
+diff -wpruN '--exclude=*.orig' a~/mysys_ssl/my_md5.cc a/mysys_ssl/my_md5.cc
+--- a~/mysys_ssl/my_md5.cc	1970-01-01 00:00:00
++++ a/mysys_ssl/my_md5.cc	1970-01-01 00:00:00
+@@ -31,6 +31,17 @@
+ #include <wolfssl/wolfcrypt/md5.h>
+ #include <ssl_compat.h>
+ typedef wc_Md5 EVP_MD_CTX;
++
++static EVP_MD_CTX *md5_alloc(void)
++{
++  return calloc(EVP_MD_CTX_SIZE, sizeof (char));
++}
++
++static void md5_free(EVP_MD_CTX *context)
++{
++  free(context);
++}
++
+ static void md5_init(EVP_MD_CTX *context)
+ {
+   wc_InitMd5(context);;
+@@ -50,9 +61,27 @@ static void md5_result(EVP_MD_CTX *conte
+ #include <openssl/evp.h>
+ #include <ssl_compat.h>
+ 
+-static void md5_init(EVP_MD_CTX *context)
++static EVP_MD_CTX *md5_alloc(void)
+ {
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++  return EVP_MD_CTX_new();
++#else
++  EVP_MD_CTX * const context= calloc(EVP_MD_CTX_SIZE, sizeof (char));
+   EVP_MD_CTX_init(context);
++#endif
++}
++
++static void md5_free(EVP_MD_CTX *context)
++{
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++  EVP_MD_CTX_free(context);
++#else
++  free(context);
++#endif
++}
++
++static void md5_init(EVP_MD_CTX *context)
++{
+ #ifdef EVP_MD_CTX_FLAG_NON_FIPS_ALLOW
+   /* Ok to ignore FIPS: MD5 is not used for crypto here */
+   EVP_MD_CTX_set_flags(context, EVP_MD_CTX_FLAG_NON_FIPS_ALLOW);
+@@ -84,11 +113,11 @@ static void md5_result(EVP_MD_CTX *conte
+ */
+ void my_md5(uchar *digest, const char *buf, size_t len)
+ {
+-  char ctx_buf[EVP_MD_CTX_SIZE];
+-  EVP_MD_CTX * const ctx= (EVP_MD_CTX*)ctx_buf;
++  EVP_MD_CTX * const ctx= md5_alloc();
+   md5_init(ctx);
+   md5_input(ctx, (const uchar *)buf, (uint) len);
+   md5_result(ctx, digest);
++  md5_free(ctx);
+ }
+ 
+ 
+@@ -108,8 +137,7 @@ void my_md5_multi(uchar *digest, ...)
+ {
+   va_list args;
+   const uchar *str;
+-  char ctx_buf[EVP_MD_CTX_SIZE];
+-  EVP_MD_CTX * const ctx= (EVP_MD_CTX*)ctx_buf;
++  EVP_MD_CTX * const ctx= md5_alloc();
+   va_start(args, digest);
+ 
+   md5_init(ctx);
+@@ -117,6 +145,7 @@ void my_md5_multi(uchar *digest, ...)
+     md5_input(ctx, str, (uint) va_arg(args, size_t));
+ 
+   md5_result(ctx, digest);
++  md5_free(ctx);
+   va_end(args);
+ }
+ 
+@@ -125,6 +154,16 @@ size_t my_md5_context_size()
+   return EVP_MD_CTX_SIZE;
+ }
+ 
++void *my_md5_alloc(void)
++{
++  return (void *)md5_alloc();
++}
++
++void my_md5_free(void *context)
++{
++  md5_free((EVP_MD_CTX *)context);
++}
++
+ void my_md5_init(void *context)
+ {
+   md5_init((EVP_MD_CTX *)context);
+diff -wpruN '--exclude=*.orig' a~/storage/innobase/handler/ha_innodb.cc a/storage/innobase/handler/ha_innodb.cc
+--- a~/storage/innobase/handler/ha_innodb.cc	1970-01-01 00:00:00
++++ a/storage/innobase/handler/ha_innodb.cc	1970-01-01 00:00:00
+@@ -8479,7 +8479,7 @@ wsrep_calc_row_hash(
+ 					dictionary */
+ 	row_prebuilt_t*	prebuilt)	/*!< in: InnoDB prebuilt struct */
+ {
+-	void *ctx = alloca(my_md5_context_size());
++	void *ctx = my_md5_alloc();
+ 	my_md5_init(ctx);
+ 
+ 	for (uint i = 0; i < table->s->fields; i++) {
+@@ -8535,6 +8535,7 @@ wsrep_calc_row_hash(
+ 	}
+ 
+ 	my_md5_result(ctx, digest);
++	my_md5_free(ctx);
+ 
+ 	return(0);
+ }
