@@ -8,10 +8,9 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 # Create directories
-dir group=nagios mode=0775 owner=nagios path=var/log/$(PREFIX)
 dir group=nagios mode=0775 owner=nagios path=var/$(PREFIX)/run
 
 # Set permissions
