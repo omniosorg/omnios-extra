@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=stress-ng
-VER=0.13.12
+VER=0.14.00
 PKG=ooce/util/stress-ng
 SUMMARY="Stress test a computer system in various selectable ways"
 DESC="$PROG - $SUMMARY"
