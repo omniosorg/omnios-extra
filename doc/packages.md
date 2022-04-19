@@ -143,7 +143,7 @@
 | ooce/network/openvpn		| 2.5.6		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn-auth-ldap | 2.0.4	| https://github.com/threerings/openvpn-auth-ldap/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/rclone		| 1.58.0	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/smtp/postfix	| 3.7.0		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
+| ooce/network/smtp/postfix	| 3.7.1		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/network/tcpdump		| 4.9.3		| https://www.tcpdump.org/release/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/unbound		| 1.15.0	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/znc		| 1.8.2		| https://github.com/znc/znc/tags | [omniosorg](https://github.com/omniosorg)
