@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nagios
-VER=4.4.6
+VER=4.4.7
 PKG=ooce/application/nagios
 SUMMARY="Extremely powerful network monitoring system"
 DESC="Nagios is a host and service monitor designed to inform you of network \
@@ -50,7 +50,7 @@ MAKE_INSTALL_ARGS="
 "
 
 MAKE_INSTALL_TARGET="
-    install
+    install-unstripped
     install-commandmode
     install-config
 "

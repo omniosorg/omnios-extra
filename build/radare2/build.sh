@@ -18,7 +18,7 @@
 
 PROG=radare2
 PKG=ooce/developer/radare2
-VER=5.6.6
+VER=5.6.8
 SUMMARY="A low-level software forensics tool"
 DESC="$PROG - $SUMMARY"
 
@@ -32,6 +32,13 @@ PREFIX+=/$PROG
 
 set_arch 64
 set_standard XPG6 CFLAGS
+
+NO_SONAME_EXPECTED=1
+
+PKGDIFFPATH="${PREFIX#/}/share/$PROG"
+PKGDIFF_HELPER="
+    s:$PKGDIFFPATH/[0-9][0-9.]*:$PKGDIFFPATH/VERSION:
+"
 
 export PATH=$GNUBIN:$PATH
 CFLAGS+=" -fPIC"

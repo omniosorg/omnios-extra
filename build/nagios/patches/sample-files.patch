@@ -1,6 +1,6 @@
 diff -wpruN '--exclude=*.orig' a~/sample-config/nagios.cfg.in a/sample-config/nagios.cfg.in
---- a~/sample-config/nagios.cfg.in	2019-08-20 17:29:34.000000000 +0000
-+++ a/sample-config/nagios.cfg.in	2020-04-21 11:40:10.946565600 +0000
+--- a~/sample-config/nagios.cfg.in	1970-01-01 00:00:00
++++ a/sample-config/nagios.cfg.in	1970-01-01 00:00:00
 @@ -15,7 +15,7 @@
  # for historical purposes.  This should be the first option specified
  # in the config file!!!
@@ -20,8 +20,8 @@ diff -wpruN '--exclude=*.orig' a~/sample-config/nagios.cfg.in a/sample-config/na
  
  # Definitions for monitoring a Windows machine
 diff -wpruN '--exclude=*.orig' a~/sample-config/resource.cfg.in a/sample-config/resource.cfg.in
---- a~/sample-config/resource.cfg.in	2019-08-20 17:29:34.000000000 +0000
-+++ a/sample-config/resource.cfg.in	2020-04-21 11:40:48.223273582 +0000
+--- a~/sample-config/resource.cfg.in	1970-01-01 00:00:00
++++ a/sample-config/resource.cfg.in	1970-01-01 00:00:00
 @@ -22,7 +22,7 @@
  ###########################################################################
  
@@ -32,8 +32,8 @@ diff -wpruN '--exclude=*.orig' a~/sample-config/resource.cfg.in a/sample-config/
  # Sets $USER2$ to be the path to event handlers
  #$USER2$=@libexecdir@/eventhandlers
 diff -wpruN '--exclude=*.orig' a~/sample-config/template-object/localhost.cfg.in a/sample-config/template-object/localhost.cfg.in
---- a~/sample-config/template-object/localhost.cfg.in	2019-08-20 17:29:34.000000000 +0000
-+++ a/sample-config/template-object/localhost.cfg.in	2020-04-21 11:38:45.112203565 +0000
+--- a~/sample-config/template-object/localhost.cfg.in	1970-01-01 00:00:00
++++ a/sample-config/template-object/localhost.cfg.in	1970-01-01 00:00:00
 @@ -4,7 +4,7 @@
  #
  # NOTE: This config file is intended to serve as an *extremely* simple
@@ -72,8 +72,8 @@ diff -wpruN '--exclude=*.orig' a~/sample-config/template-object/localhost.cfg.in
  }
  
 diff -wpruN '--exclude=*.orig' a~/sample-config/template-object/templates.cfg.in a/sample-config/template-object/templates.cfg.in
---- a~/sample-config/template-object/templates.cfg.in	2019-08-20 17:29:34.000000000 +0000
-+++ a/sample-config/template-object/templates.cfg.in	2020-04-21 11:35:30.367025180 +0000
+--- a~/sample-config/template-object/templates.cfg.in	1970-01-01 00:00:00
++++ a/sample-config/template-object/templates.cfg.in	1970-01-01 00:00:00
 @@ -61,19 +61,19 @@ define host {
  
  
@@ -100,4 +100,3 @@ diff -wpruN '--exclude=*.orig' a~/sample-config/template-object/templates.cfg.in
                                                              ; Note that the notification_period variable is being overridden from
                                                              ; the value that is inherited from the generic-host template!
      notification_interval           120                     ; Resend notifications every 2 hours
-
