@@ -12,20 +12,20 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 #
 . ../../lib/build.sh
 
 PROG=gnupg
-VER=2.3.4
+VER=2.3.5
 PKG=ooce/security/gnupg
 SUMMARY="$PROG - GNU Privacy Guard"
 DESC="A complete and free implementation of the OpenPGP standard"
 
 # we don't track the versions in doc/packages.md
 # check for updates when gnupg is updated
-LIBGPGERRORVER=1.42
-LIBGCRYPTVER=1.9.4
+LIBGPGERRORVER=1.45
+LIBGCRYPTVER=1.10.1
 LIBKSBAVER=1.6.0
 LIBASSUANVER=2.5.5
 NPTHVER=1.6
