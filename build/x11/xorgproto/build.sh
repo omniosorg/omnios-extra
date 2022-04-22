@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=xorgproto
-VER=2021.5
+VER=2022.1
 PKG=ooce/x11/header/x11-protocols
 SUMMARY="xorgproto"
 DESC="X Window System protocol definitions"
