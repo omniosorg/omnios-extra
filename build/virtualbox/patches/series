@@ -6,3 +6,5 @@ ctf.patch
 hma.patch
 installctx.patch
 ergoctx.patch
+no-var-spool-pkg.patch
+ring0-ffreestanding.patch

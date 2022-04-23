@@ -1,2 +1,3 @@
 linker_flags.patch
 libs.patch
+yield_clash.patch

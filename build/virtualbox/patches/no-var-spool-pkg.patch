@@ -1,0 +1,42 @@
+diff -wpruN '--exclude=*.orig' a~/src/VBox/Additions/solaris/Installer/makepackage.sh a/src/VBox/Additions/solaris/Installer/makepackage.sh
+--- a~/src/VBox/Additions/solaris/Installer/makepackage.sh	1970-01-01 00:00:00
++++ a/src/VBox/Additions/solaris/Installer/makepackage.sh	1970-01-01 00:00:00
+@@ -49,7 +49,7 @@ VBOX_AWK=/usr/bin/awk
+ case "$ostype" in
+ "SunOS")
+   VBOX_GGREP=/usr/sfw/bin/ggrep
+-  VBOX_SOL_PKG_DEV=/var/spool/pkg
++  VBOX_SOL_PKG_DEV=`mktemp -d`
+   ;;
+ *)
+   VBOX_GGREP=`which grep`
+@@ -145,6 +145,6 @@ pkgmk -d $VBOX_SOL_PKG_DEV -p $VBOXPKG_T
+ # translate into package datastream
+ pkgtrans -s -o "$VBOX_SOL_PKG_DEV" `pwd`/$VBOX_PKGFILENAME "$VBOX_PKGNAME"
+ 
+-rm -rf "$VBOX_SOL_PKG_DEV/$VBOX_PKGNAME"
++rm -rf "$VBOX_SOL_PKG_DEV"
+ exit $?
+ 
+diff -wpruN '--exclude=*.orig' a~/src/VBox/Installer/solaris/makepackage.sh a/src/VBox/Installer/solaris/makepackage.sh
+--- a~/src/VBox/Installer/solaris/makepackage.sh	1970-01-01 00:00:00
++++ a/src/VBox/Installer/solaris/makepackage.sh	1970-01-01 00:00:00
+@@ -262,13 +262,15 @@ package_spec_fixup_content()
+ 
+ package_create()
+ {
++    pkgd=`mktemp -d`
++
+     # Create the package instance
+-    pkgmk -o -f "$PACKAGE_SPEC" -r "$1"
++    pkgmk -d $pkgd -o -f "$PACKAGE_SPEC" -r "$1"
+ 
+     # Translate into package datastream
+-    pkgtrans -s -o /var/spool/pkg "$1/$2" "$3"
++    pkgtrans -s -o $pkgd "$1/$2" "$3"
+ 
+-    rm -rf "/var/spool/pkg/$2"
++    rm -rf $pkgd
+ }
+ 
+ fi
