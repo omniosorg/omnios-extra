@@ -83,10 +83,12 @@ export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/fribidi"
 
 ######################################################################
 
-logcmd find $DEPROOT -name \*.la -exec rm {} +
-logcmd mv $DEPROOT/$PREFIX/bin/$ISAPART64/* $DEPROOT/$PREFIX/bin/ \
-    || logerr "relocate dependency binaries"
-logcmd rm -rf $DEPROOT/$PREFIX/bin/{$ISAPART,$ISAPART64}
+if ((EXTRACT_MODE == 0)); then
+    logcmd find $DEPROOT -name \*.la -exec rm {} +
+    logcmd mv $DEPROOT/$PREFIX/bin/$ISAPART64/* $DEPROOT/$PREFIX/bin/ \
+        || logerr "relocate dependency binaries"
+    logcmd rm -rf $DEPROOT/$PREFIX/bin/{$ISAPART,$ISAPART64}
+fi
 
 LDFLAGS32+=" -L$DEPROOT/$PREFIX/lib"
 LDFLAGS64+=" -L$DEPROOT/$PREFIX/lib/$ISAPART64"

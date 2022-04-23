@@ -30,6 +30,7 @@ BUILD_DEPENDS_IPS="
 
 init
 download_source $PROG $PROG $VER
+patch_source
 prep_build
 build
 run_testsuite check

@@ -505,6 +505,8 @@ count_expensive() {
 set_batch_build_flags() {
     build_flags="-b -t -l"
     [ -n "$USE_CCACHE" ] && build_flags+=" -c"
+    ((EXTRACT_MODE == 1)) && build_flags+=" -x"
+    ((EXTRACT_MODE == 2)) && build_flags+=" -xx"
     export BATCH=1  # So logerr() exits without prompting
     export SKIP_PKG_DIFF=1
     export SKIP_PKGLINT=1
@@ -718,6 +720,8 @@ shift $((OPTIND - 1))
 [ -n "$SKIP_PKGLINT" ] && build_flags+="-l "
 [ -n "$SKIP_TESTSUITE" ] && build_flags+="-t "
 [ -n "$SKIP_HARDLINK" ] && build_flags+="-L "
+((EXTRACT_MODE == 1)) && build_flags+="-x "
+((EXTRACT_MODE == 2)) && build_flags+="-xx "
 
 case "$1" in
     config)

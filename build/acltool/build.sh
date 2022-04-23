@@ -31,6 +31,7 @@ set_checksum sha256 \
 
 init
 download_source v$VER $PROG $VER
+patch_source
 prep_build
 build
 strip_install

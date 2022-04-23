@@ -35,6 +35,7 @@ build() {
 init
 set_builddir $PROG-v$VER
 download_source v$VER $PROG v$VER
+patch_source
 prep_build
 build
 make_package
