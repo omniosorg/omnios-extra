@@ -1,0 +1,18 @@
+declarations cannot be removed since we need to support builds on releases before
+r151041 (where illumos 14418 was introduced).
+change the declaration so it works in both worlds.
+
+see: https://www.illumos.org/issues/14418
+
+diff -wpruN '--exclude=*.orig' a~/sql/mysqld.cc a/sql/mysqld.cc
+--- a~/sql/mysqld.cc	1970-01-01 00:00:00
++++ a/sql/mysqld.cc	1970-01-01 00:00:00
+@@ -173,7 +173,7 @@ extern "C" {					// Because of SCO 3.2V4
+     && defined(_XOPEN_SOURCE)
+ extern int getpagesizes(size_t *, int);
+ extern int getpagesizes2(size_t *, int);
+-extern int memcntl(caddr_t, size_t, int, caddr_t, int, int);
++extern int memcntl(void *, size_t, int, void *, int, int);
+ #endif /* __sun__ ... */
+ #endif /* HAVE_SOLARIS_LARGE_PAGES */
+ 

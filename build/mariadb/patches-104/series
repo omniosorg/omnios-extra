@@ -6,3 +6,4 @@ auth_socket.diff
 cfi.patch
 openssl3.patch
 openssl3b.patch
+memcntl.patch
