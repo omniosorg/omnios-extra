@@ -30,6 +30,7 @@ CPPFLAGS+=' -I/usr/include/ncurses '
 
 init
 download_source "$PROG" "$PROG" "$VER"
+patch_source
 prep_build
 build -ctf
 make_package

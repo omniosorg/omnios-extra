@@ -107,9 +107,12 @@ prep_build
 gitenv
 # use clone_github_source instead of clone_go_source
 # since mattermost bundles its dependencies
-clone_github_source "mmctl" "$GITHUB/$PROG/mmctl" v$MMCTLVER
-clone_github_source "$PROG-server" "$GITHUB/$PROG/$PROG-server" v$VER
-clone_github_source "$PROG-webapp" "$GITHUB/$PROG/$PROG-webapp" v$VER
+clone_github_source -dependency "mmctl" "$GITHUB/$PROG/mmctl" v$MMCTLVER
+clone_github_source -dependency "$PROG-server" \
+    "$GITHUB/$PROG/$PROG-server" v$VER
+clone_github_source -dependency "$PROG-webapp" \
+    "$GITHUB/$PROG/$PROG-webapp" v$VER
+((EXTRACT_MODE)) && exit
 build mmctl "ADVANCED_VET=FALSE"
 
 if [ $RELVER -lt 151033 ]; then

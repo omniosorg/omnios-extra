@@ -744,10 +744,12 @@ init() {
         fi
     fi
 
-    init_repo
-    pkgrepo get -s $PKGSRVR > /dev/null 2>&1 || \
-        logerr "The PKGSRVR ($PKGSRVR) isn't available. All is doomed."
-    verify_depends
+    if ((EXTRACT_MODE == 0)); then
+        init_repo
+        pkgrepo get -s $PKGSRVR > /dev/null 2>&1 || \
+            logerr "The PKGSRVR ($PKGSRVR) isn't available. All is doomed."
+        verify_depends
+    fi
 
     if [ -n "$FORCE_OPENSSL_VERSION" ]; then
         CFLAGS="-I/usr/ssl-$FORCE_OPENSSL_VERSION/include $CFLAGS"
@@ -1039,7 +1041,7 @@ patch_source() {
     [ -n "$SKIP_PATCH_SOURCE" ] && return
     [ -n "$REBASE_PATCHES" ] && rebase_patches "$@"
     apply_patches "$@"
-    [ -z "$*" -a $EXTRACT_MODE -ge 1 ] && exit 0
+    [ -z "$*" -a $EXTRACT_MODE -ge 1 ] && exit
 }
 
 #############################################################################
@@ -1121,6 +1123,9 @@ download_source() {
     typeset -i record_arc=1
     [ "$1" = "-norecord" ] && { record_arc=0; shift; }
 
+    typeset -i dependency=0
+    [ "$1" = "-dependency" ] && { dependency=1; shift; }
+
     local DLDIR="$1"; shift
     local PROG="$1"; shift
     local VER="$1"; shift
@@ -1183,7 +1188,7 @@ download_source() {
 
     popd >/dev/null
 
-    [ $EXTRACT_MODE -eq 1 ] && exit 0
+    ((EXTRACT_MODE == 1 && dependency == 0)) && exit
 }
 
 # Finds an existing archive and stores its value in a variable whose name
@@ -1227,6 +1232,9 @@ set_mirror() {
 #############################################################################
 
 clone_github_source() {
+    typeset -i dependency=0
+    [ "$1" = "-dependency" ] && { dependency=1; shift; }
+
     typeset prog="$1"
     typeset src="$2"
     typeset branch="$3"
@@ -1271,6 +1279,8 @@ clone_github_source() {
 
     _ARC_SOURCE+="${_ARC_SOURCE:+ }$src/tree/$branch"
 
+    ((EXTRACT_MODE == 1 && dependency == 0)) && exit
+
     popd > /dev/null
 }
 
@@ -1284,7 +1294,7 @@ clone_go_source() {
     typeset branch="$3"
     typeset deps="${4-_deps}"
 
-    clone_github_source $prog "$GITHUB/$src/$prog" $branch
+    clone_github_source -dependency $prog "$GITHUB/$src/$prog" $branch
 
     set_builddir "$BUILDDIR/$prog"
 
@@ -1298,6 +1308,8 @@ clone_go_source() {
 
     logmsg "Fixing permissions on dependencies"
     logcmd chmod -R u+w $GOPATH
+
+    ((EXTRACT_MODE == 1)) && exit
 
     popd > /dev/null
 }
@@ -2315,6 +2327,7 @@ make_install_in() {
 
 build() {
     [ -n "$SKIP_BUILD" ] && return
+    ((EXTRACT_MODE >= 1)) && return
 
     local ctf=${CTF_DEFAULT:-0}
 
@@ -2624,6 +2637,8 @@ pyvenv_build() {
         || logerr "python venv set up failed"
 
     logcmd rm -f $venv/bin/[aA]ctivate*
+
+    ((EXTRACT_MODE >= 1)) && exit
 
     typeset constrain=
     [ -f $SRCDIR/files/constraints -a -z "$REBASE_PATCHES" ] \

@@ -87,7 +87,7 @@ for pver in $PVERS; do
     set_builddir $PROG-$pver
     save_variable CONFIGURE_OPTS
     CONFIGURE_OPTS+=" --disable-programs --disable-doc"
-    download_source $PROG $PROG $pver
+    download_source -dependency $PROG $PROG $pver
     patch_source patches-`echo $pver | cut -d. -f1-2`
     build
     restore_variable CONFIGURE_OPTS

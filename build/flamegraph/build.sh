@@ -47,6 +47,7 @@ make_install() {
 
 init
 download_source $PROG $PROG $VER
+patch_source
 prep_build
 make_install
 make_package
