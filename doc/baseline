@@ -182,6 +182,7 @@ extra.omnios ooce/runtime/groovy-40
 extra.omnios ooce/runtime/node-12
 extra.omnios ooce/runtime/node-14
 extra.omnios ooce/runtime/node-16
+extra.omnios ooce/runtime/node-18
 extra.omnios ooce/runtime/ruby-27
 extra.omnios ooce/runtime/ruby-30
 extra.omnios ooce/runtime/ruby-31
