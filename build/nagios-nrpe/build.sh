@@ -67,7 +67,7 @@ CONFIGURE_OPTS_64="
     --localstatedir=/var/$PREFIX
     --with-logdir=/var/log/$PREFIX
     --enable-command-args
-    ac_cv_path_sslbin=$OPENSSLPATH/bin/openssl
+    ac_cv_path_sslbin=$USRBIN/openssl-$OPENSSLVER
 "
 
 init
