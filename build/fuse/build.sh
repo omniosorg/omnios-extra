@@ -35,6 +35,7 @@ PATH+=":$ONBLDBIN/$ISAPART"
 # https://github.com/omniosorg/illumos-kvm/blob/master/Makefile#L105
 # omitting gcc version specific flags; removing -Werror for now.
 MAKE_ARGS=-e
+CFLAGS+=" $CFLAGS64"
 CFLAGS+=" -fident -fno-builtin -fno-asm -nodefaultlibs -Wall"
 CFLAGS+=" -Wno-unknown-pragmas -Wno-unused -fno-inline-functions"
 CFLAGS+=" -mcmodel=kernel -fno-shrink-wrap -g -O2 -fno-inline -ffreestanding"
