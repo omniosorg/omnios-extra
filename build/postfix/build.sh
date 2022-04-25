@@ -41,6 +41,7 @@ BUILD_DEPENDS_IPS="
     library/pcre2
     ooce/database/bdb
     ooce/database/lmdb
+    ooce/library/icu4c
     ooce/library/postgresql-${PGSQLVER//./}
     ooce/library/mariadb-${MARIASQLVER//./}
     ooce/library/security/libsasl2
@@ -59,6 +60,10 @@ MAKE_INSTALL_TARGET=non-interactive-package
 configure64() {
     logmsg "--- configure (make makefiles)"
     LIBDIR=${OPREFIX}/lib/${ISAPART64}
+    # help makedefs to find and successfully build a test program linking libicu
+    addpath PKG_CONFIG_PATH "$PKG_CONFIG_PATH64"
+    export PKG_CONFIG_PATH
+
     logcmd $MAKE makefiles CCARGS="$CFLAGS $CFLAGS64"' \
         -DUSE_TLS -DHAS_DB -DHAS_LMDB -DNO_NIS -DHAS_LDAP \
         -DHAS_SQLITE -DHAS_MYSQL -DHAS_PGSQL -DUSE_SASL_AUTH -DUSE_CYRUS_SASL \
