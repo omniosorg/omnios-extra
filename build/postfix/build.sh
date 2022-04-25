@@ -37,15 +37,20 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 CONFPATH="/etc$PREFIX"
 
+# The icu4c ABI changes frequently. Lock the version
+# pulled into each build of postfix.
+ICUVER=`pkg_ver icu4c`
+ICUVER=${ICUVER%%.*}
 BUILD_DEPENDS_IPS="
     library/pcre2
     ooce/database/bdb
     ooce/database/lmdb
-    ooce/library/icu4c
+    =ooce/library/icu4c@$ICUVER
     ooce/library/postgresql-${PGSQLVER//./}
     ooce/library/mariadb-${MARIASQLVER//./}
     ooce/library/security/libsasl2
 "
+RUN_DEPENDS_IPS="=ooce/library/icu4c@$ICUVER"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
