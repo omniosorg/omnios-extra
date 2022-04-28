@@ -24,7 +24,7 @@ DESC="Unofficial Bitwarden compatible server written in Rust, formerly known "
 DESC+="as bitwarden_rs"
 
 DANIGARCIA=$GITHUB/dani-garcia
-WEBVAULTVER=2.27.0
+WEBVAULTVER=2.28.0
 
 # The next vaultwarden version requires only the stable 1.25.0 rust version
 # until then, use nightly.
@@ -96,7 +96,7 @@ get_webvault() {
 
     set_mirror "$DANIGARCIA/$prog_repo/releases/download"
     set_checksum sha256 \
-        af8cf8e608d507e44c64cd0813f79cd327feaede180f3e48a59133e4595049db
+        16dd4e62a0e58e58379b509848e354d23d38bf598ac3489867160d6cd32e1637
 
     BUILDDIR=$prog \
         download_source "v$WEBVAULTVER" bw_web_v$WEBVAULTVER
