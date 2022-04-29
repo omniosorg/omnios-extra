@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=lsof
 PKG=ooce/file/lsof
-VER=4.94.0
+VER=4.95.0
 SUMMARY="List open files"
 DESC="Report a list of all open files and the processes that opened them"
 
