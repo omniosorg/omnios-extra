@@ -70,7 +70,7 @@
 | ooce/driver/fuse		| 1.4		| https://github.com/jurikm/illumos-fusefs/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/emacs		| 28.1		| https://ftp.gnu.org/gnu/emacs/ https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html#Releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
-| ooce/editor/nano		| 6.2		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
+| ooce/editor/nano		| 6.3		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
 | ooce/file/acltool		| 1.16.2	| https://github.com/ptrrkssn/acltool/releases | [Peter Eriksson](https://github.com/ptrrkssn)
 | ooce/file/lsof		| 4.95.0	| https://github.com/lsof-org/lsof/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/file/tree		| 2.0.0		| http://mama.indstate.edu/users/ice/tree/ | [omniosorg](https://github.com/omniosorg)
