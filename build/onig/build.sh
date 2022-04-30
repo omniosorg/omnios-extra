@@ -12,18 +12,15 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=onig
-VER=6.9.7.1
+VER=6.9.8
 PKG=ooce/library/onig
 SUMMARY="Oniguruma"
 DESC="A modern and flexible regular expressions library"
-
-# 6.9.7.1 is a revised 6.9.7 release
-set_builddir $PROG-${VER%.*}
 
 CONFIGURE_OPTS="--disable-static"
 
