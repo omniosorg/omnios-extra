@@ -17,19 +17,28 @@
 . ../../lib/build.sh
 
 PROG=pango
-VER=1.50.6
+VER=1.50.7
 PKG=ooce/library/pango
 SUMMARY="pango"
 DESC="Pango is a library for laying out and rendering of text"
 
 # Dependencies
-HARFBUZZVER=4.2.0
-FRIBIDIVER=1.0.11
+HARFBUZZVER=4.2.1
+FRIBIDIVER=1.0.12
 
+# The icu4c ABI changes frequently. Lock the version
+# pulled into each build of harfbuzz.
+ICUVER=`pkg_ver icu4c`
+ICUVER=${ICUVER%%.*}
 BUILD_DEPENDS_IPS="
+    =ooce/library/icu4c@$ICUVER
     ooce/library/fontconfig
     ooce/library/freetype2
     ooce/library/cairo
+"
+
+RUN_DEPENDS_IPS="
+    =ooce/library/icu4c@$ICUVER
 "
 
 XFORM_ARGS="
