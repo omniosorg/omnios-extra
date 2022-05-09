@@ -31,6 +31,9 @@ if [ $RELVER -lt 151030 ]; then
     exit 0
 fi
 
+# This component does not yet build with gcc 12
+((GCCVER > 11)) && set_gccver 11
+
 SKIP_LICENCES=GPLv2/gSOAP
 
 MAJVER=${VER%.*}            # M.m
