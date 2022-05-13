@@ -38,7 +38,7 @@
 | ooce/database/mariadb-107	| 10.7.3	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-10	| 10.21		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-11	| 11.16		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
-| ooce/database/postgresql-12	| 12.10		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/postgresql-12	| 12.11		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-13	| 13.6		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-14	| 14.2		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-XX/citus	| 10.2.5	| https://github.com/citusdata/citus/releases | [omniosorg](https://github.com/omniosorg)
