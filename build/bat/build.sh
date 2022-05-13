@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=bat
-VER=0.20.0
+VER=0.21.0
 PKG=ooce/util/bat
 SUMMARY="A cat clone with wings"
 DESC="A cat(1) clone with syntax highlighting and Git integration."
