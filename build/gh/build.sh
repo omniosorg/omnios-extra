@@ -18,12 +18,12 @@
 
 PROG=gh
 PKG=ooce/util/gh
-VER=2.9.0
+VER=2.10.1
 SUMMARY="github-cli"
 DESC="The GitHub CLI tool"
 
 set_arch 64
-set_gover
+set_gover 1.18
 
 RUN_DEPENDS_IPS="developer/versioning/git"
 
