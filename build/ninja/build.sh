@@ -12,17 +12,18 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=ninja
 PKG=ooce/developer/ninja
-VER=1.10.2
+VER=1.11.0
 SUMMARY="Ninja"
 DESC="A small build system with a focus on speed"
 
 set_arch 64
+[ $RELVER -ge 151043 ] && set_clangver
 
 CONFIGURE_OPTS_64="
     -DCMAKE_INSTALL_PREFIX=$PREFIX
@@ -31,6 +32,8 @@ CONFIGURE_OPTS_64="
 
 TESTSUITE_MAKE="./ninja_test"
 MAKE_TESTSUITE_ARGS=
+
+TESTSUITE_SED='s/\/[0-9][0-9]*\]/\/...]/'
 
 init
 download_source $PROG "v$VER"
