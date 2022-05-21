@@ -34,7 +34,7 @@
 | ooce/database/lmdb		| 0.9.29	| https://github.com/LMDB/lmdb/tags https://symas.com/lmdb/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-104	| 10.4.25	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-105	| 10.5.16	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/database/mariadb-106	| 10.6.7	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/mariadb-106	| 10.6.8	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-107	| 10.7.3	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-108	| 10.8.3	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-10	| 10.21		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
