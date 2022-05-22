@@ -17,16 +17,11 @@
 . ../../lib/build.sh
 
 PROG=mariadb
-VER=10.7.4
-PKG=ooce/database/mariadb-107
+VER=10.8.3
+PKG=ooce/database/mariadb-108
 SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
 DESC+="MySQL relational database management system"
-
-if [ $RELVER -lt 151038 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
