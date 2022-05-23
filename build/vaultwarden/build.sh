@@ -17,19 +17,14 @@
 . ../../lib/build.sh
 
 PROG=vaultwarden
-VER=1.24.0
+VER=1.25.0
 PKG=ooce/application/vaultwarden
 SUMMARY="Bitwarden compatible server"
 DESC="Unofficial Bitwarden compatible server written in Rust, formerly known "
 DESC+="as bitwarden_rs"
 
 DANIGARCIA=$GITHUB/dani-garcia
-WEBVAULTVER=2.28.0
-
-# The next vaultwarden version requires only the stable 1.25.0 rust version
-# until then, use nightly.
-RUST=rust-nightly-x86_64-unknown-illumos
-RUSTVER=2022-01-23
+WEBVAULTVER=2.28.1
 
 set_arch 64
 
@@ -41,6 +36,7 @@ EXECFILE=$PREFIX/bin/$PROG
 BMI_EXPECTED=1
 CARGO_ARGS="--features sqlite,mysql,postgresql"
 BUILD_DEPENDS_IPS="
+    ooce/developer/rust
     ooce/library/mariadb-${MARIASQLVER//./}
     ooce/library/postgresql-${PGSQLVER//./}
 "
@@ -59,17 +55,6 @@ XFORM_ARGS="
 "
 
 SKIP_LICENCES=bitwarden
-
-get_rust_nightly() {
-    BUILDDIR=$RUST download_source -norecord rust/nightly/$RUSTVER $RUST
-
-    logmsg "Installing rust nightly [$RUSTVER]"
-    logcmd $TMPDIR/$RUST/install.sh \
-        --prefix=$TMPDIR/_rust || logerr "installing rust"
-
-    CARGO="$TMPDIR/_rust/bin/cargo"
-    export PATH="$TMPDIR/_rust/bin:$PATH"
-}
 
 copy_sample_config() {
     local relative_conffile=${CONFFILE#/}
@@ -96,7 +81,7 @@ get_webvault() {
 
     set_mirror "$DANIGARCIA/$prog_repo/releases/download"
     set_checksum sha256 \
-        16dd4e62a0e58e58379b509848e354d23d38bf598ac3489867160d6cd32e1637
+        c477fe948a07469e70926c194ace0c7d1988288d18cb799febf3adf2abe92c24
 
     BUILDDIR=$prog \
         download_source "v$WEBVAULTVER" bw_web_v$WEBVAULTVER
@@ -109,7 +94,6 @@ get_webvault() {
 }
 
 init
-get_rust_nightly
 clone_github_source $PROG "$DANIGARCIA/$PROG" $VER
 BUILDDIR+=/$PROG
 patch_source
