@@ -1,0 +1,8 @@
+--- a~/vaultwarden/Cargo.toml	2022-05-23 18:39:39.875719438 +0000
++++ a/vaultwarden/Cargo.toml	2022-05-23 18:39:54.909249526 +0000
+@@ -158,5 +158,4 @@ job_scheduler = { git = 'https://github.
+ # Strip debuginfo from the release builds
+ # Also enable thin LTO for some optimizations
+ [profile.release]
+-strip = "debuginfo"
+ lto = "thin"
