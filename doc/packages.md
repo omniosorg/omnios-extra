@@ -191,7 +191,7 @@
 | ooce/util/bat			| 0.21.0	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/diffr		| 0.1.4		| https://github.com/mookid/diffr/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/util/fd			| 8.3.2		| https://github.com/sharkdp/fd/releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/util/gh			| 2.10.1	| https://github.com/cli/cli/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/util/gh			| 2.11.3	| https://github.com/cli/cli/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/htmlq		| 0.4.0		| https://github.com/mgdm/htmlq/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/hyperfine		| 1.14.0	| https://github.com/sharkdp/hyperfine/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/jq			| 1.6		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
