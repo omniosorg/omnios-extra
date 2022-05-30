@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=fd
-VER=8.3.2
+VER=8.4.0
 PKG=ooce/util/fd
 SUMMARY="find utility"
 DESC="fd is a simple, fast and user-friendly alternative to find"
