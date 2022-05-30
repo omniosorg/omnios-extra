@@ -1,0 +1,6 @@
+tif_jbig.c
+tif_jpeg.c
+tif_jpeg_12.c
+tif_lerc.c
+tif_ojpeg.c
+tif_webp.c
