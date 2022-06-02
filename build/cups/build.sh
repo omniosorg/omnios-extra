@@ -60,6 +60,8 @@ CONFIGURE_OPTS="
     --without-php
     --without-java
 "
+# cups only supports openssl 3+
+[ $RELVER -lt 151041 ] && CONFIGURE_OPTS+=" --with-tls=gnutls"
 
 CONFIGURE_OPTS_32="
     --libdir=$OPREFIX/lib
