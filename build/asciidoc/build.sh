@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=asciidoc
-VER=10.1.4
+VER=10.2.0
 PKG=ooce/text/asciidoc
 SUMMARY="text based documentation"
 DESC="AsciiDoc - $SUMMARY"
