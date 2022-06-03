@@ -18,9 +18,9 @@
 . ../../lib/build.sh
 
 PROG=nginx
-PKG=ooce/server/nginx-120
-VER=1.20.2
-SUMMARY="nginx 1.20 web server"
+PKG=ooce/server/nginx-122
+VER=1.22.0
+SUMMARY="nginx 1.22 web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
 BROTLIVER=1.0.0rc
