@@ -208,7 +208,7 @@
 | ooce/x11/library/libsm	| 1.2.3		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libx11	| 1.8		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libxau	| 1.0.9		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
-| ooce/x11/library/libxcb	| 1.14		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
+| ooce/x11/library/libxcb	| 1.15		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libxext	| 1.3.4		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libxfixes	| 6.0.0		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libxi	| 1.8		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
