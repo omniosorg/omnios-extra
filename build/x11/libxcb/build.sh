@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=libxcb
-VER=1.14
+VER=1.15
 PSTUBVER=0.1
 PKG=ooce/x11/library/libxcb
 SUMMARY="libxcb"
@@ -25,8 +25,9 @@ DESC="X protocol C-language Binding (XCB)"
 
 . $SRCDIR/../common.sh
 
+MAJVER=`echo $VER | perl -pe '(/(\d+\.\d+)/)[0]'`
 BUILD_DEPENDS_IPS="
-    ooce/x11/header/xcb-protocols
+    =ooce/x11/header/xcb-protocols@$MAJVER
     ooce/x11/library/libxau
 "
 
