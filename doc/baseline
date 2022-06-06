@@ -128,6 +128,7 @@ extra.omnios ooce/library/mariadb-104
 extra.omnios ooce/library/mariadb-105
 extra.omnios ooce/library/mariadb-106
 extra.omnios ooce/library/mariadb-107
+extra.omnios ooce/library/mariadb-108
 extra.omnios ooce/library/nettle
 extra.omnios ooce/library/onig
 extra.omnios ooce/library/openldap
