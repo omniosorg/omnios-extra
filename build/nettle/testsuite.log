@@ -1,6 +1,7 @@
 Making check in tools
 Making check in testsuite
 PASS: aes
+PASS: aes-keywrap
 PASS: arcfour
 PASS: arctwo
 PASS: blowfish
@@ -37,6 +38,7 @@ PASS: sha3-384
 PASS: sha3-512
 PASS: shake256
 PASS: streebog
+PASS: sm3
 PASS: serpent
 PASS: twofish
 PASS: version
@@ -114,12 +116,11 @@ nm: ../libnettle.a: No such file or directory
 PASS: symbols
 PASS: dlopen
 ====================
-All 110 tests passed
+All 112 tests passed
 ====================
 Making check in examples
 xxxxxx
 xxxxxx
-eee
 PASS: rsa-sign
 PASS: rsa-verify
 PASS: rsa-encrypt
