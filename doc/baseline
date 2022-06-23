@@ -229,6 +229,7 @@ extra.omnios ooce/util/ncdu
 extra.omnios ooce/util/pass
 extra.omnios ooce/util/rargs
 extra.omnios ooce/util/stress-ng
+extra.omnios ooce/util/uefivars
 extra.omnios ooce/util/xjobs
 extra.omnios ooce/util/zadm
 extra.omnios ooce/virtualization/virtualbox
