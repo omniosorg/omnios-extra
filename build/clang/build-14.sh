@@ -18,7 +18,7 @@
 
 PROG=clang
 PKG=ooce/developer/clang-14
-VER=14.0.5
+VER=14.0.6
 SUMMARY="C language family frontend for LLVM"
 DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
@@ -47,6 +47,11 @@ RUN_DEPENDS_IPS="=ooce/developer/llvm-$MAJVER@$MINVER"
 
 OPREFIX=$PREFIX
 PREFIX+=/llvm-$MAJVER
+
+PKGDIFFPATH="${PREFIX#/}/lib/$PROG"
+PKGDIFF_HELPER="
+    s:$PKGDIFFPATH/[0-9][0-9.]*:$PKGDIFFPATH/VERSION:
+"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
