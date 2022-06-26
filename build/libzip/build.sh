@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libzip
-VER=1.8.0
+VER=1.9.0
 PKG=ooce/library/libzip
 SUMMARY="libzip"
 DESC="A C library for reading, creating and modifying zip archives"
