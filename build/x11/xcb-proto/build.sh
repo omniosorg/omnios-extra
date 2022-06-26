@@ -17,7 +17,7 @@
 . ../../../lib/build.sh
 
 PROG=xcb-proto
-VER=1.15
+VER=1.15.2
 PKG=ooce/x11/header/xcb-protocols
 SUMMARY="xcb-proto"
 DESC="X protocol C-language Binding (XCB): Protocol descriptions"
