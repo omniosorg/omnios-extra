@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=haproxy
-VER=2.6.0
+VER=2.6.1
 PKG=ooce/server/haproxy
 SUMMARY="HAProxy - fast and reliable http reverse proxy and load balancer"
 DESC="A TCP/HTTP reverse proxy which is particularly suited for high "
