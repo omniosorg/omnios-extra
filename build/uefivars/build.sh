@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=uefivars
-VER=github-latest
+VER=0.2.0
 PKG=ooce/util/uefivars
 SUMMARY="UEFI variable store firmware volume utility"
 DESC="Utility for inspecting and manipulating a UEFI variable store"
