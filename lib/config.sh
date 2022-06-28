@@ -329,7 +329,11 @@ case $RELVER in
     *) logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
 
-DEFAULT_CLANG_VER=13
+# Specify default clang version for building packages
+case $RELVER in
+    15104[3-9])         DEFAULT_CLANG_VER=14 ;;
+    *)                  DEFAULT_CLANG_VER=13 ;;
+esac
 
 DEFAULT_GO_VER=1.17
 DEFAULT_NODE_VER=16

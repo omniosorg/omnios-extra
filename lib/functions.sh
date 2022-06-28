@@ -1300,8 +1300,7 @@ clone_go_source() {
 
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
-    [ -z "$GOPATH" ] && GOPATH="$TMPDIR/$BUILDDIR/$deps"
-    export GOPATH
+    export GOPATH="$TMPDIR/$BUILDDIR/$deps"
 
     logmsg "Getting go dependencies"
     logcmd go get -d ./... || logerr "failed to get dependencies"

@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
 --- a~/Makefile	1970-01-01 00:00:00
 +++ a/Makefile	1970-01-01 00:00:00
-@@ -157,8 +157,6 @@ check: gofmt govet golangci-lint
+@@ -159,8 +159,6 @@ check: gofmt govet golangci-lint
  
  .PHONY: vendor
  vendor:

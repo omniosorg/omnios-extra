@@ -18,7 +18,7 @@
 
 PROG=htop
 PKG=ooce/system/htop
-VER=3.2.0
+VER=3.2.1
 SUMMARY="htop"
 DESC="An interactive process viewer for Unix"
 

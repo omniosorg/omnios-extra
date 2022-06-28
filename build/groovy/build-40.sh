@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=groovy
-VER=4.0.2
+VER=4.0.3
 PKG=ooce/runtime/groovy-40
 SUMMARY="Groovy"
 DESC="Java-syntax-compatible object-oriented programming "

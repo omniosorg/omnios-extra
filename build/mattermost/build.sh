@@ -17,8 +17,8 @@
 . ../../lib/build.sh
 
 PROG=mattermost
-VER=6.7.0
-MMCTLVER=6.7.0
+VER=7.0.1
+MMCTLVER=7.0.0
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
 DESC="All your team communication in one place, "
@@ -105,11 +105,11 @@ install() {
 init
 prep_build
 gitenv
-# use clone_github_source instead of clone_go_source
-# since mattermost bundles its dependencies
-clone_github_source -dependency "mmctl" "$GITHUB/$PROG/mmctl" v$MMCTLVER
-clone_github_source -dependency "$PROG-server" \
-    "$GITHUB/$PROG/$PROG-server" v$VER
+save_variables BUILDDIR EXTRACTED_SRC
+clone_go_source mmctl $PROG v$MMCTLVER
+restore_variables BUILDDIR EXTRACTED_SRC
+clone_go_source "$PROG-server" $PROG v$VER
+restore_variables BUILDDIR EXTRACTED_SRC
 clone_github_source -dependency "$PROG-webapp" \
     "$GITHUB/$PROG/$PROG-webapp" v$VER
 ((EXTRACT_MODE)) && exit
