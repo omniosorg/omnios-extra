@@ -152,7 +152,7 @@ Once these empty files are created, the following templates can be used to creat
 
 # Copyright YYYY your name/organisation
 
-. ../../lib/functions.sh
+. ../../lib/build.sh
 
 PROG=helloworld
 VER=0.1
