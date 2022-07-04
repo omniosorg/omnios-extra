@@ -18,7 +18,7 @@
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.61.0
+VER=1.62.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
@@ -54,6 +54,7 @@ XFORM_ARGS="
 "
 
 SKIP_RTIME_CHECK=1
+SKIP_SSP_CHECK=1
 NO_SONAME_EXPECTED=1
 
 RUSTARCH=x86_64-unknown-illumos
@@ -67,6 +68,7 @@ CONFIGURE_OPTS_64="
 "
 
 CONFIGURE_OPTS+="
+    --release-description=OmniOS/$RELVER
     --enable-vendor
     --enable-extended
     --build=$RUSTARCH
@@ -93,6 +95,19 @@ if [ -n "$SYSTEM_LLVM_PATH" ]; then
     export RUSTFLAGS="-C link-arg=-L$llvm_lib -C link-arg=-R$llvm_lib"
 fi
 
+TESTSUITE_SED="
+    /^$/ {
+        N
+        /failures:/b op
+    }
+    d
+    :op
+    /^gmake:/d
+    /^Build completed/d
+    n
+    b op
+"
+
 save_function make_install _make_install
 make_install() {
     logcmd mkdir -p $DESTDIR/$PREFIX || logerr "failed to create directory"
@@ -104,6 +119,7 @@ download_source $PROG ${PROG}c $VER-src
 patch_source
 prep_build
 build -noctf
+run_testsuite check
 make_package
 clean_up
 
