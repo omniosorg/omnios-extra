@@ -199,7 +199,7 @@
 | ooce/util/pass		| 1.7.4		| https://git.zx2c4.com/password-store/refs/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/rargs		| 0.3.0		| https://github.com/lotabout/rargs/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/stress-ng		| 0.14.00	| https://github.com/ColinIanKing/stress-ng/tags | [omniosorg](https://github.com/omniosorg)
-| ooce/util/uefivars		| 0.2.0		| https://github.com/citrus-it/uefivars/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/util/uefivars		| 1.0.0		| https://github.com/citrus-it/uefivars/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/xjobs		| 20200726	| https://www.maier-komor.de/xjobs.html | [omniosorg](https://github.com/omniosorg)
 | ooce/util/zadm		| github-latest	| https://github.com/omniosorg/zadm/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/virtualization/virtualbox | 6.1.34	| https://www.virtualbox.org/wiki/Downloads | [omniosorg](https://github.com/omniosorg)
