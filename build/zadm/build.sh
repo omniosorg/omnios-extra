@@ -24,6 +24,8 @@ DESC="$PROG - $SUMMARY"
 
 NOVNCVER=1.3.0
 
+RUN_DEPENDS_IPS="ooce/util/uefivars"
+
 if [ $RELVER -le 151036 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
     exit 0
