@@ -26,6 +26,7 @@ extra.omnios ooce/application/php-81/imagick
 extra.omnios ooce/application/php-common
 extra.omnios ooce/application/texlive
 extra.omnios ooce/application/tidy
+extra.omnios ooce/application/tig
 extra.omnios ooce/application/vagrant
 extra.omnios ooce/application/vaultwarden
 extra.omnios ooce/application/zabbix-agent
