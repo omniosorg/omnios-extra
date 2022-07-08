@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=cyrus
-VER=3.4.3
+VER=3.4.4
 PKG=ooce/network/cyrus-imapd
 SUMMARY="Cyrus IMAP is an email, contacts and calendar server"
 DESC="$SUMMARY"
