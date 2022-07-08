@@ -200,7 +200,7 @@
 | ooce/util/rargs		| 0.3.0		| https://github.com/lotabout/rargs/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/rlwrap		| 0.45.2	| https://github.com/hanslub42/rlwrap/releases | [r7st](https://github.com/r7st)
 | ooce/util/stress-ng		| 0.14.00	| https://github.com/ColinIanKing/stress-ng/tags | [omniosorg](https://github.com/omniosorg)
-| ooce/util/uefivars		| 1.0.0		| https://github.com/citrus-it/uefivars/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/util/uefivars		| 1.0.1		| https://github.com/citrus-it/uefivars/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/xjobs		| 20200726	| https://www.maier-komor.de/xjobs.html | [omniosorg](https://github.com/omniosorg)
 | ooce/util/zadm		| github-latest	| https://github.com/omniosorg/zadm/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/virtualization/virtualbox | 6.1.34	| https://www.virtualbox.org/wiki/Downloads | [omniosorg](https://github.com/omniosorg)
