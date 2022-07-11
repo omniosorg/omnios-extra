@@ -191,6 +191,7 @@ ELFEDIT=$USRBIN/elfedit
 GIT=$USRBIN/git
 MAKE=$USRBIN/gmake
 PATCH=$USRBIN/gpatch
+STRIP=$USRBIN/strip
 TAR="$USRBIN/gtar --no-same-permissions --no-same-owner"
 TESTSUITE_MAKE=$USRBIN/gmake
 UNZIP=$USRBIN/unzip

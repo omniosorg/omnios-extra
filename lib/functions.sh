@@ -2954,7 +2954,7 @@ strip_files() {
             mode=$(stat -c %a "$f")
             logcmd chmod u+w "$f" || logerr -b "chmod failed: $f (u+w)"
         fi
-        logcmd strip -x "$f" || logerr "strip $f failed"
+        logcmd $STRIP -x "$f" || logerr "strip $f failed"
         if [ -n "$mode" ]; then
             logcmd chmod $mode "$f" || logerr -b "chmod failed: $f ($mode)"
         fi
