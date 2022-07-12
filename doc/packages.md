@@ -11,7 +11,7 @@
 | ooce/application/mattermost	| 7.0.1		| https://github.com/mattermost/mattermost-server/releases https://docs.mattermost.com/upgrade/version-archive.html#mattermost-team-edition | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.28	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/munin	| 2.0.69	| https://github.com/munin-monitoring/munin/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/mutt		| 2.2.4		| http://www.mutt.org/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/application/mutt		| 2.2.6		| http://www.mutt.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios	| 4.4.7		| https://github.com/NagiosEnterprises/nagioscore/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nrdp	| 2.0.5 	| https://github.com/NagiosEnterprises/nrdp/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nrpe	| 4.0.3		| https://github.com/NagiosEnterprises/nrpe/releases | [omniosorg](https://github.com/omniosorg)
