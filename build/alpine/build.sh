@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=alpine
-VER=2.25
+VER=2.26
 PKG=ooce/application/alpine
 SUMMARY="Alpine Email Program"
 DESC="$PROG - an Alternatively Licensed Program for Internet News and Email"
@@ -54,7 +54,7 @@ init
 download_source $PROG $PROG $VER
 prep_build autoconf -autoreconf
 patch_source
-build -ctf
+build
 make_package
 clean_up
 

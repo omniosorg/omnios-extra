@@ -1,6 +1,6 @@
 | Package | Version | Link | Maintainer |
 | :------ | :------ | :--- | :--------- |
-| ooce/application/alpine	| 2.25		| https://alpineapp.email/ | [omniosorg](https://github.com/omniosorg)
+| ooce/application/alpine	| 2.26		| https://alpineapp.email/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/fcgiwrap	| 1.1.0		| https://github.com/gnosek/fcgiwrap/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gitea	| 1.16.8	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gnuplot	| 5.4.3		| https://sourceforge.net/projects/gnuplot/files/gnuplot/ http://www.gnuplot.info/ | [omniosorg](https://github.com/omniosorg)
