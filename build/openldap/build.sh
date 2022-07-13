@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=openldap
-VER=2.4.58
+VER=2.6.2
 PKG=ooce/network/openldap
 SUMMARY="open-source LDAP implementation"
 DESC="Open-source implementation of the Lightweight Directory Access Protocol"
@@ -74,7 +74,7 @@ CONFIGURE_OPTS_64+="
 "
 [ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
 
-MAKE_INSTALL_ARGS+=" STRIP="
+MAKE_INSTALL_ARGS+=" STRIP= STRIP_OPTS="
 
 # On older OmniOS releases where the compiler outputs 32-bit objects by
 # default, libtool creates some intermediate objects as 32-bit during the
@@ -89,7 +89,7 @@ fi
 
 build_manifests() {
     manifest_start $TMPDIR/manifest.client
-    manifest_add_dir $OPREFIX/lib $ISAPART64
+    manifest_add_dir $OPREFIX/lib pkgconfig $ISAPART64 $ISAPART64/pkgconfig
     manifest_add_dir $PREFIX/bin
     manifest_add_dir $OPREFIX/include
     manifest_add_dir $PREFIX/share/man man1 man3
@@ -105,7 +105,7 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-build -ctf
+build
 xform files/$PROG.xml > $TMPDIR/$PROG.xml
 install_smf -oocemethod ooce $PROG.xml
 build_manifests

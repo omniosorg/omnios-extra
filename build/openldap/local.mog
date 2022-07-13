@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 license LICENSE license=OpenLDAP
 
@@ -26,11 +26,17 @@ license LICENSE license=OpenLDAP
 <transform file dir path=var/$(PREFIX) -> set owner $(USER)>
 <transform file dir path=var/$(PREFIX) -> set group $(GROUP)>
 
-# OmniOS only provides the thread-safe libldap_r.so. libldap.so et al. are
-# linked to this.
-<transform file path=$(OPREFIX)/lib/(?:amd64/)?libldap-(.*)$ -> emit \
-    link path=%(path) target=libldap_r-%<1> >
-<transform file path=$(OPREFIX)/lib/(?:amd64/)?libldap- -> drop>
+# openldap used to ship libraries under a new SONAME for every 2.x
+# release before 2.6. Add compatibility symlinks for software built
+# against openldap 2.4
+<transform file path=($(OPREFIX)/lib/(?:amd64/)?)(libldap\.so\.2[.\d]+)$ \
+    -> emit link path=%<1>libldap_r.so target=%<2> >
+<transform file path=($(OPREFIX)/lib/(?:amd64/)?)(libldap\.so\.2[.\d]+)$ \
+    -> emit link path=%<1>libldap-2.4.so.2 target=%<2> >
+<transform file path=($(OPREFIX)/lib/(?:amd64/)?)(libldap\.so\.2[.\d]+)$ \
+    -> emit link path=%<1>libldap_r-2.4.so.2 target=%<2> >
+<transform file path=($(OPREFIX)/lib/(?:amd64/)?)(liblber\.so\.2[.\d]+)$ \
+    -> emit link path=%<1>liblber-2.4.so.2 target=%<2> >
 
 <include binlink.mog>
 <include manlink.mog>
