@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -27,14 +27,25 @@ DESC+="can disconnect/reconnect without losing the chat session"
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-XFORM_ARGS="
-    -DPREFIX=${PREFIX#/}
-    -DOPREFIX=${OPREFIX#/}
-    -DPROG=$PROG
-"
+# The icu4c ABI changes frequently. Lock the version
+# pulled into each build of znc.
+ICUVER=`pkg_ver icu4c`
+ICUVER=${ICUVER%%.*}
+BUILD_DEPENDS_IPS="=ooce/library/icu4c@$ICUVER"
+RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
 
 set_arch 64
 [ $RELVER -ge 151041 ] && set_clangver
+
+XFORM_ARGS="
+    -DOPREFIX=${OPREFIX#/}
+    -DPREFIX=${PREFIX#/}
+    -DPROG=$PROG
+    -DPKGROOT=$PROG
+"
+
+SKIP_RTIME_CHECK=1
+NO_SONAME_EXPECTED=1
 
 install_modules() {
     for f in $SRCDIR/files/*.cpp; do
