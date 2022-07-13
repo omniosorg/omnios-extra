@@ -18,7 +18,7 @@
 
 PROG=minio-mc
 PKG=ooce/storage/minio-mc
-VER=2022-04-26T18-00-22Z
+VER=2022-07-06T14-54-36Z
 SUMMARY="MinIO client"
 DESC="A modern alternative to UNIX commands like ls, cat, cp, mirror, diff, "
 DESC+="find etc. It supports filesystems and Amazon S3 compatible cloud "
@@ -40,7 +40,7 @@ build() {
     logcmd $MAKE LDFLAGS="$LDFLAGS" || logerr "Build failed"
 
     # $PROG version <ver>
-    [ "`./mc --version | awk '{print $3}'`" = "$MC_RELEASE.$VER" ] \
+    [ "`./mc --version | awk 'NR==1 {print $3}'`" = "$MC_RELEASE.$VER" ] \
         || logerr "version patch failed."
 
     popd >/dev/null

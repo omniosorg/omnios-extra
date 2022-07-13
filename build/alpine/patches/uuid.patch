@@ -10,14 +10,16 @@ diff --git a/imap/src/c-client/oauth2_aux.c b/imap/src/c-client/oauth2_aux.c
 index d2ad6ce..ca0fadb 100644
 --- a/imap/src/c-client/oauth2_aux.c
 +++ b/imap/src/c-client/oauth2_aux.c
-@@ -24,30 +24,20 @@
+@@ -24,6 +24,8 @@
  #include "json.h"
  #include "oauth2_aux.h"
  
 +#include <uuid/uuid.h>
 +
- /* we generate something like a guid, but not care about
-  * anything, but that it is really random.
+ OA2_type oauth2_find_extra_parameter(OAUTH2_S *, char *);
+ JSON_S *oauth2_json_reply(OAUTH2_SERVER_METHOD_S, OAUTH2_S *, int *);
+ char *xoauth2_server(char *, char *);
+@@ -148,25 +150,13 @@
   */
  char *oauth2_generate_state(void)
  {
@@ -28,19 +30,19 @@ index d2ad6ce..ca0fadb 100644
  
    rv[0] = '\0';
 -  for(i = 0; i < 4; i++)
--     sprintf(rv + strlen(rv), "%x", (unsigned int) (random() % 256));
+-     sprintf(rv + strlen(rv), "%02x", (unsigned int) (random() % 256));
 -  sprintf(rv + strlen(rv), "%c", '-');
 -  for(i = 0; i < 2; i++)
--     sprintf(rv + strlen(rv), "%x", (unsigned int) (random() % 256));
+-     sprintf(rv + strlen(rv), "%02x", (unsigned int) (random() % 256));
 -  sprintf(rv + strlen(rv), "%c", '-');
 -  for(i = 0; i < 2; i++)
--     sprintf(rv + strlen(rv), "%x", (unsigned int) (random() % 256));
+-     sprintf(rv + strlen(rv), "%02x", (unsigned int) (random() % 256));
 -  sprintf(rv + strlen(rv), "%c", '-');
 -  for(i = 0; i < 2; i++)
--     sprintf(rv + strlen(rv), "%x", (unsigned int) (random() % 256));
+-     sprintf(rv + strlen(rv), "%02x", (unsigned int) (random() % 256));
 -  sprintf(rv + strlen(rv), "%c", '-');
 -  for(i = 0; i < 6; i++)
--     sprintf(rv + strlen(rv), "%x", (unsigned int) (random() % 256));
+-     sprintf(rv + strlen(rv), "%02x", (unsigned int) (random() % 256));
 -  rv[36] = '\0';
 +  uuid_generate(uu);
 +  uuid_unparse_lower(uu, rv);

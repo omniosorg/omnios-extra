@@ -18,7 +18,7 @@
 
 PROG=minio
 PKG=ooce/storage/minio
-VER=2022-04-30T22-23-53Z
+VER=2022-07-08T00-05-23Z
 SUMMARY="MinIO server"
 DESC="A high Performance Object Storage released under Apache License v2.0. "
 DESC+="It is API compatible with Amazon S3 cloud storage service."
@@ -48,7 +48,7 @@ build() {
     logcmd $MAKE || logerr "Build failed"
 
     # $PROG version <ver>
-    [ "`./$PROG --version | awk '{print $3}'`" = "$MINIO_RELEASE.$VER" ] \
+    [ "`./$PROG --version | awk 'NR==1 {print $3}'`" = "$MINIO_RELEASE.$VER" ] \
         || logerr "version patch failed."
 
     popd >/dev/null
