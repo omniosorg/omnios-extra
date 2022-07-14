@@ -136,6 +136,7 @@ ok - handle_type_name
 ok - has_ref
 ok - homedir
 ok - hrtime
+ok - idle_check
 ok - idle_ref
 ok - idle_starvation
 ok - idna_toascii
@@ -173,6 +174,7 @@ ok - open_osfhandle_valid_handle
 ok - pipe_bind_error_addrinuse
 ok - pipe_bind_error_addrnotavail
 ok - pipe_bind_error_inval
+ok - pipe_bind_or_listen_error_after_close
 ok - pipe_close_stdout_read_stdin
 ok - pipe_connect_bad_name
 ok - pipe_connect_multiple
@@ -243,6 +245,7 @@ ok - spawn_inherit_streams
 ok - spawn_preserve_env
 ok - spawn_quoted_path # SKIP Test for Windows
 ok - spawn_reads_child_path
+ok - spawn_relative_path
 ok - spawn_setgid_fails
 ok - spawn_setuid_fails
 ok - spawn_setuid_setgid # SKIP It should be run as root user
@@ -257,6 +260,7 @@ ok - spawn_tcp_server
 ok - stdio_emulate_iocp
 ok - stdio_over_pipes
 ok - strscpy
+ok - strtok
 ok - sys_error
 ok - tcp6_local_connect_timeout
 ok - tcp6_ping_pong
@@ -275,11 +279,14 @@ ok - tcp_bind_error_fault
 ok - tcp_bind_error_inval
 ok - tcp_bind_invalid_flags
 ok - tcp_bind_localhost_ok
+ok - tcp_bind_or_listen_error_after_close
 ok - tcp_bind_writable_flags
 ok - tcp_close
 ok - tcp_close_accept
+ok - tcp_close_after_read_timeout
 ok - tcp_close_reset_accepted
 ok - tcp_close_reset_accepted_after_shutdown
+ok - tcp_close_reset_accepted_after_socket_shutdown
 ok - tcp_close_reset_client
 ok - tcp_close_reset_client_after_shutdown
 ok - tcp_close_while_connecting
@@ -307,6 +314,7 @@ ok - tcp_ref2
 ok - tcp_ref2b
 ok - tcp_ref3
 ok - tcp_ref4
+ok - tcp_rst
 ok - tcp_shutdown_after_write
 ok - tcp_try_write
 ok - tcp_try_write_error
