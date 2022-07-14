@@ -28,7 +28,7 @@ diff -wpruN '--exclude=*.orig' a~/conf/zabbix_agentd.conf a/conf/zabbix_agentd.c
  
  ### Option: DebugLevel
  #	Specifies debug level:
-@@ -302,15 +302,15 @@ Hostname=Zabbix server
+@@ -312,15 +312,15 @@ Hostname=Zabbix server
  
  ### Option: Include
  #	You may include individual files or all files in a directory in the configuration file.
