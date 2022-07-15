@@ -17,13 +17,13 @@
 . ../../lib/build.sh
 
 PROG=pango
-VER=1.50.7
+VER=1.50.8
 PKG=ooce/library/pango
 SUMMARY="pango"
 DESC="Pango is a library for laying out and rendering of text"
 
 # Dependencies
-HARFBUZZVER=4.2.1
+HARFBUZZVER=4.4.1
 FRIBIDIVER=1.0.12
 
 # The icu4c ABI changes frequently. Lock the version

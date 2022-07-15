@@ -4,7 +4,7 @@ We'd quite like fatal errors to create core files that allow analysis.
 diff -wpruN '--exclude=*.orig' a~/src/libs/zbxnix/sighandler.c a/src/libs/zbxnix/sighandler.c
 --- a~/src/libs/zbxnix/sighandler.c	1970-01-01 00:00:00
 +++ a/src/libs/zbxnix/sighandler.c	1970-01-01 00:00:00
-@@ -179,12 +179,6 @@ void	zbx_set_common_signal_handlers(void
+@@ -209,12 +209,6 @@ void	zbx_set_common_signal_handlers(zbx_
  	sigaction(SIGTERM, &phan, NULL);
  	sigaction(SIGUSR2, &phan, NULL);
  

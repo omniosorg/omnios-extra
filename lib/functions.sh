@@ -1419,6 +1419,7 @@ manifest_finalise() {
         $RIPGREP "(file|link|hardlink).* path=$prefix/" $mf \
             | sed "
                 s^.*path=$prefix/^^
+                s^  *target=.*$^^
                 s^/[^/]*$^^
         " | sort -u | while read dir; do
             logmsg "---- $dir"
