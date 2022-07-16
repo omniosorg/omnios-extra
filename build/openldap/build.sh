@@ -22,6 +22,10 @@ PKG=ooce/network/openldap
 SUMMARY="open-source LDAP implementation"
 DESC="Open-source implementation of the Lightweight Directory Access Protocol"
 
+# Previous versions that also need to be built and packaged since compiled
+# software may depend on it.
+PVERS="2.4.59"
+
 OPREFIX="$PREFIX"
 PREFIX+="/$PROG"
 
@@ -102,9 +106,24 @@ build_manifests() {
 }
 
 init
+prep_build
+
+# Build previous versions
+for pver in $PVERS; do
+    note -n "Building previous version: $pver"
+    save_variables BUILDDIR EXTRACTED_SRC CONFIGURE_OPTS_64
+    BUILDDIR=$PROG-$pver
+    EXTRACTED_SRC=$PROG-$pver
+    CONFIGURE_OPTS_64+=" --disable-slapd"
+    download_source $PROG $PROG $pver
+    patch_source patches-`echo $pver | cut -d. -f1-2`
+    build
+    restore_variables BUILDDIR EXTRACTED_SRC CONFIGURE_OPTS_64
+done
+
+note -n "Building current version: $VER"
 download_source $PROG $PROG $VER
 patch_source
-prep_build
 build
 xform files/$PROG.xml > $TMPDIR/$PROG.xml
 install_smf -oocemethod ooce $PROG.xml
