@@ -1,4 +1,11 @@
 # Building OmniOS Packages
+
+> **Warning**
+>
+> There is no guarantee that packages in this repository build correctly on
+> OmniOS releases earlier than **r151038**. If you wish to build on older
+> releases, check out the `pre-r151038` tag.
+
 ## Introduction
 The purpose of this document is to introduce building packages for the "OmniOS Extra IPS Repository".
 
