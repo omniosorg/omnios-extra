@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=openldap
-VER=2.6.2
+VER=2.6.3
 PKG=ooce/network/openldap
 SUMMARY="open-source LDAP implementation"
 DESC="Open-source implementation of the Lightweight Directory Access Protocol"
