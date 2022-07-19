@@ -14,7 +14,7 @@
 | ooce/application/mutt		| 2.2.6		| http://www.mutt.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios	| 4.4.7		| https://github.com/NagiosEnterprises/nagioscore/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nrdp	| 2.0.5 	| https://github.com/NagiosEnterprises/nrdp/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/nagios-nrpe	| 4.0.3		| https://github.com/NagiosEnterprises/nrpe/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/nagios-nrpe	| 4.1.0		| https://github.com/NagiosEnterprises/nrpe/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nsca	| 2.10.2	| https://github.com/NagiosEnterprises/nsca/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-plugins | 2.3.3	| http://www.nagios-plugins.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/novnc	| 1.3.0		| https://github.com/novnc/noVNC/releases | Currently used solely by zadm
