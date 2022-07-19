@@ -19,7 +19,7 @@
 
 PROG=nginx
 PKG=ooce/server/nginx
-VER=1.23.0
+VER=1.23.1
 SUMMARY="nginx web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
@@ -50,6 +50,7 @@ XFORM_ARGS="
     -DVERSION=$MAJVER
     -DsVERSION=
     -DDsVERSION=
+    -DBROTLI=$BROTLIVER
 "
 
 CONFIGURE_OPTS_64=
@@ -84,26 +85,11 @@ CONFIGURE_OPTS="
     --http-fastcgi-temp-path=/tmp/.nginx/fastcgi
     --http-uwsgi-temp-path=/tmp/.nginx/uwsgi
     --http-scgi-temp-path=/tmp/.nginx/scgi
+    --add-dynamic-module=../ngx_brotli-$BROTLIVER
 "
 
 
 LDFLAGS+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
-
-brotli() {
-    if [ $RELVER -ge 151035 ]; then
-        CONFIGURE_OPTS+=" --add-dynamic-module=../ngx_brotli-$BROTLIVER"
-        BUILDDIR=ngx_brotli-$BROTLIVER download_source $PROG/brotli v$BROTLIVER
-        XFORM_ARGS+="
-            -DBROTLI=$BROTLIVER
-            -DBROTLI_ONLY=
-        "
-    else
-        XFORM_ARGS+="
-            -DBROTLI=unused
-            -DBROTLI_ONLY=#
-        "
-    fi
-}
 
 copy_man_page() {
     logmsg "--- copying man page"
@@ -117,9 +103,9 @@ copy_man_page() {
 init
 download_source $PROG $PROG $VER
 patch_source
-brotli
+BUILDDIR=ngx_brotli-$BROTLIVER download_source $PROG/brotli v$BROTLIVER
 prep_build
-build -ctf
+build
 copy_man_page
 xform files/http-$PROG-template.xml > $TMPDIR/http-$PROG.xml
 xform files/http-$PROG-template > $TMPDIR/http-$PROG
