@@ -20,7 +20,7 @@ PROG=ansible
 # NB: When bumping this version, also run this script with -P to re-generate
 # files/constraints which fixes the version of dependant python modules for
 # reproducible builds.
-VER=5.7.0
+VER=6.1.0
 PKG=ooce/system/management/ansible
 SUMMARY="Radically simple IT automation"
 DESC="Ansible is a radically simple IT automation system."
@@ -37,7 +37,7 @@ RUN_DEPENDS_IPS+="
     library/python-$PYMVER/cffi-$PYTHONPKGVER
     library/python-$PYMVER/pycparser-$PYTHONPKGVER
 "
-[ $RELVER -ge 151041 ] \
+[ $RELVER -ge 151041 -a $RELVER -lt 151043 ] \
     && RUN_DEPENDS_IPS+="library/python-$PYMVER/markupsafe-$PYTHONPKGVER"
 
 XFORM_ARGS="
