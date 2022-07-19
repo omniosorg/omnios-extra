@@ -26,17 +26,11 @@ license LICENSE license=OpenLDAP
 <transform file dir path=var/$(PREFIX) -> set owner $(USER)>
 <transform file dir path=var/$(PREFIX) -> set group $(GROUP)>
 
-# openldap used to ship libraries under a new SONAME for every 2.x
-# release before 2.6. Add compatibility symlinks for software built
-# against openldap 2.4
+# keep libldap_r.so link for compatibility
+<transform link path=$(OPREFIX)/lib/(?:amd64/)?libldap_r\.so \
+    target=libldap_r-2\.4 -> drop >
 <transform file path=($(OPREFIX)/lib/(?:amd64/)?)(libldap\.so\.2[.\d]+)$ \
     -> emit link path=%<1>libldap_r.so target=%<2> >
-<transform file path=($(OPREFIX)/lib/(?:amd64/)?)(libldap\.so\.2[.\d]+)$ \
-    -> emit link path=%<1>libldap-2.4.so.2 target=%<2> >
-<transform file path=($(OPREFIX)/lib/(?:amd64/)?)(libldap\.so\.2[.\d]+)$ \
-    -> emit link path=%<1>libldap_r-2.4.so.2 target=%<2> >
-<transform file path=($(OPREFIX)/lib/(?:amd64/)?)(liblber\.so\.2[.\d]+)$ \
-    -> emit link path=%<1>liblber-2.4.so.2 target=%<2> >
 
 <include binlink.mog>
 <include manlink.mog>
