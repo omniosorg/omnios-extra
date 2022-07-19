@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nagios-nsca
-VER=2.10.1
+VER=2.10.2
 PKG=ooce/application/nagios-nsca
 SUMMARY="Nagios Service Check Acceptor"
 DESC="The Nagios Service Check Acceptor (NSCA) is used to send service check \
@@ -26,16 +26,10 @@ which runs on the main Nagios server and accepts results and the \
 send_nsca client which is used to send results to the server."
 
 set_arch 64
+set_builddir nsca-$VER
 
-BUILDDIR=nsca-$VER
-
-BUILD_DEPENDS_IPS="
-    ooce/library/libmcrypt
-"
-
-RUN_DEPENDS_IPS="
-    ooce/application/nagios-common
-"
+BUILD_DEPENDS_IPS="ooce/library/libmcrypt"
+RUN_DEPENDS_IPS="ooce/application/nagios-common"
 
 MAKE_ARGS="all"
 
@@ -46,7 +40,8 @@ XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 CFLAGS+=" -I$OPREFIX/include"
 LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
-LDFLAGS64+=" -lmcrypt"
+# getnameinfo
+LDFLAGS64+=" -lmcrypt -lsocket"
 
 make_install64() {
     logmsg "--- make install"
@@ -71,7 +66,6 @@ download_source nagios nsca $VER
 patch_source
 prep_build
 build
-strip_install
 install_smf application nsca.xml
 make_package
 clean_up
