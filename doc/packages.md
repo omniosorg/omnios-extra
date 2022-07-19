@@ -79,7 +79,7 @@
 | ooce/fonts/liberation		| 2.1.5		| https://github.com/liberationfonts/liberation-fonts/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/apr		| 1.7.0 	| https://downloads.apache.org/apr/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/apr-util		| 1.6.1		| https://downloads.apache.org/apr/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/bdw-gc		| 8.0.6		| https://www.hboehm.info/gc/gc_source/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/bdw-gc		| 8.2.0		| https://www.hboehm.info/gc/gc_source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/cairo		| 1.16.0	| https://cairographics.org/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/fcgi2		| 2.4.2		| https://github.com/FastCGI-Archives/fcgi2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/fontconfig	| 2.13.1	| https://www.freedesktop.org/software/fontconfig/release/ https://www.freedesktop.org/wiki/Software/fontconfig/ | [omniosorg](https://github.com/omniosorg)
