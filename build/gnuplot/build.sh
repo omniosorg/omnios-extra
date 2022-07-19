@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=gnuplot
-VER=5.4.3
+VER=5.4.4
 PKG=ooce/application/gnuplot
 SUMMARY="gnuplot"
 DESC="A portable command-line driven graphing utility"
@@ -30,9 +30,10 @@ PREFIX+="/$PROG"
 set_arch 64
 
 XFORM_ARGS="
-    -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
+    -DPREFIX=${PREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CPPFLAGS+=" -I$OPREFIX/include"
@@ -42,7 +43,7 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-build -ctf
+build
 make_package
 clean_up
 
