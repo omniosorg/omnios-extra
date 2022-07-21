@@ -18,16 +18,16 @@
 
 PROG=gdb
 PKG=ooce/developer/gdb
-VER=11.2
+VER=12.1
 SUMMARY="$PROG - GNU Debugger"
 DESC="The GNU debugger"
 
-OPREFIX=$PREFIX
-PREFIX+=/$PROG
-
-RUN_DEPENDS_IPS+=" shell/bash"
 # gdb needs gdb to build - the one from the previous release is fine
 BUILD_DEPENDS_IPS+=" ooce/developer/gdb"
+RUN_DEPENDS_IPS+=" shell/bash"
+
+OPREFIX=$PREFIX
+PREFIX+=/$PROG
 
 set_arch 64
 
@@ -56,6 +56,9 @@ export PATH=$GNUBIN:$PATH
 
 # gdb has large enumerations
 CTF_FLAGS+=" -s"
+
+MAKE_ARGS="MAKEINFO=/bin/true"
+MAKE_INSTALL_ARGS="$MAKE_ARGS"
 
 # Generate illumos data files describing system calls and structures
 # found in core files.

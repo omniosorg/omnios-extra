@@ -17,8 +17,7 @@
     -> set restart_fmri svc:/network/http:$(PROG)$(sVERSION)>
 
 license LICENSE license=simplified-BSD
-$(BROTLI_ONLY)license ../ngx_brotli-$(BROTLI)/LICENSE \
-    license=simplified-BSD/ngx_brotli
+license ../ngx_brotli-$(BROTLI)/LICENSE license=simplified-BSD/ngx_brotli
 
 <include mediated-binlink.mog>
 <include mediated-manlink.mog>

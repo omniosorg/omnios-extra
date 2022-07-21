@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nagios-nrpe
-VER=4.0.3
+VER=4.1.0
 PKG=ooce/application/nagios-nrpe
 SUMMARY="Nagios Remote Plugin Executor"
 DESC="NRPE allows you to execute local plugins (like check_disk, \
@@ -27,16 +27,9 @@ Requires that nrpe be running on the remote host (either as a standalone \
 daemon or as a service under inetd)."
 
 set_arch 64
+set_builddir nrpe-$VER
 
-# configure uses 'openssl dhparam -C' to generate code and that option has been
-# removed in OpenSSL 3; stick with 1.1 for now.
-[ "$OPENSSLVER" = 3 ] && set_opensslver 1.1
-
-BUILDDIR=nrpe-$VER
-
-RUN_DEPENDS_IPS="
-    ooce/application/nagios-common
-"
+RUN_DEPENDS_IPS="ooce/application/nagios-common"
 
 MAKE_ARGS="all"
 
@@ -67,7 +60,6 @@ CONFIGURE_OPTS_64="
     --localstatedir=/var/$PREFIX
     --with-logdir=/var/log/$PREFIX
     --enable-command-args
-    ac_cv_path_sslbin=$USRBIN/openssl-$OPENSSLVER
 "
 
 init
@@ -75,7 +67,6 @@ download_source nagios nrpe $VER
 patch_source
 prep_build
 build
-strip_install
 install_smf application nrpe.xml
 make_package
 clean_up

@@ -12,15 +12,15 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=bdw-gc
-VER=8.0.6
+VER=8.2.0
 PKG=ooce/library/bdw-gc
-SUMMARY="A garbage collector for C and C++"
-DESC="$SUMMARY"
+SUMMARY="$PROG"
+DESC="A garbage collector for C and C++"
 
 set_builddir gc-$VER
 SKIP_LICENCES=gc
