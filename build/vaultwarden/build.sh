@@ -18,7 +18,7 @@
 
 PROG=vaultwarden
 VER=1.25.1
-DASHREV=0
+DASHREV=1
 PKG=ooce/application/vaultwarden
 SUMMARY="Bitwarden compatible server"
 DESC="Unofficial Bitwarden compatible server written in Rust, formerly known "
