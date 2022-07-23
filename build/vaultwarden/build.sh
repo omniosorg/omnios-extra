@@ -18,14 +18,14 @@
 
 PROG=vaultwarden
 VER=1.25.1
-DASHREV=0
+DASHREV=1
 PKG=ooce/application/vaultwarden
 SUMMARY="Bitwarden compatible server"
 DESC="Unofficial Bitwarden compatible server written in Rust, formerly known "
 DESC+="as bitwarden_rs"
 
 DANIGARCIA=$GITHUB/dani-garcia
-WEBVAULTVER=2022.6.0
+WEBVAULTVER=2022.6.2
 
 set_arch 64
 
@@ -82,7 +82,7 @@ get_webvault() {
 
     set_mirror "$DANIGARCIA/$prog_repo/releases/download"
     set_checksum sha256 \
-        fd92f147cee22cbc395650bed11a9a0d470ee1a7814f80638b113722847007bb
+        206fde0814d46bb78a79a7a5ab10963beaeb5c952e05a9e1b18c2495fb7174e1
 
     BUILDDIR=$prog \
         download_source "v$WEBVAULTVER" bw_web_v$WEBVAULTVER
