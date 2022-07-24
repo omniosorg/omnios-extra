@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/bin/startGroovy a/bin/startGroovy
 --- a~/bin/startGroovy	1970-01-01 00:00:00
 +++ a/bin/startGroovy	1970-01-01 00:00:00
-@@ -263,7 +263,7 @@ if "$cygwin"; then
+@@ -272,7 +272,7 @@ if "$cygwin"; then
  fi
  
  startGroovy ( ) {
