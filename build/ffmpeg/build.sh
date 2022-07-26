@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=ffmpeg
-VER=5.0.1
+VER=5.1
 PKG=ooce/multimedia/ffmpeg
 SUMMARY="ffmpeg"
 DESC="A complete, cross-platform solution to record, "
@@ -56,6 +56,7 @@ CONFIGURE_OPTS+="
     --enable-shared
     --disable-debug
     --disable-stripping
+    --enable-libdav1d
     --enable-libfontconfig
     --enable-libfreetype
     --enable-libvorbis
@@ -65,7 +66,6 @@ CONFIGURE_OPTS+="
     --enable-libx265
     --enable-gnutls
 "
-[ $RELVER -ge 151036 ] && CONFIGURE_OPTS+=" --enable-libdav1d"
 CONFIGURE_OPTS_32="
     --libdir=$OPREFIX/lib
 "
@@ -99,7 +99,6 @@ set_builddir $PROG-$VER
 download_source $PROG $PROG $VER
 patch_source
 build
-strip_install
 make_package
 clean_up
 
