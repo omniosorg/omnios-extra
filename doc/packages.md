@@ -111,7 +111,7 @@
 | ooce/library/libvncserver	| 0.9.13	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libwebp		| 1.2.3		| https://developers.google.com/speed/webp/download | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libzip		| 1.9.2		| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/nettle		| 3.8		| https://ftp.gnu.org/gnu/nettle/ https://www.lysator.liu.se/~nisse/nettle/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/nettle		| 3.8.1		| https://ftp.gnu.org/gnu/nettle/ https://www.lysator.liu.se/~nisse/nettle/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/onig		| 6.9.8		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pango		| 1.50.8	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/protobuf		| 3.15.5	| https://github.com/protocolbuffers/protobuf/releases/ | Currently used solely by mosh
