@@ -17,16 +17,11 @@
 . ../../lib/build.sh
 
 PROG=clamav
-VER=0.105.0
+VER=0.105.1
 PKG=ooce/system/clamav
 SUMMARY="Clam Anti-virus"
 DESC="$PROG is an open-source antivirus engine for detecting trojans, "
 DESC+="viruses, malware & other malicious threats."
-
-if [ $RELVER -lt 151036 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
