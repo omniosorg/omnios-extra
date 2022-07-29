@@ -18,6 +18,7 @@
 
 PROG=bdw-gc
 VER=8.2.0
+DASHREV=1
 PKG=ooce/library/bdw-gc
 SUMMARY="$PROG"
 DESC="A garbage collector for C and C++"
@@ -30,6 +31,7 @@ XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 init
 download_source $PROG gc $VER
 patch_source
+run_autoreconf -fi
 prep_build
 build
 make_package
