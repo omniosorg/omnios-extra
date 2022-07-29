@@ -18,6 +18,7 @@
 
 PROG=nagios
 VER=4.4.7
+DASHREV=1
 PKG=ooce/application/nagios
 SUMMARY="Extremely powerful network monitoring system"
 DESC="Nagios is a host and service monitor designed to inform you of network \
