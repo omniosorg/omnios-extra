@@ -4,6 +4,7 @@ set name=pkg.description value="Tools required to build OmniOS extra"
 
 depend fmri=ooce/omnios-build-tools type=require
 
+depend fmri=compress/lz4 type=require
 depend fmri=driver/tuntap type=require
 depend fmri=library/unixodbc type=require
 depend fmri=ooce/application/graphviz type=require
@@ -19,6 +20,8 @@ depend fmri=ooce/developer/gdb type=require
 depend fmri=ooce/developer/go-117 type=require
 depend fmri=ooce/developer/go-118 type=require
 depend fmri=ooce/developer/gperf type=require
+depend fmri=ooce/developer/llvm-13 type=require
+depend fmri=ooce/developer/clang-13 type=require
 depend fmri=ooce/developer/subversion type=require
 depend fmri=ooce/developer/zig type=require
 depend fmri=ooce/editor/emacs type=require
@@ -60,6 +63,7 @@ depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require
 depend fmri=ooce/library/tiff type=require
 depend fmri=ooce/library/unbound type=require
+depend fmri=ooce/multimedia/dav1d type=require
 depend fmri=ooce/multimedia/ffmpeg type=require
 depend fmri=ooce/multimedia/x264 type=require
 depend fmri=ooce/multimedia/x265 type=require
@@ -70,39 +74,19 @@ depend fmri=ooce/text/docbook-xsl type=require
 depend fmri=system/header/header-agp type=require
 depend fmri=system/header/header-usb type=require
 depend fmri=system/library/pcap type=require
-
-# lz4 was moved to core in r151035.
-depend type=require-any fmri=pkg:/compress/lz4 fmri=pkg:/ooce/compress/lz4
-
-# Required to build x11 libraries from r151035 onwards
-depend fmri=ooce/x11/header/xcb-protocols type=conditional \
-    predicate=release/name@0.5.11-151035
-depend fmri=ooce/x11/header/x11-protocols type=conditional \
-    predicate=release/name@0.5.11-151035
-depend fmri=ooce/x11/library/libxfixes type=conditional \
-    predicate=release/name@0.5.11-151035
-depend fmri=ooce/x11/library/xtrans type=conditional \
-    predicate=release/name@0.5.11-151035
-depend fmri=ooce/x11/library/libx11 type=conditional \
-    predicate=release/name@0.5.11-151035
-depend fmri=ooce/x11/library/libxau type=conditional \
-    predicate=release/name@0.5.11-151035
-depend fmri=ooce/x11/library/libxcb type=conditional \
-    predicate=release/name@0.5.11-151035
-
-# Added support to ffmpeg from r151036 onwards
-depend fmri=ooce/multimedia/dav1d type=conditional \
-    predicate=release/name@0.5.11-151036
-
-# Added llvm/clang 13 from r151036 onwards
-depend fmri=ooce/developer/llvm-13 type=conditional \
-    predicate=release/name@0.5.11-151036
-
-# some packages use clang to build from r151038 onwards
-depend fmri=ooce/developer/clang-13 type=conditional \
-    predicate=release/name@0.5.11-151038
+depend fmri=ooce/x11/header/xcb-protocols type=require
+depend fmri=ooce/x11/header/x11-protocols type=require
+depend fmri=ooce/x11/library/libxfixes type=require
+depend fmri=ooce/x11/library/xtrans type=require
+depend fmri=ooce/x11/library/libx11 type=require
+depend fmri=ooce/x11/library/libxau type=require
+depend fmri=ooce/x11/library/libxcb type=require
 
 # Added llvm/clang 14 from r151041 onwards
 depend fmri=ooce/developer/llvm-14 type=conditional \
     predicate=release/name@0.5.11-151041
+
+# clang 14 is the default clang compiler from r151043 onwards
+depend fmri=ooce/developer/clang-14 type=conditional \
+    predicate=release/name@0.5.11-151043
 
