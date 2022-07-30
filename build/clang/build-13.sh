@@ -31,7 +31,7 @@ fi
 
 set_arch 64
 [ $RELVER -ge 151041 ] && set_clangver
-set_builddir $PROG-$VER.src
+set_builddir llvm-project-$VER.src/$PROG
 
 SKIP_RTIME_CHECK=1
 
@@ -76,7 +76,7 @@ CONFIGURE_OPTS_WS_64="
 export LD_LIBRARY_PATH="$PREFIX/lib"
 
 init
-download_source $PROG $PROG $VER.src
+download_source llvm llvm-project $VER.src
 patch_source
 prep_build cmake+ninja
 build -noctf    # C++
