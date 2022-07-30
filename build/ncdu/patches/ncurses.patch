@@ -1,0 +1,45 @@
+diff -wpruN '--exclude=*.orig' a~/build.zig a/build.zig
+--- a~/build.zig	1970-01-01 00:00:00
++++ a/build.zig	1970-01-01 00:00:00
+@@ -12,7 +12,7 @@ pub fn build(b: *std.build.Builder) void
+     exe.setBuildMode(mode);
+     exe.addCSourceFile("src/ncurses_refs.c", &[_][]const u8{});
+     exe.linkLibC();
+-    exe.linkSystemLibrary("ncursesw");
++    exe.linkSystemLibrary("ncurses");
+     exe.install();
+ 
+     const run_cmd = exe.run();
+@@ -26,7 +26,7 @@ pub fn build(b: *std.build.Builder) void
+ 
+     const tst = b.addTest("src/main.zig");
+     tst.linkLibC();
+-    tst.linkSystemLibrary("ncursesw");
++    tst.linkSystemLibrary("ncurses");
+     tst.addCSourceFile("src/ncurses_refs.c", &[_][]const u8{});
+     const tst_step = b.step("test", "Run tests");
+     tst_step.dependOn(&tst.step);
+diff -wpruN '--exclude=*.orig' a~/src/ncurses_refs.c a/src/ncurses_refs.c
+--- a~/src/ncurses_refs.c	1970-01-01 00:00:00
++++ a/src/ncurses_refs.c	1970-01-01 00:00:00
+@@ -2,7 +2,7 @@
+  * SPDX-License-Identifier: MIT
+  */
+ 
+-#include <curses.h>
++#include <ncurses/curses.h>
+ 
+ /* Zig @cImport() has problems with the ACS_* macros. Two, in fact:
+  *
+diff -wpruN '--exclude=*.orig' a~/src/ui.zig a/src/ui.zig
+--- a~/src/ui.zig	1970-01-01 00:00:00
++++ a/src/ui.zig	1970-01-01 00:00:00
+@@ -11,7 +11,7 @@ pub const c = @cImport({
+     @cDefine("_XOPEN_SOURCE", "1");
+     @cInclude("stdio.h");
+     @cInclude("string.h");
+-    @cInclude("curses.h");
++    @cInclude("ncurses/curses.h");
+     @cInclude("time.h");
+     @cInclude("wchar.h");
+     @cInclude("locale.h");

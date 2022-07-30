@@ -10,7 +10,6 @@
 # A full copy of the text of the CDDL should have accompanied this
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
-#
 # }}}
 #
 # Copyright 2021 Oxide Computer Company
@@ -20,20 +19,30 @@
 . ../../lib/build.sh
 
 PROG=ncdu
-VER=1.17
+VER=2.1.2
 PKG=ooce/util/ncdu
 SUMMARY="$PROG - NCurses Disk Usage"
-DESC='Disk usage analyzer with an ncurses interface'
+DESC="Disk usage analyzer with an ncurses interface"
 
 set_arch 64
+set_clangver # zig requires CC to be set
 
-CPPFLAGS+=' -I/usr/include/ncurses '
+BUILD_DEPENDS_IPS="ooce/developer/zig"
+
+# No configure
+configure64() { :; }
+
+# enable SSP and avoid BMI instructions
+export ZIG_FLAGS="-Drelease-safe -Dcpu=opteron"
+
+MAKE_INSTALL_ARGS="PREFIX=$PREFIX"
 
 init
-download_source "$PROG" "$PROG" "$VER"
+download_source $PROG $PROG $VER
 patch_source
 prep_build
-build -ctf
+build -noctf
+strip_install
 make_package
 clean_up
 
