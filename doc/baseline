@@ -83,6 +83,7 @@ extra.omnios ooce/developer/pkgmgr
 extra.omnios ooce/developer/radare2
 extra.omnios ooce/developer/rust
 extra.omnios ooce/developer/subversion
+extra.omnios ooce/developer/zig
 extra.omnios ooce/driver/fuse
 extra.omnios ooce/editor/emacs
 extra.omnios ooce/editor/joe
