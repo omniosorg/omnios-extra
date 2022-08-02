@@ -1,0 +1,31 @@
+diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -31,21 +31,21 @@ ncdu.1: ncdu.pod src/main.zig
+ install: install-bin install-doc
+ 
+ install-bin: release
+-	mkdir -p ${BINDIR}
+-	install -m0755 zig-out/bin/ncdu ${BINDIR}/
++	mkdir -p ${DESTDIR}/${BINDIR}
++	install -m0755 zig-out/bin/ncdu ${DESTDIR}/${BINDIR}/
+ 
+ install-doc: doc
+-	mkdir -p ${MANDIR}
+-	install -m0644 ncdu.1 ${MANDIR}/
++	mkdir -p ${DESTDIR}/${MANDIR}
++	install -m0644 ncdu.1 ${DESTDIR}/${MANDIR}/
+ 
+ uninstall: uninstall-bin uninstall-doc
+ 
+ # XXX: Ideally, these would also remove the directories created by 'install' if they are empty.
+ uninstall-bin:
+-	rm -f ${BINDIR}/ncdu
++	rm -f ${DESTDIR}/${BINDIR}/ncdu
+ 
+ uninstall-doc:
+-	rm -f ${MANDIR}/ncdu.1
++	rm -f ${DESTDIR}/${MANDIR}/ncdu.1
+ 
+ dist: doc
+ 	rm -f ncdu-${NCDU_VERSION}.tar.gz

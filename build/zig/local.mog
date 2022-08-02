@@ -8,12 +8,11 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-# Copyright 2021 Oxide Computer Company
+
 # Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
-#
 
-license LICENSES/MIT.txt license=MIT
+license LICENSE license=MIT
 
-# zig installs a stray ncdu to /usr
-<transform path=usr -> drop>
+<include binlink.mog>
+<include manlink.mog>
 
