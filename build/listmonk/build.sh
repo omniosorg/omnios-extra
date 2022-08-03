@@ -18,7 +18,7 @@
 
 PROG=listmonk
 PKG=ooce/application/listmonk
-VER=2.1.0
+VER=2.2.0
 SUMMARY="$PROG"
 DESC="Self-hosted newsletter & mailing list manager"
 
@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover
+set_gover 1.18
 set_nodever
 
 XFORM_ARGS="

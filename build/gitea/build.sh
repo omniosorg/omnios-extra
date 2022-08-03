@@ -18,7 +18,7 @@
 
 PROG=gitea
 PKG=ooce/application/gitea
-VER=1.16.9
+VER=1.17.0
 SUMMARY="Git with a cup of tea"
 DESC="Git with a cup of tea, painless self-hosted git service"
 
@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover
+set_gover 1.18
 # gitea 1.11.x requires node.js
 set_nodever
 

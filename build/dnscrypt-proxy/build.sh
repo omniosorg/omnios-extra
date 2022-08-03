@@ -18,13 +18,13 @@
 
 PROG=dnscrypt-proxy
 PKG=ooce/network/dnscrypt-proxy
-VER=2.1.1
+VER=2.1.2
 SUMMARY="DNS proxy with support for encrypted DNS protocols"
 DESC="A flexible DNS proxy, with support for modern encrypted DNS protocols"
 DESC+=" such as DNSCrypt v2 and DNS-over-HTTP/2."
 
 set_arch 64
-set_gover
+set_gover 1.18
 
 BASEDIR=$PREFIX/$PROG
 CONFFILE=/etc$BASEDIR/$PROG.conf
