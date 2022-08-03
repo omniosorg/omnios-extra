@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.18
+set_gover
 # gitea 1.11.x requires node.js
 set_nodever
 

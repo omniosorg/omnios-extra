@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover 1.18
+set_gover
 set_nodever
 
 XFORM_ARGS="

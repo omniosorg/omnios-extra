@@ -24,7 +24,7 @@ DESC="A flexible DNS proxy, with support for modern encrypted DNS protocols"
 DESC+=" such as DNSCrypt v2 and DNS-over-HTTP/2."
 
 set_arch 64
-set_gover 1.18
+set_gover
 
 BASEDIR=$PREFIX/$PROG
 CONFFILE=/etc$BASEDIR/$PROG.conf
