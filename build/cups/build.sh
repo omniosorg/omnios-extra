@@ -63,6 +63,10 @@ CONFIGURE_OPTS="
 # cups only supports openssl 3+
 [ $RELVER -lt 151041 ] && CONFIGURE_OPTS+=" --with-tls=gnutls"
 
+# cups uses libusb_get_device_list to enumerate devices
+# this currently fails in zones as it uses libdevinfo
+CONFIGURE_OPTS+=" --disable-libusb"
+
 CONFIGURE_OPTS_32="
     --libdir=$OPREFIX/lib
 "
