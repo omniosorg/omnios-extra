@@ -18,9 +18,11 @@
 
 PROG=php
 PKG=ooce/application/php-81
-VER=8.1.8
+VER=8.1.9
 SUMMARY="PHP 8.1"
 DESC="A popular general-purpose scripting language"
+
+PANDAHASH=3452f15
 
 set_arch 64
 
@@ -92,7 +94,7 @@ CONFIGURE_CMD=/bin/true \
     MAKE_ARGS_WS="
         EXTRACFLAGS=\"-I$OPENSSLPATH/include/openssl $CFLAGS $CFLAGS64\"
     " \
-    build_dependency uw-imap panda-imap-master uw-imap panda-imap master
+    build_dependency uw-imap panda-imap-master uw-imap panda-imap $PANDAHASH
 
 save_function _make_install make_install
 restore_buildenv

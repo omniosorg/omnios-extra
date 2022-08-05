@@ -22,6 +22,8 @@ VER=8.0.22
 SUMMARY="PHP 8.0"
 DESC="A popular general-purpose scripting language"
 
+PANDAHASH=3452f15
+
 set_arch 64
 
 SKIP_LICENCES=PHP
@@ -92,7 +94,7 @@ CONFIGURE_CMD=/bin/true \
     MAKE_ARGS_WS="
         EXTRACFLAGS=\"-I$OPENSSLPATH/include/openssl $CFLAGS $CFLAGS64\"
     " \
-    build_dependency uw-imap panda-imap-master uw-imap panda-imap master
+    build_dependency uw-imap panda-imap-master uw-imap panda-imap $PANDAHASH
 
 save_function _make_install make_install
 restore_buildenv
