@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/modules/Makefile.in a/modules/Makefile.in
+--- a~/modules/Makefile.in	1970-01-01 00:00:00
++++ a/modules/Makefile.in	1970-01-01 00:00:00
+@@ -66,7 +66,7 @@ ZLIB_LIB	= @Z_LIB@ -lz
+ # ---------------------------------------------------------------------------
+ # If building the SOCKET module, you may need to set these
+ # ---------------------------------------------------------------------------
+-SOCKET_LIBS = @X_EXTRA_LIBS@
++SOCKET_LIBS = @X_EXTRA_LIBS@ -lsocket
+ # ---------------------------------------------------------------------------
+ # Installation location of the modules
+ # ---------------------------------------------------------------------------

@@ -12,20 +12,18 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=slang
 PKG=ooce/library/slang
-VER=2.3.2
+VER=2.3.3
 SUMMARY="S-Lang"
 DESC="A multi-platform programmer's library designed to allow a "
 DESC+="developer to create robust multi-platform software"
 
-BUILD_DEPENDS_IPS="
-    ooce/library/libpng
-"
+forgo_isaexec
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
@@ -34,11 +32,12 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-    -DVERSION=$VER
+    -DPKGROOT=$PROG
 "
 
-# slang does not build with parallel make
-NO_PARALLEL_MAKE=1
+NO_SONAME_EXPECTED=1
+
+TESTSUITE_SED="1,/Running tests/d"
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
@@ -46,26 +45,20 @@ CONFIGURE_OPTS="
     --sysconfdir=/etc/$PREFIX
 "
 CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
-    --sbindir=$PREFIX/sbin/$ISAPART
     --libdir=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    --bindir=$PREFIX/bin
-    --sbindir=$PREFIX/sbin
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
-CFLAGS+=" -I$OPREFIX/include"
 LDFLAGS+=" $SSPFLAGS"
-LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_package
 clean_up
 
