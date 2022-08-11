@@ -2,8 +2,8 @@
 failures:
     [ui] src/test/ui/abi/stack-probes-lto.rs
     [ui] src/test/ui/abi/stack-probes.rs
+    [ui] src/test/ui/associated-consts/issue-93775.rs
     [ui] src/test/ui/backtrace.rs
-    [ui] src/test/ui/box/thin_zst.rs
     [ui] src/test/ui/issues/issue-33770.rs
     [ui] src/test/ui/issues/issue-33992.rs
     [ui] src/test/ui/issues/issue-74564-if-expr-stack-overflow.rs
@@ -16,6 +16,6 @@ failures:
     [ui] src/test/ui/runtime/out-of-stack.rs
     [ui] src/test/ui/std-backtrace.rs
 
-test result: FAILED. 12980 passed; 15 failed; 108 ignored; 0 measured; 0 filtered out; finished in 762.12s
+test result: FAILED. 12994 passed; 15 failed; 111 ignored; 0 measured; 0 filtered out; finished in 440.29s
 
 Some tests failed in compiletest suite=ui mode=ui host=x86_64-unknown-illumos target=x86_64-unknown-illumos
