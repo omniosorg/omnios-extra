@@ -19,7 +19,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-14
-VER=14.4
+VER=14.5
 SUMMARY="PostgreSQL 14"
 DESC="The World's Most Advanced Open Source Relational Database"
 
@@ -44,6 +44,10 @@ RUNPATH=$VARPATH/run
 
 reset_configure_opts
 
+SKIP_RTIME_CHECK=1
+SKIP_SSP_CHECK=1
+NO_SONAME_EXPECTED=1
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
@@ -56,6 +60,8 @@ XFORM_ARGS="
 
 CFLAGS+=" -O3"
 CPPFLAGS+=" -DWAIT_USE_POLL"
+# postgresql has large enumerations
+CTF_FLAGS+=" -s"
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX

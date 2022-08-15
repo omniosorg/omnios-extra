@@ -19,7 +19,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-10
-VER=10.21
+VER=10.22
 SUMMARY="PostgreSQL 10"
 DESC="The World's Most Advanced Open Source Relational Database"
 
@@ -39,6 +39,10 @@ RUNPATH=$VARPATH/run
 reset_configure_opts
 
 RUN_DEPENDS_IPS="ooce/database/postgresql-common"
+
+SKIP_RTIME_CHECK=1
+SKIP_SSP_CHECK=1
+NO_SONAME_EXPECTED=1
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}

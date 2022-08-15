@@ -12,20 +12,18 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=ldns
-VER=1.8.1
+VER=1.8.3
 PKG=ooce/library/ldns
 SUMMARY=$PROG
 DESC="$PROG DNS programming library and drill utility"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
-
-[ "$OPENSSLVER" = 3 ] && set_opensslver 1.1
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
