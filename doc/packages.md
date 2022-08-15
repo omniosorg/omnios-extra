@@ -206,7 +206,7 @@
 | ooce/util/xjobs		| 20200726	| https://www.maier-komor.de/xjobs.html | [omniosorg](https://github.com/omniosorg)
 | ooce/util/zadm		| github-latest	| https://github.com/omniosorg/zadm/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/virtualization/virtualbox | 6.1.36	| https://www.virtualbox.org/wiki/Downloads | [omniosorg](https://github.com/omniosorg)
-| ooce/x11/header/x11-protocols	| 2022.1	| https://www.x.org/archive/individual/proto/ | [omniosorg](https://github.com/omniosorg)
+| ooce/x11/header/x11-protocols	| 2022.2	| https://www.x.org/archive/individual/proto/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/header/xcb-protocols	| 1.15.2	| https://www.x.org/archive/individual/proto/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libice	| 1.0.10	| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libsm	| 1.2.3		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)

@@ -17,7 +17,7 @@
 . ../../../lib/build.sh
 
 PROG=xorgproto
-VER=2022.1
+VER=2022.2
 PKG=ooce/x11/header/x11-protocols
 SUMMARY="xorgproto"
 DESC="X Window System protocol definitions"
