@@ -19,7 +19,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-13
-VER=13.7
+VER=13.8
 SUMMARY="PostgreSQL 13"
 DESC="The World's Most Advanced Open Source Relational Database"
 
@@ -37,6 +37,10 @@ VARPATH=/var$PREFIX
 RUNPATH=$VARPATH/run
 
 reset_configure_opts
+
+SKIP_RTIME_CHECK=1
+SKIP_SSP_CHECK=1
+NO_SONAME_EXPECTED=1
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
