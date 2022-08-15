@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libjpeg-turbo
-VER=2.1.3
+VER=2.1.4
 PKG=ooce/library/libjpeg-turbo
 SUMMARY="libjpeg-turbo"
 DESC="SIMD-accelerated libjpeg-compatible JPEG codec library"
@@ -27,6 +27,8 @@ BUILD_DEPENDS_IPS="
     developer/nasm
 "
 
+[ $RELVER -ge 151043 ] && set_clangver
+
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
@@ -35,6 +37,11 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
 "
+
+TESTSUITE_SED='
+    1,/^Test project/d
+    s/  *[0-9][0-9.]*  *sec//
+'
 
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
@@ -53,7 +60,8 @@ init
 download_source $PROG $PROG $VER
 prep_build cmake+ninja
 patch_source
-build -ctf
+build
+run_testsuite
 make_package
 clean_up
 
