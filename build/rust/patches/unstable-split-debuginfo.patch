@@ -4,7 +4,7 @@ See https://github.com/rust-lang/rust/pull/98763
 diff -wpruN '--exclude=*.orig' a~/src/bootstrap/builder.rs a/src/bootstrap/builder.rs
 --- a~/src/bootstrap/builder.rs	1970-01-01 00:00:00
 +++ a/src/bootstrap/builder.rs	1970-01-01 00:00:00
-@@ -1433,7 +1433,8 @@ impl<'a> Builder<'a> {
+@@ -1760,7 +1760,8 @@ impl<'a> Builder<'a> {
              let needs_unstable_opts = target.contains("linux")
                  || target.contains("windows")
                  || target.contains("bsd")
