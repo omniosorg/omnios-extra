@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
 --- a~/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/CMakeLists.txt	1970-01-01 00:00:00
-@@ -238,8 +238,8 @@ ENDIF()
+@@ -240,8 +240,8 @@ ENDIF()
  OPTION(SECURITY_HARDENED "Use security-enhancing compiler features (stack protector, relro, etc)" ON)
  IF(SECURITY_HARDENED AND NOT WITH_ASAN AND NOT WITH_UBSAN AND NOT WITH_TSAN)
    # security-enhancing flags
