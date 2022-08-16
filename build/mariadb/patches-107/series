@@ -3,5 +3,5 @@ missing_concurrency.patch
 04-dtrace.patch
 05-no-pie.patch
 08-dtrace-invalid-conversion.patch
-openssl3.patch
-openssl3b.patch
+aligned_alloc.patch
+my_gethwaddr.patch
