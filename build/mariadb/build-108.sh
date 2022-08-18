@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=mariadb
-VER=10.8.3
+VER=10.8.4
 PKG=ooce/database/mariadb-108
 SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
@@ -35,6 +35,8 @@ VARPATH=/var$PREFIX
 RUNPATH=$VARPATH/run
 
 SKIP_RTIME_CHECK=1
+SKIP_SSP_CHECK=1
+NO_SONAME_EXPECTED=1
 
 BUILD_DEPENDS_IPS="
     ooce/developer/cmake

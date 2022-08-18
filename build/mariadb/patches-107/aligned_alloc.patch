@@ -1,0 +1,15 @@
+diff -wpruN '--exclude=*.orig' a~/include/aligned.h a/include/aligned.h
+--- a~/include/aligned.h	1970-01-01 00:00:00
++++ a/include/aligned.h	1970-01-01 00:00:00
+@@ -24,7 +24,11 @@ inline void *aligned_malloc(size_t size,
+ #ifdef _WIN32
+   return _aligned_malloc(size, alignment);
+ #elif defined HAVE_ALIGNED_ALLOC
++#ifdef __cplusplus
++  return std::aligned_alloc(alignment, size);
++#else
+   return aligned_alloc(alignment, size);
++#endif /* __cplusplus */
+ #elif defined __linux__
+   return memalign(alignment, size);
+ #else

@@ -4,5 +4,4 @@ missing_concurrency.patch
 05-no-pie.patch
 08-dtrace-invalid-conversion.patch
 cfi.patch
-openssl3.patch
-openssl3b.patch
+my_gethwaddr.patch
