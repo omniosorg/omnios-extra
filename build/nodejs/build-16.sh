@@ -17,16 +17,11 @@
 . ../../lib/build.sh
 
 PROG=node
-VER=16.16.0
+VER=16.17.0
 PKG=ooce/runtime/node-16
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
 DESC+="It is intended for writing scalable network programs such as web servers."
-
-if [ $RELVER -lt 151036 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
 
 MAJVER=${VER%%.*}
 
