@@ -18,7 +18,7 @@
 . ../../lib/build.sh
 
 PROG=bind
-VER=9.16.31
+VER=9.16.32
 PKG=ooce/network/bind-916
 SUMMARY="ISC BIND DNS Server & Tools"
 DESC="Server & Client Utilities for DNS"
@@ -44,6 +44,9 @@ OPREFIX=$PREFIX
 PREFIX+=/named-$MAJVER
 CONFPATH=/etc$PREFIX
 VARPATH=/var$OPREFIX/named/named-$MAJVER
+
+SKIP_RTIME_CHECK=1
+NO_SONAME_EXPECTED=1
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
