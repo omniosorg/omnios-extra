@@ -18,7 +18,7 @@
 . ../../lib/build.sh
 
 PROG=bind
-VER=9.18.5
+VER=9.18.6
 PKG=ooce/network/bind-918
 SUMMARY="ISC BIND DNS Server & Tools"
 DESC="Server & Client Utilities for DNS"
@@ -52,6 +52,9 @@ HARDLINK_TARGETS="
     ${PREFIX#/}/bin/named-checkzone
     ${PREFIX#/}/sbin/tsig-keygen
 "
+
+SKIP_RTIME_CHECK=1
+NO_SONAME_EXPECTED=1
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
