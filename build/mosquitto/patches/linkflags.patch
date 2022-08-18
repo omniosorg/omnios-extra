@@ -1,6 +1,7 @@
---- a/src/CMakeLists.txt	Mon Aug  2 14:52:17 2021
-+++ b/src/CMakeLists.txt	Mon Aug  2 14:57:46 2021
-@@ -211,9 +211,9 @@
+diff -wpruN '--exclude=*.orig' a~/src/CMakeLists.txt a/src/CMakeLists.txt
+--- a~/src/CMakeLists.txt	1970-01-01 00:00:00
++++ a/src/CMakeLists.txt	1970-01-01 00:00:00
+@@ -213,9 +213,9 @@ endif (WIN32)
  if (UNIX)
  	if (APPLE)
  		set_target_properties(mosquitto PROPERTIES LINK_FLAGS "-Wl,-exported_symbols_list -Wl,${mosquitto_SOURCE_DIR}/src/linker-macosx.syms")
