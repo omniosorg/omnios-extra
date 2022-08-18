@@ -128,7 +128,7 @@
 | ooce/multimedia/minidlna	| 1.3.0		| https://sourceforge.net/projects/minidlna/files/minidlna/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/x264		| 20210613	| https://code.videolan.org/videolan/x264/-/tree/stable https://www.videolan.org/developers/x264.html | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/x265		| 3.4		| https://github.com/videolan/x265/tags https://bitbucket.org/multicoreware/x265_git/wiki/Home | [omniosorg](https://github.com/omniosorg)
-| ooce/network/bind-916		| 9.16.31	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/bind-916		| 9.16.32	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/bind-918		| 9.18.5	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/bwm-ng		| 0.6.3		| https://github.com/vgropp/bwm-ng/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/cyrus-imapd	| 3.4.4		| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
