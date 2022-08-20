@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=tree
-VER=2.0.0
+VER=2.0.2
 PKG=ooce/file/tree
 SUMMARY="File system tree viewer"
 DESC="The tree utility recursively displays the contents of \
@@ -35,10 +35,18 @@ MAKE_ARGS_WS="
 "
 
 init
+
+# After init so that $DESTDIR is populated
+MAKE_INSTALL_ARGS="
+    DESTDIR=$DESTDIR/$PREFIX/bin
+    PREFIX=$PREFIX
+    MANDIR=$DESTDIR/$PREFIX/share/man
+"
+
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-MAKE_INSTALL_ARGS="prefix=$DESTDIR/$PREFIX" build
+build
 make_package
 clean_up
 
