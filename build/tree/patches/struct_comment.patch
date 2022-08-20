@@ -4,7 +4,7 @@ however the source requires other definitions under __EXTENSIONS__
 diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
 --- a~/info.c	1970-01-01 00:00:00
 +++ a/info.c	1970-01-01 00:00:00
-@@ -14,9 +14,9 @@ extern const struct linedraw *linedraw;
+@@ -32,9 +32,9 @@ extern const struct linedraw *linedraw;
  
  struct infofile *infostack = NULL;
  
@@ -16,7 +16,7 @@ diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
    com->pattern = phead;
    com->desc = xmalloc(sizeof(char *) * (lines+1));
    int i;
-@@ -30,7 +30,7 @@ struct infofile *new_infofile(char *path
+@@ -48,7 +48,7 @@ struct infofile *new_infofile(char *path
  {
    char buf[PATH_MAX];
    struct infofile *inf;
@@ -25,7 +25,7 @@ diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
    struct pattern *phead = NULL, *pend = NULL, *p;
    char *line[PATH_MAX];
    FILE *fp;
-@@ -98,7 +98,7 @@ void push_infostack(struct infofile *inf
+@@ -116,7 +116,7 @@ void push_infostack(struct infofile *inf
  struct infofile *pop_infostack(void)
  {
    struct infofile *inf = infostack;
@@ -34,12 +34,12 @@ diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
    struct pattern *p, *c;
    infostack = infostack->next;
  
-@@ -123,10 +123,10 @@ struct infofile *pop_infostack(void)
+@@ -141,10 +141,10 @@ struct infofile *pop_infostack(void)
   * Returns an info pointer if a path matches a pattern.
   * top == 1 if called in a directory with a .info file.
   */
--struct comment *infocheck(char *path, char *name, int top)
-+struct comment_ *infocheck(char *path, char *name, int top)
+-struct comment *infocheck(char *path, char *name, int top, int isdir)
++struct comment_ *infocheck(char *path, char *name, int top, int isdir)
  {
    struct infofile *inf = infostack;
 -  struct comment *com;
@@ -50,7 +50,7 @@ diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
 diff -wpruN '--exclude=*.orig' a~/tree.c a/tree.c
 --- a~/tree.c	1970-01-01 00:00:00
 +++ a/tree.c	1970-01-01 00:00:00
-@@ -770,7 +770,7 @@ struct _info *getinfo(char *name, char *
+@@ -782,7 +782,7 @@ struct _info *getinfo(char *name, char *
  
  struct _info **read_dir(char *dir, int *n, int infotop)
  {
@@ -62,7 +62,7 @@ diff -wpruN '--exclude=*.orig' a~/tree.c a/tree.c
 diff -wpruN '--exclude=*.orig' a~/tree.h a/tree.h
 --- a~/tree.h	1970-01-01 00:00:00
 +++ a/tree.h	1970-01-01 00:00:00
-@@ -172,15 +172,15 @@ struct ignorefile {
+@@ -173,15 +173,15 @@ struct ignorefile {
  };
  
  /* info.c */
@@ -81,12 +81,12 @@ diff -wpruN '--exclude=*.orig' a~/tree.h a/tree.h
    struct infofile *next;
  };
  
-@@ -296,7 +296,7 @@ struct ignorefile *pop_filterstack(void)
+@@ -298,7 +298,7 @@ struct ignorefile *pop_filterstack(void)
  struct infofile *new_infofile(char *path);
  void push_infostack(struct infofile *inf);
  struct infofile *pop_infostack(void);
--struct comment *infocheck(char *path, char *name, int top);
-+struct comment_ *infocheck(char *path, char *name, int top);
+-struct comment *infocheck(char *path, char *name, int top, int isdir);
++struct comment_ *infocheck(char *path, char *name, int top, int isdir);
  void printcomment(int line, int lines, char *s);
  
  /* list.c */
