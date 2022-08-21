@@ -7,7 +7,9 @@
 # A full copy of the text of the CDDL should have accompanied this
 # source. A copy of the CDDL is also available via the Internet at
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+
+set name=pkg.depend.runpath value=$(PYTHONVENDOR):$PKGDEPEND_RUNPATH
 
 <transform path=opt/ooce/share/doc -> drop>
 
