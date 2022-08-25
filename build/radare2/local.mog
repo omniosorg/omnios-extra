@@ -13,6 +13,10 @@
 license COPYING license=GPLv3
 license COPYING.LESSER license=LGPLv3
 
+# Skip dependency resolution for private libraries
+<transform file path=.*/$(PROG)/$(VERSION)/io_shm\.so$ \
+    -> set pkg.depend.bypass-generate .*>
+
 <transform path=$(PREFIX)/share/doc -> drop>
 
 <include binlink.mog>

@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=ntfs-3g
-VER=2017.3.23AR.6
+VER=2022.5.17
 PKG=ooce/system/file-system/ntfs-3g
 SUMMARY="${PROG^^} - Read-Write NTFS Driver"
 DESC="A stable, full-featured, read-write NTFS driver for Linux, Android, "
@@ -30,6 +30,8 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 RUN_DEPENDS_IPS="ooce/driver/fuse"
+
+SKIP_RTIME_CHECK=1
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}

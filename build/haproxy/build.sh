@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=haproxy
-VER=2.6.2
+VER=2.6.4
 PKG=ooce/server/haproxy
 SUMMARY="HAProxy - fast and reliable http reverse proxy and load balancer"
 DESC="A TCP/HTTP reverse proxy which is particularly suited for high "
@@ -37,7 +37,7 @@ XFORM_ARGS="
 
 MAKE_ARGS_WS="
     CC=$CC
-    CFLAGS=\"$CFLAGS $CFLAGS64 $CTF_CFLAGS\"
+    DEFINE=\"$CFLAGS $CFLAGS64 $CTF_CFLAGS\"
     LDFLAGS=\"$LDFLAGS $LDFLAGS64\"
     TARGET=solaris
     USE_PCRE2=1

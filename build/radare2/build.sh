@@ -18,7 +18,7 @@
 
 PROG=radare2
 PKG=ooce/developer/radare2
-VER=5.6.8
+VER=5.7.6
 SUMMARY="A low-level software forensics tool"
 DESC="$PROG - $SUMMARY"
 
@@ -34,6 +34,7 @@ set_arch 64
 set_standard XPG6 CFLAGS
 
 NO_SONAME_EXPECTED=1
+SKIP_RTIME_CHECK=1
 
 PKGDIFFPATH="${PREFIX#/}/share/$PROG"
 PKGDIFF_HELPER="
@@ -45,7 +46,7 @@ CFLAGS+=" -fPIC"
 LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64 -L$OPREFIX/lib/$ISAPART64"
 LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
 # Some of the libraries have large enumerations
-CTF_FLAGS+=" -s"
+CTF_FLAGS+=" -sm"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
