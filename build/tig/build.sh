@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=tig
-VER=2.5.6
+VER=2.5.7
 PKG=ooce/application/tig
 SUMMARY="Tig: text-mode interface for Git"
 DESC="Tig is an ncurses-based text-mode interface for git. \
