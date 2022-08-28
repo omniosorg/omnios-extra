@@ -17,7 +17,7 @@
 . ../../../lib/build.sh
 
 PROG=libXau
-VER=1.0.9
+VER=1.0.10
 PKG=ooce/x11/library/libxau
 SUMMARY="libXau"
 DESC="X Authorization Protocol"
