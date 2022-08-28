@@ -17,12 +17,14 @@
 . ../../lib/build.sh
 
 PROG=fontconfig
-VER=2.13.1
+VER=2.14.0
 PKG=ooce/library/fontconfig
 SUMMARY="$PROG"
 DESC="A library for configuring and customizing font access"
 
 SKIP_LICENCES=MIT
+SKIP_RTIME_CHECK=1
+SKIP_SSP_CHECK=1
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
