@@ -17,7 +17,7 @@ diff -wpruN '--exclude=*.orig' a~/src/fcmatch.c a/src/fcmatch.c
      if (v < 0)
  	v = -v;
      *bestValue = FcValueCanonicalize (value2);
-@@ -720,6 +729,46 @@ FcFontRenderPrepare (FcConfig	    *confi
+@@ -855,6 +864,46 @@ FcFontRenderPrepare (FcConfig	    *confi
      return new;
  }
  
@@ -64,18 +64,18 @@ diff -wpruN '--exclude=*.orig' a~/src/fcmatch.c a/src/fcmatch.c
  static FcPattern *
  FcFontSetMatchInternal (FcFontSet   **sets,
  			int	    nsets,
-@@ -733,6 +782,8 @@ FcFontSetMatchInternal (FcFontSet   **se
-     int		    i;
-     int		    set;
+@@ -870,6 +919,8 @@ FcFontSetMatchInternal (FcFontSet   **se
+     FcCompareData   data;
+     const FcPatternElt *elt;
  
 +    FcChangeFormat ( p );
 +
      for (i = 0; i < PRI_END; i++)
  	bestscore[i] = 0;
      best = 0;
-@@ -1016,6 +1067,8 @@ FcFontSetSort (FcConfig	    *config FC_U
-     FcBool    	    *patternLangSat;
+@@ -1210,6 +1261,8 @@ FcFontSetSort (FcConfig	    *config FC_U
      FcValue	    patternLang;
+     FcCompareData   data;
  
 +    FcChangeFormat ( p );
 +
