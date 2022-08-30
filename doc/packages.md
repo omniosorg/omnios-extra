@@ -27,7 +27,7 @@
 | ooce/application/tig 		| 2.5.7		| https://github.com/jonas/tig/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/vagrant	| 2.2.19	| https://github.com/hashicorp/vagrant/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/application/vaultwarden	| 1.25.2	| https://github.com/dani-garcia/vaultwarden/releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/application/zabbix	| 6.2.1		| https://www.zabbix.com/download_sources | [omniosorg](https://github.com/omniosorg)
+| ooce/application/zabbix	| 6.2.2		| https://www.zabbix.com/download_sources | [omniosorg](https://github.com/omniosorg)
 | ooce/audio/flac		| 1.3.4		| https://ftp.osuosl.org/pub/xiph/releases/flac/ https://xiph.org/flac/changelog.html | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pbzip2		| 1.1.13	| https://launchpad.net/pbzip2/+download | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pigz		| 2.7		| https://zlib.net/pigz/ | [omniosorg](https://github.com/omniosorg)
