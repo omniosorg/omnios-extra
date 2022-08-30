@@ -8,7 +8,12 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 license LICENSE license=modified-BSD
+
+# tcpdump ships the same binary twice, replace one with a link
+<transform file path=.*/bin/tcpdump$ -> drop>
+<transform file path=(.*/bin/tcpdump)(\..*)$ -> emit \
+    link path=%<1> target=tcpdump%<2> >
 
