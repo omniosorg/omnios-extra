@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=minidlna
-VER=1.3.0
+VER=1.3.2
 VERHUMAN=$VER
 PKG=ooce/multimedia/minidlna
 SUMMARY="MiniDLNA"
