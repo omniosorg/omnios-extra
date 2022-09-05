@@ -18,7 +18,7 @@
 
 PROG=ninja
 PKG=ooce/developer/ninja
-VER=1.11.0
+VER=1.11.1
 SUMMARY="Ninja"
 DESC="A small build system with a focus on speed"
 
