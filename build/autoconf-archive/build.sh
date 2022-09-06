@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=autoconf-archive
-VER=2022.02.11
+VER=2022.09.03
 PKG=ooce/developer/autoconf-archive
 SUMMARY="$PROG - a collection of macros for GNU Autoconf"
 DESC="$SUMMARY ($VER)"
