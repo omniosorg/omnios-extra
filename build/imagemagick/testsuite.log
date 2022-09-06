@@ -43,6 +43,7 @@ PASS: tests/validate-formats-map.tap 1
 PASS: tests/validate-formats-memory.tap 1
 PASS: tests/validate-identify.tap 1
 PASS: tests/validate-import.tap 1
+PASS: tests/validate-magick.tap 1
 PASS: tests/validate-montage.tap 1
 PASS: tests/validate-stream.tap 1
 PASS: tests/drawtest.tap 1
@@ -84,8 +85,8 @@ PASS: Magick++/demo/demos.tap 21
 PASS: Magick++/demo/demos.tap 22
 PASS: Magick++/demo/demos.tap 23
 PASS: Magick++/demo/demos.tap 24
-# TOTAL: 86
-# PASS:  84
+# TOTAL: 87
+# PASS:  85
 # SKIP:  0
 # XFAIL: 0
 # FAIL:  2
