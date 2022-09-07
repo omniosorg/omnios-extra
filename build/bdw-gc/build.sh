@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=bdw-gc
-VER=8.2.0
+VER=8.2.2
 DASHREV=1
 PKG=ooce/library/bdw-gc
 SUMMARY="$PROG"
