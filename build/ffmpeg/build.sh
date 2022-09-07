@@ -25,7 +25,7 @@ DESC+="convert and stream audio and video."
 
 # Previous versions that also need to be built and packaged since compiled
 # software may depend on it.
-PVERS="4.4.1"
+PVERS="4.4.2"
 
 if [ $RELVER -ge 151041 ]; then
     set_clangver
