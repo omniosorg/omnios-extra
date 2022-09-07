@@ -1,6 +1,6 @@
 diff -wpruN '--exclude=*.orig' a~/arg.c a/arg.c
---- a~/arg.c	2020-11-10 19:00:21.000000000 +0000
-+++ a/arg.c	2020-11-19 21:40:18.819000177 +0000
+--- a~/arg.c	1970-01-01 00:00:00
++++ a/arg.c	1970-01-01 00:00:00
 @@ -29,6 +29,8 @@
   * 4. This notice may not be removed or altered.
   */
