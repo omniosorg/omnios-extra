@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=ImageMagick
-VER=7.1.0-22
+VER=7.1.0-47
 PKG=ooce/application/imagemagick
 SUMMARY="$PROG - Convert, Edit, or Compose Bitmap Images"
 DESC="Use $PROG to create, edit, compose, or convert bitmap images. It can "
@@ -31,6 +31,7 @@ reset_configure_opts
 
 SKIP_LICENCES=ImageMagick
 SKIP_RTIME_CHECK=1
+SKIP_SSP_CHECK=1
 
 BUILD_DEPENDS_IPS="
     library/libxml2
@@ -63,6 +64,10 @@ CONFIGURE_OPTS="
     --with-heic
     --disable-static
 "
+
+# As of version 7.1.0-34, a "Linux-compatible sendfile()" is detected;
+# override thiis.
+CONFIGURE_OPTS+=" ac_cv_have_linux_sendfile=no"
 
 CONFIGURE_OPTS_64+=" --bindir=$PREFIX/bin"
 

@@ -18,9 +18,9 @@
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox
-VER=6.1.36
+VER=6.1.38
 # virtualbox does currently not build with later gsoap versions
-GSOAPVER=2.8.102
+GSOAPVER=2.8.106
 GSOAPDIR=gsoap-${GSOAPVER%.*}
 SUMMARY="VirtualBox"
 DESC="VirtualBox is a general-purpose full virtualiser for x86 hardware, "
@@ -35,6 +35,10 @@ fi
 ((GCCVER > 11)) && set_gccver 11
 
 SKIP_LICENCES=GPLv2/gSOAP
+
+SKIP_RTIME_CHECK=1
+SKIP_SSP_CHECK=1
+NO_SONAME_EXPECTED=1
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm

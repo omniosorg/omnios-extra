@@ -4,7 +4,7 @@ however the source requires other definitions under __EXTENSIONS__
 diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
 --- a~/info.c	1970-01-01 00:00:00
 +++ a/info.c	1970-01-01 00:00:00
-@@ -32,9 +32,9 @@ extern const struct linedraw *linedraw;
+@@ -31,9 +31,9 @@ extern const struct linedraw *linedraw;
  
  struct infofile *infostack = NULL;
  
@@ -16,7 +16,7 @@ diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
    com->pattern = phead;
    com->desc = xmalloc(sizeof(char *) * (lines+1));
    int i;
-@@ -48,7 +48,7 @@ struct infofile *new_infofile(char *path
+@@ -47,7 +47,7 @@ struct infofile *new_infofile(char *path
  {
    char buf[PATH_MAX];
    struct infofile *inf;
@@ -25,7 +25,7 @@ diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
    struct pattern *phead = NULL, *pend = NULL, *p;
    char *line[PATH_MAX];
    FILE *fp;
-@@ -116,7 +116,7 @@ void push_infostack(struct infofile *inf
+@@ -115,7 +115,7 @@ void push_infostack(struct infofile *inf
  struct infofile *pop_infostack(void)
  {
    struct infofile *inf = infostack;
@@ -34,7 +34,7 @@ diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
    struct pattern *p, *c;
    infostack = infostack->next;
  
-@@ -141,10 +141,10 @@ struct infofile *pop_infostack(void)
+@@ -140,10 +140,10 @@ struct infofile *pop_infostack(void)
   * Returns an info pointer if a path matches a pattern.
   * top == 1 if called in a directory with a .info file.
   */
@@ -50,7 +50,7 @@ diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
 diff -wpruN '--exclude=*.orig' a~/tree.c a/tree.c
 --- a~/tree.c	1970-01-01 00:00:00
 +++ a/tree.c	1970-01-01 00:00:00
-@@ -782,7 +782,7 @@ struct _info *getinfo(char *name, char *
+@@ -784,7 +784,7 @@ struct _info *getinfo(char *name, char *
  
  struct _info **read_dir(char *dir, int *n, int infotop)
  {
