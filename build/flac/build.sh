@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=flac
-VER=1.3.4
+VER=1.4.0
 PKG=ooce/audio/flac
 SUMMARY="flac"
 DESC="Free Lossless Audio Codec"
@@ -33,7 +33,10 @@ BUILD_DEPENDS_IPS="
     ooce/library/libogg
 "
 
-TESTSUITE_SED='/seek.*frame/s/[0-9][0-9]*/XX/g'
+TESTSUITE_SED='
+    1,/^Test project/d
+    s/  *[0-9][0-9.]*  *sec//
+'
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -43,27 +46,27 @@ XFORM_ARGS="
 "
 
 CONFIGURE_OPTS="
-    --prefix=$PREFIX
-    --includedir=$OPREFIX/include
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX=$PREFIX
+    -DCMAKE_INSTALL_INCLUDEDIR=$OPREFIX/include
+    -DBUILD_SHARED_LIBS=ON
 "
 CONFIGURE_OPTS_32="
-    --libdir=$OPREFIX/lib
+    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
-    --libdir=$OPREFIX/lib/$ISAPART64
-    --build=$TRIPLET64
+    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/$ISAPART64
 "
 
-CFLAGS+=" -I$OPREFIX/include"
-LDFLAGS32+=" -L$OPREFIX/lib -Wl,-R$OPREFIX/lib"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -Wl,-R$OPREFIX/lib/$ISAPART64"
+LDFLAGS32+=" -Wl,-R$OPREFIX/lib"
+LDFLAGS64+=" -Wl,-R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
 patch_source
-prep_build
+prep_build cmake+ninja
 build
-run_testsuite check
+run_testsuite
 make_package
 clean_up
 
