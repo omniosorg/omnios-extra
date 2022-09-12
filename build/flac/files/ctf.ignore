@@ -1,2 +1,8 @@
+fixed_intrin_ssse3.c
 float.c
+lpc_intrin_avx2.c
+lpc_intrin_fma.c
+lpc_intrin_neon.c
 lpc_intrin_vsx.c
+stream_encoder_intrin_avx2.c
+stream_encoder_intrin_ssse3.c
