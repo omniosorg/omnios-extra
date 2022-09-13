@@ -266,6 +266,9 @@ audit()
                         # clang/llvm-14 are not published until r151041
                         */clang-14:|*/llvm-14:)
                             [ $r -lt 151041 ] || ok=0 ;;
+                        # clang/llvm-15 are not published until r151043
+                        */clang-15:|*/llvm-15:)
+                            [ $r -lt 151043 ] || ok=0 ;;
                         # X11 headers/libraries are not published until r151035
                         */x11/*:) [ $r -lt 151035 ] || ok=0 ;;
                         # mariadb-106 is not published until r151038

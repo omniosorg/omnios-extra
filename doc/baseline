@@ -77,6 +77,7 @@ extra.omnios ooce/developer/gyp
 extra.omnios ooce/developer/llvm-13
 extra.omnios ooce/developer/llvm-130 r
 extra.omnios ooce/developer/llvm-14
+extra.omnios ooce/developer/llvm-15
 extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr
