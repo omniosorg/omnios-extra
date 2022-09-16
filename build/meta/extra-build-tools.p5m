@@ -90,3 +90,7 @@ depend fmri=ooce/developer/llvm-14 type=conditional \
 depend fmri=ooce/developer/clang-14 type=conditional \
     predicate=release/name@0.5.11-151043
 
+# Added llvm/clang 15 from r151043 onwards
+depend fmri=ooce/developer/llvm-15 type=conditional \
+    predicate=release/name@0.5.11-151043
+
