@@ -90,6 +90,7 @@ extra.omnios ooce/driver/fuse
 extra.omnios ooce/editor/emacs
 extra.omnios ooce/editor/joe
 extra.omnios ooce/editor/nano
+extra.omnios ooce/editor/neovim
 extra.omnios ooce/extra-build-tools
 extra.omnios ooce/file/acltool
 extra.omnios ooce/file/lsof
