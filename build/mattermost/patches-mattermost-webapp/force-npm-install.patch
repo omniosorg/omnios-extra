@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -42,7 +42,7 @@ node_modules: package.json package-lock.
+ 
+ 	node skip_integrity_check.js
+ 
+-	npm install
++	npm install --force
+ 	touch $@
+ 
+ package: build ## Packages app
