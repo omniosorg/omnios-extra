@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 set_arch 64
-set_clangver
+[ $RELVER -ge 151041 ] && set_clangver
 
 # luaJIT build requires GNU tools
 PATH="$GNUBIN:$PATH"
@@ -50,9 +50,11 @@ MAKE_ARGS_WS="
     CMAKE_BUILD_TYPE=Release
     CMAKE_INSTALL_PREFIX=$PREFIX
     CMAKE_EXTRA_FLAGS=\"
+        -DCMAKE_C_COMPILER=$CC
         -DCMAKE_EXE_LINKER_FLAGS='-Wl,-R$OPREFIX/lib/$ISAPART64 -lgcc_s'
     \"
     BUNDLED_CMAKE_FLAG=\"
+        -DCMAKE_C_COMPILER=$CC
         -DUSE_BUNDLED_GPERF=OFF
         -DUSE_BUNDLED_LIBUV=OFF
     \"
