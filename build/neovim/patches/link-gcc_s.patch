@@ -1,0 +1,15 @@
+luaJIT uses __register_frame and  __deregister_frame
+our clang only links libgcc_s for c++ by default
+
+diff -wpruN '--exclude=*.orig' a~/third-party/cmake/BuildLuajit.cmake a/third-party/cmake/BuildLuajit.cmake
+--- a~/third-party/cmake/BuildLuajit.cmake	1970-01-01 00:00:00
++++ a/third-party/cmake/BuildLuajit.cmake	1970-01-01 00:00:00
+@@ -49,6 +49,8 @@ else()
+ endif()
+ if(CMAKE_SYSTEM_NAME MATCHES "OpenBSD")
+   set(AMD64_ABI "LDFLAGS=-lpthread -lc++abi")
++elseif(CMAKE_SYSTEM_NAME MATCHES "SunOS")
++  set(AMD64_ABI "LDFLAGS=-lgcc_s")
+ else()
+   set(AMD64_ABI "")
+ endif()

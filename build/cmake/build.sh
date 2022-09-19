@@ -17,13 +17,14 @@
 . ../../lib/build.sh
 
 PROG=cmake
-VER=3.24.1
+VER=3.24.2
 PKG=ooce/developer/cmake
 SUMMARY="Build coordinator"
 DESC="An extensible system that manages the build process in a "
 DESC+="compiler-independent manner"
 
 set_arch 64
+[ $RELVER -ge 151043 ] && set_clangver
 
 SKIP_LICENCES=Kitware
 

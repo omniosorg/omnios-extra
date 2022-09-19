@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=emacs
-VER=28.1
+VER=28.2
 PKG=ooce/editor/emacs
 SUMMARY="Emacs editor"
 DESC="An extensible, customizable, free/libre text editor - and more."
@@ -29,6 +29,11 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
+
+PKGDIFFPATH="${PREFIX#/}/share/$PROG"
+PKGDIFF_HELPER="
+    s:$PKGDIFFPATH/[0-9][0-9.]*:$PKGDIFFPATH/VERSION:
+"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -59,7 +64,6 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-strip_install
 make_package
 clean_up
 

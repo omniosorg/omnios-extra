@@ -10,11 +10,7 @@
 
 # Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
-license LICENSE license=libpng
-
-# Drop 32-bit binaries
-<transform path=$(PREFIX)/s?bin/i386/(?!libpng\d*-config) -> drop>
+license LICENSE.txt license=Apache2
 
 <include binlink.mog>
-<include manlink.mog>
 

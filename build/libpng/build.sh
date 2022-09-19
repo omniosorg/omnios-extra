@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libpng
-VER=1.6.37
+VER=1.6.38
 PKG=ooce/library/libpng
 SUMMARY="libpng"
 DESC="libpng is the official PNG reference library"
@@ -31,6 +31,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS="
@@ -49,11 +50,23 @@ CONFIGURE_OPTS_64="
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
+# Make ISA binaries for libpng-config, to allow software to find the
+# right settings for 32/64-bit when pkg-config is not used.
+make_isa_stub() {
+    pushd $DESTDIR$PREFIX/bin >/dev/null
+    logcmd mkdir -p $ISAPART64
+    logcmd mv libpng*-config $ISAPART64/ || logerr "mv libpng-config"
+    make_isaexec_stub_arch $ISAPART64 $PREFIX/bin
+    popd >/dev/null
+}
+
 init
 download_source $PROG $PROG $VER
 prep_build
 patch_source
 build
+run_testsuite
+make_isa_stub
 make_package
 clean_up
 
