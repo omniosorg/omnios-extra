@@ -7,6 +7,6 @@ diff -wpruN '--exclude=*.orig' a~/mysys/my_gethwaddr.c a/mysys/my_gethwaddr.c
      {
 -#if !defined(_AIX) || !defined(__linux__)
 +#if defined(_AIX) || defined(__linux__)
- #if defined(__linux___)
+ #if defined(__linux__)
  #define HWADDR_DATA ifr[i].ifr_hwaddr.sa_data
  #else
