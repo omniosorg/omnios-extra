@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/mysys/my_gethwaddr.c a/mysys/my_gethwaddr.c
+--- a~/mysys/my_gethwaddr.c	1970-01-01 00:00:00
++++ a/mysys/my_gethwaddr.c	1970-01-01 00:00:00
+@@ -110,7 +110,7 @@ my_bool my_gethwaddr(uchar *to)
+     uint i;
+     for (i= 0; res && i < ifc.ifc_len / sizeof(ifr[0]); i++)
+     {
+-#if !defined(_AIX) || !defined(__linux__)
++#if defined(_AIX) || defined(__linux__)
+ #if defined(__linux__)
+ #define HWADDR_DATA ifr[i].ifr_hwaddr.sa_data
+ #else
