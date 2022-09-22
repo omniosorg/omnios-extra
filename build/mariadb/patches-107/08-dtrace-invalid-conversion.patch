@@ -86,7 +86,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
 diff -wpruN '--exclude=*.orig' a~/sql/sp_head.cc a/sql/sp_head.cc
 --- a~/sql/sp_head.cc	1970-01-01 00:00:00
 +++ a/sql/sp_head.cc	1970-01-01 00:00:00
-@@ -3791,7 +3791,7 @@ sp_instr_stmt::exec_core(THD *thd, uint
+@@ -3792,7 +3792,7 @@ sp_instr_stmt::exec_core(THD *thd, uint
  {
    MYSQL_QUERY_EXEC_START(thd->query(),
                           thd->thread_id,
@@ -98,7 +98,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sp_head.cc a/sql/sp_head.cc
 diff -wpruN '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_class.h
 --- a~/sql/sql_class.h	1970-01-01 00:00:00
 +++ a/sql/sql_class.h	1970-01-01 00:00:00
-@@ -7376,7 +7376,7 @@ inline int handler::ha_read_first_row(uc
+@@ -7386,7 +7386,7 @@ inline int handler::ha_read_first_row(uc
  inline int handler::ha_write_tmp_row(uchar *buf)
  {
    int error;
@@ -107,7 +107,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_class.h
    increment_statistics(&SSV::ha_tmp_write_count);
    TABLE_IO_WAIT(tracker, PSI_TABLE_WRITE_ROW, MAX_KEY, error,
            { error= write_row(buf); })
-@@ -7387,7 +7387,7 @@ inline int handler::ha_write_tmp_row(uch
+@@ -7397,7 +7397,7 @@ inline int handler::ha_write_tmp_row(uch
  inline int handler::ha_delete_tmp_row(uchar *buf)
  {
    int error;
@@ -116,7 +116,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_class.h
    increment_statistics(&SSV::ha_tmp_delete_count);
    TABLE_IO_WAIT(tracker, PSI_TABLE_DELETE_ROW, MAX_KEY, error,
                  { error= delete_row(buf); })
-@@ -7398,7 +7398,7 @@ inline int handler::ha_delete_tmp_row(uc
+@@ -7408,7 +7408,7 @@ inline int handler::ha_delete_tmp_row(uc
  inline int handler::ha_update_tmp_row(const uchar *old_data, uchar *new_data)
  {
    int error;

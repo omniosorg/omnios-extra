@@ -17,8 +17,8 @@
 . ../../lib/build.sh
 
 PROG=mariadb
-VER=10.8.5
-PKG=ooce/database/mariadb-108
+VER=10.9.3
+PKG=ooce/database/mariadb-109
 SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
 DESC+="MySQL relational database management system"
