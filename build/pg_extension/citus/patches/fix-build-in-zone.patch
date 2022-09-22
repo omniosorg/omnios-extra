@@ -5,12 +5,12 @@ diff -wpruN '--exclude=*.orig' a~/src/backend/distributed/Makefile a/src/backend
  DATA_built = $(generated_sql_files)
  
  # directories with source files
--SUBDIRS = . commands connection ddl deparser executor metadata operations planner progress relay safeclib test transaction utils worker
-+SUBDIRS = commands connection ddl deparser executor metadata operations planner progress relay safeclib test transaction utils worker
- # columnar modules
- SUBDIRS += ../columnar
+-SUBDIRS = . commands connection ddl deparser executor metadata operations planner progress relay safeclib shardsplit test transaction utils worker
++SUBDIRS = commands connection ddl deparser executor metadata operations planner progress relay safeclib shardsplit test transaction utils worker
  # enterprise modules
-@@ -33,6 +33,8 @@ ENSURE_SUBDIRS_EXIST := $(shell mkdir -p
+ SUBDIRS += replication
+ 
+@@ -31,6 +31,8 @@ ENSURE_SUBDIRS_EXIST := $(shell mkdir -p
  OBJS += \
  	$(patsubst $(citus_abs_srcdir)/%.c,%.o,$(foreach dir,$(SUBDIRS), $(sort $(wildcard $(citus_abs_srcdir)/$(dir)/*.c))))
  
