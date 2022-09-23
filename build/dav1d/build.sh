@@ -23,21 +23,16 @@ SUMMARY="AV1 decoder"
 DESC="AV1 cross-platform decoder, open-source, and focused on speed, "
 DESC+="size and correctness"
 
-if [ $RELVER -lt 151036 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
-
 forgo_isaexec
 
-[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
+LDFLAGS32+=" -lssp_ns"
 LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build meson
-build -ctf
+build
 make_package
 clean_up
 

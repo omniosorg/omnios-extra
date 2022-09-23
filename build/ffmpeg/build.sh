@@ -67,9 +67,11 @@ CONFIGURE_OPTS+="
     --enable-gnutls
 "
 CONFIGURE_OPTS_32="
+    --disable-librav1e
     --libdir=$OPREFIX/lib
 "
 CONFIGURE_OPTS_64="
+    --enable-librav1e
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 

@@ -1,4 +1,4 @@
-Start of unbound 1.16.2+libevent unit test.
+Start of unbound 1.16.3+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -69,8 +69,8 @@ test services/outside_network.c:reuse_tcp_lru_touch
 test services/outside_network.c:reuse_tcp_remove_tree_list
 test services/outside_network.c:reuse_tcp_lru_snip
 test message parse functions
-[0] did 10000 in 73.663 msec for 135753.363290 encode/sec size 615
-1297062 checks ok.
+[0] did 10000 in 86.511 msec for 115592.236825 encode/sec size 615
+1296588 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl  OK
 ./testdata/auth_nsec3_ent.rpl  OK
