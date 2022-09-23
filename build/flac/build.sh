@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=flac
-VER=1.4.0
+VER=1.4.1
 PKG=ooce/audio/flac
 SUMMARY="flac"
 DESC="Free Lossless Audio Codec"
@@ -66,7 +66,8 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build cmake+ninja
 build
-run_testsuite
+# make sure the test suite uses the libraries from the proto area
+LD_LIBRARY_PATH=$DESTDIR$OPREFIX/lib/$ISAPART64 run_testsuite
 make_package
 clean_up
 
