@@ -155,6 +155,7 @@ extra.omnios ooce/multimedia/dav1d
 extra.omnios ooce/multimedia/exif
 extra.omnios ooce/multimedia/ffmpeg
 extra.omnios ooce/multimedia/minidlna
+extra.omnios ooce/multimedia/rav1e
 extra.omnios ooce/multimedia/x264
 extra.omnios ooce/multimedia/x265
 extra.omnios ooce/network/bind-916
