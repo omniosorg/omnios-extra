@@ -18,7 +18,7 @@
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.63.0
+VER=1.64.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
@@ -31,10 +31,8 @@ PREFIX+=/$PROG
 BUILD_DEPENDS_IPS="developer/gnu-binutils"
 
 if [ $RELVER -lt 151041 ]; then
-    [ $RELVER -ge 151036 ] && LLVM_MAJVER=13 || LLVM_MAJVER=12.0
-
-    SYSTEM_LLVM_PATH="/opt/ooce/llvm-$LLVM_MAJVER"
-    RUN_DEPENDS_IPS="ooce/developer/llvm-${LLVM_MAJVER//./}"
+    SYSTEM_LLVM_PATH="/opt/ooce/llvm-$DEFAULT_CLANG_VER"
+    RUN_DEPENDS_IPS="ooce/developer/llvm-$DEFAULT_CLANG_VER"
     BUILD_DEPENDS_IPS+=" $RUN_DEPENDS_IPS"
 
     ar=$USRBIN/gar

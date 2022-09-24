@@ -1,1 +1,1 @@
-unstable-split-debuginfo.patch
+runtest-no-strip-debuginfo.patch
