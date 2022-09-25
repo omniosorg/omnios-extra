@@ -4,6 +4,7 @@ failures:
     [ui] src/test/ui/abi/stack-probes.rs
     [ui] src/test/ui/associated-consts/issue-93775.rs
     [ui] src/test/ui/backtrace.rs
+    [ui] src/test/ui/closures/deeply-nested_closures.rs
     [ui] src/test/ui/issues/issue-33770.rs
     [ui] src/test/ui/issues/issue-33992.rs
     [ui] src/test/ui/issues/issue-74564-if-expr-stack-overflow.rs
@@ -11,11 +12,13 @@ failures:
     [ui] src/test/ui/panics/issue-47429-short-backtraces.rs#v0
     [ui] src/test/ui/panics/runtime-switch.rs#legacy
     [ui] src/test/ui/panics/runtime-switch.rs#v0
+    [ui] src/test/ui/proc-macro/load-panic-backtrace.rs
     [ui] src/test/ui/process/process-panic-after-fork.rs
     [ui] src/test/ui/runtime/backtrace-debuginfo.rs
     [ui] src/test/ui/runtime/out-of-stack.rs
     [ui] src/test/ui/std-backtrace.rs
 
-test result: FAILED. 12994 passed; 15 failed; 111 ignored; 0 measured; 0 filtered out; finished in 440.29s
+test result: FAILED. 13201 passed; 17 failed; 113 ignored; 0 measured; 0 filtered out; finished in 309.74s
 
 Some tests failed in compiletest suite=ui mode=ui host=x86_64-unknown-illumos target=x86_64-unknown-illumos
+	finished in 310.861 seconds
