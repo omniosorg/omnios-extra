@@ -17,13 +17,13 @@
 . ../../lib/build.sh
 
 PROG=pango
-VER=1.50.9
+VER=1.50.10
 PKG=ooce/library/pango
 SUMMARY="pango"
 DESC="Pango is a library for laying out and rendering of text"
 
 # Dependencies
-HARFBUZZVER=4.4.1
+HARFBUZZVER=5.2.0
 FRIBIDIVER=1.0.12
 
 # The icu4c ABI changes frequently. Lock the version
@@ -48,8 +48,7 @@ XFORM_ARGS="
     -DFRIBIDI=$FRIBIDIVER
 "
 
-LDFLAGS32+=" -L$PREFIX/lib -R$PREFIX/lib"
-[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
+LDFLAGS32+=" -L$PREFIX/lib -R$PREFIX/lib -lssp_ns"
 LDFLAGS64+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
 
 export MAKE
