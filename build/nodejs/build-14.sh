@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=node
-VER=14.20.0
+VER=14.20.1
 PKG=ooce/runtime/node-14
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
@@ -38,8 +38,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
 
 # objdump is needed to build nodejs
-[ $RELVER -ge 151033 ] && TRIPLET=$TRIPLET64 || TRIPLET=$TRIPLET32
-PATH+=":/usr/gnu/$TRIPLET/bin"
+PATH+=":/usr/gnu/$TRIPLET64/bin"
 
 CXXFLAGS+="-ffunction-sections -fdata-sections"
 MAKE_ARGS="CC=$CC"
@@ -63,8 +62,8 @@ CONFIGURE_OPTS="
     --dest-cpu=x64
     --shared-nghttp2
     --shared-zlib
+    --shared-brotli
 "
-[ $RELVER -ge 151035 ] && CONFIGURE_OPTS+=" --shared-brotli"
 
 init
 download_source $PROG $PROG v$VER
