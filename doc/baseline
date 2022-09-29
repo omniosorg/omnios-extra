@@ -60,6 +60,7 @@ extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/database/rrdtool
 extra.omnios ooce/developer/autoconf-archive
 extra.omnios ooce/developer/autogen
+extra.omnios ooce/developer/cargo-c
 extra.omnios ooce/developer/ccache
 extra.omnios ooce/developer/clang-13
 extra.omnios ooce/developer/clang-130 r

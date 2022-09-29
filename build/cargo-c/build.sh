@@ -16,11 +16,13 @@
 
 . ../../lib/build.sh
 
-PROG=rav1e
-VER=0.5.1
-PKG=ooce/multimedia/rav1e
-SUMMARY="$PROG - AV1 encoder"
-DESC="AV1 video encoder"
+PROG=cargo-c
+VER=0.9.13
+PKG=ooce/developer/cargo-c
+SUMMARY="build and install C-ABI compatible dynamic and static libraries"
+DESC="produces and installs a correct pkg-config file, a static library and "
+DESC+="a dynamic library, and a C header to be used by any C "
+DESC+="(and C-compatible) software."
 
 BUILD_DEPENDS_IPS="
     ooce/developer/rust
@@ -28,20 +30,20 @@ BUILD_DEPENDS_IPS="
 
 set_arch 64
 
-# illumos strip removes symbol tables from archives
-export STRIP=$GNUBIN/strip
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+"
+
+SKIP_RTIME_CHECK=1
+SKIP_SSP_CHECK=1
 
 build() {
-    note -n "Building $PROG"
-    build_rust
-
-    note -n "Building $PROG C-API"
+    logmsg "Building 64-bit"
 
     pushd $TMPDIR/$BUILDDIR >/dev/null
 
-    logcmd $CARGO cinstall --release --library-type=cdylib \
-        --destdir=$DESTDIR --prefix=$PREFIX --libdir=$PREFIX/lib/$ISAPART64 \
-        || logerr "C-API build failed"
+    logcmd $CARGO install --root=$DESTDIR$PREFIX --path=. \
+        || logerr "build failed"
 
     popd >/dev/null
 }
@@ -51,7 +53,6 @@ download_source $PROG v$VER
 patch_source
 prep_build
 build
-install_rust
 strip_install
 make_package
 clean_up
