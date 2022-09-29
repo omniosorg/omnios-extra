@@ -32,14 +32,6 @@ set_arch 64
 export STRIP=$GNUBIN/strip
 
 build() {
-    note -n "Installing cargo-c"
-
-    logcmd $CARGO install --git=https://github.com/hadfl/cargo-c \
-        --branch=illumos --root=$TMPDIR/__deps \
-        || logerr "Installing cargo-c failed"
-
-    PATH+=":$TMPDIR/__deps/bin"
-
     note -n "Building $PROG"
     build_rust
 

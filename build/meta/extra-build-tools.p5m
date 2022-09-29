@@ -15,6 +15,7 @@ depend fmri=ooce/application/php-81 type=require
 depend fmri=ooce/audio/flac type=require
 depend fmri=ooce/database/bdb type=require
 depend fmri=ooce/database/lmdb type=require
+depend fmri=ooce/developer/cargo-c type=require
 depend fmri=ooce/developer/freepascal type=require
 depend fmri=ooce/developer/gdb type=require
 depend fmri=ooce/developer/go-118 type=require
