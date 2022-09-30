@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=libXtst
-VER=1.2.3
+VER=1.2.4
 PKG=ooce/x11/library/libxtst
 SUMMARY="libXtst"
 DESC="Client library for X Record and Test extensions"
@@ -33,7 +33,7 @@ init
 download_source x11/$PROG $PROG $VER
 prep_build
 patch_source
-build -ctf
+build
 make_package
 clean_up
 
