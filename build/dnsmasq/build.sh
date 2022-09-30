@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=dnsmasq
-VER=2.86
+VER=2.87
 PKG=ooce/network/dnsmasq
 SUMMARY="Lightweight, easy to configure DNS forwarder"
 DESC="dnsmasq is a lightweight, easy to configure DNS forwarder, designed to "
