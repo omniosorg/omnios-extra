@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=gnuplot
-VER=5.4.4
+VER=5.4.5
 PKG=ooce/application/gnuplot
 SUMMARY="gnuplot"
 DESC="A portable command-line driven graphing utility"
