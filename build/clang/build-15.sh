@@ -18,7 +18,7 @@
 
 PROG=clang
 PKG=ooce/developer/clang-15
-VER=15.0.1
+VER=15.0.2
 SUMMARY="C language family frontend for LLVM"
 DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
