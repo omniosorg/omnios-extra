@@ -56,6 +56,9 @@ extra.omnios ooce/database/postgresql-14/citus
 extra.omnios ooce/database/postgresql-14/mysql_fdw
 extra.omnios ooce/database/postgresql-14/pg_repack
 extra.omnios ooce/database/postgresql-15
+extra.omnios ooce/database/postgresql-15/citus
+extra.omnios ooce/database/postgresql-15/mysql_fdw
+extra.omnios ooce/database/postgresql-15/pg_repack
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/database/rrdtool
 extra.omnios ooce/developer/autoconf-archive
