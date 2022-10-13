@@ -58,6 +58,7 @@ depend fmri=ooce/library/pango type=require
 depend fmri=ooce/library/postgresql-12 type=require
 depend fmri=ooce/library/postgresql-13 type=require
 depend fmri=ooce/library/postgresql-14 type=require
+depend fmri=ooce/library/postgresql-15 type=require
 depend fmri=ooce/library/security/libsasl2 type=require
 depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require

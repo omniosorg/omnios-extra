@@ -12,7 +12,7 @@
 
 # Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
-PGVERSIONS="13 14"
+PGVERSIONS="13 14 15"
 
 for v in $PGVERSIONS; do
     BUILD_DEPENDS_IPS+=" ooce/library/postgresql-$v"

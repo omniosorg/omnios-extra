@@ -45,7 +45,6 @@ extra.omnios ooce/database/mariadb-107
 extra.omnios ooce/database/mariadb-108
 extra.omnios ooce/database/mariadb-109
 extra.omnios ooce/database/mariadb-common
-extra.omnios ooce/database/postgresql-10 l
 extra.omnios ooce/database/postgresql-11
 extra.omnios ooce/database/postgresql-12
 extra.omnios ooce/database/postgresql-13
@@ -56,6 +55,10 @@ extra.omnios ooce/database/postgresql-14
 extra.omnios ooce/database/postgresql-14/citus
 extra.omnios ooce/database/postgresql-14/mysql_fdw
 extra.omnios ooce/database/postgresql-14/pg_repack
+extra.omnios ooce/database/postgresql-15
+extra.omnios ooce/database/postgresql-15/citus
+extra.omnios ooce/database/postgresql-15/mysql_fdw
+extra.omnios ooce/database/postgresql-15/pg_repack
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/database/rrdtool
 extra.omnios ooce/developer/autoconf-archive
@@ -145,6 +148,7 @@ extra.omnios ooce/library/pango
 extra.omnios ooce/library/postgresql-12
 extra.omnios ooce/library/postgresql-13
 extra.omnios ooce/library/postgresql-14
+extra.omnios ooce/library/postgresql-15
 extra.omnios ooce/library/protobuf o
 extra.omnios ooce/library/security/libsasl2
 extra.omnios ooce/library/serf
