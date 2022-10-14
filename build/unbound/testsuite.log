@@ -1,4 +1,4 @@
-Start of unbound 1.16.3+libevent unit test.
+Start of unbound 1.17.0+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -68,9 +68,17 @@ test services/outside_network.c:reuse_tcp_insert
 test services/outside_network.c:reuse_tcp_lru_touch
 test services/outside_network.c:reuse_tcp_remove_tree_list
 test services/outside_network.c:reuse_tcp_lru_snip
+test services/outside_network.c:outnet_waiting_tcp_list_add_first
+test services/outside_network.c:outnet_waiting_tcp_list_add
+test services/outside_network.c:outnet_waiting_tcp_list_add_first
+test services/outside_network.c:outnet_waiting_tcp_list_remove
+test services/outside_network.c:outnet_waiting_tcp_list_pop
+test services/outside_network.c:reuse_write_wait_push_back
+test services/outside_network.c:reuse_write_wait_remove
+test services/outside_network.c:reuse_write_wait_pop
 test message parse functions
-[0] did 10000 in 86.511 msec for 115592.236825 encode/sec size 615
-1296588 checks ok.
+[0] did 10000 in 83.367 msec for 119951.539578 encode/sec size 615
+1298746 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl  OK
 ./testdata/auth_nsec3_ent.rpl  OK
@@ -172,6 +180,7 @@ selftest successful (33 checks).
 ./testdata/fwd_notcached.rpl  OK
 ./testdata/fwd_timeout.rpl  OK
 ./testdata/fwd_two.rpl  OK
+./testdata/iter_auth_tc.rpl  OK
 ./testdata/iter_class_any.rpl  OK
 ./testdata/iter_cname_cache.rpl  OK
 ./testdata/iter_cname_double.rpl  OK

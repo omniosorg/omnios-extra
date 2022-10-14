@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=unbound
-VER=1.16.3
+VER=1.17.0
 PKG=ooce/network/unbound
 SUMMARY="DNS resolver"
 DESC="Unbound is a validating, recursive, caching DNS resolver."
