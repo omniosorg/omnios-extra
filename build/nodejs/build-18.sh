@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=node
-VER=18.10.0
+VER=18.11.0
 PKG=ooce/runtime/node-18
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
@@ -62,6 +62,9 @@ CONFIGURE_OPTS="
     --shared-zlib
     --shared-brotli
 "
+
+# clang++ does not link libatomic automatically
+export LDFLAGS+=" -latomic"
 
 init
 download_source $PROG $PROG v$VER
