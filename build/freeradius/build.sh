@@ -18,18 +18,13 @@
 
 PROG=freeradius
 PKG=ooce/server/freeradius
-VER=3.2.0
+VER=3.2.1
 TALLOCVER=2.3.3
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
 SUMMARY="FreeRADIUS $MAJVER"
 DESC="The open source implementation of RADIUS, an IETF protocol for AAA "
 DESC+="(Authorisation, Authentication, and Accounting)."
-
-if [ $RELVER -lt 151036 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
@@ -52,6 +47,9 @@ XFORM_ARGS="
 set_builddir $PROG-server-$VER
 set_arch 64
 set_standard XPG4v2
+
+SKIP_RTIME_CHECK=1
+NO_SONAME_EXPECTED=1
 
 init
 prep_build
