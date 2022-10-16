@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=links
-VER=2.27
+VER=2.28
 PKG=ooce/application/links
 SUMMARY="Text mode web browser"
 DESC="$PROG - $SUMMARY"
@@ -50,7 +50,7 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-build -ctf
+build
 make_package
 clean_up
 
