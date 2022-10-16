@@ -6,7 +6,7 @@
 | ooce/application/gnuplot	| 5.4.5		| https://sourceforge.net/projects/gnuplot/files/gnuplot/ http://www.gnuplot.info/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.44.1	| https://www2.graphviz.org/Packages/stable/portable_source/ https://graphviz.org/download/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/imagemagick	| 7.1.0-47	| https://imagemagick.org/archive/ | [omniosorg](https://github.com/omniosorg)
-| ooce/application/links	| 2.27		| http://links.twibright.com/download.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/links	| 2.28		| http://links.twibright.com/download.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/listmonk	| 2.2.0		| https://github.com/knadh/listmonk/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mattermost	| 7.4.0		| https://github.com/mattermost/mattermost-server/releases https://docs.mattermost.com/upgrade/version-archive.html#mattermost-team-edition | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.28	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
