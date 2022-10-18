@@ -17,16 +17,16 @@
 . ../../lib/build.sh
 
 PROG=gnupg
-VER=2.3.7
+VER=2.3.8
 PKG=ooce/security/gnupg
 SUMMARY="$PROG - GNU Privacy Guard"
 DESC="A complete and free implementation of the OpenPGP standard"
 
 # we don't track the versions in doc/packages.md
 # check for updates when gnupg is updated
-LIBGPGERRORVER=1.45
+LIBGPGERRORVER=1.46
 LIBGCRYPTVER=1.10.1
-LIBKSBAVER=1.6.0
+LIBKSBAVER=1.6.2
 LIBASSUANVER=2.5.5
 NPTHVER=1.6
 PINENTRYVER=1.2.0
@@ -62,8 +62,11 @@ save_buildenv
 
 CONFIGURE_OPTS=" --disable-shared --enable-static"
 
+save_variable CONFIGURE_OPTS
+CONFIGURE_OPTS+=" --enable-install-gpg-error-config"
 build_dependency libgpg-error libgpg-error-$LIBGPGERRORVER \
     $PROG/libgpg-error libgpg-error $LIBGPGERRORVER
+restore_variable CONFIGURE_OPTS
 
 CPPFLAGS+=" -I$DEPROOT$PREFIX/include"
 LDFLAGS64+=" -L$DEPROOT$PREFIX/lib/$ISAPART64"
