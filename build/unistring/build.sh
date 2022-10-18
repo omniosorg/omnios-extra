@@ -17,12 +17,10 @@
 . ../../lib/build.sh
 
 PROG=unistring
-VER=1.0
+VER=1.1
 PKG=ooce/library/unistring
 SUMMARY="Unicode string manipulation library"
 DESC="libunistring - $SUMMARY"
-
-[ $RELVER -lt 151030 ] && exit 0
 
 set_builddir lib$PROG-$VER
 
