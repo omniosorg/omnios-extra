@@ -306,6 +306,8 @@ else
     XFORM_ARGS+=" -DGATE_SYSUSER=#"
 fi
 
+PKG_INCLUDE_TS="*.py"
+
 #############################################################################
 # C compiler options - these can be overridden by a build script
 #############################################################################
