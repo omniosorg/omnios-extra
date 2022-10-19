@@ -8,18 +8,18 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
-# Drop 32bit binaries
-<transform path=$(PREFIX)/s?bin/i386 -> drop>
+license COPYING license=GPLv3
 
-# Symlink binaries
-<transform file path=$(PREFIX)/(s?bin)/(.*) -> emit \
-    link path=$(OPREFIX)/%<1>/%<2> target=../$(PROG)/%<1>/%<2> >
+# Drop 32-bit binaries; guile-config requires guile
+<transform path=$(PREFIX)/s?bin/i386/guild$ -> drop>
+<transform path=$(PREFIX)/s?bin/i386/guile-(?!config) -> drop>
 
 # charset.alias is also delivered by libunistring
 <transform path=.*/charset.alias -> drop>
 <transform path=.*/share/info -> drop>
 
-license COPYING license=GPLv3
+<include binlink.mog>
+<include manlink.mog>
 
