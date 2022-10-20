@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -20,20 +20,26 @@ PROG=guile
 VER=2.0.14
 PKG=ooce/library/guile
 SUMMARY="GNU Ubiquitous Intelligent Language for Extensions"
-DESC="$SUMMARY"
-
-[ $RELVER -lt 151030 ] && exit 0
+DESC="$PROG - $SUMMARY"
 
 BUILD_DEPENDS_IPS="ooce/library/unistring ooce/library/bdw-gc"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-XFORM_ARGS="-D OPREFIX=${OPREFIX#/}"
+XFORM_ARGS="
+    -DOPREFIX=${OPREFIX#/}
+    -DPREFIX=${PREFIX#/}
+    -DPROG=$PROG
+    -DPKGROOT=$PROG
+"
+
+# source and pre-compiled files must preserve timestamps
+PKG_INCLUDE_TS+=" *.scm *.go"
 
 CPPFLAGS+=" -I/usr/include/gmp -I$OPREFIX/include"
 LDFLAGS_32+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-LDFLAGS_64+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
+LDFLAGS_64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 export LDFLAGS="$LDFLAGS_32 -lsocket -lnsl"
 
 export BDW_GC_CFLAGS="-I$OPREFIX/include"
@@ -43,6 +49,7 @@ CONFIGURE_OPTS="
     --prefix=$PREFIX
     --includedir=$OPREFIX/include
     --disable-error-on-warning
+    --disable-static
     ac_cv_type_complex_double=no
 "
 
@@ -62,11 +69,31 @@ configure64() {
     _configure64
 }
 
+# Make ISA binaries for guile-config, to allow software to find the
+# right settings for 32/64-bit when pkg-config is not used.
+make_isa_stub() {
+    pushd $DESTDIR$PREFIX/bin >/dev/null
+    logcmd mkdir -p $ISAPART64
+    logcmd mv guile-config $ISAPART64/ || logerr "mv guile-config"
+    make_isaexec_stub_arch $ISAPART64 $PREFIX/bin
+    popd >/dev/null
+}
+
+# make sure pre-compiled files are newer than sources
+set_timestamps() {
+    pushd $DESTDIR$OPREFIX/lib >/dev/null
+    logcmd $FD -e go -X $TOUCH \
+        || logerr "setting timestamps on pre-compiled files failed"
+    popd >/dev/null
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+set_timestamps
+make_isa_stub
 make_package
 clean_up
 

@@ -1763,9 +1763,15 @@ make_package() {
         ask_to_continue
     fi
     if [ -n "$DESTDIR" ]; then
+        typeset SEND_ARGS=
+        if [ -n "$PKG_INCLUDE_TS" ]; then
+            for p in $PKG_INCLUDE_TS; do
+                SEND_ARGS+="-T $p "
+            done
+        fi
         logcmd $PKGSEND -s $PKGSRVR publish -d $DESTDIR \
             -d $TMPDIR/$EXTRACTED_SRC \
-            -d $SRCDIR -T \*.py $P5M_FINAL || \
+            -d $SRCDIR $SEND_ARGS $P5M_FINAL || \
         logerr "------ Failed to publish package"
     else
         # If we're a metapackage (no DESTDIR) then there are no directories

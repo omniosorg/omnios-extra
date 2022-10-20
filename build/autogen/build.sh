@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,16 +22,13 @@ PKG=ooce/developer/autogen
 SUMMARY="Autogen - automated text and program generation tool"
 DESC="$SUMMARY"
 
-[ $RELVER -lt 151030 ] && exit 0
-
 BUILD_DEPENDS_IPS="ooce/library/guile"
 
 set_arch 64
 
 # The build framework expects tools like `mktemp` to support GNU
 # options.
-PATH="/usr/gnu/bin:/opt/ooce/guile/bin:/opt/ooce/bin:$PATH"
-export PATH
+export PATH="$GNUBIN:$PATH"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
