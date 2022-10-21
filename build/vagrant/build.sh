@@ -83,6 +83,9 @@ install() {
     echo "{ \"vagrant_version\": \"$VER\" }" > $EMBEDDED_DIR/manifest.json
 
     popd >/dev/null
+
+    patch_source
+
     pushd $TMPDIR/$BUILDDIR >/dev/null
 
     logmsg "Install Vagrant, Installer and all embedded dependencies"
@@ -99,7 +102,7 @@ init
 clone_github_source $PROG "$GITHUB/hashicorp/$PROG" v$VER
 clone_github_source $PROG-installers \
     "$GITHUB/hashicorp/$PROG-installers" v$INSTVER
-patch_source
+PATCHDIR=patches-installer patch_source
 prep_build
 build
 install
