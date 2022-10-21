@@ -18,20 +18,12 @@
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox
-VER=6.1.38
+VER=7.0.2
 GSOAPVER=2.8.123
 GSOAPDIR=gsoap-${GSOAPVER%.*}
 SUMMARY="VirtualBox"
 DESC="VirtualBox is a general-purpose full virtualiser for x86 hardware, "
 DESC+="targeted at server, desktop and embedded use."
-
-if [ $RELVER -lt 151030 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
-
-# This component does not yet build with gcc 12
-((GCCVER > 11)) && set_gccver 11
 
 SKIP_LICENCES=GPLv2/gSOAP
 
@@ -96,11 +88,8 @@ CONFIGURE_OPTS="
     --prefix=/usr
     --enable-ipv6
 "
-# gsoap does not build with parallel make
-NO_PARALLEL_MAKE=1
 # gsoap 2.8.103+ wants gnu tools
-PATH="/usr/gnu/bin:$PATH" build_dependency gsoap $GSOAPDIR gsoap gsoap_$GSOAPVER ""
-NO_PARALLEL_MAKE=
+PATH="$GNUBIN:$PATH" build_dependency gsoap $GSOAPDIR gsoap gsoap_$GSOAPVER ""
 export GSOAP=$DEPROOT/usr
 export LD_LIBRARY_PATH+=":$GSOAP/lib"
 
@@ -119,9 +108,12 @@ CONFIGURE_OPTS="
     --enable-webservice
 "
 
+# false positives are detected by our build framework
+EXPECTED_BUILD_ERRS=6
+
 # virtualbox does currently not build with openjdk11
 # disable it for releases where openjdk11 is the default
-[ $RELVER -ge 151035 ] && CONFIGURE_OPTS+=" --disable-java"
+CONFIGURE_OPTS+=" --disable-java"
 
 save_function configure64 _configure64
 configure64() {
@@ -161,6 +153,12 @@ VBOX_WITH_LIBOPUS =
 # Disable video recording (with audio support).
 VBOX_WITH_VIDEOREC =
 VBOX_WITH_AUDIO_VIDEOREC =
+
+# Undefine nls which requires Qt.
+VBOX_WITH_NLS =
+VBOX_WITH_MAIN_NLS =
+VBOX_WITH_PUEL_NLS =
+VBOX_WITH_VBOXMANAGE_NLS =
 
 # configure does not properly detect include path for libvncserver
 VBoxVNC_INCS = /opt/ooce/include

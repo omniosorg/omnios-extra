@@ -11,7 +11,7 @@
 #
 # Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
-license LICENSE license=GPLv2
+license LICENSE license=GPLv3
 <transform file path=LICENSE -> drop>
 
 # Set correct group on system directories
