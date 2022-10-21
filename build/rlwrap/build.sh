@@ -13,11 +13,12 @@
 # }}}
 
 # Copyright 2022 r7st r7st.guru@gmail.com
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=rlwrap
-VER=0.45.2
+VER=0.46
 PKG=ooce/util/rlwrap
 SUMMARY="readline wrapper"
 DESC="rlwrap is a 'readline wrapper', a small utility that uses the GNU "
