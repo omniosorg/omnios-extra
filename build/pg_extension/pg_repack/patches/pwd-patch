@@ -1,7 +1,7 @@
 diff -wpruN '--exclude=*.orig' a~/bin/pgut/pgut-fe.c a/bin/pgut/pgut-fe.c
 --- a~/bin/pgut/pgut-fe.c	1970-01-01 00:00:00
 +++ a/bin/pgut/pgut-fe.c	1970-01-01 00:00:00
-@@ -16,6 +16,10 @@
+@@ -17,6 +17,10 @@
  #include <getopt_long.h>
  #endif
  
@@ -9,6 +9,6 @@ diff -wpruN '--exclude=*.orig' a~/bin/pgut/pgut-fe.c a/bin/pgut/pgut-fe.c
 +#include <pwd.h>
 +#endif
 +
- char	   *dbname = NULL;
+ const char *dbname = NULL;
  char	   *host = NULL;
  char	   *port = NULL;

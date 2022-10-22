@@ -8,13 +8,16 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 <transform file path=.*\.py$ -> set pkg.depend.bypass-generate .* >
 <transform file path=.*ssh_tunnel_bug\.rb$ \
     -> set pkg.depend.bypass-generate .* >
 
-license $(PROG)/LICENSE license=MIT
+# drop leftovers from patching
+<transform file path=$(PREFIX)/.+\.orig$ -> drop>
 
 link path=$(OPREFIX)/bin/$(PROG) target=../$(PROG)/bin/$(PROG)
+
+license $(PROG)/LICENSE license=MIT
 

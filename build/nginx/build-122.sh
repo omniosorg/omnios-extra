@@ -19,7 +19,7 @@
 
 PROG=nginx
 PKG=ooce/server/nginx-122
-VER=1.22.0
+VER=1.22.1
 SUMMARY="nginx 1.22 web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 

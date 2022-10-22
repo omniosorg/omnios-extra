@@ -18,7 +18,7 @@
 
 PROG=pg_repack
 PKG=ooce/database/postgresql-XX/pg_repack
-VER=1.4.7
+VER=1.4.8
 SUMMARY="PostgreSQL XX online table repacking extension"
 DESC="Reorganize tables in PostgreSQL XX databases with minimal locks"
 
