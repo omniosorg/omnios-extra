@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/plugins/meson.build a/plugins/meson.build
+--- a~/plugins/meson.build	1970-01-01 00:00:00
++++ a/plugins/meson.build	1970-01-01 00:00:00
+@@ -8,8 +8,6 @@ if not enable_modules
+       capture: true,
+       command: ['sed', '-ne', 's/^[[:space:]]*\\(qemu_.*\\);/_\\1/p', '@INPUT@'])
+     plugin_ldflags = ['-Wl,-exported_symbols_list,plugins/qemu-plugins-ld64.symbols']
+-  else
+-    plugin_ldflags = ['-Xlinker', '--dynamic-list=' + (meson.project_source_root() / 'plugins/qemu-plugins.symbols')]
+   endif
+ endif
+ 
