@@ -3007,6 +3007,50 @@ strip_install() {
     popd > /dev/null
 }
 
+do_convert_ctf() {
+    typeset file="$1"
+    typeset mode=
+
+    if [ ! -w "$file" -o -u "$file" -o -g "$file" -o -k "$file" ]; then
+        mode=`$STAT -c %a "$file"`
+        logcmd $CHMOD u+w "$file" || logerr -b "chmod u+w failed: $file"
+    fi
+    typeset tf="$file.$$"
+
+    typeset flags="$CTF_FLAGS"
+    if [ -f $SRCDIR/files/ctf.ignore ]; then
+        [ $RELVER -ge 151037 ] && flags+=" -M$SRCDIR/files/ctf.ignore" \
+            || flags+=" -m"
+    fi
+    if logcmd $CTFCONVERT $flags -l "$PROG-$VER" -o "$tf" "$file"; then
+        if [ -s "$tf" ]; then
+            logcmd $CP "$tf" "$file"
+            if [ -z "$BATCH" -o -n "$CTF_AUDIT" ]; then
+                logmsg -n "$ctftag $file" \
+                    "`$CTFDUMP -S $file | \
+                    $NAWK '/number of functions/{print $6}'` function(s)"
+            else
+                logmsg "$ctftag converted $file"
+            fi
+        else
+            logmsg "$ctftag no DWARF data $file"
+        fi
+    else
+        logmsg -e "$ctftag failed $file"
+        if [ -n "$CTF_AUDIT" ]; then
+            logcmd $MKDIR -p $BASE_TMPDIR/ctfobj
+            typeset f=${file:2}
+            logcmd $CP $file $BASE_TMPDIR/ctfobj/${f//\//_}
+        fi
+    fi
+
+    logcmd $RM -f "$tf"
+    strip_files "$file"
+    if [ -n "$mode" ]; then
+        logcmd $CHMOD $mode "$file" || logerr -b "chmod failed: $file"
+    fi
+}
+
 convert_ctf() {
     local dir="${1:-$DESTDIR}"
 
@@ -3028,46 +3072,10 @@ convert_ctf() {
             continue
         fi
 
-        typeset mode=
-        if [ ! -w "$file" -o -u "$file" -o -g "$file" -o -k "$file" ]; then
-            mode=`$STAT -c %a "$file"`
-            logcmd $CHMOD u+w "$file" || logerr -b "chmod u+w failed: $file"
-        fi
-        typeset tf="$file.$$"
-
-        typeset flags="$CTF_FLAGS"
-        if [ -f $SRCDIR/files/ctf.ignore ]; then
-            [ $RELVER -ge 151037 ] && flags+=" -M$SRCDIR/files/ctf.ignore" \
-                || flags+=" -m"
-        fi
-        if logcmd $CTFCONVERT $flags -l "$PROG-$VER" -o "$tf" "$file"; then
-            if [ -s "$tf" ]; then
-                logcmd $CP "$tf" "$file"
-                if [ -z "$BATCH" -o -n "$CTF_AUDIT" ]; then
-                    logmsg -n "$ctftag $file" \
-                        "`$CTFDUMP -S $file | \
-                        $NAWK '/number of functions/{print $6}'` function(s)"
-                else
-                    logmsg "$ctftag converted $file"
-                fi
-            else
-                logmsg "$ctftag no DWARF data $file"
-            fi
-        else
-            logmsg -e "$ctftag failed $file"
-            if [ -n "$CTF_AUDIT" ]; then
-                logcmd $MKDIR -p $BASE_TMPDIR/ctfobj
-                typeset f=${file:2}
-                logcmd $CP $file $BASE_TMPDIR/ctfobj/${f//\//_}
-            fi
-        fi
-
-        logcmd $RM -f "$tf"
-        strip_files "$file"
-        if [ -n "$mode" ]; then
-            logcmd $CHMOD $mode "$file" || logerr -b "chmod failed: $file"
-        fi
+        do_convert_ctf "$file" &
+        parallelise $LCPUS
     done < <(rtime_objects "$dir")
+    wait
 
     popd >/dev/null
 }
