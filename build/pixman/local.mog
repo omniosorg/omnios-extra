@@ -11,11 +11,5 @@
 #
 # Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
-# Drop 32bit binaries
-<transform path=$(PREFIX)/s?bin/i386 -> drop>
-
-# Drop html documentation
-<transform path=$(PREFIX)/share -> drop>
-
-license COPYING-LGPL-2.1 license=LGPLv2.1
+license COPYING license=MIT
 

@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,13 +22,11 @@ PKG=ooce/library/cairo
 SUMMARY="cairo"
 DESC="Cairo is a 2D graphics library with support for multiple output devices"
 
-# Cairo depends on pixman
-PIXMANVER=0.38.4
-
 BUILD_DEPENDS_IPS="
     ooce/library/fontconfig
     ooce/library/freetype2
     ooce/library/libpng
+    ooce/library/pixman
 "
 
 OPREFIX=$PREFIX
@@ -40,23 +38,6 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DPIXMAN=$PIXMANVER
 "
-
-init
-prep_build
-
-######################################################################
-
-CONFIGURE_OPTS="
-    --disable-static
-"
-build_dependency -merge pixman pixman-$PIXMANVER pixman pixman $PIXMANVER
-export pixman_CFLAGS="-I$DEPROOT/$OPREFIX/include/pixman-1"
-export pixman_LIBS="-lpixman-1"
-LDFLAGS32+=" -L$DEPROOT/$OPREFIX/lib"
-LDFLAGS64+=" -L$DEPROOT/$OPREFIX/lib/amd64"
-logcmd find $DEPROOT -name \*.la -exec rm {} +
-
-######################################################################
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
@@ -75,10 +56,10 @@ CONFIGURE_OPTS_64="
 LDFLAGS32+=" -R$OPREFIX/lib"
 LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
 
-note -n "-- Building $PROG"
-
+init
 download_source $PROG $PROG $VER
 patch_source
+prep_build
 build
 make_package
 clean_up
