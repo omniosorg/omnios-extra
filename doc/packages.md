@@ -205,7 +205,7 @@
 | ooce/util/htmlq		| 0.4.0		| https://github.com/mgdm/htmlq/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/hyperfine		| 1.15.0	| https://github.com/sharkdp/hyperfine/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/jq			| 1.6		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/util/ncdu		| 2.2		| https://dev.yorhel.nl/download | [jclulow](https://github.com/jclulow)
+| ooce/util/ncdu		| 2.2.1		| https://dev.yorhel.nl/download | [jclulow](https://github.com/jclulow)
 | ooce/util/pass		| 1.7.4		| https://git.zx2c4.com/password-store/refs/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/rargs		| 0.3.0		| https://github.com/lotabout/rargs/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/rlwrap		| 0.46		| https://github.com/hanslub42/rlwrap/releases | [r7st](https://github.com/r7st)
