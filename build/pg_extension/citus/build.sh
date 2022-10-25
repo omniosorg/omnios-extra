@@ -18,7 +18,7 @@
 
 PROG=citus
 PKG=ooce/database/postgresql-XX/citus
-VER=11.1.3
+VER=11.1.4
 SUMMARY="Citus PostgreSQL XX extension"
 DESC="Transforms PostgreSQL XX into a distributed database"
 
@@ -28,13 +28,6 @@ SKIP_LICENCES=AGPLv3
 
 SKIP_RTIME_CHECK=1
 NO_SONAME_EXPECTED=1
-
-# lz4 was in omnios-extra until 151035
-if [ $RELVER -lt 151035 ]; then
-    CFLAGS+=" -I$OPREFIX/include"
-    LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
-fi
-
 
 init
 download_source $PROG v$VER
