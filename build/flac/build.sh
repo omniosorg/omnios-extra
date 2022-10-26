@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=flac
-VER=1.4.1
+VER=1.4.2
 PKG=ooce/audio/flac
 SUMMARY="flac"
 DESC="Free Lossless Audio Codec"
