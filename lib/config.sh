@@ -187,7 +187,7 @@ GNUBIN=/usr/gnu/bin
 # Define variables for standard utilities so that we can choose to run the
 # native version even if a build script modifies the path to put GNUBIN first.
 for util in \
-    basename cat comm cut tput digest mktemp sort sed tee rm mv cp mkdir \
+    basename cat comm cut dis tput digest mktemp sort sed tee rm mv cp mkdir \
     rmdir readlink ln ls chmod touch grep time find fgrep egrep uniq stat strip
 do
     declare -n _var=${util^^}
@@ -393,6 +393,11 @@ typeset -A FCFLAGS
 
 # Use optimisation level 2 with all versions of gcc
 FCFLAGS[_]+=" -O2"
+
+# We generally want to keep the frame pointer around, regardless of the
+# optimisation level - we like stack traces too much and it is of questionable
+# benefit anyway, even on i386.
+FCFLAGS[_]+=" -fno-omit-frame-pointer"
 
 # Taken from illumos-joyent along with the following comment:
 # "gcc has a rather aggressive optimization on by default that infers loop
