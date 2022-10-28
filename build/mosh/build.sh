@@ -12,19 +12,19 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=mosh
-VER=1.3.2
+VER=1.4.0
 PKG=ooce/network/mosh
 SUMMARY="mosh - mobile shell"
 DESC="Remote terminal application that allows roaming"
 
 # The protobuf ABI changes frequently. Link mosh statically
 # to the current version.
-PBUFVER=3.15.5
+PBUFVER=3.21.9
 
 set_arch 64
 
@@ -35,10 +35,6 @@ prep_build
 # Download and build a static version of protobuf
 
 save_buildenv
-
-# Without specifying the shell as bash here, configure is broken
-# on releases until 151037
-[ $RELVER -lt 151037 ] && CONFIGURE_CMD="$USRBIN/bash ./configure"
 
 CONFIGURE_OPTS=" --disable-shared --enable-static"
 

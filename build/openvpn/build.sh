@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=openvpn
-VER=2.5.7
+VER=2.5.8
 PKG=ooce/network/openvpn
 LZOVER=2.10
 SUMMARY="OpenVPN"
@@ -55,30 +55,20 @@ prep_build
 save_buildenv
 
 # Download and build a static version of liblzo
-CONFIGURE_OPTS="
-    --prefix=/usr
-    --disable-shared
-"
-CONFIGURE_OPTS_64=
+CONFIGURE_OPTS="--disable-shared"
+
 build_dependency lzo lzo-$LZOVER lzo lzo $LZOVER
-export LZO_CFLAGS="-I$DEPROOT/usr/include"
-export LZO_LIBS="-L$DEPROOT/usr/lib -llzo2"
+export LZO_CFLAGS="-I$DEPROOT/$PREFIX/include"
+export LZO_LIBS="-L$DEPROOT/$PREFIX/lib/$ISAPART64 -llzo2"
 
 restore_buildenv
 
 #########################################################################
 
-# Build 64-bit only and skip the arch-specific directories
 CONFIGURE_OPTS_64+="
     --includedir=$OPREFIX/include
     --libdir=$OPREFIX/lib/$ISAPART64
 "
-
-if [ $RELVER -lt 151035 ]; then
-    # lz4 was moved to core in r151035
-    export LZ4_CFLAGS="-I$OPREFIX/include"
-    export LZ4_LIBS="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64 -llz4"
-fi
 
 download_source $PROG $PROG $VER
 patch_source
@@ -98,11 +88,6 @@ VER=$AUTHLDAPVER
 PKG=ooce/network/openvpn-auth-ldap
 SUMMARY="OpenVPN Auth-LDAP Plugin"
 DESC="username/password authentication via LDAP for OpenVPN 2.x."
-
-if [ $RELVER -lt 151034 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
 
 OVPNDIR=$DESTDIR$OPREFIX/include
 PLUGINDIR=$OPREFIX/lib/$ISAPART64/openvpn/plugins
