@@ -123,7 +123,7 @@
 | ooce/library/onig		| 6.9.8		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pango		| 1.50.10	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pixman		| 0.42.0	| https://www.cairographics.org/releases/ http://www.pixman.org/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/protobuf		| 3.15.5	| https://github.com/protocolbuffers/protobuf/releases/ | Currently used solely by mosh
+| ooce/library/protobuf		| 3.21.9	| https://github.com/protocolbuffers/protobuf/releases/ | Currently used solely by mosh
 | ooce/library/security/libsasl2 | 2.1.28	| https://github.com/cyrusimap/cyrus-sasl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/serf		| 1.3.9 	| https://downloads.apache.org/serf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/slang		| 2.3.3		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)
@@ -144,7 +144,7 @@
 | ooce/network/dnsmasq		| 2.87		| https://thekelleys.org.uk/dnsmasq/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/fping		| 5.1		| https://github.com/schweikert/fping/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.4.2		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/network/mosh		| 1.3.2		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/network/mosh		| 1.4.0		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosquitto	| 2.0.15	| https://mosquitto.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mrtg		| 2.17.10	| https://oss.oetiker.ch/mrtg/pub/?M=D | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mtr		| 0.95		| https://github.com/traviscross/mtr/tags | [omniosorg](https://github.com/omniosorg)
