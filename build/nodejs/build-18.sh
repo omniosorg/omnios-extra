@@ -69,7 +69,7 @@ export LDFLAGS+=" -latomic"
 init
 download_source $PROG $PROG v$VER
 patch_source
-prep_build
+prep_build autoconf-like
 build -noctf    # C++
 strip_install
 make_package

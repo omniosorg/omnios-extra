@@ -885,6 +885,14 @@ prep_build() {
 
     local _cmakeopts=
     case "$style" in
+        autoconf)
+            CONFIGURE_OPTS+="
+                --disable-silent-rules
+                --disable-maintainer-mode
+            "
+            ;;
+        autoconf-like)
+            ;;
         cmake+ninja)
             _cmakeopts="-GNinja"
             MAKE=$NINJA

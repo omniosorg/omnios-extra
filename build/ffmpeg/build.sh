@@ -81,7 +81,7 @@ LDFLAGS32+=" -Wl,-R$OPREFIX/lib"
 LDFLAGS64+=" -Wl,-R$OPREFIX/lib/$ISAPART64"
 
 init
-prep_build
+prep_build autoconf-like
 
 # Build previous versions
 for pver in $PVERS; do

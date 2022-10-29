@@ -115,7 +115,7 @@ make_install() {
 init
 download_source $PROG ${PROG}c $VER-src
 patch_source
-prep_build
+prep_build autoconf-like
 build -noctf
 run_testsuite check
 make_package

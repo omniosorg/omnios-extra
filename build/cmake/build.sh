@@ -39,7 +39,7 @@ CONFIGURE_OPTS_64="
 init
 download_source $PROG $PROG $VER
 patch_source
-prep_build
+prep_build autoconf-like
 build
 make_package
 clean_up

@@ -59,7 +59,7 @@ BUILDDIR=scons-local-$SCONS_VER download_source scons scons-local-$SCONS_VER
 CONFIGURE_CMD="$TMPDIR/scons.py"
 download_source $PROG $PROG $VER
 patch_source
-prep_build
+prep_build autoconf-like
 build
 strip_install
 make_package

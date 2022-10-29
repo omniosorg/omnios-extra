@@ -70,7 +70,7 @@ CONFIGURE_OPTS="
 init
 download_source $PROG $PROG v$VER
 patch_source
-prep_build
+prep_build autoconf-like
 build -noctf    # ctfconvert does currently not work
 strip_install
 make_package
