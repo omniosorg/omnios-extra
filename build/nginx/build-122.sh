@@ -117,7 +117,7 @@ init
 download_source $PROG $PROG $VER
 patch_source
 brotli
-prep_build
+prep_build autoconf-like
 build
 copy_man_page
 xform files/http-nginx-template.xml > $TMPDIR/http-$PROG-$sMAJVER.xml
