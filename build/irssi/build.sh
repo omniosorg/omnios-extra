@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=irssi
-VER=1.4.2
+VER=1.4.3
 PKG=ooce/network/irssi
 SUMMARY="Irssi"
 DESC="Text-mode modular chat client"

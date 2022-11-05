@@ -143,7 +143,7 @@
 | ooce/network/dnscrypt-proxy	| 2.1.2		| https://github.com/DNSCrypt/dnscrypt-proxy/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/dnsmasq		| 2.87		| https://thekelleys.org.uk/dnsmasq/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/fping		| 5.1		| https://github.com/schweikert/fping/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/network/irssi		| 1.4.2		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/network/irssi		| 1.4.3		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosh		| 1.4.0		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosquitto	| 2.0.15	| https://mosquitto.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mrtg		| 2.17.10	| https://oss.oetiker.ch/mrtg/pub/?M=D | [omniosorg](https://github.com/omniosorg)
