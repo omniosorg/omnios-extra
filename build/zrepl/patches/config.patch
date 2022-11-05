@@ -1,6 +1,7 @@
---- src/config/config.go~	2019-10-31 21:49:31.887071321 +0000
-+++ src/config/config.go	2019-10-31 21:49:57.062645536 +0000
-@@ -545,8 +545,8 @@
+diff -wpruN '--exclude=*.orig' a~/config/config.go a/config/config.go
+--- a~/config/config.go	1970-01-01 00:00:00
++++ a/config/config.go	1970-01-01 00:00:00
+@@ -671,8 +671,8 @@ func (t *HookEnum) UnmarshalYAML(u func(
  }
  
  var ConfigFileDefaultLocations = []string{
