@@ -36,7 +36,7 @@ PASS: scaling-test
 PASS: composite
 PASS: tolerance-test
 ============================================================================
-Testsuite summary for pixman 0.42.0
+Testsuite summary for pixman 0.42.2
 ============================================================================
 # TOTAL: 33
 # PASS:  33
