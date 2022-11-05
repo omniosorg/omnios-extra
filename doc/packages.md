@@ -66,7 +66,7 @@
 | ooce/developer/gperf		| 3.1		| https://ftp.gnu.org/pub/gnu/gperf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-13	| 13.0.1	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-14	| 14.0.6	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/llvm-15	| 15.0.3	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/llvm-15	| 15.0.4	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ninja		| 1.11.1	| https://github.com/ninja-build/ninja/releases https://ninja-build.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| github-latest	| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| github-latest	| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
