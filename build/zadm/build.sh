@@ -26,11 +26,6 @@ NOVNCVER=1.3.0
 
 RUN_DEPENDS_IPS="ooce/util/uefivars"
 
-if [ $RELVER -le 151036 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
-
 save_variables MIRROR SRCMIRROR
 set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
@@ -66,7 +61,6 @@ bundle_novnc() {
     set_builddir noVNC-$NOVNCVER
 
     download_source novnc v$NOVNCVER
-    [ $RELVER -lt 151041 ] && patch_source patches-novnc
     logcmd mkdir -p $DESTDIR$PREFIX/novnc || logerr "mkdir novnc failed"
 
     pushd $TMPDIR/$BUILDDIR >/dev/null
