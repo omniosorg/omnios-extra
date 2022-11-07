@@ -17,15 +17,10 @@
 . ../../lib/build.sh
 
 PROG=fd
-VER=8.4.0
+VER=8.5.2
 PKG=ooce/util/fd
 SUMMARY="find utility"
 DESC="fd is a simple, fast and user-friendly alternative to find"
-
-if [ $RELVER -lt 151028 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
 
 BUILD_DEPENDS_IPS=ooce/developer/rust
 
@@ -35,7 +30,8 @@ init
 download_source $PROG v$VER
 patch_source
 prep_build
-build_rust --no-default-features
+# check default features and re-add any but use-jemalloc
+build_rust --no-default-features --features completions
 install_rust
 strip_install
 make_package

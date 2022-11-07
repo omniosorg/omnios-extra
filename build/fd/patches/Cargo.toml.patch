@@ -1,10 +1,10 @@
 diff -wpruN '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
 --- a~/Cargo.toml	1970-01-01 00:00:00
 +++ a/Cargo.toml	1970-01-01 00:00:00
-@@ -80,3 +80,6 @@ codegen-units = 1
- [features]
- use-jemalloc = ["jemallocator"]
- default = ["use-jemalloc"]
+@@ -87,3 +87,6 @@ use-jemalloc = ["jemallocator"]
+ completions = ["clap_complete"]
+ base = ["use-jemalloc"]
+ default = ["use-jemalloc", "completions"]
 +
 +[patch.crates-io]
 +users = { git = "https://github.com/papertigers/rust-users", branch = "illumos" }
