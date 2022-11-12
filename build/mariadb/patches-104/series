@@ -7,3 +7,4 @@ cfi.patch
 openssl3.patch
 openssl3b.patch
 memcntl.patch
+alloca.patch
