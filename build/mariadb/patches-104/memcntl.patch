@@ -7,7 +7,7 @@ see: https://www.illumos.org/issues/14418
 diff -wpruN '--exclude=*.orig' a~/sql/mysqld.cc a/sql/mysqld.cc
 --- a~/sql/mysqld.cc	1970-01-01 00:00:00
 +++ a/sql/mysqld.cc	1970-01-01 00:00:00
-@@ -173,7 +173,7 @@ extern "C" {					// Because of SCO 3.2V4
+@@ -174,7 +174,7 @@ extern "C" {					// Because of SCO 3.2V4
      && defined(_XOPEN_SOURCE)
  extern int getpagesizes(size_t *, int);
  extern int getpagesizes2(size_t *, int);
