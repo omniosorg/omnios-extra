@@ -12,18 +12,16 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=acmefetch
-VER=0.7.5
+VER=0.8.1
 PKG=ooce/util/acmefetch
 SUMMARY="AcmeFetch"
-DESC="A thin wrapper arount he ACME::Protocol library to fetch and maintain "
+DESC="A thin wrapper around the Net::ACME2 library to fetch and maintain "
 DESC+="ssl certificates using the the services of Let's Encrypt!"
-
-[ $RELVER -lt 151033 ] && RUN_DEPENDS_IPS="runtime/perl-64"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -34,6 +32,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS_64="
