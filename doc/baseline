@@ -232,6 +232,7 @@ extra.omnios ooce/text/asciidoc
 extra.omnios ooce/text/asciinema
 extra.omnios ooce/text/docbook-xsl
 extra.omnios ooce/text/ripgrep
+extra.omnios ooce/text/texinfo
 extra.omnios ooce/util/acmefetch
 extra.omnios ooce/util/bat
 extra.omnios ooce/util/diffr

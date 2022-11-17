@@ -57,9 +57,6 @@ export PATH=$GNUBIN:$PATH
 # gdb has large enumerations
 CTF_FLAGS+=" -s"
 
-MAKE_ARGS="MAKEINFO=/bin/true"
-MAKE_INSTALL_ARGS="$MAKE_ARGS"
-
 # Generate illumos data files describing system calls and structures
 # found in core files.
 function generate {

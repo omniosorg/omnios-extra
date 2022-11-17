@@ -169,6 +169,8 @@
 
 <transform path=opt/ooce/.+/man(/.+)? -> default facet.doc.man true>
 <transform path=.*\.pod$ -> default facet.doc.man true>
+<transform path=opt/ooce(|/.+)/share/info(/|$) \
+    -> default facet.optional.doc.info true>
 
 <transform path=opt/ooce.*/include(/|$) -> default facet.devel true>
 <transform file path=.*lib/.+\.a$ -> default facet.devel true>
