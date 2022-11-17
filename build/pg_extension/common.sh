@@ -20,6 +20,11 @@ done
 DEF_RUN_DEPENDS_IPS="ooce/database/postgresql-XX"
 
 set_arch 64
+# building the extensions should use the same llvm/clang version that was
+# used to build postgres JIT code; however part of the build uses
+# the first unversioned binary found in the PATH
+set_clangver
+BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
 
 OPREFIX=$PREFIX
 OPATH=$PATH
