@@ -4,14 +4,9 @@ Date: Mon, 21 Sep 2020 16:13:42 +0000
 Subject: [PATCH] Revert "Disclaimer added (#23)"
 
 This reverts commit cb54149fc1d0c6599efe47fcafb2946c83c7bd27.
----
- bin/acmefetch | 16 ----------------
- 1 file changed, 16 deletions(-)
-
-diff --git a/bin/acmefetch b/bin/acmefetch
-index 0af4fc3..0cf11f6 100755
---- a/bin/acmefetch
-+++ b/bin/acmefetch
+diff -wpruN '--exclude=*.orig' a~/bin/acmefetch a/bin/acmefetch
+--- a~/bin/acmefetch	1970-01-01 00:00:00
++++ a/bin/acmefetch	1970-01-01 00:00:00
 @@ -40,21 +40,6 @@ sub main()
  
  
@@ -34,13 +29,10 @@ index 0af4fc3..0cf11f6 100755
  }
  
  main;
-@@ -503,6 +488,5 @@ S<Tobias Oetiker E<lt>tobi@oetiker.chE<gt>>
+@@ -503,6 +488,5 @@ S<Tobias Oetiker E<lt>tobi@oetiker.chE<g
  
   2016-01-20 to Initial Version
   2016-05-09 to Updated to Protocol::ACME 0.12
 - 2019-07-11 sa Disclaimer added
  
  =cut
--- 
-2.28.0
-
