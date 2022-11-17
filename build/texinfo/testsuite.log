@@ -1,0 +1,107 @@
+Making check in gnulib/lib
+Making check in info
+PASS: t/file.sh
+PASS: t/file-node.sh
+PASS: t/file-nodes.sh
+PASS: t/file-node-with-dot.sh
+PASS: t/file-index.sh
+PASS: t/file-index-colons.sh
+PASS: t/file-file-with-dot.sh
+PASS: t/no-file.sh
+PASS: t/node-no-file.sh
+PASS: t/split.sh
+PASS: t/malformed-split.sh
+PASS: t/relative-path.sh
+PASS: t/file-relative-path.sh
+PASS: t/dir.sh
+PASS: t/dir-file.sh
+FAIL: t/dir-file-sloppily.sh
+PASS: t/dir-merge.sh
+PASS: t/dir-nondir.sh
+PASS: t/dir-no-file.sh
+PASS: t/dir-file-menu.sh
+PASS: t/dir-file-no-menu.sh
+PASS: t/dir-file-node.sh
+PASS: t/dir-file-index.sh
+PASS: t/dir-3-menus.sh
+PASS: t/dir-menus-sloppily.sh
+PASS: t/where-dir-file.sh
+PASS: t/dir-dangling-entry.sh
+PASS: t/dir-entry-to-subdir.sh
+PASS: t/spec-file-node.sh
+PASS: t/spec-no-node.sh
+PASS: t/spec-menu.sh
+PASS: t/all-only.sh
+PASS: t/empty.sh
+PASS: t/tab.sh
+PASS: t/tab-argument.sh
+PASS: t/tab-no-xref.sh
+PASS: t/tab-skip-node.sh
+PASS: t/xref-across-lines.sh
+PASS: t/xref-across-lines-2.sh
+PASS: t/body-start.sh
+PASS: t/end-of-line.sh
+PASS: t/goal-column.sh
+PASS: t/star-note-non-whitespace.sh
+PASS: t/c-u-m-x-scroll-forward.sh
+PASS: t/last-no-history.sh
+PASS: t/split-footnotes.sh
+PASS: t/window-split-dir.sh
+PASS: t/last-node-not-top-level.sh
+PASS: t/adjust-anchors.sh
+PASS: t/xref-to-anchor.sh
+PASS: t/search-after-tag.sh
+PASS: t/split-file-menu.sh
+PASS: t/search-split-after-index.sh
+PASS: t/index.sh
+PASS: t/no-index.sh
+PASS: t/index-apropos.sh
+PASS: t/index-search.sh
+PASS: t/index-completing.sh
+PASS: t/split-index.sh
+PASS: t/index-long-nodeline.sh
+PASS: t/index-paren.sh
+PASS: t/empty-infopath.sh
+PASS: t/menu-sequence.sh
+PASS: t/relative-reference.sh
+PASS: t/resize-in-completions.sh
+PASS: t/replace-viewed.sh
+PASS: t/search-skip-screen.sh
+PASS: t/search-empty.sh
+PASS: t/close-window-after-search.sh
+PASS: t/inc-sea-forward.sh
+PASS: t/inc-sea-forward-nonregex.sh
+PASS: t/inc-sea-insensitive.sh
+PASS: t/inc-sea-history.sh
+PASS: t/inc-sea-bs.sh
+PASS: t/gc-split.sh
+PASS: t/anchor-positions.sh
+PASS: t/quoted-label-as-target.sh
+PASS: t/quoted-target.sh
+PASS: t/quoted-label-and-target.sh
+PASS: t/quoted-manual-in-target.sh
+PASS: t/quoted-manual-in-label.sh
+PASS: t/goto-quoted.sh
+PASS: t/next-quoted.sh
+PASS: t/echo-area-no-completions.sh
+PASS: t/multiple-completions.sh
+PASS: t/help.sh
+============================================================================
+Testsuite summary for GNU Texinfo 7.0
+============================================================================
+# TOTAL: 86
+# PASS:  85
+# SKIP:  0
+# XFAIL: 0
+# FAIL:  1
+# XPASS: 0
+# ERROR: 0
+============================================================================
+See info/test-suite.log
+Please report to bug-texinfo@gnu.org
+============================================================================
+make[4]: *** [Makefile:1944: test-suite.log] Error 1
+make[3]: *** [Makefile:2052: check-TESTS] Error 2
+make[2]: *** [Makefile:2723: check-am] Error 2
+make[1]: *** [Makefile:2725: check] Error 2
+make: *** [Makefile:1496: check-recursive] Error 1

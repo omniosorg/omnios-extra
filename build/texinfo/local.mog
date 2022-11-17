@@ -10,16 +10,8 @@
 
 # Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
-license COPYING license=GPLv2
-license COPYING.LIB license=LGPLv2
-license COPYING3 license=GPLv3
-license COPYING3.LIB license=LGPLv3
-
-<transform file path=$(PREFIX)/bin/(gcore|gdb-add-index) -> drop>
-<transform file path=.*/syscalls/.*(linux|freebsd|netbsd) -> drop>
-<transform file path=$(PREFIX)/share/man/man1/(gdb-add|gdbserver) -> drop>
+license COPYING license=GPLv3
 
 <include binlink.mog>
 <include manlink.mog>
-<include infolink.mog>
 
