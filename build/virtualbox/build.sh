@@ -18,7 +18,7 @@
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox
-VER=7.0.2
+VER=7.0.4
 GSOAPVER=2.8.123
 GSOAPDIR=gsoap-${GSOAPVER%.*}
 SUMMARY="VirtualBox"
@@ -98,7 +98,6 @@ export LD_LIBRARY_PATH+=":$GSOAP/lib"
 
 CONFIGURE_OPTS="
     --build-headless
-    --build-libopus
     --disable-python
     --disable-alsa
     --disable-pulse
