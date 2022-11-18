@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libheif
-VER=1.13.0
+VER=1.14.0
 PKG=ooce/library/libheif
 SUMMARY="HEIF and AVIF encoder"
 DESC="ISO/IEC 23008-12:2017 HEIF and AVIF (AV1 Image File Format) "
@@ -25,9 +25,9 @@ DESC+="file format decoder and encoder"
 
 BUILD_DEPENDS_IPS="
     ooce/library/libde265
+    ooce/multimedia/dav1d
     ooce/multimedia/x265
 "
-[ $RELVER -ge 151036 ] && BUILD_DEPENDS_IPS+=" ooce/multimedia/dav1d"
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
