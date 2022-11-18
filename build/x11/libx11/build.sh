@@ -17,7 +17,7 @@
 . ../../../lib/build.sh
 
 PROG=libX11
-VER=1.8.1
+VER=1.8.2
 PKG=ooce/x11/library/libx11
 SUMMARY="libX11"
 DESC="X11 core protocol client library"
