@@ -63,6 +63,8 @@ extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/database/rrdtool
 extra.omnios ooce/developer/aarch64-gcc10
 extra.omnios ooce/developer/aarch64-gnu-binutils
+extra.omnios ooce/developer/aarch64-linker
+extra.omnios ooce/developer/aarch64-sysroot
 extra.omnios ooce/developer/autoconf-archive
 extra.omnios ooce/developer/autogen
 extra.omnios ooce/developer/cargo-c

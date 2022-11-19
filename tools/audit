@@ -283,6 +283,9 @@ audit()
                         */pango:1.47*)
                             [ $r = 151034 ] || ok=0
                             ;;
+                        # aarch64 cross build tools are
+                        # not published until r151045
+                        */aarch64-*:) [ $r -lt 151045 ] || ok=0 ;;
                         *) ok=0 ;;
                     esac
                     ;;
