@@ -61,6 +61,7 @@ extra.omnios ooce/database/postgresql-15/mysql_fdw
 extra.omnios ooce/database/postgresql-15/pg_repack
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/database/rrdtool
+extra.omnios ooce/developer/aarch64-gnu-binutils
 extra.omnios ooce/developer/autoconf-archive
 extra.omnios ooce/developer/autogen
 extra.omnios ooce/developer/cargo-c
