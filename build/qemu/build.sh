@@ -61,7 +61,6 @@ addpath PKG_CONFIG_PATH64 $DEPROOT$PREFIX/lib/$ISAPART64/pkgconfig
 CONFIGURE_CMD="/bin/bash $CONFIGURE_CMD"
 CONFIGURE_OPTS="
     --localstatedir=/var$PREFIX
-    --disable-coroutine-pool
 "
 LDFLAGS+=" -lumem"
 
