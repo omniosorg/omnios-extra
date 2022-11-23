@@ -1,0 +1,16 @@
+OFD-style record locks are currently limited to spanning the entire file in
+illumos. Undefine the option so the code falls back to an alternative
+implementation.
+
+diff -wpruN '--exclude=*.orig' a~/util/osdep.c a/util/osdep.c
+--- a~/util/osdep.c	1970-01-01 00:00:00
++++ a/util/osdep.c	1970-01-01 00:00:00
+@@ -31,6 +31,8 @@
+ #include "qemu/hw-version.h"
+ #include "monitor/monitor.h"
+ 
++#undef F_OFD_SETLK
++
+ static const char *hw_version = QEMU_HW_VERSION;
+ 
+ int socket_set_cork(int fd, int v)
