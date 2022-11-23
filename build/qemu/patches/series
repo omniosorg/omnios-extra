@@ -1,3 +1,4 @@
 undef_FSCALE.patch
 no_dynamic-list.patch
 ofs-locking.patch
+coroutine.patch
