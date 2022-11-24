@@ -35,6 +35,8 @@ set_arch 64
 
 SKIP_LICENCES=UNLICENSE
 
+export XML_CATALOG_FILES=$PREFIX/docbook-xsl/catalog.xml
+
 init
 download_source $PROG $VER
 patch_source
