@@ -24,6 +24,11 @@ DESC="A generic and open source machine emulator and virtualizer"
 
 LIBTASN1VER=4.19.0
 
+if [ $RELVER -lt 151045 ]; then
+    logmsg "--- $PKG is not built for r$RELVER"
+    exit 0
+fi
+
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
