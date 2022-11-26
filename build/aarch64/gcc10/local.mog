@@ -1,0 +1,25 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+#
+
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+
+license COPYING license=GPLv2
+license COPYING.LIB license=LGPLv2.1
+license COPYING.RUNTIME license="GCC runtime license"
+license COPYING3 license=GPLv3
+license COPYING3.LIB license=LGPLv3
+
+<transform path=$(PREFIX)/share/info -> drop>
+<transform path=.*/include-fixed -> drop>
+
+<transform file hardlink path=$(PREFIX)/bin/$(TRIPLET64)-(.+)$ -> emit \
+    link path=$(PREFIX)/bin/%<1> target=$(TRIPLET64)-%<1> >
+

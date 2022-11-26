@@ -778,6 +778,11 @@ set_builddir() {
     EXTRACTED_SRC="$1"
 }
 
+append_builddir() {
+    BUILDDIR+="/$1"
+    EXTRACTED_SRC+="/$1"
+}
+
 set_patchdir() {
     PATCHDIR="$1"
 }

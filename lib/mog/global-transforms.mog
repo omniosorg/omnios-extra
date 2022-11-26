@@ -139,6 +139,7 @@
 <transform dir path=var/log$ -> drop>
 <transform dir path=var/opt$ -> drop>
 
+<transform file path=opt/ooce(|/.+)/share/info/dir$ -> drop>
 <transform path=usr/gnu/share/info -> drop>
 <transform path=usr/share/info -> drop>
 # libtool archives
