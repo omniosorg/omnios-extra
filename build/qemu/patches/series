@@ -1,4 +1,6 @@
-undef_FSCALE.patch
-no_dynamic-list.patch
-ofs-locking.patch
-coroutine.patch
+0002-illumos-OFD-locking-must-span-the-entire-file.patch
+0003-Do-not-pass-dynamic-list-to-linker.patch
+0004-illumos-defines-FSCALE-in-sys-param.h.patch
+0005-Temporary-coroutine-patch-pending-illumos-15206.patch
+0006-configure-uses-bash-extensions.patch
+0007-Add-support-for-VNICs.patch

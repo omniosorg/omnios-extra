@@ -63,6 +63,8 @@ addpath PKG_CONFIG_PATH64 $DEPROOT$PREFIX/lib/$ISAPART64/pkgconfig
 
 #########################################################################
 
+note -n "-- Building $PROG"
+
 CONFIGURE_CMD="/bin/bash $CONFIGURE_CMD"
 CONFIGURE_OPTS="
     --localstatedir=/var$PREFIX

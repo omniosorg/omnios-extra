@@ -1,3 +1,7 @@
+From 1a428f89afaa06334a65240265b433c7d86faaf5 Mon Sep 17 00:00:00 2001
+From: Andy Fiddaman <illumos@fiddaman.net>
+Date: Mon, 28 Nov 2022 14:56:21 +0000
+Subject: Temporary coroutine patch (pending illumos 15206)
 
 The coroutine ucontext backend uses a combination of sigsetjmp/siglongjmp
 and set/getcontext(). It stores the current coroutine data in thread local
@@ -15,9 +19,12 @@ change, or if there is a better fix. It would be slightly cleaner to use
 set/getcontext() throughout, but that adds additional system call overhead.
 
 For more analysis, see https://github.com/omniosorg/illumos-omnios/issues/1260
+---
+ util/coroutine-ucontext.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/util/coroutine-ucontext.c b/util/coroutine-ucontext.c
-index ddc98fb..9eb4581 100644
+index ddc98fb4f8..9eb45819aa 100644
 --- a/util/coroutine-ucontext.c
 +++ b/util/coroutine-ucontext.c
 @@ -292,6 +292,10 @@ void qemu_coroutine_delete(Coroutine *co_)
