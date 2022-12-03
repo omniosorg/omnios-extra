@@ -24,7 +24,7 @@ DESC="A generic and open source machine emulator and virtualizer"
 
 LIBTASN1VER=4.19.0
 
-if [ $RELVER -lt 151045 ]; then
+if [ $RELVER -lt 151044 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
     exit 0
 fi
@@ -63,7 +63,8 @@ addpath PKG_CONFIG_PATH64 $DEPROOT$PREFIX/lib/$ISAPART64/pkgconfig
 
 #########################################################################
 
-CONFIGURE_CMD="/bin/bash $CONFIGURE_CMD"
+note -n "-- Building $PROG"
+
 CONFIGURE_OPTS="
     --localstatedir=/var$PREFIX
 "
