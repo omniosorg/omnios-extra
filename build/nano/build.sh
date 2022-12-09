@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=nano
-VER=6.4
+VER=7.0
 PKG=ooce/editor/nano
 SUMMARY="nano editor"
 DESC="GNU implementation of nano, a text editor emulating pico"
@@ -25,6 +25,7 @@ DESC="GNU implementation of nano, a text editor emulating pico"
 BUILD_DEPENDS_IPS="library/ncurses"
 
 set_arch 64
+[ $RELVER -ge 151045 ] && set_clangver
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
