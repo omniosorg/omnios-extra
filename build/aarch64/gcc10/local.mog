@@ -23,3 +23,6 @@ license COPYING3.LIB license=LGPLv3
 <transform file hardlink path=$(PREFIX)/bin/$(TRIPLET64)-(.+)$ -> emit \
     link path=$(PREFIX)/bin/%<1> target=$(TRIPLET64)-%<1> >
 
+<transform file path=.*libstdc++ -> \
+    set pkg.depend.bypass-generate .*libm\.so\.0$>
+
