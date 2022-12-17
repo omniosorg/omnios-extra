@@ -74,9 +74,9 @@ RUN_DEPENDS_IPS="
 export LD=/bin/ld
 export LD_FOR_HOST=/bin/ld
 export LD_FOR_TARGET=$PREFIX/bin/ld
-export AS_FOR_TARGET=$PREFIX/bin/gas
-#export HEADERS=$SYSROOT/usr/include
-#export CFLAGS_FOR_TARGET=-I$HEADERS
+export AS_FOR_TARGET=$PREFIX/bin/$TRIPLET64-as
+export CFLAGS_FOR_TARGET="-mno-outline-atomics"
+export CXXFLAGS_FOR_TARGET="-mno-outline-atomics"
 export STRIP="/usr/bin/strip -x"
 export STRIP_FOR_TARGET="$STRIP"
 
@@ -114,16 +114,7 @@ CONFIGURE_OPTS="
     --with-diagnostics-urls=auto-if-env
     --disable-bootstrap
     --disable-decimal-float
-    --disable-libatomic
-    --disable-libcilkrts
-    --disable-libgomp
-    --disable-libitm
-    --disable-libmudflap
-    --disable-libquadmath
-    --disable-libsanitizer
-    --disable-libvtv
     --disable-nls
-    --disable-shared
     --enable-c99
     --enable-long-long
     enable_frame_pointer=yes
