@@ -50,7 +50,6 @@ CONFIGURE_OPTS="
     --exec-prefix=$PREFIX/usr/gnu
     --target=$TRIPLET64
     --with-sysroot
-    --program-prefix=g
     --with-system-zlib
     --enable-initfini-array
     --disable-gdb
