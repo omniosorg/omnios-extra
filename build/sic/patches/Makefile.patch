@@ -1,0 +1,32 @@
+diff -Naur build.orig/Makefile build/Makefile
+--- build.orig/Makefile	2022-12-20 04:36:32.637900843 +0000
++++ build/Makefile	2022-12-20 04:36:54.801079992 +0000
+@@ -4,12 +4,12 @@
+ VERSION = 1.3
+ 
+ # paths
+-PREFIX = /usr/local
++PREFIX = /opt/ooce
+ MANPREFIX = ${PREFIX}/share/man
+ 
+ # use system flags.
+-SIC_CFLAGS = ${CFLAGS}
+-SIC_LDFLAGS = ${LDFLAGS}
++SIC_CFLAGS = ${CFLAGS} -fstack-protector-all
++SIC_LDFLAGS = ${LDFLAGS} -lsocket
+ SIC_CPPFLAGS = ${LDFLAGS} -DVERSION=\"${VERSION}\" -D_GNU_SOURCE
+ 
+ BIN = sic
+@@ -24,10 +24,10 @@
+ ${OBJ}: config.h strlcpy.c util.c
+ 
+ .o:
+-	${CC} -o $@ $< ${SIC_LDFLAGS}
++	gcc -o $@ $< ${SIC_LDFLAGS}
+ 
+ .c.o:
+-	${CC} -c ${SIC_CFLAGS} ${SIC_CPPFLAGS} -o $@ -c $<
++	gcc -c ${SIC_CFLAGS} ${SIC_CPPFLAGS} -o $@ -c $<
+ 
+ config.h:
+ 	cp config.def.h $@
