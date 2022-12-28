@@ -1,0 +1,5 @@
+#!/bin/sh
+
+pfx=/opt/cross/aarch64/perl5/5.36
+$pfx/bin/miniperl -I$pfx/lib/aarch64-solaris-64 "$@"
+

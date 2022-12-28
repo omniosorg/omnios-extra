@@ -10,6 +10,7 @@ LGPLv3			GNU LESSER GENERAL PUBLIC LICENSE.*\n.*Version 3,
 AGPLv3			GNU AFFERO GENERAL PUBLIC LICENSE.*\n.*Version 3,
 #
 Apache2			Apache License.*\n.*Version 2.0,
+Artistic		The "Artistic License"
 Artistic2		Artistic License 2.0(?s:.)*Copyright.*The Perl Foundation
 MPLv2			^Mozilla Public License,? [Vv]ersion 2.0$
 PSFv2			^PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2$
