@@ -71,7 +71,7 @@
 | ooce/developer/omni		| github-latest	| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| github-latest	| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/radare2	| 5.7.8		| https://github.com/radareorg/radare2/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/rust		| 1.65.0	| https://forge.rust-lang.org/infra/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/rust		| 1.66.0	| https://forge.rust-lang.org/infra/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/subversion	| 1.14.2	| https://downloads.apache.org/subversion/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/yasm		| 1.3.0		| https://github.com/yasm/yasm/releases https://yasm.tortall.net/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/zig		| 0.9.1		| https://ziglang.org/download/index.json https://ziglang.org/download/ | [omniosorg](https://github.com/omniosorg)
