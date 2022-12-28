@@ -33,6 +33,7 @@ PASS: <standard>tests/openpgp/version.scm
 PASS: <standard>tests/openpgp/enarmor.scm 
 PASS: <standard>tests/openpgp/mds.scm 
 PASS: <standard>tests/openpgp/decrypt.scm 
+PASS: <standard>tests/openpgp/decrypt-sym.scm 
 PASS: <standard>tests/openpgp/decrypt-multifile.scm 
 PASS: <standard>tests/openpgp/decrypt-dsa.scm 
 PASS: <standard>tests/openpgp/decrypt-session-key.scm 
@@ -90,7 +91,7 @@ PASS: <standard>tests/openpgp/issue2417.scm
 PASS: <standard>tests/openpgp/issue2419.scm 
 PASS: <standard>tests/openpgp/issue2929.scm 
 PASS: <standard>tests/openpgp/issue2941.scm 
-61 tests run, 61 succeeded, 0 failed, 0 failed expectedly, 0 succeeded unexpectedly, 0 skipped. 
+62 tests run, 62 succeeded, 0 failed, 0 failed expectedly, 0 succeeded unexpectedly, 0 skipped. 
 PASS: tests/cms/setup.scm 
 PASS: tests/cms/import.scm 
 PASS: tests/cms/encrypt.scm 
@@ -103,5 +104,3 @@ PASS: tests/migrations/from-classic.scm
 PASS: tests/migrations/extended-pkf.scm 
 PASS: tests/migrations/issue2276.scm 
 3 tests run, 3 succeeded, 0 failed, 0 failed expectedly, 0 succeeded unexpectedly, 0 skipped. 
-SKIP: Environment variable 'XTEST_GPGME_SRCDIR' not set.  Please point it to a recent GPGME source tree to run the GPGME test suite. 
-0 tests run, 0 succeeded, 0 failed, 0 failed expectedly, 0 succeeded unexpectedly, 0 skipped. 
