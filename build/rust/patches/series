@@ -1,1 +1,1 @@
-runtest-no-strip-debuginfo.patch
+miri.patch

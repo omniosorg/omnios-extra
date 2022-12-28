@@ -3,11 +3,11 @@ cypress is not supported on illumos and used for testing only
 diff -wpruN '--exclude=*.orig' a~/frontend/package.json a/frontend/package.json
 --- a~/frontend/package.json	1970-01-01 00:00:00
 +++ a/frontend/package.json	1970-01-01 00:00:00
-@@ -36,7 +36,6 @@
+@@ -34,7 +34,6 @@
      "@vue/cli-service": "~4.5.13",
      "@vue/eslint-config-airbnb": "^5.3.0",
      "babel-eslint": "^10.1.0",
--    "cypress": "9.5.2",
+-    "cypress": "10.10.0",
      "cypress-file-upload": "^5.0.2",
      "eslint": "^7.27.0",
      "eslint-plugin-import": "^2.23.3",

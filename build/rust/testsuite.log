@@ -13,11 +13,10 @@ failures:
     [ui] src/test/ui/panics/runtime-switch.rs#legacy
     [ui] src/test/ui/panics/runtime-switch.rs#v0
     [ui] src/test/ui/proc-macro/load-panic-backtrace.rs
-    [ui] src/test/ui/process/process-panic-after-fork.rs
     [ui] src/test/ui/runtime/backtrace-debuginfo.rs
     [ui] src/test/ui/runtime/out-of-stack.rs
     [ui] src/test/ui/std-backtrace.rs
 
-test result: FAILED. 13418 passed; 17 failed; 124 ignored; 0 measured; 0 filtered out; finished in 478.11s
+test result: FAILED. 13603 passed; 16 failed; 129 ignored; 0 measured; 0 filtered out; finished in 371.89s
 
 Some tests failed in compiletest suite=ui mode=ui host=x86_64-unknown-illumos target=x86_64-unknown-illumos

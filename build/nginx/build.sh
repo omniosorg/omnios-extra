@@ -19,7 +19,7 @@
 
 PROG=nginx
 PKG=ooce/server/nginx
-VER=1.23.2
+VER=1.23.3
 SUMMARY="nginx web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
@@ -27,6 +27,7 @@ DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 BROTLIVER=1.0.0rc
 
 set_arch 64
+[ $RELVER -ge 151045 ] && set_clangver
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
@@ -38,7 +39,7 @@ LOGPATH=/var/log$PREFIX
 VARPATH=/var$PREFIX
 RUNPATH=$VARPATH/run
 
-BUILD_DEPENDS_IPS="library/security/openssl library/pcre"
+BUILD_DEPENDS_IPS="library/security/openssl library/pcre2"
 RUN_DEPENDS_IPS="ooce/server/nginx-common"
 
 XFORM_ARGS="
