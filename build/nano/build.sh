@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=nano
-VER=7.0
+VER=7.1
 PKG=ooce/editor/nano
 SUMMARY="nano editor"
 DESC="GNU implementation of nano, a text editor emulating pico"
