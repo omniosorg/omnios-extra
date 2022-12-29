@@ -25,22 +25,17 @@ DESC+="250 lines of code. It is the little brother of irc it."
 
 set_arch 64
 
-set_mirror "https://dl.suckless.org/"
-set_checksum sha256 "30478fab3ebc75f2eb5d08cbb5b2fedcaf489116e75a2dd7197e3e9c733d65d2"
-set_builddir $PROG-$VER
+# No configure
+configure64() { :; }
 
-build64() {
-    pushd $TMPDIR/$BUILDDIR > /dev/null
-    logmsg "Building 64-bit"
-    make_clean
-    make_prog64
-    [ -z "$SKIP_BUILD_ERRCHK" ] && check_buildlog ${EXPECTED_BUILD_ERRS:-0}
-    make_install64
-    popd > /dev/null
-}
+CC=$GCC
+LDFLAGS+=" -lsocket"
+export CC CFLAGS LDFLAGS
+
+MAKE_INSTALL_ARGS="-e PREFIX=$PREFIX"
 
 init
-download_source tools $PROG-$VER
+download_source $PROG $PROG $VER
 prep_build
 patch_source
 build
