@@ -1,4 +1,4 @@
-From 1a428f89afaa06334a65240265b433c7d86faaf5 Mon Sep 17 00:00:00 2001
+From 53272e762579fe1e31a251df7a525680065cb892 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:56:21 +0000
 Subject: Temporary coroutine patch (pending illumos 15206)
