@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libvncserver
-VER=0.9.13
+VER=0.9.14
 PKG=ooce/library/libvncserver
 SUMMARY="libvncserver"
 DESC="A library for easy implementation of a VNC server."

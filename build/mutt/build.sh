@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=mutt
-VER=2.2.7
+VER=2.2.9
 PKG=ooce/application/mutt
 SUMMARY="$PROG email client"
 DESC="$PROG is a text-based email client"

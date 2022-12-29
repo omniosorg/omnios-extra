@@ -18,7 +18,7 @@
 
 PROG=mysql_fdw
 PKG=ooce/database/postgresql-XX/mysql_fdw
-VER=2.8.0
+VER=2.9.0
 SUMMARY="MySQL PostgreSQL XX foreign data wrapper"
 DESC="Allow PostgreSQL XX to access data in a MySQL database"
 
