@@ -192,6 +192,7 @@ extra.omnios ooce/network/rclone
 extra.omnios ooce/network/sic
 extra.omnios ooce/network/smtp/postfix
 extra.omnios ooce/network/socat r
+extra.omnios ooce/network/tailscale
 extra.omnios ooce/network/tcpdump
 extra.omnios ooce/network/unbound
 extra.omnios ooce/network/znc
