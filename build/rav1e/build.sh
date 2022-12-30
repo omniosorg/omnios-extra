@@ -17,13 +17,13 @@
 . ../../lib/build.sh
 
 PROG=rav1e
-VER=0.6.1
+VER=0.6.2
 PKG=ooce/multimedia/rav1e
 SUMMARY="$PROG - AV1 encoder"
 DESC="AV1 video encoder"
 
 BUILD_DEPENDS_IPS="
-    ooce/developer/rust
+    ooce/developer/cargo-c
 "
 
 set_arch 64
