@@ -24,8 +24,14 @@ DESC="produces and installs a correct pkg-config file, a static library and "
 DESC+="a dynamic library, and a C header to be used by any C "
 DESC+="(and C-compatible) software."
 
+RUSTVER=`pkg_ver rust`
+RUSTVER=${RUSTVER%.*}
 BUILD_DEPENDS_IPS="
+    =ooce/developer/rust@$RUSTVER
+"
+RUN_DEPENDS_IPS="
     ooce/developer/rust
+    $BUILD_DEPENDS_IPS
 "
 
 set_arch 64
