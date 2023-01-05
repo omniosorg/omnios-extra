@@ -17,6 +17,12 @@ license COPYING license=GPLv2
 
 dir group=bin mode=0755 owner=root path=etc/$(PREFIX)
 
+# All of the emulator binaries are delivered setuid, but with a
+# forced-privilege exec-attr file that adds only 'net_rawaccess' which
+# is necessary to use the VNIC networking backend.
+<transform file path=$(PREFIX)/bin/qemu-system- -> set mode 04755>
+<transform file path=$(PREFIX)/bin/qemu-system- -> set owner root>
+
 <include binlink.mog>
 <include manlink.mog>
 

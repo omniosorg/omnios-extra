@@ -1,6 +1,9 @@
 0002-illumos-OFD-locking-must-span-the-entire-file.patch
 0003-Do-not-pass-dynamic-list-to-linker.patch
 0004-illumos-defines-FSCALE-in-sys-param.h.patch
-0005-Temporary-coroutine-patch-pending-illumos-15206.patch
-0006-configure-uses-bash-extensions.patch
-0007-Add-support-for-VNICs.patch
+0005-configure-uses-bash-extensions.patch
+0006-configure-uses-break-outside-loop.patch
+0007-cpu-exec.c-fails-to-compile-code-path-is-reachable.patch
+0008-Temporary-coroutine-patch-pending-illumos-15206.patch
+0009-Add-support-for-VNICs.patch
+0010-Drop-unnecessary-privileges.patch

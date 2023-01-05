@@ -16,6 +16,6 @@ license BSDCOPYING license=modified-BSD
 <transform path=$(PREFIX)/share/bash -> drop>
 <transform path=$(PREFIX)/sbin/mtr$ -> edit path sbin bin>
 
-<transform path=$(MTR_PACKET_PATH)$ -> set mode 04755>
-<transform path=$(MTR_PACKET_PATH)$ -> set owner root>
+<transform file path=$(MTR_PACKET_PATH)$ -> set mode 04755>
+<transform file path=$(MTR_PACKET_PATH)$ -> set owner root>
 
