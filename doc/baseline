@@ -195,6 +195,8 @@ extra.omnios ooce/network/socat r
 extra.omnios ooce/network/tailscale
 extra.omnios ooce/network/tcpdump
 extra.omnios ooce/network/unbound
+extra.omnios ooce/network/wireguard-go
+extra.omnios ooce/network/wireguard-tools
 extra.omnios ooce/network/znc
 extra.omnios ooce/omnios-build-tools
 extra.omnios ooce/ooceapps
