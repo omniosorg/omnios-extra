@@ -17,12 +17,12 @@
 . ../../lib/build.sh
 
 PROG=cyrus
-VER=3.4.4
+VER=3.6.0
 PKG=ooce/network/cyrus-imapd
 SUMMARY="Cyrus IMAP is an email, contacts and calendar server"
 DESC="$SUMMARY"
 
-ICALVER=3.0.14
+ICALVER=3.0.16
 
 # The icu4c ABI changes frequently. Lock the version
 # pulled into each build of cyrus-imapd.
