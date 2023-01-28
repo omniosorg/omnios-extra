@@ -269,8 +269,8 @@ audit()
                         # clang/llvm-15 are not published until r151043
                         */clang-15:|*/llvm-15:)
                             [ $r -lt 151043 ] || ok=0 ;;
-                        # qemu is not published until r151044
-                        */qemu:)
+                        # qemu and tailscale are not published until r151044
+                        */qemu:|*/tailscale:)
                             [ $r -lt 151044 ] || ok=0 ;;
                         # X11 headers/libraries are not published until r151035
                         */x11/*:) [ $r -lt 151035 ] || ok=0 ;;
