@@ -83,7 +83,7 @@
 | ooce/emulator/qemu		| 7.2.0		| https://www.qemu.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/file/acltool		| 1.16.2	| https://github.com/ptrrkssn/acltool/releases | [Peter Eriksson](https://github.com/ptrrkssn)
 | ooce/file/lsof		| 4.95.0	| https://github.com/lsof-org/lsof/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/file/tree		| 2.0.4		| http://mama.indstate.edu/users/ice/tree/ | [omniosorg](https://github.com/omniosorg)
+| ooce/file/tree		| 2.1.0		| http://mama.indstate.edu/users/ice/tree/ | [omniosorg](https://github.com/omniosorg)
 | ooce/fonts/liberation		| 2.1.5		| https://github.com/liberationfonts/liberation-fonts/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/apr		| 1.7.0 	| https://downloads.apache.org/apr/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/apr-util		| 1.6.1		| https://downloads.apache.org/apr/ | [omniosorg](https://github.com/omniosorg)
