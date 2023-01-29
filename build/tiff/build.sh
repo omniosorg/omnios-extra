@@ -12,23 +12,30 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=tiff
-VER=4.4.0
+VER=4.5.0
 PKG=ooce/library/tiff
 SUMMARY="LibTIFF - TIFF Library and Utilities"
 DESC="Support for the Tag Image File Format (TIFF), a widely used format "
 DESC+="for storing image data."
 
-SKIP_LICENCES=BSD-like
+# Previous versions that also need to be built and packaged since compiled
+# software may depend on it.
+PVERS="4.4.0"
 
 forgo_isaexec
+[ $RELVER -ge 151045 ] && set_clangver
+
+SKIP_LICENCES=BSD-like
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -43,11 +50,29 @@ CONFIGURE_OPTS+="
     --disable-static
 "
 
+LDFLAGS32+=" -Wl,-R$OPREFIX/lib"
+LDFLAGS64+=" -Wl,-R$OPREFIX/lib/$ISAPART64"
+
 init
-download_source $PROG $PROG $VER
 prep_build
+
+# Build previous versions
+for pver in $PVERS; do
+    note -n "Building previous version: $pver"
+    set_builddir $PROG-$pver
+    download_source -dependency $PROG $PROG $pver
+    patch_source patches-`echo $pver | cut -d. -f1-2`
+    build
+done
+
+note -n "Building current version: $VER"
+
+set_builddir $PROG-$VER
+download_source $PROG $PROG $VER
 patch_source
 build
+# test-suite requires GNU diff
+PATH="$GNUBIN:$PATH" run_testsuite check
 make_package
 clean_up
 
