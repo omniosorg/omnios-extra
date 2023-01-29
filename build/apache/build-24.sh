@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=apache
 PKG=ooce/server/apache-24
-VER=2.4.54
+VER=2.4.55
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
 SUMMARY="Apache httpd $MAJVER"
@@ -59,6 +59,7 @@ CONFIGURE_OPTS="
     --enable-authn-dbm
     --enable-auth-digest
     --enable-authnz-ldap
+    --enable-brotli
     --enable-ldap
     --enable-headers
     --enable-rewrite
@@ -67,13 +68,11 @@ CONFIGURE_OPTS="
     --enable-md
 "
 
-[ $RELVER -ge 151035 ] && CONFIGURE_OPTS+=" --enable-brotli"
-
 init
 download_source $PROG httpd $VER
 patch_source
 prep_build
-build -ctf
+build
 xform files/apache-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
 install_smf ooce $PROG-$sMAJVER.xml
 make_package
