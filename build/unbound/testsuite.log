@@ -1,4 +1,4 @@
-Start of unbound 1.17.0+libevent unit test.
+Start of unbound 1.17.1+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -77,8 +77,8 @@ test services/outside_network.c:reuse_write_wait_push_back
 test services/outside_network.c:reuse_write_wait_remove
 test services/outside_network.c:reuse_write_wait_pop
 test message parse functions
-[0] did 10000 in 83.367 msec for 119951.539578 encode/sec size 615
-1298746 checks ok.
+[0] did 10000 in 81.777 msec for 122283.771721 encode/sec size 615
+1297552 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl  OK
 ./testdata/auth_nsec3_ent.rpl  OK
@@ -303,10 +303,11 @@ selftest successful (33 checks).
 ./testdata/rrset_untrusted.rpl  OK
 ./testdata/rrset_updated.rpl  OK
 ./testdata/serve_expired.rpl  OK
+./testdata/serve_expired_cached_servfail.rpl  OK
 ./testdata/serve_expired_client_timeout.rpl  OK
 ./testdata/serve_expired_client_timeout_no_prefetch.rpl  OK
+./testdata/serve_expired_client_timeout_servfail.rpl  OK
 ./testdata/serve_expired_reply_ttl.rpl  OK
-./testdata/serve_expired_servfail.rpl  OK
 ./testdata/serve_expired_ttl.rpl  OK
 ./testdata/serve_expired_ttl_client_timeout.rpl  OK
 ./testdata/serve_expired_zerottl.rpl  OK
