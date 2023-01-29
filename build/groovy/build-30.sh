@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=groovy
-VER=3.0.13
+VER=3.0.14
 PKG=ooce/runtime/groovy-30
 SUMMARY="Groovy"
 DESC="Java-syntax-compatible object-oriented programming "
