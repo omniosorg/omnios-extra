@@ -1,4 +1,8 @@
 console_systemd.c
+dco_freebsd.c
+dco_linux.c
+dco_win.c
+dco.c
 networking_iproute2.c
 networking_sitnl.c
 pamdl.c
