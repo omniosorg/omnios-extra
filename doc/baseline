@@ -75,6 +75,7 @@ extra.omnios ooce/developer/clang-13
 extra.omnios ooce/developer/clang-130 r
 extra.omnios ooce/developer/clang-14
 extra.omnios ooce/developer/clang-15
+extra.omnios ooce/developer/clang-16
 extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/cscope
 extra.omnios ooce/developer/cunit
