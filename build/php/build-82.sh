@@ -32,6 +32,8 @@ SKIP_LICENCES=PHP
 # record .... too long
 export AWK
 
+[ $RELVER -le 151038 ] && CONFIGURE_CMD="/usr/bin/bash ./configure --no-reexec"
+
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
 set_patchdir patches-$sMAJVER
