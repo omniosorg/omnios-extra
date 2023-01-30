@@ -23,6 +23,9 @@ SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
 
+# TODO: change the configure option back to `--enable-vendor` once
+# rust 1.68.0 has been released and the errno patch can be dropped
+
 set_builddir ${PROG}c-${VER}-src
 
 OPREFIX=$PREFIX
@@ -67,7 +70,7 @@ CONFIGURE_OPTS_64="
 
 CONFIGURE_OPTS+="
     --release-description=OmniOS/$RELVER
-    --enable-vendor
+    --disable-vendor
     --enable-extended
     --build=$RUSTARCH
     --target=$RUSTARCH
