@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=unbound
-VER=1.17.0
+VER=1.17.1
 PKG=ooce/network/unbound
 SUMMARY="DNS resolver"
 DESC="Unbound is a validating, recursive, caching DNS resolver."

@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=dnsmasq
-VER=2.87
+VER=2.88
 PKG=ooce/network/dnsmasq
 SUMMARY="Lightweight, easy to configure DNS forwarder"
 DESC="dnsmasq is a lightweight, easy to configure DNS forwarder, designed to "

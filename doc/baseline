@@ -17,12 +17,12 @@ extra.omnios ooce/application/nagios-nrdp
 extra.omnios ooce/application/nagios-nrpe
 extra.omnios ooce/application/nagios-nsca
 extra.omnios ooce/application/nagios-plugins
-extra.omnios ooce/application/php-74
-extra.omnios ooce/application/php-74/imagick
 extra.omnios ooce/application/php-80
 extra.omnios ooce/application/php-80/imagick
 extra.omnios ooce/application/php-81
 extra.omnios ooce/application/php-81/imagick
+extra.omnios ooce/application/php-82
+extra.omnios ooce/application/php-82/imagick
 extra.omnios ooce/application/php-common
 extra.omnios ooce/application/texlive
 extra.omnios ooce/application/tidy

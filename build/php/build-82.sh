@@ -12,14 +12,14 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=php
-PKG=ooce/application/php-74
-VER=7.4.33
-SUMMARY="PHP 7.4"
+PKG=ooce/application/php-82
+VER=8.2.1
+SUMMARY="PHP 8.2"
 DESC="A popular general-purpose scripting language"
 
 PANDAHASH=3452f15
@@ -50,10 +50,8 @@ BUILD_DEPENDS_IPS="
     =ooce/library/icu4c@$ICUVER
     ooce/database/bdb
     ooce/database/lmdb
-    ooce/library/freetype2
     ooce/library/icu4c
-    ooce/library/libjpeg-turbo
-    ooce/library/libpng
+    ooce/library/libgd
     ooce/library/libzip
     ooce/library/onig
 "
@@ -120,12 +118,10 @@ CONFIGURE_OPTS_64="
     --enable-calendar
     --enable-dba
     --enable-soap
-    --enable-libxml
     --with-gettext
     --enable-pcntl
     --with-openssl
     --with-gmp
-    --with-mysql=mysqlnd
     --with-mysqli=mysqlnd
     --with-pdo-mysql=mysqlnd
     --with-zlib=/usr
@@ -134,6 +130,8 @@ CONFIGURE_OPTS_64="
     --with-readline=/usr
     --with-curl
     --enable-gd
+    --with-jpeg
+    --with-freetype
     --enable-sockets
     --enable-bcmath
     --enable-exif
@@ -144,9 +142,6 @@ CONFIGURE_OPTS_64="
     --with-db4=$OPREFIX
     --with-lmdb=$OPREFIX
     --with-ldap=$OPREFIX
-    --with-jpeg
-    --with-png
-    --with-freetype
     --with-pgsql=$OPREFIX/pgsql-$PGSQLVER
     --with-pdo-pgsql=$OPREFIX/pgsql-$PGSQLVER
 
@@ -160,13 +155,15 @@ CPPFLAGS+=" -I$OPREFIX/libzip/include"
 LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
 
 save_function configure64 _configure64
-configure64() {
+function configure64() {
     _configure64 "$@"
-
-    # Test that desired features have been properly enabled
-
-    for f in GD_BUNDLED GD_FREETYPE GD_JPG GD_PNG LIBFREETYPE LIBJPEG; do
-        egrep -s "HAVE_$f 1" main/php_config.h || logerr "$f is not enabled"
+    for tok in \
+        HAVE_CURL HAVE_IMAP HAVE_LDAP \
+        HAVE_GD_BMP HAVE_GD_FREETYPE HAVE_GD_JPG HAVE_GD_PNG \
+        PDO_USE_MYSQLND HAVE_PDO_PGSQL HAVE_PGSQL \
+    ; do
+        $EGREP -s "define $tok 1" $TMPDIR/$BUILDDIR/main/php_config.h \
+            || logerr "Feature $tok is not enabled"
     done
 }
 
