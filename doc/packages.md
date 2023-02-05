@@ -160,6 +160,8 @@
 | ooce/network/tailscale	| 1.36.0	| https://www.tailscale.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/tcpdump		| 4.99.1	| https://www.tcpdump.org/release/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/unbound		| 1.17.1	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/wireguard-go	| 0.0.20220316	| https://www.wireguard.com/ | [nshalman](https://github.com/nshalman)
+| ooce/network/wireguard-tools	| 1.0.20210914	| https://www.wireguard.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/znc		| 1.8.2		| https://github.com/znc/znc/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/ooceapps			| github-latest	| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/print/cups		| 2.4.2		| https://github.com/OpenPrinting/cups/releases | [omniosorg](https://github.com/omniosorg)
