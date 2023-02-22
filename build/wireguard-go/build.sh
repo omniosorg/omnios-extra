@@ -26,7 +26,7 @@ DESC="This is an implementation of WireGuard in Go."
 RUN_DEPENDS_IPS="driver/tuntap"
 
 set_arch 64
-set_gover 119
+set_gover
 
 build_and_install() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
