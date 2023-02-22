@@ -1,0 +1,26 @@
+diff -wpruN '--exclude=*.orig' a~/pylib/gyp/generator/make.py a/pylib/gyp/generator/make.py
+--- a~/pylib/gyp/generator/make.py	1970-01-01 00:00:00
++++ a/pylib/gyp/generator/make.py	1970-01-01 00:00:00
+@@ -1497,7 +1497,8 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)
+             # We want to get the literal string "$ORIGIN" into the link command,
+             # so we need lots of escaping.
+             ldflags.append(r'-Wl,-rpath=\$$ORIGIN/lib.%s/' % self.toolset)
+-            ldflags.append(r'-Wl,-rpath-link=\$(builddir)/lib.%s/' %
++            if self.flavor != 'solaris':
++              ldflags.append(r'-Wl,-rpath-link=\$(builddir)/lib.%s/' % # ws
+                            self.toolset)
+         library_dirs = config.get('library_dirs', [])
+         ldflags += [('-L%s' % library_dir) for library_dir in library_dirs]
+diff -wpruN '--exclude=*.orig' a~/pylib/gyp/generator/ninja.py a/pylib/gyp/generator/ninja.py
+--- a~/pylib/gyp/generator/ninja.py	1970-01-01 00:00:00
++++ a/pylib/gyp/generator/ninja.py	1970-01-01 00:00:00
+@@ -1241,7 +1241,8 @@ class NinjaWriter(object):
+           ldflags.append(r'-Wl,-rpath=\$$ORIGIN/%s' % rpath)
+         else:
+           ldflags.append('-Wl,-rpath=%s' % self.target_rpath)
+-        ldflags.append('-Wl,-rpath-link=%s' % rpath)
++        if self.flavor != 'solaris':
++          ldflags.append('-Wl,-rpath-link=%s' % rpath) # whitespace
+     self.WriteVariableList(ninja_file, 'ldflags',
+                            map(self.ExpandSpecial, ldflags))
+ 

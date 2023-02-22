@@ -7,6 +7,7 @@ depend fmri=developer/omnios-build-tools type=require
 depend fmri=ooce/application/tidy type=require
 depend fmri=ooce/compress/pbzip2 type=require
 depend fmri=ooce/compress/pigz type=require
+depend fmri=ooce/developer/autoconf-archive type=require
 depend fmri=ooce/developer/ccache type=require
 depend fmri=ooce/developer/cmake type=require
 depend fmri=ooce/developer/cunit type=require
@@ -21,32 +22,23 @@ depend fmri=ooce/text/ripgrep type=require
 depend fmri=ooce/text/texinfo type=require
 depend fmri=ooce/util/fd type=require
 depend fmri=ooce/util/jq type=require
+depend fmri=ooce/x11/header/x11-protocols type=require
+depend fmri=ooce/x11/library/libxrandr type=require
+depend fmri=ooce/x11/library/libxtst type=require
+depend fmri=ooce/x11/library/libxt type=require
+
+# These two are required to run the gcc testsuite.
+depend fmri=ooce/developer/autogen type=require
+depend fmri=ooce/developer/dejagnu type=require
 
 # zstd was moved to core in r151035.
 depend type=require-any fmri=pkg:/compress/zstd fmri=pkg:/ooce/compress/zstd
-
-# These two are required to run the gcc testsuite.
-# Only part of ooce/omnios-build-tools from r151030 onwards.
-depend fmri=ooce/developer/autogen type=conditional \
-    predicate=release/name@0.5.11-151030
-depend fmri=ooce/developer/dejagnu type=conditional \
-    predicate=release/name@0.5.11-151030
 
 # Required to run the bison testsuite
 depend type=require-any fmri=ooce/runtime/ruby-27 fmri=ooce/runtime/ruby-30 \
     fmri=ooce/runtime/ruby-31
 
-# Required to build openjdk11 from r151035 onwards
-depend fmri=ooce/x11/header/x11-protocols type=conditional \
-    predicate=release/name@0.5.11-151035
-depend fmri=ooce/x11/library/libxrandr type=conditional \
-    predicate=release/name@0.5.11-151035
-depend fmri=ooce/x11/library/libxtst type=conditional \
-    predicate=release/name@0.5.11-151035
-depend fmri=ooce/x11/library/libxt type=conditional \
-    predicate=release/name@0.5.11-151035
-
-# Required to build python 3.9 from 3.9.3
-depend fmri=ooce/developer/autoconf-archive type=conditional \
-    predicate=release/name@0.5.11-151037
+# Required to build nss from r151045 onwards
+depend fmri=ooce/developer/gyp type=conditional
+    predicate=release/name@0.5.11-151045
 
