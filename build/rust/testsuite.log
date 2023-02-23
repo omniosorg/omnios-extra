@@ -17,6 +17,6 @@ failures:
     [ui] src/test/ui/runtime/out-of-stack.rs
     [ui] src/test/ui/std-backtrace.rs
 
-test result: FAILED. 13825 passed; 16 failed; 133 ignored; 0 measured; 0 filtered out; finished in 381.05s
+test result: FAILED. 13825 passed; 16 failed; 133 ignored; 0 measured; 0 filtered out; finished in 363.54s
 
 Some tests failed in compiletest suite=ui mode=ui host=x86_64-unknown-illumos target=x86_64-unknown-illumos

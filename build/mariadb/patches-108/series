@@ -3,6 +3,4 @@ missing_concurrency.patch
 04-dtrace.patch
 05-no-pie.patch
 08-dtrace-invalid-conversion.patch
-my_gethwaddr.patch
-no_as-needed_link_option.patch
 alloca.patch

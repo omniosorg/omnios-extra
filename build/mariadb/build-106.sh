@@ -12,21 +12,16 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=mariadb
-VER=10.6.11
+VER=10.6.12
 PKG=ooce/database/mariadb-106
 SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
 DESC+="MySQL relational database management system"
-
-if [ $RELVER -lt 151038 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
