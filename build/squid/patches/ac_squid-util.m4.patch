@@ -1,0 +1,20 @@
+diff --git a/squid-6.7/acinclude/squid-util.m4 b/squid-6.7/acinclude/squid-util.m4
+index 60ecd50..1f7849a 100644
+--- src/acinclude/squid-util.m4.orig
++++ src/acinclude/squid-util.m4
+@@ -224,6 +224,7 @@ AC_DEFUN([SQUID_AUTO_LIB],[
+     AS_CASE(["$withval"],[yes|no],,[
+       AS_IF([test ! -d "$withval"],AC_MSG_ERROR([--with-$1 path does not point to a directory]))
+       m4_translit([with_$1], [-+.], [___])=yes
++      AS_IF([test -d "$withval/amd64"],[$3_PATH+="-L$withval/amd64"])
+       AS_IF([test -d "$withval/lib64"],[$3_PATH+="-L$withval/lib64"])
+       AS_IF([test -d "$withval/lib"],[$3_PATH+="-L$withval/lib"])
+       AS_IF([test -d "$withval/include"],[$3_CFLAGS+="-I$withval/include"])
+@@ -236,6 +237,7 @@ AC_DEFUN([SQUID_OPTIONAL_LIB],[
+     AS_CASE(["$withval"],[yes|no],,[
+       AS_IF([test ! -d "$withval"],AC_MSG_ERROR([--with-$1 path does not point to a directory]))
+       m4_translit([with_$1], [-+.], [___])=yes
++      AS_IF([test -d "$withval/amd64"],[$3_PATH+="-L$withval/amd64"])
+       AS_IF([test -d "$withval/lib64"],[$3_PATH+="-L$withval/lib64"])
+       AS_IF([test -d "$withval/lib"],[$3_PATH+="-L$withval/lib"])
+       AS_IF([test -d "$withval/include"],[$3_CFLAGS+="-I$withval/include"])

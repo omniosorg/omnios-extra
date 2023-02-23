@@ -1,0 +1,16 @@
+use 64-bit libraries
+
+--- src/configure.ac.orig	2024-02-08 10:22:02.770828532 +0100
++++ src/configure.ac	2024-02-08 10:22:46.518281824 +0100
+@@ -1257,9 +1257,9 @@ AS_IF([test "x$with_mit_krb5" != "xno" -
+       # Get libs, etc
+       AC_MSG_NOTICE([Use krb5-config to get CXXFLAGS and LIBS])
+       LIB_KRB5_CFLAGS="`$ac_krb5_config --cflags krb5 2>/dev/null`"
+-      LIB_KRB5_LIBS="`$ac_krb5_config --libs krb5 2>/dev/null`"
++      LIB_KRB5_LIBS="`$ac_krb5_config --libs krb5 2>/dev/null`"/amd64
+       LIB_KRB5_CFLAGS="`$ac_krb5_config --cflags gssapi 2>/dev/null` $LIB_KRB5_CFLAGS"
+-      LIB_KRB5_LIBS="`$ac_krb5_config --libs gssapi 2>/dev/null` $LIB_KRB5_LIBS"
++      LIB_KRB5_LIBS="`$ac_krb5_config --libs gssapi 2>/dev/null` $LIB_KRB5_LIBS"/amd64
+     ],[
+       ## For some OS pkg-config is broken or unavailable.
+       ## Detect libraries the hard way.

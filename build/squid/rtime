@@ -1,0 +1,4 @@
+UNREF_OBJ       libgen\.so\.1
+UNREF_OBJ       libnsl\.so\.1
+UNREF_OBJ       libresolv\.so\.2
+UNREF_OBJ       libpthread\.so\.1
