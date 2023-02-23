@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=gyp
-VER=20200512
+VER=20230714
 PKG=ooce/developer/gyp
 SUMMARY="gyp - generate your projects"
 DESC="GYP is a Meta-Build system: "
