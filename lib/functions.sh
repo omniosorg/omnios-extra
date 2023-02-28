@@ -2145,19 +2145,21 @@ install_go() {
 #############################################################################
 
 install_rust() {
-    logmsg "Installing $PROG"
+    typeset prog=${1:-$PROG}
+
+    logmsg "Installing $prog"
 
     logcmd $MKDIR -p "$DESTDIR/$PREFIX/bin" \
         || logerr "Failed to create install dir"
-    logcmd $CP $TMPDIR/$BUILDDIR/target/release/$PROG \
-        $DESTDIR/$PREFIX/bin/$PROG || logerr "Failed to install binary"
+    logcmd $CP $TMPDIR/$BUILDDIR/target/release/$prog \
+        $DESTDIR/$PREFIX/bin/$prog || logerr "Failed to install binary"
 
-    for f in `$FD "^$PROG\.1\$" $TMPDIR/$BUILDDIR`; do
+    for f in `$FD "^$prog\.1\$" $TMPDIR/$BUILDDIR`; do
         logmsg "Found man page at $f"
 
         logcmd $MKDIR -p "$DESTDIR/$PREFIX/share/man/man1" \
             || logerr "Failed to create man install dir"
-        logcmd $CP $f $DESTDIR/$PREFIX/share/man/man1/$PROG.1 \
+        logcmd $CP $f $DESTDIR/$PREFIX/share/man/man1/$prog.1 \
             || logerr "Failed to install man page"
         break
     done
