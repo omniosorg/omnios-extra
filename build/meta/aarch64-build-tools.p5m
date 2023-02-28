@@ -1,0 +1,9 @@
+set name=pkg.fmri value=pkg://@PKGPUBLISHER@/ooce/aarch64-build-tools@11,5.11-@PVER@
+set name=pkg.summary value="Tools required to cross build OmniOS for aarch64"
+set name=pkg.description value="Tools required to cross build OmniOS for aarch64"
+
+depend fmri=ooce/omnios-build-tools type=require
+
+depend fmri=ooce/developer/aarch64-gcc10 type=require
+depend fmri=ooce/developer/aarch64-perl type=require
+
