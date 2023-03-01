@@ -98,6 +98,7 @@ extra.omnios ooce/developer/yasm
 extra.omnios ooce/developer/zig
 extra.omnios ooce/driver/fuse
 extra.omnios ooce/editor/emacs
+extra.omnios ooce/editor/helix
 extra.omnios ooce/editor/joe
 extra.omnios ooce/editor/nano
 extra.omnios ooce/editor/neovim

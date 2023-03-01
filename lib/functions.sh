@@ -1142,10 +1142,17 @@ download_source() {
     [ -n "$SKIP_DOWNLOAD" ] && return
 
     typeset -i record_arc=1
-    [ "$1" = "-norecord" ] && { record_arc=0; shift; }
-
     typeset -i dependency=0
-    [ "$1" = "-dependency" ] && { dependency=1; shift; }
+    typeset -i nodir=0
+    while [[ $1 = -* ]]; do
+        case $1 in
+            -norecord)      record_arc=0 ;;
+            -dependency)    dependency=1 ;;
+            -nodir)         nodir=1 ;;
+            *)              logerr "Unknown download_source option, $1" ;;
+        esac
+        shift
+    done
 
     local DLDIR="$1"; shift
     local PROG="$1"; shift
@@ -1196,8 +1203,15 @@ download_source() {
 
     # Extract the archive
     logmsg "Extracting archive: $FILENAME"
-    logcmd extract_archive $FILENAME $EXTRACTARGS \
+    if ((nodir)); then
+        mkdir $BUILDDIR || logerr "Failed to mkdir $BUILDDIR"
+        pushd $BUILDDIR
+    else
+        pushd $TARGETDIR >/dev/null
+    fi
+    logcmd extract_archive $TARGETDIR/$FILENAME $EXTRACTARGS \
         || logerr "--- Unable to extract archive."
+    popd >/dev/null
 
     # Make sure the archive actually extracted some source where we expect
     if [ ! -d "$BUILDDIR" ]; then
@@ -2131,19 +2145,21 @@ install_go() {
 #############################################################################
 
 install_rust() {
-    logmsg "Installing $PROG"
+    typeset prog=${1:-$PROG}
+
+    logmsg "Installing $prog"
 
     logcmd $MKDIR -p "$DESTDIR/$PREFIX/bin" \
         || logerr "Failed to create install dir"
-    logcmd $CP $TMPDIR/$BUILDDIR/target/release/$PROG \
-        $DESTDIR/$PREFIX/bin/$PROG || logerr "Failed to install binary"
+    logcmd $CP $TMPDIR/$BUILDDIR/target/release/$prog \
+        $DESTDIR/$PREFIX/bin/$prog || logerr "Failed to install binary"
 
-    for f in `$FD "^$PROG\.1\$" $TMPDIR/$BUILDDIR`; do
+    for f in `$FD "^$prog\.1\$" $TMPDIR/$BUILDDIR`; do
         logmsg "Found man page at $f"
 
         logcmd $MKDIR -p "$DESTDIR/$PREFIX/share/man/man1" \
             || logerr "Failed to create man install dir"
-        logcmd $CP $f $DESTDIR/$PREFIX/share/man/man1/$PROG.1 \
+        logcmd $CP $f $DESTDIR/$PREFIX/share/man/man1/$prog.1 \
             || logerr "Failed to install man page"
         break
     done

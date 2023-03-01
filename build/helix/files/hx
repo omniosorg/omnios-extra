@@ -1,0 +1,4 @@
+#!/usr/bin/ksh
+
+HELIX_RUNTIME=/opt/ooce/helix/share/runtime exec $0.bin "$@"
+
