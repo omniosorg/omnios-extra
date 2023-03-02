@@ -2478,12 +2478,14 @@ build_dependency() {
 
     typeset merge=0
     typeset oot=0
+    typeset meson=0
     typeset buildargs=
     while [[ "$1" = -* ]]; do
         case $1 in
             -merge)     merge=1 ;;
             -ctf)       buildargs+=" -ctf" ;;
             -noctf)     buildargs+=" -noctf" ;;
+            -meson)     meson=1 ;& #FALLTHROUGH
             -oot)       oot=1 ;;
             -multi)     buildargs+=" -multi" ;;
         esac
@@ -2499,6 +2501,7 @@ build_dependency() {
     save_variable EXTRACTED_SRC __builddep__
     save_variable DESTDIR __builddep__
     save_variable CONFIGURE_CMD __builddep__
+    save_variable MAKE __builddep__
 
     set_builddir "$dir"
     local patchdir="patches-$dep"
@@ -2516,7 +2519,13 @@ build_dependency() {
     patch_source $patchdir
     if ((oot)); then
         logmsg "-- Setting up for out-of-tree build"
-        CONFIGURE_CMD=$TMPDIR/$BUILDDIR/$CONFIGURE_CMD
+        if ((meson)); then
+            MAKE=$NINJA
+            CONFIGURE_CMD="/usr/lib/python$PYTHONVER/bin/meson setup"
+            CONFIGURE_CMD+=" $TMPDIR/$BUILDDIR"
+        else
+            CONFIGURE_CMD=$TMPDIR/$BUILDDIR/$CONFIGURE_CMD
+        fi
         BUILDDIR+=-build
         [ -d $TMPDIR/$BUILDDIR ] && logcmd $RM -rf $TMPDIR/$BUILDDIR
         logcmd $MKDIR -p $TMPDIR/$BUILDDIR
@@ -2527,6 +2536,7 @@ build_dependency() {
     restore_variable EXTRACTED_SRC __builddep__
     restore_variable DESTDIR __builddep__
     restore_variable CONFIGURE_CMD __builddep__
+    restore_variable MAKE __builddep__
 }
 
 #############################################################################
