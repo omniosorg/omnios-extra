@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -23,6 +23,7 @@ SUMMARY="$PROG"
 DESC="A generic and open source machine emulator and virtualizer"
 
 LIBTASN1VER=4.19.0
+LIBSLIRPVER=4.7.0
 
 if [ $RELVER -lt 151044 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
@@ -49,6 +50,12 @@ prep_build
 
 save_buildenv
 
+CONFIGURE_OPTS=" -Ddefault_library=static"
+LDFLAGS64+=" -lsocket"
+
+build_dependency -meson libslirp libslirp-v$LIBSLIRPVER \
+    $PROG/libslirp libslirp v$LIBSLIRPVER
+
 CONFIGURE_OPTS=" --disable-shared --enable-static"
 
 build_dependency libtasn1 libtasn1-$LIBTASN1VER \
@@ -56,7 +63,7 @@ build_dependency libtasn1 libtasn1-$LIBTASN1VER \
 
 restore_buildenv
 
-CFLAGS+=" -I$DEPROOT$PREFIX/include"
+CFLAGS+=" -I$DEPROOT$PREFIX/include -I$DEPROOT$PREFIX/include/slirp"
 LDFLAGS64+=" -L$DEPROOT$PREFIX/lib/$ISAPART64"
 
 addpath PKG_CONFIG_PATH64 $DEPROOT$PREFIX/lib/$ISAPART64/pkgconfig
