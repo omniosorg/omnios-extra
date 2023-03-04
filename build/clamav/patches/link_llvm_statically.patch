@@ -1,0 +1,21 @@
+diff -wpruN '--exclude=*.orig' a~/cmake/FindLLVM.cmake a/cmake/FindLLVM.cmake
+--- a~/cmake/FindLLVM.cmake	1970-01-01 00:00:00
++++ a/cmake/FindLLVM.cmake	1970-01-01 00:00:00
+@@ -85,7 +85,7 @@ else()
+         endif()
+         set(result_code)
+         execute_process(
+-            COMMAND ${LLVM_CONFIG} --${flag}
++            COMMAND ${LLVM_CONFIG} --${flag} --ignore-libllvm
+             RESULT_VARIABLE result_code
+             OUTPUT_VARIABLE LLVM_${var}
+             OUTPUT_STRIP_TRAILING_WHITESPACE
+@@ -105,7 +105,7 @@ else()
+         endif()
+         set(result_code)
+         execute_process(
+-            COMMAND ${LLVM_CONFIG} --${flag} ${components}
++            COMMAND ${LLVM_CONFIG} --${flag} ${components} --ignore-libllvm
+             RESULT_VARIABLE result_code
+             OUTPUT_VARIABLE tmplibs
+             OUTPUT_STRIP_TRAILING_WHITESPACE
