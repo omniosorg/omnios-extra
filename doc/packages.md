@@ -216,7 +216,7 @@
 | ooce/util/ncdu		| 2.2.1		| https://dev.yorhel.nl/download | [jclulow](https://github.com/jclulow)
 | ooce/util/pass		| 1.7.4		| https://git.zx2c4.com/password-store/refs/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/rargs		| 0.3.0		| https://github.com/lotabout/rargs/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/util/rlwrap		| 0.46		| https://github.com/hanslub42/rlwrap/releases | [r7st](https://github.com/r7st)
+| ooce/util/rlwrap		| 0.46.1	| https://github.com/hanslub42/rlwrap/releases | [r7st](https://github.com/r7st)
 | ooce/util/stress-ng		| 0.15.04	| https://github.com/ColinIanKing/stress-ng/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/util/u-boot		| 2023.01	| https://github.com/u-boot/u-boot/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/util/uefivars		| 1.0.1		| https://github.com/citrus-it/uefivars/releases | [omniosorg](https://github.com/omniosorg)
