@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libarchive
-VER=3.6.1
+VER=3.6.2
 PKG=ooce/library/libarchive
 SUMMARY="libarchive"
 DESC="Multi-format archive and compression library"
@@ -26,6 +26,9 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 forgo_isaexec
+[ $RELVER -ge 151045 ] && set_clangver
+
+SKIP_LICENCES=various
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -44,7 +47,8 @@ CONFIGURE_OPTS_64+="
     --libdir=$OPREFIX/lib/$ISAPART64
 "
 
-SKIP_LICENCES=various
+LDFLAGS32+=" -Wl,-R$OPREFIX/lib"
+LDFLAGS64+=" -Wl,-R$OPREFIX/lib/$ISAPART64"
 
 init
 download_source $PROG $PROG $VER
