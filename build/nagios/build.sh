@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nagios
-VER=4.4.8
+VER=4.4.10
 DASHREV=0
 PKG=ooce/application/nagios
 SUMMARY="Extremely powerful network monitoring system"
