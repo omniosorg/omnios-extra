@@ -1,12 +1,12 @@
 diff -wpruN '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
 --- a~/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/CMakeLists.txt	1970-01-01 00:00:00
-@@ -170,6 +170,8 @@ else()
-     set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+@@ -194,6 +194,8 @@ else()
+   set(USING_CLANG OFF)
  endif()
  
 +list(APPEND CMAKE_INSTALL_RPATH "/opt/ooce/lib/amd64")
 +
  if(C_LINUX)
-     if(CMAKE_COMPILER_IS_GNUCXX)
+     if(CMAKE_COMPILER_IS_GNUCXX OR USING_CLANG)
          # Set _GNU_SOURCE for O_LARGEFILE, O_CLOEXEC, O_DIRECTORY, O_NOFOLLOW, etc flags on older systems

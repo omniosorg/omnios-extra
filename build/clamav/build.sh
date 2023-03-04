@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=clamav
-VER=0.105.1
+VER=1.0.1
 PKG=ooce/system/clamav
 SUMMARY="Clam Anti-virus"
 DESC="$PROG is an open-source antivirus engine for detecting trojans, "
@@ -30,6 +30,13 @@ set_arch 64
 
 # https://www.illumos.org/issues/14659
 [ $RELVER -lt 151043 ] && STRIP=gstrip
+
+# We want to populate the clang-related environment variables
+# and set PATH to point to the correct llvm/clang version for
+# the clamav bytecode runtime, but we want to build with gcc.
+# currently only llvm 8 - 13 are supported
+set_clangver 13
+BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
 
 SKIP_LICENCES='COPYING.*'
 XFORM_ARGS="
@@ -53,8 +60,11 @@ CONFIGURE_OPTS="
     -DENABLE_TESTS=OFF
     -DENABLE_SYSTEMD=OFF
 
+    -DBYTECODE_RUNTIME=llvm
+
     -DJSONC_LIBRARY=$OPREFIX/lib/$ISAPART64/libjson-c.so
 "
+LDFLAGS+=" -lncurses"
 
 function prepare_config {
     pushd $DESTDIR/etc$PREFIX >/dev/null || logerr "pushd etc"
