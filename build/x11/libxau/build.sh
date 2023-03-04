@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=libXau
-VER=1.0.10
+VER=1.0.11
 PKG=ooce/x11/library/libxau
 SUMMARY="libXau"
 DESC="X Authorization Protocol"
