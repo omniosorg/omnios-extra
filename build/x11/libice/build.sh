@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=libICE
-VER=1.0.10
+VER=1.1.1
 PKG=ooce/x11/library/libice
 SUMMARY="libICE"
 DESC="Inter-Client Exchange Library"
@@ -28,7 +28,7 @@ init
 download_source x11/$PROG $PROG $VER
 prep_build
 patch_source
-build -ctf
+build
 make_package
 clean_up
 

@@ -10,12 +10,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
-
-if [ $RELVER -lt 151035 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
@@ -23,8 +18,7 @@ CONFIGURE_OPTS="--disable-static"
 
 addpath PKG_CONFIG_PATH $PREFIX/share/pkgconfig
 
-LDFLAGS32+=" -R$PREFIX/lib"
-[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
+LDFLAGS32+=" -R$PREFIX/lib -lssp_ns"
 LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
 
 # Vim hints

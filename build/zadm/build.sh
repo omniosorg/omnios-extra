@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,7 +22,7 @@ PKG=ooce/util/zadm
 SUMMARY="zone admin tool"
 DESC="$PROG - $SUMMARY"
 
-NOVNCVER=1.3.0
+NOVNCVER=1.4.0
 
 RUN_DEPENDS_IPS="ooce/util/uefivars"
 

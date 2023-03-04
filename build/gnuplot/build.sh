@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=gnuplot
-VER=5.4.5
+VER=5.4.6
 PKG=ooce/application/gnuplot
 SUMMARY="gnuplot"
 DESC="A portable command-line driven graphing utility"

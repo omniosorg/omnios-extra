@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=dnscrypt-proxy
 PKG=ooce/network/dnscrypt-proxy
-VER=2.1.2
+VER=2.1.4
 SUMMARY="DNS proxy with support for encrypted DNS protocols"
 DESC="A flexible DNS proxy, with support for modern encrypted DNS protocols"
 DESC+=" such as DNSCrypt v2 and DNS-over-HTTP/2."

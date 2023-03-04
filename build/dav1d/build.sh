@@ -12,18 +12,20 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=dav1d
-VER=1.0.0
+VER=1.1.0
 PKG=ooce/multimedia/dav1d
 SUMMARY="AV1 decoder"
 DESC="AV1 cross-platform decoder, open-source, and focused on speed, "
 DESC+="size and correctness"
 
 forgo_isaexec
+# clock_gettime
+set_standard XPG6
 
 LDFLAGS32+=" -lssp_ns"
 LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
