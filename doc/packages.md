@@ -48,7 +48,7 @@
 | ooce/database/postgresql-XX/mysql_fdw	| 2.9.0	| https://github.com/EnterpriseDB/mysql_fdw/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-XX/pg_repack	| 1.4.8	| https://github.com/reorg/pg_repack/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/database/rrdtool		| 1.8.0		| https://github.com/oetiker/rrdtool-1.x/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/autoconf-archive | 2022.09.03	| https://ftp.gnu.org/gnu/autoconf-archive/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/autoconf-archive | 2023.02.20	| https://ftp.gnu.org/gnu/autoconf-archive/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/autogen	| 5.18.16	| https://ftp.gnu.org/gnu/autogen/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cargo-c	| 0.9.16	| https://github.com/lu-zero/cargo-c/releases | [jimklimov](https://github.com/jimklimov)
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)

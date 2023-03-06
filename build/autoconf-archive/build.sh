@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=autoconf-archive
-VER=2022.09.03
+VER=2023.02.20
 PKG=ooce/developer/autoconf-archive
 SUMMARY="$PROG - a collection of macros for GNU Autoconf"
 DESC="$SUMMARY ($VER)"
@@ -27,13 +27,13 @@ SKIP_LICENCES=Exception
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
+set_arch 64
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
 "
-
-set_arch 64
 
 init
 download_source $PROG $PROG $VER
