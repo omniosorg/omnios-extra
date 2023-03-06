@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=apr
-VER=1.7.0
+VER=1.7.2
 PKG=ooce/library/apr
 SUMMARY="The Apache Portable Runtime library"
 DESC="The Apache Portable Runtime is a library \
@@ -48,7 +48,7 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-build -ctf
+build
 run_testsuite
 make_isa_stub
 make_package
