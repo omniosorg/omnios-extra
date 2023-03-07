@@ -1,102 +1,118 @@
+testatomic.c: In function 'test_wrap_zero64':
+testatomic.c:331:56: warning: format '%lu' expects argument of type 'long unsigned int', but argument 3 has type 'apr_uint64_t' {aka 'long long unsigned int'} [-Wformat=]
+  331 |     str = apr_psprintf(p, "zero wrap failed: 0 - 1 = %lu", y64);
+      |                                                      ~~^   ~~~
+      |                                                        |   |
+      |                                                        |   apr_uint64_t {aka long long unsigned int}
+      |                                                        long unsigned int
+      |                                                      %llu
+testatomic.c: In function 'test_inc_neg164':
+testatomic.c:345:57: warning: format '%lu' expects argument of type 'long unsigned int', but argument 3 has type 'apr_uint64_t' {aka 'long long unsigned int'} [-Wformat=]
+  345 |     str = apr_psprintf(p, "zero wrap failed: -1 + 1 = %lu", y64);
+      |                                                       ~~^   ~~~
+      |                                                         |   |
+      |                                                         |   apr_uint64_t {aka long long unsigned int}
+      |                                                         long unsigned int
+      |                                                       %llu
 APR Lock Performance Test
 ==============
 
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 1 threads    OK
-microseconds: 34046 usec
+microseconds: 34762 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 1 threads    OK
-microseconds: 34594 usec
+microseconds: 28677 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 1 threads    OK
-microseconds: 122224 usec
+microseconds: 127011 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 1 threads    OK
-microseconds: 80933 usec
+microseconds: 86524 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 2 threads    OK
-microseconds: 238625 usec
+microseconds: 340591 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 2 threads    OK
-microseconds: 202500 usec
+microseconds: 297511 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 2 threads    OK
-microseconds: 269133 usec
+microseconds: 738169 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 2 threads    OK
-microseconds: 7648541 usec
+microseconds: 20808963 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 3 threads    OK
-microseconds: 447497 usec
+microseconds: 768902 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 3 threads    OK
-microseconds: 508611 usec
+microseconds: 761092 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 3 threads    OK
-microseconds: 845858 usec
+microseconds: 2646126 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 3 threads    OK
-microseconds: 11575853 usec
+microseconds: 29905935 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 4 threads    OK
-microseconds: 636412 usec
+microseconds: 816077 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 4 threads    OK
-microseconds: 690211 usec
+microseconds: 1127743 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 4 threads    OK
-microseconds: 1124537 usec
+microseconds: 1939909 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 4 threads    OK
-microseconds: 14951758 usec
+microseconds: 41898438 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 5 threads    OK
-microseconds: 801857 usec
+microseconds: 1607704 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 5 threads    OK
-microseconds: 813925 usec
+microseconds: 3321441 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 5 threads    OK
-microseconds: 1431163 usec
+microseconds: 2616998 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 5 threads    OK
-microseconds: 19158469 usec
+microseconds: 53976071 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 6 threads    OK
-microseconds: 1019147 usec
+microseconds: 2178916 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 6 threads    OK
-microseconds: 1043864 usec
+microseconds: 1118445 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 6 threads    OK
-microseconds: 1840229 usec
+microseconds: 3405805 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 6 threads    OK
-microseconds: 22844197 usec
+microseconds: 65036885 usec
 Trying proc mutexes with mechanism `default'...
   mutex mechanism `default' is global in scope on this platform.
 Trying global mutexes with mechanism `default'...
@@ -132,7 +148,7 @@ testdup             :  SUCCESS
 testencode          :  SUCCESS
 testenv             :  SUCCESS
 testescape          :  SUCCESS
-testfile            :  SUCCESS
+testfile            :  abcdefSUCCESS
 testfilecopy        :  SUCCESS
 testfileinfo        :  SUCCESS
 testflock           :  SUCCESS
@@ -143,17 +159,7 @@ testhash            :  SUCCESS
 testipsub           :  SUCCESS
 testlock            :  SUCCESS
 testcond            :  SUCCESS
-testlfs             :  Line 78: Creation of large file (apparently not sparse)
-Line 114: Large file tests not enabled
-Line 133: Large file tests not enabled
-Line 146: Large file tests not enabled
-Line 204: Large file tests not enabled
-Line 179: Large file tests not enabled
-Line 232: Large file tests not enabled
-Line 259: Large file tests not enabled
-Line 286: Large file tests not enabled
-Line 302: Large file tests not enabled
-SUCCESS
+testlfs             :  SUCCESS
 testmmap            :  SUCCESS
 testnames           :  SUCCESS
 testoc              :  SUCCESS

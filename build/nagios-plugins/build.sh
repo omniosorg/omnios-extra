@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nagios-plugins
-VER=2.3.3
+VER=2.4.3
 PKG=ooce/application/nagios-plugins
 SUMMARY="Plugins for Nagios"
 DESC="This is the nagios-plugins package for Nagios."
@@ -57,7 +57,7 @@ patch_source
 prep_build
 build
 strip_install
-make_package local.mog final.mog
+make_package "" final.mog
 clean_up
 
 # Vim hints
