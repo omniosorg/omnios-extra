@@ -60,10 +60,9 @@ CONFIGURE_OPTS="
     -DENABLE_TESTS=OFF
     -DENABLE_SYSTEMD=OFF
 
-    -DBYTECODE_RUNTIME=llvm
-
     -DJSONC_LIBRARY=$OPREFIX/lib/$ISAPART64/libjson-c.so
 "
+[ $RELVER -ge 151042 ] && CONFIGURE_OPTS+=" -DBYTECODE_RUNTIME=llvm"
 LDFLAGS+=" -lncurses"
 
 function prepare_config {
