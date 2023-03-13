@@ -1,22 +1,21 @@
 
 failures:
-    [ui] src/test/ui/abi/stack-probes-lto.rs
-    [ui] src/test/ui/abi/stack-probes.rs
-    [ui] src/test/ui/associated-consts/issue-93775.rs
-    [ui] src/test/ui/backtrace.rs
-    [ui] src/test/ui/closures/deeply-nested_closures.rs
-    [ui] src/test/ui/issues/issue-33770.rs
-    [ui] src/test/ui/issues/issue-33992.rs
-    [ui] src/test/ui/issues/issue-74564-if-expr-stack-overflow.rs
-    [ui] src/test/ui/panics/issue-47429-short-backtraces.rs#legacy
-    [ui] src/test/ui/panics/issue-47429-short-backtraces.rs#v0
-    [ui] src/test/ui/panics/runtime-switch.rs#legacy
-    [ui] src/test/ui/panics/runtime-switch.rs#v0
-    [ui] src/test/ui/proc-macro/load-panic-backtrace.rs
-    [ui] src/test/ui/runtime/backtrace-debuginfo.rs
-    [ui] src/test/ui/runtime/out-of-stack.rs
-    [ui] src/test/ui/std-backtrace.rs
+    [ui] tests/ui/abi/stack-probes-lto.rs
+    [ui] tests/ui/abi/stack-probes.rs
+    [ui] tests/ui/associated-consts/issue-93775.rs
+    [ui] tests/ui/backtrace.rs
+    [ui] tests/ui/issues/issue-33770.rs
+    [ui] tests/ui/issues/issue-33992.rs
+    [ui] tests/ui/issues/issue-74564-if-expr-stack-overflow.rs
+    [ui] tests/ui/panics/issue-47429-short-backtraces.rs#legacy
+    [ui] tests/ui/panics/issue-47429-short-backtraces.rs#v0
+    [ui] tests/ui/panics/runtime-switch.rs#legacy
+    [ui] tests/ui/panics/runtime-switch.rs#v0
+    [ui] tests/ui/proc-macro/load-panic-backtrace.rs
+    [ui] tests/ui/runtime/backtrace-debuginfo.rs
+    [ui] tests/ui/runtime/out-of-stack.rs
+    [ui] tests/ui/std-backtrace.rs
 
-test result: FAILED. 13825 passed; 16 failed; 133 ignored; 0 measured; 0 filtered out; finished in 363.54s
+test result: FAILED. 14077 passed; 15 failed; 138 ignored; 0 measured; 0 filtered out; finished in 355.12s
 
 Some tests failed in compiletest suite=ui mode=ui host=x86_64-unknown-illumos target=x86_64-unknown-illumos
