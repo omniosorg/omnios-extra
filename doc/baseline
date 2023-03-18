@@ -1,3 +1,4 @@
+extra.omnios ooce/aarch64-build-tools
 extra.omnios ooce/application/alpine
 extra.omnios ooce/application/fcgiwrap
 extra.omnios ooce/application/gitea
@@ -64,6 +65,7 @@ extra.omnios ooce/database/rrdtool
 extra.omnios ooce/developer/aarch64-gcc10
 extra.omnios ooce/developer/aarch64-gnu-binutils
 extra.omnios ooce/developer/aarch64-linker
+extra.omnios ooce/developer/aarch64-perl
 extra.omnios ooce/developer/aarch64-sysroot
 extra.omnios ooce/developer/autoconf-archive
 extra.omnios ooce/developer/autogen
