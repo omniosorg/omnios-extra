@@ -60,7 +60,7 @@ CONFIGURE_OPTS="
 # need msg_flags from struct msghdr
 set_standard XPG4v2
 
-LDFLAGS="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 export MAKE
 
 init

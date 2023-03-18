@@ -64,7 +64,7 @@ function generate {
     # System call table
     logmsg "--- generating system call table"
     {
-        cat << EOM
+        $CAT << EOM
 <?xml version="1.0"?>
 <!DOCTYPE feature SYSTEM "gdb-syscalls.dtd">
 <syscalls_info>
@@ -78,38 +78,43 @@ EOM
         echo "</syscalls_info>"
     } > $TMPDIR/syscalls.xml
     echo $TMPDIR/syscalls.xml
-    for arch in i386 amd64; do
-        logcmd cp $TMPDIR/syscalls.xml \
-            $TMPDIR/$EXTRACTED_SRC/gdb/syscalls/$arch-illumos.xml \
-            || logerr "Could not install $arch system call table"
-    done
 
     # Offset includes
     logmsg "--- generating offset information"
     pushd $TMPDIR
-    for bits in 32 64; do
-        flags=CFLAGS$bits
+    for arch in $DEFAULT_ARCH; do
+        logcmd $CP syscalls.xml $EXTRACTED_SRC/gdb/syscalls/$arch-illumos.xml \
+            || logerr "Could not install $arch system call table"
         logcmd -p $GENOFFSETS -s $CTFSTABS -r $CTFCONVERT \
             $CW --primary gcc,$GCC,gnu --noecho -- \
-            $GENOFFSETS_CFLAGS ${!flags} \
-            < $SRCDIR/files/offsets.in > offsets$bits.h
+            $GENOFFSETS_CFLAGS ${CFLAGS[$arch]} \
+            < $SRCDIR/files/offsets.in > offsets_$arch.h
     done
     {
-        sed < offsets32.h 's/\t0x/_32&/'
-        sed < offsets64.h 's/\t0x/_64&/'
+        $SED < offsets_i386.h 's/\t0x/_32&/'
+        $SED < offsets_amd64.h 's/\t0x/_64&/'
         $EGREP $'define\tPR(FN|ARG)SZ' /usr/include/sys/old_procfs.h
-    } | tee illumos-offsets.h > $EXTRACTED_SRC/bfd/illumos-offsets.h
+    } | $TEE illumos-offsets.h > $EXTRACTED_SRC/bfd/illumos-offsets.h
     popd
 
     logmsg "--- building feature files"
     logcmd $MAKE -C $TMPDIR/$EXTRACTED_SRC/gdb/features \
         GDB=$OOCEBIN/gdb cfiles \
         || logerr "feature build failed"
+
+    logmsg -n "File generation successful"
 }
 
-save_function make_prog64 _make_prog64
-make_prog64() {
-    _make_prog64 "$@"
+pre_make() {
+    typeset arch=$1
+
+    MAKE_ARGS_WS="
+        CFLAGS=\"$CFLAGS ${CFLAGS[$arch]}\"
+        CPPFLAGS=\"$CPPFLAGS ${CPPFLAGS[$arch]}\"
+    "
+}
+
+post_make() {
     # Since we patched the doc directory out of the main makefile, build
     # the man pages separately now.
     logcmd $MAKE -C gdb/doc man install-man1 DESTDIR=$DESTDIR \

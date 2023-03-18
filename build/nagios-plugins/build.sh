@@ -43,13 +43,13 @@ MAKE_INSTALL_TARGET="
     install-root
 "
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --prefix=$PREFIX
     --libexecdir=$OPREFIX/nagios/libexec
 "
 
-CFLAGS64+=" -I$OPREFIX/pgsql-$PGSQLVER/include"
-LDFLAGS64+=" -L$OPREFIX/pgsql-$PGSQLVER/lib -R$OPREFIX/pgsql-$PGSQLVER/lib"
+CFLAGS[amd64]+=" -I$OPREFIX/pgsql-$PGSQLVER/include"
+LDFLAGS[amd64]+=" -L$OPREFIX/pgsql-$PGSQLVER/lib -R$OPREFIX/pgsql-$PGSQLVER/lib"
 
 init
 download_source nagios $PROG $VER

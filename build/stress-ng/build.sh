@@ -34,8 +34,10 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
-configure64() {
-    export CFLAGS+=" $CFLAGS64"
+pre_configure() {
+    typeset arch=$1
+
+    export CFLAGS+=" ${CFLAGS[$arch]}"
 
     MAKE_ARGS="LIB_ATOMIC= LIB_RT="
     MAKE_INSTALL_ARGS="
@@ -45,6 +47,9 @@ configure64() {
         JOBDIR=$PREFIX/share/example-jobs
         BASHDIR=$PREFIX/share/bash-completion/completions
     "
+
+    # no configure
+    false
 }
 
 init

@@ -48,27 +48,19 @@ XFORM_ARGS="
     -DFRIBIDI=$FRIBIDIVER
 "
 
-LDFLAGS32+=" -L$PREFIX/lib -R$PREFIX/lib -lssp_ns"
-LDFLAGS64+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
+pre_configure() {
+    typeset arch=$1
 
-export MAKE
+    LDFLAGS[$arch]+=" -L$PREFIX/${LIBDIRS[$arch]} -R$PREFIX/${LIBDIRS[$arch]}"
+    [ $arch = i386 ] && LDFLAGS[$arch]+=" -lssp_ns"
 
-test_config() {
+    export MAKE
+}
+
+post_configure() {
     for flag in $EXPECTED_OPTIONS; do
-        egrep -s "HAVE_$flag 1" config.h || logerr "HAVE_$flag not set"
+        $EGREP -s "HAVE_$flag 1" config.h || logerr "HAVE_$flag not set"
     done
-}
-
-save_function configure32 _configure32
-configure32() {
-    _configure32
-    test_config
-}
-
-save_function configure64 _configure64
-configure64() {
-    _configure64
-    test_config
 }
 
 init
@@ -93,15 +85,15 @@ export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/fribidi"
 
 if ((EXTRACT_MODE == 0)); then
     logcmd find $DEPROOT -name \*.la -exec rm {} +
-    logcmd mv $DEPROOT/$PREFIX/bin/$ISAPART64/* $DEPROOT/$PREFIX/bin/ \
+    logcmd mv $DEPROOT/$PREFIX/bin/amd64/* $DEPROOT/$PREFIX/bin/ \
         || logerr "relocate dependency binaries"
-    logcmd rm -rf $DEPROOT/$PREFIX/bin/{$ISAPART,$ISAPART64}
+    logcmd rm -rf $DEPROOT/$PREFIX/bin/{i386,amd64}
 fi
 
-LDFLAGS32+=" -L$DEPROOT/$PREFIX/lib"
-LDFLAGS64+=" -L$DEPROOT/$PREFIX/lib/$ISAPART64"
-addpath PKG_CONFIG_PATH32 $DEPROOT/$PREFIX/lib/pkgconfig
-addpath PKG_CONFIG_PATH64 $DEPROOT/$PREFIX/lib/$ISAPART64/pkgconfig
+for arch in $DEFAULT_ARCH; do
+    LDFLAGS[$arch]+=" -L$DEPROOT/$PREFIX/${LIBDIRS[$arch]}"
+    addpath PKG_CONFIG_PATH[$arch] $DEPROOT/$PREFIX/${LIBDIRS[$arch]}/pkgconfig
+done
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
@@ -110,12 +102,8 @@ CONFIGURE_OPTS="
     -Dinstall-tests=false
     -Dintrospection=disabled
 "
-CONFIGURE_OPTS_32="
-    --libdir=$PREFIX/lib
-"
-CONFIGURE_OPTS_64="
-    --libdir=$PREFIX/lib/$ISAPART64
-"
+CONFIGURE_OPTS[i386]=" --libdir=$PREFIX/lib "
+CONFIGURE_OPTS[amd64]=" --libdir=$PREFIX/lib/amd64 "
 
 EXPECTED_OPTIONS="CAIRO CAIRO_FREETYPE CAIRO_PDF CAIRO_PS CAIRO_PNG FREETYPE"
 
@@ -133,8 +121,8 @@ fixup() {
     local P=${PREFIX#/}
 
     rpath32="/usr/gcc/$GCCVER/lib:$PREFIX/lib"
-    rpath64="/usr/gcc/$GCCVER/lib/$ISAPART64:$PREFIX/lib/$ISAPART64"
-    for obj in $P/bin/* $P/lib/*.so* $P/lib/$ISAPART64/*.so*; do
+    rpath64="/usr/gcc/$GCCVER/lib/amd64:$PREFIX/lib/amd64"
+    for obj in $P/bin/* $P/lib/*.so* $P/lib/amd64/*.so*; do
         [ -f "$obj" ] || continue
         logmsg "--- fixing runpath for $obj"
         if file $obj | egrep -s 'ELF 64-bit'; then

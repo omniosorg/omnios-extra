@@ -57,16 +57,16 @@ build() {
         || logerr "building tools failed"
 
     logcmd $MKDIR -p $DESTDIR/$PREFIX/bin || logerr "mkdir bin failed"
-    logcmd $CP usr/src/tools/proto/root_i386-nd/opt/onbld/bin/$ISAPART64/ld \
+    logcmd $CP usr/src/tools/proto/root_i386-nd/opt/onbld/bin/amd64/ld \
         $DESTDIR/$PREFIX/bin/ || logerr "copying ld failed"
-    logcmd $MKDIR -p $DESTDIR/$PREFIX/lib/$ISAPART64 \
+    logcmd $MKDIR -p $DESTDIR/$PREFIX/lib/amd64 \
         || logerr "mkdir lib failed"
     logcmd $RSYNC -a \
-        usr/src/tools/proto/root_i386-nd/opt/onbld/lib/$ISAPART/64/ \
-        $DESTDIR/$PREFIX/lib/$ISAPART64/ || logerr "copying libs failed"
+        usr/src/tools/proto/root_i386-nd/opt/onbld/lib/i386/64/ \
+        $DESTDIR/$PREFIX/lib/amd64/ || logerr "copying libs failed"
 
     # we move the library directory level relative to ld(1)
-    rpath="\$ORIGIN/../lib/$ISAPART64:/usr/gcc/7/lib/$ISAPART64"
+    rpath="\$ORIGIN/../lib/amd64:/usr/gcc/7/lib/amd64"
     logcmd $ELFEDIT -e "dyn:value -s RUNPATH $rpath" $DESTDIR/$PREFIX/bin/ld
     logcmd $ELFEDIT -e "dyn:value -s RPATH $rpath" $DESTDIR/$PREFIX/bin/ld
 

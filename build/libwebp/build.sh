@@ -50,13 +50,13 @@ CONFIGURE_OPTS="
     --sbindir=$PREFIX/sbin
     --enable-everything
 "
-CONFIGURE_OPTS_WS_32="
+CONFIGURE_OPTS[i386_WS]="
     --libdir=$OPREFIX/lib
     LDFLAGS=\"-L$OPREFIX/lib -R$OPREFIX/lib\"
 "
-CONFIGURE_OPTS_WS_64="
-    --libdir=$OPREFIX/lib/$ISAPART64
-    LDFLAGS=\"-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64\"
+CONFIGURE_OPTS[amd64_WS]="
+    --libdir=$OPREFIX/lib/amd64
+    LDFLAGS=\"-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64\"
 "
 CPPFLAGS+=" -I$OPREFIX/include"
 

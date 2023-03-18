@@ -66,19 +66,19 @@ CONFIGURE_OPTS="
     --with-dbpath=$VARDIR/sasldb2
 "
 
-CONFIGURE_OPTS_32+="
+CONFIGURE_OPTS[i386]+="
     --with-plugindir=$PREFIX/lib/sasl2
 "
 
-CONFIGURE_OPTS_64+="
-    --with-plugindir=$PREFIX/lib/$ISAPART64/sasl2
+CONFIGURE_OPTS[amd64]+="
+    --with-plugindir=$PREFIX/lib/amd64/sasl2
     --sbindir=$PREFIX/sbin
 "
 
 # To find lmdb
 CPPFLAGS+=" -I$PREFIX/include"
-LDFLAGS32+=" -L$PREFIX/lib -R$PREFIX/lib"
-LDFLAGS64+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -L$PREFIX/lib -R$PREFIX/lib"
+LDFLAGS[amd64]+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
 
 tests() {
     [ `grep -c 'checking DB library to use... lmdb' $SRCDIR/build.log` = 4 ] \

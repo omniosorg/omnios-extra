@@ -93,9 +93,17 @@ add_targets() {
 # Dependencies are limited at the moment. Build everything
 # in alphabetical order.
 buildorder() {
-    mapfile -d '' sorted < <( printf '%s\n' ${!fulltargets[@]} | sort)
+    typeset -a sorted
+    if [ -f "$ROOTDIR/doc/pkglist.$CLIBUILDARCH" ]; then
+        mapfile -t sorted \
+            < <(grep -v '^#' $ROOTDIR/doc/pkglist.$CLIBUILDARCH)
+    else
+        mapfile -d '' -O ${#sorted[@]} sorted \
+            < <( printf '%s\n' ${!fulltargets[@]} | sort)
+    fi
     for target in ${sorted[@]}; do
-        echo $target
+        [ -n "$target" ] || continue
+        echo "$target"
     done
 }
 
@@ -117,23 +125,28 @@ list() {
 list_build() {
     PAT=${1-.}
 
-    buildorder | while read target; do
+    while read target; do
+        # Strip flags
+        target=${target%% *}
         if [ "$PAT" = "." ]; then
             echo " * $target"
         else
             echo "$target" | egrep "$PAT"
         fi
-    done
+    done < <(buildorder)
 }
 
 list_built() {
     PAT=${1-.}
 
-    buildorder | while read target; do
+    while read target; do
+        # Strip flags
+        target=${target%% *}
+
         echo $target | egrep -s "$PAT" || continue
         is_built $target && echo "${c_highlight}* \\c" || echo "${c_error}  \\c"
         echo $target$c_reset
-    done
+    done < <(buildorder)
 }
 
 ##############################################################################
@@ -240,7 +253,7 @@ built_packages_sh() {
 build_manifest() {
     typeset mf="$1"
 
-    init_repo
+    init_repos
     logmsg "Found a manifest file. Preparing it for publishing."
     if [ -f root.tar.bz2 ]; then
         logmsg "File archive found. Extracting..."
@@ -259,16 +272,19 @@ build_manifest() {
 }
 
 build() {
-    if [ -n "${fulltargets[$1]}" ]; then
-        buildtgt=$1
-    elif [ -n "${targets[$1]}" ]; then
-        buildtgt="${targets[$1]}"
-        logmsg "--- $1 -> $buildtgt"
+    typeset tgt="$1"; shift
+    typeset extra_flags="$@"
+
+    if [ -n "${fulltargets[$tgt]}" ]; then
+        buildtgt=$tgt
+    elif [ -n "${targets[$tgt]}" ]; then
+        buildtgt="${targets[$tgt]}"
+        logmsg "--- $tgt -> $buildtgt"
     else
-        logerr "Unknown package: $1"
+        logerr "Unknown package: $tgt"
     fi
     if is_built $buildtgt; then
-        logmsg "--- Package $1 was already built."
+        logmsg "--- Package $tgt was already built."
     else
         BUILD=${fulltargets[$buildtgt]}
         DIR="`dirname $BUILD`"
@@ -288,9 +304,9 @@ build() {
             LOGFILE="$_LOGFILE"
             built_packages_p5m $SCRIPT
         else
-            PATH=$PATH:. $SCRIPT -r $PKGSRVR $build_flags || \
+            PATH=$PATH:. $SCRIPT -r $PKGSRVR $build_flags $extra_flags || \
                 logerr "Unable to run $SCRIPT"
-            built_packages_sh $SCRIPT
+            [ -z "$extra_flags" ] && built_packages_sh $SCRIPT
         fi
         popd >/dev/null
     fi
@@ -378,13 +394,16 @@ job_status() {
         ((tm = now - ${slotstart[$i]}))
         e=' '
         p="${slottgt[$i]}"
-        if [ -n "${expensive[$p]}" ]; then
+        pid="${slots[$i]}"
+        if [ -f "$TMPDIR/.nw.$pid" ]; then
+            e='!'
+        elif [ -n "${expensive[$p]}" ]; then
             e='*'
         elif [ $tm -lt 70 ]; then
             e='+'
         fi
         logmsg -h "`printf "    [%2d] %8d - (%5ds) %s\n" \
-            "$i" "${slots[$i]}" "$tm" "$e${slotdesc[$i]}"`"
+            "$i" "$pid" "$tm" "$e${slotdesc[$i]}"`"
     done
     for b in ${builderr[@]}; do
         logmsg -e "`printf "            *** BUILD ERROR ***         %s\n" \
@@ -504,6 +523,7 @@ count_expensive() {
 
 set_batch_build_flags() {
     build_flags="-b -t -l"
+    [ -n "$CLIBUILDARCH" ] && build_flags+=" -a $CLIBUILDARCH"
     [ -n "$USE_CCACHE" ] && build_flags+=" -c"
     ((EXTRACT_MODE == 1)) && build_flags+=" -x"
     ((EXTRACT_MODE == 2)) && build_flags+=" -xx"
@@ -530,6 +550,11 @@ parallel_build() {
     # Do this now to avoid a race in the child tasks
     init_repo
 
+    if [ -n "$CLIBUILDARCH" ]; then
+       PKGSRVR=${REPOS[$CLIBUILDARCH]}
+       SKIP_KAYAK_KERNEL=1
+    fi
+
     declare -A slots
     declare -A slotpid
     declare -A slottgt
@@ -541,8 +566,14 @@ parallel_build() {
     [ -n "$ETHROTTLE" ] || ETHROTTLE=0
 
     # Queue up the packages to build
-    for tgt in `buildorder`; do
-        queue+=($tgt)
+    declare -a defer
+    while read tgt; do
+        [[ "$tgt" = "#"* ]] && continue
+        queue+=("$tgt")
+    done < <(buildorder)
+
+    for tgt in "${defer[@]}"; do
+        queue+=("$tgt")
     done
 
     pkgcount=${#queue[@]}
@@ -550,10 +581,16 @@ parallel_build() {
     trap 'job_status SIGINFO' SIGINFO
     trap drain SIGUSR1
 
+    typeset -i published=0
     while [ ${#queue[@]} -gt 0 ]; do
         # Pop tgt off queue
         tgt=${queue[0]}; queue=("${queue[@]:1}")
         nextslot=
+
+        typeset qtgt="$tgt"
+        typeset extra_flags=
+        [[ $tgt == *\ * ]] && extra_flags=${tgt#* }
+        tgt=${tgt%% *}
 
         ((pkgnum++))
 
@@ -569,7 +606,18 @@ parallel_build() {
                 # Rebuild the repository
                 logmsg -n "-- Rebuilding the package repository"
                 wait_for_jobs "emptying for rebuild"
-                pkgrepo -s $PKGSRVR rebuild
+                ((published)) && pkgrepo -s $PKGSRVR rebuild
+                published=0
+                continue
+            ;;
+            .SYSROOT)
+                logmsg -n "-- Updating the sysroot"
+                wait_for_jobs "emptying for sysroot"
+                if ((published)); then
+                    pkgrepo -s $PKGSRVR rebuild
+                    update_sysroot
+                fi
+                published=0
                 continue
             ;;
         esac
@@ -601,7 +649,6 @@ parallel_build() {
                 # location, then the target is just appended.
                 newloc=${expensive[$tgt]}
                 ((newloc *= 10))
-                # Ensure that kayak-kernel remains last
                 if [ $((newloc + 1)) -ge ${#queue[@]} ]; then
                     newloc=${#queue[@]}
                     ((newloc -= 2))
@@ -618,7 +665,7 @@ parallel_build() {
                 else
                     logmsg -n "-- $tgt, relocating to $newloc/${#queue[@]}"
                     _queue=("${queue[@]:0:newloc}")
-                    _queue+=($tgt)
+                    _queue+=("$qtgt")
                     _queue+=("${queue[@]:newloc}")
                     queue=("${_queue[@]}")
                     # Next queue target
@@ -634,8 +681,10 @@ parallel_build() {
             [ -n "$nextslot" ] || break
         fi
 
+        ((published++))
+
         note -h "($pkgnum/$pkgcount) Building $tgt (slot $nextslot)"
-        logprefix="[$nextslot] " build $tgt &
+        logprefix="[$nextslot] " build $tgt $extra_flags &
         slots[$nextslot]=$!
         slotpid[$!]=$nextslot
         slottgt[$nextslot]=$tgt
@@ -720,6 +769,7 @@ shift $((OPTIND - 1))
 [ -n "$SKIP_PKGLINT" ] && build_flags+="-l "
 [ -n "$SKIP_TESTSUITE" ] && build_flags+="-t "
 [ -n "$SKIP_HARDLINK" ] && build_flags+="-L "
+[ -n "$CLIBUILDARCH" ] && build_flags+="-a $CLIBUILDARCH "
 ((EXTRACT_MODE == 1)) && build_flags+="-x "
 ((EXTRACT_MODE == 2)) && build_flags+="-xx "
 
@@ -795,7 +845,7 @@ case "$1" in
 
             pkgcount=${#fulltargets[@]}
             pkgnum=0
-            for tgt in `buildorder`; do
+            while read tgt; do
                 ((pkgnum = pkgnum + 1))
 
                 [ -n "$skipuntil" -a "$skipuntil" != $tgt ] \
@@ -803,7 +853,7 @@ case "$1" in
 
                 note "($pkgnum/$pkgcount) Building $tgt"
                 build $tgt
-            done
+            done < <(buildorder)
             baseline check
         elif [[ "$tobuild" = parallel\ * ]]; then
             restore_built

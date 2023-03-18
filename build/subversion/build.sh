@@ -52,7 +52,7 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --prefix=$PREFIX
     --with-utf8proc=internal
     --disable-mod-activation
@@ -60,7 +60,7 @@ CONFIGURE_OPTS_64="
     --with-apxs=$OPREFIX/apache-$APACHEVER/bin/apxs
 "
 
-LDFLAGS+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 LDFLAGS+=" -L$PREFIX/lib -R$PREFIX/lib"
 
 MAKE_TARGET="all swig-pl"

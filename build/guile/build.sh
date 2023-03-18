@@ -38,12 +38,9 @@ XFORM_ARGS="
 PKG_INCLUDE_TS+=" *.scm *.go"
 
 CPPFLAGS+=" -I/usr/include/gmp -I$OPREFIX/include"
-LDFLAGS_32+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-LDFLAGS_64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
-export LDFLAGS="$LDFLAGS_32 -lsocket -lnsl"
+LDFLAGS+="-lsocket -lnsl"
 
 export BDW_GC_CFLAGS="-I$OPREFIX/include"
-export BDW_GC_LIBS="$LDFLAGS_32 -lgc"
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
@@ -52,30 +49,30 @@ CONFIGURE_OPTS="
     --disable-static
     ac_cv_type_complex_double=no
 "
-
-CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
+CONFIGURE_OPTS[i386]="
+    --bindir=$PREFIX/bin/i386
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --bindir=$PREFIX/bin
-    --libdir=$OPREFIX/lib/$ISAPART64
+    --libdir=$OPREFIX/lib/amd64
 "
 
-save_function configure64 _configure64
-configure64() {
-    export BDW_GC_LIBS="$LDFLAGS_64 -lgc"
-    export LDFLAGS="$LDFLAGS_64"
-    _configure64
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -L$OPREFIX/${LIBDIRS[$arch]} -R$OPREFIX/${LIBDIRS[$arch]}"
+
+    export BDW_GC_LIBS="$LDFLAGS ${LDFLAGS[$arch]} -lgc"
 }
 
 # Make ISA binaries for guile-config, to allow software to find the
 # right settings for 32/64-bit when pkg-config is not used.
 make_isa_stub() {
     pushd $DESTDIR$PREFIX/bin >/dev/null
-    logcmd mkdir -p $ISAPART64
-    logcmd mv guile-config $ISAPART64/ || logerr "mv guile-config"
-    make_isaexec_stub_arch $ISAPART64 $PREFIX/bin
+    logcmd mkdir -p amd64
+    logcmd mv guile-config amd64/ || logerr "mv guile-config"
+    make_isaexec_stub_arch amd64 $PREFIX/bin
     popd >/dev/null
 }
 

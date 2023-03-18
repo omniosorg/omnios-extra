@@ -44,7 +44,7 @@ build_dependency -noctf protobuf protobuf-$PBUFVER \
 restore_buildenv
 
 export protobuf_CFLAGS="-I$DEPROOT/opt/ooce/include"
-export protobuf_LIBS="-L$DEPROOT/opt/ooce/lib/$ISAPART64 -lprotobuf"
+export protobuf_LIBS="-L$DEPROOT/opt/ooce/lib/amd64 -lprotobuf"
 
 # the mosh build requires the protoc protobuf compiler
 PATH+=":$DEPROOT$OOCEBIN"

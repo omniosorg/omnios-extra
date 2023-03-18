@@ -27,37 +27,44 @@ set_arch 64
 
 BUILD_DEPENDS_IPS="library/security/openssl library/pcre2"
 
-# No configure
-configure64() { :; }
-
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DPROG=$PROG
 "
 
-MAKE_ARGS_WS="
-    CC=$CC
-    DEFINE=\"$CFLAGS $CFLAGS64 $CTF_CFLAGS\"
-    LDFLAGS=\"$LDFLAGS $LDFLAGS64\"
-    TARGET=solaris
-    USE_PCRE2=1
-    USE_PCRE2_JIT=1
-    USE_OPENSSL=1
-    USE_ZLIB=1
-"
+pre_configure() {
+    typeset arch=$1
 
-MAKE_INSTALL_ARGS_WS="
-    PREFIX=$PREFIX
-    MANDIR=$PREFIX/share/man
-"
+    MAKE_ARGS_WS="
+        CC=$CC
+        DEFINE=\"$CFLAGS ${CFLAGS[$arch]} $CTF_CFLAGS\"
+        LDFLAGS=\"$LDFLAGS ${LDFLAGS[$arch]}\"
+        TARGET=solaris
+        USE_PCRE2=1
+        USE_PCRE2_JIT=1
+        USE_OPENSSL=1
+        USE_ZLIB=1
+    "
 
-MAKE_INSTALL_TARGET="install-bin install-man"
+    MAKE_INSTALL_ARGS_WS="
+        PREFIX=$PREFIX
+        MANDIR=$PREFIX/share/man
+    "
 
-copy_sample_configs() {
+    MAKE_INSTALL_TARGET="install-bin install-man"
+
+    # no configure
+    false
+}
+
+post_install() {
     logmsg "-- copying sample configs"
     logcmd mkdir -p "$DESTDIR/etc$PREFIX/$PROG" || logerr "mkdir failed"
     logcmd cp $TMPDIR/$BUILDDIR/examples/*.cfg $DESTDIR/etc$PREFIX/$PROG/ \
         || logerr "copying configs failed"
+
+    xform $SRCDIR/files/$PROG-template.xml > $TMPDIR/$PROG.xml
+    install_smf ooce $PROG.xml
 }
 
 init
@@ -65,9 +72,6 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-copy_sample_configs
-xform files/$PROG-template.xml > $TMPDIR/$PROG.xml
-install_smf ooce $PROG.xml
 make_package
 clean_up
 

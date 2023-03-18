@@ -67,7 +67,7 @@ CONFIGURE_OPTS="
     --with-system-tzdata=/usr/share/lib/zoneinfo
 "
 
-CONFIGURE_OPTS_64+="
+CONFIGURE_OPTS[amd64]+="
     --bindir=$PREFIX/bin
     --enable-dtrace DTRACEFLAGS=\"-64\"
 "
@@ -80,7 +80,7 @@ build_manifests() {
     manifest_start $TMPDIR/manifest.client
     manifest_add_dir $PREFIX/include libpq
     manifest_add_dir $PREFIX/lib/pkgconfig
-    manifest_add_dir $PREFIX/lib/$ISAPART64/pkgconfig
+    manifest_add_dir $PREFIX/lib/amd64/pkgconfig
     manifest_add $PREFIX/lib '.*lib(pq\.|ecpg|pgtypes|pgcommon|pgport).*'
     manifest_add $PREFIX/bin '.*pg_config' psql ecpg
     manifest_add $PREFIX/share/man/man1 pg_config.1 psql.1 ecpg.1
@@ -95,9 +95,9 @@ build_manifests() {
 # right settings for 32/64-bit when pkg-config is not used.
 make_isa_stub() {
     pushd $DESTDIR$PREFIX/bin >/dev/null
-    logcmd mkdir -p $ISAPART64
-    logcmd mv pg_config $ISAPART64/ || logerr "mv pg_config"
-    make_isaexec_stub_arch $ISAPART64 $PREFIX/bin
+    logcmd mkdir -p amd64
+    logcmd mv pg_config amd64/ || logerr "mv pg_config"
+    make_isaexec_stub_arch amd64 $PREFIX/bin
     popd >/dev/null
 }
 

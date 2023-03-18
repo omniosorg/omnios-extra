@@ -39,18 +39,18 @@ CONFIGURE_OPTS="
     --with-ldap-include=$PREFIX/include
 "
 
-CONFIGURE_OPTS_32+="
-    --with-apr=$PREFIX/bin/$ISAPART/apr-1-config
+CONFIGURE_OPTS[i386]+="
+    --with-apr=$PREFIX/bin/i386/apr-1-config
     --with-berkeley-db=$PREFIX/include:$PREFIX/lib
 "
 
-CONFIGURE_OPTS_64+="
-    --with-apr=$PREFIX/bin/$ISAPART64/apr-1-config
-    --with-berkeley-db=$PREFIX/include:$PREFIX/lib/$ISAPART64
+CONFIGURE_OPTS[amd64]+="
+    --with-apr=$PREFIX/bin/amd64/apr-1-config
+    --with-berkeley-db=$PREFIX/include:$PREFIX/lib/amd64
 "
 
-LDFLAGS32+=" -L$PREFIX/lib -R$PREFIX/lib"
-LDFLAGS64+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -L$PREFIX/lib -R$PREFIX/lib"
+LDFLAGS[amd64]+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
 
 init
 download_source apr $PROG $VER

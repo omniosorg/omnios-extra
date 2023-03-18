@@ -54,7 +54,7 @@ XFORM_ARGS="
     -DBROTLI=$BROTLIVER
 "
 
-CONFIGURE_OPTS_64=
+CONFIGURE_OPTS[amd64]=
 CONFIGURE_OPTS="
     --with-ipv6
     --with-threads
@@ -90,7 +90,7 @@ CONFIGURE_OPTS="
 "
 
 
-LDFLAGS+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
+LDFLAGS+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
 
 copy_man_page() {
     logmsg "--- copying man page"

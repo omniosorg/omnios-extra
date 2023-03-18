@@ -26,24 +26,26 @@ directories in a tree-like format"
 set_arch 64
 [ $RELVER -ge 151045 ] && set_clangver
 
-# No configure
-configure64() { :; }
+pre_configure() {
+    typeset arch=$1
 
-MAKE_ARGS_WS="
-    -e
-    CFLAGS=\"$CFLAGS $CFLAGS64 $CTF_CFLAGS\"
-    LDFLAGS=\"$LDFLAGS $LDFLAGS64\"
-"
+    MAKE_ARGS_WS="
+        -e
+        CFLAGS=\"$CFLAGS ${CFLAGS[$arch]}\"
+        LDFLAGS=\"$LDFLAGS ${LDFLAGS[$arch]}\"
+    "
+
+    MAKE_INSTALL_ARGS="
+        DESTDIR=$DESTDIR/$PREFIX/bin
+        PREFIX=$PREFIX
+        MANDIR=$DESTDIR/$PREFIX/share/man
+    "
+
+    # no configure
+    false
+}
 
 init
-
-# After init so that $DESTDIR is populated
-MAKE_INSTALL_ARGS="
-    DESTDIR=$DESTDIR/$PREFIX/bin
-    PREFIX=$PREFIX
-    MANDIR=$DESTDIR/$PREFIX/share/man
-"
-
 download_source $PROG $PROG $VER
 patch_source
 prep_build

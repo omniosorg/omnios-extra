@@ -59,15 +59,15 @@ CONFIGURE_OPTS="--disable-shared"
 
 build_dependency lzo lzo-$LZOVER lzo lzo $LZOVER
 export LZO_CFLAGS="-I$DEPROOT/$PREFIX/include"
-export LZO_LIBS="-L$DEPROOT/$PREFIX/lib/$ISAPART64 -llzo2"
+export LZO_LIBS="-L$DEPROOT/$PREFIX/lib/amd64 -llzo2"
 
 restore_buildenv
 
 #########################################################################
 
-CONFIGURE_OPTS_64+="
+CONFIGURE_OPTS[amd64]+="
     --includedir=$OPREFIX/include
-    --libdir=$OPREFIX/lib/$ISAPART64
+    --libdir=$OPREFIX/lib/amd64
 "
 
 download_source $PROG $PROG $VER
@@ -90,12 +90,11 @@ SUMMARY="OpenVPN Auth-LDAP Plugin"
 DESC="username/password authentication via LDAP for OpenVPN 2.x."
 
 OVPNDIR=$DESTDIR$OPREFIX/include
-PLUGINDIR=$OPREFIX/lib/$ISAPART64/openvpn/plugins
+PLUGINDIR=$OPREFIX/lib/amd64/openvpn/plugins
 
 set_patchdir patches-$PROG
 RUN_DEPENDS_IPS="ooce/network/openvpn"
 
-set_arch 64
 set_builddir openvpn-$PROG-$PROG-$VER
 
 XFORM_ARGS="
@@ -115,15 +114,12 @@ export PATH+=":$DEPROOT/$PREFIX/bin"
 
 #########################################################################
 
-save_function make_install64 _make_install64
-make_install64() {
+pre_install() {
     # the install target does not create the directory
     logcmd mkdir -p $DESTDIR$PLUGINDIR || logerr "mkdir failed"
-
-    _make_install64
 }
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --libdir=$PLUGINDIR
     --with-openldap=$OPREFIX
     --with-openvpn=$OVPNDIR

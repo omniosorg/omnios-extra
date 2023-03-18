@@ -45,7 +45,7 @@ RUN_DEPENDS_IPS="system/zones/brand/lx"
 
 XFORM_ARGS="-D PREFIX=${PREFIX#/}"
 
-CONFIGURE_OPTS_32="
+CONFIGURE_OPTS[i386]="
     --prefix=$PREFIX/$PROG
     --localstatedir=/var$PREFIX/$PROG
 "

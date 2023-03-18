@@ -40,7 +40,7 @@ build() {
     pushd $TMPDIR/$BUILDDIR >/dev/null
 
     logcmd $CARGO cinstall --release --library-type=cdylib \
-        --destdir=$DESTDIR --prefix=$PREFIX --libdir=$PREFIX/lib/$ISAPART64 \
+        --destdir=$DESTDIR --prefix=$PREFIX --libdir=$PREFIX/lib/amd64 \
         || logerr "C-API build failed"
 
     popd >/dev/null

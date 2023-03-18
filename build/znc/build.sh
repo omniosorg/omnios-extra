@@ -61,11 +61,11 @@ CONFIGURE_OPTS="
     -DCMAKE_SKIP_RPATH=ON
 "
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     -DCMAKE_INSTALL_LIBDIR=lib
 "
 LDFLAGS+=" -lsocket"
-LDFLAGS64+=" -Wl,-R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/lib/amd64"
 
 tests() {
     for key in SSL IPv6 Zlib; do

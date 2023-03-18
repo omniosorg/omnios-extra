@@ -10,5 +10,5 @@
 
 # Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
-license wireguard-tools/COPYING license=GPLv2
+license COPYING license=GPLv2
 

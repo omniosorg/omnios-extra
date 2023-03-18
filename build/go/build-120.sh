@@ -51,12 +51,15 @@ make_clean() {
     popd >/dev/null
 }
 
-configure64() {
+pre_configure() {
     logcmd mkdir -p $DESTDIR/$OPREFIX \
         || logerr "--- failed to create Go install directory."
+
+    # no configure
+    false
 }
 
-make_prog64() {
+make_arch() {
     pushd $TMPDIR/$BUILDDIR/src >/dev/null
     logmsg "--- make"
     [ -z "$SKIP_TESTSUITE" ] && CMD="./all.bash" || CMD="./make.bash"
@@ -64,7 +67,7 @@ make_prog64() {
     popd >/dev/null
 }
 
-make_install64() {
+make_install() {
     logmsg "--- make install"
     logcmd mv $TMPDIR/$BUILDDIR $DESTDIR$GOROOT_FINAL \
         || logerr "--- make install failed"

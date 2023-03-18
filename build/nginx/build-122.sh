@@ -52,7 +52,7 @@ XFORM_ARGS="
     -DDsVERSION=-$sMAJVER
 "
 
-CONFIGURE_OPTS_64=
+CONFIGURE_OPTS[amd64]=
 CONFIGURE_OPTS="
     --with-ipv6
     --with-threads
@@ -86,7 +86,7 @@ CONFIGURE_OPTS="
     --http-scgi-temp-path=/tmp/.nginx/scgi
 "
 
-LDFLAGS+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
+LDFLAGS+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
 
 brotli() {
     if [ $RELVER -ge 151035 ]; then

@@ -10,7 +10,7 @@
 
 # Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
 
-set name=pkg.fmri value=ooce/application/nagios-common@1.0-@PVER@
+set name=pkg.fmri value=ooce/application/nagios-common@1.0-$(PVER)
 set name=pkg.summary value="Common properties for nagios packages"
 set name=pkg.description value="Common nagios package"
 set name=pkg.human-version value=1.0

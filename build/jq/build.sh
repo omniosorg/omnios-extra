@@ -41,7 +41,7 @@ CONFIGURE_OPTS="
     --with-oniguruma=$OPREFIX
 "
 
-LDFLAGS="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER

@@ -28,21 +28,21 @@ set_builddir icu/source
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 CONFIGURE_OPTS="--disable-samples"
-CONFIGURE_OPTS_64+="
+CONFIGURE_OPTS[amd64]+="
     --bindir=$PREFIX/bin
     --sbindir=$PREFIX/sbin
 "
 
-LDFLAGS32+=" -R$PREFIX/lib"
-LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -R$PREFIX/lib"
+LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
 
 # Make ISA binaries for icu-config, to allow software to find the
 # right settings for 32/64-bit when pkg-config is not used.
 make_isa_stub() {
     pushd $DESTDIR$PREFIX/bin >/dev/null
-    logcmd mkdir -p $ISAPART64
-    logcmd mv icu-config $ISAPART64/ || logerr "mv icu-config"
-    make_isaexec_stub_arch $ISAPART64 $PREFIX/bin
+    logcmd mkdir -p amd64
+    logcmd mv icu-config amd64/ || logerr "mv icu-config"
+    make_isaexec_stub_arch amd64 $PREFIX/bin
     popd >/dev/null
 }
 

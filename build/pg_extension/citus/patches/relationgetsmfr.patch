@@ -1,0 +1,22 @@
+diff --git a/src/include/pg_version_compat.h b/src/include/pg_version_compat.h
+index fcb857c..e6ecfed 100644
+--- a/src/include/pg_version_compat.h
++++ b/src/include/pg_version_compat.h
+@@ -55,17 +55,6 @@ pg_strtoint64(char *s)
+ }
+ 
+ 
+-static inline SMgrRelation
+-RelationGetSmgr(Relation rel)
+-{
+-	if (unlikely(rel->rd_smgr == NULL))
+-	{
+-		smgrsetowner(&(rel->rd_smgr), smgropen(rel->rd_node, rel->rd_backend));
+-	}
+-	return rel->rd_smgr;
+-}
+-
+-
+ #define CREATE_SEQUENCE_COMMAND \
+ 	"CREATE SEQUENCE IF NOT EXISTS %s AS %s INCREMENT BY " INT64_FORMAT \
+ 	" MINVALUE " INT64_FORMAT " MAXVALUE " INT64_FORMAT \

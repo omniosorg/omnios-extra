@@ -46,8 +46,8 @@ CONFIGURE_OPTS="
     --disable-static
 "
 
-CONFIGURE_OPTS_64+="
-    --libdir=$PREFIX/lib/$ISAPART64
+CONFIGURE_OPTS[amd64]+="
+    --libdir=$PREFIX/lib/amd64
 "
 
 init

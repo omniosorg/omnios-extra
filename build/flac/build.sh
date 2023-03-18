@@ -51,15 +51,15 @@ CONFIGURE_OPTS="
     -DCMAKE_INSTALL_INCLUDEDIR=$OPREFIX/include
     -DBUILD_SHARED_LIBS=ON
 "
-CONFIGURE_OPTS_32="
+CONFIGURE_OPTS[i386]="
     -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64="
-    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/$ISAPART64
+CONFIGURE_OPTS[amd64]="
+    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/amd64
 "
 
-LDFLAGS32+=" -Wl,-R$OPREFIX/lib"
-LDFLAGS64+=" -Wl,-R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -Wl,-R$OPREFIX/lib"
+LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER
@@ -67,7 +67,7 @@ patch_source
 prep_build cmake+ninja
 build
 # make sure the test suite uses the libraries from the proto area
-LD_LIBRARY_PATH=$DESTDIR$OPREFIX/lib/$ISAPART64 run_testsuite
+LD_LIBRARY_PATH=$DESTDIR$OPREFIX/lib/amd64 run_testsuite
 make_package
 clean_up
 

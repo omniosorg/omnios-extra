@@ -21,7 +21,8 @@ VER=18.14.2
 PKG=ooce/runtime/node-18
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
-DESC+="It is intended for writing scalable network programs such as web servers."
+DESC+="It is intended for writing scalable network programs such as web "
+DESC+="servers."
 
 if [ $RELVER -lt 151041 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
@@ -54,7 +55,7 @@ XFORM_ARGS="
 # node contains BMI instructions even when built on an older CPU
 BMI_EXPECTED=1
 
-CONFIGURE_OPTS_64=
+CONFIGURE_OPTS[amd64]=
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --with-dtrace
@@ -65,6 +66,7 @@ CONFIGURE_OPTS="
 
 # clang++ does not link libatomic automatically
 export LDFLAGS+=" -latomic"
+subsume_arch $BUILDARCH LDFLAGS
 
 init
 download_source $PROG $PROG v$VER

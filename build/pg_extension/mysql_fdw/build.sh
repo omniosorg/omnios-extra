@@ -32,11 +32,11 @@ set_builddir mysql_fdw-REL-${VER//./_}
 SKIP_LICENCES=modified-BSD
 
 # No configure
-configure64() { :; }
+pre_configure() { false; }
 
 MAKE_ARGS="
     USE_PGXS=1
-    MYSQL_LIBNAME=$OPREFIX/mariadb-$MARIASQLVER/lib/$ISAPART64/libmysqlclient.so
+    MYSQL_LIBNAME=$OPREFIX/mariadb-$MARIASQLVER/lib/amd64/libmysqlclient.so
 "
 MAKE_INSTALL_ARGS="USE_PGXS=1"
 MAKE_CLEAN_ARGS="USE_PGXS=1"

@@ -33,8 +33,8 @@ CONFIGURE_OPTS="
     --disable-static
 "
 
-LDFLAGS32+=" -Wl,-R$PREFIX/lib"
-LDFLAGS64+=" -Wl,-R$PREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -Wl,-R$PREFIX/lib"
+LDFLAGS[amd64]+=" -Wl,-R$PREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER

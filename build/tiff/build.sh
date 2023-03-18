@@ -50,8 +50,8 @@ CONFIGURE_OPTS+="
     --disable-static
 "
 
-LDFLAGS32+=" -Wl,-R$OPREFIX/lib"
-LDFLAGS64+=" -Wl,-R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -Wl,-R$OPREFIX/lib"
+LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/lib/amd64"
 
 init
 prep_build

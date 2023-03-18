@@ -51,7 +51,7 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
 "
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --prefix=$PREFIX
     --bindir=$PREFIX/bin
     --with-libexecdir=$PREFIX/libexec

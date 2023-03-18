@@ -25,7 +25,7 @@ DESC="A small build system with a focus on speed"
 set_arch 64
 [ $RELVER -ge 151043 ] && set_clangver
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_BUILD_TYPE=Release
 "

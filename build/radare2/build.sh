@@ -43,8 +43,8 @@ PKGDIFF_HELPER="
 
 export PATH=$GNUBIN:$PATH
 CFLAGS+=" -fPIC"
-LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64 -L$OPREFIX/lib/$ISAPART64"
-LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64 -L$OPREFIX/lib/amd64"
+LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
 # Some of the libraries have large enumerations
 CTF_FLAGS+=" -sm"
 

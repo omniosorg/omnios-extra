@@ -26,8 +26,7 @@ DESC="A Free, High-Quality, and Portable Font Engine"
 # we don't want freetype2 to have any runtime dependencies
 # on omnios-extra packages. since openjdk bundles freetype2 and
 # therefore would end up having runtime dependencies on -extra packages
-PKG_CONFIG_PATH32=
-PKG_CONFIG_PATH64=
+PKG_CONFIG_PATH=()
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
@@ -37,15 +36,15 @@ CONFIGURE_OPTS="
     --disable-static
     --with-png=no
 "
-CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
+CONFIGURE_OPTS[i386]="
+    --bindir=$PREFIX/bin/i386
     --libdir=$PREFIX/lib
 "
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --bindir=$PREFIX/bin
-    --libdir=$PREFIX/lib/$ISAPART64
+    --libdir=$PREFIX/lib/amd64
 "
-LDFLAGS32+=" -lssp_ns"
+LDFLAGS[i386]+=" -lssp_ns"
 
 init
 download_source ${PROG}2 $PROG $VER

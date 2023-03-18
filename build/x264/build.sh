@@ -33,25 +33,24 @@ BMI_EXPECTED=1
 CONFIGURE_OPTS="
     --enable-shared
 "
-CONFIGURE_OPTS_32+="
+CONFIGURE_OPTS[i386]+="
     --enable-pic
 "
-[ $RELVER -lt 151041 ] && CONFIGURE_OPTS_32+=" --disable-asm" \
-    || CONFIGURE_OPTS_32+=" --host=$TRIPLET32"
-CONFIGURE_OPTS_64+="
-    --host=$TRIPLET64
+[ $RELVER -lt 151041 ] && CONFIGURE_OPTS[i386]+=" --disable-asm" \
+    || CONFIGURE_OPTS[i386]+=" --host=${TRIPLETS[i386]}"
+CONFIGURE_OPTS[amd64]+="
+    --host=${TRIPLETS[amd64]}
 "
 
 MAKE_INSTALL_ARGS="-e INSTALL=$GNUBIN/install"
 
 CFLAGS+=" -O3"
 
-[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
-LDFLAGS64+=" -Wl,-R$PREFIX/lib/$ISAPART64"
+[ $RELVER -ge 151037 ] && LDFLAGS[i386]+=" -lssp_ns"
+LDFLAGS[amd64]+=" -Wl,-R$PREFIX/lib/amd64"
 
 # we don't want x264 to have a (circular) runtime dependency on ffmpeg
-PKG_CONFIG_PATH32=
-PKG_CONFIG_PATH64=
+PKG_CONFIG_PATH=()
 
 init
 download_source $PROG $PROG-stable $VER

@@ -1,4 +1,4 @@
-set name=pkg.fmri value=pkg://@PKGPUBLISHER@/ooce/omnios-build-tools@11,5.11-@PVER@
+set name=pkg.fmri value=pkg://$(PKGPUBLISHER)/ooce/omnios-build-tools@11,$(SUNOSVER)-$(PVER)
 set name=pkg.summary value="Extra tools required to build OmniOS"
 set name=pkg.description value="Extra tools required to build OmniOS"
 
@@ -39,6 +39,6 @@ depend type=require-any fmri=ooce/runtime/ruby-27 fmri=ooce/runtime/ruby-30 \
     fmri=ooce/runtime/ruby-31
 
 # Required to build nss from r151045 onwards
-depend fmri=ooce/developer/gyp type=conditional
+depend fmri=ooce/developer/gyp type=conditional \
     predicate=release/name@0.5.11-151045
 

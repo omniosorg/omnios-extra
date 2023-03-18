@@ -43,8 +43,8 @@ BUILD_DEPENDS_IPS="
     ooce/library/postgresql-${PGSQLVER//./}
 "
 export RUSTFLAGS="
-    -C link-arg=-R$PREFIX/mariadb-$MARIASQLVER/lib/$ISAPART64
-    -C link-arg=-R$PREFIX/pgsql-$PGSQLVER/lib/$ISAPART64
+    -C link-arg=-R$PREFIX/mariadb-$MARIASQLVER/lib/amd64
+    -C link-arg=-R$PREFIX/pgsql-$PGSQLVER/lib/amd64
 "
 
 XFORM_ARGS="

@@ -19,7 +19,7 @@
 
 PKG=ooce/developer/aarch64-gcc10
 PROG=gcc
-VER=10.3.0
+VER=10.4.0
 ILVER=il-1
 SUMMARY="gcc $VER-$ILVER ($ARCH)"
 DESC="The GNU Compiler Collection"
@@ -50,11 +50,8 @@ set_ssp none
 # building and putting the 32/64 objects in the right places. We also want
 # to unset all of the flags that we usually pass for a 64-bit object so that
 # gcc can properly create the multilib targets.
-CONFIGURE_OPTS_64="$CONFIGURE_OPTS_32"
-unset CFLAGS32 CFLAGS64
-unset CPPFLAGS32 CPPFLAGS64
-unset CXXFLAGS32 CXXFLAGS64
-unset LDFLAGS32 LDFLAGS64
+CONFIGURE_OPTS[amd64]="$CONFIGURE_OPTS[i386]"
+clear_archflags
 
 # Use bash for all shells - some corruption occurs in libstdc++-v3/config.status
 # otherwise.
@@ -75,8 +72,8 @@ export LD=/bin/ld
 export LD_FOR_HOST=/bin/ld
 export LD_FOR_TARGET=$PREFIX/bin/ld
 export AS_FOR_TARGET=$PREFIX/bin/$TRIPLET64-as
-export CFLAGS_FOR_TARGET="-mno-outline-atomics"
-export CXXFLAGS_FOR_TARGET="-mno-outline-atomics"
+export CFLAGS_FOR_TARGET="-mno-outline-atomics -mtls-dialect=trad"
+export CXXFLAGS_FOR_TARGET="-mno-outline-atomics -mtls-dialect=trad"
 export STRIP="/usr/bin/strip -x"
 export STRIP_FOR_TARGET="$STRIP"
 
@@ -94,7 +91,8 @@ PKGDIFF_HELPER="
     s^/gcc-$GCCMAJOR\\.[0-9]\\.[0-9]^/gcc-$GCCMAJOR.x.x^
 "
 
-CONFIGURE_OPTS="
+CONFIGURE_OPTS=
+CONFIGURE_OPTS[amd64]+="
     --prefix=$PREFIX
     --host $NATIVE_TRIPLET64
     --build $NATIVE_TRIPLET64
@@ -119,7 +117,7 @@ CONFIGURE_OPTS="
     --enable-long-long
     enable_frame_pointer=yes
 "
-CONFIGURE_OPTS_WS="
+CONFIGURE_OPTS[WS]="
     --with-boot-ldflags=\"-R$PREFIX/lib\"
     --with-boot-cflags=\"-O2\"
     --with-pkgversion=\"OmniOS $RELVER/$VER-$ILVER\"

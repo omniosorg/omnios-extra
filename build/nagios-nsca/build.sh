@@ -39,11 +39,11 @@ PREFIX+="/nagios"
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 CFLAGS+=" -I$OPREFIX/include"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 # getnameinfo
-LDFLAGS64+=" -lmcrypt -lsocket"
+LDFLAGS[amd64]+=" -lmcrypt -lsocket"
 
-make_install64() {
+make_install_amd64() {
     logmsg "--- make install"
     pushd $TMPDIR/$BUILDDIR >/dev/null
 

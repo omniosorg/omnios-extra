@@ -53,12 +53,12 @@ build_dependency popt popt-$POPTVER popt popt $POPTVER
 restore_buildenv
 
 export POPT_CFLAGS="-I$DEPROOT/$PREFIX/include"
-export POPT_LIBS="-L$DEPROOT/$PREFIX/lib/$ISAPART64 -lpopt"
+export POPT_LIBS="-L$DEPROOT/$PREFIX/lib/amd64 -lpopt"
 
 #########################################################################
 
 export LIBEXIF_CFLAGS="-I$OPREFIX/include"
-export LIBEXIF_LIBS="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64 -lexif"
+export LIBEXIF_LIBS="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64 -lexif"
 
 download_source $PROG $PROG $VER
 patch_source

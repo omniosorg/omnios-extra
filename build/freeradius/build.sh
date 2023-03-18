@@ -75,21 +75,27 @@ CONFIGURE_OPTS="
     --with-logdir=/var/log$PREFIX
     --localstatedir=/var$PREFIX
     --with-raddbdir=/etc$PREFIX
-    --libdir=$PREFIX/lib/$ISAPART64
     --with-talloc-include-dir=$DESTDIR$PREFIX/include
-    --with-talloc-lib-dir=$DESTDIR$PREFIX/lib/$ISAPART64
+"
+CONFIGURE_OPTS[amd64]+="
+    --libdir=$PREFIX/lib/amd64
+    --with-talloc-lib-dir=$DESTDIR$PREFIX/lib/amd64
 "
 
-# This prevents the build from embedding the temporary build directory into the
-# runpath of every object.
-MAKE_ARGS_WS="
-    TALLOC_LDFLAGS=\"-L$DESTDIR$PREFIX/lib/$ISAPART64 \
-        -R$PREFIX/lib/$ISAPART64\"
-"
+pre_configure() {
+    typeset arch=$1
 
-# To find OpenLDAP
-CPPFLAGS+=" -I$OPREFIX/include"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+    # This prevents the build from embedding the temporary build directory into
+    # the runpath of every object.
+    MAKE_ARGS_WS="
+        TALLOC_LDFLAGS=\"-L$DESTDIR$PREFIX/${LIBDIRS[$arch]} \
+            -R$PREFIX/${LIBDIRS[$arch]}\"
+    "
+
+    # To find OpenLDAP
+    CPPFLAGS+=" -I$OPREFIX/include"
+    LDFLAGS[$arch]+=" -L$OPREFIX/lib/$arch -R$OPREFIX/lib/$arch"
+}
 
 download_source $PROG "$PROG-server" $VER
 patch_source

@@ -36,7 +36,7 @@ XFORM_ARGS="
 CONFIGURE_OPTS+="
     --without-gtk
 "
-LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
 export MAKE
 
 CFLAGS+=" -DMTR_PACKET_PATH=\\\"$MTR_PACKET_PATH\\\""

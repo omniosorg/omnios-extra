@@ -34,27 +34,24 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-configure32() {
-    MAKE_ARGS_WS="
-        OFLAGS=\"$CFLAGS $CFLAGS32\"
-    "
-    MAKE_INSTALL_ARGS="
-        PREFIX=$PREFIX
-        INCDIR=$OPREFIX/include
-        LIBDIR=$OPREFIX/lib
-        BINDIR=$PREFIX/bin/i386
-    "
-}
+pre_configure() {
+    typeset arch=$1
 
-configure64() {
+    typeset bindir=bin
+    [ $arch = i386 ] && bindir+=/i386
+
     MAKE_ARGS_WS="
-        OFLAGS=\"$CFLAGS $CFLAGS64\"
+        OFLAGS=\"$CFLAGS ${CFLAGS[$arch]}\"
     "
     MAKE_INSTALL_ARGS="
         PREFIX=$PREFIX
         INCDIR=$OPREFIX/include
-        LIBDIR=$OPREFIX/lib/$ISAPART64
+        LIBDIR=$OPREFIX/${LIBDIRS[$arch]}
+        BINDIR=$PREFIX/$bindir
     "
+
+    # no configure
+    false
 }
 
 init

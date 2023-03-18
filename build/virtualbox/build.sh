@@ -36,7 +36,7 @@ MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
 
 # Set path so that libIDL-config-2 can be found by the configure script
-export LD_LIBRARY_PATH="$PREFIX/lib/$ISAPART64"
+export LD_LIBRARY_PATH="$PREFIX/lib/amd64"
 
 OPREFIX=$PREFIX
 PREFIX=/opt/$PROG
@@ -76,7 +76,7 @@ XFORM_ARGS="
 "
 
 # The usual --prefix etc. options are not supported
-CONFIGURE_OPTS_64=
+CONFIGURE_OPTS[amd64]=
 
 init
 prep_build
@@ -115,14 +115,15 @@ EXPECTED_BUILD_ERRS=6
 # disable it for releases where openjdk11 is the default
 CONFIGURE_OPTS+=" --disable-java"
 
-save_function configure64 _configure64
-configure64() {
+pre_configure() {
     sed -i "/^GSOAP=.*/s||GSOAP=$GSOAP|" configure
-    _configure64
+}
+
+post_configure() {
     echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> env.sh
 }
 
-make_prog() {
+make_arch() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
     cat << EOF > LocalConfig.kmk
@@ -169,9 +170,9 @@ VBOX_GSOAP_INCS = $DEPROOT/usr/include
 
 VBOX_DO_STRIP =
 
-# link kernel modules -ztype=kmod
-TEMPLATE_VBOXR0DRV_LDFLAGS = -r -ztype=kmod
-TEMPLATE_VBOXGUESTR0_LDFLAGS = -r -ztype=kmod
+# link kernel modules
+TEMPLATE_VBOXR0DRV_LDFLAGS = -r ${LDFLAGS[kmod]}
+TEMPLATE_VBOXGUESTR0_LDFLAGS = -r ${LDFLAGS[kmod]}
 
 EOF
     logmsg "--- building VirtualBox"

@@ -53,41 +53,41 @@ XFORM_ARGS="
 "
 
 CFLAGS+=" -O3 -I$OPREFIX/include -I/usr/include/gssapi"
-CXXFLAGS32="$CFLAGS $CFLAGS32 -R$OPREFIX/lib"
-CXXFLAGS64="$CFLAGS $CFLAGS64 -R$OPREFIX/lib/$ISAPART64"
-LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+CXXFLAGS[i386]="$CFLAGS ${CFLAGS[i386]} -R$OPREFIX/lib"
+CXXFLAGS[amd64]="$CFLAGS ${CFLAGS[amd64]} -R$OPREFIX/lib/amd64"
+LDFLAGS[i386]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
+LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 
 CONFIGURE_OPTS=
-CONFIGURE_OPTS_32=
-CONFIGURE_OPTS_64=
-CONFIGURE_OPTS_WS_32="
+CONFIGURE_OPTS[i386]=
+CONFIGURE_OPTS[amd64]=
+CONFIGURE_OPTS[i386_WS]="
     -DFEATURE_SET=xsmall
-    -DCMAKE_C_FLAGS_RELEASE=\"$CFLAGS $CFLAGS32\"
-    -DCMAKE_CXX_FLAGS_RELEASE=\"$CXXFLAGS32\"
-    -DCMAKE_EXE_LINKER_FLAGS_RELEASE=\"$LDFLAGS32\"
-    -DCMAKE_MODULE_LINKER_FLAGS_RELEASE=\"$LDFLAGS32\"
-    -DCMAKE_SHARED_LINKER_FLAGS_RELEASE=\"$LDFLAGS32\"
-    -DINSTALL_BINDIR=bin/$ISAPART
-    -DINSTALL_SBINDIR=bin/$ISAPART
-    -DINSTALL_SCRIPTDIR=bin/$ISAPART
+    -DCMAKE_C_FLAGS_RELEASE=\"$CFLAGS ${CFLAGS[i386]}\"
+    -DCMAKE_CXX_FLAGS_RELEASE=\"${CXXFLAGS[i386]}\"
+    -DCMAKE_EXE_LINKER_FLAGS_RELEASE=\"${LDFLAGS[i386]}\"
+    -DCMAKE_MODULE_LINKER_FLAGS_RELEASE=\"${LDFLAGS[i386]}\"
+    -DCMAKE_SHARED_LINKER_FLAGS_RELEASE=\"${LDFLAGS[i386]}\"
+    -DINSTALL_BINDIR=bin/i386
+    -DINSTALL_SBINDIR=bin/i386
+    -DINSTALL_SCRIPTDIR=bin/i386
     -DINSTALL_LIBDIR=lib
     -DWITH_MARIABACKUP=OFF
     -DWITH_UNIT_TESTS=OFF
 "
-CONFIGURE_OPTS_WS_64="
+CONFIGURE_OPTS[amd64_WS]="
     -DFEATURE_SET=community
-    -DCMAKE_C_FLAGS_RELEASE=\"$CFLAGS $CFLAGS64\"
-    -DCMAKE_CXX_FLAGS_RELEASE=\"$CXXFLAGS64\"
-    -DCMAKE_EXE_LINKER_FLAGS_RELEASE=\"$LDFLAGS64\"
-    -DCMAKE_MODULE_LINKER_FLAGS_RELEASE=\"$LDFLAGS64\"
-    -DCMAKE_SHARED_LINKER_FLAGS_RELEASE=\"$LDFLAGS64\"
+    -DCMAKE_C_FLAGS_RELEASE=\"$CFLAGS ${CFLAGS[amd64]}\"
+    -DCMAKE_CXX_FLAGS_RELEASE=\"${CXXFLAGS[amd64]}\"
+    -DCMAKE_EXE_LINKER_FLAGS_RELEASE=\"${LDFLAGS[amd64]}\"
+    -DCMAKE_MODULE_LINKER_FLAGS_RELEASE=\"${LDFLAGS[amd64]}\"
+    -DCMAKE_SHARED_LINKER_FLAGS_RELEASE=\"${LDFLAGS[amd64]}\"
     -DINSTALL_BINDIR=bin
     -DINSTALL_SBINDIR=bin
     -DINSTALL_SCRIPTDIR=bin
-    -DINSTALL_LIBDIR=lib/$ISAPART64
+    -DINSTALL_LIBDIR=lib/amd64
 "
-CONFIGURE_OPTS_WS="
+CONFIGURE_OPTS[WS]="
     -DWITH_COMMENT=\"OmniOS MariaDB Server\"
     -DCOMPILATION_COMMENT=\"OmniOS MariaDB Server\"
 
@@ -130,16 +130,16 @@ CONFIGURE_OPTS_WS="
 # right settings for 32/64-bit when pkg-config is not used.
 make_isa_stub() {
     pushd $DESTDIR$PREFIX/bin >/dev/null
-    logcmd mkdir -p $ISAPART64
-    logcmd mv *_config $ISAPART64/ || logerr "mv mysql_config"
-    make_isaexec_stub_arch $ISAPART64 $PREFIX/bin
+    logcmd mkdir -p amd64
+    logcmd mv *_config amd64/ || logerr "mv mysql_config"
+    make_isaexec_stub_arch amd64 $PREFIX/bin
     popd >/dev/null
 }
 
 build_manifests() {
     manifest_start $TMPDIR/manifest.client
     manifest_add_dir $PREFIX/include mysql
-    manifest_add_dir $PREFIX/lib pkgconfig $ISAPART64 $ISAPART64/pkgconfig
+    manifest_add_dir $PREFIX/lib pkgconfig amd64 amd64/pkgconfig
     manifest_add $PREFIX/bin '.*(mysql|mariadb)_config' mysql mariadb
     manifest_add $PREFIX/man/man1 mariadb.1 mysql.1 mysql_config.1
     manifest_finalise $TMPDIR/manifest.client $OPREFIX

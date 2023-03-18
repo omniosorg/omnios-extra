@@ -1,4 +1,4 @@
-set name=pkg.fmri value=pkg://@PKGPUBLISHER@/ooce/extra-build-tools@11,5.11-@PVER@
+set name=pkg.fmri value=pkg://$(PKGPUBLISHER)/ooce/extra-build-tools@11,$(SUNOSVER)-$(PVER)
 set name=pkg.summary value="Tools required to build OmniOS extra"
 set name=pkg.description value="Tools required to build OmniOS extra"
 
@@ -18,6 +18,7 @@ depend fmri=ooce/database/lmdb type=require
 depend fmri=ooce/developer/cargo-c type=require
 depend fmri=ooce/developer/freepascal type=require
 depend fmri=ooce/developer/gdb type=require
+depend fmri=ooce/developer/go-118 type=require
 depend fmri=ooce/developer/go-119 type=require
 depend fmri=ooce/developer/gperf type=require
 depend fmri=ooce/developer/llvm-13 type=require

@@ -50,10 +50,10 @@ CONFIGURE_OPTS="
 export MAKE
 
 CPPFLAGS+=" -I/usr/include/gmp -I$PREFIX/include -I$PREFIX/unbound/include"
-LDFLAGS32+=" -L$PREFIX/unbound/lib -R$PREFIX/unbound/lib"
-LDFLAGS32+=" -R$PREFIX/lib"
-LDFLAGS64+=" -L$PREFIX/unbound/lib/$ISAPART64 -R$PREFIX/unbound/lib/$ISAPART64"
-LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -L$PREFIX/unbound/lib -R$PREFIX/unbound/lib"
+LDFLAGS[i386]+=" -R$PREFIX/lib"
+LDFLAGS[amd64]+=" -L$PREFIX/unbound/lib/amd64 -R$PREFIX/unbound/lib/amd64"
+LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER

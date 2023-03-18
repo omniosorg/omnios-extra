@@ -60,14 +60,15 @@ prep_build
 save_buildenv
 
 CONFIGURE_CMD="$CMAKE ."
-CONFIGURE_OPTS_64=
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DICAL_BUILD_DOCS=OFF
     -DENABLE_GTK_DOC=OFF
-    -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib/$ISAPART64
-    -DCMAKE_LIBRARY_ARCHITECTURE=$ISAPART64
+"
+CONFIGURE_OPTS[amd64]="
+    -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib/amd64
+    -DCMAKE_LIBRARY_ARCHITECTURE=amd64
 "
 RUN_AUTORECONF=
 
@@ -76,22 +77,22 @@ build_dependency libical libical-$ICALVER $PROG/libical libical $ICALVER
 restore_buildenv
 
 depinc=$DEPROOT$PREFIX/include
-deplib=$DEPROOT$PREFIX/lib/$ISAPART64
+deplib=$DEPROOT$PREFIX/lib/amd64
 
-addpath PKG_CONFIG_PATH64 $deplib/pkgconfig
+addpath PKG_CONFIG_PATH[amd64] $deplib/pkgconfig
 
 CPPFLAGS+=" -I$depinc"
-LDFLAGS64+=" -L$deplib"
+LDFLAGS[amd64]+=" -L$deplib"
 
 CPPFLAGS+=" -I$OPREFIX/include"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
-LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
+LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
 
 #########################################################################
 
 note -n "Building Cyrus-imapd"
 
-export KRB5_LIBS="-L/usr/lib/$ISAPART64 -lkrb5"
+export KRB5_LIBS="-L/usr/lib/amd64 -lkrb5"
 export KRB_LIBS="-lkrb5"
 export KRB5_CFLAGS="-I/usr/include/kerberosv5"
 CPPFLAGS+=" $KRB5_CFLAGS"
@@ -107,12 +108,9 @@ CONFIGURE_OPTS="
     --enable-idled
     --with-sasl=$OPREFIX
 "
-CONFIGURE_OPTS_64+=" --libexecdir=$PREFIX/libexec"
+CONFIGURE_OPTS[amd64]+=" --libexecdir=$PREFIX/libexec"
 
-save_function make_install _make_install
-make_install() {
-    _make_install "$@"
-
+post_install() {
     # Copy in the dependency libraries
 
     pushd $deplib >/dev/null
@@ -120,7 +118,7 @@ make_install() {
         [[ $lib = *.so.* && -f $lib && ! -h $lib ]] || continue
         tgt=`echo $lib | cut -d. -f1-3`
         logmsg "--- installing library $lib -> $tgt"
-        logcmd cp $lib $DESTDIR/$PREFIX/lib/$ISAPART64/$tgt \
+        logcmd cp $lib $DESTDIR/$PREFIX/lib/amd64/$tgt \
             || logerr "cp $tgt"
     done
     popd >/dev/null
@@ -130,10 +128,10 @@ make_install() {
     # Unfortunately, libtool insists on adding $DEPROOT to the runtime
     # library path in each binary and library. Fixing this up post-install
     # for now, there may be a better way to do it.
-    typeset rpath="$PREFIX/lib/$ISAPART64:$OPREFIX/lib/$ISAPART64"
-    rpath+=":/usr/gcc/$GCCVER/lib/$ISAPART64"
+    typeset rpath="$PREFIX/lib/amd64:$OPREFIX/lib/amd64"
+    rpath+=":/usr/gcc/$GCCVER/lib/amd64"
 
-    for f in bin/* sbin/* libexec/* lib/$ISAPART64/*; do
+    for f in bin/* sbin/* libexec/* lib/amd64/*; do
         [ -f $f -a ! -h $f ] || continue
         logmsg "--- fixing runpath in $f"
         logcmd elfedit -e "dyn:value -s RUNPATH $rpath" $f

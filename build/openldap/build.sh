@@ -55,11 +55,11 @@ CONFIGURE_OPTS="
     --enable-crypt
     --without-cyrus-sasl
 "
-CONFIGURE_OPTS_32+="
-    --bindir=$PREFIX/bin/$ISAPART
+CONFIGURE_OPTS[i386]+="
+    --bindir=$PREFIX/bin/i386
     --disable-slapd
 "
-CONFIGURE_OPTS_64+="
+CONFIGURE_OPTS[amd64]+="
     --bindir=$PREFIX/bin
     --sbindir=$PREFIX/sbin
     --libexecdir=$PREFIX/libexec
@@ -76,24 +76,13 @@ CONFIGURE_OPTS_64+="
     --enable-modules
     --enable-overlays=mod
 "
-[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
+LDFLAGS[i386]+=" -lssp_ns"
 
 MAKE_INSTALL_ARGS+=" STRIP= STRIP_OPTS="
 
-# On older OmniOS releases where the compiler outputs 32-bit objects by
-# default, libtool creates some intermediate objects as 32-bit during the
-# 64-bit build.
-if [ $RELVER -lt 151034 ]; then
-    save_function configure64 _configure64
-    configure64() {
-        _configure64 "$@"
-        sed -i '/^no_builtin_flag=/s/-/-m64 &/' libtool
-    }
-fi
-
 build_manifests() {
     manifest_start $TMPDIR/manifest.client
-    manifest_add_dir $OPREFIX/lib pkgconfig $ISAPART64 $ISAPART64/pkgconfig
+    manifest_add_dir $OPREFIX/lib pkgconfig amd64 amd64/pkgconfig
     manifest_add_dir $PREFIX/bin
     manifest_add_dir $OPREFIX/include
     manifest_add_dir $PREFIX/share/man man1 man3
@@ -111,14 +100,14 @@ prep_build
 # Build previous versions
 for pver in $PVERS; do
     note -n "Building previous version: $pver"
-    save_variables BUILDDIR EXTRACTED_SRC CONFIGURE_OPTS_64
+    save_variables BUILDDIR EXTRACTED_SRC CONFIGURE_OPTS
     BUILDDIR=$PROG-$pver
     EXTRACTED_SRC=$PROG-$pver
-    CONFIGURE_OPTS_64+=" --disable-slapd"
+    CONFIGURE_OPTS[amd64]+=" --disable-slapd"
     download_source $PROG $PROG $pver
     patch_source patches-`echo $pver | cut -d. -f1-2`
     build
-    restore_variables BUILDDIR EXTRACTED_SRC CONFIGURE_OPTS_64
+    restore_variables BUILDDIR EXTRACTED_SRC CONFIGURE_OPTS
 done
 
 note -n "Building current version: $VER"

@@ -46,8 +46,6 @@ BUILD_DEPENDS_IPS="text/gnu-sed"
 # perl-cross requires GNU tools
 export PATH="$GNUBIN:$PATH"
 
-MAKE_ARGS="miniperl modules"
-
 init
 prep_build
 
@@ -57,7 +55,7 @@ download_source $PROG $PROG-cross $CROSSVER
 patch_source patches-$PROG-cross
 restore_variables BUILDDIR EXTRACTED_SRC
 
-configure64() {
+configure_amd64() {
     logcmd $RSYNC -a $TMPDIR/$PROG-cross-$CROSSVER/* $TMPDIR/$BUILDDIR/ \
         || logerr "rsync perl-cross failed"
 
@@ -120,7 +118,7 @@ configure64() {
     " xconfig.sh
 }
 
-make_install() {
+make_install_amd64() {
     logmsg "--- make install"
 
     for d in bin lib/aarch64-solaris-64/CORE; do
@@ -138,7 +136,10 @@ make_install() {
 
 download_source $PROG $PROG $VER
 patch_source
-build
+# building miniperl is racy
+MAKE_JOBS= MAKE_ARGS="miniperl" build
+configure_amd64() { :; }
+MAKE_ARGS="modules" build
 make_package
 clean_up
 

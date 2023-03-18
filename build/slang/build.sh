@@ -44,11 +44,11 @@ CONFIGURE_OPTS="
     --includedir=$OPREFIX/include
     --sysconfdir=/etc/$PREFIX
 "
-CONFIGURE_OPTS_32="
+CONFIGURE_OPTS[i386]="
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64="
-    --libdir=$OPREFIX/lib/$ISAPART64
+CONFIGURE_OPTS[amd64]="
+    --libdir=$OPREFIX/lib/amd64
 "
 
 LDFLAGS+=" $SSPFLAGS"

@@ -69,17 +69,17 @@ CONFIGURE_OPTS="
 # override thiis.
 CONFIGURE_OPTS+=" ac_cv_have_linux_sendfile=no"
 
-CONFIGURE_OPTS_64+=" --bindir=$PREFIX/bin"
+CONFIGURE_OPTS[amd64]+=" --bindir=$PREFIX/bin"
 
 CPPFLAGS+=" -I$OPREFIX/libzip/include"
-LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
+LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 
 make_isa_stub() {
     pushd $DESTDIR$PREFIX/bin >/dev/null
-    logcmd mkdir -p $ISAPART64
-    logcmd mv *-config $ISAPART64/ || logerr "mv -config"
-    make_isaexec_stub_arch $ISAPART64 $PREFIX/bin
+    logcmd mkdir -p amd64
+    logcmd mv *-config amd64/ || logerr "mv -config"
+    make_isaexec_stub_arch amd64 $PREFIX/bin
     popd >/dev/null
 }
 

@@ -30,12 +30,12 @@ CONFIGURE_OPTS="
     apr_cv_pthreads_lib=
 "
 
-CONFIGURE_OPTS_32+="
-    --with-installbuilddir=$PREFIX/share/apr/$ISAPART/build-1
+CONFIGURE_OPTS[i386]+="
+    --with-installbuilddir=$PREFIX/share/apr/i386/build-1
 "
 
-CONFIGURE_OPTS_64+="
-    --with-installbuilddir=$PREFIX/share/apr/$ISAPART64/build-1
+CONFIGURE_OPTS[amd64]+="
+    --with-installbuilddir=$PREFIX/share/apr/amd64/build-1
 "
 
 # Run the test-suite for the 32-bit build too

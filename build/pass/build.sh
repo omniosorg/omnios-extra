@@ -45,7 +45,7 @@ XFORM_ARGS="
 "
 
 # No configure
-configure64() { :; }
+pre_configure() { false; }
 
 init
 prep_build

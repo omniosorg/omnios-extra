@@ -32,29 +32,32 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-configure64() {
+pre_configure() {
+    typeset arch=$1
+
     MAKE_ARGS_WS="
         -e
-        CFLAGS=\"$CFLAGS64 $CFLAGS\"
-        LDFLAGS=\"$LDFLAGS64 $LDFLAGS\"
+        CFLAGS=\"${CFLAGS[$arch]} $CFLAGS\"
+        LDFLAGS=\"${LDFLAGS[$arch]} $LDFLAGS\"
         LIBS=\"-lm -lz\"
     "
+
+    # no configure
+    false
 }
 
-make_install64() {
-    logmsg "--- make install"
-
+make_install() {
     for d in bin share/man/man1; do
-        mkdir -p $DESTDIR$PREFIX/$d
+        logcmd $MKDIR -p $DESTDIR$PREFIX/$d
     done
-    
-    logcmd cp $TMPDIR/$BUILDDIR/$PROG \
+
+    logcmd $CP $TMPDIR/$BUILDDIR/$PROG \
         $DESTDIR$PREFIX/bin/$PROG
-    logcmd cp $TMPDIR/$BUILDDIR/$PROG.1 \
+    logcmd $CP $TMPDIR/$BUILDDIR/$PROG.1 \
         $DESTDIR$PREFIX/share/man/man1/$PROG.1
 
     # extract licence
-    sed '2,/^The license/d' < $TMPDIR/$BUILDDIR/README \
+    $SED '2,/^The license/d' < $TMPDIR/$BUILDDIR/README \
         > $TMPDIR/$BUILDDIR/LICENCE
 }
 

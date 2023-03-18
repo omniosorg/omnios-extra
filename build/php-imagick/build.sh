@@ -37,7 +37,7 @@ set_builddir imagick-$VER
 SKIP_LICENCES=PHP
 SKIP_RTIME_CHECK=1
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --with-imagick=$PREFIX/ImageMagick
 "
 
