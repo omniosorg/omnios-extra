@@ -3,5 +3,9 @@ build-*.log
 build.log.*
 build-*.log.*
 tmp.repo/
+tmp.repo.aarch64/
+*.p5m.final
+*.p5m.i386.final
+*.p5m.aarch64.final
 *~
 tmp

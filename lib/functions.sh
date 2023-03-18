@@ -1,28 +1,20 @@
 #!/bin/bash
 #
-# {{{ CDDL HEADER START
+# {{{ CDDL HEADER
 #
-# The contents of this file are subject to the terms of the
-# Common Development and Distribution License, Version 1.0 only
-# (the "License").  You may not use this file except in compliance
-# with the License.
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
 #
-# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
-# or http://www.opensolaris.org/os/licensing.
-# See the License for the specific language governing permissions
-# and limitations under the License.
-#
-# When distributing Covered Code, include this CDDL HEADER in each
-# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
-# If applicable, add the following below this CDDL HEADER, with the
-# fields enclosed by brackets "[]" replaced with your own identifying
-# information: Portions Copyright [yyyy] [name of copyright owner]
-#
-# CDDL HEADER END }}}
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
 #
 # Copyright (c) 2014 by Delphix. All rights reserved.
 # Copyright 2015 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 #
 
 #############################################################################
@@ -52,9 +44,10 @@ export PATH=$BASEPATH
 process_opts() {
     SCREENOUT=
     FLAVOR=
-    OLDFLAVOR=
-    BUILDARCH=both
-    OLDBUILDARCH=
+    CLIFLAVOR=
+    BUILDARCH=
+    set_arch "$DEFAULT_ARCH" default
+    CLIBUILDARCH=
     BATCH=
     AUTOINSTALL=
     DEPVER=
@@ -69,14 +62,9 @@ process_opts() {
     while getopts "bcimPpstf:ha:d:Llr:x" opt; do
         case $opt in
             a)
-                BUILDARCH=$OPTARG
-                OLDBUILDARCH=$OPTARG # Used to see if the script overrides the
-                                     # BUILDARCH variable
-                if [[ ! "$BUILDARCH" =~ ^(32|64|both)$ ]]; then
-                    echo "Invalid build architecture specified: $BUILDARCH"
-                    show_synopsis; show_usage
-                    exit 2
-                fi
+                set_arch "$OPTARG"
+                CLIBUILDARCH="$OPTARG"
+                cross_arch $CLIBUILDARCH && SKIP_TESTSUITE=1
                 ;;
             b)
                 BATCH=1 # Batch mode - exit on error
@@ -90,7 +78,7 @@ process_opts() {
                 ;;
             f)
                 FLAVOR="$OPTARG"
-                OLDFLAVOR="$OPTARG" # Used to see if the script overrides
+                CLIFLAVOR="$OPTARG" # Used to see if the script overrides
                 ;;
             \?|h)
                 show_synopsis; show_usage
@@ -135,7 +123,7 @@ process_opts() {
 #############################################################################
 show_synopsis() {
     $CAT << EOM
-Usage: $0 [-blt] [-f FLAVOR] [-h] [-a 32|64|both] [-d DEPVER]
+Usage: $0 [-blt] [-f FLAVOR] [-h] [-a i386|amd64|aarch64|32|64|x86] [-d DEPVER]
 EOM
 }
 
@@ -229,7 +217,7 @@ logmsg() {
 logerr() {
     [ "$1" = "-b" ] && BATCH=1 && shift
     # Print an error message and ask the user if they wish to continue
-    logmsg -e "$@"
+    logmsg -e "$@" >> /dev/stderr
     if [ -z "$BATCH" ]; then
         ask_to_continue "An Error occured in the build. "
     else
@@ -256,7 +244,7 @@ ask_to_continue_() {
     echo -n "${1}${MSG} ($STR) "
     read
     while [[ ! "$REPLY" =~ $RE ]]; do
-        echo -n "continue? ($STR) "
+        echo -n "${MSG} ($STR) "
         read
     done
 }
@@ -316,6 +304,15 @@ ask_to_testsuite() {
 }
 
 #############################################################################
+# Copyright string
+#############################################################################
+
+copyright_string() {
+    echo "Copyright (c) 2017-`date +%Y`" \
+        "OmniOS Community Edition (OmniOSce) Association."
+}
+
+#############################################################################
 # URL encoding for package names, at least
 #############################################################################
 
@@ -359,6 +356,33 @@ parallelise() {
     done
 }
 
+in_list() {
+    typeset list=${1:?list}
+    typeset key=${2:?key}
+    typeset v
+
+    for v in $list; do
+        [ "$v" = "$key" ] && return 0
+    done
+    return 1
+}
+
+valid_arch() {
+    in_list "$ARCH_LIST" "$1"
+}
+
+cross_arch() {
+    in_list "$CROSS_ARCH" "$1"
+}
+
+# This is a crude function to determine if the current build is purely a cross
+# arch one. It should not be used widely and we need something better if we're
+# going to support multi-arch builds in a single run (which is still up for
+# debate).
+is_cross() {
+    [[ ! $BUILDARCH = *amd64* ]]
+}
+
 #############################################################################
 # Set up tools area
 #############################################################################
@@ -387,10 +411,10 @@ set_ssp() {
         all)    SSPFLAGS="-fstack-protector-all" ;;
         *)      logerr "Unknown stack protector variant ($1)" ;;
     esac
-    local LCFLAGS=`echo $CFLAGS | $SED 's/-fstack-protector[^ ]*//'`
-    local LCXXFLAGS=`echo $CXXFLAGS | $SED 's/-fstack-protector[^ ]*//'`
-    CFLAGS="$LCFLAGS $SSPFLAGS"
-    CXXFLAGS="$LCFLAGS $SSPFLAGS"
+    typeset LCFLAGS=`echo ${CFLAGS[0]} | $SED 's/-fstack-protector[^ ]*//'`
+    typeset LCXXFLAGS=`echo ${CXXFLAGS[0]} | $SED 's/-fstack-protector[^ ]*//'`
+    CFLAGS[0]="$LCFLAGS $SSPFLAGS"
+    CXXFLAGS[0]="$LCFLAGS $SSPFLAGS"
     [ -z "$2" ] && logmsg "-- Set stack protection to '$1'"
 }
 
@@ -410,20 +434,41 @@ set_gccver() {
     fi
     export GCC GXX GCCVER GCCPATH PATH
 
-    CFLAGS="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
-    CXXFLAGS="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
+    CFLAGS[0]="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
+    CXXFLAGS[0]="${FCFLAGS[_]} ${FCFLAGS[$GCCVER]}"
     CTF_CFLAGS="${CTFCFLAGS[_]} ${CTFCFLAGS[$GCCVER]}"
 
     set_ssp strong $2
+}
+
+set_crossgcc() {
+    typeset arch=${1:?arch}
+
+    logmsg "-- Setting GCC for cross compilation to $arch"
+    GCCPATH="$CROSSTOOLS/$arch"
+    GCC="$GCCPATH/bin/gcc"
+    GXX="$GCCPATH/bin/g++"
+    CC=$GCC
+    CXX=$GXX
+    [ -x "$GCC" ] || logerr "Unknown compiler version $GCCVER"
+    PATH="$GCCPATH/bin:$BASEPATH"
+    if [ -n "$USE_CCACHE" ]; then
+        [ -x $CCACHE_PATH/ccache ] || logerr "Ccache is not installed"
+        PATH="$CCACHE_PATH:$PATH"
+    fi
+    [[ ${CFLAGS[$arch]} =~ *--sysroot* ]] \
+        || CFLAGS[$arch]+=" --sysroot=${SYSROOT[$arch]}"
+    [[ ${CXXFLAGS[$arch]} =~ *--sysroot* ]] \
+        || CXXFLAGS[$arch]+=" --sysroot=${SYSROOT[$arch]}"
 }
 
 set_clangver() {
     CLANGVER="${1:-$DEFAULT_CLANG_VER}"
     [ -z "$2" ] && logmsg "-- Setting clang version to $CLANGVER"
     CLANGPATH="/opt/ooce/llvm-$CLANGVER"
-    CC="clang"
-    CXX="clang++"
-    [ -x "$CLANGPATH/bin/$CC" ] || logerr "Unknown compiler version $CLANGVER"
+    CC="$CLANGPATH/bin/clang"
+    CXX="$CLANGPATH/bin/clang++"
+    [ -x "$CC" ] || logerr "Unknown compiler version $CLANGVER"
     PATH="$CLANGPATH/bin:$BASEPATH"
     if [ -n "$USE_CCACHE" ]; then
         [ -x $CCACHE_PATH/ccache ] || logerr "Ccache is not installed"
@@ -431,8 +476,8 @@ set_clangver() {
     fi
     export CC CXX CLANGVER CLANGPATH PATH
 
-    CFLAGS="${FCFLAGS[_]}"
-    CXXFLAGS="${FCFLAGS[_]}"
+    CFLAGS[0]="${FCFLAGS[_]}"
+    CXXFLAGS[0]="${FCFLAGS[_]}"
     CTF_CFLAGS="${CTFCFLAGS[_]}"
 
     set_ssp strong $2
@@ -513,44 +558,85 @@ set_rubyver() {
 #############################################################################
 
 reset_configure_opts() {
+    typeset arch
+
     # If it's the global default (/usr), we want sysconfdir to be /etc
     # otherwise put it under PREFIX
     [ $PREFIX = "/usr" ] && SYSCONFDIR=/etc || SYSCONFDIR=/etc$PREFIX
 
-    CONFIGURE_OPTS_32="
-        --prefix=$PREFIX
-        --sysconfdir=$SYSCONFDIR
-        --includedir=$PREFIX/include
-    "
-    CONFIGURE_OPTS_64="$CONFIGURE_OPTS_32"
+    for arch in $ARCH_LIST; do
+        CONFIGURE_OPTS[$arch]="
+            --prefix=$PREFIX
+            --sysconfdir=$SYSCONFDIR
+            --includedir=$PREFIX/include
+        "
+    done
 
     if [ -n "$FORGO_ISAEXEC" ]; then
-        CONFIGURE_OPTS_32+="
-            --bindir=$PREFIX/bin
-            --sbindir=$PREFIX/sbin
-            --libdir=$PREFIX/lib
-            --libexecdir=$PREFIX/libexec
-        "
-        CONFIGURE_OPTS_64+="
-            --bindir=$PREFIX/bin
-            --sbindir=$PREFIX/sbin
-            --libdir=$PREFIX/lib/$ISAPART64
-            --libexecdir=$PREFIX/libexec/$ISAPART64
-        "
+        for arch in $ARCH_LIST; do
+            case $arch in
+                amd64)
+                    CONFIGURE_OPTS[$arch]+="
+                        --bindir=$PREFIX/bin
+                        --sbindir=$PREFIX/sbin
+                        --libdir=$PREFIX/lib/$arch
+                        --libexecdir=$PREFIX/libexec/$arch
+                    "
+                    ;;
+                *)
+                    CONFIGURE_OPTS[$arch]+="
+                        --bindir=$PREFIX/bin
+                        --sbindir=$PREFIX/sbin
+                        --libdir=$PREFIX/lib
+                        --libexecdir=$PREFIX/libexec
+                    "
+                    ;;
+            esac
+        done
     else
-        CONFIGURE_OPTS_32+="
-            --bindir=$PREFIX/bin/$ISAPART
-            --sbindir=$PREFIX/sbin/$ISAPART
-            --libdir=$PREFIX/lib
-            --libexecdir=$PREFIX/libexec
-        "
-        CONFIGURE_OPTS_64+="
-            --bindir=$PREFIX/bin/$ISAPART64
-            --sbindir=$PREFIX/sbin/$ISAPART64
-            --libdir=$PREFIX/lib/$ISAPART64
-            --libexecdir=$PREFIX/libexec/$ISAPART64
-        "
+        for arch in $ARCH_LIST; do
+            case $arch in
+                i386)
+                    CONFIGURE_OPTS[$arch]+="
+                        --bindir=$PREFIX/bin/$arch
+                        --sbindir=$PREFIX/sbin/$arch
+                        --libdir=$PREFIX/lib
+                        --libexecdir=$PREFIX/libexec
+                    "
+                    ;;
+                amd64)
+                    CONFIGURE_OPTS[$arch]+="
+                        --bindir=$PREFIX/bin/$arch
+                        --sbindir=$PREFIX/sbin/$arch
+                        --libdir=$PREFIX/lib/$arch
+                        --libexecdir=$PREFIX/libexec/$arch
+                    "
+                    ;;
+                aarch64)
+                    CONFIGURE_OPTS[$arch]+="
+                        --bindir=$PREFIX/bin
+                        --sbindir=$PREFIX/sbin
+                        --libdir=$PREFIX/lib
+                        --libexecdir=$PREFIX/libexec
+                    "
+                    ;;
+            esac
+        done
     fi
+
+    # Cross compiler options - this will evolve
+    for arch in $CROSS_ARCH; do
+        CONFIGURE_OPTS[$arch]+="
+            --host=${TRIPLETS[$arch]}
+        "
+    done
+}
+
+clear_archflags() {
+    CFLAGS=()
+    CPPFLAGS=()
+    CXXFLAGS=()
+    LDFLAGS=()
 }
 
 set_standard() {
@@ -558,7 +644,7 @@ set_standard() {
     typeset var="${2:-CPPFLAGS}"
     [ -n "${STANDARDS[$st]}" ] || logerr "Unknown standard $st"
     declare -n _var=$var
-    _var+=" ${STANDARDS[$st]}"
+    _var[0]+=" ${STANDARDS[$st]}"
 }
 
 forgo_isaexec() {
@@ -567,9 +653,25 @@ forgo_isaexec() {
 }
 
 set_arch() {
-    [[ $1 =~ ^(both|32|64)$ ]] || logerr "Bad argument to set_arch"
-    BUILDARCH=$1
-    forgo_isaexec
+    typeset arch="${1:?arch}"
+
+    case "$BUILDARCH:$arch" in
+        *:all)          BUILDARCH="$ARCH_LIST" ;;
+        *:aarch64)      ;&
+        *:amd64)        ;&
+        *:i386)         BUILDARCH=$arch ;;
+        *:"i386 amd64") ;&
+        *:x86)          BUILDARCH="i386 amd64" ;;
+        *i386*:64)      BUILDARCH=${BUILDARCH/i386/} ;;
+        *amd64*:32)     BUILDARCH=${BUILDARCH/amd64/} ;;
+        aarch64:64)     ;;
+        aarch64:32)     logerr "32-bit is not valid for $BUILDARCH" ;;
+        *)              logerr "Unknown architecture ($BUILDARCH:$arch)" ;;
+    esac
+    [ -z "$2" ] && forgo_isaexec
+    for a in $BUILDARCH; do
+        valid_arch $a || logerr "$a is not a supported architecture."
+    done
 }
 
 check_mediators() {
@@ -630,19 +732,94 @@ libtool_nostdlib() {
 }
 
 #############################################################################
-# Initialization function
+# Initialisation function
 #############################################################################
 
 init_repo() {
-    if [[ "$PKGSRVR" == file:/* ]]; then
-        RPATH="`echo $PKGSRVR | $SED 's^file:/*^/^'`"
-        if [ ! -d "$RPATH" ]; then
-            logmsg "-- Initialising local repo at $RPATH"
-            $PKGREPO create $RPATH || logerr "Could not create local repo"
-            $PKGREPO add-publisher -s $RPATH $PKGPUBLISHER || \
+    typeset repo=${1:-$PKGSRVR}
+
+    if [[ "$repo" == file:/* ]]; then
+        typeset rpath="`echo $repo | $SED 's^file:/*^/^'`"
+        if [ ! -d "$rpath" ]; then
+            logmsg "-- Initialising local repo at $rpath"
+            $PKGREPO create $rpath || logerr "Could not create local repo"
+            $PKGREPO add-publisher -s $rpath $PKGPUBLISHER || \
                 logerr "Could not set publisher on local repo"
         fi
     fi
+}
+
+typeset -A REPOS SYSROOT
+init_sysroot() {
+    typeset arch=${1?arch}
+    typeset repo=${2?repo}
+
+    [ "${REPOS[$arch]}" = $repo ] && return
+
+    [ -d $CROSSTOOLS/$arch ] || logerr "$CROSSTOOLS/$arch not found"
+
+    init_repo $repo
+
+    typeset sysroot=$BASE_TMPDIR/sysroot.$arch
+    if [ ! -d $sysroot ]; then
+        tmpsysroot=$sysroot.$$
+
+        logmsg "-- Creating $arch sysroot"
+        logcmd $PKGCLIENT image-create --full \
+            --publisher $PKGPUBLISHER=$repo \
+            --variant variant.arch=$arch \
+            --facet doc.man=false \
+            $tmpsysroot || logerr "Could not initialise $arch sysroot"
+        logcmd $PKGCLIENT -R $tmpsysroot \
+            set-property flush-content-cache-on-success True
+        logmsg "--- Seeding initial $arch sysroot"
+        case $arch in
+            aarch64)
+                logcmd $PKGCLIENT -R $tmpsysroot set-publisher \
+                    -g ${BRAICH_REPO} omnios
+                logcmd -p $PKGCLIENT -R $tmpsysroot install '*'
+                logcmd cp /etc/zones/SUNWdefault.xml $tmpsysroot/etc/zones/
+                ;;
+            *)
+                logcmd $RSYNC -a $CROSSTOOLS/$arch/sysroot/ $tmpsysroot \
+                    || logerr "Could not sync initial sysroot"
+                ;;
+        esac
+        if [ -d $sysroot ]; then
+            logcmd rm -rf $tmpsysroot
+        else
+            logcmd mv $tmpsysroot $sysroot
+        fi
+    else
+        logcmd $PKGCLIENT -R $sysroot install '*'
+    fi
+
+    REPOS[$arch]=$repo
+    SYSROOT[$arch]=$sysroot
+}
+
+update_sysroot() {
+    typeset arch
+
+    for arch in ${!SYSROOT[@]}; do
+        logmsg "--- updating sysroot for $arch"
+        logcmd $PKGCLIENT -R ${SYSROOT[$arch]} install '*'
+    done
+}
+
+init_repos() {
+    init_repo $PKGSRVR
+    $PKGREPO get -s $PKGSRVR > /dev/null 2>&1 || \
+        logerr "The PKGSRVR ($PKGSRVR) isn't available. All is doomed."
+
+    for arch in $BUILDARCH; do
+        if cross_arch $arch; then
+                [[ $PKGSRVR == file:/* ]] \
+                    || logerr "Can only build $arch to a file based repo."
+                init_sysroot $arch ${PKGSRVR%%/}.$arch
+                DESTDIRS+=" $DESTDIR.$arch"
+        fi
+    done
 }
 
 github_latest() {
@@ -684,16 +861,16 @@ init() {
     else
         logmsg "Selected Flavor: $FLAVOR"
     fi
-    if [ -n "$OLDFLAVOR" -a "$OLDFLAVOR" != "$FLAVOR" ]; then
+    if [ -n "$CLIFLAVOR" -a "$CLIFLAVOR" != "$FLAVOR" ]; then
         logmsg "NOTICE - The flavor was overridden by the build script."
-        logmsg "The flavor specified on the command line was: $OLDFLAVOR"
+        logmsg "The flavor specified on the command line was: $CLIFLAVOR"
     fi
 
     # Build arch
     logmsg "Selected build arch: $BUILDARCH"
-    if [ -n "$OLDBUILDARCH" -a "$OLDBUILDARCH" != "$BUILDARCH" ]; then
+    if [ -n "$CLIBUILDARCH" -a "$CLIBUILDARCH" != "$BUILDARCH" ]; then
         logmsg "NOTICE - The build arch was overridden by the build script."
-        logmsg "The build arch specified on the command line was: $OLDFLAVOR"
+        logmsg "The build arch specified on the command line was: $CLIBUILDARCH"
     fi
 
     # Extra dependency version
@@ -732,6 +909,7 @@ init() {
     # For DESTDIR the '%' can cause problems for some install scripts
     PKGD=${PKGE//%/_}
     DESTDIR=$TMPDIR/${PKGD}_pkg
+    DESTDIRS=$DESTDIR
 
     P5M_FINAL=$TMPDIR/$PKGE.p5m
     P5M_GEN=$P5M_FINAL.gen
@@ -753,16 +931,15 @@ init() {
     fi
 
     if ((EXTRACT_MODE == 0)); then
-        init_repo
-        $PKGREPO get -s $PKGSRVR > /dev/null 2>&1 || \
-            logerr "The PKGSRVR ($PKGSRVR) isn't available. All is doomed."
+        init_repos
         verify_depends
     fi
 
     if [ -n "$FORCE_OPENSSL_VERSION" ]; then
-        CFLAGS="-I/usr/ssl-$FORCE_OPENSSL_VERSION/include $CFLAGS"
-        LDFLAGS32="-L/usr/ssl-$FORCE_OPENSSL_VERSION/lib $LDFLAGS32"
-        LDFLAGS64="-L/usr/ssl-$FORCE_OPENSSL_VERSION/lib/$ISAPART64 $LDFLAGS64"
+        CFLAGS[0]="-I/usr/ssl-$FORCE_OPENSSL_VERSION/include ${CFLAGS[0]}"
+        LDFLAGS[i386]="-L/usr/ssl-$FORCE_OPENSSL_VERSION/lib ${LDFLAGS[i386]}"
+        LDFLAGS[amd64]="-L/usr/ssl-$FORCE_OPENSSL_VERSION/lib/amd64 "
+        LDFLAGS[amd64]+="${LDFLAGS[amd64]}"
     fi
 
     # Create symbolic links to build area
@@ -876,11 +1053,13 @@ prep_build() {
     logmsg "--- Creating temporary installation directory"
 
     if [ -z "$DONT_REMOVE_INSTALL_DIR" ]; then
-        logcmd $CHMOD -R u+w $DESTDIR > /dev/null 2>&1
-        logcmd $RM -rf $DESTDIR || \
-            logerr "Failed to remove old temporary install dir"
-        logcmd $MKDIR -p $DESTDIR || \
-            logerr "Failed to create temporary install dir"
+        for dir in $DESTDIRS; do
+            logcmd $CHMOD -R u+w $dir >/dev/null 2>&1
+            logcmd $RM -rf $dir || \
+                logerr "Failed to remove old install directory $dir"
+            logcmd $MKDIR -p $dir || \
+                logerr "Failed to create install directory $dir"
+            done
     fi
 
     logcmd $RM -f "$TMPDIR/frag.mog"
@@ -891,7 +1070,7 @@ prep_build() {
     local _cmakeopts=
     case "$style" in
         autoconf)
-            CONFIGURE_OPTS+="
+            CONFIGURE_OPTS[0]+="
                 --disable-silent-rules
                 --disable-maintainer-mode
             "
@@ -909,6 +1088,12 @@ prep_build() {
             MULTI_BUILD=1
             CONFIGURE_CMD="$CMAKE $_cmakeopts $TMPDIR/$BUILDDIR"
             ;;
+        gyp+ninja)
+            MAKE=$NINJA
+            TESTSUITE_MAKE=$MAKE
+            MAKE_TESTSUITE_ARGS=
+            CONFIGURE_CMD="$GYP"
+            ;;
         meson)
             OUT_OF_TREE_BUILD=1
             MULTI_BUILD=1
@@ -917,6 +1102,7 @@ prep_build() {
             MAKE_TESTSUITE_ARGS=
             CONFIGURE_CMD="/usr/lib/python$PYTHONVER/bin/meson setup"
             CONFIGURE_CMD+=" $TMPDIR/$BUILDDIR"
+            PATH=$OOCEBIN:$PATH
             ;;
     esac
 
@@ -931,8 +1117,15 @@ prep_build() {
     [ -h $TMPDIR/build ] && $RM -f $TMPDIR/build
     logcmd $LN -sf $BUILDDIR $TMPDIR/build
     # ... and to DESTDIR
-    [ -h $TMPDIR/pkg ] && $RM -f $TMPDIR/pkg
-    logcmd $LN -sf ${DESTDIR##*/} $TMPDIR/pkg
+    for dir in $DESTDIRS; do
+        if [[ ${dir##*/} = *.* ]]; then
+            tgt=pkg.${dir##*.}
+        else
+            tgt=pkg
+        fi
+        [ -h $TMPDIR/$tgt ] && $RM -f $TMPDIR/$tgt
+        logcmd $LN -sf ${dir##*/} $TMPDIR/$tgt
+    done
 }
 
 #############################################################################
@@ -977,6 +1170,7 @@ patch_file() {
 
 apply_patches() {
     local patchdir="${1:-$PATCHDIR}"
+    local series="${2:-series}"
 
     if ! check_for_patches $patchdir "in order to apply them"; then
         logmsg "--- Not applying any patches"
@@ -985,7 +1179,7 @@ apply_patches() {
 
     logmsg "Applying patches"
     pushd $TMPDIR/$EXTRACTED_SRC > /dev/null
-    exec 3<"$SRCDIR/$patchdir/series" || logerr "Could not open patch series"
+    exec 3<"$SRCDIR/$patchdir/$series" || logerr "Could not open patch series"
     while read LINE <&3; do
         [[ $LINE = \#* ]] && continue
         # Split Line into filename+args
@@ -997,6 +1191,7 @@ apply_patches() {
 
 rebase_patches() {
     local patchdir="${1:-$PATCHDIR}"
+    local series="${2:-series}"
 
     if ! check_for_patches $patchdir "in order to re-base them"; then
         logmsg -e "--- No patches to re-base"
@@ -1015,7 +1210,7 @@ rebase_patches() {
 
     # Read the series file for patch filenames
     # Use a separate file handle so that logerr() can be used in the loop
-    exec 3<"$SRCDIR/$patchdir/series" || logerr "Could not open patch series"
+    exec 3<"$SRCDIR/$patchdir/$series" || logerr "Could not open patch series"
     while read LINE <&3; do
         [[ $LINE = \#* ]] && continue
 
@@ -1055,7 +1250,7 @@ rebase_patches() {
     popd > /dev/null
 
     # Now the patches have been re-based, -pX is no longer required.
-    $SED -i 's/ -p.*//' "$SRCDIR/$patchdir/series"
+    $SED -i 's/ -p.*//' "$SRCDIR/$patchdir/$series"
 }
 
 patch_source() {
@@ -1248,6 +1443,7 @@ extract_archive() {
         *.tar.zst)          $ZSTD -dc $file | $TAR -xvf - $* ;;
         *.tar.xz)           $XZCAT $file | $TAR -xvf - $* ;;
         *.tar.bz2)          $BUNZIP2 -dc $file | $TAR -xvf - $* ;;
+        *.tar.lz)           $LZIP -dc $file | $TAR -xvf - $* ;;
         *.tar.gz|*.tgz)     $GZIP -dc $file | $TAR -xvf - $* ;;
         *.zip)              $UNZIP $file $* ;;
         *.tar)              $TAR -xvf $file $* ;;
@@ -1335,7 +1531,8 @@ clone_go_source() {
 
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
-    export GOPATH="$TMPDIR/$BUILDDIR/$deps"
+    [ -z "$GOPATH" ] && GOPATH="$TMPDIR/$BUILDDIR/$deps"
+    export GOPATH
 
     logmsg "Getting go dependencies"
     logcmd go get -d ./... || logerr "failed to get dependencies"
@@ -1526,6 +1723,9 @@ convert_version() {
     elif [[ $var = *p[0-9] ]]; then
         ## Convert trailing pX
         var=${var//p/.}
+    elif [[ $var = *.pl[0-9]* ]]; then
+        ## Convert trailing plX
+        var=${var//pl/}
     elif [[ $var = *-P[0-9] ]]; then
         # Convert trailing -P (as used by ISC bind)
         var=${var//-P/.}
@@ -1537,9 +1737,51 @@ convert_version() {
     [ "$var" = "$_var" ] || logmsg "--- Converted version '$_var' -> '$var'"
 }
 
+build_archmog() {
+    typeset arch=$1
+
+    typeset x="-DARCH=$arch -D${arch}_ONLY="
+    typeset a
+    for a in $NATIVE_ARCH $CROSS_ARCH; do
+        [ $arch = $a ] && continue
+        x+=" -D${a}_ONLY=#"
+    done
+    echo "$x"
+}
+
 make_package() {
     logmsg "-- building package $PKG"
 
+    typeset -a cross=
+    typeset -i native=0
+
+    for arch in $BUILDARCH; do
+        if cross_arch $arch; then
+            cross+=($arch)
+        else
+            ((native++))
+        fi
+    done
+
+    if ((native)); then
+        logmsg "--- packaging native arch"
+        hook pre_package $NATIVE_ARCH
+        XFORM_ARGS+=" `build_archmog $NATIVE_ARCH`" make_package_impl "$@"
+        hook pre_package $NATIVE_ARCH
+    fi
+    for carch in ${cross[*]}; do
+        logmsg "--- packaging $c"
+        hook pre_package $carch
+        DESTDIR+=.$carch \
+            PKGSRVR=${REPOS[$carch]} \
+            PKG_IMAGE=${SYSROOT[$carch]} \
+            XFORM_ARGS+=" `build_archmog $carch`" \
+            make_package_impl "$@"
+        hook post_package $carch
+    done
+}
+
+make_package_impl() {
     PKGE=`url_encode $PKG`
 
     typeset seed_manifest=
@@ -1568,39 +1810,33 @@ make_package() {
         && FINAL_MOG_FILE="$SRCDIR/$FINAL_MOG_FILE"
     [ -s "$TMPDIR/frag.mog" ] && FRAG_MOG_FILE=$TMPDIR/frag.mog
 
-    case $BUILDARCH in
-        32) BUILDSTR="32bit-" ;;
-        64) BUILDSTR="64bit-" ;;
-        *) BUILDSTR="" ;;
-    esac
     case $FLAVOR in
         ""|default) FLAVORSTR="" ;;
         *) FLAVORSTR="$FLAVOR-" ;;
     esac
-    DESCSTR="$DESC"
+    typeset DESCSTR="$DESC"
     [ -n "$FLAVORSTR" ] && DESCSTR="$DESCSTR ($FLAVOR)"
     # Add the local dash-revision if specified.
     [ $RELVER -ge 151027 ] && PVER=$RELVER.$DASHREV || PVER=$DASHREV.$RELVER
 
     # Temporary file paths
-    MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
+    typeset MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
+    typeset GLOBAL_MOG_FILE=
     [ $RELVER -ge 151041 ] && GLOBAL_MOG_FILE=global-transforms.mog \
         || GLOBAL_MOG_FILE=legacy-global-transforms.mog
-    MY_MOG_FILE=$TMPDIR/${PKGE}.mog
+    typeset MY_MOG_FILE=$TMPDIR/${PKGE}.mog
 
     # Version cleanup
 
     [ -z "$VERHUMAN" ] && VERHUMAN="$VER"
 
     convert_version VER
+    typeset XVER=$VER
+    typeset PVER=$RELVER.$DASHREV
+    convert_version XVER
     convert_version PVER
 
-    if [ -n "$FLAVOR" ]; then
-        # We use FLAVOR instead of FLAVORSTR as we don't want the trailing dash
-        FMRI="${PKG}-${FLAVOR}@${VER},${SUNOSVER}-${PVER}"
-    else
-        FMRI="${PKG}@${VER},${SUNOSVER}-${PVER}"
-    fi
+    FMRI="${PKG}@${XVER},${SUNOSVER}-${PVER}"
 
     # Mog files are transformed in several stages
     #
@@ -1813,16 +2049,23 @@ make_package() {
     return 0
 }
 
-translate_manifest() {
-    local src=$1
-    local dst=$2
+publish_manifest_impl() {
+    typeset arch="$1"
+    typeset pmf="$2"
+    typeset root="$3"
 
-    $SED -e "
-        s/@PKGPUBLISHER@/$PKGPUBLISHER/g
-        s/@RELVER@/$RELVER/g
-        s/@PVER@/$PVER/g
-        s/@SUNOSVER@/$SUNOSVER/g
-        " < $src > $dst
+    [ -n "$root" ] && root="-d $root"
+
+    logcmd -p $PKGMOGRIFY -P /dev/fd/3 -I $BLIBDIR/mog \
+        $XFORM_ARGS `build_archmog $arch` $pmf \
+        | $PKGFMT -u > $pmf.$arch.final
+
+    if [ -z "$SKIP_PKGLINT" ] && ( [ -n "$BATCH" ] || ask_to_pkglint ); then
+        run_pkglint $PKGSRVR $pmf.$arch.final
+    fi
+
+    logcmd $PKGSEND -s $PKGSRVR publish $root $pmf.$arch.final \
+        || logerr "pkgsend failed"
 }
 
 publish_manifest() {
@@ -1830,29 +2073,42 @@ publish_manifest() {
     local pmf=$2
     local root=$3
 
-    [ -n "$root" ] && root="-d $root"
+    typeset -a cross=
+    typeset -i native=0
 
-    TMPDIR="$BASE_TMPDIR/${pmf##*/}"
-    logcmd mkdir -p $TMPDIR || logerr "Could not mkdir $TMPDIR"
+    typeset x="
+        -DPKGPUBLISHER=$PKGPUBLISHER
+        -DRELVER=$RELVER
+        -DPVER=$PVER
+        -DSUNOSVER=$SUNOSVER
+        -DPKGPUBEMAIL=$PUBLISHER_EMAIL
+    "
 
-    local tmpf=$TMPDIR/manifest
+    for arch in $BUILDARCH; do
+        if cross_arch $arch; then
+            cross+=($arch)
+        else
+            ((native++))
+        fi
+    done
 
-    translate_manifest $pmf $tmpf.xlate
+    exec 3>"$TMPDIR/mog.stderr"
 
-    logmsg "--- Applying transforms"
-    logcmd -p $PKGMOGRIFY $XFORM_ARGS $tmpf.xlate  > $tmpf.final
+    if ((native)); then
+        logmsg "--- packaging native arch"
 
-    logmsg "Publishing from $tmpf.final"
+        XFORM_ARGS+="$x" publish_manifest_impl $NATIVE_ARCH "$pmf" "$root"
+    else
+        for carch in ${cross[*]}; do
+            logmsg "--- packaging $arch"
 
-    fgrep -q '$(' $tmpf.final \
-        && logerr "------ Manifest contains unresolved variables"
-
-    if [ -z "$SKIP_PKGLINT" ] && ( [ -n "$BATCH" ] || ask_to_pkglint ); then
-        run_pkglint $PKGSRVR $tmpf.final
+            PKGSRVR=${REPOS[$carch]} \
+                PKG_IMAGE=${SYSROOT[$carch]} \
+                XFORM_ARGS+="$x" \
+                publish_manifest_impl "$carch" "$pmf" "$root"
+            done
     fi
 
-    logcmd $PKGSEND -s $PKGSRVR publish $root $tmpf.final \
-        || logerr "pkgsend failed"
     [ -n "$pkg" -a -z "$SKIP_PKG_DIFF" ] && diff_latest $pkg
 }
 
@@ -2170,16 +2426,15 @@ install_rust() {
 #############################################################################
 
 make_isa_stub() {
-    [ -n "$FORGO_ISAEXEC" ] \
-        && logerr "-- Calling make_isa_stub after forgo_isaexec"
+    [ -n "$FORGO_ISAEXEC" ] && return
     logmsg "Making isaexec stub binaries"
     [ -z "$ISAEXEC_DIRS" ] && ISAEXEC_DIRS="bin sbin"
     for DIR in $ISAEXEC_DIRS; do
         if [ -d $DESTDIR$PREFIX/$DIR ]; then
             logmsg "--- $DIR"
             pushd $DESTDIR$PREFIX/$DIR > /dev/null
-            make_isaexec_stub_arch $ISAPART $PREFIX/$DIR
-            make_isaexec_stub_arch $ISAPART64 $PREFIX/$DIR
+            make_isaexec_stub_arch i386 $PREFIX/$DIR
+            make_isaexec_stub_arch amd64 $PREFIX/$DIR
             popd > /dev/null
         fi
     done
@@ -2215,33 +2470,26 @@ make_isaexec_stub_arch() {
         # Skip if we already made a stub for this file
         [ -f "$file" ] && continue
         logmsg "---- Creating ISA stub for $file"
-        logcmd $CC $CFLAGS $CFLAGS32 -o $file \
+        logcmd $CC ${CFLAGS[0]} ${CFLAGS[i386]} -o $file \
             -DFALLBACK_PATH="$dir/$file" $BLIBDIR/isastub.c \
             || logerr "--- Failed to make isaexec stub for $dir/$file"
         strip_files "$file"
     done
 }
 
+configure_autoreconf() {
+    [ -f configure -a -f configure.ac ] \
+        && [ ! configure.ac -nt configure ] && return
+    run_autoreconf -fi
+}
+
 #############################################################################
 # Build commands
 #############################################################################
-# Notes:
-#   - These methods are designed to work in the general case.
-#   - You can set CFLAGS/LDFLAGS (and CFLAGS32/CFLAGS64 for arch specific flags)
-#   - Configure flags are set in CONFIGURE_OPTS_32 and CONFIGURE_OPTS_64 with
-#     defaults set in config.sh. You can append to these variables or replace
-#     them if the defaults don't work for you.
-#   - In the normal case, where you just want to add --enable-feature, set
-#     CONFIGURE_OPTS. This will be appended to the end of CONFIGURE_CMD
-#     for both 32 and 64 bit builds.
-#   - Any of these functions can be overridden in your build script, so if
-#     anything here doesn't apply to the build process for your application,
-#     just override that function with whatever code you need. The build
-#     function itself can be overridden if the build process doesn't fit into a
-#     configure, make, make install pattern.
-#############################################################################
 
 make_clean() {
+    typeset arch="$1"
+    hook pre_clean $arch
     if [ -n "$CLEAN_SOURCE" ]; then
         CLEAN_SOURCE=
         return
@@ -2253,51 +2501,34 @@ make_clean() {
         $MAKE $MAKE_CLEAN_ARGS "$@" distclean \
             || $MAKE $MAKE_CLEAN_ARGS "$@" clean
     ) 2>&1 | $SED 's/error: /errorclean: /' | pipelog >/dev/null
+    hook post_clean $arch
 }
 
-configure_autoreconf() {
-    [ -f configure -a -f configure.ac ] \
-        && [ ! configure.ac -nt configure ] && return
-    run_autoreconf -fi
-}
-
-configure32() {
-    logmsg "--- configure (32-bit)"
-    eval set -- $CONFIGURE_OPTS_WS_32 $CONFIGURE_OPTS_WS
+configure_arch() {
+    typeset arch=${1:?arch}
+    hook pre_configure $arch || return
+    logmsg "--- configure ($arch)"
+    eval set -- ${CONFIGURE_OPTS["${arch}_WS"]} ${CONFIGURE_OPTS[WS]}
     [ -n "$RUN_AUTORECONF" ] && configure_autoreconf
-    PCPATH=
-    [ -n "$PKG_CONFIG_PATH" ] && addpath PCPATH "$PKG_CONFIG_PATH"
-    [ -n "$PKG_CONFIG_PATH32" ] && addpath PCPATH "$PKG_CONFIG_PATH32"
-    CFLAGS="$CFLAGS $CFLAGS32" \
-        CXXFLAGS="$CXXFLAGS $CXXFLAGS32" \
-        CPPFLAGS="$CPPFLAGS $CPPFLAGS32" \
-        LDFLAGS="$LDFLAGS $LDFLAGS32" \
+    typeset PCPATH=
+    addpath PCPATH ${PKG_CONFIG_PATH[0]}
+    addpath PCPATH ${PKG_CONFIG_PATH[$arch]}
+    CFLAGS="${CFLAGS[0]} ${CFLAGS[$arch]}" \
+        CXXFLAGS="${CXXFLAGS[0]} ${CXXFLAGS[$arch]}" \
+        CPPFLAGS="${CPPFLAGS[0]} ${CPPFLAGS[$arch]}" \
+        LDFLAGS="${LDFLAGS[0]} ${LDFLAGS[$arch]}" \
         PKG_CONFIG_PATH="$PCPATH" \
         CC="$CC" CXX="$CXX" \
-        logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_32 \
-        $CONFIGURE_OPTS "$@" || \
+        logcmd $CONFIGURE_CMD \
+        ${CONFIGURE_OPTS[$arch]} ${CONFIGURE_OPTS[0]} \
+        "$@" || \
         logerr "--- Configure failed"
+    hook post_configure $arch
 }
 
-configure64() {
-    logmsg "--- configure (64-bit)"
-    eval set -- $CONFIGURE_OPTS_WS_64 $CONFIGURE_OPTS_WS
-    [ -n "$RUN_AUTORECONF" ] && configure_autoreconf
-    PCPATH=
-    [ -n "$PKG_CONFIG_PATH" ] && addpath PCPATH "$PKG_CONFIG_PATH"
-    [ -n "$PKG_CONFIG_PATH64" ] && addpath PCPATH "$PKG_CONFIG_PATH64"
-    CFLAGS="$CFLAGS $CFLAGS64" \
-        CXXFLAGS="$CXXFLAGS $CXXFLAGS64" \
-        CPPFLAGS="$CPPFLAGS $CPPFLAGS64" \
-        LDFLAGS="$LDFLAGS $LDFLAGS64" \
-        PKG_CONFIG_PATH="$PCPATH" \
-        CC="$CC" CXX="$CXX" \
-        logcmd $CONFIGURE_CMD $CONFIGURE_OPTS_64 \
-        $CONFIGURE_OPTS "$@" || \
-        logerr "--- Configure failed"
-}
-
-make_prog() {
+make_arch() {
+    typeset arch=${1:?arch}
+    hook pre_make $arch
     eval set -- $MAKE_ARGS_WS
     [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=""
     if [ -n "$LIBTOOL_NOSTDLIB" ]; then
@@ -2306,17 +2537,18 @@ make_prog() {
     logmsg "--- make"
     logcmd $MAKE $MAKE_JOBS $MAKE_ARGS "$@" $MAKE_TARGET \
         || logerr "--- Make failed"
+    hook post_make $arch
 }
 
-make_prog32() {
-    make_prog
-}
-
-make_prog64() {
-    make_prog
-}
+for arch in $ARCH_LIST; do
+    eval "configure_$arch() { configure_arch $arch; }"
+    eval "make_clean_$arch() { make_clean $arch; }"
+    eval "make_prog_$arch() { make_arch $arch; }"
+done
 
 make_install() {
+    typeset arch=$1; shift
+    hook pre_install $arch
     local args="$@"
     eval set -- $MAKE_INSTALL_ARGS_WS
     logmsg "--- make install"
@@ -2327,14 +2559,19 @@ make_install() {
         logcmd $MAKE DESTDIR=${DESTDIR} $args $MAKE_INSTALL_ARGS "$@" \
             $MAKE_INSTALL_TARGET || logerr "--- Make install failed"
     fi
+    hook post_install $arch
 }
 
-make_install32() {
-    make_install $MAKE_INSTALL_ARGS_32
+make_install_i386() {
+    make_install i386 $MAKE_INSTALL_ARGS_32
 }
 
-make_install64() {
-    make_install $MAKE_INSTALL_ARGS_64
+make_install_amd64() {
+    make_install amd64 $MAKE_INSTALL_ARGS_64
+}
+
+make_install_aarch64() {
+    DESTDIR+=.aarch64 make_install aarch64 $MAKE_INSTALL_ARGS_64
 }
 
 make_pure_install() {
@@ -2369,10 +2606,18 @@ make_install_in() {
 }
 
 build() {
+    typeset arch
+
     [ -n "$SKIP_BUILD" ] && return
     ((EXTRACT_MODE >= 1)) && return
 
     local ctf=${CTF_DEFAULT:-0}
+
+    for arch in $ARCH_LIST; do
+        if [[ ${CONFIGURE_OPTS[0]} =~ /$arch ]]; then
+            logerr "CONFIGURE_OPTS must not contain ISA options."
+        fi
+    done
 
     while [[ "$1" = -* ]]; do
         case "$1" in
@@ -2383,23 +2628,31 @@ build() {
         shift
     done
 
-    [ $ctf -eq 1 ] && CFLAGS+=" $CTF_CFLAGS"
+    [ $ctf -eq 1 ] && CFLAGS[0]+=" $CTF_CFLAGS"
+
+    hook build_init
 
     [ -n "$MULTI_BUILD" ] && logmsg "--- Using multiple build directories"
     typeset _BUILDDIR=$BUILDDIR
-    for b in $BUILDORDER; do
-        if [[ $BUILDARCH =~ ^($b|both)$ ]]; then
-            if [ -n "$MULTI_BUILD" ]; then
-                BUILDDIR+="/build.$b"
-                $MKDIR -p $TMPDIR/$BUILDDIR
-                MULTI_BUILD_LAST=$BUILDDIR
-            fi
-            build$b
-            BUILDDIR=$_BUILDDIR
+    for b in $BUILDARCH; do
+        if [ -n "$MULTI_BUILD" ]; then
+            BUILDDIR+="/build.$b"
+            $MKDIR -p $TMPDIR/$BUILDDIR
+            MULTI_BUILD_LAST=$BUILDDIR
         fi
+        hook pre_build $b || continue
+        build_$b || logerr "$b build failed"
+        hook post_build $b
+        BUILDDIR=$_BUILDDIR
     done
 
-    [ $ctf -eq 1 ] && convert_ctf "$DESTDIR"
+    if [ $ctf -eq 1 ]; then
+        for dir in $DESTDIRS; do
+            convert_ctf "$dir"
+        done
+    fi
+
+    hook build_fini
 }
 
 check_buildlog() {
@@ -2418,28 +2671,44 @@ check_buildlog() {
         && logerr "cmake could not correctly identify the compiler"
 }
 
-build32() {
+build_i386() {
+    typeset arch=i386
     pushd $TMPDIR/$BUILDDIR > /dev/null
-    logmsg "Building 32-bit"
-    export ISALIST="$ISAPART"
-    make_clean
-    configure32
-    make_prog32
+    logmsg "Building $arch"
+    export ISALIST="i386"
+    make_clean_$arch
+    configure_$arch
+    make_prog_$arch
     [ -z "$SKIP_BUILD_ERRCHK" ] && check_buildlog ${EXPECTED_BUILD_ERRS:-0}
-    make_install32
+    make_install_$arch
     popd > /dev/null
     unset ISALIST
     export ISALIST
 }
 
-build64() {
+build_amd64() {
+    typeset arch=amd64
     pushd $TMPDIR/$BUILDDIR > /dev/null
-    logmsg "Building 64-bit"
-    make_clean
-    configure64
-    make_prog64
+    logmsg "Building $arch"
+    make_clean_$arch
+    configure_$arch
+    make_prog_$arch
     [ -z "$SKIP_BUILD_ERRCHK" ] && check_buildlog ${EXPECTED_BUILD_ERRS:-0}
-    make_install64
+    make_install_$arch
+    popd > /dev/null
+}
+
+build_aarch64() {
+    typeset arch=aarch64
+
+    pushd $TMPDIR/$BUILDDIR > /dev/null
+    logmsg "Building $arch"
+    set_crossgcc $arch
+    make_clean_$arch
+    configure_$arch
+    make_prog_$arch
+    [ -z "$SKIP_BUILD_ERRCHK" ] && check_buildlog ${EXPECTED_BUILD_ERRS:-0}
+    make_install_$arch
     popd > /dev/null
 }
 
@@ -2515,7 +2784,7 @@ build_dependency() {
     fi
 
     note -n "-- Building dependency $dep"
-    EXTRACT_MODE=0 download_source "$dldir" "$prog" "$ver" "$TMPDIR"
+    download_source -dependency "$dldir" "$prog" "$ver" "$TMPDIR"
     patch_source $patchdir
     if ((oot)); then
         logmsg "-- Setting up for out-of-tree build"
@@ -2551,14 +2820,6 @@ set_python_version() {
     PYTHONLIB=$PYTHONPATH/lib
     PYTHONVENDOR=$PYTHONLIB/python$PYTHONVER/vendor-packages
     PYTHONSITE=$PYTHONLIB/python$PYTHONVER/site-packages
-}
-
-pre_python_32() {
-    logmsg "prepping 32bit python build"
-}
-
-pre_python_64() {
-    logmsg "prepping 64bit python build"
 }
 
 python_path_fixup() {
@@ -2600,7 +2861,7 @@ python_compile() {
 
 python_pep518() {
     logmsg "-- PEP518 build"
-    logcmd $PYTHON -mpip install \
+    logcmd $PYTHON -mpip install -vvv \
         --no-deps --isolated --no-input --exists-action=a \
         --disable-pip-version-check --prefix=$PREFIX --root=$DESTDIR . \
         || logerr "--- build failed"
@@ -2636,22 +2897,55 @@ python_backend() {
     python_$backend "$@"
 }
 
-python_build32() {
-    export ISALIST=i386
-    pre_python_32
-    CFLAGS="$CFLAGS $CFLAGS32" LDFLAGS="$LDFLAGS $LDFLAGS32" \
-        PYBUILDOPTS="$PYBUILDOPTS $PYBUILDOPTS32" \
-        PYINSTOPTS="$PYINSTOPTS $PYINST32OPTS" \
+python_build_arch() {
+    typeset arch=$1
+    hook pre_build $arch
+    CFLAGS="${CFLAGS[0]} ${CFLAGS[$arch]}" \
+        LDFLAGS="${LDFLAGS[0]} ${LDFLAGS[$arch]}" \
+        PYBUILDOPTS="${PYBUILDOPTS[0]} ${PYBUILDOPTS[$arch]}" \
+        PYINSTOPTS="${PYINSTOPTS[0]} ${PYINSTOPTS[$arch]}" \
         python_backend
+
+    # XXX - can do better
+    if [ -d $DESTDIR/$TMPDIR/venv/cross ]; then
+        logcmd $MV $DESTDIR/$TMPDIR/venv/cross $DESTDIR/usr
+        logcmd $RM -rf $DESTDIR/data
+    fi
+
+    python_vendor_relocate
+    python_path_fixup
+    python_compile
 }
 
-python_build64() {
-    export ISALIST="amd64 i386"
-    pre_python_64
-    CFLAGS="$CFLAGS $CFLAGS64" LDFLAGS="$LDFLAGS $LDFLAGS64" \
-        PYBUILDOPTS="$PYBUILDOPTS $PYBUILDOPTS64" \
-        PYINSTOPTS="$PYINSTOPTS $PYINST64OPTS" \
-        python_backend
+python_build_i386() {
+    ISALIST=i386 \
+        python_build_arch i386
+}
+
+python_build_amd64() {
+    ISALIST="amd64 i386" \
+        python_build_arch amd64
+}
+
+python_build_aarch64() {
+    typeset arch=aarch64
+
+    # Prepare a cross compilation environment
+    logmsg "--- Preparing cross compilation environment"
+    set_crossgcc $arch
+    logcmd $PYTHON -mcrossenv ${SYSROOT[$arch]}$PYTHON $TMPDIR/venv \
+        || logerr "Failed to set up crossenv"
+    source $TMPDIR/venv/bin/activate
+}
+
+python_build_aarch64() {
+    typeset arch=aarch64
+
+    python_cross_setup $arch
+
+    PYTHON=$TMPDIR/venv/cross/bin/python \
+        DESTDIR+=.$arch \
+        python_build_arch $arch
 }
 
 python_build() {
@@ -2664,20 +2958,16 @@ python_build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
     # we only ship 64 bit python3
-    [[ $PYTHONVER = 3.* ]] && BUILDARCH=64
+    [[ $PYTHONVER == 3.* && $BUILDARCH == *i386* ]] && BUILDARCH=amd64
 
     [ -f setup.py -o -f pyproject.toml ] \
         || logerr "Don't know how to build this project"
 
-    for b in $BUILDORDER; do
-        [[ $BUILDARCH =~ ^($b|both)$ ]] && python_build$b
+    for b in $BUILDARCH; do
+        python_build_$b || logerr "$b build failed"
     done
 
     popd > /dev/null
-
-    python_vendor_relocate
-    python_path_fixup
-    python_compile
 }
 
 pyvenv_build() {
@@ -2746,7 +3036,7 @@ pyvenv_build() {
 #############################################################################
 
 build_rust() {
-    logmsg "Building 64-bit"
+    logmsg "Building rust (amd64)"
 
     pushd $TMPDIR/$BUILDDIR >/dev/null
 
@@ -2774,7 +3064,7 @@ buildperl() {
         source $SRCDIR/${PROG}-${VER}.env
     fi
     pushd $TMPDIR/$BUILDDIR > /dev/null
-    logmsg "Building 64-bit"
+    logmsg "Building perl"
     if [ -f Makefile.PL ]; then
         make_clean
         makefilepl $PERL_MAKEFILE_OPTS
@@ -2792,12 +3082,12 @@ buildperl() {
 }
 
 makefilepl() {
-    logmsg "--- Makefile.PL 64-bit"
+    logmsg "--- Makefile.PL"
     logcmd $PERL Makefile.PL $@ || logerr "Failed to run Makefile.PL"
 }
 
 buildpl() {
-    logmsg "--- Build.PL 64-bit"
+    logmsg "--- Build.PL"
     logcmd $PERL Build.PL prefix=$PREFIX $@ ||
         logerr "Failed to run Build.PL"
 }
@@ -2866,6 +3156,8 @@ check_symlinks() {
 addpath() {
     declare -n var=$1
     typeset val="$2"
+
+    [ -n "$val" ] || return
 
     var+="${var:+:}$val"
 }
@@ -3093,7 +3385,7 @@ do_convert_ctf() {
 convert_ctf() {
     local dir="${1:-$DESTDIR}"
 
-    logmsg "Converting DWARF to CTF"
+    logmsg "Converting DWARF to CTF (${dir##*/})"
 
     pushd $dir > /dev/null || logerr "Cannot change to $dir"
 
@@ -3298,10 +3590,12 @@ check_licences() {
 clean_up() {
     logmsg "-- Cleaning up"
     if [ -z "$DONT_REMOVE_INSTALL_DIR" ]; then
-        logmsg "--- Removing temporary install directory $DESTDIR"
-        logcmd $CHMOD -R u+w $DESTDIR > /dev/null 2>&1
-        logcmd $RM -rf $DESTDIR || \
-            logerr "Failed to remove temporary install directory"
+        for dir in $DESTDIRS; do
+            logmsg "--- Removing temporary install directory $dir"
+            logcmd $CHMOD -R u+w $dir > /dev/null 2>&1
+            logcmd $RM -rf $dir || \
+                logerr "Failed to remove temporary install directory $dir"
+        done
         logmsg "--- Cleaning up temporary manifest and transform files"
         logcmd $RM -f $P5M_GEN $P5M_MOG $P5M_DEPGEN $P5M_DEPGEN.res $P5M_FINAL \
             $MY_MOG_FILE $MANUAL_DEPS || \
@@ -3315,6 +3609,17 @@ clean_up() {
 # Helper functions to save and restore variables and functions
 #############################################################################
 
+function_exists() {
+    [ "`type -t $1`" = function ]
+}
+
+hook() {
+    func=${1:?func}; shift
+    function_exists $func || return 0
+    logmsg "--- Callback $func($@)"
+    $func "$@"
+}
+
 save_function() {
     local ORIG_FUNC=$(declare -f $1)
     local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
@@ -3324,8 +3629,7 @@ save_function() {
 save_variable() {
     local var=$1
     local prefix=${2:-__save__}
-    declare -n _var=$var
-    declare -g $prefix$var="$_var"
+    declare -g $prefix$var="$(declare -p $var)"
 }
 
 save_variables() {
@@ -3339,7 +3643,18 @@ restore_variable() {
     local var=$1
     local prefix=${2:-__save__}
     declare -n _var=$prefix$var
-    declare -g $var="$_var"
+    #
+    # At this point, _var may look something like one of the following,
+    # depending on whether it is a scalar or array, for example:
+    #     declare -- var=val
+    #     declare -A var=([0]="val")
+    # The first one is actually not valid syntax to use when replaying the
+    # variable, and in all cases we want the new variable to end up with
+    # global scope. Therefore the following two substitutions achieve this
+    # so that '-g' is added and we do not have '--'.
+    _var=${_var/#declare --/declare -}
+    _var=${_var/#declare -/declare -g}
+    eval "$_var"
 }
 
 restore_variables() {
@@ -3360,6 +3675,52 @@ restore_buildenv() {
     local opt
     for opt in $BUILDENV_OPTS; do
         restore_variable $opt
+    done
+}
+
+flatten_variable() {
+    declare var=$1
+    declare -n _var=$var
+    typeset X="$_var"
+    unset $var
+    _var="${X## }"
+}
+
+flatten_variables() {
+    local var
+    for var in $*; do
+        flatten_variable $var
+    done
+}
+
+#
+# This function takes an associative array which contains arch-specific keys
+# and converts into a scalar variable that contains the base elements
+# concatenated with those from the arch-specific portion.
+# For example:
+#
+# With a CFLAGS variable like this:
+#
+#   CFLAGS=([0]="-O2 -g" [i386]="-m32" [amd64]="-m64")
+#
+# Calling `subsume_arch amd64 CFLAGS` would result in CFLAGS now being
+#
+#   CFLAGS="-O2 -g -m64"
+#
+# The resulting variable is also marked for export.
+#
+subsume_arch() {
+    typeset arch=${1:?arch}; shift
+    typeset var
+
+    for var in $*; do
+        declare -n _var=$var
+
+        _var+=" ${_var[$arch]}"
+
+        typeset X="$_var"
+        unset $var
+        export _var="${X## }"
     done
 }
 

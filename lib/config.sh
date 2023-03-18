@@ -1,27 +1,20 @@
 #
-# {{{ CDDL HEADER START
 #
-# The contents of this file are subject to the terms of the
-# Common Development and Distribution License, Version 1.0 only
-# (the "License").  You may not use this file except in compliance
-# with the License.
+# {{{ CDDL HEADER
 #
-# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
-# or http://www.opensolaris.org/os/licensing.
-# See the License for the specific language governing permissions
-# and limitations under the License.
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
 #
-# When distributing Covered Code, include this CDDL HEADER in each
-# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
-# If applicable, add the following below this CDDL HEADER, with the
-# fields enclosed by brackets "[]" replaced with your own identifying
-# information: Portions Copyright [yyyy] [name of copyright owner]
-#
-# CDDL HEADER END }}}
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
 #
 # Copyright (c) 2015 by Delphix. All rights reserved.
 # Copyright 2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
 #
 #############################################################################
 # Configuration for the build system
@@ -89,6 +82,17 @@ DASHREV=0
 # Default package publisher
 PKGPUBLISHER=extra.omnios
 
+# Supported architectures, and the default set.
+ARCH_LIST="i386 amd64 aarch64"
+CROSS_ARCH="aarch64"
+DEFAULT_ARCH="i386 amd64"
+# NATIVE_ARCH is the native architecture, which is i386 even when we are
+# building a package for amd64, or both i386 and amd64.
+NATIVE_ARCH="i386"
+BUILD_ARCH="amd64"
+
+HOMEURL=https://omnios.org
+
 # Default repository
 PKGSRVR=file://$ROOTDIR/tmp.repo/
 
@@ -119,12 +123,14 @@ else
     IPS_REPO=https://pkg.omnios.org/bloody/extra
     OB_IPS_REPO=https://pkg.omnios.org/bloody/core
 fi
+BRAICH_REPO=https://pkg.omnios.org/bloody/braich
 
 ARCHIVE_TYPES="tar.xz tar.bz2 tar.gz tgz tar zip"
 
 # Default prefix for packages (may be overridden)
 PREFIX=/opt/ooce
 NOTES_LOCATION=$PREFIX/share/doc/release-notes
+CROSSTOOLS=/opt/cross
 
 # Temporary directories
 # TMPDIR is used for source archives and build directories
@@ -144,11 +150,11 @@ PATCHDIR=patches
 # Do we create isaexec stubs for scripts and other non-binaries (default yes)
 NOSCRIPTSTUB=
 
-ISAPART=i386
-ISAPART64=amd64
-
-TRIPLET32=i386-pc-solaris2.11
-TRIPLET64=x86_64-pc-solaris2.11
+typeset -A TRIPLETS=(
+    [i386]=i386-pc-solaris2.11
+    [amd64]=x86_64-pc-solaris2.11
+    [aarch64]=aarch64-unknown-solaris2.11
+)
 
 #############################################################################
 # Perl stuff
@@ -179,7 +185,8 @@ PERL_MAKE_TEST=1
 # Paths to common tools
 #############################################################################
 USRBIN=/usr/bin
-OOCEBIN=/opt/ooce/bin
+OOCEOPT=/opt/ooce
+OOCEBIN=$OOCEOPT/bin
 SFWBIN=/usr/sfw/bin
 ONBLDBIN=/opt/onbld/bin
 GNUBIN=/usr/gnu/bin
@@ -215,7 +222,7 @@ PATCH=$GNUBIN/patch
 REALPATH=$GNUBIN/realpath
 TAR="$GNUBIN/tar --no-same-permissions --no-same-owner"
 
- # Command for privilege escalation. Can be overridden in site.sh
+# Command for privilege escalation. Can be overridden in site.sh
 PFEXEC=$USRBIN/sudo
 
 # pkg(7) commands
@@ -224,6 +231,7 @@ PKGDEPEND=$USRBIN/pkgdepend
 PKGFMT=$USRBIN/pkgfmt
 PKGLINT=$USRBIN/pkglint
 PKGMOGRIFY=$USRBIN/pkgmogrify
+PKGMERGE=$USRBIN/pkgmerge
 PKGRECV=$USRBIN/pkgrecv
 PKGREPO=$USRBIN/pkgrepo
 PKGSEND=$USRBIN/pkgsend
@@ -236,6 +244,7 @@ FD=$OOCEBIN/fd
 GZIP=$OOCEBIN/pigz
 JQ=$OOCEBIN/jq
 NINJA=$OOCEBIN/ninja
+GYP=$OOCEBIN/gyp
 RIPGREP=$OOCEBIN/rg
 
 FIND_ELF=$ONBLDBIN/find_elf
@@ -269,18 +278,6 @@ MJOBS="$[ $LCPUS + ($LCPUS / 2) ]"
 [ "$MJOBS" = "0" ] && MJOBS=2
 MAKE_JOBS="-j $MJOBS"
 MAKE_TARGET=
-MAKE_ARGS=
-MAKE_ARGS_WS=
-MAKE_CLEAN_ARGS=
-MAKE_CLEAN_ARGS_WS=
-MAKE_INSTALL_TARGET=install
-MAKE_INSTALL_ARGS=
-MAKE_INSTALL_ARGS_WS=
-MAKE_INSTALL_ARGS_32=
-MAKE_INSTALL_ARGS_64=
-NO_PARALLEL_MAKE=
-MAKE_TESTSUITE_ARGS=--quiet
-MAKE_TESTSUITE_ARGS_WS=
 
 # Remove install or packaging files by default. You can set this in a build
 # script when testing to speed up building a package
@@ -314,25 +311,15 @@ PKG_INCLUDE_TS="*.py"
 
 # The list of options which define the build environment
 BUILDENV_OPTS="
-    CONFIGURE_CMD
-    CONFIGURE_OPTS CONFIGURE_OPTS_32 CONFIGURE_OPTS_64
-    CONFIGURE_OPTS_WS_32 CONFIGURE_OPTS_WS_64
-    CFLAGS CFLAGS32 CFLAGS64
-    CXXFLAGS CXXFLAGS32 CXXFLAGS64
-    CPPFLAGS CPPFLAGS32 CPPFLAGS64
-    LDFLAGS LDFLAGS32 LDFLAGS64
+    CONFIGURE_CMD CONFIGURE_OPTS
+    CFLAGS CXXFLAGS CPPFLAGS
+    LDFLAGS
     MAKE_JOBS
 "
 
-# isaexec(3C) variants
-# These variables will be passed to the build to construct multi-arch
-# binary and lib directories in DESTDIR
-
 CCACHE_PATH=/opt/ooce/ccache/bin
 
-BUILDORDER="32 64"
-
-# For OmniOS we (almost) always want GCC
+# We (almost) always want GCC
 CC=gcc
 CXX=g++
 
@@ -413,7 +400,7 @@ FCFLAGS[10]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[11]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[12]+=" -fno-aggressive-loop-optimizations"
 
-# Flags to enable particular standards; see standards(5)
+# Flags to enable particular standards; see standards(7)
 typeset -A STANDARDS
 
 STANDARDS[POSIX]="-D_POSIX_C_SOURCE=200112L -D_POSIX_PTHREAD_SEMANTICS"
@@ -423,46 +410,76 @@ STANDARDS[XPG4v2]="-D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED=1"
 STANDARDS[XPG5]="-D_XOPEN_SOURCE=500 -D__EXTENSIONS__=1"
 STANDARDS[XPG6]="-D_XOPEN_SOURCE=600 -D__EXTENSIONS__=1"
 
-# CFLAGS applies to both builds, 32/64 only gets applied to the respective
-# build
-CFLAGS=
-CFLAGS32="-m32"
-CFLAGS64="-m64"
+typeset -A CFLAGS=(
+    [i386]=-m32
+    [amd64]=-m64
+)
 
-# Linker flags
-LDFLAGS=
-LDFLAGS32="-m32"
-LDFLAGS64="-m64"
+typeset -A LDFLAGS=(
+    [i386]=-m32
+    [amd64]=-m64
+)
 
-# C pre-processor flags
-CPPFLAGS=
-CPPFLAGS32=
-CPPFLAGS64=
+typeset -A CXXFLAGS=(
+    [i386]=-m32
+    [amd64]=-m64
+)
 
-# C++ flags
-CXXFLAGS=
-CXXFLAGS32="-m32"
-CXXFLAGS64="-m64"
+typeset -A PYBUILDOPTS=()
+typeset -A PYINSTOPTS=()
 
-# pkg-config paths
-PKG_CONFIG_PATH32=$PREFIX/lib/pkgconfig
-PKG_CONFIG_PATH64=$PREFIX/lib/$ISAPART64/pkgconfig
+typeset -A CPPFLAGS=()
+typeset -A PKG_CONFIG_PATH=(
+    [i386]=$PREFIX/lib/pkgconfig
+    [amd64]=$PREFIX/lib/amd64/pkgconfig
+)
+
+typeset -A LIBDIRS=(
+    [i386]=lib
+    [amd64]=lib/amd64
+    [aarch64]=lib
+)
+
+MAKE_ARGS=
+MAKE_ARGS_WS=
+MAKE_INSTALL_TARGET=install
+MAKE_INSTALL_ARGS=
+MAKE_INSTALL_ARGS_WS=
+MAKE_INSTALL_ARGS_32=
+MAKE_INSTALL_ARGS_64=
+NO_PARALLEL_MAKE=
+MAKE_TESTSUITE_ARGS=--quiet
+MAKE_TESTSUITE_ARGS_WS=
+
+DESTDIR=
+
+#############################################################################
+# Flags for building kernel modules
+#############################################################################
+
+CFLAGS[kmod]="
+    -mcmodel=kernel
+    -fno-strict-aliasing -fno-unit-at-a-time
+    -fno-optimize-sibling-calls -ffreestanding -mno-red-zone
+    -mno-mmx -mno-sse -msave-args
+    -Winline -fno-inline-small-functions -fno-inline-functions-called-once
+    -fno-ipa-cp -fno-ipa-icf -fno-clone-functions -fno-reorder-functions
+    -fno-reorder-blocks-and-partition
+    --param=max-inline-insns-single=450 -fno-shrink-wrap
+    -mindirect-branch=thunk-extern -mindirect-branch-register
+    -fno-asynchronous-unwind-tables -fstack-protector-strong
+"
+LDFLAGS[kmod]="-ztype=kmod"
 
 #############################################################################
 # Configuration of the packaged software
 #############################################################################
-# Default configure command - almost always sufficient
+
 CONFIGURE_CMD="./configure"
 
 # Configure options to apply to both builds - this is the one you usually want
 # to change for things like --enable-feature
-CONFIGURE_OPTS=
-CONFIGURE_OPTS_32=
-CONFIGURE_OPTS_64=
-# Configure options that can contain embedded white-space within escaped quotes
-CONFIGURE_OPTS_WS=
-CONFIGURE_OPTS_WS_32=
-CONFIGURE_OPTS_WS_64=
+typeset -A CONFIGURE_OPTS=()
 FORGO_ISAEXEC=
 
 # Vim hints

@@ -90,7 +90,7 @@
 <transform dir path=etc/versions$ -> drop>
 <transform dir path=kernel$ -> drop>
 <transform dir path=kernel/drv$ -> drop>
-<transform dir path=kernel/drv/amd64$ -> drop>
+<transform dir path=kernel/drv/(amd|aarch)64$ -> drop>
 <transform dir path=lib$ -> drop>
 <transform dir path=(lib|var)/svc$ -> drop>
 <transform dir path=(lib|var)/svc/manifest$ -> drop>
@@ -117,7 +117,7 @@
 <transform dir path=usr/bin/i86$ -> drop>
 <transform dir path=usr/kernel$ -> drop>
 <transform dir path=usr/kernel/drv$ -> drop>
-<transform dir path=usr/kernel/drv/amd64$ -> drop>
+<transform dir path=usr/kernel/drv/(amd|aarch)64$ -> drop>
 <transform dir path=usr/lib$ -> drop>
 <transform dir path=usr/lib/amd64$ -> drop>
 <transform dir path=usr/lib/devfsadm$ -> drop>
