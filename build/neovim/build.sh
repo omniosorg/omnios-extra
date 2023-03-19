@@ -44,23 +44,26 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
-# No configure
-configure64() { :; }
+pre_configure() {
+    typeset arch=$1
 
-MAKE_ARGS_WS="
-    CMAKE_BUILD_TYPE=Release
-    CMAKE_INSTALL_PREFIX=$PREFIX
-    CMAKE_EXTRA_FLAGS=\"
-        -DCMAKE_EXE_LINKER_FLAGS='-Wl,-R$OPREFIX/lib/$ISAPART64 -lgcc_s'
-    \"
-    BUNDLED_CMAKE_FLAG=\"
-        -DUSE_BUNDLED_GPERF=OFF
-        -DUSE_BUNDLED_LIBUV=OFF
-    \"
-"
+    MAKE_ARGS_WS="
+        CMAKE_BUILD_TYPE=Release
+        CMAKE_INSTALL_PREFIX=$PREFIX
+        BUNDLED_CMAKE_FLAG=\"
+            -DUSE_BUNDLED_GPERF=OFF
+            -DUSE_BUNDLED_LIBUV=OFF
+        \"
+        CMAKE_EXTRA_FLAGS=\"
+            -DCMAKE_EXE_LINKER_FLAGS='-Wl,-R$OPREFIX/${LIBDIRS[$arch]} -lgcc_s'
+        \"
+    "
 
-export CFLAGS="$CTF_CFLAGS"
-export CMAKE_LIBRARY_PATH=$OPREFIX/lib/$ISAPART64
+    export CMAKE_LIBRARY_PATH=$OPREFIX/${LIBDIRS[$arch]}
+
+    # no configure
+    false
+}
 
 init
 download_source $PROG v$VER

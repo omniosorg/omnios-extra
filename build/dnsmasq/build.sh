@@ -21,7 +21,8 @@ VER=2.89
 PKG=ooce/network/dnsmasq
 SUMMARY="Lightweight, easy to configure DNS forwarder"
 DESC="dnsmasq is a lightweight, easy to configure DNS forwarder, designed to "
-DESC+="provide DNS (and optionally DHCP and TFTP) services to a small-scale network."
+DESC+="provide DNS (and optionally DHCP and TFTP) services to a small-scale "
+DESC+="network."
 
 set_arch 64
 [ $RELVER -ge 151045 ] && set_clangver
@@ -35,16 +36,18 @@ copy_sample_config() {
     local dest_confdir=$DESTDIR/${relative_conffile%/*}
 
     logmsg "-- copying sample config"
-    logcmd mkdir -p "$dest_confdir" || logerr "mkdir failed"
-    logcmd cp $TMPDIR/$BUILDDIR/$PROG.conf.example $DESTDIR/$relative_conffile \
-        || logerr "copying configs failed"
+    logcmd $MKDIR -p "$dest_confdir" || logerr "mkdir failed"
+    logcmd $CP $TMPDIR/$BUILDDIR/$PROG.conf.example \
+        $DESTDIR/$relative_conffile || logerr "copying configs failed"
 }
 
-configure64() {
+pre_configure() {
+    typeset arch=$1
+
     MAKE_ARGS_WS="
         CC=$CC
-        CFLAGS=\"-DNO_IPSET $CFLAGS $CFLAGS64\"
-        LDFLAGS=\"$LDFLAGS $LDFLAGS64\"
+        CFLAGS=\"-DNO_IPSET $CFLAGS ${CFLAGS[$arch]}\"
+        LDFLAGS=\"$LDFLAGS ${LDFLAGS[$arch]}\"
         PREFIX=$PREFIX
         MANDIR=$PREFIX/share/man
         sunos_libs=\"-lnsl -lsocket\"
@@ -54,6 +57,9 @@ configure64() {
         PREFIX=$PREFIX
         MANDIR=$PREFIX/share/man
     "
+
+    # no configure
+    false
 }
 
 XFORM_ARGS="

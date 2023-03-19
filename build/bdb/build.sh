@@ -47,22 +47,22 @@ CONFIGURE_OPTS="
     --enable-compat185
     --disable-static
 "
-CONFIGURE_OPTS_32="
+CONFIGURE_OPTS[i386]="
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64="
-    --libdir=$OPREFIX/lib/$ISAPART64
+CONFIGURE_OPTS[amd64]="
+    --libdir=$OPREFIX/lib/amd64
 "
 
-LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
+[ $RELVER -ge 151037 ] && LDFLAGS[i386]+=" -lssp_ns"
+LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 
 export EXTLIBS=-lm
 
 save_function build64 _build64
 build64() {
-    export DLDFLAGS=$LDFLAGS64
+    export DLDFLAGS=${LDFLAGS[amd64]}
     _build64
 }
 

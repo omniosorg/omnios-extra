@@ -52,26 +52,29 @@ MAKE_INSTALL_ARGS_32="
 "
 
 MAKE_INSTALL_ARGS_64="
-    libdir=$OPREFIX/lib/$ISAPART64
+    libdir=$OPREFIX/lib/amd64
 "
 
-configure32() {
-    export XCFLAGS="$CFLAGS $CFLAGS32"
-    export LDFLAGS="$LDFLAGS $LDFLAGS32"
-    [ $RELVER -ge 151037 ] && export SOLIBS="-lssp_ns"
-}
+pre_configure() {
+    typeset arch=$1
 
-configure64() { 
-    export XCFLAGS="$CFLAGS $CFLAGS64"
-    export LDFLAGS="$LDFLAGS $LDFLAGS64"
-    export SOLIBS=
+    [ $arch = i386 ] && SOLIBS="-lssp_ns" || SOLIBS=
+
+    MAKE_ARGS_WS="
+        CFLAGS=\"$CFLAGS ${CFLAGS[$arch]}\"
+        LDFLAGS=\"$LDFLAGS ${LDFLAGS[$arch]}\"
+        SOLIBS=\"$SOLIBS\"
+    "
+
+    # no configure
+    false
 }
 
 init
 download_source $PROG $PROGUCVER
 patch_source
 prep_build
-build -ctf
+build
 make_package
 clean_up
 

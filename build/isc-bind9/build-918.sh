@@ -94,7 +94,7 @@ CONFIGURE_OPTS="
 "
 
 # for lmdb
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER

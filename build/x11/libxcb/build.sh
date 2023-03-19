@@ -40,7 +40,7 @@ build_dependency -merge libpthread-stubs libpthread-stubs-$PSTUBVER \
     x11/libpthread-stubs libpthread-stubs $PSTUBVER
 
 addpath PKG_CONFIG_PATH32 $DEPROOT$PREFIX/lib/pkgconfig
-addpath PKG_CONFIG_PATH64 $DEPROOT$PREFIX/lib/$ISAPART64/pkgconfig
+addpath PKG_CONFIG_PATH64 $DEPROOT$PREFIX/lib/amd64/pkgconfig
 
 ######################################################################
 

@@ -67,26 +67,20 @@ CONFIGURE_OPTS="
 # this currently fails in zones as it uses libdevinfo
 CONFIGURE_OPTS+=" --disable-libusb"
 
-CONFIGURE_OPTS_32="
+CONFIGURE_OPTS[i386]="
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64="
-    --libdir=$OPREFIX/lib/$ISAPART64
+CONFIGURE_OPTS[amd64]="
+    --libdir=$OPREFIX/lib/amd64
 "
 
-LDFLAGS32+=" -L$OPREFIX/lib -Wl,-R$OPREFIX/lib -lsocket"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -Wl,-R$OPREFIX/lib/$ISAPART64 -lsocket"
+LDFLAGS[i386]+=" -L$OPREFIX/lib -Wl,-R$OPREFIX/lib -lsocket"
+LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -Wl,-R$OPREFIX/lib/amd64 -lsocket"
 
-save_function configure32 _configure32
-configure32(){
-    export DSOFLAGS="$LDFLAGS $LDFLAGS32"
-    _configure32
-}
+pre_configure() {
+    typeset arch=$1
 
-save_function configure64 _configure64
-configure64(){
-    export DSOFLAGS="$LDFLAGS $LDFLAGS64"
-    _configure64
+    export DSOFLAGS="$LDFLAGS ${LDFLAGS[$arch]}"
 }
 
 init

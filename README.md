@@ -7,13 +7,18 @@
 > releases, check out the `pre-r151038` tag.
 
 ## Introduction
-The purpose of this document is to introduce building packages for the "OmniOS Extra IPS Repository".
+The purpose of this document is to introduce building packages for the "OmniOS
+Extra IPS Repository".
 
-The "OmniOS Extra IPS Repository" offers a simple way for administrators to install applications. Like everything else about the OmniOS Community Edition project, it is a volunteer effort. It is important to keep this in mind when reading this
-document.
+The "OmniOS Extra IPS Repository" offers a simple way for administrators to
+install applications. Like everything else about the OmniOS Community Edition
+project, it is a volunteer effort. It is important to keep this in mind when
+reading this document.
 
-The "OmniOS Extra IPS Repository" is open to all, anyone may submit a new package, or volunteer to maintain an existing or un-maintained package. No special commit privileges are needed and [assistance](#omnios-community-support-channels) is available if needed.
-
+The "OmniOS Extra IPS Repository" is open to all, anyone may submit a new
+package, or volunteer to maintain an existing or un-maintained package. No
+special commit privileges are needed and
+[assistance](#omnios-community-support-channels) is available if needed.
 
 ### Prepare to build packages for OmniOS
 
@@ -59,7 +64,9 @@ The "OmniOS Extra IPS Repository" is open to all, anyone may submit a new packag
 2. [Recommended reading](#recommended-reading)
 
 # Prepare to build packages for OmniOS
-The objective of this section is to prepare a build environment and introduce the `build.sh` and `local.mog` files. After this, an experimental build can be run with an example package.
+The objective of this section is to prepare a build environment and introduce
+the `build.sh` and `local.mog` files. After this, an experimental build can be
+run with an example package.
 
 1. [Requirements](#requirements)
 2. [Create the build environment](#create-the-build-environment)
@@ -68,9 +75,11 @@ The objective of this section is to prepare a build environment and introduce th
 
 ## Requirements
 
-To create packages for the "OmniOS Extra IPS Repository", the following is necessary:
+To create packages for the "OmniOS Extra IPS Repository", the following is
+necessary:
 
-* Virtual or physical system running the latest OmniOS release, preferably the latest ["Bloody Release"](https://omnios.org/about/stablevsbloody).
+* Virtual or physical system running the latest OmniOS release, preferably the
+  latest ["Bloody Release"](https://omnios.org/about/stablevsbloody).
 * The system should have a minimum of 2GB of RAM.
 
 * "OmniOS [Extra Build Tools](https://github.com/omniosorg/omnios-extra/blob/master/build/meta/extra-build-tools.p5m)" This can be installed with the following command:
@@ -85,11 +94,13 @@ To create packages for the "OmniOS Extra IPS Repository", the following is neces
 
 ### Fork the "OmniOS Extra IPS Repository"
 
-If help is needed with this, please see: <https://help.github.com/en/github/getting-started-with-github/fork-a-repo>
+If help is needed with this, please see:
+<https://help.github.com/en/github/getting-started-with-github/fork-a-repo>
 
 ### Create a local repository on the build system
 
-In a suitable directory, clone the fork of the "OmniOS Extra IPS Repository", that was created in the previous step.
+In a suitable directory, clone the fork of the "OmniOS Extra IPS Repository",
+that was created in the previous step.
 
 ```none
 $ git clone github.com/github_account/omnios-extra
@@ -111,7 +122,10 @@ In this section, the ubiquitous `helloworld` will be packaged for OmniOS.
 
 ### Create a `git branch` and a build directory
 
-Before creating any new package, it is necessary to create a new `git branch` for its build files. The reason being, is that when the package is later submitted for inclusion into the "OmniOS Extra IPS Repository", only a "Pull Request" from a `git branch` will be accepted.
+Before creating any new package, it is necessary to create a new `git branch`
+for its build files. The reason being, is that when the package is later
+submitted for inclusion into the "OmniOS Extra IPS Repository", only a "Pull
+Request" from a `git branch` will be accepted.
 
 Name the `git branch` after the package name.
 
@@ -120,7 +134,9 @@ $ git branch helloworld
 $ git checkout helloworld
 ```
 
-To create the build directory for the `helloworld` package, create a new directory under the `build` directory in the cloned "OmniOS Extra IPS Repository".
+To create the build directory for the `helloworld` package, create a new
+directory under the `build` directory in the cloned "OmniOS Extra IPS
+Repository".
 
 ```none
 $ mkdir build/helloworld
@@ -129,7 +145,8 @@ $ cd build/helloworld
 
 ### Create the build files
 
-Every package relies on 2 files to complete a build, `build.sh` & `local.mog`. These are created as follows:
+Every package relies on 2 files to complete a build, `build.sh` & `local.mog`.
+These are created as follows:
 
 ```none
 $ touch build.sh local.mog
@@ -138,7 +155,8 @@ $ chmod +x build.sh
 
 As `build.sh` is a `bash` shell script, it is set as an executable.
 
-Once these empty files are created, the following templates can be used to create the `helloworld` build files:
+Once these empty files are created, the following templates can be used to
+create the `helloworld` build files:
 
 ##### `build.sh`
 
@@ -209,11 +227,17 @@ The contents of these files will be discussed thoroughly in the ["OmniOS Extra B
 
 ## Build the `helloworld` package
 
-For the `helloworld` package, the above `build.sh` & `local.mog` templates are enough to build the OmniOS package.
+For the `helloworld` package, the above `build.sh` & `local.mog` templates are
+enough to build the OmniOS package.
 
-In fact, for a robust program like [tcpdump](https://github.com/omniosorg/omnios-extra/tree/master/build/tcpdump/build.sh), the `build.sh` was not much more complicated than the above templates. A lot of knowledge of the build system can be gained browsing the various `build.sh` files in the `build` directory.
+In fact, for a robust program like
+[tcpdump](https://github.com/omniosorg/omnios-extra/tree/master/build/tcpdump/build.sh),
+the `build.sh` was not much more complicated than the above templates. A lot of
+knowledge of the build system can be gained browsing the various `build.sh`
+files in the `build` directory.
 
-From the current `helloworld` directory, the `helloworld` package can be built from the `build.sh` as follows:
+From the current `helloworld` directory, the `helloworld` package can be built
+from the `build.sh` as follows:
 
 ```none
 $ ./build.sh
@@ -221,9 +245,13 @@ $ ./build.sh
 
 **Note:** No special privileges are need to create a package from the build system. Nor is it advised to create packages as the `root` user.
 
-This will build the `helloworld` package, through all its various stages, terminating with the publishing of the `helloworld` package.
+This will build the `helloworld` package, through all its various stages,
+terminating with the publishing of the `helloworld` package.
 
-The default "IPS Repository", for the build system, that all packages will be published to, resides at the root directory of the cloned "OmniOS Extra IPS Repository". The root directory of this default "IPS Repository" is named `tmp.repo`.
+The default "IPS Repository", for the build system, that all packages will be
+published to, resides at the root directory of the cloned "OmniOS Extra IPS
+Repository". The root directory of this default "IPS Repository" is named
+`tmp.repo`.
 
 ### Installing the package
 
@@ -343,18 +371,29 @@ The "OmniOS Extra Repository" contains prime quality packages to enhance your Om
 | log files | /var/log/ooce/package(-x.y)
 | other var files | /var/opt/ooce/package(-x.y)
 | mediated symlinks provide access to binaries |  /opt/ooce/bin
-| mediated symlinks provide access to manual pages |  /opt/ooce/share/man*
+| mediated symlinks provide access to manual pages |  /opt/ooce/share/man\*
 
+### Build framework
+
+Refer to `doc/framework` for an overview of the build framework,
+descriptions of the various variables discussed below, and the functions
+and hooks which are available.
 
 ## The `local.mog` and `lib/mog/global-transforms.mog` files
 
 ### `local.mog`
 
-The `local.mog` file is a way to transform package manifests programatically. This allows you to transform the contents of the package in reliable and repeatable ways. IPS uses `pkgmogrify` to achieve these changes.
+The `local.mog` file is a way to transform package manifests programatically.
+This allows you to transform the contents of the package in reliable and
+repeatable ways. IPS uses `pkgmogrify` to achieve these changes.
 
-In the `local.mog` file it is possible to change ownership and permissions on files, drop certain files from a package, make sure certain files do not get overwritten with newer versions. It also allows the creation of users and groups and even to adjust system services when a package has this requirement.
+In the `local.mog` file it is possible to change ownership and permissions on
+files, drop certain files from a package, make sure certain files do not get
+overwritten with newer versions. It also allows the creation of users and
+groups and even to adjust system services when a package has this requirement.
 
-From the `build.sh` you can pass variables to `local.mog` with the following directive:
+From the `build.sh` you can pass variables to `local.mog` with the following
+directive:
 
 ```none
 XFORM_ARGS="
@@ -365,7 +404,8 @@ XFORM_ARGS="
 "
 ```
 
-This allows `local.mog` to read in these variables, and later in the build proccess, for `pkgmogrify` to make transformations upon them.
+This allows `local.mog` to read in these variables, and later in the build
+proccess, for `pkgmogrify` to make transformations upon them.
 
 An example of transformations possible are as follows:
 
@@ -392,23 +432,33 @@ user ftpuser=false username=gitea uid=86 group=$(PROG) \
 
 All these directives will be processed via the `pkgmogrify` utility.
 
-The first is of particular interest as it creates a new user and group for the system.
+The first is of particular interest as it creates a new user and group for the
+system.
 
 Following this, is mainly setting ownership and permissions on files.
 
-However of note, the line with `set preserve true` tells the build system not to overwrite files in the corresponding directory. In this case, old files will be left untouched and new files will be added with the prefix `.new`
+However of note, the line with `set preserve true` tells the build system not
+to overwrite files in the corresponding directory. In this case, old files will
+be left untouched and new files will be added with the prefix `.new`
 
-It is beyond the scope of this document to describe in full detail the workings of how `pkgmogify` deals with the `local.mog` file, therefore it is recommended to read in detail Chapter 8 of [Packaging and Delivering Software with the Image Packaging System](https://github.com/OpenIndiana/oi-docs/blob/master/docs/dev/pdf/ips-dev-guide.pdf), to best take advantage of the `local.mog` file.
+It is beyond the scope of this document to describe in full detail the workings
+of how `pkgmogify` deals with the `local.mog` file, therefore it is recommended
+to read in detail Chapter 8 of
+[Packaging and Delivering Software with the Image Packaging System](https://github.com/OpenIndiana/oi-docs/blob/master/docs/dev/pdf/ips-dev-guide.pdf),
+to best take advantage of the `local.mog` file.
 
 ### `lib/mog/global-transforms.mog`
 
-The "Omnios Build System" will automatically apply a number of transformations to a package being created via the `lib/mog/global-transforms.mog` file. It is recommended to study this file to appreciate, which changes are being made.
+The "Omnios Build System" will automatically apply a number of transformations
+to a package being created via the `lib/mog/global-transforms.mog` file. It is
+recommended to study this file to appreciate, which changes are being made.
 
 
 ## Build and run dependencies
 ### Build Dependencies
 
-Insert the following into `build.sh` to define the necessary programs to complete the build process.
+Insert the following into `build.sh` to define the necessary programs to
+complete the build process.
 
 ```none
 BUILD_DEPENDS_IPS+="
@@ -417,19 +467,27 @@ BUILD_DEPENDS_IPS+="
     ooce/package/name3...
 "
 ```
-Anything from the base install or the meta packages [extra-build-tools](https://github.com/omniosorg/omnios-extra/blob/master/build/meta/extra-build-tools.p5m) & [omnios-build](https://github.com/omniosorg/omnios-extra/blob/master/build/meta/omnios-build-tools.p5m) should not need to be included.
+Anything from the base install or the meta packages
+[extra-build-tools](https://github.com/omniosorg/omnios-extra/blob/master/build/meta/extra-build-tools.p5m)
+&
+[omnios-build](https://github.com/omniosorg/omnios-extra/blob/master/build/meta/omnios-build-tools.p5m)
+should not need to be included.
 
 ### Optional Build Dependencies
 
-If a package dependency is required to build the package but is not necessary to install the package, this can be dropped when the software is packaged, via a `final.mog`.
+If a package dependency is required to build the package but is not necessary
+to install the package, this can be dropped when the software is packaged, via
+a `final.mog`.
 
-Include the package as normal in `BUILD_DEPENDS_IPS` directive and then use the following in the `build.sh`:
+Include the package as normal in `BUILD_DEPENDS_IPS` directive and then use the
+following in the `build.sh`:
 
 ```none
 make_package local.mog final.mog
 ```
 
-Also, include a `final.mog` file in the base of the package directory, with contents similar to below:
+Also, include a `final.mog` file in the base of the package directory, with
+contents similar to below:
 
 ```none
 # Remove the automatically detected 'require' dependencies.
@@ -437,11 +495,14 @@ Also, include a `final.mog` file in the base of the package directory, with cont
 <transform depend type=require fmri=.*(?:mariadb|postgresql) -> drop>
 ```
 
-For an example see [here](https://github.com/omniosorg/omnios-extra/tree/master/build/nagios-plugins).
+For an example see
+[here](https://github.com/omniosorg/omnios-extra/tree/master/build/nagios-plugins).
 
 ### Run dependencies
 
-Almost all run dependencies should be auto-detected. It's better to let this happen than to hard code it. If it is absolutely necessary to define run dependencies, the directive that is placed in `build.sh` is as follow:
+Almost all run dependencies should be auto-detected. It's better to let this
+happen than to hard code it. If it is absolutely necessary to define run
+dependencies, the directive that is placed in `build.sh` is as follow:
 
 ```none
 RUN_DEPENDS_IPS+="
@@ -452,7 +513,9 @@ RUN_DEPENDS_IPS+="
 ```
 ## Configure directives
 
-Default configure flags are set in the `lib/config.sh` file. These may be overridden or appended to, with the `CONFIGURE_OPTS` directive. An example follows:
+Default configure flags are set in the `lib/config.sh` file. These may be
+overridden or appended to, with the `CONFIGURE_OPTS` directive. An example
+follows:
 
 ```none
 CONFIGURE_OPTS+="
@@ -466,13 +529,13 @@ CONFIGURE_OPTS+="
 ```
 These will be applied to the `CONFIGURE_CMD` for **both** 32 and 64 bit builds.
 
-Architecture independent configure flags may also be set with the `CONFIGURE_OPTS_32` and `CONFIGURE_OPTS_64` directives.
-
-`lib/functions.sh` can provide a working example of how these directives are applied.
+Architecture independent configure flags may also be set with the
+`CONFIGURE_OPTS[i386]` and `CONFIGURE_OPTS[amd64]` directives.
 
 ## Make directives
 
-Make directives may also be set and overridden in `build.sh`. Follows are possible use cases:
+Make directives may also be set and overridden in `build.sh`. Follows are
+possible use cases:
 
 #### Supplying arguments to make:
 
@@ -493,64 +556,86 @@ MAKE_INSTALL_TARGET="
 "
 ```
 
-Like the `CONFIGURE_OPTS` directive, these apply to **both** 32 and 64 bit builds.
+Like the `CONFIGURE_OPTS` directive, these apply to **both** 32 and 64 bit
+builds.
 
-Architecture independent configure flags may also be set with the `MAKE_INSTALL_XXXXXX_32` and `MAKE_INSTALL_XXXXXX_64` directives.
+Architecture independent configure flags may also be set with the
+`MAKE_INSTALL_XXXXXX_32` and `MAKE_INSTALL_XXXXXX_64` directives.
 
-`lib/functions.sh` can provide a working example of how these directives are applied.
+`lib/functions.sh` can provide a working example of how these directives are
+applied.
 
 ## Linker directives
 
-CFLAGS/LDFLAGS directives may also be set in `build.sh`. Follows are possible use cases:
+CFLAGS/LDFLAGS directives may also be set in `build.sh`. Follows are possible
+use cases:
 
 ```none
 CFLAGS+=" -O3 -I$OPREFIX/include -I/usr/include/gssapi"
-CXXFLAGS32+=" $CFLAGS $CFLAGS32 -R$OPREFIX/lib"
-CXXFLAGS64+=" $CFLAGS $CFLAGS64 -R$OPREFIX/lib/$ISAPART64"
-LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+CXXFLAGS[i386]+=" $CFLAGS ${CFLAGS[i386]} -R$OPREFIX/lib"
+CXXFLAGS[amd64]+=" $CFLAGS ${CFLAGS[amd64]} -R$OPREFIX/lib/amd64"
+LDFLAGS[i386]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
+LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 ```
 
-Like the `CONFIGURE_OPTS` directive, the directives without the architecture prefix, apply to **both** 32 and 64 bit builds.
+Like the `CONFIGURE_OPTS` directive, the directives without the architecture
+prefix, apply to **both** 32 and 64 bit builds.
 
-Architecture independent configure flags have also been set in the above example with the `XXFLAGS32` and `XXFLAGS64` directives.
+Architecture independent configure flags have also been set in the above
+example with the `XXFLAGS[i386]` and `XXFLAGS[amd64]` directives.
 
-`lib/functions.sh` can provide a working example of how these directives are applied.
+`lib/functions.sh` can provide a working example of how these directives are
+applied.
 
 ## Using your own functions in `build.sh`
 
-Sometimes it is not possible for the build system to cater for all events, when building a package. However, within `build.sh`, it is possible to create functions to deal with situations as they arise.
+Sometimes it is not possible for the build system to cater for all events, when
+building a package. However, within `build.sh`, it is possible to create
+functions to deal with situations as they arise.
 
-For example, when building a package that has no `./configure` or `make` processes, it is possible to override the main build function as follows:
+For example, when building a package that has no `./configure` or `make`
+processes, it is possible to override the main build function as follows:
 
 ```none
 build() {
-    logcmd mkdir -p $DESTDIR/$PREFIX/nagios/nrdp || logerr "mkdir"
-    logcmd cp -r $TMPDIR/$BUILDDIR/server/* $DESTDIR/$PREFIX/nagios/nrdp \
+    logcmd $MKDIR -p $DESTDIR/$PREFIX/nagios/nrdp || logerr "mkdir"
+    logcmd $CP -r $TMPDIR/$BUILDDIR/server/* $DESTDIR/$PREFIX/nagios/nrdp \
         || logerr "cp -r server failed"
 }
 ```
 
-In the above example, the package being built is from *PHP* source code. There is no `./configure` or `make` processes and the contents can simply be copied into the `$DESTDIR` and then packaged by the build system.
+In the above example, the package being built is from *PHP* source code. There
+is no `./configure` or `make` processes and the contents can simply be copied
+into the `$DESTDIR` and then packaged by the build system.
 
-This is a case of overriding a function, however it is also possible to create any functions that are necessary and place them in the right order amongst the "build functions" of the `build.sh` file.
+This is a case of overriding a function, however it is also possible to create
+any functions that are necessary and place them in the right order amongst the
+"build functions" of the `build.sh` file.
 
-The best source for discovering more about using your own functions, is to browse the `build.sh` of other packages.
+The best source for discovering more about using your own functions, is to
+browse the `build.sh` of other packages.
 
 ## Creating patches
 
 ### Patches directory and contents
 
-If it is neccessary to supply patches for the build to complete, these go in the sub-directory `patches` of the `build/package-name` directory.
+If it is neccessary to supply patches for the build to complete, these go in
+the sub-directory `patches` of the `build/package-name` directory.
 
-Generally, one patch should be created for each functional change.. The following command should be sufficient to create a patch.
+Generally, one patch should be created for each functional change.. The
+following command should be sufficient to create a patch.
 
 ```none
 $ gdiff -wpruN '--exclude=*.orig' a~/ a/ > description-of-patch.patch
 ```
-The patching may take place in the `build/package-name/tmp` directory, however the final patches must be transferred to the `patches` directory.
+The patching may take place in the `build/package-name/tmp` directory, however
+the final patches must be transferred to the `patches` directory.
 
-The filename of the patch should then be `echo`'d into a file named `series`, that resides in the `patches` directory. The file `series`, is used by the build system to apply the patches that are listed in this file. This is done in the order of the patches listed, so care must be taken, to list patches in order, as necessary for the build to complete,
+The filename of the patch should then be `echo`'d into a file named `series`,
+that resides in the `patches` directory. The file `series`, is used by the
+build system to apply the patches that are listed in this file. This is done in
+the order of the patches listed, so care must be taken, to list patches in
+order, as necessary for the build to complete,
 
 ```none
 $ echo description-of-patch.patch >> series
@@ -558,12 +643,12 @@ $ echo description-of-patch.patch >> series
 
 ### Re-basing patches to ensure the correct format
 
-To ensure the patches are in the standard format for the build system, it is advised to run an automatic re-base. This can be achieved with the following command:
+To ensure the patches are in the standard format for the build system, it is
+advised to run an automatic re-base. This can be achieved with the following
+command:
 
 ```none
 ./build.sh -Pxx
-...
-...
 ...
 Checking for patches in patches/ (in order to re-base them)
 Re-basing patches
@@ -574,32 +659,48 @@ Applying patches
 Time: ooce/application/package-name - 0h0m4s
 ```
 
-The output from the command demonstrates that the patches have been re-based correctly.
+The output from the command demonstrates that the patches have been re-based
+correctly.
 
 ## SMF manifests
 
-The "Service Management Facility" (SMF) replaces `init.d` scripts in OmniOS (and other illumos based distributions). SMF creates a unified model for services and service management.
+The "Service Management Facility" (SMF) replaces `init.d` scripts in OmniOS
+(and other illumos based distributions). SMF creates a unified model for
+services and service management.
 
-If it is neccessary to include an SMF manifest with the package, the associated *Manifest* & *Method* files should be placed in the `files` sub-directory of the `build/package-name` directory.
+If it is neccessary to include an SMF manifest with the package, the associated
+*Manifest* & *Method* files should be placed in the `files` sub-directory of
+the `build/package-name` directory.
 
-It is preferably, however not always possible, that only a *Manifiest* file should be included.
+It is preferably, however not always possible, that only a *Manifest* file
+should be included.
 
-Once the associated SMF files have been placed in the `files` sub-directory, the `build.sh` can be instructed to process these files with the following directive:
+Once the associated SMF files have been placed in the `files` sub-directory,
+the `build.sh` can be instructed to process these files with the following
+directive:
 
 ```none
 install_smf application $PROG.xml application-$PROG
 ```
 
-This should be placed after the "build function" declarations and before the `make package` declaration.
+This should be placed after the "build function" declarations and before the
+`make package` declaration.
 
-
-It is beyond the scope of this document to describe in full detail the workings of SMF, therefore it is highly recommended that you download and read "[Management of Systems and Services with Solaris Service Management Facility](https://www.oracle.com/technetwork/server-storage/solaris10/solaris-smf-wp-167901.pdf)".
+It is beyond the scope of this document to describe in full detail the workings
+of SMF, therefore it is highly recommended that you download and read
+"[Management of Systems and Services with Solaris Service Management Facility](https://www.oracle.com/technetwork/server-storage/solaris10/solaris-smf-wp-167901.pdf)".
 
 ## Providing messages at installation
 
-When providing a package which requires manual integration steps, it may be necessary to inform the end user of this situation. IPS has a facility to display a message during package installation to inform the end user of any important considerations that should be taken.
+When providing a package which requires manual integration steps, it may be
+necessary to inform the end user of this situation. IPS has a facility to
+display a message during package installation to inform the end user of any
+important considerations that should be taken.
 
-This is done by creating a text file and placing it in the `files` sub-directory of the `build/package-name` directory. An example text file that informs an end user, that they must read the installed `IMPORTANT.txt` file, would be similar to the following:
+This is done by creating a text file and placing it in the `files`
+sub-directory of the `build/package-name` directory. An example text file that
+informs an end user, that they must read the installed `IMPORTANT.txt` file,
+would be similar to the following:
 
 #### README
 
@@ -615,13 +716,15 @@ this program with the system, please read
 ------------------
 ```
 
-Once this `README` file has been placed in the `files` sub-directory, the `build.sh` can be instructed to process this file with the following directive:
+Once this `README` file has been placed in the `files` sub-directory, the
+`build.sh` can be instructed to process this file with the following directive:
 
 ```none
 add_notes README
 ```
 
-This should be placed after the "build function" declarations and before the `make package` declaration.
+This should be placed after the "build function" declarations and before the
+`make package` declaration.
 
 ## Making the source available to the build environment
 
@@ -629,14 +732,22 @@ This should be placed after the "build function" declarations and before the `ma
 
 #### Mirrors:
 
-The omnios-extra build system has a mirror at https://mirrors.omnios.org/ that maintains current source tarballs and checksums. It uses these to build its packages. In the early stages of a build, this source tarball will not be available on the OmniOS mirror, and will be need to be made available for the build process.
+The omnios-extra build system has a mirror at https://mirrors.omnios.org/ that
+maintains current source tarballs and checksums. It uses these to build its
+packages. In the early stages of a build, this source tarball will not be
+available on the OmniOS mirror, and will be need to be made available for the
+build process.
 
-This can be done by using the `set_mirror` directive in `build.sh`. For example the source tarball for "Apache httpd 2.4.43" is available at the mirror: <https://downloads.apache.org/>. Therefore the `set_mirror` directive should be as follows:
+This can be done by using the `set_mirror` directive in `build.sh`. For example
+the source tarball for "Apache httpd 2.4.43" is available at the mirror:
+<https://downloads.apache.org/>. Therefore the `set_mirror` directive should be
+as follows:
 
 ```none
 set_mirror "https://downloads.apache.org/"
 ```
-Further in the `build.sh` file, the `download_source` directive should be as follows:
+Further in the `build.sh` file, the `download_source` directive should be as
+follows:
 
 ```none
 download_source $PROG $PROG $VER
@@ -644,9 +755,12 @@ download_source $PROG $PROG $VER
 
 #### Checksums:
 
-The above will be sufficient if the accompanying sha256 checksum file is available in the same directory as the tarball.
+The above will be sufficient if the accompanying sha256 checksum file is
+available in the same directory as the tarball.
 
-If the checksum is not available, this can be included in the `build.sh` with the `set_checksum` directive. For example, had the "Apache httpd 2.4.43" checksum file not been available, the following `set_checksum` should be set:
+If the checksum is not available, this can be included in the `build.sh` with
+the `set_checksum` directive. For example, had the "Apache httpd 2.4.43"
+checksum file not been available, the following `set_checksum` should be set:
 
 ```none
 set_checksum sha256 "a497652ab3fc81318cdc2a203090a999150d86461acff97c1065dc910fe10f43"
@@ -662,7 +776,8 @@ If the source tarball is on github, the following directive should be used:
 set_mirror "$GITHUB/apache/$PROG/archive"
 ```
 
-Further in the `build.sh` file, the `download_source` directive should be as follows:
+Further in the `build.sh` file, the `download_source` directive should be as
+follows:
 
 ```none
 download_source $VER
@@ -672,7 +787,8 @@ download_source $VER
 
 #### Checksums:
 
-GitHub does not supply checksums for downloaded archives, so this can be workd around with the following directive:
+GitHub does not supply checksums for downloaded archives, so this can be workd
+around with the following directive:
 
 ```none
 set_checksum "none"
@@ -680,14 +796,16 @@ set_checksum "none"
 
 ### Exceptional cases regarding source tarballs
 
-
 #### Source tarball
 
-Sometimes the source tarball is not in a standard format and the argument to the directive, `download_source`, will need to be edited accordingly.
+Sometimes the source tarball is not in a standard format and the argument to
+the directive, `download_source`, will need to be edited accordingly.
 
 #### Build Directory
 
-Sometimes the tarball will extract to an un-expected directory. For example, sometimes a tarball named `$PROG-$VER.tar.gz` may extract to a directory named `$PROG-$PROG-$VER`.
+Sometimes the tarball will extract to an un-expected directory. For example,
+sometimes a tarball named `$PROG-$VER.tar.gz` may extract to a directory named
+`$PROG-$PROG-$VER`.
 
 In this case, use the `BUILDDIR` directive, as follows:
 
@@ -697,7 +815,9 @@ set_builddir "$PROG-$PROG-$VER"
 
 #### Source Directory
 
-Sometimes the source directory, where the `configure` script lies will not be where it is expected. For example, the `configure` script may not be in the root of the `$PROG-VER/` directory, but instead in `$PROG-VER/$PROG/`.
+Sometimes the source directory, where the `configure` script lies will not be
+where it is expected. For example, the `configure` script may not be in the
+root of the `$PROG-VER/` directory, but instead in `$PROG-VER/$PROG/`.
 
 In this case. the above `set_builddir` should also take care of this.
 
@@ -705,7 +825,10 @@ In this case. the above `set_builddir` should also take care of this.
 
 ### Bundling a licence with the package
 
-All packages must be bundled with their respective licence. To add a licence to the package being built, the licence must be included in the `local.mog` file. This is generally always the last line of text in the `local.mog` file and appears as follows:
+All packages must be bundled with their respective licence. To add a licence to
+the package being built, the licence must be included in the `local.mog` file.
+This is generally always the last line of text in the `local.mog` file and
+appears as follows:
 
 ```none
 license COPYING license=GPLv3
@@ -713,7 +836,9 @@ license COPYING license=GPLv3
 
 ### How the build system determines the licence type
 
-The utility, `tools/licence`, is used to determine the specific type of licence. To manually determine the licence that is bundled with the package run the following:
+The utility, `tools/licence`, is used to determine the specific type of
+licence. To manually determine the licence that is bundled with the package run
+the following:
 
 ```none
 $ tools/licence build/package/tmp/path/to/LICENCE
@@ -727,7 +852,8 @@ Licence definitions can be viewed in `doc/licences`.
 
 These definitions cover most open source licences.
 
-If the licence is not detected, it is possible to use the `SKIP_LICENCES` directive, followed by the licence type, in `build.sh`. For example:
+If the licence is not detected, it is possible to use the `SKIP_LICENCES`
+directive, followed by the licence type, in `build.sh`. For example:
 
 ```none
 SKIP_LICENCES="Sleepycat"
@@ -749,7 +875,8 @@ license GPL-3.0.txt license=GPLv3
 
 ### When no licence is supplied in the source tarball
 
-It is possible to write a function in `build.sh`, to extract licence information in the source, if it is available.
+It is possible to write a function in `build.sh`, to extract licence
+information in the source, if it is available.
 
 An [example function](https://github.com/omniosorg/omnios-extra/blob/master/build/fcgiwrap/build.sh) to extract the licence is as follows:
 
@@ -766,11 +893,16 @@ The licence may then be determined by the `tools/licence` utility.
 
 ### When all else fails
 
-As a last resort, you may consider modifying the licence definition pattern in `doc/licences`. **You will need to let the maintainers explicitly aware of any changes to this file.**
+As a last resort, you may consider modifying the licence definition pattern in
+`doc/licences`. **You will need to let the maintainers explicitly aware of any
+changes to this file.**
 
 ## Adding package information to the build system
 
-To keep the "OmniOS Build System" up-to-date, new packages need to be added to files in the `doc/` directory. This is intuitive and can be achieved by simply browsing the files that need to be changed and then edit according, with details from the package that is being added.
+To keep the "OmniOS Build System" up-to-date, new packages need to be added to
+files in the `doc/` directory. This is intuitive and can be achieved by simply
+browsing the files that need to be changed and then edit according, with
+details from the package that is being added.
 
 The files that need editing are:
 
@@ -779,9 +911,15 @@ The files that need editing are:
 
 ## The build system's default "IPS Repository"
 
-The default “IPS Repository”, for the build system, that all packages will be published to, resides at the root directory of the cloned “OmniOS Extra IPS Repository”. The root directory of this default “IPS Repository” is named `tmp.repo`.
+The default "IPS Repository", for the build system, that all packages will be
+published to, resides at the root directory of the cloned "OmniOS Extra IPS
+Repository". The root directory of this default "IPS Repository" is
+named `tmp.repo`.
 
-The build systems “IPS Repository” may be imported on the local system. This is done by importing the `tmp.repo` either as a secondary “OmniOS Extra IPS Repository” (but in that case the signature-policy must be set to ignore), or a local.omnios publisher can be added. This can be achieved as follows:
+The build systems "IPS Repository" may be imported on the local system. This is
+done by importing the `tmp.repo` either as a secondary "OmniOS Extra IPS
+Repository" (but in that case the signature-policy must be set to ignore),
+or a local.omnios publisher can be added. This can be achieved as follows:
 
 ```none
 # cd /path/to/github/repos/omnios-extra/lib/
@@ -790,8 +928,8 @@ The build systems “IPS Repository” may be imported on the local system. This
 
 Change the line that defines PKGPUBLISHER :
 
-```none
-diff site.sh site.sh.template 
+```diff
+diff site.sh site.sh.template
 12c12
 < PKGPUBLISHER=local.omnios
 ---
@@ -809,9 +947,9 @@ With this set, the list of publishers should look similar to the following:
 ```none
 $ pkg publisher
 PUBLISHER                   TYPE     STATUS P LOCATION
-omnios                      origin   online F https://pkg.omnios.org/bloody/core/
-local.omnios                origin   online F file:///path/to/github/repos/omnios-extra/tmp.repo/
-extra.omnios                origin   online F https://pkg.omnios.org/bloody/extra/
+omnios              origin   online F https://pkg.omnios.org/bloody/core/
+local.omnios        origin   online F file:///path/to/github/repos/omnios-extra/tmp.repo/
+extra.omnios        origin   online F https://pkg.omnios.org/bloody/extra/
 ```
 
 # Tips for building specific types of packages
@@ -824,29 +962,49 @@ extra.omnios                origin   online F https://pkg.omnios.org/bloody/extr
 
 ## Building packages that share common elements
 
-When building a package for software that has many components, it may arise that the software should be split into separate packages. This presents a problem, when these packages share common elements, for example; the same user or directory structure.
+When building a package for software that has many components, it may arise
+that the software should be split into separate packages. This presents a
+problem, when these packages share common elements, for example; the same user
+or directory structure.
 
-The way to deal with this is to create a "*Common Package*" that the other packages can share.
+The way to deal with this is to create a "*Common Package*" that the other
+packages can share.
 
-A common package is simply a `.mog` file placed in the build directory of the main package that you are building. For example, the *Nagios* package, a `.mog` file named `nagios-common.p5m` is placed in the main build directory `build/nagios`. This file details the common elements shared with all the other *Nagios* packages.
+A common package is simply a `.mog` file placed in the build directory of the
+main package that you are building. For example, the *Nagios* package, a `.mog`
+file named `nagios-common.p5m` is placed in the main build directory
+`build/nagios`. This file details the common elements shared with all the other
+*Nagios* packages.
 
-For the build system to recognise this file, this *Common Package* should be added **only** to the `doc/baseline` file. This should not be added to `doc/packages.md`.
+For the build system to recognise this file, this *Common Package* should be
+added **only** to the `doc/baseline` file. This should not be added to
+`doc/packages.md`.
 
-Examining the contents of `nagios-common.p5m` and other `xxxxxx-common.p5m` files should give you a better understanding to contributing these types of packages.
+Examining the contents of `nagios-common.p5m` and other `xxxxxx-common.p5m`
+files should give you a better understanding to contributing these types of
+packages.
 
 ## Tips for building libraries
 
-Building libraries follows the same outline as building packages, however there are a few extra considerations that need to be applied.
+Building libraries follows the same outline as building packages, however there
+are a few extra considerations that need to be applied.
 
 ### Build for both 32 & 64 bit
 
-Libraries are built for both 32 & 64 bit architectures. This just requires omiting the `set_arch 64` directive from the standard `build.sh` file, that has been demonstrated in the "[Create a build directory and its build files](https://gitea.bcn.pbdigital.org/philip/knowledge-base/wiki/Omnios%3A-Extra-Build-Packages#user-content-create-a-build-directory-and-its-build-files)" section.
+Libraries are built for both 32 & 64 bit architectures. This just requires
+omiting the `set_arch 64` directive from the standard `build.sh` file, that has
+been demonstrated in the "[Create a build directory and its build
+files](https://gitea.bcn.pbdigital.org/philip/knowledge-base/wiki/Omnios%3A-Extra-Build-Packages#user-content-create-a-build-directory-and-its-build-files)"
+section.
 
 ### Drop 32 bit binaries
 
-If a library installs 32 bit binaries, it is necessary to drop these before building the package. This can be set in the `local.mog` file, of the library being built.
+If a library installs 32 bit binaries, it is necessary to drop these before
+building the package. This can be set in the `local.mog` file, of the library
+being built.
 
-This should be possible to achieve, with a statement in the `local.mog` file, similar to the following:
+This should be possible to achieve, with a statement in the `local.mog` file,
+similar to the following:
 
 ```
 # Drop 32bit binaries
@@ -855,7 +1013,10 @@ This should be possible to achieve, with a statement in the `local.mog` file, si
 
 ### Adding library information to the build system
 
-Similar to how information is added to `doc/...` files, when building a standard package, library packages need also to add information to the meta package `extra-build-tools`. Therefore the `build/meta/extra-build-tools.p5m` file will need editing.
+Similar to how information is added to `doc/...` files, when building a
+standard package, library packages need also to add information to the meta
+package `extra-build-tools`. Therefore the `build/meta/extra-build-tools.p5m`
+file will need editing.
 
 The complete list of files that need editing are:
 
@@ -888,11 +1049,14 @@ Coming Soon! In the meantime, [browse the build scripts of Rust packages in the 
 
 * Make sure that the package has been added to `doc/packages.md`
 
-* If the package is a library, make sure that it has been added to `build/meta/extra-build-tools.p5m`
+* If the package is a library, make sure that it has been added to
+  `build/meta/extra-build-tools.p5m`
 
 ## Create a "Pull Request" for the "OmniOS Extra IPS Repository"
 
-Once work has been completed for a new package, the `git branch` will be needed to be pushed to the fork of the "OmniOS Extra IPS Repository" that was created in the [first section](#create-the-build-environment).
+Once work has been completed for a new package, the `git branch` will be needed
+to be pushed to the fork of the "OmniOS Extra IPS Repository" that was created
+in the [first section](#create-the-build-environment).
 
 The procedure to update the fork is as follows:
 
@@ -903,39 +1067,52 @@ git commit -m 'name of package and version number'
 git push --set-upstream origin `git-branch`
 ```
 
-After the initial commit of the `git-branch` has been uploaded, it is possible to omit the `--set-upstream` option from subsequent updates. This is demonstrated below:
+After the initial commit of the `git-branch` has been uploaded, it is possible
+to omit the `--set-upstream` option from subsequent updates. This is
+demonstrated below:
 
 ```none
 git push origin `git-branch`
 ```
 
-Viewing the new branch online at <https://github.com>, it is now possible to create a new pull request. To the right of the "Branch" menu, click "New pull request" to submit the new package to OmniOS.
+Viewing the new branch online at <https://github.com>, it is now possible to
+create a new pull request. To the right of the "Branch" menu, click "New pull
+request" to submit the new package to OmniOS.
 
 ## Keeping updated with upstream omnios-extra
 
-If there have been commits upstream on the original master, after cloning the fork, it is necessary to ensure that the local repository is up-to-date with the remote master. This is done by first updating the local repository that has been cloned from the fork, and then, updating the fork with the newly updated local repository.
+If there have been commits upstream on the original master, after cloning the
+fork, it is necessary to ensure that the local repository is up-to-date with
+the remote master. This is done by first updating the local repository that has
+been cloned from the fork, and then, updating the fork with the newly updated
+local repository.
 
 ### Updating local repository with upstream remote
 
-First determine if the upstream `omniosorg/omnios-extra` repository is set as a remote.
+First determine if the upstream `omniosorg/omnios-extra` repository is set as a
+remote.
 
 ```none
 git remote -v
 ```
 
-If the upstream `ominosorg/omnios-extra` repository is not set, add this with the following command:
+If the upstream `ominosorg/omnios-extra` repository is not set, add this with
+the following command:
 
 ```none
 git remote add upstream https://github.com/omniosorg/omnios-extra.git
 ```
 
-Now confirm that the remote upstream `ominosorg/omnios-extra` repository  is set.
+Now confirm that the remote upstream `ominosorg/omnios-extra` repository  is
+set.
 
 ```none
 git remote -v
 ```
 
-To pull all the data from the remote into the local repository. Use the `fetch` and `merge` subcommands. Before doing this, check that the current branch is set to `master`.
+To pull all the data from the remote into the local repository. Use the `fetch`
+and `merge` subcommands. Before doing this, check that the current branch is
+set to `master`.
 
 ```none
 git branch
@@ -944,15 +1121,19 @@ git fetch upstream
 git merge upstream/master
 ```
 
-**git fetch** only downloads new data from a remote repository - but it doesn't integrate any of this new data into the working files.
+**git fetch** only downloads new data from a remote repository - but it doesn't
+integrate any of this new data into the working files.
 
 **git merge** is where the fetched data is pulled into the working files.
 
-After executing the above commands only the local repository will be up-to-date with the remote upstream `omniosorg/omnios-extra` repository.
+After executing the above commands only the local repository will be up-to-date
+with the remote upstream `omniosorg/omnios-extra` repository.
 
 ### Updating GitHub fork with local repository
 
-Once the local repository is up-to-date, it is recommended to push this local repository to GitHub so that the fork of `omniosorg/omnios-extra` is also up-to-date.
+Once the local repository is up-to-date, it is recommended to push this local
+repository to GitHub so that the fork of `omniosorg/omnios-extra` is also
+up-to-date.
 
 ```none
 git push origin master

@@ -43,7 +43,7 @@ CONFIGURE_OPTS="
     --with-pthreads
 "
 
-LDFLAGS64="-L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 export MAKE
 
 TESTSUITE_SED="/libtool/d"
@@ -59,7 +59,7 @@ fixup_config() {
 
 build_manifests() {
     manifest_start $TMPDIR/manifest.client
-    manifest_add_dir $PREFIX/lib pkgconfig $ISAPART64 $ISAPART64/pkgconfig
+    manifest_add_dir $PREFIX/lib pkgconfig amd64 amd64/pkgconfig
     manifest_add_dir $PREFIX/share/man/man3
     manifest_add_dir $PREFIX/include
     manifest_finalise $TMPDIR/manifest.client $OPREFIX

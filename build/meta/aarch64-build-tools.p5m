@@ -1,4 +1,4 @@
-set name=pkg.fmri value=pkg://@PKGPUBLISHER@/ooce/aarch64-build-tools@11,5.11-@PVER@
+set name=pkg.fmri value=pkg://$(PKGPUBLISHER)/ooce/aarch64-build-tools@11,$(SUNOSVER)-$(PVER)
 set name=pkg.summary value="Tools required to cross build OmniOS for aarch64"
 set name=pkg.description value="Tools required to cross build OmniOS for aarch64"
 

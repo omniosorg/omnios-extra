@@ -69,7 +69,7 @@ build_dependency libgpg-error libgpg-error-$LIBGPGERRORVER \
 restore_variable CONFIGURE_OPTS
 
 CPPFLAGS+=" -I$DEPROOT$PREFIX/include"
-LDFLAGS64+=" -L$DEPROOT$PREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -L$DEPROOT$PREFIX/lib/amd64"
 CONFIGURE_OPTS+=" --with-libgpg-error-prefix=$DEPROOT$PREFIX"
 
 build_dependency libgcrypt libgcrypt-$LIBGCRYPTVER \
@@ -96,7 +96,7 @@ restore_buildenv
 #########################################################################
 
 # libdns does currently not work reliably on OmniOS; disable it
-CONFIGURE_OPTS_WS="
+CONFIGURE_OPTS[WS]="
     --disable-static
     --disable-libdns
     --sysconfdir=/etc$OPREFIX
@@ -109,8 +109,8 @@ CONFIGURE_OPTS_WS="
     LDAPLIBS=\"-lldap_r -llber\"
 "
 CPPFLAGS+=" -I$DEPROOT$PREFIX/include -I$OPREFIX/include"
-LDFLAGS64+=" -L$DEPROOT$PREFIX/lib/$ISAPART64"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -L$DEPROOT$PREFIX/lib/amd64"
+LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 PATH+=":$DEPROOT$PREFIX/bin"
 
 download_source $PROG $PROG $VER

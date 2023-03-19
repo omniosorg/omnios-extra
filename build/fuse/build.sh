@@ -29,26 +29,19 @@ set_builddir "illumos-${PROG}fs-Version-$VER/kernel"
 
 MAKE=$USRBIN/dmake
 # build requires ctf tools
-PATH+=":$ONBLDBIN/$ISAPART"
+PATH+=":$ONBLDBIN/i386"
 
-# override CFLAGS for kernel module; flags taken from:
-# https://github.com/omniosorg/illumos-kvm/blob/master/Makefile#L105
-# omitting gcc version specific flags; removing -Werror for now.
-MAKE_ARGS=-e
-CFLAGS+=" $CFLAGS64"
-CFLAGS+=" -fident -fno-builtin -fno-asm -nodefaultlibs -Wall"
-CFLAGS+=" -Wno-unknown-pragmas -Wno-unused -fno-inline-functions"
-CFLAGS+=" -mcmodel=kernel -fno-shrink-wrap -g -O2 -fno-inline -ffreestanding"
-CFLAGS+=" -fno-strict-aliasing -Wpointer-arith -std=gnu99 -mno-red-zone"
-# From r151032, the kernel is built with retpolines
-[ $RELVER -ge 151032 ] \
-    && CFLAGS+=" -mindirect-branch=thunk-extern -mindirect-branch-register"
-export CFLAGS
+pre_configure() {
+    typeset arch=$1
 
-export LDFLAGS+=" -ztype=kmod"
+    CFLAGS+=" `echo ${CFLAGS[kmod]}`"
+    LDFLAGS+=" `echo ${LDFLAGS[kmod]}`"
+    subsume_arch $arch CFLAGS LDFLAGS
+    MAKE_ARGS=-e
 
-# No configure
-configure64() { :; }
+    # No configure
+    false
+}
 
 init
 download_source $PROG Version-$VER

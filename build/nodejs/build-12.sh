@@ -57,7 +57,7 @@ XFORM_ARGS="
 # node contains BMI instructions even when built on an older CPU
 BMI_EXPECTED=1
 
-CONFIGURE_OPTS_64=
+CONFIGURE_OPTS[amd64]=
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --with-dtrace

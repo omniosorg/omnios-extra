@@ -42,7 +42,7 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DLLVM_INCLUDE_DIRS=$OPREFIX/llvm-$CLANGVER/include
@@ -62,7 +62,7 @@ save_buildenv
 set_builddir llvm-project-$CLANGFVER.src/lld
 prep_build cmake+ninja
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     -DCMAKE_BUILD_TYPE=Release
     -DLLVM_MAIN_SRC_DIR=$TMPDIR/llvm-project-$CLANGFVER.src/llvm
 "
@@ -72,7 +72,7 @@ build_dependency -noctf lld-$CLANGVER llvm-project-$CLANGFVER.src/lld \
 
 restore_buildenv
 
-CONFIGURE_OPTS_64+="
+CONFIGURE_OPTS[amd64]+="
     -DLLD_INCLUDE_DIRS=$DEPROOT/usr/local/include
     -DLLD_LIBDIRS=$DEPROOT/usr/local/lib
 "

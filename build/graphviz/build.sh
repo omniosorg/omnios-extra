@@ -48,30 +48,30 @@ CONFIGURE_OPTS="
     --without-visio
     --disable-php
     --includedir=$OPREFIX/include
-    --libdir=$OPREFIX/lib/$ISAPART64
     PS2PDF=/bin/true
+"
+CONFIGURE_OPTS[amd64]+="
+    --libdir=$OPREFIX/lib/amd64
 "
 
 CPPFLAGS+=" -I$OPREFIX/include"
-LDFLAGS+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 
-checks() {
+post_install() {
+    logmsg "-- generating plugin configuration file"
+    LD_LIBRARY_PATH=$DESTDIR$OPREFIX/lib/amd64 \
+        GVBINDIR=$DESTDIR$OPREFIX/lib/amd64/$PROG \
+         logcmd $DESTDIR$PREFIX/bin/dot -c -v || logerr "dot -c failed"
+    egrep -s libgvplugin_core.so.6 \
+        $DESTDIR$OPREFIX/lib/amd64/$PROG/config6 \
+        || logerr "Plugin configuration file was not properly generated"
+
+    # checks
+
     for opt in LIBGD FONTCONFIG FREETYPE2 PANGOCAIRO; do
         egrep -s "HAVE_$opt 1" $TMPDIR/$BUILDDIR/config.log \
             || logerr "Option $opt is not enabled"
     done
-}
-
-save_function make_install _make_install
-make_install() {
-    _make_install "$@"
-    logmsg "-- generating plugin configuration file"
-    LD_LIBRARY_PATH=$DESTDIR$OPREFIX/lib/$ISAPART64 \
-        GVBINDIR=$DESTDIR$OPREFIX/lib/$ISAPART64/$PROG \
-         logcmd $DESTDIR$PREFIX/bin/dot -c -v || logerr "dot -c failed"
-    egrep -s libgvplugin_core.so.6 \
-        $DESTDIR$OPREFIX/lib/$ISAPART64/$PROG/config6 \
-        || logerr "Plugin configuration file was not properly generated"
 }
 
 init
@@ -79,7 +79,6 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-checks
 make_package
 clean_up
 

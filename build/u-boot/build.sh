@@ -26,13 +26,21 @@ set_arch 64
 
 MAKE_TARGET="sandbox_defconfig tools"
 
-configure64() {
+pre_configure() {
+    typeset arch=$1
+
     MAKE_ARGS_WS="
         V=1
         HOSTCC=\"$CC\"
-        HOSTCFLAGS=\"$CFLAGS $CFLAGS64 -I$PREFIX/include\"
-        HOSTLDLIBS=\"$LDFLAGS $LDFLAGS64 -L$PREFIX/lib/amd64 -lnsl -lsocket\"
+        HOSTCFLAGS=\"$CFLAGS ${CFLAGS[$arch]} -I$PREFIX/include\"
+        HOSTLDLIBS=\"
+            $LDFLAGS ${LDFLAGS[$arch]}
+            -L$PREFIX/${LIBDIRS[$arch]} -lnsl -lsocket
+        \"
     "
+
+    # no configure
+    false
 }
 
 make_install() {

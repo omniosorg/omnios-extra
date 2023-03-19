@@ -30,7 +30,7 @@ set_clangver # zig requires CC to be set
 BUILD_DEPENDS_IPS="ooce/developer/zig"
 
 # No configure
-configure64() { :; }
+pre_configure() { false; }
 
 # enable SSP and avoid BMI instructions
 export ZIG_FLAGS="-Drelease-safe -Dcpu=opteron"

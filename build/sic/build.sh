@@ -25,12 +25,17 @@ DESC+="250 lines of code. It is the little brother of irc it."
 
 set_arch 64
 
-# No configure
-configure64() { :; }
-
-CC=$GCC
 LDFLAGS+=" -lsocket"
-export CC CFLAGS LDFLAGS
+
+pre_configure() {
+    typeset arch=$1
+
+    subsume_arch $arch CFLAGS LDFLAGS
+    export CC=$GCC
+
+    # No configure
+    false
+}
 
 MAKE_INSTALL_ARGS="-e PREFIX=$PREFIX"
 

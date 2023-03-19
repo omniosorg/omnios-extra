@@ -40,12 +40,12 @@ CONFIGURE_OPTS="
     --with-rrd-default-font=LiberationMono-Regular
     --disable-ruby
 "
-CONFIGURE_OPTS_64+="
+CONFIGURE_OPTS[amd64]+="
     --libdir=$PREFIX/lib
     --with-tcllib=$OPREFIX/tcl/lib
 "
 
-LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
 
 export PYTHON
 

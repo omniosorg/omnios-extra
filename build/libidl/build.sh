@@ -36,17 +36,17 @@ CONFIGURE_OPTS="
     --prefix=$PREFIX
     --includedir=$OPREFIX/include
 "
-CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
-    --sbindir=$PREFIX/sbin/$ISAPART
+CONFIGURE_OPTS[i386]="
+    --bindir=$PREFIX/bin/i386
+    --sbindir=$PREFIX/sbin/i386
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --bindir=$PREFIX/bin
     --sbindir=$PREFIX/sbin
-    --libdir=$OPREFIX/lib/$ISAPART64
+    --libdir=$OPREFIX/lib/amd64
 "
-[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
+[ $RELVER -ge 151037 ] && LDFLAGS[i386]+=" -lssp_ns"
 
 init
 download_source $PROG $PROG $VER

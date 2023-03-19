@@ -27,8 +27,8 @@ forgo_isaexec
 # clock_gettime
 set_standard XPG6
 
-LDFLAGS32+=" -lssp_ns"
-LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -lssp_ns"
+LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER

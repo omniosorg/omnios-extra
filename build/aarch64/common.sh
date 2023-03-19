@@ -2,7 +2,7 @@
 . ../../../lib/build.sh
 
 ARCH=aarch64
-NATIVE_TRIPLET64=$TRIPLET64
+NATIVE_TRIPLET64=${TRIPLETS[amd64]}
 TRIPLET64=$ARCH-unknown-solaris2.11
 
 if [ $RELVER -lt 151045 ]; then

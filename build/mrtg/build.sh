@@ -37,14 +37,16 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
-CONFIGURE_OPTS="
-    --with-gd-inc=$OPREFIX/include
-    --with-gd-lib=$OPREFIX/lib/$ISAPART64
-"
+CONFIGURE_OPTS=" --with-gd-inc=$OPREFIX/include "
 
 reset_configure_opts
 
-LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]+=" --with-gd-lib=$OPREFIX/${LIBDIRS[$arch]} "
+    LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]} "
+}
 
 init
 download_source $PROG $PROG $VER

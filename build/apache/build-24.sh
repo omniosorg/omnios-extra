@@ -41,7 +41,7 @@ XFORM_ARGS+="
     -DUSER=webservd -DGROUP=webservd
 "
 
-CONFIGURE_OPTS_64=
+CONFIGURE_OPTS[amd64]=
 CONFIGURE_OPTS="
     --enable-layout=OOCE
     --prefix=$PREFIX

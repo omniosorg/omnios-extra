@@ -45,7 +45,9 @@ CONFIGURE_OPTS="
     --with-ssl-certs-dir=/etc/ssl/certs
     --without-tcl
     --with-ldap-include-dir=$OPREFIX/include
-    --with-ldap-lib-dir=$OPREFIX/lib/$ISAPART64
+"
+CONFIGURE_OPTS[amd64]+="
+    --with-ldap-lib-dir=$OPREFIX/lib/amd64
 "
 
 export LIBS=-luuid

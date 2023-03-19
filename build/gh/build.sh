@@ -23,12 +23,12 @@ SUMMARY="github-cli"
 DESC="The GitHub CLI tool"
 
 set_arch 64
-set_gover
+set_gover 1.18
 
 RUN_DEPENDS_IPS="developer/versioning/git"
 
 # No configure
-configure64() { :; }
+configure_amd64() { :; }
 
 MAKE_INSTALL_ARGS="prefix=$PREFIX"
 

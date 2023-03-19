@@ -25,18 +25,18 @@ DESC+="into the H.265/MPEG-H HEVC compression format"
 
 set_builddir $PROG-$VER/source
 
-CONFIGURE_OPTS_32="
+CONFIGURE_OPTS[i386]="
     -DLIB_INSTALL_DIR=lib
 "
-CONFIGURE_OPTS_64="
-    -DLIB_INSTALL_DIR=lib/$ISAPART64
+CONFIGURE_OPTS[amd64]="
+    -DLIB_INSTALL_DIR=lib/amd64
 "
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=$PREFIX
 "
 
-LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
 
 fix_version() {
     pushd $TMPDIR/$BUILDDIR >/dev/null
@@ -59,7 +59,7 @@ build64() {
     save_variable BUILDDIR
     BUILDDIR+="/10bit"
     logcmd mkdir -p $TMPDIR/$BUILDDIR || logerr "mkdir failed"
-    CONFIGURE_OPTS_64+="
+    CONFIGURE_OPTS[amd64]+="
         -DHIGH_BIT_DEPTH=ON
         -DEXPORT_C_API=OFF
         -DENABLE_SHARED=OFF
@@ -74,7 +74,7 @@ build64() {
     save_variable BUILDDIR
     BUILDDIR+="/12bit"
     logcmd mkdir -p $TMPDIR/$BUILDDIR || logerr "mkdir failed"
-    CONFIGURE_OPTS_64+="
+    CONFIGURE_OPTS[amd64]+="
         -DMAIN12=ON
     "
     _build64
@@ -85,7 +85,7 @@ build64() {
     restore_buildenv
 
     note -n "-- Building $PROG 8bit"
-    CONFIGURE_OPTS_64+="
+    CONFIGURE_OPTS[amd64]+="
         -DEXTRA_LIB=x265_main10.a;x265_main12.a
         -DEXTRA_LINK_FLAGS=-L$TMPDIR/_deproot
         -DLINKED_10BIT=ON -DLINKED_12BIT=ON

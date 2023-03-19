@@ -46,7 +46,7 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --prefix=$PREFIX
     --with-db-path=/var$PREFIX/cache
     --with-log-path=/var/log$PREFIX
@@ -62,8 +62,8 @@ default_config() {
 }
 
 CPPFLAGS+=" -D__OmniOS__ -I$OPREFIX/include"
-LDFLAGS64+=" -Wl,-L$OPREFIX/lib/$ISAPART64 -Wl,-R$OPREFIX/lib/$ISAPART64"
-LDFLAGS64+=" -lsocket -lsendfile"
+LDFLAGS[amd64]+=" -Wl,-L$OPREFIX/lib/amd64 -Wl,-R$OPREFIX/lib/amd64"
+LDFLAGS[amd64]+=" -lsocket -lsendfile"
 
 init
 prep_build

@@ -62,14 +62,18 @@ SKIP_RTIME_CHECK=1
 
 MAKE_INSTALL_TARGET=non-interactive-package
 
-configure64() {
+pre_configure() {
+    typeset arch=$1
+
     logmsg "--- configure (make makefiles)"
-    LIBDIR=${OPREFIX}/lib/${ISAPART64}
+
+    ARCHLIB=${LIBDIRS[$arch]}
+    LIBDIR=$OPREFIX/$ARCHLIB
     # help makedefs to find and successfully build a test program linking libicu
-    addpath PKG_CONFIG_PATH "$PKG_CONFIG_PATH64"
+    addpath PKG_CONFIG_PATH "$PKG_CONFIG_PATH[$arch]"
     export PKG_CONFIG_PATH
 
-    logcmd $MAKE makefiles CCARGS="$CFLAGS $CFLAGS64"' \
+    logcmd $MAKE makefiles CCARGS="$CFLAGS ${CFLAGS[$arch]}"' \
         -DUSE_TLS -DHAS_DB -DHAS_LMDB -DNO_NIS -DHAS_LDAP \
         -DHAS_SQLITE -DHAS_MYSQL -DHAS_PGSQL -DUSE_SASL_AUTH -DUSE_CYRUS_SASL \
         -DDEF_COMMAND_DIR=\"'${PREFIX}/sbin'\" \
@@ -88,11 +92,13 @@ configure64() {
         AUXLIBS="-L$LIBDIR -Wl,-R$LIBDIR -ldb -lsasl2 -lssl -lcrypto" \
         AUXLIBS_LDAP="-lldap_r -llber" \
         AUXLIBS_SQLITE="-lsqlite3" \
-        AUXLIBS_MYSQL="-L${OPREFIX}/mariadb-${MARIASQLVER}/lib/${ISAPART64} -Wl,-R${OPREFIX}/mariadb-${MARIASQLVER}/lib/${ISAPART64} -lmysqlclient" \
-        AUXLIBS_PGSQL="-L${OPREFIX}/pgsql-${PGSQLVER}/lib/${ISAPART64} -Wl,-R${OPREFIX}/pgsql-${PGSQLVER}/lib/${ISAPART64} -lpq" \
+        AUXLIBS_MYSQL="-L${OPREFIX}/mariadb-${MARIASQLVER}/$ARCHLIB -Wl,-R${OPREFIX}/mariadb-${MARIASQLVER}/$ARCHLIB -lmysqlclient" \
+        AUXLIBS_PGSQL="-L${OPREFIX}/pgsql-${PGSQLVER}/$ARCHLIB -Wl,-R${OPREFIX}/pgsql-${PGSQLVER}/$ARCHLIB -lpq" \
         AUXLIBS_LMDB="-llmdb" \
         AUXLIBS_PCRE="-lpcre2" \
             || logerr "Failed make makefiles command"
+
+    false
 }
 
 make_clean() {

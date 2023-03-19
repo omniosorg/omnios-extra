@@ -36,10 +36,10 @@ CONFIGURE_OPTS="
     --disable-static
     --disable-dane-ta-usage
 "
-CONFIGURE_OPTS_32+="
-    --bindir=$PREFIX/bin/$ISAPART
+CONFIGURE_OPTS[i386]+="
+    --bindir=$PREFIX/bin/i386
 "
-CONFIGURE_OPTS_64+="
+CONFIGURE_OPTS[amd64]+="
     --bindir=$PREFIX/bin
     --with-drill
     --with-examples
@@ -52,9 +52,9 @@ make_clean() {
 
 make_isa_stub() {
     pushd $DESTDIR$PREFIX/bin >/dev/null
-    logcmd mkdir -p $ISAPART64
-    logcmd mv ldns-config $ISAPART64/ || logerr "mv ldns-config"
-    make_isaexec_stub_arch $ISAPART64 $PREFIX/bin
+    logcmd mkdir -p amd64
+    logcmd mv ldns-config amd64/ || logerr "mv ldns-config"
+    make_isaexec_stub_arch amd64 $PREFIX/bin
     popd >/dev/null
 }
 

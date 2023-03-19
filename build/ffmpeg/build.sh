@@ -66,19 +66,19 @@ CONFIGURE_OPTS+="
     --enable-libx265
     --enable-gnutls
 "
-CONFIGURE_OPTS_32="
+CONFIGURE_OPTS[i386]="
     --disable-librav1e
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --enable-librav1e
-    --libdir=$OPREFIX/lib/$ISAPART64
+    --libdir=$OPREFIX/lib/amd64
 "
 
 # to find x264.h for builtin check
 CPPFLAGS+=" -I$OPREFIX/include"
-LDFLAGS32+=" -Wl,-R$OPREFIX/lib"
-LDFLAGS64+=" -Wl,-R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -Wl,-R$OPREFIX/lib"
+LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/lib/amd64"
 
 init
 prep_build autoconf-like

@@ -18,8 +18,8 @@ CONFIGURE_OPTS="--disable-static"
 
 addpath PKG_CONFIG_PATH $PREFIX/share/pkgconfig
 
-LDFLAGS32+=" -R$PREFIX/lib -lssp_ns"
-LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -R$PREFIX/lib -lssp_ns"
+LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
 
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker

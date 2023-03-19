@@ -47,7 +47,7 @@ XFORM_ARGS="
     -DNOVNCVER=$NOVNCVER
 "
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --prefix=$PREFIX
     --sysconfdir=/etc$PREFIX
     --localstatedir=/var$PREFIX

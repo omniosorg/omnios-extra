@@ -44,7 +44,7 @@ CONFIGURE_OPTS="
     --prefix=$PREFIX
     --sysconfdir=/etc/$PREFIX
 "
-LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER

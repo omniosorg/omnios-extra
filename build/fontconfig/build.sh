@@ -50,15 +50,15 @@ CONFIGURE_OPTS="
     --with-default-fonts=$OPREFIX/share/fonts
     --with-cache-dir=/var/$PREFIX/cache
 "
-CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
-    --sbindir=$PREFIX/sbin/$ISAPART
+CONFIGURE_OPTS[i386]="
+    --bindir=$PREFIX/bin/i386
+    --sbindir=$PREFIX/sbin/i386
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --bindir=$PREFIX/bin
     --sbindir=$PREFIX/sbin
-    --libdir=$OPREFIX/lib/$ISAPART64
+    --libdir=$OPREFIX/lib/amd64
 "
 
 # The build framework expects GNU tools
@@ -69,8 +69,8 @@ rem_abs_symlinks() {
     logcmd rm -f $DESTDIR/etc$PREFIX/fonts/conf.d/*.conf
 }
 
-LDFLAGS32+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-LDFLAGS64+=" -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
+LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER

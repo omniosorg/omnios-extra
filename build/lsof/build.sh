@@ -42,12 +42,13 @@ MAKE_ARGS_WS="
     DEBUG=\"$CTF_CFLAGS $SSPFLAGS\"
 "
 
-configure64() {
-    logmsg "--- configure (64-bit)"
+pre_configure() {
     yes | logcmd ./Configure solaris || logerr "--- Configure failed"
+    # Skip normal configure path
+    false
 }
 
-make_install64() {
+make_install() {
     logmsg "--- make install"
     mkdir -p $DESTDIR$PREFIX/share/man/man8
     mkdir -p $DESTDIR$PREFIX/bin

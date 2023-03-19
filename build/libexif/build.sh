@@ -32,13 +32,13 @@ CONFIGURE_OPTS="
     --includedir=$OPREFIX/include
     --disable-static
 "
-CONFIGURE_OPTS_32="
+CONFIGURE_OPTS[i386]="
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64="
-    --libdir=$OPREFIX/lib/$ISAPART64
+CONFIGURE_OPTS[amd64]="
+    --libdir=$OPREFIX/lib/amd64
 "
-[ $RELVER -ge 151037 ] && LDFLAGS32+=" -lssp_ns"
+[ $RELVER -ge 151037 ] && LDFLAGS[i386]+=" -lssp_ns"
 
 init
 download_source $PROG $PROG $VER

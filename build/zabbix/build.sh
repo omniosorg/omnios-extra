@@ -53,28 +53,25 @@ CONFIGURE_OPTS="
     --enable-server
     --enable-ipv6
     --with-libevent=$OPREFIX
-    --with-libevent-lib=$OPREFIX/lib/$ISAPART64
     --with-net-snmp
     --with-libcurl
     --with-libxml2
     --with-openssl
     --with-ldap=$OPREFIX
 "
-CONFIGURE_OPTS_64+="
+CONFIGURE_OPTS[amd64]+="
     --libdir=$PREFIX/lib
+    --with-libevent-lib=$OPREFIX/lib/amd64
 "
 
 # See https://support.zabbix.com/browse/ZBX-18210
 # and https://support.zabbix.com/browse/ZBX-16928
 CFLAGS+=" -DDUK_USE_BYTEORDER=1"
 
-LDFLAGS+=" -R$OPREFIX/lib/$ISAPART64 "
+LDFLAGS+=" -R$OPREFIX/lib/amd64 "
 LIBS+=" -lumem"
 
-save_function make_install _make_install
-make_install() {
-    _make_install "$@"
-
+post_install() {
     logcmd rsync -a ui/ $DESTDIR/$PREFIX/ui/ \
         || logerr "rsync ui failed"
 
@@ -113,12 +110,12 @@ CONFIGURE_OPTS+="
 LDFLAGS+=" -R`$pgconfig --libdir`"
 build -ctf
 restore_buildenv
+unset -f post_install
 
 note -n "Building Mariadb variant"
 
 save_buildenv
 save_variable DESTDIR
-save_function _make_install make_install
 DESTDIR+="_mariadb"
 CONFIGURE_OPTS+=" --with-mysql=$mariaconfig"
 LDFLAGS+=" -R`$mariaconfig --libs | cut -d\  -f1 | cut -dL -f2`"

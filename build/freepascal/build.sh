@@ -41,15 +41,17 @@ XFORM_ARGS="
 
 MAKE_TARGET=all
 
-configure64() {
+pre_configure() {
     logmsg "--- Generating Makefile"
     logcmd fpcmake Makefile.fpc || logerr "failed to generate Makefile"
+
+    MAKE_INSTALL_ARGS="PREFIX=$DESTDIR$PREFIX"
+
+    # no configure
+    false
 }
 
-save_function make_install _make_install
-make_install() {
-    MAKE_INSTALL_ARGS="PREFIX=$DESTDIR$PREFIX"
-    _make_install
+post_install() {
     logcmd mkdir -p $DESTDIR/etc$PREFIX || logerr "mkdir"
     logcmd $DESTDIR$PREFIX/lib/fpc/$VER/samplecfg $PREFIX/lib/fpc/$VER \
         $DESTDIR/etc$PREFIX || logerr "create config failed"

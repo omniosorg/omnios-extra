@@ -27,7 +27,7 @@ DESC="Reorganize tables in PostgreSQL XX databases with minimal locks"
 set_builddir pg_repack-ver_$VER
 
 # No configure
-configure64() { :; }
+pre_configure() { false; }
 
 init
 download_source $PROG ver_$VER

@@ -31,7 +31,19 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-configure64() { :; }
+pre_configure() {
+    typeset arch=$1
+
+    MAKE_ARGS_WS="
+        CXXFLAGS=\"$CXXFLAGS ${CXXFLAGS[$arch]}\"
+        LDFLAGS=\"$LDFLAGS ${LDFLAGS[$arch]}\"
+        LDLIBS_PTHREAD=
+    "
+    MAKE_INSTALL_ARGS="PREFIX=$PREFIX"
+
+    # no configure
+    false
+}
 
 init
 download_source $PROG $PROG $VER

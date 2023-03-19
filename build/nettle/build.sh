@@ -31,8 +31,8 @@ CONFIGURE_OPTS="
 "
 
 CPPFLAGS+=" -I/usr/include/gmp"
-LDFLAGS32+=" -R$PREFIX/lib"
-LDFLAGS64+=" -R$PREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -R$PREFIX/lib"
+LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER

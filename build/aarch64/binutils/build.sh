@@ -46,7 +46,7 @@ HARDLINK_TARGETS="
     ${PREFIX#/}/usr/gnu/$TRIPLET64/bin/strip
 "
 
-CONFIGURE_OPTS="
+CONFIGURE_OPTS[amd64]+="
     --exec-prefix=$PREFIX/usr/gnu
     --target=$TRIPLET64
     --with-sysroot

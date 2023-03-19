@@ -59,7 +59,7 @@ RUSTARCH=x86_64-unknown-illumos
 
 CONFIGURE_CMD="$PYTHON src/bootstrap/configure.py"
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --prefix=$PREFIX
     --sysconfdir=/etc$PREFIX
     --localstatedir=/var$PREFIX
@@ -106,10 +106,8 @@ TESTSUITE_SED="
     b op
 "
 
-save_function make_install _make_install
-make_install() {
+pre_install() {
     logcmd mkdir -p $DESTDIR/$PREFIX || logerr "failed to create directory"
-    _make_install "$@"
 }
 
 init

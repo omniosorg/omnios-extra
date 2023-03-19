@@ -41,21 +41,21 @@ CONFIGURE_OPTS="
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DWITH_WEBSOCKETS=0
 "
-CONFIGURE_OPTS_32=
-CONFIGURE_OPTS_64="-DCMAKE_LIBRARY_PATH=$PREFIX/lib/$ISAPART64"
+CONFIGURE_OPTS[i386]=
+CONFIGURE_OPTS[amd64]="-DCMAKE_LIBRARY_PATH=$PREFIX/lib/amd64"
 
-LDFLAGS32+=" -L$PREFIX/lib -R$PREFIX/lib"
-LDFLAGS64+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -L$PREFIX/lib -R$PREFIX/lib"
+LDFLAGS[amd64]+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
 CFLAGS+=" -D_REENTRANT"
 
-BUILDORDER="64 32"
+[ "$BUILDARCH" = "i386 amd64" ] && BUILDARCH="amd64 i386"
 
-save_function make_install64 _make_install64
-make_install64() {
-    _make_install64
+post_install() {
+    [ $1 = amd64 ] || return
+
     pushd $DESTDIR/$PREFIX >/dev/null
-    logcmd mkdir -p lib/$ISAPART64/
-    logcmd mv lib/*.so.* lib/pkgconfig lib/$ISAPART64/
+    logcmd mkdir -p lib/amd64/
+    logcmd mv lib/*.so.* lib/pkgconfig lib/amd64/
     popd >/dev/null
 }
 

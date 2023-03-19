@@ -46,7 +46,6 @@ XFORM_ARGS="
     -DUSER=clamav -DGROUP=clamav
 "
 
-CONFIGURE_OPTS_64=
 CONFIGURE_OPTS="
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DAPP_CONFIG_DIRECTORY=/etc$PREFIX
@@ -59,13 +58,14 @@ CONFIGURE_OPTS="
     -DENABLE_EXAMPLES=OFF
     -DENABLE_TESTS=OFF
     -DENABLE_SYSTEMD=OFF
-
-    -DJSONC_LIBRARY=$OPREFIX/lib/$ISAPART64/libjson-c.so
+"
+CONFIGURE_OPTS[amd64]="
+    -DJSONC_LIBRARY=$OPREFIX/lib/amd64/libjson-c.so
 "
 [ $RELVER -ge 151042 ] && CONFIGURE_OPTS+=" -DBYTECODE_RUNTIME=llvm"
 LDFLAGS+=" -lncurses"
 
-function prepare_config {
+post_install() {
     pushd $DESTDIR/etc$PREFIX >/dev/null || logerr "pushd etc"
     local tf=`mktemp`
     for f in clamd.conf freshclam.conf; do
@@ -76,6 +76,10 @@ function prepare_config {
     done
     rm -f $tf
     popd >/dev/null
+
+    add_notes README.install
+    xform $SRCDIR/files/clamav.xml > $TMPDIR/clamav.xml
+    install_smf -oocemethod ooce clamav.xml
 }
 
 init
@@ -83,10 +87,6 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build cmake+ninja
 build
-add_notes README.install
-prepare_config
-xform files/clamav.xml > $TMPDIR/clamav.xml
-install_smf -oocemethod ooce clamav.xml
 make_package
 clean_up
 

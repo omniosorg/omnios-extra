@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=mattermost
-VER=7.5.0
+VER=7.5.2
 MMCTLVER=7.5.0
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
@@ -25,7 +25,7 @@ DESC="All your team communication in one place, "
 DESC+="instantly searchable and accessible anywhere."
 
 set_arch 64
-set_gover
+set_gover 1.18
 set_nodever
 
 BUILD_DEPENDS_IPS+="
@@ -36,8 +36,8 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 export BUILD_NUMBER=$VER
-export PKG_CONFIG_PATH=$PKG_CONFIG_PATH64
 export PATH="$GNUBIN:$PATH"
+subsume_arch $BUILDARCH PKG_CONFIG_PATH
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -55,22 +55,40 @@ XFORM_ARGS="
 gitenv() {
     GITCONFIG=$TMPDIR/gitconfig
     : > $GITCONFIG
-    logcmd git config -f $GITCONFIG url."github.com/".insteadOf git@github.com/
-    logcmd git config -f $GITCONFIG url."https://".insteadOf ssh://
+    logcmd $GIT config -f $GITCONFIG url."github.com/".insteadOf git@github.com/
+    logcmd $GIT config -f $GITCONFIG url."https://".insteadOf ssh://
 
     GITBIN=$TMPDIR/gitbin
-    logcmd rm -rf $GITBIN
-    logcmd mkdir $GITBIN || logerr "Cannot create $GITBIN"
-    cat << EOM > $GITBIN/git
+    logcmd $RM -rf $GITBIN
+    logcmd $MKDIR $GITBIN || logerr "Cannot create $GITBIN"
+    $CAT << EOM > $GITBIN/git
 #!/bin/sh
 GIT_CONFIG_GLOBAL=$GITCONFIG /usr/bin/git "\$@"
 EOM
-    logcmd chmod +x $GITBIN/git
+    logcmd $CHMOD +x $GITBIN/git
 
     PATH="$GITBIN:$PATH"
 }
 
-build() {
+download_source() {
+    gitenv
+    save_variables BUILDDIR EXTRACTED_SRC
+
+    clone_go_source mmctl $PROG v$MMCTLVER
+    restore_variables BUILDDIR EXTRACTED_SRC
+
+    GOPATH=$TMPDIR/$BUILDDIR/$PROG-server/_deps
+    clone_go_source "$PROG-server" $PROG v$VER
+    restore_variables BUILDDIR EXTRACTED_SRC
+
+    clone_github_source -dependency "$PROG-webapp" \
+        "$GITHUB/$PROG/$PROG-webapp" v$VER
+    restore_variables BUILDDIR EXTRACTED_SRC
+
+    ((EXTRACT_MODE)) && exit
+}
+
+build_component() {
     prog="$1"; shift
 
     note -n "Building $prog"
@@ -84,47 +102,51 @@ build() {
     popd >/dev/null
 
     logmsg "Fixing permissions on $prog dependencies"
-    logcmd chmod -R u+w $GOPATH
+    logcmd $CHMOD -R u+w $GOPATH
+}
+
+build_mmctl() {
+    build_component mmctl "ADVANCED_VET=FALSE"
+}
+
+build_webapp() {
+    save_variable LDFLAGS
+    LDFLAGS+=" -R$OPREFIX/lib/amd64"
+    subsume_arch $BUILDARCH LDFLAGS
+    build_component $PROG-webapp build
+    restore_variable LDFLAGS
+}
+
+build_server() {
+    build_component $PROG-server build-illumos package-illumos
+}
+
+build() {
+    for component in mmctl webapp server; do
+        [ -n "$FLAVOR" -a "$FLAVOR" != $component ] && continue
+        build_$component
+    done
 }
 
 install() {
-    logcmd mkdir -p $DESTDIR/$OPREFIX || logerr "mkdir"
+    logcmd $MKDIR -p $DESTDIR/$OPREFIX || logerr "mkdir"
 
-    logcmd rsync -a $TMPDIR/$BUILDDIR/$PROG-server/dist/$PROG \
+    logcmd $RSYNC -a $TMPDIR/$BUILDDIR/$PROG-server/dist/$PROG \
         $DESTDIR/$OPREFIX/ || logerr "copying dist"
 
-    logcmd cp $TMPDIR/$BUILDDIR/mmctl/mmctl $DESTDIR/$PREFIX/bin \
+    logcmd $CP $TMPDIR/$BUILDDIR/mmctl/mmctl $DESTDIR/$PREFIX/bin \
         || logerr "copying mmctl"
 
     logmsg "Creating config path"
-    logcmd mkdir -p $DESTDIR/etc/$PREFIX || logerr "creating config dir"
-    logcmd mv $DESTDIR/$PREFIX/config/* $DESTDIR/etc/$PREFIX \
+    logcmd $MKDIR -p $DESTDIR/etc/$PREFIX || logerr "creating config dir"
+    logcmd $MV $DESTDIR/$PREFIX/config/* $DESTDIR/etc/$PREFIX \
         || logerr "copying config"
 }
 
 init
 prep_build
-gitenv
-save_variables BUILDDIR EXTRACTED_SRC
-clone_go_source mmctl $PROG v$MMCTLVER
-restore_variables BUILDDIR EXTRACTED_SRC
-clone_go_source "$PROG-server" $PROG v$VER
-restore_variables BUILDDIR EXTRACTED_SRC
-clone_github_source -dependency "$PROG-webapp" \
-    "$GITHUB/$PROG/$PROG-webapp" v$VER
-((EXTRACT_MODE)) && exit
-build mmctl "ADVANCED_VET=FALSE"
-
-if [ $RELVER -lt 151033 ]; then
-    export PKG_CONFIG_PATH="$PKG_CONFIG_PATH32"
-    export LDFLAGS=" -R$OPREFIX/lib"
-else
-    export LDFLAGS=" -R$OPREFIX/lib/$ISAPART64"
-fi
-build $PROG-webapp build
-export LDFLAGS=
-
-build $PROG-server build-illumos package-illumos
+download_source
+build
 install
 install_smf application $PROG.xml
 make_package

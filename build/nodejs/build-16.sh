@@ -21,7 +21,8 @@ VER=16.19.1
 PKG=ooce/runtime/node-16
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
-DESC+="It is intended for writing scalable network programs such as web servers."
+DESC+="It is intended for writing scalable network programs such as web "
+DESC+="servers."
 
 MAJVER=${VER%%.*}
 
@@ -48,7 +49,7 @@ XFORM_ARGS="
 # node contains BMI instructions even when built on an older CPU
 BMI_EXPECTED=1
 
-CONFIGURE_OPTS_64=
+CONFIGURE_OPTS[amd64]=
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --with-dtrace

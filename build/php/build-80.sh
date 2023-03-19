@@ -92,7 +92,7 @@ CONFIGURE_CMD=/bin/true \
     MAKE_TARGET=gso \
     MAKE_ARGS="SSLLIB=/usr/lib/64 SSLTYPE=unix" \
     MAKE_ARGS_WS="
-        EXTRACFLAGS=\"-I$OPENSSLPATH/include/openssl $CFLAGS $CFLAGS64\"
+        EXTRACFLAGS=\"-I$OPENSSLPATH/include/openssl $CFLAGS ${CFLAGS[amd64]}\"
     " \
     build_dependency uw-imap panda-imap-master uw-imap panda-imap $PANDAHASH
 
@@ -103,7 +103,7 @@ note -n "Building $PROG $VER"
 
 ######################################################################
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --prefix=$PREFIX
     --sysconfdir=$CONFPATH
     --localstatedir=$VARPATH
@@ -151,11 +151,11 @@ CONFIGURE_OPTS_64="
 "
 
 # opcache-jit does not build on r151030
-[ $RELVER -lt 151036 ] && CONFIGURE_OPTS_64+=" --disable-opcache-jit"
+[ $RELVER -lt 151036 ] && CONFIGURE_OPTS[amd64]+=" --disable-opcache-jit"
 
 CPPFLAGS+=" -I/usr/include/gmp"
 CPPFLAGS+=" -I$OPREFIX/libzip/include"
-LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/$ISAPART64 -R$OPREFIX/lib/$ISAPART64"
+LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 
 save_function configure64 _configure64
 function configure64() {

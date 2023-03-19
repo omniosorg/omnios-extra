@@ -51,7 +51,7 @@ prep_build
 save_buildenv
 
 CONFIGURE_OPTS=" -Ddefault_library=static"
-LDFLAGS64+=" -lsocket"
+LDFLAGS[amd64]+=" -lsocket"
 
 build_dependency -meson libslirp libslirp-v$LIBSLIRPVER \
     $PROG/libslirp libslirp v$LIBSLIRPVER
@@ -64,9 +64,9 @@ build_dependency libtasn1 libtasn1-$LIBTASN1VER \
 restore_buildenv
 
 CFLAGS+=" -I$DEPROOT$PREFIX/include -I$DEPROOT$PREFIX/include/slirp"
-LDFLAGS64+=" -L$DEPROOT$PREFIX/lib/$ISAPART64"
+LDFLAGS[amd64]+=" -L$DEPROOT$PREFIX/lib/amd64"
 
-addpath PKG_CONFIG_PATH64 $DEPROOT$PREFIX/lib/$ISAPART64/pkgconfig
+addpath PKG_CONFIG_PATH[amd64] $DEPROOT$PREFIX/lib/amd64/pkgconfig
 
 #########################################################################
 
@@ -90,7 +90,7 @@ fixup() {
 
     local P=${PREFIX#/}
 
-    rpath64="/usr/gcc/$GCCVER/lib/$ISAPART64:$OPREFIX/lib/$ISAPART64"
+    rpath64="/usr/gcc/$GCCVER/lib/amd64:$OPREFIX/lib/amd64"
     for obj in $P/bin/*; do
         [ -f "$obj" ] || continue
         logmsg "--- fixing runpath for $obj"

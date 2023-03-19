@@ -40,15 +40,15 @@ XFORM_ARGS="
 CONFIGURE_OPTS+="
     --disable-static
 "
-CONFIGURE_OPTS_32+="
+CONFIGURE_OPTS[i386]+="
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64+="
-    --libdir=$OPREFIX/lib/$ISAPART64
+CONFIGURE_OPTS[amd64]+="
+    --libdir=$OPREFIX/lib/amd64
 "
 
-LDFLAGS32+=" -Wl,-R$OPREFIX/lib"
-LDFLAGS64+=" -Wl,-R$OPREFIX/lib/$ISAPART64"
+LDFLAGS[i386]+=" -Wl,-R$OPREFIX/lib"
+LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER

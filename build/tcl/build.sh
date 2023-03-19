@@ -43,18 +43,16 @@ XFORM_ARGS="
     -DVERSION=$MAJVER
 "
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --prefix=$PREFIX
     --enable-man-symlinks
     --mandir=$PREFIX/share/man
     --enable-64bit
 "
 
-save_function configure64 _configure64
-configure64() {
-    _configure64
-
+post_configure() {
     pushd $TMPDIR/$BUILDDIR/../doc >/dev/null
+
     for f in *.n ; do
         manbase=`basename "$f" .n`
         mv "$f" "${manbase}.1t"
@@ -65,6 +63,8 @@ configure64() {
     done
 
     popd >/dev/null
+
+    unset -f post_configure
 }
 
 init
@@ -96,8 +96,6 @@ SKIP_LICENCES=NIST
 # pkgdepend fails dependency resulution because TCL is not available, yet
 RUN_DEPENDS_IPS="ooce/runtime/tcl"
 
-set_arch 64
-
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
@@ -105,13 +103,11 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --prefix=$PREFIX
     --enable-64bit
     --with-tcl=$TCLDIR
 "
-
-save_function _configure64 configure64
 
 init
 download_source $PROG $PROG$VER

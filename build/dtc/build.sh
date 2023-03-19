@@ -24,26 +24,30 @@ DESC="$PROG - $SUMMARY"
 
 set_arch 64
 
-# No configure
-configure64() { :; }
-
 NO_SONAME_EXPECTED=1
 
-# TODO: no debug info/SSP for shared library
-MAKE_ARGS="
-    NO_YAML=1
-    NO_PYTHON=1
-    PREFIX=$PREFIX
-"
-MAKE_ARGS_WS="
-    EXTRA_CFLAGS=\"$CTF_CFLAGS $SSPFLAGS\"
-    SHAREDLIB_LDFLAGS=\"-shared -Wl,-soname\"
-    LDFLAGS=\"-R$PREFIX/lib/$ISAPART64\"
-"
-MAKE_INSTALL_ARGS="
-    $MAKE_ARGS
-    LIBDIR=$PREFIX/lib/$ISAPART64/libfdt
-"
+pre_configure() {
+    typeset arch=$1
+
+    # TODO: no debug info/SSP for shared library
+    MAKE_ARGS="
+        NO_YAML=1
+        NO_PYTHON=1
+        PREFIX=$PREFIX
+    "
+    MAKE_ARGS_WS="
+        EXTRA_CFLAGS=\"$CFLAGS ${CFLAGS[$arch]}\"
+        SHAREDLIB_LDFLAGS=\"-shared -Wl,-soname\"
+        LDFLAGS=\"-R$PREFIX/${LIBDIRS[$arch]}\"
+    "
+    MAKE_INSTALL_ARGS="
+        $MAKE_ARGS
+        LIBDIR=$PREFIX/${LIBDIRS[$arch]}/libfdt
+    "
+
+    # no configure
+    false
+}
 
 init
 download_source $PROG $PROG $VER

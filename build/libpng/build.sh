@@ -39,24 +39,24 @@ CONFIGURE_OPTS="
     --prefix=$PREFIX
     --includedir=$OPREFIX/include
 "
-CONFIGURE_OPTS_32="
-    --bindir=$PREFIX/bin/$ISAPART
-    --sbindir=$PREFIX/sbin/$ISAPART
+CONFIGURE_OPTS[i386]="
+    --bindir=$PREFIX/bin/i386
+    --sbindir=$PREFIX/sbin/i386
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --bindir=$PREFIX/bin
     --sbindir=$PREFIX/sbin
-    --libdir=$OPREFIX/lib/$ISAPART64
+    --libdir=$OPREFIX/lib/amd64
 "
 
 # Make ISA binaries for libpng-config, to allow software to find the
 # right settings for 32/64-bit when pkg-config is not used.
 make_isa_stub() {
     pushd $DESTDIR$PREFIX/bin >/dev/null
-    logcmd mkdir -p $ISAPART64
-    logcmd mv libpng*-config $ISAPART64/ || logerr "mv libpng-config"
-    make_isaexec_stub_arch $ISAPART64 $PREFIX/bin
+    logcmd mkdir -p amd64
+    logcmd mv libpng*-config amd64/ || logerr "mv libpng-config"
+    make_isaexec_stub_arch amd64 $PREFIX/bin
     popd >/dev/null
 }
 

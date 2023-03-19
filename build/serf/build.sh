@@ -21,38 +21,35 @@ VER=1.3.9
 SCONS_VER=3.1.2
 PKG=ooce/library/serf
 SUMMARY="High performance C-based HTTP client library"
-DESC="Apache's high performance C-based HTTP client \
-library built upon the Apache Portable Runtime (APR) \
-library." 
+DESC="Apache's high performance C-based HTTP client library built upon the "
+DESC+="Apache Portable Runtime (APR) library."
 
 CONFIGURE_OPTS="
     PREFIX=$PREFIX
     CPPFLAGS=-DPATH_MAX=1024
 "
-CONFIGURE_OPTS_32=
-CONFIGURE_OPTS_64=
-CONFIGURE_OPTS_WS_32="
-    APR=$PREFIX/bin/$ISAPART/apr-1-config
-    APU=$PREFIX/bin/$ISAPART/apu-1-config
-    CFLAGS=\"$CFLAGS $CFLAGS32 $CTF_CFLAGS\"
-    LINKFLAGS=\"$LDFLAGS $LDFLAGS32\"
-"
-[ $RELVER -ge 151037 ] && CONFIGURE_OPTS_WS_32+=" LIBS=\"-lssp_ns\""
-CONFIGURE_OPTS_WS_64="
-    APR=$PREFIX/bin/$ISAPART64/apr-1-config
-    APU=$PREFIX/bin/$ISAPART64/apu-1-config
-    CFLAGS=\"$CFLAGS $CFLAGS64 $CTF_CFLAGS\"
-    LINKFLAGS=\"$LDFLAGS $LDFLAGS64\"
-    LIBDIR=$PREFIX/lib/$ISAPART64
-"
+CONFIGURE_OPTS[i386]="LIBS=-lssp_ns"
+CONFIGURE_OPTS[amd64]=
 
-make_prog() { :; }
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[${arch}_WS]="
+        GCC=$GCC
+        APR=$PREFIX/bin/$arch/apr-1-config
+        APU=$PREFIX/bin/$arch/apu-1-config
+        CFLAGS=\"$CFLAGS ${CFLAGS[$arch]}\"
+        LINKFLAGS=\"$LDFLAGS ${LDFLAGS[$arch]}\"
+        LIBDIR=\"$PREFIX/${LIBDIRS[$arch]}\"
+    "
+}
+
+make_arch() { :; }
 
 make_install() {
     logmsg "-- make install"
     $CONFIGURE_CMD install --install-sandbox=$DESTDIR
 }
-
 
 init
 BUILDDIR=scons-local-$SCONS_VER download_source scons scons-local-$SCONS_VER

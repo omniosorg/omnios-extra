@@ -44,7 +44,7 @@ set_builddir $PROG-$VER-source
 # texlive doesn't check for gmake
 export MAKE
 
-CONFIGURE_OPTS_64="
+CONFIGURE_OPTS[amd64]="
     --prefix=$PREFIX
     --bindir=$PREFIX/bin
     --sysconfdir=/etc$PREFIX
@@ -53,7 +53,7 @@ CONFIGURE_OPTS_64="
     --disable-luajittex
     --without-x
     --with-gmp-includes=/usr/include/gmp
-    --with-gmp-libdir=/usr/lib/$ISAPART64
+    --with-gmp-libdir=/usr/lib/amd64
     --with-system-cairo
     --with-system-freetype2
     --with-system-gmp
@@ -61,8 +61,16 @@ CONFIGURE_OPTS_64="
     --with-system-pixman
     --with-system-mpfr
     --with-system-zlib
-    --build=$TRIPLET64
+    --build=${TRIPLETS[amd64]}
 "
+
+pre_configure() {
+    # Without specifying the shell as bash here, the generated
+    # config.status is broken.
+    # We already export SHELL=bash in config.sh but that doesn't seem
+    # to be enough.
+    CONFIGURE_CMD="/usr/bin/bash $TMPDIR/$PROG-$VER-source/configure"
+}
 
 dl_dist() {
     for dist in texmf extra; do
@@ -104,10 +112,10 @@ config_tex() {
 }
 
 CFLAGS+=" -I$OPREFIX/include"
-LDFLAGS64+=" -R$OPREFIX/lib/$ISAPART64"
-# export required, otherwise build will fail
-# /usr/lib/$ISAPART64/pkgconfig for mpfr
-export PKG_CONFIG_PATH="$PKG_CONFIG_PATH64:/usr/lib/$ISAPART64/pkgconfig"
+LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
+# /usr/lib/amd64/pkgconfig for mpfr
+subsume_arch amd64 PKG_CONFIG_PATH
+addpath PKG_CONFIG_PATH /usr/lib/amd64/pkgconfig
 
 init
 download_source $PROG $PROG $VER-source
@@ -115,11 +123,6 @@ patch_source
 dl_dist
 # texlive should be built out-of-tree
 prep_build autoconf -oot
-# Without specifying the shell as bash here, the generated
-# config.status is broken.
-# We already export SHELL=bash in config.sh but that doesn't seem
-# to be enough.
-CONFIGURE_CMD="/usr/bin/bash $TMPDIR/$PROG-$VER-source/configure"
 install_dist
 build
 strip_install

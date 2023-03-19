@@ -39,14 +39,14 @@ XFORM_ARGS="
 # we build/ship 32 and 64bit libraries but only 64bit binaries
 configure32() {
     MAKE_ARGS_WS="
-        CFLAGS=\"$CFLAGS $CFLAGS32\"
-        LDFLAGS=\"$LDFLAGS $LDFLAGS32\"
+        CFLAGS=\"$CFLAGS ${CFLAGS[i386]}\"
+        LDFLAGS=\"$LDFLAGS ${LDFLAGS[i386]}\"
     "
 }
 configure64() {
     MAKE_ARGS_WS="
-        CFLAGS=\"$CFLAGS $CFLAGS64\"
-        LDFLAGS=\"$LDFLAGS $LDFLAGS64\"
+        CFLAGS=\"$CFLAGS ${CFLAGS[amd64]}\"
+        LDFLAGS=\"$LDFLAGS ${LDFLAGS[amd64]}\"
     "
 }
 
@@ -56,7 +56,7 @@ MAKE_INSTALL_ARGS="
     INCLUDEDIR=$OPREFIX/include
 "
 MAKE_INSTALL_ARGS_32="LIBDIR=$OPREFIX/lib"
-MAKE_INSTALL_ARGS_64="LIBDIR=$OPREFIX/lib/$ISAPART64"
+MAKE_INSTALL_ARGS_64="LIBDIR=$OPREFIX/lib/amd64"
 
 init
 download_source $PROG "v$VER"

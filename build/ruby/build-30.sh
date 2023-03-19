@@ -42,7 +42,7 @@ XFORM_ARGS="
     -DsVERSION=$sMAJVER
 "
 
-CONFIGURE_OPTS_64+="
+CONFIGURE_OPTS[amd64]+="
     --disable-install-doc
     --libdir=$PREFIX/lib
 "

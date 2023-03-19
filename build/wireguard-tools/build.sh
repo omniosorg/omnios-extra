@@ -19,7 +19,7 @@
 PROG=wireguard-tools
 PKG=ooce/network/wireguard-tools
 VER=1.0.20210914
-HASH=8588ad1
+HASH=wg-quick-for-sunos
 SUMMARY="Tools for configuring WireGuard"
 DESC="This supplies the main userspace tooling for using and configuring "
 DESC+="WireGuard tunnels, including the wg(8) and wg-quick(8) utilities."
@@ -32,23 +32,31 @@ XFORM_ARGS+="
     -DSERVICE=ooce/network/wg-quick
 "
 
-build_and_install() {
-    pushd $TMPDIR/$BUILDDIR/$PROG/src
-    logcmd $MAKE \
-        SYSCONFDIR=/etc$PREFIX \
-        PREFIX=$PREFIX \
-        DESTDIR=$DESTDIR \
-        WITH_WGQUICK=yes \
-        install \
-        || logerr "unable to build wireguard-tools"
-    popd >/dev/null
+set_arch 64
+
+pre_configure() {
+    subsume_arch $1 CFLAGS LDFLAGS
+
+    MAKE_ARGS="
+        -C src
+        V=1
+        SYSCONFDIR=/etc$PREFIX
+        PREFIX=$PREFIX
+        DESTDIR=$DESTDIR
+        WITH_WGQUICK=yes
+    "
+    MAKE_INSTALL_ARGS="$MAKE_ARGS"
+    # no configure
+    false
 }
 
 init
 prep_build
 # Use nshalman fork until it is fully upstreamed
 clone_github_source $PROG $GITHUB/nshalman/$PROG $HASH
-build_and_install
+append_builddir $PROG
+patch_source
+build
 xform files/wg-quick.xml > $TMPDIR/network-wg-quick.xml
 install_smf ooce network-wg-quick.xml
 make_package

@@ -26,22 +26,26 @@ DESC+="kilobytes per second, average packet sizes and more."
 
 set_arch 64
 
-configure64() {
-    MAKE_ARGS_WS="-e COPT=\"$CFLAGS $CFLAGS64\" -f Makefile.Solaris"
+pre_configure() {
+    typeset arch=$1
+
+    MAKE_ARGS_WS="-e COPT=\"$CFLAGS ${CFLAGS[$arch]}\" -f Makefile.Solaris"
+
+    # no configure
+    false
 }
 
-save_function make_install _make_install
-make_install() {
+pre_install() {
+    typeset arch=$1
+
     for d in bin share/man/man1; do
-        logcmd mkdir -p $DESTDIR$PREFIX/$d || logerr "mkdir failed"
+        logcmd $MKDIR -p $DESTDIR$PREFIX/$d || logerr "mkdir failed"
     done
 
     MAKE_INSTALL_ARGS_WS="
-        -e COPT=\"$CFLAGS $CFLAGS64\"
+        -e COPT=\"$CFLAGS ${CFLAGS[$arch]}\"
         BASEDIR=$DESTDIR$PREFIX INSTALL=$GNUBIN/install -f Makefile.Solaris
     "
-
-    _make_install
 }
 
 init

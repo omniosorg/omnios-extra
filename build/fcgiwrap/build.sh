@@ -47,7 +47,7 @@ CONFIGURE_OPTS="
 
 # configure does not properly use pkg-config for these.
 CFLAGS+=" -I$PREFIX/include"
-LDFLAGS64+=" -L$PREFIX/lib/$ISAPART64 -R$PREFIX/lib/$ISAPART64 -lsocket"
+LDFLAGS[amd64]+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64 -lsocket"
 
 extract_licence() {
     logmsg "-- extracting licence"

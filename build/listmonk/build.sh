@@ -42,7 +42,7 @@ export PATH=$GNUBIN:$PATH
 # parallel make is currently broken
 NO_PARALLEL_MAKE=1
 
-configure64() {
+pre_configure() {
     note -n "-- installing yarn"
 
     mkdir -p "$TMPDIR/$BUILDDIR/_deps"
@@ -50,9 +50,12 @@ configure64() {
         || logerr "installing yarn failed"
 
     export YARN=$TMPDIR/$BUILDDIR/_deps/node_modules/yarn/bin/yarn
+
+    # no configure
+    false
 }
 
-make_install64() {
+make_install() {
     logcmd $TMPDIR/$BUILDDIR/$PROG --new-config \
         || logerr "Failed to generate config"
 
@@ -65,6 +68,8 @@ make_install64() {
         || logerr "Failed to install binary"
     logcmd cp $TMPDIR/$BUILDDIR/config.toml $DESTDIR/etc/$PREFIX/ \
         || logerr "Failed to install config"
+
+    install_smf ooce listmonk.xml
 }
 
 init
@@ -72,7 +77,6 @@ clone_go_source $PROG knadh v$VER
 patch_source
 prep_build
 MAKE_TARGET=dist build -noctf
-install_smf ooce listmonk.xml
 make_package
 clean_up
 
