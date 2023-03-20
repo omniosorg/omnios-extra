@@ -68,6 +68,7 @@ CONFIGURE_OPTS[amd64]="
 CONFIGURE_OPTS+="
     --release-description=OmniOS/$RELVER
     --enable-vendor
+    --enable-local-rust
     --enable-extended
     --build=$RUSTARCH
     --target=$RUSTARCH
