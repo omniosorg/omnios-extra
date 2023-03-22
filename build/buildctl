@@ -319,12 +319,21 @@ build() {
 baseline() {
     mode="${1:-check}"
     repo="$2"
-    [ -z "$repo" ] && repo="$PKGSRVR"
 
     if [ $mode != create -a $mode != check ]; then
         echo "Unknown baseline mode - $mode"
         exit 1
     fi
+
+    init_repos
+
+    typeset baselinef=$ROOTDIR/doc/baseline
+    if [ -n "$CLIBUILDARCH" -a -f "$baselinef.$CLIBUILDARCH" ]; then
+        baselinef+=.$CLIBUILDARCH
+        PKGSRVR=${REPOS[$CLIBUILDARCH]}
+    fi
+
+    [ -z "$repo" ] && repo="$PKGSRVR"
 
     [ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
 
@@ -343,12 +352,12 @@ baseline() {
     ' | sed 's/ *$//' | sort > $TMPDIR/baseline.$$
 
     if [ $mode = create ]; then
-        mv $TMPDIR/baseline.$$ $ROOTDIR/doc/baseline
-        echo "Created baseline in doc/baseline"
+        mv $TMPDIR/baseline.$$ $baselinef
+        echo "Created baseline in $baselinef"
         return
     fi
     note "Checking baseline"
-    if ! diff -U0 $ROOTDIR/doc/baseline $TMPDIR/baseline.$$; then
+    if ! diff -U0 $baselinef $TMPDIR/baseline.$$; then
         logerr "Package list does not match baseline"
     fi
     rm -f $TMPDIR/baseline.$$
