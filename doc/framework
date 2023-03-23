@@ -39,6 +39,7 @@ The following convenience macro exists too:
 
     LIBDIRS[i386]           "lib"
     LIBDIRS[amd64]          "lib/amd64"
+    LIBDIRS[aarch64]        "lib"
 
 The following variables are also available. These have not yet been converted
 to associative arrays but likely will be in the future:
