@@ -1258,6 +1258,7 @@ patch_source() {
     [ -n "$REBASE_PATCHES" ] && rebase_patches "$@"
     apply_patches "$@"
     [ -z "$*" -a $EXTRACT_MODE -ge 1 ] && exit
+    [ -n "$GOPATH" ] && logcmd go clean -cache
 }
 
 #############################################################################
