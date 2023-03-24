@@ -93,5 +93,6 @@ build
 make_package
     *pre_package <arch>
     make_package_impl
+    *pre_publish
     *post_package <arch>
 
