@@ -157,7 +157,7 @@
 | ooce/network/openldap		| 2.6.4		| https://www.openldap.org/software/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn		| 2.6.1		| https://build.openvpn.net/downloads/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openvpn-auth-ldap | 2.0.4	| https://github.com/threerings/openvpn-auth-ldap/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/network/rclone		| 1.61.1	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/rclone		| 1.62.2	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/sic		| 1.3		| https://tools.suckless.org/sic/ | [r7st](https://github.com/r7st)
 | ooce/network/smtp/postfix	| 3.7.4		| https://www.swissrave.ch/mirror/postfix-source/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/network/tailscale	| 1.38.2	| https://www.tailscale.com/ | [nshalman](https://github.com/nshalman)
