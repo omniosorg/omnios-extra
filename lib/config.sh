@@ -195,7 +195,8 @@ GNUBIN=/usr/gnu/bin
 # native version even if a build script modifies the path to put GNUBIN first.
 for util in \
     basename cat comm cut dis tput digest mktemp sort sed tee rm mv cp mkdir \
-    rmdir readlink ln ls chmod touch grep time find fgrep egrep uniq stat strip
+    rmdir readlink ln ls chmod touch grep time find fgrep egrep uniq stat \
+    strip sleep tail
 do
     declare -n _var=${util^^}
     declare -g _var=$USRBIN/$util
