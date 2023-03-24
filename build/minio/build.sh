@@ -18,7 +18,7 @@
 
 PROG=minio
 PKG=ooce/storage/minio
-VER=2023-02-27T18-10-45Z
+VER=2023-03-22T06-36-24Z
 SUMMARY="MinIO server"
 DESC="A high Performance Object Storage released under Apache License v2.0. "
 DESC+="It is API compatible with Amazon S3 cloud storage service."
