@@ -181,7 +181,7 @@
 | ooce/runtime/ruby-31		| 3.1.3		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/tcl		| 8.6.13	| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/security/gnupg		| 2.4.0		| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
-| ooce/server/apache-24		| 2.4.55	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
+| ooce/server/apache-24		| 2.4.56	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24/modules/fcgid | 2.3.9	| https://downloads.apache.org/httpd/mod_fcgid/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/freeradius	| 3.2.2		| https://github.com/FreeRADIUS/freeradius-server/releases https://freeradius.org/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/server/haproxy		| 2.7.3		| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
