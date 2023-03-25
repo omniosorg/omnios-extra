@@ -25,7 +25,7 @@ DESC="All your team communication in one place, "
 DESC+="instantly searchable and accessible anywhere."
 
 set_arch 64
-set_gover 1.18
+set_gover
 set_nodever
 
 BUILD_DEPENDS_IPS+="
