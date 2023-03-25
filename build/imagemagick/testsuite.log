@@ -65,7 +65,7 @@ PASS: Magick++/demo/demos.tap 1
 PASS: Magick++/demo/demos.tap 2
 PASS: Magick++/demo/demos.tap 3
 PASS: Magick++/demo/demos.tap 4
-FAIL: Magick++/demo/demos.tap 5
+PASS: Magick++/demo/demos.tap 5
 PASS: Magick++/demo/demos.tap 6
 PASS: Magick++/demo/demos.tap 7
 PASS: Magick++/demo/demos.tap 8
@@ -86,9 +86,9 @@ PASS: Magick++/demo/demos.tap 22
 PASS: Magick++/demo/demos.tap 23
 PASS: Magick++/demo/demos.tap 24
 # TOTAL: 87
-# PASS:  85
+# PASS:  86
 # SKIP:  0
 # XFAIL: 0
-# FAIL:  2
+# FAIL:  1
 # XPASS: 0
 # ERROR: 0
