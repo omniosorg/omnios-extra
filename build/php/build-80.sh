@@ -150,16 +150,11 @@ CONFIGURE_OPTS[amd64]="
     --with-fpm-group=php
 "
 
-# opcache-jit does not build on r151030
-[ $RELVER -lt 151036 ] && CONFIGURE_OPTS[amd64]+=" --disable-opcache-jit"
-
 CPPFLAGS+=" -I/usr/include/gmp"
 CPPFLAGS+=" -I$OPREFIX/libzip/include"
 LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 
-save_function configure64 _configure64
-function configure64() {
-    _configure64 "$@"
+post_configure() {
     for tok in \
         HAVE_CURL HAVE_IMAP HAVE_LDAP \
         HAVE_GD_BMP HAVE_GD_FREETYPE HAVE_GD_JPG HAVE_GD_PNG \
@@ -214,7 +209,6 @@ upload_tmp_dir = /tmp
 download_source $PROG $PROG $VER
 patch_source
 build
-strip_install
 xform files/php-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
 xform files/php-template > $TMPDIR/$PROG-$sMAJVER
 install_smf application $PROG-$sMAJVER.xml $PROG-$sMAJVER
