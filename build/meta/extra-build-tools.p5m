@@ -18,7 +18,6 @@ depend fmri=ooce/database/lmdb type=require
 depend fmri=ooce/developer/cargo-c type=require
 depend fmri=ooce/developer/freepascal type=require
 depend fmri=ooce/developer/gdb type=require
-depend fmri=ooce/developer/go-118 type=require
 depend fmri=ooce/developer/go-119 type=require
 depend fmri=ooce/developer/gperf type=require
 depend fmri=ooce/developer/llvm-13 type=require
