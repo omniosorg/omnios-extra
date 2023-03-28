@@ -12,12 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=emacs
 VER=28.2
+DASHREV=1
 PKG=ooce/editor/emacs
 SUMMARY="Emacs editor"
 DESC="An extensible, customizable, free/libre text editor - and more."
@@ -41,6 +42,9 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DPKGROOT=$PROG
 "
+
+# source and pre-compiled files must preserve timestamps
+PKG_INCLUDE_TS+=" *.el *.el.gz *.elc *.eln"
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
