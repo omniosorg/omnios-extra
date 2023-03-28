@@ -1,0 +1,32 @@
+newer crate releases are required to build on illumos
+crate versions taken from ripgrep
+diff -wpruN '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
+--- a~/Cargo.toml	1970-01-01 00:00:00
++++ a/Cargo.toml	1970-01-01 00:00:00
+@@ -32,8 +32,9 @@ chan = "0.1"
+ csv = "1"
+ csv-index = "0.1.5"
+ docopt = "1"
+-filetime = "0.1"
+-num_cpus = "1.4"
++filetime = "0.2"
++libc = "0.2.97"
++num_cpus = "1.13"
+ rand = "0.4"
+ regex = "1"
+ serde = "1"
+diff -wpruN '--exclude=*.orig' a~/src/util.rs a/src/util.rs
+--- a~/src/util.rs	1970-01-01 00:00:00
++++ a/src/util.rs	1970-01-01 00:00:00
+@@ -82,9 +82,9 @@ pub fn num_of_chunks(nitems: usize, chun
+     n
+ }
+ 
+-pub fn last_modified(md: &fs::Metadata) -> u64 {
++pub fn last_modified(md: &fs::Metadata) -> i64 {
+     use filetime::FileTime;
+-    FileTime::from_last_modification_time(md).seconds_relative_to_1970()
++    FileTime::from_last_modification_time(md).unix_seconds()
+ }
+ 
+ pub fn condense<'a>(val: Cow<'a, [u8]>, n: Option<usize>) -> Cow<'a, [u8]> {
