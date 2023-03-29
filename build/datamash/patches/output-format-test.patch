@@ -1,0 +1,18 @@
+illumos printf will switch from floating point ('%f') to exponent ('%e') notation for a long double
+that causes the resulting number to be longer than 512 digits, even if it is only trailing 0s that
+take it over the limit.
+
+https://github.com/illumos/illumos-gate/blob/master/usr/src/lib/libc/port/fp/fconvert.c#L170-L181
+
+diff -wpruN '--exclude=*.orig' a~/tests/datamash-output-format.pl a/tests/datamash-output-format.pl
+--- a~/tests/datamash-output-format.pl	1970-01-01 00:00:00
++++ a/tests/datamash-output-format.pl	1970-01-01 00:00:00
+@@ -106,7 +106,7 @@ my @Tests =
+   # with an "X".
+   ['m2', '--format "%.4000f"   sum 1',  {IN_PIPE=>$in1},
+     {OUT => "1.00000X\n"},
+-    {OUT_SUBST => 's/^(1\.00000)([0-9]{3995})$/\1X/'}],
++    {OUT_SUBST => 's/^(1\.00000)([0-9]{3995}(?:e\+00)?)$/\1X/'}],
+ );
+ 
+ 

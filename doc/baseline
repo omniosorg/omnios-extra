@@ -245,6 +245,7 @@ extra.omnios ooce/terminal/byobu
 extra.omnios ooce/terminal/minicom
 extra.omnios ooce/text/asciidoc
 extra.omnios ooce/text/asciinema
+extra.omnios ooce/text/datamash
 extra.omnios ooce/text/docbook-xsl
 extra.omnios ooce/text/ripgrep
 extra.omnios ooce/text/texinfo
