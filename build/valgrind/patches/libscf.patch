@@ -1,0 +1,26 @@
+libscf, when built with gcc10, does a 64-bit load instead of two 32-bit loads.
+
+scf_handle_bind+0xdf:           movq   $0x4d0152657015,%rax
+
+vs
+
+scf_handle_bind+0xd6:           movl   $0x52657015,-0x5c(%ebp)
+scf_handle_bind+0xdd:           movl   $0x4d01,-0x58(%ebp)
+
+diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
+--- a~/configure.ac	1970-01-01 00:00:00
++++ a/configure.ac	1970-01-01 00:00:00
+@@ -4454,11 +4454,11 @@ if test "X$VGCONF_ARCH_PRI" = "Xamd64";
+ else
+   libscf=/usr/lib/libscf.so.1
+ fi
+-if ! $DIS_PATH -F scf_handle_bind $libscf  | grep -q 0x526570; then
++if ! $DIS_PATH -F scf_handle_bind $libscf  | grep -q -E '0x(4d01)?526570'; then
+   AC_MSG_WARN([Function `scf_handle_bind' does not contain repository cache protocol version.])
+   AC_MSG_ERROR([Cannot determine version of the repository cache protocol.])
+ fi
+-hex=$( $DIS_PATH -F scf_handle_bind $libscf  | sed -n 's/.*0x526570\(..\).*/\1/p' )
++hex=$( $DIS_PATH -F scf_handle_bind $libscf  | perl -pe '($_) = /0x(?:4d01)?526570(\d{2}),/' )
+ if test -z "$hex"; then
+   AC_MSG_WARN([Version of the repository cache protocol is empty?!])
+   AC_MSG_ERROR([Cannot determine version of the repository cache protocol.])

@@ -75,6 +75,7 @@
 | ooce/developer/radare2	| 5.7.8		| https://github.com/radareorg/radare2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/rust		| 1.68.0	| https://forge.rust-lang.org/infra/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/subversion	| 1.14.2	| https://downloads.apache.org/subversion/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/valgrind	| 3.20.0	| https://valgrind.org/downloads/current.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/yasm		| 1.3.0		| https://github.com/yasm/yasm/releases https://yasm.tortall.net/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/zig		| 0.9.1		| https://ziglang.org/download/index.json https://ziglang.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/driver/fuse		| 1.4		| https://github.com/jurikm/illumos-fusefs/tags | [omniosorg](https://github.com/omniosorg)
