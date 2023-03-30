@@ -1,0 +1,42 @@
+Making check in po
+PASS: tests/datamash-show-env.sh
+PASS: tests/datamash-tests.pl
+PASS: tests/datamash-tests-deprecated.pl
+PASS: tests/datamash-tests-2.pl
+PASS: tests/datamash-tests-2-deprecated.pl
+PASS: tests/datamash-parser.pl
+PASS: tests/datamash-error-msgs.pl
+PASS: tests/datamash-md5.pl
+PASS: tests/datamash-sha.pl
+PASS: tests/datamash-rand.sh
+PASS: tests/datamash-stats.pl
+PASS: tests/datamash-transpose.pl
+PASS: tests/datamash-crosstab.pl
+PASS: tests/datamash-check.pl
+PASS: tests/datamash-pair-tests.pl
+PASS: tests/datamash-check-tabular.pl
+PASS: tests/datamash-output-format.pl
+PASS: tests/datamash-i18n-de.pl
+PASS: tests/datamash-sort-header.pl
+PASS: tests/datamash-sort-header-deprecated.pl
+PASS: tests/datamash-sort-errors.sh
+datamash-io-errors.sh: skipped test: expensive: disabled by default
+SKIP: tests/datamash-io-errors.sh
+PASS: tests/datamash-io-errors-cheap.sh
+PASS: tests/datamash-strbin.sh
+datamash-valgrind.sh: skipped test: expensive: disabled by default
+SKIP: tests/datamash-valgrind.sh
+PASS: tests/decorate-tests.pl
+PASS: tests/decorate-errors.pl
+PASS: tests/decorate-sort-tests.pl
+============================================================================
+Testsuite summary for GNU datamash 1.8-dirty
+============================================================================
+# TOTAL: 28
+# PASS:  26
+# SKIP:  2
+# XFAIL: 0
+# FAIL:  0
+# XPASS: 0
+# ERROR: 0
+============================================================================

@@ -98,6 +98,7 @@ extra.omnios ooce/developer/pkgmgr
 extra.omnios ooce/developer/radare2
 extra.omnios ooce/developer/rust
 extra.omnios ooce/developer/subversion
+extra.omnios ooce/developer/valgrind
 extra.omnios ooce/developer/yasm
 extra.omnios ooce/developer/zig
 extra.omnios ooce/driver/fuse
@@ -245,6 +246,7 @@ extra.omnios ooce/terminal/byobu
 extra.omnios ooce/terminal/minicom
 extra.omnios ooce/text/asciidoc
 extra.omnios ooce/text/asciinema
+extra.omnios ooce/text/datamash
 extra.omnios ooce/text/docbook-xsl
 extra.omnios ooce/text/ripgrep
 extra.omnios ooce/text/texinfo
