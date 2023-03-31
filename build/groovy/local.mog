@@ -8,10 +8,13 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 # drop .bat files and leftovers from patching
 <transform file path=$(PREFIX)/bin/.+\.(?:bat|orig)$ -> drop>
+
+depend type=require-any fmri=pkg:/runtime/java/openjdk11 \
+    fmri=pkg:/runtime/java/openjdk17
 
 <include mediated-binlink.mog>
 

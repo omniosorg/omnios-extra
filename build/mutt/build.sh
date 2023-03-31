@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=mutt
-VER=2.2.9
+VER=2.2.10
 PKG=ooce/application/mutt
 SUMMARY="$PROG email client"
 DESC="$PROG is a text-based email client"

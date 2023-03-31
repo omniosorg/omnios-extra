@@ -1,3 +1,4 @@
+abbrev-cache.c
 abbrev.c
 ada-exp.c
 ada-lang.c
@@ -27,6 +28,7 @@ block.c
 blockframe.c
 break-catch-exec.c
 break-catch-fork.c
+break-catch-load.c
 break-catch-sig.c
 break-catch-syscall.c
 break-catch-throw.c
@@ -67,6 +69,7 @@ compile-object-run.c
 compile.c
 complaints.c
 completer.c
+cooked-index.c
 copying.c
 corelow.c
 cp-abi.c
@@ -110,6 +113,7 @@ findvar.c
 fork-child.c
 fork-inferior.c
 frame-base.c
+frame-info.c
 frame-tailcall.c
 frame-unwind.c
 frame.c
@@ -171,6 +175,7 @@ mem-break.c
 memattr.c
 memory-map.c
 memrange.c
+memtag.c
 mi-cmd-break.c
 mi-cmd-catch.c
 mi-cmd-disas.c
@@ -226,6 +231,7 @@ py-breakpoint.c
 py-cmd.c
 py-connection.c
 py-continueevent.c
+py-disasm.c
 py-event.c
 py-evtregistry.c
 py-evts.c
@@ -281,6 +287,30 @@ reverse.c
 run-on-main-thread.c
 rust-lang.c
 rust-parse.c
+scm-arch.c
+scm-auto-load.c
+scm-block.c
+scm-breakpoint.c
+scm-cmd.c
+scm-disasm.c
+scm-exception.c
+scm-frame.c
+scm-gsmob.c
+scm-iterator.c
+scm-lazy-string.c
+scm-math.c
+scm-objfile.c
+scm-param.c
+scm-ports.c
+scm-pretty-print.c
+scm-progspace.c
+scm-safe-call.c
+scm-string.c
+scm-symbol.c
+scm-symtab.c
+scm-type.c
+scm-utils.c
+scm-value.c
 sentinel-frame.c
 ser-base.c
 ser-event.c
@@ -297,6 +327,7 @@ solib-target.c
 solib.c
 source-cache.c
 source.c
+split-name.c
 stabsread.c
 stack.c
 stap-probe.c

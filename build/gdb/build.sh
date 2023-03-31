@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=gdb
 PKG=ooce/developer/gdb
-VER=12.1
+VER=13.1
 SUMMARY="$PROG - GNU Debugger"
 DESC="The GNU debugger"
 
