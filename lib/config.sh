@@ -196,7 +196,7 @@ GNUBIN=/usr/gnu/bin
 for util in \
     basename cat comm cut dis tput digest mktemp sort sed tee rm mv cp mkdir \
     rmdir readlink ln ls chmod touch grep time find fgrep egrep uniq stat \
-    strip sleep tail
+    strip sleep tail date
 do
     declare -n _var=${util^^}
     declare -g _var=$USRBIN/$util
@@ -284,6 +284,7 @@ MAKE_TARGET=
 # script when testing to speed up building a package
 DONT_REMOVE_INSTALL_DIR=
 
+SYS_XFORM_ARGS=
 XFORM_ARGS=
 
 # Prior to release r151040, some users and groups were provided as part of the
@@ -299,12 +300,12 @@ XFORM_ARGS=
 # earliest available package for r151040, it should not be possible for anyone
 # to downgrade and shoot themselves in the foot.
 if [ $RELVER -ge 151040 ]; then
-    XFORM_ARGS+=" -DGATE_SYSUSER="
+    SYS_XFORM_ARGS+=" -DGATE_SYSUSER="
 else
-    XFORM_ARGS+=" -DGATE_SYSUSER=#"
+    SYS_XFORM_ARGS+=" -DGATE_SYSUSER=#"
 fi
 
-PKG_INCLUDE_TS="*.py"
+PKG_INCLUDE_TS=
 
 #############################################################################
 # C compiler options - these can be overridden by a build script
