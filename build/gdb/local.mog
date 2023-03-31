@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYING license=GPLv2
 license COPYING.LIB license=LGPLv2
@@ -18,6 +18,12 @@ license COPYING3.LIB license=LGPLv3
 <transform file path=$(PREFIX)/bin/(gcore|gdb-add-index) -> drop>
 <transform file path=.*/syscalls/.*(linux|freebsd|netbsd) -> drop>
 <transform file path=$(PREFIX)/share/man/man1/(gdb-add|gdbserver) -> drop>
+
+# pre-compiled files must be newer than their sources
+<transform file path=$(PREFIX)/share/$(PROG)/guile/.+\.scm$ \
+    -> set timestamp $(TS_SRC)>
+<transform file path=$(PREFIX)/share/$(PROG)/guile/.+\.go$ \
+    -> set timestamp $(TS_OBJ)>
 
 <include binlink.mog>
 <include manlink.mog>

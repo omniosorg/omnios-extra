@@ -34,9 +34,6 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
-# source and pre-compiled files must preserve timestamps
-PKG_INCLUDE_TS+=" *.scm *.go"
-
 CPPFLAGS+=" -I/usr/include/gmp -I$OPREFIX/include"
 LDFLAGS+="-lsocket -lnsl"
 
@@ -76,20 +73,11 @@ make_isa_stub() {
     popd >/dev/null
 }
 
-# make sure pre-compiled files are newer than sources
-set_timestamps() {
-    pushd $DESTDIR$OPREFIX/lib >/dev/null
-    logcmd $FD -e go -X $TOUCH \
-        || logerr "setting timestamps on pre-compiled files failed"
-    popd >/dev/null
-}
-
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-set_timestamps
 make_isa_stub
 make_package
 clean_up
