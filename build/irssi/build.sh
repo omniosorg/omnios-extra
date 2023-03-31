@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=irssi
-VER=1.4.3
+VER=1.4.4
 PKG=ooce/network/irssi
 SUMMARY="Irssi"
 DESC="Text-mode modular chat client"
