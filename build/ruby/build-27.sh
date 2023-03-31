@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=ruby
-VER=2.7.7
+VER=2.7.8
 PKG=ooce/runtime/ruby-27
 SUMMARY="Ruby"
 DESC="A dynamic, open source programming language "
