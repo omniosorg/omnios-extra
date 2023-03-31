@@ -12,21 +12,20 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=vaultwarden
-VER=1.27.0
-DASHREV=0
+VER=1.28.0
 PKG=ooce/application/vaultwarden
 SUMMARY="Bitwarden compatible server"
 DESC="Unofficial Bitwarden compatible server written in Rust, formerly known "
 DESC+="as bitwarden_rs"
 
 DANIGARCIA=$GITHUB/dani-garcia
-WEBVAULTVER=2022.12.0
-WEBVAULTSHA256=402dff6aa205d8d7493c79b051bbc947adb0b14181ae0b07242caa049ff480c7
+WEBVAULTVER=2023.3.0b
+WEBVAULTSHA256=ac3d27cbbb0dabb09cba0029c0b4d13b4f866fa3ae4eaa2dfd1f3880800ce19c
 
 set_arch 64
 
