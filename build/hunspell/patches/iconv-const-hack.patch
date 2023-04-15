@@ -1,0 +1,39 @@
+diff -wpruN '--exclude=*.orig' a~/src/tools/hunspell.cxx a/src/tools/hunspell.cxx
+--- a~/src/tools/hunspell.cxx	1970-01-01 00:00:00
++++ a/src/tools/hunspell.cxx	1970-01-01 00:00:00
+@@ -261,7 +261,7 @@ std::string chenc(const std::string& st,
+     fprintf(stderr, gettext("error - iconv_open: %s -> %s\n"), enc2, enc1);
+   } else {
+     size_t res;
+-    while ((res = iconv(conv, &source, &c1, &dest, &c2)) == size_t(-1)) {
++    while ((res = iconv(conv, (char**)&source, &c1, &dest, &c2)) == size_t(-1)) {
+       if (errno == E2BIG) {
+         //c2 is zero or close to zero
+         size_t next_start = out.size() - c2;
+@@ -320,7 +320,7 @@ TextParser* get_parser(int format, const
+         wordchars_utf16 = NULL;
+         wordchars_utf16_len = 0;
+       } else {
+-        iconv(conv, (ICONV_CONST char**)&wchars, &c1, &dest, &c2);
++        iconv(conv, (char**)&wchars, &c1, &dest, &c2);
+         iconv_close(conv);
+         u8_u16(new_wordchars_utf16, text_conv);
+         std::sort(new_wordchars_utf16.begin(), new_wordchars_utf16.end());
+@@ -348,7 +348,7 @@ TextParser* get_parser(int format, const
+         char* ch8bit = ch;
+         ch[0] = (char)i;
+         ch[1] = '\0';
+-        size_t res = iconv(conv, (ICONV_CONST char**)&ch8bit, &c1, &dest, &c2);
++        size_t res = iconv(conv, (char**)&ch8bit, &c1, &dest, &c2);
+         if (res != (size_t)-1) {
+           std::vector<w_char> w;
+           u8_u16(w, std::string(u8, dest));
+@@ -379,7 +379,7 @@ TextParser* get_parser(int format, const
+                 denc);
+       } else {
+         const char* wchars = vec_wordchars.c_str();
+-        iconv(conv, (ICONV_CONST char**)&wchars, &c1, &dest, &c2);
++        iconv(conv, (char**)&wchars, &c1, &dest, &c2);
+         iconv_close(conv);
+         *dest = '\0';
+       }

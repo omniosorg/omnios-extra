@@ -1,0 +1,3 @@
+iconv-const-hack.patch
+dictpath.patch
+ncurses.patch

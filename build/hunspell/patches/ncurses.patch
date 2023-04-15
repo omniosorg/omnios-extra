@@ -1,0 +1,16 @@
+diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
+--- a~/configure.ac	1970-01-01 00:00:00
++++ a/configure.ac	1970-01-01 00:00:00
+@@ -54,11 +54,9 @@ AC_ARG_WITH(
+ AS_IF([test "x$with_ui" != xno], [
+ 	AC_CHECK_LIB([ncursesw],[tparm],[
+ 		CURSESLIB=-lncursesw
+-	],[AC_CHECK_LIB([curses],[tparm],[
+-		CURSESLIB=-lcurses
+ 	],[AC_CHECK_LIB([ncurses],[tparm],[
+ 		CURSESLIB=-lncurses
+-	])])])
++	])])
+    if test "$CURSESLIB" != "" ; then
+ 	echo Compiling with curses user interface.
+ 	AC_CHECK_HEADERS([curses.h])
