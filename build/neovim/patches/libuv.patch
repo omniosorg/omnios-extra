@@ -1,11 +1,11 @@
 remove unecessary linking to libraries
 
-diff -wpruN '--exclude=*.orig' a~/cmake/FindLibUV.cmake a/cmake/FindLibUV.cmake
---- a~/cmake/FindLibUV.cmake	1970-01-01 00:00:00
-+++ a/cmake/FindLibUV.cmake	1970-01-01 00:00:00
-@@ -29,42 +29,42 @@ set(LIBUV_INCLUDE_DIRS ${LIBUV_INCLUDE_D
- 
- # Deal with the fact that libuv.pc is missing important dependency information.
+diff -wpruN '--exclude=*.orig' a~/cmake/FindLibuv.cmake a/cmake/FindLibuv.cmake
+--- a~/cmake/FindLibuv.cmake	1970-01-01 00:00:00
++++ a/cmake/FindLibuv.cmake	1970-01-01 00:00:00
+@@ -7,42 +7,6 @@ find_library(LIBUV_LIBRARY NAMES ${LIBUV
+ set(LIBUV_LIBRARIES ${LIBUV_LIBRARY})
+ set(LIBUV_INCLUDE_DIRS ${LIBUV_INCLUDE_DIR})
  
 -include(CheckLibraryExists)
 -
@@ -43,42 +43,17 @@ diff -wpruN '--exclude=*.orig' a~/cmake/FindLibUV.cmake a/cmake/FindLibUV.cmake
 -if(HAVE_LIBSENDFILE)
 -  list(APPEND LIBUV_LIBRARIES sendfile)
 -endif()
-+#include(CheckLibraryExists)
-+#
-+#check_library_exists(dl dlopen "dlfcn.h" HAVE_LIBDL)
-+#if(HAVE_LIBDL)
-+#  list(APPEND LIBUV_LIBRARIES dl)
-+#endif()
-+#
-+#check_library_exists(kstat kstat_lookup "kstat.h" HAVE_LIBKSTAT)
-+#if(HAVE_LIBKSTAT)
-+#  list(APPEND LIBUV_LIBRARIES kstat)
-+#endif()
-+#
-+#check_library_exists(kvm kvm_open "kvm.h" HAVE_LIBKVM)
-+#if(HAVE_LIBKVM AND NOT CMAKE_SYSTEM_NAME STREQUAL "OpenBSD")
-+#  list(APPEND LIBUV_LIBRARIES kvm)
-+#endif()
-+#
-+#check_library_exists(nsl gethostbyname "nsl.h" HAVE_LIBNSL)
-+#if(HAVE_LIBNSL)
-+#  list(APPEND LIBUV_LIBRARIES nsl)
-+#endif()
-+#
-+#check_library_exists(perfstat perfstat_cpu "libperfstat.h" HAVE_LIBPERFSTAT)
-+#if(HAVE_LIBPERFSTAT)
-+#  list(APPEND LIBUV_LIBRARIES perfstat)
-+#endif()
-+#
-+#check_library_exists(rt clock_gettime "time.h" HAVE_LIBRT)
-+#if(HAVE_LIBRT)
-+#  list(APPEND LIBUV_LIBRARIES rt)
-+#endif()
-+#
-+#check_library_exists(sendfile sendfile "" HAVE_LIBSENDFILE)
-+#if(HAVE_LIBSENDFILE)
-+#  list(APPEND LIBUV_LIBRARIES sendfile)
-+#endif()
  
  if(WIN32)
    # check_library_exists() does not work for Win32 API calls in X86 due to name
+diff -wpruN '--exclude=*.orig' a~/src/nvim/CMakeLists.txt a/src/nvim/CMakeLists.txt
+--- a~/src/nvim/CMakeLists.txt	1970-01-01 00:00:00
++++ a/src/nvim/CMakeLists.txt	1970-01-01 00:00:00
+@@ -10,6 +10,7 @@ else()
+   # Fall back to find module for older libuv versions that don't provide config file
+   find_package(Libuv 1.28.0 REQUIRED MODULE)
+   target_include_directories(libuv SYSTEM BEFORE INTERFACE ${LIBUV_INCLUDE_DIRS})
++  target_include_directories(main_lib SYSTEM BEFORE INTERFACE ${LIBUV_INCLUDE_DIRS})
+   target_link_libraries(libuv INTERFACE ${LIBUV_LIBRARIES})
+ endif()
+ 

@@ -6,19 +6,19 @@ Subject: [PATCH] XXX illumos support
 diff -wpruN '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
 --- a~/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/CMakeLists.txt	1970-01-01 00:00:00
-@@ -75,6 +75,8 @@ set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFI
- # used for check_c_compiler_flag
- include(CheckCCompilerFlag)
+@@ -28,6 +28,8 @@ include(LuaHelpers)
+ include(PreventInTreeBuilds)
+ include(Util)
  
 +include(illumos)
 +
- if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-   # CMake tries to treat /sw and /opt/local as extension of the system path, but
-   # that doesn't really work out very well.  Once you have a dependency that
+ set(TOUCHES_DIR ${PROJECT_BINARY_DIR}/touches)
+ 
+ find_program(CCACHE_PRG ccache)
 diff -wpruN '--exclude=*.orig' a~/cmake/illumos.cmake a/cmake/illumos.cmake
 --- a~/cmake/illumos.cmake	1970-01-01 00:00:00
 +++ a/cmake/illumos.cmake	1970-01-01 00:00:00
-@@ -0,0 +1,10 @@
+@@ -0,0 +1,11 @@
 +if (CMAKE_SYSTEM_NAME STREQUAL "SunOS")
 +  # Determine if the host is running an illumos distribution:
 +  execute_process(COMMAND /usr/bin/uname -o OUTPUT_VARIABLE UNAME_O
@@ -26,13 +26,14 @@ diff -wpruN '--exclude=*.orig' a~/cmake/illumos.cmake a/cmake/illumos.cmake
 +
 +  if (UNAME_O STREQUAL "illumos")
 +    set(ILLUMOS 1)
-+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DNVIM_OS_ILLUMOS=1")
++    list(APPEND CMAKE_C_FLAGS "-DNVIM_OS_ILLUMOS=1")
++    list(APPEND gen_cflags "-DNVIM_OS_ILLUMOS=1")
 +  endif()
 +endif()
 diff -wpruN '--exclude=*.orig' a~/cmake.deps/CMakeLists.txt a/cmake.deps/CMakeLists.txt
 --- a~/cmake.deps/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/cmake.deps/CMakeLists.txt	1970-01-01 00:00:00
-@@ -5,6 +5,8 @@ project(NVIM_DEPS C)
+@@ -9,6 +9,8 @@ endif()
  # Point CMake at any custom modules we may ship
  list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" "${PROJECT_SOURCE_DIR}/../cmake")
  
@@ -44,7 +45,7 @@ diff -wpruN '--exclude=*.orig' a~/cmake.deps/CMakeLists.txt a/cmake.deps/CMakeLi
 diff -wpruN '--exclude=*.orig' a~/src/nvim/CMakeLists.txt a/src/nvim/CMakeLists.txt
 --- a~/src/nvim/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/src/nvim/CMakeLists.txt	1970-01-01 00:00:00
-@@ -152,6 +152,9 @@ foreach(sfile ${NVIM_SOURCES})
+@@ -356,6 +356,9 @@ foreach(sfile ${NVIM_SOURCES})
    if(NOT WIN32 AND ${f} MATCHES "^(os_win_console.c)$")
      list(APPEND to_remove ${sfile})
    endif()
@@ -57,7 +58,7 @@ diff -wpruN '--exclude=*.orig' a~/src/nvim/CMakeLists.txt a/src/nvim/CMakeLists.
 diff -wpruN '--exclude=*.orig' a~/src/nvim/os/pty_process_unix.c a/src/nvim/os/pty_process_unix.c
 --- a~/src/nvim/os/pty_process_unix.c	1970-01-01 00:00:00
 +++ a/src/nvim/os/pty_process_unix.c	1970-01-01 00:00:00
-@@ -15,12 +15,8 @@
+@@ -17,12 +17,8 @@
  # include <libutil.h>
  #elif defined(__OpenBSD__) || defined(__NetBSD__) || defined(__APPLE__)
  # include <util.h>
@@ -72,7 +73,7 @@ diff -wpruN '--exclude=*.orig' a~/src/nvim/os/pty_process_unix.c a/src/nvim/os/p
  #else
  # include <pty.h>
  #endif
-@@ -44,117 +40,6 @@
+@@ -49,117 +45,6 @@
  # include "os/pty_process_unix.c.generated.h"
  #endif
  
@@ -187,9 +188,9 @@ diff -wpruN '--exclude=*.orig' a~/src/nvim/os/pty_process_unix.c a/src/nvim/os/p
 -
 -#endif
 -
- /// termios saved at startup (for TUI) or initialized by pty_process_spawn().
- static struct termios termios_default;
- 
+ /// @returns zero on success, or negative error code
+ int pty_process_spawn(PtyProcess *ptyproc)
+   FUNC_ATTR_NONNULL_ALL
 diff -wpruN '--exclude=*.orig' a~/src/nvim/os_illumos.c a/src/nvim/os_illumos.c
 --- a~/src/nvim/os_illumos.c	1970-01-01 00:00:00
 +++ a/src/nvim/os_illumos.c	1970-01-01 00:00:00
@@ -396,5 +397,5 @@ diff -wpruN '--exclude=*.orig' a~/src/nvim/po/CMakeLists.txt a/src/nvim/po/CMake
  find_program(XGETTEXT_PRG xgettext)
 +endif()
  find_program(ICONV_PRG iconv)
- 
- option(LANGUAGES "Localizations to build")
+ mark_as_advanced(
+   GETTEXT_MSGFMT_EXECUTABLE
