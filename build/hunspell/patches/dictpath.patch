@@ -1,0 +1,33 @@
+diff -wpruN '--exclude=*.orig' a~/src/tools/hunspell.cxx a/src/tools/hunspell.cxx
+--- a~/src/tools/hunspell.cxx	1970-01-01 00:00:00
++++ a/src/tools/hunspell.cxx	1970-01-01 00:00:00
+@@ -116,10 +116,7 @@
+ #include "../parsers/odfparser.hxx"
+ 
+ #define LIBDIR                \
+-  "/usr/share/hunspell:"      \
+-  "/usr/share/myspell:"       \
+-  "/usr/share/myspell/dicts:" \
+-  "/Library/Spelling"
++  "/opt/ooce/hunspell/share/hunspell"
+ #define USEROOODIR {                  \
+   ".openoffice.org/3/user/wordbook", \
+   ".openoffice.org2/user/wordbook",  \
+@@ -2058,7 +2055,8 @@ int main(int argc, char** argv) {
+     if (getenv("DICPATH")) {
+       path_std_str.append(getenv("DICPATH")).append(PATHSEP);
+     }
+-    path_std_str.append(LIBDIR).append(PATHSEP);
++    path_std_str.append(LIBDIR);
++/*
+     if (HOME) {
+       const char * userooodir[] = USEROOODIR;
+       for(size_t i = 0; i < sizeof(userooodir)/sizeof(userooodir[0]); ++i) {
+@@ -2070,6 +2068,7 @@ int main(int argc, char** argv) {
+       }
+       path_std_str.append(OOODIR);
+     }
++*/
+     path = mystrdup(path_std_str.c_str());
+   }
+ 
