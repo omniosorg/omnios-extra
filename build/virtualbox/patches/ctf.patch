@@ -5,7 +5,7 @@ problem resolution.
 diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3PLAIN.kmk
 --- a~/kBuild/tools/GCC3PLAIN.kmk	1970-01-01 00:00:00
 +++ a/kBuild/tools/GCC3PLAIN.kmk	1970-01-01 00:00:00
-@@ -74,18 +74,37 @@ endif
+@@ -70,18 +70,37 @@ endif
  # General Properties used by kBuild
  TOOL_GCC3PLAIN_COBJSUFF         ?= .o
  TOOL_GCC3PLAIN_CFLAGS           ?=
@@ -47,7 +47,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3
  TOOL_GCC3PLAIN_CXXINCS          ?=
  TOOL_GCC3PLAIN_CXXDEFS          ?=
  
-@@ -99,6 +118,10 @@ TOOL_GCC3PLAIN_ARLIBSUFF        ?= .a
+@@ -95,6 +114,10 @@ TOOL_GCC3PLAIN_ARLIBSUFF        ?= .a
  
  TOOL_GCC3PLAIN_LDFLAGS          ?=
  
@@ -58,7 +58,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3
  
  ## Compile C source.
  # @param    $(target)   Normalized main target name.
-@@ -130,6 +153,7 @@ define TOOL_GCC3PLAIN_COMPILE_C_CMDS
+@@ -126,6 +149,7 @@ define TOOL_GCC3PLAIN_COMPILE_C_CMDS
  		$(flags) -fpreprocessed -x c\
  		-o $(obj)\
  		-
@@ -66,7 +66,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3
  	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
  endef
  else # !KBUILD_USE_KOBJCACHE
-@@ -140,6 +164,7 @@ define TOOL_GCC3PLAIN_COMPILE_C_CMDS
+@@ -136,6 +160,7 @@ define TOOL_GCC3PLAIN_COMPILE_C_CMDS
  		-Wp,-MD,$(dep) -Wp,-MT,$(obj) -Wp,-MP\
  		-o $(obj)\
  		$(abspath $(source))
@@ -74,7 +74,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3
  	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
  endef
  endif # !KBUILD_USE_KOBJCACHE
-@@ -174,6 +199,7 @@ define TOOL_GCC3PLAIN_COMPILE_CXX_CMDS
+@@ -170,6 +195,7 @@ define TOOL_GCC3PLAIN_COMPILE_CXX_CMDS
  		$(flags) -fpreprocessed -x c++\
  		-o $(obj)\
  		-
@@ -82,7 +82,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3
  	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
  endef
  else # !KBUILD_USE_KOBJCACHE
-@@ -184,6 +210,7 @@ define TOOL_GCC3PLAIN_COMPILE_CXX_CMDS
+@@ -180,6 +206,7 @@ define TOOL_GCC3PLAIN_COMPILE_CXX_CMDS
  		-Wp,-MD,$(dep) -Wp,-MT,$(obj) -Wp,-MP\
  		-o $(obj)\
  		$(abspath $(source))
@@ -90,7 +90,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3
  	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
  endef
  endif # !KBUILD_USE_KOBJCACHE
-@@ -265,6 +292,10 @@ define TOOL_GCC3PLAIN_LINK_PROGRAM_CMDS
+@@ -261,6 +288,10 @@ define TOOL_GCC3PLAIN_LINK_PROGRAM_CMDS
  		$(filter %.def, $(othersrc))\
  		$(foreach p,$(libpath), -L$(p))\
  		$(foreach lib,$(libs), $(if $(findstring $(lib),$(subst /,x,$(lib))), -l$(patsubst lib%,%,$(lib)), $(lib)))
@@ -101,7 +101,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3
  endef
  
  
-@@ -293,6 +324,10 @@ define TOOL_GCC3PLAIN_LINK_DLL_CMDS
+@@ -289,6 +320,10 @@ define TOOL_GCC3PLAIN_LINK_DLL_CMDS
  		$(filter %.def, $(othersrc))\
  		$(foreach p,$(libpath), -L$(p))\
  		$(foreach lib,$(libs), $(if $(findstring $(lib),$(subst /,x,$(lib))), -l$(patsubst lib%,%,$(lib)), $(lib)))
@@ -112,7 +112,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3
  endef
  
  
-@@ -324,5 +359,9 @@ define TOOL_GCC3PLAIN_LINK_SYSMOD_CMDS
+@@ -320,5 +355,9 @@ define TOOL_GCC3PLAIN_LINK_SYSMOD_CMDS
  		$(filter %.def, $(othersrc))\
  		$(foreach p,$(libpath), -L$(p))\
  		$(foreach lib,$(libs), $(if $(findstring $(lib),$(subst /,x,$(lib))), -l$(patsubst lib%,%,$(lib)), $(lib)))
@@ -125,7 +125,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3
 diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GXX3PLAIN.kmk a/kBuild/tools/GXX3PLAIN.kmk
 --- a~/kBuild/tools/GXX3PLAIN.kmk	1970-01-01 00:00:00
 +++ a/kBuild/tools/GXX3PLAIN.kmk	1970-01-01 00:00:00
-@@ -75,17 +75,35 @@ endif
+@@ -71,17 +71,35 @@ endif
  # General Properties used by kBuild
  TOOL_GXX3PLAIN_COBJSUFF         ?= .o
  TOOL_GXX3PLAIN_CFLAGS           ?=
@@ -165,7 +165,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GXX3PLAIN.kmk a/kBuild/tools/GXX3
  TOOL_GXX3PLAIN_CXXINCS          ?=
  TOOL_GXX3PLAIN_CXXDEFS          ?=
  
-@@ -107,6 +125,10 @@ TOOL_GXX3PLAIN_ARLIBSUFF        ?= .a
+@@ -103,6 +121,10 @@ TOOL_GXX3PLAIN_ARLIBSUFF        ?= .a
  
  TOOL_GXX3PLAIN_LDFLAGS          ?=
  
@@ -176,7 +176,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GXX3PLAIN.kmk a/kBuild/tools/GXX3
  
  ## Compile C source.
  # @param    $(target)   Normalized main target name.
-@@ -145,6 +167,7 @@ else
+@@ -141,6 +163,7 @@ else
  		-o $(obj)\
  		$(abspath $(source))
  endif
@@ -184,7 +184,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GXX3PLAIN.kmk a/kBuild/tools/GXX3
  	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
  endef
  
-@@ -239,6 +262,8 @@ define TOOL_GXX3PLAIN_COMPILE_AS_CMDS
+@@ -235,6 +258,8 @@ define TOOL_GXX3PLAIN_COMPILE_AS_CMDS
  		-Wp,-MD,$(dep) -Wp,-MT,$(obj) -Wp,-MP\
  		-o $(obj)\
  		$(abspath $(source))
@@ -193,7 +193,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GXX3PLAIN.kmk a/kBuild/tools/GXX3
  	$(QUIET)$(APPEND) -n "$(dep)" "" "$(source):" ""
  endef
  
-@@ -293,6 +318,10 @@ define TOOL_GXX3PLAIN_LINK_PROGRAM_CMDS
+@@ -289,6 +314,10 @@ define TOOL_GXX3PLAIN_LINK_PROGRAM_CMDS
  		$(filter %.def, $(othersrc))\
  		$(foreach p,$(libpath), -L$(p))\
  		$(foreach lib,$(libs), $(if $(findstring $(lib),$(subst /,x,$(lib))), -l$(patsubst lib%,%,$(lib)), $(lib)))
@@ -204,7 +204,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GXX3PLAIN.kmk a/kBuild/tools/GXX3
  endef
  
  
-@@ -321,6 +350,10 @@ define TOOL_GXX3PLAIN_LINK_DLL_CMDS
+@@ -317,6 +346,10 @@ define TOOL_GXX3PLAIN_LINK_DLL_CMDS
  		$(filter %.def, $(othersrc))\
  		$(foreach p,$(libpath), -L$(p))\
  		$(foreach lib,$(libs), $(if $(findstring $(lib),$(subst /,x,$(lib))), -l$(patsubst lib%,%,$(lib)), $(lib)))
@@ -215,7 +215,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GXX3PLAIN.kmk a/kBuild/tools/GXX3
  endef
  
  
-@@ -352,5 +385,9 @@ define TOOL_GXX3PLAIN_LINK_SYSMOD_CMDS
+@@ -348,5 +381,9 @@ define TOOL_GXX3PLAIN_LINK_SYSMOD_CMDS
  		$(filter %.def, $(othersrc))\
  		$(foreach p,$(libpath), -L$(p))\
  		$(foreach lib,$(libs), $(if $(findstring $(lib),$(subst /,x,$(lib))), -l$(patsubst lib%,%,$(lib)), $(lib)))

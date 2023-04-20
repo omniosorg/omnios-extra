@@ -13,19 +13,21 @@
 # }}}
 
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nginx
-PKG=ooce/server/nginx-122
-VER=1.22.1
-SUMMARY="nginx 1.22 web server"
+PKG=ooce/server/nginx-124
+VER=1.24.0
+SUMMARY="nginx 1.24 web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
+# Brotli source from https://github.com/google/ngx_brotli
 BROTLIVER=1.0.0rc
 
 set_arch 64
+[ $RELVER -ge 151045 ] && set_clangver
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
@@ -38,7 +40,7 @@ LOGPATH=/var/log$OPREFIX/$PROG
 VARPATH=/var$OPREFIX/$PROG
 RUNPATH=$VARPATH/run
 
-BUILD_DEPENDS_IPS="library/security/openssl library/pcre"
+BUILD_DEPENDS_IPS="library/security/openssl library/pcre2"
 RUN_DEPENDS_IPS="ooce/server/nginx-common"
 
 XFORM_ARGS="
@@ -50,6 +52,7 @@ XFORM_ARGS="
     -DVERSION=$MAJVER
     -DsVERSION=$sMAJVER
     -DDsVERSION=-$sMAJVER
+    -DBROTLI=$BROTLIVER
 "
 
 CONFIGURE_OPTS[amd64]=
@@ -84,25 +87,11 @@ CONFIGURE_OPTS="
     --http-fastcgi-temp-path=/tmp/.nginx/fastcgi
     --http-uwsgi-temp-path=/tmp/.nginx/uwsgi
     --http-scgi-temp-path=/tmp/.nginx/scgi
+    --add-dynamic-module=../ngx_brotli-$BROTLIVER
 "
 
-LDFLAGS+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
 
-brotli() {
-    if [ $RELVER -ge 151035 ]; then
-        CONFIGURE_OPTS+=" --add-dynamic-module=../ngx_brotli-$BROTLIVER"
-        BUILDDIR=ngx_brotli-$BROTLIVER download_source $PROG/brotli v$BROTLIVER
-        XFORM_ARGS+="
-            -DBROTLI=$BROTLIVER
-            -DBROTLI_ONLY=
-        "
-    else
-        XFORM_ARGS+="
-            -DBROTLI=unused
-            -DBROTLI_ONLY=#
-        "
-    fi
-}
+LDFLAGS+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
 
 copy_man_page() {
     logmsg "--- copying man page"
@@ -116,12 +105,12 @@ copy_man_page() {
 init
 download_source $PROG $PROG $VER
 patch_source
-brotli
+BUILDDIR=ngx_brotli-$BROTLIVER download_source $PROG/brotli v$BROTLIVER
 prep_build autoconf-like
 build
 copy_man_page
-xform files/http-nginx-template.xml > $TMPDIR/http-$PROG-$sMAJVER.xml
-xform files/http-nginx-template > $TMPDIR/http-$PROG-$sMAJVER
+xform files/http-$PROG-template.xml > $TMPDIR/http-$PROG-$sMAJVER.xml
+xform files/http-$PROG-template > $TMPDIR/http-$PROG-$sMAJVER
 install_smf network http-$PROG-$sMAJVER.xml http-$PROG-$sMAJVER
 make_package
 clean_up

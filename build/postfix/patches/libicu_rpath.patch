@@ -3,7 +3,7 @@ makedefs checks whether the test binary it builds can be run
 diff -wpruN '--exclude=*.orig' a~/makedefs a/makedefs
 --- a~/makedefs	1970-01-01 00:00:00
 +++ a/makedefs	1970-01-01 00:00:00
-@@ -866,6 +866,7 @@ case "$CCARGS" in
+@@ -877,6 +877,7 @@ case "$CCARGS" in
  		  (icu-config --cppflags)) 2>/dev/null` && {
  		icu_ldflags=`((pkg-config --libs icu-uc icu-i18n) ||
  		  (icu-config --ldflags)) 2>/dev/null` && {
