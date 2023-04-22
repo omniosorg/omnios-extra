@@ -82,7 +82,7 @@
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/nano		| 7.2		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/neovim		| 0.9.0		| https://github.com/neovim/neovim/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/emulator/qemu		| 7.2.1		| https://www.qemu.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/emulator/qemu		| 8.0.0		| https://www.qemu.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/file/acltool		| 1.16.2	| https://github.com/ptrrkssn/acltool/releases | [Peter Eriksson](https://github.com/ptrrkssn)
 | ooce/file/lsof		| 4.95.0	| https://github.com/lsof-org/lsof/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/file/tree		| 2.1.0		| http://mama.indstate.edu/users/ice/tree/ | [omniosorg](https://github.com/omniosorg)
