@@ -275,8 +275,9 @@ audit()
                         # qemu and tailscale are not published until r151044
                         */qemu:|*/tailscale:)
                             [ $r -lt 151044 ] || ok=0 ;;
-                        # helix and mariadb-1011 are not published until r151042
-                        */helix:|*/mariadb-1011:)
+                        # helix, mariadb-1011 and hunspell
+                        # are not published until r151042
+                        */helix:|*/mariadb-1011:|*/hunspell:)
                             [ $r -lt 151042 ] || ok=0 ;;
                         # X11 headers/libraries are not published until r151035
                         */x11/*:) [ $r -lt 151035 ] || ok=0 ;;
