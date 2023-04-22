@@ -52,11 +52,6 @@ CONFIGURE_OPTS[amd64]="
 
 CPPFLAGS+=" -I/usr/include/ncurses"
 
-# libtool adds '-nostdlib' which prevents clang from adding the proper RPATH
-# for libstdc++
-LDFLAGS[i386]+=" -Wl,-R/usr/gcc/$DEFAULT_GCC_VER/lib"
-LDFLAGS[amd64]+=" -Wl,-R/usr/gcc/$DEFAULT_GCC_VER/lib/amd64"
-
 post_install() {
     [ $1 = i386 ] && return
 
