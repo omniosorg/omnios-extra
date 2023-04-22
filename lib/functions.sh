@@ -1231,7 +1231,7 @@ rebase_patches() {
             /^diff -/q
             p
             ' < $patchfile~ > $patchfile
-        $GDIFF -wpruN --exclude='*.orig' $dir{~,} >> $patchfile
+        $GDIFF -wpruN --no-dereference --exclude='*.orig' $dir{~,} >> $patchfile
         local stat=$?
         if ((stat != 1)); then
             logcmd $MV $patchfile{~,}
