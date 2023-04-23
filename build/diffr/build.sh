@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=diffr
-VER=0.1.4
+VER=0.1.5
 PKG=ooce/util/diffr
 SUMMARY="Yet another diff highlighting tool"
 DESC="Alternative diff command that shows additional information on top of the "
