@@ -1,6 +1,20 @@
 diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.cpp a/lib/Driver/ToolChains/Solaris.cpp
 --- a~/lib/Driver/ToolChains/Solaris.cpp	1970-01-01 00:00:00
 +++ a/lib/Driver/ToolChains/Solaris.cpp	1970-01-01 00:00:00
+@@ -125,10 +125,11 @@
+   bool NeedsSanitizerDeps = addSanitizerRuntimes(getToolChain(), Args, CmdArgs);
+   AddLinkerInputs(getToolChain(), Inputs, Args, CmdArgs, JA);
+
++  if (getToolChain().ShouldLinkCXXStdlib(Args) && !Args.hasArg(options::OPT_r))
++    getToolChain().AddCXXStdlibLibArgs(Args, CmdArgs);
++
+   if (!Args.hasArg(options::OPT_nostdlib, options::OPT_nodefaultlibs,
+                    options::OPT_r)) {
+-    if (getToolChain().ShouldLinkCXXStdlib(Args))
+-      getToolChain().AddCXXStdlibLibArgs(Args, CmdArgs);
+     // LLVM support for atomics on 32-bit SPARC V8+ is incomplete, so
+     // forcibly link with libatomic as a workaround.
+     if (getToolChain().getTriple().getArch() == llvm::Triple::sparc) {
 @@ -302,3 +302,16 @@ void Solaris::addLibStdCxxIncludePaths(
                             TripleStr, Multilib.includeSuffix(), DriverArgs,
                             CC1Args);
@@ -31,3 +45,17 @@ diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.h a/lib/Driver/T
    SanitizerMask getSupportedSanitizers() const override;
    unsigned GetDefaultDwarfVersion() const override { return 2; }
  
+diff -wpruN '--exclude=*.orig' a~/lib/Driver/ToolChain.cpp a/lib/Driver/ToolChain.cpp
+--- a~/lib/Driver/ToolChain.cpp  1970-01-01 00:00:00
++++ a/lib/Driver/ToolChain.cpp   1970-01-01 00:00:00
+@@ -999,9 +999,7 @@
+ }
+
+ bool ToolChain::ShouldLinkCXXStdlib(const llvm::opt::ArgList &Args) const {
+-  return getDriver().CCCIsCXX() &&
+-         !Args.hasArg(options::OPT_nostdlib, options::OPT_nodefaultlibs,
+-                      options::OPT_nostdlibxx);
++  return getDriver().CCCIsCXX() && !Args.hasArg(options::OPT_nostdlibxx);
+ }
+
+ void ToolChain::AddCXXStdlibLibArgs(const ArgList &Args,
