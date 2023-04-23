@@ -17,13 +17,15 @@
 . ../../lib/build.sh
 
 PROG=qemu
-VER=7.2.1
+VER=8.0.0
 PKG=ooce/emulator/qemu
 SUMMARY="$PROG"
 DESC="A generic and open source machine emulator and virtualizer"
 
 LIBTASN1VER=4.19.0
 LIBSLIRPVER=4.7.0
+SPHINXVER=6.1.3
+SPHINXRTDVER=1.2.0
 
 if [ $RELVER -lt 151044 ]; then
     logmsg "--- $PKG is not built for r$RELVER"
@@ -68,12 +70,17 @@ LDFLAGS[amd64]+=" -L$DEPROOT$PREFIX/lib/amd64"
 
 addpath PKG_CONFIG_PATH[amd64] $DEPROOT$PREFIX/lib/amd64/pkgconfig
 
+pyvenv_install sphinx $SPHINXVER $TMPDIR/sphinx
+pyvenv_install sphinx-rtd-theme $SPHINXRTDVER $TMPDIR/sphinx
+PATH+=":$TMPDIR/sphinx/bin"
+
 #########################################################################
 
 note -n "-- Building $PROG"
 
 CONFIGURE_OPTS="
     --localstatedir=/var$PREFIX
+    --enable-docs
 "
 LDFLAGS+=" -lumem"
 

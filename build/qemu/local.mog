@@ -8,12 +8,12 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYING license=GPLv2
 
 # drop unwanted stuff
-<transform path=$(PREFIX)/share/(?:applications|icons) -> drop >
+<transform path=$(PREFIX)/share/(?:applications|icons|doc) -> drop>
 
 dir group=bin mode=0755 owner=root path=etc/$(PREFIX)
 
