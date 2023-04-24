@@ -18,7 +18,7 @@
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.68.2
+VER=1.69.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
@@ -108,7 +108,15 @@ TESTSUITE_SED="
 "
 
 pre_install() {
-    logcmd mkdir -p $DESTDIR/$PREFIX || logerr "failed to create directory"
+    logcmd $MKDIR -p $DESTDIR/$PREFIX || logerr "failed to create directory"
+}
+
+pre_test() {
+    # https://github.com/rust-lang/rust/commit/13588cc681c9cc451ddf6286424b1a61
+    # ^ has broken running the tests from a release tarball. Fix it by
+    # re-creating the pre-requisites.
+    logcmd $MKDIR -p .github/workflows
+    logcmd $PYTHON x.py run src/tools/expand-yaml-anchors
 }
 
 init
