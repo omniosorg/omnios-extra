@@ -90,6 +90,10 @@ build
             *post_build <arch>
     *build_fini
 
+run_testsuite
+    *pre_test
+    *post_test
+
 make_package
     *pre_package <arch>
     make_package_impl
