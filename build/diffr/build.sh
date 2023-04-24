@@ -35,7 +35,7 @@ build_rust
 install_rust
 # illumos strip cannot deal with this binary
 # see https://www.illumos.org/issues/14659
-PATH=$GNUBIN:$PATH strip_install
+STRIP=gstrip strip_install
 make_package
 clean_up
 
