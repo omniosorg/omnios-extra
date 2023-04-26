@@ -2729,6 +2729,7 @@ run_testsuite() {
             pushd $TMPDIR/$MULTI_BUILD_LAST/$dir > /dev/null
         fi
         logmsg "Running testsuite"
+        hook pre_test
         op=`$MKTEMP`
         eval set -- $MAKE_TESTSUITE_ARGS_WS
         $TESTSUITE_MAKE $target $MAKE_TESTSUITE_ARGS "$@" 2>&1 | $TEE $op
@@ -2740,6 +2741,7 @@ run_testsuite() {
             $CP $op $SRCDIR/$output
         fi
         logcmd $RM -f $op
+        hook post_test
         popd > /dev/null
     fi
 }

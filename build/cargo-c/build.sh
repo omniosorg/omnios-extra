@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=cargo-c
-VER=0.9.17
+VER=0.9.19
 PKG=ooce/developer/cargo-c
 SUMMARY="build and install C-ABI compatible dynamic and static libraries"
 DESC="produces and installs a correct pkg-config file, a static library and "
