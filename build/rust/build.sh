@@ -23,6 +23,9 @@ SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
 
+# starting with release 1.69.0, rust requires at least llvm 14
+LLVMVER=14
+
 set_builddir ${PROG}c-${VER}-src
 
 OPREFIX=$PREFIX
@@ -31,8 +34,8 @@ PREFIX+=/$PROG
 BUILD_DEPENDS_IPS="developer/gnu-binutils"
 
 if [ $RELVER -lt 151041 ]; then
-    SYSTEM_LLVM_PATH="/opt/ooce/llvm-$DEFAULT_CLANG_VER"
-    RUN_DEPENDS_IPS="ooce/developer/llvm-$DEFAULT_CLANG_VER"
+    SYSTEM_LLVM_PATH="/opt/ooce/llvm-$LLVMVER"
+    RUN_DEPENDS_IPS="ooce/developer/llvm-$LLVMVER"
     BUILD_DEPENDS_IPS+=" $RUN_DEPENDS_IPS"
 
     ar=$USRBIN/gar

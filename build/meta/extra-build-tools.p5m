@@ -22,6 +22,7 @@ depend fmri=ooce/developer/go-119 type=require
 depend fmri=ooce/developer/go-120 type=require
 depend fmri=ooce/developer/gperf type=require
 depend fmri=ooce/developer/llvm-13 type=require
+depend fmri=ooce/developer/llvm-14 type=require
 depend fmri=ooce/developer/clang-13 type=require
 depend fmri=ooce/developer/subversion type=require
 depend fmri=ooce/developer/yasm type=require
@@ -87,10 +88,6 @@ depend fmri=ooce/x11/library/xtrans type=require
 depend fmri=ooce/x11/library/libx11 type=require
 depend fmri=ooce/x11/library/libxau type=require
 depend fmri=ooce/x11/library/libxcb type=require
-
-# Added llvm/clang 14 from r151041 onwards
-depend fmri=ooce/developer/llvm-14 type=conditional \
-    predicate=release/name@0.5.11-151041
 
 # clang 14 is the default clang compiler from r151043 onwards
 depend fmri=ooce/developer/clang-14 type=conditional \

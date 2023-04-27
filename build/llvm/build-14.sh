@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,13 +22,8 @@ VER=14.0.6
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 
-if [ $RELVER -lt 151041 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
-
 set_arch 64
-set_clangver
+[ $RELVER -ge 151041 ] && set_clangver
 set_builddir $PROG-project-$VER.src/$PROG
 
 SKIP_RTIME_CHECK=1
