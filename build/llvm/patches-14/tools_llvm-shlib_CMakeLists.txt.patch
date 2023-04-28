@@ -2,7 +2,7 @@ $NetBSD: patch-tools_llvm-shlib_CMakeLists.txt,v 1.5 2019/06/02 08:35:55 adam Ex
 
 Use the Linux style linking everywhere except Darwin and SunOS.
 
-diff -wpruN '--exclude=*.orig' a~/tools/llvm-shlib/CMakeLists.txt a/tools/llvm-shlib/CMakeLists.txt
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tools/llvm-shlib/CMakeLists.txt a/tools/llvm-shlib/CMakeLists.txt
 --- a~/tools/llvm-shlib/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/tools/llvm-shlib/CMakeLists.txt	1970-01-01 00:00:00
 @@ -33,13 +33,11 @@ if(LLVM_BUILD_LLVM_DYLIB)
