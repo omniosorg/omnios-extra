@@ -1,1 +1,3 @@
-libclamunrar.so.9.1.0
+libclamunrar.so
+libfreshclam.so
+sigtool
