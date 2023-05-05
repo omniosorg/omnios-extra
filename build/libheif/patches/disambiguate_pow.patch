@@ -1,7 +1,7 @@
-diff -wpruN '--exclude=*.orig' a~/libheif/heif_hevc.cc a/libheif/heif_hevc.cc
---- a~/libheif/heif_hevc.cc	1970-01-01 00:00:00
-+++ a/libheif/heif_hevc.cc	1970-01-01 00:00:00
-@@ -45,10 +45,10 @@ static double read_depth_rep_info_elemen
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libheif/hevc.cc a/libheif/hevc.cc
+--- a~/libheif/hevc.cc	1970-01-01 00:00:00
++++ a/libheif/hevc.cc	1970-01-01 00:00:00
+@@ -43,10 +43,10 @@ static double read_depth_rep_info_elemen
    //printf("sign:%d exponent:%d mantissa_len:%d mantissa:%d\n",sign_flag,exponent,mantissa_len,mantissa);
  
    if (exponent > 0) {
