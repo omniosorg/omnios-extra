@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=dav1d
-VER=1.1.0
+VER=1.2.0
 PKG=ooce/multimedia/dav1d
 SUMMARY="AV1 decoder"
 DESC="AV1 cross-platform decoder, open-source, and focused on speed, "
@@ -27,6 +27,12 @@ forgo_isaexec
 # clock_gettime
 set_standard XPG6
 
+TESTSUITE_SED='
+    1,/Running all tests/d
+    s/  *[0-9][0-9.]*s//
+    /^Full log written to/d
+'
+
 LDFLAGS[i386]+=" -lssp_ns"
 LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
 
@@ -35,6 +41,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build meson
 build
+run_testsuite
 make_package
 clean_up
 

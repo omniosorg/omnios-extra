@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libheif
-VER=1.15.1
+VER=1.16.1
 PKG=ooce/library/libheif
 SUMMARY="HEIF and AVIF encoder"
 DESC="ISO/IEC 23008-12:2017 HEIF and AVIF (AV1 Image File Format) "
@@ -26,15 +26,21 @@ DESC+="file format decoder and encoder"
 BUILD_DEPENDS_IPS="
     ooce/library/libde265
     ooce/multimedia/dav1d
+    ooce/multimedia/rav1e
     ooce/multimedia/x265
 "
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 CONFIGURE_OPTS="
-    --disable-static
-    --disable-examples
-    --disable-go
+    --preset=release
+    -DCMAKE_INSTALL_PREFIX=$PREFIX
+"
+CONFIGURE_OPTS[i386]="
+    -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib
+"
+CONFIGURE_OPTS[amd64]="
+    -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib/amd64
 "
 
 LDFLAGS[i386]+=" -R$PREFIX/lib"
@@ -43,7 +49,7 @@ LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
 init
 download_source $PROG $PROG $VER
 patch_source
-prep_build autoconf -autoreconf
+prep_build cmake+ninja
 build -noctf    # C++
 strip_install
 make_package
