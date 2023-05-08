@@ -17,3 +17,7 @@ license ../../../LICENSE license=CDDL
 <transform file path=$(SYSROOT)/lib/libdl\.so\.1$ \
     -> default pkg.depend.bypass-generate usr/lib/aarch64/ld\.so\.1 >
 
+# libc.so.1 has a runtime dependency on libm.so.0 which cannot be resolved
+<transform file path=$(SYSROOT)/lib/libc\.so\.1$ \
+    -> default pkg.depend.bypass-generate .*libm\.so\.0$>
+
