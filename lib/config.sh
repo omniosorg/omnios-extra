@@ -345,7 +345,8 @@ esac
 # Specify default clang version for building packages
 case $RELVER in
     15104[3-4])         DEFAULT_CLANG_VER=14 ;;
-    15104[5-9])         DEFAULT_CLANG_VER=15 ;;
+    15104[5-6])         DEFAULT_CLANG_VER=15 ;;
+    15104[7-9])         DEFAULT_CLANG_VER=16 ;;
     *)                  DEFAULT_CLANG_VER=13 ;;
 esac
 
