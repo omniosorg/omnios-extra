@@ -6,7 +6,7 @@ used. The patch to the postgresql.conf.sample is to show that sysv is the defaul
 ordering is changed as by default it used to be mmap and posix for the defaults and you could always
 override things using the sysv setting.
 --
-diff -wpruN '--exclude=*.orig' a~/src/backend/utils/misc/postgresql.conf.sample a/src/backend/utils/misc/postgresql.conf.sample
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/backend/utils/misc/postgresql.conf.sample a/src/backend/utils/misc/postgresql.conf.sample
 --- a~/src/backend/utils/misc/postgresql.conf.sample	1970-01-01 00:00:00
 +++ a/src/backend/utils/misc/postgresql.conf.sample	1970-01-01 00:00:00
 @@ -134,16 +134,16 @@
@@ -30,7 +30,7 @@ diff -wpruN '--exclude=*.orig' a~/src/backend/utils/misc/postgresql.conf.sample 
  					#   windows
  					#   mmap
  					# (change requires restart)
-diff -wpruN '--exclude=*.orig' a~/src/include/portability/mem.h a/src/include/portability/mem.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/include/portability/mem.h a/src/include/portability/mem.h
 --- a~/src/include/portability/mem.h	1970-01-01 00:00:00
 +++ a/src/include/portability/mem.h	1970-01-01 00:00:00
 @@ -14,11 +14,15 @@
@@ -49,7 +49,7 @@ diff -wpruN '--exclude=*.orig' a~/src/include/portability/mem.h a/src/include/po
  
  /* Linux prefers MAP_ANONYMOUS, but the flag is called MAP_ANON on other systems. */
  #ifndef MAP_ANONYMOUS
-diff -wpruN '--exclude=*.orig' a~/src/include/storage/dsm_impl.h a/src/include/storage/dsm_impl.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/include/storage/dsm_impl.h a/src/include/storage/dsm_impl.h
 --- a~/src/include/storage/dsm_impl.h	1970-01-01 00:00:00
 +++ a/src/include/storage/dsm_impl.h	1970-01-01 00:00:00
 @@ -19,6 +19,13 @@
@@ -78,10 +78,10 @@ diff -wpruN '--exclude=*.orig' a~/src/include/storage/dsm_impl.h a/src/include/s
  #endif
  #define USE_DSM_MMAP
  #endif
-diff -wpruN '--exclude=*.orig' a~/src/include/storage/pg_shmem.h a/src/include/storage/pg_shmem.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/include/storage/pg_shmem.h a/src/include/storage/pg_shmem.h
 --- a~/src/include/storage/pg_shmem.h	1970-01-01 00:00:00
 +++ a/src/include/storage/pg_shmem.h	1970-01-01 00:00:00
-@@ -69,7 +69,9 @@
+@@ -69,7 +69,9 @@ extern void *ShmemProtectiveRegion;
  #endif
  extern void *UsedShmemSegAddr;
  
