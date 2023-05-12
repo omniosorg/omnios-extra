@@ -6,7 +6,7 @@ used. The patch to the postgresql.conf.sample is to show that sysv is the defaul
 ordering is changed as by default it used to be mmap and posix for the defaults and you could always
 override things using the sysv setting.
 --
-diff -wpruN '--exclude=*.orig' a~/src/backend/utils/misc/postgresql.conf.sample a/src/backend/utils/misc/postgresql.conf.sample
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/backend/utils/misc/postgresql.conf.sample a/src/backend/utils/misc/postgresql.conf.sample
 --- a~/src/backend/utils/misc/postgresql.conf.sample	1970-01-01 00:00:00
 +++ a/src/backend/utils/misc/postgresql.conf.sample	1970-01-01 00:00:00
 @@ -141,16 +141,16 @@
@@ -30,7 +30,7 @@ diff -wpruN '--exclude=*.orig' a~/src/backend/utils/misc/postgresql.conf.sample 
  					#   windows
  					#   mmap
  					# (change requires restart)
-diff -wpruN '--exclude=*.orig' a~/src/include/portability/mem.h a/src/include/portability/mem.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/include/portability/mem.h a/src/include/portability/mem.h
 --- a~/src/include/portability/mem.h	1970-01-01 00:00:00
 +++ a/src/include/portability/mem.h	1970-01-01 00:00:00
 @@ -14,11 +14,15 @@
@@ -49,25 +49,24 @@ diff -wpruN '--exclude=*.orig' a~/src/include/portability/mem.h a/src/include/po
  
  /* Linux prefers MAP_ANONYMOUS, but the flag is called MAP_ANON on other systems. */
  #ifndef MAP_ANONYMOUS
-diff -wpruN '--exclude=*.orig' a~/src/include/storage/dsm_impl.h a/src/include/storage/dsm_impl.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/include/storage/dsm_impl.h a/src/include/storage/dsm_impl.h
 --- a~/src/include/storage/dsm_impl.h	1970-01-01 00:00:00
 +++ a/src/include/storage/dsm_impl.h	1970-01-01 00:00:00
-@@ -19,7 +19,14 @@
+@@ -19,6 +19,13 @@
  #define DSM_IMPL_WINDOWS		3
  #define DSM_IMPL_MMAP			4
  
 +#ifdef HAVE_SYS_SHM_H
- /*
++/*
 + * For SHM_SHARE_MMU.
 + */
 +#include <sys/shm.h>
 +#endif
 +
-+/*
+ /*
   * Determine which dynamic shared memory implementations will be supported
   * on this platform, and which one will be the default.
-  */
-@@ -34,7 +41,12 @@
+@@ -34,6 +41,11 @@
  #define USE_DSM_SYSV
  #ifndef DEFAULT_DYNAMIC_SHARED_MEMORY_TYPE
  #define DEFAULT_DYNAMIC_SHARED_MEMORY_TYPE		DSM_IMPL_SYSV
@@ -75,15 +74,14 @@ diff -wpruN '--exclude=*.orig' a~/src/include/storage/dsm_impl.h a/src/include/s
 +#ifdef SHM_SHARE_MMU
 +#undef DEFAULT_DYNAMIC_SHARED_MEMORY_TYPE
 +#define DEFAULT_DYNAMIC_SHARED_MEMORY_TYPE		DSM_IMPL_SYSV
- #endif
 +#endif
+ #endif
  #define USE_DSM_MMAP
  #endif
- 
-diff -wpruN '--exclude=*.orig' a~/src/include/storage/pg_shmem.h a/src/include/storage/pg_shmem.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/include/storage/pg_shmem.h a/src/include/storage/pg_shmem.h
 --- a~/src/include/storage/pg_shmem.h	1970-01-01 00:00:00
 +++ a/src/include/storage/pg_shmem.h	1970-01-01 00:00:00
-@@ -70,7 +70,9 @@
+@@ -70,7 +70,9 @@ extern void *ShmemProtectiveRegion;
  #endif
  extern void *UsedShmemSegAddr;
  

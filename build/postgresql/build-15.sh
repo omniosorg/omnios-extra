@@ -19,7 +19,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-15
-VER=15.2
+VER=15.3
 SUMMARY="PostgreSQL 15"
 DESC="The World's Most Advanced Open Source Relational Database"
 
