@@ -1,6 +1,6 @@
 see: https://www.illumos.org/issues/14418
 
-diff -wpruN '--exclude=*.orig' a~/deps/v8/src/base/platform/platform-posix.cc a/deps/v8/src/base/platform/platform-posix.cc
+diff -wpruN --no-dereference '--exclude=*.orig' a~/deps/v8/src/base/platform/platform-posix.cc a/deps/v8/src/base/platform/platform-posix.cc
 --- a~/deps/v8/src/base/platform/platform-posix.cc	1970-01-01 00:00:00
 +++ a/deps/v8/src/base/platform/platform-posix.cc	1970-01-01 00:00:00
 @@ -72,14 +72,6 @@
