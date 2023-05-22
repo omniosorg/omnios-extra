@@ -5,3 +5,4 @@
 0006-Temporary-coroutine-patch-pending-illumos-15206.patch
 0007-Add-support-for-VNICs.patch
 0008-Drop-unnecessary-privileges.patch
+0009-Add-support-for-a-zconsole-character-device.patch
