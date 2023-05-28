@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nettle
-VER=3.8.1
+VER=3.9
 PKG=ooce/library/nettle
 SUMMARY="$PROG - low-level cryptographic library"
 DESC="Cryptographic library that is designed to fit easily in more or "
