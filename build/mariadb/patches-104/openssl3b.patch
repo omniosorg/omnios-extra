@@ -4,7 +4,7 @@ See https://jira.mariadb.org/browse/MDEV-28339
 Here are just enough fixes for running mariadb with openssl 3.0.2, stopping
 short of reworking aspects of the API and plugin infrastructure.
 
-diff -wpruN '--exclude=*.orig' a~/include/mysql/service_md5.h a/include/mysql/service_md5.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/include/mysql/service_md5.h a/include/mysql/service_md5.h
 --- a~/include/mysql/service_md5.h	1970-01-01 00:00:00
 +++ a/include/mysql/service_md5.h	1970-01-01 00:00:00
 @@ -58,6 +58,9 @@ void my_md5_init(void *context);
@@ -17,7 +17,7 @@ diff -wpruN '--exclude=*.orig' a~/include/mysql/service_md5.h a/include/mysql/se
  #endif
  
  #ifdef __cplusplus
-diff -wpruN '--exclude=*.orig' a~/mysys_ssl/my_crypt.cc a/mysys_ssl/my_crypt.cc
+diff -wpruN --no-dereference '--exclude=*.orig' a~/mysys_ssl/my_crypt.cc a/mysys_ssl/my_crypt.cc
 --- a~/mysys_ssl/my_crypt.cc	1970-01-01 00:00:00
 +++ a/mysys_ssl/my_crypt.cc	1970-01-01 00:00:00
 @@ -42,6 +42,9 @@ public:
@@ -46,7 +46,7 @@ diff -wpruN '--exclude=*.orig' a~/mysys_ssl/my_crypt.cc a/mysys_ssl/my_crypt.cc
      ERR_remove_state(0);
    }
  
-diff -wpruN '--exclude=*.orig' a~/mysys_ssl/my_md5.cc a/mysys_ssl/my_md5.cc
+diff -wpruN --no-dereference '--exclude=*.orig' a~/mysys_ssl/my_md5.cc a/mysys_ssl/my_md5.cc
 --- a~/mysys_ssl/my_md5.cc	1970-01-01 00:00:00
 +++ a/mysys_ssl/my_md5.cc	1970-01-01 00:00:00
 @@ -31,6 +31,17 @@
@@ -145,10 +145,10 @@ diff -wpruN '--exclude=*.orig' a~/mysys_ssl/my_md5.cc a/mysys_ssl/my_md5.cc
  void my_md5_init(void *context)
  {
    md5_init((EVP_MD_CTX *)context);
-diff -wpruN '--exclude=*.orig' a~/storage/innobase/handler/ha_innodb.cc a/storage/innobase/handler/ha_innodb.cc
+diff -wpruN --no-dereference '--exclude=*.orig' a~/storage/innobase/handler/ha_innodb.cc a/storage/innobase/handler/ha_innodb.cc
 --- a~/storage/innobase/handler/ha_innodb.cc	1970-01-01 00:00:00
 +++ a/storage/innobase/handler/ha_innodb.cc	1970-01-01 00:00:00
-@@ -8784,7 +8784,7 @@ wsrep_calc_row_hash(
+@@ -8777,7 +8777,7 @@ wsrep_calc_row_hash(
  	ulint		len;
  	const byte*	ptr;
  
@@ -157,7 +157,7 @@ diff -wpruN '--exclude=*.orig' a~/storage/innobase/handler/ha_innodb.cc a/storag
  	my_md5_init(ctx);
  
  	for (uint i = 0; i < table->s->fields; i++) {
-@@ -8842,6 +8842,7 @@ wsrep_calc_row_hash(
+@@ -8835,6 +8835,7 @@ wsrep_calc_row_hash(
  	}
  
  	my_md5_result(ctx, digest);

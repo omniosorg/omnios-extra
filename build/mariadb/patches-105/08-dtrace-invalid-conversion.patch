@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/sql/filesort.cc a/sql/filesort.cc
+diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/filesort.cc a/sql/filesort.cc
 --- a~/sql/filesort.cc	1970-01-01 00:00:00
 +++ a/sql/filesort.cc	1970-01-01 00:00:00
 @@ -220,7 +220,7 @@ SORT_INFO *filesort(THD *thd, TABLE *tab
@@ -9,11 +9,11 @@ diff -wpruN '--exclude=*.orig' a~/sql/filesort.cc a/sql/filesort.cc
 +  MYSQL_FILESORT_START((char*)table->s->db.str, (char*)table->s->table_name.str);
    DEBUG_SYNC(thd, "filesort_start");
  
-   if (!(sort= new SORT_INFO))
-diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
+   if (!(sort= new SORT_INFO))    // Note that this is not automatically freed!
+diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
 --- a~/sql/handler.cc	1970-01-01 00:00:00
 +++ a/sql/handler.cc	1970-01-01 00:00:00
-@@ -6699,18 +6699,18 @@ int handler::ha_external_lock(THD *thd,
+@@ -6735,18 +6735,18 @@ int handler::ha_external_lock(THD *thd,
    {
      if (lock_type == F_RDLCK)
      {
@@ -38,7 +38,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
      }
    }
  
-@@ -7199,7 +7199,7 @@ int handler::ha_write_row(const uchar *b
+@@ -7246,7 +7246,7 @@ int handler::ha_write_row(const uchar *b
        DBUG_RETURN(error);
    }
  
@@ -47,7 +47,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
    mark_trx_read_write();
    increment_statistics(&SSV::ha_write_count);
  
-@@ -7259,7 +7259,7 @@ int handler::ha_update_row(const uchar *
+@@ -7306,7 +7306,7 @@ int handler::ha_update_row(const uchar *
    if (error)
      return error;
  
@@ -56,7 +56,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
    mark_trx_read_write();
    increment_statistics(&SSV::ha_update_count);
  
-@@ -7338,7 +7338,7 @@ int handler::ha_delete_row(const uchar *
+@@ -7385,7 +7385,7 @@ int handler::ha_delete_row(const uchar *
    DBUG_ASSERT(buf == table->record[0] ||
                buf == table->record[1]);
  
@@ -65,7 +65,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
    mark_trx_read_write();
    increment_statistics(&SSV::ha_delete_count);
  
-@@ -7395,7 +7395,7 @@ int handler::ha_delete_row(const uchar *
+@@ -7442,7 +7442,7 @@ int handler::ha_delete_row(const uchar *
  int handler::ha_direct_update_rows(ha_rows *update_rows, ha_rows *found_rows)
  {
    int error;
@@ -74,7 +74,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
    mark_trx_read_write();
  
    error= direct_update_rows(update_rows, found_rows);
-@@ -7422,7 +7422,7 @@ int handler::ha_direct_delete_rows(ha_ro
+@@ -7469,7 +7469,7 @@ int handler::ha_direct_delete_rows(ha_ro
    /* Ensure we are not using binlog row */
    DBUG_ASSERT(!table->in_use->is_current_stmt_binlog_format_row());
  
@@ -83,7 +83,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
    mark_trx_read_write();
  
    error = direct_delete_rows(delete_rows);
-diff -wpruN '--exclude=*.orig' a~/sql/sp_head.cc a/sql/sp_head.cc
+diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/sp_head.cc a/sql/sp_head.cc
 --- a~/sql/sp_head.cc	1970-01-01 00:00:00
 +++ a/sql/sp_head.cc	1970-01-01 00:00:00
 @@ -3768,7 +3768,7 @@ sp_instr_stmt::exec_core(THD *thd, uint
@@ -95,10 +95,10 @@ diff -wpruN '--exclude=*.orig' a~/sql/sp_head.cc a/sql/sp_head.cc
                           &thd->security_ctx->priv_user[0],
                           (char *)thd->security_ctx->host_or_ip,
                           3);
-diff -wpruN '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_class.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_class.h
 --- a~/sql/sql_class.h	1970-01-01 00:00:00
 +++ a/sql/sql_class.h	1970-01-01 00:00:00
-@@ -7133,7 +7133,7 @@ inline int handler::ha_read_first_row(uc
+@@ -7170,7 +7170,7 @@ inline int handler::ha_read_first_row(uc
  inline int handler::ha_write_tmp_row(uchar *buf)
  {
    int error;
@@ -107,7 +107,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_class.h
    increment_statistics(&SSV::ha_tmp_write_count);
    TABLE_IO_WAIT(tracker, PSI_TABLE_WRITE_ROW, MAX_KEY, error,
            { error= write_row(buf); })
-@@ -7144,7 +7144,7 @@ inline int handler::ha_write_tmp_row(uch
+@@ -7181,7 +7181,7 @@ inline int handler::ha_write_tmp_row(uch
  inline int handler::ha_delete_tmp_row(uchar *buf)
  {
    int error;
@@ -116,7 +116,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_class.h
    increment_statistics(&SSV::ha_tmp_delete_count);
    TABLE_IO_WAIT(tracker, PSI_TABLE_DELETE_ROW, MAX_KEY, error,
                  { error= delete_row(buf); })
-@@ -7155,7 +7155,7 @@ inline int handler::ha_delete_tmp_row(uc
+@@ -7192,7 +7192,7 @@ inline int handler::ha_delete_tmp_row(uc
  inline int handler::ha_update_tmp_row(const uchar *old_data, uchar *new_data)
  {
    int error;
@@ -125,7 +125,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_class.h
    increment_statistics(&SSV::ha_tmp_update_count);
    TABLE_IO_WAIT(tracker, PSI_TABLE_UPDATE_ROW, active_index, error,
            { error= update_row(old_data, new_data);})
-diff -wpruN '--exclude=*.orig' a~/sql/sql_cursor.cc a/sql/sql_cursor.cc
+diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/sql_cursor.cc a/sql/sql_cursor.cc
 --- a~/sql/sql_cursor.cc	1970-01-01 00:00:00
 +++ a/sql/sql_cursor.cc	1970-01-01 00:00:00
 @@ -125,7 +125,7 @@ int mysql_open_cursor(THD *thd, select_r
@@ -137,7 +137,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sql_cursor.cc a/sql/sql_cursor.cc
                           &thd->security_ctx->priv_user[0],
                           (char *) thd->security_ctx->host_or_ip,
                           2);
-diff -wpruN '--exclude=*.orig' a~/sql/sql_parse.cc a/sql/sql_parse.cc
+diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/sql_parse.cc a/sql/sql_parse.cc
 --- a~/sql/sql_parse.cc	1970-01-01 00:00:00
 +++ a/sql/sql_parse.cc	1970-01-01 00:00:00
 @@ -1855,7 +1855,7 @@ bool dispatch_command(enum enum_server_c
@@ -158,7 +158,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sql_parse.cc a/sql/sql_parse.cc
                          &thd->security_ctx->priv_user[0],
                          (char *) thd->security_ctx->host_or_ip);
  
-@@ -7858,7 +7858,7 @@ static void wsrep_prepare_for_autocommit
+@@ -7877,7 +7877,7 @@ static void wsrep_prepare_for_autocommit
  
    /* DTRACE begin */
    MYSQL_QUERY_START(rawbuf, thd->thread_id,
@@ -167,7 +167,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sql_parse.cc a/sql/sql_parse.cc
                      &thd->security_ctx->priv_user[0],
                      (char *) thd->security_ctx->host_or_ip);
  
-@@ -8078,7 +8078,7 @@ void mysql_parse(THD *thd, char *rawbuf,
+@@ -8097,7 +8097,7 @@ void mysql_parse(THD *thd, char *rawbuf,
            lex->set_trg_event_type_for_tables();
            MYSQL_QUERY_EXEC_START(thd->query(),
                                   thd->thread_id,
@@ -176,10 +176,10 @@ diff -wpruN '--exclude=*.orig' a~/sql/sql_parse.cc a/sql/sql_parse.cc
                                   &thd->security_ctx->priv_user[0],
                                   (char *) thd->security_ctx->host_or_ip,
                                   0);
-diff -wpruN '--exclude=*.orig' a~/sql/sql_prepare.cc a/sql/sql_prepare.cc
+diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/sql_prepare.cc a/sql/sql_prepare.cc
 --- a~/sql/sql_prepare.cc	1970-01-01 00:00:00
 +++ a/sql/sql_prepare.cc	1970-01-01 00:00:00
-@@ -5070,7 +5070,7 @@ bool Prepared_statement::execute(String
+@@ -5068,7 +5068,7 @@ bool Prepared_statement::execute(String
      {
        MYSQL_QUERY_EXEC_START(thd->query(),
                               thd->thread_id,
@@ -188,7 +188,7 @@ diff -wpruN '--exclude=*.orig' a~/sql/sql_prepare.cc a/sql/sql_prepare.cc
                               &thd->security_ctx->priv_user[0],
                               (char *) thd->security_ctx->host_or_ip,
                               1);
-diff -wpruN '--exclude=*.orig' a~/storage/csv/ha_tina.cc a/storage/csv/ha_tina.cc
+diff -wpruN --no-dereference '--exclude=*.orig' a~/storage/csv/ha_tina.cc a/storage/csv/ha_tina.cc
 --- a~/storage/csv/ha_tina.cc	1970-01-01 00:00:00
 +++ a/storage/csv/ha_tina.cc	1970-01-01 00:00:00
 @@ -1243,7 +1243,7 @@ int ha_tina::rnd_next(uchar *buf)
