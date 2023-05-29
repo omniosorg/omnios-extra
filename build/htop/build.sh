@@ -28,6 +28,10 @@ set_arch 64
 # need stack_t, timestruc_t, label_t, ...
 set_standard XPG6
 
+# TODO: pending an illumos fix that defining _XOPEN_SOURCE_EXTENDED
+# does not default to XPG4v2 even if a higher standard is set
+CPPFLAGS+=" -D_XPG5"
+
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 init

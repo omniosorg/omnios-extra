@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/config-scripts/cups-compiler.m4 a/config-scripts/cups-compiler.m4
+diff -wpruN --no-dereference '--exclude=*.orig' a~/config-scripts/cups-compiler.m4 a/config-scripts/cups-compiler.m4
 --- a~/config-scripts/cups-compiler.m4	1970-01-01 00:00:00
 +++ a/config-scripts/cups-compiler.m4	1970-01-01 00:00:00
 @@ -164,7 +164,7 @@ AS_IF([test -n "$GCC"], [

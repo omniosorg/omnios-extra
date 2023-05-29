@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/scheduler/cups.xml.in a/scheduler/cups.xml.in
+diff -wpruN --no-dereference '--exclude=*.orig' a~/scheduler/cups.xml.in a/scheduler/cups.xml.in
 --- a~/scheduler/cups.xml.in	1970-01-01 00:00:00
 +++ a/scheduler/cups.xml.in	1970-01-01 00:00:00
 @@ -49,14 +49,6 @@
