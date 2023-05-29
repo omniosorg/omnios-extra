@@ -10,6 +10,7 @@ ok - barrier_serial_thread
 ok - barrier_serial_thread_single
 ok - callback_stack
 ok - check_ref
+ok - clock_gettime
 ok - close_fd
 ok - close_order
 ok - closed_fd_events
@@ -73,6 +74,7 @@ ok - fs_file_pos_after_op_with_offset
 ok - fs_file_sync
 ok - fs_file_write_null_buffer
 ok - fs_fstat
+ok - fs_fstat_stdio
 ok - fs_futime
 ok - fs_get_system_error
 ok - fs_lutime
@@ -100,9 +102,11 @@ ok - fs_readdir_non_existing_dir
 ok - fs_readlink
 ok - fs_realpath
 ok - fs_rename_to_existing_file
+ok - fs_scandir_early_exit
 ok - fs_scandir_empty_dir
 ok - fs_scandir_file
 ok - fs_scandir_non_existent_dir
+ok - fs_stat_batch_multiple
 ok - fs_stat_missing_path
 ok - fs_statfs
 ok - fs_symlink
@@ -114,10 +118,12 @@ ok - fs_write_alotof_bufs
 ok - fs_write_alotof_bufs_with_offset
 ok - fs_write_multiple_bufs
 ok - get_currentexe
+ok - get_group
 ok - get_loadavg
 ok - get_memory
 ok - get_osfhandle_valid_handle
 ok - get_passwd
+ok - get_passwd2
 ok - getaddrinfo_basic
 ok - getaddrinfo_basic_sync
 ok - getaddrinfo_concurrent
@@ -167,6 +173,8 @@ ok - loop_update_time
 ok - metrics_idle_time
 ok - metrics_idle_time_thread
 ok - metrics_idle_time_zero
+ok - metrics_info_check
+ok - metrics_pool_events
 ok - multiple_listen
 ok - not_readable_nor_writable_on_read_error
 ok - not_writable_after_shutdown
@@ -177,6 +185,7 @@ ok - pipe_bind_error_inval
 ok - pipe_bind_or_listen_error_after_close
 ok - pipe_close_stdout_read_stdin
 ok - pipe_connect_bad_name
+ok - pipe_connect_close_multiple
 ok - pipe_connect_multiple
 ok - pipe_connect_on_prepare
 ok - pipe_connect_to_file
@@ -321,11 +330,13 @@ ok - tcp_try_write_error
 ok - tcp_unexpected_read
 ok - tcp_write_after_connect
 ok - tcp_write_fail
+ok - tcp_write_in_a_row
 ok - tcp_write_queue_order
 ok - tcp_write_ready
 ok - tcp_write_to_half_open_connection
 ok - tcp_writealot
 ok - test_macros
+ok - thread_affinity
 ok - thread_create
 ok - thread_equal
 ok - thread_local_storage
@@ -352,6 +363,8 @@ ok - timer_huge_repeat
 ok - timer_huge_timeout
 ok - timer_init
 ok - timer_is_closing
+ok - timer_no_double_call_nowait
+ok - timer_no_double_call_once
 ok - timer_null_callback
 ok - timer_order
 ok - timer_ref
@@ -377,7 +390,7 @@ ok - udp_mmsg
 ok - udp_multicast_interface
 ok - udp_multicast_interface6
 not ok - udp_multicast_join
-ok - udp_multicast_join6 # SKIP No external IPv6 interface available
+ok - udp_multicast_join6
 ok - udp_multicast_ttl
 ok - udp_no_autobind
 ok - udp_open
@@ -386,6 +399,7 @@ ok - udp_open_connect
 ok - udp_open_twice
 ok - udp_options
 ok - udp_options6
+ok - udp_recv_in_a_row
 ok - udp_ref
 ok - udp_ref2
 ok - udp_ref3

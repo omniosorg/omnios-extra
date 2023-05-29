@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/cmake/plugin.cmake a/cmake/plugin.cmake
+diff -wpruN --no-dereference '--exclude=*.orig' a~/cmake/plugin.cmake a/cmake/plugin.cmake
 --- a~/cmake/plugin.cmake	1970-01-01 00:00:00
 +++ a/cmake/plugin.cmake	1970-01-01 00:00:00
 @@ -145,7 +145,7 @@ MACRO(MYSQL_ADD_PLUGIN)
@@ -28,7 +28,7 @@ diff -wpruN '--exclude=*.orig' a~/cmake/plugin.cmake a/cmake/plugin.cmake
  
      SET_TARGET_PROPERTIES (${target} PROPERTIES PREFIX "")
      IF (NOT ARG_CLIENT)
-diff -wpruN '--exclude=*.orig' a~/extra/mariabackup/CMakeLists.txt a/extra/mariabackup/CMakeLists.txt
+diff -wpruN --no-dereference '--exclude=*.orig' a~/extra/mariabackup/CMakeLists.txt a/extra/mariabackup/CMakeLists.txt
 --- a~/extra/mariabackup/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/extra/mariabackup/CMakeLists.txt	1970-01-01 00:00:00
 @@ -87,6 +87,8 @@ IF(NOT HAVE_SYSTEM_REGEX)
@@ -40,7 +40,7 @@ diff -wpruN '--exclude=*.orig' a~/extra/mariabackup/CMakeLists.txt a/extra/maria
  
  ########################################################################
  # mbstream binary
-diff -wpruN '--exclude=*.orig' a~/mysys_ssl/CMakeLists.txt a/mysys_ssl/CMakeLists.txt
+diff -wpruN --no-dereference '--exclude=*.orig' a~/mysys_ssl/CMakeLists.txt a/mysys_ssl/CMakeLists.txt
 --- a~/mysys_ssl/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/mysys_ssl/CMakeLists.txt	1970-01-01 00:00:00
 @@ -46,4 +46,4 @@ ENDIF()
@@ -49,7 +49,7 @@ diff -wpruN '--exclude=*.orig' a~/mysys_ssl/CMakeLists.txt a/mysys_ssl/CMakeList
  TARGET_LINK_LIBRARIES(mysys_ssl dbug strings ${SSL_LIBRARIES})
 -DTRACE_INSTRUMENT(mysys_ssl)
 +#DTRACE_INSTRUMENT(mysys_ssl)
-diff -wpruN '--exclude=*.orig' a~/storage/csv/CMakeLists.txt a/storage/csv/CMakeLists.txt
+diff -wpruN --no-dereference '--exclude=*.orig' a~/storage/csv/CMakeLists.txt a/storage/csv/CMakeLists.txt
 --- a~/storage/csv/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/storage/csv/CMakeLists.txt	1970-01-01 00:00:00
 @@ -15,3 +15,10 @@

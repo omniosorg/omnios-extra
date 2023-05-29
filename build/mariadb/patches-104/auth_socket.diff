@@ -1,6 +1,6 @@
 Submitted upstream at https://github.com/MariaDB/server/pull/1434
 
-diff -wpruN '--exclude=*.orig' a~/plugin/auth_socket/CMakeLists.txt a/plugin/auth_socket/CMakeLists.txt
+diff -wpruN --no-dereference '--exclude=*.orig' a~/plugin/auth_socket/CMakeLists.txt a/plugin/auth_socket/CMakeLists.txt
 --- a~/plugin/auth_socket/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/plugin/auth_socket/CMakeLists.txt	1970-01-01 00:00:00
 @@ -57,12 +57,39 @@ IF (HAVE_XUCRED)
@@ -43,7 +43,7 @@ diff -wpruN '--exclude=*.orig' a~/plugin/auth_socket/CMakeLists.txt a/plugin/aut
  
  IF(ok)
    MYSQL_ADD_PLUGIN(auth_socket auth_socket.c DEFAULT)
-diff -wpruN '--exclude=*.orig' a~/plugin/auth_socket/auth_socket.c a/plugin/auth_socket/auth_socket.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/plugin/auth_socket/auth_socket.c a/plugin/auth_socket/auth_socket.c
 --- a~/plugin/auth_socket/auth_socket.c	1970-01-01 00:00:00
 +++ a/plugin/auth_socket/auth_socket.c	1970-01-01 00:00:00
 @@ -47,6 +47,9 @@

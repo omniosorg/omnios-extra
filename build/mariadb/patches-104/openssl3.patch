@@ -6,7 +6,7 @@ Subject: [PATCH] Revert "don't build with OpenSSL 3.0, it doesn't work before
 
 This reverts commit c9beef43154a199bfcd9f71049c011a2ed77ca74, because
 we have OpenSSL 3.0 support here.
-diff -wpruN '--exclude=*.orig' a~/cmake/ssl.cmake a/cmake/ssl.cmake
+diff -wpruN --no-dereference '--exclude=*.orig' a~/cmake/ssl.cmake a/cmake/ssl.cmake
 --- a~/cmake/ssl.cmake	1970-01-01 00:00:00
 +++ a/cmake/ssl.cmake	1970-01-01 00:00:00
 @@ -118,7 +118,7 @@ MACRO (MYSQL_CHECK_SSL)

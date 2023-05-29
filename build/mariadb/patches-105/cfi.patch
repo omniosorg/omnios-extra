@@ -6,7 +6,7 @@ my_context.s:18: Error: CFI instruction used without previous .cfi_startproc
 We don't need this since we do not build mariadb with -fomit-frame-pointer
 and we do not rely on dwarf data in the target 32-bit binaries.
 
-diff -wpruN '--exclude=*.orig' a~/mysys/my_context.c a/mysys/my_context.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/mysys/my_context.c a/mysys/my_context.c
 --- a~/mysys/my_context.c	1970-01-01 00:00:00
 +++ a/mysys/my_context.c	1970-01-01 00:00:00
 @@ -462,7 +462,7 @@ my_context_spawn(struct my_context *c, v
