@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/cmulocal/sasl2.m4 a/cmulocal/sasl2.m4
+diff -wpruN --no-dereference '--exclude=*.orig' a~/cmulocal/sasl2.m4 a/cmulocal/sasl2.m4
 --- a~/cmulocal/sasl2.m4	1970-01-01 00:00:00
 +++ a/cmulocal/sasl2.m4	1970-01-01 00:00:00
 @@ -398,7 +398,7 @@ if test ${with_staticsasl} != "no"; then
