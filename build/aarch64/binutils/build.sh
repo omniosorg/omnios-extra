@@ -27,6 +27,8 @@ DESC+="object files, libraries, etc."
 REPO=$GITHUB/richlowe/$PROG
 BRANCH=illumos-arm64
 
+# does not build with gcc 13, yet
+((GCCVER == 13)) && set_gccver 12
 set_arch 64
 CTF_FLAGS+=" -s"
 
