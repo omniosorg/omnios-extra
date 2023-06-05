@@ -24,6 +24,8 @@ DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
 DESC+="It is intended for writing scalable network programs such as web "
 DESC+="servers."
 
+# does not build with gcc 13, yet
+((GCCVER == 13)) && set_gccver 12
 set_arch 64
 
 MAJVER=${VER%%.*}
