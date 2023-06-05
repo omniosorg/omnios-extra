@@ -126,7 +126,6 @@ All 117 tests passed
 Making check in examples
 xxxxxx
 xxxxxx
-e
 PASS: rsa-sign
 PASS: rsa-verify
 PASS: rsa-encrypt

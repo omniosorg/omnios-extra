@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 #
 . ../../lib/build.sh
 
 PROG=minidlna
-VER=1.3.2
+VER=1.3.3
 VERHUMAN=$VER
 PKG=ooce/multimedia/minidlna
 SUMMARY="MiniDLNA"

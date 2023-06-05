@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/minidlna.conf a/minidlna.conf
+diff -wpruN --no-dereference '--exclude=*.orig' a~/minidlna.conf a/minidlna.conf
 --- a~/minidlna.conf	1970-01-01 00:00:00
 +++ a/minidlna.conf	1970-01-01 00:00:00
 @@ -40,7 +40,7 @@ album_art_names=Cover.jpg/cover.jpg/Albu

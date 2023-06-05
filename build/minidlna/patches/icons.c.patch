@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/icons.c a/icons.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/icons.c a/icons.c
 --- a~/icons.c	1970-01-01 00:00:00
 +++ a/icons.c	1970-01-01 00:00:00
 @@ -2124,6 +2124,639 @@ jpeg_lrg[] =	"\xff\xd8\xff\xe0\x00\x10\x

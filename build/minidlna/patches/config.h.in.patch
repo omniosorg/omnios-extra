@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/config.h.in a/config.h.in
+diff -wpruN --no-dereference '--exclude=*.orig' a~/config.h.in a/config.h.in
 --- a~/config.h.in	1970-01-01 00:00:00
 +++ a/config.h.in	1970-01-01 00:00:00
 @@ -1,5 +1,8 @@
