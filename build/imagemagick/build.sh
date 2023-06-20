@@ -47,6 +47,10 @@ BUILD_DEPENDS_IPS="
     ooce/application/graphviz
 "
 
+RUN_DEPENDS_IPS="
+    ooce/multimedia/dcraw
+"
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
