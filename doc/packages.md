@@ -133,6 +133,7 @@
 | ooce/library/tiff		| 4.5.0		| https://download.osgeo.org/libtiff/ https://libtiff.gitlab.io/libtiff/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/unistring	| 1.1		| https://ftp.gnu.org/gnu/libunistring/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/dav1d		| 1.2.1		| https://downloads.videolan.org/pub/videolan/dav1d/ https://www.videolan.org/projects/dav1d.html | [omniosorg](https://github.com/omniosorg)
+| ooce/multimedia/dcraw		| 9.28.0	| https://www.dechifro.org/dcraw/archive/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/exif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/exif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/ffmpeg	| 6.0		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/minidlna	| 1.3.3		| https://sourceforge.net/projects/minidlna/files/minidlna/ | [omniosorg](https://github.com/omniosorg)
