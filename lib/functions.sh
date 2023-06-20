@@ -2756,14 +2756,16 @@ build_dependency() {
     typeset merge=0
     typeset oot=0
     typeset meson=0
+    typeset cmake=0
     typeset buildargs=
     while [[ "$1" = -* ]]; do
         case $1 in
             -merge)     merge=1 ;;
             -ctf)       buildargs+=" -ctf" ;;
             -noctf)     buildargs+=" -noctf" ;;
-            -meson)     meson=1 ;& #FALLTHROUGH
             -oot)       oot=1 ;;
+            -meson)     meson=1 ; oot=1 ;;
+            -cmake)     cmake=1; oot=1 ;;
             -multi)     buildargs+=" -multi" ;;
         esac
         shift
@@ -2799,6 +2801,10 @@ build_dependency() {
         if ((meson)); then
             MAKE=$NINJA
             CONFIGURE_CMD="/usr/lib/python$PYTHONVER/bin/meson setup"
+            CONFIGURE_CMD+=" $TMPDIR/$BUILDDIR"
+        elif ((cmake)); then
+            MAKE=$NINJA
+            CONFIGURE_CMD="$CMAKE -GNinja"
             CONFIGURE_CMD+=" $TMPDIR/$BUILDDIR"
         else
             CONFIGURE_CMD=$TMPDIR/$BUILDDIR/$CONFIGURE_CMD
