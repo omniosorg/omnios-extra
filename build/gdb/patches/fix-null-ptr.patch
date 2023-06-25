@@ -6,7 +6,7 @@ diff -wpruN '--exclude=*.orig' a~/gdb/osabi.c a/gdb/osabi.c
    { "SVR4", NULL },
    { "GNU/Hurd", NULL },
 -  { "Solaris", NULL },
-+  { "illumos", "solaris[2-9]\.[0-9][0-9]" },
++  { "illumos", "solaris[2-9]\\.[0-9][0-9]" },
    { "GNU/Linux", "linux(-gnu[^-]*)?" },
    { "FreeBSD", NULL },
    { "NetBSD", NULL },
