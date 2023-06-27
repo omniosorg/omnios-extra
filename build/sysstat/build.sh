@@ -23,7 +23,7 @@ SUMMARY="System statistics"
 DESC="Key system statistics at a glance"
 
 set_arch 64
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG

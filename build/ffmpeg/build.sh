@@ -27,7 +27,7 @@ DESC+="convert and stream audio and video."
 # software may depend on it.
 PVERS="4.4.3 5.1.2"
 
-if [ $RELVER -ge 151041 ]; then
+if test_relver '>=' 151041; then
     set_clangver
 
     CONFIGURE_OPTS="

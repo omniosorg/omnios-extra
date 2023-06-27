@@ -27,7 +27,7 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 set_arch 64
-[ $RELVER -ge 151045 ] && set_clangver
+test_relver '>=' 151045 && set_clangver
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}

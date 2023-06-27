@@ -55,7 +55,7 @@ CONFIGURE_OPTS[amd64]="
     --sbindir=$PREFIX/sbin
     --libdir=$OPREFIX/lib/amd64
 "
-[ $RELVER -ge 151037 ] && LDFLAGS[i386]+=" -lssp_ns"
+LDFLAGS[i386]+=" -lssp_ns"
 
 save_function make_install _make_install
 make_install() {

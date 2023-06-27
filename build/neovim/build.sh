@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 set_arch 64
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 export CC
 
 # luaJIT build requires GNU tools

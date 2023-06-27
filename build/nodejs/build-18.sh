@@ -24,10 +24,7 @@ DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
 DESC+="It is intended for writing scalable network programs such as web "
 DESC+="servers."
 
-if [ $RELVER -lt 151041 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
+min_rel 151041
 
 MAJVER=${VER%%.*}
 

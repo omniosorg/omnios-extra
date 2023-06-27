@@ -22,7 +22,7 @@ PKG=ooce/library/libid3tag
 SUMMARY="libid3tag"
 DESC="ID3 tag manipulation library."
 
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 
 CONFIGURE_OPTS="
     --disable-static

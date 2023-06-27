@@ -28,7 +28,7 @@ set_arch 64
 # and set PATH to point to the correct llvm/clang version
 # but we want to build with gcc for releases before r151041
 set_clangver 13 # zig 0.9.x requires LLVM 13
-[ $RELVER -lt 151041 ] && BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
+test_relver '<' 151041 && BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
 
 CLANGFVER=`pkg_ver clang build-$CLANGVER.sh`
 

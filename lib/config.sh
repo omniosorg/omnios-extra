@@ -73,6 +73,20 @@ if [[ ! "$RELVER" =~ ^151[0-9]{3}$ ]]; then
     exit 1
 fi
 
+# This is here so that it can be overidden in site.sh
+test_relver() {
+    typeset op="${1:?op}"
+    typeset ver="${2:?ver}"
+
+    case "$op" in
+        ">")    ((RELVER > ver)) ;;
+        ">=")   ((RELVER >= ver)) ;;
+        "<")    ((RELVER < ver)) ;;
+        "<=")   ((RELVER <= ver)) ;;
+        =|==)   ((RELVER == ver)) ;;
+    esac
+}
+
 # Platform information, e.g. 5.11
 SUNOSVER=`uname -r`
 

@@ -28,7 +28,7 @@ DESC+="for storing image data."
 PVERS="4.4.0"
 
 forgo_isaexec
-[ $RELVER -ge 151045 ] && set_clangver
+test_relver '>=' 151045 && set_clangver
 
 SKIP_LICENCES=BSD-like
 

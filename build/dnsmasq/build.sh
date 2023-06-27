@@ -25,7 +25,7 @@ DESC+="provide DNS (and optionally DHCP and TFTP) services to a small-scale "
 DESC+="network."
 
 set_arch 64
-[ $RELVER -ge 151045 ] && set_clangver
+test_relver '>=' 151045 && set_clangver
 
 BASEDIR=$PREFIX/$PROG
 CONFFILE=/etc$BASEDIR/$PROG.conf

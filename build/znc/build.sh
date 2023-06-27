@@ -35,7 +35,7 @@ BUILD_DEPENDS_IPS="=ooce/library/icu4c@$ICUVER"
 RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
 
 set_arch 64
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}

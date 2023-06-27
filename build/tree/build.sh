@@ -24,7 +24,7 @@ DESC="The tree utility recursively displays the contents of \
 directories in a tree-like format"
 
 set_arch 64
-[ $RELVER -ge 151045 ] && set_clangver
+test_relver '>=' 151045 && set_clangver
 
 pre_configure() {
     typeset arch=$1

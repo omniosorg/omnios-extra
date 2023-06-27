@@ -23,7 +23,7 @@ SUMMARY="Ninja"
 DESC="A small build system with a focus on speed"
 
 set_arch 64
-[ $RELVER -ge 151043 ] && set_clangver
+test_relver '>=' 151043 && set_clangver
 
 CONFIGURE_OPTS[amd64]="
     -DCMAKE_INSTALL_PREFIX=$PREFIX

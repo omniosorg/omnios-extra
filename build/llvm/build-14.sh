@@ -23,7 +23,7 @@ SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 
 set_arch 64
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 set_builddir $PROG-project-$VER.src/$PROG
 
 SKIP_RTIME_CHECK=1

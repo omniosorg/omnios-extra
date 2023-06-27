@@ -23,10 +23,7 @@ SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
 DESC+="MySQL relational database management system"
 
-if [ $RELVER -lt 151042 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
+min_rel 151042
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}

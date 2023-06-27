@@ -48,8 +48,6 @@ CONFIGURE_OPTS[amd64]="
     -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/amd64
     -DNettle_LIBRARY=$OPREFIX/lib/amd64/libnettle.so
 "
-[ $RELVER -lt 151035 ] \
-    && CONFIGURE_OPTS[amd64]+=" -DZstd_LIBRARY=$OPREFIX/lib/amd64/libzstd.so"
 
 LDFLAGS[i386]+=" -R$OPREFIX/lib"
 LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"

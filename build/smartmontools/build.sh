@@ -22,7 +22,7 @@ PKG=ooce/system/smartmontools
 SUMMARY="smartmontools"
 DESC="Control and monitor storage systems using SMART"
 
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 
 RUN_DEPENDS_IPS=ooce/security/gnupg
 

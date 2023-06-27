@@ -5,10 +5,7 @@ ARCH=aarch64
 NATIVE_TRIPLET64=${TRIPLETS[amd64]}
 TRIPLET64=$ARCH-unknown-solaris2.11
 
-if [ $RELVER -lt 151045 ]; then
-    logmsg "--- The $ARCH cross packages are not built for r$RELVER"
-    exit 0
-fi
+min_rel 151045
 
 PREFIX=/opt/cross/$ARCH
 SYSROOT=$PREFIX/sysroot

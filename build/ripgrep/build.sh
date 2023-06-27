@@ -23,13 +23,10 @@ SUMMARY="Fast line-oriented search tool"
 DESC="A fast line-oriented search tool that recursively searches your current "
 DESC+="directory for a regex pattern while respecting your gitignore rules"
 
-BUILD_DEPENDS_IPS=ooce/developer/rust
-
-# libpcre2 is included with OmniOS as of r151029 and ripgrep can use it
-if [ $RELVER -ge 151029 ]; then
-    BUILD_DEPENDS_IPS+=" library/pcre2"
-    args="--features pcre2"
-fi
+BUILD_DEPENDS_IPS="
+    ooce/developer/rust
+    library/pcre2
+"
 
 set_arch 64
 
@@ -41,7 +38,7 @@ init
 download_source $PROG $VER
 patch_source
 prep_build
-build_rust $args
+build_rust --features pcre2
 PROG=rg install_rust
 strip_install
 make_package

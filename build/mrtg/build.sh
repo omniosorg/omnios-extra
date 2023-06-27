@@ -25,8 +25,6 @@ DESC+="how much traffic has passed through each interface."
 
 set_arch 64
 
-[ $RELVER -lt 151033 ] && RUN_DEPENDS_IPS+=" runtime/perl-64"
-
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 

@@ -22,10 +22,7 @@ PKG=ooce/editor/helix
 SUMMARY="A post-modern modal text editor."
 DESC="A kakoune / neovim inspired editor, written in Rust."
 
-if [ $RELVER -lt 151042 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
+min_rel 151042
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
