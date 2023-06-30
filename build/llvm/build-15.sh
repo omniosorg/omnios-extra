@@ -22,10 +22,7 @@ VER=15.0.7
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 
-if [ $RELVER -lt 151043 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
+min_rel 151043
 
 set_arch 64
 set_clangver

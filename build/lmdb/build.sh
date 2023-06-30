@@ -23,7 +23,7 @@ SUMMARY="lmdb"
 DESC="Lightning Memory-Mapped Database"
 
 forgo_isaexec
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 
 SKIP_LICENCES=OpenLDAP
 

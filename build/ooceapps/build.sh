@@ -29,8 +29,6 @@ set_mirror "$OOCEGITHUB/$PROG/releases/download"
 # some perl modules require gnu-tar to unpack
 export PATH="/usr/gnu/bin:$PATH"
 
-[ $RELVER -lt 151033 ] && RUN_DEPENDS_IPS+=" runtime/perl-64"
-
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 

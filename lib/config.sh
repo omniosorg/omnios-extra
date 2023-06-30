@@ -73,6 +73,20 @@ if [[ ! "$RELVER" =~ ^151[0-9]{3}$ ]]; then
     exit 1
 fi
 
+# This is here so that it can be overidden in site.sh
+test_relver() {
+    typeset op="${1:?op}"
+    typeset ver="${2:?ver}"
+
+    case "$op" in
+        ">")    ((RELVER > ver)) ;;
+        ">=")   ((RELVER >= ver)) ;;
+        "<")    ((RELVER < ver)) ;;
+        "<=")   ((RELVER <= ver)) ;;
+        =|==)   ((RELVER == ver)) ;;
+    esac
+}
+
 # Platform information, e.g. 5.11
 SUNOSVER=`uname -r`
 
@@ -80,6 +94,9 @@ SUNOSVER=`uname -r`
 DASHREV=0
 [ $RELVER -ge 151027 ] && PVER=$RELVER.$DASHREV || PVER=$DASHREV.$RELVER
 
+DISTRO=OmniOS
+DISTRO_LONG="OmniOS Community Edition"
+HOMEURL=https://omnios.org
 # Default package publisher
 PKGPUBLISHER=extra.omnios
 
@@ -91,8 +108,6 @@ DEFAULT_ARCH="i386 amd64"
 # building a package for amd64, or both i386 and amd64.
 NATIVE_ARCH="i386"
 BUILD_ARCH="amd64"
-
-HOMEURL=https://omnios.org
 
 # Default repository
 PKGSRVR=file://$ROOTDIR/tmp.repo/

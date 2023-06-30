@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 forgo_isaexec
-[ $RELVER -ge 151045 ] && set_clangver
+test_relver '>=' 151045 && set_clangver
 
 SKIP_LICENCES=various
 

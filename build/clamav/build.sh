@@ -29,7 +29,7 @@ PREFIX+="/$PROG"
 set_arch 64
 
 # https://www.illumos.org/issues/14659
-[ $RELVER -lt 151043 ] && STRIP=gstrip
+test_relver '<' 151043 && STRIP=gstrip
 
 # We want to populate the clang-related environment variables
 # and set PATH to point to the correct llvm/clang version for
@@ -62,7 +62,7 @@ CONFIGURE_OPTS="
 CONFIGURE_OPTS[amd64]="
     -DJSONC_LIBRARY=$OPREFIX/lib/amd64/libjson-c.so
 "
-[ $RELVER -ge 151042 ] && CONFIGURE_OPTS+=" -DBYTECODE_RUNTIME=llvm"
+test_relver '>=' 151042 && CONFIGURE_OPTS+=" -DBYTECODE_RUNTIME=llvm"
 LDFLAGS+=" -lncurses"
 
 post_install() {

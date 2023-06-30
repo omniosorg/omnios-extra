@@ -22,7 +22,7 @@ PKG=ooce/library/libexif
 SUMMARY="libexif"
 DESC="Reads and writes EXIF metainformation from and to image files."
 
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"

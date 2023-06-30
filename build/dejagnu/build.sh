@@ -22,8 +22,6 @@ PKG=ooce/developer/dejagnu
 SUMMARY="DejaGnu"
 DESC="DejaGnu is a framework for testing other programs"
 
-[ $RELVER -lt 151030 ] && exit 0
-
 BUILD_DEPENDS_IPS="ooce/runtime/expect"
 RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
 

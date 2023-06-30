@@ -37,8 +37,6 @@ RUN_DEPENDS_IPS+="
     library/python-$PYMVER/cffi-$PYTHONPKGVER
     library/python-$PYMVER/pycparser-$PYTHONPKGVER
 "
-[ $RELVER -ge 151041 -a $RELVER -lt 151043 ] \
-    && RUN_DEPENDS_IPS+="library/python-$PYMVER/markupsafe-$PYTHONPKGVER"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}

@@ -28,7 +28,7 @@ BUILD_DEPENDS_IPS=ooce/developer/rust
 set_arch 64
 
 # https://www.illumos.org/issues/14659
-[ $RELVER -lt 151043 ] && STRIP=gstrip
+test_relver '<' 151043 && STRIP=gstrip
 
 init
 download_source $PROG $VER

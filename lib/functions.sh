@@ -349,6 +349,24 @@ set_coredir() {
 # Utilities
 #############################################################################
 
+min_rel() {
+    typeset ver="${1:-ver}"
+
+    if test_relver '<' $ver; then
+        logmsg "--- $PKG is not built for r$RELVER"
+        exit 0
+    fi
+}
+
+max_rel() {
+    typeset ver="${1:-ver}"
+
+    if test_relver '>' $ver; then
+        logmsg "--- $PKG is not built for r$RELVER"
+        exit 0
+    fi
+}
+
 parallelise() {
     local num="${1:-1}"
     while [ "`jobs -rp | wc -l`" -ge "$num" ]; do
@@ -403,7 +421,6 @@ init_tools() {
 
 SSPFLAGS=
 set_ssp() {
-    [ $RELVER -lt 151037 ] && return
     case "$1" in
         none)   SSPFLAGS=; SKIP_SSP_CHECK=1 ;;
         strong) SSPFLAGS="-fstack-protector-strong" ;;
@@ -1579,9 +1596,7 @@ EOM
             done
             echo
         ) > $BASE_TMPDIR/lint/pkglintrc
-        [ $RELVER -ge 151033 ] \
-            && _repo="-r $repo -r $IPS_REPO -r $OB_IPS_REPO" \
-            || _repo="-r $repo"
+        _repo="-r $repo -r $IPS_REPO -r $OB_IPS_REPO"
     fi
     echo $c_note
     logcmd -p $PKGLINT -f $BASE_TMPDIR/lint/pkglintrc \
@@ -1696,8 +1711,8 @@ generate_manifest() {
 
     check_symlinks "$DESTDIR"
     if [ -z "$BATCH" ]; then
-        [ $RELVER -ge 151033 -a -z "$SKIP_RTIME_CHECK" ] && check_rtime
-        [ $RELVER -ge 151037 -a -z "$SKIP_SSP_CHECK" ] && check_ssp
+        [ -z "$SKIP_RTIME_CHECK" ] && check_rtime
+        [ -z "$SKIP_SSP_CHECK" ] && check_ssp
         check_soname
     fi
     check_bmi
@@ -1820,12 +1835,12 @@ make_package_impl() {
     typeset DESCSTR="$DESC"
     [ -n "$FLAVORSTR" ] && DESCSTR="$DESCSTR ($FLAVOR)"
     # Add the local dash-revision if specified.
-    [ $RELVER -ge 151027 ] && PVER=$RELVER.$DASHREV || PVER=$DASHREV.$RELVER
+    PVER=$RELVER.$DASHREV
 
     # Temporary file paths
     typeset MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
     typeset GLOBAL_MOG_FILE=
-    [ $RELVER -ge 151041 ] && GLOBAL_MOG_FILE=global-transforms.mog \
+    test_relver '>=' 151041 && GLOBAL_MOG_FILE=global-transforms.mog \
         || GLOBAL_MOG_FILE=legacy-global-transforms.mog
     typeset MY_MOG_FILE=$TMPDIR/${PKGE}.mog
 
@@ -1889,8 +1904,7 @@ make_package_impl() {
         pkgmeta pkg.description     "$DESCSTR"
         pkgmeta publisher           "$PUBLISHER_EMAIL"
         pkgmeta pkg.human-version   "$VERHUMAN"
-        [ $legacy -eq 1 -a $RELVER -ge 151035 ] \
-            && pkgmeta pkg.legacy true
+        [ $legacy -eq 1 ] && pkgmeta pkg.legacy true
         if [[ $_ARC_SOURCE = *\ * ]]; then
             _asindex=0
             for _as in $_ARC_SOURCE; do
@@ -2011,10 +2025,8 @@ make_package_impl() {
         logmsg "$line"
     done
 
-    if [ $RELVER -ge 151031 ]; then
-        logmsg "--- Formatting manifest"
-        logcmd $PKGFMT -s $P5M_FINAL
-    fi
+    logmsg "--- Formatting manifest"
+    logcmd $PKGFMT -s $P5M_FINAL
 
     $FGREP -q '$(' $P5M_FINAL \
         && logerr "------ Manifest contains unresolved variables"
@@ -2362,7 +2374,6 @@ EOM
 }
 
 install_inetservices() {
-    [ $RELVER -ge 151035 ] || return
     install_fragment "${1:-services}" /etc/inet/services.d
 }
 
@@ -3373,10 +3384,7 @@ do_convert_ctf() {
     typeset tf="$file.$$"
 
     typeset flags="$CTF_FLAGS"
-    if [ -f $SRCDIR/files/ctf.ignore ]; then
-        [ $RELVER -ge 151037 ] && flags+=" -M$SRCDIR/files/ctf.ignore" \
-            || flags+=" -m"
-    fi
+    [ -f $SRCDIR/files/ctf.ignore ] && flags+=" -M$SRCDIR/files/ctf.ignore"
     if logcmd $CTFCONVERT $flags -l "$PROG-$VER" -o "$tf" "$file"; then
         if [ -s "$tf" ]; then
             logcmd $CP "$tf" "$file"

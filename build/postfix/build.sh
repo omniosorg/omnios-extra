@@ -24,7 +24,7 @@ SUMMARY="Postfix MTA"
 DESC="Wietse Venema's mail server alternative to sendmail"
 
 set_arch 64
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 
 SKIP_LICENCES=IPL
 

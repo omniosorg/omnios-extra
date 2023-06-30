@@ -24,7 +24,7 @@ DESC="An extensible system that manages the build process in a "
 DESC+="compiler-independent manner"
 
 set_arch 64
-[ $RELVER -ge 151043 ] && set_clangver
+test_relver '>=' 151043 && set_clangver
 
 SKIP_LICENCES=Kitware
 

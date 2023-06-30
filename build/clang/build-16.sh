@@ -24,10 +24,7 @@ DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
 DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
 
-if [ $RELVER -lt 151045 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
+min_rel 151045
 
 set_arch 64
 set_clangver
@@ -71,7 +68,7 @@ CONFIGURE_OPTS[amd64_WS]="
     -DCMAKE_C_LINK_FLAGS=\"${LDFLAGS[amd64]}\"
     -DCMAKE_CXX_LINK_FLAGS=\"${LDFLAGS[amd64]}\"
     -DGCC_INSTALL_PREFIX=\"$GCCPATH\"
-    -DCLANG_VENDOR=\"OmniOS/$RELVER\"
+    -DCLANG_VENDOR=\"$DISTRO/$RELVER\"
     -DCLANG_DEFAULT_RTLIB=libgcc
     -DCLANG_DEFAULT_CXX_STDLIB=libstdc++
     -DLLVM_DIR=\"$PREFIX/lib/cmake/llvm\"

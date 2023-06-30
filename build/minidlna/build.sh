@@ -25,7 +25,7 @@ DESC="DLNA/UPnP-AV media server"
 
 set_arch 64
 set_standard XPG6
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"

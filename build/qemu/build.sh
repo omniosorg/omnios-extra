@@ -27,10 +27,7 @@ LIBSLIRPVER=4.7.0
 SPHINXVER=6.1.3
 SPHINXRTDVER=1.2.0
 
-if [ $RELVER -lt 151044 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
+min_relver 151044
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG

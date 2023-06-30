@@ -23,8 +23,6 @@ SUMMARY="munin"
 DESC="A networked resource monitoring tool that can help "
 DESC+="analyse resource trends."
 
-[ $RELVER -lt 151033 ] && RUN_DEPENDS_IPS+=" runtime/perl-64"
-
 set_arch 64
 
 SKIP_LICENCES=GPLv2

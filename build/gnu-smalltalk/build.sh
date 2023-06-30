@@ -76,7 +76,7 @@ CPPFLAGS+=" -I/usr/include/gmp"
 
 LDFLAGS[i386]+=" -R$OPREFIX/lib"
 LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
-[ $RELVER -ge 151037 ] && LDFLAGS[i386]+=" -lssp_ns"
+LDFLAGS[i386]+=" -lssp_ns"
 
 # create package functions
 init

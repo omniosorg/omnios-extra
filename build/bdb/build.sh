@@ -55,7 +55,7 @@ CONFIGURE_OPTS[amd64]="
 "
 
 LDFLAGS[i386]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-[ $RELVER -ge 151037 ] && LDFLAGS[i386]+=" -lssp_ns"
+LDFLAGS[i386]+=" -lssp_ns"
 LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 
 export EXTLIBS=-lm

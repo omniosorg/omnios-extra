@@ -23,10 +23,7 @@ SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
 DESC+="MySQL relational database management system"
 
-if [ $RELVER -lt 151042 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
+min_rel 151042
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
@@ -93,8 +90,8 @@ CONFIGURE_OPTS[amd64_WS]="
     -DINSTALL_LIBDIR=lib/amd64
 "
 CONFIGURE_OPTS[WS]="
-    -DWITH_COMMENT=\"OmniOS MariaDB Server\"
-    -DCOMPILATION_COMMENT=\"OmniOS MariaDB Server\"
+    -DWITH_COMMENT=\"$DISTRO MariaDB Server\"
+    -DCOMPILATION_COMMENT=\"$DISTRO MariaDB Server\"
 
     -DCMAKE_VERBOSE_MAKEFILE=1
     -DCMAKE_BUILD_TYPE=Release

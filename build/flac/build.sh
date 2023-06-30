@@ -23,7 +23,7 @@ SUMMARY="flac"
 DESC="Free Lossless Audio Codec"
 
 forgo_isaexec
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"

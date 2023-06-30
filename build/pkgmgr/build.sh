@@ -25,7 +25,6 @@ DESC="IPS package management/publishing tool"
 set_mirror "$OOCEGITHUB/$PROG/releases/download"
 
 RUN_DEPENDS_IPS="network/rsync"
-[ $RELVER -lt 151033 ] && RUN_DEPENDS_IPS+=" runtime/perl-64"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"

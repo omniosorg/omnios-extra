@@ -22,10 +22,7 @@ VER=1.38.4
 SUMMARY="Tailscale"
 DESC="The easiest, most secure way to use WireGuard and 2FA."
 
-if [ $RELVER -lt 151044 ]; then
-    logmsg "--- $PKG is not built for r$RELVER"
-    exit 0
-fi
+min_rel 151044
 
 RUN_DEPENDS_IPS="driver/tuntap"
 

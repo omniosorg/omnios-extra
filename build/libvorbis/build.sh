@@ -25,7 +25,7 @@ DESC+="general-purpose compressed audio format"
 
 BUILD_DEPENDS_IPS="ooce/library/libogg"
 
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 

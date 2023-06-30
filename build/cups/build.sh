@@ -22,7 +22,7 @@ PKG=ooce/print/cups
 SUMMARY="Common UNIX Printing System"
 DESC="Standards-based, open source printing system for UNIX operating systems"
 
-[ $RELVER -ge 151041 ] && set_clangver
+test_relver '>=' 151041 && set_clangver
 
 # getpwuid_r
 set_standard XPG6

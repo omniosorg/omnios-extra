@@ -27,7 +27,7 @@ BUILD_DEPENDS_IPS="
     developer/nasm
 "
 
-[ $RELVER -ge 151043 ] && set_clangver
+test_relver '>=' 151043 && set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
