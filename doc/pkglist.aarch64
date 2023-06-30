@@ -13,3 +13,4 @@ ooce/system/htop
 ooce/library/libogg
 .SYSROOT
 ooce/audio/flac
+ooce/library/libvorbis
