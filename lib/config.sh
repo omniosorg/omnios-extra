@@ -77,13 +77,14 @@ fi
 test_relver() {
     typeset op="${1:?op}"
     typeset ver="${2:?ver}"
+    typeset testver="$RELVER"
 
     case "$op" in
-        ">")    ((RELVER > ver)) ;;
-        ">=")   ((RELVER >= ver)) ;;
-        "<")    ((RELVER < ver)) ;;
-        "<=")   ((RELVER <= ver)) ;;
-        =|==)   ((RELVER == ver)) ;;
+        ">")    ((testver > ver)) ;;
+        ">=")   ((testver >= ver)) ;;
+        "<")    ((testver < ver)) ;;
+        "<=")   ((testver <= ver)) ;;
+        =|==)   ((testver == ver)) ;;
     esac
 }
 
@@ -92,7 +93,7 @@ SUNOSVER=`uname -r`
 
 # Default branch
 DASHREV=0
-[ $RELVER -ge 151027 ] && PVER=$RELVER.$DASHREV || PVER=$DASHREV.$RELVER
+PVER=$RELVER.$DASHREV
 
 DISTRO=OmniOS
 DISTRO_LONG="OmniOS Community Edition"
@@ -228,7 +229,7 @@ RSYNC=$USRBIN/rsync
 UNZIP=$USRBIN/unzip
 WGET=$USRBIN/wget
 XZCAT=$USRBIN/xzcat
-[ $RELVER -ge 151035 ] && ZSTD=$USRBIN/zstd || ZSTD=$OOCEBIN/zstd
+ZSTD=$USRBIN/zstd
 
 # GNU utilities
 AWK=$GNUBIN/awk
@@ -284,8 +285,7 @@ GENOFFSETS_CFLAGS="
     -_gcc=-fno-eliminate-unused-debug-types
 "
 
-# Enable CTF by default from r151037 on
-[ $RELVER -ge 151037 ] && CTF_DEFAULT=1
+CTF_DEFAULT=1
 
 # Figure out number of logical CPUs for use with parallel gmake jobs (-j)
 # Default to 1.5*nCPUs as we assume the build machine is 100% devoted to
@@ -316,7 +316,7 @@ XFORM_ARGS=
 # a package update will overwrite them. Since the users are included in the
 # earliest available package for r151040, it should not be possible for anyone
 # to downgrade and shoot themselves in the foot.
-if [ $RELVER -ge 151040 ]; then
+if test_relver '>=' 151040; then
     SYS_XFORM_ARGS+=" -DGATE_SYSUSER="
 else
     SYS_XFORM_ARGS+=" -DGATE_SYSUSER=#"
@@ -381,16 +381,13 @@ case $RELVER in
     *)                  PYTHON3VER=3.5 ;;
 esac
 # Specify default Python version for building packages
-[ $RELVER -lt 151029 ] && DEFAULT_PYTHON_VER=$PYTHON2VER \
-    || DEFAULT_PYTHON_VER=$PYTHON3VER
+DEFAULT_PYTHON_VER=$PYTHON3VER
 
 # Specify expected openssl mediator setting
-if [ $RELVER -ge 151041 ]; then
+if test_relver '>=' 151041; then
     EXP_OPENSSLVER=3
-elif [ $RELVER -ge 151027 ]; then
-    EXP_OPENSSLVER=1.1
 else
-    EXP_OPENSSLVER=1.0
+    EXP_OPENSSLVER=1.1
 fi
 
 # Default database versions to bundle into packages which use the libraries
