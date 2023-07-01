@@ -1,6 +1,6 @@
 remove unecessary linking to libraries
 
-diff -wpruN '--exclude=*.orig' a~/cmake/FindLibuv.cmake a/cmake/FindLibuv.cmake
+diff -wpruN --no-dereference '--exclude=*.orig' a~/cmake/FindLibuv.cmake a/cmake/FindLibuv.cmake
 --- a~/cmake/FindLibuv.cmake	1970-01-01 00:00:00
 +++ a/cmake/FindLibuv.cmake	1970-01-01 00:00:00
 @@ -7,42 +7,6 @@ find_library(LIBUV_LIBRARY NAMES ${LIBUV
@@ -46,7 +46,7 @@ diff -wpruN '--exclude=*.orig' a~/cmake/FindLibuv.cmake a/cmake/FindLibuv.cmake
  
  if(WIN32)
    # check_library_exists() does not work for Win32 API calls in X86 due to name
-diff -wpruN '--exclude=*.orig' a~/src/nvim/CMakeLists.txt a/src/nvim/CMakeLists.txt
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/CMakeLists.txt a/src/nvim/CMakeLists.txt
 --- a~/src/nvim/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/src/nvim/CMakeLists.txt	1970-01-01 00:00:00
 @@ -10,6 +10,7 @@ else()

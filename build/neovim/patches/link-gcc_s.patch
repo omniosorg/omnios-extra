@@ -1,7 +1,7 @@
 luaJIT uses __register_frame and  __deregister_frame
 our clang only links libgcc_s for c++ by default
 
-diff -wpruN '--exclude=*.orig' a~/cmake.deps/cmake/BuildLuajit.cmake a/cmake.deps/cmake/BuildLuajit.cmake
+diff -wpruN --no-dereference '--exclude=*.orig' a~/cmake.deps/cmake/BuildLuajit.cmake a/cmake.deps/cmake/BuildLuajit.cmake
 --- a~/cmake.deps/cmake/BuildLuajit.cmake	1970-01-01 00:00:00
 +++ a/cmake.deps/cmake/BuildLuajit.cmake	1970-01-01 00:00:00
 @@ -42,6 +42,8 @@ else()
