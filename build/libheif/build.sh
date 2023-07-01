@@ -17,11 +17,13 @@
 . ../../lib/build.sh
 
 PROG=libheif
-VER=1.16.1
+VER=1.16.2
 PKG=ooce/library/libheif
 SUMMARY="HEIF and AVIF encoder"
 DESC="ISO/IEC 23008-12:2017 HEIF and AVIF (AV1 Image File Format) "
 DESC+="file format decoder and encoder"
+
+test_relver '>=' 151047 && set_clangver
 
 BUILD_DEPENDS_IPS="
     ooce/library/libde265
@@ -44,8 +46,8 @@ CONFIGURE_OPTS[amd64]="
     -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib/amd64
 "
 
-LDFLAGS[i386]+=" -R$PREFIX/lib"
-LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
+LDFLAGS[i386]+=" -Wl,-R$PREFIX/lib"
+LDFLAGS[amd64]+=" -Wl,-R$PREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER
