@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libuv
-VER=1.45.0
+VER=1.46.0
 PKG=ooce/library/libuv
 SUMMARY=$PROG
 DESC="Multi-platform support library with a focus on asynchronous I/O."
