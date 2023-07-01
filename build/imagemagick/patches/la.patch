@@ -16,7 +16,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/MagickCore/module.c a/MagickC
  #else
  #  if defined(_DEBUG)
  #    define ModuleGlobExpression "IM_MOD_DB_*.dll"
-@@ -1471,7 +1471,7 @@ static void TagToCoderModuleName(const c
+@@ -1473,7 +1473,7 @@ static void TagToCoderModuleName(const c
    if (IsEventLogging() != MagickFalse)
      (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",tag);
  #if defined(MAGICKCORE_LTDL_DELEGATE)
@@ -25,7 +25,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/MagickCore/module.c a/MagickC
    (void) LocaleLower(name);
  #else
  #if defined(MAGICKCORE_WINDOWS_SUPPORT)
-@@ -1525,7 +1525,7 @@ static void TagToFilterModuleName(const
+@@ -1527,7 +1527,7 @@ static void TagToFilterModuleName(const
  #elif !defined(MAGICKCORE_LTDL_DELEGATE)
    (void) FormatLocaleString(name,MagickPathExtent,"%s.dll",tag);
  #else
