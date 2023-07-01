@@ -130,7 +130,7 @@
 | ooce/library/security/libsasl2 | 2.1.28	| https://github.com/cyrusimap/cyrus-sasl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/serf		| 1.3.10 	| https://downloads.apache.org/serf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/slang		| 2.3.3		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/tiff		| 4.5.0		| https://download.osgeo.org/libtiff/ https://libtiff.gitlab.io/libtiff/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/tiff		| 4.5.1		| https://download.osgeo.org/libtiff/ https://libtiff.gitlab.io/libtiff/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/unistring	| 1.1		| https://ftp.gnu.org/gnu/libunistring/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/dav1d		| 1.2.1		| https://downloads.videolan.org/pub/videolan/dav1d/ https://www.videolan.org/projects/dav1d.html | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/dcraw		| 9.28.0	| https://www.dechifro.org/dcraw/archive/ | [omniosorg](https://github.com/omniosorg)

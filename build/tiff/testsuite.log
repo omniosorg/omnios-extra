@@ -90,9 +90,10 @@ PASS: tiff2rgba-palette-1c-8b.sh
 PASS: tiff2rgba-rgb-3c-16b.sh
 PASS: tiff2rgba-rgb-3c-8b.sh
 PASS: testfax4.sh
+PASS: testfax3_bug_513.sh
 PASS: testdeflatelaststripextradata.sh
-# TOTAL: 93
-# PASS:  93
+# TOTAL: 94
+# PASS:  94
 # SKIP:  0
 # XFAIL: 0
 # FAIL:  0
