@@ -17,12 +17,13 @@
 . ../../lib/build.sh
 
 PROG=libwebp
-VER=1.3.0
+VER=1.3.1
 PKG=ooce/library/libwebp
 SUMMARY="libwebp"
 DESC="WebP - A modern image format that provides lossless and lossy compression"
 DESC+=" for images on the web"
 
+test_relver '>=' 151047 && set_clangver
 forgo_isaexec
 
 OPREFIX=$PREFIX
@@ -52,11 +53,11 @@ CONFIGURE_OPTS="
 "
 CONFIGURE_OPTS[i386_WS]="
     --libdir=$OPREFIX/lib
-    LDFLAGS=\"-L$OPREFIX/lib -R$OPREFIX/lib\"
+    LDFLAGS=\"-L$OPREFIX/lib -Wl,-R$OPREFIX/lib\"
 "
 CONFIGURE_OPTS[amd64_WS]="
     --libdir=$OPREFIX/lib/amd64
-    LDFLAGS=\"-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64\"
+    LDFLAGS=\"-L$OPREFIX/lib/amd64 -Wl,-R$OPREFIX/lib/amd64\"
 "
 CPPFLAGS+=" -I$OPREFIX/include"
 

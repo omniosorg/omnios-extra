@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=libXt
-VER=1.2.1
+VER=1.3.0
 PKG=ooce/x11/library/libxt
 SUMMARY="libXt"
 DESC="X Toolkit library"

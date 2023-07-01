@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=serf
-VER=1.3.9
-SCONS_VER=3.1.2
+VER=1.3.10
+SCONS_VER=4.5.2
 PKG=ooce/library/serf
 SUMMARY="High performance C-based HTTP client library"
 DESC="Apache's high performance C-based HTTP client library built upon the "

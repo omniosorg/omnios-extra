@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=tiff
-VER=4.5.0
+VER=4.5.1
 PKG=ooce/library/tiff
 SUMMARY="LibTIFF - TIFF Library and Utilities"
 DESC="Support for the Tag Image File Format (TIFF), a widely used format "

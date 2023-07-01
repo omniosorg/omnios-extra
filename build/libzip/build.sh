@@ -12,15 +12,17 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libzip
-VER=1.9.2
+VER=1.10.0
 PKG=ooce/library/libzip
 SUMMARY="libzip"
 DESC="A C library for reading, creating and modifying zip archives"
+
+test_relver '>=' 151047 && set_clangver
 
 BUILD_DEPENDS_IPS="
     ooce/developer/cmake
@@ -49,8 +51,8 @@ CONFIGURE_OPTS[amd64]="
     -DNettle_LIBRARY=$OPREFIX/lib/amd64/libnettle.so
 "
 
-LDFLAGS[i386]+=" -R$OPREFIX/lib"
-LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
+LDFLAGS[i386]+=" -Wl,-R$OPREFIX/lib"
+LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER

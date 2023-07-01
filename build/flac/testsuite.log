@@ -1,22 +1,24 @@
-    Start 1: libFLAC
-1/9 Test #1: libFLAC ..........................   Passed
-    Start 2: libFLAC++
-2/9 Test #2: libFLAC++ ........................   Passed
-    Start 3: grabbag
-3/9 Test #3: grabbag ..........................   Passed
-    Start 4: flac
-4/9 Test #4: flac .............................   Passed
-    Start 5: metaflac
-5/9 Test #5: metaflac .........................   Passed
-    Start 6: replaygain
-6/9 Test #6: replaygain .......................   Passed
-    Start 7: seeking
-7/9 Test #7: seeking ..........................   Passed
-    Start 8: streams
-8/9 Test #8: streams ..........................   Passed
-    Start 9: compression
-9/9 Test #9: compression ......................   Passed
+      Start  1: libFLAC
+ 1/10 Test  #1: libFLAC ..........................   Passed
+      Start  2: libFLAC++
+ 2/10 Test  #2: libFLAC++ ........................   Passed
+      Start  3: grabbag
+ 3/10 Test  #3: grabbag ..........................   Passed
+      Start  4: generate_streams
+ 4/10 Test  #4: generate_streams .................   Passed
+      Start  5: flac
+ 5/10 Test  #5: flac .............................   Passed
+      Start  6: metaflac
+ 6/10 Test  #6: metaflac .........................   Passed
+      Start  7: replaygain
+ 7/10 Test  #7: replaygain .......................   Passed
+      Start  8: seeking
+ 8/10 Test  #8: seeking ..........................   Passed
+      Start  9: streams
+ 9/10 Test  #9: streams ..........................   Passed
+      Start 10: compression
+10/10 Test #10: compression ......................   Passed
 
-100% tests passed, 0 tests failed out of 9
+100% tests passed, 0 tests failed out of 10
 
 Total Test time (real) =

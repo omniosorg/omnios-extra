@@ -2,7 +2,7 @@
 Use the thread-safe LDAP library by default. This also prevents a conflict
 with the illumos libldap in /usr/lib.
 
-diff -wpruN '--exclude=*.orig' a~/configure a/configure
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure a/configure
 --- a~/configure	1970-01-01 00:00:00
 +++ a/configure	1970-01-01 00:00:00
 @@ -45178,7 +45178,7 @@ fi
@@ -41,7 +41,7 @@ diff -wpruN '--exclude=*.orig' a~/configure a/configure
     ;;
    esac
  
-diff -wpruN '--exclude=*.orig' a~/ext/ldap/config.m4 a/ext/ldap/config.m4
+diff -wpruN --no-dereference '--exclude=*.orig' a~/ext/ldap/config.m4 a/ext/ldap/config.m4
 --- a~/ext/ldap/config.m4	1970-01-01 00:00:00
 +++ a/ext/ldap/config.m4	1970-01-01 00:00:00
 @@ -70,10 +70,10 @@ if test "$PHP_LDAP" != "no"; then

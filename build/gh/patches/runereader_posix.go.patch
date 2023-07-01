@@ -1,7 +1,7 @@
-diff -wpruN '--exclude=*.orig' a~/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.3.6/terminal/runereader_posix.go a/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.3.6/terminal/runereader_posix.go
---- a~/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.3.6/terminal/runereader_posix.go	1970-01-01 00:00:00
-+++ a/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.3.6/terminal/runereader_posix.go	1970-01-01 00:00:00
-@@ -12,8 +12,7 @@ import (
+diff -wpruN --no-dereference '--exclude=*.orig' a~/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.3.7/terminal/runereader_posix.go a/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.3.7/terminal/runereader_posix.go
+--- a~/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.3.7/terminal/runereader_posix.go	1970-01-01 00:00:00
++++ a/_deps/pkg/mod/github.com/!alec!aivazis/survey/v2@v2.3.7/terminal/runereader_posix.go	1970-01-01 00:00:00
+@@ -13,8 +13,7 @@ import (
  	"bufio"
  	"bytes"
  	"fmt"
@@ -11,7 +11,7 @@ diff -wpruN '--exclude=*.orig' a~/_deps/pkg/mod/github.com/!alec!aivazis/survey/
  )
  
  const (
-@@ -22,7 +21,7 @@ const (
+@@ -23,7 +22,7 @@ const (
  )
  
  type runeReaderState struct {
@@ -20,7 +20,7 @@ diff -wpruN '--exclude=*.orig' a~/_deps/pkg/mod/github.com/!alec!aivazis/survey/
  	reader *bufio.Reader
  	buf    *bytes.Buffer
  }
-@@ -44,19 +43,20 @@ func (rr *RuneReader) Buffer() *bytes.Bu
+@@ -45,19 +44,20 @@ func (rr *RuneReader) Buffer() *bytes.Bu
  
  // For reading runes we just want to disable echo.
  func (rr *RuneReader) SetTermMode() error {
@@ -47,7 +47,7 @@ diff -wpruN '--exclude=*.orig' a~/_deps/pkg/mod/github.com/!alec!aivazis/survey/
  		return err
  	}
  
-@@ -64,7 +64,7 @@ func (rr *RuneReader) SetTermMode() erro
+@@ -65,7 +65,7 @@ func (rr *RuneReader) SetTermMode() erro
  }
  
  func (rr *RuneReader) RestoreTermMode() error {

@@ -169,6 +169,7 @@ ok - loop_configure
 ok - loop_handles
 ok - loop_instant_close
 ok - loop_stop
+ok - loop_stop_before_run
 ok - loop_update_time
 ok - metrics_idle_time
 ok - metrics_idle_time_thread
@@ -193,6 +194,7 @@ ok - pipe_getsockname
 ok - pipe_getsockname_abstract
 ok - pipe_getsockname_blocking
 ok - pipe_listen_without_bind
+ok - pipe_overlong_path
 ok - pipe_pending_instances
 ok - pipe_ping_pong
 ok - pipe_ping_pong_vec
@@ -351,6 +353,7 @@ ok - threadpool_cancel_getaddrinfo
 ok - threadpool_cancel_getnameinfo
 ok - threadpool_cancel_random
 ok - threadpool_cancel_single
+ok - threadpool_cancel_when_busy
 ok - threadpool_cancel_work
 ok - threadpool_multiple_event_loops
 ok - threadpool_queue_work_einval
@@ -365,6 +368,7 @@ ok - timer_init
 ok - timer_is_closing
 ok - timer_no_double_call_nowait
 ok - timer_no_double_call_once
+ok - timer_no_run_on_unref
 ok - timer_null_callback
 ok - timer_order
 ok - timer_ref
