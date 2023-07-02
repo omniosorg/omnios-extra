@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/gdb/osabi.c a/gdb/osabi.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/gdb/osabi.c a/gdb/osabi.c
 --- a~/gdb/osabi.c	1970-01-01 00:00:00
 +++ a/gdb/osabi.c	1970-01-01 00:00:00
 @@ -64,7 +64,7 @@ static const struct osabi_names gdb_osab
