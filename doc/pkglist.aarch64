@@ -14,6 +14,7 @@ ooce/library/libogg
 ooce/library/nettle
 ooce/library/libev
 ooce/text/datamash
+ooce/library/libgif
 .SYSROOT
 ooce/audio/flac
 ooce/library/libvorbis
