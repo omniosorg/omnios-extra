@@ -13,6 +13,7 @@ ooce/system/htop
 ooce/library/libogg
 ooce/library/nettle
 ooce/library/libev
+ooce/text/datamash
 .SYSROOT
 ooce/audio/flac
 ooce/library/libvorbis
