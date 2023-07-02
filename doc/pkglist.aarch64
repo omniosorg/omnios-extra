@@ -17,6 +17,7 @@ ooce/text/datamash
 ooce/library/libgif
 ooce/library/libpng
 ooce/library/tiff
+ooce/file/tree
 .SYSROOT
 ooce/audio/flac
 ooce/library/libvorbis
