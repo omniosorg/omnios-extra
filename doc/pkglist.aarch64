@@ -11,6 +11,7 @@
 
 ooce/system/htop
 ooce/library/libogg
+ooce/library/nettle
 .SYSROOT
 ooce/audio/flac
 ooce/library/libvorbis
