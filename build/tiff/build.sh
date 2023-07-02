@@ -50,11 +50,17 @@ CONFIGURE_OPTS+="
     --disable-static
 "
 
-LDFLAGS[i386]+=" -Wl,-R$OPREFIX/lib"
-LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/lib/amd64"
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 prep_build
+
+# Skip previous versions for cross compilation
+pre_build() { ! cross_arch $1; }
 
 # Build previous versions
 for pver in $PVERS; do
@@ -64,6 +70,7 @@ for pver in $PVERS; do
     patch_source patches-`echo $pver | cut -d. -f1-2`
     build
 done
+unset -f pre_build
 
 note -n "Building current version: $VER"
 
