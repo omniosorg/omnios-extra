@@ -16,3 +16,6 @@ ooce/library/libev
 .SYSROOT
 ooce/audio/flac
 ooce/library/libvorbis
+ooce/network/unbound -f libsandheaders
+.SYSROOT
+ooce/network/unbound
