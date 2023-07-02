@@ -19,3 +19,4 @@ ooce/library/libvorbis
 ooce/network/unbound -f libsandheaders
 .SYSROOT
 ooce/network/unbound
+ooce/library/gnutls

@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -49,17 +49,25 @@ CONFIGURE_OPTS="
 
 export MAKE
 
-CPPFLAGS+=" -I/usr/include/gmp -I$PREFIX/include -I$PREFIX/unbound/include"
-LDFLAGS[i386]+=" -L$PREFIX/unbound/lib -R$PREFIX/unbound/lib"
-LDFLAGS[i386]+=" -R$PREFIX/lib"
-LDFLAGS[amd64]+=" -L$PREFIX/unbound/lib/amd64 -R$PREFIX/unbound/lib/amd64"
-LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
+pre_configure() {
+    typeset arch=$1
+
+    # just using '--sysroot' does not work for cross-builds.
+    CPPFLAGS+=" -I${SYSROOT[$arch]}/usr/include/gmp"
+    CPPFLAGS+=" -I${SYSROOT[$arch]}$PREFIX/include"
+    CPPFLAGS+=" -I${SYSROOT[$arch]}$PREFIX/unbound/include"
+    CFLAGS[aarch64]+=" -mno-outline-atomics -mtls-dialect=trad"
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$PREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$PREFIX/unbound/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -R$PREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -R$PREFIX/unbound/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-build -ctf
+build
 run_testsuite check
 make_package
 clean_up
