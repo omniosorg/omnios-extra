@@ -18,6 +18,7 @@ ooce/library/libgif
 ooce/library/libpng
 ooce/library/tiff
 ooce/file/tree
+ooce/library/libjpeg-turbo
 .SYSROOT
 ooce/audio/flac
 ooce/library/libvorbis
