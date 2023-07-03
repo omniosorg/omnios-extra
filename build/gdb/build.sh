@@ -18,7 +18,7 @@
 
 PROG=gdb
 PKG=ooce/developer/gdb
-VER=13.1
+VER=13.2
 SUMMARY="$PROG - GNU Debugger"
 DESC="The GNU debugger"
 
