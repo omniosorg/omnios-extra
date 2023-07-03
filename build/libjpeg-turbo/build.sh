@@ -49,12 +49,19 @@ CONFIGURE_OPTS="
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_INSTALL_INCLUDEDIR=$OPREFIX/include
 "
-CONFIGURE_OPTS[i386]="
-    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib
-"
-CONFIGURE_OPTS[amd64]="
-    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/amd64
-"
+
+CFLAGS[aarch64]+=" -mno-outline-atomics -mtls-dialect=trad"
+
+pre_build() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]="-DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[$arch]}"
+
+    ! cross_arch $arch && return
+
+    # XXXARM: check whether it's possible to cross-build SIMD
+     CONFIGURE_OPTS[$arch]+=" -DWITH_SIMD=OFF"
+}
 
 init
 download_source $PROG $PROG $VER

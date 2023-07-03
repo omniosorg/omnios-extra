@@ -29,10 +29,15 @@ CONFIGURE_OPTS="
     --disable-static
     --disable-openssl
 "
+CONFIGURE_OPTS[aarch64]+=" HOST_CC=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc"
 
 CPPFLAGS+=" -I/usr/include/gmp"
-LDFLAGS[i386]+=" -R$PREFIX/lib"
-LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
+
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -R$PREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER

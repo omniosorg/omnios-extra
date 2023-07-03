@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -33,8 +33,11 @@ CONFIGURE_OPTS="
     --disable-static
 "
 
-LDFLAGS[i386]+=" -Wl,-R$PREFIX/lib"
-LDFLAGS[amd64]+=" -Wl,-R$PREFIX/lib/amd64"
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER

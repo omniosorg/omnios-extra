@@ -54,15 +54,13 @@ CONFIGURE_OPTS="
     -DCMAKE_INSTALL_INCLUDEDIR=$OPREFIX/include
     -DBUILD_SHARED_LIBS=ON
 "
-CONFIGURE_OPTS[i386]="
-    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib
-"
-CONFIGURE_OPTS[amd64]="
-    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/amd64
-"
 
-LDFLAGS[i386]+=" -Wl,-R$OPREFIX/lib"
-LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/lib/amd64"
+pre_build() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]="-DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER

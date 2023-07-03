@@ -35,14 +35,16 @@ pre_configure() {
         LDFLAGS=\"$LDFLAGS ${LDFLAGS[$arch]}\"
     "
 
+    # no configure
+    false
+}
+
+pre_install() {
     MAKE_INSTALL_ARGS="
         DESTDIR=$DESTDIR/$PREFIX/bin
         PREFIX=$PREFIX
         MANDIR=$DESTDIR/$PREFIX/share/man
     "
-
-    # no configure
-    false
 }
 
 init

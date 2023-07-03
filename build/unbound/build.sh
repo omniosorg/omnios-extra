@@ -43,21 +43,29 @@ CONFIGURE_OPTS="
     --with-pthreads
 "
 
-LDFLAGS[amd64]="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 export MAKE
+
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]="-L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
+}
 
 TESTSUITE_SED="/libtool/d"
 
-fixup_config() {
+post_install() {
+    [ $1 = i386 ] && return
+
     # We do not want to chroot by default as this requires additional setup.
     # Also, people may (should) be running this inside a zone anyway.
     sed -i '
         /chroot:/c\
 	chroot: ""
     ' $DESTDIR/etc$PREFIX/unbound.conf
-}
 
-build_manifests() {
+    install_smf network dns-unbound.xml
+
     manifest_start $TMPDIR/manifest.client
     manifest_add_dir $PREFIX/lib pkgconfig amd64 amd64/pkgconfig
     manifest_add_dir $PREFIX/share/man/man3
@@ -74,12 +82,10 @@ prep_build
 patch_source
 build
 run_testsuite
-install_smf network dns-unbound.xml
-fixup_config
-build_manifests
 PKG=${PKG/network/library} SUMMARY+=" libraries" \
     make_package -seed $TMPDIR/manifest.client
-make_package -seed $TMPDIR/manifest.server server.mog
+[ "$FLAVOR" != libsandheaders ] \
+    && make_package -seed $TMPDIR/manifest.server server.mog
 clean_up
 
 # Vim hints

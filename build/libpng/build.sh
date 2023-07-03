@@ -49,10 +49,25 @@ CONFIGURE_OPTS[amd64]="
     --sbindir=$PREFIX/sbin
     --libdir=$OPREFIX/lib/amd64
 "
+CONFIGURE_OPTS[aarch64]+="
+    --bindir=$PREFIX/bin
+    --sbindir=$PREFIX/sbin
+    --libdir=$OPREFIX/lib
+"
+
+pre_configure() {
+    typeset arch=$1
+
+    ! cross_arch $arch && return
+
+    CPPFLAGS[$arch]+=" -I${SYSROOT[$arch]}/usr/include"
+}
 
 # Make ISA binaries for libpng-config, to allow software to find the
 # right settings for 32/64-bit when pkg-config is not used.
-make_isa_stub() {
+post_install() {
+    [ $1 != amd64 ] && return
+
     pushd $DESTDIR$PREFIX/bin >/dev/null
     logcmd mkdir -p amd64
     logcmd mv libpng*-config amd64/ || logerr "mv libpng-config"
@@ -66,7 +81,6 @@ prep_build
 patch_source
 build
 run_testsuite
-make_isa_stub
 make_package
 clean_up
 

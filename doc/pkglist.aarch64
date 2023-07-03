@@ -10,3 +10,19 @@
 #		 	arch-specific sysroot.
 
 ooce/system/htop
+ooce/library/libogg
+ooce/library/nettle
+ooce/library/libev
+ooce/text/datamash
+ooce/library/libgif
+ooce/library/libpng
+ooce/library/tiff
+ooce/file/tree
+ooce/library/libjpeg-turbo
+.SYSROOT
+ooce/audio/flac
+ooce/library/libvorbis
+ooce/network/unbound -f libsandheaders
+.SYSROOT
+ooce/network/unbound
+ooce/library/gnutls
