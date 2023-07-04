@@ -115,6 +115,7 @@ CONFIGURE_OPTS[amd64]+="
     --disable-nls
     --enable-c99
     --enable-long-long
+    --enable-warn-rwx-segments=no
     enable_frame_pointer=yes
 "
 CONFIGURE_OPTS[WS]="
