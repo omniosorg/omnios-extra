@@ -1,1 +1,15 @@
-omnios ooce/system/htop
+extra.omnios ooce/audio/flac
+extra.omnios ooce/file/tree
+extra.omnios ooce/library/gnutls
+extra.omnios ooce/library/libev
+extra.omnios ooce/library/libgif
+extra.omnios ooce/library/libjpeg-turbo
+extra.omnios ooce/library/libogg
+extra.omnios ooce/library/libpng
+extra.omnios ooce/library/libvorbis
+extra.omnios ooce/library/nettle
+extra.omnios ooce/library/tiff
+extra.omnios ooce/library/unbound
+extra.omnios ooce/network/unbound
+extra.omnios ooce/system/htop
+extra.omnios ooce/text/datamash

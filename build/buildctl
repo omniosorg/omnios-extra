@@ -561,7 +561,7 @@ parallel_build() {
 
     start_built_listener
     # Do this now to avoid a race in the child tasks
-    init_repo
+    init_repos
 
     if [ -n "$CLIBUILDARCH" ]; then
        PKGSRVR=${REPOS[$CLIBUILDARCH]}
