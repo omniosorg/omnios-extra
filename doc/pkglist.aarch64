@@ -28,3 +28,5 @@ ooce/network/openldap
 .SYSROOT
 ooce/network/unbound
 ooce/library/gnutls
+.SYSROOT
+ooce/security/gnupg
