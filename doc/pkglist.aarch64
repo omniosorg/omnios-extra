@@ -22,6 +22,7 @@ ooce/library/libjpeg-turbo
 ooce/network/openldap -f libsandheaders
 ooce/library/freetype2
 ooce/fonts/liberation
+ooce/multimedia/x264
 .SYSROOT
 ooce/audio/flac
 ooce/library/libvorbis

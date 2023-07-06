@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -42,11 +42,19 @@ CONFIGURE_OPTS[amd64]+="
     --host=${TRIPLETS[amd64]}
 "
 
+pre_configure() {
+    typeset arch=$1
+
+    ! cross_arch $arch && return
+
+    CONFIGURE_OPTS[$arch]+=" --sysroot=${SYSROOT[$arch]}"
+}
+
 MAKE_INSTALL_ARGS="-e INSTALL=$GNUBIN/install"
 
 CFLAGS+=" -O3"
 
-[ $RELVER -ge 151037 ] && LDFLAGS[i386]+=" -lssp_ns"
+LDFLAGS[i386]+=" -lssp_ns"
 LDFLAGS[amd64]+=" -Wl,-R$PREFIX/lib/amd64"
 
 # we don't want x264 to have a (circular) runtime dependency on ffmpeg
@@ -56,7 +64,7 @@ init
 download_source $PROG $PROG-stable $VER
 patch_source
 prep_build
-build -ctf
+build
 make_package
 clean_up
 

@@ -14,6 +14,7 @@ extra.omnios ooce/library/nettle
 extra.omnios ooce/library/openldap
 extra.omnios ooce/library/tiff
 extra.omnios ooce/library/unbound
+extra.omnios ooce/multimedia/x264
 extra.omnios ooce/network/openldap
 extra.omnios ooce/network/unbound
 extra.omnios ooce/security/gnupg

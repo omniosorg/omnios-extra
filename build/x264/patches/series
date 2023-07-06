@@ -1,2 +1,3 @@
 libs.patch
 clang-no-mimpure-text.patch
+xpg6-check.patch
