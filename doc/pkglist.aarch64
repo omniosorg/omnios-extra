@@ -28,6 +28,9 @@ ooce/library/libid3tag
 ooce/library/libexif
 ooce/database/lmdb
 ooce/database/bdb
+ooce/database/postgresql-common
+ooce/database/postgresql-14 -f libsandheaders
+###############################################################################
 .SYSROOT
 ooce/audio/flac
 ooce/library/libvorbis
@@ -35,11 +38,16 @@ ooce/network/unbound -f libsandheaders
 ooce/network/openldap
 ooce/library/fontconfig
 ooce/library/libwebp
+ooce/database/postgresql-14
+###############################################################################
 .SYSROOT
 ooce/network/unbound
 ooce/library/gnutls
+###############################################################################
 .SYSROOT
 ooce/security/gnupg
 ooce/multimedia/ffmpeg
+###############################################################################
 .SYSROOT
 ooce/multimedia/minidlna
+###############################################################################

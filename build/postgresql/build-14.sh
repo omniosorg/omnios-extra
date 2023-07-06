@@ -59,6 +59,7 @@ XFORM_ARGS="
 "
 
 CFLAGS+=" -O3"
+CFLAGS[aarch64]+=" -mno-outline-atomics"
 CPPFLAGS+=" -DWAIT_USE_POLL"
 # postgresql has large enumerations
 CTF_FLAGS+=" -s"
@@ -82,12 +83,32 @@ CONFIGURE_OPTS[amd64_WS]+="
     --with-llvm LLVM_CONFIG=\"$CLANGPATH/bin/llvm-config --link-static\"
     --enable-dtrace DTRACEFLAGS=-64
 "
+CONFIGURE_OPTS[aarch64]+="
+    --disable-dtrace
+"
 
 # need to build world to get e.g. man pages in
 MAKE_TARGET=world
 MAKE_INSTALL_TARGET=install-world
 
-build_manifests() {
+post_install() {
+    typeset arch=$1
+
+    [ $arch = i386 ] && return
+
+    # Make ISA binaries for pg_config, to allow software to find the
+    # right settings for 32/64-bit when pkg-config is not used.
+    if [ $arch = amd64 ]; then
+        pushd $DESTDIR$PREFIX/bin >/dev/null
+        logcmd mkdir -p amd64
+        logcmd mv pg_config amd64/ || logerr "mv pg_config"
+        make_isaexec_stub_arch amd64 $PREFIX/bin
+        popd >/dev/null
+    fi
+
+    xform $SRCDIR/files/postgres.xml > $TMPDIR/$PROG-$sMAJVER.xml
+    install_smf ooce $PROG-$sMAJVER.xml
+
     manifest_start $TMPDIR/manifest.client
     manifest_add_dir $PREFIX/include '.*'
     manifest_add_dir $PREFIX/lib/pkgconfig
@@ -104,30 +125,17 @@ build_manifests() {
     manifest_finalise $TMPDIR/manifest.server $OPREFIX etc
 }
 
-# Make ISA binaries for pg_config, to allow software to find the
-# right settings for 32/64-bit when pkg-config is not used.
-make_isa_stub() {
-    pushd $DESTDIR$PREFIX/bin >/dev/null
-    logcmd mkdir -p amd64
-    logcmd mv pg_config amd64/ || logerr "mv pg_config"
-    make_isaexec_stub_arch amd64 $PREFIX/bin
-    popd >/dev/null
-}
-
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-make_isa_stub
 #run_testsuite check-world
-xform files/postgres.xml > $TMPDIR/$PROG-$sMAJVER.xml
-install_smf ooce $PROG-$sMAJVER.xml
-build_manifests
 PKG=${PKG/database/library} SUMMARY+=" client and libraries" \
     make_package -seed $TMPDIR/manifest.client
-RUN_DEPENDS_IPS="ooce/database/postgresql-common" \
-    make_package -seed $TMPDIR/manifest.server server.mog
+[ "$FLAVOR" != libsandheaders ] \
+    && RUN_DEPENDS_IPS="ooce/database/postgresql-common" \
+        make_package -seed $TMPDIR/manifest.server server.mog
 clean_up
 
 # Vim hints

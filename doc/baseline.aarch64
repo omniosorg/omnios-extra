@@ -1,6 +1,8 @@
 extra.omnios ooce/audio/flac
 extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
+extra.omnios ooce/database/postgresql-14
+extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/file/tree
 extra.omnios ooce/fonts/liberation
 extra.omnios ooce/library/fontconfig
@@ -17,6 +19,7 @@ extra.omnios ooce/library/libvorbis
 extra.omnios ooce/library/libwebp
 extra.omnios ooce/library/nettle
 extra.omnios ooce/library/openldap
+extra.omnios ooce/library/postgresql-14
 extra.omnios ooce/library/tiff
 extra.omnios ooce/library/unbound
 extra.omnios ooce/multimedia/dav1d
