@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -27,7 +27,16 @@ test_relver '>=' 151041 && set_clangver
 CONFIGURE_OPTS="
     --disable-static
 "
-[ $RELVER -ge 151037 ] && LDFLAGS[i386]+=" -lssp_ns"
+
+LDFLAGS[i386]+=" -lssp_ns"
+
+pre_configure() {
+    typeset arch=$1
+
+    ! cross_arch $arch && return
+
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER
