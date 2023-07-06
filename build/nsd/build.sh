@@ -60,16 +60,24 @@ CONFIGURE_OPTS="
 # need msg_flags from struct msghdr
 set_standard XPG4v2
 
-LDFLAGS="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 export MAKE
+
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
+}
+
+post_install() {
+    install_smf network dns-nsd.xml
+}
 
 init
 download_source $PROG $PROG $VER
 prep_build
 patch_source
 build
-strip_install
-install_smf network dns-nsd.xml
 make_package
 clean_up
 

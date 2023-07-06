@@ -39,6 +39,7 @@ ooce/network/openldap
 ooce/library/fontconfig
 ooce/library/libwebp
 ooce/database/postgresql-14
+ooce/network/nsd
 ###############################################################################
 .SYSROOT
 ooce/network/unbound
