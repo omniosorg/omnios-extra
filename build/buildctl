@@ -601,7 +601,7 @@ parallel_build() {
     typeset -i published=0
     while [ ${#queue[@]} -gt 0 ]; do
         # Pop tgt off queue
-        tgt=${queue[0]}; queue=("${queue[@]:1}")
+        tgt="${queue[0]}"; queue=("${queue[@]:1}")
         nextslot=
 
         typeset qtgt="$tgt"
