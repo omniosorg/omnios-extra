@@ -32,3 +32,4 @@ extra.omnios ooce/network/unbound
 extra.omnios ooce/security/gnupg
 extra.omnios ooce/system/htop
 extra.omnios ooce/text/datamash
+extra.omnios ooce/util/pass
