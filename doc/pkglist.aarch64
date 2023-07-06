@@ -33,6 +33,7 @@ ooce/database/postgresql-14 -f libsandheaders
 ooce/terminal/minicom
 ooce/text/hunspell
 ooce/compress/pbzip2
+ooce/compress/pigz
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

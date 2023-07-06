@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -38,7 +38,7 @@ pre_configure() {
     MAKE_ARGS_WS="
         -e
         CFLAGS=\"${CFLAGS[$arch]} $CFLAGS\"
-        LDFLAGS=\"${LDFLAGS[$arch]} $LDFLAGS\"
+        LDFLAGS=\"${LDFLAGS[$arch]} -L${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]} $LDFLAGS\"
         LIBS=\"-lm -lz\"
     "
 
