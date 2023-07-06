@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -43,7 +43,6 @@ download_source $PROG $PROG v$VER
 patch_source
 prep_build autoconf -autoreconf
 build
-strip_install
 make_package
 clean_up
 

@@ -30,6 +30,7 @@ ooce/database/lmdb
 ooce/database/bdb
 ooce/database/postgresql-common
 ooce/database/postgresql-14 -f libsandheaders
+ooce/terminal/minicom
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

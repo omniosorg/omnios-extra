@@ -31,5 +31,6 @@ extra.omnios ooce/network/openldap
 extra.omnios ooce/network/unbound
 extra.omnios ooce/security/gnupg
 extra.omnios ooce/system/htop
+extra.omnios ooce/terminal/minicom
 extra.omnios ooce/text/datamash
 extra.omnios ooce/util/pass
