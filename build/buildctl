@@ -563,6 +563,7 @@ parallel_build() {
     # Do this now to avoid a race in the child tasks
     init_repos
 
+    save_variable PKGSRVR
     if [ -n "$CLIBUILDARCH" ]; then
        PKGSRVR=${REPOS[$CLIBUILDARCH]}
     fi
@@ -724,6 +725,7 @@ parallel_build() {
             note -e "***** BUILD ERROR ***** ($b)"
         done
     else
+        restore_variable PKGSRVR
         baseline check
     fi
 
