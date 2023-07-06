@@ -19,10 +19,15 @@ ooce/library/libpng
 ooce/library/tiff
 ooce/file/tree
 ooce/library/libjpeg-turbo
+ooce/network/openldap -f libsandheaders
+ooce/library/freetype2
 .SYSROOT
 ooce/audio/flac
 ooce/library/libvorbis
 ooce/network/unbound -f libsandheaders
+ooce/network/openldap
 .SYSROOT
 ooce/network/unbound
 ooce/library/gnutls
+.SYSROOT
+ooce/security/gnupg

@@ -30,6 +30,8 @@ PKG_CONFIG_PATH=()
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
+export CC_BUILD=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc
+
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --includedir=$PREFIX/include
@@ -44,7 +46,17 @@ CONFIGURE_OPTS[amd64]="
     --bindir=$PREFIX/bin
     --libdir=$PREFIX/lib/amd64
 "
+CONFIGURE_OPTS[aarch64]+="
+    --bindir=$PREFIX/bin
+    --libdir=$PREFIX/lib
+"
 LDFLAGS[i386]+=" -lssp_ns"
+
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}"
+}
 
 init
 download_source ${PROG}2 $PROG $VER

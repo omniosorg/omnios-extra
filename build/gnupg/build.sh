@@ -52,6 +52,8 @@ XFORM_ARGS="
     -DPINENTRY=$PINENTRYVER
 "
 
+export CC_FOR_BUILD=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc
+
 init
 prep_build
 
@@ -70,6 +72,7 @@ restore_variable CONFIGURE_OPTS
 
 CPPFLAGS+=" -I$DEPROOT$PREFIX/include"
 LDFLAGS[amd64]+=" -L$DEPROOT$PREFIX/lib/amd64"
+LDFLAGS[aarch64]+=" -L$DEPROOT$PREFIX/lib"
 CONFIGURE_OPTS+=" --with-libgpg-error-prefix=$DEPROOT$PREFIX"
 
 build_dependency libgcrypt libgcrypt-$LIBGCRYPTVER \
@@ -87,6 +90,13 @@ build_dependency npth npth-$NPTHVER \
 save_variable DEPROOT
 
 CONFIGURE_OPTS+=" --with-libassuan-prefix=$DEPROOT$PREFIX"
+
+pre_configure() {
+    typeset arch=$1
+
+    CPPFLAGS+=" -I${SYSROOT[$arch]}/usr/include/ncurses"
+}
+
 build_dependency -ctf -merge pinentry pinentry-$PINENTRYVER \
     $PROG/pinentry pinentry $PINENTRYVER
 
@@ -104,13 +114,21 @@ CONFIGURE_OPTS[WS]="
     --with-libgcrypt-prefix=$DEPROOT$PREFIX
     --with-libassuan-prefix=$DEPROOT$PREFIX
     --with-libksba-prefix=$DEPROOT$PREFIX
+    KSBA_CONFIG=$DEPROOT$PREFIX/bin/ksba-config
     --with-npth-prefix=$DEPROOT$PREFIX
     --with-pinentry-pgm=$PREFIX/bin/pinentry
     LDAPLIBS=\"-lldap_r -llber\"
 "
-CPPFLAGS+=" -I$DEPROOT$PREFIX/include -I$OPREFIX/include"
-LDFLAGS[amd64]+=" -L$DEPROOT$PREFIX/lib/amd64"
-LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
+
+pre_configure() {
+    typeset arch=$1
+
+    CPPFLAGS+=" -I$DEPROOT$PREFIX/include -I$OPREFIX/include"
+    LDFLAGS[$arch]+=" -L$DEPROOT$PREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
+}
+
 PATH+=":$DEPROOT$PREFIX/bin"
 
 download_source $PROG $PROG $VER

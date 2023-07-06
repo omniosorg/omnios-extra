@@ -478,9 +478,10 @@ set_crossgcc() {
     [[ ${CXXFLAGS[$arch]} =~ *--sysroot* ]] \
         || CXXFLAGS[$arch]+=" --sysroot=${SYSROOT[$arch]}"
 
-    export PKG_CONFIG_SYSROOT_DIR=${SYSROOT[$arch]}
-    addpath PKG_CONFIG_PATH[$arch] \
-        $OOCEOPT/${LIBDIRS[$arch]}/pkgconfig
+    PKG_CONFIG_SYSROOT_DIR=${SYSROOT[$arch]}
+    PKG_CONFIG_LIBDIR="${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}/pkgconfig"
+    PKG_CONFIG_LIBDIR+=":${SYSROOT[$arch]}$OOCEOPT/${LIBDIRS[$arch]}/pkgconfig"
+    export PKG_CONFIG_SYSROOT_DIR PKG_CONFIG_LIBDIR
 
     [[ $CONFIGURE_CMD =~ $CMAKE* ]] && CONFIGURE_OPTS[$arch]+="
         -DCMAKE_FIND_ROOT_PATH=${SYSROOT[$arch]}
@@ -697,6 +698,7 @@ set_arch() {
     for a in $BUILDARCH; do
         valid_arch $a || logerr "$a is not a supported architecture."
     done
+    trim_variable BUILDARCH
 }
 
 check_mediators() {
@@ -2837,6 +2839,8 @@ build_dependency() {
     fi
     ((EXTRACT_MODE == 0)) && build $buildargs
 
+    cross_arch $BUILDARCH && DEPROOT+=.$BUILDARCH
+
     restore_variable BUILDDIR __builddep__
     restore_variable EXTRACTED_SRC __builddep__
     restore_variable DESTDIR __builddep__
@@ -3718,6 +3722,17 @@ restore_buildenv() {
     local opt
     for opt in $BUILDENV_OPTS; do
         restore_variable $opt
+    done
+}
+
+trim_variable() {
+    local name=$1
+    declare -n _var=$name
+    while [[ "$_var" == ' '* ]]; do
+        _var="${_var# }"
+    done
+    while [[ "$_var" == *' ' ]]; do
+        _var="${_var% }"
     done
 }
 

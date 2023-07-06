@@ -5,7 +5,7 @@ with gethrvtime().
 (support was added in https://www.illumos.org/issues/14126 and is present from
  release r151041 onwards).
 
-diff -wpruN '--exclude=*.orig' a~/agent/protect.c a/agent/protect.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/agent/protect.c a/agent/protect.c
 --- a~/agent/protect.c	1970-01-01 00:00:00
 +++ a/agent/protect.c	1970-01-01 00:00:00
 @@ -125,6 +125,9 @@ calibrate_get_time (struct calibrate_tim
