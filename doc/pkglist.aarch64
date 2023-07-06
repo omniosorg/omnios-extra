@@ -36,3 +36,4 @@ ooce/network/unbound
 ooce/library/gnutls
 .SYSROOT
 ooce/security/gnupg
+ooce/multimedia/ffmpeg
