@@ -39,3 +39,5 @@ ooce/library/gnutls
 .SYSROOT
 ooce/security/gnupg
 ooce/multimedia/ffmpeg
+.SYSROOT
+ooce/multimedia/minidlna
