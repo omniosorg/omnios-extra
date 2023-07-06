@@ -31,6 +31,7 @@ ooce/database/bdb
 ooce/database/postgresql-common
 ooce/database/postgresql-14 -f libsandheaders
 ooce/terminal/minicom
+ooce/text/hunspell
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

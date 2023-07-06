@@ -25,11 +25,11 @@ DESC="$PROG - spell checker"
 # https://github.com/fin-w/LibreOffice-Geiriadur-Cymraeg-Welsh-Dictionary
 CYVER=1.2
 
-forgo_isaexec
-set_clangver
-
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
+
+forgo_isaexec
+set_clangver
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
@@ -49,8 +49,12 @@ CONFIGURE_OPTS[i386]="
 CONFIGURE_OPTS[amd64]="
     --libdir=$OPREFIX/lib/amd64
 "
+CONFIGURE_OPTS[aarch64]+="
+    --libdir=$OPREFIX/lib
+"
 
 CPPFLAGS+=" -I/usr/include/ncurses"
+CXXFLAGS[aarch64]+=" -mno-outline-atomics -mtls-dialect=trad"
 
 post_install() {
     [ $1 = i386 ] && return
