@@ -27,6 +27,7 @@ ooce/audio/flac
 ooce/library/libvorbis
 ooce/network/unbound -f libsandheaders
 ooce/network/openldap
+ooce/library/fontconfig
 .SYSROOT
 ooce/network/unbound
 ooce/library/gnutls
