@@ -1,4 +1,5 @@
 extra.omnios ooce/audio/flac
+extra.omnios ooce/database/lmdb
 extra.omnios ooce/file/tree
 extra.omnios ooce/fonts/liberation
 extra.omnios ooce/library/fontconfig

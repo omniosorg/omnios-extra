@@ -26,6 +26,7 @@ ooce/multimedia/x264
 ooce/multimedia/dav1d
 ooce/library/libid3tag
 ooce/library/libexif
+ooce/database/lmdb
 .SYSROOT
 ooce/audio/flac
 ooce/library/libvorbis
