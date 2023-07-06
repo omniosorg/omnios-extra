@@ -10,6 +10,7 @@ extra.omnios ooce/library/libjpeg-turbo
 extra.omnios ooce/library/libogg
 extra.omnios ooce/library/libpng
 extra.omnios ooce/library/libvorbis
+extra.omnios ooce/library/libwebp
 extra.omnios ooce/library/nettle
 extra.omnios ooce/library/openldap
 extra.omnios ooce/library/tiff

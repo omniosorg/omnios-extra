@@ -29,6 +29,7 @@ ooce/library/libvorbis
 ooce/network/unbound -f libsandheaders
 ooce/network/openldap
 ooce/library/fontconfig
+ooce/library/libwebp
 .SYSROOT
 ooce/network/unbound
 ooce/library/gnutls
