@@ -1849,8 +1849,6 @@ make_package_impl() {
     esac
     typeset DESCSTR="$DESC"
     [ -n "$FLAVORSTR" ] && DESCSTR="$DESCSTR ($FLAVOR)"
-    # Add the local dash-revision if specified.
-    PVER=$RELVER.$DASHREV
 
     # Temporary file paths
     typeset MANUAL_DEPS=$TMPDIR/${PKGE}.deps.mog
