@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -30,6 +30,8 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DPROG=$PROG
 "
+
+export CXX
 
 pre_configure() {
     typeset arch=$1
