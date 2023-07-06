@@ -71,6 +71,7 @@ extract_pkgs() {
 
 add_buildscripts() {
     for build in `find . -name build\*.sh | cut -c3-`; do
+        [[ ${build##*/} = build-arch-* ]] && continue
         for PKG in `extract_pkgs $build`; do
             add_target $PKG $build
         done
@@ -563,6 +564,7 @@ parallel_build() {
     # Do this now to avoid a race in the child tasks
     init_repos
 
+    save_variable PKGSRVR
     if [ -n "$CLIBUILDARCH" ]; then
        PKGSRVR=${REPOS[$CLIBUILDARCH]}
     fi
@@ -599,7 +601,7 @@ parallel_build() {
     typeset -i published=0
     while [ ${#queue[@]} -gt 0 ]; do
         # Pop tgt off queue
-        tgt=${queue[0]}; queue=("${queue[@]:1}")
+        tgt="${queue[0]}"; queue=("${queue[@]:1}")
         nextslot=
 
         typeset qtgt="$tgt"
@@ -724,6 +726,7 @@ parallel_build() {
             note -e "***** BUILD ERROR ***** ($b)"
         done
     else
+        restore_variable PKGSRVR
         baseline check
     fi
 
