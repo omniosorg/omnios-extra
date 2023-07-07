@@ -27,14 +27,7 @@ DESC+="convert and stream audio and video."
 # software may depend on it.
 PVERS="4.4.3 5.1.2"
 
-if test_relver '>=' 151041; then
-    set_clangver
-
-    CONFIGURE_OPTS="
-        --cc=$CC
-        --cxx=$CXX
-    "
-fi
+test_relver '>=' 151041 && set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -49,7 +42,7 @@ XFORM_ARGS="
 # ffmpeg contains BMI instructions even when built on an older CPU
 BMI_EXPECTED=1
 
-CONFIGURE_OPTS+="
+CONFIGURE_OPTS="
     --prefix=$PREFIX
     --incdir=$OPREFIX/include
     --disable-static
@@ -63,25 +56,52 @@ CONFIGURE_OPTS+="
     --enable-libwebp
     --enable-gpl
     --enable-libx264
-    --enable-libx265
     --enable-gnutls
 "
 CONFIGURE_OPTS[i386]="
+    --enable-libx265
     --disable-librav1e
     --libdir=$OPREFIX/lib
 "
 CONFIGURE_OPTS[amd64]="
+    --enable-libx265
     --enable-librav1e
     --libdir=$OPREFIX/lib/amd64
 "
+CONFIGURE_OPTS[aarch64]="
+    --enable-cross-compile
+    --disable-asm
+    --disable-libx265
+    --disable-librav1e
+    --libdir=$OPREFIX/lib
+"
 
-# to find x264.h for builtin check
-CPPFLAGS+=" -I$OPREFIX/include"
-LDFLAGS[i386]+=" -Wl,-R$OPREFIX/lib"
-LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/lib/amd64"
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS+="
+        --cc=$CC
+        --cxx=$CXX
+    "
+
+    # to find x264.h for builtin check
+    CPPFLAGS+=" -I${SYSROOT[$arch]}$OPREFIX/include"
+
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+
+    ! cross_arch $arch && return
+
+    CONFIGURE_OPTS[$arch]+="
+        --sysroot=${SYSROOT[$arch]}
+        --host-cc=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc
+    "
+}
 
 init
 prep_build autoconf-like
+
+# Skip previous versions for cross compilation
+pre_build() { ! cross_arch $1; }
 
 # Build previous versions
 for pver in $PVERS; do
@@ -94,6 +114,7 @@ for pver in $PVERS; do
     build
     restore_variable CONFIGURE_OPTS
 done
+unset -f pre_build
 
 note -n "Building current version: $VER"
 

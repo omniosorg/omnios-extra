@@ -60,25 +60,32 @@ CONFIGURE_OPTS[amd64]="
     --sbindir=$PREFIX/sbin
     --libdir=$OPREFIX/lib/amd64
 "
+CONFIGURE_OPTS[aarch64]+="
+    --bindir=$PREFIX/bin
+    --sbindir=$PREFIX/sbin
+    --libdir=$OPREFIX/lib
+"
 
-# The build framework expects GNU tools
-export PATH="/usr/gnu/bin:$PATH"
+pre_configure() {
+    # The build framework expects GNU tools
+    export PATH="$GNUBIN:$PATH"
+}
 
-rem_abs_symlinks() {
+post_install() {
     logmsg "--- removing absolute symlinks"
     logcmd rm -f $DESTDIR/etc$PREFIX/fonts/conf.d/*.conf
 }
 
 LDFLAGS[i386]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
 LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
+LDFLAGS[aarch64]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
 
 init
 download_source $PROG $PROG $VER
 prep_build
 patch_source
 run_autoreconf -fi
-build -ctf
-rem_abs_symlinks
+build
 make_package
 clean_up
 

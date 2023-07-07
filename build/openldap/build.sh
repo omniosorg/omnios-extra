@@ -118,6 +118,8 @@ unset -f pre_build
 post_install() {
     [ $1 = i386 ] && return
 
+    xform $SRCDIR/files/$PROG.xml > $TMPDIR/$PROG.xml
+
     install_smf -oocemethod ooce $PROG.xml
 
     manifest_start $TMPDIR/manifest.client
@@ -137,7 +139,6 @@ note -n "Building current version: $VER"
 download_source $PROG $PROG $VER
 patch_source
 build
-xform files/$PROG.xml > $TMPDIR/$PROG.xml
 PKG=${PKG/network/library} SUMMARY+=" - clients and libraries" \
     make_package -seed $TMPDIR/manifest.client
 [ "$FLAVOR" != libsandheaders ] \

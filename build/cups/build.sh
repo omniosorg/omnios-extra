@@ -31,6 +31,8 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 VARDIR="/var$PREFIX"
 
+forgo_isaexec
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
@@ -39,7 +41,6 @@ XFORM_ARGS="
 "
 
 CONFIGURE_OPTS="
-    --prefix=$PREFIX
     --sysconfdir=/etc$OPREFIX
     --includedir=$OPREFIX/include
     --localstatedir=$VARDIR
@@ -67,18 +68,13 @@ CONFIGURE_OPTS="
 # this currently fails in zones as it uses libdevinfo
 CONFIGURE_OPTS+=" --disable-libusb"
 
-CONFIGURE_OPTS[i386]="
-    --libdir=$OPREFIX/lib
-"
-CONFIGURE_OPTS[amd64]="
-    --libdir=$OPREFIX/lib/amd64
-"
-
-LDFLAGS[i386]+=" -L$OPREFIX/lib -Wl,-R$OPREFIX/lib -lsocket"
-LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -Wl,-R$OPREFIX/lib/amd64 -lsocket"
-
 pre_configure() {
     typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]+=" --libdir=$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -lsocket"
 
     export DSOFLAGS="$LDFLAGS ${LDFLAGS[$arch]}"
 }
@@ -89,7 +85,6 @@ patch_source
 prep_build
 run_autoconf -f
 build
-strip_install
 VER=${VER//op/.} make_package
 clean_up
 

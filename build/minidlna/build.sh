@@ -23,12 +23,12 @@ PKG=ooce/multimedia/minidlna
 SUMMARY="MiniDLNA"
 DESC="DLNA/UPnP-AV media server"
 
+OPREFIX=$PREFIX
+PREFIX+="/$PROG"
+
 set_arch 64
 set_standard XPG6
 test_relver '>=' 151041 && set_clangver
-
-OPREFIX=$PREFIX
-PREFIX+="/$PROG"
 
 BUILD_DEPENDS_IPS="
     ooce/library/libjpeg-turbo
@@ -46,32 +46,43 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
-CONFIGURE_OPTS[amd64]="
-    --prefix=$PREFIX
+CONFIGURE_OPTS[amd64]+="
+    --with-db-path=/var$PREFIX/cache
+    --with-log-path=/var/log$PREFIX
+    ac_cv_header_sys_inotify_h=no
+    ac_cv_func_inotify_init=no
+"
+CONFIGURE_OPTS[aarch64]+="
     --with-db-path=/var$PREFIX/cache
     --with-log-path=/var/log$PREFIX
     ac_cv_header_sys_inotify_h=no
     ac_cv_func_inotify_init=no
 "
 
-default_config() {
+pre_configure() {
+    typeset arch=$1
+
+    CPPFLAGS+=" -D__OmniOS__ -I${SYSROOT[$arch]}$OPREFIX/include"
+    LDFLAGS[$arch]+=" -Wl,-L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -lsocket -lsendfile"
+}
+
+post_install() {
     logmsg "--- Copying default config file"
     logcmd mkdir -p $DESTDIR/etc$PREFIX
     logcmd cp $TMPDIR/$BUILDDIR/${PROG}.conf $DESTDIR/etc$PREFIX \
      || logerr "Failed to copy default config file"
+
+    install_smf application $PROG.xml
 }
 
-CPPFLAGS+=" -D__OmniOS__ -I$OPREFIX/include"
-LDFLAGS[amd64]+=" -Wl,-L$OPREFIX/lib/amd64 -Wl,-R$OPREFIX/lib/amd64"
-LDFLAGS[amd64]+=" -lsocket -lsendfile"
 
 init
 prep_build
 download_source $PROG $PROG $VER
 patch_source
-build -ctf
-default_config
-install_smf application $PROG.xml
+build
 make_package
 clean_up
 

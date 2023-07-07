@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -42,19 +42,6 @@ XFORM_ARGS="
 
 MAKE_ARGS+=" -e"
 
-MAKE_INSTALL_ARGS="
-    prefix=$PREFIX
-    includedir=$OPREFIX/include
-"
-
-MAKE_INSTALL_ARGS_32="
-    libdir=$OPREFIX/lib
-"
-
-MAKE_INSTALL_ARGS_64="
-    libdir=$OPREFIX/lib/amd64
-"
-
 pre_configure() {
     typeset arch=$1
 
@@ -68,6 +55,16 @@ pre_configure() {
 
     # no configure
     false
+}
+
+pre_install() {
+    typeset arch=$1
+
+    MAKE_INSTALL_ARGS="
+        prefix=$PREFIX
+        includedir=$OPREFIX/include
+        libdir=$OPREFIX/${LIBDIRS[$arch]}
+    "
 }
 
 init

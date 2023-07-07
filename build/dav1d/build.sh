@@ -33,8 +33,24 @@ TESTSUITE_SED='
     /^Full log written to/d
 '
 
+CFLAGS[aarch64]+=" -mno-outline-atomics"
+
 LDFLAGS[i386]+=" -lssp_ns"
-LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
+
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]="
+        --prefix=$PREFIX
+        --libdir=$PREFIX/${LIBDIRS[$arch]}
+    "
+
+    LDFLAGS[$arch]+=" -R$PREFIX/${LIBDIRS[$arch]}"
+
+    ! cross_arch $arch && return
+
+    CONFIGURE_CMD+=" --cross-file $SRCDIR/files/aarch64-gcc.txt"
+}
 
 init
 download_source $PROG $PROG $VER

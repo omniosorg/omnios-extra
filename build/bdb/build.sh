@@ -13,7 +13,7 @@
 # }}}
 
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -28,10 +28,10 @@ SKIP_LICENCES="Sleepycat"
 
 set_builddir db-$VER/build_unix
 
-forgo_isaexec
-
 OPREFIX=$PREFIX
 PREFIX+="/$PROG-$VER"
+
+forgo_isaexec
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -42,28 +42,23 @@ XFORM_ARGS="
 
 CONFIGURE_CMD="../dist/configure"
 CONFIGURE_OPTS="
-    --prefix=$PREFIX
     --includedir=$OPREFIX/include
     --enable-compat185
     --disable-static
 "
-CONFIGURE_OPTS[i386]="
-    --libdir=$OPREFIX/lib
-"
-CONFIGURE_OPTS[amd64]="
-    --libdir=$OPREFIX/lib/amd64
-"
 
-LDFLAGS[i386]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
 LDFLAGS[i386]+=" -lssp_ns"
-LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 
 export EXTLIBS=-lm
 
-save_function build64 _build64
-build64() {
-    export DLDFLAGS=${LDFLAGS[amd64]}
-    _build64
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]+=" --libdir=$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
+
+    export DLDFLAGS=${LDFLAGS[$arch]}
 }
 
 init

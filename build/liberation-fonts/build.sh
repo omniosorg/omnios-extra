@@ -26,8 +26,12 @@ DESC+="as usage of Times New Roman, Arial, Courier New."
 SKIP_LICENCES=SILv1.1
 set_builddir $PROG-ttf-$VER
 
-copy_fonts() {
-    dst=$DESTDIR$PREFIX/share/fonts/truetype/liberation
+pre_package() {
+    typeset arch=$1
+
+    dst=$DESTDIR
+    cross_arch $arch && dst+=".$arch"
+    dst+=$PREFIX/share/fonts/truetype/liberation
 
     logcmd mkdir -p $dst || logerr "--- mkdir failed"
 
@@ -40,7 +44,6 @@ init
 download_source $PROG $BUILDDIR
 patch_source
 prep_build
-copy_fonts
 make_package
 clean_up
 

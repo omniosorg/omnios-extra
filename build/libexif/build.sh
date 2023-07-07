@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -38,7 +38,11 @@ CONFIGURE_OPTS[i386]="
 CONFIGURE_OPTS[amd64]="
     --libdir=$OPREFIX/lib/amd64
 "
-[ $RELVER -ge 151037 ] && LDFLAGS[i386]+=" -lssp_ns"
+CONFIGURE_OPTS[aarch64]+="
+    --libdir=$OPREFIX/lib
+"
+
+LDFLAGS[i386]+=" -lssp_ns"
 
 init
 download_source $PROG $PROG $VER

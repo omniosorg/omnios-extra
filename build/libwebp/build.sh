@@ -51,15 +51,17 @@ CONFIGURE_OPTS="
     --sbindir=$PREFIX/sbin
     --enable-everything
 "
-CONFIGURE_OPTS[i386_WS]="
-    --libdir=$OPREFIX/lib
-    LDFLAGS=\"-L$OPREFIX/lib -Wl,-R$OPREFIX/lib\"
-"
-CONFIGURE_OPTS[amd64_WS]="
-    --libdir=$OPREFIX/lib/amd64
-    LDFLAGS=\"-L$OPREFIX/lib/amd64 -Wl,-R$OPREFIX/lib/amd64\"
-"
-CPPFLAGS+=" -I$OPREFIX/include"
+
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[${arch}_WS]="
+        --libdir=$OPREFIX/${LIBDIRS[$arch]}
+        LDFLAGS=\"-L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]} -Wl,-R$OPREFIX/${LIBDIRS[$arch]}\"
+    "
+
+    CPPFLAGS+=" -I${SYSROOT[$arch]}$OPREFIX/include"
+}
 
 init
 download_source $PROG $PROG $VER

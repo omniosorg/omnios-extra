@@ -21,13 +21,40 @@ ooce/file/tree
 ooce/library/libjpeg-turbo
 ooce/network/openldap -f libsandheaders
 ooce/library/freetype2
+ooce/fonts/liberation
+ooce/multimedia/x264
+ooce/multimedia/dav1d
+ooce/library/libid3tag
+ooce/library/libexif
+ooce/database/lmdb
+ooce/database/bdb
+ooce/database/postgresql-common
+ooce/database/postgresql-14 -f libsandheaders
+ooce/terminal/minicom
+ooce/text/hunspell
+ooce/compress/pbzip2
+ooce/compress/pigz
+ooce/print/cups
+###############################################################################
 .SYSROOT
 ooce/audio/flac
 ooce/library/libvorbis
 ooce/network/unbound -f libsandheaders
 ooce/network/openldap
+ooce/library/fontconfig
+ooce/library/libwebp
+ooce/database/postgresql-14
+ooce/network/nsd
+###############################################################################
 .SYSROOT
 ooce/network/unbound
 ooce/library/gnutls
+###############################################################################
 .SYSROOT
 ooce/security/gnupg
+ooce/multimedia/ffmpeg
+###############################################################################
+.SYSROOT
+ooce/multimedia/minidlna
+ooce/util/pass
+###############################################################################

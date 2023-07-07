@@ -1,0 +1,27 @@
+values-xpg6.o check should be sysroot aware
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -531,6 +531,7 @@ for opt do
+         --sysroot=*)
+             CFLAGS="$CFLAGS --sysroot=$optarg"
+             LDFLAGS="$LDFLAGS --sysroot=$optarg"
++            sysroot="$optarg"
+             ;;
+         --bit-depth=*)
+             bit_depth="$optarg"
+@@ -703,10 +704,10 @@ case $host_os in
+         SYS="SunOS"
+         define HAVE_MALLOC_H
+         libm="-lm"
+-        if cc_check "" /usr/lib/64/values-xpg6.o; then
+-            LDFLAGS="$LDFLAGS /usr/lib/64/values-xpg6.o"
++        if cc_check "" "$sysroot/usr/lib/64/values-xpg6.o"; then
++            LDFLAGS="$LDFLAGS $sysroot/usr/lib/64/values-xpg6.o"
+         else
+-            LDFLAGS="$LDFLAGS /usr/lib/values-xpg6.o"
++            LDFLAGS="$LDFLAGS $sysroot/usr/lib/values-xpg6.o"
+         fi
+         if test -x /usr/ucb/install ; then
+             INSTALL=/usr/ucb/install
