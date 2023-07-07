@@ -34,6 +34,7 @@ ooce/terminal/minicom
 ooce/text/hunspell
 ooce/compress/pbzip2
 ooce/compress/pigz
+ooce/print/cups
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

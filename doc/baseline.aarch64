@@ -31,6 +31,7 @@ extra.omnios ooce/multimedia/x264
 extra.omnios ooce/network/nsd
 extra.omnios ooce/network/openldap
 extra.omnios ooce/network/unbound
+extra.omnios ooce/print/cups
 extra.omnios ooce/security/gnupg
 extra.omnios ooce/system/htop
 extra.omnios ooce/terminal/minicom
