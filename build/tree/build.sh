@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=tree
-VER=2.1.0
+VER=2.1.1
 PKG=ooce/file/tree
 SUMMARY="File system tree viewer"
 DESC="The tree utility recursively displays the contents of \
