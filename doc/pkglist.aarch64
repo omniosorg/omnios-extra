@@ -35,6 +35,7 @@ ooce/text/hunspell
 ooce/compress/pbzip2
 ooce/compress/pigz
 ooce/print/cups
+ooce/library/pixman
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
