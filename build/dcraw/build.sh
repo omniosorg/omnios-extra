@@ -36,6 +36,12 @@ SKIP_LICENCES='JasPer'
 set_arch 64
 set_builddir $PROG
 
+pre_configure() {
+    typeset arch=$1
+
+    export CMAKE_LIBRARY_PATH=$PREFIX/${LIBDIRS[$arch]}
+}
+
 init
 prep_build
 
