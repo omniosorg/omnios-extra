@@ -22,7 +22,9 @@ PKG=ooce/library/libzip
 SUMMARY="libzip"
 DESC="A C library for reading, creating and modifying zip archives"
 
-test_relver '>=' 151047 && set_clangver
+# refrain from building this package with clang as it adds
+# nullability attributes to headers which cause issues when
+# being used with gcc
 
 BUILD_DEPENDS_IPS="
     ooce/developer/cmake
@@ -43,22 +45,24 @@ CONFIGURE_OPTS="
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_INSTALL_INCLUDEDIR=$OPREFIX/include
 "
-CONFIGURE_OPTS[i386]="
-    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib
-"
-CONFIGURE_OPTS[amd64]="
-    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/amd64
-    -DNettle_LIBRARY=$OPREFIX/lib/amd64/libnettle.so
-"
 
-LDFLAGS[i386]+=" -Wl,-R$OPREFIX/lib"
-LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/lib/amd64"
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]="
+        -DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[$arch]}
+    "
+
+    LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
+
+    export CMAKE_LIBRARY_PATH=$OPREFIX/${LIBDIRS[$arch]}
+}
 
 init
 download_source $PROG $PROG $VER
 prep_build cmake+ninja
 patch_source
-build -ctf
+build
 make_package
 clean_up
 
