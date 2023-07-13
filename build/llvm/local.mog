@@ -18,5 +18,8 @@
 <include mediated-binlink.mog>
 <include mediated-manlink.mog>
 
+link path=$(OPREFIX)/llvm target=$(PKGROOT) \
+    mediator=$(MEDIATOR) mediator-version=$(MEDIATOR_VERSION)
+
 license LICENSE.TXT license=Apache2
 
