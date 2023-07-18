@@ -23,7 +23,7 @@ SUMMARY="$ARCH sysroot"
 DESC="$SUMMARY for cross compilation"
 
 BUILD_DEPENDS_IPS="
-    ooce/developer/$ARCH-gcc10
+    ooce/developer/$ARCH-gcc$CROSSGCCVER
     ooce/developer/$ARCH-gnu-binutils
 "
 
@@ -59,14 +59,16 @@ build() {
     logcmd $MKDIR -p $DESTDIR/$PREFIX/bin || logerr "mkdir bin failed"
     logcmd $CP usr/src/tools/proto/root_i386-nd/opt/onbld/bin/amd64/ld \
         $DESTDIR/$PREFIX/bin/ || logerr "copying ld failed"
-    logcmd $MKDIR -p $DESTDIR/$PREFIX/lib/amd64 \
+    logcmd $MKDIR -p $DESTDIR/$PREFIX/${LIBDIRS[$BUILD_ARCH]} \
         || logerr "mkdir lib failed"
     logcmd $RSYNC -a \
         usr/src/tools/proto/root_i386-nd/opt/onbld/lib/i386/64/ \
-        $DESTDIR/$PREFIX/lib/amd64/ || logerr "copying libs failed"
+        $DESTDIR/$PREFIX/${LIBDIRS[$BUILD_ARCH]}/ \
+        || logerr "copying libs failed"
 
     # we move the library directory level relative to ld(1)
-    rpath="\$ORIGIN/../lib/amd64:/usr/gcc/7/lib/amd64"
+    typeset rpath="\$ORIGIN/../${LIBDIRS[$BUILD_ARCH]}"
+    rpath+=":/usr/gcc/$CROSSGCCVER/${LIBDIRS[$BUILD_ARCH]}"
     logcmd $ELFEDIT -e "dyn:value -s RUNPATH $rpath" $DESTDIR/$PREFIX/bin/ld
     logcmd $ELFEDIT -e "dyn:value -s RPATH $rpath" $DESTDIR/$PREFIX/bin/ld
 
