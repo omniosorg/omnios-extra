@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=apr-util
-VER=1.6.1
+VER=1.6.3
 PKG=ooce/library/apr-util
 SUMMARY="Utilities for the Apache Portable Runtime library"
 DESC="The Apache Portable Runtime is a library \
@@ -34,7 +34,7 @@ CONFIGURE_OPTS="
     --with-crypto
     --without-pgsql
     --with-gdbm
-    --with-ldap=ldap_r
+    --with-ldap=ldap
     --with-lber=lber
     --with-ldap-include=$PREFIX/include
 "
@@ -51,6 +51,28 @@ CONFIGURE_OPTS[amd64]+="
 
 LDFLAGS[i386]+=" -L$PREFIX/lib -R$PREFIX/lib"
 LDFLAGS[amd64]+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
+
+post_install() {
+    typeset arch=$1
+
+    pushd $DESTDIR/$PREFIX >/dev/null
+
+    # Unfortunately, libtool messes up the runtime library path
+    # in each apr-util-1 library. Fixing this up post-install
+    # for now, there may be a better way to do it.
+    typeset rpath="$PREFIX/${LIBDIRS[$arch]}/apr-util-1"
+    rpath+=":$PREFIX/${LIBDIRS[$arch]}"
+    rpath+=":/usr/gcc/$GCCVER/${LIBDIRS[$arch]}"
+
+    for f in ${LIBDIRS[$arch]}/apr-util-1/*.so; do
+        [ -f $f -a ! -h $f ] || continue
+        logmsg "--- fixing runpath in $f"
+        logcmd $ELFEDIT -e "dyn:value -s RUNPATH $rpath" $f
+        logcmd $ELFEDIT -e "dyn:value -s RPATH $rpath" $f
+    done
+
+    popd >/dev/null
+}
 
 init
 download_source apr $PROG $VER
