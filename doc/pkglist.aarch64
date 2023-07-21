@@ -36,6 +36,7 @@ ooce/compress/pbzip2
 ooce/compress/pigz
 ooce/print/cups
 ooce/library/pixman
+ooce/library/libuv
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

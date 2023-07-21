@@ -17,6 +17,7 @@ extra.omnios ooce/library/libid3tag
 extra.omnios ooce/library/libjpeg-turbo
 extra.omnios ooce/library/libogg
 extra.omnios ooce/library/libpng
+extra.omnios ooce/library/libuv
 extra.omnios ooce/library/libvorbis
 extra.omnios ooce/library/libwebp
 extra.omnios ooce/library/nettle

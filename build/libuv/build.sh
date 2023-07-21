@@ -40,7 +40,7 @@ download_source $PROG v$VER
 patch_source
 prep_build
 run_inbuild "./autogen.sh"
-build -ctf
+build
 run_testsuite check
 make_package
 clean_up
