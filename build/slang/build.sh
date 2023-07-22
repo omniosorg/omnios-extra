@@ -23,10 +23,11 @@ SUMMARY="S-Lang"
 DESC="A multi-platform programmer's library designed to allow a "
 DESC+="developer to create robust multi-platform software"
 
-forgo_isaexec
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
+
+forgo_isaexec
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -40,18 +41,27 @@ NO_SONAME_EXPECTED=1
 TESTSUITE_SED="1,/Running tests/d"
 
 CONFIGURE_OPTS="
-    --prefix=$PREFIX
     --includedir=$OPREFIX/include
     --sysconfdir=/etc/$PREFIX
 "
-CONFIGURE_OPTS[i386]="
+CONFIGURE_OPTS[i386]+="
     --libdir=$OPREFIX/lib
 "
-CONFIGURE_OPTS[amd64]="
+CONFIGURE_OPTS[amd64]+="
     --libdir=$OPREFIX/lib/amd64
+"
+CONFIGURE_OPTS[aarch64]+="
+    --libdir=$OPREFIX/lib
 "
 
 LDFLAGS+=" $SSPFLAGS"
+
+pre_build() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER
