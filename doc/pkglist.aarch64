@@ -37,6 +37,7 @@ ooce/compress/pigz
 ooce/print/cups
 ooce/library/pixman
 ooce/library/libuv
+ooce/library/json-c
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
