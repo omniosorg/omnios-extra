@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -24,6 +24,8 @@ DESC="Low-level software library for pixel manipulation, providing features "
 DESC+="such as image compositing and trapezoid rasterization"
 
 CONFIGURE_OPTS="--disable-static"
+
+CFLAGS[aarch64]+=" -mtls-dialect=trad"
 
 init
 download_source $PROG $PROG $VER

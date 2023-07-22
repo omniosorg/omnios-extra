@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -35,12 +35,15 @@ CONFIGURE_OPTS[i386]=
 CONFIGURE_OPTS[amd64]="
     -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib/amd64
 "
+CONFIGURE_OPTS[aarch64]=
+
+CFLAGS[aarch64]+=" -mno-outline-atomics -mtls-dialect=trad"
 
 init
 download_source $PROG $PROG $VER
 prep_build cmake+ninja
 patch_source
-build -ctf
+build
 make_package
 clean_up
 

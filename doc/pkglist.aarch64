@@ -35,6 +35,10 @@ ooce/text/hunspell
 ooce/compress/pbzip2
 ooce/compress/pigz
 ooce/print/cups
+ooce/library/pixman
+ooce/library/libuv
+ooce/library/json-c
+ooce/library/onig
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
@@ -45,10 +49,12 @@ ooce/library/fontconfig
 ooce/library/libwebp
 ooce/database/postgresql-14
 ooce/network/nsd
+ooce/library/slang
 ###############################################################################
 .SYSROOT
 ooce/network/unbound
 ooce/library/gnutls
+ooce/application/mc
 ###############################################################################
 .SYSROOT
 ooce/security/gnupg
