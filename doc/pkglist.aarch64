@@ -54,6 +54,7 @@ ooce/library/slang
 .SYSROOT
 ooce/network/unbound
 ooce/library/gnutls
+ooce/application/mc
 ###############################################################################
 .SYSROOT
 ooce/security/gnupg

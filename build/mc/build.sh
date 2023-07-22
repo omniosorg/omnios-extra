@@ -45,6 +45,7 @@ CONFIGURE_OPTS="
     --sysconfdir=/etc/$PREFIX
 "
 LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
+LDFLAGS[aarch64]+=" -R$OPREFIX/lib"
 
 init
 download_source $PROG $PROG $VER
