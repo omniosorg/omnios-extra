@@ -17,8 +17,7 @@
 . ../../lib/build.sh
 
 PROG=emacs
-VER=28.2
-DASHREV=1
+VER=29.1
 PKG=ooce/editor/emacs
 SUMMARY="Emacs editor"
 DESC="An extensible, customizable, free/libre text editor - and more."
