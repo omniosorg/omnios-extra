@@ -32,7 +32,7 @@ XFORM_ARGS+="
     -DSERVICE=$PKG
 "
 set_arch 64
-set_gover 1.20
+set_gover
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
