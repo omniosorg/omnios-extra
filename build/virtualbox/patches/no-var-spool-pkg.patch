@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/src/VBox/Additions/solaris/Installer/makepackage.sh a/src/VBox/Additions/solaris/Installer/makepackage.sh
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Additions/solaris/Installer/makepackage.sh a/src/VBox/Additions/solaris/Installer/makepackage.sh
 --- a~/src/VBox/Additions/solaris/Installer/makepackage.sh	1970-01-01 00:00:00
 +++ a/src/VBox/Additions/solaris/Installer/makepackage.sh	1970-01-01 00:00:00
 @@ -59,7 +59,7 @@ VBOX_AWK=/usr/bin/awk
@@ -18,7 +18,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/Additions/solaris/Installer/makepacka
 +rm -rf "$VBOX_SOL_PKG_DEV"
  exit $?
  
-diff -wpruN '--exclude=*.orig' a~/src/VBox/Installer/solaris/makepackage.sh a/src/VBox/Installer/solaris/makepackage.sh
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Installer/solaris/makepackage.sh a/src/VBox/Installer/solaris/makepackage.sh
 --- a~/src/VBox/Installer/solaris/makepackage.sh	1970-01-01 00:00:00
 +++ a/src/VBox/Installer/solaris/makepackage.sh	1970-01-01 00:00:00
 @@ -272,13 +272,15 @@ package_spec_fixup_content()

@@ -2,7 +2,7 @@ Add CTF data to virtualbox objects to aid debugging. Also use the same gcc
 flags as for the main illumos build to disable optimisations that hinder
 problem resolution.
 
-diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3PLAIN.kmk
+diff -wpruN --no-dereference '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3PLAIN.kmk
 --- a~/kBuild/tools/GCC3PLAIN.kmk	1970-01-01 00:00:00
 +++ a/kBuild/tools/GCC3PLAIN.kmk	1970-01-01 00:00:00
 @@ -70,18 +70,37 @@ endif
@@ -122,7 +122,7 @@ diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GCC3PLAIN.kmk a/kBuild/tools/GCC3
 +	$(QUIET)$(TOOL_STRIP) -x $(out)
  endef
  
-diff -wpruN '--exclude=*.orig' a~/kBuild/tools/GXX3PLAIN.kmk a/kBuild/tools/GXX3PLAIN.kmk
+diff -wpruN --no-dereference '--exclude=*.orig' a~/kBuild/tools/GXX3PLAIN.kmk a/kBuild/tools/GXX3PLAIN.kmk
 --- a~/kBuild/tools/GXX3PLAIN.kmk	1970-01-01 00:00:00
 +++ a/kBuild/tools/GXX3PLAIN.kmk	1970-01-01 00:00:00
 @@ -71,17 +71,35 @@ endif
