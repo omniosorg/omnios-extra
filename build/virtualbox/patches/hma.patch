@@ -1,7 +1,7 @@
-diff -wpruN '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/SUPDrv.cpp a/src/VBox/HostDrivers/Support/SUPDrv.cpp
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/SUPDrv.cpp a/src/VBox/HostDrivers/Support/SUPDrv.cpp
 --- a~/src/VBox/HostDrivers/Support/SUPDrv.cpp	1970-01-01 00:00:00
 +++ a/src/VBox/HostDrivers/Support/SUPDrv.cpp	1970-01-01 00:00:00
-@@ -4261,7 +4261,7 @@ SUPR0_EXPORT_SYMBOL(SUPR0ChangeCR4);
+@@ -4248,7 +4248,7 @@ SUPR0_EXPORT_SYMBOL(SUPR0ChangeCR4);
   */
  SUPR0DECL(int) SUPR0EnableVTx(bool fEnable)
  {
@@ -10,7 +10,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/SUPDrv.cpp a/src/
      return supdrvOSEnableVTx(fEnable);
  #else
      RT_NOREF1(fEnable);
-@@ -4280,7 +4280,7 @@ SUPR0_EXPORT_SYMBOL(SUPR0EnableVTx);
+@@ -4267,7 +4267,7 @@ SUPR0_EXPORT_SYMBOL(SUPR0EnableVTx);
   */
  SUPR0DECL(bool) SUPR0SuspendVTxOnCpu(void)
  {
@@ -19,7 +19,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/SUPDrv.cpp a/src/
      return supdrvOSSuspendVTxOnCpu();
  #else
      return false;
-@@ -4298,7 +4298,7 @@ SUPR0_EXPORT_SYMBOL(SUPR0SuspendVTxOnCpu
+@@ -4285,7 +4285,7 @@ SUPR0_EXPORT_SYMBOL(SUPR0SuspendVTxOnCpu
   */
  SUPR0DECL(void) SUPR0ResumeVTxOnCpu(bool fSuspended)
  {
@@ -28,7 +28,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/SUPDrv.cpp a/src/
      supdrvOSResumeVTxOnCpu(fSuspended);
  #else
      RT_NOREF1(fSuspended);
-diff -wpruN '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/solaris/SUPDrv-solaris.c a/src/VBox/HostDrivers/Support/solaris/SUPDrv-solaris.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/solaris/SUPDrv-solaris.c a/src/VBox/HostDrivers/Support/solaris/SUPDrv-solaris.c
 --- a~/src/VBox/HostDrivers/Support/solaris/SUPDrv-solaris.c	1970-01-01 00:00:00
 +++ a/src/VBox/HostDrivers/Support/solaris/SUPDrv-solaris.c	1970-01-01 00:00:00
 @@ -57,6 +57,7 @@

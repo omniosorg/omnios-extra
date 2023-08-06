@@ -7,7 +7,7 @@ The fix for
 changed the signature of installctx() to take an additional argument which
 needs to be set to NULL for previous behaviour.
 
-diff -wpruN '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-solaris.c a/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-solaris.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-solaris.c a/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-solaris.c
 --- a~/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-solaris.c	1970-01-01 00:00:00
 +++ a/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-solaris.c	1970-01-01 00:00:00
 @@ -78,6 +78,7 @@ bool                            g_frtSol
@@ -42,7 +42,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-
  
          /*
           * Mandatory: map_addr() hooks.
-diff -wpruN '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/the-solaris-kernel.h a/src/VBox/Runtime/r0drv/solaris/the-solaris-kernel.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/the-solaris-kernel.h a/src/VBox/Runtime/r0drv/solaris/the-solaris-kernel.h
 --- a~/src/VBox/Runtime/r0drv/solaris/the-solaris-kernel.h	1970-01-01 00:00:00
 +++ a/src/VBox/Runtime/r0drv/solaris/the-solaris-kernel.h	1970-01-01 00:00:00
 @@ -173,6 +173,15 @@ typedef struct RTR0FNSOLTHREADCTX
@@ -84,7 +84,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/the-solaris-ker
  
  /*
   * Workaround for older Solaris versions which called map_addr()/choose_addr()/
-diff -wpruN '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/threadctxhooks-r0drv-solaris.c a/src/VBox/Runtime/r0drv/solaris/threadctxhooks-r0drv-solaris.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/threadctxhooks-r0drv-solaris.c a/src/VBox/Runtime/r0drv/solaris/threadctxhooks-r0drv-solaris.c
 --- a~/src/VBox/Runtime/r0drv/solaris/threadctxhooks-r0drv-solaris.c	1970-01-01 00:00:00
 +++ a/src/VBox/Runtime/r0drv/solaris/threadctxhooks-r0drv-solaris.c	1970-01-01 00:00:00
 @@ -192,7 +192,19 @@ RTDECL(int) RTThreadCtxHookCreate(PRTTHR

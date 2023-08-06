@@ -2,7 +2,7 @@
 Split the SUNWvbox.pkg rule into two so that files can be installed into
 the default layout without building the package file.
 
-diff -wpruN '--exclude=*.orig' a~/src/VBox/Installer/solaris/Makefile.kmk a/src/VBox/Installer/solaris/Makefile.kmk
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Installer/solaris/Makefile.kmk a/src/VBox/Installer/solaris/Makefile.kmk
 --- a~/src/VBox/Installer/solaris/Makefile.kmk	1970-01-01 00:00:00
 +++ a/src/VBox/Installer/solaris/Makefile.kmk	1970-01-01 00:00:00
 @@ -545,7 +545,6 @@ $(VBOX_PATH_SI_SCRATCH)/dist-copy.ts: \

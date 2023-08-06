@@ -9,7 +9,7 @@ virtualbox needs to use the new ctx management functions.
 13917 was integrated to r151041 so the previous behaviour code must be retained
 for prior releases.
 
-diff -wpruN '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-solaris.c a/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-solaris.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-solaris.c a/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-solaris.c
 --- a~/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-solaris.c	1970-01-01 00:00:00
 +++ a/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-solaris.c	1970-01-01 00:00:00
 @@ -223,6 +223,7 @@ DECLHIDDEN(int) rtR0InitNative(void)
@@ -28,7 +28,7 @@ diff -wpruN '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/initterm-r0drv-
  
          /*
           * Mandatory: map_addr() hooks.
-diff -wpruN '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/threadctxhooks-r0drv-solaris.c a/src/VBox/Runtime/r0drv/solaris/threadctxhooks-r0drv-solaris.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Runtime/r0drv/solaris/threadctxhooks-r0drv-solaris.c a/src/VBox/Runtime/r0drv/solaris/threadctxhooks-r0drv-solaris.c
 --- a~/src/VBox/Runtime/r0drv/solaris/threadctxhooks-r0drv-solaris.c	1970-01-01 00:00:00
 +++ a/src/VBox/Runtime/r0drv/solaris/threadctxhooks-r0drv-solaris.c	1970-01-01 00:00:00
 @@ -163,6 +163,14 @@ static void rtThreadCtxHookSolFree(void

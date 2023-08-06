@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/main/listen.c a/src/main/listen.c
+--- a~/src/main/listen.c	1970-01-01 00:00:00
++++ a/src/main/listen.c	1970-01-01 00:00:00
+@@ -55,7 +55,7 @@ RCSID("$Id: ee73a571aedb81939bb72ac36b65
+ #ifdef WITH_TLS
+ #include <netinet/tcp.h>
+ 
+-#  ifdef __APPLE__
++#  if defined(__APPLE__) || defined(__illumos__)
+ #    if !defined(SOL_TCP) && defined(IPPROTO_TCP)
+ #      define SOL_TCP IPPROTO_TCP
+ #    endif

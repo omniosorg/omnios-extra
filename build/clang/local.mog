@@ -25,7 +25,7 @@
 <include mediated-binlink.mog>
 <include mediated-manlink.mog>
 
-link path=$(OPREFIX)/bin/$(PROG)-$(VERSION)++ target=../$(PKGROOT)/bin/$(PROG)++
+link path=$(OPREFIX)/bin/$(PROG)++-$(VERSION) target=../$(PKGROOT)/bin/$(PROG)++
 
 # don't mediate version specific binaries
 <transform path=.*/s?bin/[^/]+-$(VERSION)$ -> delete mediator .>
