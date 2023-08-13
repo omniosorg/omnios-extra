@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/src/password-store.sh a/src/password-store.sh
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/password-store.sh a/src/password-store.sh
 --- a~/src/password-store.sh	1970-01-01 00:00:00
 +++ a/src/password-store.sh	1970-01-01 00:00:00
 @@ -492,7 +492,7 @@ cmd_edit() {

@@ -1,6 +1,6 @@
 $NetBSD: patch-aa,v 1.2 2013/04/11 11:45:44 adam Exp $
 
-diff -wpruN '--exclude=*.orig' a~/getopt.c a/getopt.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/getopt.c a/getopt.c
 --- a~/getopt.c	1970-01-01 00:00:00
 +++ a/getopt.c	1970-01-01 00:00:00
 @@ -61,6 +61,7 @@
