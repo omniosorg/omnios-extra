@@ -142,7 +142,7 @@ else
 fi
 BRAICH_REPO=https://pkg.omnios.org/bloody/braich
 
-ARCHIVE_TYPES="tar.xz tar.bz2 tar.gz tgz tar zip"
+ARCHIVE_TYPES="tar.zst tar.xz tar.bz2 tar.lz tar.gz tgz tar zip"
 
 # Default prefix for packages (may be overridden)
 PREFIX=/opt/ooce
