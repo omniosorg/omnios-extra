@@ -17,15 +17,15 @@
 . ../../lib/build.sh
 
 PROG=vaultwarden
-VER=1.28.0
+VER=1.29.1
 PKG=ooce/application/vaultwarden
 SUMMARY="Bitwarden compatible server"
 DESC="Unofficial Bitwarden compatible server written in Rust, formerly known "
 DESC+="as bitwarden_rs"
 
 DANIGARCIA=$GITHUB/dani-garcia
-WEBVAULTVER=2023.3.0b
-WEBVAULTSHA256=ac3d27cbbb0dabb09cba0029c0b4d13b4f866fa3ae4eaa2dfd1f3880800ce19c
+WEBVAULTVER=2023.7.1
+WEBVAULTSHA256=0d7ea02eb13cc7b29c875af7ecc787c0a4990c22df13a024f0589e6faa3703d4
 
 set_arch 64
 
@@ -62,8 +62,8 @@ copy_sample_config() {
     local dest_confdir=$DESTDIR/${relative_conffile%/*}
 
     logmsg "-- copying sample config"
-    logcmd mkdir -p "$dest_confdir" || logerr "mkdir failed"
-    logcmd cp $TMPDIR/$BUILDDIR/.env.template $DESTDIR/$relative_conffile \
+    logcmd $MKDIR -p "$dest_confdir" || logerr "mkdir failed"
+    logcmd $CP $TMPDIR/$BUILDDIR/.env.template $DESTDIR/$relative_conffile \
         || logerr "copying configs failed"
 }
 
@@ -87,8 +87,8 @@ get_webvault() {
         download_source "v$WEBVAULTVER" bw_web_v$WEBVAULTVER
 
     logmsg "-- copying $prog"
-    logcmd mkdir -p $DESTDIR/$relative_webvaultdir || logerr "mkdir failed"
-    logcmd rsync -a $TMPDIR/$prog/ $DESTDIR/$relative_webvaultdir/ \
+    logcmd $MKDIR -p $DESTDIR/$relative_webvaultdir || logerr "mkdir failed"
+    logcmd $RSYNC -a --delete $TMPDIR/$prog/ $DESTDIR/$relative_webvaultdir/ \
         || logerr "copying $prog failed"
 
 }
