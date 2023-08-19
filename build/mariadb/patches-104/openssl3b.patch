@@ -148,7 +148,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/mysys_ssl/my_md5.cc a/mysys_s
 diff -wpruN --no-dereference '--exclude=*.orig' a~/storage/innobase/handler/ha_innodb.cc a/storage/innobase/handler/ha_innodb.cc
 --- a~/storage/innobase/handler/ha_innodb.cc	1970-01-01 00:00:00
 +++ a/storage/innobase/handler/ha_innodb.cc	1970-01-01 00:00:00
-@@ -8777,7 +8777,7 @@ wsrep_calc_row_hash(
+@@ -8804,7 +8804,7 @@ wsrep_calc_row_hash(
  	ulint		len;
  	const byte*	ptr;
  
@@ -157,7 +157,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/storage/innobase/handler/ha_i
  	my_md5_init(ctx);
  
  	for (uint i = 0; i < table->s->fields; i++) {
-@@ -8835,6 +8835,7 @@ wsrep_calc_row_hash(
+@@ -8862,6 +8862,7 @@ wsrep_calc_row_hash(
  	}
  
  	my_md5_result(ctx, digest);
