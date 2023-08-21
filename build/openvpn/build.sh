@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=openvpn
-VER=2.6.5
+VER=2.6.6
 PKG=ooce/network/openvpn
 LZOVER=2.10
 SUMMARY="OpenVPN"
@@ -27,7 +27,7 @@ DESC+="or for networking Cloud data centers"
 
 # PLUGIN VERSIONS
 # source from https://github.com/skvadrik/re2c (required to build auth-ldap)
-RE2CVER=2.0.3
+RE2CVER=3.1
 AUTHLDAPVER=2.0.4
 
 SKIP_LICENCES=Various
@@ -102,6 +102,8 @@ XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG -DVER=$VER
 "
+
+export MAKE
 
 init
 prep_build
