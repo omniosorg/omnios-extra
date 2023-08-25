@@ -18,7 +18,7 @@
 
 PROG=pigz
 PKG=ooce/compress/pigz
-VER=2.7
+VER=2.8
 SUMMARY=$PROG
 DESC="Parallel implementation of gzip for modern "
 DESC+="multi-processor, multi-core machines"
