@@ -1,4 +1,4 @@
-From 57e63b2b5a5da471438f6f1dfa9d4aee53e4a1c0 Mon Sep 17 00:00:00 2001
+From d1c9b712d33b67a8ccce221d20c8af73046e2a1a Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:53:22 +0000
 Subject: Do not pass --dynamic-list to linker

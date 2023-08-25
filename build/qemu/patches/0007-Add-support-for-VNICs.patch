@@ -1,4 +1,4 @@
-From 8c721a64516e43d9829700cbe590fa070e523082 Mon Sep 17 00:00:00 2001
+From ec77c5f76eaff191e1f1c1db6f6a660d180f0a64 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:51:42 +0000
 Subject: Add support for VNICs
@@ -17,10 +17,10 @@ https://github.com/TritonDataCenter/illumos-kvm-cmd
  create mode 100644 net/vnic.c
 
 diff --git a/meson.build b/meson.build
-index c44d05a13f..eb7693dae5 100644
+index 98e68ef0b1..1a7536a64a 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -404,7 +404,8 @@ elif targetos == 'darwin'
+@@ -631,7 +631,8 @@ elif targetos == 'darwin'
  elif targetos == 'sunos'
    socket = [cc.find_library('socket'),
              cc.find_library('nsl'),
@@ -56,14 +56,14 @@ index 4c8a469a50..61ff327dc6 100644
                  has_host_dev = 1;
                  break;
 diff --git a/net/meson.build b/net/meson.build
-index 87afca3e93..0fca6edf63 100644
+index bdf564a57b..a15d21d359 100644
 --- a/net/meson.build
 +++ b/net/meson.build
-@@ -37,6 +37,7 @@ endif
- softmmu_ss.add(when: 'CONFIG_LINUX', if_true: files('tap-linux.c'))
- softmmu_ss.add(when: 'CONFIG_BSD', if_true: files('tap-bsd.c'))
- softmmu_ss.add(when: 'CONFIG_SOLARIS', if_true: files('tap-solaris.c'))
-+softmmu_ss.add(when: 'CONFIG_SOLARIS', if_true: files('vnic.c'))
+@@ -44,6 +44,7 @@ endif
+ system_ss.add(when: 'CONFIG_LINUX', if_true: files('tap-linux.c'))
+ system_ss.add(when: 'CONFIG_BSD', if_true: files('tap-bsd.c'))
+ system_ss.add(when: 'CONFIG_SOLARIS', if_true: files('tap-solaris.c'))
++system_ss.add(when: 'CONFIG_SOLARIS', if_true: files('vnic.c'))
  tap_posix = ['tap.c']
  if not config_host.has_key('CONFIG_LINUX') and not config_host.has_key('CONFIG_BSD') and not config_host.has_key('CONFIG_SOLARIS')
    tap_posix += 'tap-stub.c'
@@ -360,10 +360,10 @@ index 0000000000..481661b583
 +	return (0);
 +}
 diff --git a/qapi/net.json b/qapi/net.json
-index d6eb30008b..e662a92c5b 100644
+index 313c8a606e..5c02de4f61 100644
 --- a/qapi/net.json
 +++ b/qapi/net.json
-@@ -360,6 +360,17 @@
+@@ -354,6 +354,17 @@
      '*group': 'str',
      '*mode':  'uint16' } }
  
@@ -381,7 +381,7 @@ index d6eb30008b..e662a92c5b 100644
  ##
  # @NetdevBridgeOptions:
  #
-@@ -653,7 +664,7 @@
+@@ -648,7 +659,7 @@
  { 'enum': 'NetClientDriver',
    'data': [ 'none', 'nic', 'user', 'tap', 'l2tpv3', 'socket', 'stream',
              'dgram', 'vde', 'bridge', 'hubport', 'netmap', 'vhost-user',
@@ -390,7 +390,7 @@ index d6eb30008b..e662a92c5b 100644
              { 'name': 'vmnet-host', 'if': 'CONFIG_VMNET' },
              { 'name': 'vmnet-shared', 'if': 'CONFIG_VMNET' },
              { 'name': 'vmnet-bridged', 'if': 'CONFIG_VMNET' }] }
-@@ -688,6 +699,7 @@
+@@ -676,6 +687,7 @@
      'stream':   'NetdevStreamOptions',
      'dgram':    'NetdevDgramOptions',
      'vde':      'NetdevVdeOptions',
