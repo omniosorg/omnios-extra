@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=xcb-proto
-VER=1.15.2
+VER=1.16.0
 PKG=ooce/x11/header/xcb-protocols
 SUMMARY="xcb-proto"
 DESC="X protocol C-language Binding (XCB): Protocol descriptions"
