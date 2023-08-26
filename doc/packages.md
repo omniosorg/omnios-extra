@@ -98,7 +98,7 @@
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/icu4c		| 72.1		| https://github.com/unicode-org/icu/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/jansson		| 2.14		| https://github.com/akheron/jansson/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/library/json-c		| 0.16		| https://github.com/json-c/json-c/tags https://github.com/json-c/json-c/wiki | [omniosorg](https://github.com/omniosorg)
+| ooce/library/json-c		| 0.17		| https://github.com/json-c/json-c/tags https://github.com/json-c/json-c/wiki | [omniosorg](https://github.com/omniosorg)
 | ooce/library/ldns		| 1.8.3		| https://nlnetlabs.nl/downloads/ldns/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libarchive	| 3.6.2		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libde265		| 1.0.12	| https://github.com/strukturag/libde265/releases | [omniosorg](https://github.com/omniosorg)
