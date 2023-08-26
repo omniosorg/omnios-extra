@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libarchive
-VER=3.6.2
+VER=3.7.1
 PKG=ooce/library/libarchive
 SUMMARY="libarchive"
 DESC="Multi-format archive and compression library"
@@ -37,6 +37,8 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
+TESTSUITE_SED="/libtool/d"
+
 CONFIGURE_OPTS+="
     --disable-static
 "
@@ -55,6 +57,7 @@ download_source $PROG $PROG $VER
 prep_build
 patch_source
 build
+run_testsuite check
 make_package
 clean_up
 
