@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=libxcb
-VER=1.15
+VER=1.16
 PSTUBVER=0.1
 PKG=ooce/x11/library/libxcb
 SUMMARY="libxcb"
