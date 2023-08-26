@@ -144,7 +144,7 @@
 | ooce/network/bind-918		| 9.18.18	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/bwm-ng		| 0.6.3		| https://github.com/vgropp/bwm-ng/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/cyrus-imapd	| 3.8.0		| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/network/dnscrypt-proxy	| 2.1.4		| https://github.com/DNSCrypt/dnscrypt-proxy/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/network/dnscrypt-proxy	| 2.1.5		| https://github.com/DNSCrypt/dnscrypt-proxy/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/dnsmasq		| 2.89		| https://thekelleys.org.uk/dnsmasq/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/fping		| 5.1		| https://github.com/schweikert/fping/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.4.4		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
