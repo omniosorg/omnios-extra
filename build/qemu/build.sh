@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=qemu
-VER=8.0.4
+VER=8.1.0
 PKG=ooce/emulator/qemu
 SUMMARY="$PROG"
 DESC="A generic and open source machine emulator and virtualizer"
@@ -74,6 +74,9 @@ PATH+=":$TMPDIR/sphinx/bin"
 #########################################################################
 
 note -n "-- Building $PROG"
+
+# POSIX sigwait(2) plus strnlen visibility
+set_standard POSIX+EXTENSIONS CFLAGS
 
 CONFIGURE_OPTS="
     --localstatedir=/var$PREFIX

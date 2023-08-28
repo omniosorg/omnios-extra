@@ -17,13 +17,14 @@
 . ../../lib/build.sh
 
 PROG=haproxy
-VER=2.7.6
+VER=2.8.2
 PKG=ooce/server/haproxy
 SUMMARY="HAProxy - fast and reliable http reverse proxy and load balancer"
 DESC="A TCP/HTTP reverse proxy which is particularly suited for high "
 DESC+="availability environments."
 
 set_arch 64
+test_relver '>=' 151047 && set_clangver
 
 BUILD_DEPENDS_IPS="library/security/openssl library/pcre2"
 

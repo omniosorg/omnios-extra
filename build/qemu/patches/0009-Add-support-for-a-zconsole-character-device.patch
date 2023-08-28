@@ -1,20 +1,20 @@
-From cf33200aa325c51b3ef5a1158996e75b8c44759b Mon Sep 17 00:00:00 2001
+From 79a451eaabf0be8097fe463e98ad091f90440fd2 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 22 May 2023 20:31:38 +0000
 Subject: Add support for a zconsole character device
 
 ---
- chardev/char-zconsole.c | 75 +++++++++++++++++++++++++++++++++++++++++
+ chardev/char-zconsole.c | 74 +++++++++++++++++++++++++++++++++++++++++
  chardev/meson.build     |  2 ++
  include/chardev/char.h  |  1 +
  include/qemu/osdep.h    |  4 +++
  qapi/char.json          |  2 ++
- 5 files changed, 84 insertions(+)
+ 5 files changed, 83 insertions(+)
  create mode 100644 chardev/char-zconsole.c
 
 diff --git a/chardev/char-zconsole.c b/chardev/char-zconsole.c
 new file mode 100644
-index 0000000000..0abc53718b
+index 0000000000..86d0df36e2
 --- /dev/null
 +++ b/chardev/char-zconsole.c
 @@ -0,0 +1,74 @@
@@ -93,7 +93,7 @@ index 0000000000..0abc53718b
 +
 +#endif
 diff --git a/chardev/meson.build b/chardev/meson.build
-index 7a3ba777ab..e1e9d3aed2 100644
+index fb630b429e..7823456a7d 100644
 --- a/chardev/meson.build
 +++ b/chardev/meson.build
 @@ -26,6 +26,8 @@ chardev_ss.add(when: 'CONFIG_WIN32', if_true: files(
@@ -104,7 +104,7 @@ index 7a3ba777ab..e1e9d3aed2 100644
 +
  chardev_ss = chardev_ss.apply(config_host, strict: false)
  
- softmmu_ss.add(files(
+ system_ss.add(files(
 diff --git a/include/chardev/char.h b/include/chardev/char.h
 index 44cd82e405..7563bdc9b4 100644
 --- a/include/chardev/char.h
@@ -118,10 +118,10 @@ index 44cd82e405..7563bdc9b4 100644
  #define TYPE_CHARDEV_UDP "chardev-udp"
  
 diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 9eff0be95b..d5de9cc833 100644
+index 21ef8f1699..0496d84f54 100644
 --- a/include/qemu/osdep.h
 +++ b/include/qemu/osdep.h
-@@ -487,6 +487,10 @@ void qemu_anon_ram_free(void *ptr, size_t size);
+@@ -484,6 +484,10 @@ void qemu_anon_ram_free(void *ptr, size_t size);
  #define HAVE_CHARDEV_SERIAL 1
  #endif
  
@@ -133,10 +133,10 @@ index 9eff0be95b..d5de9cc833 100644
  #define SIGIO SIGPOLL
  #endif
 diff --git a/qapi/char.json b/qapi/char.json
-index 923dc5056d..f5fb31b889 100644
+index 52aaff25eb..59e5bf3667 100644
 --- a/qapi/char.json
 +++ b/qapi/char.json
-@@ -444,6 +444,7 @@
+@@ -469,6 +469,7 @@
  { 'enum': 'ChardevBackendKind',
    'data': [ 'file',
              'serial',
@@ -144,7 +144,7 @@ index 923dc5056d..f5fb31b889 100644
              'parallel',
              'pipe',
              'socket',
-@@ -586,6 +587,7 @@
+@@ -611,6 +612,7 @@
    'discriminator': 'type',
    'data': { 'file': 'ChardevFileWrapper',
              'serial': 'ChardevHostdevWrapper',

@@ -17,10 +17,12 @@
 . ../../lib/build.sh
 
 PROG=json-c
-VER=0.16
+VER=0.17
 PKG=ooce/library/json-c
 SUMMARY=$PROG
 DESC="$PROG - A JSON implementation in C"
+
+test_relver '>=' 151047 && set_clangver
 
 BUILD_DEPENDS_IPS="
     ooce/developer/cmake
