@@ -27,7 +27,7 @@ DESC="Disk usage analyzer with an ncurses interface"
 set_arch 64
 set_clangver # zig requires CC to be set
 
-BUILD_DEPENDS_IPS="ooce/developer/zig"
+BUILD_DEPENDS_IPS="ooce/developer/zig-09"
 
 # No configure
 pre_configure() { false; }

@@ -1,0 +1,42 @@
+diff --git a/lib/std/c/solaris.zig b/lib/std/c/solaris.zig
+index 58d02416c..b7549e444 100644
+--- a/lib/std/c/solaris.zig
++++ b/lib/std/c/solaris.zig
+@@ -1069,7 +1069,21 @@ pub const mcontext_t = extern struct {
+ };
+ 
+ pub const REG = struct {
++    pub const R15 = 0;
++    pub const R14 = 1;
++    pub const R13 = 2;
++    pub const R12 = 3;
++    pub const R11 = 4;
++    pub const R10 = 5;
++    pub const R9 = 6;
++    pub const R8 = 7;
++    pub const RDI = 8;
++    pub const RSI = 9;
+     pub const RBP = 10;
++    pub const RBX = 11;
++    pub const RDX = 12;
++    pub const RCX = 13;
++    pub const RAX = 14;
+     pub const RIP = 17;
+     pub const RSP = 20;
+ };
+diff --git a/lib/std/dwarf/abi.zig b/lib/std/dwarf/abi.zig
+index 6fbd1fba4..3525b9cb4 100644
+--- a/lib/std/dwarf/abi.zig
++++ b/lib/std/dwarf/abi.zig
+@@ -247,7 +247,10 @@ pub fn regBytes(
+                 14 => mem.asBytes(&ucontext_ptr.mcontext.gregs[os.REG.R14]),
+                 15 => mem.asBytes(&ucontext_ptr.mcontext.gregs[os.REG.R15]),
+                 16 => mem.asBytes(&ucontext_ptr.mcontext.gregs[os.REG.RIP]),
+-                17...32 => |i| mem.asBytes(&ucontext_ptr.mcontext.fpregs.xmm[i - 17]),
++                17...32 => |i| if (builtin.os.tag == .solaris)
++                    mem.asBytes(&ucontext_ptr.mcontext.fpregs.chip_state.xmm[i - 17])
++                else
++                    mem.asBytes(&ucontext_ptr.mcontext.fpregs.xmm[i - 17]),
+                 else => error.InvalidRegister,
+             },
+             .freebsd => switch (reg_number) {

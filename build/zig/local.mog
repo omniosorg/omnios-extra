@@ -13,6 +13,6 @@
 
 license LICENSE license=MIT
 
-<include binlink.mog>
-<include manlink.mog>
+<include mediated-binlink.mog>
+<include mediated-manlink.mog>
 

@@ -1,0 +1,28 @@
+diff --git a/lib/std/c/solaris.zig b/lib/std/c/solaris.zig
+index b7549e444..3ec8c3aa9 100644
+--- a/lib/std/c/solaris.zig
++++ b/lib/std/c/solaris.zig
+@@ -498,6 +498,7 @@ pub const NI = struct {
+     pub const MAXSERV = 32;
+ };
+ 
++pub const NAME_MAX = 255;
+ pub const PATH_MAX = 1024;
+ pub const IOV_MAX = 1024;
+ 
+diff --git a/lib/std/fs.zig b/lib/std/fs.zig
+index e5c2d67d6..2b5392762 100644
+--- a/lib/std/fs.zig
++++ b/lib/std/fs.zig
+@@ -59,10 +59,9 @@ pub const MAX_PATH_BYTES = switch (builtin.os.tag) {
+ /// (depending on the platform) this assumption may not hold for every configuration.
+ /// The byte count does not include a null sentinel byte.
+ pub const MAX_NAME_BYTES = switch (builtin.os.tag) {
+-    .linux, .macos, .ios, .freebsd, .openbsd, .netbsd, .dragonfly => os.NAME_MAX,
++    .linux, .macos, .ios, .freebsd, .openbsd, .netbsd, .dragonfly, .solaris => os.NAME_MAX,
+     // Haiku's NAME_MAX includes the null terminator, so subtract one.
+     .haiku => os.NAME_MAX - 1,
+-    .solaris => os.system.MAXNAMLEN,
+     // Each UTF-16LE character may be expanded to 3 UTF-8 bytes.
+     // If it would require 4 UTF-8 bytes, then there would be a surrogate
+     // pair in the UTF-16LE, and we (over)account 3 bytes for it that way.
