@@ -30,8 +30,11 @@ test_relver '>=' 151041 && set_clangver
 # x264 contains BMI instructions even when built on an older CPU
 BMI_EXPECTED=1
 
+# we don't want x264 to have a (circular) runtime dependency on ffmpeg
 CONFIGURE_OPTS="
     --enable-shared
+    --disable-swscale
+    --disable-lavf
 "
 CONFIGURE_OPTS[i386]+="
     --enable-pic
@@ -56,9 +59,6 @@ CFLAGS+=" -O3"
 
 LDFLAGS[i386]+=" -lssp_ns"
 LDFLAGS[amd64]+=" -Wl,-R$PREFIX/lib/amd64"
-
-# we don't want x264 to have a (circular) runtime dependency on ffmpeg
-PKG_CONFIG_PATH=()
 
 init
 download_source $PROG $PROG-stable $VER
