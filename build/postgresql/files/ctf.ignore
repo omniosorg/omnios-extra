@@ -1,3 +1,6 @@
+blake3_dispatch.c
+blake3_portable.c
+blake3.c
 dynloader.c
 regcomp.c
 regerror.c
