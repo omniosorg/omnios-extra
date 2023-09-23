@@ -1,0 +1,22 @@
+diff --git a/src/libc_installation.zig b/src/libc_installation.zig
+index 2d42a03a3..a01bc4f33 100644
+--- a/src/libc_installation.zig
++++ b/src/libc_installation.zig
+@@ -213,11 +213,16 @@ pub const LibCInstallation = struct {
+             try self.findNativeIncludeDirPosix(args);
+             try self.findNativeCrtBeginDirHaiku(args);
+             self.crt_dir = try args.allocator.dupeZ(u8, "/system/develop/lib");
++        } else if (builtin.target.os.tag == .solaris) {
++            // There is only one libc in illumos, and its headers and
++            // libraries are always in the same spot.
++            self.include_dir = try args.allocator.dupeZ(u8, "/usr/include");
++            self.sys_include_dir = try args.allocator.dupeZ(u8, "/usr/include");
++            self.crt_dir = try args.allocator.dupeZ(u8, "/usr/lib/64");
+         } else if (std.process.can_spawn) {
+             try self.findNativeIncludeDirPosix(args);
+             switch (builtin.target.os.tag) {
+                 .freebsd, .netbsd, .openbsd, .dragonfly => self.crt_dir = try args.allocator.dupeZ(u8, "/usr/lib"),
+-                .solaris => self.crt_dir = try args.allocator.dupeZ(u8, "/usr/lib/64"),
+                 .linux => try self.findNativeCrtDirPosix(args),
+                 else => {},
+             }

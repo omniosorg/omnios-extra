@@ -25,7 +25,7 @@ depend fmri=ooce/developer/llvm-14 type=require
 depend fmri=ooce/developer/clang-13 type=require
 depend fmri=ooce/developer/subversion type=require
 depend fmri=ooce/developer/yasm type=require
-depend fmri=ooce/developer/zig type=require
+depend fmri=ooce/developer/zig-09 type=require
 depend fmri=ooce/editor/emacs type=require
 depend fmri=ooce/fonts/liberation type=require
 depend fmri=ooce/library/apr type=require

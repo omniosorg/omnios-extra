@@ -102,7 +102,9 @@ extra.omnios ooce/developer/rust
 extra.omnios ooce/developer/subversion
 extra.omnios ooce/developer/valgrind
 extra.omnios ooce/developer/yasm
-extra.omnios ooce/developer/zig
+extra.omnios ooce/developer/zig r
+extra.omnios ooce/developer/zig-09
+extra.omnios ooce/developer/zig-011
 extra.omnios ooce/driver/fuse
 extra.omnios ooce/editor/emacs
 extra.omnios ooce/editor/helix

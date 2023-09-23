@@ -1,0 +1,16 @@
+diff --git a/build.zig b/build.zig
+index 87da0e695..e1bdc45ca 100644
+--- a/build.zig
++++ b/build.zig
+@@ -197,6 +197,11 @@ pub fn build(b: *std.Build) !void {
+     exe.sanitize_thread = sanitize_thread;
+     exe.entitlements = entitlements;
+ 
++    //
++    // We prefer to have the frame pointer in illumos.
++    //
++    exe.omit_frame_pointer = false;
++
+     exe.build_id = b.option(
+         std.Build.Step.Compile.BuildId,
+         "build-id",

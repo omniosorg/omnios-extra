@@ -1,0 +1,28 @@
+diff --git a/lib/std/crypto/Certificate/Bundle.zig b/lib/std/crypto/Certificate/Bundle.zig
+index 3e28d12d0..ad08f9ad1 100644
+--- a/lib/std/crypto/Certificate/Bundle.zig
++++ b/lib/std/crypto/Certificate/Bundle.zig
+@@ -64,6 +64,7 @@ pub fn rescan(cb: *Bundle, gpa: Allocator) RescanError!void {
+         .netbsd => return rescanBSD(cb, gpa, "/etc/openssl/certs/ca-certificates.crt"),
+         .dragonfly => return rescanBSD(cb, gpa, "/usr/local/etc/ssl/cert.pem"),
+         .windows => return rescanWindows(cb, gpa),
++        .solaris => return rescanSolaris(cb, gpa, "/etc/ssl/cacert.pem"),
+         else => {},
+     }
+ }
+@@ -151,6 +152,15 @@ fn rescanWindows(cb: *Bundle, gpa: Allocator) RescanWindowsError!void {
+     cb.bytes.shrinkAndFree(gpa, cb.bytes.items.len);
+ }
+ 
++const RescanSolarisError = AddCertsFromFilePathError;
++
++fn rescanSolaris(cb: *Bundle, gpa: Allocator, cert_file_path: []const u8) RescanSolarisError!void {
++    cb.bytes.clearRetainingCapacity();
++    cb.map.clearRetainingCapacity();
++    try addCertsFromFilePathAbsolute(cb, gpa, cert_file_path);
++    cb.bytes.shrinkAndFree(gpa, cb.bytes.items.len);
++}
++
+ pub const AddCertsFromDirPathError = fs.File.OpenError || AddCertsFromDirError;
+ 
+ pub fn addCertsFromDirPath(
