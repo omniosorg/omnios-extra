@@ -62,7 +62,6 @@ depend fmri=ooce/library/postgresql-12 type=require
 depend fmri=ooce/library/postgresql-13 type=require
 depend fmri=ooce/library/postgresql-14 type=require
 depend fmri=ooce/library/postgresql-15 type=require
-depend fmri=ooce/library/postgresql-16 type=require
 depend fmri=ooce/library/security/libsasl2 type=require
 depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require
@@ -96,6 +95,10 @@ depend fmri=ooce/developer/clang-14 type=conditional \
 # Added llvm/clang 15 from r151043 onwards
 depend fmri=ooce/developer/llvm-15 type=conditional \
     predicate=release/name@0.5.11-151043
+
+# Added postgresql 16 from r151044 onwards
+depend fmri=ooce/library/postgresql-16 type=conditional \
+    predicate=release/name@0.5.11-151044
 
 # clang 15 is the default clang compiler from r151045 onwards
 depend fmri=ooce/developer/clang-15 type=conditional \

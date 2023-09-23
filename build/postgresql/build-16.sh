@@ -23,6 +23,8 @@ VER=16.0
 SUMMARY="PostgreSQL 16"
 DESC="The World's Most Advanced Open Source Relational Database"
 
+min_rel 151044
+
 SKIP_LICENCES=postgresql
 
 # We want to populate the clang-related environment variables
