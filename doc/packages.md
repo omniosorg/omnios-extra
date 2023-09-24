@@ -169,7 +169,7 @@
 | ooce/network/wireguard-tools	| 1.0.20210914	| https://www.wireguard.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/znc		| 1.8.2		| https://github.com/znc/znc/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/ooceapps			| github-latest	| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/print/cups		| 2.4.6		| https://github.com/OpenPrinting/cups/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/print/cups		| 2.4.7		| https://github.com/OpenPrinting/cups/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/expect		| 5.45.4	| https://sourceforge.net/projects/expect/files/Expect/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/gnu-smalltalk	| 3.2.5		| https://ftp.gnu.org/gnu/smalltalk/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/groovy-30	| 3.0.19	| https://groovy.apache.org/download.html | [omniosorg](https://github.com/omniosorg)
