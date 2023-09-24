@@ -6,6 +6,7 @@ extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
 extra.omnios ooce/database/postgresql-14
 extra.omnios ooce/database/postgresql-common
+extra.omnios ooce/developer/ninja
 extra.omnios ooce/file/tree
 extra.omnios ooce/fonts/liberation
 extra.omnios ooce/library/fontconfig
@@ -43,4 +44,5 @@ extra.omnios ooce/system/htop
 extra.omnios ooce/terminal/minicom
 extra.omnios ooce/text/datamash
 extra.omnios ooce/text/hunspell
+extra.omnios ooce/util/jq
 extra.omnios ooce/util/pass

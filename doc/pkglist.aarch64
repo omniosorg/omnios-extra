@@ -39,6 +39,7 @@ ooce/library/pixman
 ooce/library/libuv
 ooce/library/json-c
 ooce/library/onig
+ooce/developer/ninja
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
@@ -50,6 +51,7 @@ ooce/library/libwebp
 ooce/database/postgresql-14
 ooce/network/nsd
 ooce/library/slang
+ooce/util/jq
 ###############################################################################
 .SYSROOT
 ooce/network/unbound

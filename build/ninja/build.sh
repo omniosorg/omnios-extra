@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -25,15 +25,20 @@ DESC="A small build system with a focus on speed"
 set_arch 64
 test_relver '>=' 151043 && set_clangver
 
-CONFIGURE_OPTS[amd64]="
-    -DCMAKE_INSTALL_PREFIX=$PREFIX
-    -DCMAKE_BUILD_TYPE=Release
-"
+CONFIGURE_OPTS="-DCMAKE_BUILD_TYPE=Release"
 
 TESTSUITE_MAKE="./ninja_test"
 MAKE_TESTSUITE_ARGS=
 
 TESTSUITE_SED='s/\/[0-9][0-9]*\]/\/...]/'
+
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]="
+        -DCMAKE_INSTALL_PREFIX=$PREFIX
+    "
+}
 
 init
 download_source $PROG "v$VER"

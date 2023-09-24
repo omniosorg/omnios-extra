@@ -1,9 +1,9 @@
 s_addr is defined in netinet/in.h
 
-diff -wpruN '--exclude=*.orig' a~/src/main.c a/src/main.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/main.c a/src/main.c
 --- a~/src/main.c	1970-01-01 00:00:00
 +++ a/src/main.c	1970-01-01 00:00:00
-@@ -185,8 +185,8 @@ static void term_socket_connect_tcp(void
+@@ -186,8 +186,8 @@ static void term_socket_connect_tcp(void
    if (!s)
      return;
  
@@ -14,7 +14,7 @@ diff -wpruN '--exclude=*.orig' a~/src/main.c a/src/main.c
    if (!s_port) {
      fprintf(stderr, "No port given\n");
      return;
-@@ -194,11 +194,11 @@ static void term_socket_connect_tcp(void
+@@ -195,11 +195,11 @@ static void term_socket_connect_tcp(void
    *s_port = 0;
    s_port++;
  

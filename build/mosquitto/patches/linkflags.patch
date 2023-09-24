@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/src/CMakeLists.txt a/src/CMakeLists.txt
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/CMakeLists.txt a/src/CMakeLists.txt
 --- a~/src/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/src/CMakeLists.txt	1970-01-01 00:00:00
 @@ -213,9 +213,9 @@ endif (WIN32)

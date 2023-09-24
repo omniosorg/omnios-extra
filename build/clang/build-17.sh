@@ -12,23 +12,26 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=clang
-PKG=ooce/developer/clang-13
-VER=13.0.1
+PKG=ooce/developer/clang-17
+VER=17.0.1
 SUMMARY="C language family frontend for LLVM"
 DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
 DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
 
+min_rel 151047
+
 set_arch 64
-test_relver '>=' 151041 && set_clangver
+set_clangver
 set_builddir llvm-project-$VER.src/$PROG
 
 SKIP_RTIME_CHECK=1
+NO_SONAME_EXPECTED=1
 
 MAJVER=${VER%%.*}
 MINVER=${VER%.*}
@@ -41,6 +44,11 @@ RUN_DEPENDS_IPS="=ooce/developer/llvm-$MAJVER@$MINVER"
 
 OPREFIX=$PREFIX
 PREFIX+=/llvm-$MAJVER
+
+PKGDIFFPATH="${PREFIX#/}/lib/$PROG"
+PKGDIFF_HELPER="
+    s:$PKGDIFFPATH/[0-9][0-9.]*:$PKGDIFFPATH/VERSION:
+"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -64,7 +72,9 @@ CONFIGURE_OPTS[amd64_WS]="
     -DCLANG_DEFAULT_RTLIB=libgcc
     -DCLANG_DEFAULT_CXX_STDLIB=libstdc++
     -DLLVM_DIR=\"$PREFIX/lib/cmake/llvm\"
+    -DLLVM_INCLUDE_TESTS=OFF
 "
+LDFLAGS+=" -lm"
 # we want to end up with '$ORIGIN/../lib' as runpath and not with
 # '$PREFIX/lib:$ORIGIN/../lib'; yet we need to find libLLVM during build time
 export LD_LIBRARY_PATH="$PREFIX/lib"
