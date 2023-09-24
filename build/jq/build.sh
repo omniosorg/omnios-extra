@@ -41,13 +41,13 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
-    --with-oniguruma=$OPREFIX
 "
 
 pre_configure() {
     typeset arch=$1
 
-    LDFLAGS[$arch]="-L$OPREFIX/${LIBDIRS[$arch]}"
+    CONFIGURE_OPTS[$arch]+=" --with-oniguruma=${SYSROOT[$arch]}$OPREFIX"
+    LDFLAGS[$arch]="-L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
     LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
 }
 

@@ -43,4 +43,5 @@ extra.omnios ooce/system/htop
 extra.omnios ooce/terminal/minicom
 extra.omnios ooce/text/datamash
 extra.omnios ooce/text/hunspell
+extra.omnios ooce/util/jq
 extra.omnios ooce/util/pass
