@@ -4,7 +4,7 @@ our clang only links libgcc_s for c++ by default
 diff -wpruN --no-dereference '--exclude=*.orig' a~/cmake.deps/cmake/BuildLuajit.cmake a/cmake.deps/cmake/BuildLuajit.cmake
 --- a~/cmake.deps/cmake/BuildLuajit.cmake	1970-01-01 00:00:00
 +++ a/cmake.deps/cmake/BuildLuajit.cmake	1970-01-01 00:00:00
-@@ -42,6 +42,8 @@ else()
+@@ -35,6 +35,8 @@ else()
  endif()
  if(CMAKE_SYSTEM_NAME MATCHES "OpenBSD")
    set(AMD64_ABI "LDFLAGS=-lpthread -lc++abi")
