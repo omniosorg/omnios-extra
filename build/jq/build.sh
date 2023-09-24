@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=jq
 PKG=ooce/util/jq
-VER=1.6
+VER=1.7
 SUMMARY="$PROG - JSON query tool"
 DESC="$PROG is a lightweight and flexible command-line JSON processor"
 
@@ -28,6 +28,9 @@ PREFIX+=/$PROG
 BUILD_DEPENDS_IPS="ooce/library/onig"
 
 set_arch 64
+test_relver '>=' 151047 && set_clangver
+
+export MAKE
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -41,7 +44,12 @@ CONFIGURE_OPTS="
     --with-oniguruma=$OPREFIX
 "
 
-LDFLAGS="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]="-L$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER
