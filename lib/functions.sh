@@ -583,6 +583,22 @@ set_rubyver() {
 }
 
 #############################################################################
+# zig version
+#############################################################################
+
+set_zigver() {
+    ZIGVER="${1:-$DEFAULT_ZIG_VER}"
+    logmsg "-- Setting zig version to $ZIGVER"
+    ZIGPATH="/opt/ooce/zig-$ZIGVER"
+    PATH="$ZIGPATH/bin:$PATH"
+    export PATH
+
+    [ -x "$ZIGPATH/bin/zig" ] || logerr "Unknown zig version $ZIGVER"
+
+    BUILD_DEPENDS_IPS+=" ooce/developer/zig-${ZIGVER//./}"
+}
+
+#############################################################################
 # Default configure options.
 #############################################################################
 
