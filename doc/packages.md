@@ -151,7 +151,7 @@
 | ooce/network/fping		| 5.1		| https://github.com/schweikert/fping/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.4.4		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosh		| 1.4.0		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/network/mosquitto	| 2.0.15	| https://mosquitto.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/mosquitto	| 2.0.17	| https://mosquitto.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mrtg		| 2.17.10	| https://oss.oetiker.ch/mrtg/pub/?M=D | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mtr		| 0.95		| https://github.com/traviscross/mtr/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nicstat		| 1.95		| https://sourceforge.net/projects/nicstat/files/ | [omniosorg](https://github.com/omniosorg)
