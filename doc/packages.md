@@ -204,7 +204,7 @@
 | ooce/system/znapzend		| 0.21.2	| https://github.com/oetiker/znapzend/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/zrepl		| 0.6.0		| https://github.com/zrepl/zrepl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/terminal/byobu		| 5.133		| https://launchpad.net/byobu/+download https://launchpad.net/byobu/ | [omniosorg](https://github.com/omniosorg)
-| ooce/terminal/minicom		| 2.8		| https://salsa.debian.org/api/v4/projects/minicom-team%2Fminicom/repository/tags/ https://salsa.debian.org/minicom-team/minicom/ | [omniosorg](https://github.com/omniosorg)
+| ooce/terminal/minicom		| 2.9		| https://salsa.debian.org/api/v4/projects/minicom-team%2Fminicom/repository/tags/ https://salsa.debian.org/minicom-team/minicom/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 10.2.0	| https://pypi.org/project/asciidoc | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciinema		| 2.3.0		| https://github.com/asciinema/asciinema/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/datamash		| 1.8		| https://ftp.gnu.org/gnu/datamash/ | [omniosorg](https://github.com/omniosorg)
