@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=tiff
-VER=4.5.1
+VER=4.6.0
 PKG=ooce/library/tiff
 SUMMARY="LibTIFF - TIFF Library and Utilities"
 DESC="Support for the Tag Image File Format (TIFF), a widely used format "
@@ -29,6 +29,8 @@ PVERS="4.4.0"
 
 forgo_isaexec
 test_relver '>=' 151045 && set_clangver
+
+export MAKE
 
 SKIP_LICENCES=BSD-like
 
