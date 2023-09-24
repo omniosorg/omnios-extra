@@ -39,6 +39,7 @@ ooce/library/pixman
 ooce/library/libuv
 ooce/library/json-c
 ooce/library/onig
+ooce/developer/ninja
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
