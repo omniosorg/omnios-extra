@@ -18,7 +18,7 @@
 
 PROG=tailscale
 PKG=ooce/network/tailscale
-VER=1.44.2
+VER=1.50.0
 SUMMARY="Tailscale"
 DESC="The easiest, most secure way to use WireGuard and 2FA."
 
@@ -32,7 +32,7 @@ XFORM_ARGS+="
     -DSERVICE=$PKG
 "
 set_arch 64
-set_gover
+set_gover 121
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
