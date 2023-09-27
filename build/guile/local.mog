@@ -21,7 +21,8 @@ license COPYING license=GPLv3
 <transform path=.*/share/info -> drop>
 
 # pre-compiled files must be newer than their sources
-<transform file path=$(OPREFIX)/lib/.+\.scm$ -> set timestamp $(TS_SRC)>
+<transform file path=$(PREFIX)/share/$(PROG)/.+\.scm$ \
+    -> set timestamp $(TS_SRC)>
 <transform file path=$(OPREFIX)/lib/.+\.go$ -> set timestamp $(TS_OBJ)>
 
 <include binlink.mog>
