@@ -57,6 +57,7 @@ ooce/util/jq
 ooce/network/unbound
 ooce/library/gnutls
 ooce/application/mc
+ooce/library/cairo
 ###############################################################################
 .SYSROOT
 ooce/security/gnupg
