@@ -164,7 +164,7 @@
 | ooce/network/rclone		| 1.64.0	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/sic		| 1.3		| https://tools.suckless.org/sic/ | [r7st](https://github.com/r7st)
 | ooce/network/smtp/postfix	| 3.8.2		| https://high5.nl/mirrors/postfix-release/index.html | [omniosorg](https://github.com/omniosorg)
-| ooce/network/tailscale	| 1.44.2	| https://www.tailscale.com/ | [nshalman](https://github.com/nshalman)
+| ooce/network/tailscale	| 1.50.0	| https://www.tailscale.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/tcpdump		| 4.99.3	| https://www.tcpdump.org/release/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/unbound		| 1.18.0	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/wireguard-go	| 0.0.20220316	| https://www.wireguard.com/ | [nshalman](https://github.com/nshalman)
