@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -52,9 +52,14 @@ CONFIGURE_OPTS[amd64]="
     --bindir=$PREFIX/bin
     --libdir=$OPREFIX/lib/amd64
 "
+CONFIGURE_OPTS[aarch64]+="
+    --bindir=$PREFIX/bin
+    --libdir=$OPREFIX/lib
+"
 
 LDFLAGS[i386]+=" -R$OPREFIX/lib"
 LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
+LDFLAGS[aarch64]+=" -R$OPREFIX/lib"
 
 init
 download_source $PROG $PROG $VER

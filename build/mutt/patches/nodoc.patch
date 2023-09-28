@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/doc/mutt.man a/doc/mutt.man
+diff -wpruN --no-dereference '--exclude=*.orig' a~/doc/mutt.man a/doc/mutt.man
 --- a~/doc/mutt.man	1970-01-01 00:00:00
 +++ a/doc/mutt.man	1970-01-01 00:00:00
 @@ -86,9 +86,6 @@ OpenPGP, and a threaded sorting mode.
