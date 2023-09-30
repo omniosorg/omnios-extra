@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=mysql_fdw
 PKG=ooce/database/postgresql-XX/mysql_fdw
-VER=2.9.0
+VER=2.9.1
 SUMMARY="MySQL PostgreSQL XX foreign data wrapper"
 DESC="Allow PostgreSQL XX to access data in a MySQL database"
 
