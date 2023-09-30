@@ -68,6 +68,8 @@ CONFIGURE_OPTS="
     --enable-md
 "
 
+LDFLAGS[amd64]+=" -R$OPREFIX/${LIBDIRS[amd64]}"
+
 init
 download_source $PROG httpd $VER
 patch_source
