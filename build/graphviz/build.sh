@@ -41,6 +41,9 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
+# groff 1.23.0 has issues building the docs which we don't even package
+export GROFF=$USRBIN/true
+
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --disable-static
