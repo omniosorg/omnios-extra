@@ -18,7 +18,7 @@
 
 PROG=citus
 PKG=ooce/database/postgresql-XX/citus
-VER=11.2.0
+VER=12.1.0
 SUMMARY="Citus PostgreSQL XX extension"
 DESC="Transforms PostgreSQL XX into a distributed database"
 
@@ -34,6 +34,8 @@ download_source $PROG v$VER
 patch_source
 
 for v in $PGVERSIONS; do
+    # citus 12 is not compatible with postgres 13
+    ((v <= 13)) && continue
     PREFIX=$OPREFIX/pgsql-$v
 
     # Make sure the right pg_config is used.
