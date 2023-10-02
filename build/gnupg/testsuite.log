@@ -23,6 +23,13 @@ PASS: t-rmd160
 PASS: t-keydb
 PASS: t-keydb-get-keyblock
 PASS: t-stutter
+PASS: ./../tests/cms/samplekeys/ov-user.p12
+PASS: ./../tests/cms/samplekeys/ov-server.p12
+PASS: ./../tests/cms/samplekeys/opensc-test.p12
+PASS: ./../tests/cms/samplekeys/t5793-openssl.pfx
+PASS: ./../tests/cms/samplekeys/t5793-test.pfx
+PASS: t-minip12
+1 test passed
 PASS: t-protect
 1 test passed
 PASS: t-http-basic
@@ -104,3 +111,5 @@ PASS: tests/migrations/from-classic.scm
 PASS: tests/migrations/extended-pkf.scm 
 PASS: tests/migrations/issue2276.scm 
 3 tests run, 3 succeeded, 0 failed, 0 failed expectedly, 0 succeeded unexpectedly, 0 skipped. 
+SKIP: Environment variable 'XTEST_GPGME_SRCDIR' not set.  Please point it to a recent GPGME source tree to run the GPGME test suite. 
+0 tests run, 0 succeeded, 0 failed, 0 failed expectedly, 0 succeeded unexpectedly, 0 skipped. 
