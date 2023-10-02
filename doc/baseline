@@ -105,8 +105,8 @@ extra.omnios ooce/developer/subversion
 extra.omnios ooce/developer/valgrind
 extra.omnios ooce/developer/yasm
 extra.omnios ooce/developer/zig r
-extra.omnios ooce/developer/zig-09
 extra.omnios ooce/developer/zig-011
+extra.omnios ooce/developer/zig-09
 extra.omnios ooce/driver/fuse
 extra.omnios ooce/editor/emacs
 extra.omnios ooce/editor/helix
@@ -175,6 +175,7 @@ extra.omnios ooce/library/tiff
 extra.omnios ooce/library/unbound
 extra.omnios ooce/library/unistring
 extra.omnios ooce/multimedia/dav1d
+extra.omnios ooce/multimedia/dcraw
 extra.omnios ooce/multimedia/exif
 extra.omnios ooce/multimedia/ffmpeg
 extra.omnios ooce/multimedia/minidlna
