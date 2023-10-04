@@ -37,7 +37,10 @@ set_patchdir patches-$MAJVER
 # Using the = prefix to require the specific matching version of llvm
 BUILD_DEPENDS_IPS="=ooce/developer/llvm-$MAJVER@$VER"
 
-RUN_DEPENDS_IPS="=ooce/developer/llvm-$MAJVER@$MINVER"
+RUN_DEPENDS_IPS="
+    =ooce/developer/llvm-$MAJVER@$MINVER
+    developer/gcc$GCCVER
+"
 
 OPREFIX=$PREFIX
 PREFIX+=/llvm-$MAJVER
