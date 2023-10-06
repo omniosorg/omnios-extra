@@ -30,7 +30,15 @@ SKIP_LICENCES=postgresql
 # We want to populate the clang-related environment variables
 # and set PATH to point to the correct llvm/clang version for
 # the postgres JIT code, but we want to build with gcc.
-set_clangver
+if ((DEFAULT_CLANG_VER > 15)); then
+    # We need version 15 as beginning with version 16 the LLVMBuildLoad
+    # symbol is removed and postgresql references that symbol. When
+    # postgresql support the so called opaque pointers API we can switch
+    # to a newer version of clang again.
+    set_clangver 15
+else
+    set_clangver
+fi
 BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
 
 MAJVER=${VER%.*}            # M.m
