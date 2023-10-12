@@ -1,0 +1,142 @@
+From 34183a015512b36db0569a76ab14909da7fa5430 Mon Sep 17 00:00:00 2001
+From: Philip Homburg <philip@nlnetlabs.nl>
+Date: Thu, 7 Sep 2023 15:35:32 +0200
+Subject: [PATCH] Fix #928 (1.18 doesn't start on macOS/SunOS)
+
+---
+ services/listen_dnsport.c |  4 ++++
+ util/fptr_wlist.c         |  2 ++
+ util/netevent.c           | 14 +++++---------
+ 3 files changed, 11 insertions(+), 9 deletions(-)
+
+diff --git a/services/listen_dnsport.c b/services/listen_dnsport.c
+index 60f9b41e5..259347a36 100644
+--- a/services/listen_dnsport.c
++++ b/services/listen_dnsport.c
+@@ -1498,9 +1498,13 @@ listen_create(struct comm_base* base, struct listen_port* ports,
+ 			}
+ 		} else if(ports->ftype == listen_type_udpancil ||
+ 				  ports->ftype == listen_type_udpancil_dnscrypt) {
++#if defined(AF_INET6) && defined(IPV6_PKTINFO) && defined(HAVE_RECVMSG)
+ 			cp = comm_point_create_udp_ancil(base, ports->fd,
+ 				front->udp_buff, ports->pp2_enabled, cb,
+ 				cb_arg, ports->socket);
++#else
++			log_warn("This system does not support UDP ancilliary data.");
++#endif
+ 		}
+ 		if(!cp) {
+ 			log_err("can't create commpoint");
+diff --git a/util/fptr_wlist.c b/util/fptr_wlist.c
+index 3b88da235..43d38dc37 100644
+--- a/util/fptr_wlist.c
++++ b/util/fptr_wlist.c
+@@ -168,7 +168,9 @@ int
+ fptr_whitelist_event(void (*fptr)(int, short, void *))
+ {
+ 	if(fptr == &comm_point_udp_callback) return 1;
++#if defined(AF_INET6) && defined(IPV6_PKTINFO) && defined(HAVE_RECVMSG)
+ 	else if(fptr == &comm_point_udp_ancil_callback) return 1;
++#endif
+ 	else if(fptr == &comm_point_tcp_accept_callback) return 1;
+ 	else if(fptr == &comm_point_tcp_handle_callback) return 1;
+ 	else if(fptr == &comm_timer_callback) return 1;
+diff --git a/util/netevent.c b/util/netevent.c
+index 204e4883c..9f4a6e6c3 100644
+--- a/util/netevent.c
++++ b/util/netevent.c
+@@ -850,10 +850,10 @@ static int consume_pp2_header(struct sldns_buffer* buf, struct comm_reply* rep,
+ 	return 1;
+ }
+ 
++#if defined(AF_INET6) && defined(IPV6_PKTINFO) && defined(HAVE_RECVMSG)
+ void
+ comm_point_udp_ancil_callback(int fd, short event, void* arg)
+ {
+-#if defined(AF_INET6) && defined(IPV6_PKTINFO) && defined(HAVE_RECVMSG)
+ 	struct comm_reply rep;
+ 	struct msghdr msg;
+ 	struct iovec iov[1];
+@@ -972,14 +972,8 @@ comm_point_udp_ancil_callback(int fd, short event, void* arg)
+ 		if(!rep.c || rep.c->fd == -1) /* commpoint closed */
+ 			break;
+ 	}
+-#else
+-	(void)fd;
+-	(void)event;
+-	(void)arg;
+-	fatal_exit("recvmsg: No support for IPV6_PKTINFO; IP_PKTINFO or IP_RECVDSTADDR. "
+-		"Please disable interface-automatic");
+-#endif /* AF_INET6 && IPV6_PKTINFO && HAVE_RECVMSG */
+ }
++#endif /* AF_INET6 && IPV6_PKTINFO && HAVE_RECVMSG */
+ 
+ void
+ comm_point_udp_callback(int fd, short event, void* arg)
+@@ -3860,7 +3854,7 @@ comm_point_create_udp(struct comm_base *base, int fd, sldns_buffer* buffer,
+ 	evbits = UB_EV_READ | UB_EV_PERSIST;
+ 	/* ub_event stuff */
+ 	c->ev->ev = ub_event_new(base->eb->base, c->fd, evbits,
+-#ifdef USE_WINSOCK
++#if defined(USE_WINSOCK) || !(defined(AF_INET6) && defined(IPV6_PKTINFO) && defined(HAVE_RECVMSG))
+ 		comm_point_udp_callback, c);
+ #else
+ 		comm_point_udp_ancil_callback, c);
+@@ -3879,6 +3873,7 @@ comm_point_create_udp(struct comm_base *base, int fd, sldns_buffer* buffer,
+ 	return c;
+ }
+ 
++#if defined(AF_INET6) && defined(IPV6_PKTINFO) && defined(HAVE_RECVMSG)
+ struct comm_point*
+ comm_point_create_udp_ancil(struct comm_base *base, int fd,
+ 	sldns_buffer* buffer, int pp2_enabled,
+@@ -3941,6 +3936,7 @@ comm_point_create_udp_ancil(struct comm_base *base, int fd,
+ 	c->event_added = 1;
+ 	return c;
+ }
++#endif
+ 
+ static struct comm_point*
+ comm_point_create_tcp_handler(struct comm_base *base,
+From 1c8f0e0fc5056e95fed87206ef6f81aed4d209d1 Mon Sep 17 00:00:00 2001
+From: Philip Homburg <philip@nlnetlabs.nl>
+Date: Thu, 7 Sep 2023 16:23:11 +0200
+Subject: [PATCH] Avoid calling comm_point_udp_ancil_callback from
+ comm_point_create_udp
+
+---
+ services/listen_dnsport.c | 4 +++-
+ util/netevent.c           | 4 ----
+ 2 files changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/services/listen_dnsport.c b/services/listen_dnsport.c
+index 259347a36..753550978 100644
+--- a/services/listen_dnsport.c
++++ b/services/listen_dnsport.c
+@@ -1327,7 +1327,9 @@ ports_create_if(const char* ifname, int do_auto, int do_udp, int do_tcp,
+ 			log_warn("socket timestamping is not available");
+ 		}
+ 		if(!port_insert(list, s, is_dnscrypt
+-			?listen_type_udp_dnscrypt:listen_type_udp,
++			?listen_type_udp_dnscrypt :
++			(sock_queue_timeout ?
++				listen_type_udpancil:listen_type_udp),
+ 			is_pp2, ub_sock)) {
+ 			sock_close(s);
+ 			if(ub_sock->addr)
+diff --git a/util/netevent.c b/util/netevent.c
+index 9f4a6e6c3..2c03cfd60 100644
+--- a/util/netevent.c
++++ b/util/netevent.c
+@@ -3854,11 +3854,7 @@ comm_point_create_udp(struct comm_base *base, int fd, sldns_buffer* buffer,
+ 	evbits = UB_EV_READ | UB_EV_PERSIST;
+ 	/* ub_event stuff */
+ 	c->ev->ev = ub_event_new(base->eb->base, c->fd, evbits,
+-#if defined(USE_WINSOCK) || !(defined(AF_INET6) && defined(IPV6_PKTINFO) && defined(HAVE_RECVMSG))
+ 		comm_point_udp_callback, c);
+-#else
+-		comm_point_udp_ancil_callback, c);
+-#endif
+ 	if(c->ev->ev == NULL) {
+ 		log_err("could not baseset udp event");
+ 		comm_point_delete(c);
