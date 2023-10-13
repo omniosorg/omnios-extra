@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=dav1d
-VER=1.2.1
+VER=1.3.0
 PKG=ooce/multimedia/dav1d
 SUMMARY="AV1 decoder"
 DESC="AV1 cross-platform decoder, open-source, and focused on speed, "

@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=irssi
-VER=1.4.4
+VER=1.4.5
 PKG=ooce/network/irssi
 SUMMARY="Irssi"
 DESC="Text-mode modular chat client"
@@ -33,6 +33,8 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DPKGROOT=$PROG
 "
+
+CONFIGURE_OPTS[aarch64]+=" --with-perl=no"
 
 init
 download_source $PROG $PROG $VER

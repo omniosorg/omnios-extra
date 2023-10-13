@@ -45,7 +45,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/cmake.deps/CMakeLists.txt a/c
 diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/CMakeLists.txt a/src/nvim/CMakeLists.txt
 --- a~/src/nvim/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/src/nvim/CMakeLists.txt	1970-01-01 00:00:00
-@@ -353,6 +353,9 @@ foreach(sfile ${NVIM_SOURCES})
+@@ -358,6 +358,9 @@ foreach(sfile ${NVIM_SOURCES})
    if(NOT WIN32 AND ${f} MATCHES "^(os_win_console.c)$")
      list(APPEND to_remove ${sfile})
    endif()
