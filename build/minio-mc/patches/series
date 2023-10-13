@@ -1,1 +1,2 @@
 Makefile.patch
+console.patch -R
