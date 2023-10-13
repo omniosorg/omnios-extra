@@ -22,13 +22,13 @@
  
  # Specify the type of syslog messages - please refer to 'man syslog'
  # for facility names.
-@@ -74,7 +69,7 @@
+@@ -74,7 +74,7 @@
  # It is recommended that the directory where this file is stored is
  # also owned by root to keep other users from tampering with it.
  # Default: disabled
--#PidFile /var/run/clamd.pid
+-#PidFile /run/clamav/clamd.pid
 +PidFile /var/$(PREFIX)/clamd.pid
- 
+
  # Optional path to the global temporary directory.
  # Default: system specific (usually /tmp or /var/tmp).
 @@ -82,7 +77,7 @@
@@ -40,13 +40,13 @@
  
  # Only load the official signatures published by the ClamAV project.
  # Default: no
-@@ -93,7 +88,7 @@
- 
+@@ -99,7 +99,7 @@
  # Path to a local socket file the daemon will listen on.
  # Default: disabled (must be specified by a user)
--#LocalSocket /tmp/clamd.socket
-+LocalSocket /tmp/clamd.socket
- 
+ #LocalSocket /run/clamav/clamd.sock
+-#LocalSocket /tmp/clamd.sock
++LocalSocket /tmp/clamd.sock
+
  # Sets the group ownership on the unix socket.
  # Default: disabled (the primary group of the user running clamd)
 @@ -176,8 +171,10 @@
