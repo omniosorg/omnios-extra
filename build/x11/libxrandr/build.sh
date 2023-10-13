@@ -17,7 +17,7 @@
 . ../../../lib/build.sh
 
 PROG=libXrandr
-VER=1.5.3
+VER=1.5.4
 PKG=ooce/x11/library/libxrandr
 SUMMARY="libXrandr"
 DESC="X Resize and Rotate extension library"
