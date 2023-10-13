@@ -216,7 +216,7 @@
 | ooce/text/xsv			| 0.13.0	| https://github.com/BurntSushi/xsv/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/acmefetch		| 0.8.1		| https://github.com/oetiker/AcmeFetch/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/atuin		| 16.0.0	| https://github.com/atuinsh/atuin/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/util/bat			| 0.23.0	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/util/bat			| 0.24.0	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/diffr		| 0.1.5		| https://github.com/mookid/diffr/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/util/dtc			| 1.7.0		| https://git.kernel.org/pub/scm/utils/dtc/dtc.git/refs/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/fd			| 8.7.0		| https://github.com/sharkdp/fd/releases/ | [omniosorg](https://github.com/omniosorg)
