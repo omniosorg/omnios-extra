@@ -40,6 +40,7 @@ ooce/library/libuv
 ooce/library/json-c
 ooce/library/onig
 ooce/developer/ninja
+ooce/network/irssi
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
