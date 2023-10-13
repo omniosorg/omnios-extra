@@ -1,0 +1,39 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/_deps/pkg/mod/github.com/ncw/directio@v1.0.5/direct_io_unix.go a/_deps/pkg/mod/github.com/ncw/directio@v1.0.5/direct_io_unix.go
+--- a~/_deps/pkg/mod/github.com/ncw/directio@v1.0.5/direct_io_unix.go	1970-01-01 00:00:00
++++ a/_deps/pkg/mod/github.com/ncw/directio@v1.0.5/direct_io_unix.go	1970-01-01 00:00:00
+@@ -6,7 +6,7 @@ package directio
+ 
+ import (
+ 	"os"
+-	"syscall"
++	"golang.org/x/sys/unix"
+ )
+ 
+ const (
+@@ -19,5 +19,5 @@ const (
+ 
+ // OpenFile is a modified version of os.OpenFile which sets O_DIRECT
+ func OpenFile(name string, flag int, perm os.FileMode) (file *os.File, err error) {
+-	return os.OpenFile(name, syscall.O_DIRECT|flag, perm)
++	return os.OpenFile(name, unix.O_DIRECT|flag, perm)
+ }
+diff -wpruN --no-dereference '--exclude=*.orig' a~/internal/disk/directio_unix.go a/internal/disk/directio_unix.go
+--- a~/internal/disk/directio_unix.go	1970-01-01 00:00:00
++++ a/internal/disk/directio_unix.go	1970-01-01 00:00:00
+@@ -22,7 +22,6 @@ package disk
+ 
+ import (
+ 	"os"
+-	"syscall"
+ 
+ 	"github.com/ncw/directio"
+ 	"golang.org/x/sys/unix"
+@@ -43,7 +42,7 @@ func DisableDirectIO(f *os.File) error {
+ 	if err != nil {
+ 		return err
+ 	}
+-	flag &= ^(syscall.O_DIRECT)
++	flag &= ^(unix.O_DIRECT)
+ 	_, err = unix.FcntlInt(fd, unix.F_SETFL, flag)
+ 	return err
+ }
