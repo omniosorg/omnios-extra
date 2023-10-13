@@ -41,6 +41,7 @@ ooce/library/json-c
 ooce/library/onig
 ooce/developer/ninja
 ooce/network/irssi
+ooce/util/stress-ng
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

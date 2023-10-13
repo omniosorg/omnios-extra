@@ -48,3 +48,4 @@ extra.omnios ooce/text/datamash
 extra.omnios ooce/text/hunspell
 extra.omnios ooce/util/jq
 extra.omnios ooce/util/pass
+extra.omnios ooce/util/stress-ng
