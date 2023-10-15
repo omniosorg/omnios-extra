@@ -81,7 +81,7 @@ build_dependency -merge -noctf harfbuzz harfbuzz-$HARFBUZZVER \
 export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/harfbuzz"
 
 SKIP_BUILD_ERRCHK=
-EXPECTED_BUILD_ERRS=2
+test_relver '>=' 151044 && EXPECTED_BUILD_ERRS=2
 
 ######################################################################
 
