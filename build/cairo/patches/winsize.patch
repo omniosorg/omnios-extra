@@ -1,0 +1,14 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/perf/cairo-perf-print.c a/perf/cairo-perf-print.c
+--- a~/perf/cairo-perf-print.c	1970-01-01 00:00:00
++++ a/perf/cairo-perf-print.c	1970-01-01 00:00:00
+@@ -45,6 +45,10 @@
+ #include <sys/ioctl.h>
+ #endif
+ 
++#ifdef __illumos__
++#include <sys/termios.h>
++#endif
++
+ static void
+ report_print (const cairo_perf_report_t *report,
+ 	      int show_histogram)
