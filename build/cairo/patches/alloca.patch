@@ -1,0 +1,14 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/cairo-colr-glyph-render.c a/src/cairo-colr-glyph-render.c
+--- a~/src/cairo-colr-glyph-render.c	1970-01-01 00:00:00
++++ a/src/cairo-colr-glyph-render.c	1970-01-01 00:00:00
+@@ -43,6 +43,10 @@
+ #include <stdio.h>
+ #include <string.h>
+ 
++#ifdef __illumos__
++#include <alloca.h>
++#endif
++
+ #if HAVE_FT_COLR_V1
+ 
+ #include <ft2build.h>

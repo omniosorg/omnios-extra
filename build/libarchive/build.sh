@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libarchive
-VER=3.7.1
+VER=3.7.2
 PKG=ooce/library/libarchive
 SUMMARY="libarchive"
 DESC="Multi-format archive and compression library"

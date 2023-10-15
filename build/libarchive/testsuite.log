@@ -4,7 +4,7 @@ PASS: bsdcpio_test
 PASS: bsdcat_test
 PASS: bsdunzip_test
 ============================================================================
-Testsuite summary for libarchive 3.7.1
+Testsuite summary for libarchive 3.7.2
 ============================================================================
 # TOTAL: 5
 # PASS:  5

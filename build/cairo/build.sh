@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=cairo
-VER=1.16.0
+VER=1.18.0
 PKG=ooce/library/cairo
 SUMMARY="cairo"
 DESC="Cairo is a 2D graphics library with support for multiple output devices"
@@ -28,6 +28,9 @@ BUILD_DEPENDS_IPS="
     ooce/library/libpng
     ooce/library/pixman
 "
+
+# ctime_r, mkdtemp, ...
+set_standard POSIX+EXTENSIONS
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -41,7 +44,6 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
-    --disable-static
     --includedir=$OPREFIX/include
 "
 CONFIGURE_OPTS[i386]="
@@ -52,19 +54,46 @@ CONFIGURE_OPTS[amd64]="
     --bindir=$PREFIX/bin
     --libdir=$OPREFIX/lib/amd64
 "
-CONFIGURE_OPTS[aarch64]+="
+CONFIGURE_OPTS[aarch64]="
     --bindir=$PREFIX/bin
     --libdir=$OPREFIX/lib
 "
 
-LDFLAGS[i386]+=" -R$OPREFIX/lib"
-LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
-LDFLAGS[aarch64]+=" -R$OPREFIX/lib"
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]} -lxnet"
+
+    ! cross_arch $arch && return
+
+    CONFIGURE_CMD+=" --cross-file $SRCDIR/files/aarch64-gcc.txt"
+}
+
+post_install() {
+    typeset arch=$1
+
+    pushd $DESTDIR/$OPREFIX >/dev/null
+
+    # Unfortunately, meson messes up the runtime library path
+    # Fixing this up post-install for now,
+    # there may be a better way to do it.
+    typeset rpath="$OPREFIX/${LIBDIRS[$arch]}"
+    rpath+=":/usr/gcc/$GCCVER/${LIBDIRS[$arch]}"
+
+    for f in ${LIBDIRS[$arch]}/lib$PROG*.so.*; do
+        [ -f $f -a ! -h $f ] || continue
+        logmsg "--- fixing runpath in $f"
+        logcmd $ELFEDIT -e "dyn:value -s RUNPATH $rpath" $f
+        logcmd $ELFEDIT -e "dyn:value -s RPATH $rpath" $f
+    done
+
+    popd >/dev/null
+}
 
 init
 download_source $PROG $PROG $VER
 patch_source
-prep_build
+prep_build meson
 build
 make_package
 clean_up

@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=gnuplot
-VER=5.4.6
+VER=5.4.9
 PKG=ooce/application/gnuplot
 SUMMARY="gnuplot"
 DESC="A portable command-line driven graphing utility"
@@ -35,6 +35,8 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DPKGROOT=$PROG
 "
+
+CONFIGURE_OPTS+=" --with-qt=no"
 
 CPPFLAGS+=" -I$OPREFIX/include"
 LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"

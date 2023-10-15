@@ -12,19 +12,19 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=pango
-VER=1.50.11
+VER=1.51.0
 PKG=ooce/library/pango
 SUMMARY="pango"
 DESC="Pango is a library for laying out and rendering of text"
 
 # Dependencies
-HARFBUZZVER=5.2.0
-FRIBIDIVER=1.0.12
+HARFBUZZVER=8.2.1
+FRIBIDIVER=1.0.13
 
 # The icu4c ABI changes frequently. Lock the version
 # pulled into each build of harfbuzz.
@@ -68,11 +68,20 @@ prep_build
 
 ######################################################################
 
+# false positive due to the BUFFER_VERIFY_ERROR macro showing up in the build log
+# since there will be one error in the log after the 32-bit build but two
+# after the 64-bit build we disable error checking for harfbuzz but enable
+# it afterwards and set the expected error count to 2
+SKIP_BUILD_ERRCHK=1
+
 EXPECTED_OPTIONS="CAIRO CAIRO_FT FREETYPE GLIB"
 build_dependency -merge -noctf harfbuzz harfbuzz-$HARFBUZZVER \
     harfbuzz harfbuzz $HARFBUZZVER
 
 export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/harfbuzz"
+
+SKIP_BUILD_ERRCHK=
+EXPECTED_BUILD_ERRS=2
 
 ######################################################################
 
