@@ -819,6 +819,8 @@ init_sysroot() {
         case $arch in
             aarch64)
                 logcmd $PKGCLIENT -R $tmpsysroot set-publisher \
+                    -g ${BRAICH_REPO} $PKGPUBLISHER
+                logcmd $PKGCLIENT -R $tmpsysroot set-publisher \
                     -g ${BRAICH_REPO} omnios
                 logcmd -p $PKGCLIENT -R $tmpsysroot install '*'
                 logcmd cp /etc/zones/SUNWdefault.xml $tmpsysroot/etc/zones/
