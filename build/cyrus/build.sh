@@ -22,7 +22,7 @@ PKG=ooce/network/cyrus-imapd
 SUMMARY="Cyrus IMAP is an email, contacts and calendar server"
 DESC="$SUMMARY"
 
-ICALVER=3.0.16
+ICALVER=3.0.17
 
 # The icu4c ABI changes frequently. Lock the version
 # pulled into each build of cyrus-imapd.
