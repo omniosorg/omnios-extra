@@ -1,7 +1,7 @@
-diff -wpruN '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
 --- a~/Cargo.toml	1970-01-01 00:00:00
 +++ a/Cargo.toml	1970-01-01 00:00:00
-@@ -94,3 +94,7 @@ use-jemalloc = ["jemallocator"]
+@@ -93,3 +93,7 @@ use-jemalloc = ["jemallocator"]
  completions = ["clap_complete"]
  base = ["use-jemalloc"]
  default = ["use-jemalloc", "completions"]
