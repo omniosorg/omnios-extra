@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/config.layout a/config.layout
+diff -wpruN --no-dereference '--exclude=*.orig' a~/config.layout a/config.layout
 --- a~/config.layout	1970-01-01 00:00:00
 +++ a/config.layout	1970-01-01 00:00:00
 @@ -419,3 +419,27 @@

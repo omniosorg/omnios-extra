@@ -5,7 +5,7 @@ Patch status: Solaris-specific; not suitable for upstream
 
 Drops extra privilege which was given via SMF manifest file.
 
-diff -wpruN '--exclude=*.orig' a~/server/main.c a/server/main.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/server/main.c a/server/main.c
 --- a~/server/main.c	1970-01-01 00:00:00
 +++ a/server/main.c	1970-01-01 00:00:00
 @@ -46,6 +46,8 @@
@@ -25,7 +25,7 @@ diff -wpruN '--exclude=*.orig' a~/server/main.c a/server/main.c
      APR_OPTIONAL_FN_TYPE(ap_signal_server) *signal_server;
      int rc = OK;
  
-@@ -837,6 +840,21 @@ int main(int argc, const char * const ar
+@@ -839,6 +842,21 @@ int main(int argc, const char * const ar
  
          ap_run_optional_fn_retrieve();
  
