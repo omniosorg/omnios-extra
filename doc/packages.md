@@ -127,7 +127,7 @@
 | ooce/library/libwebp		| 1.3.2		| https://developers.google.com/speed/webp/download | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libzip		| 1.10.1	| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/nettle		| 3.9.1		| https://ftp.gnu.org/gnu/nettle/ https://www.lysator.liu.se/~nisse/nettle/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/onig		| 6.9.8		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/onig		| 6.9.9		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pango		| 1.51.0	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pixman		| 0.42.2	| https://www.cairographics.org/releases/ http://www.pixman.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/protobuf		| 3.21.9	| https://github.com/protocolbuffers/protobuf/releases/ | Currently used solely by mosh
