@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=mosquitto
-VER=2.0.17
+VER=2.0.18
 PKG=ooce/network/mosquitto
 SUMMARY="$PROG - an open source message broker"
 DESC="$PROG is an open source (EPL/EDL licensed) message broker that "
