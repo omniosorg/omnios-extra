@@ -1,7 +1,7 @@
-diff -wpruN '--exclude=*.orig' texlive-20180414-source~/texk/kpathsea/texmf.cnf texlive-20180414-source/texk/kpathsea/texmf.cnf
---- texlive-20180414-source~/texk/kpathsea/texmf.cnf	2018-03-26 14:23:43.000000000 +0000
-+++ texlive-20180414-source/texk/kpathsea/texmf.cnf	2018-10-14 17:51:56.208543279 +0000
-@@ -58,7 +58,7 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/texk/kpathsea/texmf.cnf a/texk/kpathsea/texmf.cnf
+--- a~/texk/kpathsea/texmf.cnf	1970-01-01 00:00:00
++++ a/texk/kpathsea/texmf.cnf	1970-01-01 00:00:00
+@@ -59,7 +59,7 @@
  % SELFAUTOPARENT (its grandparent = /usr/local/texlive/YYYY), and
  % SELFAUTOGRANDPARENT (its great-grandparent = /usr/local/texlive).
  % Sorry for the off-by-one-generation names.
