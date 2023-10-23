@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/docs/conf/extra/httpd-default.conf.in a/docs/conf/extra/httpd-default.conf.in
+diff -wpruN --no-dereference '--exclude=*.orig' a~/docs/conf/extra/httpd-default.conf.in a/docs/conf/extra/httpd-default.conf.in
 --- a~/docs/conf/extra/httpd-default.conf.in	1970-01-01 00:00:00
 +++ a/docs/conf/extra/httpd-default.conf.in	1970-01-01 00:00:00
 @@ -52,7 +52,7 @@ AccessFileName .htaccess
@@ -10,7 +10,7 @@ diff -wpruN '--exclude=*.orig' a~/docs/conf/extra/httpd-default.conf.in a/docs/c
  
  #
  # Optionally add a line containing the server version and virtual host
-diff -wpruN '--exclude=*.orig' a~/docs/conf/httpd.conf.in a/docs/conf/httpd.conf.in
+diff -wpruN --no-dereference '--exclude=*.orig' a~/docs/conf/httpd.conf.in a/docs/conf/httpd.conf.in
 --- a~/docs/conf/httpd.conf.in	1970-01-01 00:00:00
 +++ a/docs/conf/httpd.conf.in	1970-01-01 00:00:00
 @@ -74,8 +74,8 @@ Listen @@Port@@

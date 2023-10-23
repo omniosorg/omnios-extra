@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=onig
-VER=6.9.8
+VER=6.9.9
 PKG=ooce/library/onig
 SUMMARY="Oniguruma"
 DESC="A modern and flexible regular expressions library"

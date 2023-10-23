@@ -13,12 +13,12 @@
 # }}}
 #
 # Copyright 2020 Carsten Grzemba
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=sg3_utils
-VER=1.47
+VER=1.48
 PKG=ooce/system/sg3_utils
 SUMMARY="the sg3-utils SCSI utilities"
 DESC="Collection of utilities for devices that use the SCSI command set. "
