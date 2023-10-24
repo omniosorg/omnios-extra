@@ -47,7 +47,7 @@ start)
 	# under /var/run from the manifest.
         [ -d /tmp/.nginx ] || mkdir /tmp/.nginx
         chmod 700 /tmp/.nginx
-        exec ${NGINX} 2>&1
+        exec ${NGINX} -c ${CONF_FILE} 2>&1
         ;;
 *)
         echo "Unknown method."
