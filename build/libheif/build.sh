@@ -49,6 +49,14 @@ CONFIGURE_OPTS[amd64]="
 LDFLAGS[i386]+=" -Wl,-R$PREFIX/lib"
 LDFLAGS[amd64]+=" -Wl,-R$PREFIX/lib/amd64"
 
+pre_configure() {
+    typeset arch=$1
+
+    test_relver '>' 151038 && return
+
+    export CMAKE_LIBRARY_PATH=$PREFIX/${LIBDIRS[$arch]}
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
