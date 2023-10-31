@@ -18,7 +18,7 @@
 
 PROG=llvm
 PKG=ooce/developer/llvm-17
-VER=17.0.3
+VER=17.0.4
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 
