@@ -39,6 +39,8 @@ set_builddir $PROG
 pre_configure() {
     typeset arch=$1
 
+    test_relver '>' 151038 && return
+
     export CMAKE_LIBRARY_PATH=$PREFIX/${LIBDIRS[$arch]}
 }
 
