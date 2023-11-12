@@ -13,18 +13,18 @@
 # }}}
 
 # Copyright 2011-2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../common.sh
 
 PROG=perl
 PKG=ooce/developer/aarch64-perl
-VER=5.36.0
+VER=5.38.0
 MAJVER=${VER%.*}
 SUMMARY="Perl $MAJVER Programming Language"
 DESC="A highly capable, feature-rich programming language"
 
-CROSSVER=1.4
+CROSSVER=1.5
 
 set_arch 64
 CTF_FLAGS+=" -s"
@@ -35,6 +35,7 @@ PREFIX+=/perl5/$MAJVER
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DPROG=$PROG
+    -DMAJVER=$MAJVER
 "
 
 # Perl bundles a lot of shared objects with its extensions
@@ -139,7 +140,8 @@ patch_source
 # building miniperl is racy
 MAKE_JOBS= MAKE_ARGS="miniperl" build
 configure_amd64() { :; }
-MAKE_ARGS="modules" build
+MAKE_ARGS="xconfig.h modules" build
+xform files/perl > $TMPDIR/perl
 make_package
 clean_up
 
