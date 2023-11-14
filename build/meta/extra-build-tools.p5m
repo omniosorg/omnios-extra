@@ -120,3 +120,7 @@ depend fmri=ooce/developer/clang-16 type=conditional \
 depend fmri=ooce/developer/llvm-17 type=conditional \
     predicate=release/name@0.5.11-151047
 
+# clang 17 is the default clang compiler from r151049 onwards
+depend fmri=ooce/developer/clang-17 type=conditional \
+    predicate=release/name@0.5.11-151049
+
