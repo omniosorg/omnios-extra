@@ -19,7 +19,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-16
-VER=16.0
+VER=16.1
 SUMMARY="PostgreSQL 16"
 DESC="The World's Most Advanced Open Source Relational Database"
 
