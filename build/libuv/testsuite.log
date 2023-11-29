@@ -31,6 +31,7 @@ ok - embed
 ok - emfile
 ok - env_vars
 ok - error_message
+ok - fork_close_signal_in_child
 ok - fork_fs_events_child
 ok - fork_fs_events_child_dir
 ok - fork_fs_events_file_parent_child
@@ -77,6 +78,7 @@ ok - fs_fstat
 ok - fs_fstat_stdio
 ok - fs_futime
 ok - fs_get_system_error
+ok - fs_link
 ok - fs_lutime
 ok - fs_mkdtemp
 ok - fs_mkstemp
@@ -257,6 +259,7 @@ ok - spawn_preserve_env
 ok - spawn_quoted_path # SKIP Test for Windows
 ok - spawn_reads_child_path
 ok - spawn_relative_path
+ok - spawn_same_stdout_stderr
 ok - spawn_setgid_fails
 ok - spawn_setuid_fails
 ok - spawn_setuid_setgid # SKIP It should be run as root user
@@ -301,6 +304,8 @@ ok - tcp_close_reset_accepted_after_socket_shutdown
 ok - tcp_close_reset_client
 ok - tcp_close_reset_client_after_shutdown
 ok - tcp_close_while_connecting
+ok - tcp_connect6_error_fault
+ok - tcp_connect6_link_local
 ok - tcp_connect_error_after_write
 ok - tcp_connect_error_fault
 ok - tcp_connect_timeout
