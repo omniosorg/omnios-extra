@@ -49,7 +49,7 @@
 | ooce/database/rrdtool		| 1.8.0		| https://github.com/oetiker/rrdtool-1.x/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/autoconf-archive | 2023.02.20	| https://ftp.gnu.org/gnu/autoconf-archive/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/autogen	| 5.18.16	| https://ftp.gnu.org/gnu/autogen/ | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/cargo-c	| 0.9.27	| https://github.com/lu-zero/cargo-c/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/cargo-c	| 0.9.28	| https://github.com/lu-zero/cargo-c/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
 | ooce/developer/clang-13	| 13.0.1	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/clang-14	| 14.0.6	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
