@@ -1,4 +1,4 @@
-Start of unbound 1.18.0+libevent unit test.
+Start of unbound 1.19.0+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -78,9 +78,9 @@ test services/outside_network.c:reuse_write_wait_push_back
 test services/outside_network.c:reuse_write_wait_remove
 test services/outside_network.c:reuse_write_wait_pop
 test message parse functions
-[0] did 10000 in 83.772 msec for 119371.627752 encode/sec size 615
+[0] did 10000 in 81.015 msec for 123433.931988 encode/sec size 615
 test edns ede optional encoding functions
-1297056 checks ok.
+1297540 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl  OK
 ./testdata/auth_nsec3_ent.rpl  OK
@@ -156,6 +156,7 @@ selftest successful (33 checks).
 ./testdata/black_prime.rpl  OK
 ./testdata/black_prime_entry.rpl  OK
 ./testdata/chaos_trustanchor.rpl  OK
+./testdata/disable_edns_do.rpl  OK
 ./testdata/dns64_lookup.rpl  OK
 ./testdata/domain_insec_ds.rpl  OK
 ./testdata/ede_acl_refused.rpl  OK
@@ -271,6 +272,7 @@ selftest successful (33 checks).
 ./testdata/iter_scrub_ns.rpl  OK
 ./testdata/iter_scrub_ns_fwd.rpl  OK
 ./testdata/iter_scrub_ns_side.rpl  OK
+./testdata/iter_scrub_rr_length.rpl  OK
 ./testdata/iter_soamin.rpl  OK
 ./testdata/iter_stub_leak.rpl  OK
 ./testdata/iter_stub_noroot.rpl  OK
@@ -295,6 +297,7 @@ selftest successful (33 checks).
 ./testdata/refuse_xfr.rpl  OK
 ./testdata/root_key_sentinel.rpl  OK
 ./testdata/rpz_axfr.rpl  OK
+./testdata/rpz_cached_cname.rpl  OK
 ./testdata/rpz_clientip.rpl  OK
 ./testdata/rpz_ixfr.rpl  OK
 ./testdata/rpz_nsdname.rpl  OK
@@ -456,6 +459,7 @@ selftest successful (33 checks).
 ./testdata/val_referd.rpl  OK
 ./testdata/val_referglue.rpl  OK
 ./testdata/val_rrsig.rpl  OK
+./testdata/val_scrub_rr_length.rpl  OK
 ./testdata/val_secds.rpl  OK
 ./testdata/val_secds_nosig.rpl  OK
 ./testdata/val_spurious_ns.rpl  OK

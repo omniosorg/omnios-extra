@@ -166,7 +166,7 @@
 | ooce/network/smtp/postfix	| 3.8.3		| https://high5.nl/mirrors/postfix-release/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/network/tailscale	| 1.50.0	| https://www.tailscale.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/tcpdump		| 4.99.3	| https://www.tcpdump.org/release/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/unbound		| 1.18.0	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/unbound		| 1.19.0	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/wireguard-go	| 0.0.20220316	| https://www.wireguard.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/wireguard-tools	| 1.0.20210914	| https://www.wireguard.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/znc		| 1.8.2		| https://github.com/znc/znc/tags | [omniosorg](https://github.com/omniosorg)
