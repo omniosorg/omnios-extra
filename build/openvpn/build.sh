@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=openvpn
-VER=2.6.6
+VER=2.6.8
 PKG=ooce/network/openvpn
 LZOVER=2.10
 SUMMARY="OpenVPN"
@@ -72,7 +72,7 @@ CONFIGURE_OPTS[amd64]+="
 
 download_source $PROG $PROG $VER
 patch_source
-run_autoreconf -i
+run_autoreconf -fi
 build
 install_smf ooce network-openvpn.xml
 make_package $PROG.mog
