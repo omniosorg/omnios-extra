@@ -18,7 +18,7 @@
 
 PROG=php
 PKG=ooce/application/php-81
-VER=8.1.24
+VER=8.1.26
 SUMMARY="PHP 8.1"
 DESC="A popular general-purpose scripting language"
 

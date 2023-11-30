@@ -17,9 +17,9 @@
 . ../../lib/build.sh
 
 PROG=php
-PKG=ooce/application/php-80
-VER=8.0.30
-SUMMARY="PHP 8.0"
+PKG=ooce/application/php-83
+VER=8.3.0
+SUMMARY="PHP 8.3"
 DESC="A popular general-purpose scripting language"
 
 PANDAHASH=3452f15
@@ -31,6 +31,8 @@ SKIP_LICENCES=PHP
 # configure needs gawk for 7.3.6 as awk bails out with
 # record .... too long
 export AWK
+
+test_relver '<=' 151038 && CONFIGURE_CMD="/usr/bin/bash ./configure --no-reexec"
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
@@ -158,8 +160,7 @@ post_configure() {
     for tok in \
         HAVE_CURL HAVE_IMAP HAVE_LDAP \
         HAVE_GD_BMP HAVE_GD_FREETYPE HAVE_GD_JPG HAVE_GD_PNG \
-        MYSQLI_USE_MYSQLND PDO_USE_MYSQLND \
-        HAVE_PDO_PGSQL HAVE_PGSQL \
+        PDO_USE_MYSQLND HAVE_PDO_PGSQL HAVE_PGSQL \
     ; do
         $EGREP -s "define $tok 1" $TMPDIR/$BUILDDIR/main/php_config.h \
             || logerr "Feature $tok is not enabled"

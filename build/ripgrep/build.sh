@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=ripgrep
-VER=13.0.0
+VER=14.0.3
 PKG=ooce/text/ripgrep
 SUMMARY="Fast line-oriented search tool"
 DESC="A fast line-oriented search tool that recursively searches your current "
@@ -32,7 +32,21 @@ set_arch 64
 
 SKIP_LICENCES=UNLICENSE
 
-export XML_CATALOG_FILES=$PREFIX/docbook-xsl/catalog.xml
+pre_package() {
+    typeset arch=$1
+
+    # we cannot run the cross built binary, the best we can do is assume
+    # that the build host runs the same version and use it to generate
+    # the man page
+    cross_arch $arch && rg=$PREFIX/bin/rg || rg=$DESTDIR$PREFIX/bin/rg
+
+    logmsg "generating man page"
+    logcmd $MKDIR -p $DESTDIR$PREFIX/share/man/man1 \
+        || logerr "creating man dir failed"
+    logcmd $rg --generate man \
+        >| $DESTDIR$PREFIX/share/man/man1/rg.1 \
+        || logerr "generating man page failed"
+}
 
 init
 download_source $PROG $VER

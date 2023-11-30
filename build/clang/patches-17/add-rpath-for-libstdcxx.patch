@@ -15,7 +15,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/lib/Driver/ToolChain.cpp a/li
 diff -wpruN --no-dereference '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris.cpp a/lib/Driver/ToolChains/Solaris.cpp
 --- a~/lib/Driver/ToolChains/Solaris.cpp	1970-01-01 00:00:00
 +++ a/lib/Driver/ToolChains/Solaris.cpp	1970-01-01 00:00:00
-@@ -128,10 +128,11 @@ void solaris::Linker::ConstructJob(Compi
+@@ -151,11 +151,12 @@ void solaris::Linker::ConstructJob(Compi
    bool NeedsSanitizerDeps = addSanitizerRuntimes(getToolChain(), Args, CmdArgs);
    AddLinkerInputs(getToolChain(), Inputs, Args, CmdArgs, JA);
  
@@ -24,12 +24,13 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/lib/Driver/ToolChains/Solaris
 +
    if (!Args.hasArg(options::OPT_nostdlib, options::OPT_nodefaultlibs,
                     options::OPT_r)) {
--    if (getToolChain().ShouldLinkCXXStdlib(Args))
--      getToolChain().AddCXXStdlibLibArgs(Args, CmdArgs);
+     if (D.CCCIsCXX()) {
+-      if (getToolChain().ShouldLinkCXXStdlib(Args))
+-        getToolChain().AddCXXStdlibLibArgs(Args, CmdArgs);
+       CmdArgs.push_back("-lm");
+     }
      // LLVM support for atomics on 32-bit SPARC V8+ is incomplete, so
-     // forcibly link with libatomic as a workaround.
-     if (getToolChain().getTriple().getArch() == llvm::Triple::sparc) {
-@@ -305,3 +306,16 @@ void Solaris::addLibStdCxxIncludePaths(
+@@ -334,3 +335,16 @@ void Solaris::addLibStdCxxIncludePaths(
                             TripleStr, Multilib.includeSuffix(), DriverArgs,
                             CC1Args);
  }
