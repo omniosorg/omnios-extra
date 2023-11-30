@@ -12,55 +12,42 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=lsof
 PKG=ooce/file/lsof
-VER=4.95.0
-DASHREV=1
+VER=4.99.0
 SUMMARY="List open files"
 DESC="Report a list of all open files and the processes that opened them"
-
-SKIP_LICENCES=lsof
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
 
-XFORM_ARGS="
-    -DPREFIX=${PREFIX#/}
-    -DOPREFIX=${OPREFIX#/}
-    -DPROG=$PROG
-    -DVERSION=$VER
-"
+SKIP_LICENCES=lsof
 
-MAKE_ARGS_WS="
-    -e
-    DEBUG=\"$CTF_CFLAGS $SSPFLAGS\"
+XFORM_ARGS="
+    -DOPREFIX=${OPREFIX#/}
+    -DPREFIX=${PREFIX#/}
+    -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 pre_configure() {
-    yes | logcmd ./Configure solaris || logerr "--- Configure failed"
-    # Skip normal configure path
-    false
-}
+    typeset arch=$1
 
-make_install() {
-    logmsg "--- make install"
-    mkdir -p $DESTDIR$PREFIX/share/man/man8
-    mkdir -p $DESTDIR$PREFIX/bin
-    logcmd cp $TMPDIR/$BUILDDIR/${PROG^}.8 \
-        $DESTDIR$PREFIX/share/man/man8/$PROG.8 \
-        || logerr "--- Make install failed"
-    logcmd cp $TMPDIR/$BUILDDIR/$PROG $DESTDIR$PREFIX/bin/$PROG \
-        || logerr "--- Make install failed"
+    CONFIGURE_OPTS[$arch]+="
+        --disable-static
+        --includedir=$OPREFIX/include
+        --libdir=$OPREFIX/${LIBDIRS[$arch]}
+    "
 }
 
 init
-download_source $PROG $VER
+download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
