@@ -43,7 +43,7 @@ pre_package() {
     logmsg "generating man page"
     logcmd $MKDIR -p $DESTDIR$PREFIX/share/man/man1 \
         || logerr "creating man dir failed"
-    logcmd $rg --generate man \
+    logcmd -p $rg --generate man \
         >| $DESTDIR$PREFIX/share/man/man1/rg.1 \
         || logerr "generating man page failed"
 }
