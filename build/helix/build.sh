@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=helix
-VER=22.12
+VER=23.10
 PKG=ooce/editor/helix
 SUMMARY="A post-modern modal text editor."
 DESC="A kakoune / neovim inspired editor, written in Rust."
