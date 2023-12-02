@@ -219,9 +219,9 @@ extra.omnios ooce/runtime/groovy-30
 extra.omnios ooce/runtime/groovy-40
 extra.omnios ooce/runtime/node-18
 extra.omnios ooce/runtime/node-20
-extra.omnios ooce/runtime/ruby-27
 extra.omnios ooce/runtime/ruby-30
 extra.omnios ooce/runtime/ruby-31
+extra.omnios ooce/runtime/ruby-32
 extra.omnios ooce/runtime/tcl
 extra.omnios ooce/security/gnupg
 extra.omnios ooce/server/apache-24

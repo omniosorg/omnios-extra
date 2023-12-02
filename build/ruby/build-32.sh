@@ -17,8 +17,8 @@
 . ../../lib/build.sh
 
 PROG=ruby
-VER=2.7.8
-PKG=ooce/runtime/ruby-27
+VER=3.2.2
+PKG=ooce/runtime/ruby-32
 SUMMARY="Ruby"
 DESC="A dynamic, open source programming language "
 DESC+="with a focus on simplicity and productivity."
@@ -31,6 +31,8 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
 
 set_arch 64
+
+NO_SONAME_EXPECTED=1
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -48,13 +50,15 @@ CONFIGURE_OPTS[amd64]+="
 "
 
 CPPFLAGS+=" -I/usr/include/gmp"
+LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
+
+subsume_arch $BUILDARCH PKG_CONFIG_PATH
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-strip_install
 make_package
 clean_up
 
