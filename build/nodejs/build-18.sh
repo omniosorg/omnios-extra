@@ -24,12 +24,12 @@ DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
 DESC+="It is intended for writing scalable network programs such as web "
 DESC+="servers."
 
-min_rel 151041
+min_rel 151038
 
 MAJVER=${VER%%.*}
 
 set_arch 64
-set_clangver
+test_relver '>=' 151041 && set_clangver
 set_builddir $PROG-v$VER
 set_patchdir patches-$MAJVER
 
