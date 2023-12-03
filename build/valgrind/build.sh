@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=valgrind
-VER=3.21.0
+VER=3.22.0
 PKG=ooce/developer/valgrind
 SUMMARY="An instrumentation framework for building dynamic analysis tools."
 DESC="Valgrind tools can automatically detect many memory management and "

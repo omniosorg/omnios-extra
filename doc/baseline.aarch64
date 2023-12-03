@@ -33,6 +33,7 @@ extra.omnios ooce/library/postgresql-14
 extra.omnios ooce/library/slang
 extra.omnios ooce/library/tiff
 extra.omnios ooce/library/unbound
+extra.omnios ooce/library/yaml
 extra.omnios ooce/multimedia/dav1d
 extra.omnios ooce/multimedia/ffmpeg
 extra.omnios ooce/multimedia/minidlna

@@ -26,22 +26,34 @@ previously mmap()d memory:
 	brk(0x04FB8000)                                 = 0
 	brk(0x04FBC000)                                 Err#12 ENOMEM
 
-diff -wpruN '--exclude=*.orig' a~/deps/v8/src/heap/code-range.cc a/deps/v8/src/heap/code-range.cc
+diff -wpruN --no-dereference '--exclude=*.orig' a~/deps/v8/src/heap/code-range.cc a/deps/v8/src/heap/code-range.cc
 --- a~/deps/v8/src/heap/code-range.cc	1970-01-01 00:00:00
 +++ a/deps/v8/src/heap/code-range.cc	1970-01-01 00:00:00
-@@ -26,14 +26,13 @@ base::LazyInstance<std::weak_ptr<CodeRan
+@@ -22,9 +22,6 @@ namespace internal {
+ namespace {
  
  DEFINE_LAZY_LEAKY_OBJECT_GETTER(CodeRangeAddressHint, GetCodeRangeAddressHint)
- 
+-
 -void FunctionInStaticBinaryForAddressHint() {}
+-
  }  // anonymous namespace
  
- Address CodeRangeAddressHint::GetAddressHint(size_t code_range_size) {
-   base::MutexGuard guard(&mutex_);
-   auto it = recently_freed_.find(code_range_size);
-   if (it == recently_freed_.end() || it->second.empty()) {
--    return FUNCTION_ADDR(&FunctionInStaticBinaryForAddressHint);
-+    return reinterpret_cast<Address>(GetRandomMmapAddr());
+ Address CodeRangeAddressHint::GetAddressHint(size_t code_range_size,
+@@ -55,7 +52,7 @@ Address CodeRangeAddressHint::GetAddress
+       // with a higher chances to point to the free address space range.
+       return RoundUp(preferred_region.begin(), alignment);
+     }
+-    return RoundUp(FUNCTION_ADDR(&FunctionInStaticBinaryForAddressHint),
++    return RoundUp(reinterpret_cast<Address>(GetRandomMmapAddr()),
+                    alignment);
    }
-   Address result = it->second.back();
-   it->second.pop_back();
+ 
+@@ -262,7 +259,7 @@ base::AddressRegion CodeRange::GetPrefer
+     // When there's no embedded blob use address of a function from the binary
+     // as an approximation.
+     embedded_blob_code_start =
+-        FUNCTION_ADDR(&FunctionInStaticBinaryForAddressHint);
++        reinterpret_cast<Address>(GetRandomMmapAddr());
+     embedded_blob_code_end = embedded_blob_code_start + 1;
+   } else {
+     embedded_blob_code_end =

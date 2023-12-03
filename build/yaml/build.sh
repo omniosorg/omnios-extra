@@ -16,34 +16,27 @@
 
 . ../../lib/build.sh
 
-PROG=rclone
-PKG=ooce/network/rclone
-VER=1.65.0
-SUMMARY="rsync for cloud storage"
-DESC="A command line program to sync files and directories to and from "
-DESC+="different cloud storage providers"
+PROG=yaml
+VER=0.2.5
+PKG=ooce/library/yaml
+SUMMARY="LibYAML"
+DESC="$SUMMARY - A C library for parsing and emitting YAML."
 
-set_arch 64
-set_gover
+set_clangver
 
-# rclone build wants GNU cp
-export PATH="$GNUBIN:$PATH"
+# many false positives show up in macro warnings in the log
+SKIP_BUILD_ERRCHK=1
 
-build() {
-    pushd $TMPDIR/$BUILDDIR > /dev/null
+TESTSUITE_FILTER='^[A-Z#0-9 ][A-Z#0-9 ]'
 
-    logmsg "Building 64-bit"
-    logcmd $MAKE || logerr "Build failed"
-
-    popd >/dev/null
-}
+CONFIGURE_OPTS="--disable-static"
 
 init
-clone_go_source $PROG $PROG v$VER
-patch_source
+download_source $PROG $PROG $VER
 prep_build
+patch_source
 build
-install_go
+run_testsuite
 make_package
 clean_up
 

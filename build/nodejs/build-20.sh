@@ -12,38 +12,33 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=node
-VER=12.22.12
-PKG=ooce/runtime/node-12
+VER=20.10.0
+PKG=ooce/runtime/node-20
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
-DESC+="It is intended for writing scalable network programs such as web servers."
+DESC+="It is intended for writing scalable network programs such as web "
+DESC+="servers."
+
+min_rel 151049
 
 MAJVER=${VER%%.*}
 
 set_arch 64
-
+set_clangver
 set_builddir $PROG-v$VER
 set_patchdir patches-$MAJVER
 
 BUILD_DEPENDS_IPS="
     developer/gnu-binutils
-    runtime/python-27
 "
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
-
-# objdump is needed to build nodejs
-TRIPLET=$TRIPLET64
-PATH+=":/usr/gnu/$TRIPLET/bin"
-
-CXXFLAGS+="-ffunction-sections -fdata-sections"
-MAKE_ARGS="CC=$CC"
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -60,18 +55,20 @@ BMI_EXPECTED=1
 CONFIGURE_OPTS[amd64]=
 CONFIGURE_OPTS="
     --prefix=$PREFIX
-    --with-dtrace
-    --dest-cpu=x64
     --shared-nghttp2
     --shared-zlib
     --shared-brotli
 "
 
+# clang++ does not link libatomic automatically
+export LDFLAGS+=" -latomic"
+subsume_arch $BUILDARCH LDFLAGS
+
 init
 download_source $PROG $PROG v$VER
 patch_source
 prep_build autoconf-like
-build -noctf    # ctfconvert does currently not work
+build -noctf    # C++
 strip_install
 make_package
 clean_up

@@ -43,6 +43,7 @@ ooce/developer/ninja
 ooce/network/irssi
 ooce/util/stress-ng
 ooce/library/libarchive
+ooce/library/yaml
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

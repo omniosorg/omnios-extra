@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=icu4c
-VER=72.1
+VER=74.1
 PKG=ooce/library/icu4c
 SUMMARY="ICU - International Components for Unicode"
 DESC="A mature, widely used set of C/C++ libraries providing "

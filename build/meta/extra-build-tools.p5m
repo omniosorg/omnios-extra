@@ -67,13 +67,14 @@ depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require
 depend fmri=ooce/library/tiff type=require
 depend fmri=ooce/library/unbound type=require
+depend fmri=ooce/library/yaml type=require
 depend fmri=ooce/multimedia/dav1d type=require
 depend fmri=ooce/multimedia/ffmpeg type=require
 depend fmri=ooce/multimedia/rav1e type=require
 depend fmri=ooce/multimedia/x264 type=require
 depend fmri=ooce/multimedia/x265 type=require
-depend fmri=ooce/runtime/node-16 type=require
-depend fmri=ooce/runtime/ruby-30 type=require
+depend fmri=ooce/runtime/node-18 type=require
+depend fmri=ooce/runtime/ruby-31 type=require
 depend fmri=ooce/server/apache-24 type=require
 depend fmri=ooce/text/docbook-xsl type=require
 depend fmri=system/header/header-agp type=require
