@@ -22,7 +22,7 @@ PKG=ooce/library/yaml
 SUMMARY="LibYAML"
 DESC="$SUMMARY - A C library for parsing and emitting YAML."
 
-set_clangver
+test_relver '>=' 151046 && set_clangver
 
 # many false positives show up in macro warnings in the log
 SKIP_BUILD_ERRCHK=1
