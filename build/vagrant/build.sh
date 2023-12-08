@@ -29,7 +29,7 @@ PREFIX+=/$PROG
 
 set_arch 64
 set_gover
-set_rubyver
+set_rubyver 3.0
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
