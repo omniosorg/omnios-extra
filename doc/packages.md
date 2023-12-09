@@ -191,7 +191,7 @@
 | ooce/server/haproxy		| 2.8.3		| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.25.3	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-124		| 1.24.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/storage/minio		| 2023-10-07T15-07-38Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/storage/minio		| 2023-12-07T04-16-00Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio-mc		| 2023-12-02T11-24-10Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/file-system/ntfs-3g | 2022.10.3	| https://github.com/tuxera/ntfs-3g/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/clamav		| 1.2.1		| https://github.com/Cisco-Talos/clamav/tags https://www.clamav.net/downloads | [omniosorg](https://github.com/omniosorg)
