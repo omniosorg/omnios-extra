@@ -1,0 +1,32 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/server/build/release.mk a/server/build/release.mk
+--- a~/server/build/release.mk	1970-01-01 00:00:00
++++ a/server/build/release.mk	1970-01-01 00:00:00
+@@ -1,5 +1,9 @@
+ dist: | check-style test package
+ 
++build-illumos:
++	@echo Build illumos amd64
++	env GOOS=illumos GOARCH=amd64 $(GO) build -o $(GOBIN) $(GOFLAGS) -trimpath -tags production -ldflags '$(LDFLAGS)' ./...
++
+ build-linux: build-linux-amd64 build-linux-arm64
+ 
+ build-linux-amd64:
+@@ -138,18 +142,6 @@ endif
+ 		cp bin/manifest.txt $(DIST_PATH); \
+ 	fi
+ 
+-	@# Import Mattermost plugin public key
+-	gpg --import build/plugin-production-public-key.gpg
+-
+-	@# Download prepackaged plugins
+-	mkdir -p tmpprepackaged
+-	@cd tmpprepackaged && for plugin_package in $(PLUGIN_PACKAGES) ; do \
+-		for ARCH in "osx-amd64" "windows-amd64" "linux-amd64" ; do \
+-			curl -f -O -L https://plugins-store.test.mattermost.com/release/$$plugin_package-$$ARCH.tar.gz; \
+-			curl -f -O -L https://plugins-store.test.mattermost.com/release/$$plugin_package-$$ARCH.tar.gz.sig; \
+-		done; \
+-	done
+-
+ package-general:
+ 	@# Create needed directories
+ 	mkdir -p $(DIST_PATH_GENERIC)/bin

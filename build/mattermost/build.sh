@@ -17,8 +17,10 @@
 . ../../lib/build.sh
 
 PROG=mattermost
-VER=7.5.2
-MMCTLVER=7.5.0
+VER=8.1.7
+# check for the current morph version/commit hash and create a patched branch in
+# https://github.com/omniosorg/morph; then point to that branch
+MORPHBRANCH=il_1.0.5
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
 DESC="All your team communication in one place, "
@@ -72,32 +74,40 @@ EOM
 
 download_source() {
     gitenv
-    save_variables BUILDDIR EXTRACTED_SRC
 
-    clone_go_source mmctl $PROG v$MMCTLVER
-    restore_variables BUILDDIR EXTRACTED_SRC
+    clone_github_source -dependency $PROG $GITHUB/$PROG/$PROG v$VER
 
-    GOPATH=$TMPDIR/$BUILDDIR/$PROG-server/_deps
-    clone_go_source "$PROG-server" $PROG v$VER
-    restore_variables BUILDDIR EXTRACTED_SRC
+    export GOPATH=$TMPDIR/$BUILDDIR/$PROG/server/_deps
 
-    clone_github_source -dependency "$PROG-webapp" \
-        "$GITHUB/$PROG/$PROG-webapp" v$VER
-    restore_variables BUILDDIR EXTRACTED_SRC
+    pushd $TMPDIR/$BUILDDIR/$PROG/server >/dev/null
+    logmsg "Replacing morph"
+    logcmd go mod edit -replace \
+        github.com/mattermost/morph=github.com/omniosorg/morph@$MORPHBRANCH \
+        || logerr "Failed to replace morph"
+
+    logmsg "Getting go dependencies"
+    logcmd go get -d ./... || logerr "failed to get dependencies"
+
+    logmsg "Fixing permissions on dependencies"
+    logcmd $CHMOD -R u+w $GOPATH
+
+    set_builddir $BUILDDIR/$PROG
+
+    patch_source
 
     ((EXTRACT_MODE)) && exit
+
+    popd >/dev/null
 }
 
 build_component() {
     prog="$1"; shift
 
+    [ -n "$FLAVOR" -a "$FLAVOR" != "$prog" ] && return
+
     note -n "Building $prog"
 
-    EXTRACTED_SRC+=/$prog patch_source patches-$prog
-
-    export GOPATH=$TMPDIR/$BUILDDIR/$prog/_deps
-
-    pushd $TMPDIR/$BUILDDIR/$prog > /dev/null
+    pushd $TMPDIR/$BUILDDIR/$prog >/dev/null
     logcmd $MAKE "$@" || logerr "Build failed"
     popd >/dev/null
 
@@ -105,37 +115,29 @@ build_component() {
     logcmd $CHMOD -R u+w $GOPATH
 }
 
-build_mmctl() {
-    build_component mmctl "ADVANCED_VET=FALSE"
-}
-
-build_webapp() {
+build() {
     save_variable LDFLAGS
     LDFLAGS+=" -R$OPREFIX/lib/amd64"
     subsume_arch $BUILDARCH LDFLAGS
-    build_component $PROG-webapp build
+    # we could build the webapp from within the server project
+    # using the build-client target
+    # however, node.js fails in a very weird way (missing dependencies)
+    build_component webapp dist
     restore_variable LDFLAGS
-}
 
-build_server() {
-    build_component $PROG-server build-illumos package-illumos
-}
-
-build() {
-    for component in mmctl webapp server; do
-        [ -n "$FLAVOR" -a "$FLAVOR" != $component ] && continue
-        build_$component
-    done
+    build_component server build-illumos package-prep
 }
 
 install() {
-    logcmd $MKDIR -p $DESTDIR/$OPREFIX || logerr "mkdir"
+    logcmd $MKDIR -p $DESTDIR/$PREFIX/bin || logerr "mkdir"
 
-    logcmd $RSYNC -a $TMPDIR/$BUILDDIR/$PROG-server/dist/$PROG \
+    logcmd $RSYNC -a $TMPDIR/$BUILDDIR/server/dist/$PROG \
         $DESTDIR/$OPREFIX/ || logerr "copying dist"
 
-    logcmd $CP $TMPDIR/$BUILDDIR/mmctl/mmctl $DESTDIR/$PREFIX/bin \
-        || logerr "copying mmctl"
+    logcmd $CP $TMPDIR/$BUILDDIR/server/bin/$PROG \
+        $DESTDIR/$PREFIX/bin/ || logerr "copying $PROG"
+    logcmd $CP $TMPDIR/$BUILDDIR/server/bin/mmctl \
+        $DESTDIR/$PREFIX/bin/ || logerr "copying mmctl"
 
     logmsg "Creating config path"
     logcmd $MKDIR -p $DESTDIR/etc/$PREFIX || logerr "creating config dir"

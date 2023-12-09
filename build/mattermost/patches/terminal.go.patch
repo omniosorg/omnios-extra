@@ -1,6 +1,6 @@
-diff -wpruN '--exclude=*.orig' a~/vendor/github.com/isacikgoz/prompt/term/terminal.go a/vendor/github.com/isacikgoz/prompt/term/terminal.go
---- a~/vendor/github.com/isacikgoz/prompt/term/terminal.go	1970-01-01 00:00:00
-+++ a/vendor/github.com/isacikgoz/prompt/term/terminal.go	1970-01-01 00:00:00
+diff -wpruN --no-dereference '--exclude=*.orig' a~/server/_deps/pkg/mod/github.com/isacikgoz/prompt@v0.1.0/term/terminal.go a/server/_deps/pkg/mod/github.com/isacikgoz/prompt@v0.1.0/term/terminal.go
+--- a~/server/_deps/pkg/mod/github.com/isacikgoz/prompt@v0.1.0/term/terminal.go	1970-01-01 00:00:00
++++ a/server/_deps/pkg/mod/github.com/isacikgoz/prompt@v0.1.0/term/terminal.go	1970-01-01 00:00:00
 @@ -4,8 +4,7 @@ import (
  	"bufio"
  	"bytes"
