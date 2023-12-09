@@ -12,7 +12,7 @@
 | ooce/application/mc		| 4.8.30	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/munin	| 2.0.69	| https://github.com/munin-monitoring/munin/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mutt		| 2.2.12	| http://www.mutt.org/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/application/nagios	| 4.4.10	| https://github.com/NagiosEnterprises/nagioscore/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/nagios	| 4.5.0		| https://github.com/NagiosEnterprises/nagioscore/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nrdp	| 2.0.5 	| https://github.com/NagiosEnterprises/nrdp/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nrpe	| 4.1.0		| https://github.com/NagiosEnterprises/nrpe/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/nagios-nsca	| 2.10.2	| https://github.com/NagiosEnterprises/nsca/releases | [omniosorg](https://github.com/omniosorg)

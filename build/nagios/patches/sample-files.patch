@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/sample-config/nagios.cfg.in a/sample-config/nagios.cfg.in
+diff -wpruN --no-dereference '--exclude=*.orig' a~/sample-config/nagios.cfg.in a/sample-config/nagios.cfg.in
 --- a~/sample-config/nagios.cfg.in	1970-01-01 00:00:00
 +++ a/sample-config/nagios.cfg.in	1970-01-01 00:00:00
 @@ -15,7 +15,7 @@
@@ -19,7 +19,7 @@ diff -wpruN '--exclude=*.orig' a~/sample-config/nagios.cfg.in a/sample-config/na
  cfg_file=@sysconfdir@/objects/localhost.cfg
  
  # Definitions for monitoring a Windows machine
-diff -wpruN '--exclude=*.orig' a~/sample-config/resource.cfg.in a/sample-config/resource.cfg.in
+diff -wpruN --no-dereference '--exclude=*.orig' a~/sample-config/resource.cfg.in a/sample-config/resource.cfg.in
 --- a~/sample-config/resource.cfg.in	1970-01-01 00:00:00
 +++ a/sample-config/resource.cfg.in	1970-01-01 00:00:00
 @@ -22,7 +22,7 @@
@@ -31,7 +31,7 @@ diff -wpruN '--exclude=*.orig' a~/sample-config/resource.cfg.in a/sample-config/
  
  # Sets $USER2$ to be the path to event handlers
  #$USER2$=@libexecdir@/eventhandlers
-diff -wpruN '--exclude=*.orig' a~/sample-config/template-object/localhost.cfg.in a/sample-config/template-object/localhost.cfg.in
+diff -wpruN --no-dereference '--exclude=*.orig' a~/sample-config/template-object/localhost.cfg.in a/sample-config/template-object/localhost.cfg.in
 --- a~/sample-config/template-object/localhost.cfg.in	1970-01-01 00:00:00
 +++ a/sample-config/template-object/localhost.cfg.in	1970-01-01 00:00:00
 @@ -4,7 +4,7 @@
@@ -71,7 +71,7 @@ diff -wpruN '--exclude=*.orig' a~/sample-config/template-object/localhost.cfg.in
      members                 localhost               ; Comma separated list of hosts that belong to this group
  }
  
-diff -wpruN '--exclude=*.orig' a~/sample-config/template-object/templates.cfg.in a/sample-config/template-object/templates.cfg.in
+diff -wpruN --no-dereference '--exclude=*.orig' a~/sample-config/template-object/templates.cfg.in a/sample-config/template-object/templates.cfg.in
 --- a~/sample-config/template-object/templates.cfg.in	1970-01-01 00:00:00
 +++ a/sample-config/template-object/templates.cfg.in	1970-01-01 00:00:00
 @@ -61,19 +61,19 @@ define host {
