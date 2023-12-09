@@ -1,6 +1,6 @@
-diff -wpruN '--exclude=*.orig' a~/plugins-root/check_dhcp.c a/plugins-root/check_dhcp.c
---- a~/plugins-root/check_dhcp.c	2019-12-04 22:53:08.000000000 +0000
-+++ a/plugins-root/check_dhcp.c	2020-04-20 19:57:02.645330615 +0000
+diff -wpruN --no-dereference '--exclude=*.orig' a~/plugins-root/check_dhcp.c a/plugins-root/check_dhcp.c
+--- a~/plugins-root/check_dhcp.c	1970-01-01 00:00:00
++++ a/plugins-root/check_dhcp.c	1970-01-01 00:00:00
 @@ -82,7 +82,7 @@ const char *email = "devel@nagios-plugin
  #include <signal.h>
  #include <sys/dlpi.h>
