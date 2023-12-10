@@ -1,6 +1,6 @@
-diff -wpruN '--exclude=*.orig' a~/commands/utils_unix.go a/commands/utils_unix.go
---- a~/commands/utils_unix.go	1970-01-01 00:00:00
-+++ a/commands/utils_unix.go	1970-01-01 00:00:00
+diff -wpruN --no-dereference '--exclude=*.orig' a~/server/cmd/mmctl/commands/utils_unix.go a/server/cmd/mmctl/commands/utils_unix.go
+--- a~/server/cmd/mmctl/commands/utils_unix.go	1970-01-01 00:00:00
++++ a/server/cmd/mmctl/commands/utils_unix.go	1970-01-01 00:00:00
 @@ -1,8 +1,8 @@
  // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
  // See LICENSE.txt for license information.

@@ -9,7 +9,7 @@
 # http://www.illumos.org/license/CDDL.
 #
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 dir group=bin mode=0755 owner=root path=var/$(PREFIX)
 dir group=$(PROG) mode=0700 owner=$(PROG) path=var/$(PREFIX)/data
@@ -36,6 +36,6 @@ link path=$(OPREFIX)/bin/mmctl target=../$(PROG)/bin/mmctl
 <transform file path=$(PREFIX)/bin/$(PROG) \
     -> set restart_fmri svc:/ooce/application/$(PROG):default>
 
-license $(PROG)-server/LICENSE.txt license=Apache2
-license $(PROG)-server/build/MIT-COMPILED-LICENSE.md license=MIT
+license LICENSE.txt license=Apache2
+license server/build/MIT-COMPILED-LICENSE.md license=MIT
 
