@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=mod_wsgi
-VER=4.9.4
+VER=5.0.0
 # Hard-coded here for now. If we ship more than one apache version, this will
 # need restructuring.
 PKG=ooce/server/apache-24/modules/wsgi
@@ -52,7 +52,7 @@ init
 download_source apache $PROG $VER
 patch_source
 prep_build
-build -ctf
+build
 make_package
 clean_up
 
