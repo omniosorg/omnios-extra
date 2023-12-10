@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=gnuplot
-VER=5.4.9
+VER=5.4.10
 PKG=ooce/application/gnuplot
 SUMMARY="gnuplot"
 DESC="A portable command-line driven graphing utility"
@@ -28,6 +28,7 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 set_arch 64
+test_relver '>=' 151049 && set_clangver
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
@@ -39,7 +40,7 @@ XFORM_ARGS="
 CONFIGURE_OPTS+=" --with-qt=no"
 
 CPPFLAGS+=" -I$OPREFIX/include"
-LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
+LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -Wl,-R$OPREFIX/lib/amd64"
 
 init
 download_source $PROG $PROG $VER

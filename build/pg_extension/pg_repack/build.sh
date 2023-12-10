@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=pg_repack
 PKG=ooce/database/postgresql-XX/pg_repack
-VER=1.4.8
+VER=1.5.0
 SUMMARY="PostgreSQL XX online table repacking extension"
 DESC="Reorganize tables in PostgreSQL XX databases with minimal locks"
 
