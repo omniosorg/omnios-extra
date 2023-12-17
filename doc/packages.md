@@ -73,6 +73,7 @@
 | ooce/developer/ninja		| 1.11.1	| https://github.com/ninja-build/ninja/releases https://ninja-build.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| github-latest	| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| github-latest	| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/protobuf	| 25.1		| https://github.com/protocolbuffers/protobuf/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/radare2	| 5.7.8		| https://github.com/radareorg/radare2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/rust		| 1.74.1	| https://forge.rust-lang.org/infra/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/subversion	| 1.14.2	| https://downloads.apache.org/subversion/ | [omniosorg](https://github.com/omniosorg)
@@ -130,7 +131,6 @@
 | ooce/library/onig		| 6.9.9		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pango		| 1.51.0	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pixman		| 0.42.2	| https://www.cairographics.org/releases/ http://www.pixman.org/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/protobuf		| 3.21.9	| https://github.com/protocolbuffers/protobuf/releases/ | Currently used solely by mosh
 | ooce/library/security/libsasl2 | 2.1.28	| https://github.com/cyrusimap/cyrus-sasl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/serf		| 1.3.10 	| https://downloads.apache.org/serf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/slang		| 2.3.3		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)

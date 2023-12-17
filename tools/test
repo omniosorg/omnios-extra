@@ -55,9 +55,6 @@ add_target()
 			*/cyrus-imapd:*)
 				targets["ooce/library/libical"]=`pver ICALVER`
 				;;
-			*/mosh:*)
-				targets["ooce/library/protobuf"]=`pver PBUFVER`
-				;;
 			*/zadm:*)
 				targets["ooce/application/novnc"]=`pver NOVNCVER`
 				;;
