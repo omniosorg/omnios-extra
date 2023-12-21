@@ -10,7 +10,7 @@ Nagios Installation on OmniOS
 
 #### Install and Configure
 
-    pkg install fcgiwrap nagios nagios-plugins nginx php-74
+    pkg install fcgiwrap nagios nagios-plugins nginx php-82
     usermod -G fcgiwrap nginx
     usermod -G nagcmd fcgiwrap
     cp nagios-nginx-example.conf /etc/opt/ooce/nginx/nginx.conf
@@ -23,7 +23,7 @@ As the Apache *httpasswd* program is not available, it is possible to create the
 
 #### Start Nagios
 
-    svcadm enable php74
+    svcadm enable php82
     svcadm enable fcgiwrap
     svcadm enable nginx
     svcadm enable nagios
