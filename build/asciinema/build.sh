@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=asciinema
-VER=2.3.0
+VER=2.4.0
 PKG=ooce/text/asciinema
 SUMMARY="asciinema terminal recorder"
 DESC="A lightweight, purely text-based approach to terminal recording"
