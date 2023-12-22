@@ -1,4 +1,4 @@
-From d1c9b712d33b67a8ccce221d20c8af73046e2a1a Mon Sep 17 00:00:00 2001
+From 11b165e6d78f0c80d6d6570dfa15aa14b560eae2 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:53:22 +0000
 Subject: Do not pass --dynamic-list to linker
@@ -8,7 +8,7 @@ Subject: Do not pass --dynamic-list to linker
  1 file changed, 2 deletions(-)
 
 diff --git a/plugins/meson.build b/plugins/meson.build
-index 752377c66d..e86414aa2a 100644
+index 6b2d7a9292..505d49a894 100644
 --- a/plugins/meson.build
 +++ b/plugins/meson.build
 @@ -8,8 +8,6 @@ if not enable_modules

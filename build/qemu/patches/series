@@ -2,7 +2,6 @@
 0003-Do-not-pass-dynamic-list-to-linker.patch
 0004-illumos-defines-FSCALE-in-sys-param.h.patch
 0005-configure-uses-bash-extensions.patch
-0006-Temporary-coroutine-patch-pending-illumos-15206.patch
-0007-Add-support-for-VNICs.patch
-0008-Drop-unnecessary-privileges.patch
-0009-Add-support-for-a-zconsole-character-device.patch
+0006-Add-support-for-VNICs.patch
+0007-Drop-unnecessary-privileges.patch
+0008-Add-support-for-a-zconsole-character-device.patch
