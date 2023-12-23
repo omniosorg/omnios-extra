@@ -18,11 +18,11 @@
 
 PROG=php
 PKG=ooce/application/php-83
-VER=8.3.0
+VER=8.3.1
 SUMMARY="PHP 8.3"
 DESC="A popular general-purpose scripting language"
 
-PANDAHASH=3452f15
+PANDAHASH=01eaaa9
 
 set_arch 64
 

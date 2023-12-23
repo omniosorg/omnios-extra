@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=texinfo
-VER=7.0.3
+VER=7.1
 PKG=ooce/text/texinfo
 SUMMARY="$PROG - the official documentation format of the GNU project"
 DESC="Texinfo uses a single source file to produce output in a number of "

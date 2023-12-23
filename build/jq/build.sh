@@ -18,7 +18,7 @@
 
 PROG=jq
 PKG=ooce/util/jq
-VER=1.7
+VER=1.7.1
 SUMMARY="$PROG - JSON query tool"
 DESC="$PROG is a lightweight and flexible command-line JSON processor"
 
