@@ -8,11 +8,11 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
 
 # Restart fmri service
 <transform file path=$(PREFIX)/sbin/named \
-    -> set restart_fmri svc:/ooce/network/dns:named$(sVERSION)>
+    -> set restart_fmri svc:/network/dns:named$(sVERSION)>
 
 # Set permissions for directories
 <transform file path=$(CONFPATH) -> set preserve renamenew>
