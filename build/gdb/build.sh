@@ -18,7 +18,7 @@
 
 PROG=gdb
 PKG=ooce/developer/gdb
-VER=13.2
+VER=14.1
 SUMMARY="$PROG - GNU Debugger"
 DESC="The GNU debugger"
 
@@ -98,8 +98,21 @@ EOM
     popd
 
     logmsg "--- building feature files"
+    export XMLTOC
     logcmd $MAKE -C $TMPDIR/$EXTRACTED_SRC/gdb/features \
-        GDB=$OOCEBIN/gdb cfiles \
+        GDB=$OOCEBIN/gdb \
+        XMLTOC="
+            i386/amd64-avx-illumos.xml
+            i386/amd64-illumos.xml
+            i386/i386-avx-illumos.xml
+            i386/i386-illumos.xml
+            i386/i386-mmx-illumos.xml
+        " \
+        FEATURE_XMLFILES="
+            i386/32bit-illumos.xml
+            i386/64bit-illumos.xml
+        " \
+        cfiles \
         || logerr "feature build failed"
 
     logmsg -n "File generation successful"
