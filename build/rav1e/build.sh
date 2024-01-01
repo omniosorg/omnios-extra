@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=rav1e
-VER=0.6.6
+VER=0.7.0
 PKG=ooce/multimedia/rav1e
 SUMMARY="$PROG - AV1 encoder"
 DESC="AV1 video encoder"
