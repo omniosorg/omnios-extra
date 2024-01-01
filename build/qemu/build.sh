@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -27,7 +27,7 @@ LIBSLIRPVER=4.7.0
 SPHINXVER=7.2.6
 SPHINXRTDVER=2.0.0
 
-min_relver 151044
+min_rel 151044
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
