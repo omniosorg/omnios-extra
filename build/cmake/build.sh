@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=cmake
-VER=3.28.0
+VER=3.28.1
 PKG=ooce/developer/cmake
 SUMMARY="Build coordinator"
 DESC="An extensible system that manages the build process in a "
