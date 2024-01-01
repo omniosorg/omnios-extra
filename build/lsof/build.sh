@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=lsof
 PKG=ooce/file/lsof
-VER=4.99.0
+VER=4.99.3
 SUMMARY="List open files"
 DESC="Report a list of all open files and the processes that opened them"
 
@@ -36,15 +36,7 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
-pre_configure() {
-    typeset arch=$1
-
-    CONFIGURE_OPTS[$arch]+="
-        --disable-static
-        --includedir=$OPREFIX/include
-        --libdir=$OPREFIX/${LIBDIRS[$arch]}
-    "
-}
+CONFIGURE_OPTS+=" --disable-liblsof"
 
 init
 download_source $PROG $PROG $VER

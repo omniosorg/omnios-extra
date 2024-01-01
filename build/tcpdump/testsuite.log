@@ -1,8 +1,8 @@
-Running tests from /temp/build_hadfl/tcpdump-4.99.3/tcpdump-4.99.3/tests
+Running tests from /temp/build_hadfl/tcpdump-4.99.4/tcpdump-4.99.4/tests
 with ./tcpdump, version:
-tcpdump version 4.99.3
-libpcap version 1.10.3
-OpenSSL 3.0.8 7 Feb 2023
+tcpdump version 4.99.4
+libpcap version 1.10.4
+OpenSSL 3.1.4 24 Oct 2023
     print-x                                 : passed
     print-xx                                : passed
     print-X                                 : passed
@@ -347,7 +347,7 @@ OpenSSL 3.0.8 7 Feb 2023
     isoclns-oobr                            : passed
     nfs-attr-oobr                           : passed
     decnet-oobr                             : passed
-    oobr_parse_elements                     : passed
+    ieee802.11_parse_elements_oobr          : passed
     hoobr_ripng_print                       : passed
     hoobr_juniper                           : passed
     hoobr_juniper2                          : passed
@@ -546,7 +546,7 @@ OpenSSL 3.0.8 7 Feb 2023
     unsupported-link-type-dbus              : passed
     lsp-ping-timestamp                      : passed
     lwres_with_extra                        : passed
-FILE: /temp/build_hadfl/tcpdump-4.99.3/tcpdump-4.99.3/tests/crypto.tests
+FILE: /temp/build_hadfl/tcpdump-4.99.4/tcpdump-4.99.4/tests/crypto.tests
     esp1                                    : passed
     esp2                                    : passed
     esp3                                    : passed
@@ -559,14 +559,14 @@ FILE: /temp/build_hadfl/tcpdump-4.99.3/tcpdump-4.99.3/tests/crypto.tests
     bgp-aigp-oobr-ssl                       : passed
     bgp-as-path-oobr-nossl                  : skipped (HAVE_LIBCRYPTO set)
     bgp-aigp-oobr-nossl                     : skipped (HAVE_LIBCRYPTO set)
-FILE: /temp/build_hadfl/tcpdump-4.99.3/tcpdump-4.99.3/tests/isis-seg-fault-1-v.tests
+FILE: /temp/build_hadfl/tcpdump-4.99.4/tcpdump-4.99.4/tests/isis-seg-fault-1-v.tests
     isis-seg-fault-1-v                      : passed
-FILE: /temp/build_hadfl/tcpdump-4.99.3/tcpdump-4.99.3/tests/lmp-v.tests
+FILE: /temp/build_hadfl/tcpdump-4.99.4/tcpdump-4.99.4/tests/lmp-v.tests
     lmp-v-fptype1                           : passed
     lmp-v-fptype2                           : skipped (HAVE_FPTYPE2 not set)
-FILE: /temp/build_hadfl/tcpdump-4.99.3/tcpdump-4.99.3/tests/non-bsd.tests
+FILE: /temp/build_hadfl/tcpdump-4.99.4/tcpdump-4.99.4/tests/non-bsd.tests
     heap-overflow-1                         : passed
-FILE: /temp/build_hadfl/tcpdump-4.99.3/tcpdump-4.99.3/tests/printf_z.tests
+FILE: /temp/build_hadfl/tcpdump-4.99.4/tcpdump-4.99.4/tests/printf_z.tests
     ospf-gmpls                              : passed
     ospf-nssa-bitnt                         : passed
     ospf3_ah-vv                             : passed
@@ -585,7 +585,7 @@ FILE: /temp/build_hadfl/tcpdump-4.99.3/tcpdump-4.99.3/tests/printf_z.tests
     dns-zlip-2                              : passed
     dns-zlip-3                              : passed
     sflow_print-segv                        : passed
-FILE: /temp/build_hadfl/tcpdump-4.99.3/tcpdump-4.99.3/tests/smb.tests
+FILE: /temp/build_hadfl/tcpdump-4.99.4/tcpdump-4.99.4/tests/smb.tests
     eapon1                                  : skipped (ENABLE_SMB not set)
     eapon1-nosmb                            : passed
     eapon1-v                                : skipped (ENABLE_SMB not set)

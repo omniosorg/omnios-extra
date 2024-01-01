@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -20,7 +20,7 @@ PROG=ansible
 # NB: When bumping this version, also run this script with -P to re-generate
 # files/constraints which fixes the version of dependant python modules for
 # reproducible builds.
-VER=6.3.0
+VER=9.1.0
 PKG=ooce/system/management/ansible
 SUMMARY="Radically simple IT automation"
 DESC="Ansible is a radically simple IT automation system."

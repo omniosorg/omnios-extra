@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=fontconfig
-VER=2.14.2
+VER=2.15.0
 PKG=ooce/library/fontconfig
 SUMMARY="$PROG"
 DESC="A library for configuring and customizing font access"

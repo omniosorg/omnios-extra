@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=minio
 PKG=ooce/storage/minio
-VER=2023-12-20T01-00-02Z
+VER=2023-12-23T07-19-11Z
 SUMMARY="MinIO server"
 DESC="A high Performance Object Storage. "
 DESC+="It is API compatible with Amazon S3 cloud storage service."
