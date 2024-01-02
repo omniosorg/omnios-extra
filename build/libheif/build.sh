@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -25,12 +25,18 @@ DESC+="file format decoder and encoder"
 
 test_relver '>=' 151047 && set_clangver
 
+# The rav1e ABI changes frequently. Lock the version
+# pulled into each build of libheif.
+RAV1EVER=`pkg_ver rav1e`
+RAV1EVER=${RAV1EVER%.*}
+
 BUILD_DEPENDS_IPS="
     ooce/library/libde265
     ooce/multimedia/dav1d
-    ooce/multimedia/rav1e
+    =ooce/multimedia/rav1e@$RAV1EVER
     ooce/multimedia/x265
 "
+RUN_DEPENDS_IPS="=ooce/multimedia/rav1e@$RAV1EVER"
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
