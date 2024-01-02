@@ -29,6 +29,17 @@ PVERS="4.4.4 5.1.4"
 
 test_relver '>=' 151041 && set_clangver
 
+# The rav1e ABI changes frequently. Lock the version
+# pulled into each build of ffmpeg.
+# TODO: since the build framework checks whether the package is installed on
+# the host system rather than the sysroot for cross-builds, this won't break
+# cross-building ffmpeg even when rav1e is not present in the sysroot
+# we should fix the framework to be able to handle arch specific build-time
+# dependencies
+RAV1EVER=`pkg_ver rav1e`
+RAV1EVER=${RAV1EVER%.*}
+BUILD_DEPENDS_IPS="=ooce/multimedia/rav1e@$RAV1EVER"
+
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
@@ -89,7 +100,10 @@ pre_configure() {
 
     LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
 
-    ! cross_arch $arch && return
+    if ! cross_arch $arch; then
+        RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
+        return
+    fi
 
     CONFIGURE_OPTS[$arch]+="
         --sysroot=${SYSROOT[$arch]}
