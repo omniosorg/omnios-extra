@@ -1,0 +1,3087 @@
+
+This is the illumos / SmartOS commit from
+https://github.com/siepkes/bazel-smartos
+
+The subsequent `omnios.patch` replaces SmartOS-specific values in here
+with ones suitable for OmniOS.
+
+From b18a74ab079f0a6ec895e275a58957d9c024925a Mon Sep 17 00:00:00 2001
+From: Jasper Siepkes <siepkes@serviceplanet.nl>
+Date: Wed, 27 Dec 2023 10:43:10 +0100
+Subject: [PATCH] Modifications to port Bazel 6.3.2 to illumos / SmartOS.
+
+---
+ README.md                                     |  91 ++-
+ WORKSPACE                                     |   2 +-
+ distdir_deps.bzl                              |  27 +-
+ scripts/bootstrap/buildenv.sh                 |   4 +
+ scripts/packages/BUILD                        |   1 +
+ scripts/packages/template_bin.sh              |   4 +
+ src/conditions/BUILD                          |  14 +
+ src/conditions/BUILD.tools                    |   6 +
+ src/main/cpp/BUILD                            |   8 +
+ src/main/cpp/blaze.cc                         |   3 +-
+ src/main/cpp/blaze_util_illumos.cc            | 235 +++++++
+ src/main/cpp/blaze_util_posix.cc              |   9 +
+ .../lib/analysis/config/AutoCpuConverter.java |   4 +
+ .../LocalConfigPlatformFunction.java          |   4 +-
+ .../bazel/rules/BazelRuleClassProvider.java   |   6 +-
+ .../rules/python/python_stub_template.txt     |   4 +-
+ .../devtools/build/lib/jni/JniLoader.java     |   1 +
+ .../build/lib/rules/cpp/CcModule.java         |  13 +-
+ .../build/lib/rules/cpp/CppActionConfigs.java |  23 +-
+ .../lib/runtime/BazelFileSystemModule.java    |  32 +-
+ .../lib/runtime/CommonCommandOptions.java     |   4 +-
+ .../build/lib/runtime/ConfigExpander.java     |   2 +
+ .../build/lib/server/GrpcServerImpl.java      |   9 +
+ .../google/devtools/build/lib/util/OS.java    |   5 +-
+ src/main/native/BUILD                         |   2 +
+ src/main/native/unix_jni.cc                   |  10 +-
+ src/main/native/unix_jni.h                    |   2 +-
+ src/main/native/unix_jni_illumos.cc           | 114 ++++
+ src/main/tools/BUILD                          |   5 +
+ .../LocalConfigPlatformFunctionTest.java      |   1 +
+ .../lib/packages/util/BazelMockCcSupport.java |   2 +-
+ .../packages/util/MockPlatformSupport.java    |   4 +
+ .../platform/SleepPreventionModuleTest.java   |   1 +
+ src/tools/singlejar/diag.h                    |   2 +-
+ src/tools/singlejar/mapped_file_posix.inc     |   2 +-
+ src/tools/singlejar/zip_headers.h             |   2 +-
+ third_party/BUILD                             |   6 +
+ third_party/absl/BUILD                        |   7 +
+ third_party/absl/LICENSE                      | 203 ++++++
+ third_party/absl/illumos-20211102.0.patch     |  83 +++
+ third_party/grpc/build_defs.bzl               |  12 +-
+ third_party/grpc/grpc_1.47.0.illumos.patch    | 602 ++++++++++++++++++
+ third_party/platforms/illumos-0.0.4.0.patch   |  28 +
+ third_party/zstd-jni/zstd-jni.BUILD           |   1 +
+ tools/cpp/BUILD.static.illumos                |  77 +++
+ tools/cpp/BUILD.tpl                           |   3 +-
+ tools/cpp/bsd_cc_toolchain_config.bzl         |   2 +-
+ tools/cpp/cc_configure.bzl                    |   8 +
+ tools/cpp/illumos_cc_toolchain_config.bzl     | 333 ++++++++++
+ tools/cpp/lib_cc_configure.bzl                |   5 +
+ tools/cpp/osx_cc_configure.bzl                |  32 +
+ tools/jdk/BUILD                               |   2 +-
+ tools/jdk/BUILD.java_tools                    |  62 ++
+ tools/jdk/BUILD.tools                         |   8 +
+ tools/platforms/BUILD                         |   7 +
+ tools/platforms/BUILD.tools                   |   7 +
+ 56 files changed, 2098 insertions(+), 48 deletions(-)
+ create mode 100644 src/main/cpp/blaze_util_illumos.cc
+ create mode 100644 src/main/native/unix_jni_illumos.cc
+ create mode 100644 third_party/absl/BUILD
+ create mode 100644 third_party/absl/LICENSE
+ create mode 100644 third_party/absl/illumos-20211102.0.patch
+ create mode 100644 third_party/grpc/grpc_1.47.0.illumos.patch
+ create mode 100644 third_party/platforms/illumos-0.0.4.0.patch
+ create mode 100644 tools/cpp/BUILD.static.illumos
+ create mode 100644 tools/cpp/illumos_cc_toolchain_config.bzl
+
+diff --git a/README.md b/README.md
+index de903d6ff3c3f..167e9c66dd83b 100644
+--- a/README.md
++++ b/README.md
+@@ -1,4 +1,93 @@
+-# [Bazel](https://bazel.build)
++# Bazel illumos (and somewhat Solaris) port
++
++**(Scroll down for original Bazel README.md)**
++
++This repo contains a illumos port of Bazel. This port currently assumes the use of pkgsrc.
++
++Previous versions of this port used Solaris as a target name but this version specifically targets illumos. Among things because I don't want to hijack the Solaris target name since this is acutally a illumos port. With a little effort (couple of `ifdef`'s) it can probably also be made to work on Solaris. Since I personally don't have a need for such a port it's not here. However if you would like to adopt this port for use on Solaris and run into any issues while doing so please feel free to reach out to me via issues or Mastodon (`@JasperSiepkes@mastodon.social`).
++
++## Building Bazel on SmartOS
++
++Create a SmartOS container (joyent brand if you are on Triton). To build and use Bazel you need an image which has GCC 9. This guide assumes you use image `e44ed3e0-910b-11ed-a5d4-00151714048c` (22.4.0) with GCC 9. Beware that currently the GCC `9.3.0` path is hardcoded in Bazel path (see known issues).
++
++Install required build packages:
++
++```
++# pkgin -y install git-base zip unzip openjdk11 libtool cmake automake ninja-build autoconf gmake gcc9
++```
++
++Next we need to download the Bazel distribution and apply the changes of this forked repo. The reason why we need the Bazel distribution and can't simply compile the cloned fork is because in order to compile Bazel you need a working Bazel installation (usually an older version). The Bazel distribution contains things like pre-compiled protobuf messages (ie. java files generated by the protobuf compiler).
++
++Download [bazel-6.3.2-dist.zip](https://github.com/bazelbuild/bazel/releases/download/6.3.2/bazel-6.3.2-dist.zip) (the Bazel distribution) from the [Bazel releases](https://github.com/bazelbuild/bazel/releases) page.
++
++Next we will prepare our source tree by putting everything together:
++
++```
++# mkdir bazel-6.3.2
++# unzip bazel-6.3.2-dist.zip -d bazel-6.3.2
++# git clone https://github.com/siepkes/bazel-smartos.git
++# cd bazel-smartos
++# git checkout smartos-6.3.2
++# git format-patch -1
++# cd ../bazel-6.3.2
++# patch -p1 < ../bazel-smartos/0001-Modifications-to-port-Bazel-6.3.2-to-illumos-SmartOS.patch
++```
++
++We are now ready to build Bazel!
++
++```
++# export JAVA_HOME="/opt/local/java/openjdk11"
++# export EXTRA_BAZEL_ARGS="--tool_java_runtime_version=local_jdk"
++# ./compile.sh
++```
++
++Grab a `<INSERT FAVORITE BEVERAGE HERE>` and wait for the build to complete.
++
++## Debugging Bazel build problems
++
++When encountering issues with building Bazel the following `EXTRA_BAZEL_ARGS` can be set to get more information during the build. See the [Bazel Command Line Reference](https://docs.bazel.build/versions/master/command-line-reference.html) for more flags.
++
++```
++# export EXTRA_BAZEL_ARGS="--subcommands --verbose_failures --tool_java_runtime_version=local_jdk"
++# export CC_CONFIGURE_DEBUG=1
++```
++
++## Troubleshooting
++
++### Package '@local_jdk//': Package '' contains errors
++
++If you run in to an error like this:
++
++```
++ERROR: /root/.cache/bazel/_bazel_root/b3ceecd93235c3ff2b5d18da2360ca56/external/local_jdk/BUILD.bazel:183:10: @local_jdk//:jdk-lib: invalid label 'lib/perl5/man/man3/App::Cpan.3.gz' in element 7182 of attribute 'srcs' in 'filegroup' rule: invalid target name 'lib/perl5/man/man3/App::Cpan.3.gz': target names may not contain ':'
++ERROR: Analysis of target '//main:hello-world' failed; build aborted: error loading package '@local_jdk//': Package '' contains errors
++```
++
++You probably need to specify where Java home is. For example:
++
++```
++$ export JAVA_HOME="/opt/local/java/openjdk11"
++```
++
++## Notes on porting to illumos
++
++This port is dependent on the [platforms](https://github.com/siepkes/platforms) definition repository.
++
++## Known issues
++
++* `bazel/tools/cpp/CROSSTOOL` contains a hardcoded GCC version number in some paths. For example `/opt/local/gcc7/lib/gcc/x86_64-sun-solaris2.11/7.5.0/include-fixed`. This can break with GCC updates and will result in errors like when for example `7.3.0` is configured in Bazel instead of `7.5.0`:
++
++```
++ERROR: /root/.cache/bazel/_bazel_root/7558a64af10a6eb79f74e70211660103/external/com_google_protobuf/BUILD:414:1: undeclared inclusion(s) in rule '@com_google_protobuf//:protoc':
++this rule is missing dependency declarations for the following files included by 'external/com_google_protobuf/src/google/protobuf/compiler/main.cc':
++  '/opt/local/gcc7/lib/gcc/x86_64-sun-solaris2.11/7.5.0/include/stddef.h'
++  '/opt/local/gcc7/lib/gcc/x86_64-sun-solaris2.11/7.5.0/include/stdint.h'
++Target //source/exe:envoy-static failed to build
++```
++
++* There are some `FIXME:` entries added to the code base which describe ugly hacks which have been applied. If these changes are ever to be upstreamed these would likely need to be addressed.
++
++# Original Bazel README.md
+ 
+ *{Fast, Correct} - Choose two*
+ 
+diff --git a/WORKSPACE b/WORKSPACE
+index f6e0a3352d06f..4776e712fde17 100644
+--- a/WORKSPACE
++++ b/WORKSPACE
+@@ -706,4 +706,4 @@ debian_deps()
+ 
+ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+ 
+-bazel_skylib_workspace()
++bazel_skylib_workspace()
+\ No newline at end of file
+diff --git a/distdir_deps.bzl b/distdir_deps.bzl
+index b896f1b24eaf1..25be68c3a8885 100644
+--- a/distdir_deps.bzl
++++ b/distdir_deps.bzl
+@@ -25,11 +25,12 @@ DIST_DEPS = {
+     #
+     ########################################
+     "platforms": {
+-        "archive": "platforms-0.0.5.tar.gz",
+-        "sha256": "379113459b0feaf6bfbb584a91874c065078aa673222846ac765f86661c27407",
++        "archive": "b2adb960759a3dc93505953357109d78503b0bd9.zip",
++        "sha256": "dbb1e347cf7016ef8b1fa92999d45711c806c1d491510555cb2b82bddbf0b356",
++        "strip_prefix": "platforms-b2adb960759a3dc93505953357109d78503b0bd9",
+         "urls": [
+-            "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.5/platforms-0.0.5.tar.gz",
+-            "https://github.com/bazelbuild/platforms/releases/download/0.0.5/platforms-0.0.5.tar.gz",
++            # Commit 'b2adb960759a3dc93505953357109d78503b0bd9' is a fork of 0.0.5 with 'illumos' added as OS.
++            "https://github.com/siepkes/platforms/archive/b2adb960759a3dc93505953357109d78503b0bd9.zip",
+         ],
+         "used_in": [
+             "additional_distfiles",
+@@ -52,9 +53,13 @@ DIST_DEPS = {
+     # Used in src/main/java/com/google/devtools/build/lib/bazel/rules/java/jdk.WORKSPACE.
+     # Used in src/test/java/com/google/devtools/build/lib/blackbox/framework/blackbox.WORKSAPCE
+     "rules_cc": {
+-        "archive": "rules_cc-0.0.2.tar.gz",
+-        "sha256": "58bff40957ace85c2de21ebfc72e53ed3a0d33af8cc20abd0ceec55c63be7de2",
+-        "urls": ["https://github.com/bazelbuild/rules_cc/releases/download/0.0.2/rules_cc-0.0.2.tar.gz"],
++        "archive": "dcdade2ab0ac62b817b411827ff616454dd4f442.zip",
++        "sha256": "7c14eece2ea365f75e781a04776faab06beacb7296d18602b6230e5ff1230918",
++        "strip_prefix": "rules_cc-dcdade2ab0ac62b817b411827ff616454dd4f442",
++        "urls": [
++            # TODO: Implement as patch instead of using a repo.
++            "https://github.com/siepkes/rules_cc/archive/dcdade2ab0ac62b817b411827ff616454dd4f442.zip",
++        ],
+         "used_in": [
+             "additional_distfiles",
+             "test_WORKSPACE_files",
+@@ -122,7 +127,9 @@ DIST_DEPS = {
+         "patch_args": ["-p1"],
+         "patches": [
+             "//third_party/grpc:grpc_1.47.0.patch",
+-            "//third_party/grpc:grpc_1.47.0.win_arm64.patch",
++            # Conflicts with out illumos changes (cares build modifications).
++            #"//third_party/grpc:grpc_1.47.0.win_arm64.patch",
++            "//third_party/grpc:grpc_1.47.0.illumos.patch",
+         ],
+         "used_in": [
+             "additional_distfiles",
+@@ -235,6 +242,10 @@ DIST_DEPS = {
+             "https://mirror.bazel.build/github.com/abseil/abseil-cpp/archive/refs/tags/20211102.0.tar.gz",
+             "https://github.com/abseil/abseil-cpp/archive/refs/tags/20211102.0.tar.gz",
+         ],
++        "patch_args": ["-p1"],
++        "patches": [
++            "//third_party:absl/illumos-20211102.0.patch",
++        ],
+         "used_in": [
+             "additional_distfiles",
+             "test_WORKSPACE_files",
+diff --git a/scripts/bootstrap/buildenv.sh b/scripts/bootstrap/buildenv.sh
+index 03f52c32d440b..a40e5991cc988 100755
+--- a/scripts/bootstrap/buildenv.sh
++++ b/scripts/bootstrap/buildenv.sh
+@@ -98,6 +98,10 @@ openbsd)
+   JAVA_HOME="${JAVA_HOME:-/usr/local/jdk-11}"
+   ;;
+ 
++sunos)
++  JAVA_HOME="${JAVA_HOME:-/opt/local/java/openjdk11}"
++  ;;
++
+ darwin)
+   if [[ -z "$JAVA_HOME" ]]; then
+     JAVA_HOME="$(/usr/libexec/java_home -v ${JAVA_VERSION}+ 2> /dev/null)" \
+diff --git a/scripts/packages/BUILD b/scripts/packages/BUILD
+index c915a93ce9388..740c6345c99fd 100644
+--- a/scripts/packages/BUILD
++++ b/scripts/packages/BUILD
+@@ -24,6 +24,7 @@ filegroup(
+         ],
+         "//src/conditions:freebsd": [],
+         "//src/conditions:openbsd": [],
++        "//src/conditions:illumos": [],
+         "//src/conditions:darwin": [
+             ":with-jdk/install.sh",
+             ":without-jdk/install.sh",
+diff --git a/scripts/packages/template_bin.sh b/scripts/packages/template_bin.sh
+index 974a19bf01a52..145c083e8dfd7 100755
+--- a/scripts/packages/template_bin.sh
++++ b/scripts/packages/template_bin.sh
+@@ -119,6 +119,10 @@ if [ -z "${JAVA_HOME-}" ]; then
+       JAVA_HOME="/usr/local/jdk-1.8.0"
+       BASHRC="~/.bashrc"
+       ;;
++    sunos)
++      JAVA_HOME="/opt/local/java/openjdk11"
++      BASHRC="~/.bashrc"
++      ;;
+     darwin)
+       JAVA_HOME="$(/usr/libexec/java_home -v ${JAVA_VERSION}+ 2> /dev/null)" || true
+       BASHRC="~/.bash_profile"
+diff --git a/src/conditions/BUILD b/src/conditions/BUILD
+index 6fd49f313a20d..df8a1044af1c3 100644
+--- a/src/conditions/BUILD
++++ b/src/conditions/BUILD
+@@ -165,6 +165,12 @@ config_setting(
+     visibility = ["//visibility:public"],
+ )
+ 
++config_setting(
++    name = "illumos",
++    constraint_values = ["@platforms//os:illumos"],
++    visibility = ["//visibility:public"],
++)
++
+ config_setting(
+     name = "windows",
+     constraint_values = ["@platforms//os:windows"],
+@@ -233,3 +239,11 @@ config_setting(
+     },
+     visibility = ["//visibility:public"],
+ )
++
++config_setting(
++    name = "grpc_no_ares",
++    values = {
++        "define": "grpc_no_ares=true",
++    },
++    visibility = ["//visibility:public"],
++)
+\ No newline at end of file
+diff --git a/src/conditions/BUILD.tools b/src/conditions/BUILD.tools
+index aafdb4fb34786..ec0775bb4ba3f 100644
+--- a/src/conditions/BUILD.tools
++++ b/src/conditions/BUILD.tools
+@@ -12,6 +12,12 @@ config_setting(
+     visibility = ["//visibility:public"],
+ )
+ 
++config_setting(
++    name = "illumos",
++    constraint_values = ["@platforms//os:illumos"],
++    visibility = ["//visibility:public"],
++)
++
+ config_setting(
+     name = "darwin",
+     constraint_values = ["@platforms//os:macos"],
+diff --git a/src/main/cpp/BUILD b/src/main/cpp/BUILD
+index ffe7caf6bb5b0..a2d1dea3a10db 100644
+--- a/src/main/cpp/BUILD
++++ b/src/main/cpp/BUILD
+@@ -30,6 +30,10 @@ cc_library(
+             "blaze_util_bsd.cc",
+             "blaze_util_posix.cc",
+         ],
++        "//src/conditions:illumos": [
++            "blaze_util_illumos.cc",
++            "blaze_util_posix.cc",
++        ],
+         "//src/conditions:windows": [
+             "blaze_util_windows.cc",
+         ],
+@@ -51,6 +55,8 @@ cc_library(
+         ],
+         "//src/conditions:openbsd": [
+         ],
++        "//src/conditions:illumos": [
++        ],
+         "//src/conditions:windows": WIN_LINK_OPTS,
+         "//conditions:default": [
+             "-lrt",
+@@ -112,6 +118,8 @@ cc_binary(
+         ],
+         "//src/conditions:openbsd": [
+         ],
++        "//src/conditions:illumos": [
++        ],
+         "//src/conditions:windows": [
+         ],
+         "//conditions:default": [
+diff --git a/src/main/cpp/blaze.cc b/src/main/cpp/blaze.cc
+index 459dd524c62dc..a1ca4edd0d55d 100644
+--- a/src/main/cpp/blaze.cc
++++ b/src/main/cpp/blaze.cc
+@@ -1263,7 +1263,8 @@ static ATTRIBUTE_NORETURN void RunClientServerMode(
+       // actually different because the two processes have different mount
+       // tables.
+       BAZEL_LOG(INFO) << "Server's cwd moved or deleted ("
+-                      << server_cwd->AsPrintablePath() << ").";
++                      << server_cwd->AsPrintablePath() << ") - ("
++                      << workspace << ") Server PID: " << server->ProcessInfo().server_pid_;
+       server->KillRunningServer();
+     } else {
+       break;
+diff --git a/src/main/cpp/blaze_util_illumos.cc b/src/main/cpp/blaze_util_illumos.cc
+new file mode 100644
+index 0000000000000..d70e55e27db52
+--- /dev/null
++++ b/src/main/cpp/blaze_util_illumos.cc
+@@ -0,0 +1,235 @@
++// Copyright 2014 The Bazel Authors. All rights reserved.
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//    http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
++// Copied from the Linux version since Illumos also supports /proc.
++//
++//
++// Following methods implemented specifically for Illumos:
++// - GetSelfPath
++// - GetStartTime (internal)
++//   - WriteSystemSpecificProcessIdentifier
++//   - VerifyServerProcess
++// - GetProcessCWD
++
++#include <errno.h>  // errno, ENAMETOOLONG
++#include <limits.h>
++#include <pwd.h>
++#include <signal.h>
++#include <spawn.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>  // strerror
++#include <sys/socket.h>
++#include <sys/stat.h>
++#include <sys/statfs.h>
++#include <sys/types.h>
++#include <unistd.h>
++#include <procfs.h> // psinfo
++#include <time.h>
++#include <libproc.h> // proc_arg_psinfo
++
++#include "src/main/cpp/blaze_util.h"
++#include "src/main/cpp/blaze_util_platform.h"
++#include "src/main/cpp/util/errors.h"
++#include "src/main/cpp/util/exit_code.h"
++#include "src/main/cpp/util/file.h"
++#include "src/main/cpp/util/logging.h"
++#include "src/main/cpp/util/path.h"
++#include "src/main/cpp/util/port.h"
++#include "src/main/cpp/util/strings.h"
++
++namespace blaze {
++
++using blaze_util::GetLastErrorString;
++using std::string;
++using std::vector;
++
++string GetOutputRoot() {
++  string base;
++  string home = GetHomeDir();
++  if (!home.empty()) {
++    base = home;
++  } else {
++    char buf[2048];
++    struct passwd pwbuf;
++    struct passwd *pw = NULL;
++    int uid = getuid();
++    int r = getpwuid_r(uid, &pwbuf, buf, 2048, &pw);
++    if (r != -1 && pw != NULL) {
++      base = pw->pw_dir;
++    }
++  }
++
++  if (!base.empty()) {
++    return blaze_util::JoinPath(base, ".cache/bazel");
++  }
++
++  return "/tmp";
++}
++
++void WarnFilesystemType(const blaze_util::Path &output_base) {
++  // TODO: Implement on Illumos
++}
++
++string GetSelfPath(const char* argv0) {
++  return string(getexecname());
++}
++
++uint64_t GetMillisecondsMonotonic() {
++  struct timespec ts = {};
++  clock_gettime(CLOCK_MONOTONIC, &ts);
++  return ts.tv_sec * 1000LL + (ts.tv_nsec / 1000000LL);
++}
++
++uint64_t GetMillisecondsSinceProcessStart() {
++  struct timespec ts = {};
++  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts);
++  return ts.tv_sec * 1000LL + (ts.tv_nsec / 1000000LL);
++}
++
++void SetScheduling(bool batch_cpu_scheduling, int io_nice_level) {
++  // TODO: Implement setting CPU and IO scheduling hints.
++}
++
++std::unique_ptr<blaze_util::Path> GetProcessCWD(int pid) {
++  // In Illumos and Solaris using readlink on '/proc/PID/cwd' in procfs (like is done in the Linux port) will result
++  // in a null string. This implementation inspired on how 'pwdx.c' (in base Illumos) does it.
++
++  char cwd[PATH_MAX], proc[128];
++  psinfo_t psinfo;
++  int err_code, ret_readlink;
++
++  if (proc_arg_psinfo(std::to_string(pid).c_str(), PR_ARG_PIDS, &psinfo, &err_code) == -1) {
++    BAZEL_DIE(blaze_exit_code::INTERNAL_ERROR)
++      << "Unable to retrieve 'psinfo_t' for PID: " << pid;
++  }
++
++  (void) snprintf(proc, sizeof (proc), "/proc/%d/path/cwd", (int)psinfo.pr_pid);
++
++  if ((ret_readlink = readlink(proc, cwd, sizeof (cwd) - 1)) <= 0) {
++    BAZEL_DIE(blaze_exit_code::INTERNAL_ERROR)
++      << "Cannot resolve current work dir for PID: " << pid;
++  }
++  cwd[ret_readlink] = '\0';
++
++  BAZEL_LOG(INFO) << "PID: " << pid << " (" << string(cwd) << ").";
++
++  return std::unique_ptr<blaze_util::Path>(new blaze_util::Path(string(cwd)));
++}
++
++bool IsSharedLibrary(const string &filename) {
++  return blaze_util::ends_with(filename, ".so");
++}
++
++string GetSystemJavabase() {
++  // if JAVA_HOME is defined, then use it as default.
++  string javahome = GetEnv("JAVA_HOME");
++  if (!javahome.empty()) {
++    return javahome;
++  }
++
++  // which javac
++  string javac_dir = Which("javac");
++  if (javac_dir.empty()) {
++    return "";
++  }
++
++  // Resolve all symlinks.
++  char resolved_path[PATH_MAX];
++  if (realpath(javac_dir.c_str(), resolved_path) == NULL) {
++    return "";
++  }
++  javac_dir = resolved_path;
++
++  // dirname dirname
++  return blaze_util::Dirname(blaze_util::Dirname(javac_dir));
++}
++
++// Called from a signal handler!
++static bool GetStartTime(const string& pid, string* start_time) {
++  // TODO: Threw this together somewhat quick. Needs to be checked
++  // for correctness.
++  char filename [PATH_MAX];
++  FILE *f;
++  bool time_set = false;
++  psinfo_t info;
++
++  snprintf(filename, sizeof(filename), "/proc/%s/psinfo", pid.c_str());
++
++  f = fopen(filename, "r");
++  if (f) {
++    if (fread(&info, sizeof(info), 1, f) > 0) {
++      char buffer [128];
++      sprintf (buffer, "%lu", info.pr_start.tv_sec);
++      *start_time = string(buffer);
++      time_set = true;
++    }
++    
++    fclose(f);
++  }
++
++  return time_set;
++}
++
++int ConfigureDaemonProcess(posix_spawnattr_t* attrp,
++                           const StartupOptions &options) {
++  // No interesting platform-specific details to configure on this platform.
++  return 0;
++}
++
++void WriteSystemSpecificProcessIdentifier(const blaze_util::Path& server_dir,
++                                          pid_t server_pid) {
++  string pid_string = blaze_util::ToString(server_pid);
++
++  string start_time;
++  if (!GetStartTime(pid_string, &start_time)) {
++    BAZEL_DIE(blaze_exit_code::LOCAL_ENVIRONMENTAL_ERROR) 
++        << "Cannot get start time of process " << pid_string.c_str();
++  }
++
++  blaze_util::Path start_time_file = server_dir.GetRelative("server.starttime");
++  if (!blaze_util::WriteFile(start_time, start_time_file)) {
++    BAZEL_DIE(blaze_exit_code::LOCAL_ENVIRONMENTAL_ERROR)
++        << "Cannot write start time in server dir "
++        << server_dir.AsPrintablePath() << ": " << GetLastErrorString();
++  }
++}
++
++// On Linux we use a combination of PID and start time to identify the server
++// process. That is supposed to be unique unless one can start more processes
++// than there are PIDs available within a single jiffy.
++bool VerifyServerProcess(int pid, const blaze_util::Path &output_base) {
++  string start_time;
++  if (!GetStartTime(blaze_util::ToString(pid), &start_time)) {
++    // Cannot read PID file from /proc . Process died meantime, all is good. No
++    // stale server is present.
++    return false;
++  }
++
++  string recorded_start_time;
++  bool file_present = blaze_util::ReadFile(
++      output_base.GetRelative("server/server.starttime"), &recorded_start_time);
++
++  return recorded_start_time == start_time;
++}
++
++void ExcludePathFromBackup(const blaze_util::Path &path) {
++  // Not supported.
++}
++
++int32_t GetExplicitSystemLimit(const int resource) {
++  return -1;
++}
++
++}  // namespace blaze
+diff --git a/src/main/cpp/blaze_util_posix.cc b/src/main/cpp/blaze_util_posix.cc
+index e046663c5f94c..e1e752ade4650 100644
+--- a/src/main/cpp/blaze_util_posix.cc
++++ b/src/main/cpp/blaze_util_posix.cc
+@@ -34,6 +34,9 @@
+ #include <sys/wait.h>
+ #include <time.h>
+ #include <unistd.h>
++#if defined(__illumos__)
++#include <sys/termios.h> // TIOCGWINSZ
++#endif
+ 
+ #include <algorithm>
+ #include <cassert>
+@@ -705,6 +708,9 @@ uint64_t AcquireLock(const blaze_util::Path& output_base, bool batch_mode,
+   // fails to take the lock, but not parsed otherwise.
+   (void) ftruncate(lockfd, 0);
+   lseek(lockfd, 0, SEEK_SET);
++#if defined(__illumos__)
++// TODO: Implement for Illumos. Illumos does not support dprintf (POSIX 2008).
++#else
+   // Arguably we should ensure this fits in the 4KB we lock.  In practice no one
+   // will have a cwd long enough to overflow that, and nothing currently uses
+   // the rest of the lock file anyway.
+@@ -714,6 +720,7 @@ uint64_t AcquireLock(const blaze_util::Path& output_base, bool batch_mode,
+   if (const char *tty = ttyname(STDIN_FILENO)) {  // NOLINT (single-threaded)
+     dprintf(lockfd, "tty=%s\n", tty);
+   }
++#endif
+   blaze_lock->lockfd = lockfd;
+   return wait_time;
+ }
+@@ -856,7 +863,9 @@ static bool UnlimitResource(const int resource, const bool allow_infinity) {
+ bool UnlimitResources() {
+   bool success = true;
+   success &= UnlimitResource(RLIMIT_NOFILE, false);
++#if defined(RLIMIT_NPROC)
+   success &= UnlimitResource(RLIMIT_NPROC, false);
++#endif
+   return success;
+ }
+ 
+diff --git a/src/main/java/com/google/devtools/build/lib/analysis/config/AutoCpuConverter.java b/src/main/java/com/google/devtools/build/lib/analysis/config/AutoCpuConverter.java
+index 4d5917aaaaa34..eaa32dd3fdb32 100644
+--- a/src/main/java/com/google/devtools/build/lib/analysis/config/AutoCpuConverter.java
++++ b/src/main/java/com/google/devtools/build/lib/analysis/config/AutoCpuConverter.java
+@@ -44,6 +44,8 @@ public String convert(String input) throws OptionsParsingException {
+           }
+         case FREEBSD:
+           return "freebsd";
++        case ILLUMOS:
++          return "illumos";          
+         case OPENBSD:
+           return "openbsd";
+         case WINDOWS:
+@@ -98,6 +100,8 @@ public static Pair<CPU, OS> reverse(String input) {
+       return Pair.of(CPU.getCurrent(), OS.DARWIN);
+     } else if (input.startsWith("freebsd")) {
+       return Pair.of(CPU.getCurrent(), OS.FREEBSD);
++    } else if (input.startsWith("illumos")) {
++      return Pair.of(CPU.getCurrent(), OS.ILLUMOS);      
+     } else if (input.startsWith("openbsd")) {
+       return Pair.of(CPU.getCurrent(), OS.OPENBSD);
+     } else if (input.startsWith("x64_windows")) {
+diff --git a/src/main/java/com/google/devtools/build/lib/bazel/repository/LocalConfigPlatformFunction.java b/src/main/java/com/google/devtools/build/lib/bazel/repository/LocalConfigPlatformFunction.java
+index eecf41a30ecd5..31a3fd95432d9 100644
+--- a/src/main/java/com/google/devtools/build/lib/bazel/repository/LocalConfigPlatformFunction.java
++++ b/src/main/java/com/google/devtools/build/lib/bazel/repository/LocalConfigPlatformFunction.java
+@@ -134,9 +134,11 @@ static String osToConstraint(OS os) {
+       case DARWIN:
+         return "@platforms//os:osx";
+       case FREEBSD:
+-        return "@platforms//os:freebsd";
++        return "@platforms//os:freebsd";       
+       case OPENBSD:
+         return "@platforms//os:openbsd";
++      case ILLUMOS:
++        return "@platforms//os:illumos";            
+       case LINUX:
+         return "@platforms//os:linux";
+       case WINDOWS:
+diff --git a/src/main/java/com/google/devtools/build/lib/bazel/rules/BazelRuleClassProvider.java b/src/main/java/com/google/devtools/build/lib/bazel/rules/BazelRuleClassProvider.java
+index 3e8c2fd7ae074..2ad359744f237 100644
+--- a/src/main/java/com/google/devtools/build/lib/bazel/rules/BazelRuleClassProvider.java
++++ b/src/main/java/com/google/devtools/build/lib/bazel/rules/BazelRuleClassProvider.java
+@@ -538,7 +538,9 @@ public static String pathOrDefault(OS os, @Nullable String path, @Nullable PathF
+     // TODO(ulfjack): The default PATH should be set from the exec platform, which may be different
+     // from the local machine. For now, this can be overridden with --action_env=PATH=<value>, so
+     // at least there's a workaround.
+-    if (os != OS.WINDOWS) {
++    if (os == OS.ILLUMOS) {
++      return "/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin";
++    } else if (os != OS.WINDOWS) {
+       // The default used to be "/bin:/usr/bin". However, on Mac the Python 3 interpreter, if it is
+       // installed at all, tends to be under /usr/local/bin. The autodetecting Python toolchain
+       // searches PATH for "python3", so if we don't include this directory then we can't run PY3
+@@ -547,7 +549,7 @@ public static String pathOrDefault(OS os, @Nullable String path, @Nullable PathF
+       // Note that --action_env does not propagate to the host config, so it is not a viable
+       // workaround when a genrule is itself built in the host config (e.g. nested genrules). See
+       // #8536.
+-      return "/bin:/usr/bin:/usr/local/bin";
++      return "/bin:/usr/bin:/usr/local/bin:/opt/local/bin";
+     }
+ 
+     String newPath = "";
+diff --git a/src/main/java/com/google/devtools/build/lib/bazel/rules/python/python_stub_template.txt b/src/main/java/com/google/devtools/build/lib/bazel/rules/python/python_stub_template.txt
+index 92dd6b82fa0da..514cf6fc247ee 100644
+--- a/src/main/java/com/google/devtools/build/lib/bazel/rules/python/python_stub_template.txt
++++ b/src/main/java/com/google/devtools/build/lib/bazel/rules/python/python_stub_template.txt
+@@ -75,8 +75,8 @@ if IsWindows() and not HasWindowsExecutableExtension(PYTHON_BINARY):
+   PYTHON_BINARY = PYTHON_BINARY + '.exe'
+ 
+ def SearchPath(name):
+-  """Finds a file in a given search path."""
+-  search_path = os.getenv('PATH', os.defpath).split(os.pathsep)
++  # TODO: Modified for SmartOS + pkgsrc. Is this the right way?
++  search_path = os.getenv('PATH', os.defpath + ":/opt/local/bin").split(os.pathsep)
+   for directory in search_path:
+     if directory:
+       path = os.path.join(directory, name)
+diff --git a/src/main/java/com/google/devtools/build/lib/jni/JniLoader.java b/src/main/java/com/google/devtools/build/lib/jni/JniLoader.java
+index b604d06acace1..97ae2abd879bd 100644
+--- a/src/main/java/com/google/devtools/build/lib/jni/JniLoader.java
++++ b/src/main/java/com/google/devtools/build/lib/jni/JniLoader.java
+@@ -40,6 +40,7 @@ public final class JniLoader {
+         case LINUX:
+         case FREEBSD:
+         case OPENBSD:
++        case ILLUMOS:
+         case UNKNOWN:
+           loadLibrary("main/native/libunix_jni.so");
+           break;
+diff --git a/src/main/java/com/google/devtools/build/lib/rules/cpp/CcModule.java b/src/main/java/com/google/devtools/build/lib/rules/cpp/CcModule.java
+index 5065e3169627b..f80b23944fa95 100755
+--- a/src/main/java/com/google/devtools/build/lib/rules/cpp/CcModule.java
++++ b/src/main/java/com/google/devtools/build/lib/rules/cpp/CcModule.java
+@@ -1324,10 +1324,15 @@ public CcToolchainConfigInfo ccToolchainConfigInfoFromStarlark(
+         }
+       }
+ 
+-      CppPlatform platform =
+-          targetLibc.equals(CppActionConfigs.MACOS_TARGET_LIBC)
+-              ? CppPlatform.MAC
+-              : CppPlatform.LINUX;
++      CppPlatform platform;
++      if (targetLibc.equals(CppActionConfigs.MACOS_TARGET_LIBC)) {
++        platform = CppPlatform.MAC;
++      } else if (targetLibc.equals(CppActionConfigs.ILLUMOS_TARGET_LIBC)) {
++        platform = CppPlatform.ILLUMOS;
++      } else {
++        platform = CppPlatform.LINUX;
++      }
++
+       for (CToolchain.Feature feature :
+           CppActionConfigs.getLegacyFeatures(
+               platform,
+diff --git a/src/main/java/com/google/devtools/build/lib/rules/cpp/CppActionConfigs.java b/src/main/java/com/google/devtools/build/lib/rules/cpp/CppActionConfigs.java
+index 1ade3e2dfc010..2e2720604d1e5 100644
+--- a/src/main/java/com/google/devtools/build/lib/rules/cpp/CppActionConfigs.java
++++ b/src/main/java/com/google/devtools/build/lib/rules/cpp/CppActionConfigs.java
+@@ -31,12 +31,15 @@ public class CppActionConfigs {
+   /** A platform for C++ tool invocations. */
+   public enum CppPlatform {
+     LINUX,
++    ILLUMOS,
+     MAC
+   }
+ 
+   /** A string constant for the macOS target libc value. */
+   public static final String MACOS_TARGET_LIBC = "macosx";
+ 
++  public static final String ILLUMOS_TARGET_LIBC = "illumos";
++
+   // Note: these features won't be added to the crosstools that defines no_legacy_features feature
+   // (e.g. ndk, apple, enclave crosstools). Those need to be modified separately.
+   public static ImmutableList<CToolchain.Feature> getLegacyFeatures(
+@@ -631,11 +634,13 @@ public static ImmutableList<CToolchain.Feature> getLegacyFeatures(
+                         "    action: 'c++-link-static-library'",
+                         "    flag_group {",
+                         ifLinux(platform, "flag: 'rcsD'"),
++                        ifIllumos(platform, "flag: '-rcs'"),
+                         ifMac(platform, "flag: '-static'", "flag: '-s'"),
+                         "    }",
+                         "    flag_group {",
+                         "      expand_if_all_available: 'output_execpath'",
+                         ifLinux(platform, "flag: '%{output_execpath}'"),
++                        ifIllumos(platform, "flag: '%{output_execpath}'"),
+                         ifMac(platform, "flag: '-o'", "flag: '%{output_execpath}'"),
+                         "    }",
+                         "  }",
+@@ -691,6 +696,10 @@ public static ImmutableList<CToolchain.Feature> getLegacyFeatures(
+                         "        flag: '-Wl,--start-lib'",
+                         "      }",
+                         ifLinux(
++                            // FIXME: The modification of `-whole-archive` and `-no-whole-archive` to start with a double dash (`--`)
++                            // is a hack to make it work on Illumos. We should actually configure `libc_target` to be 'ILLUMOS' so the 
++                            // `ifIllumos()` method below gets triggered properly. However that turned out to be less straight forward
++                            // then hoped. Hence the quick and dirty hack.
+                             platform,
+                             "  flag_group {",
+                             "    expand_if_true: 'libraries_to_link.is_whole_archive'",
+@@ -698,7 +707,7 @@ public static ImmutableList<CToolchain.Feature> getLegacyFeatures(
+                             "        variable: 'libraries_to_link.type'",
+                             "        value: 'static_library'",
+                             "    }",
+-                            "    flag: '-Wl,-whole-archive'",
++                            "    flag: '-Wl,--whole-archive'",
+                             "  }",
+                             "  flag_group {",
+                             "    expand_if_equal: {",
+@@ -749,7 +758,7 @@ public static ImmutableList<CToolchain.Feature> getLegacyFeatures(
+                             "        variable: 'libraries_to_link.type'",
+                             "        value: 'static_library'",
+                             "    }",
+-                            "    flag: '-Wl,-no-whole-archive'",
++                            "    flag: '-Wl,--no-whole-archive'",
+                             "  }"),
+                         ifMac(
+                             platform,
+@@ -943,7 +952,11 @@ public static ImmutableList<CToolchain.Feature> getLegacyFeatures(
+                         "    action: 'lto-index-for-executable'",
+                         "    flag_group {",
+                         "      expand_if_all_available: 'strip_debug_symbols'",
+-                        "      flag: '-Wl,-S'",
++                        //ifLinux(platform, "      flag: '-Wl,-S'"),
++                        //ifMac(platform, "      flag: '-Wl,-S'"),
++                        // TODO: Figure out how to only strip debug symbols on Illumos.
++                        // 'zstrip-class' is not present on Illumos I think?
++                        //ifIllumos(platform, "      flag: '-Wl,zstrip-class=debug'"),
+                         "    }",
+                         "  }")));
+       }
+@@ -1594,6 +1607,10 @@ private static String ifLinux(CppPlatform platform, String... lines) {
+     return ifTrue(platform == CppPlatform.LINUX, lines);
+   }
+ 
++  private static String ifIllumos(CppPlatform platform, String... lines) {
++    return ifTrue(platform == CppPlatform.ILLUMOS, lines);
++  }
++
+   private static String ifMac(CppPlatform platform, String... lines) {
+     return ifTrue(platform == CppPlatform.MAC, lines);
+   }
+diff --git a/src/main/java/com/google/devtools/build/lib/runtime/BazelFileSystemModule.java b/src/main/java/com/google/devtools/build/lib/runtime/BazelFileSystemModule.java
+index 58907a7c0ec66..e57408da76334 100644
+--- a/src/main/java/com/google/devtools/build/lib/runtime/BazelFileSystemModule.java
++++ b/src/main/java/com/google/devtools/build/lib/runtime/BazelFileSystemModule.java
+@@ -42,6 +42,7 @@
+  * com.google.devtools.build.lib.vfs.FileSystem} class use {@code SHA256} by default.
+  */
+ public class BazelFileSystemModule extends BlazeModule {
++  
+   @Override
+   public ModuleFileSystem getFileSystem(
+       OptionsParsingResult startupOptions, PathFragment realExecRootBase)
+@@ -66,16 +67,25 @@ public ModuleFileSystem getFileSystem(
+       }
+     }
+ 
+-    FileSystem fs;
+-    if (OS.getCurrent() == OS.WINDOWS) {
+-      fs = new WindowsFileSystem(digestHashFunction, options.enableWindowsSymlinks);
+-    } else {
+-      if (JniLoader.isJniAvailable()) {
+-        fs = new UnixFileSystem(digestHashFunction, options.unixDigestHashAttributeName);
+-      } else {
+-        fs = new JavaIoFileSystem(digestHashFunction);
+-      }
+-    }
+-    return ModuleFileSystem.create(fs);
++    // TODO: Temporary Illumos workarround. The 'Java_com_google_devtools_build_lib_unix_NativePosixFiles_mkdirs'
++    // method in unix_jni.cc throws an exception with 'Error 0'. See stack trace below. Obtained from jvm.log with
++    // a modification which made Bazel print the Java exception.
++    //
++    //      java.io.IOException: /root/.cache/bazel/_bazel_root/cache/repos/v1 (Error 0)
++    //      at com.google.devtools.build.lib.unix.NativePosixFiles.mkdirs(Native Method)
++    //      at com.google.devtools.build.lib.unix.UnixFileSystem.createDirectoryAndParents(UnixFileSystem.java:331)
++    //      at com.google.devtools.build.lib.vfs.Path.createDirectoryAndParents(Path.java:549)
++    //      at com.google.devtools.build.lib.vfs.FileSystemUtils.createDirectoryAndParents(FileSystemUtils.java:614)
++    //      at com.google.devtools.build.lib.bazel.BazelRepositoryModule.beforeCommand(BazelRepositoryModule.java:251)
++    //      at com.google.devtools.build.lib.runtime.BlazeCommandDispatcher.execExclusively(BlazeCommandDispatcher.java:358)
++    //      at com.google.devtools.build.lib.runtime.BlazeCommandDispatcher.exec(BlazeCommandDispatcher.java:208)
++    //      at com.google.devtools.build.lib.server.GrpcServerImpl.executeCommand(GrpcServerImpl.java:604)
++    //      at com.google.devtools.build.lib.server.GrpcServerImpl.lambda$run$2(GrpcServerImpl.java:660)
++    //      at io.grpc.Context$1.run(Context.java:595)
++    //      at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
++    //      at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
++    //      at java.lang.Thread.run(Thread.java:748)
++
++    return ModuleFileSystem.create(new JavaIoFileSystem(digestHashFunction));
+   }
+ }
+diff --git a/src/main/java/com/google/devtools/build/lib/runtime/CommonCommandOptions.java b/src/main/java/com/google/devtools/build/lib/runtime/CommonCommandOptions.java
+index bf962d3a360f2..9189b915ce161 100644
+--- a/src/main/java/com/google/devtools/build/lib/runtime/CommonCommandOptions.java
++++ b/src/main/java/com/google/devtools/build/lib/runtime/CommonCommandOptions.java
+@@ -51,8 +51,8 @@ public class CommonCommandOptions extends OptionsBase {
+           "If true, Bazel picks up host-OS-specific config lines from bazelrc files. For example, "
+               + "if the host OS is Linux and you run bazel build, Bazel picks up lines starting "
+               + "with build:linux. Supported OS identifiers are linux, macos, windows, freebsd, "
+-              + "and openbsd. Enabling this flag is equivalent to using --config=linux on Linux, "
+-              + "--config=windows on Windows, etc.")
++              + "openbsd and illumos. Enabling this flag is equivalent to using --config=linux "
++              + "on Linux, --config=windows on Windows, etc.")
+   public boolean enablePlatformSpecificConfig;
+ 
+   @Option(
+diff --git a/src/main/java/com/google/devtools/build/lib/runtime/ConfigExpander.java b/src/main/java/com/google/devtools/build/lib/runtime/ConfigExpander.java
+index 92fe5f1356c19..b458be284b9ba 100644
+--- a/src/main/java/com/google/devtools/build/lib/runtime/ConfigExpander.java
++++ b/src/main/java/com/google/devtools/build/lib/runtime/ConfigExpander.java
+@@ -50,6 +50,8 @@ private static String getPlatformName() {
+         return "freebsd";
+       case OPENBSD:
+         return "openbsd";
++      case ILLUMOS:
++        return "illumos";        
+       default:
+         return OS.getCurrent().getCanonicalName();
+     }
+diff --git a/src/main/java/com/google/devtools/build/lib/server/GrpcServerImpl.java b/src/main/java/com/google/devtools/build/lib/server/GrpcServerImpl.java
+index 9f73f5a3db5e8..7c2f2ce2c8029 100644
+--- a/src/main/java/com/google/devtools/build/lib/server/GrpcServerImpl.java
++++ b/src/main/java/com/google/devtools/build/lib/server/GrpcServerImpl.java
+@@ -438,6 +438,7 @@ public void serve() throws AbruptExitException {
+ 
+   private void writeServerStatusFiles(InetSocketAddress address) throws AbruptExitException {
+     String addressString = InetAddresses.toUriString(address.getAddress()) + ":" + server.getPort();
++
+     writeServerFile(PORT_FILE, addressString);
+     writeServerFile(REQUEST_COOKIE_FILE, requestCookie);
+     writeServerFile(RESPONSE_COOKIE_FILE, responseCookie);
+@@ -573,6 +574,14 @@ private void executeCommand(RunRequest request, BlockingStreamObserver<RunRespon
+           BlazeCommandResult.detailedExitCode(
+               InterruptedFailureDetails.detailedExitCode("Command dispatch interrupted"));
+       commandId = ""; // The default value, the client will ignore it
++    } catch (Exception e) {
++      try {
++        java.nio.file.Files.write(java.nio.file.Paths.get("/tmp/bazel_exception.txt"), e.toString().getBytes());      
++      } catch (Exception e2) {
++        e2.printStackTrace();
++      }
++
++      throw e;
+     }
+     RunResponse.Builder response = RunResponse.newBuilder()
+         .setCookie(responseCookie)
+diff --git a/src/main/java/com/google/devtools/build/lib/util/OS.java b/src/main/java/com/google/devtools/build/lib/util/OS.java
+index cb8c2e3c1d5ce..73b1a17fe80fc 100644
+--- a/src/main/java/com/google/devtools/build/lib/util/OS.java
++++ b/src/main/java/com/google/devtools/build/lib/util/OS.java
+@@ -20,13 +20,14 @@
+  */
+ public enum OS {
+   DARWIN("osx", "Mac OS X"),
+-  FREEBSD("freebsd", "FreeBSD"),
++  FREEBSD("freebsd", "FreeBSD"),  
+   OPENBSD("openbsd", "OpenBSD"),
++  ILLUMOS("illumos", "SunOS"),
+   LINUX("linux", "Linux"),
+   WINDOWS("windows", "Windows"),
+   UNKNOWN("unknown", "");
+ 
+-  private static final EnumSet<OS> POSIX_COMPATIBLE = EnumSet.of(DARWIN, FREEBSD, OPENBSD, LINUX);
++  private static final EnumSet<OS> POSIX_COMPATIBLE = EnumSet.of(DARWIN, FREEBSD, OPENBSD, ILLUMOS, LINUX);
+ 
+   private final String canonicalName;
+   private final String detectionName;
+diff --git a/src/main/native/BUILD b/src/main/native/BUILD
+index 3af2db53e3d6d..90a906b279b1c 100644
+--- a/src/main/native/BUILD
++++ b/src/main/native/BUILD
+@@ -4,6 +4,7 @@ genrule(
+         "//src/conditions:darwin": ["@bazel_tools//tools/jdk:jni_md_header-darwin"],
+         "//src/conditions:freebsd": ["@bazel_tools//tools/jdk:jni_md_header-freebsd"],
+         "//src/conditions:openbsd": ["@bazel_tools//tools/jdk:jni_md_header-openbsd"],
++        "//src/conditions:illumos": ["@bazel_tools//tools/jdk:jni_md_header-illumos"], 
+         "//src/conditions:windows": ["@bazel_tools//tools/jdk:jni_md_header-windows"],
+         "//conditions:default": ["@bazel_tools//tools/jdk:jni_md_header-linux"],
+     }),
+@@ -39,6 +40,7 @@ filegroup(
+         ],
+         "//src/conditions:freebsd": ["unix_jni_bsd.cc"],
+         "//src/conditions:openbsd": ["unix_jni_bsd.cc"],
++        "//src/conditions:illumos": ["unix_jni_illumos.cc"],
+         "//conditions:default": ["unix_jni_linux.cc"],
+     }),
+ )
+diff --git a/src/main/native/unix_jni.cc b/src/main/native/unix_jni.cc
+index 1af7983b7448c..7097db87446ad 100644
+--- a/src/main/native/unix_jni.cc
++++ b/src/main/native/unix_jni.cc
+@@ -616,7 +616,7 @@ Java_com_google_devtools_build_lib_unix_NativePosixFiles_mkdirs(JNIEnv *env,
+       PostException(env, ENOTDIR, path_chars);
+     }
+     goto cleanup;
+-  } else if (errno != ENOENT) {
++  } else if (errno != ENOENT && errno != 0) {
+     PostException(env, errno, path_chars);
+     goto cleanup;
+   }
+@@ -685,6 +685,7 @@ static jobject NewDirents(JNIEnv *env,
+ static char GetDirentType(struct dirent *entry,
+                           int dirfd,
+                           bool follow_symlinks) {
++#ifdef _DIRENT_HAVE_D_TYPE
+   switch (entry->d_type) {
+     case DT_REG:
+       return 'f';
+@@ -696,16 +697,19 @@ static char GetDirentType(struct dirent *entry,
+       }
+       FALLTHROUGH_INTENDED;
+     case DT_UNKNOWN:
++#endif
+       portable_stat_struct statbuf;
+       if (portable_fstatat(dirfd, entry->d_name, &statbuf, 0) == 0) {
+         if (S_ISREG(statbuf.st_mode)) return 'f';
+         if (S_ISDIR(statbuf.st_mode)) return 'd';
+       }
++#ifdef _DIRENT_HAVE_D_TYPE
+       // stat failed or returned something weird; fall through
+       FALLTHROUGH_INTENDED;
+     default:
+       return '?';
+   }
++#endif
+ }
+ }  // namespace
+ 
+@@ -990,12 +994,14 @@ static int ForceDelete(JNIEnv* env, const std::vector<std::string>& dir_path,
+ // posts an exception.
+ static int IsSubdir(JNIEnv* env, const std::vector<std::string>& dir_path,
+                     const int dir_fd, const struct dirent* de, bool* is_dir) {
++#ifdef _DIRENT_HAVE_D_TYPE
+   switch (de->d_type) {
+     case DT_DIR:
+       *is_dir = true;
+       return 0;
+ 
+     case DT_UNKNOWN: {
++#endif
+       struct stat st;
+       if (fstatat(dir_fd, de->d_name, &st, AT_SYMLINK_NOFOLLOW) == -1) {
+         PostDeleteTreesBelowException(env, errno, "fstatat", dir_path,
+@@ -1004,12 +1010,14 @@ static int IsSubdir(JNIEnv* env, const std::vector<std::string>& dir_path,
+       }
+       *is_dir = st.st_mode & S_IFDIR;
+       return 0;
++#ifdef _DIRENT_HAVE_D_TYPE      
+     }
+ 
+     default:
+       *is_dir = false;
+       return 0;
+   }
++#endif  
+ }
+ 
+ // Recursively deletes all trees under the given path.
+diff --git a/src/main/native/unix_jni.h b/src/main/native/unix_jni.h
+index 3e231fcf65ae5..aabf986525d0a 100644
+--- a/src/main/native/unix_jni.h
++++ b/src/main/native/unix_jni.h
+@@ -25,7 +25,7 @@
+ 
+ namespace blaze_jni {
+ 
+-#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__)
++#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__illumos__)
+ // stat64 is deprecated on OS X/BSD.
+ typedef struct stat portable_stat_struct;
+ #define portable_stat ::stat
+diff --git a/src/main/native/unix_jni_illumos.cc b/src/main/native/unix_jni_illumos.cc
+new file mode 100644
+index 0000000000000..075354cd583ec
+--- /dev/null
++++ b/src/main/native/unix_jni_illumos.cc
+@@ -0,0 +1,114 @@
++// Copyright 2015 The Bazel Authors. All rights reserved.
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//    http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
++#include "src/main/native/unix_jni.h"
++
++#include <assert.h>
++#include <errno.h>
++#include <fcntl.h>
++#include <stdlib.h>
++#include <string.h>
++#include <sys/param.h>
++#include <sys/stat.h>
++#include <sys/unistd.h>
++#include <sys/types.h>
++
++#include <string>
++
++namespace blaze_jni {
++
++using std::string;
++
++// See unix_jni.h.
++string ErrorMessage(int error_number) {
++  char buf[1024] = "";
++  if (strerror_r(error_number, buf, sizeof buf) < 0) {
++    snprintf(buf, sizeof buf, "strerror_r(%d): errno %d", error_number, errno);
++  }
++
++  return string(buf);
++}
++
++int portable_fstatat(int dirfd, char *name, portable_stat_struct *statbuf,
++                     int flags) {
++  return fstatat(dirfd, name, statbuf, flags);
++}
++
++int StatSeconds(const portable_stat_struct &statbuf, StatTimes t) {
++  switch (t) {
++    case STAT_ATIME:
++      return statbuf.st_atime;
++    case STAT_CTIME:
++      return statbuf.st_ctime;
++    case STAT_MTIME:
++      return statbuf.st_mtime;
++  }
++}
++
++int StatNanoSeconds(const portable_stat_struct &statbuf, StatTimes t) {
++  // TODO: Implement nano second based timers on Illumos.
++  switch (t) {
++    case STAT_ATIME:
++      return statbuf.st_atim.tv_nsec;
++    case STAT_CTIME:
++      return statbuf.st_ctim.tv_nsec;
++    case STAT_MTIME:
++      return statbuf.st_mtim.tv_nsec;
++  }
++}
++
++ssize_t portable_getxattr(const char *path, const char *name, void *value,
++                          size_t size, bool *attr_not_found) {
++  errno = ENOSYS;
++  return -1;
++}
++
++ssize_t portable_lgetxattr(const char *path, const char *name, void *value,
++                           size_t size, bool *attr_not_found) {
++  errno = ENOSYS;
++  return -1;
++}
++
++int portable_sysctlbyname(const char *name_chars, long *mibp, size_t *sizep) {
++  errno = ENOSYS;
++  return -1;
++}
++
++int portable_push_disable_sleep() {
++  // Currently not implemented.
++  return -1;
++}
++
++int portable_pop_disable_sleep() {
++  // Currently not implemented.
++  return -1;
++}
++
++void portable_start_suspend_monitoring() {
++  // Currently not implemented.
++}
++
++int portable_memory_pressure_warning_count() {
++  // Currently not implemented.
++  // https://www.kernel.org/doc/Documentation/cgroup-v1/memory.txt
++  return 0;
++}
++
++int portable_memory_pressure_critical_count() {
++  // Currently not implemented.
++  // https://www.kernel.org/doc/Documentation/cgroup-v1/memory.txt
++  return 0;
++}
++
++} // namespace blaze_jni
+\ No newline at end of file
+diff --git a/src/main/tools/BUILD b/src/main/tools/BUILD
+index 8be0bb1733962..fbed95ccbb8fb 100644
+--- a/src/main/tools/BUILD
++++ b/src/main/tools/BUILD
+@@ -16,6 +16,8 @@ cc_library(
+     srcs = ["process-tools.cc"] + select({
+         "//src/conditions:darwin": ["process-tools-darwin.cc"],
+         "//src/conditions:openbsd": ["process-tools-darwin.cc"],
++        # TODO: Does this have any adverse effects?
++        "//src/conditions:illumos": [],
+         "//conditions:default": ["process-tools-linux.cc"],
+     }),
+     hdrs = ["process-tools.h"],
+@@ -74,6 +76,7 @@ cc_binary(
+         "//src/conditions:darwin": ["dummy-sandbox.c"],
+         "//src/conditions:freebsd": ["dummy-sandbox.c"],
+         "//src/conditions:openbsd": ["dummy-sandbox.c"],
++        "//src/conditions:illumos": ["dummy-sandbox.c"],
+         "//src/conditions:windows": ["dummy-sandbox.c"],
+         "//conditions:default": [
+             "linux-sandbox.cc",
+@@ -88,6 +91,7 @@ cc_binary(
+         "//src/conditions:darwin": [],
+         "//src/conditions:freebsd": [],
+         "//src/conditions:openbsd": [],
++        "//src/conditions:illumos": [],
+         "//src/conditions:windows": [],
+         "//conditions:default": [
+             "-lm",
+@@ -98,6 +102,7 @@ cc_binary(
+         "//src/conditions:darwin": [],
+         "//src/conditions:freebsd": [],
+         "//src/conditions:openbsd": [],
++        "//src/conditions:illumos": [],
+         "//src/conditions:windows": [],
+         "//conditions:default": [
+             ":logging",
+diff --git a/src/test/java/com/google/devtools/build/lib/bazel/repository/LocalConfigPlatformFunctionTest.java b/src/test/java/com/google/devtools/build/lib/bazel/repository/LocalConfigPlatformFunctionTest.java
+index 61dda46ad4585..ef01f62bb970c 100644
+--- a/src/test/java/com/google/devtools/build/lib/bazel/repository/LocalConfigPlatformFunctionTest.java
++++ b/src/test/java/com/google/devtools/build/lib/bazel/repository/LocalConfigPlatformFunctionTest.java
+@@ -88,6 +88,7 @@ public static Collection<Object[]> createInputValues() {
+           new Object[] {OS.DARWIN, "@platforms//os:osx"},
+           new Object[] {OS.FREEBSD, "@platforms//os:freebsd"},
+           new Object[] {OS.OPENBSD, "@platforms//os:openbsd"},
++          new Object[] {OS.ILLUMOS, "@platforms//os:illumos"},
+           new Object[] {OS.WINDOWS, "@platforms//os:windows"});
+     }
+ 
+diff --git a/src/test/java/com/google/devtools/build/lib/packages/util/BazelMockCcSupport.java b/src/test/java/com/google/devtools/build/lib/packages/util/BazelMockCcSupport.java
+index 1c4bcc259d53a..9681f47640171 100644
+--- a/src/test/java/com/google/devtools/build/lib/packages/util/BazelMockCcSupport.java
++++ b/src/test/java/com/google/devtools/build/lib/packages/util/BazelMockCcSupport.java
+@@ -35,7 +35,7 @@ private static final boolean isNotCcLabel(String label) {
+   private BazelMockCcSupport() {}
+ 
+   private static final ImmutableList<String> CROSSTOOL_ARCHS =
+-      ImmutableList.of("piii", "k8", "armeabi-v7a", "ppc", "darwin");
++      ImmutableList.of("piii", "k8", "armeabi-v7a", "ppc", "darwin", "illumos");
+ 
+   @Override
+   protected String getRealFilesystemCrosstoolTopPath() {
+diff --git a/src/test/java/com/google/devtools/build/lib/packages/util/MockPlatformSupport.java b/src/test/java/com/google/devtools/build/lib/packages/util/MockPlatformSupport.java
+index ec3d6f2c7d315..05fd3bc80696c 100644
+--- a/src/test/java/com/google/devtools/build/lib/packages/util/MockPlatformSupport.java
++++ b/src/test/java/com/google/devtools/build/lib/packages/util/MockPlatformSupport.java
+@@ -134,6 +134,10 @@ public static void setup(
+         "constraint_value(",
+         "    name = 'openbsd',",
+         "    constraint_setting = ':os',",
++        ")",
++        "constraint_value(",
++        "    name = 'illumos',",
++        "    constraint_setting = ':os',",
+         ")");
+     mockToolsConfig.create(
+         platformsPath + "/BUILD",
+diff --git a/src/test/java/com/google/devtools/build/lib/platform/SleepPreventionModuleTest.java b/src/test/java/com/google/devtools/build/lib/platform/SleepPreventionModuleTest.java
+index 71a30ec0b5865..68cb260ee4f59 100644
+--- a/src/test/java/com/google/devtools/build/lib/platform/SleepPreventionModuleTest.java
++++ b/src/test/java/com/google/devtools/build/lib/platform/SleepPreventionModuleTest.java
+@@ -33,6 +33,7 @@ private static boolean haveSleepPreventionSupport() throws Exception {
+       case LINUX:
+       case FREEBSD:
+       case OPENBSD:
++      case ILLUMOS:
+       case UNKNOWN:
+         return false;
+     }
+diff --git a/src/tools/singlejar/diag.h b/src/tools/singlejar/diag.h
+index 9120911678b70..41dfaaaf3146a 100644
+--- a/src/tools/singlejar/diag.h
++++ b/src/tools/singlejar/diag.h
+@@ -20,7 +20,7 @@
+  * for portability.
+  */
+ #if defined(__APPLE__) || defined(__linux__) || defined(__FreeBSD__) || \
+-    defined(__OpenBSD__)
++    defined(__OpenBSD__) || defined(__illumos__)
+ 
+ #include <err.h>
+ #define diag_err(...) err(__VA_ARGS__)
+diff --git a/src/tools/singlejar/mapped_file_posix.inc b/src/tools/singlejar/mapped_file_posix.inc
+index d59de00964995..aea2f5e313091 100644
+--- a/src/tools/singlejar/mapped_file_posix.inc
++++ b/src/tools/singlejar/mapped_file_posix.inc
+@@ -26,7 +26,7 @@
+ 
+ // The implementation is specific to 64-bit Linux / OS X / BSD.
+ #if !((defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__) || \
+-       defined(__OpenBSD__)) &&                                            \
++       defined(__OpenBSD__) || defined(__illumos__)) &&                    \
+       __SIZEOF_POINTER__ == 8)
+ #error This code for 64 bit Unix.
+ #endif
+diff --git a/src/tools/singlejar/zip_headers.h b/src/tools/singlejar/zip_headers.h
+index ca0e23c3760a5..5957dbcd8d357 100644
+--- a/src/tools/singlejar/zip_headers.h
++++ b/src/tools/singlejar/zip_headers.h
+@@ -25,7 +25,7 @@
+ 
+ #include <cinttypes>
+ 
+-#if defined(__linux__)
++#if defined(__linux__) || defined(__illumos__)
+ #include <endian.h>
+ #elif defined(__FreeBSD__) || defined(__OpenBSD__)
+ #include <sys/endian.h>
+diff --git a/third_party/BUILD b/third_party/BUILD
+index 8ea4d22cd0806..2871ebf4676a9 100644
+--- a/third_party/BUILD
++++ b/third_party/BUILD
+@@ -626,6 +626,7 @@ UNNECESSARY_DYNAMIC_LIBRARIES = select({
+     "//src/conditions:linux_s390x": "*.so *.jnilib *.dll",
+     "//src/conditions:freebsd": "*.so *.jnilib *.dll",
+     "//src/conditions:openbsd": "*.so *.jnilib *.dll",
++    "//src/conditions:illumos": "*.so *.jnilib *.dll",
+     # Default is to play it safe -- better have a big binary than a slow binary
+     #   The empty string means nothing is to be removed from the library;
+     #   the rule command tests for the empty string explictly to avoid
+@@ -903,6 +904,11 @@ config_setting(
+     values = {"host_cpu": "openbsd"},
+ )
+ 
++config_setting(
++    name = "illumos",
++    values = {"host_cpu": "illumos"},
++)
++
+ config_setting(
+     name = "s390x",
+     values = {"host_cpu": "s390x"},
+diff --git a/third_party/absl/BUILD b/third_party/absl/BUILD
+new file mode 100644
+index 0000000000000..843dc3b6909a7
+--- /dev/null
++++ b/third_party/absl/BUILD
+@@ -0,0 +1,7 @@
++package(default_visibility = ["//visibility:public"])
++
++licenses(["notice"])  # Apache v2
++
++exports_files([
++    "illumos-20211102.0.patch"
++])
+diff --git a/third_party/absl/LICENSE b/third_party/absl/LICENSE
+new file mode 100644
+index 0000000000000..ccd61dcfe3dbc
+--- /dev/null
++++ b/third_party/absl/LICENSE
+@@ -0,0 +1,203 @@
++
++                                 Apache License
++                           Version 2.0, January 2004
++                        https://www.apache.org/licenses/
++
++   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
++
++   1. Definitions.
++
++      "License" shall mean the terms and conditions for use, reproduction,
++      and distribution as defined by Sections 1 through 9 of this document.
++
++      "Licensor" shall mean the copyright owner or entity authorized by
++      the copyright owner that is granting the License.
++
++      "Legal Entity" shall mean the union of the acting entity and all
++      other entities that control, are controlled by, or are under common
++      control with that entity. For the purposes of this definition,
++      "control" means (i) the power, direct or indirect, to cause the
++      direction or management of such entity, whether by contract or
++      otherwise, or (ii) ownership of fifty percent (50%) or more of the
++      outstanding shares, or (iii) beneficial ownership of such entity.
++
++      "You" (or "Your") shall mean an individual or Legal Entity
++      exercising permissions granted by this License.
++
++      "Source" form shall mean the preferred form for making modifications,
++      including but not limited to software source code, documentation
++      source, and configuration files.
++
++      "Object" form shall mean any form resulting from mechanical
++      transformation or translation of a Source form, including but
++      not limited to compiled object code, generated documentation,
++      and conversions to other media types.
++
++      "Work" shall mean the work of authorship, whether in Source or
++      Object form, made available under the License, as indicated by a
++      copyright notice that is included in or attached to the work
++      (an example is provided in the Appendix below).
++
++      "Derivative Works" shall mean any work, whether in Source or Object
++      form, that is based on (or derived from) the Work and for which the
++      editorial revisions, annotations, elaborations, or other modifications
++      represent, as a whole, an original work of authorship. For the purposes
++      of this License, Derivative Works shall not include works that remain
++      separable from, or merely link (or bind by name) to the interfaces of,
++      the Work and Derivative Works thereof.
++
++      "Contribution" shall mean any work of authorship, including
++      the original version of the Work and any modifications or additions
++      to that Work or Derivative Works thereof, that is intentionally
++      submitted to Licensor for inclusion in the Work by the copyright owner
++      or by an individual or Legal Entity authorized to submit on behalf of
++      the copyright owner. For the purposes of this definition, "submitted"
++      means any form of electronic, verbal, or written communication sent
++      to the Licensor or its representatives, including but not limited to
++      communication on electronic mailing lists, source code control systems,
++      and issue tracking systems that are managed by, or on behalf of, the
++      Licensor for the purpose of discussing and improving the Work, but
++      excluding communication that is conspicuously marked or otherwise
++      designated in writing by the copyright owner as "Not a Contribution."
++
++      "Contributor" shall mean Licensor and any individual or Legal Entity
++      on behalf of whom a Contribution has been received by Licensor and
++      subsequently incorporated within the Work.
++
++   2. Grant of Copyright License. Subject to the terms and conditions of
++      this License, each Contributor hereby grants to You a perpetual,
++      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
++      copyright license to reproduce, prepare Derivative Works of,
++      publicly display, publicly perform, sublicense, and distribute the
++      Work and such Derivative Works in Source or Object form.
++
++   3. Grant of Patent License. Subject to the terms and conditions of
++      this License, each Contributor hereby grants to You a perpetual,
++      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
++      (except as stated in this section) patent license to make, have made,
++      use, offer to sell, sell, import, and otherwise transfer the Work,
++      where such license applies only to those patent claims licensable
++      by such Contributor that are necessarily infringed by their
++      Contribution(s) alone or by combination of their Contribution(s)
++      with the Work to which such Contribution(s) was submitted. If You
++      institute patent litigation against any entity (including a
++      cross-claim or counterclaim in a lawsuit) alleging that the Work
++      or a Contribution incorporated within the Work constitutes direct
++      or contributory patent infringement, then any patent licenses
++      granted to You under this License for that Work shall terminate
++      as of the date such litigation is filed.
++
++   4. Redistribution. You may reproduce and distribute copies of the
++      Work or Derivative Works thereof in any medium, with or without
++      modifications, and in Source or Object form, provided that You
++      meet the following conditions:
++
++      (a) You must give any other recipients of the Work or
++          Derivative Works a copy of this License; and
++
++      (b) You must cause any modified files to carry prominent notices
++          stating that You changed the files; and
++
++      (c) You must retain, in the Source form of any Derivative Works
++          that You distribute, all copyright, patent, trademark, and
++          attribution notices from the Source form of the Work,
++          excluding those notices that do not pertain to any part of
++          the Derivative Works; and
++
++      (d) If the Work includes a "NOTICE" text file as part of its
++          distribution, then any Derivative Works that You distribute must
++          include a readable copy of the attribution notices contained
++          within such NOTICE file, excluding those notices that do not
++          pertain to any part of the Derivative Works, in at least one
++          of the following places: within a NOTICE text file distributed
++          as part of the Derivative Works; within the Source form or
++          documentation, if provided along with the Derivative Works; or,
++          within a display generated by the Derivative Works, if and
++          wherever such third-party notices normally appear. The contents
++          of the NOTICE file are for informational purposes only and
++          do not modify the License. You may add Your own attribution
++          notices within Derivative Works that You distribute, alongside
++          or as an addendum to the NOTICE text from the Work, provided
++          that such additional attribution notices cannot be construed
++          as modifying the License.
++
++      You may add Your own copyright statement to Your modifications and
++      may provide additional or different license terms and conditions
++      for use, reproduction, or distribution of Your modifications, or
++      for any such Derivative Works as a whole, provided Your use,
++      reproduction, and distribution of the Work otherwise complies with
++      the conditions stated in this License.
++
++   5. Submission of Contributions. Unless You explicitly state otherwise,
++      any Contribution intentionally submitted for inclusion in the Work
++      by You to the Licensor shall be under the terms and conditions of
++      this License, without any additional terms or conditions.
++      Notwithstanding the above, nothing herein shall supersede or modify
++      the terms of any separate license agreement you may have executed
++      with Licensor regarding such Contributions.
++
++   6. Trademarks. This License does not grant permission to use the trade
++      names, trademarks, service marks, or product names of the Licensor,
++      except as required for reasonable and customary use in describing the
++      origin of the Work and reproducing the content of the NOTICE file.
++
++   7. Disclaimer of Warranty. Unless required by applicable law or
++      agreed to in writing, Licensor provides the Work (and each
++      Contributor provides its Contributions) on an "AS IS" BASIS,
++      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
++      implied, including, without limitation, any warranties or conditions
++      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
++      PARTICULAR PURPOSE. You are solely responsible for determining the
++      appropriateness of using or redistributing the Work and assume any
++      risks associated with Your exercise of permissions under this License.
++
++   8. Limitation of Liability. In no event and under no legal theory,
++      whether in tort (including negligence), contract, or otherwise,
++      unless required by applicable law (such as deliberate and grossly
++      negligent acts) or agreed to in writing, shall any Contributor be
++      liable to You for damages, including any direct, indirect, special,
++      incidental, or consequential damages of any character arising as a
++      result of this License or out of the use or inability to use the
++      Work (including but not limited to damages for loss of goodwill,
++      work stoppage, computer failure or malfunction, or any and all
++      other commercial damages or losses), even if such Contributor
++      has been advised of the possibility of such damages.
++
++   9. Accepting Warranty or Additional Liability. While redistributing
++      the Work or Derivative Works thereof, You may choose to offer,
++      and charge a fee for, acceptance of support, warranty, indemnity,
++      or other liability obligations and/or rights consistent with this
++      License. However, in accepting such obligations, You may act only
++      on Your own behalf and on Your sole responsibility, not on behalf
++      of any other Contributor, and only if You agree to indemnify,
++      defend, and hold each Contributor harmless for any liability
++      incurred by, or claims asserted against, such Contributor by reason
++      of your accepting any such warranty or additional liability.
++
++   END OF TERMS AND CONDITIONS
++
++   APPENDIX: How to apply the Apache License to your work.
++
++      To apply the Apache License to your work, attach the following
++      boilerplate notice, with the fields enclosed by brackets "[]"
++      replaced with your own identifying information. (Don't include
++      the brackets!)  The text should be enclosed in the appropriate
++      comment syntax for the file format. We also recommend that a
++      file or class name and description of purpose be included on the
++      same "printed page" as the copyright notice for easier
++      identification within third-party archives.
++
++   Copyright [yyyy] [name of copyright owner]
++
++   Licensed under the Apache License, Version 2.0 (the "License");
++   you may not use this file except in compliance with the License.
++   You may obtain a copy of the License at
++
++       https://www.apache.org/licenses/LICENSE-2.0
++
++   Unless required by applicable law or agreed to in writing, software
++   distributed under the License is distributed on an "AS IS" BASIS,
++   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++   See the License for the specific language governing permissions and
++   limitations under the License.
++
+diff --git a/third_party/absl/illumos-20211102.0.patch b/third_party/absl/illumos-20211102.0.patch
+new file mode 100644
+index 0000000000000..3a9e8adab13b9
+--- /dev/null
++++ b/third_party/absl/illumos-20211102.0.patch
+@@ -0,0 +1,83 @@
++From 7b5818367956b15b4b8c3c9748a05e8649c6f39b Mon Sep 17 00:00:00 2001
++From: Jasper Siepkes <siepkes@serviceplanet.nl>
++Date: Sat, 16 Jul 2022 20:28:24 +0200
++Subject: [PATCH] Added SmartOS compatibility.
++
++---
++ absl/debugging/internal/vdso_support.cc       |  6 +++-
++ .../cctz/include/cctz/civil_time_detail.h     | 29 ++++++++++++-------
++ 2 files changed, 23 insertions(+), 12 deletions(-)
++
++diff --git a/absl/debugging/internal/vdso_support.cc b/absl/debugging/internal/vdso_support.cc
++index 977a9f6b..76d4253a 100644
++--- a/absl/debugging/internal/vdso_support.cc
+++++ b/absl/debugging/internal/vdso_support.cc
++@@ -38,7 +38,7 @@
++ #define ABSL_HAVE_GETAUXVAL
++ #endif
++ 
++-#ifdef ABSL_HAVE_GETAUXVAL
+++#if defined(ABSL_HAVE_GETAUXVAL) || defined(__sun)
++ #include <sys/auxv.h>
++ #endif
++ 
++@@ -54,6 +54,10 @@
++ using Elf64_auxv_t = Elf64_Auxinfo;
++ using Elf32_auxv_t = Elf32_Auxinfo;
++ #endif
+++#if defined(__sun)
+++using Elf64_auxv_t = auxv_t;
+++#endif
+++
++ 
++ namespace absl {
++ ABSL_NAMESPACE_BEGIN
++diff --git a/absl/time/internal/cctz/include/cctz/civil_time_detail.h b/absl/time/internal/cctz/include/cctz/civil_time_detail.h
++index 8aadde57..4800dcda 100644
++--- a/absl/time/internal/cctz/include/cctz/civil_time_detail.h
+++++ b/absl/time/internal/cctz/include/cctz/civil_time_detail.h
++@@ -48,23 +48,30 @@ using diff_t = std::int_fast64_t;
++ namespace detail {
++ 
++ // Type aliases that indicate normalized argument values.
++-using month_t = std::int_fast8_t;   // [1:12]
++-using day_t = std::int_fast8_t;     // [1:31]
++-using hour_t = std::int_fast8_t;    // [0:23]
++-using minute_t = std::int_fast8_t;  // [0:59]
++-using second_t = std::int_fast8_t;  // [0:59]
+++
+++// ILLUMOS SPECIFIC CHANGE:
+++// Fixes build failures when using '-Werror=char-subscripts'.
+++//
+++// std::int_fast64_t can be negative. Since it is directly used to
+++// reference positions in arrays the compiler complains about it. Making
+++// the types unsigned ensure they can never be negative.
+++using month_t = std::uint_fast8_t;   // [1:12]
+++using day_t = std::uint_fast8_t;     // [1:31]
+++using hour_t = std::uint_fast8_t;    // [0:23]
+++using minute_t = std::uint_fast8_t;  // [0:59]
+++using second_t = std::uint_fast8_t;  // [0:59]
++ 
++ // Normalized civil-time fields: Y-M-D HH:MM:SS.
++ struct fields {
++   CONSTEXPR_M fields(year_t year, month_t month, day_t day, hour_t hour,
++                      minute_t minute, second_t second)
++       : y(year), m(month), d(day), hh(hour), mm(minute), ss(second) {}
++-  std::int_least64_t y;
++-  std::int_least8_t m;
++-  std::int_least8_t d;
++-  std::int_least8_t hh;
++-  std::int_least8_t mm;
++-  std::int_least8_t ss;
+++  std::uint_least8_t y;
+++  std::uint_least8_t m;
+++  std::uint_least8_t d;
+++  std::uint_least8_t hh;
+++  std::uint_least8_t mm;
+++  std::uint_least8_t ss;
++ };
++ 
++ struct second_tag {};
++-- 
++2.36.1
++
+diff --git a/third_party/grpc/build_defs.bzl b/third_party/grpc/build_defs.bzl
+index 6129480e26492..0e8dffbcc5b5c 100644
+--- a/third_party/grpc/build_defs.bzl
++++ b/third_party/grpc/build_defs.bzl
+@@ -130,6 +130,7 @@ def _get_external_deps(external_deps):
+ def grpc_cc_library(
+         name,
+         srcs = [],
++        defines = ["grpc_no_ares=true"],  # Our use case doesn't need ares.
+         public_hdrs = [],
+         hdrs = [],
+         external_deps = [],
+@@ -147,12 +148,21 @@ def grpc_cc_library(
+                 "-std=c99",
+                 "-Wimplicit-function-declaration",
+             ],
++            "//src/conditions:illumos": [
++                # Needed for 'msg_control' in 'msghdr'.
++                "-D_XOPEN_SOURCE=600",
++                # Needed for 'IPV6_V6ONLY' in 'in.h'.
++                "-D__EXTENSIONS__",
++                # Must be c99 otherwise 'feature_tests.h' will complain.
++                "-std=c99",
++                "-Wimplicit-function-declaration",
++            ],            
+             ":windows": ["/we4013"],
+         })
+     cc_library(
+         name = name,
+         srcs = srcs,
+-        defines = ["GRPC_ARES=0"],  # Our use case doesn't need ares.
++        defines = ["grpc_no_ares=true"],  # Our use case doesn't need ares.
+         hdrs = hdrs + public_hdrs,
+         deps = deps + _get_external_deps(external_deps),
+         copts = copts,
+diff --git a/third_party/grpc/grpc_1.47.0.illumos.patch b/third_party/grpc/grpc_1.47.0.illumos.patch
+new file mode 100644
+index 0000000000000..1777295dee068
+--- /dev/null
++++ b/third_party/grpc/grpc_1.47.0.illumos.patch
+@@ -0,0 +1,602 @@
++From f8621ea05fb2040c342d2687649692b8bc6095fd Mon Sep 17 00:00:00 2001
++From: Jasper Siepkes <siepkes@serviceplanet.nl>
++Date: Sun, 17 Jul 2022 14:41:14 +0200
++Subject: [PATCH] Added illumos compatibility.
++
++---
++ .../dns/c_ares/grpc_ares_ev_driver_posix.cc   |   6 +
++ src/core/lib/iomgr/sockaddr_utils_posix.cc    |   4 +-
++ third_party/cares/BUILD                       |   1 +
++ third_party/cares/cares.BUILD                 |   6 +
++ .../cares/config_illumos/ares_config.h        | 506 ++++++++++++++++++
++ 5 files changed, 522 insertions(+), 1 deletion(-)
++ create mode 100644 third_party/cares/config_illumos/ares_config.h
++
++diff --git a/src/core/ext/filters/client_channel/resolver/dns/c_ares/grpc_ares_ev_driver_posix.cc b/src/core/ext/filters/client_channel/resolver/dns/c_ares/grpc_ares_ev_driver_posix.cc
++index ae5cec860d..7088873c8c 100644
++--- a/src/core/ext/filters/client_channel/resolver/dns/c_ares/grpc_ares_ev_driver_posix.cc
+++++ b/src/core/ext/filters/client_channel/resolver/dns/c_ares/grpc_ares_ev_driver_posix.cc
++@@ -35,6 +35,12 @@
++ 
++ #include <ares.h>
++ 
+++#ifdef __sun
+++#include <sys/filio.h>
+++#include <unistd.h>
+++#include <stropts.h>
+++#endif
+++
++ #include "absl/strings/str_cat.h"
++ 
++ #include "src/core/ext/filters/client_channel/resolver/dns/c_ares/grpc_ares_ev_driver.h"
++diff --git a/src/core/lib/iomgr/sockaddr_utils_posix.cc b/src/core/lib/iomgr/sockaddr_utils_posix.cc
++index ba9a6c7384..ced16affdb 100644
++--- a/src/core/lib/iomgr/sockaddr_utils_posix.cc
+++++ b/src/core/lib/iomgr/sockaddr_utils_posix.cc
++@@ -23,6 +23,9 @@
++ #ifdef GRPC_POSIX_SOCKET_UTILS_COMMON
++ 
++ #include "src/core/lib/iomgr/socket_utils.h"
+++
+++// On illumos tcp.h needs types.h.
+++#include <sys/types.h>
++ #ifdef GRPC_LINUX_TCP_H
++ #include <linux/tcp.h>
++ #else
++@@ -31,7 +34,6 @@
++ #include <stdio.h>
++ #include <string.h>
++ #include <sys/socket.h>
++-#include <sys/types.h>
++ #include <unistd.h>
++ 
++ #include <string>
++diff --git a/third_party/cares/BUILD b/third_party/cares/BUILD
++index d73f5516bc..e19f65c312 100644
++--- a/third_party/cares/BUILD
+++++ b/third_party/cares/BUILD
++@@ -7,4 +7,5 @@ exports_files([
++     "config_linux/ares_config.h",
++     "config_openbsd/ares_config.h",
++     "config_windows/ares_config.h",
+++    "config_illumos/ares_config.h",
++ ])
++diff --git a/third_party/cares/cares.BUILD b/third_party/cares/cares.BUILD
++index 43e8ac7b68..e8aff357a2 100644
++--- a/third_party/cares/cares.BUILD
+++++ b/third_party/cares/cares.BUILD
++@@ -20,6 +20,11 @@ config_setting(
++     values = {"cpu": "darwin_arm64e"},
++ )
++ 
+++config_setting(
+++    name = "illumos",
+++    values = {"cpu": "illumos"},
+++)
+++
++ config_setting(
++     name = "windows",
++     values = {"cpu": "x64_windows"},
++@@ -111,6 +116,7 @@ copy_file(
++         ":darwin_x86_64": "@com_github_grpc_grpc//third_party/cares:config_darwin/ares_config.h",
++         ":darwin_arm64": "@com_github_grpc_grpc//third_party/cares:config_darwin/ares_config.h",
++         ":darwin_arm64e": "@com_github_grpc_grpc//third_party/cares:config_darwin/ares_config.h",
+++        ":illumos": "@com_github_grpc_grpc//third_party/cares:config_illumos/ares_config.h",
++         ":windows": "@com_github_grpc_grpc//third_party/cares:config_windows/ares_config.h",
++         ":android": "@com_github_grpc_grpc//third_party/cares:config_android/ares_config.h",
++         "//conditions:default": "@com_github_grpc_grpc//third_party/cares:config_linux/ares_config.h",
++diff --git a/third_party/cares/config_illumos/ares_config.h b/third_party/cares/config_illumos/ares_config.h
++new file mode 100644
++index 0000000000..d806bfd58e
++--- /dev/null
+++++ b/third_party/cares/config_illumos/ares_config.h
++@@ -0,0 +1,506 @@
+++/* ares_config.h.  Generated from ares_config.h.in by configure.  */
+++/* ares_config.h.in.  Generated from configure.ac by autoheader.  */
+++
+++/* Define if building universal (internal helper macro) */
+++/* #undef AC_APPLE_UNIVERSAL_BUILD */
+++
+++/* define this if ares is built for a big endian system */
+++/* #undef ARES_BIG_ENDIAN */
+++
+++/* when building as static part of libcurl */
+++/* #undef BUILDING_LIBCURL */
+++
+++/* Defined for build that exposes internal static functions for testing. */
+++/* #undef CARES_EXPOSE_STATICS */
+++
+++/* Defined for build with symbol hiding. */
+++#define CARES_SYMBOL_HIDING 1
+++
+++/* Definition to make a library symbol externally visible. */
+++#define CARES_SYMBOL_SCOPE_EXTERN __attribute__ ((__visibility__ ("default")))
+++
+++/* the signed version of size_t */
+++#define CARES_TYPEOF_ARES_SSIZE_T ssize_t
+++
+++/* Use resolver library to configure cares */
+++/* #undef CARES_USE_LIBRESOLV */
+++
+++/* if a /etc/inet dir is being used */
+++#define ETC_INET 1
+++
+++/* Define to the type of arg 2 for gethostname. */
+++#define GETHOSTNAME_TYPE_ARG2 int
+++
+++/* Define to the type qualifier of arg 1 for getnameinfo. */
+++#define GETNAMEINFO_QUAL_ARG1 const
+++
+++/* Define to the type of arg 1 for getnameinfo. */
+++#define GETNAMEINFO_TYPE_ARG1 struct sockaddr *
+++
+++/* Define to the type of arg 2 for getnameinfo. */
+++#define GETNAMEINFO_TYPE_ARG2 socklen_t
+++
+++/* Define to the type of args 4 and 6 for getnameinfo. */
+++#define GETNAMEINFO_TYPE_ARG46 socklen_t
+++
+++/* Define to the type of arg 7 for getnameinfo. */
+++#define GETNAMEINFO_TYPE_ARG7 int
+++
+++/* Specifies the number of arguments to getservbyport_r */
+++#define GETSERVBYPORT_R_ARGS 5
+++
+++/* Specifies the size of the buffer to pass to getservbyport_r */
+++#define GETSERVBYPORT_R_BUFSIZE 4096
+++
+++/* Define to 1 if you have AF_INET6. */
+++#define HAVE_AF_INET6 1
+++
+++/* Define to 1 if you have the <arpa/inet.h> header file. */
+++#define HAVE_ARPA_INET_H 1
+++
+++/* Define to 1 if you have the <arpa/nameser_compat.h> header file. */
+++#define HAVE_ARPA_NAMESER_COMPAT_H 1
+++
+++/* Define to 1 if you have the <arpa/nameser.h> header file. */
+++#define HAVE_ARPA_NAMESER_H 1
+++
+++/* Define to 1 if you have the <assert.h> header file. */
+++#define HAVE_ASSERT_H 1
+++
+++/* Define to 1 if you have the `bitncmp' function. */
+++/* #undef HAVE_BITNCMP */
+++
+++/* Define to 1 if bool is an available type. */
+++#define HAVE_BOOL_T 1
+++
+++/* Define to 1 if you have the clock_gettime function and monotonic timer. */
+++#define HAVE_CLOCK_GETTIME_MONOTONIC 1
+++
+++/* Define to 1 if you have the closesocket function. */
+++/* #undef HAVE_CLOSESOCKET */
+++
+++/* Define to 1 if you have the CloseSocket camel case function. */
+++/* #undef HAVE_CLOSESOCKET_CAMEL */
+++
+++/* Define to 1 if you have the connect function. */
+++#define HAVE_CONNECT 1
+++
+++/* define if the compiler supports basic C++11 syntax */
+++#define HAVE_CXX11 1
+++
+++/* Define to 1 if you have the <dlfcn.h> header file. */
+++#define HAVE_DLFCN_H 1
+++
+++/* Define to 1 if you have the <errno.h> header file. */
+++#define HAVE_ERRNO_H 1
+++
+++/* Define to 1 if you have the fcntl function. */
+++#define HAVE_FCNTL 1
+++
+++/* Define to 1 if you have the <fcntl.h> header file. */
+++#define HAVE_FCNTL_H 1
+++
+++/* Define to 1 if you have a working fcntl O_NONBLOCK function. */
+++#define HAVE_FCNTL_O_NONBLOCK 1
+++
+++/* Define to 1 if you have the freeaddrinfo function. */
+++#define HAVE_FREEADDRINFO 1
+++
+++/* Define to 1 if you have a working getaddrinfo function. */
+++#define HAVE_GETADDRINFO 1
+++
+++/* Define to 1 if the getaddrinfo function is threadsafe. */
+++#define HAVE_GETADDRINFO_THREADSAFE 1
+++
+++/* Define to 1 if you have the getenv function. */
+++#define HAVE_GETENV 1
+++
+++/* Define to 1 if you have the gethostbyaddr function. */
+++#define HAVE_GETHOSTBYADDR 1
+++
+++/* Define to 1 if you have the gethostbyname function. */
+++#define HAVE_GETHOSTBYNAME 1
+++
+++/* Define to 1 if you have the gethostname function. */
+++#define HAVE_GETHOSTNAME 1
+++
+++/* Define to 1 if you have the getnameinfo function. */
+++#define HAVE_GETNAMEINFO 1
+++
+++/* Define to 1 if you have the getservbyport_r function. */
+++#define HAVE_GETSERVBYPORT_R 1
+++
+++/* Define to 1 if you have the `gettimeofday' function. */
+++#define HAVE_GETTIMEOFDAY 1
+++
+++/* Define to 1 if you have the `if_indextoname' function. */
+++#define HAVE_IF_INDEXTONAME 1
+++
+++/* Define to 1 if you have a IPv6 capable working inet_net_pton function. */
+++/* #undef HAVE_INET_NET_PTON */
+++
+++/* Define to 1 if you have a IPv6 capable working inet_ntop function. */
+++#define HAVE_INET_NTOP 1
+++
+++/* Define to 1 if you have a IPv6 capable working inet_pton function. */
+++#define HAVE_INET_PTON 1
+++
+++/* Define to 1 if you have the <inttypes.h> header file. */
+++#define HAVE_INTTYPES_H 1
+++
+++/* Define to 1 if you have the ioctl function. */
+++#define HAVE_IOCTL 1
+++
+++/* Define to 1 if you have the ioctlsocket function. */
+++/* #undef HAVE_IOCTLSOCKET */
+++
+++/* Define to 1 if you have the IoctlSocket camel case function. */
+++/* #undef HAVE_IOCTLSOCKET_CAMEL */
+++
+++/* Define to 1 if you have a working IoctlSocket camel case FIONBIO function.
+++   */
+++/* #undef HAVE_IOCTLSOCKET_CAMEL_FIONBIO */
+++
+++/* Define to 1 if you have a working ioctlsocket FIONBIO function. */
+++/* #undef HAVE_IOCTLSOCKET_FIONBIO */
+++
+++/* Define to 1 if you have a working ioctl FIONBIO function. */
+++/* #undef HAVE_IOCTL_FIONBIO */
+++
+++/* Define to 1 if you have a working ioctl SIOCGIFADDR function. */
+++/* #undef HAVE_IOCTL_SIOCGIFADDR */
+++
+++/* Define to 1 if you have the `resolve' library (-lresolve). */
+++/* #undef HAVE_LIBRESOLVE */
+++
+++/* Define to 1 if you have the <limits.h> header file. */
+++#define HAVE_LIMITS_H 1
+++
+++/* if your compiler supports LL */
+++#define HAVE_LL 1
+++
+++/* Define to 1 if the compiler supports the 'long long' data type. */
+++#define HAVE_LONGLONG 1
+++
+++/* Define to 1 if you have the malloc.h header file. */
+++#define HAVE_MALLOC_H 1
+++
+++/* Define to 1 if you have the memory.h header file. */
+++#define HAVE_MEMORY_H 1
+++
+++/* Define to 1 if you have the MSG_NOSIGNAL flag. */
+++#define HAVE_MSG_NOSIGNAL 1
+++
+++/* Define to 1 if you have the <netdb.h> header file. */
+++#define HAVE_NETDB_H 1
+++
+++/* Define to 1 if you have the <netinet/in.h> header file. */
+++#define HAVE_NETINET_IN_H 1
+++
+++/* Define to 1 if you have the <netinet/tcp.h> header file. */
+++#define HAVE_NETINET_TCP_H 1
+++
+++/* Define to 1 if you have the <net/if.h> header file. */
+++#define HAVE_NET_IF_H 1
+++
+++/* Define to 1 if you have PF_INET6. */
+++#define HAVE_PF_INET6 1
+++
+++/* Define to 1 if you have the recv function. */
+++#define HAVE_RECV 1
+++
+++/* Define to 1 if you have the recvfrom function. */
+++#define HAVE_RECVFROM 1
+++
+++/* Define to 1 if you have the send function. */
+++#define HAVE_SEND 1
+++
+++/* Define to 1 if you have the setsockopt function. */
+++#define HAVE_SETSOCKOPT 1
+++
+++/* Define to 1 if you have a working setsockopt SO_NONBLOCK function. */
+++/* #undef HAVE_SETSOCKOPT_SO_NONBLOCK */
+++
+++/* Define to 1 if you have the <signal.h> header file. */
+++#define HAVE_SIGNAL_H 1
+++
+++/* Define to 1 if sig_atomic_t is an available typedef. */
+++#define HAVE_SIG_ATOMIC_T 1
+++
+++/* Define to 1 if sig_atomic_t is already defined as volatile. */
+++/* #undef HAVE_SIG_ATOMIC_T_VOLATILE */
+++
+++/* Define to 1 if your struct sockaddr_in6 has sin6_scope_id. */
+++#define HAVE_SOCKADDR_IN6_SIN6_SCOPE_ID 1
+++
+++/* Define to 1 if you have the socket function. */
+++#define HAVE_SOCKET 1
+++
+++/* Define to 1 if you have the <socket.h> header file. */
+++/* #undef HAVE_SOCKET_H */
+++
+++/* Define to 1 if you have the <stdbool.h> header file. */
+++#define HAVE_STDBOOL_H 1
+++
+++/* Define to 1 if you have the <stdint.h> header file. */
+++#define HAVE_STDINT_H 1
+++
+++/* Define to 1 if you have the <stdio.h> header file. */
+++#define HAVE_STDIO_H 1
+++
+++/* Define to 1 if you have the <stdlib.h> header file. */
+++#define HAVE_STDLIB_H 1
+++
+++/* Define to 1 if you have the strcasecmp function. */
+++#define HAVE_STRCASECMP 1
+++
+++/* Define to 1 if you have the strcmpi function. */
+++/* #undef HAVE_STRCMPI */
+++
+++/* Define to 1 if you have the strdup function. */
+++#define HAVE_STRDUP 1
+++
+++/* Define to 1 if you have the stricmp function. */
+++/* #undef HAVE_STRICMP */
+++
+++/* Define to 1 if you have the <strings.h> header file. */
+++#define HAVE_STRINGS_H 1
+++
+++/* Define to 1 if you have the <string.h> header file. */
+++#define HAVE_STRING_H 1
+++
+++/* Define to 1 if you have the strncasecmp function. */
+++#define HAVE_STRNCASECMP 1
+++
+++/* Define to 1 if you have the strncmpi function. */
+++/* #undef HAVE_STRNCMPI */
+++
+++/* Define to 1 if you have the strnicmp function. */
+++/* #undef HAVE_STRNICMP */
+++
+++/* Define to 1 if you have the <stropts.h> header file. */
+++#define HAVE_STROPTS_H 1
+++
+++/* Define to 1 if you have struct addrinfo. */
+++#define HAVE_STRUCT_ADDRINFO 1
+++
+++/* Define to 1 if you have struct in6_addr. */
+++#define HAVE_STRUCT_IN6_ADDR 1
+++
+++/* Define to 1 if you have struct sockaddr_in6. */
+++#define HAVE_STRUCT_SOCKADDR_IN6 1
+++
+++/* if struct sockaddr_storage is defined */
+++#define HAVE_STRUCT_SOCKADDR_STORAGE 1
+++
+++/* Define to 1 if you have the timeval struct. */
+++#define HAVE_STRUCT_TIMEVAL 1
+++
+++/* Define to 1 if you have the <sys/ioctl.h> header file. */
+++#define HAVE_SYS_IOCTL_H 1
+++
+++/* Define to 1 if you have the <sys/param.h> header file. */
+++#define HAVE_SYS_PARAM_H 1
+++
+++/* Define to 1 if you have the <sys/select.h> header file. */
+++#define HAVE_SYS_SELECT_H 1
+++
+++/* Define to 1 if you have the <sys/socket.h> header file. */
+++#define HAVE_SYS_SOCKET_H 1
+++
+++/* Define to 1 if you have the <sys/stat.h> header file. */
+++#define HAVE_SYS_STAT_H 1
+++
+++/* Define to 1 if you have the <sys/time.h> header file. */
+++#define HAVE_SYS_TIME_H 1
+++
+++/* Define to 1 if you have the <sys/types.h> header file. */
+++#define HAVE_SYS_TYPES_H 1
+++
+++/* Define to 1 if you have the <sys/uio.h> header file. */
+++#define HAVE_SYS_UIO_H 1
+++
+++/* Define to 1 if you have the <time.h> header file. */
+++#define HAVE_TIME_H 1
+++
+++/* Define to 1 if you have the <unistd.h> header file. */
+++#define HAVE_UNISTD_H 1
+++
+++/* Define to 1 if you have the windows.h header file. */
+++/* #undef HAVE_WINDOWS_H */
+++
+++/* Define to 1 if you have the winsock2.h header file. */
+++/* #undef HAVE_WINSOCK2_H */
+++
+++/* Define to 1 if you have the winsock.h header file. */
+++/* #undef HAVE_WINSOCK_H */
+++
+++/* Define to 1 if you have the writev function. */
+++#define HAVE_WRITEV 1
+++
+++/* Define to 1 if you have the ws2tcpip.h header file. */
+++/* #undef HAVE_WS2TCPIP_H */
+++
+++/* Define if __system_property_get exists. */
+++/* #undef HAVE___SYSTEM_PROPERTY_GET */
+++
+++/* Define to the sub-directory where libtool stores uninstalled libraries. */
+++#define LT_OBJDIR ".libs/"
+++
+++/* Define to 1 if you need the malloc.h header file even with stdlib.h */
+++/* #undef NEED_MALLOC_H */
+++
+++/* Define to 1 if you need the memory.h header file even with stdlib.h */
+++/* #undef NEED_MEMORY_H */
+++
+++/* Define to 1 if _REENTRANT preprocessor symbol must be defined. */
+++#define NEED_REENTRANT 1
+++
+++/* Define to 1 if _THREAD_SAFE preprocessor symbol must be defined. */
+++/* #undef NEED_THREAD_SAFE */
+++
+++/* cpu-machine-OS */
+++#define OS "x86_64-pc-solaris2.11"
+++
+++/* Name of package */
+++#define PACKAGE "c-ares"
+++
+++/* Define to the address where bug reports for this package should be sent. */
+++#define PACKAGE_BUGREPORT "c-ares mailing list: http://cool.haxx.se/mailman/listinfo/c-ares"
+++
+++/* Define to the full name of this package. */
+++#define PACKAGE_NAME "c-ares"
+++
+++/* Define to the full name and version of this package. */
+++#define PACKAGE_STRING "c-ares -"
+++
+++/* Define to the one symbol short name of this package. */
+++#define PACKAGE_TARNAME "c-ares"
+++
+++/* Define to the home page for this package. */
+++#define PACKAGE_URL ""
+++
+++/* Define to the version of this package. */
+++#define PACKAGE_VERSION "-"
+++
+++/* a suitable file/device to read random data from */
+++#define RANDOM_FILE "/dev/urandom"
+++
+++/* Define to the type qualifier pointed by arg 5 for recvfrom. */
+++#define RECVFROM_QUAL_ARG5 
+++
+++/* Define to the type of arg 1 for recvfrom. */
+++#define RECVFROM_TYPE_ARG1 int
+++
+++/* Define to the type pointed by arg 2 for recvfrom. */
+++#define RECVFROM_TYPE_ARG2 void
+++
+++/* Define to 1 if the type pointed by arg 2 for recvfrom is void. */
+++#define RECVFROM_TYPE_ARG2_IS_VOID 1
+++
+++/* Define to the type of arg 3 for recvfrom. */
+++#define RECVFROM_TYPE_ARG3 size_t
+++
+++/* Define to the type of arg 4 for recvfrom. */
+++#define RECVFROM_TYPE_ARG4 int
+++
+++/* Define to the type pointed by arg 5 for recvfrom. */
+++#define RECVFROM_TYPE_ARG5 struct sockaddr
+++
+++/* Define to 1 if the type pointed by arg 5 for recvfrom is void. */
+++/* #undef RECVFROM_TYPE_ARG5_IS_VOID */
+++
+++/* Define to the type pointed by arg 6 for recvfrom. */
+++#define RECVFROM_TYPE_ARG6 void
+++
+++/* Define to 1 if the type pointed by arg 6 for recvfrom is void. */
+++#define RECVFROM_TYPE_ARG6_IS_VOID 1
+++
+++/* Define to the function return type for recvfrom. */
+++#define RECVFROM_TYPE_RETV ssize_t
+++
+++/* Define to the type of arg 1 for recv. */
+++#define RECV_TYPE_ARG1 int
+++
+++/* Define to the type of arg 2 for recv. */
+++#define RECV_TYPE_ARG2 void *
+++
+++/* Define to the type of arg 3 for recv. */
+++#define RECV_TYPE_ARG3 size_t
+++
+++/* Define to the type of arg 4 for recv. */
+++#define RECV_TYPE_ARG4 int
+++
+++/* Define to the function return type for recv. */
+++#define RECV_TYPE_RETV ssize_t
+++
+++/* Define as the return type of signal handlers (`int' or `void'). */
+++#define RETSIGTYPE void
+++
+++/* Define to the type qualifier of arg 2 for send. */
+++#define SEND_QUAL_ARG2 const
+++
+++/* Define to the type of arg 1 for send. */
+++#define SEND_TYPE_ARG1 int
+++
+++/* Define to the type of arg 2 for send. */
+++#define SEND_TYPE_ARG2 void *
+++
+++/* Define to the type of arg 3 for send. */
+++#define SEND_TYPE_ARG3 size_t
+++
+++/* Define to the type of arg 4 for send. */
+++#define SEND_TYPE_ARG4 int
+++
+++/* Define to the function return type for send. */
+++#define SEND_TYPE_RETV ssize_t
+++
+++/* Define to 1 if all of the C90 standard headers exist (not just the ones
+++   required in a freestanding environment). This macro is provided for
+++   backward compatibility; new code need not use it. */
+++#define STDC_HEADERS 1
+++
+++/* Define to 1 if you can safely include both <sys/time.h> and <time.h>. This
+++   macro is obsolete. */
+++#define TIME_WITH_SYS_TIME 1
+++
+++/* Define to disable non-blocking sockets. */
+++/* #undef USE_BLOCKING_SOCKETS */
+++
+++/* Version number of package */
+++#define VERSION "-"
+++
+++/* Define to avoid automatic inclusion of winsock.h */
+++/* #undef WIN32_LEAN_AND_MEAN */
+++
+++/* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
+++   significant byte first (like Motorola and SPARC, unlike Intel). */
+++#if defined AC_APPLE_UNIVERSAL_BUILD
+++# if defined __BIG_ENDIAN__
+++#  define WORDS_BIGENDIAN 1
+++# endif
+++#else
+++# ifndef WORDS_BIGENDIAN
+++/* #  undef WORDS_BIGENDIAN */
+++# endif
+++#endif
+++
+++/* Define to 1 if OS is AIX. */
+++#ifndef _ALL_SOURCE
+++/* #  undef _ALL_SOURCE */
+++#endif
+++
+++/* Number of bits in a file offset, on hosts where this is settable. */
+++/* #undef _FILE_OFFSET_BITS */
+++
+++/* Define for large files, on AIX-style hosts. */
+++/* #undef _LARGE_FILES */
+++
+++/* Define to empty if `const' does not conform to ANSI C. */
+++/* #undef const */
+++
+++/* Type to use in place of in_addr_t when system does not provide it. */
+++/* #undef in_addr_t */
+++
+++/* Define to `unsigned int' if <sys/types.h> does not define. */
+++/* #undef size_t */
++-- 
++2.41.0
++
+diff --git a/third_party/platforms/illumos-0.0.4.0.patch b/third_party/platforms/illumos-0.0.4.0.patch
+new file mode 100644
+index 0000000000000..b46e74e47b98e
+--- /dev/null
++++ b/third_party/platforms/illumos-0.0.4.0.patch
+@@ -0,0 +1,28 @@
++From e2b0fddbd5f841432740a0029751168c054db622 Mon Sep 17 00:00:00 2001
++From: Jasper Siepkes <siepkes@serviceplanet.nl>
++Date: Sat, 12 Sep 2020 09:12:52 +0200
++Subject: [PATCH] Added Solaris / SmartOS / Illumos support.
++
++---
++ os/BUILD | 5 +++++
++ 1 file changed, 5 insertions(+)
++
++diff --git a/os/BUILD b/os/BUILD
++index 53fec81..b57f988 100644
++--- a/os/BUILD
+++++ b/os/BUILD
++@@ -23,6 +23,11 @@ constraint_value(
++     constraint_setting = ":os",
++ )
++ 
+++constraint_value(
+++    name = "illumos",
+++    constraint_setting = ":os",
+++)
+++
++ constraint_value(
++     name = "android",
++     constraint_setting = ":os",
++-- 
++2.37.1
++
+diff --git a/third_party/zstd-jni/zstd-jni.BUILD b/third_party/zstd-jni/zstd-jni.BUILD
+index 5a378368e16b5..1f653837ef03a 100644
+--- a/third_party/zstd-jni/zstd-jni.BUILD
++++ b/third_party/zstd-jni/zstd-jni.BUILD
+@@ -4,6 +4,7 @@ genrule(
+         "@bazel_tools//src/conditions:darwin": ["@bazel_tools//tools/jdk:jni_md_header-darwin"],
+         "@bazel_tools//src/conditions:freebsd": ["@bazel_tools//tools/jdk:jni_md_header-freebsd"],
+         "@bazel_tools//src/conditions:openbsd": ["@bazel_tools//tools/jdk:jni_md_header-openbsd"],
++        "@bazel_tools//src/conditions:illumos": ["@bazel_tools//tools/jdk:jni_md_header-illumos"],
+         "@bazel_tools//src/conditions:windows": ["@bazel_tools//tools/jdk:jni_md_header-windows"],
+         "//conditions:default": ["@bazel_tools//tools/jdk:jni_md_header-linux"],
+     }),
+diff --git a/tools/cpp/BUILD.static.illumos b/tools/cpp/BUILD.static.illumos
+new file mode 100644
+index 0000000000000..6a63324d734ee
+--- /dev/null
++++ b/tools/cpp/BUILD.static.illumos
+@@ -0,0 +1,77 @@
++# Copyright 2018 The Bazel Authors. All rights reserved.
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#    http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++# This becomes the BUILD file for @local_config_cc// under Illumos.
++
++load(":cc_toolchain_config.bzl", "cc_toolchain_config")
++load("@rules_cc//cc:defs.bzl", "cc_library", "cc_toolchain", "cc_toolchain_suite")
++
++package(default_visibility = ["//visibility:public"])
++
++cc_library(
++    name = "malloc",
++)
++
++filegroup(
++    name = "empty",
++    srcs = [],
++)
++
++# Hardcoded toolchain, legacy behaviour.
++cc_toolchain_suite(
++    name = "toolchain",
++    toolchains = {
++        "illumos|compiler": ":cc-compiler-illumos",
++        "illumos": ":cc-compiler-illumos",
++    },
++)
++
++cc_toolchain(
++    name = "cc-compiler-illumos",
++    all_files = ":empty",
++    ar_files = ":empty",
++    as_files = ":empty",
++    compiler_files = ":empty",
++    dwp_files = ":empty",
++    linker_files = ":empty",
++    objcopy_files = ":empty",
++    strip_files = ":empty",
++    supports_param_files = 0,
++    toolchain_config = ":local_illumos",
++    toolchain_identifier = "local_illumos",
++)
++
++cc_toolchain_config(
++    name = "local_illumos",
++    cpu = "illumos",
++)
++
++toolchain(
++    name = "cc-toolchain-illumos",
++    exec_compatible_with = [
++        "@platforms//cpu:x86_64",
++        "@platforms//os:illumos",
++    ],
++    target_compatible_with = [
++        "@platforms//cpu:x86_64",
++        "@platforms//os:illumos",
++    ],
++    toolchain = ":cc-compiler-illumos",
++    toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
++)
++
++filegroup(
++    name = "link_dynamic_library",
++    srcs = ["link_dynamic_library.sh"],
++)
+diff --git a/tools/cpp/BUILD.tpl b/tools/cpp/BUILD.tpl
+index ab72a06a4e6b4..f77a1823ce5f4 100644
+--- a/tools/cpp/BUILD.tpl
++++ b/tools/cpp/BUILD.tpl
+@@ -12,7 +12,8 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
+-# This becomes the BUILD file for @local_config_cc// under non-BSD unixes.
++# This becomes the BUILD file for @local_config_cc// under non-BSD and
++# non-Illumos unixes.
+ 
+ load(":cc_toolchain_config.bzl", "cc_toolchain_config")
+ load(":armeabi_cc_toolchain_config.bzl", "armeabi_cc_toolchain_config")
+diff --git a/tools/cpp/bsd_cc_toolchain_config.bzl b/tools/cpp/bsd_cc_toolchain_config.bzl
+index 26fb748cecdf2..22b154b25100e 100644
+--- a/tools/cpp/bsd_cc_toolchain_config.bzl
++++ b/tools/cpp/bsd_cc_toolchain_config.bzl
+@@ -105,7 +105,7 @@ def _impl(ctx):
+                 actions = all_compile_actions,
+                 flag_groups = [
+                     flag_group(
+-                        flags = [
++                        flags = [                       
+                             "-no-canonical-prefixes",
+                             "-Wno-builtin-macro-redefined",
+                             "-D__DATE__=\"redacted\"",
+diff --git a/tools/cpp/cc_configure.bzl b/tools/cpp/cc_configure.bzl
+index 9dd40dc10862d..20adadcf8e1ff 100644
+--- a/tools/cpp/cc_configure.bzl
++++ b/tools/cpp/cc_configure.bzl
+@@ -114,6 +114,14 @@ def cc_autoconf_impl(repository_ctx, overriden_tools = dict()):
+         # container so skipping until we have proper tests for these platforms.
+         repository_ctx.symlink(paths["@bazel_tools//tools/cpp:bsd_cc_toolchain_config.bzl"], "cc_toolchain_config.bzl")
+         repository_ctx.symlink(paths["@bazel_tools//tools/cpp:BUILD.static.bsd"], "BUILD")
++    elif cpu_value == "illumos":
++        paths = resolve_labels(repository_ctx, [
++            "@bazel_tools//tools/cpp:BUILD.static.illumos",
++            "@bazel_tools//tools/cpp:illumos_cc_toolchain_config.bzl",
++        ])
++
++        repository_ctx.symlink(paths["@bazel_tools//tools/cpp:illumos_cc_toolchain_config.bzl"], "cc_toolchain_config.bzl")
++        repository_ctx.symlink(paths["@bazel_tools//tools/cpp:BUILD.static.illumos"], "BUILD")
+     elif cpu_value in ["x64_windows", "arm64_windows"]:
+         # TODO(ibiryukov): overriden_tools are only supported in configure_unix_toolchain.
+         # We might want to add that to Windows too(at least for msys toolchain).
+diff --git a/tools/cpp/illumos_cc_toolchain_config.bzl b/tools/cpp/illumos_cc_toolchain_config.bzl
+new file mode 100644
+index 0000000000000..678248ce72a72
+--- /dev/null
++++ b/tools/cpp/illumos_cc_toolchain_config.bzl
+@@ -0,0 +1,333 @@
++# Copyright 2019 The Bazel Authors. All rights reserved.
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#    http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++"""A Starlark cc_toolchain configuration rule for Illumos."""
++
++load(
++    "@bazel_tools//tools/cpp:cc_toolchain_config_lib.bzl",
++    "action_config",
++    "feature",
++    "flag_group",
++    "flag_set",
++    "tool",
++    "tool_path",
++    "with_feature_set",
++)
++load("@bazel_tools//tools/build_defs/cc:action_names.bzl", "ACTION_NAMES")
++
++all_compile_actions = [
++    ACTION_NAMES.c_compile,
++    ACTION_NAMES.cpp_compile,
++    ACTION_NAMES.linkstamp_compile,
++    ACTION_NAMES.assemble,
++    ACTION_NAMES.preprocess_assemble,
++    ACTION_NAMES.cpp_header_parsing,
++    ACTION_NAMES.cpp_module_compile,
++    ACTION_NAMES.cpp_module_codegen,
++    ACTION_NAMES.clif_match,
++    ACTION_NAMES.lto_backend,
++]
++
++all_cpp_compile_actions = [
++    ACTION_NAMES.cpp_compile,
++    ACTION_NAMES.linkstamp_compile,
++    ACTION_NAMES.cpp_header_parsing,
++    ACTION_NAMES.cpp_module_compile,
++    ACTION_NAMES.cpp_module_codegen,
++    ACTION_NAMES.clif_match,
++]
++
++all_link_actions = [
++    ACTION_NAMES.cpp_link_executable,
++    ACTION_NAMES.cpp_link_dynamic_library,
++    ACTION_NAMES.cpp_link_nodeps_dynamic_library,
++]
++
++def _impl(ctx):
++    cpu = ctx.attr.cpu
++    is_illumos = cpu == "illumos"
++    compiler = "compiler"
++    toolchain_identifier = "local_{}".format(cpu)
++    host_system_name = "local"
++    target_system_name = "local"
++    target_libc = "local"
++    abi_version = "local"
++    abi_libc_version = "local"
++
++    objcopy_embed_data_action = action_config(
++        action_name = "objcopy_embed_data",
++        enabled = True,
++        tools = [tool(path = "/opt/local/bin/objcopy")],
++    )
++
++    action_configs = [objcopy_embed_data_action] if is_illumos else []
++
++    default_link_flags_feature = feature(
++        name = "default_link_flags",
++        enabled = True,
++        flag_sets = [
++            flag_set(
++                actions = all_link_actions,
++                flag_groups = [
++                    flag_group(
++                        flags = [
++                            # gcc_s is here because it needs to be pulled in _before_ libc gets pulled in. Libraries
++                            # like libxnet pull in libc so therefor we need to explicitly put libgcc_s before them.
++                            # If we don't we run in to the problem that GCC's exception support (in libgcc_s) gets overriden
++                            # by Illumos' libc exception support (in libc). This leads to the situation where exceptions
++                            # don't work for a GCC compiled application. Applications will simply terminate when an 
++                            # exception is thrown. For more info see:
++                            # - https://paulbeachsblog.blogspot.com/2008/03/exceptions-gcc-and-solaris-10-amd-64bit.html
++                            # - https://stackoverflow.com/questions/27490165/sun-studio-linking-gcc-libs-exceptions-do-not-work#
++                            # - https://blogs.datalogics.com/2013/06/26/2013-june-dle-intel-solaris-64-mystery/
++                            "-lgcc_s",
++                            "-lxnet",
++                            "-lsocket",
++                            "-lnsl",
++                            # Needed for 'proc_arg_psinfo'.
++                            "-lproc",
++                            "-lstdc++",
++                            # Create position independent code.
++                            "-fpic",
++                            # Make the Illumos linker behave less strict. By default it uses '-ztext'. This caused some issues
++                            # with Envoy.
++                            # TODO: This doesn't belong here. Solve this properly.
++                            "-Wl,-z,textoff",
++                            # Remove the default '-ztext' flag which conflicts with '-ztextoff'.
++                            "-mimpure-text",
++                            # Make the Illumos linker rescan the archive files that are provided to the link-edit.
++                            "-Wl,-z,rescan",
++                        ],
++                    ),
++                ],
++            )
++        ],
++    )
++
++    unfiltered_compile_flags_feature = feature(
++        name = "unfiltered_compile_flags",
++        enabled = True,
++        flag_sets = [
++            flag_set(
++                actions = all_compile_actions,
++                flag_groups = [
++                    flag_group(
++                        flags = [
++                            # Identify as Illumos.
++                            "-D__illumos__",                            
++                            "-no-canonical-prefixes",
++                            "-fno-canonical-system-headers",
++                            "-Wno-builtin-macro-redefined",
++                            "-D__DATE__=\"redacted\"",
++                            "-D__TIMESTAMP__=\"redacted\"",
++                            "-D__TIME__=\"redacted\"",
++                        ],
++                    ),
++                ],
++            ),
++        ],
++    )
++
++    supports_pic_feature = feature(name = "supports_pic", enabled = True)
++
++    default_compile_flags_feature = feature(
++        name = "default_compile_flags",
++        enabled = True,
++        flag_sets = [
++            flag_set(
++                actions = all_compile_actions,
++                flag_groups = [
++                    flag_group(
++                        flags = [
++                            "-U_FORTIFY_SOURCE",
++                            "-D_FORTIFY_SOURCE=1",
++                            # TODO: Does Solaris support this?
++                            #"-fstack-protector",
++                            "-Wall",
++                            "-fno-omit-frame-pointer",
++                        ],
++                    ),
++                ],
++            ),
++            flag_set(
++                actions = all_compile_actions,
++                flag_groups = [flag_group(flags = ["-g"])],
++                with_features = [with_feature_set(features = ["dbg"])],
++            ),
++            flag_set(
++                actions = all_compile_actions,
++                flag_groups = [
++                    flag_group(
++                        flags = [
++                            "-g0",
++                            "-O2",
++                            "-DNDEBUG",
++                            "-ffunction-sections",
++                            "-fdata-sections",
++                        ],
++                    ),
++                ],
++                with_features = [with_feature_set(features = ["opt"])],
++            ),
++            flag_set(
++                actions = all_cpp_compile_actions + [ACTION_NAMES.lto_backend],
++                flag_groups = [flag_group(flags = ["-std=c++17"])],
++            ),
++        ],
++    )
++
++    opt_feature = feature(name = "opt")
++
++    supports_dynamic_linker_feature = feature(name = "supports_dynamic_linker", enabled = True)
++
++    objcopy_embed_flags_feature = feature(
++        name = "objcopy_embed_flags",
++        enabled = True,
++        flag_sets = [
++            flag_set(
++                actions = ["objcopy_embed_data"],
++                flag_groups = [flag_group(flags = ["-I", "binary"])],
++            ),
++        ],
++    )
++
++    dbg_feature = feature(name = "dbg")
++
++    user_compile_flags_feature = feature(
++        name = "user_compile_flags",
++        enabled = True,
++        flag_sets = [
++            flag_set(
++                actions = all_compile_actions,
++                flag_groups = [
++                    flag_group(
++                        flags = ["%{user_compile_flags}"],
++                        iterate_over = "user_compile_flags",
++                        expand_if_available = "user_compile_flags",
++                    ),
++                ],
++            ),
++        ],
++    )
++
++    sysroot_feature = feature(
++        name = "sysroot",
++        enabled = True,
++        flag_sets = [
++            flag_set(
++                actions = [
++                    ACTION_NAMES.c_compile,
++                    ACTION_NAMES.cpp_compile,
++                    ACTION_NAMES.linkstamp_compile,
++                    ACTION_NAMES.preprocess_assemble,
++                    ACTION_NAMES.cpp_header_parsing,
++                    ACTION_NAMES.cpp_module_compile,
++                    ACTION_NAMES.cpp_module_codegen,
++                    ACTION_NAMES.clif_match,
++                    ACTION_NAMES.lto_backend,
++                ] + all_link_actions,
++                flag_groups = [
++                    flag_group(
++                        flags = ["--sysroot=%{sysroot}"],
++                        expand_if_available = "sysroot",
++                    ),
++                ],
++            ),
++        ],
++    )
++
++    if is_illumos:
++        features = [
++            default_compile_flags_feature,
++            default_link_flags_feature,
++            supports_dynamic_linker_feature,
++            supports_pic_feature,
++            objcopy_embed_flags_feature,
++            opt_feature,
++            dbg_feature,
++            user_compile_flags_feature,
++            sysroot_feature,
++            unfiltered_compile_flags_feature,
++        ]
++    else:
++        features = [supports_dynamic_linker_feature, supports_pic_feature]
++
++    if (is_illumos):
++        # Paths obtained with '/opt/local/gcc9/bin/g++ -E -x c++ - -v < /dev/null'.
++        cxx_builtin_include_directories = ["/opt/local/gcc9/include/c++/9.3.0","/opt/local/gcc9/include/c++/9.3.0/x86_64-sun-solaris2.11","/opt/local/gcc9/include/c++/9.3.0/backward","/opt/local/gcc9/lib/gcc/x86_64-sun-solaris2.11/9.3.0/include","/opt/local/include","/opt/local/gcc9/include","/opt/local/gcc9/lib/gcc/x86_64-sun-solaris2.11/9.3.0/include-fixed","/usr/include"]
++    else:
++        cxx_builtin_include_directories = []
++
++    if is_illumos:
++        tool_paths = [
++            # Illumos ar doesn't have the '-D' flag which GNU ar has.
++            tool_path(name = "ar", path = "/opt/local/bin/ar"),
++            tool_path(name = "compat-ld", path = "/usr/bin/ld"),
++            tool_path(name = "cpp", path = "/opt/local/gcc9/bin/cpp"),
++            # Does not exist on Solaris.
++            tool_path(name = "dwp", path = "/usr/bin/dwp"),
++            tool_path(name = "gcc", path = "/opt/local/gcc9/bin/gcc"),
++            tool_path(name = "gcov", path = "/opt/local/gcc9/bin/gcov"),
++            tool_path(name = "ld", path = "/usr/bin/ld"),
++            tool_path(name = "nm", path = "/usr/bin/nm"),
++            tool_path(name = "objcopy", path = "/opt/local/bin/objcopy"),
++            tool_path(name = "objdump", path = "/opt/local/bin/objdump"),
++            tool_path(name = "strip", path = "/opt/local/bin/strip"),
++        ]
++    else:
++        tool_paths = [
++            tool_path(name = "ar", path = "/bin/false"),
++            tool_path(name = "compat-ld", path = "/bin/false"),
++            tool_path(name = "cpp", path = "/bin/false"),
++            tool_path(name = "dwp", path = "/bin/false"),
++            tool_path(name = "gcc", path = "/bin/false"),
++            tool_path(name = "gcov", path = "/bin/false"),
++            tool_path(name = "ld", path = "/bin/false"),
++            tool_path(name = "nm", path = "/bin/false"),
++            tool_path(name = "objcopy", path = "/bin/false"),
++            tool_path(name = "objdump", path = "/bin/false"),
++            tool_path(name = "strip", path = "/bin/false"),
++        ]
++
++    out = ctx.actions.declare_file(ctx.label.name)
++    ctx.actions.write(out, "Fake executable")
++    return [
++        cc_common.create_cc_toolchain_config_info(
++            ctx = ctx,
++            features = features,
++            action_configs = action_configs,
++            cxx_builtin_include_directories = cxx_builtin_include_directories,
++            toolchain_identifier = toolchain_identifier,
++            host_system_name = host_system_name,
++            target_system_name = target_system_name,
++            target_cpu = cpu,
++            target_libc = target_libc,
++            compiler = compiler,
++            abi_version = abi_version,
++            abi_libc_version = abi_libc_version,
++            tool_paths = tool_paths,
++        ),
++        DefaultInfo(
++            executable = out,
++        ),
++    ]
++
++cc_toolchain_config = rule(
++    implementation = _impl,
++    attrs = {
++        "cpu": attr.string(mandatory = True),
++    },
++    provides = [CcToolchainConfigInfo],
++    executable = True,
++)
+diff --git a/tools/cpp/lib_cc_configure.bzl b/tools/cpp/lib_cc_configure.bzl
+index 40e4f4c79d1f6..aa7fbf8c4f9ae 100644
+--- a/tools/cpp/lib_cc_configure.bzl
++++ b/tools/cpp/lib_cc_configure.bzl
+@@ -181,6 +181,7 @@ def get_cpu_value(repository_ctx):
+     """Compute the cpu_value based on the OS name. Doesn't %-escape the result!"""
+     os_name = repository_ctx.os.name
+     arch = repository_ctx.os.arch
++    auto_configure_warning_maybe(repository_ctx, "OS Name: " + str(os_name) + " ARCH value: " + str(arch))
+     if os_name.startswith("mac os"):
+         # Check if we are on x86_64 or arm64 and return the corresponding cpu value.
+         return "darwin" + ("_arm64" if arch == "aarch64" else "")
+@@ -188,6 +189,10 @@ def get_cpu_value(repository_ctx):
+         return "freebsd"
+     if os_name.find("openbsd") != -1:
+         return "openbsd"
++    if os_name.find("sunos") != -1:
++        # os_name is 'sunos' on Illumos. I'm guessing this value comes from 'os.name' in Java since it can
++        # also be 'mac os'.
++        return "illumos"
+     if os_name.find("windows") != -1:
+         if arch == "aarch64":
+             return "arm64_windows"
+diff --git a/tools/cpp/osx_cc_configure.bzl b/tools/cpp/osx_cc_configure.bzl
+index cbfc6afe27429..abf19b934b5ef 100644
+--- a/tools/cpp/osx_cc_configure.bzl
++++ b/tools/cpp/osx_cc_configure.bzl
+@@ -139,6 +139,38 @@ def _compile_cc_file(repository_ctx, src_name, out_name, timeout):
+     else:
+         _compile_cc_file_single_arch(repository_ctx, src_name, out_name, timeout)
+ 
++def configure_illumos_toolchain(repository_ctx, cpu_value, overriden_tools):
++    """Configure C++ toolchain on Illumos.
++
++    Args:
++      repository_ctx: The repository context.
++      overriden_tools: dictionary of overriden tools.
++    """
++    paths = resolve_labels(repository_ctx, [
++        "@bazel_tools//tools/cpp:armeabi_cc_toolchain_config.bzl",
++        "@bazel_tools//tools/cpp:osx_cc_wrapper.sh.tpl",
++        "@bazel_tools//tools/objc:libtool.sh",
++        "@bazel_tools//tools/objc:libtool_check_unique.cc",
++        "@bazel_tools//tools/objc:make_hashed_objlist.py",
++        "@bazel_tools//tools/objc:xcrunwrapper.sh",
++        "@bazel_tools//tools/osx/crosstool:BUILD.tpl",
++        "@bazel_tools//tools/osx/crosstool:cc_toolchain_config.bzl",
++        "@bazel_tools//tools/osx/crosstool:wrapped_clang.cc",
++        "@bazel_tools//tools/osx:xcode_locator.m",
++    ])
++
++    env = repository_ctx.os.environ
++    should_use_xcode = "BAZEL_USE_XCODE_TOOLCHAIN" in env and env["BAZEL_USE_XCODE_TOOLCHAIN"] == "1"
++    xcode_toolchains = []
++
++    # Make the following logic in sync with //tools/cpp:cc_configure.bzl#cc_autoconf_toolchains_impl
++    (xcode_toolchains, xcodeloc_err) = run_xcode_locator(
++        repository_ctx,
++        paths["@bazel_tools//tools/osx:xcode_locator.m"],
++    )
++
++    configure_unix_toolchain(repository_ctx, cpu_value, overriden_tools = overriden_tools)
++
+ def configure_osx_toolchain(repository_ctx, cpu_value, overriden_tools):
+     """Configure C++ toolchain on macOS.
+ 
+diff --git a/tools/jdk/BUILD b/tools/jdk/BUILD
+index 56c6d70126382..3d30910f48094 100644
+--- a/tools/jdk/BUILD
++++ b/tools/jdk/BUILD
+@@ -36,4 +36,4 @@ filegroup(
+ filegroup(
+     name = "package-srcs",
+     srcs = glob(["**"]),
+-)
++)
+\ No newline at end of file
+diff --git a/tools/jdk/BUILD.java_tools b/tools/jdk/BUILD.java_tools
+index e210eff23130f..810caad49b262 100644
+--- a/tools/jdk/BUILD.java_tools
++++ b/tools/jdk/BUILD.java_tools
+@@ -135,6 +135,68 @@ config_setting(
+     visibility = ["//visibility:public"],
+ )
+ 
++config_setting(
++    name = "illumos",
++    constraint_values = ["@platforms//os:illumos"],
++    visibility = ["//visibility:public"],
++)
++
++alias(
++    name = "singlejar",
++    actual = select({
++        "//:remote": ":singlejar_cc_bin",
++        "//conditions:default": ":singlejar_prebuilt_or_cc_binary",
++    }),
++)
++
++alias(
++    name = "singlejar_prebuilt_or_cc_binary",
++    actual = select({
++        ":linux_x86_64": "java_tools/src/tools/singlejar/singlejar_local",
++        ":darwin_x86_64": "java_tools/src/tools/singlejar/singlejar_local",
++        ":darwin_arm64": "java_tools/src/tools/singlejar/singlejar_local",
++        ":darwin_arm64e": "java_tools/src/tools/singlejar/singlejar_local",
++        ":windows": "java_tools/src/tools/singlejar/singlejar_local.exe",
++        "//conditions:default": "singlejar_cc_bin",
++    }),
++)
++
++alias(
++    name = "prebuilt_singlejar",
++    actual = select({
++        ":windows": "java_tools/src/tools/singlejar/singlejar_local.exe",
++        "//conditions:default": "java_tools/src/tools/singlejar/singlejar_local",
++    }),
++)
++
++alias(
++    name = "ijar",
++    actual = select({
++        ":remote": ":ijar_cc_binary",
++        "//conditions:default": ":prebuilt_binary_or_cc_binary",
++    }),
++)
++
++alias(
++    name = "prebuilt_binary_or_cc_binary",
++    actual = select({
++        ":linux_x86_64": ":ijar_prebuilt_binary",
++        ":darwin_x86_64": ":ijar_prebuilt_binary",
++        ":darwin_arm64": ":ijar_prebuilt_binary",
++        ":darwin_arm64e": ":ijar_prebuilt_binary",
++        ":windows": ":ijar_prebuilt_binary",
++        "//conditions:default": ":ijar_cc_binary",
++    }),
++)
++
++filegroup(
++    name = "ijar_prebuilt_binary",
++    srcs = select({
++        ":windows": ["java_tools/ijar/ijar.exe"],
++        "//conditions:default": ["java_tools/ijar/ijar"],
++    }),
++)
++
+ cc_library(
+     name = "malloc",
+ )
+diff --git a/tools/jdk/BUILD.tools b/tools/jdk/BUILD.tools
+index 92b83e5b80f55..82548c7759cc7 100644
+--- a/tools/jdk/BUILD.tools
++++ b/tools/jdk/BUILD.tools
+@@ -80,6 +80,12 @@ java_runtime_files(
+     srcs = ["include/openbsd/jni_md.h"],
+ )
+ 
++java_runtime_files(
++    name = "jni_md_header-illumos",
++    # OpenJDK doesn't make a distinction between Solaris and Illumos (yet).
++    srcs = ["include/solaris/jni_md.h"],
++)
++
+ # The Java native interface. Depend on this package if you #include <jni.h>.
+ #
+ # See test_jni in third_party/bazel/src/test/shell/bazel/bazel_java_test.sh for
+@@ -98,6 +104,7 @@ cc_library(
+         "//src/conditions:darwin": [":jni_md_header-darwin"],
+         "//src/conditions:freebsd": [":jni_md_header-freebsd"],
+         "//src/conditions:openbsd": [":jni_md_header-openbsd"],
++        "//src/conditions:illumos": [":jni_md_header-illumos"],
+         "//src/conditions:windows": [":jni_md_header-windows"],
+         "//conditions:default": [],
+     }),
+@@ -111,6 +118,7 @@ cc_library(
+         "//src/conditions:darwin": ["include/darwin"],
+         "//src/conditions:freebsd": ["include/freebsd"],
+         "//src/conditions:openbsd": ["include/openbsd"],
++        "//src/conditions:illumos": ["include/solaris"],
+         "//src/conditions:windows": ["include/win32"],
+         "//conditions:default": [],
+     }),
+diff --git a/tools/platforms/BUILD b/tools/platforms/BUILD
+index 18ff33eb0302d..d5ea35ad03935 100644
+--- a/tools/platforms/BUILD
++++ b/tools/platforms/BUILD
+@@ -88,6 +88,11 @@ alias(
+     actual = "@platforms//os:openbsd",
+ )
+ 
++alias(
++    name = "illumos",
++    actual = "@platforms//os:illumos",
++)
++
+ alias(
+     name = "android",
+     actual = "@platforms//os:android",
+@@ -127,6 +132,7 @@ platform(
+         "@platforms//os:osx",
+         "@platforms//os:freebsd",
+         "@platforms//os:openbsd",
++        "@platforms//os:illumos",
+         "@platforms//os:linux",
+         "@platforms//os:windows",
+     ],
+@@ -150,6 +156,7 @@ platform(
+         "@platforms//os:osx",
+         "@platforms//os:freebsd",
+         "@platforms//os:openbsd",
++        "@platforms//os:illumos",
+         "@platforms//os:linux",
+         "@platforms//os:windows",
+     ],
+diff --git a/tools/platforms/BUILD.tools b/tools/platforms/BUILD.tools
+index 27a11ae38b96f..56ade59ac5282 100644
+--- a/tools/platforms/BUILD.tools
++++ b/tools/platforms/BUILD.tools
+@@ -76,6 +76,11 @@ alias(
+     actual = "@platforms//os:openbsd",
+ )
+ 
++alias(
++    name = "illumos",
++    actual = "@platforms//os:illumos",
++)
++
+ alias(
+     name = "android",
+     actual = "@platforms//os:android",
+@@ -115,6 +120,7 @@ platform(
+         "@platforms//os:osx",
+         "@platforms//os:freebsd",
+         "@platforms//os:openbsd",
++        "@platforms//os:illumos",
+         "@platforms//os:linux",
+         "@platforms//os:windows",
+     ],
+@@ -138,6 +144,7 @@ platform(
+         "@platforms//os:osx",
+         "@platforms//os:freebsd",
+         "@platforms//os:openbsd",
++        "@platforms//os:illumos",
+         "@platforms//os:linux",
+         "@platforms//os:windows",
+     ],

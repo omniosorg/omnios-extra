@@ -1,0 +1,135 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/scripts/bootstrap/buildenv.sh a/scripts/bootstrap/buildenv.sh
+--- a~/scripts/bootstrap/buildenv.sh	1970-01-01 00:00:00
++++ a/scripts/bootstrap/buildenv.sh	1970-01-01 00:00:00
+@@ -270,7 +270,7 @@ function git_date() {
+ # the last commit if any.
+ function get_last_version() {
+   if [ -f "CHANGELOG.md" ]; then
+-    local version="$(fgrep -m 1 '## Release' CHANGELOG.md \
++    local version="$(/usr/bin/gfgrep -m 1 '## Release' CHANGELOG.md \
+                        | sed -E 's|.*Release (.*) \(.*\)|\1|')"
+   else
+     local version=""
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/main/cpp/blaze_util_illumos.cc a/src/main/cpp/blaze_util_illumos.cc
+--- a~/src/main/cpp/blaze_util_illumos.cc	1970-01-01 00:00:00
++++ a/src/main/cpp/blaze_util_illumos.cc	1970-01-01 00:00:00
+@@ -139,21 +139,7 @@ string GetSystemJavabase() {
+     return javahome;
+   }
+ 
+-  // which javac
+-  string javac_dir = Which("javac");
+-  if (javac_dir.empty()) {
+-    return "";
+-  }
+-
+-  // Resolve all symlinks.
+-  char resolved_path[PATH_MAX];
+-  if (realpath(javac_dir.c_str(), resolved_path) == NULL) {
+-    return "";
+-  }
+-  javac_dir = resolved_path;
+-
+-  // dirname dirname
+-  return blaze_util::Dirname(blaze_util::Dirname(javac_dir));
++  return "@@OOCE_JDK_HOME@@";
+ }
+ 
+ // Called from a signal handler!
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/main/java/com/google/devtools/build/lib/bazel/rules/BazelRuleClassProvider.java a/src/main/java/com/google/devtools/build/lib/bazel/rules/BazelRuleClassProvider.java
+--- a~/src/main/java/com/google/devtools/build/lib/bazel/rules/BazelRuleClassProvider.java	1970-01-01 00:00:00
++++ a/src/main/java/com/google/devtools/build/lib/bazel/rules/BazelRuleClassProvider.java	1970-01-01 00:00:00
+@@ -539,7 +539,7 @@ public class BazelRuleClassProvider {
+     // from the local machine. For now, this can be overridden with --action_env=PATH=<value>, so
+     // at least there's a workaround.
+     if (os == OS.ILLUMOS) {
+-      return "/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin";
++      return "/usr/sbin:/usr/bin:/opt/ooce/bin:/sbin";
+     } else if (os != OS.WINDOWS) {
+       // The default used to be "/bin:/usr/bin". However, on Mac the Python 3 interpreter, if it is
+       // installed at all, tends to be under /usr/local/bin. The autodetecting Python toolchain
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/main/java/com/google/devtools/build/lib/bazel/rules/python/python_stub_template.txt a/src/main/java/com/google/devtools/build/lib/bazel/rules/python/python_stub_template.txt
+--- a~/src/main/java/com/google/devtools/build/lib/bazel/rules/python/python_stub_template.txt	1970-01-01 00:00:00
++++ a/src/main/java/com/google/devtools/build/lib/bazel/rules/python/python_stub_template.txt	1970-01-01 00:00:00
+@@ -76,7 +76,7 @@ if IsWindows() and not HasWindowsExecuta
+ 
+ def SearchPath(name):
+   # TODO: Modified for SmartOS + pkgsrc. Is this the right way?
+-  search_path = os.getenv('PATH', os.defpath + ":/opt/local/bin").split(os.pathsep)
++  search_path = os.getenv('PATH', os.defpath + ":/opt/ooce/bin").split(os.pathsep)
+   for directory in search_path:
+     if directory:
+       path = os.path.join(directory, name)
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tools/cpp/illumos_cc_toolchain_config.bzl a/tools/cpp/illumos_cc_toolchain_config.bzl
+--- a~/tools/cpp/illumos_cc_toolchain_config.bzl	1970-01-01 00:00:00
++++ a/tools/cpp/illumos_cc_toolchain_config.bzl	1970-01-01 00:00:00
+@@ -68,7 +68,7 @@ def _impl(ctx):
+     objcopy_embed_data_action = action_config(
+         action_name = "objcopy_embed_data",
+         enabled = True,
+-        tools = [tool(path = "/opt/local/bin/objcopy")],
++        tools = [tool(path = "/usr/bin/gobjcopy")],
+     )
+ 
+     action_configs = [objcopy_embed_data_action] if is_illumos else []
+@@ -126,6 +126,7 @@ def _impl(ctx):
+                         flags = [
+                             # Identify as Illumos.
+                             "-D__illumos__",                            
++			    "-D_REENTRANT",
+                             "-no-canonical-prefixes",
+                             "-fno-canonical-system-headers",
+                             "-Wno-builtin-macro-redefined",
+@@ -156,6 +157,8 @@ def _impl(ctx):
+                             #"-fstack-protector",
+                             "-Wall",
+                             "-fno-omit-frame-pointer",
++			    "-fno-aggressive-loop-optimizations",
++			    "-fstack-protector-strong",
+                         ],
+                     ),
+                 ],
+@@ -264,26 +267,34 @@ def _impl(ctx):
+         features = [supports_dynamic_linker_feature, supports_pic_feature]
+ 
+     if (is_illumos):
+-        # Paths obtained with '/opt/local/gcc9/bin/g++ -E -x c++ - -v < /dev/null'.
+-        cxx_builtin_include_directories = ["/opt/local/gcc9/include/c++/9.3.0","/opt/local/gcc9/include/c++/9.3.0/x86_64-sun-solaris2.11","/opt/local/gcc9/include/c++/9.3.0/backward","/opt/local/gcc9/lib/gcc/x86_64-sun-solaris2.11/9.3.0/include","/opt/local/include","/opt/local/gcc9/include","/opt/local/gcc9/lib/gcc/x86_64-sun-solaris2.11/9.3.0/include-fixed","/usr/include"]
++        # Paths obtained with 'g++-13 -E -x c++ - -v </dev/null'.
++        cxx_builtin_include_directories = [
++            "/opt/gcc-13/include/c++/13.2.0",
++            "/opt/gcc-13/include/c++/13.2.0/x86_64-pc-solaris2.11",
++            "/opt/gcc-13/include/c++/13.2.0/backward",
++            "/opt/gcc-13/lib/gcc/x86_64-pc-solaris2.11/13.2.0/include",
++            "/opt/gcc-13/include",
++            "/opt/gcc-13/lib/gcc/x86_64-pc-solaris2.11/13.2.0/include-fixed",
++            "/usr/include"
++        ]
+     else:
+         cxx_builtin_include_directories = []
+ 
+     if is_illumos:
+         tool_paths = [
+             # Illumos ar doesn't have the '-D' flag which GNU ar has.
+-            tool_path(name = "ar", path = "/opt/local/bin/ar"),
++            tool_path(name = "ar", path = "/usr/bin/gar"),
+             tool_path(name = "compat-ld", path = "/usr/bin/ld"),
+-            tool_path(name = "cpp", path = "/opt/local/gcc9/bin/cpp"),
++            tool_path(name = "cpp", path = "/opt/gcc-13/bin/cpp"),
+             # Does not exist on Solaris.
+             tool_path(name = "dwp", path = "/usr/bin/dwp"),
+-            tool_path(name = "gcc", path = "/opt/local/gcc9/bin/gcc"),
+-            tool_path(name = "gcov", path = "/opt/local/gcc9/bin/gcov"),
++            tool_path(name = "gcc", path = "/opt/gcc-13/bin/gcc"),
++            tool_path(name = "gcov", path = "/opt/gcc-13/bin/gcov"),
+             tool_path(name = "ld", path = "/usr/bin/ld"),
+             tool_path(name = "nm", path = "/usr/bin/nm"),
+-            tool_path(name = "objcopy", path = "/opt/local/bin/objcopy"),
+-            tool_path(name = "objdump", path = "/opt/local/bin/objdump"),
+-            tool_path(name = "strip", path = "/opt/local/bin/strip"),
++            tool_path(name = "objcopy", path = "/usr/bin/gobjcopy"),
++            tool_path(name = "objdump", path = "/usr/bin/gobjdump"),
++            tool_path(name = "strip", path = "/usr/bin/gstrip"),
+         ]
+     else:
+         tool_paths = [
