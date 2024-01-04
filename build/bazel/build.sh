@@ -22,7 +22,7 @@ PKG=ooce/developer/bazel
 SUMMARY="bazel"
 DESC="Build and test software of any size, quickly and reliably."
 
-min_rel 151046
+min_rel 151048
 set_arch 64
 
 JDKVER=11
