@@ -70,6 +70,7 @@ extra.omnios ooce/developer/aarch64-perl
 extra.omnios ooce/developer/aarch64-sysroot
 extra.omnios ooce/developer/autoconf-archive
 extra.omnios ooce/developer/autogen
+extra.omnios ooce/developer/bazel
 extra.omnios ooce/developer/cargo-c
 extra.omnios ooce/developer/ccache
 extra.omnios ooce/developer/clang-13

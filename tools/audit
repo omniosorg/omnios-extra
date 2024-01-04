@@ -252,6 +252,8 @@ audit()
                         # aarch64 cross build tools are
                         # not published until r151045
                         */aarch64-*:) [ $r -lt 151045 ] || ok=0 ;;
+                        # bazel is not published until r151046
+                        */bazel) [ $r -lt 151046 ] || ok=0 ;;
                         *) ok=0 ;;
                     esac
                     ;;
