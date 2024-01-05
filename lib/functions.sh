@@ -2872,6 +2872,7 @@ build_dependency() {
 
 set_python_version() {
     PYTHONVER=$1
+    PYTHONMAJVER=${PYTHONVER%%.*}
     PYTHONPKGVER=${PYTHONVER//./}
     PYTHONPATH=$PREFIX
     PYTHON=/usr/bin/python$PYTHONVER
