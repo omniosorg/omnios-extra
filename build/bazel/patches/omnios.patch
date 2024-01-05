@@ -89,7 +89,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/tools/cpp/illumos_cc_toolchai
                          ],
                      ),
                  ],
-@@ -264,26 +267,34 @@ def _impl(ctx):
+@@ -264,26 +267,28 @@ def _impl(ctx):
          features = [supports_dynamic_linker_feature, supports_pic_feature]
  
      if (is_illumos):
@@ -97,13 +97,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/tools/cpp/illumos_cc_toolchai
 -        cxx_builtin_include_directories = ["/opt/local/gcc9/include/c++/9.3.0","/opt/local/gcc9/include/c++/9.3.0/x86_64-sun-solaris2.11","/opt/local/gcc9/include/c++/9.3.0/backward","/opt/local/gcc9/lib/gcc/x86_64-sun-solaris2.11/9.3.0/include","/opt/local/include","/opt/local/gcc9/include","/opt/local/gcc9/lib/gcc/x86_64-sun-solaris2.11/9.3.0/include-fixed","/usr/include"]
 +        # Paths obtained with 'g++-13 -E -x c++ - -v </dev/null'.
 +        cxx_builtin_include_directories = [
-+            "/opt/gcc-13/include/c++/13.2.0",
-+            "/opt/gcc-13/include/c++/13.2.0/x86_64-pc-solaris2.11",
-+            "/opt/gcc-13/include/c++/13.2.0/backward",
-+            "/opt/gcc-13/lib/gcc/x86_64-pc-solaris2.11/13.2.0/include",
-+            "/opt/gcc-13/include",
-+            "/opt/gcc-13/lib/gcc/x86_64-pc-solaris2.11/13.2.0/include-fixed",
-+            "/usr/include"
++            @@CXX_INCLUDE_DIRECTORIES@@
 +        ]
      else:
          cxx_builtin_include_directories = []
@@ -115,13 +109,13 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/tools/cpp/illumos_cc_toolchai
 +            tool_path(name = "ar", path = "/usr/bin/gar"),
              tool_path(name = "compat-ld", path = "/usr/bin/ld"),
 -            tool_path(name = "cpp", path = "/opt/local/gcc9/bin/cpp"),
-+            tool_path(name = "cpp", path = "/opt/gcc-13/bin/cpp"),
++            tool_path(name = "cpp", path = "@@GCCPATH@@/bin/cpp"),
              # Does not exist on Solaris.
              tool_path(name = "dwp", path = "/usr/bin/dwp"),
 -            tool_path(name = "gcc", path = "/opt/local/gcc9/bin/gcc"),
 -            tool_path(name = "gcov", path = "/opt/local/gcc9/bin/gcov"),
-+            tool_path(name = "gcc", path = "/opt/gcc-13/bin/gcc"),
-+            tool_path(name = "gcov", path = "/opt/gcc-13/bin/gcov"),
++            tool_path(name = "gcc", path = "@@GCCPATH@@/bin/gcc"),
++            tool_path(name = "gcov", path = "@@GCCPATH@@/bin/gcov"),
              tool_path(name = "ld", path = "/usr/bin/ld"),
              tool_path(name = "nm", path = "/usr/bin/nm"),
 -            tool_path(name = "objcopy", path = "/opt/local/bin/objcopy"),

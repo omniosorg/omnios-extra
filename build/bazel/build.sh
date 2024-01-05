@@ -36,10 +36,28 @@ RUN_DEPENDS_IPS="
 pre_configure() { false; }
 
 post_patch() {
-    pushd $TMPDIR/$BUILDDIR > /dev/null
+    pushd "$1" > /dev/null
+
+    # We need to parse out the list of include paths that G++ will use to patch
+    # them into the source.
+    typeset -a paths=()
+    while read path; do
+        paths+=(`$REALPATH "$path"`)
+    done < <($GXX -E -x c++ - -v </dev/null 2>&1 | $SED -n '
+        /include.*search starts here:/,/End of search list/ {
+            /^ /p
+        }')
+    INCLUDEPATHS=`printf '"%s",' ${paths[*]}`
+
     logcmd $SED -i "
-        s%@@OOCE_JDK_HOME@@%$JDKHOME%
-    " src/main/cpp/blaze_util_illumos.cc || logerr "JDKHOME subst failed"
+        s^@@OOCE_JDK_HOME@@^$JDKHOME^
+        s^@@GCCPATH@@^$GCCPATH^
+        s^@@CXX_INCLUDE_DIRECTORIES@@^$INCLUDEPATHS^
+        " \
+        src/main/cpp/blaze_util_illumos.cc \
+        tools/cpp/illumos_cc_toolchain_config.bzl \
+        || logerr "substitutions failed"
+
     popd > /dev/null
 }
 
@@ -67,7 +85,6 @@ init
 download_source -nodir $PROG $PROG $VER-dist
 prep_build
 patch_source
-post_patch
 build -noctf    # C++
 make_package
 clean_up
