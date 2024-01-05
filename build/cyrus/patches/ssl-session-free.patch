@@ -1,0 +1,17 @@
+
+This reverts https://github.com/cyrusimap/cyrus-imapd/commit/a3523d4067c502a52
+which was causing crashes during TLS shutdown.
+
+See https://github.com/cyrusimap/cyrus-imapd/issues/4785
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/tls.c a/imap/tls.c
+--- a~/imap/tls.c	1970-01-01 00:00:00
++++ a/imap/tls.c	1970-01-01 00:00:00
+@@ -637,7 +637,6 @@ static void remove_session_cb(SSL_CTX *c
+     session_id = SSL_SESSION_get_id(sess, &session_id_length);
+ 
+     remove_session(session_id, session_id_length);
+-    SSL_SESSION_free(sess);
+ }
+ 
+ /*
