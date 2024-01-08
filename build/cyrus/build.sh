@@ -96,6 +96,7 @@ export KRB5_LIBS="-L/usr/lib/amd64 -lkrb5"
 export KRB_LIBS="-lkrb5"
 export KRB5_CFLAGS="-I/usr/include/kerberosv5"
 CPPFLAGS+=" $KRB5_CFLAGS"
+LDFLAGS+=" -lumem"
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
