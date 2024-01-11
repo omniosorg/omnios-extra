@@ -12,25 +12,18 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=htop
 PKG=ooce/system/htop
-VER=3.2.2
+VER=3.3.0
 SUMMARY="htop"
 DESC="An interactive process viewer for Unix"
 
 set_arch 64
 test_relver '>=' 151041 && set_clangver
-
-# need stack_t, timestruc_t, label_t, ...
-set_standard XPG6
-
-# TODO: pending an illumos fix that defining _XOPEN_SOURCE_EXTENDED
-# does not default to XPG4v2 even if a higher standard is set
-CPPFLAGS+=" -D_XPG5"
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
