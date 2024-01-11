@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=u-boot
 PKG=ooce/util/u-boot
-VER=2023.10
+VER=2024.01
 SUMMARY="Das U-Boot"
 DESC="$SUMMARY: Universal Bootloader"
 
