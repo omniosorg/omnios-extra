@@ -198,7 +198,7 @@
 | ooce/system/clamav		| 1.2.1		| https://github.com/Cisco-Talos/clamav/tags https://www.clamav.net/downloads | [omniosorg](https://github.com/omniosorg)
 | ooce/system/htop		| 3.3.0		| https://github.com/htop-dev/htop/releases https://htop.dev/downloads.html#sources | [omniosorg](https://github.com/omniosorg)
 | ooce/system/management/ansible | 9.1.0	| https://pypi.org/project/ansible/ | [omniosorg](https://github.com/omniosorg)
-| ooce/system/mbuffer		| 20231216	| https://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
+| ooce/system/mbuffer		| 20240107	| https://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/sg3_utils		| 1.48		| https://sg.danny.cz/sg/sg3_utils.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/smartmontools	| 7.4		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/sysstat		| 20151012	| https://www.maier-komor.de/sysstat.html | [omniosorg](https://github.com/omniosorg)
