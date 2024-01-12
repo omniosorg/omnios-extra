@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=rclone
 PKG=ooce/network/rclone
-VER=1.65.0
+VER=1.65.1
 SUMMARY="rsync for cloud storage"
 DESC="A command line program to sync files and directories to and from "
 DESC+="different cloud storage providers"

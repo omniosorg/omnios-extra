@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=protobuf
-VER=25.1
+VER=25.2
 PKG=ooce/developer/protobuf
 SUMMARY="protobuf"
 DESC="Google's language-neutral, platform-neutral, extensible mechanism "

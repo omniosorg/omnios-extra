@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=mattermost
-VER=8.1.7
+VER=8.1.8
 # check for the current morph version/commit hash and create a patched branch in
 # https://github.com/omniosorg/morph; then point to that branch
 MORPHBRANCH=il_1.0.5

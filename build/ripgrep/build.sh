@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=ripgrep
-VER=14.0.3
+VER=14.1.0
 PKG=ooce/text/ripgrep
 SUMMARY="Fast line-oriented search tool"
 DESC="A fast line-oriented search tool that recursively searches your current "
