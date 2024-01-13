@@ -1,1 +1,2 @@
 Forced Privilege:solaris:cmd:::/$(PREFIX)/bin/gpg:privs=proc_lock_memory
+Forced Privilege:solaris:cmd:::/$(PREFIX)/bin/pinentry-curses:privs=proc_lock_memory

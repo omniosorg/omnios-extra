@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 #
 . ../../lib/build.sh
 
@@ -25,8 +25,8 @@ DESC="A complete and free implementation of the OpenPGP standard"
 # we don't track the versions in doc/packages.md
 # check for updates when gnupg is updated
 LIBGPGERRORVER=1.47
-LIBGCRYPTVER=1.10.2
-LIBKSBAVER=1.6.4
+LIBGCRYPTVER=1.10.3
+LIBKSBAVER=1.6.5
 LIBASSUANVER=2.5.6
 NPTHVER=1.6
 PINENTRYVER=1.2.1
