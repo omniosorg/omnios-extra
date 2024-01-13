@@ -16,40 +16,32 @@
 
 . ../../lib/build.sh
 
-PROG=pixman
-VER=0.43.0
-PKG=ooce/library/pixman
+PROG=oxide
+VER=0.2.0
+PKG=ooce/util/oxide
 SUMMARY="$PROG"
-DESC="Low-level software library for pixel manipulation, providing features "
-DESC+="such as image compositing and trapezoid rasterization"
+DESC="Oxide SDK and CLI"
 
-TESTSUITE_SED='
-    /Running all tests/d
-    s/  *[0-9][0-9.]*s//
-    /^Full log written to/d
-'
+BUILD_DEPENDS_IPS=ooce/developer/rust
 
-CFLAGS[aarch64]+=" -mtls-dialect=trad"
+REPO=$GITHUB/oxidecomputer/$PROG.rs
 
-pre_configure() {
-    typeset arch=$1
+set_arch 64
 
-    CONFIGURE_OPTS[$arch]="
-        --prefix=$PREFIX
-        --libdir=$PREFIX/${LIBDIRS[$arch]}
-    "
+# oxide contains BMI instructions even when built on an older CPU
+BMI_EXPECTED=1
 
-    ! cross_arch $arch && return
-
-    CONFIGURE_CMD+=" --cross-file $SRCDIR/files/aarch64-gcc.txt"
-}
+# https://www.illumos.org/issues/14659
+test_relver '<' 151043 && STRIP=gstrip
 
 init
-download_source $PROG $PROG $VER
+clone_github_source $PROG $REPO v$VER
+append_builddir $PROG
 patch_source
-prep_build meson
-build
-run_testsuite
+prep_build
+build_rust
+install_rust
+strip_install
 make_package
 clean_up
 

@@ -1,48 +1,41 @@
-Making check in pixman
-Makefile:1311: warning: ignoring prerequisites on suffix rule definition
-Making check in demos
-Making check in test
-PASS: oob-test
-PASS: infinite-loop
-PASS: trap-crasher
-PASS: fence-image-self-test
-PASS: region-translate-test
-PASS: fetch-test
-PASS: a1-trap-test
-PASS: prng-test
-PASS: radial-invalid
-PASS: pdf-op-test
-PASS: region-test
-PASS: combiner-test
-PASS: scaling-crash-test
-PASS: alpha-loop
-PASS: scaling-helpers-test
-PASS: thread-test
-PASS: rotate-test
-PASS: alphamap
-PASS: gradient-crash-test
-PASS: pixel-test
-PASS: matrix-test
-PASS: filter-reduction-test
-PASS: composite-traps-test
-PASS: region-contains-test
-PASS: glyph-test
-PASS: solid-test
-PASS: stress-test
-PASS: cover-test
-PASS: blitters-test
-PASS: affine-test
-PASS: scaling-test
-PASS: composite
-PASS: tolerance-test
-============================================================================
-Testsuite summary for pixman 0.42.2
-============================================================================
-# TOTAL: 33
-# PASS:  33
-# SKIP:  0
-# XFAIL: 0
-# FAIL:  0
-# XPASS: 0
-# ERROR: 0
-============================================================================
+ 1/33 oob-test              OK
+ 2/33 infinite-loop         OK
+ 3/33 trap-crasher          OK
+ 4/33 fence-image-self-test OK
+ 5/33 region-translate-test OK
+ 6/33 fetch-test            OK
+ 7/33 a1-trap-test          OK
+ 8/33 prng-test             OK
+ 9/33 radial-invalid        OK
+10/33 pdf-op-test           OK
+11/33 region-test           OK
+12/33 combiner-test         OK
+13/33 scaling-crash-test    OK
+14/33 alpha-loop            OK
+15/33 scaling-helpers-test  OK
+16/33 rotate-test           OK
+17/33 gradient-crash-test   OK
+18/33 matrix-test           OK
+19/33 thread-test           OK
+20/33 pixel-test            OK
+21/33 solid-test            OK
+22/33 alphamap              OK
+23/33 glyph-test            OK
+24/33 filter-reduction-test OK
+25/33 composite-traps-test  OK
+26/33 cover-test            OK
+27/33 stress-test           OK
+28/33 blitters-test         OK
+29/33 region-contains-test  OK
+30/33 affine-test           OK
+31/33 scaling-test          OK
+32/33 composite             OK
+33/33 tolerance-test        OK
+
+Ok:                 33  
+Expected Fail:      0   
+Fail:               0   
+Unexpected Pass:    0   
+Skipped:            0   
+Timeout:            0   
+
