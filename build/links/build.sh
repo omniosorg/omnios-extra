@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=links
-VER=2.28
+VER=2.29
 PKG=ooce/application/links
 SUMMARY="Text mode web browser"
 DESC="$PROG - $SUMMARY"
