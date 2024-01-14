@@ -18,7 +18,7 @@
 
 PROG=radare2
 PKG=ooce/developer/radare2
-VER=5.7.8
+VER=5.8.8
 SUMMARY="A low-level software forensics tool"
 DESC="$PROG - $SUMMARY"
 

@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/shlr/qjs/src/quickjs.c a/shlr/qjs/src/quickjs.c
+--- a~/shlr/qjs/src/quickjs.c	1970-01-01 00:00:00
++++ a/shlr/qjs/src/quickjs.c	1970-01-01 00:00:00
+@@ -42514,6 +42514,8 @@ static int getTimezoneOffset(int64_t tim
+ #if defined(_WIN32)
+     /* XXX: TODO */
+     return 0;
++#elif defined(__illumos__)
++    return timezone / 60;
+ #else
+     time_t ti;
+     struct tm tm;
