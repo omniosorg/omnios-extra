@@ -1,2 +1,4 @@
 pie.patch
 install.patch
+timezone.patch
+rename-POP_XOR.patch
