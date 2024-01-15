@@ -32,6 +32,9 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 BUILD_DEPENDS_IPS="developer/gnu-binutils"
+# `rustc` uses `gcc` as its linker. Other dependencies such as the C runtime
+# and linker are themselves pulled in as dependencies of the gcc package.
+RUN_DEPENDS_IPS="developer/gcc$GCCVER"
 
 if test_relver '<' 151041; then
     SYSTEM_LLVM_PATH="/opt/ooce/llvm-$LLVMVER"
