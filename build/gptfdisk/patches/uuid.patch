@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' a~/guid.cc a/guid.cc
+--- a~/guid.cc	1970-01-01 00:00:00
++++ a/guid.cc	1970-01-01 00:00:00
+@@ -141,7 +141,7 @@ void GUIDData::Zero(void) {
+ void GUIDData::Randomize(void) {
+    int i, uuidGenerated = 0;
+ 
+-#ifdef _UUID_UUID_H
++#ifdef _UUID_H
+    uuid_generate(uuidData);
+    ReverseBytes(&uuidData[0], 4);
+    ReverseBytes(&uuidData[4], 2);

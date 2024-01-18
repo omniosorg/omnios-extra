@@ -195,6 +195,7 @@
 | ooce/storage/minio		| 2024-01-13T07-53-03Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio-mc		| 2024-01-13T08-44-48Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/file-system/ntfs-3g | 2022.10.3	| https://github.com/tuxera/ntfs-3g/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/system/gptfdisk		| 1.0.9		| https://sourceforge.net/projects/gptfdisk/files/gptfdisk/ | [oxidecomputer](https://github.com/oxidecomputer)
 | ooce/system/clamav		| 1.2.1		| https://github.com/Cisco-Talos/clamav/tags https://www.clamav.net/downloads | [omniosorg](https://github.com/omniosorg)
 | ooce/system/htop		| 3.3.0		| https://github.com/htop-dev/htop/releases https://htop.dev/downloads.html#sources | [omniosorg](https://github.com/omniosorg)
 | ooce/system/management/ansible | 9.1.0	| https://pypi.org/project/ansible/ | [omniosorg](https://github.com/omniosorg)

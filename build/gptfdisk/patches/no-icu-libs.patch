@@ -1,0 +1,14 @@
+diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -131,8 +131,8 @@ else ifeq ($(TARGET),macos)
+   LDLIBS= #-licucore
+   CGDISK_LDLIBS=/usr/local/Cellar/ncurses/6.2/lib/libncurses.dylib
+ else ifeq ($(TARGET),solaris)
+-  CXXFLAGS+=-Wall -D_FILE_OFFSET_BITS=64 -I/usr/include/ncurses
+-  LDFLAGS+=-L/lib -licuio -licuuc -luuid
++  #CXXFLAGS+=-Wall -D_FILE_OFFSET_BITS=64 -I/usr/include/ncurses
++  #LDFLAGS+=-L/lib -licuio -licuuc -luuid
+ endif
+ 
+ # More default settings, for all OSes....
