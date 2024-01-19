@@ -25,11 +25,12 @@ DESC="Build and test software of any size, quickly and reliably."
 min_rel 151046
 set_arch 64
 
-JDKVER=11
-JDKHOME=/usr/jdk/openjdk$JDKVER.0
+JDKVER=11.0
+JDKHOME=/usr/jdk/openjdk$JDKVER
 
 RUN_DEPENDS_IPS="
     runtime/java/openjdk$JDKVER
+    developer/gcc$GCCVER
 "
 
 # No configure
