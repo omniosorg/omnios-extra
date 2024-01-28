@@ -131,7 +131,7 @@
 | ooce/library/nettle		| 3.9.1		| https://ftp.gnu.org/gnu/nettle/ https://www.lysator.liu.se/~nisse/nettle/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/onig		| 6.9.9		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pango		| 1.51.0	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/pixman		| 0.43.0	| https://www.cairographics.org/releases/ http://www.pixman.org/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/pixman		| 0.43.2	| https://www.cairographics.org/releases/ http://www.pixman.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/security/libsasl2 | 2.1.28	| https://github.com/cyrusimap/cyrus-sasl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/serf		| 1.3.10 	| https://downloads.apache.org/serf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/slang		| 2.3.3		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)

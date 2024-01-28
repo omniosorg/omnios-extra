@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=pixman
-VER=0.43.0
+VER=0.43.2
 PKG=ooce/library/pixman
 SUMMARY="$PROG"
 DESC="Low-level software library for pixel manipulation, providing features "
