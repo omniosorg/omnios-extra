@@ -44,6 +44,7 @@ ooce/network/irssi
 ooce/util/stress-ng
 ooce/library/libarchive
 ooce/library/yaml
+ooce/library/popt
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

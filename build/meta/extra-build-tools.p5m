@@ -59,6 +59,7 @@ depend fmri=ooce/library/onig type=require
 depend fmri=ooce/library/openldap type=require
 depend fmri=ooce/library/pango type=require
 depend fmri=ooce/library/pixman type=require
+depend fmri=ooce/library/popt type=require
 depend fmri=ooce/library/postgresql-12 type=require
 depend fmri=ooce/library/postgresql-13 type=require
 depend fmri=ooce/library/postgresql-14 type=require

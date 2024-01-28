@@ -11,40 +11,29 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 # }}}
-#
+
 # Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
-PKG=ooce/multimedia/exif
-VER=0.6.21
-PROG=exif
-SUMMARY="Exif utility"
-DESC="A small command-line utility to show EXIF information hidden in "
-DESC+="JPEG files"
+PROG=popt
+VER=1.19
+PKG=ooce/library/popt
+SUMMARY="$PROG"
+DESC="$PROG - command line option parsing library"
 
-OPREFIX=$PREFIX
-PREFIX+="/$PROG"
+set_clangver
 
-set_arch 64
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
 
-XFORM_ARGS="
-    -DPREFIX=${PREFIX#/}
-    -DOPREFIX=${OPREFIX#/}
-    -DPROG=$PROG
-    -DPKGROOT=$PROG
-"
-
-export POPT_CFLAGS="-I$OPREFIX/include"
-export POPT_LIBS="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64 -lpopt"
-export LIBEXIF_CFLAGS="-I$OPREFIX/include"
-export LIBEXIF_LIBS="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64 -lexif"
+CONFIGURE_OPTS="--disable-static"
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
+run_testsuite check
 make_package
 clean_up
 
