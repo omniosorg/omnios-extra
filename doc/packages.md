@@ -185,7 +185,7 @@
 | ooce/runtime/ruby-32		| 3.2.3		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-33		| 3.3.0		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/tcl		| 8.6.13	| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/security/gnupg		| 2.4.3		| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/security/gnupg		| 2.4.4		| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24		| 2.4.58	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24/modules/fcgid | 2.3.9	| https://downloads.apache.org/httpd/mod_fcgid/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24/modules/wsgi | 5.0.0    | https://github.com/GrahamDumpleton/mod_wsgi/tags/ | [cgrzemba](https://github.com/cgrzemba)
