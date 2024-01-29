@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 # Copyright 2024 Oxide Computer Company
 
 . ../../lib/build.sh
@@ -24,32 +24,13 @@ SUMMARY="GPT fdisk (gdisk, cgdisk, sgdisk, fixparts)"
 DESC="GPT fdisk is a disk partitioning tool loosely modeled on Linux "
 DESC+="fdisk, but used for modifying GUID Partition Table (GPT) disks."
 
-POPTVER=1.14
-
 set_arch 64
-
-init
-prep_build
-
-#########################################################################
-# Download and build a static version of popt
-
-save_buildenv
-
-CONFIGURE_OPTS=" --disable-shared --enable-static"
-
-build_dependency popt popt-$POPTVER popt popt $POPTVER
-
-restore_buildenv
-
-export POPT_CFLAGS="-I$DEPROOT/$PREFIX/include"
-export POPT_LDFLAGS="-L$DEPROOT/$PREFIX/lib/amd64"
-
-#########################################################################
 
 pre_configure() {
     typeset arch=$1
 
+    POPT_CFLAGS="-I$DEPROOT/$PREFIX/include"
+    POPT_LDFLAGS="-L$PREFIX/${LIBDIRS[$arch]} -R$PREFIX/${LIBDIRS[$arch]}"
     MAKE_ARGS_WS="
         CXXFLAGS=\"$CXXFLAGS ${CXXFLAGS[$arch]} $POPT_CFLAGS\"
         LDFLAGS=\"$LDFLAGS ${LDFLAGS[$arch]} $POPT_LDFLAGS -zignore\"
@@ -72,8 +53,10 @@ make_install() {
     done
 }
 
+init
 download_source $PROG $PROG $VER
 patch_source
+prep_build
 build -noctf    # C++
 make_package
 clean_up

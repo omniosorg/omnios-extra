@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=gnupg
-VER=2.4.3
+VER=2.4.4
 PKG=ooce/security/gnupg
 SUMMARY="$PROG - GNU Privacy Guard"
 DESC="A complete and free implementation of the OpenPGP standard"
@@ -133,7 +133,7 @@ PATH+=":$DEPROOT$PREFIX/bin"
 
 download_source $PROG $PROG $VER
 patch_source
-build -ctf
+build
 install_execattr
 run_testsuite check
 make_package

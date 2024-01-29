@@ -16,27 +16,24 @@
 
 . ../../lib/build.sh
 
-PROG=gh
-PKG=ooce/util/gh
-VER=2.42.1
-SUMMARY="github-cli"
-DESC="The GitHub CLI tool"
+PROG=popt
+VER=1.19
+PKG=ooce/library/popt
+SUMMARY="$PROG"
+DESC="$PROG - command line option parsing library"
 
-set_arch 64
-set_gover 1.21
+set_clangver
 
-RUN_DEPENDS_IPS="developer/versioning/git"
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
 
-# No configure
-configure_amd64() { :; }
-
-MAKE_INSTALL_ARGS="prefix=$PREFIX"
+CONFIGURE_OPTS="--disable-static"
 
 init
-clone_go_source cli cli v$VER
+download_source $PROG $PROG $VER
 patch_source
 prep_build
-build -noctf
+build
+run_testsuite check
 make_package
 clean_up
 

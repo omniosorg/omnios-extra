@@ -12,19 +12,16 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PKG=ooce/multimedia/exif
 VER=0.6.21
 PROG=exif
-POPTVER=1.14
 SUMMARY="Exif utility"
 DESC="A small command-line utility to show EXIF information hidden in "
 DESC+="JPEG files"
-
-BUILD_DEPENDS_IPS=ooce/library/libexif
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -38,30 +35,15 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
-init
-prep_build
-
-#########################################################################
-# Download and build a static version of popt
-
-save_buildenv
-
-CONFIGURE_OPTS=" --disable-shared --enable-static"
-
-build_dependency popt popt-$POPTVER popt popt $POPTVER
-
-restore_buildenv
-
-export POPT_CFLAGS="-I$DEPROOT/$PREFIX/include"
-export POPT_LIBS="-L$DEPROOT/$PREFIX/lib/amd64 -lpopt"
-
-#########################################################################
-
+export POPT_CFLAGS="-I$OPREFIX/include"
+export POPT_LIBS="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64 -lpopt"
 export LIBEXIF_CFLAGS="-I$OPREFIX/include"
 export LIBEXIF_LIBS="-L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64 -lexif"
 
+init
 download_source $PROG $PROG $VER
 patch_source
+prep_build
 build
 make_package
 clean_up

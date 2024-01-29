@@ -20,10 +20,10 @@
 20/33 pixel-test            OK
 21/33 solid-test            OK
 22/33 alphamap              OK
-23/33 glyph-test            OK
-24/33 filter-reduction-test OK
-25/33 composite-traps-test  OK
-26/33 cover-test            OK
+23/33 filter-reduction-test OK
+24/33 glyph-test            OK
+25/33 cover-test            OK
+26/33 composite-traps-test  OK
 27/33 stress-test           OK
 28/33 blitters-test         OK
 29/33 region-contains-test  OK

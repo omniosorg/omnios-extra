@@ -29,6 +29,7 @@ extra.omnios ooce/library/nettle
 extra.omnios ooce/library/onig
 extra.omnios ooce/library/openldap
 extra.omnios ooce/library/pixman
+extra.omnios ooce/library/popt
 extra.omnios ooce/library/postgresql-14
 extra.omnios ooce/library/slang
 extra.omnios ooce/library/tiff
