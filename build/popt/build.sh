@@ -22,7 +22,7 @@ PKG=ooce/library/popt
 SUMMARY="$PROG"
 DESC="$PROG - command line option parsing library"
 
-set_clangver
+test_relver '>=' 151046 && set_clangver
 
 TESTSUITE_FILTER='^[A-Z#][A-Z ]'
 
