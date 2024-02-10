@@ -13,13 +13,13 @@
 # }}}
 
 # Copyright 2016 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=postgresql
 PKG=ooce/database/postgresql-13
-VER=13.13
+VER=13.14
 SUMMARY="PostgreSQL 13"
 DESC="The World's Most Advanced Open Source Relational Database"
 
