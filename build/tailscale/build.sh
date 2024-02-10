@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -32,7 +32,7 @@ XFORM_ARGS+="
     -DSERVICE=$PKG
 "
 set_arch 64
-set_gover 121
+set_gover
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
