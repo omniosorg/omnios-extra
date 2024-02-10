@@ -13,23 +13,21 @@
 # }}}
 #
 # Copyright 2018 Thomas Merkel
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libpciaccess
-VER=0.17
+VER=0.18
 PKG=ooce/library/libpciaccess
 SUMMARY="PCI access utility library from X.org"
 DESC="The pciaccess library wraps platform-dependent PCI access "
 DESC+="methods in a convenient library."
 
-CONFIGURE_OPTS="--disable-static"
-
 init
 download_source $PROG $PROG $VER
 patch_source
-prep_build
+prep_build meson
 build
 make_package
 clean_up
