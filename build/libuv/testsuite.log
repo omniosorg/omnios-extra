@@ -349,6 +349,7 @@ ok - thread_equal
 ok - thread_local_storage
 ok - thread_mutex
 ok - thread_mutex_recursive
+ok - thread_priority
 ok - thread_rwlock
 ok - thread_rwlock_trylock
 ok - thread_stack_size
@@ -380,6 +381,7 @@ ok - timer_ref
 ok - timer_ref2
 ok - timer_run_once
 ok - timer_start_twice
+ok - timer_zero_timeout
 ok - tmpdir
 ok - tty
 ok - tty_file
