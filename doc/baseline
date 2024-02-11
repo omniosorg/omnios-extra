@@ -44,7 +44,6 @@ extra.omnios ooce/database/mariadb-104
 extra.omnios ooce/database/mariadb-105
 extra.omnios ooce/database/mariadb-106
 extra.omnios ooce/database/mariadb-common
-extra.omnios ooce/database/postgresql-11
 extra.omnios ooce/database/postgresql-12
 extra.omnios ooce/database/postgresql-13
 extra.omnios ooce/database/postgresql-13/mysql_fdw
@@ -86,8 +85,8 @@ extra.omnios ooce/developer/dejagnu
 extra.omnios ooce/developer/flamegraph
 extra.omnios ooce/developer/freepascal
 extra.omnios ooce/developer/gdb
-extra.omnios ooce/developer/go-120
 extra.omnios ooce/developer/go-121
+extra.omnios ooce/developer/go-122
 extra.omnios ooce/developer/gperf
 extra.omnios ooce/developer/gyp
 extra.omnios ooce/developer/llvm-13

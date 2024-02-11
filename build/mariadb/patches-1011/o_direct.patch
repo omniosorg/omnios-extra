@@ -1,0 +1,33 @@
+From ea9a6a1494b80bfc1a2e99509ffbb4dfed8b49ab Mon Sep 17 00:00:00 2001
+From: Daniel Black <daniel@mariadb.org>
+Date: Fri, 2 Feb 2024 11:38:00 +1100
+Subject: [PATCH] MDEV-33095 MariaDB-backup - no OS_DATA_FILE_NO_O_DIRECT on
+ some platforms
+
+Postfix for a6290a5bc5f3cba096854595c354d19d9267743d, in 10.11
+where OS_DATA_FILE_NO_O_DIRECT gets used. Same #ifdef conditions
+as other uses of OS_DATA_FILE_NO_O_DIRECT.
+
+Noticed on aarch64-macos builder.
+---
+ extra/mariabackup/xtrabackup.cc | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/extra/mariabackup/xtrabackup.cc b/extra/mariabackup/xtrabackup.cc
+index 680404e698608..3b828dec8a486 100644
+--- a/extra/mariabackup/xtrabackup.cc
++++ b/extra/mariabackup/xtrabackup.cc
+@@ -2428,7 +2428,12 @@ static bool innodb_init()
+   os_file_delete_if_exists_func(ib_logfile0.c_str(), nullptr);
+   os_file_t file= os_file_create_func(ib_logfile0.c_str(),
+                                       OS_FILE_CREATE, OS_FILE_NORMAL,
+-                                      OS_DATA_FILE_NO_O_DIRECT, false, &ret);
++#if defined _WIN32 || defined HAVE_FCNTL_DIRECT
++                                      OS_DATA_FILE_NO_O_DIRECT,
++#else
++                                      OS_DATA_FILE,
++#endif
++				      false, &ret);
+   if (!ret)
+   {
+   invalid_log:

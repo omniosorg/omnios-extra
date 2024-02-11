@@ -18,14 +18,14 @@ index a47b4bd6e..adc408c17 100644
 --- a/README
 +++ b/README
 @@ -5,7 +5,7 @@
- [![Coverity Scan Build Status](https://scan.coverity.com/projects/2180/badge.svg)](https://scan.coverity.com/projects/libusb-libusb)
+ # libusb
  
  libusb is a library for USB device access from Linux, macOS,
--Windows, OpenBSD/NetBSD, Haiku and Solaris userspace.
-+Windows, OpenBSD/NetBSD, Haiku, Solaris, and illumos userspace.
+-Windows, OpenBSD/NetBSD, Haiku, Solaris userspace, and WebAssembly
++Windows, OpenBSD/NetBSD, Haiku, Solaris, illumos userspace, and WebAssembly
+ via WebUSB.
  It is written in C (Haiku backend in C++) and licensed under the GNU
  Lesser General Public License version 2.1 or, at your option, any later
- version (see [COPYING](COPYING)).
 diff --git a/configure.ac b/configure.ac
 index f6cf2f9f7..fe51f2e8f 100644
 --- a/configure.ac

@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=libXext
-VER=1.3.5
+VER=1.3.6
 PKG=ooce/x11/library/libxext
 SUMMARY="libXext"
 DESC="X protocol common extensions client library"
