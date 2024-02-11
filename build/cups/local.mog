@@ -9,13 +9,23 @@
 # http://www.illumos.org/license/CDDL.
 #
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 <transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
 
 # fix group and permissions
 <transform path=(?:etc|var)/$(PREFIX) -> set group lp>
+<transform file path=etc/$(PREFIX) -> set mode 0640>
 <transform path=var/$(PREFIX)/run/$(PROG) -> set mode 0777>
+<transform dir path=etc/$(PREFIX)/ssl$ -> set mode 0700>
+<transform dir path=var/$(PREFIX)/cache/cups$ -> set mode 0770>
+<transform dir path=var/$(PREFIX)/cache/cups/rss$ -> set mode 0775>
+<transform dir path=var/$(PREFIX)/spool/cups$ -> set mode 0710>
+<transform dir path=var/$(PREFIX)/spool/cups/tmp$ -> set mode 01770>
+
+<transform file path=$(PREFIX)/lib/$(PROG)/backend/(?:ipp|lpd|usb)$ \
+    -> set mode 0744>
+<transform file path=$(PREFIX)/sbin/cupsd$ -> set mode 0700>
 
 <transform dir path=var/$(PREFIX)/run/$(PROG)/certs -> drop>
 

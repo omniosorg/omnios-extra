@@ -28,6 +28,10 @@ RUN_DEPENDS_IPS="driver/tuntap"
 set_arch 64
 set_gover
 
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+"
+
 build_and_install() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
     logcmd $MAKE PREFIX=$PREFIX DESTDIR=$DESTDIR install \
