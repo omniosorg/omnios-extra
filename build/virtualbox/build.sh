@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox
-VER=7.0.12
+VER=7.0.14a
 GSOAPVER=2.8.129
 GSOAPDIR=gsoap-${GSOAPVER%.*}
 SUMMARY="VirtualBox"
@@ -107,6 +107,10 @@ CONFIGURE_OPTS="
     --enable-vnc
     --enable-webservice
 "
+
+# We use the bundled libxml2 since the system package is too new - some
+# constification has been done and virtualbox is not yet ready for it.
+CONFIGURE_OPTS+=" --build-libxml2"
 
 # false positives are detected by our build framework
 EXPECTED_BUILD_ERRS=6
