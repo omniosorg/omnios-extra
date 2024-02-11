@@ -1,0 +1,11 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/modules/filters/mod_xml2enc.c a/modules/filters/mod_xml2enc.c
+--- a~/modules/filters/mod_xml2enc.c	1970-01-01 00:00:00
++++ a/modules/filters/mod_xml2enc.c	1970-01-01 00:00:00
+@@ -35,6 +35,7 @@
+ #endif
+ 
+ /* libxml2 */
++#include <libxml/xmlstring.h>
+ #include <libxml/encoding.h>
+ 
+ #if defined(__clang__)

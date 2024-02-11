@@ -1,3 +1,4 @@
 layout.patch
 priv_drop.patch
 httpd.conf.patch
+libxml2.patch
