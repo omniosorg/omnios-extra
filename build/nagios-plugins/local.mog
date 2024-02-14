@@ -8,9 +8,12 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 <transform dir path=$(OPREFIX)/nagios/libexec -> set mode 0755>
+# A couple of things need to be setuid root
+<transform file path=$(OPREFIX)/nagios/libexec/(check_(icmp|dhcp)|pst3)$ \
+    -> set mode 04555>
 
 license COPYING license=GPLv3
 

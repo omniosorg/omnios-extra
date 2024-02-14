@@ -1757,8 +1757,28 @@ generate_manifest() {
             GENERATE_ARGS+="--target $f "
         done
     fi
-    logcmd -p $PKGSEND generate $GENERATE_ARGS $DESTDIR > $outf \
-        || logerr "------ Failed to generate manifest"
+    logcmd -p $PKGSEND generate $GENERATE_ARGS $DESTDIR > $outf.raw \
+        || logerr "---- Failed to generate manifest"
+    # `pkgsend generate` will produce a manifest based on the files it
+    # finds under $DESTDIR. It will set the ownership and group in generated
+    # lines to root:bin, but will copy the mode attribute from the file it
+    # finds. The modes of files in this directory do generally accurately
+    # reflect executability, but other bits may be set depending on how the
+    # temporary directory is set up. For example, in a shared build workspace
+    # there could be extended ACLs to maintain writeability by the owning
+    # group, or the sticky group attribute may be set on directories.
+    # Rather than implicitly trusting the mode that is found, we normalise it
+    # to something more generic.
+    sed  -E '
+        # Strip off any special attributes such as setuid or sticky group
+        s/\<mode=0[[:digit:]]+([[:digit:]]{3})\>/mode=0\1/
+        # Reduce group/other permissions
+        s/\<mode=0([75])[[:digit:]]{2}\>/mode=0\155/
+        s/\<mode=0([64])[[:digit:]]{2}\>/mode=0\144/
+        # Convert unexpected modes to something reasonable
+        s/\<mode=02[[:digit:]]{2}\>/mode=0644/
+        s/\<mode=0[13][[:digit:]]{2}\>/mode=0755/
+    ' < $outf.raw > $outf || logerr "---- Failed cleaning manifest permissions"
 }
 
 convert_version() {
@@ -1833,6 +1853,23 @@ make_package() {
     done
 }
 
+manifest_mode_map() {
+    typeset src="$1"
+
+    $PKGFMT -u < $src | $AWK '
+        /^file|^dir/ {
+            delete map
+            split($0, a)
+            for (el in a) {
+                if (split(a[el], b, "=") == 2)
+                    map[b[1]] = b[2]
+            }
+            if ("path" in map && "mode" in map)
+                printf("%4s %6d %s\n", $1, map["mode"], map["path"])
+        }
+    '
+}
+
 make_package_impl() {
     PKGE=`url_encode $PKG`
 
@@ -1890,12 +1927,12 @@ make_package_impl() {
 
     # Mog files are transformed in several stages
     #
-    #        $DESTDIR           +---------+
-    #   `pkgsend generate` ---> |.p5m.gen |
-    #                           +---------+
-    #                                |
-    #        +--------+              v
-    #        |.p5m.mog| <------ `pkgmogrify`
+    #        $DESTDIR           +-------------+   fix      +----------+
+    #   `pkgsend generate` ---> |.p5m.gen.raw | --perms--> | .p5m.gen |
+    #                           +-------------+            +----------+
+    #                                                            |
+    #        +--------+                                          v
+    #        |.p5m.mog| <--------------------------------- `pkgmogrify`
     #        +--------+
     #            |
     #            v                 +---------+
@@ -1969,6 +2006,38 @@ make_package_impl() {
             logmsg -e "$l"
         done
         logerr "Warnings from mogrify process"
+    fi
+
+    if [ -z "$BATCH" -a -f "$P5M_GEN.raw" ]; then
+        logmsg "--- Checking for permission overrides"
+        # Check for permissions set by the package install scripts which are
+        # not being preserved. Since the local mog may have added or removed
+        # files and directories, this is a bit more work than a simple diff.
+        #
+        manifest_mode_map $P5M_GEN.raw > $TMPDIR/permdiff.raw.$$
+        manifest_mode_map $P5M_MOG > $TMPDIR/permdiff.mog.$$
+
+        # Find the list of files common to both manifests and generate grep
+        # patterns to extract the corresponding lines from the mode maps.
+        for f in raw mog; do
+            $AWK '{print $3}' < $TMPDIR/permdiff.$f.$$ \
+                > $TMPDIR/permdiff.$f.paths.$$
+        done
+        logcmd -p $COMM -12 $TMPDIR/permdiff.{raw,mog}.paths.$$ \
+            | $SED 's/.*/ &\$/' > $TMPDIR/permdiff.patt.$$
+
+        if ! $GDIFF -U0 --color=always --minimal \
+            <($EGREP -f $TMPDIR/permdiff.patt.$$ $TMPDIR/permdiff.raw.$$) \
+            <($EGREP -f $TMPDIR/permdiff.patt.$$ $TMPDIR/permdiff.mog.$$) \
+            > $TMPDIR/permdiff.$$; then
+                echo
+                # Not anchored due to colour codes in file
+                $EGREP -v '(\-\-\-|\+\+\+|\@\@) ' $TMPDIR/permdiff.$$
+                note "Some permissions were overridden:"
+                logcmd $RM -f $TMPDIR/permdiff.$$
+                [ -z "$PERMDIFF_NOASK" ] && ask_to_continue
+        fi
+        logcmd $RM -f $TMPDIR/permdiff.*.$$
     fi
 
     if [ -n "$DESTDIR" ]; then
@@ -3677,7 +3746,8 @@ clean_up() {
                 logerr "Failed to remove temporary install directory $dir"
         done
         logmsg "--- Cleaning up temporary manifest and transform files"
-        logcmd $RM -f $P5M_GEN $P5M_MOG $P5M_DEPGEN $P5M_DEPGEN.res $P5M_FINAL \
+        logcmd $RM -f $P5M_GEN $P5M_GEN.raw $P5M_MOG \
+            $P5M_DEPGEN $P5M_DEPGEN.res $P5M_FINAL \
             $MY_MOG_FILE $MANUAL_DEPS || \
             logerr "Failed to remove temporary manifest and transform files"
         logmsg "Done."

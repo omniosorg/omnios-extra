@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 license LICENSE license=GPLv2
 license ../LICENCE.talloc license=LGPLv3
@@ -63,7 +63,9 @@ dir path=var/$(PREFIX) owner=$(USER) group=$(GROUP) mode=0750
 <transform file dir path=var/log/$(PREFIX) -> set mode 0755>
 
 <transform file dir path=etc/$(PREFIX) -> set group $(GROUP)>
-<transform dir path=etc/$(PREFIX)$ -> set mode 0750>
+<transform dir path=etc/$(PREFIX) -> set mode 0750>
+<transform file path=etc/$(PREFIX) -> set mode 0640>
+<transform file path=etc/$(PREFIX).*\.mk$ -> set mode 0644>
 
 <include binlink.mog>
 <include manlink.mog>

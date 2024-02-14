@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 group gid=27 groupname=$(PROG)
 group gid=28 groupname=postdrop
@@ -17,11 +17,15 @@ user ftpuser=false gcos-field="Postfix Reserved UID" group=$(PROG) \
 
 <transform dir path=var/lib/$(PROG) -> set owner $(PROG)>
 <transform dir path=var/lib/$(PROG) -> set group $(PROG)>
+<transform dir path=var/lib/$(PROG) -> set mode 0700>
 <transform dir path=var/spool/$(PROG)/.+ -> set owner $(PROG)>
+<transform dir path=var/spool/$(PROG)/.+ -> set mode 0700>
 <transform dir path=var/spool/$(PROG)/maildrop -> set group postdrop>
 <transform dir path=var/spool/$(PROG)/maildrop -> set mode 1730>
 <transform dir path=var/spool/$(PROG)/public -> set group postdrop>
+<transform dir path=var/spool/$(PROG)/public -> set mode 0710>
 <transform dir path=var/spool/$(PROG)/pid -> set owner root>
+<transform dir path=var/spool/$(PROG)/pid -> set mode 0755>
 <transform file dir path=$(PREFIX)/libexec/$(PROG)/pickup -> set owner root>
 <transform file path=$(PREFIX)/sbin/postqueue -> set group postdrop>
 <transform file path=$(PREFIX)/sbin/postdrop -> set group postdrop>

@@ -8,7 +8,9 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+
+<transform dir path=etc/$(PREFIX) -> set mode 0700>
 
 license LICENSE license=MIT
 

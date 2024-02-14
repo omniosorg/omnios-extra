@@ -38,6 +38,12 @@ RUN_DEPENDS_IPS+="
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
+    -DPROG=$PROG
+"
+
 MAKE_INSTALL_TARGET="
     install
     install-root

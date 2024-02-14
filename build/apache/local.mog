@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 $(GATE_SYSUSER)group gid=80 groupname=$(GROUP)
 $(GATE_SYSUSER)user ftpuser=false gcos-field="Apache user" \
@@ -38,6 +38,8 @@ $(GATE_SYSUSER)user ftpuser=false gcos-field="Apache user" \
 
 <transform file path=$(PREFIX)/bin/httpd \
     -> set restart_fmri svc:/application/$(PROG)$(sVERSION):default>
+
+<transform file path=$(PREFIX)/bin/suexec -> set mode 04755>
 
 <transform dir path=var/$(PREFIX)/run -> set owner $(USER)>
 <transform dir path=var/log/$(PREFIX) -> set owner $(USER)>
