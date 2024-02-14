@@ -1,4 +1,4 @@
-Start of unbound 1.19.0+libevent unit test.
+Start of unbound 1.19.1+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -78,9 +78,9 @@ test services/outside_network.c:reuse_write_wait_push_back
 test services/outside_network.c:reuse_write_wait_remove
 test services/outside_network.c:reuse_write_wait_pop
 test message parse functions
-[0] did 10000 in 81.015 msec for 123433.931988 encode/sec size 615
+[0] did 10000 in 96.319 msec for 103821.675889 encode/sec size 615
 test edns ede optional encoding functions
-1297540 checks ok.
+1297592 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl  OK
 ./testdata/auth_nsec3_ent.rpl  OK
