@@ -1,0 +1,20 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/frontend/package.json a/frontend/package.json
+--- a~/frontend/package.json	1970-01-01 00:00:00
++++ a/frontend/package.json	1970-01-01 00:00:00
+@@ -31,7 +31,6 @@
+   "devDependencies": {
+     "@vitejs/plugin-vue2": "^2.3.1",
+     "@vue/eslint-config-airbnb": "^7.0.1",
+-    "cypress": "13.6.1",
+     "cypress-file-upload": "^5.0.2",
+     "eslint": "^8.56.0",
+     "eslint-define-config": "^2.0.0",
+@@ -41,5 +40,8 @@
+     "vite": "^5.0.12",
+     "vue-eslint-parser": "^9.3.2",
+     "vue-template-compiler": "^2.6.12"
++  },
++  "resolutions": {
++    "rollup": "npm:@rollup/wasm-node"
+   }
+ }
