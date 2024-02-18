@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/src/dnsmasq.h a/src/dnsmasq.h
 --- a~/src/dnsmasq.h	1970-01-01 00:00:00
 +++ a/src/dnsmasq.h	1970-01-01 00:00:00
-@@ -1518,10 +1518,7 @@ int set_ipv6pktinfo(int fd);
+@@ -1556,10 +1556,7 @@ int set_ipv6pktinfo(int fd);
  #ifdef HAVE_DHCP6
  void join_multicast(int dienow);
  #endif

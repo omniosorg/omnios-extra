@@ -1,5 +1,4 @@
 libsocket.patch
-freshclam-install.patch
 ldpath.patch
 link_llvm_statically.patch
 no-version-script.patch
