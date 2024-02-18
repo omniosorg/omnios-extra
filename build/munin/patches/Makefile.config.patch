@@ -136,3 +136,12 @@ diff -wpruN '--exclude=*.orig' a~/Makefile.config a/Makefile.config
  
  CHOWN      := chown
  CHMOD      := chmod
+@@ -160,7 +160,7 @@
+
+ # Java compiler stuff - only needed on the buildhost
+ JC         := javac
+-JFLAGS     := -g -source 1.7 -target 1.7 -Xlint
++JFLAGS     := -g -source 1.8 -target 1.8 -Xlint
+ JAR        := jar
+
+ # Check if the java compiler works
