@@ -60,6 +60,7 @@
 | illumos	| 95	| svctag
 | illumos	| 96	| unknown
 | pkg5		| 97	| pkg5srv
+| extra		| 98	| squid
 
 ### Groups
 
@@ -122,4 +123,4 @@
 | illumos	| 95	| slocate
 | illumos	| 96	| unknown
 | pkg5		| 97	| pkg5srv
-
+| extra		| 98	| squid

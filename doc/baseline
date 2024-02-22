@@ -202,6 +202,7 @@ extra.omnios ooce/network/nsd
 extra.omnios ooce/network/openldap
 extra.omnios ooce/network/openvpn
 extra.omnios ooce/network/openvpn-auth-ldap
+extra.omnios ooce/network/proxy/squid
 extra.omnios ooce/network/rclone
 extra.omnios ooce/network/sic
 extra.omnios ooce/network/smtp/postfix
