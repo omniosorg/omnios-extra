@@ -44,7 +44,7 @@ addpath PKG_CONFIG_PATH[amd64] $DEPROOT$PREFIX/lib/amd64/pkgconfig
 
 ######################################################################
 
-PYTHONPATH+=":$PREFIX/lib/python$PYTHONVER/vendor-packages"
+PYTHONPATH+=":$PYTHONVENDOR"
 export PYTHONPATH
 
 download_source x11/$PROG $PROG $VER
