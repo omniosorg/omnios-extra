@@ -45,6 +45,10 @@ CONFIGURE_OPTS[amd64]+="
     --with-examples
 "
 
+# Building in parallel produces occasional bad objects that then fail the
+# linking stage. This needs investigation but disabled parallelism for now.
+NO_PARALLEL_MAKE=1
+
 # The 'distclean' target clobbers too much including 'configure'
 make_clean() {
     logcmd $MAKE clean
