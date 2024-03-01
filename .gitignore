@@ -2,6 +2,7 @@ build.log
 build-*.log
 build.log.*
 build-*.log.*
+last-failure.log
 tmp.repo/
 tmp.repo.aarch64/
 *.p5m.final
