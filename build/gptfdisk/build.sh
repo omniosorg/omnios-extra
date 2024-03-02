@@ -18,7 +18,7 @@
 . ../../lib/build.sh
 
 PROG=gptfdisk
-VER=1.0.9
+VER=1.0.10
 PKG=ooce/system/gptfdisk
 SUMMARY="GPT fdisk (gdisk, cgdisk, sgdisk, fixparts)"
 DESC="GPT fdisk is a disk partitioning tool loosely modeled on Linux "
@@ -58,6 +58,7 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build -noctf    # C++
+strip_install
 make_package
 clean_up
 
