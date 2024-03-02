@@ -1,8 +1,11 @@
---- a~/vaultwarden/Cargo.toml	2022-05-23 18:39:39.875719438 +0000
-+++ a/vaultwarden/Cargo.toml	2022-05-23 18:39:54.909249526 +0000
-@@ -158,5 +158,4 @@ job_scheduler = { git = 'https://github.
- # Strip debuginfo from the release builds
- # Also enable thin LTO for some optimizations
+diff -wpruN --no-dereference '--exclude=*.orig' a~/vaultwarden/Cargo.toml a/vaultwarden/Cargo.toml
+--- a~/vaultwarden/Cargo.toml	1970-01-01 00:00:00
++++ a/vaultwarden/Cargo.toml	1970-01-01 00:00:00
+@@ -168,7 +168,6 @@ rpassword = "7.3.1"
+ # The symbols are the provide better panic traces
+ # Also enable fat LTO and use 1 codegen unit for optimizations
  [profile.release]
 -strip = "debuginfo"
- lto = "thin"
+ lto = "fat"
+ codegen-units = 1
+ 
