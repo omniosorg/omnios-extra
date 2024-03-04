@@ -1,16 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/gptcurses.cc a/gptcurses.cc
---- a~/gptcurses.cc	1970-01-01 00:00:00
-+++ a/gptcurses.cc	1970-01-01 00:00:00
-@@ -26,7 +26,7 @@
- #if defined (__APPLE__) || (__FreeBSD__)
- #include <ncurses.h>
- #else
--#include <ncursesw/ncurses.h>
-+#include <ncurses/ncurses.h>
- #endif
- #include "gptcurses.h"
- #include "support.h"
-diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Makefile a/Makefile
 --- a~/Makefile	1970-01-01 00:00:00
 +++ a/Makefile	1970-01-01 00:00:00
 @@ -72,7 +72,7 @@ LDLIBS+=-luuid #-licuio -licuuc
@@ -22,3 +10,15 @@ diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
  LIB_NAMES=crc32 support guid gptpart mbrpart basicmbr mbr gpt bsd parttypes attributes diskio diskio-unix
  MBR_LIBS=support diskio diskio-unix basicmbr mbrpart
  ALL=gdisk cgdisk sgdisk fixparts
+diff -wpruN --no-dereference '--exclude=*.orig' a~/gptcurses.cc a/gptcurses.cc
+--- a~/gptcurses.cc	1970-01-01 00:00:00
++++ a/gptcurses.cc	1970-01-01 00:00:00
+@@ -26,7 +26,7 @@
+ #if defined (__APPLE__) || (__FreeBSD__)
+ #include <ncurses.h>
+ #else
+-#include <ncursesw/ncurses.h>
++#include <ncurses/ncurses.h>
+ #endif
+ #include "gptcurses.h"
+ #include "support.h"

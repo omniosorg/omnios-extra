@@ -12,16 +12,19 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libgif
-VER=5.2.1
+VER=5.2.2
 PKG=ooce/library/libgif
 SUMMARY="libgif"
 DESC="GIFLIB is a package of portable tools and library routines for "
 DESC+="working with GIF images."
+
+forgo_isaexec
+test_relver '>=' 151049 && set_clangver
 
 set_builddir giflib-$VER
 
@@ -32,13 +35,11 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 pre_configure() {
     typeset arch=$1
-
-    typeset bindir=bin
-    [ $arch = i386 ] && bindir+=/i386
 
     MAKE_ARGS_WS="
         OFLAGS=\"$CFLAGS ${CFLAGS[$arch]}\"
@@ -47,7 +48,6 @@ pre_configure() {
         PREFIX=$PREFIX
         INCDIR=$OPREFIX/include
         LIBDIR=$OPREFIX/${LIBDIRS[$arch]}
-        BINDIR=$PREFIX/$bindir
     "
 
     # no configure
