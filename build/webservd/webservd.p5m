@@ -1,0 +1,14 @@
+set name=pkg.fmri value=ooce/server/webservd-common@1.0.0-$(PVER)
+set name=variant.arch value=i386
+set name=variant.opensolaris.zone value=global value=nonglobal
+set name=description value="Common webservd package"
+set name=pkg.description value="Common webservd package"
+set name=pkg.summary value="Common webservd package"
+
+dir group=bin mode=0755 owner=root  path=var/opt/ooce
+dir group=webservd mode=0755 owner=webservd path=var/opt/ooce/webservd
+
+$(GATE_SYSUSER)group gid=80 groupname=webservd
+$(GATE_SYSUSER)user ftpuser=false gcos-field="webservd user" \
+    group=webservd uid=80 password=NP username=webservd \
+    home-dir=/var/opt/ooce/webservd

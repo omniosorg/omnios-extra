@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -28,6 +28,8 @@ set_arch 64
 set_builddir httpd-$VER
 
 set_patchdir patches-$sMAJVER
+
+RUN_DEPENDS_IPS="ooce/server/webservd-common"
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER

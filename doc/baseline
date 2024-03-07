@@ -232,11 +232,13 @@ extra.omnios ooce/server/apache-24
 extra.omnios ooce/server/apache-24/modules/fcgid
 extra.omnios ooce/server/apache-24/modules/subversion
 extra.omnios ooce/server/apache-24/modules/wsgi
+extra.omnios ooce/server/caddy
 extra.omnios ooce/server/freeradius
 extra.omnios ooce/server/haproxy
 extra.omnios ooce/server/nginx
 extra.omnios ooce/server/nginx-124
 extra.omnios ooce/server/nginx-common
+extra.omnios ooce/server/webservd-common
 extra.omnios ooce/storage/minio
 extra.omnios ooce/storage/minio-mc
 extra.omnios ooce/system/clamav
