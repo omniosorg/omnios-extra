@@ -22,6 +22,7 @@ depend fmri=ooce/text/ripgrep type=require
 depend fmri=ooce/text/texinfo type=require
 depend fmri=ooce/util/fd type=require
 depend fmri=ooce/util/jq type=require
+depend fmri=ooce/util/qemu-img type=require
 depend fmri=ooce/x11/header/x11-protocols type=require
 depend fmri=ooce/x11/library/libxrandr type=require
 depend fmri=ooce/x11/library/libxtst type=require

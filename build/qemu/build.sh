@@ -39,6 +39,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DPROG=$PROG
     -DPKGROOT=$PROG
+    -DSHIPETC=
 "
 
 init
@@ -112,12 +113,25 @@ fixup() {
     popd >/dev/null
 }
 
+post_install() {
+    manifest_start $TMPDIR/manifest.img
+    manifest_add $PREFIX/bin qemu-img
+    manifest_add $PREFIX/share/man/man1 'qemu-img\.1'
+    manifest_finalise $TMPDIR/manifest.img $OPREFIX
+
+    manifest_uniq $TMPDIR/manifest.{qemu,img}
+    manifest_finalise $TMPDIR/manifest.qemu $OPREFIX
+}
+
 download_source $PROG $PROG $VER
 patch_source
 build
 fixup
+PKG="ooce/util/$PROG-img" DESC="$PROG-img" SUMMARY="$PROG-img utility" \
+    XFORM_ARGS+=" -DSHIPETC=#" make_package -seed $TMPDIR/manifest.img
 install_execattr
-make_package
+RUN_DEPENDS_IPS="ooce/util/$PROG-img" \
+    make_package -seed $TMPDIR/manifest.qemu
 clean_up
 
 # Vim hints
