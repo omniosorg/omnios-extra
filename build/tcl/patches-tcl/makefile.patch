@@ -3,7 +3,7 @@ man3 and mann).
 
 This patch will not be sent upstream.
 
-diff -wpruN '--exclude=*.orig' a~/Makefile.in a/Makefile.in
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Makefile.in a/Makefile.in
 --- a~/Makefile.in	1970-01-01 00:00:00
 +++ a/Makefile.in	1970-01-01 00:00:00
 @@ -72,10 +72,10 @@ MAN_INSTALL_DIR		= $(INSTALL_ROOT)$(mand
@@ -19,7 +19,7 @@ diff -wpruN '--exclude=*.orig' a~/Makefile.in a/Makefile.in
  
  # Path to the html documentation dir:
  HTML_DIR		= @HTML_DIR@
-@@ -280,7 +280,7 @@ CC_SWITCHES = $(STUB_CC_SWITCHES) ${NO_D
+@@ -286,7 +286,7 @@ CC_SWITCHES = $(STUB_CC_SWITCHES) ${NO_D
  
  APP_CC_SWITCHES = $(CC_SWITCHES) @EXTRA_APP_CC_SWITCHES@
  
@@ -28,7 +28,7 @@ diff -wpruN '--exclude=*.orig' a~/Makefile.in a/Makefile.in
  
  DEPEND_SWITCHES	= ${CFLAGS} -I${UNIX_DIR} -I${GENERIC_DIR} \
  	${AC_FLAGS} ${EXTRA_CFLAGS} @EXTRA_CC_SWITCHES@
-@@ -1019,7 +1019,7 @@ install-msgs:
+@@ -1028,7 +1028,7 @@ install-msgs:
  	done
  
  install-doc: doc
@@ -37,7 +37,7 @@ diff -wpruN '--exclude=*.orig' a~/Makefile.in a/Makefile.in
  	    if [ ! -d "$$i" ] ; then \
  		echo "Making directory $$i"; \
  		$(INSTALL_DATA_DIR) "$$i"; \
-@@ -1029,13 +1029,13 @@ install-doc: doc
+@@ -1038,13 +1038,13 @@ install-doc: doc
  	@for i in $(TOP_DIR)/doc/*.1; do \
  	    $(SHELL) $(UNIX_DIR)/installManPage $(MAN_FLAGS) $$i "$(MAN1_INSTALL_DIR)"; \
  	done

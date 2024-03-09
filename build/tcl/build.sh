@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=tcl
-VER=8.6.13
+VER=8.6.14
 EXPECTVER=5.45.4
 PKG=ooce/runtime/tcl
 SUMMARY="Tool Command Language"
@@ -28,7 +28,7 @@ MAJVER=${VER%.*}
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
-BUILDDIR=$PROG$VER/unix
+set_builddir $PROG$VER/unix
 PATCHDIR+=-$PROG
 
 SKIP_LICENCES=BSD-style

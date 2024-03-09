@@ -1,2 +1,6 @@
-exp_regexp.c
 exp_closetcl.c
+exp_regexp.c
+itclTestRegisterC.c
+psGdbm.c
+psLmdb.c
+threadNs.c
