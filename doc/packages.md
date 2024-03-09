@@ -197,7 +197,7 @@
 | ooce/server/nginx		| 1.25.4	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-124		| 1.24.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio		| 2024-01-18T22-51-28Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/storage/minio-mc		| 2024-01-18T07-03-39Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/storage/minio-mc		| 2024-03-07T00-31-49Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/file-system/ntfs-3g | 2022.10.3	| https://github.com/tuxera/ntfs-3g/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/gptfdisk		| 1.0.10	| https://sourceforge.net/projects/gptfdisk/files/gptfdisk/ | [oxidecomputer](https://github.com/oxidecomputer)
 | ooce/system/clamav		| 1.3.0		| https://github.com/Cisco-Talos/clamav/tags https://www.clamav.net/downloads | [omniosorg](https://github.com/omniosorg)
