@@ -24,6 +24,7 @@ PASS: t-rmd160
 PASS: t-keydb
 PASS: t-keydb-get-keyblock
 PASS: t-stutter
+PASS: t-keyid
 PASS: ./../tests/cms/samplekeys/ov-user.p12
 PASS: ./../tests/cms/samplekeys/ov-server.p12
 PASS: ./../tests/cms/samplekeys/opensc-test.p12
