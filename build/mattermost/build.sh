@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=mattermost
-VER=8.1.10
+VER=9.5.2
 # check for the current morph version/commit hash and create a patched branch in
 # https://github.com/omniosorg/morph; then point to that branch
 MORPHBRANCH=il_1.0.5
@@ -125,7 +125,7 @@ build() {
     build_component webapp dist
     restore_variable LDFLAGS
 
-    build_component server build-illumos package-prep
+    build_component server setup-go-work build-illumos package-prep
 }
 
 install() {

@@ -1,0 +1,36 @@
+From eac9a396772442d2f8a95efd651bdd58a91a5661 Mon Sep 17 00:00:00 2001
+From: Harrison Healey <harrisonmhealey@gmail.com>
+Date: Fri, 19 Jan 2024 09:43:51 -0500
+Subject: [PATCH] Allow NPM v10 when working on the web app (#25959)
+
+---
+ webapp/package-lock.json | 2 +-
+ webapp/package.json      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/webapp/package-lock.json b/webapp/package-lock.json
+index 851de409d7046..6fa18d727e5be 100644
+--- a/webapp/package-lock.json
++++ b/webapp/package-lock.json
+@@ -45,7 +45,7 @@
+       },
+       "engines": {
+         "node": "^18.10.0",
+-        "npm": "^9.0.0"
++        "npm": "^9.0.0 || ^10.0.0"
+       }
+     },
+     "channels": {
+diff --git a/webapp/package.json b/webapp/package.json
+index 25bcb3591f25c..89781a885c33b 100644
+--- a/webapp/package.json
++++ b/webapp/package.json
+@@ -3,7 +3,7 @@
+   "private": true,
+   "engines": {
+     "node": "^18.10.0",
+-    "npm": "^9.0.0"
++    "npm": "^9.0.0 || ^10.0.0"
+   },
+   "scripts": {
+     "postinstall": "npm run build --workspace=platform/types --workspace=platform/client --workspace=platform/components",
