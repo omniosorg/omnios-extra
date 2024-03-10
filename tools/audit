@@ -243,6 +243,8 @@ audit()
                         */clang-16:|*/llvm-16:) [ $r -lt 151045 ] || ok=0 ;;
                         # clang/llvm-17 are not published until r151047
                         */clang-17:|*/llvm-17:) [ $r -lt 151047 ] || ok=0 ;;
+                        # clang/llvm-18 are not published until r151049
+                        */clang-18:|*/llvm-18:) [ $r -lt 151049 ] || ok=0 ;;
                         # qemu, tailscale and pgsql 16 are not published until r151044
                         */qemu:|*/tailscale:|*/postgresql-16:) [ $r -lt 151044 ] || ok=0 ;;
                         # helix, mariadb-1011 and hunspell
