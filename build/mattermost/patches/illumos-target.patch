@@ -6,7 +6,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/server/build/release.mk a/ser
  
 +build-illumos:
 +	@echo Build illumos amd64
-+	env GOOS=illumos GOARCH=amd64 $(GO) build -o $(GOBIN) $(GOFLAGS) -trimpath -tags production -ldflags '$(LDFLAGS)' ./...
++	env GOOS=illumos GOARCH=amd64 $(GO) build -o $(GOBIN) $(GOFLAGS) -trimpath -tags '$(BUILD_TAGS) production' -ldflags '$(LDFLAGS)' ./...
 +
  build-linux: build-linux-amd64 build-linux-arm64
  

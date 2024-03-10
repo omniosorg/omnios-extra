@@ -1,6 +1,7 @@
 abbrev-cache.c
 abbrev.c
 ada-exp.c
+ada-imported.c
 ada-lang.c
 ada-tasks.c
 ada-typeprint.c
@@ -88,6 +89,7 @@ dcache.c
 debug.c
 debuginfod-support.c
 dictionary.c
+die.c
 disasm.c
 displaced-stepping.c
 dtrace-probe.c
@@ -149,6 +151,7 @@ infcmd.c
 inferior.c
 inflow.c
 infrun.c
+init.c
 inline-frame.c
 interps.c
 jit.c
@@ -231,6 +234,7 @@ py-breakpoint.c
 py-cmd.c
 py-connection.c
 py-continueevent.c
+py-dap.c
 py-disasm.c
 py-event.c
 py-evtregistry.c
@@ -248,6 +252,7 @@ py-instruction.c
 py-lazy-string.c
 py-linetable.c
 py-membuf.c
+py-mi.c
 py-micmd.c
 py-newobjfileevent.c
 py-objfile.c
@@ -272,6 +277,8 @@ py-varobj.c
 py-xmethods.c
 python.c
 ravenscar-thread.c
+read-debug-names.c
+read-gdb-index.c
 read.c
 record-btrace.c
 record-full.c
@@ -376,6 +383,7 @@ typeprint.c
 ui-file.c
 ui-out.c
 ui-style.c
+ui.c
 user-regs.c
 utils.c
 valarith.c

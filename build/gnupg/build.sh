@@ -17,18 +17,18 @@
 . ../../lib/build.sh
 
 PROG=gnupg
-VER=2.4.4
+VER=2.4.5
 PKG=ooce/security/gnupg
 SUMMARY="$PROG - GNU Privacy Guard"
 DESC="A complete and free implementation of the OpenPGP standard"
 
 # we don't track the versions in doc/packages.md
 # check for updates when gnupg is updated
-LIBGPGERRORVER=1.47
+LIBGPGERRORVER=1.48
 LIBGCRYPTVER=1.10.3
-LIBKSBAVER=1.6.5
-LIBASSUANVER=2.5.6
-NPTHVER=1.6
+LIBKSBAVER=1.6.6
+LIBASSUANVER=2.5.7
+NPTHVER=1.7
 PINENTRYVER=1.2.1
 
 OPREFIX=$PREFIX

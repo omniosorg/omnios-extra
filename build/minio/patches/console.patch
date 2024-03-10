@@ -19,10 +19,10 @@ Signed-off-by: Sebastiaan van Stijn <github@gone.nl>
  delete mode 100644 tc_solaris_cgo.go
  delete mode 100644 tc_solaris_nocgo.go
 
-diff --git a/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/console_unix.go b/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/console_unix.go
+diff --git a/_deps/pkg/mod/github.com/containerd/console@v1.0.4/console_unix.go b/_deps/pkg/mod/github.com/containerd/console@v1.0.4/console_unix.go
 index 164dd59..022ae6c 100644
---- a/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/console_unix.go
-+++ b/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/console_unix.go
+--- a/_deps/pkg/mod/github.com/containerd/console@v1.0.4/console_unix.go
++++ b/_deps/pkg/mod/github.com/containerd/console@v1.0.4/console_unix.go
 @@ -1,5 +1,5 @@
 -//go:build darwin || freebsd || linux || netbsd || openbsd || solaris || zos
 -// +build darwin freebsd linux netbsd openbsd solaris zos
@@ -31,10 +31,10 @@ index 164dd59..022ae6c 100644
  
  /*
     Copyright The containerd Authors.
-diff --git a/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/pty_unix.go b/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/pty_unix.go
+diff --git a/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0/pty_unix.go b/_deps/pkg/mod/github.com/containerd/console@v1.0.4/pty_unix.go
 index b090252..f5a5b80 100644
---- a/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/pty_unix.go
-+++ b/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/pty_unix.go
+--- a/_deps/pkg/mod/github.com/containerd/console@v1.0.4/pty_unix.go
++++ b/_deps/pkg/mod/github.com/containerd/console@v1.0.4/pty_unix.go
 @@ -1,5 +1,5 @@
 -//go:build darwin || linux || netbsd || openbsd || solaris
 -// +build darwin linux netbsd openbsd solaris
@@ -43,10 +43,10 @@ index b090252..f5a5b80 100644
  
  /*
     Copyright The containerd Authors.
-diff --git a/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/tc_solaris_cgo.go b/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/tc_solaris_cgo.go
+diff --git a/_deps/pkg/mod/github.com/containerd/console@v1.0.4/tc_solaris_cgo.go b/_deps/pkg/mod/github.com/containerd/console@v1.0.4/tc_solaris_cgo.go
 deleted file mode 100644
 index c755a9b..0000000
---- a/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/tc_solaris_cgo.go
+--- a/_deps/pkg/mod/github.com/containerd/console@v1.0.4/tc_solaris_cgo.go
 +++ /dev/null
 @@ -1,52 +0,0 @@
 -//go:build solaris && cgo
@@ -101,10 +101,10 @@ index c755a9b..0000000
 -	}
 -	return nil
 -}
-diff --git a/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/tc_solaris_nocgo.go b/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/tc_solaris_nocgo.go
+diff --git a/_deps/pkg/mod/github.com/containerd/console@v1.0.4/tc_solaris_nocgo.go b/_deps/pkg/mod/github.com/containerd/console@v1.0.4/tc_solaris_nocgo.go
 deleted file mode 100644
 index 29c07d4..0000000
---- a/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/tc_solaris_nocgo.go
+--- a/_deps/pkg/mod/github.com/containerd/console@v1.0.4/tc_solaris_nocgo.go
 +++ /dev/null
 @@ -1,48 +0,0 @@
 -//go:build solaris && !cgo
@@ -155,10 +155,10 @@ index 29c07d4..0000000
 -func unlockpt(f *os.File) error {
 -	panic("unlockpt() support requires cgo.")
 -}
-diff --git a/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/tc_unix.go b/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/tc_unix.go
+diff --git a/_deps/pkg/mod/github.com/containerd/console@v1.0.4/tc_unix.go b/_deps/pkg/mod/github.com/containerd/console@v1.0.4/tc_unix.go
 index 947cb75..f5053b2 100644
---- a/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/tc_unix.go
-+++ b/_deps/pkg/mod/github.com/containerd/console@v1.0.4-0.20230313162750-1ae8d489ac81/tc_unix.go
+--- a/_deps/pkg/mod/github.com/containerd/console@v1.0.4/tc_unix.go
++++ b/_deps/pkg/mod/github.com/containerd/console@v1.0.4/tc_unix.go
 @@ -1,5 +1,5 @@
 -//go:build darwin || freebsd || linux || netbsd || openbsd || solaris || zos
 -// +build darwin freebsd linux netbsd openbsd solaris zos
