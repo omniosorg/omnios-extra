@@ -1,0 +1,69 @@
+?   	github.com/direnv/direnv/v2	[no test files]
+?   	github.com/direnv/direnv/v2/gzenv	[no test files]
+?   	github.com/direnv/direnv/v2/script/issue-command	[no test files]
+?   	github.com/direnv/direnv/v2/script/release-changelog	[no test files]
+?   	github.com/direnv/direnv/v2/xdg	[no test files]
+=== RUN   TestVersionDotTxt
+--- PASS: TestVersionDotTxt (0.00s)
+=== RUN   TestEnvDiff
+--- PASS: TestEnvDiff (0.00s)
+=== RUN   TestEnvDiffEmptyValue
+--- PASS: TestEnvDiffEmptyValue (0.00s)
+=== RUN   TestIgnoredEnv
+--- PASS: TestIgnoredEnv (0.00s)
+=== RUN   TestEnv
+--- PASS: TestEnv (0.00s)
+=== RUN   TestUpdate
+--- PASS: TestUpdate (0.00s)
+=== RUN   TestFTJsons
+--- PASS: TestFTJsons (0.00s)
+=== RUN   TestRoundTrip
+--- PASS: TestRoundTrip (0.01s)
+=== RUN   TestCanonicalAdds
+--- PASS: TestCanonicalAdds (0.00s)
+=== RUN   TestCheckPasses
+--- PASS: TestCheckPasses (0.00s)
+=== RUN   TestCheckStale
+--- PASS: TestCheckStale (0.00s)
+=== RUN   TestCheckAppeared
+--- PASS: TestCheckAppeared (0.00s)
+=== RUN   TestCheckGone
+--- PASS: TestCheckGone (0.00s)
+=== RUN   TestSomething
+--- PASS: TestSomething (0.00s)
+=== RUN   TestCutEncapsulated_ok
+--- PASS: TestCutEncapsulated_ok (0.00s)
+=== RUN   TestExport_ok
+--- PASS: TestExport_ok (0.00s)
+=== RUN   TestBashEscape
+--- PASS: TestBashEscape (0.00s)
+=== RUN   TestShellDetection
+--- PASS: TestShellDetection (0.00s)
+PASS
+ok  	github.com/direnv/direnv/v2/internal/cmd	(cached)
+=== RUN   TestDotEnvExported
+--- PASS: TestDotEnvExported (0.00s)
+=== RUN   TestDotEnvPlain
+--- PASS: TestDotEnvPlain (0.00s)
+=== RUN   TestSoloEmpty
+--- PASS: TestSoloEmpty (0.00s)
+=== RUN   TestDotEnvQuoted
+--- PASS: TestDotEnvQuoted (0.00s)
+=== RUN   TestDotEnvYAML
+--- PASS: TestDotEnvYAML (0.00s)
+=== RUN   TestFailingMustParse
+--- PASS: TestFailingMustParse (0.00s)
+=== RUN   TestCommentOverride
+--- PASS: TestCommentOverride (0.00s)
+=== RUN   TestVariableExpansion
+--- PASS: TestVariableExpansion (0.00s)
+=== RUN   TestVariableExpansionWithDefaults
+--- PASS: TestVariableExpansionWithDefaults (0.00s)
+PASS
+ok  	github.com/direnv/direnv/v2/pkg/dotenv	(cached)
+=== RUN   TestWriter
+--- PASS: TestWriter (0.00s)
+=== RUN   TestParser
+--- PASS: TestParser (0.00s)
+PASS
+ok  	github.com/direnv/direnv/v2/pkg/sri	(cached)
