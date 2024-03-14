@@ -269,6 +269,7 @@ extra.omnios ooce/util/acmefetch
 extra.omnios ooce/util/atuin
 extra.omnios ooce/util/bat
 extra.omnios ooce/util/diffr
+extra.omnios ooce/util/direnv
 extra.omnios ooce/util/dtc
 extra.omnios ooce/util/fd
 extra.omnios ooce/util/gh

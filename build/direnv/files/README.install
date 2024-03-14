@@ -1,0 +1,12 @@
+
+-------------------------
+direnv Installation Notes
+-------------------------
+
+For direnv to work properly it needs to be hooked into the shell.
+Each shell has its own extension mechanism.
+
+Refer to the instructions at https://direnv.net/docs/hook.html
+
+-------------------------
+
