@@ -2,4 +2,3 @@ no-lmtp-version.patch
 adminip.patch
 sasllib.patch
 log-pri.patch
-ssl-session-free.patch
