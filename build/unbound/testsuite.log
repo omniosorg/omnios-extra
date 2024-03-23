@@ -1,4 +1,4 @@
-Start of unbound 1.19.2+libevent unit test.
+Start of unbound 1.19.3+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -78,9 +78,9 @@ test services/outside_network.c:reuse_write_wait_push_back
 test services/outside_network.c:reuse_write_wait_remove
 test services/outside_network.c:reuse_write_wait_pop
 test message parse functions
-[0] did 10000 in 71.961 msec for 138964.161143 encode/sec size 615
+[0] did 10000 in 72.544 msec for 137847.375386 encode/sec size 615
 test edns ede optional encoding functions
-1297278 checks ok.
+1297710 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl  OK
 ./testdata/auth_nsec3_ent.rpl  OK
@@ -195,6 +195,7 @@ selftest successful (33 checks).
 ./testdata/iter_cycle.rpl  OK
 ./testdata/iter_cycle_noh.rpl  OK
 ./testdata/iter_dname_insec.rpl  OK
+./testdata/iter_dname_ttl.rpl  OK
 ./testdata/iter_dname_yx.rpl  OK
 ./testdata/iter_dnsseclame_bug.rpl  OK
 ./testdata/iter_dnsseclame_ds.rpl  OK
@@ -314,6 +315,7 @@ selftest successful (33 checks).
 ./testdata/rrset_rettl.rpl  OK
 ./testdata/rrset_untrusted.rpl  OK
 ./testdata/rrset_updated.rpl  OK
+./testdata/rrset_use_cached.rpl  OK
 ./testdata/serve_expired.rpl  OK
 ./testdata/serve_expired_0ttl_nodata.rpl  OK
 ./testdata/serve_expired_0ttl_nxdomain.rpl  OK

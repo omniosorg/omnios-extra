@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,7 +22,11 @@ PKG=ooce/system/smartmontools
 SUMMARY="smartmontools"
 DESC="Control and monitor storage systems using SMART"
 
-test_relver '>=' 151041 && set_clangver
+# building smartmontools with clang 17 and stack protector enabled
+# leads to a misaligned stack
+# https://github.com/llvm/llvm-project/issues/83673
+((DEFAULT_CLANG_VER == 17)) && clangv=16 || clangv=$DEFAULT_CLANG_VER
+test_relver '>=' 151041 && set_clangver $clangv
 
 RUN_DEPENDS_IPS=ooce/security/gnupg
 
