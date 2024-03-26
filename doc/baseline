@@ -259,6 +259,7 @@ extra.omnios ooce/system/zrepl
 extra.omnios ooce/terminal/byobu
 extra.omnios ooce/terminal/minicom
 extra.omnios ooce/text/asciidoc
+extra.omnios ooce/text/asciidoctor
 extra.omnios ooce/text/asciinema
 extra.omnios ooce/text/datamash
 extra.omnios ooce/text/docbook-xsl
