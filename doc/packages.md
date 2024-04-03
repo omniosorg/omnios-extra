@@ -8,7 +8,7 @@
 | ooce/application/imagemagick	| 7.1.1-20	| https://imagemagick.org/archive/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/links	| 2.29		| http://links.twibright.com/download.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/listmonk	| 3.0.0		| https://github.com/knadh/listmonk/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/application/mattermost	| 9.5.2		| https://docs.mattermost.com/upgrade/version-archive.html#mattermost-team-edition | [omniosorg](https://github.com/omniosorg)
+| ooce/application/mattermost	| 9.5.3		| https://docs.mattermost.com/upgrade/version-archive.html#mattermost-team-edition | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mc		| 4.8.31	| http://ftp.midnight-commander.org/?C=N;O=D | [omniosorg](https://github.com/omniosorg)
 | ooce/application/munin	| 2.0.69	| https://github.com/munin-monitoring/munin/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mutt		| 2.2.12	| http://www.mutt.org/download.html | [omniosorg](https://github.com/omniosorg)
