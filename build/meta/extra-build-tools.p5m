@@ -79,7 +79,6 @@ depend fmri=ooce/runtime/node-18 type=require
 depend fmri=ooce/runtime/ruby-30 type=require
 depend fmri=ooce/runtime/ruby-33 type=require
 depend fmri=ooce/server/apache-24 type=require
-depend fmri=ooce/text/asciidoctor type=require
 depend fmri=ooce/text/docbook-xsl type=require
 depend fmri=system/header/header-agp type=require
 depend fmri=system/header/header-ugen type=require
