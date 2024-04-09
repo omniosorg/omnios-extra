@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=stress-ng
-VER=0.17.00
+VER=0.17.07
 PKG=ooce/util/stress-ng
 SUMMARY="Stress test a computer system in various selectable ways"
 DESC="$PROG - $SUMMARY"
