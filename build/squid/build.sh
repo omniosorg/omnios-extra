@@ -13,11 +13,12 @@
 # }}}
 #
 # Copyright 2023 Carsten Grzemba
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=squid
-VER=6.7
+VER=6.9
 PKG=ooce/network/proxy/squid
 SUMMARY="Squid WEB Proxy"
 DESC="Squid is a caching proxy for the Web supporting HTTP, HTTPS, FTP, and more."
