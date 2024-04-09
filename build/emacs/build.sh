@@ -23,7 +23,10 @@ SUMMARY="Emacs editor"
 DESC="An extensible, customizable, free/libre text editor - and more."
 
 BUILD_DEPENDS_IPS="library/ncurses"
-RUN_DEPENDS_IPS="file/gnu-findutils"
+RUN_DEPENDS_IPS="
+    file/gnu-findutils
+    ooce/text/tree-sitter-langs
+"
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG

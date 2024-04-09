@@ -211,9 +211,9 @@ GNUBIN=/usr/gnu/bin
 # Define variables for standard utilities so that we can choose to run the
 # native version even if a build script modifies the path to put GNUBIN first.
 for util in \
-    basename cat comm cut dis tput digest mktemp sort sed tee rm mv cp mkdir \
-    rmdir readlink ln ls chmod touch grep time find fgrep egrep uniq stat \
-    strip sleep tail date
+    basename cat comm cut diff dis tput digest mktemp sort sed tee rm mv cp \
+    mkdir rmdir readlink ln ls chmod touch grep time find fgrep egrep uniq \
+    stat strip sleep tail date
 do
     declare -n _var=${util^^}
     declare -g _var=$USRBIN/$util
