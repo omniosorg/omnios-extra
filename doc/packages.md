@@ -65,7 +65,7 @@
 | ooce/developer/gdb		| 14.2		| https://ftp.gnu.org/gnu/gdb/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/git-absorb	| 0.6.11	| https://github.com/tummychow/git-absorb/releases| [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-121		| 1.21.9	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/go-122		| 1.22.1	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/go-122		| 1.22.2	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/gperf		| 3.1		| https://ftp.gnu.org/pub/gnu/gperf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-13	| 13.0.1	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-14	| 14.0.6	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
