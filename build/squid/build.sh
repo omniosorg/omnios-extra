@@ -13,22 +13,24 @@
 # }}}
 #
 # Copyright 2023 Carsten Grzemba
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=squid
-VER=6.7
+VER=6.9
 PKG=ooce/network/proxy/squid
 SUMMARY="Squid WEB Proxy"
-DESC="Squid is a caching proxy for the Web supporting HTTP, HTTPS, FTP, and more."
+DESC="Squid is a caching proxy for the Web supporting HTTP, HTTPS, FTP, "
+DESC+="and more."
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 CONFPATH=/etc$PREFIX
-LOGPATH=/var$PREFIX/logs
 VARPATH=/var$PREFIX
-RUNPATH=$LOGPATH
-PIDFILE=/var/run/squid.pid
+LOGPATH=$VARPATH/logs
+RUNPATH=$VARPATH/run
+PIDFILE=$RUNPATH/squid.pid
 
 set_arch 64
 
@@ -39,17 +41,16 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
     -DUSER=squid
     -DGROUP=squid
-    -DPIDFILE=${PIDFILE}
+    -DPIDFILE=$PIDFILE
 "
 
 CONFIGURE_OPTS="
-    --sysconfdir=/etc${PREFIX}
-    --localstatedir=/var${PREFIX}
-    --with-swapdir=/var${PREFIX}/cache
-    --mandir=/usr/share/man
+    --sysconfdir=$CONFPATH
+    --localstatedir=$VARPATH
+    --with-swapdir=$VARPATH/cache
     --with-default-user=squid
-    --with-logdir=/var${PREFIX}/logs
-    --with-pidfile=${PIDFILE}
+    --with-logdir=$LOGPATH
+    --with-pidfile=$PIDFILE
     --enable-large-cache-files
     --disable-static
     --with-mit-krb5
@@ -104,22 +105,21 @@ CONFIGURE_OPTS="
 "
 
 CONFIGURE_OPTS[amd64]+="
-    --libdir=$PREFIX/lib/amd64
+    --libdir=$PREFIX/${LIBDIRS[amd64]}
 "
 
 CXXFLAGS+=" -Wno-unknown-pragmas -Wno-deprecated-declarations"
 export LIBLDAP_LIBS="-lldap -llber"
-export LIBLDAP_PATH="-L$OPREFIX/lib/amd64 "
-LDFLAGS[amd64]+=" -Wl,-z -Wl,ignore -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
+export LIBLDAP_PATH="-L$OPREFIX/${LIBDIRS[amd64]}"
+LDFLAGS[amd64]+=" -Wl,-z -Wl,ignore"
+LDFLAGS[amd64]+=" -L$OPREFIX/${LIBDIRS[amd64]} -R$OPREFIX/${LIBDIRS[amd64]}"
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-for f in squid; do
-    xform files/$f > $TMPDIR/$f
-done
+xform files/$PROG > $TMPDIR/$PROG
 install_execattr
 install_smf -oocemethod ooce $PROG.xml $PROG
 make_package

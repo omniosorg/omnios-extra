@@ -2,8 +2,8 @@
 
 source /lib/svc/share/smf_include.sh
 
-typeset -r SQUID_HOME=/$(PREFIX)
-typeset -r CONF_FILE=/etc${SQUID_HOME}/squid.conf
+typeset -r SQUID_HOME="/$(PREFIX)"
+typeset -r CONF_FILE="/etc${SQUID_HOME}/squid.conf"
 typeset -r SQUID="${SQUID_HOME}/sbin/squid"
 
 [[ ! -f ${CONF_FILE} ]] && exit $SMF_EXIT_ERR_CONFIG
@@ -24,7 +24,7 @@ stop)
         ;;
 *)
         print "Usage: $0 {start|stop}"
-        exit 1
+        exit $SMF_EXIT_ERR_FATAL
         ;;
 esac
 

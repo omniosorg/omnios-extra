@@ -1,1 +1,1 @@
-Forced Privilege:solaris:cmd:::/opt/ooce/squid/libexec/amd64/pinger:privs=net_icmpaccess
+Forced Privilege:solaris:cmd:::/$(PREFIX)/libexec/amd64/pinger:privs=net_icmpaccess

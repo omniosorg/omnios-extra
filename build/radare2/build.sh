@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=radare2
 PKG=ooce/developer/radare2
-VER=5.8.8
+VER=5.9.0
 SUMMARY="A low-level software forensics tool"
 DESC="$PROG - $SUMMARY"
 

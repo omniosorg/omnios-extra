@@ -9,6 +9,7 @@
 # http://www.illumos.org/license/CDDL.
 #
 # Copyright 2020 Carsten Grzemba
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYING license=GPLv2
 
@@ -19,21 +20,16 @@ group groupname=$(GROUP) gid=98
 user ftpuser=false username=$(USER) uid=98 group=$(GROUP) \
     gcos-field="$(PROG) User" home-dir=/var/$(PREFIX) password=NP
 
-<transform file path=etc/opt/ooce/squid/.* -> set preserve renamenew>
+<transform file path=etc/opt/ooce/squid -> set preserve renamenew>
+
+# See also files/exec_attr
+<transform file path=$(PREFIX)/libexec/amd64/pinger -> set mode 04555>
 
 # Restart services on upgrade
 <transform file path=$(PREFIX)/sbin/squid$ \
     -> set restart_fmri svc:/ooce/proxy/$(PROG):default>
 
-<transform dir path=$(PREFIX)/var \
-    -> drop >
-<transform dir path=var/run \
-    -> drop >
-<transform dir path=var/opt/ooce/squid/run(/.*)* \
-    -> drop >
-
-<transform dir path=var/$(PREFIX)(/.*)* \
-    -> default group squid >
-<transform dir path=var/$(PREFIX)(/.*)* \
-    -> default owner squid>
+<transform dir path=var/$(PREFIX)/run/squid -> drop>
+<transform dir path=var/$(PREFIX) -> set group squid>
+<transform dir path=var/$(PREFIX) -> set owner squid>
 
