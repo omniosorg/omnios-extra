@@ -1,0 +1,48 @@
+From 34fa0739fb74b6940e3d34c431d978f3152758e8 Mon Sep 17 00:00:00 2001
+From: Dominik Hassler <hadfl@omnios.org>
+Date: Fri, 5 Apr 2024 18:20:46 +0000
+Subject: [PATCH] initial illumos support
+
+---
+ tree-sitter-langs-build.el | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/tree-sitter-langs-build.el b/tree-sitter-langs-build.el
+index 2e62cfed..f4b96044 100644
+--- a/tree-sitter-langs-build.el
++++ b/tree-sitter-langs-build.el
+@@ -244,6 +244,7 @@ infrequent (grammar-only changes). It is different from the version of
+     ('gnu/linux "linux")
+     ('berkeley-unix "freebsd")
+     ('windows-nt "windows")
++    ('usg-unix-v "illumos")
+     (_ (error "Unsupported system-type %s" system-type))))
+ 
+ (defconst tree-sitter-langs--suffixes '(".dylib" ".dll" ".so")
+@@ -410,6 +411,26 @@ from the current state of the grammar repo, without cleanup."
+                "-I" "src"
+                "src/parser.c"
+                "-o" (format "%sbin/%s.so" tree-sitter-langs-grammar-dir lang-symbol)))))
++           ((memq system-type '(usg-unix-v))
++            (cond
++             ((file-exists-p "src/scanner.cc")
++              (tree-sitter-langs--call
++               "g++" "-shared" "-fPIC" "-fno-exceptions" "-g" "-O2"
++               "-I" "src"
++               "src/scanner.cc" "-xc" "src/parser.c"
++               "-o" (format "%sbin/%s.so" tree-sitter-langs-grammar-dir lang-symbol)))
++             ((file-exists-p "src/scanner.c")
++              (tree-sitter-langs--call
++               "gcc" "-shared" "-fPIC" "-g" "-O2"
++               "-I" "src"
++               "src/scanner.c" "src/parser.c"
++               "-o" (format "%sbin/%s.so" tree-sitter-langs-grammar-dir lang-symbol)))
++             (:default
++              (tree-sitter-langs--call
++               "gcc" "-shared" "-fPIC" "-g" "-O2"
++               "-I" "src"
++               "src/parser.c"
++               "-o" (format "%sbin/%s.so" tree-sitter-langs-grammar-dir lang-symbol)))))
+            (:default (tree-sitter-langs--call "tree-sitter" "test")))))
+       ;; Replace underscores with hyphens. Example: c_sharp.
+       (let ((default-directory bin-dir))
