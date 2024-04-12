@@ -1,9 +1,9 @@
-diff -wpruN '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
+diff -wpruN --no-dereference '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
 --- a~/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/CMakeLists.txt	1970-01-01 00:00:00
-@@ -5,16 +5,6 @@ include(CheckIPOSupported)
+@@ -8,16 +8,6 @@ option(NINJA_FORCE_PSELECT "Use pselect(
  
- project(ninja)
+ project(ninja CXX)
  
 -# --- optional link-time optimization
 -check_ipo_supported(RESULT lto_supported OUTPUT error)
