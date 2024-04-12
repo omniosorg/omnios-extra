@@ -29,7 +29,7 @@ JDKVER=11.0
 JDKHOME=/usr/jdk/openjdk$JDKVER
 
 RUN_DEPENDS_IPS="
-    runtime/java/openjdk$JDKVER
+    runtime/java/openjdk${JDKVER%%.*}
     developer/gcc$GCCVER
 "
 
