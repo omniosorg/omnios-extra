@@ -16,6 +16,7 @@
 # Set permissions
 <transform file path=etc/$(PREFIX) -> set preserve renamenew>
 <transform dir file path=etc/$(PREFIX) -> set owner nagios>
+<transform dir file path=etc/$(PREFIX) -> set mode 0775>
 <transform dir file path=etc/$(PREFIX) -> set group nagios>
 <transform dir file path=var/$(PREFIX) -> set owner nagios>
 <transform dir file path=var/$(PREFIX) -> set group nagios>
