@@ -2,6 +2,7 @@ apparmor-data.c
 core-affinity.c
 core-asm-ret.c
 core-clocksource.c
+core-config-check.c
 core-config.c
 core-cpu-cache.c
 core-cpu.c
@@ -46,6 +47,7 @@ core-time.c
 core-try-open.c
 core-vmstat.c
 stress-access.c
+stress-acl.c
 stress-af-alg.c
 stress-affinity.c
 stress-aio.c
@@ -58,6 +60,7 @@ stress-bad-ioctl.c
 stress-bigheap.c
 stress-bind-mount.c
 stress-binderfs.c
+stress-bitonicsort.c
 stress-branch.c
 stress-brk.c
 stress-bsearch.c
@@ -100,11 +103,14 @@ stress-epoll.c
 stress-eventfd.c
 stress-exec.c
 stress-exit-group.c
+stress-expmath.c
+stress-factor.c
 stress-fallocate.c
 stress-fanotify.c
 stress-far-branch.c
 stress-fault.c
 stress-fcntl.c
+stress-fd-fork.c
 stress-fiemap.c
 stress-fifo.c
 stress-file-ioctl.c
@@ -156,6 +162,7 @@ stress-kvm.c
 stress-l1cache.c
 stress-landlock.c
 stress-lease.c
+stress-led.c
 stress-link.c
 stress-list.c
 stress-llc-affinity.c
@@ -164,9 +171,11 @@ stress-locka.c
 stress-lockbus.c
 stress-lockf.c
 stress-lockofd.c
+stress-logmath.c
 stress-longjmp.c
 stress-loop.c
 stress-lsearch.c
+stress-lsm.c
 stress-madvise.c
 stress-malloc.c
 stress-matrix-3d.c
@@ -187,11 +196,13 @@ stress-mlock.c
 stress-mlockmany.c
 stress-mmap.c
 stress-mmapaddr.c
+stress-mmapfiles.c
 stress-mmapfixed.c
 stress-mmapfork.c
 stress-mmaphuge.c
 stress-mmapmany.c
 stress-module.c
+stress-monte-carlo.c
 stress-mpfr.c
 stress-mprotect.c
 stress-mq.c
@@ -226,8 +237,10 @@ stress-pipeherd.c
 stress-pkey.c
 stress-plugin.c
 stress-poll.c
+stress-powmath.c
 stress-prctl.c
 stress-prefetch.c
+stress-prio-inv.c
 stress-priv-instr.c
 stress-procfs.c
 stress-pthread.c
@@ -288,6 +301,8 @@ stress-sigrt.c
 stress-sigsegv.c
 stress-sigsuspend.c
 stress-sigtrap.c
+stress-sigxcpu.c
+stress-sigxfsz.c
 stress-skiplist.c
 stress-sleep.c
 stress-smi.c
@@ -303,6 +318,7 @@ stress-spawn.c
 stress-splice.c
 stress-stack.c
 stress-stackmmap.c
+stress-statmount.c
 stress-str.c
 stress-stream.c
 stress-swap.c
@@ -315,12 +331,14 @@ stress-sysfs.c
 stress-sysinfo.c
 stress-sysinval.c
 stress-tee.c
+stress-time-warp.c
 stress-timer.c
 stress-timerfd.c
 stress-tlb-shootdown.c
 stress-tmpfs.c
 stress-touch.c
 stress-tree.c
+stress-trig.c
 stress-tsc.c
 stress-tsearch.c
 stress-tun.c
@@ -351,6 +369,7 @@ stress-wait.c
 stress-waitcpu.c
 stress-watchdog.c
 stress-wcs.c
+stress-workload.c
 stress-x86cpuid.c
 stress-x86syscall.c
 stress-xattr.c
