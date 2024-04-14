@@ -6,4 +6,6 @@ depend fmri=ooce/omnios-build-tools type=require
 
 depend fmri=ooce/developer/aarch64-gcc10 type=require
 depend fmri=ooce/developer/aarch64-perl type=require
+depend fmri=ooce/util/dtc type=require
+depend fmri=ooce/util/u-boot type=require
 
