@@ -4,4 +4,4 @@ minissdp.c.patch
 monitor.c.patch
 icons.c.patch
 select_use_after_free.patch
-ffmpeg_7.patch
+libavformat_61.patch
