@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=git-absorb
-VER=0.6.11
+VER=0.6.13
 PKG=ooce/developer/git-absorb
 SUMMARY="Automatically absorb changes into staged commits"
 DESC="You have a feature branch with a few commits. "
