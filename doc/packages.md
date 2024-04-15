@@ -20,7 +20,7 @@
 | ooce/application/novnc	| 1.4.0		| https://github.com/novnc/noVNC/releases | Currently used solely by zadm
 | ooce/application/php-81	| 8.1.28	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-82	| 8.2.17	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-83	| 8.3.4		| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-83	| 8.3.6		| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-XX/imagick	| 3.7.0	| https://github.com/Imagick/imagick/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20230313	| https://pi.kwarc.info/historic/systems/texlive/2023/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/tidy		| 5.8.0		| https://github.com/htacg/tidy-html5/releases | [omniosorg](https://github.com/omniosorg)
