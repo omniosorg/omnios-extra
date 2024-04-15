@@ -63,7 +63,7 @@
 | ooce/developer/dejagnu	| 1.6.3		| https://ftp.gnu.org/gnu/dejagnu/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/freepascal	| 3.2.2		| https://sourceforge.net/projects/freepascal/files/Source/ https://www.freepascal.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/gdb		| 14.2		| https://ftp.gnu.org/gnu/gdb/ | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/git-absorb	| 0.6.11	| https://github.com/tummychow/git-absorb/releases| [omniosorg](https://github.com/omniosorg)
+| ooce/developer/git-absorb	| 0.6.13	| https://github.com/tummychow/git-absorb/releases| [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-121		| 1.21.9	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-122		| 1.22.2	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/gperf		| 3.1		| https://ftp.gnu.org/pub/gnu/gperf/ | [omniosorg](https://github.com/omniosorg)
