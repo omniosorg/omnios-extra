@@ -182,7 +182,7 @@
 | ooce/runtime/expect		| 5.45.4	| https://sourceforge.net/projects/expect/files/Expect/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/gnu-smalltalk	| 3.2.5		| https://ftp.gnu.org/gnu/smalltalk/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/groovy-30	| 3.0.21	| https://groovy.apache.org/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/runtime/groovy-40	| 4.0.18	| https://groovy.apache.org/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/runtime/groovy-40	| 4.0.21	| https://groovy.apache.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-18		| 18.19.1	| https://nodejs.org/download/release/index.json https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-20		| 20.12.1	| https://nodejs.org/download/release/index.json https://nodejs.org/en/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-30		| 3.0.6		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
