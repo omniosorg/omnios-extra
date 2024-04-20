@@ -44,6 +44,15 @@ pre_configure() {
     false
 }
 
+post_build() {
+    typeset arch=$1
+
+    cross_arch $arch && return
+
+    build_rust
+    install_rust
+}
+
 LDFLAGS[i386]+=" -lssp_ns"
 
 init
@@ -51,8 +60,6 @@ download_source $PROG v$VER
 patch_source
 prep_build
 build
-build_rust
-install_rust
 make_package
 clean_up
 

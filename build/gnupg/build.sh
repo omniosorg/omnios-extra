@@ -84,8 +84,11 @@ build_dependency libksba libksba-$LIBKSBAVER \
 build_dependency libassuan libassuan-$LIBASSUANVER \
     $PROG/libassuan libassuan $LIBASSUANVER
 
+save_variable CONFIGURE_OPTS
+CONFIGURE_OPTS+=" --enable-install-npth-config"
 build_dependency npth npth-$NPTHVER \
     $PROG/npth npth $NPTHVER
+restore_variable CONFIGURE_OPTS
 
 save_variable DEPROOT
 

@@ -22,10 +22,13 @@ VER=1.12.0
 SUMMARY="Ninja"
 DESC="A small build system with a focus on speed"
 
-forgo_isaexec
+set_arch 64
 test_relver '>=' 151043 && set_clangver
 
-CONFIGURE_OPTS="-DCMAKE_BUILD_TYPE=Release"
+CONFIGURE_OPTS="
+    -DCMAKE_BUILD_TYPE=Release
+    -DINSTALL_GTEST=OFF
+"
 
 TESTSUITE_MAKE="./ninja_test"
 MAKE_TESTSUITE_ARGS=
@@ -39,6 +42,10 @@ pre_configure() {
         -DCMAKE_INSTALL_PREFIX=$PREFIX
         -DCMAKE_INSTALL_LIBDIR=$PREFIX/${LIBDIRS[$arch]}
     "
+
+    ! cross_arch $arch && return
+
+    CONFIGURE_OPTS[$arch]+=" -DBUILD_TESTING=OFF"
 }
 
 init
