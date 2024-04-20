@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/SUPDrv.cpp a/src/VBox/HostDrivers/Support/SUPDrv.cpp
 --- a~/src/VBox/HostDrivers/Support/SUPDrv.cpp	1970-01-01 00:00:00
 +++ a/src/VBox/HostDrivers/Support/SUPDrv.cpp	1970-01-01 00:00:00
-@@ -4248,7 +4248,7 @@ SUPR0_EXPORT_SYMBOL(SUPR0ChangeCR4);
+@@ -4249,7 +4249,7 @@ SUPR0_EXPORT_SYMBOL(SUPR0ChangeCR4);
   */
  SUPR0DECL(int) SUPR0EnableVTx(bool fEnable)
  {
@@ -10,7 +10,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/
      return supdrvOSEnableVTx(fEnable);
  #else
      RT_NOREF1(fEnable);
-@@ -4267,7 +4267,7 @@ SUPR0_EXPORT_SYMBOL(SUPR0EnableVTx);
+@@ -4268,7 +4268,7 @@ SUPR0_EXPORT_SYMBOL(SUPR0EnableVTx);
   */
  SUPR0DECL(bool) SUPR0SuspendVTxOnCpu(void)
  {
@@ -19,7 +19,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/HostDrivers/Support/
      return supdrvOSSuspendVTxOnCpu();
  #else
      return false;
-@@ -4285,7 +4285,7 @@ SUPR0_EXPORT_SYMBOL(SUPR0SuspendVTxOnCpu
+@@ -4286,7 +4286,7 @@ SUPR0_EXPORT_SYMBOL(SUPR0SuspendVTxOnCpu
   */
  SUPR0DECL(void) SUPR0ResumeVTxOnCpu(bool fSuspended)
  {
