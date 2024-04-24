@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=wireguard-go
 PKG=ooce/network/wireguard-go
-VER=0.0.20220316
+VER=0.0.20230223
 HASH=c8619d9
 SUMMARY="Go Implementation of WireGuard"
 DESC="This is an implementation of WireGuard in Go."
