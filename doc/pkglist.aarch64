@@ -46,6 +46,7 @@ ooce/library/libarchive
 ooce/library/yaml
 ooce/library/popt
 ooce/library/tree-sitter
+ooce/util/dtc
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
