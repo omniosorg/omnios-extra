@@ -47,6 +47,7 @@ ooce/library/yaml
 ooce/library/popt
 ooce/library/tree-sitter
 ooce/util/dtc
+ooce/util/u-boot
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

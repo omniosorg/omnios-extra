@@ -54,3 +54,4 @@ extra.omnios ooce/util/dtc
 extra.omnios ooce/util/jq
 extra.omnios ooce/util/pass
 extra.omnios ooce/util/stress-ng
+extra.omnios ooce/util/u-boot
