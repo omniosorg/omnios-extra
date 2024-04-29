@@ -1,0 +1,18 @@
+diff --git a/lib/std/debug.zig b/lib/std/debug.zig
+index eaa5ca9ff7..8d8cd421e3 100644
+--- a/lib/std/debug.zig
++++ b/lib/std/debug.zig
+@@ -687,10 +687,10 @@ pub const StackIterator = struct {
+             }
+ 
+             return true;
+-        } else if (@hasDecl(posix.system, "msync") and native_os != .wasi and native_os != .emscripten) {
+-            posix.msync(aligned_memory, posix.MSF.ASYNC) catch |err| {
++        } else if (@hasDecl(posix.system, "madvise") and native_os != .wasi and native_os != .emscripten) {
++            posix.madvise(aligned_memory, mem.page_size, posix.MADV.NORMAL) catch |err| {
+                 switch (err) {
+-                    error.UnmappedMemory => return false,
++                    posix.MadviseError.OutOfMemory => return false,
+                     else => unreachable,
+                 }
+             };

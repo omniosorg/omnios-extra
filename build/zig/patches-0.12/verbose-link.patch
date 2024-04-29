@@ -1,0 +1,15 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 30ec5fb13..995cf1323 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -886,6 +886,10 @@ set(ZIG_BUILD_ARGS
+   "-Dversion-string=${RESOLVED_ZIG_VERSION}"
+ )
+ 
++if(ZIG_BUILD_VERBOSE_LINK)
++  list(APPEND ZIG_BUILD_ARGS "--verbose-link")
++endif()
++
+ add_custom_target(stage3 ALL
+   DEPENDS "${CMAKE_BINARY_DIR}/stage3/bin/zig"
+ )
