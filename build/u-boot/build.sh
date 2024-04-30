@@ -25,9 +25,11 @@ DESC="$SUMMARY: Universal Bootloader"
 set_arch 64
 
 MAKE_TARGET="sandbox_defconfig tools"
+NATIVE_CC=$CC
 
-pre_configure() {
+set_args() {
     typeset arch=$1
+    typeset CC=$2
 
     MAKE_ARGS_WS="
         V=1
@@ -38,9 +40,45 @@ pre_configure() {
             -L$PREFIX/${LIBDIRS[$arch]} -lnsl -lsocket
         \"
     "
+    if cross_arch $arch; then
+        MAKE_ARGS_WS+="
+            HOSTLDFLAGS=\"--sysroot=${SYSROOT[$arch]}\"
+        "
+    fi
+}
 
+pre_configure() {
     # no configure
     false
+}
+
+make_arch() {
+    typeset arch=$1
+
+    set_args $BUILD_ARCH $NATIVE_CC
+    eval set -- $MAKE_ARGS_WS
+    logcmd $MAKE $MAKE_JOBS $MAKE_ARGS "$@" $MAKE_TARGET \
+        || logerr "--- Make failed"
+
+    cross_arch $arch || return
+
+    # This is pretty horrible. U-Boot supports cross compilation for the
+    # images, but not for the tools. To cross-build the tools, we need to
+    # perform the full native build (as we've just done) which provides the
+    # native tools that are needed for the build, and then rebuild
+    # the tools. KBUILD_NOCMDDEP overrides the make system's desire to rebuild
+    # everything because the build flags have changed which would result in
+    # the tools required for parts of the build being built for the target
+    # system and no longer runnable.
+    note -n Building cross tools
+
+    logcmd $FD -t f -e o . tools -X rm \
+        || logerr "Failed to remove native objects"
+    logcmd $RM -f tools/mkimage || logerr "rm tools/mkimage failed"
+    set_args $arch $CC
+    eval set -- $MAKE_ARGS_WS KBUILD_NOCMDDEP=1
+    logcmd $MAKE $MAKE_JOBS $MAKE_ARGS "$@" tools/ \
+        || logerr "--- Make cross tools failed"
 }
 
 make_install() {
