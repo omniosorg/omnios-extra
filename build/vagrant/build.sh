@@ -24,18 +24,22 @@ INSTVER=2.2.6
 SUMMARY="Vagrant"
 DESC="Build and distribute virtualized development environments"
 
+RUBYVER=3.0
+
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
 set_gover
-set_rubyver 3.0
+set_rubyver $RUBYVER
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
     -DVERSION=$VER
+    -DRUBYBIN=$OOCEOPT/ruby-$RUBYVER/bin
+    -DVAGRANT=$PREFIX/bin/$PROG.bin
 "
 
 # For bsdtar, needed to unpack boxes
@@ -91,7 +95,7 @@ install() {
     logmsg "Install Vagrant, Installer and all embedded dependencies"
     logcmd mkdir -p $DESTDIR/$PREFIX/bin
     logcmd cp $TMPDIR/$BUILDDIR/$PROG-installers/substrate/launcher/$PROG \
-        $DESTDIR/$PREFIX/bin/$PROG || logerr "cp failed"
+        $DESTDIR/$PREFIX/bin/$PROG.bin || logerr "cp failed"
     logcmd cp -r $TMPDIR/$BUILDDIR/$PROG/opt/$PROG/embedded \
         $DESTDIR/$PREFIX || logerr "cp failed"
 
@@ -106,6 +110,7 @@ PATCHDIR=patches-installer patch_source
 prep_build
 build
 install
+xform files/$PROG > $TMPDIR/$PROG
 make_package
 clean_up
 
