@@ -1,0 +1,13 @@
+diff --git a/lib/std/net.zig b/lib/std/net.zig
+index b12fb1932d..922f4eee3c 100644
+--- a/lib/std/net.zig
++++ b/lib/std/net.zig
+@@ -249,7 +249,7 @@ pub const Address = extern union {
+                 &mem.toBytes(@as(c_int, 1)),
+             );
+             switch (native_os) {
+-                .windows => {},
++                .windows, .illumos => {},
+                 else => try posix.setsockopt(
+                     sockfd,
+                     posix.SOL.SOCKET,

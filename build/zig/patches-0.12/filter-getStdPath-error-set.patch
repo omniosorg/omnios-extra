@@ -1,0 +1,39 @@
+From 2bc6c9eb3c486abec7e869c2343e15908fbc0393 Mon Sep 17 00:00:00 2001
+From: Ryan Zezeski <ryan@zinascii.com>
+Date: Sat, 27 Apr 2024 18:45:48 -0600
+Subject: [PATCH] filter getStdPath() error set
+
+We need to filter out some unreachable errors, just like was done for
+Linux.
+---
+ lib/std/os.zig | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/lib/std/os.zig b/lib/std/os.zig
+index 53f1bef4fe..efe1397ed2 100644
+--- a/lib/std/os.zig
++++ b/lib/std/os.zig
+@@ -146,10 +146,16 @@ pub fn getFdPath(fd: std.posix.fd_t, out_buffer: *[MAX_PATH_BYTES]u8) std.posix.
+             var procfs_buf: ["/proc/self/path/-2147483648\x00".len]u8 = undefined;
+             const proc_path = std.fmt.bufPrintZ(procfs_buf[0..], "/proc/self/path/{d}", .{fd}) catch unreachable;
+ 
+-            const target = posix.readlinkZ(proc_path, out_buffer) catch |err| switch (err) {
+-                error.UnsupportedReparsePointType => unreachable,
+-                error.NotLink => unreachable,
+-                else => |e| return e,
++            const target = posix.readlinkZ(proc_path, out_buffer) catch |err| {
++                switch (err) {
++                    error.NotLink => unreachable,
++                    error.BadPathName => unreachable,
++                    error.InvalidUtf8 => unreachable, // WASI-only
++                    error.InvalidWtf8 => unreachable, // Windows-only
++                    error.UnsupportedReparsePointType => unreachable, // Windows-only
++                    error.NetworkNotFound => unreachable, // Windows-only
++                    else => |e| return e,
++                }
+             };
+             return target;
+         },
+-- 
+2.43.0
+
