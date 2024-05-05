@@ -241,7 +241,7 @@
 | ooce/util/pass		| 1.7.4		| https://git.zx2c4.com/password-store/refs/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/rargs		| 0.3.0		| https://github.com/lotabout/rargs/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/rlwrap		| 0.46.1	| https://github.com/hanslub42/rlwrap/releases | [r7st](https://github.com/r7st)
-| ooce/util/stress-ng		| 0.17.07	| https://github.com/ColinIanKing/stress-ng/tags | [omniosorg](https://github.com/omniosorg)
+| ooce/util/stress-ng		| 0.17.08	| https://github.com/ColinIanKing/stress-ng/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/util/u-boot		| 2024.01	| https://ftp.denx.de/pub/u-boot/ https://github.com/u-boot/u-boot | [omniosorg](https://github.com/omniosorg)
 | ooce/util/uefivars		| 1.0.1		| https://github.com/citrus-it/uefivars/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/xjobs		| 20200726	| https://www.maier-komor.de/xjobs.html | [omniosorg](https://github.com/omniosorg)
