@@ -13,14 +13,14 @@
 # }}}
 
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nginx
-PKG=ooce/server/nginx-124
-VER=1.24.0
-SUMMARY="nginx 1.24 web server"
+PKG=ooce/server/nginx-126
+VER=1.26.0
+SUMMARY="nginx 1.26 web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
 # Brotli source from https://github.com/google/ngx_brotli
