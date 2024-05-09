@@ -3,8 +3,9 @@
 > **Warning**
 >
 > There is no guarantee that packages in this repository build correctly on
-> OmniOS releases earlier than **r151038**. If you wish to build on older
-> releases, check out the `pre-r151038` tag.
+> OmniOS releases earlier than **r151046**. If you wish to build on older
+> releases, check out the `pre-r151046` tag (or the `pre-r151038` tag respectively
+> if you want to build on releases earlier than **r151038**).
 
 ## Introduction
 The purpose of this document is to introduce building packages for the "OmniOS
@@ -1147,7 +1148,7 @@ git push origin master
 ### OmniOS community support channels
 
 * **Gitter:** Connect to the web-based [chat room on Gitter](https://gitter.im/omniosorg/Lobby).
-* **IRC:**  Join the [#omnios channel on Freenode](http://webchat.freenode.net/?randomnick=1&channels=%23omnios&uio=d4).
+* **IRC:**  Join the [#omnios channel on Libera](https://web.libera.chat/#omnios).
 * **Mailing list:** general discussion and queries, please subscribe to the [omnios-discuss mailing list](https://illumos.topicbox.com/groups/omnios-discuss).
 
 ### Recommended reading
