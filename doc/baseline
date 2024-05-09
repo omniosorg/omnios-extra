@@ -240,7 +240,7 @@ extra.omnios ooce/server/caddy
 extra.omnios ooce/server/freeradius
 extra.omnios ooce/server/haproxy
 extra.omnios ooce/server/nginx
-extra.omnios ooce/server/nginx-124
+extra.omnios ooce/server/nginx-126
 extra.omnios ooce/server/nginx-common
 extra.omnios ooce/server/webservd-common
 extra.omnios ooce/storage/minio
