@@ -223,7 +223,7 @@
 | ooce/text/hunspell		| 1.7.2		| https://github.com/hunspell/hunspell/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/ripgrep		| 14.1.0	| https://github.com/BurntSushi/ripgrep/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/texinfo		| 7.1		| https://ftp.gnu.org/gnu/texinfo/ https://www.gnu.org/software/texinfo/ | [omniosorg](https://github.com/omniosorg)
-| ooce/text/tree-sitter-langs	| 0.12.171	| https://github.com/emacs-tree-sitter/tree-sitter-langs/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/text/tree-sitter-langs	| 0.12.196	| https://github.com/emacs-tree-sitter/tree-sitter-langs/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/xsv			| 0.13.0	| https://github.com/BurntSushi/xsv/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/acmefetch		| 0.8.1		| https://github.com/oetiker/AcmeFetch/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/atuin		| 18.2.0	| https://github.com/atuinsh/atuin/releases | [omniosorg](https://github.com/omniosorg)
