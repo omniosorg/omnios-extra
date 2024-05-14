@@ -28,7 +28,19 @@ set_gover 1.22
 # No configure
 configure_amd64() { :; }
 
-MAKE_INSTALL_ARGS="prefix=$PREFIX"
+CONFIG=etc/${PREFIX#/}/$PROG
+DATA=var/${PREFIX#/}/$PROG
+
+XFORM_ARGS="
+    -DPREFIX=${PREFIX#/}
+    -DPROG=$PROG
+    -DVERSION=$VER
+    -DUSER=sdns -DGROUP=sdns
+    -DCONFIG=$CONFIG
+    -DDATA=$DATA
+    -DXDG_CONFIG=${CONFIG%/$PROG}
+    -DXDG_DATA=${DATA%/$PROG}
+"
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
