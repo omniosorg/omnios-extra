@@ -25,6 +25,7 @@ depend fmri=ooce/developer/llvm-13 type=require
 depend fmri=ooce/developer/llvm-14 type=require
 depend fmri=ooce/developer/llvm-17 type=require
 depend fmri=ooce/developer/clang-13 type=require
+depend fmri=ooce/developer/clang-17 type=require
 depend fmri=ooce/developer/protobuf type=require
 depend fmri=ooce/developer/subversion type=require
 depend fmri=ooce/developer/yasm type=require
@@ -120,10 +121,6 @@ depend fmri=ooce/developer/zig-011 type=conditional \
 
 # clang 16 is the default clang compiler from r151047 onwards
 depend fmri=ooce/developer/clang-16 type=conditional \
-    predicate=release/name@0.5.11-151047
-
-# clang 17 is required to build zig 0.12
-depend fmri=ooce/developer/clang-17 type=conditional \
     predicate=release/name@0.5.11-151047
 
 # Added llvm/clang 18 from r151049 onwards
