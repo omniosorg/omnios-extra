@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=qemu
-VER=8.2.2
+VER=9.0.0
 PKG=ooce/emulator/qemu
 SUMMARY="$PROG"
 DESC="A generic and open source machine emulator and virtualizer"
@@ -26,8 +26,6 @@ LIBTASN1VER=4.19.0
 LIBSLIRPVER=4.7.0
 SPHINXVER=7.2.6
 SPHINXRTDVER=2.0.0
-
-min_rel 151044
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
