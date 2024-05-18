@@ -1,9 +1,12 @@
 alloc.c
+api_wrappers.c
 arabic.c
 arglist.c
 autocmd.c
+base64.c
 buffer_updates.c
 buffer.c
+bufwrite.c
 change.c
 channel.c
 charset.c
@@ -73,10 +76,16 @@ linematch.c
 lmpack.c
 log.c
 loop.c
+lpcap.c
+lpcode.c
+lpcset.c
+lptree.c
+lpvm.c
 lua_api_c_bindings.generated.c
 lua_cjson.c
 luv.c
 main.c
+map_glyph_cache.c
 map.c
 mapping.c
 mark.c
@@ -102,6 +111,7 @@ option.c
 options.c
 optionstr.c
 os_illumos.c
+packer.c
 parser.c
 path.c
 pathdef.c
@@ -120,6 +130,7 @@ rstream.c
 runtime.c
 screen.c
 search.c
+secure.c
 server.c
 sha256.c
 shada.c
@@ -177,6 +188,7 @@ vimscript.c
 vterm.c
 win_config.c
 window.c
+winfloat.c
 wstream.c
 xdiff.c
 xdiffi.c
