@@ -236,7 +236,7 @@
 | ooce/util/htmlq		| 0.4.0		| https://github.com/mgdm/htmlq/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/hyperfine		| 1.18.0	| https://github.com/sharkdp/hyperfine/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/jq			| 1.7.1		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/util/ncdu		| 2.3		| https://dev.yorhel.nl/download | [jclulow](https://github.com/jclulow)
+| ooce/util/ncdu		| 2.4		| https://dev.yorhel.nl/download | [jclulow](https://github.com/jclulow)
 | ooce/util/oxide		| 0.2.0		| https://github.com/oxidecomputer/oxide.rs/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/pass		| 1.7.4		| https://git.zx2c4.com/password-store/refs/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/rargs		| 0.3.0		| https://github.com/lotabout/rargs/releases | [omniosorg](https://github.com/omniosorg)

@@ -1,7 +1,7 @@
-diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Makefile a/Makefile
 --- a~/Makefile	1970-01-01 00:00:00
 +++ a/Makefile	1970-01-01 00:00:00
-@@ -31,21 +31,21 @@ ncdu.1: ncdu.pod src/main.zig
+@@ -28,21 +28,21 @@ clean:
  install: install-bin install-doc
  
  install-bin: release
@@ -10,7 +10,7 @@ diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
 +	mkdir -p ${DESTDIR}/${BINDIR}
 +	install -m0755 zig-out/bin/ncdu ${DESTDIR}/${BINDIR}/
  
- install-doc: doc
+ install-doc:
 -	mkdir -p ${MANDIR}
 -	install -m0644 ncdu.1 ${MANDIR}/
 +	mkdir -p ${DESTDIR}/${MANDIR}
@@ -27,5 +27,5 @@ diff -wpruN '--exclude=*.orig' a~/Makefile a/Makefile
 -	rm -f ${MANDIR}/ncdu.1
 +	rm -f ${DESTDIR}/${MANDIR}/ncdu.1
  
- dist: doc
+ dist:
  	rm -f ncdu-${NCDU_VERSION}.tar.gz

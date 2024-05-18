@@ -29,6 +29,7 @@ depend fmri=ooce/developer/clang-17 type=require
 depend fmri=ooce/developer/protobuf type=require
 depend fmri=ooce/developer/subversion type=require
 depend fmri=ooce/developer/yasm type=require
+depend fmri=ooce/developer/zig-012 type=require
 depend fmri=ooce/editor/emacs type=require
 depend fmri=ooce/fonts/liberation type=require
 depend fmri=ooce/library/apr type=require
@@ -113,10 +114,6 @@ depend fmri=ooce/developer/clang-15 type=conditional \
 
 # Added llvm/clang 16 from r151045 onwards
 depend fmri=ooce/developer/llvm-16 type=conditional \
-    predicate=release/name@0.5.11-151045
-
-# Added zig 0.11 from r151045 onwards
-depend fmri=ooce/developer/zig-011 type=conditional \
     predicate=release/name@0.5.11-151045
 
 # clang 16 is the default clang compiler from r151047 onwards
