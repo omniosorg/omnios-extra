@@ -27,7 +27,8 @@ DESC+="servers."
 MAJVER=${VER%%.*}
 
 set_arch 64
-test_relver '>=' 151041 && set_clangver
+# does not yet build with clang 18
+set_clangver 17
 set_builddir $PROG-v$VER
 set_patchdir patches-$MAJVER
 
