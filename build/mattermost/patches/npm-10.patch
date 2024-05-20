@@ -3,15 +3,9 @@ From: Harrison Healey <harrisonmhealey@gmail.com>
 Date: Fri, 19 Jan 2024 09:43:51 -0500
 Subject: [PATCH] Allow NPM v10 when working on the web app (#25959)
 
----
- webapp/package-lock.json | 2 +-
- webapp/package.json      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/webapp/package-lock.json b/webapp/package-lock.json
-index 851de409d7046..6fa18d727e5be 100644
---- a/webapp/package-lock.json
-+++ b/webapp/package-lock.json
+diff -wpruN --no-dereference '--exclude=*.orig' a~/webapp/package-lock.json a/webapp/package-lock.json
+--- a~/webapp/package-lock.json	1970-01-01 00:00:00
++++ a/webapp/package-lock.json	1970-01-01 00:00:00
 @@ -45,7 +45,7 @@
        },
        "engines": {
@@ -21,10 +15,9 @@ index 851de409d7046..6fa18d727e5be 100644
        }
      },
      "channels": {
-diff --git a/webapp/package.json b/webapp/package.json
-index 25bcb3591f25c..89781a885c33b 100644
---- a/webapp/package.json
-+++ b/webapp/package.json
+diff -wpruN --no-dereference '--exclude=*.orig' a~/webapp/package.json a/webapp/package.json
+--- a~/webapp/package.json	1970-01-01 00:00:00
++++ a/webapp/package.json	1970-01-01 00:00:00
 @@ -3,7 +3,7 @@
    "private": true,
    "engines": {

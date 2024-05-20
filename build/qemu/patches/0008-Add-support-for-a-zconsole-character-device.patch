@@ -1,16 +1,15 @@
-From 8479fb27ef6486bbc7f915f055826465c4199f47 Mon Sep 17 00:00:00 2001
+From d7c62874583496466bce1bb1425837aa08f742f8 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 22 May 2023 20:31:38 +0000
 Subject: Add support for a zconsole character device
 
 ---
  chardev/char-zconsole.c | 74 +++++++++++++++++++++++++++++++++++++++++
- chardev/meson.build     |  2 ++
+ chardev/meson.build     |  6 ++++
  include/chardev/char.h  |  1 +
  include/qemu/osdep.h    |  4 +++
- meson.build             |  2 ++
  qapi/char.json          |  2 ++
- 6 files changed, 85 insertions(+)
+ 5 files changed, 87 insertions(+)
  create mode 100644 chardev/char-zconsole.c
 
 diff --git a/chardev/char-zconsole.c b/chardev/char-zconsole.c
@@ -94,16 +93,20 @@ index 0000000000..86d0df36e2
 +
 +#endif
 diff --git a/chardev/meson.build b/chardev/meson.build
-index 6d56ad32fd..47e3bcb8b1 100644
+index 70070a8279..e05f9424d6 100644
 --- a/chardev/meson.build
 +++ b/chardev/meson.build
-@@ -26,6 +26,8 @@ chardev_ss.add(when: 'CONFIG_WIN32', if_true: files(
-   'char-win.c',
- ))
+@@ -26,6 +26,12 @@ else
+     ), util)
+ endif
  
-+chardev_ss.add(when: 'CONFIG_SOLARIS', if_true: files('char-zconsole.c'))
++if host_os == 'sunos'
++  chardev_ss.add(files(
++    'char-zconsole.c',
++  ))
++endif
 +
- chardev_ss = chardev_ss.apply(config_targetos, strict: false)
+ chardev_ss = chardev_ss.apply({})
  
  system_ss.add(files(
 diff --git a/include/chardev/char.h b/include/chardev/char.h
@@ -119,11 +122,11 @@ index 01df55f9e8..8e47f42149 100644
  #define TYPE_CHARDEV_UDP "chardev-udp"
  
 diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index d30ba73eda..4c653d5c66 100644
+index c7053cdc2b..86c5becca0 100644
 --- a/include/qemu/osdep.h
 +++ b/include/qemu/osdep.h
-@@ -514,6 +514,10 @@ void qemu_anon_ram_free(void *ptr, size_t size);
- #define HAVE_CHARDEV_SERIAL 1
+@@ -521,6 +521,10 @@ void qemu_anon_ram_free(void *ptr, size_t size);
+ #endif
  #endif
  
 +#ifdef __illumos__
@@ -133,36 +136,23 @@ index d30ba73eda..4c653d5c66 100644
  #if defined(__HAIKU__)
  #define SIGIO SIGPOLL
  #endif
-diff --git a/meson.build b/meson.build
-index 04cffd4623..9f87c1b190 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2848,6 +2848,8 @@ if targetos == 'darwin'
-   config_targetos += {'CONFIG_DARWIN': 'y'}
- elif targetos == 'linux'
-   config_targetos += {'CONFIG_LINUX': 'y'}
-+elif targetos == 'sunos'
-+  config_targetos += {'CONFIG_SOLARIS': 'y'}
- endif
- if targetos in bsd_oses
-   config_targetos += {'CONFIG_BSD': 'y'}
 diff --git a/qapi/char.json b/qapi/char.json
-index c1bab7b855..31f77a395c 100644
+index 777dde55d9..a5abeb6146 100644
 --- a/qapi/char.json
 +++ b/qapi/char.json
-@@ -473,6 +473,7 @@
- { 'enum': 'ChardevBackendKind',
+@@ -476,6 +476,7 @@
    'data': [ 'file',
-             'serial',
+             { 'name': 'serial', 'if': 'HAVE_CHARDEV_SERIAL' },
+             { 'name': 'parallel', 'if': 'HAVE_CHARDEV_PARALLEL' },
 +            'zconsole',
-             'parallel',
              'pipe',
              'socket',
-@@ -615,6 +616,7 @@
-   'discriminator': 'type',
-   'data': { 'file': 'ChardevFileWrapper',
-             'serial': 'ChardevHostdevWrapper',
+             'udp',
+@@ -647,6 +648,7 @@
+                         'if': 'HAVE_CHARDEV_SERIAL' },
+             'parallel': { 'type': 'ChardevHostdevWrapper',
+                           'if': 'HAVE_CHARDEV_PARALLEL' },
 +            'zconsole': 'ChardevHostdevWrapper',
-             'parallel': 'ChardevHostdevWrapper',
              'pipe': 'ChardevHostdevWrapper',
              'socket': 'ChardevSocketWrapper',
+             'udp': 'ChardevUdpWrapper',

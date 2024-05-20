@@ -3,12 +3,10 @@ remove unecessary linking to libraries
 diff -wpruN --no-dereference '--exclude=*.orig' a~/cmake/FindLibuv.cmake a/cmake/FindLibuv.cmake
 --- a~/cmake/FindLibuv.cmake	1970-01-01 00:00:00
 +++ a/cmake/FindLibuv.cmake	1970-01-01 00:00:00
-@@ -7,42 +7,6 @@ find_library(LIBUV_LIBRARY NAMES ${LIBUV
- set(LIBUV_LIBRARIES ${LIBUV_LIBRARY})
- set(LIBUV_INCLUDE_DIRS ${LIBUV_INCLUDE_DIR})
+@@ -3,41 +3,6 @@ find_library2(LIBUV_LIBRARY NAMES uv_a u
  
--include(CheckLibraryExists)
--
+ set(LIBUV_LIBRARIES ${LIBUV_LIBRARY})
+ 
 -check_library_exists(dl dlopen "dlfcn.h" HAVE_LIBDL)
 -if(HAVE_LIBDL)
 -  list(APPEND LIBUV_LIBRARIES dl)
@@ -43,17 +41,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/cmake/FindLibuv.cmake a/cmake
 -if(HAVE_LIBSENDFILE)
 -  list(APPEND LIBUV_LIBRARIES sendfile)
 -endif()
- 
+-
  if(WIN32)
    # check_library_exists() does not work for Win32 API calls in X86 due to name
-diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/CMakeLists.txt a/src/nvim/CMakeLists.txt
---- a~/src/nvim/CMakeLists.txt	1970-01-01 00:00:00
-+++ a/src/nvim/CMakeLists.txt	1970-01-01 00:00:00
-@@ -10,6 +10,7 @@ else()
-   # Fall back to find module for older libuv versions that don't provide config file
-   find_package(Libuv 1.28.0 REQUIRED MODULE)
-   target_include_directories(libuv SYSTEM BEFORE INTERFACE ${LIBUV_INCLUDE_DIRS})
-+  target_include_directories(main_lib SYSTEM BEFORE INTERFACE ${LIBUV_INCLUDE_DIRS})
-   target_link_libraries(libuv INTERFACE ${LIBUV_LIBRARIES})
- endif()
- 
+   # mangling calling conventions

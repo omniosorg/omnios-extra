@@ -1,28 +1,25 @@
-diff -wpruN '--exclude=*.orig' a~/build.zig a/build.zig
+diff -wpruN --no-dereference '--exclude=*.orig' a~/build.zig a/build.zig
 --- a~/build.zig	1970-01-01 00:00:00
 +++ a/build.zig	1970-01-01 00:00:00
-@@ -49,7 +49,7 @@
- }
+@@ -20,7 +20,7 @@ pub fn build(b: *std.Build) void {
+     });
  
- pub fn linkNcurses(compile_step: *std.Build.CompileStep) void {
--    compile_step.linkSystemLibrary("ncursesw");
-+    compile_step.linkSystemLibrary("ncurses");
-     compile_step.linkLibC();
-     compile_step.addCSourceFile(.{ .file = .{ .path = "src/ncurses_refs.c" }, .flags = &.{} });
- }
-diff -wpruN '--exclude=*.orig' a~/src/ncurses_refs.c a/src/ncurses_refs.c
---- a~/src/ncurses_refs.c	1970-01-01 00:00:00
-+++ a/src/ncurses_refs.c	1970-01-01 00:00:00
-@@ -2,7 +2,7 @@
-  * SPDX-License-Identifier: MIT
-  */
+     exe.pie = pie;
+-    exe.root_module.linkSystemLibrary("ncursesw", .{});
++    exe.root_module.linkSystemLibrary("ncurses", .{});
+     // https://github.com/ziglang/zig/blob/b52be973dfb7d1408218b8e75800a2da3dc69108/build.zig#L551-L554
+     if (target.result.isDarwin()) {
+         // useful for package maintainers
+@@ -44,7 +44,7 @@ pub fn build(b: *std.Build) void {
+         .link_libc = true,
+     });
+     unit_tests.pie = pie;
+-    unit_tests.root_module.linkSystemLibrary("ncursesw", .{});
++    unit_tests.root_module.linkSystemLibrary("ncurses", .{});
  
--#include <curses.h>
-+#include <ncurses/curses.h>
+     const run_unit_tests = b.addRunArtifact(unit_tests);
  
- /* Zig @cImport() has problems with the ACS_* macros. Two, in fact:
-  *
-diff -wpruN '--exclude=*.orig' a~/src/ui.zig a/src/ui.zig
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/ui.zig a/src/ui.zig
 --- a~/src/ui.zig	1970-01-01 00:00:00
 +++ a/src/ui.zig	1970-01-01 00:00:00
 @@ -11,7 +11,7 @@ pub const c = @cImport({
