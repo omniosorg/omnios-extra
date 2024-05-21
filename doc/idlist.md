@@ -21,6 +21,7 @@
 | omnios	| 23	| chrony
 | omnios	| 26	| dma
 | extra		| 27	| postfix
+| extra   | 35  | sdns
 | illumos	| 37	| listen
 | illumos	| 50	| gdm
 | illumos	| 51	| zfssnap
