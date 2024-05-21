@@ -18,7 +18,7 @@
 
 PROG=php
 PKG=ooce/application/php-83
-VER=8.3.6
+VER=8.3.7
 SUMMARY="PHP 8.3"
 DESC="A popular general-purpose scripting language"
 
@@ -31,8 +31,6 @@ SKIP_LICENCES=PHP
 # configure needs gawk for 7.3.6 as awk bails out with
 # record .... too long
 export AWK
-
-test_relver '<=' 151038 && CONFIGURE_CMD="/usr/bin/bash ./configure --no-reexec"
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm

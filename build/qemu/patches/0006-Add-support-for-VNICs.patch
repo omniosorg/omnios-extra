@@ -1,4 +1,4 @@
-From 3a5d30ea9e4d787d58ea4b881d38fbf549cb3c6b Mon Sep 17 00:00:00 2001
+From 159d27d4280199d985922dc023978bea6056fcb3 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:51:42 +0000
 Subject: Add support for VNICs
@@ -17,17 +17,17 @@ https://github.com/TritonDataCenter/illumos-kvm-cmd
  create mode 100644 net/vnic.c
 
 diff --git a/meson.build b/meson.build
-index 6c77d9687d..04cffd4623 100644
+index 91a0aa64c6..f822becff3 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -621,7 +621,8 @@ elif targetos == 'darwin'
- elif targetos == 'sunos'
+@@ -698,7 +698,8 @@ elif host_os == 'darwin'
+ elif host_os == 'sunos'
    socket = [cc.find_library('socket'),
              cc.find_library('nsl'),
 -            cc.find_library('resolv')]
 +            cc.find_library('resolv'),
 +            cc.find_library('dlpi')]
- elif targetos == 'haiku'
+ elif host_os == 'haiku'
    socket = [cc.find_library('posix_error_mapper'),
              cc.find_library('network'),
 diff --git a/net/clients.h b/net/clients.h
@@ -56,23 +56,23 @@ index 4c8a469a50..61ff327dc6 100644
                  has_host_dev = 1;
                  break;
 diff --git a/net/meson.build b/net/meson.build
-index ce99bd4447..923280d56e 100644
+index 9432a588e4..06a3af08ed 100644
 --- a/net/meson.build
 +++ b/net/meson.build
-@@ -51,7 +51,7 @@ elif targetos == 'linux'
- elif targetos in bsd_oses
+@@ -50,7 +50,7 @@ elif host_os == 'linux'
+ elif host_os in bsd_oses
    system_ss.add(files('tap.c', 'tap-bsd.c'))
- elif targetos == 'sunos'
+ elif host_os == 'sunos'
 -  system_ss.add(files('tap.c', 'tap-solaris.c'))
 +  system_ss.add(files('tap.c', 'tap-solaris.c', 'vnic.c'))
  else
    system_ss.add(files('tap.c', 'tap-stub.c'))
  endif
 diff --git a/net/net.c b/net/net.c
-index 0520bc1681..583bd3a35e 100644
+index a2f0c828bb..e62bdeca29 100644
 --- a/net/net.c
 +++ b/net/net.c
-@@ -1103,6 +1103,7 @@ static int (* const net_client_init_fun[NET_CLIENT_DRIVER__MAX])(
+@@ -1249,6 +1249,7 @@ static int (* const net_client_init_fun[NET_CLIENT_DRIVER__MAX])(
  #ifdef CONFIG_VDE
          [NET_CLIENT_DRIVER_VDE]       = net_init_vde,
  #endif
@@ -361,10 +361,10 @@ index 0000000000..481661b583
 +	return (0);
 +}
 diff --git a/qapi/net.json b/qapi/net.json
-index 8095b68fa8..dd189486d0 100644
+index 0f5a259475..7e2c6fa424 100644
 --- a/qapi/net.json
 +++ b/qapi/net.json
-@@ -354,6 +354,17 @@
+@@ -364,6 +364,17 @@
      '*group': 'str',
      '*mode':  'uint16' } }
  
@@ -382,7 +382,7 @@ index 8095b68fa8..dd189486d0 100644
  ##
  # @NetdevBridgeOptions:
  #
-@@ -703,7 +714,7 @@
+@@ -716,7 +727,7 @@
  { 'enum': 'NetClientDriver',
    'data': [ 'none', 'nic', 'user', 'tap', 'l2tpv3', 'socket', 'stream',
              'dgram', 'vde', 'bridge', 'hubport', 'netmap', 'vhost-user',
@@ -391,7 +391,7 @@ index 8095b68fa8..dd189486d0 100644
              { 'name': 'af-xdp', 'if': 'CONFIG_AF_XDP' },
              { 'name': 'vmnet-host', 'if': 'CONFIG_VMNET' },
              { 'name': 'vmnet-shared', 'if': 'CONFIG_VMNET' },
-@@ -732,6 +743,7 @@
+@@ -745,6 +756,7 @@
      'stream':   'NetdevStreamOptions',
      'dgram':    'NetdevDgramOptions',
      'vde':      'NetdevVdeOptions',

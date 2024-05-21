@@ -27,9 +27,8 @@ DESC="$PROG is a general-purpose programming language and toolchain for "
 DESC+="maintaining robust, optimal, and reusable software."
 
 #
-# Zig 0.12.x requires LLVM 17, which requires rel 151047 or later.
+# Zig 0.12.x requires LLVM 17
 #
-min_rel 151047
 set_clangver 17
 set_arch 64
 
