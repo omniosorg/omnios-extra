@@ -16,8 +16,8 @@ dir path=$(CONFIG) owner=$(USER) group=$(GROUP) mode=0700
 dir path=$(DATA) owner=$(USER) group=$(GROUP) mode=0700
 dir path=var/log/$(PREFIX)/$(PROG) owner=$(USER) group=$(GROUP) mode=0755
 
-group groupname=$(PROG) gid=5353
-user ftpuser=false username=$(PROG) uid=5353 group=$(PROG) \
+group groupname=$(PROG) gid=35
+user ftpuser=false username=$(PROG) uid=35 group=$(PROG) \
     gcos-field="SDNS User" home-dir=$(DATA) password=NP
 
 <transform file path=$(CONFIG)/ -> set preserve true>
