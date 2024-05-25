@@ -22,6 +22,9 @@ PKG=ooce/network/openldap
 SUMMARY="open-source LDAP implementation"
 DESC="Open-source implementation of the Lightweight Directory Access Protocol"
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 # Previous versions that also need to be built and packaged since compiled
 # software may depend on it.
 PVERS="2.4.59"

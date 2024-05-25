@@ -24,6 +24,9 @@ SUMMARY="GNU Smalltalk"
 DESC="A free implementation of the Smalltalk-80 language, \
 well-versed to scripting tasks and headless processing."
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 # 64-bit build currently segfaults, needs investigation
 set_arch 32
 set_builddir smalltalk-$VER

@@ -23,6 +23,9 @@ SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
 DESC+="MySQL relational database management system"
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 min_rel 151042
 
 MAJVER=${VER%.*}

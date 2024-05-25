@@ -32,6 +32,9 @@ LOGPATH=$VARPATH/logs
 RUNPATH=$VARPATH/run
 PIDFILE=$RUNPATH/squid.pid
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 set_arch 64
 
 XFORM_ARGS="

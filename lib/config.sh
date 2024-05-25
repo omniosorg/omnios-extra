@@ -279,6 +279,7 @@ CTFCFLAGS[10]="-gstrict-dwarf"
 CTFCFLAGS[11]="-gstrict-dwarf"
 CTFCFLAGS[12]="-gstrict-dwarf"
 CTFCFLAGS[13]="-gstrict-dwarf"
+CTFCFLAGS[14]="-gstrict-dwarf"
 GENOFFSETS_CFLAGS="
     ${CTFCFLAGS[_]}
     -_gcc=-fno-eliminate-unused-debug-symbols
@@ -355,8 +356,8 @@ case $RELVER in
     151039|151040)      DEFAULT_GCC_VER=11; ILLUMOS_GCC_VER=7 ;;
     15104[12])          DEFAULT_GCC_VER=11; ILLUMOS_GCC_VER=10 ;;
     15104[3-6])         DEFAULT_GCC_VER=12; ILLUMOS_GCC_VER=10 ;;
-    15104[7-9])         DEFAULT_GCC_VER=13; ILLUMOS_GCC_VER=10 ;;
-    15105[0-9])         DEFAULT_GCC_VER=13; ILLUMOS_GCC_VER=10 ;;
+    15104[7-9]|151050)  DEFAULT_GCC_VER=13; ILLUMOS_GCC_VER=10 ;;
+    15105[1-9])         DEFAULT_GCC_VER=14; ILLUMOS_GCC_VER=10 ;;
     *) logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
 
@@ -423,6 +424,7 @@ FCFLAGS[10]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[11]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[12]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[13]+=" -fno-aggressive-loop-optimizations"
+FCFLAGS[14]+=" -fno-aggressive-loop-optimizations"
 
 # Flags to enable particular standards; see standards(7)
 typeset -A STANDARDS

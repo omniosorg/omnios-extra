@@ -13,7 +13,7 @@
 # }}}
 
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -26,6 +26,9 @@ DESC="full featured terminal-based screen editor"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
 

@@ -33,6 +33,9 @@ PATCHDIR+=-$PROG
 
 SKIP_LICENCES=BSD-style
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 set_arch 64
 
 XFORM_ARGS="

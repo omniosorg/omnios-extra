@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -24,6 +24,9 @@ DESC="The Apache Portable Runtime is a library \
 of C data structures and routines, forming a system portability \
 layer that covers as many operating systems as possible, including \
 Unices, Win32, BeOS, OS/2."
+
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
 
 BUILD_DEPENDS_IPS+="
     ooce/library/apr

@@ -24,6 +24,9 @@ SUMMARY="GNU binary utilities ($ARCH target)"
 DESC="A set of programming tools for creating and managing binary programs, "
 DESC+="object files, libraries, etc."
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 REPO=$GITHUB/richlowe/$PROG
 BRANCH=illumos-arm64-${VER/./-}
 

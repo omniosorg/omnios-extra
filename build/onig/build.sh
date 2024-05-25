@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -21,6 +21,9 @@ VER=6.9.9
 PKG=ooce/library/onig
 SUMMARY="Oniguruma"
 DESC="A modern and flexible regular expressions library"
+
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
 
 CONFIGURE_OPTS="--disable-static"
 
