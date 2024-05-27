@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -21,6 +21,9 @@ VER=2.0.14
 PKG=ooce/library/guile
 SUMMARY="GNU Ubiquitous Intelligent Language for Extensions"
 DESC="$PROG - $SUMMARY"
+
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
 
 BUILD_DEPENDS_IPS="ooce/library/unistring ooce/library/bdw-gc"
 

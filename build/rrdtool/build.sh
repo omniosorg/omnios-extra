@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -24,6 +24,9 @@ DESC="High performance data logging and graphing system for time series data."
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
 

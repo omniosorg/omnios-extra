@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -23,6 +23,9 @@ SUMMARY="${PROG^^} - Read-Write NTFS Driver"
 DESC="A stable, full-featured, read-write NTFS driver for Linux, Android, "
 DESC+="Mac OS X, FreeBSD, NetBSD, OpenSolaris, QNX, Haiku, "
 DESC+="and other operating systems"
+
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
 
 set_builddir ${PROG}_ntfsprogs-$VER
 

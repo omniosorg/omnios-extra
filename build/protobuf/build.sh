@@ -23,6 +23,9 @@ SUMMARY="protobuf"
 DESC="Google's language-neutral, platform-neutral, extensible mechanism "
 DESC+="for serializing structured data"
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 forgo_isaexec
 
 CONFIGURE_OPTS="

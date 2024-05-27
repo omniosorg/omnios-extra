@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -44,8 +44,11 @@ XFORM_ARGS="
     -DGROUP=radius -DGID=74
 "
 
-set_builddir $PROG-server-$VER
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 set_arch 64
+set_builddir $PROG-server-$VER
 set_standard XPG4v2
 
 SKIP_RTIME_CHECK=1

@@ -23,6 +23,9 @@ VER=13.15
 SUMMARY="PostgreSQL 13"
 DESC="The World's Most Advanced Open Source Relational Database"
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 SKIP_LICENCES=postgresql
 
 MAJVER=${VER%.*}            # M.m

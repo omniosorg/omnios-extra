@@ -37,7 +37,13 @@ if ((DEFAULT_CLANG_VER > 15)); then
 else
     set_clangver
 fi
-BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
+
+# does not yet build with gcc 14
+if ((GCCVER > 13)); then
+    BASEPATH=$PATH set_gccver 13
+else
+    BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
+fi
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm

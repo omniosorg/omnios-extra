@@ -24,6 +24,9 @@ DESC="A popular general-purpose scripting language"
 
 PANDAHASH=01eaaa9
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 set_arch 64
 
 SKIP_LICENCES=PHP

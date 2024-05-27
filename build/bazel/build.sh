@@ -22,7 +22,9 @@ PKG=ooce/developer/bazel
 SUMMARY="bazel"
 DESC="Build and test software of any size, quickly and reliably."
 
-min_rel 151046
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 set_arch 64
 
 JDKVER=11.0

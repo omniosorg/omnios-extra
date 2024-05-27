@@ -13,7 +13,7 @@
 # }}}
 
 # Copyright 2014 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,6 +22,9 @@ VER=20230313
 PKG=ooce/application/texlive
 SUMMARY="TeX Live"
 DESC="LaTeX distribution"
+
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
 

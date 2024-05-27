@@ -22,6 +22,9 @@ PKG=ooce/application/links
 SUMMARY="Text mode web browser"
 DESC="$PROG - $SUMMARY"
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 set_arch 64
 
 OPREFIX=$PREFIX

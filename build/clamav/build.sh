@@ -36,7 +36,13 @@ test_relver '<' 151043 && STRIP=gstrip
 # the clamav bytecode runtime, but we want to build with gcc.
 # currently only llvm 8 - 13 are supported
 set_clangver 13
-BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
+
+# does not yet build with gcc 14
+if ((GCCVER > 13)); then
+    BASEPATH=$PATH set_gccver 13
+else
+    BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
+fi
 
 SKIP_LICENCES='COPYING.*'
 XFORM_ARGS="

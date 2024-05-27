@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,6 +22,9 @@ PKG=ooce/library/libmcrypt
 SUMMARY="Multi-cipher cryptographic library"
 DESC="libmcrypt is a cryptographic library that conveniently brings together \
 a variety of ciphers for convenient use."
+
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}

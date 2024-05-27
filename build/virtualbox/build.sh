@@ -61,6 +61,9 @@ RUN_DEPENDS_IPS="
     ooce/library/libvncserver
 "
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 set_arch 64
 
 # virtualbox unpacks to directory w/o the trailing alpha character

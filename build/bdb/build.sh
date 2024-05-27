@@ -13,7 +13,7 @@
 # }}}
 
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -23,6 +23,9 @@ VERHUMAN=$VER
 PKG=ooce/database/bdb
 SUMMARY="$PROG - Berkeley DB: an embedded database library for key/value data"
 DESC="$SUMMARY"
+
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
 
 SKIP_LICENCES="Sleepycat"
 

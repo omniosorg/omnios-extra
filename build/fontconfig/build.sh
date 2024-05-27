@@ -22,6 +22,9 @@ PKG=ooce/library/fontconfig
 SUMMARY="$PROG"
 DESC="A library for configuring and customizing font access"
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 SKIP_LICENCES=MIT
 SKIP_RTIME_CHECK=1
 SKIP_SSP_CHECK=1
