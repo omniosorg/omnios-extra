@@ -56,6 +56,7 @@ install() {
 init
 # Use nshalman fork until it is fully upstreamed
 clone_go_source $PROG nshalman "v$VER-sunos"
+patch_source
 prep_build
 build
 install
