@@ -42,6 +42,7 @@ build_and_install() {
 init
 # Use nshalman fork until it is fully upstreamed
 clone_go_source $PROG nshalman $HASH
+patch_source
 prep_build
 build_and_install
 make_package

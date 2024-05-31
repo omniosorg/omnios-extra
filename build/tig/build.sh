@@ -40,9 +40,9 @@ XFORM_ARGS="
 
 MAKE_INSTALL_TARGET+=" install-doc-man"
 
-# create package functions
 init
 download_source $PROG $PROG $VER
+patch_source
 prep_build
 build
 strip_install
