@@ -13,12 +13,12 @@
 # }}}
 
 # Copyright 2022 Martin Samuelsson
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=tig
-VER=2.5.8
+VER=2.5.10
 PKG=ooce/application/tig
 SUMMARY="Tig: text-mode interface for Git"
 DESC="Tig is an ncurses-based text-mode interface for git. \
