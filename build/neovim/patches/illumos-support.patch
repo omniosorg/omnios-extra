@@ -264,8 +264,8 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/os_illumos.c a/src/n
 +		 * The line discipline is not present, so push the appropriate
 +		 * STREAMS modules for the subordinate device:
 +		 */
-+		if (ioctl(s, I_PUSH, "ptem") < 0 ||
-+		    ioctl(s, I_PUSH, "ldterm") < 0) {
++		if (ioctl(s, __I_PUSH_NOCTTY, "ptem") < 0 ||
++		    ioctl(s, __I_PUSH_NOCTTY, "ldterm") < 0) {
 +			return (openpty_failure(c, s, errno));
 +		}
 +	}

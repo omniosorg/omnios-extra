@@ -1,0 +1,99 @@
+From cbc39cb75b67eb77386337dad47e239346638ff7 Mon Sep 17 00:00:00 2001
+From: "Joshua M. Clulow" <jmc@oxide.computer>
+Date: Fri, 31 May 2024 20:49:32 -0700
+Subject: [PATCH 2/2] XXX use system default tty modes
+
+
+diff --git a/src/nvim/os/pty_process_unix.c b/src/nvim/os/pty_process_unix.c
+index 866a1d2d5..4a37456bd 100644
+--- a/src/nvim/os/pty_process_unix.c
++++ b/src/nvim/os/pty_process_unix.c
+@@ -46,12 +46,6 @@
+ int pty_process_spawn(PtyProcess *ptyproc)
+   FUNC_ATTR_NONNULL_ALL
+ {
+-  // termios initialized at first use
+-  static struct termios termios_default;
+-  if (!termios_default.c_cflag) {
+-    init_termios(&termios_default);
+-  }
+-
+   int status = 0;  // zero or negative error code (libuv convention)
+   Process *proc = (Process *)ptyproc;
+   assert(proc->err.closed);
+@@ -59,7 +53,7 @@ int pty_process_spawn(PtyProcess *ptyproc)
+   ptyproc->winsize = (struct winsize){ ptyproc->height, ptyproc->width, 0, 0 };
+   uv_disable_stdio_inheritance();
+   int master;
+-  int pid = forkpty(&master, NULL, &termios_default, &ptyproc->winsize);
++  int pid = forkpty(&master, NULL, NULL, &ptyproc->winsize);
+ 
+   if (pid < 0) {
+     status = -errno;
+@@ -178,63 +172,6 @@ static void init_child(PtyProcess *ptyproc)
+   _exit(122);  // 122 is EXEC_FAILED in the Vim source.
+ }
+ 
+-static void init_termios(struct termios *termios) FUNC_ATTR_NONNULL_ALL
+-{
+-  // Taken from pangoterm
+-  termios->c_iflag = ICRNL|IXON;
+-  termios->c_oflag = OPOST|ONLCR;
+-#ifdef TAB0
+-  termios->c_oflag |= TAB0;
+-#endif
+-  termios->c_cflag = CS8|CREAD;
+-  termios->c_lflag = ISIG|ICANON|IEXTEN|ECHO|ECHOE|ECHOK;
+-
+-  // not using cfsetspeed, not available on all platforms
+-  cfsetispeed(termios, 38400);
+-  cfsetospeed(termios, 38400);
+-
+-#ifdef IUTF8
+-  termios->c_iflag |= IUTF8;
+-#endif
+-#ifdef NL0
+-  termios->c_oflag |= NL0;
+-#endif
+-#ifdef CR0
+-  termios->c_oflag |= CR0;
+-#endif
+-#ifdef BS0
+-  termios->c_oflag |= BS0;
+-#endif
+-#ifdef VT0
+-  termios->c_oflag |= VT0;
+-#endif
+-#ifdef FF0
+-  termios->c_oflag |= FF0;
+-#endif
+-#ifdef ECHOCTL
+-  termios->c_lflag |= ECHOCTL;
+-#endif
+-#ifdef ECHOKE
+-  termios->c_lflag |= ECHOKE;
+-#endif
+-
+-  termios->c_cc[VINTR] = 0x1f & 'C';
+-  termios->c_cc[VQUIT] = 0x1f & '\\';
+-  termios->c_cc[VERASE] = 0x7f;
+-  termios->c_cc[VKILL] = 0x1f & 'U';
+-  termios->c_cc[VEOF] = 0x1f & 'D';
+-  termios->c_cc[VEOL] = _POSIX_VDISABLE;
+-  termios->c_cc[VEOL2] = _POSIX_VDISABLE;
+-  termios->c_cc[VSTART] = 0x1f & 'Q';
+-  termios->c_cc[VSTOP] = 0x1f & 'S';
+-  termios->c_cc[VSUSP] = 0x1f & 'Z';
+-  termios->c_cc[VREPRINT] = 0x1f & 'R';
+-  termios->c_cc[VWERASE] = 0x1f & 'W';
+-  termios->c_cc[VLNEXT] = 0x1f & 'V';
+-  termios->c_cc[VMIN] = 1;
+-  termios->c_cc[VTIME] = 0;
+-}
+-
+ static int set_duplicating_descriptor(int fd, uv_pipe_t *pipe)
+   FUNC_ATTR_NONNULL_ALL
+ {
+-- 
+2.40.1
+
