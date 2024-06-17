@@ -53,6 +53,7 @@ CONFIGURE_OPTS="
     --without-x
     --with-gif=no
     --with-tree-sitter
+    --with-json
     ac_cv_sys_long_file_names=yes
     ac_cv_header_sys_inotify_h=no
     ac_cv_func_inotify_init=no
