@@ -1,4 +1,4 @@
-Start of unbound 1.19.3+libevent unit test.
+Start of unbound 1.20.0+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -78,9 +78,9 @@ test services/outside_network.c:reuse_write_wait_push_back
 test services/outside_network.c:reuse_write_wait_remove
 test services/outside_network.c:reuse_write_wait_pop
 test message parse functions
-[0] did 10000 in 72.544 msec for 137847.375386 encode/sec size 615
+[0] did 10000 in 118.196 msec for 84605.231988 encode/sec size 615
 test edns ede optional encoding functions
-1297710 checks ok.
+1297542 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl  OK
 ./testdata/auth_nsec3_ent.rpl  OK
@@ -220,6 +220,7 @@ selftest successful (33 checks).
 ./testdata/iter_fwdfirstequal.rpl  OK
 ./testdata/iter_fwdstub.rpl  OK
 ./testdata/iter_fwdstubroot.rpl  OK
+./testdata/iter_ghost_grandchild_delegation.rpl  OK
 ./testdata/iter_ghost_sub.rpl  OK
 ./testdata/iter_ghost_timewindow.rpl  OK
 ./testdata/iter_got6only.rpl  OK
@@ -284,6 +285,7 @@ selftest successful (33 checks).
 ./testdata/local_acl_taglist.rpl  OK
 ./testdata/local_acl_taglist_action.rpl  OK
 ./testdata/local_cname.rpl  OK
+./testdata/local_cnameother.rpl  OK
 ./testdata/local_ds.rpl  OK
 ./testdata/local_nodefault.rpl  OK
 ./testdata/local_transparent_sametype.rpl  OK
@@ -300,13 +302,19 @@ selftest successful (33 checks).
 ./testdata/rpz_axfr.rpl  OK
 ./testdata/rpz_cached_cname.rpl  OK
 ./testdata/rpz_clientip.rpl  OK
+./testdata/rpz_clientip_override.rpl  OK
+./testdata/rpz_cname_handle.rpl  OK
 ./testdata/rpz_ixfr.rpl  OK
 ./testdata/rpz_nsdname.rpl  OK
+./testdata/rpz_nsdname_override.rpl  OK
 ./testdata/rpz_nsip.rpl  OK
+./testdata/rpz_nsip_override.rpl  OK
 ./testdata/rpz_passthru.rpl  OK
+./testdata/rpz_passthru_clientip.rpl  OK
 ./testdata/rpz_qname.rpl  OK
 ./testdata/rpz_qname_override.rpl  OK
 ./testdata/rpz_qname_tcponly.rpl  OK
+./testdata/rpz_qtype_cname.rpl  OK
 ./testdata/rpz_respip.rpl  OK
 ./testdata/rpz_respip_override.rpl  OK
 ./testdata/rpz_respip_tcponly.rpl  OK
@@ -334,7 +342,9 @@ selftest successful (33 checks).
 ./testdata/stop_nxdomain_minimised.rpl  OK
 ./testdata/trust_cname_chain.rpl  OK
 ./testdata/ttl_max.rpl  OK
+./testdata/ttl_max_negative.rpl  OK
 ./testdata/ttl_min.rpl  OK
+./testdata/ttl_min_negative.rpl  OK
 ./testdata/ttl_msg.rpl  OK
 ./testdata/val_adbit.rpl  OK
 ./testdata/val_adcopy.rpl  OK
@@ -353,6 +363,7 @@ selftest successful (33 checks).
 ./testdata/val_cnamenx_dblnsec.rpl  OK
 ./testdata/val_cnamenx_rcodenx.rpl  OK
 ./testdata/val_cnameqtype.rpl  OK
+./testdata/val_cnameqtype_qmin.rpl  OK
 ./testdata/val_cnametocloser.rpl  OK
 ./testdata/val_cnametocloser_nosig.rpl  OK
 ./testdata/val_cnametocnamewctoposwc.rpl  OK
@@ -372,6 +383,8 @@ selftest successful (33 checks).
 ./testdata/val_cnamewctonx.rpl  OK
 ./testdata/val_cnamewctoposwc.rpl  OK
 ./testdata/val_deleg_nons.rpl  OK
+./testdata/val_dnameqtype.rpl  OK
+./testdata/val_dnameqtype_qmin.rpl  OK
 ./testdata/val_dnametoolong.rpl  OK
 ./testdata/val_dnametopos.rpl  OK
 ./testdata/val_dnametoposwc.rpl  OK

@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=asciidoctor
-VER=2.0.22
+VER=2.0.23
 PKG=ooce/text/asciidoctor
 SUMMARY="Toolchain for converting AsciiDoc to other formats"
 DESC="A fast, open source text processor and publishing toolchain, "
