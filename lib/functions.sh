@@ -2891,7 +2891,7 @@ run_testsuite() {
         else
             $CP $op $SRCDIR/$output
         fi
-        logcmd $RM -f $op
+        logcmd $MV $op $TMPDIR/testsuite.raw
         hook post_test
         popd > /dev/null
     fi
