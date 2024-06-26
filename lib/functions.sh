@@ -14,7 +14,7 @@
 #
 # Copyright (c) 2014 by Delphix. All rights reserved.
 # Copyright 2015 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 #
 
 #############################################################################
@@ -682,11 +682,30 @@ clear_archflags() {
 }
 
 set_standard() {
+    typeset -i xcurses=0
+    while [[ "$1" = -* ]]; do
+        case $1 in
+            -xcurses)  xcurses=1 ;;
+        esac
+        shift
+    done
     typeset st="$1"
     typeset var="${2:-CPPFLAGS}"
     [ -n "${STANDARDS[$st]}" ] || logerr "Unknown standard $st"
     declare -n _var=$var
     _var[0]+=" ${STANDARDS[$st]}"
+
+    # When selecting XPG4v2 or later, we must also use the X/Open curses
+    # library, as long as we were not called with "-nocurses"
+    ((xcurses)) || return
+    case $st in
+        XPG4v2|XPG5|XPG6)
+            typeset x=/usr/xpg4
+            _var[0]="-I$x/include ${_var[0]}"
+            LDFLAGS[i386]="-L$x/lib -R$x/lib ${LDFLAGS[i386]}"
+            LDFLAGS[amd64]="-L$x/lib/amd64 -R$x/lib/amd64 ${LDFLAGS[amd64]}"
+            ;;
+    esac
 }
 
 forgo_isaexec() {
@@ -1096,10 +1115,21 @@ prep_build() {
 
     # Generate timestamps
     typeset now=`TZ=UTC $DATE +%s`
+    typeset TS_SRC_EPOCH=$((now - 60))
+    typeset TS_OBJ_EPOCH=$((now - 30))
     typeset TS_FMT="%Y%m%dT%H%M%SZ"
-    typeset TS_SRC=`$DATE -r $((now - 60)) +$TS_FMT`
-    typeset TS_OBJ=`$DATE -r $((now - 30)) +$TS_FMT`
+    typeset TS_SRC=`$DATE -r $TS_SRC_EPOCH +$TS_FMT`
+    typeset TS_OBJ=`$DATE -r $TS_OBJ_EPOCH +$TS_FMT`
 
+    # Python is patched to use the value of this variable as the timestamp that
+    # it embeds in .pyc files. We need to make sure that this embedded
+    # timestamp matches the timestamp that the packaging system will apply to
+    # the corresponding source .py file.
+    export FORCE_PYC_TIMESTAMP=$TS_SRC_EPOCH
+
+    # These tokens are used by rules in lib/mog/global-transforms.mog to
+    # automatically apply timestamp attributes to python modules and their
+    # compiled form. They can also be used by other packages in their local.mog
     SYS_XFORM_ARGS+=" -DTS_SRC=$TS_SRC -DTS_OBJ=$TS_OBJ"
 
     logmsg "--- Creating temporary installation directory"
@@ -2656,6 +2686,11 @@ configure_arch() {
         "$@" || \
         logerr "--- Configure failed"
     hook post_configure $arch
+    # Check for configuration tests that have failed as a result of a
+    # main function being present without a declared return type.
+    $RIPGREP --no-messages --no-ignore \
+        "error: (return type defaults|implicit declaration.*'(exit|strcmp)')" \
+        -g config.log && logerr 'Found broken tests in configure'
 }
 
 make_arch() {
@@ -2793,6 +2828,7 @@ check_buildlog() {
     logmsg "--- Checking logfile for errors (expect $expected)"
 
     errs="`$GREP 'error: ' $LOGFILE | \
+        $EGREP -v -- '-Werror' | \
         $EGREP -cv 'pathspec.*did not match any file'`"
 
     [ "$errs" -ne "$expected" ] \
@@ -2866,7 +2902,7 @@ run_testsuite() {
         else
             $CP $op $SRCDIR/$output
         fi
-        logcmd $RM -f $op
+        logcmd $MV $op $TMPDIR/testsuite.raw
         hook post_test
         popd > /dev/null
     fi
@@ -3019,7 +3055,8 @@ python_pep518() {
     logmsg "-- PEP518 build"
     logcmd $PYTHON -mpip install -vvv \
         --no-deps --isolated --no-input --exists-action=a \
-        --disable-pip-version-check --prefix=$PREFIX --root=$DESTDIR . \
+        --disable-pip-version-check --root=$DESTDIR $PEP518OPTS \
+        --prefix=$PREFIX . \
         || logerr "--- build failed"
 }
 
@@ -3060,6 +3097,7 @@ python_build_arch() {
         LDFLAGS="${LDFLAGS[0]} ${LDFLAGS[$arch]}" \
         PYBUILDOPTS="${PYBUILDOPTS[0]} ${PYBUILDOPTS[$arch]}" \
         PYINSTOPTS="${PYINSTOPTS[0]} ${PYINSTOPTS[$arch]}" \
+        PEP518OPTS="${PEP518OPTS[0]} ${PEP518OPTS[$arch]}" \
         python_backend
 
     # XXX - can do better
