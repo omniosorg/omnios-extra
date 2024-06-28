@@ -1,0 +1,7 @@
+aegis128l_armcrypto.c
+aegis256_armcrypto.c
+aead_aes256gcm_armcrypto.c
+aegis128l_armcrypto.c
+aegis256_armcrypto.c
+aead_aes256gcm_armcrypto.c
+poly1305_sse2.c

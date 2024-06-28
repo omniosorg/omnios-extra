@@ -125,6 +125,7 @@
 | ooce/library/libogg		| 1.3.5		| https://ftp.osuosl.org/pub/xiph/releases/ogg/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libpciaccess	| 0.18		| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
 | ooce/library/libpng		| 1.6.43	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libsodium	| 1.0.20	| https://github.com/jedisct1/libsodium/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libusb-1		| 1.0.27	| https://github.com/libusb/libusb/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libuv		| 1.48.0	| https://github.com/libuv/libuv/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvorbis	| 1.3.7		| https://ftp.osuosl.org/pub/xiph/releases/vorbis/ | [omniosorg](https://github.com/omniosorg)
