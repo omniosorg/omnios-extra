@@ -61,6 +61,7 @@ ooce/database/postgresql-14
 ooce/network/nsd
 ooce/library/slang
 ooce/util/jq
+ooce/security/minisign
 ###############################################################################
 .SYSROOT
 ooce/network/unbound

@@ -233,6 +233,7 @@ extra.omnios ooce/runtime/ruby-32
 extra.omnios ooce/runtime/ruby-33
 extra.omnios ooce/runtime/tcl
 extra.omnios ooce/security/gnupg
+extra.omnios ooce/security/minisign
 extra.omnios ooce/server/apache-24
 extra.omnios ooce/server/apache-24/modules/fcgid
 extra.omnios ooce/server/apache-24/modules/subversion
