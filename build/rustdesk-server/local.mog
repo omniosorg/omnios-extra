@@ -1,0 +1,36 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+#
+
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+
+license LICENSE license=AGPLv3
+
+dir group=$(GROUP) mode=0750 owner=$(USER) path=etc/$(PREFIX)
+dir group=$(GROUP) mode=0750 owner=$(USER) path=var/$(PREFIX)
+
+group groupname=$(GROUP) gid=49
+user ftpuser=false username=$(USER) uid=49 group=$(GROUP) \
+    gcos-field="RustDesk User" home-dir=/var/$(PREFIX) password=NP
+
+# Create configuration file
+file files/env path=etc/$(PREFIX)/env \
+    owner=root group=$(GROUP) mode=0640 preserve=renamenew
+link path=var/$(PREFIX)/.env \
+    target=../../../../etc/$(PREFIX)/env
+
+<transform file path=$(PREFIX)/bin \
+    -> add restart_fmri svc:/ooce/application/rustdesk:hbbr>
+<transform file path=$(PREFIX)/bin \
+    -> add restart_fmri svc:/ooce/application/rustdesk:hbbs>
+
+# Symlink rustdesk-util
+link path=$(OPREFIX)/bin/$(UTIL) target=../$(PROG)/bin/$(UTIL)
+

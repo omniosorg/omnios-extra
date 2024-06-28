@@ -25,6 +25,7 @@ extra.omnios ooce/application/php-82/imagick
 extra.omnios ooce/application/php-83
 extra.omnios ooce/application/php-83/imagick
 extra.omnios ooce/application/php-common
+extra.omnios ooce/application/rustdesk-server
 extra.omnios ooce/application/texlive
 extra.omnios ooce/application/tidy
 extra.omnios ooce/application/tig
