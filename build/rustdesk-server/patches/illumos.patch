@@ -1,0 +1,42 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
+--- a~/Cargo.toml	1970-01-01 00:00:00
++++ a/Cargo.toml	1970-01-01 00:00:00
+@@ -25,8 +25,8 @@ lazy_static = "1.4"
+ clap = "2"
+ rust-ini = "0.18"
+ minreq = { version = "2.4", features = ["punycode"] }
+-machine-uid = "0.2"
+-mac_address = "1.1.5"
++machine-uid = "0.5.1"
++mac_address = "1.1.7"
+ whoami = "1.2"
+ base64 = "0.13"
+ axum = { version = "0.5", features = ["headers"] }
+@@ -49,7 +49,7 @@ http = "0.2"
+ flexi_logger = { version = "0.22", features = ["async", "use_chrono_for_offset", "dont_minimize_extra_stacks"] }
+ ipnetwork = "0.20"
+ local-ip-address = "0.5.1"
+-dns-lookup = "1.0.8"
++dns-lookup = "2.0.4"
+ ping = "0.4.0"
+ 
+ [build-dependencies]
+@@ -58,3 +58,6 @@ hbb_common = { path = "libs/hbb_common"
+ [workspace]
+ members = ["libs/hbb_common"]
+ exclude = ["ui"]
++
++[patch.crates-io]
++machine-uid = { git = "https://github.com/hadfl/machine-uid.git", branch = "illumos" }
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libs/hbb_common/Cargo.toml a/libs/hbb_common/Cargo.toml
+--- a~/libs/hbb_common/Cargo.toml	1970-01-01 00:00:00
++++ a/libs/hbb_common/Cargo.toml	1970-01-01 00:00:00
+@@ -34,7 +34,7 @@ chrono = "0.4"
+ 
+ [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+ mac_address = "1.1"
+-machine-uid = "0.2"
++machine-uid = "0.5.1"
+ 
+ [features]
+ quic = []

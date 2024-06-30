@@ -22,6 +22,7 @@
 | omnios	| 26	| dma
 | extra		| 27	| postfix
 | illumos	| 37	| listen
+| extra		| 49	| rustdesk
 | illumos	| 50	| gdm
 | illumos	| 51	| zfssnap
 | illumos	| 52	| upnp
@@ -86,6 +87,7 @@
 | extra		| 27	| postfix
 | extra		| 28	| postdrop
 | extra		| 45	| sasl
+| extra		| 49	| rustdesk
 | illumos	| 50	| gdm
 | illumos	| 52	| upnp
 | extra		| 53	| named
