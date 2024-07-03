@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=znc
-VER=1.9.0
+VER=1.9.1
 VERHUMAN=$VER
 PKG=ooce/network/znc
 SUMMARY="$PROG - an advanced IRC bouncer"
@@ -35,7 +35,7 @@ BUILD_DEPENDS_IPS="=ooce/library/icu4c@$ICUVER"
 RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
 
 set_arch 64
-test_relver '>=' 151041 && set_clangver
+set_clangver
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
@@ -51,7 +51,7 @@ install_modules() {
     for f in $SRCDIR/files/*.cpp; do
         bf=`basename $f`
         logmsg "Installing module: $bf"
-        logcmd cp $f $TMPDIR/$BUILDDIR/modules/
+        logcmd $CP $f $TMPDIR/$BUILDDIR/modules/
     done
 }
 
@@ -59,6 +59,9 @@ CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_SKIP_RPATH=ON
+    -DWANT_PERL=false
+    -DWANT_PYTHON=false
+    -DWANT_TCL=false
 "
 
 CONFIGURE_OPTS[amd64]="

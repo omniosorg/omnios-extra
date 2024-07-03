@@ -178,7 +178,7 @@
 | ooce/network/unbound		| 1.20.0	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/wireguard-go	| 0.0.20220316	| https://www.wireguard.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/wireguard-tools	| 1.0.20210914	| https://www.wireguard.com/ | [nshalman](https://github.com/nshalman)
-| ooce/network/znc		| 1.9.0		| https://github.com/znc/znc/tags | [omniosorg](https://github.com/omniosorg)
+| ooce/network/znc		| 1.9.1		| https://znc.in/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/ooceapps			| github-latest	| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/print/cups		| 2.4.8		| https://github.com/OpenPrinting/cups/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/expect		| 5.45.4	| https://sourceforge.net/projects/expect/files/Expect/ | [omniosorg](https://github.com/omniosorg)
