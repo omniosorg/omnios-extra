@@ -22,6 +22,7 @@ extra.omnios ooce/library/libid3tag
 extra.omnios ooce/library/libjpeg-turbo
 extra.omnios ooce/library/libogg
 extra.omnios ooce/library/libpng
+extra.omnios ooce/library/libsodium
 extra.omnios ooce/library/libuv
 extra.omnios ooce/library/libvorbis
 extra.omnios ooce/library/libwebp
@@ -46,6 +47,7 @@ extra.omnios ooce/network/openldap
 extra.omnios ooce/network/unbound
 extra.omnios ooce/print/cups
 extra.omnios ooce/security/gnupg
+extra.omnios ooce/security/minisign
 extra.omnios ooce/system/htop
 extra.omnios ooce/terminal/minicom
 extra.omnios ooce/text/datamash

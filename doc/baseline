@@ -25,6 +25,7 @@ extra.omnios ooce/application/php-82/imagick
 extra.omnios ooce/application/php-83
 extra.omnios ooce/application/php-83/imagick
 extra.omnios ooce/application/php-common
+extra.omnios ooce/application/rustdesk-server
 extra.omnios ooce/application/texlive
 extra.omnios ooce/application/tidy
 extra.omnios ooce/application/tig
@@ -151,6 +152,7 @@ extra.omnios ooce/library/libmcrypt
 extra.omnios ooce/library/libogg
 extra.omnios ooce/library/libpciaccess
 extra.omnios ooce/library/libpng
+extra.omnios ooce/library/libsodium
 extra.omnios ooce/library/libusb-1
 extra.omnios ooce/library/libuv
 extra.omnios ooce/library/libvncserver
@@ -232,6 +234,7 @@ extra.omnios ooce/runtime/ruby-32
 extra.omnios ooce/runtime/ruby-33
 extra.omnios ooce/runtime/tcl
 extra.omnios ooce/security/gnupg
+extra.omnios ooce/security/minisign
 extra.omnios ooce/server/apache-24
 extra.omnios ooce/server/apache-24/modules/fcgid
 extra.omnios ooce/server/apache-24/modules/subversion
