@@ -1,0 +1,13 @@
+diff --git a/pam_oath/pam_modutil.h b/pam_oath/pam_modutil.h
+index de239df..d6093da 100644
+--- a/pam_oath/pam_modutil.h
++++ b/pam_oath/pam_modutil.h
+@@ -1,6 +1,8 @@
+ #ifndef PAM_MODUTIL_H
+ # define PAM_MODUTIL_H
+ 
++#include <security/pam_appl.h>
++
+ # ifdef HAVE_SECURITY_PAM_MODUTIL_H
+ #  include <security/pam_modutil.h>
+ # else

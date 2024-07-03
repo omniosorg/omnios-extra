@@ -49,6 +49,7 @@ ooce/library/tree-sitter
 ooce/util/dtc
 ooce/util/u-boot
 ooce/library/libsodium
+ooce/security/oath-toolkit
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
