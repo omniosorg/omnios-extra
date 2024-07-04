@@ -42,6 +42,9 @@ BUILD_DEPENDS_IPS="ooce/library/libev"
 
 set_arch 64
 
+# nsd contains BMI instructions even when built on an older CPU
+BMI_EXPECTED=1
+
 CONFIGURE_OPTS="
     --sysconfdir=/etc$OPREFIX
     --with-run-dir=/var$sPREFIX
