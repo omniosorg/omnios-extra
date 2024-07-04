@@ -111,6 +111,7 @@ extra.omnios ooce/developer/yasm
 extra.omnios ooce/developer/zig r
 extra.omnios ooce/developer/zig-011
 extra.omnios ooce/developer/zig-012
+extra.omnios ooce/developer/zig-013
 extra.omnios ooce/developer/zig-09
 extra.omnios ooce/driver/fuse
 extra.omnios ooce/editor/emacs

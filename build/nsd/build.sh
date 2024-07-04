@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nsd
-VER=4.9.1
+VER=4.10.0
 PKG=ooce/network/nsd
 SUMMARY="Authoritative DNS server"
 DESC="The NLnet Labs Name Server Daemon (NSD) is an authoritative "
@@ -57,8 +57,8 @@ CONFIGURE_OPTS="
     --with-pidfile=/var$sPREFIX/run/nsd.pid
 "
 
-# need msg_flags from struct msghdr
-set_standard XPG4v2
+# need msg_flags from struct msghdr and strcasecmp
+set_standard XPG6
 
 export MAKE
 

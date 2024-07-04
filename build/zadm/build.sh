@@ -22,7 +22,7 @@ PKG=ooce/util/zadm
 SUMMARY="zone admin tool"
 DESC="$PROG - $SUMMARY"
 
-NOVNCVER=1.4.0
+NOVNCVER=1.5.0
 
 RUN_DEPENDS_IPS="ooce/util/uefivars"
 

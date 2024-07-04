@@ -17,12 +17,12 @@
 . ../../lib/build.sh
 
 PROG=cups
-VER=2.4.8
+VER=2.4.10
 PKG=ooce/print/cups
 SUMMARY="Common UNIX Printing System"
 DESC="Standards-based, open source printing system for UNIX operating systems"
 
-test_relver '>=' 151041 && set_clangver
+set_clangver
 
 # getpwuid_r
 set_standard XPG6

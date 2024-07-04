@@ -17,19 +17,21 @@
 . ../../lib/build.sh
 
 PROG=zig
-VER=0.12.1
+VER=0.13.0
 MAJVER=${VER%%.*}
 MINVER=${VER%.*}
 MINVER=${MINVER#*.}
-PKG=ooce/developer/zig-012
+PKG=ooce/developer/zig-013
 SUMMARY="$PROG programming language"
 DESC="$PROG is a general-purpose programming language and toolchain for "
 DESC+="maintaining robust, optimal, and reusable software."
 
+min_rel 151049
+
 #
-# Zig 0.12.x requires LLVM 17
+# Zig 0.13.x requires LLVM 18
 #
-set_clangver 17
+set_clangver 18
 set_arch 64
 
 CLANGFVER=`pkg_ver clang build-$CLANGVER.sh`
