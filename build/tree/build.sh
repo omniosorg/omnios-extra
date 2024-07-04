@@ -12,19 +12,21 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=tree
-VER=2.1.1
+VER=2.1.2
 PKG=ooce/file/tree
 SUMMARY="File system tree viewer"
 DESC="The tree utility recursively displays the contents of \
 directories in a tree-like format"
 
 set_arch 64
-test_relver '>=' 151045 && set_clangver
+set_clangver
+
+set_builddir unix-$PROG-$VER
 
 pre_configure() {
     typeset arch=$1
@@ -48,7 +50,7 @@ pre_install() {
 }
 
 init
-download_source $PROG $PROG $VER
+download_source $PROG unix-$PROG $VER
 patch_source
 prep_build
 build
