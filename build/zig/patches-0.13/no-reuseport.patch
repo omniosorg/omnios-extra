@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/lib/std/net.zig a/lib/std/net.zig
+--- a~/lib/std/net.zig	1970-01-01 00:00:00
++++ a/lib/std/net.zig	1970-01-01 00:00:00
+@@ -249,7 +249,7 @@ pub const Address = extern union {
+                 &mem.toBytes(@as(c_int, 1)),
+             );
+             switch (native_os) {
+-                .windows => {},
++                .windows, .illumos => {},
+                 else => try posix.setsockopt(
+                     sockfd,
+                     posix.SOL.SOCKET,

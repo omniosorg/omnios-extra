@@ -1,0 +1,184 @@
+From 02472a0eb920e43015987cd0cd8d94992eca3397 Mon Sep 17 00:00:00 2001
+From: Ryan Zezeski <ryan@zinascii.com>
+Date: Mon, 29 Apr 2024 08:16:24 -0600
+Subject: [PATCH] check for PT_INTERP before exec
+
+Before allowing the builder to run a command, verify that the binary
+contains a PT_INTERP entry. This avoids an issue with illumos where we
+drop a SIGKILL on the process if there is a PT_PHDR with no PT_INTERP.
+diff -wpruN --no-dereference '--exclude=*.orig' a~/lib/std/Build/Step/Run.zig a/lib/std/Build/Step/Run.zig
+--- a~/lib/std/Build/Step/Run.zig	1970-01-01 00:00:00
++++ a/lib/std/Build/Step/Run.zig	1970-01-01 00:00:00
+@@ -1189,6 +1189,143 @@ fn runCommand(
+     }
+ }
+ 
++// Copied directly from std.system.
++fn preadAtLeast(file: fs.File, buf: []u8, offset: u64, min_read_len: usize) !usize {
++    var i: usize = 0;
++    while (i < min_read_len) {
++        const len = file.pread(buf[i..], offset + i) catch |err| switch (err) {
++            error.OperationAborted => unreachable, // Windows-only
++            error.WouldBlock => unreachable, // Did not request blocking mode
++            error.NotOpenForReading => unreachable,
++            error.SystemResources => return error.SystemResources,
++            error.IsDir => return error.UnableToReadElfFile,
++            error.BrokenPipe => return error.UnableToReadElfFile,
++            error.Unseekable => return error.UnableToReadElfFile,
++            error.ConnectionResetByPeer => return error.UnableToReadElfFile,
++            error.ConnectionTimedOut => return error.UnableToReadElfFile,
++            error.SocketNotConnected => return error.UnableToReadElfFile,
++            error.Unexpected => return error.Unexpected,
++            error.InputOutput => return error.FileSystem,
++            error.AccessDenied => return error.Unexpected,
++        };
++        if (len == 0) return error.UnexpectedEndOfFile;
++        i += len;
++    }
++    return i;
++}
++
++// Copied directly from std.system.
++fn elfInt(is_64: bool, need_bswap: bool, int_32: anytype, int_64: anytype) @TypeOf(int_64) {
++    if (is_64) {
++        if (need_bswap) {
++            return @byteSwap(int_64);
++        } else {
++            return int_64;
++        }
++    } else {
++        if (need_bswap) {
++            return @byteSwap(int_32);
++        } else {
++            return int_32;
++        }
++    }
++}
++
++// A modified version of std.system.abiAndDynamicLinkerFromFile().
++fn illumosHasInterp(file: fs.File) !bool {
++    const elf = std.elf;
++
++    var hdr_buf: [@sizeOf(elf.Elf64_Ehdr)]u8 align(@alignOf(elf.Elf64_Ehdr)) = undefined;
++    _ = try preadAtLeast(file, &hdr_buf, 0, hdr_buf.len);
++    const hdr32: *elf.Elf32_Ehdr = @ptrCast(&hdr_buf);
++    const hdr64: *elf.Elf64_Ehdr = @ptrCast(&hdr_buf);
++
++    if (!mem.eql(u8, hdr32.e_ident[0..4], elf.MAGIC)) {
++        return error.InvalidElfMagic;
++    }
++
++    const native_endian = builtin.cpu.arch.endian();
++    const elf_endian: std.builtin.Endian = switch (hdr32.e_ident[elf.EI_DATA]) {
++        elf.ELFDATA2LSB => .little,
++        else => return error.InvalidElfEndian,
++    };
++
++    const need_bswap = elf_endian != native_endian;
++
++    if (need_bswap) {
++        return error.ForeignElf;
++    }
++
++    if (hdr32.e_ident[elf.EI_VERSION] != 1) return error.InvalidElfVersion;
++
++    const is_64 = switch (hdr32.e_ident[elf.EI_CLASS]) {
++        elf.ELFCLASS32 => false,
++        elf.ELFCLASS64 => true,
++        else => return error.InvalidElfClass,
++    };
++
++    var phoff = elfInt(is_64, need_bswap, hdr32.e_phoff, hdr64.e_phoff);
++    const phentsize = elfInt(is_64, need_bswap, hdr32.e_phentsize, hdr64.e_phentsize);
++    const phnum = elfInt(is_64, need_bswap, hdr32.e_phnum, hdr64.e_phnum);
++
++    var ph_buf: [16 * @sizeOf(elf.Elf64_Phdr)]u8 align(@alignOf(elf.Elf64_Phdr)) = undefined;
++    if (phentsize > @sizeOf(elf.Elf64_Phdr)) return error.InvalidElfFile;
++
++    var ph_i: u16 = 0;
++    while (ph_i < phnum) {
++        // Reserve some bytes so that we can deref the 64-bit struct fields
++        // even when the ELF file is 32-bits.
++        const ph_reserve: usize = @sizeOf(elf.Elf64_Phdr) - @sizeOf(elf.Elf32_Phdr);
++        const ph_read_byte_len = try preadAtLeast(file, ph_buf[0 .. ph_buf.len - ph_reserve], phoff, phentsize);
++        var ph_buf_i: usize = 0;
++
++        while (ph_buf_i < ph_read_byte_len and ph_i < phnum) : ({
++            ph_i += 1;
++            phoff += phentsize;
++            ph_buf_i += phentsize;
++        }) {
++            const ph32: *elf.Elf32_Phdr = @ptrCast(@alignCast(&ph_buf[ph_buf_i]));
++            const ph64: *elf.Elf64_Phdr = @ptrCast(@alignCast(&ph_buf[ph_buf_i]));
++            const p_type = elfInt(is_64, need_bswap, ph32.p_type, ph64.p_type);
++            switch (p_type) {
++                elf.PT_INTERP => {
++                    return true;
++                },
++                else => continue,
++            }
++        }
++    }
++
++    // We didn't find a PT_INTERP section.
++    return false;
++}
++
++fn illumosInterpCheck(prog: []const u8) !bool {
++    // For now we assume all commands are using absolute paths, but if
++    // for some reason one isn't we assume it's okay to execute.
++    if (!std.fs.path.isAbsolute(prog)) {
++        return true;
++    }
++
++    const file = std.fs.openFileAbsolute(prog, .{}) catch |err| {
++        std.log.err("could not open file ({any}): {s}", .{ err, prog });
++        return error.InvalidExe;
++    };
++    defer file.close();
++
++    const interp = illumosHasInterp(file) catch |err| {
++        std.log.err("failed to read ELF ({any}): {s}", .{ err, prog });
++        return error.InvalidExe;
++    };
++
++    if (!interp) {
++        std.log.err("no PT_INTERP found: {s}", .{ prog });
++        return false;
++    }
++
++    return true;
++}
++
+ const ChildProcResult = struct {
+     term: std.process.Child.Term,
+     elapsed_ns: u64,
+@@ -1206,6 +1343,28 @@ fn spawnChildAndCollect(
+     const b = run.step.owner;
+     const arena = b.allocator;
+ 
++    // The zig test suite is happy to attempt executing foreing
++    // binaries, both static and dynamic. It relies on exec(2) to
++    // return ENOEXEC as indication that this binary cannot be run on
++    // the native system. However, the static binaries pose a problem.
++    // They contain a PT_PHDR without a PT_INTERP, causing the illumos
++    // exec(2) to return ENOEXEC but also causing the kernel to drop a
++    // SIGKILL on the process. The test suite doesn't expect this and
++    // ends up dead in its tracks. Illumos drops the SIGKILL because
++    // by the time it makes this check it has already modified the
++    // process, and so its only option is to drop a SIGKILL to end the
++    // process. We should modify exec(2) to catch this condition
++    // before modifying the process, but for now we check the binary
++    // ahead of time and return InvalidExe for any file without an
++    // interpreter.
++    if (builtin.os.tag == .illumos) {
++        const has_interp = try illumosInterpCheck(argv[0]);
++
++        if (!has_interp) {
++            return error.InvalidExe;
++        }
++    }
++
+     var child = std.process.Child.init(argv, arena);
+     if (run.cwd) |lazy_cwd| {
+         child.cwd = lazy_cwd.getPath2(b, &run.step);
