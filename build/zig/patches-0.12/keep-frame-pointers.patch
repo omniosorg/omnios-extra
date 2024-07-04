@@ -1,9 +1,8 @@
-diff --git a/build.zig b/build.zig
-index 87da0e695..e1bdc45ca 100644
---- a/build.zig
-+++ b/build.zig
-@@ -197,6 +197,11 @@ pub fn build(b: *std.Build) !void {
-     exe.sanitize_thread = sanitize_thread;
+diff -wpruN --no-dereference '--exclude=*.orig' a~/build.zig a/build.zig
+--- a~/build.zig	1970-01-01 00:00:00
++++ a/build.zig	1970-01-01 00:00:00
+@@ -204,6 +204,11 @@ pub fn build(b: *std.Build) !void {
+     exe.pie = pie;
      exe.entitlements = entitlements;
  
 +    //
@@ -12,5 +11,5 @@ index 87da0e695..e1bdc45ca 100644
 +    exe.root_module.omit_frame_pointer = false;
 +
      exe.build_id = b.option(
-         std.Build.Step.Compile.BuildId,
+         std.zig.BuildId,
          "build-id",

@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=zig
-VER=0.12.0
+VER=0.12.1
 MAJVER=${VER%%.*}
 MINVER=${VER%.*}
 MINVER=${MINVER#*.}
