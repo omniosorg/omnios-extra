@@ -48,6 +48,7 @@ extra.omnios ooce/network/unbound
 extra.omnios ooce/print/cups
 extra.omnios ooce/security/gnupg
 extra.omnios ooce/security/minisign
+extra.omnios ooce/security/oath-toolkit
 extra.omnios ooce/system/htop
 extra.omnios ooce/terminal/minicom
 extra.omnios ooce/text/datamash
