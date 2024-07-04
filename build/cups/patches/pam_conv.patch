@@ -13,7 +13,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/tools/ippeveprinter.c a/tools
  #endif /* HAVE_LIBPAM */
  static int		parse_options(ippeve_client_t *client, cups_option_t **options);
  static void		process_attr_message(ippeve_job_t *job, char *message);
-@@ -5634,7 +5634,7 @@ load_ppd_attributes(
+@@ -5649,7 +5649,7 @@ load_ppd_attributes(
  static int				/* O - Success or failure */
  pam_func(
      int                      num_msg,	/* I - Number of messages */
