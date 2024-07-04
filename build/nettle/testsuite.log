@@ -1,4 +1,10 @@
 Making check in tools
+PASS: sexp-conv
+PASS: pkcs1-conv
+PASS: nettle-pbkdf2
+==================
+All 3 tests passed
+==================
 Making check in testsuite
 PASS: aes
 PASS: aes-keywrap
@@ -37,6 +43,7 @@ PASS: sha3-224
 PASS: sha3-256
 PASS: sha3-384
 PASS: sha3-512
+PASS: shake128
 PASS: shake256
 PASS: streebog
 PASS: sm3
@@ -69,6 +76,7 @@ PASS: yarrow
 PASS: xts
 PASS: pbkdf2
 SKIP: x86-ibt
+PASS: drbg-ctr-aes256
 PASS: sexp
 PASS: sexp-format
 PASS: rsa2sexp
@@ -84,6 +92,7 @@ PASS: rsa-pss-sign-tr
 PASS: rsa
 PASS: rsa-encrypt
 PASS: rsa-keygen
+PASS: rsa-oaep-encrypt
 PASS: rsa-sec-decrypt
 PASS: rsa-compute-root
 PASS: dsa
@@ -113,12 +122,20 @@ PASS: gostdsa-verify
 PASS: gostdsa-keygen
 PASS: gostdsa-vko
 PASS: cxx
-PASS: sexp-conv
-PASS: pkcs1-conv
-PASS: nettle-pbkdf2
 nm: ../libnettle.a: No such file or directory
 nm: ../libnettle.a: No such file or directory
 PASS: symbols
+SKIP: sc-cnd-memcpy
+SKIP: sc-gcm
+SKIP: sc-memeql
+SKIP: sc-pkcs1-sec-decrypt
+SKIP: sc-rsa-sec-decrypt
+SKIP: sc-rsa-oaep-encrypt
+SKIP: sc-ecdsa-sign
+SKIP: sc-curve25519-dh
+SKIP: sc-curve448-dh
+SKIP: sc-ed25519
+SKIP: sc-ed448
 PASS: dlopen
 ====================
 All 117 tests passed
@@ -126,6 +143,7 @@ All 117 tests passed
 Making check in examples
 xxxxxx
 xxxxxx
+ee
 PASS: rsa-sign
 PASS: rsa-verify
 PASS: rsa-encrypt
