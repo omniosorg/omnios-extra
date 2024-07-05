@@ -21,7 +21,6 @@
 | omnios	| 23	| chrony
 | omnios	| 26	| dma
 | extra		| 27	| postfix
-| extra   | 35  | sdns
 | illumos	| 37	| listen
 | illumos	| 50	| gdm
 | illumos	| 51	| zfssnap
@@ -86,6 +85,7 @@
 | illumos	| 25	| smmsp
 | extra		| 27	| postfix
 | extra		| 28	| postdrop
+| extra     | 35    | sdns
 | extra		| 45	| sasl
 | illumos	| 50	| gdm
 | illumos	| 52	| upnp
