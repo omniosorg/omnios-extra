@@ -68,11 +68,6 @@
                          name="start"
                          exec="%{config/exec} --config %{config/file} &amp;"
                          timeout_seconds="60">
-                <method_context security_flags="aslr">
-                    <method_credential user="$(USER)"
-                                       group="$(GROUP)"
-                                       privileges="basic,net_privaddr,!proc_info,!proc_session,!file_link_any" />
-                </method_context>
             </exec_method>
 
             <exec_method type="method"
