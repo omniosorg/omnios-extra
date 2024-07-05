@@ -25,7 +25,7 @@ DESC="One-time password components"
 # does not yet build with gcc 14
 ((GCCVER > 13)) && set_gccver 13
 
-set_arch 64
+forgo_isaexec
 # For the standard getpwnam_r
 set_standard XPG6
 
@@ -35,6 +35,8 @@ CPPFLAGS+=" -D__STDC_WANT_LIB_EXT1__"
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
 "
+
+CONFIGURE_OPTS="--disable-static"
 
 pre_configure() {
     typeset arch=$1

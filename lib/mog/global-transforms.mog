@@ -73,6 +73,8 @@
 # lib/64 -> lib/amd64 link
 <transform dir path=opt/ooce(|/.+)/lib/amd64$ -> emit \
     link path=opt/ooce%<1>/lib/64 target=amd64 >
+<transform dir path=opt/ooce(|/.+)/lib/security/amd64$ -> emit \
+    link path=opt/ooce%<1>/lib/security/64 target=amd64 >
 
 #
 # Drops
