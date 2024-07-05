@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=sdns
-VER=1.3.6
+VER=1.3.7
 PKG=ooce/network/sdns
 SUMMARY="sdns"
 DESC="Simple DNS Server"
