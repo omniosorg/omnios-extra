@@ -26,7 +26,7 @@ set_arch 64
 set_gover 1.22
 
 # No configure
-configure_amd64() { :; }
+pre_configure() { false; }
 
 CONFIG=etc/${PREFIX#/}/$PROG
 DATA=var/${PREFIX#/}/$PROG
