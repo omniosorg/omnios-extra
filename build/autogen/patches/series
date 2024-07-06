@@ -1,2 +1,1 @@
-getdefs.c.patch
-Werror.patch
+gcc14.patch
