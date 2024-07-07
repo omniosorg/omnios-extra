@@ -1,0 +1,11 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -3664,6 +3664,7 @@ else
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ #include <stdio.h>
++#include <stdlib.h>
+             int main()
+             {
+                 long long b, a = -0x3AFAFAFAFAFAFAFALL;
