@@ -1,0 +1,13 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -14096,7 +14096,8 @@ rm -f core conftest.err conftest.$ac_obj
+ else
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+-main () {
++#include <stdlib.h>
++int main () {
+               /* Are we little or big endian?  From Harbison&Steele.  */
+               union
+               {
