@@ -22,8 +22,8 @@ VER=9.28.0
 SUMMARY="Raw digital photograph decoder"
 DESC="dcraw - Decoding raw digital photographs"
 
-LCMSVER=2.15
-JASPERVER=4.0.0
+LCMSVER=2.16
+JASPERVER=4.2.4
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -33,19 +33,10 @@ XFORM_ARGS="
 
 SKIP_LICENCES='JasPer'
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 set_arch 64
+test_relver '>=' 151051 && set_clangver
 set_builddir $PROG
-
-pre_configure() {
-    typeset arch=$1
-
-    test_relver '>' 151038 && return
-
-    export CMAKE_LIBRARY_PATH=$PREFIX/${LIBDIRS[$arch]}
-}
+set_standard XPG6
 
 init
 prep_build
@@ -76,7 +67,7 @@ configure_arch() {
     typeset arch=$1
 
     CPPFLAGS+=" -I$OOCEOPT/include"
-    LDFLAGS+=" -L$OOCEOPT/${LIBDIRS[$arch]} -R$OOCEOPT/${LIBDIRS[$arch]}"
+    LDFLAGS+=" -L$OOCEOPT/${LIBDIRS[$arch]} -Wl,-R$OOCEOPT/${LIBDIRS[$arch]}"
 
     subsume_arch $arch CPPFLAGS
     subsume_arch $arch CFLAGS
@@ -86,7 +77,7 @@ configure_arch() {
 make_arch() {
     typeset arch=$1
 
-    logcmd $GCC $CPPFLAGS $CFLAGS -o dcraw dcraw.c \
+    logcmd $CC $CPPFLAGS $CFLAGS -o dcraw dcraw.c \
         $LDFLAGS -lm -ljasper -llcms2 -ljpeg -lheif || logerr "build failed"
 }
 
