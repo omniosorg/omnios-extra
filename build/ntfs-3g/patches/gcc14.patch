@@ -1,0 +1,14 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libfuse-lite/helper.c a/libfuse-lite/helper.c
+--- a~/libfuse-lite/helper.c	1970-01-01 00:00:00
++++ a/libfuse-lite/helper.c	1970-01-01 00:00:00
+@@ -6,6 +6,10 @@
+     See the file COPYING.LIB.
+ */
+ 
++#ifdef __illumos__
++#include <unistd.h>
++#endif
++
+ #include "config.h"
+ #include "fuse_i.h"
+ #include "fuse_lowlevel.h"
