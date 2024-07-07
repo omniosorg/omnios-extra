@@ -1,0 +1,21 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -6934,6 +6934,8 @@ else
+ 
+ #include <sys/types.h>
+ #include <stdarg.h>
++#include <stdlib.h>
++#include <strings.h>
+ void foo(const char *format, ...) {
+ 	va_list ap;
+ 	int len;
+@@ -6953,7 +6955,7 @@ void foo(const char *format, ...) {
+ 
+ 	exit(0);
+ }
+-main() { foo("hello"); }
++int main() { foo("hello"); }
+ 
+ _ACEOF
+ if ac_fn_c_try_run "$LINENO"; then :
