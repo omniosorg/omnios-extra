@@ -22,8 +22,7 @@ PKG=ooce/library/onig
 SUMMARY="Oniguruma"
 DESC="A modern and flexible regular expressions library"
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
+test_relver '>=' 151051 && set_clangver
 
 CONFIGURE_OPTS="--disable-static"
 
