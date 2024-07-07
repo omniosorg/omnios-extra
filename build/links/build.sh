@@ -22,13 +22,11 @@ PKG=ooce/application/links
 SUMMARY="Text mode web browser"
 DESC="$PROG - $SUMMARY"
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
-set_arch 64
-
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
+
+set_arch 64
+test_relver '>=' 151051 && set_clangver
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -38,9 +36,6 @@ XFORM_ARGS="
 "
 
 CPPFLAGS+=" -I$OPREFIX/include"
-LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
-
-NO_PARALLEL_MAKE=1
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
@@ -48,6 +43,13 @@ CONFIGURE_OPTS="
 "
 # Feature is currently incomplete
 #    --enable-javascript
+
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER
