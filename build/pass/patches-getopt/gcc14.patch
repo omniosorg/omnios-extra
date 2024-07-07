@@ -1,0 +1,14 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/gnu/getopt.c a/gnu/getopt.c
+--- a~/gnu/getopt.c	1970-01-01 00:00:00
++++ a/gnu/getopt.c	1970-01-01 00:00:00
+@@ -76,6 +76,10 @@
+ #endif
+ #endif
+ 
++#ifdef __illumos__
++#include <strings.h>
++#endif
++
+ #if defined (WIN32) && !defined (__CYGWIN32__)
+ /* It's not Unix, really.  See?  Capital letters.  */
+ #include <windows.h>

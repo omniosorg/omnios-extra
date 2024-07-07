@@ -1,2 +1,3 @@
 include_locale.patch
 Makefile.patch
+gcc14.patch
