@@ -30,6 +30,9 @@ set_patchdir patches-$sMAJVER
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
 
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
 set_arch 64
 
 NO_SONAME_EXPECTED=1
