@@ -52,6 +52,7 @@ ooce/library/libsodium
 ooce/security/oath-toolkit
 ooce/editor/joe
 ooce/multimedia/x265
+ooce/library/libde265
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

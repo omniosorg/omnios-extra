@@ -17,6 +17,7 @@ extra.omnios ooce/library/freetype2
 extra.omnios ooce/library/gnutls
 extra.omnios ooce/library/json-c
 extra.omnios ooce/library/libarchive
+extra.omnios ooce/library/libde265
 extra.omnios ooce/library/libev
 extra.omnios ooce/library/libexif
 extra.omnios ooce/library/libgif
