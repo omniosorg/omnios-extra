@@ -41,6 +41,7 @@ extra.omnios ooce/multimedia/dav1d
 extra.omnios ooce/multimedia/ffmpeg
 extra.omnios ooce/multimedia/minidlna
 extra.omnios ooce/multimedia/x264
+extra.omnios ooce/multimedia/x265
 extra.omnios ooce/network/irssi
 extra.omnios ooce/network/nsd
 extra.omnios ooce/network/openldap

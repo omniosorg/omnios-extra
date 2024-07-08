@@ -50,6 +50,7 @@ ooce/util/dtc
 ooce/util/u-boot
 ooce/library/libsodium
 ooce/security/oath-toolkit
+ooce/multimedia/x265
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
