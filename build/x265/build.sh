@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -39,6 +39,7 @@ CONFIGURE_OPTS="
 
 CXXFLAGS[aarch64]+=" -mno-outline-atomics"
 LDFLAGS[amd64]+=" -R$PREFIX/${LIBDIRS[amd64]}"
+LDFLAGS[aarch64]+=" -R$PREFIX/${LIBDIRS[aarch64]}"
 
 fix_version() {
     pushd $TMPDIR/$BUILDDIR >/dev/null
