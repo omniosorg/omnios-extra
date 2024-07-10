@@ -51,6 +51,7 @@ ooce/util/u-boot
 ooce/library/libsodium
 ooce/security/oath-toolkit
 ooce/editor/joe
+ooce/multimedia/x265
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

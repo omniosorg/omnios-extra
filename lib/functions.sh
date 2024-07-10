@@ -1026,6 +1026,16 @@ append_builddir() {
     EXTRACTED_SRC+="/$1"
 }
 
+save_builddir() {
+    save_variable BUILDDIR $*
+    save_variable EXTRACTED_SRC $*
+}
+
+restore_builddir() {
+    restore_variable BUILDDIR $*
+    restore_variable EXTRACTED_SRC $*
+}
+
 set_patchdir() {
     PATCHDIR="$1"
 }
