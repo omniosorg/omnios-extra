@@ -81,4 +81,5 @@ ooce/multimedia/ffmpeg
 .SYSROOT
 ooce/multimedia/minidlna
 ooce/util/pass
+ooce/library/libheif
 ###############################################################################

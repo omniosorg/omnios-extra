@@ -30,13 +30,14 @@ test_relver '>=' 151047 && set_clangver
 RAV1EVER=`pkg_ver rav1e`
 RAV1EVER=${RAV1EVER%.*}
 
+# TODO: we don't cross build rust software, yet. but the rav1e build-time
+# dependency is met on the build host
 BUILD_DEPENDS_IPS="
     ooce/library/libde265
     ooce/multimedia/dav1d
     =ooce/multimedia/rav1e@$RAV1EVER
     ooce/multimedia/x265
 "
-RUN_DEPENDS_IPS="=ooce/multimedia/rav1e@$RAV1EVER"
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
@@ -45,23 +46,26 @@ CONFIGURE_OPTS="
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DWITH_EXAMPLES=OFF
 "
-CONFIGURE_OPTS[i386]="
-    -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib
-"
-CONFIGURE_OPTS[amd64]="
-    -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib/amd64
-"
-
-LDFLAGS[i386]+=" -Wl,-R$PREFIX/lib"
-LDFLAGS[amd64]+=" -Wl,-R$PREFIX/lib/amd64"
 
 pre_configure() {
     typeset arch=$1
 
-    test_relver '>' 151038 && return
+    ! cross_arch $arch && RUN_DEPENDS_IPS="=ooce/multimedia/rav1e@$RAV1EVER"
 
-    export CMAKE_LIBRARY_PATH=$PREFIX/${LIBDIRS[$arch]}
+    export CMAKE_LIBRARY_PATH=${SYSROOT[$arch]}$PREFIX/${LIBDIRS[$arch]}
+
+    CONFIGURE_OPTS[$arch]="
+        -DCMAKE_INSTALL_LIBDIR=$PREFIX/${LIBDIRS[$arch]}
+        -DZLIB_INCLUDE_DIR=${SYSROOT[$arch]}/usr/include
+        -DZLIB_LIBRARY_RELEASE=${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}/libz.so
+    "
+
+    cross_arch $arch && CONFIGURE_OPTS[$arch]+=" -DWITH_RAV1E=OFF"
+
+    LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
 }
+
+CXXFLAGS[aarch64]+=" -mtls-dialect=trad"
 
 init
 download_source $PROG $PROG $VER
