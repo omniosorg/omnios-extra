@@ -57,7 +57,7 @@ init
 download_source $PROG $VER
 patch_source
 prep_build
-PKG_CONFIG_PATH=${PKG_CONFIG_PATH[amd64]} SODIUM_USE_PKG_CONFIG=ON build_rust
+PKG_CONFIG_PATH=${PKG_CONFIG_PATH[amd64]} SODIUM_USE_PKG_CONFIG=1 build_rust
 install_rust
 strip_install
 xform files/rustdesk-template.xml > $TMPDIR/rustdesk.xml

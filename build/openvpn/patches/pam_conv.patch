@@ -1,0 +1,21 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/plugins/auth-pam/auth-pam.c a/src/plugins/auth-pam/auth-pam.c
+--- a~/src/plugins/auth-pam/auth-pam.c	1970-01-01 00:00:00
++++ a/src/plugins/auth-pam/auth-pam.c	1970-01-01 00:00:00
+@@ -645,7 +645,7 @@ openvpn_plugin_abort_v1(openvpn_plugin_h
+  * PAM conversation function
+  */
+ static int
+-my_conv(int n, const struct pam_message **msg_array,
++my_conv(int n, struct pam_message **msg_array,
+         struct pam_response **response_array, void *appdata_ptr)
+ {
+     const struct user_pass *up = ( const struct user_pass *) appdata_ptr;
+@@ -667,7 +667,7 @@ my_conv(int n, const struct pam_message
+     /* loop through each PAM-module query */
+     for (i = 0; i < n; ++i)
+     {
+-        const struct pam_message *msg = msg_array[i];
++        struct pam_message *msg = msg_array[i];
+         aresp[i].resp_retcode = 0;
+         aresp[i].resp = NULL;
+ 

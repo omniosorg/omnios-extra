@@ -27,28 +27,28 @@ DESC="full featured terminal-based screen editor"
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 set_arch 64
+test_relver '>=' 151051 && set_clangver
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
-CONFIGURE_OPTS[amd64]="
+CONFIGURE_OPTS+="
     --prefix=$PREFIX
     --sysconfdir=/etc$OPREFIX
 "
+
+CPPFLAGS+=" -I/usr/include/ncurses"
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-strip_install
 make_package
 clean_up
 

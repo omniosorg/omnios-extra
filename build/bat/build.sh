@@ -26,19 +26,18 @@ BUILD_DEPENDS_IPS="
     ooce/developer/rust
 "
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 set_arch 64
 
 # ansi_colours wants gnu-ar
 export AR="$USRBIN/gar"
 
+export RUSTFLAGS="-C link-arg=-R$PREFIX/lib/amd64"
+
 init
 download_source $PROG v$VER
 patch_source
 prep_build
-build_rust
+PKG_CONFIG_PATH=${PKG_CONFIG_PATH[amd64]} RUSTONIG_SYSTEM_LIBONIG=1 build_rust
 install_rust
 strip_install
 make_package

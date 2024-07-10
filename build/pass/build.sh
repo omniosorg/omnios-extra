@@ -27,9 +27,6 @@ GETOPTVER=1.1.6
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 set_arch 64
 set_builddir password-store-$VER
 

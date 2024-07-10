@@ -1,3 +1,4 @@
+extra.omnios ooce/application/links
 extra.omnios ooce/application/mc
 extra.omnios ooce/audio/flac
 extra.omnios ooce/compress/pbzip2
@@ -7,6 +8,7 @@ extra.omnios ooce/database/lmdb
 extra.omnios ooce/database/postgresql-14
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/developer/ninja
+extra.omnios ooce/editor/joe
 extra.omnios ooce/file/tree
 extra.omnios ooce/fonts/liberation
 extra.omnios ooce/library/cairo

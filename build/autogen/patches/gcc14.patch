@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -18406,7 +18406,7 @@ else
+ 
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+-static inline foo(bar) int bar; { return bar; }
++static inline int foo(bar) int bar; { return bar; }
+ int
+ main ()
+ {

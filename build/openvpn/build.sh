@@ -45,9 +45,6 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 set_arch 64
 
 init
@@ -107,6 +104,9 @@ XFORM_ARGS="
 "
 
 export MAKE
+
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
 
 init
 prep_build

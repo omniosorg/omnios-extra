@@ -50,6 +50,7 @@ ooce/util/dtc
 ooce/util/u-boot
 ooce/library/libsodium
 ooce/security/oath-toolkit
+ooce/editor/joe
 ooce/multimedia/x265
 ###############################################################################
 .SYSROOT
@@ -64,6 +65,7 @@ ooce/network/nsd
 ooce/library/slang
 ooce/util/jq
 ooce/security/minisign
+ooce/application/links
 ###############################################################################
 .SYSROOT
 ooce/network/unbound
