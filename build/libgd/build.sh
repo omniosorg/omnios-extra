@@ -23,15 +23,14 @@ SUMMARY="libgd"
 DESC="GD is an open source code library for the dynamic creation of images by "
 DESC+="programmers"
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 SKIP_LICENCES=libgd
-
-forgo_isaexec
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
+forgo_isaexec
+test_relver '>=' 151051 && set_clangver
+set_standard XPG6
 
 BUILD_DEPENDS_IPS="
     library/fontconfig
@@ -49,20 +48,17 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
-CONFIGURE_OPTS="
-    --prefix=$PREFIX
+CONFIGURE_OPTS+="
     --disable-static
     --includedir=$OPREFIX/include
 "
-CONFIGURE_OPTS[i386]="
-    --libdir=$OPREFIX/lib
-"
-CONFIGURE_OPTS[amd64]="
-    --libdir=$OPREFIX/lib/amd64
-"
 
-LDFLAGS[i386]+=" -R$OPREFIX/lib"
-LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]+=" --libdir=$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER
