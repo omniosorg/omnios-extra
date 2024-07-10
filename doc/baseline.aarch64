@@ -42,6 +42,7 @@ extra.omnios ooce/library/tree-sitter
 extra.omnios ooce/library/unbound
 extra.omnios ooce/library/yaml
 extra.omnios ooce/multimedia/dav1d
+extra.omnios ooce/multimedia/dcraw
 extra.omnios ooce/multimedia/ffmpeg
 extra.omnios ooce/multimedia/minidlna
 extra.omnios ooce/multimedia/x264
