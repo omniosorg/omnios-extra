@@ -38,6 +38,8 @@ test_relver '>=' 151051 && set_clangver
 set_builddir $PROG
 set_standard XPG6
 
+CFLAGS[aarch64]+=" -mtls-dialect=trad"
+
 init
 prep_build
 
@@ -45,19 +47,21 @@ prep_build
 
 save_buildenv
 
-unset CONFIGURE_OPTS
-CONFIGURE_OPTS="--prefix=/usr --disable-shared"
+CONFIGURE_OPTS="--disable-shared"
 build_dependency lcms2 lcms2-$LCMSVER $PROG/lcms2 lcms2 $LCMSVER
 
-unset CONFIGURE_OPTS
-CONFIGURE_OPTS+=" -DCMAKE_INSTALL_PREFIX=/usr"
-CONFIGURE_OPTS+=" -DJAS_ENABLE_SHARED=false"
+LDFLAGS[aarch64]+=" -L${SYSROOT[aarch64]}$PREFIX/${LIBDIRS[aarch64]}"
+
+CONFIGURE_OPTS[amd64]="-DCMAKE_INSTALL_LIBDIR=${LIBDIRS[amd64]}"
+CONFIGURE_OPTS[aarch64]="
+    -DJAS_CROSSCOMPILING=ON
+    -DJAS_STDC_VERSION=201112L
+    -DCMAKE_INSTALL_LIBDIR=${LIBDIRS[aarch64]}
+"
+CONFIGURE_OPTS="-DCMAKE_INSTALL_PREFIX=$PREFIX -DJAS_ENABLE_SHARED=false"
 build_dependency -cmake jasper jasper-$JASPERVER $PROG/jasper jasper $JASPERVER
 
 restore_buildenv
-
-CPPFLAGS+=" -I$DEPROOT/usr/include"
-LDFLAGS+=" -L$DEPROOT/usr/lib"
 
 #########################################################################
 
@@ -66,8 +70,12 @@ note -n "-- Building $PROG"
 configure_arch() {
     typeset arch=$1
 
-    CPPFLAGS+=" -I$OOCEOPT/include"
-    LDFLAGS+=" -L$OOCEOPT/${LIBDIRS[$arch]} -Wl,-R$OOCEOPT/${LIBDIRS[$arch]}"
+
+    CPPFLAGS+=" -I$DEPROOT$PREFIX/include"
+    CPPFLAGS+=" -I${SYSROOT[$arch]}$PREFIX/include"
+    LDFLAGS+=" -L$DEPROOT$PREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS+=" -L${SYSROOT[$arch]}$PREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
 
     subsume_arch $arch CPPFLAGS
     subsume_arch $arch CFLAGS
