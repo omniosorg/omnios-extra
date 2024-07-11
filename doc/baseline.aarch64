@@ -5,6 +5,8 @@ extra.omnios ooce/compress/pbzip2
 extra.omnios ooce/compress/pigz
 extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
+extra.omnios ooce/database/mariadb-106
+extra.omnios ooce/database/mariadb-common
 extra.omnios ooce/database/postgresql-14
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/developer/ninja
@@ -31,6 +33,7 @@ extra.omnios ooce/library/libsodium
 extra.omnios ooce/library/libuv
 extra.omnios ooce/library/libvorbis
 extra.omnios ooce/library/libwebp
+extra.omnios ooce/library/mariadb-106
 extra.omnios ooce/library/nettle
 extra.omnios ooce/library/onig
 extra.omnios ooce/library/openldap
