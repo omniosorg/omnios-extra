@@ -1,5 +1,5 @@
 set name=pkg.fmri value=ooce/database/mariadb-common@1.0.0-$(PVER)
-set name=variant.arch value=i386
+set name=variant.arch value=$(ARCH)
 set name=variant.opensolaris.zone value=global value=nonglobal
 set name=description value="Common mariadb package"
 set name=pkg.description value="Common mariadb package"

@@ -53,6 +53,7 @@ ooce/security/oath-toolkit
 ooce/editor/joe
 ooce/multimedia/x265
 ooce/library/libde265
+ooce/database/mariadb-common
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
@@ -67,6 +68,7 @@ ooce/library/slang
 ooce/util/jq
 ooce/security/minisign
 ooce/application/links
+ooce/database/mariadb-106
 ###############################################################################
 .SYSROOT
 ooce/network/unbound
