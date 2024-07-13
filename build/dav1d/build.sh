@@ -33,8 +33,6 @@ TESTSUITE_SED='
     /^Full log written to/d
 '
 
-CFLAGS[aarch64]+=" -mno-outline-atomics"
-
 LDFLAGS[i386]+=" -lssp_ns"
 
 pre_configure() {

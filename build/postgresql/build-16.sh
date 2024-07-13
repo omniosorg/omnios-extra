@@ -69,7 +69,6 @@ XFORM_ARGS="
 "
 
 CFLAGS+=" -O3"
-CFLAGS[aarch64]+=" -mno-outline-atomics"
 CPPFLAGS+=" -DWAIT_USE_POLL"
 # postgresql has large enumerations
 CTF_FLAGS+=" -s"
