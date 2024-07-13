@@ -66,7 +66,7 @@ pre_configure() {
 
     ! cross_arch $arch && return
 
-    CONFIGURE_CMD+=" --cross-file $SRCDIR/files/aarch64-gcc.txt"
+    CONFIGURE_CMD+=" --cross-file $SRCDIR/files/$arch-gcc.txt"
 }
 
 post_install() {

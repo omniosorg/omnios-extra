@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -21,6 +21,8 @@ VER=1.51.0
 PKG=ooce/library/pango
 SUMMARY="pango"
 DESC="Pango is a library for laying out and rendering of text"
+
+forgo_isaexec
 
 # Dependencies
 HARFBUZZVER=8.2.1
@@ -51,7 +53,8 @@ XFORM_ARGS="
 pre_configure() {
     typeset arch=$1
 
-    LDFLAGS[$arch]+=" -L$PREFIX/${LIBDIRS[$arch]} -R$PREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$PREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -R$PREFIX/${LIBDIRS[$arch]}"
     [ $arch = i386 ] && LDFLAGS[$arch]+=" -lssp_ns"
 
     export MAKE
@@ -61,6 +64,12 @@ post_configure() {
     for flag in $EXPECTED_OPTIONS; do
         $EGREP -s "HAVE_$flag 1" config.h || logerr "HAVE_$flag not set"
     done
+}
+
+# we'd have to check whether the gcc version is lower or equal to 11
+# however `set_crossgcc` does not set GCCVER so we cannot check
+post_build() {
+    [ "$1" = aarch64 ] && EXPECTED_BUILD_ERRS=0 || EXPECTED_BUILD_ERRS=2
 }
 
 init
@@ -81,7 +90,6 @@ build_dependency -merge -noctf harfbuzz harfbuzz-$HARFBUZZVER \
 export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/harfbuzz"
 
 SKIP_BUILD_ERRCHK=
-test_relver '>=' 151044 && EXPECTED_BUILD_ERRS=2
 
 ######################################################################
 
@@ -92,14 +100,7 @@ export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/fribidi"
 
 ######################################################################
 
-if ((EXTRACT_MODE == 0)); then
-    logcmd find $DEPROOT -name \*.la -exec rm {} +
-    logcmd mv $DEPROOT/$PREFIX/bin/amd64/* $DEPROOT/$PREFIX/bin/ \
-        || logerr "relocate dependency binaries"
-    logcmd rm -rf $DEPROOT/$PREFIX/bin/{i386,amd64}
-fi
-
-for arch in $DEFAULT_ARCH; do
+for arch in $ARCH_LIST; do
     LDFLAGS[$arch]+=" -L$DEPROOT/$PREFIX/${LIBDIRS[$arch]}"
     addpath PKG_CONFIG_PATH[$arch] $DEPROOT/$PREFIX/${LIBDIRS[$arch]}/pkgconfig
 done
@@ -111,8 +112,12 @@ CONFIGURE_OPTS="
     -Dinstall-tests=false
     -Dintrospection=disabled
 "
-CONFIGURE_OPTS[i386]=" --libdir=$PREFIX/lib "
-CONFIGURE_OPTS[amd64]=" --libdir=$PREFIX/lib/amd64 "
+CONFIGURE_OPTS[i386]=" --libdir=$PREFIX/${LIBDIRS[i386]} "
+CONFIGURE_OPTS[amd64]=" --libdir=$PREFIX/${LIBDIRS[amd64]} "
+CONFIGURE_OPTS[aarch64]="
+    --libdir=$PREFIX/${LIBDIRS[aarch64]}
+    --cross-file $SRCDIR/files/aarch64-gcc.txt
+"
 
 EXPECTED_OPTIONS="CAIRO CAIRO_FREETYPE CAIRO_PDF CAIRO_PS CAIRO_PNG FREETYPE"
 

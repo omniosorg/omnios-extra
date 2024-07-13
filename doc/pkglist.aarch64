@@ -80,6 +80,7 @@ ooce/library/cairo
 .SYSROOT
 ooce/security/gnupg
 ooce/multimedia/ffmpeg
+ooce/library/pango
 ###############################################################################
 .SYSROOT
 ooce/multimedia/minidlna

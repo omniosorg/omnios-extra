@@ -38,6 +38,7 @@ extra.omnios ooce/library/mariadb-106
 extra.omnios ooce/library/nettle
 extra.omnios ooce/library/onig
 extra.omnios ooce/library/openldap
+extra.omnios ooce/library/pango
 extra.omnios ooce/library/pixman
 extra.omnios ooce/library/popt
 extra.omnios ooce/library/postgresql-14
