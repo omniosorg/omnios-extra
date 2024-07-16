@@ -56,7 +56,7 @@ CONFIGURE_OPTS[aarch64]+="
 "
 
 CPPFLAGS+=" -I/usr/include/ncurses"
-CXXFLAGS[aarch64]+=" -mno-outline-atomics -mtls-dialect=trad"
+CXXFLAGS[aarch64]+=" -mtls-dialect=trad"
 
 post_install() {
     [ $1 = i386 ] && return

@@ -37,7 +37,6 @@ CONFIGURE_OPTS="
     -DCMAKE_INSTALL_PREFIX=$PREFIX
 "
 
-CXXFLAGS[aarch64]+=" -mno-outline-atomics"
 LDFLAGS[amd64]+=" -R$PREFIX/${LIBDIRS[amd64]}"
 LDFLAGS[aarch64]+=" -R$PREFIX/${LIBDIRS[aarch64]}"
 

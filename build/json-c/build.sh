@@ -39,7 +39,7 @@ CONFIGURE_OPTS[amd64]="
 "
 CONFIGURE_OPTS[aarch64]=
 
-CFLAGS[aarch64]+=" -mno-outline-atomics -mtls-dialect=trad"
+CFLAGS[aarch64]+=" -mtls-dialect=trad"
 
 init
 download_source $PROG $PROG $VER

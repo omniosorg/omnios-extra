@@ -37,6 +37,7 @@ CONFIGURE_OPTS="
     --includedir=$PREFIX/include
     --disable-static
     --with-png=no
+    --with-harfbuzz=no
 "
 CONFIGURE_OPTS[i386]="
     --bindir=$PREFIX/bin/i386

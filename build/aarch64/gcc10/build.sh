@@ -72,8 +72,8 @@ export LD=/bin/ld
 export LD_FOR_HOST=/bin/ld
 export LD_FOR_TARGET=$PREFIX/bin/ld
 export AS_FOR_TARGET=$PREFIX/bin/$TRIPLET64-as
-export CFLAGS_FOR_TARGET="-mno-outline-atomics -mtls-dialect=trad"
-export CXXFLAGS_FOR_TARGET="-mno-outline-atomics -mtls-dialect=trad"
+export CFLAGS_FOR_TARGET="-mtls-dialect=trad"
+export CXXFLAGS_FOR_TARGET="-mtls-dialect=trad"
 export STRIP="/usr/bin/strip -x"
 export STRIP_FOR_TARGET="$STRIP"
 

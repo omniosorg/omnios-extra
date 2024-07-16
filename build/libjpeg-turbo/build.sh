@@ -50,7 +50,7 @@ CONFIGURE_OPTS="
     -DCMAKE_INSTALL_INCLUDEDIR=$OPREFIX/include
 "
 
-CFLAGS[aarch64]+=" -mno-outline-atomics -mtls-dialect=trad"
+CFLAGS[aarch64]+=" -mtls-dialect=trad"
 
 pre_build() {
     typeset arch=$1
