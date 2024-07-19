@@ -55,6 +55,7 @@ ooce/multimedia/x265
 ooce/library/libde265
 ooce/database/mariadb-common
 ooce/library/icu4c
+ooce/security/pam_radius
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

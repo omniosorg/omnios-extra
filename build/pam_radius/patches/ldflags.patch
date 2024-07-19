@@ -1,0 +1,14 @@
+this fixes linking ssp_ns for the 32-bit build
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -65,7 +65,7 @@ src/md5.o: src/md5.c src/md5.h
+ #	gcc -shared pam_radius_auth.o md5.o -lpam -lc -o pam_radius_auth.so
+ #
+ pam_radius_auth.so: src/pam_radius_auth.o src/md5.o
+-	$(CC) $(LDFLAGS) $^ -lpam -o pam_radius_auth.so
++	$(CC) $^ -lpam -o pam_radius_auth.so $(LDFLAGS)
+ 
+ ######################################################################
+ #
