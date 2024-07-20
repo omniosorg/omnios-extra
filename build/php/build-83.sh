@@ -18,14 +18,13 @@
 
 PROG=php
 PKG=ooce/application/php-83
-VER=8.3.8
+VER=8.3.9
 SUMMARY="PHP 8.3"
 DESC="A popular general-purpose scripting language"
 
 PANDAHASH=01eaaa9
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
+test_relver '>=' 151051 && set_clangver
 
 set_arch 64
 
