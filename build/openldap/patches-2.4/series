@@ -1,1 +1,4 @@
 dnattrfilter.patch
+configure.patch
+check_hostname.patch
+thread.patch

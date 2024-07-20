@@ -1,0 +1,49 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libraries/libldap/tls2.c a/libraries/libldap/tls2.c
+--- a~/libraries/libldap/tls2.c	1970-01-01 00:00:00
++++ a/libraries/libldap/tls2.c	1970-01-01 00:00:00
+@@ -315,6 +315,22 @@ update_flags( Sockbuf *sb, tls_session *
+ 	return tls_imp->ti_session_upflags( sb, ssl, rc );
+ }
+ 
++static int
++ldap_pvt_tls_check_hostname( LDAP *ld, void *s, const char *name_in )
++{
++	tls_session *session = s;
++
++	if (ld->ld_options.ldo_tls_require_cert != LDAP_OPT_X_TLS_NEVER &&
++	    ld->ld_options.ldo_tls_require_cert != LDAP_OPT_X_TLS_ALLOW) {
++		ld->ld_errno = tls_imp->ti_session_chkhost( ld, session, name_in );
++		if (ld->ld_errno != LDAP_SUCCESS) {
++			return ld->ld_errno;
++		}
++	}
++
++	return LDAP_SUCCESS;
++}
++
+ /*
+  * Call this to do a TLS connect on a sockbuf. ctx_arg can be
+  * a SSL_CTX * or NULL, in which case the default ctx is used.
+@@ -504,22 +520,6 @@ ldap_pvt_tls_get_peer_dn( void *s, struc
+ }
+ 
+ int
+-ldap_pvt_tls_check_hostname( LDAP *ld, void *s, const char *name_in )
+-{
+-	tls_session *session = s;
+-
+-	if (ld->ld_options.ldo_tls_require_cert != LDAP_OPT_X_TLS_NEVER &&
+-	    ld->ld_options.ldo_tls_require_cert != LDAP_OPT_X_TLS_ALLOW) {
+-		ld->ld_errno = tls_imp->ti_session_chkhost( ld, session, name_in );
+-		if (ld->ld_errno != LDAP_SUCCESS) {
+-			return ld->ld_errno;
+-		}
+-	}
+-
+-	return LDAP_SUCCESS;
+-}
+-
+-int
+ ldap_int_tls_config( LDAP *ld, int option, const char *arg )
+ {
+ 	int i;

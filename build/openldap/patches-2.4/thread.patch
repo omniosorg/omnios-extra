@@ -1,0 +1,13 @@
+thr_yield(3C) is declared in thread.h
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libraries/libldap_r/thr_posix.c a/libraries/libldap_r/thr_posix.c
+--- a~/libraries/libldap_r/thr_posix.c	1970-01-01 00:00:00
++++ a/libraries/libldap_r/thr_posix.c	1970-01-01 00:00:00
+@@ -31,6 +31,7 @@
+ #define LDAP_THREAD_IMPLEMENTATION
+ #define LDAP_THREAD_RDWR_IMPLEMENTATION
+ #include "ldap_thr_debug.h"	 /* May rename the symbols defined below */
++#include <thread.h>
+ #include <signal.h>			 /* For pthread_kill() */
+ 
+ #if HAVE_PTHREADS < 6
