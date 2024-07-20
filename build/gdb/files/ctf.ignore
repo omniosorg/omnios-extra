@@ -16,6 +16,7 @@ amd64-sol2-tdep.c
 amd64-tdep.c
 amd64.c
 annotate.c
+aranges.c
 arch-utils.c
 async-event.c
 attribute.c
@@ -104,6 +105,7 @@ exec.c
 expprint.c
 expr.c
 extension.c
+extract-store-integer.c
 f-exp.c
 f-lang.c
 f-typeprint.c
@@ -374,6 +376,7 @@ tui-out.c
 tui-regs.c
 tui-source.c
 tui-stack.c
+tui-status.c
 tui-win.c
 tui-wingeneral.c
 tui-winsource.c
