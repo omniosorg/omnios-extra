@@ -217,7 +217,7 @@
 | ooce/system/smartmontools	| 7.4		| https://sourceforge.net/projects/smartmontools/files/smartmontools/ | [omniosorg](https://github.com/omniosorg)
 | ooce/system/sysstat		| 20151012	| https://www.maier-komor.de/sysstat.html | [omniosorg](https://github.com/omniosorg)
 | ooce/system/top		| 3.8		| https://sourceforge.net/projects/unixtop/files/unixtop/ | [omniosorg](https://github.com/omniosorg)
-| ooce/system/znapzend		| 0.22.0	| https://github.com/oetiker/znapzend/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/system/znapzend		| 0.23.2	| https://github.com/oetiker/znapzend/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/zrepl		| 0.6.1		| https://github.com/zrepl/zrepl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/terminal/byobu		| 5.133		| https://launchpad.net/byobu/+download https://launchpad.net/byobu/ | [omniosorg](https://github.com/omniosorg)
 | ooce/terminal/minicom		| 2.9		| https://salsa.debian.org/api/v4/projects/minicom-team%2Fminicom/repository/tags/ https://salsa.debian.org/minicom-team/minicom/ | [omniosorg](https://github.com/omniosorg)
