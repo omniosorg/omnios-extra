@@ -197,7 +197,7 @@
 | ooce/security/minisign	| 0.11		| https://github.com/jedisct1/minisign/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/security/oath-toolkit	| 2.6.11	| https://download.savannah.nongnu.org/releases/oath-toolkit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/security/pam_radius	| 2.0.0		| https://github.com/FreeRADIUS/pam_radius/tags | [omniosorg](https://github.com/omniosorg)
-| ooce/server/apache-24		| 2.4.61	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
+| ooce/server/apache-24		| 2.4.62	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24/modules/fcgid | 2.3.9	| https://downloads.apache.org/httpd/mod_fcgid/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24/modules/wsgi | 5.0.0    | https://github.com/GrahamDumpleton/mod_wsgi/tags/ | [cgrzemba](https://github.com/cgrzemba)
 | ooce/server/caddy         | 2.8.4     | https://github.com/caddyserver/caddy/releases | [gkoh](https://github.com/gkoh)

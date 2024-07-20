@@ -18,13 +18,14 @@
 
 PROG=apache
 PKG=ooce/server/apache-24
-VER=2.4.61
+VER=2.4.62
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
 SUMMARY="Apache httpd $MAJVER"
 DESC="The Apache HTTP Server Project web server, version $MAJVER"
 
 set_arch 64
+test_relver '>=' 151051 && set_clangver
 set_builddir httpd-$VER
 
 set_patchdir patches-$sMAJVER
@@ -70,7 +71,7 @@ CONFIGURE_OPTS="
     --enable-md
 "
 
-LDFLAGS[amd64]+=" -R$OPREFIX/${LIBDIRS[amd64]}"
+LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/${LIBDIRS[amd64]}"
 
 init
 download_source $PROG httpd $VER
