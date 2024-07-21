@@ -18,7 +18,7 @@
 
 PROG=VirtualBox
 PKG=ooce/virtualization/virtualbox
-VER=7.0.18
+VER=7.0.20
 GSOAPVER=2.8.134
 GSOAPDIR=gsoap-${GSOAPVER%.*}
 SUMMARY="VirtualBox"
@@ -60,9 +60,6 @@ RUN_DEPENDS_IPS="
     ooce/library/libjpeg-turbo
     ooce/library/libvncserver
 "
-
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
 
