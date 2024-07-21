@@ -220,6 +220,7 @@ do
     unset -vn _var
 done
 
+AR=$USRBIN/ar
 CURL=$USRBIN/curl
 ELFEDIT=$USRBIN/elfedit
 GIT=$USRBIN/git

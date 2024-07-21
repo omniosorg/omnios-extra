@@ -18,8 +18,8 @@
 
 PROG=freeradius
 PKG=ooce/server/freeradius
-VER=3.2.3
-TALLOCVER=2.4.0
+VER=3.2.5
+TALLOCVER=2.4.2             # https://www.samba.org/ftp/talloc/
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
 SUMMARY="FreeRADIUS $MAJVER"
@@ -36,7 +36,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-    -DPKGROOT=$PROG-$MAJVER
+    -DPKGROOT=$PROG
     -DVERSION=$MAJVER
     -DsVERSION=$sMAJVER
     -DDsVERSION=-$sMAJVER
@@ -44,12 +44,9 @@ XFORM_ARGS="
     -DGROUP=radius -DGID=74
 "
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 set_arch 64
 set_builddir $PROG-server-$VER
-set_standard XPG4v2
+set_standard XPG6
 
 SKIP_RTIME_CHECK=1
 NO_SONAME_EXPECTED=1
@@ -57,18 +54,38 @@ NO_SONAME_EXPECTED=1
 init
 prep_build
 
-## build talloc dependency
+#########################################################################
+# build static libtalloc dependency
+
 save_buildenv
+
+post_install() {
+    typeset arch=$1
+
+    # talloc does not support buiding a static archive
+    # wipe the dynamic libraries from _deproot and
+    # build a static archive ourselves
+    logcmd $RM -f $DEPROOT$PREFIX/${LIBDIRS[$arch]}/libtalloc.* \
+        || logerr "removing dynamic libraries failed"
+
+    logcmd $AR -q "$DEPROOT$PREFIX/${LIBDIRS[$arch]}/libtalloc.a" \
+        $TMPDIR/$BUILDDIR/bin/default/talloc.c.*.o \
+        || logerr "creating archive failed"
+}
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --disable-python
 "
-build_dependency -merge talloc talloc-$TALLOCVER $PROG talloc $TALLOCVER
+build_dependency talloc talloc-$TALLOCVER $PROG talloc $TALLOCVER
 # Extract the talloc licence
 sed '/^\*/q' < $TMPDIR/talloc-$TALLOCVER/talloc.c > $TMPDIR/LICENCE.talloc
 
 restore_buildenv
+
+unset -f post_install
+
+#########################################################################
 
 note -n "Building $PROG"
 
@@ -78,11 +95,11 @@ CONFIGURE_OPTS="
     --with-logdir=/var/log$PREFIX
     --localstatedir=/var$PREFIX
     --with-raddbdir=/etc$PREFIX
-    --with-talloc-include-dir=$DESTDIR$PREFIX/include
+    --with-talloc-include-dir=$DEPROOT$PREFIX/include
 "
 CONFIGURE_OPTS[amd64]+="
-    --libdir=$PREFIX/lib/amd64
-    --with-talloc-lib-dir=$DESTDIR$PREFIX/lib/amd64
+    --libdir=$PREFIX/${LIBDIRS[amd64]}
+    --with-talloc-lib-dir=$DEPROOT$PREFIX/${LIBDIRS[amd64]}
 "
 
 pre_configure() {
@@ -91,18 +108,18 @@ pre_configure() {
     # This prevents the build from embedding the temporary build directory into
     # the runpath of every object.
     MAKE_ARGS_WS="
-        TALLOC_LDFLAGS=\"-L$DESTDIR$PREFIX/${LIBDIRS[$arch]} \
+        TALLOC_LDFLAGS=\"-L$DEPROOT$PREFIX/${LIBDIRS[$arch]} \
             -R$PREFIX/${LIBDIRS[$arch]}\"
     "
 
     # To find OpenLDAP
     CPPFLAGS+=" -I$OPREFIX/include"
-    LDFLAGS[$arch]+=" -L$OPREFIX/lib/$arch -R$OPREFIX/lib/$arch"
+    LDFLAGS[$arch]+=" -L$OPREFIX/${LIBDIRS[$arch]} -R$OPREFIX/${LIBDIRS[$arch]}"
 }
 
 download_source $PROG "$PROG-server" $VER
 patch_source
-MAKE_INSTALL_ARGS="R=$DESTDIR" build -ctf
+MAKE_INSTALL_ARGS="R=$DESTDIR" build
 xform files/freeradius-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
 install_smf ooce $PROG-$sMAJVER.xml
 add_notes README.server-install
