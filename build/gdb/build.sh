@@ -18,7 +18,7 @@
 
 PROG=gdb
 PKG=ooce/developer/gdb
-VER=14.2
+VER=15.1
 SUMMARY="$PROG - GNU Debugger"
 DESC="The GNU debugger"
 
@@ -29,10 +29,9 @@ RUN_DEPENDS_IPS+=" shell/bash"
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 set_arch 64
+# Needed for X/Open curses/termcap
+set_standard -xcurses XPG6
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}

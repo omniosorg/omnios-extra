@@ -18,7 +18,7 @@
 . ../../lib/build.sh
 
 PROG=mbuffer
-VER=20240107
+VER=20240707
 PKG=ooce/system/mbuffer
 SUMMARY="$PROG - measuring buffer"
 DESC="$PROG is a tool for buffering data streams"
@@ -27,7 +27,9 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 set_arch 64
-test_relver '>=' 151045 && set_clangver
+set_clangver
+
+set_builddir $PROG-r$VER
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}

@@ -1,0 +1,55 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/build/openldap.m4 a/build/openldap.m4
+--- a~/build/openldap.m4	1970-01-01 00:00:00
++++ a/build/openldap.m4	1970-01-01 00:00:00
+@@ -371,6 +371,7 @@ AC_DEFUN([OL_BERKELEY_DB_VERSION],
+ #ifndef NULL
+ #define NULL ((void *)0)
+ #endif
++int
+ main()
+ {
+ #if DB_VERSION_MAJOR > 1
+@@ -420,6 +421,7 @@ AC_DEFUN([OL_BERKELEY_DB_THREAD],
+ #ifndef NULL
+ #define NULL ((void *)0)
+ #endif
++int
+ main()
+ {
+ 	int rc;
+@@ -777,6 +779,7 @@ AC_CACHE_CHECK([for compatible POSIX reg
+ #include <sys/types.h>
+ #include <regex.h>
+ static char *pattern, *string;
++int
+ main()
+ {
+ 	int rc;
+@@ -804,6 +807,7 @@ AC_DEFUN([OL_C_UPPER_LOWER],
+ [AC_CACHE_CHECK([if toupper() requires islower()],ol_cv_c_upper_lower,[
+ 	AC_RUN_IFELSE([AC_LANG_SOURCE([[
+ #include <ctype.h>
++int
+ main()
+ {
+ 	if ('C' == toupper('C'))
+@@ -859,6 +863,7 @@ AC_DEFUN([OL_NONPOSIX_STRERROR_R],
+ 			]])],[ol_cv_nonposix_strerror_r=yes],[ol_cv_nonposix_strerror_r=no])
+ 	else
+ 		AC_RUN_IFELSE([AC_LANG_SOURCE([[
++			int
+ 			main() {
+ 				char buf[100];
+ 				buf[0] = 0;
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure.in a/configure.in
+--- a~/configure.in	1970-01-01 00:00:00
++++ a/configure.in	1970-01-01 00:00:00
+@@ -1469,7 +1469,7 @@ pthread_rwlock_t rwlock;
+ #ifndef NULL
+ #define NULL (void*)0
+ #endif
+-]], [[pthread_detach(NULL);]])],[ol_cv_func_pthread_detach=yes],[ol_cv_func_pthread_detach=no])
++]], [[pthread_detach(0);]])],[ol_cv_func_pthread_detach=yes],[ol_cv_func_pthread_detach=no])
+ 			])
+ 
+ 			if test $ol_cv_func_pthread_detach = no ; then

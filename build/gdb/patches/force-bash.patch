@@ -8,7 +8,7 @@ Not suitable for upstream.
 diff -wpruN --no-dereference '--exclude=*.orig' a~/gdbsupport/pathstuff.cc a/gdbsupport/pathstuff.cc
 --- a~/gdbsupport/pathstuff.cc	1970-01-01 00:00:00
 +++ a/gdbsupport/pathstuff.cc	1970-01-01 00:00:00
-@@ -373,11 +373,7 @@ find_gdb_home_config_file (const char *n
+@@ -372,11 +372,7 @@ find_gdb_home_config_file (const char *n
  const char *
  get_shell ()
  {

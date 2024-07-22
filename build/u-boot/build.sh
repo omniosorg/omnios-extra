@@ -18,7 +18,7 @@
 
 PROG=u-boot
 PKG=ooce/util/u-boot
-VER=2024.01
+VER=2024.07
 SUMMARY="Das U-Boot"
 DESC="$SUMMARY: Universal Bootloader"
 

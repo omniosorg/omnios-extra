@@ -17,20 +17,16 @@
 . ../../lib/build.sh
 
 PROG=node
-VER=20.12.2
+VER=20.15.1
 PKG=ooce/runtime/node-20
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
 DESC+="It is intended for writing scalable network programs such as web "
 DESC+="servers."
 
-min_rel 151046
-
 MAJVER=${VER%%.*}
 
 set_arch 64
-# does not yet build with clang 18
-set_clangver 17
 set_builddir $PROG-v$VER
 set_patchdir patches-$MAJVER
 
@@ -56,14 +52,9 @@ BMI_EXPECTED=1
 CONFIGURE_OPTS[amd64]=
 CONFIGURE_OPTS="
     --prefix=$PREFIX
-    --shared-nghttp2
     --shared-zlib
     --shared-brotli
 "
-
-# clang++ does not link libatomic automatically
-export LDFLAGS+=" -latomic"
-subsume_arch $BUILDARCH LDFLAGS
 
 init
 download_source $PROG $PROG v$VER

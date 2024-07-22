@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libheif
-VER=1.17.6
+VER=1.18.0
 PKG=ooce/library/libheif
 SUMMARY="HEIF and AVIF encoder"
 DESC="ISO/IEC 23008-12:2017 HEIF and AVIF (AV1 Image File Format) "
@@ -58,6 +58,10 @@ pre_configure() {
         -DCMAKE_INSTALL_LIBDIR=$PREFIX/${LIBDIRS[$arch]}
         -DZLIB_INCLUDE_DIR=${SYSROOT[$arch]}/usr/include
         -DZLIB_LIBRARY_RELEASE=${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}/libz.so
+        -DBROTLI_DEC_INCLUDE_DIR=${SYSROOT[$arch]}/usr/include
+        -DBROTLI_DEC_LIB=${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}/libbrotlidec.so
+        -DBROTLI_ENC_INCLUDE_DIR=${SYSROOT[$arch]}/usr/include
+        -DBROTLI_ENC_LIB=${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}/libbrotlienc.so
     "
 
     cross_arch $arch && CONFIGURE_OPTS[$arch]+=" -DWITH_RAV1E=OFF"

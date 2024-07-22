@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
+--- a~/Cargo.toml	1970-01-01 00:00:00
++++ a/Cargo.toml	1970-01-01 00:00:00
+@@ -84,7 +84,7 @@ test-case = "3.3"
+ 
+ [profile.release]
+ lto = true
+-strip = true
++#strip = true
+ codegen-units = 1
+ 
+ [features]
