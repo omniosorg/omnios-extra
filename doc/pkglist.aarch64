@@ -56,6 +56,7 @@ ooce/library/libde265
 ooce/database/mariadb-common
 ooce/library/icu4c
 ooce/security/pam_radius
+ooce/library/liburcu
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

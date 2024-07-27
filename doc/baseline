@@ -154,6 +154,7 @@ extra.omnios ooce/library/libogg
 extra.omnios ooce/library/libpciaccess
 extra.omnios ooce/library/libpng
 extra.omnios ooce/library/libsodium
+extra.omnios ooce/library/liburcu
 extra.omnios ooce/library/libusb-1
 extra.omnios ooce/library/libuv
 extra.omnios ooce/library/libvncserver
