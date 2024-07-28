@@ -55,35 +55,19 @@ init
 prep_build
 
 #########################################################################
-# build static libtalloc dependency
+# build libtalloc dependency
 
 save_buildenv
-
-post_install() {
-    typeset arch=$1
-
-    # talloc does not support buiding a static archive
-    # wipe the dynamic libraries from _deproot and
-    # build a static archive ourselves
-    logcmd $RM -f $DEPROOT$PREFIX/${LIBDIRS[$arch]}/libtalloc.* \
-        || logerr "removing dynamic libraries failed"
-
-    logcmd $AR -q "$DEPROOT$PREFIX/${LIBDIRS[$arch]}/libtalloc.a" \
-        $TMPDIR/$BUILDDIR/bin/default/talloc.c.*.o \
-        || logerr "creating archive failed"
-}
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --disable-python
 "
-build_dependency talloc talloc-$TALLOCVER $PROG talloc $TALLOCVER
+build_dependency -merge talloc talloc-$TALLOCVER $PROG talloc $TALLOCVER
 # Extract the talloc licence
 sed '/^\*/q' < $TMPDIR/talloc-$TALLOCVER/talloc.c > $TMPDIR/LICENCE.talloc
 
 restore_buildenv
-
-unset -f post_install
 
 #########################################################################
 
@@ -95,11 +79,11 @@ CONFIGURE_OPTS="
     --with-logdir=/var/log$PREFIX
     --localstatedir=/var$PREFIX
     --with-raddbdir=/etc$PREFIX
-    --with-talloc-include-dir=$DEPROOT$PREFIX/include
+    --with-talloc-include-dir=$DESTDIR$PREFIX/include
 "
 CONFIGURE_OPTS[amd64]+="
     --libdir=$PREFIX/${LIBDIRS[amd64]}
-    --with-talloc-lib-dir=$DEPROOT$PREFIX/${LIBDIRS[amd64]}
+    --with-talloc-lib-dir=$DESTDIR$PREFIX/${LIBDIRS[amd64]}
 "
 
 pre_configure() {
@@ -108,7 +92,7 @@ pre_configure() {
     # This prevents the build from embedding the temporary build directory into
     # the runpath of every object.
     MAKE_ARGS_WS="
-        TALLOC_LDFLAGS=\"-L$DEPROOT$PREFIX/${LIBDIRS[$arch]} \
+        TALLOC_LDFLAGS=\"-L$DESTDIR$PREFIX/${LIBDIRS[$arch]} \
             -R$PREFIX/${LIBDIRS[$arch]}\"
     "
 
