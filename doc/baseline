@@ -154,6 +154,7 @@ extra.omnios ooce/library/libogg
 extra.omnios ooce/library/libpciaccess
 extra.omnios ooce/library/libpng
 extra.omnios ooce/library/libsodium
+extra.omnios ooce/library/liburcu
 extra.omnios ooce/library/libusb-1
 extra.omnios ooce/library/libuv
 extra.omnios ooce/library/libvncserver
@@ -191,8 +192,8 @@ extra.omnios ooce/multimedia/minidlna
 extra.omnios ooce/multimedia/rav1e
 extra.omnios ooce/multimedia/x264
 extra.omnios ooce/multimedia/x265
-extra.omnios ooce/network/bind-916
 extra.omnios ooce/network/bind-918
+extra.omnios ooce/network/bind-920
 extra.omnios ooce/network/bind-common
 extra.omnios ooce/network/bwm-ng
 extra.omnios ooce/network/cyrus-imapd

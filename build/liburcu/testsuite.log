@@ -1,0 +1,252 @@
+Making check in include
+Making check in src
+Making check in doc
+Making check in examples
+Making check in tests
+Making check in utils
+Making check in common
+Making check in unit
+PASS: test_arch 1 - caa_get_cycles works
+PASS: test_arch_cxx 1 - caa_get_cycles works
+SKIP: test_get_cpu_mask_from_sysfs - Skip Linux specific tests.
+SKIP: test_get_cpu_mask_from_sysfs_cxx - Skip Linux specific tests.
+SKIP: test_get_max_cpuid_from_mask - Skip Linux specific tests.
+SKIP: test_get_max_cpuid_from_mask_cxx - Skip Linux specific tests.
+SKIP: test_get_max_cpuid_from_sysfs - Skip Linux specific tests.
+SKIP: test_get_max_cpuid_from_sysfs_cxx - Skip Linux specific tests.
+PASS: test_get_possible_cpus_array_len 1 - get_possible_cpus_array_len (32 > 0)
+SKIP: test_get_possible_cpus_array_len 2 # SKIP Linux specific test.
+PASS: test_get_possible_cpus_array_len_cxx 1 - get_possible_cpus_array_len (32 > 0)
+SKIP: test_get_possible_cpus_array_len_cxx 2 # SKIP Linux specific test.
+# test_uatomic: Test atomic ops on byte
+PASS: test_uatomic 1 - uatomic_read(&vals.c) == 10
+PASS: test_uatomic 2 - uatomic_read(&vals.c) == (__typeof__(*(&vals.c)))-1UL
+PASS: test_uatomic 3 - uatomic_read(&vals.c) == 22
+PASS: test_uatomic 4 - v == (__typeof__(*(&vals.c)))-1UL
+PASS: test_uatomic 5 - uatomic_read(&vals.c) == 22
+PASS: test_uatomic 6 - v == 22
+PASS: test_uatomic 7 - uatomic_read(&vals.c) == 55
+PASS: test_uatomic 8 - v == 22
+PASS: test_uatomic 9 - uatomic_read(&vals.c) == 23
+PASS: test_uatomic 10 - uatomic_read(&vals.c) == 22
+PASS: test_uatomic 11 - v == 96
+PASS: test_uatomic 12 - uatomic_read(&vals.c) == 96
+PASS: test_uatomic 13 - uatomic_read(&vals.c) == 122
+PASS: test_uatomic 14 - v == 121
+PASS: test_uatomic 15 - uatomic_read(&vals.c) == 119
+PASS: test_uatomic 16 - uatomic_read(&vals.c) == 121
+PASS: test_uatomic 17 - uatomic_read(&vals.c) == 1
+# test_uatomic: Test atomic ops on short
+PASS: test_uatomic 18 - uatomic_read(&vals.s) == 10
+PASS: test_uatomic 19 - uatomic_read(&vals.s) == (__typeof__(*(&vals.s)))-1UL
+PASS: test_uatomic 20 - uatomic_read(&vals.s) == 22
+PASS: test_uatomic 21 - v == (__typeof__(*(&vals.s)))-1UL
+PASS: test_uatomic 22 - uatomic_read(&vals.s) == 22
+PASS: test_uatomic 23 - v == 22
+PASS: test_uatomic 24 - uatomic_read(&vals.s) == 55
+PASS: test_uatomic 25 - v == 22
+PASS: test_uatomic 26 - uatomic_read(&vals.s) == 23
+PASS: test_uatomic 27 - uatomic_read(&vals.s) == 22
+PASS: test_uatomic 28 - v == 96
+PASS: test_uatomic 29 - uatomic_read(&vals.s) == 96
+PASS: test_uatomic 30 - uatomic_read(&vals.s) == 122
+PASS: test_uatomic 31 - v == 121
+PASS: test_uatomic 32 - uatomic_read(&vals.s) == 119
+PASS: test_uatomic 33 - uatomic_read(&vals.s) == 121
+PASS: test_uatomic 34 - uatomic_read(&vals.s) == 1
+# test_uatomic: Test atomic ops on int
+PASS: test_uatomic 35 - uatomic_read(&vals.i) == 10
+PASS: test_uatomic 36 - uatomic_read(&vals.i) == (__typeof__(*(&vals.i)))-1UL
+PASS: test_uatomic 37 - uatomic_read(&vals.i) == 22
+PASS: test_uatomic 38 - v == (__typeof__(*(&vals.i)))-1UL
+PASS: test_uatomic 39 - uatomic_read(&vals.i) == 22
+PASS: test_uatomic 40 - v == 22
+PASS: test_uatomic 41 - uatomic_read(&vals.i) == 55
+PASS: test_uatomic 42 - v == 22
+PASS: test_uatomic 43 - uatomic_read(&vals.i) == 23
+PASS: test_uatomic 44 - uatomic_read(&vals.i) == 22
+PASS: test_uatomic 45 - v == 96
+PASS: test_uatomic 46 - uatomic_read(&vals.i) == 96
+PASS: test_uatomic 47 - uatomic_read(&vals.i) == 122
+PASS: test_uatomic 48 - v == 121
+PASS: test_uatomic 49 - uatomic_read(&vals.i) == 119
+PASS: test_uatomic 50 - uatomic_read(&vals.i) == 121
+PASS: test_uatomic 51 - uatomic_read(&vals.i) == 1
+# test_uatomic: Test atomic ops on long
+PASS: test_uatomic 52 - uatomic_read(&vals.l) == 10
+PASS: test_uatomic 53 - uatomic_read(&vals.l) == (__typeof__(*(&vals.l)))-1UL
+PASS: test_uatomic 54 - uatomic_read(&vals.l) == 22
+PASS: test_uatomic 55 - v == (__typeof__(*(&vals.l)))-1UL
+PASS: test_uatomic 56 - uatomic_read(&vals.l) == 22
+PASS: test_uatomic 57 - v == 22
+PASS: test_uatomic 58 - uatomic_read(&vals.l) == 55
+PASS: test_uatomic 59 - v == 22
+PASS: test_uatomic 60 - uatomic_read(&vals.l) == 23
+PASS: test_uatomic 61 - uatomic_read(&vals.l) == 22
+PASS: test_uatomic 62 - v == 96
+PASS: test_uatomic 63 - uatomic_read(&vals.l) == 96
+PASS: test_uatomic 64 - uatomic_read(&vals.l) == 122
+PASS: test_uatomic 65 - v == 121
+PASS: test_uatomic 66 - uatomic_read(&vals.l) == 119
+PASS: test_uatomic 67 - uatomic_read(&vals.l) == 121
+PASS: test_uatomic 68 - uatomic_read(&vals.l) == 1
+# test_uatomic_cxx: Test atomic ops on byte
+PASS: test_uatomic_cxx 1 - uatomic_read(&vals.c) == 10
+PASS: test_uatomic_cxx 2 - uatomic_read(&vals.c) == (__typeof__(*(&vals.c)))-1UL
+PASS: test_uatomic_cxx 3 - uatomic_read(&vals.c) == 22
+PASS: test_uatomic_cxx 4 - v == (__typeof__(*(&vals.c)))-1UL
+PASS: test_uatomic_cxx 5 - uatomic_read(&vals.c) == 22
+PASS: test_uatomic_cxx 6 - v == 22
+PASS: test_uatomic_cxx 7 - uatomic_read(&vals.c) == 55
+PASS: test_uatomic_cxx 8 - v == 22
+PASS: test_uatomic_cxx 9 - uatomic_read(&vals.c) == 23
+PASS: test_uatomic_cxx 10 - uatomic_read(&vals.c) == 22
+PASS: test_uatomic_cxx 11 - v == 96
+PASS: test_uatomic_cxx 12 - uatomic_read(&vals.c) == 96
+PASS: test_uatomic_cxx 13 - uatomic_read(&vals.c) == 122
+PASS: test_uatomic_cxx 14 - v == 121
+PASS: test_uatomic_cxx 15 - uatomic_read(&vals.c) == 119
+PASS: test_uatomic_cxx 16 - uatomic_read(&vals.c) == 121
+PASS: test_uatomic_cxx 17 - uatomic_read(&vals.c) == 1
+# test_uatomic_cxx: Test atomic ops on short
+PASS: test_uatomic_cxx 18 - uatomic_read(&vals.s) == 10
+PASS: test_uatomic_cxx 19 - uatomic_read(&vals.s) == (__typeof__(*(&vals.s)))-1UL
+PASS: test_uatomic_cxx 20 - uatomic_read(&vals.s) == 22
+PASS: test_uatomic_cxx 21 - v == (__typeof__(*(&vals.s)))-1UL
+PASS: test_uatomic_cxx 22 - uatomic_read(&vals.s) == 22
+PASS: test_uatomic_cxx 23 - v == 22
+PASS: test_uatomic_cxx 24 - uatomic_read(&vals.s) == 55
+PASS: test_uatomic_cxx 25 - v == 22
+PASS: test_uatomic_cxx 26 - uatomic_read(&vals.s) == 23
+PASS: test_uatomic_cxx 27 - uatomic_read(&vals.s) == 22
+PASS: test_uatomic_cxx 28 - v == 96
+PASS: test_uatomic_cxx 29 - uatomic_read(&vals.s) == 96
+PASS: test_uatomic_cxx 30 - uatomic_read(&vals.s) == 122
+PASS: test_uatomic_cxx 31 - v == 121
+PASS: test_uatomic_cxx 32 - uatomic_read(&vals.s) == 119
+PASS: test_uatomic_cxx 33 - uatomic_read(&vals.s) == 121
+PASS: test_uatomic_cxx 34 - uatomic_read(&vals.s) == 1
+# test_uatomic_cxx: Test atomic ops on int
+PASS: test_uatomic_cxx 35 - uatomic_read(&vals.i) == 10
+PASS: test_uatomic_cxx 36 - uatomic_read(&vals.i) == (__typeof__(*(&vals.i)))-1UL
+PASS: test_uatomic_cxx 37 - uatomic_read(&vals.i) == 22
+PASS: test_uatomic_cxx 38 - v == (__typeof__(*(&vals.i)))-1UL
+PASS: test_uatomic_cxx 39 - uatomic_read(&vals.i) == 22
+PASS: test_uatomic_cxx 40 - v == 22
+PASS: test_uatomic_cxx 41 - uatomic_read(&vals.i) == 55
+PASS: test_uatomic_cxx 42 - v == 22
+PASS: test_uatomic_cxx 43 - uatomic_read(&vals.i) == 23
+PASS: test_uatomic_cxx 44 - uatomic_read(&vals.i) == 22
+PASS: test_uatomic_cxx 45 - v == 96
+PASS: test_uatomic_cxx 46 - uatomic_read(&vals.i) == 96
+PASS: test_uatomic_cxx 47 - uatomic_read(&vals.i) == 122
+PASS: test_uatomic_cxx 48 - v == 121
+PASS: test_uatomic_cxx 49 - uatomic_read(&vals.i) == 119
+PASS: test_uatomic_cxx 50 - uatomic_read(&vals.i) == 121
+PASS: test_uatomic_cxx 51 - uatomic_read(&vals.i) == 1
+# test_uatomic_cxx: Test atomic ops on long
+PASS: test_uatomic_cxx 52 - uatomic_read(&vals.l) == 10
+PASS: test_uatomic_cxx 53 - uatomic_read(&vals.l) == (__typeof__(*(&vals.l)))-1UL
+PASS: test_uatomic_cxx 54 - uatomic_read(&vals.l) == 22
+PASS: test_uatomic_cxx 55 - v == (__typeof__(*(&vals.l)))-1UL
+PASS: test_uatomic_cxx 56 - uatomic_read(&vals.l) == 22
+PASS: test_uatomic_cxx 57 - v == 22
+PASS: test_uatomic_cxx 58 - uatomic_read(&vals.l) == 55
+PASS: test_uatomic_cxx 59 - v == 22
+PASS: test_uatomic_cxx 60 - uatomic_read(&vals.l) == 23
+PASS: test_uatomic_cxx 61 - uatomic_read(&vals.l) == 22
+PASS: test_uatomic_cxx 62 - v == 96
+PASS: test_uatomic_cxx 63 - uatomic_read(&vals.l) == 96
+PASS: test_uatomic_cxx 64 - uatomic_read(&vals.l) == 122
+PASS: test_uatomic_cxx 65 - v == 121
+PASS: test_uatomic_cxx 66 - uatomic_read(&vals.l) == 119
+PASS: test_uatomic_cxx 67 - uatomic_read(&vals.l) == 121
+PASS: test_uatomic_cxx 68 - uatomic_read(&vals.l) == 1
+PASS: test_urcu_multiflavor 1 - !test_mf_memb()
+PASS: test_urcu_multiflavor 2 - !test_mf_mb()
+PASS: test_urcu_multiflavor 3 - !test_mf_signal()
+PASS: test_urcu_multiflavor 4 - !test_mf_qsbr()
+PASS: test_urcu_multiflavor 5 - !test_mf_bp()
+PASS: test_urcu_multiflavor_cxx 1 - !test_mf_memb()
+PASS: test_urcu_multiflavor_cxx 2 - !test_mf_mb()
+PASS: test_urcu_multiflavor_cxx 3 - !test_mf_signal()
+PASS: test_urcu_multiflavor_cxx 4 - !test_mf_qsbr()
+PASS: test_urcu_multiflavor_cxx 5 - !test_mf_bp()
+PASS: test_urcu_multiflavor_dynlink 1 - !test_mf_memb()
+PASS: test_urcu_multiflavor_dynlink 2 - !test_mf_mb()
+PASS: test_urcu_multiflavor_dynlink 3 - !test_mf_signal()
+PASS: test_urcu_multiflavor_dynlink 4 - !test_mf_qsbr()
+PASS: test_urcu_multiflavor_dynlink 5 - !test_mf_bp()
+PASS: test_urcu_multiflavor_dynlink_cxx 1 - !test_mf_memb()
+PASS: test_urcu_multiflavor_dynlink_cxx 2 - !test_mf_mb()
+PASS: test_urcu_multiflavor_dynlink_cxx 3 - !test_mf_signal()
+PASS: test_urcu_multiflavor_dynlink_cxx 4 - !test_mf_qsbr()
+PASS: test_urcu_multiflavor_dynlink_cxx 5 - !test_mf_bp()
+PASS: test_urcu_multiflavor_single_unit 1 - !test_mf_mb()
+PASS: test_urcu_multiflavor_single_unit 2 - !test_mf_bp()
+PASS: test_urcu_multiflavor_single_unit 3 - !test_mf_memb()
+PASS: test_urcu_multiflavor_single_unit 4 - !test_mf_signal()
+PASS: test_urcu_multiflavor_single_unit 5 - !test_mf_qsbr()
+PASS: test_urcu_multiflavor_single_unit_cxx 1 - !test_mf_mb()
+PASS: test_urcu_multiflavor_single_unit_cxx 2 - !test_mf_bp()
+PASS: test_urcu_multiflavor_single_unit_cxx 3 - !test_mf_memb()
+PASS: test_urcu_multiflavor_single_unit_cxx 4 - !test_mf_signal()
+PASS: test_urcu_multiflavor_single_unit_cxx 5 - !test_mf_qsbr()
+PASS: test_urcu_multiflavor_single_unit_dynlink 1 - !test_mf_mb()
+PASS: test_urcu_multiflavor_single_unit_dynlink 2 - !test_mf_bp()
+PASS: test_urcu_multiflavor_single_unit_dynlink 3 - !test_mf_memb()
+PASS: test_urcu_multiflavor_single_unit_dynlink 4 - !test_mf_signal()
+PASS: test_urcu_multiflavor_single_unit_dynlink 5 - !test_mf_qsbr()
+PASS: test_urcu_multiflavor_single_unit_dynlink_cxx 1 - !test_mf_mb()
+PASS: test_urcu_multiflavor_single_unit_dynlink_cxx 2 - !test_mf_bp()
+PASS: test_urcu_multiflavor_single_unit_dynlink_cxx 3 - !test_mf_memb()
+PASS: test_urcu_multiflavor_single_unit_dynlink_cxx 4 - !test_mf_signal()
+PASS: test_urcu_multiflavor_single_unit_dynlink_cxx 5 - !test_mf_qsbr()
+PASS: test_build 1 - cds_lfs_empty
+PASS: test_build 2 - cds_lfs_empty
+PASS: test_build 3 - cds_wfcq_empty
+PASS: test_build_cxx 1 - cds_lfs_empty
+PASS: test_build_cxx 2 - cds_lfs_empty
+PASS: test_build_cxx 3 - cds_wfcq_empty
+PASS: test_build_dynlink 1 - cds_lfs_empty
+PASS: test_build_dynlink 2 - cds_lfs_empty
+PASS: test_build_dynlink 3 - cds_wfcq_empty
+PASS: test_build_dynlink_cxx 1 - cds_lfs_empty
+PASS: test_build_dynlink_cxx 2 - cds_lfs_empty
+PASS: test_build_dynlink_cxx 3 - cds_wfcq_empty
+============================================================================
+Testsuite summary for userspace-rcu 0.14.0
+============================================================================
+# TOTAL: 200
+# PASS:  192
+# SKIP:  8
+# XFAIL: 0
+# FAIL:  0
+# XPASS: 0
+# ERROR: 0
+============================================================================
+Making check in benchmark
+============================================================================
+Testsuite summary for userspace-rcu 0.14.0
+============================================================================
+# TOTAL: 0
+# PASS:  0
+# SKIP:  0
+# XFAIL: 0
+# FAIL:  0
+# XPASS: 0
+# ERROR: 0
+============================================================================
+Making check in regression
+============================================================================
+Testsuite summary for userspace-rcu 0.14.0
+============================================================================
+# TOTAL: 0
+# PASS:  0
+# SKIP:  0
+# XFAIL: 0
+# FAIL:  0
+# XPASS: 0
+# ERROR: 0
+============================================================================
+Making check in extras

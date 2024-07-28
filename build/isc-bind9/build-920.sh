@@ -18,14 +18,15 @@
 . ../../lib/build.sh
 
 PROG=bind
-VER=9.18.28
-PKG=ooce/network/bind-918
+VER=9.20.0
+PKG=ooce/network/bind-920
 SUMMARY="ISC BIND DNS Server & Tools"
 DESC="Server & Client Utilities for DNS"
 
 BUILD_DEPENDS_IPS="
     ooce/database/lmdb
     ooce/library/json-c
+    ooce/library/liburcu
     ooce/library/libuv
 "
 
