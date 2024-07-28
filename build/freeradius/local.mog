@@ -27,7 +27,10 @@ user ftpuser=false username=$(USER) uid=$(UID) group=$(GROUP) \
 <transform path=$(PREFIX)/share/doc -> drop>
 
 # Drop rc.radiusd
-<transform path=$(PREFIX)/sbin/rc.radiusd -> drop>
+<transform path=$(PREFIX)/sbin/rc\.radiusd -> drop>
+
+# Drop talloc header and .pc
+<transform file path=.*/talloc\.(?:pc|h)$ -> drop>
 
 # Drop static libs
 <transform file path=.*\.a$ -> drop>
