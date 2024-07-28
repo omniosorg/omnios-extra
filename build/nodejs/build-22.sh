@@ -26,6 +26,9 @@ DESC+="servers."
 
 MAJVER=${VER%%.*}
 
+# fails to build with gcc 12
+((GCCVER == 12)) && set_gccver 11
+
 set_arch 64
 set_builddir $PROG-v$VER
 set_patchdir patches-$MAJVER
