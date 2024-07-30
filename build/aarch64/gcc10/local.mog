@@ -9,7 +9,7 @@
 # http://www.illumos.org/license/CDDL.
 #
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYING license=GPLv2
 license COPYING.LIB license=LGPLv2.1
@@ -25,4 +25,6 @@ license COPYING3.LIB license=LGPLv3
 
 <transform file path=.*libstdc++ -> \
     set pkg.depend.bypass-generate .*libm\.so\.0$>
+
+link path=$(PREFIX)/lib/gcc/$(TRIPLET64)/$(MAJOR) target=$(GCCVER)
 
