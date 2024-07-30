@@ -4,10 +4,9 @@ Date: Fri, 31 May 2024 20:49:32 -0700
 Subject: [PATCH 2/2] XXX use system default tty modes
 
 
-diff --git a/src/nvim/os/pty_process_unix.c b/src/nvim/os/pty_process_unix.c
-index 866a1d2d5..4a37456bd 100644
---- a/src/nvim/os/pty_process_unix.c
-+++ b/src/nvim/os/pty_process_unix.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/os/pty_process_unix.c a/src/nvim/os/pty_process_unix.c
+--- a~/src/nvim/os/pty_process_unix.c	1970-01-01 00:00:00
++++ a/src/nvim/os/pty_process_unix.c	1970-01-01 00:00:00
 @@ -46,12 +46,6 @@
  int pty_process_spawn(PtyProcess *ptyproc)
    FUNC_ATTR_NONNULL_ALL
@@ -21,7 +20,7 @@ index 866a1d2d5..4a37456bd 100644
    int status = 0;  // zero or negative error code (libuv convention)
    Process *proc = (Process *)ptyproc;
    assert(proc->err.closed);
-@@ -59,7 +53,7 @@ int pty_process_spawn(PtyProcess *ptyproc)
+@@ -59,7 +53,7 @@ int pty_process_spawn(PtyProcess *ptypro
    ptyproc->winsize = (struct winsize){ ptyproc->height, ptyproc->width, 0, 0 };
    uv_disable_stdio_inheritance();
    int master;
@@ -30,7 +29,7 @@ index 866a1d2d5..4a37456bd 100644
  
    if (pid < 0) {
      status = -errno;
-@@ -178,63 +172,6 @@ static void init_child(PtyProcess *ptyproc)
+@@ -178,63 +172,6 @@ static void init_child(PtyProcess *ptypr
    _exit(122);  // 122 is EXEC_FAILED in the Vim source.
  }
  
@@ -94,6 +93,3 @@ index 866a1d2d5..4a37456bd 100644
  static int set_duplicating_descriptor(int fd, uv_pipe_t *pipe)
    FUNC_ATTR_NONNULL_ALL
  {
--- 
-2.40.1
-
