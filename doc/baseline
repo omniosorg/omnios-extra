@@ -97,6 +97,7 @@ extra.omnios ooce/developer/llvm-15
 extra.omnios ooce/developer/llvm-16
 extra.omnios ooce/developer/llvm-17
 extra.omnios ooce/developer/llvm-18
+extra.omnios ooce/developer/llvm-19
 extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr
