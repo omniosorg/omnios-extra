@@ -62,6 +62,29 @@ XFORM_ARGS="
     -DVERSION=$MAJVER
 "
 
+post_install() {
+    for a in "${!TRIPLETS[@]}"; do
+        cfgfile="$DESTDIR$PREFIX/bin/${TRIPLETS[$a]}.cfg"
+        if cross_arch $a; then
+            # TODO: globbing only works reliably as long as we just have
+            # one cross compiler version per arch.
+            crossgccver=`pkg_ver $a/gcc*`
+            crossgccver=${crossgccver%%.*}
+            cxxinc="$CROSSTOOLS/$a/${TRIPLETS[$a]}/include/c++/$crossgccver"
+            $CAT << EOF >| $cfgfile
+--gcc-install-dir=$CROSSTOOLS/$a/lib/gcc/${TRIPLETS[$a]}/$crossgccver
+-stdlib++-isystem$cxxinc
+-stdlib++-isystem$cxxinc/${TRIPLETS[$a]}
+-stdlib++-isystem$cxxinc/backward
+EOF
+        else
+            $CAT << EOF >| $cfgfile
+--gcc-install-dir=$GCCPATH/lib/gcc/${TRIPLETS[$BUILD_ARCH]}/$DEFAULT_GCC_VER
+EOF
+        fi
+    done
+}
+
 CONFIGURE_OPTS[amd64]=
 CONFIGURE_OPTS[amd64_WS]="
     -DCMAKE_BUILD_TYPE=Release
@@ -70,7 +93,6 @@ CONFIGURE_OPTS[amd64_WS]="
     -DCMAKE_CXX_COMPILER=\"$CXX\"
     -DCMAKE_C_LINK_FLAGS=\"${LDFLAGS[amd64]}\"
     -DCMAKE_CXX_LINK_FLAGS=\"${LDFLAGS[amd64]}\"
-    -DGCC_INSTALL_PREFIX=\"$GCCPATH\"
     -DCLANG_VENDOR=\"$DISTRO/$RELVER\"
     -DCLANG_DEFAULT_RTLIB=libgcc
     -DCLANG_DEFAULT_CXX_STDLIB=libstdc++
