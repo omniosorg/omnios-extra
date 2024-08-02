@@ -9,7 +9,7 @@
 # http://www.illumos.org/license/CDDL.
 #
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 # Skip dependency resolution for python components
 <transform file path=$(PREFIX)/share/$(PROG)/.*\.py$ \
@@ -30,6 +30,9 @@ link path=$(OPREFIX)/bin/$(PROG)++-$(VERSION) target=../$(PKGROOT)/bin/$(PROG)++
 # don't mediate version specific binaries
 <transform path=.*/s?bin/[^/]+-$(VERSION)$ -> delete mediator .>
 <transform path=.*/s?bin/[^/]+-$(VERSION)$ -> delete mediator-version .>
+
+# drop config symlinks
+<transform link path=$(OPREFIX)/bin/.+\.cfg$ -> drop>
 
 license LICENSE.TXT license=Apache2
 
