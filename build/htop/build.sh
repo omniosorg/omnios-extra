@@ -23,9 +23,24 @@ SUMMARY="htop"
 DESC="An interactive process viewer for Unix"
 
 set_arch 64
-test_relver '>=' 151041 && set_clangver
+set_clangver
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
+
+# TODO: if we are going to use clang as a cross-compiler we should
+# add support to the framework; this is just a hacky workaround
+# to have at least one consumer of clang for cross-compiling
+pre_configure() {
+    typeset arch=$1
+
+    ! cross_arch $arch && return
+
+    set_clangver
+
+    PATH=$CROSSTOOLS/$arch/bin:$PATH
+    CC+=" --target=${TRIPLETS[$arch]}"
+    CFLAGS[$arch]+=" $CTF_CFLAGS"
+}
 
 init
 download_source $PROG $PROG $VER
