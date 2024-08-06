@@ -1,0 +1,17 @@
+Ensure .eh_frame is consistently read-only for aarch64
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/llvm-project/llvm/lib/MC/MCObjectFileInfo.cpp a/src/llvm-project/llvm/lib/MC/MCObjectFileInfo.cpp
+--- a~/src/llvm-project/llvm/lib/MC/MCObjectFileInfo.cpp	1970-01-01 00:00:00
++++ a/src/llvm-project/llvm/lib/MC/MCObjectFileInfo.cpp	1970-01-01 00:00:00
+@@ -381,8 +381,10 @@ void MCObjectFileInfo::initELFMCObjectFi
+   // Solaris requires different flags for .eh_frame to seemingly every other
+   // platform.
+   unsigned EHSectionFlags = ELF::SHF_ALLOC;
+-  if (T.isOSSolaris() && T.getArch() != Triple::x86_64)
++  if (T.isOSSolaris() && T.getArch() != Triple::x86_64 &&
++      T.getArch() != Triple::aarch64) {
+     EHSectionFlags |= ELF::SHF_WRITE;
++  }
+ 
+   // ELF
+   BSSSection = Ctx->getELFSection(".bss", ELF::SHT_NOBITS,

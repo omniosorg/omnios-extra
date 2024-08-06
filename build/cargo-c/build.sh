@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=cargo-c
-VER=0.10.0
+VER=0.10.3
 PKG=ooce/developer/cargo-c
 SUMMARY="build and install C-ABI compatible dynamic and static libraries"
 DESC="produces and installs a correct pkg-config file, a static library and "
@@ -48,9 +48,6 @@ build() {
 
     pushd $TMPDIR/$BUILDDIR >/dev/null
 
-    # os_info 3.8.0 is broken on illumos -
-    # See https://github.com/stanislav-tkach/os_info/issues/371
-    logcmd $CARGO update --package os_info@3.8.0 --precise 3.7.0
     logcmd $CARGO install --locked --root=$DESTDIR$PREFIX --path=. \
         || logerr "build failed"
 

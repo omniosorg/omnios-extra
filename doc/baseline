@@ -75,7 +75,6 @@ extra.omnios ooce/developer/cargo-c
 extra.omnios ooce/developer/ccache
 extra.omnios ooce/developer/clang-13
 extra.omnios ooce/developer/clang-130 r
-extra.omnios ooce/developer/clang-14
 extra.omnios ooce/developer/clang-15
 extra.omnios ooce/developer/clang-16
 extra.omnios ooce/developer/clang-17
@@ -94,7 +93,6 @@ extra.omnios ooce/developer/gperf
 extra.omnios ooce/developer/gyp
 extra.omnios ooce/developer/llvm-13
 extra.omnios ooce/developer/llvm-130 r
-extra.omnios ooce/developer/llvm-14
 extra.omnios ooce/developer/llvm-15
 extra.omnios ooce/developer/llvm-16
 extra.omnios ooce/developer/llvm-17
