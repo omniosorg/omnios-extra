@@ -5,14 +5,14 @@ failures:
 
 error in revision `x64`: test run failed!
 status: exit status: 101
-command: cd "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/abi/stack-probes.x64" && RUST_TEST_THREADS="12" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/abi/stack-probes.x64/a"
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/abi/stack-probes.x64" && RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/abi/stack-probes.x64/a"
 --- stdout -------------------------------
 status: signal: 11 (SIGSEGV) (core dumped)
 stdout: 
 stderr:
 ------------------------------------------
 --- stderr -------------------------------
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/abi/stack-probes.rs:83:5:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/abi/stack-probes.rs:87:5:
 assertion failed: stderr.contains("has overflowed its stack\n")
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ------------------------------------------
@@ -22,7 +22,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 error: test compilation failed although it shouldn't!
 status: signal: 11 (SIGSEGV) (core dumped)
-command: RUSTC_ICE="0" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/associated-consts/issue-93775.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/home/pmb/.cargo" "--sysroot" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "-C" "prefer-dynamic" "--out-dir" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/associated-consts/issue-93775" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/associated-consts/issue-93775/auxiliary"
+command: env -u RUSTC_LOG_COLOR RUSTC_ICE="0" RUST_BACKTRACE="short" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/associated-consts/issue-93775.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/.cargo" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/vendor" "--sysroot" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--check-cfg" "cfg(FALSE)" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "-C" "prefer-dynamic" "--out-dir" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/associated-consts/issue-93775" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/associated-consts/issue-93775/auxiliary"
 stdout: none
 stderr: none
 
@@ -31,28 +31,83 @@ stderr: none
 
 error in revision `x64`: test run failed!
 status: exit status: 101
-command: cd "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/abi/stack-probes-lto.x64" && RUST_TEST_THREADS="12" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/abi/stack-probes-lto.x64/a"
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/abi/stack-probes-lto.x64" && RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/abi/stack-probes-lto.x64/a"
 --- stdout -------------------------------
 status: signal: 11 (SIGSEGV) (core dumped)
 stdout: 
 stderr:
 ------------------------------------------
 --- stderr -------------------------------
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/abi/stack-probes.rs:83:5:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/abi/stack-probes.rs:87:5:
 assertion failed: stderr.contains("has overflowed its stack\n")
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ------------------------------------------
 
 
----- [ui] tests/ui/backtrace.rs stdout ----
+---- [ui] tests/ui/backtrace/dylib-dep.rs stdout ----
 
 error: test run failed!
 status: exit status: 101
-command: cd "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/backtrace" && RUST_TEST_THREADS="12" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/backtrace/a"
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/backtrace/dylib-dep" && RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/backtrace/dylib-dep/a"
 stdout: none
 --- stderr -------------------------------
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/backtrace.rs:70:5:
-bad output: thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/backtrace.rs:19:9:
+-----------------------------------
+looking for:
+	/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/backtrace/dylib-dep.rs:69
+	/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/backtrace/auxiliary/dylib-dep-helper.rs:18
+	/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/backtrace/dylib-dep.rs:68
+found:
+Backtrace [
+    { fn: "std::backtrace::Backtrace::create" },
+    { fn: "std::backtrace::Backtrace::capture" },
+    { fn: "std::panicking::try" },
+    { fn: "std::rt::lang_start_internal" },
+]
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/backtrace/dylib-dep.rs:52:9:
+expected backtrace to contain /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/backtrace/dylib-dep.rs
+stack backtrace:
+   0: rust_begin_unwind
+   1: core::panicking::panic_fmt
+   2: <unknown>
+   3: <unknown>
+   4: <unknown>
+   5: <unknown>
+   6: <unknown>
+   7: <unknown>
+   8: <unknown>
+   9: <unknown>
+  10: std::panicking::try
+  11: std::rt::lang_start_internal
+  12: <unknown>
+  13: <unknown>
+  14: <unknown>
+  15: <unknown>
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+------------------------------------------
+
+
+---- [ui] tests/ui/backtrace/std-backtrace.rs stdout ----
+
+error: test run failed!
+status: exit status: 101
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/backtrace/std-backtrace" && RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/backtrace/std-backtrace/a"
+stdout: none
+--- stderr -------------------------------
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/backtrace/std-backtrace.rs:34:5:
+assertion failed: String::from_utf8_lossy(&p.stdout).contains("backtrace::main")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+------------------------------------------
+
+
+---- [ui] tests/ui/backtrace/backtrace.rs stdout ----
+
+error: test run failed!
+status: exit status: 101
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/backtrace/backtrace" && RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/backtrace/backtrace/a"
+stdout: none
+--- stderr -------------------------------
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/backtrace/backtrace.rs:70:5:
+bad output: thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/backtrace/backtrace.rs:19:9:
 explicit panic
 stack backtrace:
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
@@ -61,182 +116,72 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ------------------------------------------
 
 
+---- [ui] tests/ui/backtrace/line-tables-only.rs stdout ----
+
+error: test run failed!
+status: exit status: 101
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/backtrace/line-tables-only" && RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/backtrace/line-tables-only/a"
+stdout: none
+--- stderr -------------------------------
+Backtrace [
+    { fn: "std::panicking::try" },
+    { fn: "std::rt::lang_start_internal" },
+]
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/backtrace/line-tables-only.rs:32:5:
+backtrace does not contain expected name foo
+stack backtrace:
+   0: rust_begin_unwind
+   1: core::panicking::panic_fmt
+   2: <unknown>
+   3: <unknown>
+   4: <unknown>
+   5: <unknown>
+   6: std::panicking::try
+   7: std::rt::lang_start_internal
+   8: <unknown>
+   9: <unknown>
+  10: <unknown>
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+------------------------------------------
+
+
 ---- [ui] tests/ui/closures/deeply-nested_closures.rs stdout ----
 
 error: test compilation failed although it shouldn't!
 status: signal: 11 (SIGSEGV) (core dumped)
-command: RUSTC_ICE="0" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/closures/deeply-nested_closures.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/home/pmb/.cargo" "--sysroot" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "-C" "prefer-dynamic" "--out-dir" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/closures/deeply-nested_closures" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/closures/deeply-nested_closures/auxiliary"
+command: env -u RUSTC_LOG_COLOR RUSTC_ICE="0" RUST_BACKTRACE="short" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/closures/deeply-nested_closures.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/.cargo" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/vendor" "--sysroot" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--check-cfg" "cfg(FALSE)" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "-C" "prefer-dynamic" "--out-dir" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/closures/deeply-nested_closures" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/closures/deeply-nested_closures/auxiliary"
 stdout: none
 stderr: none
-
-
----- [ui] tests/ui/issues/issue-21763.rs stdout ----
-diff of stderr:
-
-8	   = note: required because it appears within the type `(Rc<()>, Rc<()>)`
-9	   = note: required for `hashbrown::raw::RawTable<(Rc<()>, Rc<()>)>` to implement `Send`
-10	note: required because it appears within the type `hashbrown::map::HashMap<Rc<()>, Rc<()>, RandomState>`
--	  --> $HASHBROWN_SRC_LOCATION
-+	  --> /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/vendor/hashbrown/src/map.rs:190:12
-+	   |
-+	LL | pub struct HashMap<K, V, S = DefaultHashBuilder, A: Allocator = Global> {
-+	   |            ^^^^^^^
-12	note: required because it appears within the type `HashMap<Rc<()>, Rc<()>>`
-13	  --> $SRC_DIR/std/src/collections/hash/map.rs:LL:COL
-14	note: required by a bound in `foo`
-
-
-The actual stderr differed from the expected stderr.
-Actual stderr saved to /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/issues/issue-21763/issue-21763.stderr
-To update references, rerun the tests and pass the `--bless` flag
-To only update this specific test, also pass `--test-args issues/issue-21763.rs`
-
-error: 1 errors occurred comparing output.
-status: exit status: 1
-command: RUSTC_ICE="0" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/issues/issue-21763.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/home/pmb/.cargo" "--sysroot" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "--emit" "metadata" "-C" "prefer-dynamic" "--out-dir" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/issues/issue-21763" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/issues/issue-21763/auxiliary"
-stdout: none
---- stderr -------------------------------
-error[E0277]: `Rc<()>` cannot be sent between threads safely
-  --> /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/issues/issue-21763.rs:11:11
-   |
-LL |     foo::<HashMap<Rc<()>, Rc<()>>>();
-   |           ^^^^^^^^^^^^^^^^^^^^^^^ `Rc<()>` cannot be sent between threads safely
-   |
-   = help: within `(Rc<()>, Rc<()>)`, the trait `Send` is not implemented for `Rc<()>`, which is required by `HashMap<Rc<()>, Rc<()>>: Send`
-   = note: required because it appears within the type `(Rc<()>, Rc<()>)`
-   = note: required for `hashbrown::raw::RawTable<(Rc<()>, Rc<()>)>` to implement `Send`
-note: required because it appears within the type `hashbrown::map::HashMap<Rc<()>, Rc<()>, RandomState>`
-  --> /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/vendor/hashbrown/src/map.rs:190:12
-   |
-LL | pub struct HashMap<K, V, S = DefaultHashBuilder, A: Allocator = Global> {
-   |            ^^^^^^^
-note: required because it appears within the type `HashMap<Rc<()>, Rc<()>>`
-  --> /rustc/FAKE_PREFIX/library/std/src/collections/hash/map.rs:213:12
-note: required by a bound in `foo`
-  --> /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/issues/issue-21763.rs:8:11
-   |
-LL | fn foo<T: Send>() {}
-   |           ^^^^ required by this bound in `foo`
-
-error: aborting due to 1 previous error
-
-For more information about this error, try `rustc --explain E0277`.
-------------------------------------------
-
-
----- [ui] tests/ui/issues/issue-33992.rs stdout ----
-
-error: test compilation failed although it shouldn't!
-status: exit status: 1
-command: RUSTC_ICE="0" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/issues/issue-33992.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/home/pmb/.cargo" "--sysroot" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "-O" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "-C" "prefer-dynamic" "-o" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/issues/issue-33992/a" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/issues/issue-33992/auxiliary"
-stdout: none
---- stderr -------------------------------
-error: linking with `gcc` failed: exit status: 1
-   |
-   = note: LC_ALL="C" PATH="/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/lib/rustlib/x86_64-unknown-illumos/bin:/opt/gcc-13/bin:/tmp/build_pmb/tools:/usr/ccs/bin:/usr/bin:/usr/sbin:/opt/ooce/bin:/usr/gnu/bin:/usr/sfw/bin" VSLANG="1033" "gcc" "-m64" "-std=c99" "/tmp/rustc2QmRV7/symbols.o" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/issues/issue-33992/a.issue_33992.d461f9015d9ec370-cgu.0.rcgu.o" "-Wl,-z,ignore" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/issues/issue-33992/auxiliary" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/lib/rustlib/x86_64-unknown-illumos/lib" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/lib/rustlib/x86_64-unknown-illumos/lib" "-Wl,-Bdynamic" "-lstd-919a7acbc27892ed" "-Wl,-Bstatic" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/lib/rustlib/x86_64-unknown-illumos/lib/libcompiler_builtins-bcc29db2eafd305d.rlib" "-Wl,-Bdynamic" "-lsocket" "-lposix4" "-lpthread" "-lresolv" "-lnsl" "-lumem" "-lgcc_s" "-lm" "-lrt" "-lpthread" "-lsendfile" "-llgrp" "-lc" "-lssp" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/lib/rustlib/x86_64-unknown-illumos/lib" "-o" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/issues/issue-33992/a" "-nodefaultlibs" "-Wl,-rpath,$ORIGIN/../../../../stage2/lib/rustlib/x86_64-unknown-illumos/lib"
-   = note: Undefined            first referenced
-            symbol                  in file
-           _ZN11issue_339925TEST517h5efca60cba4bf7cbE /tmp/rustc2QmRV7/symbols.o
-           _ZN11issue_339925TEST417h2bfa3614957cbf3dE /tmp/rustc2QmRV7/symbols.o
-           ld: fatal: symbol referencing errors. No output written to /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/issues/issue-33992/a
-           collect2: error: ld returned 1 exit status
-           
-
-error: aborting due to 1 previous error
-------------------------------------------
 
 
 ---- [ui] tests/ui/issues/issue-74564-if-expr-stack-overflow.rs stdout ----
 
 error: test compilation failed although it shouldn't!
 status: signal: 11 (SIGSEGV) (core dumped)
-command: RUSTC_ICE="0" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/issues/issue-74564-if-expr-stack-overflow.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/home/pmb/.cargo" "--sysroot" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "-C" "prefer-dynamic" "--out-dir" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/issues/issue-74564-if-expr-stack-overflow" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/issues/issue-74564-if-expr-stack-overflow/auxiliary"
+command: env -u RUSTC_LOG_COLOR RUSTC_ICE="0" RUST_BACKTRACE="short" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/issues/issue-74564-if-expr-stack-overflow.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/.cargo" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/vendor" "--sysroot" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--check-cfg" "cfg(FALSE)" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "-C" "prefer-dynamic" "--out-dir" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/issues/issue-74564-if-expr-stack-overflow" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/issues/issue-74564-if-expr-stack-overflow/auxiliary"
 stdout: none
 stderr: none
 
 
----- [ui] tests/ui/panics/default-backtrace-ice.rs stdout ----
-diff of stderr:
+---- [ui] tests/ui/linkage-attr/linkage-attr-does-not-panic-llvm-issue-33992.rs stdout ----
 
-8	aborting due to `-Z treat-err-as-bug=1`
-9	stack backtrace:
-10	(end_short_backtrace)
--	(begin_short_backtrace)
--	(end_short_backtrace)
--	(begin_short_backtrace)
-14	
-15	error: the compiler unexpectedly panicked. this is a bug.
-16	
-
-
-The actual stderr differed from the expected stderr.
-Actual stderr saved to /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/default-backtrace-ice/default-backtrace-ice.stderr
-To update references, rerun the tests and pass the `--bless` flag
-To only update this specific test, also pass `--test-args panics/default-backtrace-ice.rs`
-
-error: 1 errors occurred comparing output.
-status: exit status: 101
-command: env -u RUST_BACKTRACE RUSTC_ICE="0" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/panics/default-backtrace-ice.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/home/pmb/.cargo" "--sysroot" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "--emit" "metadata" "-C" "prefer-dynamic" "--out-dir" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/default-backtrace-ice" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/default-backtrace-ice/auxiliary" "-Z" "treat-err-as-bug=1"
+error: test compilation failed although it shouldn't!
+status: exit status: 1
+command: env -u RUSTC_LOG_COLOR RUSTC_ICE="0" RUST_BACKTRACE="short" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/linkage-attr/linkage-attr-does-not-panic-llvm-issue-33992.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/.cargo" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/vendor" "--sysroot" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--check-cfg" "cfg(FALSE)" "-O" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "-C" "prefer-dynamic" "-o" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/linkage-attr/linkage-attr-does-not-panic-llvm-issue-33992/a" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/linkage-attr/linkage-attr-does-not-panic-llvm-issue-33992/auxiliary"
 stdout: none
 --- stderr -------------------------------
-error: internal compiler error[E0425]: cannot find value `missing_ident` in this scope
-  --> /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/panics/default-backtrace-ice.rs:21:13
+error: linking with `gcc` failed: exit status: 1
    |
-LL | fn main() { missing_ident; }
-   |             ^^^^^^^^^^^^^ not found in this scope
+   = note: LC_ALL="C" PATH="/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/lib/rustlib/x86_64-unknown-illumos/bin:/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/lib/rustlib/x86_64-unknown-illumos/bin:/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/lib/rustlib/x86_64-unknown-illumos/bin:/opt/gcc-13/bin:/data/omnios-build/omniosorg/r151050/_extra/tools:/usr/ccs/bin:/usr/bin:/usr/sbin:/opt/ooce/bin:/usr/gnu/bin:/usr/sfw/bin" VSLANG="1033" "gcc" "-m64" "-std=c99" "/tmp/rustcQ45x7U/symbols.o" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/linkage-attr/linkage-attr-does-not-panic-llvm-issue-33992/a.linkage_attr_does_not_panic_llvm_issue_33992.d62731e8c6f2e521-cgu.0.rcgu.o" "-Wl,-z,ignore" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/linkage-attr/linkage-attr-does-not-panic-llvm-issue-33992/auxiliary" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/lib/rustlib/x86_64-unknown-illumos/lib" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/lib/rustlib/x86_64-unknown-illumos/lib" "-Wl,-Bdynamic" "-lstd-5ac567ddc4336f41" "-Wl,-Bstatic" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/lib/rustlib/x86_64-unknown-illumos/lib/libcompiler_builtins-5f0f321d275f40bf.rlib" "-Wl,-Bdynamic" "-lsocket" "-lposix4" "-lpthread" "-lresolv" "-lnsl" "-lumem" "-lgcc_s" "-lm" "-lrt" "-lpthread" "-lsendfile" "-llgrp" "-lc" "-lssp" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/lib/rustlib/x86_64-unknown-illumos/lib" "-o" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/linkage-attr/linkage-attr-does-not-panic-llvm-issue-33992/a" "-nodefaultlibs" "-Wl,-rpath,$ORIGIN/../../../../stage2/lib/rustlib/x86_64-unknown-illumos/lib"
+   = note: Undefined            first referenced
+            symbol                  in file
+           _ZN44linkage_attr_does_not_panic_llvm_issue_339925TEST417h4aec0b22e706e69fE /tmp/rustcQ45x7U/symbols.o
+           _ZN44linkage_attr_does_not_panic_llvm_issue_339925TEST517h760d49f0d2d7d11dE /tmp/rustcQ45x7U/symbols.o
+           ld: fatal: symbol referencing errors. No output written to /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/linkage-attr/linkage-attr-does-not-panic-llvm-issue-33992/a
+           collect2: error: ld returned 1 exit status
+           
 
-thread 'rustc' panicked at compiler/rustc_errors/src/lib.rs:1745:17:
-aborting due to `-Z treat-err-as-bug=1`
-stack backtrace:
-   0: 0xfffffc7fe2d4b3b8 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h6e6d25212d06bf42
-   1: 0xfffffc7fe2d9597b - core::fmt::write::h3ac5a7ce85582018
-   2: 0xfffffc7fe2d64f0e - std::io::Write::write_fmt::h356157ebee92d872
-   3: 0xfffffc7fe2d4b1b7 - std::sys_common::backtrace::print::hb2ab28eedfaa5b2d
-   4: 0xfffffc7fe2d1407a - std::panicking::default_hook::{{closure}}::h02fa617ceb5f1240
-   5: 0xfffffc7fe2d13dd1 - std::panicking::default_hook::h9e3e44cc4d940aa1
-   6: 0xfffffc7fd9d975dd - <unknown>
-   7: 0xfffffc7fe2d15201 - std::panicking::rust_panic_with_hook::h5f65f051e2021761
-   8: 0xfffffc7fe2d4bb6c - std::panicking::begin_panic_handler::{{closure}}::h57dd2d56b4fe632a
-   9: 0xfffffc7fe2d4b879 - std::sys_common::backtrace::__rust_end_short_backtrace::hc53549f12f02cf2b
-  10: 0xfffffc7fe2d14696 - rust_begin_unwind
-  11: 0xfffffc7fe2d9ba25 - core::panicking::panic_fmt::h5128107e67ced53c
-  12: 0xfffffc7fe01a92c1 - <unknown>
-  13: 0xfffffc7fe01a8710 - <unknown>
-  14: 0xfffffc7fd9f7d61f - <unknown>
-  15: 0xfffffc7fe01a7d0c - <unknown>
-  16: 0xfffffc7fe01e4fe3 - <unknown>
-  17: 0xfffffc7fde53c93e - <unknown>
-  18: 0xfffffc7fde61137e - <unknown>
-  19: 0xfffffc7fde57276e - <unknown>
-  20: 0xfffffc7fd9f5d9d2 - <unknown>
-  21: 0xfffffc7fdeda9ab2 - <unknown>
-  22: 0xfffffc7fdeffce3d - <unknown>
-  23: 0xfffffc7fdf031e78 - <unknown>
-  24: 0xfffffc7fdee52d12 - <unknown>
-  25: 0xfffffc7fe058d2d8 - <unknown>
-  26: 0xfffffc7fe058d4b9 - <unknown>
-  27: 0xfffffc7fe058cd20 - <unknown>
-  28: 0xfffffc7fdee69bdd - <unknown>
-  29: 0xfffffc7fdfe5db64 - <unknown>
-  30: 0xfffffc7fd9daa5bc - <unknown>
-  31: 0xfffffc7fd9db5f2b - <unknown>
-  32: 0xfffffc7fd9d8e4fb - <unknown>
-  33: 0xfffffc7fd9d90882 - <unknown>
-  34: 0xfffffc7fe2d42659 - std::sys::pal::unix::thread::Thread::new::thread_start::h83815736f34df3d0
-  35: 0xfffffc7feea33e67 - _thrp_setup
-  36: 0xfffffc7feea341b0 - <unknown>
-
-error: the compiler unexpectedly panicked. this is a bug.
-
-note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
-
-note: rustc 1.78.0 (9b00956e5 2024-04-29) (OmniOS/151049) running on x86_64-unknown-illumos
-
-note: compiler flags: -Z threads=1 -Z simulate-remapped-rust-src-base=/rustc/FAKE_PREFIX -Z translate-remapped-path-to-local-path=no -Z ignore-directory-in-diagnostics-source-blocks=/home/pmb/.cargo -C codegen-units=1 -Z ui-testing -Z deduplicate-diagnostics=no -Z write-long-types-to-disk=no -C strip=debuginfo -C prefer-dynamic -C rpath -C debuginfo=0 -Z treat-err-as-bug=1
-
-query stack during panic:
-#0 [resolver_for_lowering_raw] getting the resolver for lowering
-end of query stack
+error: aborting due to 1 previous error
 ------------------------------------------
 
 
@@ -253,14 +198,14 @@ diff of run.stderr:
 
 
 The actual run.stderr differed from the expected run.stderr.
-Actual run.stderr saved to /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/issue-47429-short-backtraces.legacy/issue-47429-short-backtraces.legacy.run.stderr
+Actual run.stderr saved to /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/issue-47429-short-backtraces.legacy/issue-47429-short-backtraces.legacy.run.stderr
 
 error in revision `legacy`: 1 errors occurred comparing run output.
 status: exit status: 101
-command: cd "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/issue-47429-short-backtraces.legacy" && RUST_BACKTRACE="1" RUST_TEST_THREADS="12" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/issue-47429-short-backtraces.legacy/a"
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/issue-47429-short-backtraces.legacy" && RUST_BACKTRACE="1" RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/issue-47429-short-backtraces.legacy/a"
 stdout: none
 --- stderr -------------------------------
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/panics/issue-47429-short-backtraces.rs:23:5:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/panics/issue-47429-short-backtraces.rs:23:5:
 explicit panic
 stack backtrace:
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
@@ -280,14 +225,165 @@ diff of run.stderr:
 
 
 The actual run.stderr differed from the expected run.stderr.
-Actual run.stderr saved to /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/issue-47429-short-backtraces.v0/issue-47429-short-backtraces.v0.run.stderr
+Actual run.stderr saved to /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/issue-47429-short-backtraces.v0/issue-47429-short-backtraces.v0.run.stderr
 
 error in revision `v0`: 1 errors occurred comparing run output.
 status: exit status: 101
-command: cd "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/issue-47429-short-backtraces.v0" && RUST_BACKTRACE="1" RUST_TEST_THREADS="12" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/issue-47429-short-backtraces.v0/a"
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/issue-47429-short-backtraces.v0" && RUST_BACKTRACE="1" RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/issue-47429-short-backtraces.v0/a"
 stdout: none
 --- stderr -------------------------------
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/panics/issue-47429-short-backtraces.rs:23:5:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/panics/issue-47429-short-backtraces.rs:23:5:
+explicit panic
+stack backtrace:
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+------------------------------------------
+
+
+---- [ui] tests/ui/panics/default-backtrace-ice.rs stdout ----
+diff of stderr:
+
+8	aborting due to `-Z treat-err-as-bug=1`
+9	stack backtrace:
+10	(end_short_backtrace)
+-	(begin_short_backtrace)
+-	(end_short_backtrace)
+-	(begin_short_backtrace)
+14	
+15	error: the compiler unexpectedly panicked. this is a bug.
+16	
+
+
+The actual stderr differed from the expected stderr.
+Actual stderr saved to /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/default-backtrace-ice/default-backtrace-ice.stderr
+To update references, rerun the tests and pass the `--bless` flag
+To only update this specific test, also pass `--test-args panics/default-backtrace-ice.rs`
+
+error: 1 errors occurred comparing output.
+status: exit status: 101
+command: env -u RUSTC_LOG_COLOR -u RUST_BACKTRACE RUSTC_ICE="0" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/panics/default-backtrace-ice.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/.cargo" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/vendor" "--sysroot" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--check-cfg" "cfg(FALSE)" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "--emit" "metadata" "-C" "prefer-dynamic" "--out-dir" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/default-backtrace-ice" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/default-backtrace-ice/auxiliary" "-Z" "treat-err-as-bug=1"
+stdout: none
+--- stderr -------------------------------
+error: internal compiler error[E0425]: cannot find value `missing_ident` in this scope
+  --> /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/panics/default-backtrace-ice.rs:21:13
+   |
+LL | fn main() { missing_ident; }
+   |             ^^^^^^^^^^^^^ not found in this scope
+
+thread 'rustc' panicked at compiler/rustc_errors/src/lib.rs:1745:17:
+aborting due to `-Z treat-err-as-bug=1`
+stack backtrace:
+   0: 0xfffffaffe6bb8e7f - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::hc081a55a0f1780b5
+   1: 0xfffffaffe6c2e49b - core::fmt::write::h35f0fe8e729713e4
+   2: 0xfffffaffe6bf6a18 - std::io::Write::write_fmt::heb110bcb762ba542
+   3: 0xfffffaffe6bb8c77 - std::sys_common::backtrace::print::h0c24713efa5b4e4b
+   4: 0xfffffaffe6bc0f5a - std::panicking::default_hook::{{closure}}::hf5143a727765c9bd
+   5: 0xfffffaffe6bc0c52 - std::panicking::default_hook::hf518dfe583c971c6
+   6: 0xfffffaffd804a27c - <unknown>
+   7: 0xfffffaffe6bc1821 - std::panicking::rust_panic_with_hook::h6f0cad0c94a63f1a
+   8: 0xfffffaffe6bb945a - std::panicking::begin_panic_handler::{{closure}}::h7c1e1664d69f4de8
+   9: 0xfffffaffe6bb9089 - std::sys_common::backtrace::__rust_end_short_backtrace::h5ece08c990f68b6e
+  10: 0xfffffaffe6bc13b6 - rust_begin_unwind
+  11: 0xfffffaffe6c3afb2 - core::panicking::panic_fmt::h7b1aecc2da5994b5
+  12: 0xfffffaffde69e0f8 - <unknown>
+  13: 0xfffffaffde69d542 - <unknown>
+  14: 0xfffffaffd8239c17 - <unknown>
+  15: 0xfffffaffde69cb6c - <unknown>
+  16: 0xfffffaffde6ef7e3 - <unknown>
+  17: 0xfffffaffdcbbdd84 - <unknown>
+  18: 0xfffffaffdcc70f0b - <unknown>
+  19: 0xfffffaffdcbf2f5e - <unknown>
+  20: 0xfffffaffd8265b72 - <unknown>
+  21: 0xfffffaffdcfa7602 - <unknown>
+  22: 0xfffffaffdd0755ad - <unknown>
+  23: 0xfffffaffdd239208 - <unknown>
+  24: 0xfffffaffdd15cff2 - <unknown>
+  25: 0xfffffaffdea860b6 - <unknown>
+  26: 0xfffffaffdea86949 - <unknown>
+  27: 0xfffffaffdea8667e - <unknown>
+  28: 0xfffffaffdd170d0d - <unknown>
+  29: 0xfffffaffde32b244 - <unknown>
+  30: 0xfffffaffd8026484 - <unknown>
+  31: 0xfffffaffd7fe2957 - <unknown>
+  32: 0xfffffaffd8011e2a - <unknown>
+  33: 0xfffffaffd7fe2221 - <unknown>
+  34: 0xfffffaffd8048295 - <unknown>
+  35: 0xfffffaffd801e132 - <unknown>
+  36: 0xfffffaffe6bc727b - std::sys::pal::unix::thread::Thread::new::thread_start::hb33981c781d77ec2
+  37: 0xfffffaffe8a33e67 - _thrp_setup
+  38: 0xfffffaffe8a341b0 - <unknown>
+
+error: the compiler unexpectedly panicked. this is a bug.
+
+note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
+
+note: please make sure that you have updated to the latest nightly
+
+note: rustc 1.80.1 (3f5fd8dd4 2024-08-06) (OmniOS/151050) running on x86_64-unknown-illumos
+
+note: compiler flags: -Z threads=1 -Z simulate-remapped-rust-src-base=/rustc/FAKE_PREFIX -Z translate-remapped-path-to-local-path=no -Z ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/.cargo -Z ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/vendor -C codegen-units=1 -Z ui-testing -Z deduplicate-diagnostics=no -Z write-long-types-to-disk=no -C strip=debuginfo -C prefer-dynamic -C rpath -C debuginfo=0 -Z treat-err-as-bug=1
+
+query stack during panic:
+#0 [resolver_for_lowering_raw] getting the resolver for lowering
+end of query stack
+------------------------------------------
+
+
+---- [ui] tests/ui/panics/short-ice-remove-middle-frames.rs stdout ----
+diff of run.stderr:
+
+1	thread 'main' panicked at $DIR/short-ice-remove-middle-frames.rs:52:5:
+2	debug!!!
+3	stack backtrace:
+-	   0: std::panicking::begin_panic
+-	   1: short_ice_remove_middle_frames::seven
+-	   2: short_ice_remove_middle_frames::sixth
+-	   3: short_ice_remove_middle_frames::fifth::{{closure}}
+-	      [... omitted 4 frames ...]
+-	   4: short_ice_remove_middle_frames::second
+-	   5: short_ice_remove_middle_frames::first::{{closure}}
+-	   6: short_ice_remove_middle_frames::first
+-	   7: short_ice_remove_middle_frames::main
+-	   8: core::ops::function::FnOnce::call_once
+14	note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+15	
+
+
+The actual run.stderr differed from the expected run.stderr.
+Actual run.stderr saved to /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/short-ice-remove-middle-frames/short-ice-remove-middle-frames.run.stderr
+
+error: 1 errors occurred comparing run output.
+status: exit status: 101
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/short-ice-remove-middle-frames" && RUST_BACKTRACE="1" RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/short-ice-remove-middle-frames/a"
+stdout: none
+--- stderr -------------------------------
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/panics/short-ice-remove-middle-frames.rs:52:5:
+debug!!!
+stack backtrace:
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+------------------------------------------
+
+
+---- [ui] tests/ui/panics/runtime-switch.rs#v0 stdout ----
+diff of run.stderr:
+
+1	thread 'main' panicked at $DIR/runtime-switch.rs:26:5:
+2	explicit panic
+3	stack backtrace:
+-	   0: std::panicking::begin_panic::<&str>
+-	   1: runtime_switch::main
+6	note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+7	
+
+
+The actual run.stderr differed from the expected run.stderr.
+Actual run.stderr saved to /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/runtime-switch.v0/runtime-switch.v0.run.stderr
+
+error in revision `v0`: 1 errors occurred comparing run output.
+status: exit status: 101
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/runtime-switch.v0" && RUST_BACKTRACE="0" RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/runtime-switch.v0/a"
+stdout: none
+--- stderr -------------------------------
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/panics/runtime-switch.rs:26:5:
 explicit panic
 stack backtrace:
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
@@ -307,41 +403,14 @@ diff of run.stderr:
 
 
 The actual run.stderr differed from the expected run.stderr.
-Actual run.stderr saved to /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/runtime-switch.legacy/runtime-switch.legacy.run.stderr
+Actual run.stderr saved to /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/runtime-switch.legacy/runtime-switch.legacy.run.stderr
 
 error in revision `legacy`: 1 errors occurred comparing run output.
 status: exit status: 101
-command: cd "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/runtime-switch.legacy" && RUST_BACKTRACE="0" RUST_TEST_THREADS="12" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/runtime-switch.legacy/a"
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/runtime-switch.legacy" && RUST_BACKTRACE="0" RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/runtime-switch.legacy/a"
 stdout: none
 --- stderr -------------------------------
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/panics/runtime-switch.rs:26:5:
-explicit panic
-stack backtrace:
-note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
-------------------------------------------
-
-
----- [ui] tests/ui/panics/runtime-switch.rs#v0 stdout ----
-diff of run.stderr:
-
-1	thread 'main' panicked at $DIR/runtime-switch.rs:26:5:
-2	explicit panic
-3	stack backtrace:
--	   0: std::panicking::begin_panic::<&str>
--	   1: runtime_switch::main
-6	note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
-7	
-
-
-The actual run.stderr differed from the expected run.stderr.
-Actual run.stderr saved to /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/runtime-switch.v0/runtime-switch.v0.run.stderr
-
-error in revision `v0`: 1 errors occurred comparing run output.
-status: exit status: 101
-command: cd "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/runtime-switch.v0" && RUST_BACKTRACE="0" RUST_TEST_THREADS="12" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/runtime-switch.v0/a"
-stdout: none
---- stderr -------------------------------
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/panics/runtime-switch.rs:26:5:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/panics/runtime-switch.rs:26:5:
 explicit panic
 stack backtrace:
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
@@ -369,53 +438,27 @@ diff of run.stderr:
 
 
 The actual run.stderr differed from the expected run.stderr.
-Actual run.stderr saved to /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/short-ice-remove-middle-frames-2/short-ice-remove-middle-frames-2.run.stderr
+Actual run.stderr saved to /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/short-ice-remove-middle-frames-2/short-ice-remove-middle-frames-2.run.stderr
 
 error: 1 errors occurred comparing run output.
 status: exit status: 101
-command: cd "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/short-ice-remove-middle-frames-2" && RUST_BACKTRACE="1" RUST_TEST_THREADS="12" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/short-ice-remove-middle-frames-2/a"
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/short-ice-remove-middle-frames-2" && RUST_BACKTRACE="1" RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/panics/short-ice-remove-middle-frames-2/a"
 stdout: none
 --- stderr -------------------------------
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/panics/short-ice-remove-middle-frames-2.rs:56:5:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/panics/short-ice-remove-middle-frames-2.rs:56:5:
 debug!!!
 stack backtrace:
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 ------------------------------------------
 
 
----- [ui] tests/ui/panics/short-ice-remove-middle-frames.rs stdout ----
-diff of run.stderr:
+---- [ui] tests/ui/parser/survive-peano-lesson-queue.rs stdout ----
 
-1	thread 'main' panicked at $DIR/short-ice-remove-middle-frames.rs:52:5:
-2	debug!!!
-3	stack backtrace:
--	   0: std::panicking::begin_panic
--	   1: short_ice_remove_middle_frames::seven
--	   2: short_ice_remove_middle_frames::sixth
--	   3: short_ice_remove_middle_frames::fifth::{{closure}}
--	      [... omitted 4 frames ...]
--	   4: short_ice_remove_middle_frames::second
--	   5: short_ice_remove_middle_frames::first::{{closure}}
--	   6: short_ice_remove_middle_frames::first
--	   7: short_ice_remove_middle_frames::main
--	   8: core::ops::function::FnOnce::call_once
-14	note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
-15	
-
-
-The actual run.stderr differed from the expected run.stderr.
-Actual run.stderr saved to /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/short-ice-remove-middle-frames/short-ice-remove-middle-frames.run.stderr
-
-error: 1 errors occurred comparing run output.
-status: exit status: 101
-command: cd "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/short-ice-remove-middle-frames" && RUST_BACKTRACE="1" RUST_TEST_THREADS="12" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/panics/short-ice-remove-middle-frames/a"
+error: test compilation failed although it shouldn't!
+status: signal: 11 (SIGSEGV) (core dumped)
+command: env -u RUSTC_LOG_COLOR RUSTC_ICE="0" RUST_BACKTRACE="short" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/parser/survive-peano-lesson-queue.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/.cargo" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/vendor" "--sysroot" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--check-cfg" "cfg(FALSE)" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "-C" "prefer-dynamic" "--out-dir" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/parser/survive-peano-lesson-queue" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/parser/survive-peano-lesson-queue/auxiliary"
 stdout: none
---- stderr -------------------------------
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/panics/short-ice-remove-middle-frames.rs:52:5:
-debug!!!
-stack backtrace:
-note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
-------------------------------------------
+stderr: none
 
 
 ---- [ui] tests/ui/proc-macro/load-panic-backtrace.rs stdout ----
@@ -428,9 +471,11 @@ diff of stderr:
 +	
 +	note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
 +	
-+	note: rustc 1.78.0 (9b00956e5 2024-04-29) (OmniOS/151049) running on x86_64-unknown-illumos
++	note: please make sure that you have updated to the latest nightly
 +	
-+	note: compiler flags: -Z threads=1 -Z simulate-remapped-rust-src-base=/rustc/FAKE_PREFIX -Z translate-remapped-path-to-local-path=no -Z ignore-directory-in-diagnostics-source-blocks=/home/pmb/.cargo -C codegen-units=1 -Z ui-testing -Z deduplicate-diagnostics=no -Z write-long-types-to-disk=no -C strip=debuginfo -C prefer-dynamic -C rpath -C debuginfo=0 -Z proc-macro-backtrace
++	note: rustc 1.80.1 (3f5fd8dd4 2024-08-06) (OmniOS/151050) running on x86_64-unknown-illumos
++	
++	note: compiler flags: -Z threads=1 -Z simulate-remapped-rust-src-base=/rustc/FAKE_PREFIX -Z translate-remapped-path-to-local-path=no -Z ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/.cargo -Z ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/vendor -C codegen-units=1 -Z ui-testing -Z deduplicate-diagnostics=no -Z write-long-types-to-disk=no -C strip=debuginfo -C prefer-dynamic -C rpath -C debuginfo=0 -Z proc-macro-backtrace
 +	
 +	query stack during panic:
 +	#0 [resolver_for_lowering_raw] getting the resolver for lowering
@@ -441,16 +486,16 @@ diff of stderr:
 
 
 The actual stderr differed from the expected stderr.
-Actual stderr saved to /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/proc-macro/load-panic-backtrace/load-panic-backtrace.stderr
+Actual stderr saved to /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/proc-macro/load-panic-backtrace/load-panic-backtrace.stderr
 To update references, rerun the tests and pass the `--bless` flag
 To only update this specific test, also pass `--test-args proc-macro/load-panic-backtrace.rs`
 
 error: 1 errors occurred comparing output.
 status: exit status: 1
-command: RUSTC_ICE="0" RUST_BACKTRACE="0" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/proc-macro/load-panic-backtrace.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/home/pmb/.cargo" "--sysroot" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "--emit" "metadata" "-C" "prefer-dynamic" "--out-dir" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/proc-macro/load-panic-backtrace" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/proc-macro/load-panic-backtrace/auxiliary" "-Z" "proc-macro-backtrace"
+command: env -u RUSTC_LOG_COLOR RUSTC_ICE="0" RUST_BACKTRACE="0" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/proc-macro/load-panic-backtrace.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/.cargo" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/vendor" "--sysroot" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--check-cfg" "cfg(FALSE)" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "--emit" "metadata" "-C" "prefer-dynamic" "--out-dir" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/proc-macro/load-panic-backtrace" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/proc-macro/load-panic-backtrace/auxiliary" "-Z" "proc-macro-backtrace"
 stdout: none
 --- stderr -------------------------------
-thread 'rustc' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/proc-macro/auxiliary/test-macros.rs:43:5:
+thread 'rustc' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/proc-macro/auxiliary/test-macros.rs:43:5:
 panic-derive
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
@@ -458,15 +503,17 @@ error: the compiler unexpectedly panicked. this is a bug.
 
 note: we would appreciate a bug report: https://github.com/rust-lang/rust/issues/new?labels=C-bug%2C+I-ICE%2C+T-compiler&template=ice.md
 
-note: rustc 1.78.0 (9b00956e5 2024-04-29) (OmniOS/151049) running on x86_64-unknown-illumos
+note: please make sure that you have updated to the latest nightly
 
-note: compiler flags: -Z threads=1 -Z simulate-remapped-rust-src-base=/rustc/FAKE_PREFIX -Z translate-remapped-path-to-local-path=no -Z ignore-directory-in-diagnostics-source-blocks=/home/pmb/.cargo -C codegen-units=1 -Z ui-testing -Z deduplicate-diagnostics=no -Z write-long-types-to-disk=no -C strip=debuginfo -C prefer-dynamic -C rpath -C debuginfo=0 -Z proc-macro-backtrace
+note: rustc 1.80.1 (3f5fd8dd4 2024-08-06) (OmniOS/151050) running on x86_64-unknown-illumos
+
+note: compiler flags: -Z threads=1 -Z simulate-remapped-rust-src-base=/rustc/FAKE_PREFIX -Z translate-remapped-path-to-local-path=no -Z ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/.cargo -Z ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/vendor -C codegen-units=1 -Z ui-testing -Z deduplicate-diagnostics=no -Z write-long-types-to-disk=no -C strip=debuginfo -C prefer-dynamic -C rpath -C debuginfo=0 -Z proc-macro-backtrace
 
 query stack during panic:
 #0 [resolver_for_lowering_raw] getting the resolver for lowering
 end of query stack
 error: proc-macro derive panicked
-  --> /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/proc-macro/load-panic-backtrace.rs:11:10
+  --> /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/proc-macro/load-panic-backtrace.rs:11:10
    |
 LL | #[derive(Panic)]
    |          ^^^^^
@@ -481,7 +528,7 @@ error: aborting due to 1 previous error
 
 error: test run failed!
 status: exit status: 101
-command: cd "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/runtime/backtrace-debuginfo" && RUST_TEST_THREADS="12" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/runtime/backtrace-debuginfo/a"
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/runtime/backtrace-debuginfo" && RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/runtime/backtrace-debuginfo/a"
 --- stdout -------------------------------
 ---------------------------------------
 trace does not match position list
@@ -493,31 +540,31 @@ backtrace-debuginfo.rs:184
 
 --- stderr
 test case 0
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/runtime/backtrace-debuginfo.rs:81:5:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/runtime/backtrace-debuginfo.rs:81:5:
 explicit panic
 stack backtrace:
-   0: 0xfffffc7fef0cb3b8 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h6e6d25212d06bf42
-   1: 0xfffffc7fef11597b - core::fmt::write::h3ac5a7ce85582018
-   2: 0xfffffc7fef0e4f0e - std::io::Write::write_fmt::h356157ebee92d872
-   3: 0xfffffc7fef0cb1b7 - std::sys_common::backtrace::print::hb2ab28eedfaa5b2d
-   4: 0xfffffc7fef09407a - std::panicking::default_hook::{{closure}}::h02fa617ceb5f1240
-   5: 0xfffffc7fef093dd1 - std::panicking::default_hook::h9e3e44cc4d940aa1
-   6: 0xfffffc7fef0951cf - std::panicking::rust_panic_with_hook::h5f65f051e2021761
-   7:           0x41817f - <unknown>
-   8:           0x41737d - <unknown>
-   9:           0x418121 - <unknown>
-  10:           0x428408 - <unknown>
-  11:           0x428bc5 - <unknown>
-  12:           0x42a2b1 - <unknown>
-  13:           0x41912e - <unknown>
-  14:           0x417391 - <unknown>
-  15:           0x417e14 - <unknown>
-  16: 0xfffffc7fef0944e4 - std::panicking::try::hc08c19e72d2a5283
-  17: 0xfffffc7fef0abb6e - std::rt::lang_start_internal::haf7354e02d96bb65
-  18:           0x417de7 - <unknown>
-  19:           0x42a311 - <unknown>
-  20:           0x415807 - <unknown>
-  21:           0x415768 - <unknown>
+   0: 0xfffffaffeed68e7f - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::hc081a55a0f1780b5
+   1: 0xfffffaffeedde49b - core::fmt::write::h35f0fe8e729713e4
+   2: 0xfffffaffeeda6a18 - std::io::Write::write_fmt::heb110bcb762ba542
+   3: 0xfffffaffeed68c77 - std::sys_common::backtrace::print::h0c24713efa5b4e4b
+   4: 0xfffffaffeed70f5a - std::panicking::default_hook::{{closure}}::hf5143a727765c9bd
+   5: 0xfffffaffeed70c52 - std::panicking::default_hook::hf518dfe583c971c6
+   6: 0xfffffaffeed71802 - std::panicking::rust_panic_with_hook::h6f0cad0c94a63f1a
+   7:           0x418bff - <unknown>
+   8:           0x41791d - <unknown>
+   9:           0x418ba1 - <unknown>
+  10:           0x428507 - <unknown>
+  11:           0x428c35 - <unknown>
+  12:           0x42a1ee - <unknown>
+  13:           0x419d9e - <unknown>
+  14:           0x417931 - <unknown>
+  15:           0x4187b4 - <unknown>
+  16: 0xfffffaffeed71214 - std::panicking::try::h44b63116cd2b01fa
+  17: 0xfffffaffeeda0d3c - std::rt::lang_start_internal::h3c4b2151dc4654ff
+  18:           0x418787 - <unknown>
+  19:           0x42a251 - <unknown>
+  20:           0x415eb7 - <unknown>
+  21:           0x415e18 - <unknown>
 
 ---------------------------------------
 trace does not match position list
@@ -529,31 +576,31 @@ backtrace-debuginfo.rs:184
 
 --- stderr
 test case 1
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/runtime/backtrace-debuginfo.rs:82:5:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/runtime/backtrace-debuginfo.rs:82:5:
 explicit panic
 stack backtrace:
-   0: 0xfffffc7fef2db3b8 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h6e6d25212d06bf42
-   1: 0xfffffc7fef32597b - core::fmt::write::h3ac5a7ce85582018
-   2: 0xfffffc7fef2f4f0e - std::io::Write::write_fmt::h356157ebee92d872
-   3: 0xfffffc7fef2db1b7 - std::sys_common::backtrace::print::hb2ab28eedfaa5b2d
-   4: 0xfffffc7fef2a407a - std::panicking::default_hook::{{closure}}::h02fa617ceb5f1240
-   5: 0xfffffc7fef2a3dd1 - std::panicking::default_hook::h9e3e44cc4d940aa1
-   6: 0xfffffc7fef2a51cf - std::panicking::rust_panic_with_hook::h5f65f051e2021761
-   7:           0x41817f - <unknown>
-   8:           0x41737d - <unknown>
-   9:           0x418121 - <unknown>
-  10:           0x4284f9 - <unknown>
-  11:           0x428bc5 - <unknown>
-  12:           0x42a2b1 - <unknown>
-  13:           0x41912e - <unknown>
-  14:           0x417391 - <unknown>
-  15:           0x417e14 - <unknown>
-  16: 0xfffffc7fef2a44e4 - std::panicking::try::hc08c19e72d2a5283
-  17: 0xfffffc7fef2bbb6e - std::rt::lang_start_internal::haf7354e02d96bb65
-  18:           0x417de7 - <unknown>
-  19:           0x42a311 - <unknown>
-  20:           0x415807 - <unknown>
-  21:           0x415768 - <unknown>
+   0: 0xfffffaffeed18e7f - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::hc081a55a0f1780b5
+   1: 0xfffffaffeed8e49b - core::fmt::write::h35f0fe8e729713e4
+   2: 0xfffffaffeed56a18 - std::io::Write::write_fmt::heb110bcb762ba542
+   3: 0xfffffaffeed18c77 - std::sys_common::backtrace::print::h0c24713efa5b4e4b
+   4: 0xfffffaffeed20f5a - std::panicking::default_hook::{{closure}}::hf5143a727765c9bd
+   5: 0xfffffaffeed20c52 - std::panicking::default_hook::hf518dfe583c971c6
+   6: 0xfffffaffeed21802 - std::panicking::rust_panic_with_hook::h6f0cad0c94a63f1a
+   7:           0x418bff - <unknown>
+   8:           0x41791d - <unknown>
+   9:           0x418ba1 - <unknown>
+  10:           0x4285ab - <unknown>
+  11:           0x428c35 - <unknown>
+  12:           0x42a1ee - <unknown>
+  13:           0x419d9e - <unknown>
+  14:           0x417931 - <unknown>
+  15:           0x4187b4 - <unknown>
+  16: 0xfffffaffeed21214 - std::panicking::try::h44b63116cd2b01fa
+  17: 0xfffffaffeed50d3c - std::rt::lang_start_internal::h3c4b2151dc4654ff
+  18:           0x418787 - <unknown>
+  19:           0x42a251 - <unknown>
+  20:           0x415eb7 - <unknown>
+  21:           0x415e18 - <unknown>
 
 ---------------------------------------
 trace does not match position list
@@ -567,33 +614,33 @@ backtrace-debuginfo.rs:184
 
 --- stderr
 test case 2
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/runtime/backtrace-debuginfo.rs:84:9:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/runtime/backtrace-debuginfo.rs:84:9:
 explicit panic
 stack backtrace:
-   0: 0xfffffc7fef2db3b8 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h6e6d25212d06bf42
-   1: 0xfffffc7fef32597b - core::fmt::write::h3ac5a7ce85582018
-   2: 0xfffffc7fef2f4f0e - std::io::Write::write_fmt::h356157ebee92d872
-   3: 0xfffffc7fef2db1b7 - std::sys_common::backtrace::print::hb2ab28eedfaa5b2d
-   4: 0xfffffc7fef2a407a - std::panicking::default_hook::{{closure}}::h02fa617ceb5f1240
-   5: 0xfffffc7fef2a3dd1 - std::panicking::default_hook::h9e3e44cc4d940aa1
-   6: 0xfffffc7fef2a51cf - std::panicking::rust_panic_with_hook::h5f65f051e2021761
-   7:           0x41817f - <unknown>
-   8:           0x41737d - <unknown>
-   9:           0x418121 - <unknown>
-  10:           0x42871b - <unknown>
-  11:           0x4280f3 - <unknown>
-  12:           0x428580 - <unknown>
-  13:           0x428bc5 - <unknown>
-  14:           0x42a2b1 - <unknown>
-  15:           0x41912e - <unknown>
-  16:           0x417391 - <unknown>
-  17:           0x417e14 - <unknown>
-  18: 0xfffffc7fef2a44e4 - std::panicking::try::hc08c19e72d2a5283
-  19: 0xfffffc7fef2bbb6e - std::rt::lang_start_internal::haf7354e02d96bb65
-  20:           0x417de7 - <unknown>
-  21:           0x42a311 - <unknown>
-  22:           0x415807 - <unknown>
-  23:           0x415768 - <unknown>
+   0: 0xfffffaffef148e7f - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::hc081a55a0f1780b5
+   1: 0xfffffaffef1be49b - core::fmt::write::h35f0fe8e729713e4
+   2: 0xfffffaffef186a18 - std::io::Write::write_fmt::heb110bcb762ba542
+   3: 0xfffffaffef148c77 - std::sys_common::backtrace::print::h0c24713efa5b4e4b
+   4: 0xfffffaffef150f5a - std::panicking::default_hook::{{closure}}::hf5143a727765c9bd
+   5: 0xfffffaffef150c52 - std::panicking::default_hook::hf518dfe583c971c6
+   6: 0xfffffaffef151802 - std::panicking::rust_panic_with_hook::h6f0cad0c94a63f1a
+   7:           0x418bff - <unknown>
+   8:           0x41791d - <unknown>
+   9:           0x418ba1 - <unknown>
+  10:           0x4287cb - <unknown>
+  11:           0x428233 - <unknown>
+  12:           0x428626 - <unknown>
+  13:           0x428c35 - <unknown>
+  14:           0x42a1ee - <unknown>
+  15:           0x419d9e - <unknown>
+  16:           0x417931 - <unknown>
+  17:           0x4187b4 - <unknown>
+  18: 0xfffffaffef151214 - std::panicking::try::h44b63116cd2b01fa
+  19: 0xfffffaffef180d3c - std::rt::lang_start_internal::h3c4b2151dc4654ff
+  20:           0x418787 - <unknown>
+  21:           0x42a251 - <unknown>
+  22:           0x415eb7 - <unknown>
+  23:           0x415e18 - <unknown>
 
 ---------------------------------------
 trace does not match position list
@@ -607,32 +654,32 @@ backtrace-debuginfo.rs:184
 
 --- stderr
 test case 3
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/runtime/backtrace-debuginfo.rs:87:9:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/runtime/backtrace-debuginfo.rs:87:9:
 explicit panic
 stack backtrace:
-   0: 0xfffffc7fef03b3b8 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h6e6d25212d06bf42
-   1: 0xfffffc7fef08597b - core::fmt::write::h3ac5a7ce85582018
-   2: 0xfffffc7fef054f0e - std::io::Write::write_fmt::h356157ebee92d872
-   3: 0xfffffc7fef03b1b7 - std::sys_common::backtrace::print::hb2ab28eedfaa5b2d
-   4: 0xfffffc7fef00407a - std::panicking::default_hook::{{closure}}::h02fa617ceb5f1240
-   5: 0xfffffc7fef003dd1 - std::panicking::default_hook::h9e3e44cc4d940aa1
-   6: 0xfffffc7fef0051cf - std::panicking::rust_panic_with_hook::h5f65f051e2021761
-   7:           0x41817f - <unknown>
-   8:           0x41737d - <unknown>
-   9:           0x418121 - <unknown>
-  10:           0x42886b - <unknown>
-  11:           0x428602 - <unknown>
-  12:           0x428bc5 - <unknown>
-  13:           0x42a2b1 - <unknown>
-  14:           0x41912e - <unknown>
-  15:           0x417391 - <unknown>
-  16:           0x417e14 - <unknown>
-  17: 0xfffffc7fef0044e4 - std::panicking::try::hc08c19e72d2a5283
-  18: 0xfffffc7fef01bb6e - std::rt::lang_start_internal::haf7354e02d96bb65
-  19:           0x417de7 - <unknown>
-  20:           0x42a311 - <unknown>
-  21:           0x415807 - <unknown>
-  22:           0x415768 - <unknown>
+   0: 0xfffffaffef0e8e7f - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::hc081a55a0f1780b5
+   1: 0xfffffaffef15e49b - core::fmt::write::h35f0fe8e729713e4
+   2: 0xfffffaffef126a18 - std::io::Write::write_fmt::heb110bcb762ba542
+   3: 0xfffffaffef0e8c77 - std::sys_common::backtrace::print::h0c24713efa5b4e4b
+   4: 0xfffffaffef0f0f5a - std::panicking::default_hook::{{closure}}::hf5143a727765c9bd
+   5: 0xfffffaffef0f0c52 - std::panicking::default_hook::hf518dfe583c971c6
+   6: 0xfffffaffef0f1802 - std::panicking::rust_panic_with_hook::h6f0cad0c94a63f1a
+   7:           0x418bff - <unknown>
+   8:           0x41791d - <unknown>
+   9:           0x418ba1 - <unknown>
+  10:           0x42890b - <unknown>
+  11:           0x4286a8 - <unknown>
+  12:           0x428c35 - <unknown>
+  13:           0x42a1ee - <unknown>
+  14:           0x419d9e - <unknown>
+  15:           0x417931 - <unknown>
+  16:           0x4187b4 - <unknown>
+  17: 0xfffffaffef0f1214 - std::panicking::try::h44b63116cd2b01fa
+  18: 0xfffffaffef120d3c - std::rt::lang_start_internal::h3c4b2151dc4654ff
+  19:           0x418787 - <unknown>
+  20:           0x42a251 - <unknown>
+  21:           0x415eb7 - <unknown>
+  22:           0x415e18 - <unknown>
 
 ---------------------------------------
 trace does not match position list
@@ -644,30 +691,30 @@ backtrace-debuginfo.rs:184
 
 --- stderr
 test case 4
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/runtime/backtrace-debuginfo.rs:95:5:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/runtime/backtrace-debuginfo.rs:95:5:
 explicit panic
 stack backtrace:
-   0: 0xfffffc7feee4b3b8 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h6e6d25212d06bf42
-   1: 0xfffffc7feee9597b - core::fmt::write::h3ac5a7ce85582018
-   2: 0xfffffc7feee64f0e - std::io::Write::write_fmt::h356157ebee92d872
-   3: 0xfffffc7feee4b1b7 - std::sys_common::backtrace::print::hb2ab28eedfaa5b2d
-   4: 0xfffffc7feee1407a - std::panicking::default_hook::{{closure}}::h02fa617ceb5f1240
-   5: 0xfffffc7feee13dd1 - std::panicking::default_hook::h9e3e44cc4d940aa1
-   6: 0xfffffc7feee151cf - std::panicking::rust_panic_with_hook::h5f65f051e2021761
-   7:           0x41817f - <unknown>
-   8:           0x41737d - <unknown>
-   9:           0x418121 - <unknown>
-  10:           0x428cc6 - <unknown>
-  11:           0x42a2b1 - <unknown>
-  12:           0x41912e - <unknown>
-  13:           0x417391 - <unknown>
-  14:           0x417e14 - <unknown>
-  15: 0xfffffc7feee144e4 - std::panicking::try::hc08c19e72d2a5283
-  16: 0xfffffc7feee2bb6e - std::rt::lang_start_internal::haf7354e02d96bb65
-  17:           0x417de7 - <unknown>
-  18:           0x42a311 - <unknown>
-  19:           0x415807 - <unknown>
-  20:           0x415768 - <unknown>
+   0: 0xfffffaffef1b8e7f - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::hc081a55a0f1780b5
+   1: 0xfffffaffef22e49b - core::fmt::write::h35f0fe8e729713e4
+   2: 0xfffffaffef1f6a18 - std::io::Write::write_fmt::heb110bcb762ba542
+   3: 0xfffffaffef1b8c77 - std::sys_common::backtrace::print::h0c24713efa5b4e4b
+   4: 0xfffffaffef1c0f5a - std::panicking::default_hook::{{closure}}::hf5143a727765c9bd
+   5: 0xfffffaffef1c0c52 - std::panicking::default_hook::hf518dfe583c971c6
+   6: 0xfffffaffef1c1802 - std::panicking::rust_panic_with_hook::h6f0cad0c94a63f1a
+   7:           0x418bff - <unknown>
+   8:           0x41791d - <unknown>
+   9:           0x418ba1 - <unknown>
+  10:           0x428cfa - <unknown>
+  11:           0x42a1ee - <unknown>
+  12:           0x419d9e - <unknown>
+  13:           0x417931 - <unknown>
+  14:           0x4187b4 - <unknown>
+  15: 0xfffffaffef1c1214 - std::panicking::try::h44b63116cd2b01fa
+  16: 0xfffffaffef1f0d3c - std::rt::lang_start_internal::h3c4b2151dc4654ff
+  17:           0x418787 - <unknown>
+  18:           0x42a251 - <unknown>
+  19:           0x415eb7 - <unknown>
+  20:           0x415e18 - <unknown>
 
 ---------------------------------------
 trace does not match position list
@@ -679,30 +726,30 @@ backtrace-debuginfo.rs:184
 
 --- stderr
 test case 5
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/runtime/backtrace-debuginfo.rs:96:5:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/runtime/backtrace-debuginfo.rs:96:5:
 explicit panic
 stack backtrace:
-   0: 0xfffffc7feed6b3b8 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h6e6d25212d06bf42
-   1: 0xfffffc7feedb597b - core::fmt::write::h3ac5a7ce85582018
-   2: 0xfffffc7feed84f0e - std::io::Write::write_fmt::h356157ebee92d872
-   3: 0xfffffc7feed6b1b7 - std::sys_common::backtrace::print::hb2ab28eedfaa5b2d
-   4: 0xfffffc7feed3407a - std::panicking::default_hook::{{closure}}::h02fa617ceb5f1240
-   5: 0xfffffc7feed33dd1 - std::panicking::default_hook::h9e3e44cc4d940aa1
-   6: 0xfffffc7feed351cf - std::panicking::rust_panic_with_hook::h5f65f051e2021761
-   7:           0x41817f - <unknown>
-   8:           0x41737d - <unknown>
-   9:           0x418121 - <unknown>
-  10:           0x428daf - <unknown>
-  11:           0x42a2b1 - <unknown>
-  12:           0x41912e - <unknown>
-  13:           0x417391 - <unknown>
-  14:           0x417e14 - <unknown>
-  15: 0xfffffc7feed344e4 - std::panicking::try::hc08c19e72d2a5283
-  16: 0xfffffc7feed4bb6e - std::rt::lang_start_internal::haf7354e02d96bb65
-  17:           0x417de7 - <unknown>
-  18:           0x42a311 - <unknown>
-  19:           0x415807 - <unknown>
-  20:           0x415768 - <unknown>
+   0: 0xfffffaffef018e7f - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::hc081a55a0f1780b5
+   1: 0xfffffaffef08e49b - core::fmt::write::h35f0fe8e729713e4
+   2: 0xfffffaffef056a18 - std::io::Write::write_fmt::heb110bcb762ba542
+   3: 0xfffffaffef018c77 - std::sys_common::backtrace::print::h0c24713efa5b4e4b
+   4: 0xfffffaffef020f5a - std::panicking::default_hook::{{closure}}::hf5143a727765c9bd
+   5: 0xfffffaffef020c52 - std::panicking::default_hook::hf518dfe583c971c6
+   6: 0xfffffaffef021802 - std::panicking::rust_panic_with_hook::h6f0cad0c94a63f1a
+   7:           0x418bff - <unknown>
+   8:           0x41791d - <unknown>
+   9:           0x418ba1 - <unknown>
+  10:           0x428d9a - <unknown>
+  11:           0x42a1ee - <unknown>
+  12:           0x419d9e - <unknown>
+  13:           0x417931 - <unknown>
+  14:           0x4187b4 - <unknown>
+  15: 0xfffffaffef021214 - std::panicking::try::h44b63116cd2b01fa
+  16: 0xfffffaffef050d3c - std::rt::lang_start_internal::h3c4b2151dc4654ff
+  17:           0x418787 - <unknown>
+  18:           0x42a251 - <unknown>
+  19:           0x415eb7 - <unknown>
+  20:           0x415e18 - <unknown>
 
 ---------------------------------------
 trace does not match position list
@@ -715,30 +762,30 @@ backtrace-debuginfo.rs:184
 
 --- stderr
 test case 6
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/runtime/backtrace-debuginfo.rs:102:9:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/runtime/backtrace-debuginfo.rs:102:9:
 explicit panic
 stack backtrace:
-   0: 0xfffffc7fef2bb3b8 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h6e6d25212d06bf42
-   1: 0xfffffc7fef30597b - core::fmt::write::h3ac5a7ce85582018
-   2: 0xfffffc7fef2d4f0e - std::io::Write::write_fmt::h356157ebee92d872
-   3: 0xfffffc7fef2bb1b7 - std::sys_common::backtrace::print::hb2ab28eedfaa5b2d
-   4: 0xfffffc7fef28407a - std::panicking::default_hook::{{closure}}::h02fa617ceb5f1240
-   5: 0xfffffc7fef283dd1 - std::panicking::default_hook::h9e3e44cc4d940aa1
-   6: 0xfffffc7fef2851cf - std::panicking::rust_panic_with_hook::h5f65f051e2021761
-   7:           0x41817f - <unknown>
-   8:           0x41737d - <unknown>
-   9:           0x418121 - <unknown>
-  10:           0x428ee6 - <unknown>
-  11:           0x42a2b1 - <unknown>
-  12:           0x41912e - <unknown>
-  13:           0x417391 - <unknown>
-  14:           0x417e14 - <unknown>
-  15: 0xfffffc7fef2844e4 - std::panicking::try::hc08c19e72d2a5283
-  16: 0xfffffc7fef29bb6e - std::rt::lang_start_internal::haf7354e02d96bb65
-  17:           0x417de7 - <unknown>
-  18:           0x42a311 - <unknown>
-  19:           0x415807 - <unknown>
-  20:           0x415768 - <unknown>
+   0: 0xfffffaffef0a8e7f - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::hc081a55a0f1780b5
+   1: 0xfffffaffef11e49b - core::fmt::write::h35f0fe8e729713e4
+   2: 0xfffffaffef0e6a18 - std::io::Write::write_fmt::heb110bcb762ba542
+   3: 0xfffffaffef0a8c77 - std::sys_common::backtrace::print::h0c24713efa5b4e4b
+   4: 0xfffffaffef0b0f5a - std::panicking::default_hook::{{closure}}::hf5143a727765c9bd
+   5: 0xfffffaffef0b0c52 - std::panicking::default_hook::hf518dfe583c971c6
+   6: 0xfffffaffef0b1802 - std::panicking::rust_panic_with_hook::h6f0cad0c94a63f1a
+   7:           0x418bff - <unknown>
+   8:           0x41791d - <unknown>
+   9:           0x418ba1 - <unknown>
+  10:           0x428ec3 - <unknown>
+  11:           0x42a1ee - <unknown>
+  12:           0x419d9e - <unknown>
+  13:           0x417931 - <unknown>
+  14:           0x4187b4 - <unknown>
+  15: 0xfffffaffef0b1214 - std::panicking::try::h44b63116cd2b01fa
+  16: 0xfffffaffef0e0d3c - std::rt::lang_start_internal::h3c4b2151dc4654ff
+  17:           0x418787 - <unknown>
+  18:           0x42a251 - <unknown>
+  19:           0x415eb7 - <unknown>
+  20:           0x415e18 - <unknown>
 
 ---------------------------------------
 trace does not match position list
@@ -752,32 +799,32 @@ backtrace-debuginfo.rs:184
 
 --- stderr
 test case 7
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/runtime/backtrace-debuginfo.rs:107:9:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/runtime/backtrace-debuginfo.rs:107:9:
 explicit panic
 stack backtrace:
-   0: 0xfffffc7fed5bb3b8 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h6e6d25212d06bf42
-   1: 0xfffffc7fed60597b - core::fmt::write::h3ac5a7ce85582018
-   2: 0xfffffc7fed5d4f0e - std::io::Write::write_fmt::h356157ebee92d872
-   3: 0xfffffc7fed5bb1b7 - std::sys_common::backtrace::print::hb2ab28eedfaa5b2d
-   4: 0xfffffc7fed58407a - std::panicking::default_hook::{{closure}}::h02fa617ceb5f1240
-   5: 0xfffffc7fed583dd1 - std::panicking::default_hook::h9e3e44cc4d940aa1
-   6: 0xfffffc7fed5851cf - std::panicking::rust_panic_with_hook::h5f65f051e2021761
-   7:           0x41817f - <unknown>
-   8:           0x41737d - <unknown>
-   9:           0x418121 - <unknown>
-  10:           0x4289bb - <unknown>
-  11:           0x428143 - <unknown>
-  12:           0x428f8e - <unknown>
-  13:           0x42a2b1 - <unknown>
-  14:           0x41912e - <unknown>
-  15:           0x417391 - <unknown>
-  16:           0x417e14 - <unknown>
-  17: 0xfffffc7fed5844e4 - std::panicking::try::hc08c19e72d2a5283
-  18: 0xfffffc7fed59bb6e - std::rt::lang_start_internal::haf7354e02d96bb65
-  19:           0x417de7 - <unknown>
-  20:           0x42a311 - <unknown>
-  21:           0x415807 - <unknown>
-  22:           0x415768 - <unknown>
+   0: 0xfffffaffeeca8e7f - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::hc081a55a0f1780b5
+   1: 0xfffffaffeed1e49b - core::fmt::write::h35f0fe8e729713e4
+   2: 0xfffffaffeece6a18 - std::io::Write::write_fmt::heb110bcb762ba542
+   3: 0xfffffaffeeca8c77 - std::sys_common::backtrace::print::h0c24713efa5b4e4b
+   4: 0xfffffaffeecb0f5a - std::panicking::default_hook::{{closure}}::hf5143a727765c9bd
+   5: 0xfffffaffeecb0c52 - std::panicking::default_hook::hf518dfe583c971c6
+   6: 0xfffffaffeecb1802 - std::panicking::rust_panic_with_hook::h6f0cad0c94a63f1a
+   7:           0x418bff - <unknown>
+   8:           0x41791d - <unknown>
+   9:           0x418ba1 - <unknown>
+  10:           0x428a4b - <unknown>
+  11:           0x4281e3 - <unknown>
+  12:           0x428f5d - <unknown>
+  13:           0x42a1ee - <unknown>
+  14:           0x419d9e - <unknown>
+  15:           0x417931 - <unknown>
+  16:           0x4187b4 - <unknown>
+  17: 0xfffffaffeecb1214 - std::panicking::try::h44b63116cd2b01fa
+  18: 0xfffffaffeece0d3c - std::rt::lang_start_internal::h3c4b2151dc4654ff
+  19:           0x418787 - <unknown>
+  20:           0x42a251 - <unknown>
+  21:           0x415eb7 - <unknown>
+  22:           0x415e18 - <unknown>
 
 ---------------------------------------
 trace does not match position list
@@ -791,31 +838,31 @@ backtrace-debuginfo.rs:184
 
 --- stderr
 test case 8
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/runtime/backtrace-debuginfo.rs:110:9:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/runtime/backtrace-debuginfo.rs:110:9:
 explicit panic
 stack backtrace:
-   0: 0xfffffc7fef27b3b8 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h6e6d25212d06bf42
-   1: 0xfffffc7fef2c597b - core::fmt::write::h3ac5a7ce85582018
-   2: 0xfffffc7fef294f0e - std::io::Write::write_fmt::h356157ebee92d872
-   3: 0xfffffc7fef27b1b7 - std::sys_common::backtrace::print::hb2ab28eedfaa5b2d
-   4: 0xfffffc7fef24407a - std::panicking::default_hook::{{closure}}::h02fa617ceb5f1240
-   5: 0xfffffc7fef243dd1 - std::panicking::default_hook::h9e3e44cc4d940aa1
-   6: 0xfffffc7fef2451cf - std::panicking::rust_panic_with_hook::h5f65f051e2021761
-   7:           0x41817f - <unknown>
-   8:           0x41737d - <unknown>
-   9:           0x418121 - <unknown>
-  10:           0x428b0b - <unknown>
-  11:           0x429049 - <unknown>
-  12:           0x42a2b1 - <unknown>
-  13:           0x41912e - <unknown>
-  14:           0x417391 - <unknown>
-  15:           0x417e14 - <unknown>
-  16: 0xfffffc7fef2444e4 - std::panicking::try::hc08c19e72d2a5283
-  17: 0xfffffc7fef25bb6e - std::rt::lang_start_internal::haf7354e02d96bb65
-  18:           0x417de7 - <unknown>
-  19:           0x42a311 - <unknown>
-  20:           0x415807 - <unknown>
-  21:           0x415768 - <unknown>
+   0: 0xfffffaffeeef8e7f - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::hc081a55a0f1780b5
+   1: 0xfffffaffeef6e49b - core::fmt::write::h35f0fe8e729713e4
+   2: 0xfffffaffeef36a18 - std::io::Write::write_fmt::heb110bcb762ba542
+   3: 0xfffffaffeeef8c77 - std::sys_common::backtrace::print::h0c24713efa5b4e4b
+   4: 0xfffffaffeef00f5a - std::panicking::default_hook::{{closure}}::hf5143a727765c9bd
+   5: 0xfffffaffeef00c52 - std::panicking::default_hook::hf518dfe583c971c6
+   6: 0xfffffaffeef01802 - std::panicking::rust_panic_with_hook::h6f0cad0c94a63f1a
+   7:           0x418bff - <unknown>
+   8:           0x41791d - <unknown>
+   9:           0x418ba1 - <unknown>
+  10:           0x428b8b - <unknown>
+  11:           0x429018 - <unknown>
+  12:           0x42a1ee - <unknown>
+  13:           0x419d9e - <unknown>
+  14:           0x417931 - <unknown>
+  15:           0x4187b4 - <unknown>
+  16: 0xfffffaffeef01214 - std::panicking::try::h44b63116cd2b01fa
+  17: 0xfffffaffeef30d3c - std::rt::lang_start_internal::h3c4b2151dc4654ff
+  18:           0x418787 - <unknown>
+  19:           0x42a251 - <unknown>
+  20:           0x415eb7 - <unknown>
+  21:           0x415e18 - <unknown>
 
 ---------------------------------------
 trace does not match position list
@@ -828,33 +875,33 @@ backtrace-debuginfo.rs:184
 
 --- stderr
 test case 9
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/runtime/backtrace-debuginfo.rs:102:9:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/runtime/backtrace-debuginfo.rs:102:9:
 explicit panic
 stack backtrace:
-   0: 0xfffffc7fef14b3b8 - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::h6e6d25212d06bf42
-   1: 0xfffffc7fef19597b - core::fmt::write::h3ac5a7ce85582018
-   2: 0xfffffc7fef164f0e - std::io::Write::write_fmt::h356157ebee92d872
-   3: 0xfffffc7fef14b1b7 - std::sys_common::backtrace::print::hb2ab28eedfaa5b2d
-   4: 0xfffffc7fef11407a - std::panicking::default_hook::{{closure}}::h02fa617ceb5f1240
-   5: 0xfffffc7fef113dd1 - std::panicking::default_hook::h9e3e44cc4d940aa1
-   6: 0xfffffc7fef1151cf - std::panicking::rust_panic_with_hook::h5f65f051e2021761
-   7:           0x41817f - <unknown>
-   8:           0x41737d - <unknown>
-   9:           0x418121 - <unknown>
-  10:           0x42914b - <unknown>
-  11:           0x42a2b1 - <unknown>
-  12:           0x41912e - <unknown>
-  13:           0x417391 - <unknown>
-  14:           0x417e14 - <unknown>
-  15: 0xfffffc7fef1144e4 - std::panicking::try::hc08c19e72d2a5283
-  16: 0xfffffc7fef12bb6e - std::rt::lang_start_internal::haf7354e02d96bb65
-  17:           0x417de7 - <unknown>
-  18:           0x42a311 - <unknown>
-  19:           0x415807 - <unknown>
-  20:           0x415768 - <unknown>
+   0: 0xfffffaffef0c8e7f - <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt::hc081a55a0f1780b5
+   1: 0xfffffaffef13e49b - core::fmt::write::h35f0fe8e729713e4
+   2: 0xfffffaffef106a18 - std::io::Write::write_fmt::heb110bcb762ba542
+   3: 0xfffffaffef0c8c77 - std::sys_common::backtrace::print::h0c24713efa5b4e4b
+   4: 0xfffffaffef0d0f5a - std::panicking::default_hook::{{closure}}::hf5143a727765c9bd
+   5: 0xfffffaffef0d0c52 - std::panicking::default_hook::hf518dfe583c971c6
+   6: 0xfffffaffef0d1802 - std::panicking::rust_panic_with_hook::h6f0cad0c94a63f1a
+   7:           0x418bff - <unknown>
+   8:           0x41791d - <unknown>
+   9:           0x418ba1 - <unknown>
+  10:           0x42911a - <unknown>
+  11:           0x42a1ee - <unknown>
+  12:           0x419d9e - <unknown>
+  13:           0x417931 - <unknown>
+  14:           0x4187b4 - <unknown>
+  15: 0xfffffaffef0d1214 - std::panicking::try::h44b63116cd2b01fa
+  16: 0xfffffaffef100d3c - std::rt::lang_start_internal::h3c4b2151dc4654ff
+  17:           0x418787 - <unknown>
+  18:           0x42a251 - <unknown>
+  19:           0x415eb7 - <unknown>
+  20:           0x415e18 - <unknown>
 ------------------------------------------
 --- stderr -------------------------------
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/runtime/backtrace-debuginfo.rs:174:9:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/runtime/backtrace-debuginfo.rs:174:9:
 found some errors
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ------------------------------------------
@@ -864,28 +911,15 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 error: test run failed!
 status: exit status: 101
-command: cd "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/runtime/out-of-stack" && RUST_TEST_THREADS="12" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/runtime/out-of-stack/a"
+command: cd "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/runtime/out-of-stack" && RUST_TEST_THREADS="40" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/runtime/out-of-stack/a"
 --- stdout -------------------------------
 testing: silent-thread
 ------------------------------------------
 --- stderr -------------------------------
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/runtime/out-of-stack.rs:44:5:
+thread 'main' panicked at /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/runtime/out-of-stack.rs:43:5:
 assertion `left == right` failed
   left: Some(11)
  right: Some(6)
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-------------------------------------------
-
-
----- [ui] tests/ui/std-backtrace.rs stdout ----
-
-error: test run failed!
-status: exit status: 101
-command: cd "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/std-backtrace" && RUST_TEST_THREADS="12" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/std-backtrace/a"
-stdout: none
---- stderr -------------------------------
-thread 'main' panicked at /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/std-backtrace.rs:34:5:
-assertion failed: String::from_utf8_lossy(&p.stdout).contains("backtrace::main")
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ------------------------------------------
 
@@ -916,17 +950,17 @@ diff of stderr:
 
 
 The actual stderr differed from the expected stderr.
-Actual stderr saved to /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/structs-enums/enum-rec/issue-17431-6/issue-17431-6.stderr
+Actual stderr saved to /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/structs-enums/enum-rec/issue-17431-6/issue-17431-6.stderr
 To update references, rerun the tests and pass the `--bless` flag
 To only update this specific test, also pass `--test-args structs-enums/enum-rec/issue-17431-6.rs`
 
 error: 1 errors occurred comparing output.
 status: exit status: 1
-command: RUSTC_ICE="0" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/structs-enums/enum-rec/issue-17431-6.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/home/pmb/.cargo" "--sysroot" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "--emit" "metadata" "-C" "prefer-dynamic" "--out-dir" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/structs-enums/enum-rec/issue-17431-6" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/build/x86_64-unknown-illumos/test/ui/structs-enums/enum-rec/issue-17431-6/auxiliary"
+command: env -u RUSTC_LOG_COLOR RUSTC_ICE="0" RUST_BACKTRACE="short" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2/bin/rustc" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/structs-enums/enum-rec/issue-17431-6.rs" "-Zthreads=1" "-Zsimulate-remapped-rust-src-base=/rustc/FAKE_PREFIX" "-Ztranslate-remapped-path-to-local-path=no" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/.cargo" "-Z" "ignore-directory-in-diagnostics-source-blocks=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/vendor" "--sysroot" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/stage2" "--target=x86_64-unknown-illumos" "--check-cfg" "cfg(FALSE)" "--error-format" "json" "--json" "future-incompat" "-Ccodegen-units=1" "-Zui-testing" "-Zdeduplicate-diagnostics=no" "-Zwrite-long-types-to-disk=no" "-Cstrip=debuginfo" "--emit" "metadata" "-C" "prefer-dynamic" "--out-dir" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/structs-enums/enum-rec/issue-17431-6" "-A" "unused" "-A" "internal_features" "-Crpath" "-Cdebuginfo=0" "-Lnative=/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/native/rust-test-helpers" "-L" "/data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/build/x86_64-unknown-illumos/test/ui/structs-enums/enum-rec/issue-17431-6/auxiliary"
 stdout: none
 --- stderr -------------------------------
 error[E0072]: recursive type `Foo` has infinite size
-  --> /tmp/build_pmb/rust-1.78.0/rustc-1.78.0-src/tests/ui/structs-enums/enum-rec/issue-17431-6.rs:5:1
+  --> /data/omnios-build/omniosorg/r151050/_extra/rust-1.80.1/rustc-1.80.1-src/tests/ui/structs-enums/enum-rec/issue-17431-6.rs:5:1
    |
 LL | enum Foo { X(Mutex<Option<Foo>>) }
    | ^^^^^^^^                  --- recursive without indirection
@@ -947,24 +981,26 @@ failures:
     [ui] tests/ui/abi/stack-probes.rs#x64
     [ui] tests/ui/associated-consts/issue-93775.rs
     [ui] tests/ui/abi/stack-probes-lto.rs#x64
-    [ui] tests/ui/backtrace.rs
+    [ui] tests/ui/backtrace/dylib-dep.rs
+    [ui] tests/ui/backtrace/std-backtrace.rs
+    [ui] tests/ui/backtrace/backtrace.rs
+    [ui] tests/ui/backtrace/line-tables-only.rs
     [ui] tests/ui/closures/deeply-nested_closures.rs
-    [ui] tests/ui/issues/issue-21763.rs
-    [ui] tests/ui/issues/issue-33992.rs
     [ui] tests/ui/issues/issue-74564-if-expr-stack-overflow.rs
-    [ui] tests/ui/panics/default-backtrace-ice.rs
+    [ui] tests/ui/linkage-attr/linkage-attr-does-not-panic-llvm-issue-33992.rs
     [ui] tests/ui/panics/issue-47429-short-backtraces.rs#legacy
     [ui] tests/ui/panics/issue-47429-short-backtraces.rs#v0
-    [ui] tests/ui/panics/runtime-switch.rs#legacy
-    [ui] tests/ui/panics/runtime-switch.rs#v0
-    [ui] tests/ui/panics/short-ice-remove-middle-frames-2.rs
+    [ui] tests/ui/panics/default-backtrace-ice.rs
     [ui] tests/ui/panics/short-ice-remove-middle-frames.rs
+    [ui] tests/ui/panics/runtime-switch.rs#v0
+    [ui] tests/ui/panics/runtime-switch.rs#legacy
+    [ui] tests/ui/panics/short-ice-remove-middle-frames-2.rs
+    [ui] tests/ui/parser/survive-peano-lesson-queue.rs
     [ui] tests/ui/proc-macro/load-panic-backtrace.rs
     [ui] tests/ui/runtime/backtrace-debuginfo.rs
     [ui] tests/ui/runtime/out-of-stack.rs
-    [ui] tests/ui/std-backtrace.rs
     [ui] tests/ui/structs-enums/enum-rec/issue-17431-6.rs
 
-test result: FAILED. 16181 passed; 20 failed; 175 ignored; 0 measured; 0 filtered out; finished in 407.88s
+test result: FAILED. 16777 passed; 22 failed; 204 ignored; 0 measured; 0 filtered out; finished in 476.50s
 
 Some tests failed in compiletest suite=ui mode=ui host=x86_64-unknown-illumos target=x86_64-unknown-illumos
