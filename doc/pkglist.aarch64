@@ -59,6 +59,7 @@ ooce/security/pam_radius
 ooce/library/liburcu
 ooce/text/ripgrep
 ooce/util/fd
+ooce/util/hyperfine
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
