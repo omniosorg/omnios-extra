@@ -68,6 +68,7 @@ extra.omnios ooce/terminal/minicom
 extra.omnios ooce/text/datamash
 extra.omnios ooce/text/hunspell
 extra.omnios ooce/text/ripgrep
+extra.omnios ooce/text/xsv
 extra.omnios ooce/util/dtc
 extra.omnios ooce/util/fd
 extra.omnios ooce/util/hyperfine

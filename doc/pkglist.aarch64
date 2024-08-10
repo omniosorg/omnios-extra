@@ -60,6 +60,7 @@ ooce/library/liburcu
 ooce/text/ripgrep
 ooce/util/fd
 ooce/util/hyperfine
+ooce/text/xsv
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
