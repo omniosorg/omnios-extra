@@ -58,6 +58,7 @@ ooce/library/icu4c
 ooce/security/pam_radius
 ooce/library/liburcu
 ooce/text/ripgrep
+ooce/util/fd
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
