@@ -61,6 +61,7 @@ ooce/text/ripgrep
 ooce/util/fd
 ooce/util/hyperfine
 ooce/text/xsv
+ooce/util/rargs
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
