@@ -57,6 +57,7 @@ ooce/database/mariadb-common
 ooce/library/icu4c
 ooce/security/pam_radius
 ooce/library/liburcu
+ooce/text/ripgrep
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
