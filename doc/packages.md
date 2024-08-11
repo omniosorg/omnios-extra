@@ -75,7 +75,7 @@
 | ooce/developer/ninja		| 1.12.1	| https://github.com/ninja-build/ninja/releases https://ninja-build.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| github-latest	| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| github-latest	| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/protobuf	| 27.0		| https://github.com/protocolbuffers/protobuf/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/protobuf	| 27.3		| https://github.com/protocolbuffers/protobuf/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/radare2	| 5.9.2		| https://github.com/radareorg/radare2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/rust		| 1.80.1	| https://forge.rust-lang.org/infra/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/subversion	| 1.14.3	| https://downloads.apache.org/subversion/ | [omniosorg](https://github.com/omniosorg)
