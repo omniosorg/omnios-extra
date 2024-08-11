@@ -1,1 +1,2 @@
 aarch64-eh_frame-ro.patch
+aarch64-cpu-features.patch

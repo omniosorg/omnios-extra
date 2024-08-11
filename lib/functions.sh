@@ -2578,6 +2578,8 @@ install_rust() {
     logmsg "Installing $prog"
 
     for b in $BUILDARCH; do
+        hook pre_install $b || return
+
         destdir=$DESTDIR
         cross_arch $b && destdir+=.$b
 
@@ -2595,6 +2597,8 @@ install_rust() {
                 || logerr "Failed to install man page"
             break
         done
+
+        hook post_install $b
     done
 }
 
@@ -3255,12 +3259,24 @@ pyvenv_build() {
 #############################################################################
 
 build_rust() {
+    save_variables CFLAGS CXXFLAGS
+
     for b in $BUILDARCH; do
         logmsg "Building rust ($b)"
+
+        hook pre_build $b || continue
 
         pushd $TMPDIR/$BUILDDIR >/dev/null
 
         if cross_arch $b; then
+            restore_variables CFLAGS CXXFLAGS
+
+            subsume_arch $b CFLAGS
+            subsume_arch $b CXXFLAGS
+            CFLAGS+=" --sysroot=${SYSROOT[$b]}"
+            CXXFLAGS+=" --sysroot=${SYSROOT[$b]}"
+            export CFLAGS CXXFLAGS
+
             RUSTFLAGS+=" -C linker=$CROSSTOOLS/$b/bin/gcc"
             RUSTFLAGS+=" -C link-arg=--sysroot=${SYSROOT[$b]}"
             export RUSTFLAGS
@@ -3269,12 +3285,22 @@ build_rust() {
             PKG_CONFIG_LIBDIR="${SYSROOT[$b]}/usr/${LIBDIRS[$b]}/pkgconfig"
             PKG_CONFIG_LIBDIR+=":${SYSROOT[$b]}$OOCEOPT/${LIBDIRS[$b]}/pkgconfig"
             export PKG_CONFIG_SYSROOT_DIR PKG_CONFIG_LIBDIR
+
+            CC="$CROSSTOOLS/$b/bin/gcc"
+            CXX="$CROSSTOOLS/$b/bin/g++"
+            export CC CXX
+        else
+            PKG_CONFIG_LIBDIR="/usr/${LIBDIRS[$b]}/pkgconfig"
+            PKG_CONFIG_LIBDIR+=":$OOCEOPT/${LIBDIRS[$b]}/pkgconfig"
+            export PKG_CONFIG_LIBDIR
         fi
 
         logcmd $CARGO build --release --target=${RUSTTRIPLETS[$b]} $@ \
             || logerr "build failed"
 
         popd >/dev/null
+
+        hook post_build $b
     done
 }
 
