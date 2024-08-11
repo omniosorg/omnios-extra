@@ -2577,19 +2577,24 @@ install_rust() {
 
     logmsg "Installing $prog"
 
-    logcmd $MKDIR -p "$DESTDIR/$PREFIX/bin" \
-        || logerr "Failed to create install dir"
-    logcmd $CP $TMPDIR/$BUILDDIR/target/release/$prog \
-        $DESTDIR/$PREFIX/bin/$prog || logerr "Failed to install binary"
+    for b in $BUILDARCH; do
+        destdir=$DESTDIR
+        cross_arch $b && destdir+=.$b
 
-    for f in `$FD "^$prog\.1\$" $TMPDIR/$BUILDDIR`; do
-        logmsg "Found man page at $f"
+        logcmd $MKDIR -p "$destdir$PREFIX/bin" \
+            || logerr "Failed to create install dir"
+        logcmd $CP $TMPDIR/$BUILDDIR/target/${RUSTTRIPLETS[$b]}/release/$prog \
+            $destdir$PREFIX/bin/$prog || logerr "Failed to install binary"
 
-        logcmd $MKDIR -p "$DESTDIR/$PREFIX/share/man/man1" \
-            || logerr "Failed to create man install dir"
-        logcmd $CP $f $DESTDIR/$PREFIX/share/man/man1/$prog.1 \
-            || logerr "Failed to install man page"
-        break
+        for f in `$FD "^$prog\.1\$" $TMPDIR/$BUILDDIR`; do
+            logmsg "Found man page at $f"
+
+            logcmd $MKDIR -p "$destdir$PREFIX/share/man/man1" \
+                || logerr "Failed to create man install dir"
+            logcmd $CP $f $destdir$PREFIX/share/man/man1/$prog.1 \
+                || logerr "Failed to install man page"
+            break
+        done
     done
 }
 
@@ -3250,13 +3255,27 @@ pyvenv_build() {
 #############################################################################
 
 build_rust() {
-    logmsg "Building rust (amd64)"
+    for b in $BUILDARCH; do
+        logmsg "Building rust ($b)"
 
-    pushd $TMPDIR/$BUILDDIR >/dev/null
+        pushd $TMPDIR/$BUILDDIR >/dev/null
 
-    logcmd $CARGO build --release $@ || logerr "build failed"
+        if cross_arch $b; then
+            RUSTFLAGS+=" -C linker=$CROSSTOOLS/$b/bin/gcc"
+            RUSTFLAGS+=" -C link-arg=--sysroot=${SYSROOT[$b]}"
+            export RUSTFLAGS
 
-    popd >/dev/null
+            PKG_CONFIG_SYSROOT_DIR=${SYSROOT[$b]}
+            PKG_CONFIG_LIBDIR="${SYSROOT[$b]}/usr/${LIBDIRS[$b]}/pkgconfig"
+            PKG_CONFIG_LIBDIR+=":${SYSROOT[$b]}$OOCEOPT/${LIBDIRS[$b]}/pkgconfig"
+            export PKG_CONFIG_SYSROOT_DIR PKG_CONFIG_LIBDIR
+        fi
+
+        logcmd $CARGO build --release --target=${RUSTTRIPLETS[$b]} $@ \
+            || logerr "build failed"
+
+        popd >/dev/null
+    done
 }
 
 #############################################################################

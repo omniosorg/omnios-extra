@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -26,9 +26,6 @@ DESC+="splitting and joining CSV files."
 BUILD_DEPENDS_IPS=ooce/developer/rust
 
 set_arch 64
-
-# https://www.illumos.org/issues/14659
-test_relver '<' 151043 && STRIP=gstrip
 
 init
 download_source $PROG $VER

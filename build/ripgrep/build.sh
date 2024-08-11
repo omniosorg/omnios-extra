@@ -38,13 +38,19 @@ pre_package() {
     # we cannot run the cross built binary, the best we can do is assume
     # that the build host runs the same version and use it to generate
     # the man page
-    cross_arch $arch && rg=$PREFIX/bin/rg || rg=$DESTDIR$PREFIX/bin/rg
+    destdir=$DESTDIR
+    if cross_arch $arch; then
+        rg=$PREFIX/bin/rg
+        destdir+=.$arch
+    else
+        rg=$destdir$PREFIX/bin/rg
+    fi
 
     logmsg "generating man page"
-    logcmd $MKDIR -p $DESTDIR$PREFIX/share/man/man1 \
+    logcmd $MKDIR -p $destdir$PREFIX/share/man/man1 \
         || logerr "creating man dir failed"
     logcmd -p $rg --generate man \
-        >| $DESTDIR$PREFIX/share/man/man1/rg.1 \
+        >| $destdir$PREFIX/share/man/man1/rg.1 \
         || logerr "generating man page failed"
 }
 
