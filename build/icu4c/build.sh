@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=icu4c
-VER=74.1
+VER=75.1
 PKG=ooce/library/icu4c
 SUMMARY="ICU - International Components for Unicode"
 DESC="A mature, widely used set of C/C++ libraries providing "
