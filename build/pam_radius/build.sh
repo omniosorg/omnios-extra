@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=pam_radius
-VER=2.0.0
+VER=3.0.0
 PKG=ooce/security/pam_radius
 SUMMARY="RADIUS PAM module"
 DESC="PAM to RADIUS authentication module"
@@ -37,7 +37,7 @@ LDFLAGS[i386]+=" -lssp_ns"
 
 save_variables CFLAGS LDFLAGS
 
-pre_make() {
+pre_configure() {
     typeset arch=$1
 
     restore_variables CFLAGS LDFLAGS

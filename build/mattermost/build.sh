@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=mattermost
-VER=9.5.7
+VER=9.5.8
 # check for the current morph version/commit hash and create a patched branch in
 # https://github.com/omniosorg/morph; then point to that branch
 MORPHBRANCH=il_1.0.5
@@ -28,7 +28,7 @@ DESC+="instantly searchable and accessible anywhere."
 
 set_arch 64
 set_gover
-set_nodever
+set_nodever 18
 
 BUILD_DEPENDS_IPS+="
     ooce/library/libpng

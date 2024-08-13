@@ -1,7 +1,7 @@
-diff -wpruN --no-dereference '--exclude=*.orig' a~/_deps/pkg/mod/github.com/sassoftware/go-rpmutils@v0.2.0/fileutil/fileutil_unix.go a/_deps/pkg/mod/github.com/sassoftware/go-rpmutils@v0.2.0/fileutil/fileutil_unix.go
---- a~/_deps/pkg/mod/github.com/sassoftware/go-rpmutils@v0.2.0/fileutil/fileutil_unix.go	1970-01-01 00:00:00
-+++ a/_deps/pkg/mod/github.com/sassoftware/go-rpmutils@v0.2.0/fileutil/fileutil_unix.go	1970-01-01 00:00:00
-@@ -20,12 +20,12 @@ package fileutil
+diff -wpruN --no-dereference '--exclude=*.orig' a~/_deps/pkg/mod/github.com/sassoftware/go-rpmutils@v0.3.0/fileutil/fileutil_unix.go a/_deps/pkg/mod/github.com/sassoftware/go-rpmutils@v0.3.0/fileutil/fileutil_unix.go
+--- a~/_deps/pkg/mod/github.com/sassoftware/go-rpmutils@v0.3.0/fileutil/fileutil_unix.go	1970-01-01 00:00:00
++++ a/_deps/pkg/mod/github.com/sassoftware/go-rpmutils@v0.3.0/fileutil/fileutil_unix.go	1970-01-01 00:00:00
+@@ -21,12 +21,12 @@ package fileutil
  
  import (
  	"os"
@@ -16,7 +16,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/_deps/pkg/mod/github.com/sass
  	if !ok {
  		return false
  	}
-@@ -34,5 +34,5 @@ func HasLinks(info os.FileInfo) bool {
+@@ -35,5 +35,5 @@ func HasLinks(info os.FileInfo) bool {
  
  // Mkfifo creates a named pipe with the specified path and permissions
  func Mkfifo(path string, mode uint32) error {

@@ -62,6 +62,8 @@ ooce/util/fd
 ooce/util/hyperfine
 ooce/text/xsv
 ooce/util/rargs
+ooce/developer/git-absorb
+ooce/util/bat
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

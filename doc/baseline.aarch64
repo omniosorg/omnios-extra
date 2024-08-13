@@ -9,6 +9,7 @@ extra.omnios ooce/database/mariadb-106
 extra.omnios ooce/database/mariadb-common
 extra.omnios ooce/database/postgresql-14
 extra.omnios ooce/database/postgresql-common
+extra.omnios ooce/developer/git-absorb
 extra.omnios ooce/developer/ninja
 extra.omnios ooce/editor/joe
 extra.omnios ooce/file/tree
@@ -69,6 +70,7 @@ extra.omnios ooce/text/datamash
 extra.omnios ooce/text/hunspell
 extra.omnios ooce/text/ripgrep
 extra.omnios ooce/text/xsv
+extra.omnios ooce/util/bat
 extra.omnios ooce/util/dtc
 extra.omnios ooce/util/fd
 extra.omnios ooce/util/hyperfine
