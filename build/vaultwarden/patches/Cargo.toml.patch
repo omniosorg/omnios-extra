@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/vaultwarden/Cargo.toml a/vaultwarden/Cargo.toml
 --- a~/vaultwarden/Cargo.toml	1970-01-01 00:00:00
 +++ a/vaultwarden/Cargo.toml	1970-01-01 00:00:00
-@@ -168,7 +168,6 @@ rpassword = "7.3.1"
+@@ -167,7 +167,6 @@ rpassword = "7.3.1"
  # The symbols are the provide better panic traces
  # Also enable fat LTO and use 1 codegen unit for optimizations
  [profile.release]
@@ -9,3 +9,11 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/vaultwarden/Cargo.toml a/vaul
  lto = "fat"
  codegen-units = 1
  
+@@ -244,3 +243,7 @@ unnecessary_self_imports = "deny"
+ unused_async = "deny"
+ verbose_file_reads = "deny"
+ zero_sized_map_values = "deny"
++
++[patch.crates-io]
++mysqlclient-sys = { git = "https://github.com/citrus-it/mysqlclient-sys", branch = "illumos" }
++

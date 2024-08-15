@@ -17,15 +17,15 @@
 . ../../lib/build.sh
 
 PROG=vaultwarden
-VER=1.30.5
+VER=1.32.0
 PKG=ooce/application/vaultwarden
 SUMMARY="Bitwarden compatible server"
 DESC="Unofficial Bitwarden compatible server written in Rust, formerly known "
 DESC+="as bitwarden_rs"
 
 DANIGARCIA=$GITHUB/dani-garcia
-WEBVAULTVER=2024.5.0
-WEBVAULTSHA256=35001cea3c4ec52a66a2331ecc11efd20b2ad77c34e47dc6061a315f3b5706e4
+WEBVAULTVER=2024.6.2
+WEBVAULTSHA256=c6f71f1f98290b91670c8f717b59aa27baaaa49bdfe4a3f2be38da426021d843
 
 set_arch 64
 
@@ -56,6 +56,12 @@ XFORM_ARGS="
 "
 
 SKIP_LICENCES=bitwarden
+
+# configure runs mysql_config/pg_config to determine the proper paths
+# for the database libraries. To avoid having to rely on a particular
+# mediator value for the installed packages, set the explicitly versioned
+# bin directories first in the PATH.
+PATH=$PREFIX/mariadb-$MARIASQLVER/bin:$PREFIX/pgsql-$PGSQLVER/bin:$PATH
 
 copy_sample_config() {
     local relative_conffile=${CONFFILE#/}
@@ -97,6 +103,8 @@ init
 clone_github_source $PROG "$DANIGARCIA/$PROG" $VER
 BUILDDIR+=/$PROG
 patch_source
+# mio needs bumping to work around https://github.com/tokio-rs/mio/pull/1824
+run_inbuild cargo update -p mio
 prep_build
 build_rust $CARGO_ARGS
 install_rust
