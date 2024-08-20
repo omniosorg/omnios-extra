@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+
+    This file and its contents are supplied under the terms of the
+    Common Development and Distribution License ("CDDL"), version 1.0.
+    You may only use this file in accordance with the terms of version
+    1.0 of the CDDL.
+
+    A full copy of the text of the CDDL should have accompanied this
+    source. A copy of the CDDL is also available via the Internet at
+    http://www.illumos.org/license/CDDL.
+
+    Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+
+-->
+<service_bundle type="profile"
+                name="victoriametrics">
+
+    <service name="application/victoriametrics"
+             type="service"
+             version="1">
+
+        <instance name="vmagent">
+            <method_context>
+                <method_environment>
+                    <envvar name="VM_remoteWrite_url"
+                            value="http://localhost:8428/api/v1/write" />
+                </method_environment>
+            </method_context>
+
+        </instance>
+
+    </service>
+
+</service_bundle>
