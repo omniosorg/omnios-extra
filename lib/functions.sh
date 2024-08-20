@@ -219,7 +219,7 @@ logerr() {
     # Print an error message and ask the user if they wish to continue
     logmsg -e "$@" >> /dev/stderr
     if [ -z "$BATCH" ]; then
-        ask_to_continue "An Error occured in the build. "
+        ask_to_continue "An Error occurred in the build. "
     else
         exit 1
     fi

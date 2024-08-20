@@ -1,0 +1,17 @@
+-----------------------------------------
+VictoriaMetrics and vmagent Configuration
+-----------------------------------------
+
+VictoriaMetrics and vmagent are not configured by configuration files.
+Configuration is achieved via command-line arguments or equivalent environment variables.
+
+For SMF service integration, service profiles with appropriate environment variables can be used.
+Example profiles are provided in `<prefix>/share/victoriametrics`.
+
+These can edited and applied with:
+```
+svcadm apply victoria-metrics-profile.xml
+svcadm apply vmagent-profile.xml
+```
+
+vmagent _requires_ at least the envvar `VM_remoteWrite_url`, an example is provided that can be applied.
