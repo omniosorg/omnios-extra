@@ -1,3 +1,2 @@
-sockets.patch
 ldap.patch
 static_assert.patch
