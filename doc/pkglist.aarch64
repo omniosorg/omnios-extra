@@ -64,6 +64,7 @@ ooce/text/xsv
 ooce/util/rargs
 ooce/developer/git-absorb
 ooce/util/bat
+ooce/system/mbuffer
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

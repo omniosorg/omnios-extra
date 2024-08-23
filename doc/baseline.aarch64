@@ -65,6 +65,7 @@ extra.omnios ooce/security/minisign
 extra.omnios ooce/security/oath-toolkit
 extra.omnios ooce/security/pam_radius
 extra.omnios ooce/system/htop
+extra.omnios ooce/system/mbuffer
 extra.omnios ooce/terminal/minicom
 extra.omnios ooce/text/datamash
 extra.omnios ooce/text/hunspell

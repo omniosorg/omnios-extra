@@ -38,6 +38,14 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
+pre_configure() {
+    typeset arch=$1
+
+    ! cross_arch $arch && return
+
+    export OBJDUMP="$CROSSTOOLS/$arch/bin/${TRIPLETS[$arch]}-objdump"
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
