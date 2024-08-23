@@ -67,6 +67,7 @@ ooce/util/bat
 ooce/system/mbuffer
 ooce/application/mutt
 ooce/network/fping
+ooce/util/xjobs
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
