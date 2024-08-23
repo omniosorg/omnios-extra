@@ -19,7 +19,7 @@
 
 PROG=nginx
 PKG=ooce/server/nginx-126
-VER=1.26.1
+VER=1.26.2
 SUMMARY="nginx 1.26 web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
