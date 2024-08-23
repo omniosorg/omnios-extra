@@ -65,6 +65,7 @@ ooce/util/rargs
 ooce/developer/git-absorb
 ooce/util/bat
 ooce/system/mbuffer
+ooce/application/mutt
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
