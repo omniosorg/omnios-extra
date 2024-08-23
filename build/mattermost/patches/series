@@ -1,4 +1,3 @@
 illumos-target.patch
 utils_unix.go.patch
 terminal.go.patch
-npm-10.patch
