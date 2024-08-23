@@ -27,6 +27,12 @@ min_rel 151044
 
 SKIP_LICENCES=postgresql
 
+# The icu4c ABI changes frequently. Lock the version
+# pulled into each build of postgres.
+ICUVER=`pkg_ver icu4c`
+ICUVER=${ICUVER%%.*}
+BUILD_DEPENDS_IPS="=ooce/library/icu4c@$ICUVER"
+
 # We want to populate the clang-related environment variables
 # and set PATH to point to the correct llvm/clang version for
 # the postgres JIT code, but we want to build with gcc.
@@ -151,7 +157,8 @@ build
 PKG=${PKG/database/library} SUMMARY+=" client and libraries" \
     make_package -seed $TMPDIR/manifest.client
 [ "$FLAVOR" != libsandheaders ] \
-    && RUN_DEPENDS_IPS="ooce/database/postgresql-common" \
+    && RUN_DEPENDS_IPS="ooce/database/postgresql-common \
+        =ooce/library/icu4c@$ICUVER" \
         make_package -seed $TMPDIR/manifest.server server.mog
 clean_up
 
