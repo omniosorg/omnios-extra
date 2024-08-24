@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/display.c a/display.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/display.c a/display.c
 --- a~/display.c	1970-01-01 00:00:00
 +++ a/display.c	1970-01-01 00:00:00
 @@ -103,6 +103,8 @@ static int x_mem = X_MEM;
@@ -134,7 +134,7 @@ diff -wpruN '--exclude=*.orig' a~/display.c a/display.c
   *  *_swap(stats) - print "Swap: " followed by the swap summary string
   *
   *  Assumptions:  cursor is on "lastline", the previous line
-diff -wpruN '--exclude=*.orig' a~/display.h a/display.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/display.h a/display.h
 --- a~/display.h	1970-01-01 00:00:00
 +++ a/display.h	1970-01-01 00:00:00
 @@ -60,6 +60,8 @@ void i_memory(long *stats);
@@ -146,7 +146,7 @@ diff -wpruN '--exclude=*.orig' a~/display.h a/display.h
  void i_swap(long *stats);
  void u_swap(long *stats);
  void i_message(struct timeval *now);
-diff -wpruN '--exclude=*.orig' a~/layout.h a/layout.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/layout.h a/layout.h
 --- a~/layout.h	1970-01-01 00:00:00
 +++ a/layout.h	1970-01-01 00:00:00
 @@ -60,12 +60,14 @@
@@ -166,7 +166,7 @@ diff -wpruN '--exclude=*.orig' a~/layout.h a/layout.h
 -#define  Y_PROCS	6
 +#define  Y_PROCS	7
  
-diff -wpruN '--exclude=*.orig' a~/machine/m_sunos5.c a/machine/m_sunos5.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/machine/m_sunos5.c a/machine/m_sunos5.c
 --- a~/machine/m_sunos5.c	1970-01-01 00:00:00
 +++ a/machine/m_sunos5.c	1970-01-01 00:00:00
 @@ -298,6 +298,10 @@ char *memorynames[] =
@@ -239,7 +239,7 @@ diff -wpruN '--exclude=*.orig' a~/machine/m_sunos5.c a/machine/m_sunos5.c
  
      /* get the cpu statistics arrays */
      cpustats = get_cpustats(&cpus, cpustats);
-diff -wpruN '--exclude=*.orig' a~/machine.h a/machine.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/machine.h a/machine.h
 --- a~/machine.h	1970-01-01 00:00:00
 +++ a/machine.h	1970-01-01 00:00:00
 @@ -51,6 +51,7 @@ struct statics
@@ -258,7 +258,7 @@ diff -wpruN '--exclude=*.orig' a~/machine.h a/machine.h
      long   *swap;
  };
  
-diff -wpruN '--exclude=*.orig' a~/top.c a/top.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/top.c a/top.c
 --- a~/top.c	1970-01-01 00:00:00
 +++ a/top.c	1970-01-01 00:00:00
 @@ -548,6 +548,7 @@ do_display(globalstate *gstate)

@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/top.1.in a/top.1.in
+diff -wpruN --no-dereference '--exclude=*.orig' a~/top.1.in a/top.1.in
 --- a~/top.1.in	1970-01-01 00:00:00
 +++ a/top.1.in	1970-01-01 00:00:00
 @@ -298,7 +298,7 @@ Quit
