@@ -22,28 +22,16 @@ PKG=ooce/library/security/libsasl2
 SUMMARY="Simple Authentication and Security Layer (SASL)"
 DESC="$SUMMARY shared library and plugins"
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DPROG=$PROG
 "
 
+forgo_isaexec
 set_standard XPG6
 
 SKIP_RTIME_CHECK=1
 SKIP_LICENCES='*'
-
-# Sasl runs make recursively and does not honour $MAKE - put GNU first
-# in the path.
-PATH=$GNUBIN:$PATH
-
-# configure runs mysql_config/pg_config to determine the proper paths
-# for the database libraries. To avoid having to rely on a particular
-# mediator value for the installed packages, set the explicitly versioned
-# bin directories first in the PATH.
-PATH=$PREFIX/mariadb-$MARIASQLVER/bin:$PREFIX/pgsql-$PGSQLVER/bin:$PATH
 
 ETCDIR=/etc$PREFIX/sasl2
 VARDIR=/var$PREFIX/sasl2
@@ -60,8 +48,6 @@ CONFIGURE_OPTS="
     --enable-sql
     --enable-ldapdb \
     --with-ldap
-    --with-mysql=$PREFIX/mariadb-$MARIASQLVER
-    --with-pgsql=$PREFIX/pgsql-$PGSQLVER
     --with-gss_impl=mit
 
     --enable-auth-sasldb
@@ -69,26 +55,72 @@ CONFIGURE_OPTS="
     --with-dbpath=$VARDIR/sasldb2
 "
 
-CONFIGURE_OPTS[i386]+="
-    --with-plugindir=$PREFIX/lib/sasl2
-"
+buildcnt=0
 
-CONFIGURE_OPTS[amd64]+="
-    --with-plugindir=$PREFIX/lib/amd64/sasl2
-    --sbindir=$PREFIX/sbin
-"
+pre_configure() {
+    typeset arch=$1
 
-# To find lmdb
-CPPFLAGS+=" -I$PREFIX/include"
-LDFLAGS[i386]+=" -L$PREFIX/lib -R$PREFIX/lib"
-LDFLAGS[amd64]+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
+    ((buildcnt++))
+
+    # Sasl runs make recursively and does not honour $MAKE - put GNU first
+    # in the path.
+    PATH=$GNUBIN:$PATH
+
+    CONFIGURE_OPTS[$arch]+="
+        --with-plugindir=$PREFIX/${LIBDIRS[$arch]}/sasl2
+        --with-mysql=${SYSROOT[$arch]}$PREFIX/mariadb-$MARIASQLVER
+        --with-pgsql=${SYSROOT[$arch]}$PREFIX/pgsql-$PGSQLVER
+    "
+
+    for l in mariadb-$MARIASQLVER pgsql-$PGSQLVER; do
+        addpath PKG_CONFIG_PATH[$arch] \
+            ${SYSROOT[$arch]}$PREFIX/$l/${LIBDIRS[$arch]}/pkgconfig
+    done
+
+    # To find lmdb
+    CPPFLAGS+=" -I${SYSROOT[$arch]}$PREFIX/include"
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$PREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -R$PREFIX/${LIBDIRS[$arch]}"
+
+    ! cross_arch $arch && return
+
+    export CC_FOR_BUILD=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc
+}
+
+post_install() {
+    typeset arch=$1
+
+    pushd $DESTDIR/$PREFIX >/dev/null
+
+    # We set the library runtime path explicitly for the shared
+    # library that uses mariadb/postgres libraries instead of
+    # just adding it to all shared libraries
+    typeset rpath="$PREFIX/${LIBDIRS[$arch]}"
+    rpath+=":$PREFIX/mariadb-$MARIASQLVER/${LIBDIRS[$arch]}"
+    rpath+=":$PREFIX/pgsql-$PGSQLVER/${LIBDIRS[$arch]}"
+
+    for f in `$FD -t f 'libsql\.so' ${LIBDIRS[$arch]}/sasl2/`; do
+        logmsg "--- fixing runpath in $f"
+        logcmd $ELFEDIT -e "dyn:value -s RUNPATH $rpath" $f
+        logcmd $ELFEDIT -e "dyn:value -s RPATH $rpath" $f
+    done
+
+    popd >/dev/null
+
+    [ $arch = i386 ] && return
+
+    xform $SRCDIR/files/saslauthd.xml > $TMPDIR/saslauthd.xml
+    install_smf ooce saslauthd.xml
+}
 
 tests() {
-    [ `grep -c 'checking DB library to use... lmdb' $SRCDIR/build.log` = 4 ] \
+    c2=$buildcnt
+    ((c2 *= 2))
+    [ `grep -c 'checking DB library to use... lmdb' $SRCDIR/build.log` = $c2 ] \
         || logerr "$PROG was not built with lmdb"
-    [ `grep -c 'lmysqlclient... yes' $SRCDIR/build.log` = 2 ] \
+    [ `grep -c 'lmysqlclient... yes' $SRCDIR/build.log` = $buildcnt ] \
         || logerr "$PROG was not built with mariadb"
-    [ `grep -c 'lpq... yes' $SRCDIR/build.log` = 2 ] \
+    [ `grep -c 'lpq... yes' $SRCDIR/build.log` = $buildcnt ] \
         || logerr "$PROG was not built with postgres"
 }
 
@@ -98,11 +130,9 @@ prep_build
 patch_source
 run_autoreconf -fi
 # Remove the pre-rendered version of the man page to force a new one.
-logcmd rm $TMPDIR/$BUILDDIR/saslauthd/saslauthd.8
-build -ctf
+logcmd $RM $TMPDIR/$BUILDDIR/saslauthd/saslauthd.8
+build
 tests
-xform files/saslauthd.xml > $TMPDIR/saslauthd.xml
-install_smf ooce saslauthd.xml
 make_package
 clean_up
 

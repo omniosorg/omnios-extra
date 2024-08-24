@@ -89,6 +89,7 @@ ooce/network/unbound
 ooce/library/gnutls
 ooce/application/mc
 ooce/library/cairo
+ooce/library/security/libsasl2
 ###############################################################################
 .SYSROOT
 ooce/security/gnupg
