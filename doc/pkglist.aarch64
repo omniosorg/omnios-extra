@@ -69,6 +69,7 @@ ooce/application/mutt
 ooce/network/fping
 ooce/util/xjobs
 ooce/library/ldns
+ooce/library/libzip
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

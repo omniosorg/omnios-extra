@@ -39,6 +39,7 @@ extra.omnios ooce/library/libuv
 extra.omnios ooce/library/libvncserver
 extra.omnios ooce/library/libvorbis
 extra.omnios ooce/library/libwebp
+extra.omnios ooce/library/libzip
 extra.omnios ooce/library/mariadb-106
 extra.omnios ooce/library/nettle
 extra.omnios ooce/library/onig
