@@ -97,6 +97,7 @@ ooce/multimedia/ffmpeg
 ooce/library/pango
 ooce/network/znc
 ooce/library/libvncserver
+ooce/network/smtp/postfix
 ###############################################################################
 .SYSROOT
 ooce/multimedia/minidlna

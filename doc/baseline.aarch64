@@ -62,6 +62,7 @@ extra.omnios ooce/network/fping
 extra.omnios ooce/network/irssi
 extra.omnios ooce/network/nsd
 extra.omnios ooce/network/openldap
+extra.omnios ooce/network/smtp/postfix
 extra.omnios ooce/network/unbound
 extra.omnios ooce/network/znc
 extra.omnios ooce/print/cups
