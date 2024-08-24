@@ -35,6 +35,7 @@ extra.omnios ooce/library/libpng
 extra.omnios ooce/library/libsodium
 extra.omnios ooce/library/liburcu
 extra.omnios ooce/library/libuv
+extra.omnios ooce/library/libvncserver
 extra.omnios ooce/library/libvorbis
 extra.omnios ooce/library/libwebp
 extra.omnios ooce/library/mariadb-106

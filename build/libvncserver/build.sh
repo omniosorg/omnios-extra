@@ -44,11 +44,17 @@ CONFIGURE_OPTS="
     -DWITH_EXAMPLES=OFF
 "
 CONFIGURE_OPTS[i386]=
-CONFIGURE_OPTS[amd64]="-DCMAKE_INSTALL_LIBDIR=lib/amd64"
+CONFIGURE_OPTS[amd64]="-DCMAKE_INSTALL_LIBDIR=${LIBDIRS[amd64]}"
+CONFIGURE_OPTS[aarch64]=
 
-LDFLAGS[i386]+=" -L$PREFIX/lib -Wl,-R$PREFIX/lib"
-LDFLAGS[amd64]+=" -L$PREFIX/lib/amd64 -Wl,-R$PREFIX/lib/amd64"
 CFLAGS+=" -D_REENTRANT"
+
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$PREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG LibVNCServer $VER

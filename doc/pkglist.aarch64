@@ -96,6 +96,7 @@ ooce/security/gnupg
 ooce/multimedia/ffmpeg
 ooce/library/pango
 ooce/network/znc
+ooce/library/libvncserver
 ###############################################################################
 .SYSROOT
 ooce/multimedia/minidlna

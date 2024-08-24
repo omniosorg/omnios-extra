@@ -9,14 +9,9 @@
 # http://www.illumos.org/license/CDDL.
 # CDDL HEADER START
 #
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYING license=GPLv2
 
 <transform path=$(PREFIX)/share/doc -> drop>
-
-link path=$(PREFIX)/lib/libvncclient.so target=libvncclient.so.1
-link path=$(PREFIX)/lib/libvncserver.so target=libvncserver.so.1
-link path=$(PREFIX)/lib/amd64/libvncclient.so target=libvncclient.so.1
-link path=$(PREFIX)/lib/amd64/libvncserver.so target=libvncserver.so.1
 
