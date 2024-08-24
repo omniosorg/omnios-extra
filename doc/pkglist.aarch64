@@ -70,6 +70,7 @@ ooce/network/fping
 ooce/util/xjobs
 ooce/library/ldns
 ooce/library/libzip
+ooce/library/jansson
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
