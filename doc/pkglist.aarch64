@@ -68,6 +68,7 @@ ooce/system/mbuffer
 ooce/application/mutt
 ooce/network/fping
 ooce/util/xjobs
+ooce/library/ldns
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
