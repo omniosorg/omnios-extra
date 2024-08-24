@@ -23,7 +23,7 @@ SUMMARY="tcpdump - TCP packet analyzer"
 DESC="tcpdump - a powerful command-line TCP packet analyzer"
 
 set_arch 64
-test_relver '>=' 151045 && set_clangver
+set_clangver
 
 BUILD_DEPENDS_IPS="
     system/library/pcap

@@ -71,6 +71,7 @@ ooce/util/xjobs
 ooce/library/ldns
 ooce/library/libzip
 ooce/library/jansson
+ooce/network/tcpdump
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
