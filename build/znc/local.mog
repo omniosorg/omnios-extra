@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 license LICENSE license=Apache2
 
@@ -35,7 +35,7 @@ link path=etc/$(PREFIX) target=/var/$(PREFIX)/configs
 
 <transform file path=var/$(PREFIX)/configs -> set preserve true>
 
-<transform file path=$(PREFIX)/bin -> \
+<transform file path=$(PREFIX)/(?:bin|lib/znc)/ -> \
     set restart_fmri svc:/network/znc:default>
 
 <include binlink.mog>

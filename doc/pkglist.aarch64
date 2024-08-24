@@ -95,6 +95,7 @@ ooce/library/security/libsasl2
 ooce/security/gnupg
 ooce/multimedia/ffmpeg
 ooce/library/pango
+ooce/network/znc
 ###############################################################################
 .SYSROOT
 ooce/multimedia/minidlna

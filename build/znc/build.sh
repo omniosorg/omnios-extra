@@ -47,14 +47,6 @@ XFORM_ARGS="
 SKIP_RTIME_CHECK=1
 NO_SONAME_EXPECTED=1
 
-install_modules() {
-    for f in $SRCDIR/files/*.cpp; do
-        bf=`basename $f`
-        logmsg "Installing module: $bf"
-        logcmd $CP $f $TMPDIR/$BUILDDIR/modules/
-    done
-}
-
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=$PREFIX
@@ -63,12 +55,28 @@ CONFIGURE_OPTS="
     -DWANT_PYTHON=false
     -DWANT_TCL=false
 "
-
-CONFIGURE_OPTS[amd64]="
-    -DCMAKE_INSTALL_LIBDIR=lib
-"
+CONFIGURE_OPTS[amd64]="-DCMAKE_INSTALL_LIBDIR=lib"
+CONFIGURE_OPTS[aarch64]="-DCMAKE_INSTALL_LIBDIR=lib"
 LDFLAGS+=" -lsocket"
-LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/lib/amd64"
+
+pre_build() {
+    for f in $SRCDIR/files/*.cpp; do
+        bf=`basename $f`
+        logmsg "Installing module: $bf"
+        logcmd $CP $f $TMPDIR/$EXTRACTED_SRC/modules/ \
+            || logerr "failed to install module: $bf"
+    done
+}
+
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+}
+
+post_install() {
+    install_smf network znc.xml
+}
 
 tests() {
     for key in SSL IPv6 Zlib; do
@@ -79,12 +87,10 @@ tests() {
 init
 download_source $PROG $PROG $VER
 patch_source
-install_modules
 prep_build cmake+ninja
 build -noctf    # C++
 tests
 strip_install
-install_smf network znc.xml
 make_package
 clean_up
 
