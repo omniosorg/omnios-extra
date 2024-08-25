@@ -13,6 +13,7 @@
 # }}}
 
 # Copyright 2023 Carsten Grzemba
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -31,6 +32,7 @@ sAPACHEVER=${APACHEVER//./}
 RUN_DEPENDS_IPS+=" ooce/server/apache-$sAPACHEVER"
 
 set_arch 64
+test_relver '>=' 151051 && set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+="/apache-$APACHEVER"
