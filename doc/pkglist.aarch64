@@ -73,6 +73,7 @@ ooce/library/libzip
 ooce/library/jansson
 ooce/network/tcpdump
 ooce/system/top
+ooce/library/apr
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
