@@ -47,7 +47,13 @@ pre_configure() {
 post_build() {
     typeset arch=$1
 
-    cross_arch $arch && return
+    [ $arch = i386 ] && return
+
+    # rust needs the native gcc
+    # the cross gcc should not be ahead in PATH
+    cross_arch $arch && set_gccver $DEFAULT_GCC_VER
+
+    unset -f post_build
 
     build_rust
     install_rust

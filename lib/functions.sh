@@ -2578,6 +2578,8 @@ install_rust() {
     logmsg "Installing $prog"
 
     for b in $BUILDARCH; do
+        [ $b = i386 ] && continue
+
         hook pre_install $b || return
 
         destdir=$DESTDIR
@@ -3262,6 +3264,8 @@ build_rust() {
     save_variables CFLAGS CXXFLAGS
 
     for b in $BUILDARCH; do
+        [ $b = i386 ] && continue
+
         logmsg "Building rust ($b)"
 
         hook pre_build $b || continue
