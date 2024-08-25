@@ -1,0 +1,42 @@
+see: https://www.illumos.org/issues/15657
+struct pam_message in struct pam_conv is not const in illumos before r151051
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/scheduler/auth.c a/scheduler/auth.c
+--- a~/scheduler/auth.c	1970-01-01 00:00:00
++++ a/scheduler/auth.c	1970-01-01 00:00:00
+@@ -575,7 +575,7 @@ cupsdAuthorize(cupsd_client_t *con)	/* I
+       strlcpy(data.username, username, sizeof(data.username));
+       strlcpy(data.password, password, sizeof(data.password));
+ 
+-#  ifdef __sun
++#  if defined(__sun) && OOCEVER < 151051
+       pamdata.conv        = (int (*)(int, struct pam_message **,
+ 				     struct pam_response **,
+ 				     void *))pam_func;
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tools/ippeveprinter.c a/tools/ippeveprinter.c
+--- a~/tools/ippeveprinter.c	1970-01-01 00:00:00
++++ a/tools/ippeveprinter.c	1970-01-01 00:00:00
+@@ -324,7 +324,11 @@ static ipp_t		*load_legacy_attributes(co
+ static ipp_t		*load_ppd_attributes(const char *ppdfile, cups_array_t *docformats);
+ #endif /* !CUPS_LITE */
+ #if HAVE_LIBPAM
++#if OOCEVER >= 151051
+ static int		pam_func(int, const struct pam_message **, struct pam_response **, void *);
++#else
++static int		pam_func(int, struct pam_message **, struct pam_response **, void *);
++#endif
+ #endif /* HAVE_LIBPAM */
+ static int		parse_options(ippeve_client_t *client, cups_option_t **options);
+ static void		process_attr_message(ippeve_job_t *job, char *message);
+@@ -5649,7 +5653,11 @@ load_ppd_attributes(
+ static int				/* O - Success or failure */
+ pam_func(
+     int                      num_msg,	/* I - Number of messages */
++#if OOCEVER >= 151051
+     const struct pam_message **msg,	/* I - Messages */
++#else
++    struct pam_message **msg,	/* I - Messages */
++#endif
+     struct pam_response      **resp,	/* O - Responses */
+     void                     *appdata_ptr)
+ 					/* I - Pointer to connection */
