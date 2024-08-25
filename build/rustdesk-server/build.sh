@@ -41,24 +41,21 @@ SKIP_SSP_CHECK=1
 # node contains BMI instructions even when built on an older CPU
 BMI_EXPECTED=1
 
-export RUSTFLAGS="-C link-arg=-R$OPREFIX/lib/amd64"
+pre_build() {
+    typeset arch=$1
 
-install_rust() {
-    logcmd $MKDIR -p "$DESTDIR/$PREFIX/bin" \
-        || logerr "Failed to create install dir"
-
-    for f in hbbr hbbs rustdesk-utils; do
-        logcmd $CP $TMPDIR/$BUILDDIR/target/release/$f \
-            $DESTDIR/$PREFIX/bin/$f || logerr "Failed to install $f"
-    done
+    export RUSTFLAGS="-C link-arg=-R$OPREFIX/${LIBDIRS[$arch]}"
+    # rust runs objects during the build which don't have the library
+    # runtime path set, yet
+    export LD_LIBRARY_PATH="$OPREFIX/${LIBDIRS[$arch]}"
 }
 
 init
 download_source $PROG $VER
 patch_source
 prep_build
-PKG_CONFIG_PATH=${PKG_CONFIG_PATH[amd64]} SODIUM_USE_PKG_CONFIG=1 build_rust
-install_rust
+SODIUM_USE_PKG_CONFIG=1 build_rust
+for f in hbbr hbbs rustdesk-utils; do install_rust $f; done
 strip_install
 xform files/rustdesk-template.xml > $TMPDIR/rustdesk.xml
 install_smf ooce rustdesk.xml
