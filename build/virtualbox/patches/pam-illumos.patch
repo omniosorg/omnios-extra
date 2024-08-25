@@ -1,0 +1,57 @@
+see: https://www.illumos.org/issues/15657
+struct pam_message in struct pam_conv is not const in illumos before r151051
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Additions/common/pam/pam_vbox.cpp a/src/VBox/Additions/common/pam/pam_vbox.cpp
+--- a~/src/VBox/Additions/common/pam/pam_vbox.cpp	1970-01-01 00:00:00
++++ a/src/VBox/Additions/common/pam/pam_vbox.cpp	1970-01-01 00:00:00
+@@ -198,7 +198,7 @@ static int vbox_set_msg(pam_handle_t *hP
+     msg.msg = pszText;
+ #endif
+ 
+-#ifdef RT_OS_SOLARIS
++#if defined(RT_OS_SOLARIS) && OOCEVER < 151051
+     pam_conv *conv = NULL;
+     int pamrc = pam_get_item(hPAM, PAM_CONV, (void **)&conv);
+ #else
+@@ -209,7 +209,7 @@ static int vbox_set_msg(pam_handle_t *hP
+         && conv)
+     {
+         pam_response *resp = NULL;
+-#ifdef RT_OS_SOLARIS
++#if defined(RT_OS_SOLARIS) && OOCEVER < 151051
+         pam_message *msg_p = &msg;
+ #else
+         const pam_message *msg_p = &msg;
+@@ -291,7 +291,7 @@ static int pam_vbox_init(pam_handle_t *h
+         char *rhost = NULL;
+         char *tty = NULL;
+         char *prompt = NULL;
+-#ifdef RT_OS_SOLARIS
++#if defined(RT_OS_SOLARIS) && OOCEVER < 151051
+         pam_get_item(hPAM, PAM_RHOST, (void**) &rhost);
+         pam_get_item(hPAM, PAM_TTY, (void**) &tty);
+         pam_get_item(hPAM, PAM_USER_PROMPT, (void**) &prompt);
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/HostServices/auth/pam/VBoxAuthPAM.c a/src/VBox/HostServices/auth/pam/VBoxAuthPAM.c
+--- a~/src/VBox/HostServices/auth/pam/VBoxAuthPAM.c	1970-01-01 00:00:00
++++ a/src/VBox/HostServices/auth/pam/VBoxAuthPAM.c	1970-01-01 00:00:00
+@@ -254,7 +254,7 @@ typedef struct _PamContext
+     char *pszPassword;
+ } PamContext;
+ 
+-#if defined(RT_OS_SOLARIS)
++#if defined(RT_OS_SOLARIS) && OOCEVER < 151051
+ static int conv (int num_msg, struct pam_message **msg,
+                  struct pam_response **resp, void *appdata_ptr)
+ #else
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Runtime/r3/posix/process-creation-posix.cpp a/src/VBox/Runtime/r3/posix/process-creation-posix.cpp
+--- a~/src/VBox/Runtime/r3/posix/process-creation-posix.cpp	1970-01-01 00:00:00
++++ a/src/VBox/Runtime/r3/posix/process-creation-posix.cpp	1970-01-01 00:00:00
+@@ -228,7 +228,7 @@ static int rtProcPosixCreateInner(const
+  * @param   ppaResponses    Where to put our responses.
+  * @param   pvAppData       Pointer to RTPROCPAMARGS.
+  */
+-#if defined(RT_OS_SOLARIS)
++#if defined(RT_OS_SOLARIS) && OOCEVER < 151051
+ static int rtPamConv(int cMessages, struct pam_message **papMessages, struct pam_response **ppaResponses, void *pvAppData)
+ #else
+ static int rtPamConv(int cMessages, const struct pam_message **papMessages, struct pam_response **ppaResponses, void *pvAppData)
