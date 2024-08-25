@@ -97,7 +97,7 @@ pre_configure() {
     "
 
     # To find OpenLDAP
-    CPPFLAGS+=" -I$OPREFIX/include"
+    CPPFLAGS+=" -I$OPREFIX/include -DOOCEVER=$RELVER"
     LDFLAGS[$arch]+=" -L$OPREFIX/${LIBDIRS[$arch]} -R$OPREFIX/${LIBDIRS[$arch]}"
 }
 
