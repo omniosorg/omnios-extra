@@ -17,10 +17,10 @@
 . ../../lib/build.sh
 
 PROG=mattermost
-VER=9.5.8
+VER=9.11.0
 # check for the current morph version/commit hash and create a patched branch in
 # https://github.com/omniosorg/morph; then point to that branch
-MORPHBRANCH=il_1.0.5
+MORPHBRANCH=il_1.1.0
 PKG=ooce/application/mattermost
 SUMMARY="$PROG"
 DESC="All your team communication in one place, "
@@ -28,7 +28,7 @@ DESC+="instantly searchable and accessible anywhere."
 
 set_arch 64
 set_gover
-set_nodever 18
+set_nodever
 
 BUILD_DEPENDS_IPS+="
     ooce/library/libpng

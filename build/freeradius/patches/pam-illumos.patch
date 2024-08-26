@@ -1,12 +1,18 @@
+see: https://www.illumos.org/issues/15657
+struct pam_message in struct pam_conv is not const in illumos before r151051
+
 diff -wpruN --no-dereference '--exclude=*.orig' a~/src/modules/rlm_pam/rlm_pam.c a/src/modules/rlm_pam/rlm_pam.c
 --- a~/src/modules/rlm_pam/rlm_pam.c	1970-01-01 00:00:00
 +++ a/src/modules/rlm_pam/rlm_pam.c	1970-01-01 00:00:00
-@@ -68,7 +68,7 @@ typedef struct rlm_pam_data_t {
+@@ -68,7 +68,11 @@ typedef struct rlm_pam_data_t {
   * Uses PAM's appdata_ptr so it's thread safe, and doesn't
   * have any nasty static variables hanging around.
   */
--static int pam_conv(int num_msg, struct pam_message const **msg, struct pam_response **resp, void *appdata_ptr)
++#if OOCEVER >= 151051
+ static int pam_conv(int num_msg, struct pam_message const **msg, struct pam_response **resp, void *appdata_ptr)
++#else
 +static int pam_conv(int num_msg, struct pam_message **msg, struct pam_response **resp, void *appdata_ptr)
++#endif
  {
  	int count;
  	struct pam_response *reply;

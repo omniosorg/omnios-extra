@@ -61,12 +61,12 @@ CONFIGURE_OPTS="
     --without-php
     --without-java
 "
-# cups only supports openssl 3+
-[ $RELVER -lt 151041 ] && CONFIGURE_OPTS+=" --with-tls=gnutls"
 
 # cups uses libusb_get_device_list to enumerate devices
 # this currently fails in zones as it uses libdevinfo
 CONFIGURE_OPTS+=" --disable-libusb"
+
+CPPFLAGS+=" -DOOCEVER=$RELVER"
 
 pre_configure() {
     typeset arch=$1

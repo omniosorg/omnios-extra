@@ -65,6 +65,8 @@ restore_buildenv
 
 #########################################################################
 
+CPPFLAGS+=" -DOOCEVER=$RELVER"
+
 CONFIGURE_OPTS[amd64]+="
     --includedir=$OPREFIX/include
     --libdir=$OPREFIX/lib/amd64

@@ -1,45 +1,6 @@
 Use the thread-safe LDAP library by default. This also prevents a conflict
 with the illumos libldap in /usr/lib.
 
-diff -wpruN --no-dereference '--exclude=*.orig' a~/configure a/configure
---- a~/configure	1970-01-01 00:00:00
-+++ a/configure	1970-01-01 00:00:00
-@@ -51139,7 +51139,7 @@ fi
- 
- 
-   if test "$ext_shared" = "yes"; then
--    LDAP_SHARED_LIBADD="-lldap $LDAP_SHARED_LIBADD"
-+    LDAP_SHARED_LIBADD="-lldap_r $LDAP_SHARED_LIBADD"
-     if test -n "$LDAP_LIBDIR"; then
- 
-   if test "$LDAP_LIBDIR" != "/usr/$PHP_LIBDIR" && test "$LDAP_LIBDIR" != "/usr/lib"; then
-@@ -51223,7 +51223,7 @@ fi
-   case ldap in
-   c|c_r) ;;
-   *)
--      LIBS="-lldap $LIBS"
-+      LIBS="-lldap_r $LIBS"
-    ;;
-   esac
- 
-@@ -51238,7 +51238,7 @@ fi
- 
- 
-   if test "$ext_shared" = "yes"; then
--    LDAP_SHARED_LIBADD="-lldap $LDAP_SHARED_LIBADD"
-+    LDAP_SHARED_LIBADD="-lldap_r $LDAP_SHARED_LIBADD"
-     if test -n "$LDAP_LIBDIR"; then
- 
-   if test "$LDAP_LIBDIR" != "/usr/$PHP_LIBDIR" && test "$LDAP_LIBDIR" != "/usr/lib"; then
-@@ -51322,7 +51322,7 @@ fi
-   case ldap in
-   c|c_r) ;;
-   *)
--      LIBS="-lldap $LIBS"
-+      LIBS="-lldap_r $LIBS"
-    ;;
-   esac
- 
 diff -wpruN --no-dereference '--exclude=*.orig' a~/ext/ldap/config.m4 a/ext/ldap/config.m4
 --- a~/ext/ldap/config.m4	1970-01-01 00:00:00
 +++ a/ext/ldap/config.m4	1970-01-01 00:00:00
