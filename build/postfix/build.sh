@@ -24,7 +24,7 @@ SUMMARY="Postfix MTA"
 DESC="Wietse Venema's mail server alternative to sendmail"
 
 set_arch 64
-test_relver '>=' 151041 && set_clangver
+set_clangver
 
 SKIP_LICENCES=IPL
 
@@ -65,6 +65,42 @@ MAKE_INSTALL_TARGET=non-interactive-package
 pre_configure() {
     typeset arch=$1
 
+    if cross_arch $arch; then
+        save_variable BUILDARCH
+        set_arch $BUILD_ARCH
+        set_gccver $DEFAULT_GCC_VER
+
+        note -n "-- Building native tools"
+
+        pushd $TMPDIR/$BUILDDIR >/dev/null
+
+        # we don't really care about the configure options here as we just need
+        # a native postconf; however, postconf decides where to install
+        # everything, so it should know about the proper locations
+        logcmd $MAKE makefiles CCARGS="$CFLAGS"' \
+            -DDEF_COMMAND_DIR=\"'${PREFIX}/sbin'\" \
+            -DDEF_CONFIG_DIR=\"'${CONFPATH}'\" \
+            -DDEF_DAEMON_DIR=\"'${PREFIX}/libexec/postfix'\" \
+            -DDEF_MAILQ_PATH=\"'${PREFIX}/bin/mailq'\" \
+            -DDEF_NEWALIAS_PATH=\"'${PREFIX}/bin/newaliases'\" \
+            -DDEF_MANPAGE_DIR=\"'${PREFIX}/share/man'\" \
+            -DDEF_SENDMAIL_PATH=\"'${PREFIX}/sbin/sendmail'\" \
+            ' || logerr "failed making native makefiles"
+
+        logcmd $MAKE $MAKE_JOBS || logerr "failed to make native tools"
+        logcmd $CP $TMPDIR/$BUILDDIR/bin/postconf $TMPDIR/ \
+            || logerr "failed to copy native postconf"
+
+        popd >/dev/null
+
+        set_crossgcc $arch
+        restore_variable BUILDARCH
+
+        note -n "-- Building $PROG"
+
+        make_clean $arch
+    fi
+
     logmsg "--- configure (make makefiles)"
 
     ARCHLIB=${LIBDIRS[$arch]}
@@ -89,16 +125,30 @@ pre_configure() {
         -I'${OPREFIX}/pgsql-${PGSQLVER}/include' \
         ' \
         OPT='-O2' \
-        AUXLIBS="-L$LIBDIR -Wl,-R$LIBDIR -ldb -lsasl2 -lssl -lcrypto" \
+        AUXLIBS="-L${SYSROOT[$arch]}$LIBDIR -Wl,-R$LIBDIR -ldb -lsasl2 -lssl -lcrypto" \
         AUXLIBS_LDAP="-lldap_r -llber" \
         AUXLIBS_SQLITE="-lsqlite3" \
-        AUXLIBS_MYSQL="-L${OPREFIX}/mariadb-${MARIASQLVER}/$ARCHLIB -Wl,-R${OPREFIX}/mariadb-${MARIASQLVER}/$ARCHLIB -lmysqlclient" \
-        AUXLIBS_PGSQL="-L${OPREFIX}/pgsql-${PGSQLVER}/$ARCHLIB -Wl,-R${OPREFIX}/pgsql-${PGSQLVER}/$ARCHLIB -lpq" \
+        AUXLIBS_MYSQL="-L${SYSROOT[$arch]}${OPREFIX}/mariadb-${MARIASQLVER}/$ARCHLIB -Wl,-R${OPREFIX}/mariadb-${MARIASQLVER}/$ARCHLIB -lmysqlclient" \
+        AUXLIBS_PGSQL="-L${SYSROOT[$arch]}${OPREFIX}/pgsql-${PGSQLVER}/$ARCHLIB -Wl,-R${OPREFIX}/pgsql-${PGSQLVER}/$ARCHLIB -lpq" \
         AUXLIBS_LMDB="-llmdb" \
         AUXLIBS_PCRE="-lpcre2" \
             || logerr "Failed make makefiles command"
 
     false
+}
+
+pre_install() {
+    typeset arch=$1
+
+    MAKE_INSTALL_ARGS="install_root=${DESTDIR}"
+
+    ! cross_arch $arch && return
+
+    export POSTCONF=$TMPDIR/postconf
+}
+
+post_install() {
+    install_smf ooce smtp-postfix.xml
 }
 
 make_clean() {
@@ -111,9 +161,7 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
-MAKE_INSTALL_ARGS="install_root=${DESTDIR}" build
-strip_install
-install_smf ooce smtp-postfix.xml
+build
 make_package
 clean_up
 

@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=ldns
-VER=1.8.3
+VER=1.8.4
 PKG=ooce/library/ldns
 SUMMARY=$PROG
 DESC="$PROG DNS programming library and drill utility"
@@ -44,17 +44,22 @@ CONFIGURE_OPTS[amd64]+="
     --with-drill
     --with-examples
 "
-
-# Building in parallel produces occasional bad objects that then fail the
-# linking stage. This needs investigation but disabled parallelism for now.
-NO_PARALLEL_MAKE=1
+CONFIGURE_OPTS[aarch64]+="
+    --bindir=$PREFIX/bin
+    --with-drill
+    --with-examples
+"
 
 # The 'distclean' target clobbers too much including 'configure'
 make_clean() {
     logcmd $MAKE clean
 }
 
-make_isa_stub() {
+post_install() {
+    typeset arch=$1
+
+    [ $arch != amd64 ] && return
+
     pushd $DESTDIR$PREFIX/bin >/dev/null
     logcmd mkdir -p amd64
     logcmd mv ldns-config amd64/ || logerr "mv ldns-config"
@@ -67,7 +72,6 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-make_isa_stub
 make_package
 clean_up
 

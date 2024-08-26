@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -23,7 +23,7 @@ BETA=1
 SUMMARY="top"
 DESC="Display and update information about the top cpu processes"
 
-BUILDDIR="$PROG-${VER}beta$BETA"
+set_builddir "$PROG-${VER}beta$BETA"
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
@@ -37,10 +37,7 @@ XFORM_ARGS="
     -DVERSION=$VER
 "
 
-CONFIGURE_OPTS[amd64]="
-    --prefix=$PREFIX
-    --disable-dualarch
-"
+CONFIGURE_OPTS[amd64]+=" --disable-dualarch"
 
 init
 download_source $PROG $PROG ${VER}beta$BETA

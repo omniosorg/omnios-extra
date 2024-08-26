@@ -1,7 +1,7 @@
-diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure.ac a/configure.ac
 --- a~/configure.ac	1970-01-01 00:00:00
 +++ a/configure.ac	1970-01-01 00:00:00
-@@ -882,30 +882,33 @@ case "$with_pgsql" in
+@@ -833,30 +833,32 @@ case "$with_pgsql" in
       LDFLAGS=$save_LDFLAGS
       ;;
      *)
@@ -24,8 +24,7 @@ diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
 +     #   CMU_ADD_LIBPATH_TO(${with_pgsql}, LIB_PGSQL)
 +     #fi
  
-+     _lib=`pg_config --libdir`
-+     LIB_PGSQL="-L$_lib -R$_lib -lpq"
++     LIB_PGSQL="`pkg-config --libs libpq`"
       LIB_PGSQL_DIR=$LIB_PGSQL
 -     LIB_PGSQL="$LIB_PGSQL -lpq"
  
@@ -52,7 +51,7 @@ diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
 +     #    CPPFLAGS="${CPPFLAGS} -I${with_pgsql}"
 +     #fi
 +
-+     CPPFLAGS+=" `pg_config --cppflags` -I`pg_config --includedir`"
++     CPPFLAGS+=" `pkg-config --cflags libpq`"
  
  
         save_LDFLAGS=$LDFLAGS

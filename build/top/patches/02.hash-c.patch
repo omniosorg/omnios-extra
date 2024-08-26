@@ -3,7 +3,7 @@
 #    6893978 top segfaults with high thread ids
 #
 *** top-3.8beta1/hash.c-old  Thu Jul  2 15:30:55 2009
-diff -wpruN '--exclude=*.orig' a~/hash.c a/hash.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/hash.c a/hash.c
 --- a~/hash.c	1970-01-01 00:00:00
 +++ a/hash.c	1970-01-01 00:00:00
 @@ -1354,7 +1354,7 @@ hash_add_pidthr(hash_table *ht, pidthr_t

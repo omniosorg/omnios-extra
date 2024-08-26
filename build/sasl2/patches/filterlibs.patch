@@ -1,10 +1,10 @@
 
 libdoor and libdl are now just filters. No need to link with them.
 
-diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure.ac a/configure.ac
 --- a~/configure.ac	1970-01-01 00:00:00
 +++ a/configure.ac	1970-01-01 00:00:00
-@@ -227,7 +227,7 @@ fi
+@@ -173,7 +173,7 @@ fi
  AC_MSG_CHECKING(if DB handle is kept open in SASLDB)
  AC_MSG_RESULT($keep_db_open)
  
@@ -13,7 +13,7 @@ diff -wpruN '--exclude=*.orig' a~/configure.ac a/configure.ac
  AC_SUBST(SASL_DL_LIB)
  
  dnl /dev/random ?
-@@ -332,7 +332,7 @@ IPCTYPE=$with_ipctype
+@@ -282,7 +282,7 @@ IPCTYPE=$with_ipctype
  AC_SUBST(IPCTYPE)
  LIB_DOOR=
  if test "$with_ipctype" = "doors"; then

@@ -1,3 +1,4 @@
 aliases_patch.patch
-libicu_rpath.patch
+icu4c.patch
 socket.patch
+postconf.patch

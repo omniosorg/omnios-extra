@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -30,6 +30,8 @@ CONFIGURE_OPTS="
     apr_cv_pthreads_lib=
 "
 
+export CC_FOR_BUILD=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc
+
 CONFIGURE_OPTS[i386]+="
     --with-installbuilddir=$PREFIX/share/apr/i386/build-1
 "
@@ -38,9 +40,18 @@ CONFIGURE_OPTS[amd64]+="
     --with-installbuilddir=$PREFIX/share/apr/amd64/build-1
 "
 
+CONFIGURE_OPTS[aarch64]+="
+    --with-installbuilddir=$PREFIX/share/apr/aarch64/build-1
+    ac_cv_file__dev_zero=yes
+    apr_cv_process_shared_works=yes
+    apr_cv_mutex_robust_shared=yes
+    apr_cv_tcp_nodelay_with_cork=yes
+"
+
 # Run the test-suite for the 32-bit build too
-make_install32() {
-    make_install
+post_install() {
+    [ $1 != i386 ] && return
+
     run_testsuite test "" testsuite-32.log
 }
 

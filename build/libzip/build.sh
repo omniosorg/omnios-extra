@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -25,10 +25,6 @@ DESC="A C library for reading, creating and modifying zip archives"
 # refrain from building this package with clang as it adds
 # nullability attributes to headers which cause issues when
 # being used with gcc
-
-BUILD_DEPENDS_IPS="
-    ooce/developer/cmake
-"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -45,17 +41,14 @@ CONFIGURE_OPTS="
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_INSTALL_INCLUDEDIR=$OPREFIX/include
 "
+CONFIGURE_OPTS[i386]="-DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[i386]}"
+CONFIGURE_OPTS[amd64]="-DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[amd64]}"
+CONFIGURE_OPTS[aarch64]="-DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[aarch64]}"
 
 pre_configure() {
     typeset arch=$1
 
-    CONFIGURE_OPTS[$arch]="
-        -DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[$arch]}
-    "
-
     LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
-
-    export CMAKE_LIBRARY_PATH=$OPREFIX/${LIBDIRS[$arch]}
 }
 
 init

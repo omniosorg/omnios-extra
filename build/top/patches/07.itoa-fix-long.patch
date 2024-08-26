@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/display.c a/display.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/display.c a/display.c
 --- a~/display.c	1970-01-01 00:00:00
 +++ a/display.c	1970-01-01 00:00:00
 @@ -635,7 +635,7 @@ summary_format_memory(int x, int y, long
@@ -10,7 +10,7 @@ diff -wpruN '--exclude=*.orig' a~/display.c a/display.c
  	    }
  
  	    /* next iteration will not start at x, y */
-diff -wpruN '--exclude=*.orig' a~/utils.c a/utils.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/utils.c a/utils.c
 --- a~/utils.c	1970-01-01 00:00:00
 +++ a/utils.c	1970-01-01 00:00:00
 @@ -93,27 +93,27 @@ atoiwi(char *str)
@@ -49,7 +49,7 @@ diff -wpruN '--exclude=*.orig' a~/utils.c a/utils.c
  
      ptr = buffer + sizeof(buffer);
      *--ptr = '\0';
-diff -wpruN '--exclude=*.orig' a~/utils.h a/utils.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/utils.h a/utils.h
 --- a~/utils.h	1970-01-01 00:00:00
 +++ a/utils.h	1970-01-01 00:00:00
 @@ -40,7 +40,7 @@

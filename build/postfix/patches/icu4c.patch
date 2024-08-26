@@ -1,0 +1,19 @@
+since we also cross-compile postfix, we have to relax the check from
+testing whether the binary can be run on the build host to just trust
+the compiler whether it could build the binary or not
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/makedefs a/makedefs
+--- a~/makedefs	1970-01-01 00:00:00
++++ a/makedefs	1970-01-01 00:00:00
+@@ -902,9 +902,8 @@ int main(int argc, char **argv)
+ 				  &error) != 14);
+ }
+ EOF
+-		    ${CC-gcc} -o makedefs.test makedefs.test.c $icu_cppflags \
+-			$icu_ldflags >/dev/null 2>&1
+-		    if ./makedefs.test 2>/dev/null ; then
++		    if ${CC-gcc} -o makedefs.test makedefs.test.c $icu_cppflags \
++			$icu_ldflags >/dev/null 2>&1; then
+ 			CCARGS="$CCARGS $icu_cppflags"
+ 			SYSLIBS="$SYSLIBS $icu_ldflags"
+ 		    else

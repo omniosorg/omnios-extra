@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/saslauthd/saslauthd.mdoc a/saslauthd/saslauthd.mdoc
+diff -wpruN --no-dereference '--exclude=*.orig' a~/saslauthd/saslauthd.mdoc a/saslauthd/saslauthd.mdoc
 --- a~/saslauthd/saslauthd.mdoc	1970-01-01 00:00:00
 +++ a/saslauthd/saslauthd.mdoc	1970-01-01 00:00:00
 @@ -38,37 +38,28 @@ authentication services to clients that

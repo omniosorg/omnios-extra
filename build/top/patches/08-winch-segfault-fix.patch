@@ -1,6 +1,6 @@
 https://sourceforge.net/p/unixtop/patches/22/
 
-diff -wpruN '--exclude=*.orig' a~/top.c a/top.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/top.c a/top.c
 --- a~/top.c	1970-01-01 00:00:00
 +++ a/top.c	1970-01-01 00:00:00
 @@ -257,14 +257,14 @@ hold_signals()
