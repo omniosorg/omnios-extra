@@ -28,18 +28,38 @@ set_clangver
 
 SKIP_LICENCES=Kitware
 
-MAKE=$NINJA
+XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
-CONFIGURE_OPTS[amd64]="
-    --prefix=$PREFIX
-    --generator=Ninja
-    --system-curl
+CONFIGURE_OPTS="
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX=$PREFIX
+    -DCMAKE_USE_SYSTEM_BZIP2=ON
+    -DCMAKE_USE_SYSTEM_CURL=ON
+    -DCMAKE_USE_SYSTEM_EXPAT=ON
+    -DCMAKE_USE_SYSTEM_LIBLZMA=ON
+    -DCMAKE_USE_SYSTEM_LIBUV=ON
+    -DCMAKE_USE_SYSTEM_ZLIB=ON
+    -DCMAKE_USE_SYSTEM_ZSTD=ON
 "
+CONFIGURE_OPTS[amd64]=
+CONFIGURE_OPTS[aarch64]=
+
+pre_configure() {
+    typeset arch=$1
+
+    ! cross_arch $arch && return
+
+    # setting CMAKE_SYSTEM_NAME will set the internal `CMAKE_CROSSCOMPILING`
+    # to true; this prevents it from using the cross-compiled cmake for install
+    CONFIGURE_OPTS[$arch]+=" -DBUILD_CursesDialog=ON -DCMAKE_SYSTEM_NAME=SunOS"
+
+    LDFLAGS[$arch]+=" -R$PREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER
 patch_source
-prep_build autoconf-like
+prep_build cmake+ninja
 build
 make_package
 clean_up

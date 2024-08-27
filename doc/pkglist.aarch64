@@ -89,6 +89,7 @@ ooce/util/jq
 ooce/security/minisign
 ooce/application/links
 ooce/database/mariadb-106
+ooce/developer/cmake
 ###############################################################################
 .SYSROOT
 ooce/network/unbound
