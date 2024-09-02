@@ -17,12 +17,12 @@
 . ../../lib/build.sh
 
 PROG=victoriametrics
-VER=1.102.1
+VER=1.102.2
 PKG=ooce/database/victoriametrics
 SUMMARY="VictoriaMetrics"
 DESC="Fast, cost-effective monitoring solution and time series database."
 
-DATA=var/lib/victoria-metrics-data
+DATA=var/${PREFIX#/}/$PROG
 
 set_arch 64
 set_gover
@@ -45,8 +45,10 @@ build() {
     export CGO_ENABLED=0
     export GOOS=illumos
 
-    logcmd gmake victoria-metrics-pure || logerr "Unable to build victoria-metrics-pure"
-    logcmd gmake vmutils-pure || logerr "Unable to build vmutils-pure"
+    logcmd $MAKE victoria-metrics-pure \
+        || logerr "Unable to build victoria-metrics-pure"
+    logcmd $MAKE vmutils-pure \
+        || logerr "Unable to build vmutils-pure"
 
     popd >/dev/null
 }

@@ -58,7 +58,7 @@
 | extra		| 90	| postgres
 | extra		| 91	| subversion
 | omnios	| 92	| sshd
-| extra     | 93    | victoriametrics
+| extra		| 93	| victoriametrics
 | illumos	| 95	| svctag
 | illumos	| 96	| unknown
 | pkg5		| 97	| pkg5srv
@@ -123,7 +123,7 @@
 | extra		| 90	| postgres
 | extra		| 91	| subversion
 | omnios	| 92	| sshd
-| extra     | 93    | victoriametrics
+| extra		| 93	| victoriametrics
 | illumos	| 95	| slocate
 | illumos	| 96	| unknown
 | pkg5		| 97	| pkg5srv

@@ -47,7 +47,7 @@
             <method_context>
                 <method_credential user="$(USER)"
                                    group="$(GROUP)"
-                                   privileges="basic,net_privaddr" />
+                                   privileges="basic" />
                 <method_environment>
                     <envvar name="VM_storageDataPath"
                             value="/$(DATA)" />
@@ -116,7 +116,7 @@
             <method_context>
                 <method_credential user="$(USER)"
                                    group="$(GROUP)"
-                                   privileges="basic,net_privaddr" />
+                                   privileges="basic" />
             </method_context>
 
             <exec_method type="method"

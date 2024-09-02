@@ -16,7 +16,7 @@ dir path=$(DATA) owner=$(USER) group=$(GROUP) mode=0700
 
 group groupname=$(GROUP) gid=93
 user ftpuser=false username=$(USER) uid=93 group=$(GROUP) \
-    gcos-field="VictoriaMetrics - time series database" \
+    gcos-field="VictoriaMetrics user" \
     home-dir=/$(DATA) password=NP
 
 file ./tmp/victoria-metrics-profile.xml \
