@@ -17,7 +17,7 @@
 <service_bundle type="profile"
                 name="victoriametrics">
 
-    <service name="application/victoriametrics"
+    <service name="ooce/application/victoriametrics"
              type="service"
              version="1">
 

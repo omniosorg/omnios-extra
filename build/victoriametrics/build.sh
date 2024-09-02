@@ -24,7 +24,7 @@ DESC="Fast, cost-effective monitoring solution and time series database."
 
 DATA=var/lib/victoria-metrics-data
 
-set_arch amd64
+set_arch 64
 set_gover
 
 XFORM_ARGS="
@@ -63,7 +63,8 @@ install_go bin/vmctl-pure vmctl
 install_go bin/vmrestore-pure vmrestore
 xform files/$PROG-template.xml > $TMPDIR/$PROG.xml
 install_smf application $PROG.xml
-xform files/victoria-metrics-profile-template.xml > $TMPDIR/victoria-metrics-profile.xml
+xform files/victoria-metrics-profile-template.xml \
+    > $TMPDIR/victoria-metrics-profile.xml
 add_notes README.install
 make_package
 clean_up
