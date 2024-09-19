@@ -235,6 +235,8 @@ audit()
                     case $pkg:$pver in
                         # clang/llvm-18 are not published until r151049
                         */clang-18:|*/llvm-18:|*/zig-013:) [ $r -lt 151049 ] || ok=0 ;;
+                        # clang/llvm-19 are not published until r151051
+                        */clang-19:|*/llvm-19:) [ $r -lt 151051 ] || ok=0 ;;
                         *) ok=0 ;;
                     esac
                     ;;
