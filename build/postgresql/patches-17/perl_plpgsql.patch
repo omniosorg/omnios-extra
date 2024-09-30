@@ -1,0 +1,19 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/pl/plpgsql/src/pl_exec.c a/src/pl/plpgsql/src/pl_exec.c
+--- a~/src/pl/plpgsql/src/pl_exec.c	1970-01-01 00:00:00
++++ a/src/pl/plpgsql/src/pl_exec.c	1970-01-01 00:00:00
+@@ -8381,6 +8381,15 @@ exec_set_found(PLpgSQL_execstate *estate
+ 	PLpgSQL_var *var;
+ 
+ 	var = (PLpgSQL_var *) (estate->datums[estate->found_varno]);
++
++	/*
++	 * Prevent spurious warning due to compiler not realizing
++	 * VARATT_IS_EXTERNAL_NON_EXPANDED() branch in assign_simple_var() isn't
++	 * reachable due to "found" being byvalue.
++	 */
++	if (var->datatype->typlen != 1)
++		pg_unreachable();
++
+ 	assign_simple_var(estate, var, BoolGetDatum(state), false, false);
+ }
+ 
