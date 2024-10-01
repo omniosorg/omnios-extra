@@ -1,3 +1,4 @@
 02-smf.patch
 properly-check-pie.patch
 pam-illumos.patch
+disable-services.patch
