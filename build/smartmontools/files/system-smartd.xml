@@ -60,10 +60,7 @@ CDDL HEADER END
                      name="start"
                      exec="/opt/ooce/sbin/smartd --pidfile=/var/opt/ooce/smartmontools/run/smartd.pid --savestates=/var/opt/ooce/smartmontools/"
                      timeout_seconds="60">
-            <method_context security_flags="aslr">
-                <method_credential user="root"
-                                   group="root" />
-            </method_context>
+            <method_context security_flags="aslr" />
         </exec_method>
 
         <exec_method type="method"

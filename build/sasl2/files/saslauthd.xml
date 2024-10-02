@@ -49,7 +49,7 @@
                    restart_on="none">
             <service_fmri value="svc:/milestone/multi-user" />
         </dependent>
-        <method_context security_flags="aslr">
+        <method_context security_flags="aslr" working_directory="/">
             <method_credential user="root"
                                group="sasl"
                                privileges="basic,!proc_info,!proc_session,!file_link_any" />

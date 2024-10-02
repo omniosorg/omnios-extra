@@ -24,10 +24,6 @@
                     type="service">
             <service_fmri value="svc:/system/filesystem/local" />
         </dependency>
-        <method_context>
-            <method_credential group="root"
-                               user="root" />
-        </method_context>
 
         <exec_method name="start"
                      type="method"
