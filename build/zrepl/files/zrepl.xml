@@ -78,6 +78,7 @@ Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
         <!--
 
 
+
         <property_group name="startd" type="framework">
                 <propval name="duration" type="astring" value="child" />
         </property_group>

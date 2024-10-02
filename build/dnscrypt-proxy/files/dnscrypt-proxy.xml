@@ -16,7 +16,7 @@
 <service_bundle type="manifest"
                 name="network:dns:dnscrypt-proxy">
 
-        <service name="network/dns/dnscrypt-proxy"
+    <service name="network/dns/dnscrypt-proxy"
              type="service"
              version="1">
 
@@ -68,7 +68,8 @@
 
         <template>
             <common_name>
-                <loctext xml:lang="C">dnscrypt-proxy - Flexible DNS Proxy</loctext>
+                <loctext xml:lang="C">dnscrypt-proxy - Flexible DNS
+                Proxy</loctext>
             </common_name>
         </template>
 

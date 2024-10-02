@@ -56,7 +56,6 @@ Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
                    restart_on="none">
             <service_fmri value="svc:/milestone/multi-user-server" />
         </dependent>
-
         <method_context security_flags="aslr">
             <method_credential user="listmonk"
                                group="listmonk" />
@@ -65,8 +64,7 @@ Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
         <exec_method type="method"
                      name="start"
                      exec="/opt/ooce/listmonk/bin/listmonk &amp;"
-                     timeout_seconds="60">
-        </exec_method>
+                     timeout_seconds="60"></exec_method>
 
         <exec_method type="method"
                      name="stop"
@@ -77,7 +75,8 @@ Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
 
         <template>
             <common_name>
-                <loctext xml:lang="C">listmonk - Self-hosted newsletter &amp; mailing list manager</loctext>
+                <loctext xml:lang="C">listmonk - Self-hosted newsletter &amp;
+                mailing list manager</loctext>
             </common_name>
         </template>
 

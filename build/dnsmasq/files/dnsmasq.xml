@@ -16,7 +16,7 @@
 <service_bundle type="manifest"
                 name="network:dns:dnsmasq">
 
-        <service name="network/dns/dnsmasq"
+    <service name="network/dns/dnsmasq"
              type="service"
              version="1">
 
@@ -68,7 +68,8 @@
 
         <template>
             <common_name>
-                <loctext xml:lang="C">dnsmasq - Lightweight, easy to configure DNS forwarder</loctext>
+                <loctext xml:lang="C">dnsmasq - Lightweight, easy to configure
+                DNS forwarder</loctext>
             </common_name>
         </template>
 

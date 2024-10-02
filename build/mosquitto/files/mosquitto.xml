@@ -70,7 +70,8 @@
 
         <template>
             <common_name>
-                <loctext xml:lang="C">Mosquitto is an open source message broker that implements the MQTT protocol</loctext>
+                <loctext xml:lang="C">Mosquitto is an open source message
+                broker that implements the MQTT protocol</loctext>
             </common_name>
         </template>
 
