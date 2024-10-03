@@ -69,7 +69,7 @@ CDDL HEADER END
         <template>
             <common_name>
                 <loctext xml:lang="C">NRPE - Nagios Remote Plugin
-                Executor"</loctext>
+                Executor</loctext>
             </common_name>
         </template>
 

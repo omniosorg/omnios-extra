@@ -26,8 +26,6 @@
                      exec="/$(PREFIX)/bin/wg-quick up %i"
                      timeout_seconds="180">
             <method_context>
-                <method_credential group="root"
-                                   user="root" />
                 <method_environment>
                     <envvar name="WG_QUICK_USERSPACE_IMPLEMENTATION"
                             value="/$(PREFIX)/bin/wireguard-go" />
@@ -40,8 +38,6 @@
                      exec="/$(PREFIX)/bin/wg-quick down %i"
                      timeout_seconds="180">
             <method_context>
-                <method_credential group="root"
-                                   user="root" />
                 <method_environment>
                     <envvar name="WG_QUICK_USERSPACE_IMPLEMENTATION"
                             value="/$(PREFIX)/bin/wireguard-go" />

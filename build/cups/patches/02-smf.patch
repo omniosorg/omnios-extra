@@ -21,7 +21,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/scheduler/cups.xml.in a/sched
              exec='@sbindir@/cupsd'
              timeout_seconds='60' >
 -            <method_context>
-+            <method_context security_flags="aslr">
++            <method_context security_flags="aslr" working_directory="/">
                  <method_credential user='root' group='@CUPS_GROUP@' />
              </method_context>
          </exec_method>

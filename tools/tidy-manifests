@@ -1,5 +1,5 @@
 #!/bin/ksh
-#
+
 # This file and its contents are supplied under the terms of the
 # Common Development and Distribution License ("CDDL"), version 1.0.
 # You may only use this file in accordance with the terms of version
@@ -9,12 +9,17 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
-tidy=/opt/ooce/bin/tidy
-__SCRIPTDIR="${0%/*}"
+# This script reformats SMF manifests to a consistent style. It's not
+# necessarily anyone's preferred style, but it is consistent!
 
-ELEMENTS=(
+PATH=/usr/bin:/usr/sbin
+
+typeset -r TIDY=/opt/ooce/bin/tidy
+typeset -r __SCRIPTDIR="${0%/*}"
+typeset -r CFG="$__SCRIPTDIR/../doc/tidy.conf"
+typeset -a ELEMENTS=(
         '<service '
         '<create_default_instance'
         '<single_instance'
@@ -29,27 +34,42 @@ ELEMENTS=(
         '<\/instance'
 )
 
-echo "PROCESSING: $1"
+function fatal {
+	print "$*" >&2
+	exit 1
+}
 
-# tidy manifest according to doc/tidy.conf
-$tidy -q -config $__SCRIPTDIR/../doc/tidy.conf -m $1
-if [ $? -gt 0 ]; then
-    echo "An error occurred processing $1!"
-    exit 0
-fi
+[ -n "$1" ] || fatal "Syntax: $0 <manifest file>,..."
+[ -r "$CFG" ] || fatal "Cannot read config file $CFG"
 
-# use only double quotes in manifest and check for nested quotes
-gsed -i 's/'"'"'/"/g' $1
-gsed 's/[^"]//g' $1 | awk '{ if(length !=2 && length !=0) print \
-    "WARNING: may contain nested quotes!";}'
+for mfst in "$@"; do
+	print "PROCESSING: $mfst"
 
-# introduce spacing for readability between elements
-for i in "${ELEMENTS[@]}"
-do
-    gsed -i "/$i/s/^/\n/" $1
-    if [ $? -gt 0 ]; then
-        echo "An error occurred processing $1!"
-        exit 0
-    fi
+	# Tidy manifest according to doc/tidy.conf
+	$TIDY -q -config $CFG -m "$mfst" \
+	    || fatal "An error occurred processing $mfst"
+
+	# Use only double quotes in manifest
+	sed -i 's/'"'"'/"/g' "$mfst"
+
+	# Check for nested quotes
+	sed 's/[^"]//g' "$mfst" | awk '
+		length % 2 != 0 {
+			print "WARNING: line", FNR, "contains nested quotes"
+		}'
+
+	# Introduce spacing for readability between elements
+	for i in "${ELEMENTS[@]}"; do
+	    gsed -i "/$i/s/^/\n/" "$mfst" \
+	        || fatal "An error occurred processing $mfst"
+	done
+
+	# Produce de-tokenised version of the manifest suitable for validation
+	typeset tf=`mktemp`
+	sed 's/\$(\([a-zA-Z]*\))/\1/g' < "$mfst" > "$tf"
+	svccfg validate "$tf"
+	typeset -i rc=$?
+	rm -f $tf
+	((rc == 0)) || fatal "$mfst is corrupt"
 done
 
