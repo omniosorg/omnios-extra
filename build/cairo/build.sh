@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=cairo
-VER=1.18.0
+VER=1.18.2
 PKG=ooce/library/cairo
 SUMMARY="cairo"
 DESC="Cairo is a 2D graphics library with support for multiple output devices"
