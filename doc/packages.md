@@ -63,7 +63,7 @@
 | ooce/developer/cunit		| 2.1-3		| https://sourceforge.net/projects/cunit/files/CUnit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/dejagnu	| 1.6.3		| https://ftp.gnu.org/gnu/dejagnu/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/freepascal	| 3.2.2		| https://sourceforge.net/projects/freepascal/files/Source/ https://www.freepascal.org/ | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/gdb		| 15.1		| https://ftp.gnu.org/gnu/gdb/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/gdb		| 15.2		| https://ftp.gnu.org/gnu/gdb/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/git-absorb	| 0.6.15	| https://github.com/tummychow/git-absorb/releases| [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-122		| 1.22.8	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/go-123		| 1.23.2	| https://golang.org/dl/ | [omniosorg](https://github.com/omniosorg)
