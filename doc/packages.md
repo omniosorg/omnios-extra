@@ -143,7 +143,7 @@
 | ooce/library/security/libsasl2 | 2.1.28	| https://github.com/cyrusimap/cyrus-sasl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/serf		| 1.3.10 	| https://downloads.apache.org/serf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/slang		| 2.3.3		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/tiff		| 4.6.0		| https://download.osgeo.org/libtiff/ https://libtiff.gitlab.io/libtiff/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/tiff		| 4.7.0		| https://download.osgeo.org/libtiff/ https://libtiff.gitlab.io/libtiff/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/tree-sitter	| 0.22.4	| https://github.com/tree-sitter/tree-sitter/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/unistring	| 1.1		| https://ftp.gnu.org/gnu/libunistring/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/yaml		| 0.2.5		| https://github.com/yaml/libyaml/releases | [omniosorg](https://github.com/omniosorg)
