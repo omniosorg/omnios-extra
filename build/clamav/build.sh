@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=clamav
-VER=1.3.1
+VER=1.4.1
 PKG=ooce/system/clamav
 SUMMARY="Clam Anti-virus"
 DESC="$PROG is an open-source antivirus engine for detecting trojans, "
@@ -28,21 +28,13 @@ PREFIX+="/$PROG"
 
 set_arch 64
 
-# https://www.illumos.org/issues/14659
-test_relver '<' 151043 && STRIP=gstrip
-
 # We want to populate the clang-related environment variables
 # and set PATH to point to the correct llvm/clang version for
 # the clamav bytecode runtime, but we want to build with gcc.
 # currently only llvm 8 - 13 are supported
 set_clangver 13
 
-# does not yet build with gcc 14
-if ((GCCVER > 13)); then
-    BASEPATH=$PATH set_gccver 13
-else
-    BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
-fi
+BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
 
 SKIP_LICENCES='COPYING.*'
 XFORM_ARGS="
@@ -64,11 +56,11 @@ CONFIGURE_OPTS="
     -DENABLE_EXAMPLES=OFF
     -DENABLE_TESTS=OFF
     -DENABLE_SYSTEMD=OFF
+    -DBYTECODE_RUNTIME=llvm
 "
 CONFIGURE_OPTS[amd64]="
     -DJSONC_LIBRARY=$OPREFIX/lib/amd64/libjson-c.so
 "
-test_relver '>=' 151042 && CONFIGURE_OPTS+=" -DBYTECODE_RUNTIME=llvm"
 LDFLAGS+=" -lncurses"
 
 post_install() {
