@@ -1,4 +1,4 @@
-From ca223fd716b4714176e83cf39a5415874ddb27d0 Mon Sep 17 00:00:00 2001
+From ab707a712e6ef79aea93d7e4ab9993ced68154d5 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 15:09:47 +0000
 Subject: configure uses bash extensions
@@ -8,7 +8,7 @@ Subject: configure uses bash extensions
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index 3cd736b139..b9fb5f4b9b 100755
+index d08b71f14b..aca32b953e 100755
 --- a/configure
 +++ b/configure
 @@ -1,4 +1,4 @@

@@ -1,4 +1,4 @@
-From dc781d5e12af041bf808349710a757eba328eb52 Mon Sep 17 00:00:00 2001
+From 55b4f51cbf19b471d4ba5896437fa0e161fa94b4 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:53:46 +0000
 Subject: illumos defines FSCALE in sys/param.h
@@ -8,10 +8,10 @@ Subject: illumos defines FSCALE in sys/param.h
  1 file changed, 1 insertion(+)
 
 diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index ada05aa530..9c760b2630 100644
+index a72c262096..604dc8671f 100644
 --- a/target/arm/tcg/translate-sve.c
 +++ b/target/arm/tcg/translate-sve.c
-@@ -3861,6 +3861,7 @@ DO_ZPZZ_FP(FMAX_zpzz, aa64_sve, sve_fmax)
+@@ -3734,6 +3734,7 @@ DO_ZPZZ_FP(FMAX_zpzz, aa64_sve, sve_fmax)
  DO_ZPZZ_FP(FMINNM_zpzz, aa64_sve, sve_fminnum)
  DO_ZPZZ_FP(FMAXNM_zpzz, aa64_sve, sve_fmaxnum)
  DO_ZPZZ_FP(FABD, aa64_sve, sve_fabd)

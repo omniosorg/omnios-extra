@@ -1,4 +1,4 @@
-From d7c62874583496466bce1bb1425837aa08f742f8 Mon Sep 17 00:00:00 2001
+From d0404faf03b341420e75c33dc62c68cb6f4e41f5 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 22 May 2023 20:31:38 +0000
 Subject: Add support for a zconsole character device
@@ -122,7 +122,7 @@ index 01df55f9e8..8e47f42149 100644
  #define TYPE_CHARDEV_UDP "chardev-udp"
  
 diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index c7053cdc2b..86c5becca0 100644
+index fe7c3c5f67..97f479e3d7 100644
 --- a/include/qemu/osdep.h
 +++ b/include/qemu/osdep.h
 @@ -521,6 +521,10 @@ void qemu_anon_ram_free(void *ptr, size_t size);
@@ -137,7 +137,7 @@ index c7053cdc2b..86c5becca0 100644
  #define SIGIO SIGPOLL
  #endif
 diff --git a/qapi/char.json b/qapi/char.json
-index 777dde55d9..a5abeb6146 100644
+index ef58445cee..633d6feda3 100644
 --- a/qapi/char.json
 +++ b/qapi/char.json
 @@ -476,6 +476,7 @@
