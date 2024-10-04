@@ -239,7 +239,7 @@
 | ooce/util/diffr		| 0.1.5		| https://github.com/mookid/diffr/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/util/direnv		| 2.34.0	| https://github.com/direnv/direnv/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/dtc			| 1.7.0		| https://git.kernel.org/pub/scm/utils/dtc/dtc.git/refs/ | [omniosorg](https://github.com/omniosorg)
-| ooce/util/fd			| 10.1.0	| https://github.com/sharkdp/fd/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/util/fd			| 10.2.0	| https://github.com/sharkdp/fd/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/gh			| 2.49.0	| https://github.com/cli/cli/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/htmlq		| 0.4.0		| https://github.com/mgdm/htmlq/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/hyperfine		| 1.18.0	| https://github.com/sharkdp/hyperfine/releases/ | [omniosorg](https://github.com/omniosorg)
