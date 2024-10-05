@@ -3,7 +3,7 @@ groff 1.23.0 fails to build user.ps; skip build since we are not shipping it any
 diff -wpruN --no-dereference '--exclude=*.orig' a~/dbug/CMakeLists.txt a/dbug/CMakeLists.txt
 --- a~/dbug/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/dbug/CMakeLists.txt	1970-01-01 00:00:00
-@@ -29,7 +29,7 @@ IF(NOT CMAKE_CROSSCOMPILING)
+@@ -30,7 +30,7 @@ IF(NOT CMAKE_CROSSCOMPILING OR DEFINED C
    TARGET_LINK_LIBRARIES(factorial dbug)
  ENDIF()
  

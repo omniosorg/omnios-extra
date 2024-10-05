@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/libclamav/CMakeLists.txt a/libclamav/CMakeLists.txt
 --- a~/libclamav/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/libclamav/CMakeLists.txt	1970-01-01 00:00:00
-@@ -466,7 +466,7 @@ if(ENABLE_SHARED_LIB)
+@@ -474,7 +474,7 @@ if(ENABLE_SHARED_LIB)
      else()
          target_link_libraries( clamav PUBLIC Iconv::Iconv )
      endif()
@@ -13,7 +13,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/libclamav/CMakeLists.txt a/li
 diff -wpruN --no-dereference '--exclude=*.orig' a~/libclamunrar/CMakeLists.txt a/libclamunrar/CMakeLists.txt
 --- a~/libclamunrar/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/libclamunrar/CMakeLists.txt	1970-01-01 00:00:00
-@@ -98,7 +98,7 @@ if(ENABLE_SHARED_LIB)
+@@ -97,7 +97,7 @@ if(ENABLE_SHARED_LIB)
  
      if(WIN32)
          set_target_properties(clamunrar PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
@@ -37,7 +37,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/libclamunrar_iface/CMakeLists
 diff -wpruN --no-dereference '--exclude=*.orig' a~/libfreshclam/CMakeLists.txt a/libfreshclam/CMakeLists.txt
 --- a~/libfreshclam/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/libfreshclam/CMakeLists.txt	1970-01-01 00:00:00
-@@ -58,7 +58,7 @@ if(ENABLE_SHARED_LIB)
+@@ -62,7 +62,7 @@ if(ENABLE_SHARED_LIB)
  
      if(WIN32)
          set_target_properties(freshclam PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)

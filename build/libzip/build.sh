@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libzip
-VER=1.10.1
+VER=1.11.1
 PKG=ooce/library/libzip
 SUMMARY="libzip"
 DESC="A C library for reading, creating and modifying zip archives"

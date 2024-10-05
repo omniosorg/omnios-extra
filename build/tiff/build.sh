@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=tiff
-VER=4.6.0
+VER=4.7.0
 PKG=ooce/library/tiff
 SUMMARY="LibTIFF - TIFF Library and Utilities"
 DESC="Support for the Tag Image File Format (TIFF), a widely used format "
@@ -28,7 +28,7 @@ DESC+="for storing image data."
 PVERS="4.4.0"
 
 forgo_isaexec
-test_relver '>=' 151045 && set_clangver
+set_clangver
 
 export MAKE
 

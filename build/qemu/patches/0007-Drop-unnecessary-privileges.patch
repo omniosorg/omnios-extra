@@ -1,4 +1,4 @@
-From 2501c004b607d6b7ac7c7bc6e786537f5351a3ce Mon Sep 17 00:00:00 2001
+From 2aaae6a0e5e6057e97c728a08f0619d0effd6d23 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Fri, 30 Dec 2022 18:06:57 +0000
 Subject: Drop unnecessary privileges
@@ -8,7 +8,7 @@ Subject: Drop unnecessary privileges
  1 file changed, 41 insertions(+)
 
 diff --git a/os-posix.c b/os-posix.c
-index a4284e2c07..6b89a56ff6 100644
+index 43f9a43f3f..b37d8c9258 100644
 --- a/os-posix.c
 +++ b/os-posix.c
 @@ -29,6 +29,7 @@
@@ -19,7 +19,7 @@ index a4284e2c07..6b89a56ff6 100644
  
  #include "qemu/error-report.h"
  #include "qemu/log.h"
-@@ -278,6 +279,45 @@ void os_setup_limits(void)
+@@ -282,6 +283,45 @@ void os_setup_limits(void)
      }
  }
  
@@ -65,7 +65,7 @@ index a4284e2c07..6b89a56ff6 100644
  void os_setup_post(void)
  {
      int fd = 0;
-@@ -295,6 +335,7 @@ void os_setup_post(void)
+@@ -299,6 +339,7 @@ void os_setup_post(void)
  
      change_root();
      change_process_uid();

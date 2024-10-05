@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=json-c
-VER=0.17
+VER=0.18
 PKG=ooce/library/json-c
 SUMMARY=$PROG
 DESC="$PROG - A JSON implementation in C"

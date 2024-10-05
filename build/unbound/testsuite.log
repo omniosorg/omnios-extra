@@ -1,4 +1,4 @@
-Start of unbound 1.20.0+libevent unit test.
+Start of unbound 1.21.1+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -78,9 +78,10 @@ test services/outside_network.c:reuse_write_wait_push_back
 test services/outside_network.c:reuse_write_wait_remove
 test services/outside_network.c:reuse_write_wait_pop
 test message parse functions
-[0] did 10000 in 118.196 msec for 84605.231988 encode/sec size 615
+[0] did 10000 in 83.471 msec for 119802.086952 encode/sec size 615
 test edns ede optional encoding functions
-1297542 checks ok.
+test localzones parent calculation functions
+1297593 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl  OK
 ./testdata/auth_nsec3_ent.rpl  OK
@@ -180,6 +181,7 @@ selftest successful (33 checks).
 ./testdata/fwd_jostle_out.rpl  OK
 ./testdata/fwd_lrudrop.rpl  OK
 ./testdata/fwd_minimal.rpl  OK
+./testdata/fwd_name_lookup.rpl  OK
 ./testdata/fwd_no_cache.rpl  OK
 ./testdata/fwd_notcached.rpl  OK
 ./testdata/fwd_timeout.rpl  OK
@@ -304,6 +306,7 @@ selftest successful (33 checks).
 ./testdata/rpz_clientip.rpl  OK
 ./testdata/rpz_clientip_override.rpl  OK
 ./testdata/rpz_cname_handle.rpl  OK
+./testdata/rpz_cname_tag.rpl  OK
 ./testdata/rpz_ixfr.rpl  OK
 ./testdata/rpz_nsdname.rpl  OK
 ./testdata/rpz_nsdname_override.rpl  OK
@@ -383,6 +386,7 @@ selftest successful (33 checks).
 ./testdata/val_cnamewctonx.rpl  OK
 ./testdata/val_cnamewctoposwc.rpl  OK
 ./testdata/val_deleg_nons.rpl  OK
+./testdata/val_dname_twice.rpl  OK
 ./testdata/val_dnameqtype.rpl  OK
 ./testdata/val_dnameqtype_qmin.rpl  OK
 ./testdata/val_dnametoolong.rpl  OK
@@ -396,6 +400,7 @@ selftest successful (33 checks).
 ./testdata/val_entds.rpl  OK
 ./testdata/val_faildnskey.rpl  OK
 ./testdata/val_faildnskey_ok.rpl  OK
+./testdata/val_failure_dnskey.rpl  OK
 ./testdata/val_fwdds.rpl  OK
 ./testdata/val_keyprefetch.rpl  OK
 ./testdata/val_keyprefetch_verify.rpl  OK

@@ -1,4 +1,4 @@
-From 159d27d4280199d985922dc023978bea6056fcb3 Mon Sep 17 00:00:00 2001
+From b75b45b43e69db02e32a8b4880d62360a58f5d6c Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:51:42 +0000
 Subject: Add support for VNICs
@@ -17,10 +17,10 @@ https://github.com/TritonDataCenter/illumos-kvm-cmd
  create mode 100644 net/vnic.c
 
 diff --git a/meson.build b/meson.build
-index 91a0aa64c6..f822becff3 100644
+index fbda17c987..830b105d5e 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -698,7 +698,8 @@ elif host_os == 'darwin'
+@@ -751,7 +751,8 @@ elif host_os == 'darwin'
  elif host_os == 'sunos'
    socket = [cc.find_library('socket'),
              cc.find_library('nsl'),
@@ -56,10 +56,10 @@ index 4c8a469a50..61ff327dc6 100644
                  has_host_dev = 1;
                  break;
 diff --git a/net/meson.build b/net/meson.build
-index 9432a588e4..06a3af08ed 100644
+index e0cd71470e..28e29375aa 100644
 --- a/net/meson.build
 +++ b/net/meson.build
-@@ -50,7 +50,7 @@ elif host_os == 'linux'
+@@ -52,7 +52,7 @@ elif host_os == 'linux'
  elif host_os in bsd_oses
    system_ss.add(files('tap.c', 'tap-bsd.c'))
  elif host_os == 'sunos'
@@ -69,10 +69,10 @@ index 9432a588e4..06a3af08ed 100644
    system_ss.add(files('tap.c', 'tap-stub.c'))
  endif
 diff --git a/net/net.c b/net/net.c
-index a2f0c828bb..e62bdeca29 100644
+index fc1125111c..b80e016d97 100644
 --- a/net/net.c
 +++ b/net/net.c
-@@ -1249,6 +1249,7 @@ static int (* const net_client_init_fun[NET_CLIENT_DRIVER__MAX])(
+@@ -1253,6 +1253,7 @@ static int (* const net_client_init_fun[NET_CLIENT_DRIVER__MAX])(
  #ifdef CONFIG_VDE
          [NET_CLIENT_DRIVER_VDE]       = net_init_vde,
  #endif
@@ -361,7 +361,7 @@ index 0000000000..481661b583
 +	return (0);
 +}
 diff --git a/qapi/net.json b/qapi/net.json
-index 0f5a259475..7e2c6fa424 100644
+index 87fc0d0b28..510191da55 100644
 --- a/qapi/net.json
 +++ b/qapi/net.json
 @@ -364,6 +364,17 @@
@@ -382,7 +382,7 @@ index 0f5a259475..7e2c6fa424 100644
  ##
  # @NetdevBridgeOptions:
  #
-@@ -716,7 +727,7 @@
+@@ -723,7 +734,7 @@
  { 'enum': 'NetClientDriver',
    'data': [ 'none', 'nic', 'user', 'tap', 'l2tpv3', 'socket', 'stream',
              'dgram', 'vde', 'bridge', 'hubport', 'netmap', 'vhost-user',
@@ -391,7 +391,7 @@ index 0f5a259475..7e2c6fa424 100644
              { 'name': 'af-xdp', 'if': 'CONFIG_AF_XDP' },
              { 'name': 'vmnet-host', 'if': 'CONFIG_VMNET' },
              { 'name': 'vmnet-shared', 'if': 'CONFIG_VMNET' },
-@@ -745,6 +756,7 @@
+@@ -752,6 +763,7 @@
      'stream':   'NetdevStreamOptions',
      'dgram':    'NetdevDgramOptions',
      'vde':      'NetdevVdeOptions',

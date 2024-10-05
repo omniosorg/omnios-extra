@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=ruby
-VER=3.3.4
+VER=3.3.5
 PKG=ooce/runtime/ruby-33
 SUMMARY="Ruby"
 DESC="A dynamic, open source programming language "

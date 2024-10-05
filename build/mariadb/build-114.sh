@@ -17,8 +17,8 @@
 . ../../lib/build.sh
 
 PROG=mariadb
-VER=10.4.34
-PKG=ooce/database/mariadb-104
+VER=11.4.3
+PKG=ooce/database/mariadb-114
 SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
 DESC+="MySQL relational database management system"
@@ -55,6 +55,7 @@ XFORM_ARGS="
     -DUSER=mysql -DGROUP=mysql
 "
 
+CPPFLAGS+=" -DOOCEVER=$RELVER"
 CFLAGS+=" -O3 -I$OPREFIX/include -I/usr/include/gssapi"
 CXXFLAGS[i386]="$CFLAGS ${CFLAGS[i386]} -R$OPREFIX/lib"
 CXXFLAGS[amd64]="$CFLAGS ${CFLAGS[amd64]} -R$OPREFIX/lib/amd64"
@@ -144,7 +145,7 @@ build_manifests() {
     manifest_add_dir $PREFIX/include mysql
     manifest_add_dir $PREFIX/lib pkgconfig amd64 amd64/pkgconfig
     manifest_add $PREFIX/bin '.*(mysql|mariadb)_config' mysql mariadb
-    manifest_add $PREFIX/man/man1 mariadb.1 mysql.1 mysql_config.1
+    manifest_add $PREFIX/man/man1 mariadb.1 mysql.1 '(mysql|mariadb)_config.1'
     manifest_finalise $TMPDIR/manifest.client $OPREFIX
 
     manifest_uniq $TMPDIR/manifest.{server,client}

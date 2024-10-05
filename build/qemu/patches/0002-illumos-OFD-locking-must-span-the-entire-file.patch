@@ -1,4 +1,4 @@
-From 5a22e75a6a9d7685a80166f76956a651f362d232 Mon Sep 17 00:00:00 2001
+From c779a4d8596036b5cb394d33a8a36c4d173d9efc Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:52:31 +0000
 Subject: illumos OFD locking must span the entire file
@@ -8,7 +8,7 @@ Subject: illumos OFD locking must span the entire file
  1 file changed, 2 insertions(+)
 
 diff --git a/util/osdep.c b/util/osdep.c
-index e996c4744a..9f1af093d9 100644
+index 770369831b..962aefc562 100644
 --- a/util/osdep.c
 +++ b/util/osdep.c
 @@ -31,6 +31,8 @@
