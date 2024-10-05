@@ -1,0 +1,32 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2024 Guo-Rong Koh
+
+license LICENSE license=Apache2
+
+dir path=$(DATA) owner=$(USER) group=$(GROUP) mode=0700
+
+group groupname=$(GROUP) gid=93
+user ftpuser=false username=$(USER) uid=93 group=$(GROUP) \
+    gcos-field="VictoriaMetrics user" \
+    home-dir=/$(DATA) password=NP
+
+file ./tmp/victoria-metrics-profile.xml \
+    path=$(PREFIX)/share/$(PROG)/victoria-metrics-profile.xml \
+    owner=$(USER) group=$(GROUP) mode=0444
+file files/vmagent-profile.xml \
+    path=$(PREFIX)/share/$(PROG)/vmagent-profile.xml \
+    owner=$(USER) group=$(GROUP) mode=0444
+
+<transform file path=$(PREFIX)/bin/victoria-metrics -> \
+    set restart_fmri svc:/application/$(PROG):victoria-metrics>
+<transform file path=$(PREFIX)/bin/vmagent -> \
+    set restart_fmri svc:/application/$(PROG):vmagent>
