@@ -96,10 +96,6 @@ depend fmri=ooce/x11/library/libx11 type=require
 depend fmri=ooce/x11/library/libxau type=require
 depend fmri=ooce/x11/library/libxcb type=require
 
-# clang 14 is the default clang compiler from r151043 onwards
-depend fmri=ooce/developer/clang-14 type=conditional \
-    predicate=release/name@0.5.11-151043
-
 # Added llvm/clang 15 from r151043 onwards
 depend fmri=ooce/developer/llvm-15 type=conditional \
     predicate=release/name@0.5.11-151043
