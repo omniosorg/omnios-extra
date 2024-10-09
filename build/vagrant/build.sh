@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -64,6 +64,7 @@ build() {
     GOPATH=$TMPDIR/$BUILDDIR/$PROG-installers/substrate/launcher/_deps
     GO111MODULE=auto
     export GOPATH GO111MODULE
+    logcmd go mod init $PROG || logerr "Failed to init go module"
     logcmd go get github.com/kardianos/osext \
         || logerr "Get dependency for Vagrant Installers failed"
     logcmd go build -o $PROG || logerr "Build Vagrant Installers failed"
