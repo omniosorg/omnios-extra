@@ -18,11 +18,9 @@
 
 PROG=tailscale
 PKG=ooce/network/tailscale
-VER=1.72.1
+VER=1.74.0
 SUMMARY="Tailscale"
 DESC="The easiest, most secure way to use WireGuard and 2FA."
-
-min_rel 151044
 
 RUN_DEPENDS_IPS="driver/tuntap"
 
@@ -31,26 +29,26 @@ XFORM_ARGS+="
     -DPROG=$PROG
     -DSERVICE=$PKG
 "
+
 set_arch 64
 set_gover
 
 build() {
+    logmsg "Building 64-bit"
+
     pushd $TMPDIR/$BUILDDIR > /dev/null
+
     export CGO_ENABLED=0
     export GOOS=illumos
-    logcmd bash -x ./build_dist.sh --box ./cmd/tailscaled \
+    logcmd $SHELL -x ./build_dist.sh --box ./cmd/tailscaled \
         || logerr "failed to compile tailscaled"
-    logcmd /usr/bin/elfedit \
+    logcmd $ELFEDIT \
         -e "ehdr:ei_osabi ELFOSABI_SOLARIS" \
         -e "ehdr:ei_abiversion EAV_SUNW_CURRENT" \
         tailscaled \
         || logerr "failed to fixup elf headers"
-    popd >/dev/null
-}
 
-install() {
-    mkdir -p $DESTDIR/$PREFIX/sbin
-    cp $TMPDIR/$BUILDDIR/tailscaled $DESTDIR/$PREFIX/sbin/
+    popd >/dev/null
 }
 
 init
@@ -59,7 +57,7 @@ clone_go_source $PROG nshalman "v$VER-sunos"
 patch_source
 prep_build
 build
-install
+install_go tailscaled tailscaled $DESTDIR/$PREFIX/sbin
 xform files/$PROG.xml > $TMPDIR/network-$PROG.xml
 install_smf ooce network-$PROG.xml
 make_package

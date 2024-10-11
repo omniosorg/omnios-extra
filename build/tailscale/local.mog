@@ -13,3 +13,4 @@
 link path=$(PREFIX)/bin/tailscale target=../sbin/tailscaled
 
 license LICENSE license=modified-BSD
+
