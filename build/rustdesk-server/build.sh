@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=rustdesk-server
-VER=1.1.11-1
+VER=1.1.12
 PKG=ooce/application/rustdesk-server
 SUMMARY="$PROG - remote control"
 DESC="Full-featured open source remote control alternative for self-hosting "
