@@ -31,8 +31,18 @@ CONFIGURE_OPTS="
     -DCMAKE_POSITION_INDEPENDENT_CODE=ON
     -Dprotobuf_BUILD_TESTS=OFF
 "
-CONFIGURE_OPTS[i386]="-DCMAKE_INSTALL_LIBDIR=$PREFIX/${LIBDIRS[i386]}"
-CONFIGURE_OPTS[amd64]="-DCMAKE_INSTALL_LIBDIR=$PREFIX/${LIBDIRS[amd64]}"
+
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]="
+        -DCMAKE_INSTALL_LIBDIR=$PREFIX/${LIBDIRS[$arch]}
+        -DZLIB_INCLUDE_DIR=${SYSROOT[$arch]}/usr/include
+        -DZLIB_LIBRARY_RELEASE=${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}/libz.so
+    "
+}
+
+CXXFLAGS[aarch64]+=" -mtls-dialect=trad"
 
 init
 clone_github_source $PROG "$GITHUB/protocolbuffers/$PROG" v$VER

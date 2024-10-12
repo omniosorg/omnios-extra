@@ -13,6 +13,7 @@ extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/git-absorb
 extra.omnios ooce/developer/ninja
+extra.omnios ooce/developer/protobuf
 extra.omnios ooce/editor/joe
 extra.omnios ooce/file/tree
 extra.omnios ooce/fonts/liberation

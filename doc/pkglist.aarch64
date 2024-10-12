@@ -75,6 +75,7 @@ ooce/network/tcpdump
 ooce/system/top
 ooce/library/apr
 ooce/util/rlwrap
+ooce/developer/protobuf
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
