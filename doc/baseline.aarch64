@@ -91,6 +91,7 @@ extra.omnios ooce/util/hyperfine
 extra.omnios ooce/util/jq
 extra.omnios ooce/util/pass
 extra.omnios ooce/util/rargs
+extra.omnios ooce/util/rlwrap
 extra.omnios ooce/util/stress-ng
 extra.omnios ooce/util/u-boot
 extra.omnios ooce/util/xjobs

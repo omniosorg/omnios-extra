@@ -74,6 +74,7 @@ ooce/library/jansson
 ooce/network/tcpdump
 ooce/system/top
 ooce/library/apr
+ooce/util/rlwrap
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
