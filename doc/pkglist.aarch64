@@ -79,6 +79,7 @@ ooce/developer/protobuf
 ooce/library/libdwarf
 ooce/library/libmcrypt
 ooce/network/sic
+ooce/application/tig
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

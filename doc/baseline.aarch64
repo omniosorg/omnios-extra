@@ -1,6 +1,7 @@
 extra.omnios ooce/application/links
 extra.omnios ooce/application/mc
 extra.omnios ooce/application/mutt
+extra.omnios ooce/application/tig
 extra.omnios ooce/audio/flac
 extra.omnios ooce/compress/pbzip2
 extra.omnios ooce/compress/pigz
