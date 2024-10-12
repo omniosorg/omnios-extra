@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -21,7 +21,9 @@ VER=2.1-3
 VERHUMAN=$VER
 PKG=ooce/developer/cunit
 SUMMARY="C Unit Testing Framework"
-DESC="$SUMMARY"
+DESC="$PROG - $SUMMARY"
+
+test_relver '>=' 151053 && set_clangver
 
 BUILDDIR=CUnit-$VER
 
@@ -40,8 +42,7 @@ prep_build
 patch_source
 run_autoreconf -fi
 build
-VER=${VER//-/.}
-make_package
+VER=${VER//-/.} make_package
 clean_up
 
 # Vim hints

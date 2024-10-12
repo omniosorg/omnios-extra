@@ -80,6 +80,7 @@ ooce/library/libdwarf
 ooce/library/libmcrypt
 ooce/network/sic
 ooce/application/tig
+ooce/developer/cunit
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
