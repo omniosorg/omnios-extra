@@ -10,7 +10,9 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+
+test_relver '>=' 151053 && set_clangver
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
@@ -18,8 +20,8 @@ CONFIGURE_OPTS="--disable-static"
 
 addpath PKG_CONFIG_PATH $PREFIX/share/pkgconfig
 
-LDFLAGS[i386]+=" -R$PREFIX/lib -lssp_ns"
-LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
+LDFLAGS[i386]+=" -Wl,-R$PREFIX/${LIBDIRS[i386]} -lssp_ns"
+LDFLAGS[amd64]+=" -Wl,-R$PREFIX/${LIBDIRS[amd64]}"
 
 # Vim hints
 # vim:ts=4:sw=4:et:fdm=marker
