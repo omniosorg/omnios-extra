@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -25,6 +25,7 @@ DESC="Remote terminal application that allows roaming"
 set_arch 64
 
 CXXFLAGS[amd64]+=" -std=c++17"
+CXXFLAGS[aarch64]+=" -std=c++17"
 
 init
 download_source $PROG $PROG $VER
