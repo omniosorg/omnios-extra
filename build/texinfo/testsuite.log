@@ -88,7 +88,7 @@ PASS: t/echo-area-no-completions.sh
 PASS: t/multiple-completions.sh
 PASS: t/help.sh
 ============================================================================
-Testsuite summary for GNU Texinfo 7.1
+Testsuite summary for GNU Texinfo 7.1.1
 ============================================================================
 # TOTAL: 87
 # PASS:  87
@@ -161,7 +161,7 @@ PASS: ii-0057-test
 PASS: ii-0058-test
 PASS: ii-0059-test
 ============================================================================
-Testsuite summary for GNU Texinfo 7.1
+Testsuite summary for GNU Texinfo 7.1.1
 ============================================================================
 # TOTAL: 59
 # PASS:  59
@@ -178,7 +178,7 @@ Making check in Texinfo/XS
 Making check in gnulib/lib
 Making check in .
 ============================================================================
-Testsuite summary for GNU Texinfo 7.1
+Testsuite summary for GNU Texinfo 7.1.1
 ============================================================================
 # TOTAL: 0
 # PASS:  0
@@ -301,7 +301,7 @@ SKIP: test_scripts/other_highlight_syntax_example_highlight.sh
 SKIP: test_scripts/other_highlight_syntax_example_default_language.sh
 SKIP: test_scripts/other_highlight_syntax_example_latin9.sh
 ============================================================================
-Testsuite summary for GNU Texinfo 7.1
+Testsuite summary for GNU Texinfo 7.1.1
 ============================================================================
 # TOTAL: 110
 # PASS:  76
@@ -322,7 +322,7 @@ PASS: output_dir_file_non_ascii.sh
 SKIP: tex_t4ht_output_dir_non_ascii.sh
 SKIP: tex_l2h_output_dir_non_ascii.sh
 ============================================================================
-Testsuite summary for GNU Texinfo 7.1
+Testsuite summary for GNU Texinfo 7.1.1
 ============================================================================
 # TOTAL: 9
 # PASS:  5
@@ -335,7 +335,7 @@ Testsuite summary for GNU Texinfo 7.1
 Making check in Pod-Simple-Texinfo
 PASS: prove.sh
 ============================================================================
-Testsuite summary for GNU Texinfo 7.1
+Testsuite summary for GNU Texinfo 7.1.1
 ============================================================================
 # TOTAL: 1
 # PASS:  1
@@ -348,7 +348,7 @@ Testsuite summary for GNU Texinfo 7.1
 Making check in texindex
 PASS: tests/ti-helpversion.sh
 ============================================================================
-Testsuite summary for GNU Texinfo 7.1
+Testsuite summary for GNU Texinfo 7.1.1
 ============================================================================
 # TOTAL: 1
 # PASS:  1
@@ -361,7 +361,7 @@ Testsuite summary for GNU Texinfo 7.1
 Making check in util
 PASS: tests/texi2dvi_helpversion.sh
 ============================================================================
-Testsuite summary for GNU Texinfo 7.1
+Testsuite summary for GNU Texinfo 7.1.1
 ============================================================================
 # TOTAL: 1
 # PASS:  1
