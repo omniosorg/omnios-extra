@@ -1,4 +1,2 @@
 Makefile.patch
-console.patch -R
 directio.patch
-msgp-illumos.patch
