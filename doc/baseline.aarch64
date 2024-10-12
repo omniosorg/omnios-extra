@@ -71,6 +71,7 @@ extra.omnios ooce/network/irssi
 extra.omnios ooce/network/mosh
 extra.omnios ooce/network/nsd
 extra.omnios ooce/network/openldap
+extra.omnios ooce/network/sic
 extra.omnios ooce/network/smtp/postfix
 extra.omnios ooce/network/tcpdump
 extra.omnios ooce/network/unbound
