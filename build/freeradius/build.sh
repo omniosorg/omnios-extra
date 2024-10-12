@@ -18,7 +18,7 @@
 
 PROG=freeradius
 PKG=ooce/server/freeradius
-VER=3.2.5
+VER=3.2.6
 TALLOCVER=2.4.2             # https://www.samba.org/ftp/talloc/
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
