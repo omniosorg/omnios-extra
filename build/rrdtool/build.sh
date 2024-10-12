@@ -17,16 +17,13 @@
 . ../../lib/build.sh
 
 PROG=rrdtool
-VER=1.8.0
+VER=1.9.0
 PKG=ooce/database/rrdtool
 SUMMARY="Round-Robin Database Tool"
 DESC="High performance data logging and graphing system for time series data."
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
-
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
 
