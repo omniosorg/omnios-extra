@@ -77,6 +77,7 @@ ooce/library/apr
 ooce/util/rlwrap
 ooce/developer/protobuf
 ooce/library/libdwarf
+ooce/library/libmcrypt
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
