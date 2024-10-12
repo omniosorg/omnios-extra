@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=ripgrep
-VER=14.1.0
+VER=14.1.1
 PKG=ooce/text/ripgrep
 SUMMARY="Fast line-oriented search tool"
 DESC="A fast line-oriented search tool that recursively searches your current "
