@@ -17,13 +17,10 @@
 . ../../lib/build.sh
 
 PROG=oath-toolkit
-VER=2.6.11
+VER=2.6.12
 PKG=ooce/security/oath-toolkit
 SUMMARY="OATH Toolkit"
 DESC="One-time password components"
-
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 forgo_isaexec
 # For the standard getpwnam_r
