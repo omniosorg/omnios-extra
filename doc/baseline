@@ -61,6 +61,10 @@ extra.omnios ooce/database/postgresql-16
 extra.omnios ooce/database/postgresql-16/citus
 extra.omnios ooce/database/postgresql-16/mysql_fdw
 extra.omnios ooce/database/postgresql-16/pg_repack
+extra.omnios ooce/database/postgresql-17
+extra.omnios ooce/database/postgresql-17/citus
+extra.omnios ooce/database/postgresql-17/mysql_fdw
+extra.omnios ooce/database/postgresql-17/pg_repack
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/database/rrdtool
 extra.omnios ooce/developer/aarch64-gcc10
@@ -176,6 +180,7 @@ extra.omnios ooce/library/postgresql-13
 extra.omnios ooce/library/postgresql-14
 extra.omnios ooce/library/postgresql-15
 extra.omnios ooce/library/postgresql-16
+extra.omnios ooce/library/postgresql-17
 extra.omnios ooce/library/security/libsasl2
 extra.omnios ooce/library/serf
 extra.omnios ooce/library/slang
