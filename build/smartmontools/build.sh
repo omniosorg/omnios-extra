@@ -22,11 +22,9 @@ PKG=ooce/system/smartmontools
 SUMMARY="smartmontools"
 DESC="Control and monitor storage systems using SMART"
 
-# building smartmontools with clang 17 and stack protector enabled
-# leads to a misaligned stack
+# refrain from building this package with clang as it
+# leads to a misaligned stack if stack protector is enabled
 # https://github.com/llvm/llvm-project/issues/83673
-((DEFAULT_CLANG_VER == 17)) && clangv=16 || clangv=$DEFAULT_CLANG_VER
-test_relver '>=' 151041 && set_clangver $clangv
 
 RUN_DEPENDS_IPS=ooce/security/gnupg
 
