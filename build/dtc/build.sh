@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=dtc
-VER=1.7.0
+VER=1.7.1
 PKG=ooce/util/dtc
 SUMMARY="Device Tree Compiler"
 DESC="$PROG - $SUMMARY"

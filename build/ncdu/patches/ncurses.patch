@@ -1,16 +1,16 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/build.zig a/build.zig
 --- a~/build.zig	1970-01-01 00:00:00
 +++ a/build.zig	1970-01-01 00:00:00
-@@ -20,7 +20,7 @@ pub fn build(b: *std.Build) void {
+@@ -18,7 +18,7 @@ pub fn build(b: *std.Build) void {
      });
  
      exe.pie = pie;
 -    exe.root_module.linkSystemLibrary("ncursesw", .{});
 +    exe.root_module.linkSystemLibrary("ncurses", .{});
+     exe.root_module.linkSystemLibrary("libzstd", .{});
      // https://github.com/ziglang/zig/blob/b52be973dfb7d1408218b8e75800a2da3dc69108/build.zig#L551-L554
      if (target.result.isDarwin()) {
-         // useful for package maintainers
-@@ -44,7 +44,7 @@ pub fn build(b: *std.Build) void {
+@@ -43,7 +43,7 @@ pub fn build(b: *std.Build) void {
          .link_libc = true,
      });
      unit_tests.pie = pie;

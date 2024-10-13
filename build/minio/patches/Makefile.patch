@@ -9,9 +9,9 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/Makefile a/Makefile
  
  GOARCH := $(shell go env GOARCH)
  GOOS := $(shell go env GOOS)
-@@ -132,7 +132,7 @@ build-debugging:
+@@ -172,7 +172,7 @@ build-debugging:
  
- build: checks ## builds minio to $(PWD)
+ build: checks build-debugging ## builds minio to $(PWD)
  	@echo "Building minio binary to './minio'"
 -	@CGO_ENABLED=0 go build -tags kqueue -trimpath --ldflags "$(LDFLAGS)" -o $(PWD)/minio 1>/dev/null
 +	@CGO_ENABLED=1 go build -tags kqueue -trimpath --ldflags "$(LDFLAGS)" -o $(PWD)/minio 1>/dev/null

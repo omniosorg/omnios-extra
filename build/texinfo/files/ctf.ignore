@@ -3,6 +3,7 @@ c-ctype.c
 c-strcasecmp.c
 c-strncasecmp.c
 exitfail.c
+float.c
 iconv_open.c
 localcharset.c
 malloca.c

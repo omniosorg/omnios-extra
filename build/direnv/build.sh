@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=direnv
-VER=2.34.0
+VER=2.35.0
 PKG=ooce/util/direnv
 SUMMARY="unclutter your .profile"
 DESC="A shell extension that can load and unload environment variables "

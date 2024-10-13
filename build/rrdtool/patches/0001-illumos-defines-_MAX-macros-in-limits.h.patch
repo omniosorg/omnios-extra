@@ -1,0 +1,29 @@
+From 8b8ef3de3bfd17625389053a10d9663ec3b864d0 Mon Sep 17 00:00:00 2001
+From: Dominik Hassler <hadfl@omnios.org>
+Date: Sun, 13 Oct 2024 11:23:48 +0000
+Subject: [PATCH] illumos defines _MAX macros in limits.h
+
+---
+ src/rrd_config_bottom.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/rrd_config_bottom.h b/src/rrd_config_bottom.h
+index 82d04e09..62c04d5f 100644
+--- a/src/rrd_config_bottom.h
++++ b/src/rrd_config_bottom.h
+@@ -27,6 +27,12 @@
+ #ifdef HAVE_SYS_PARAM_H
+ # include <sys/param.h>
+ #endif
++
++/* illumos defines *_MAX macros in limits.h */
++#ifdef __illumos__
++#include <limits.h>
++#endif
++
+ #ifndef MAXPATH
+ # ifdef PATH_MAX
+ #  define MAXPATH PATH_MAX
+-- 
+2.46.2
+
