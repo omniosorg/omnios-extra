@@ -18,12 +18,9 @@
 
 PROG=u-boot
 PKG=ooce/util/u-boot
-VER=2024.07
+VER=2024.10
 SUMMARY="Das U-Boot"
 DESC="$SUMMARY: Universal Bootloader"
-
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
 
@@ -36,6 +33,7 @@ set_args() {
 
     MAKE_ARGS_WS="
         V=1
+        NO_PYTHON=1
         HOSTCC=\"$CC\"
         HOSTCFLAGS=\"$CFLAGS ${CFLAGS[$arch]} -I$PREFIX/include\"
         HOSTLDLIBS=\"
