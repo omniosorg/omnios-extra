@@ -33,6 +33,18 @@ XFORM_ARGS="
 CONFIGURE_OPTS+="
     --mandir=$PREFIX/share/man
 "
+
+pre_configure() {
+    typeset arch=$1
+
+    ! cross_arch $arch && return
+
+    CONFIGURE_OPTS[$arch]+="
+        ac_cv_func_malloc_0_nonnull=yes
+        ac_cv_func_realloc_0_nonnull=yes
+    "
+}
+
 LDFLAGS[i386]+=" -lssp_ns"
 
 init

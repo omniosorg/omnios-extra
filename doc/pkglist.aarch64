@@ -74,6 +74,13 @@ ooce/library/jansson
 ooce/network/tcpdump
 ooce/system/top
 ooce/library/apr
+ooce/util/rlwrap
+ooce/developer/protobuf
+ooce/library/libdwarf
+ooce/library/libmcrypt
+ooce/network/sic
+ooce/application/tig
+ooce/developer/cunit
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
@@ -90,6 +97,7 @@ ooce/security/minisign
 ooce/application/links
 ooce/database/mariadb-106
 ooce/developer/cmake
+ooce/network/mosh
 ###############################################################################
 .SYSROOT
 ooce/network/unbound

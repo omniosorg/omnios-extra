@@ -1,6 +1,7 @@
 extra.omnios ooce/application/links
 extra.omnios ooce/application/mc
 extra.omnios ooce/application/mutt
+extra.omnios ooce/application/tig
 extra.omnios ooce/audio/flac
 extra.omnios ooce/compress/pbzip2
 extra.omnios ooce/compress/pigz
@@ -11,8 +12,10 @@ extra.omnios ooce/database/mariadb-common
 extra.omnios ooce/database/postgresql-14
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/developer/cmake
+extra.omnios ooce/developer/cunit
 extra.omnios ooce/developer/git-absorb
 extra.omnios ooce/developer/ninja
+extra.omnios ooce/developer/protobuf
 extra.omnios ooce/editor/joe
 extra.omnios ooce/file/tree
 extra.omnios ooce/fonts/liberation
@@ -27,6 +30,7 @@ extra.omnios ooce/library/json-c
 extra.omnios ooce/library/ldns
 extra.omnios ooce/library/libarchive
 extra.omnios ooce/library/libde265
+extra.omnios ooce/library/libdwarf
 extra.omnios ooce/library/libev
 extra.omnios ooce/library/libexif
 extra.omnios ooce/library/libgd
@@ -34,6 +38,7 @@ extra.omnios ooce/library/libgif
 extra.omnios ooce/library/libheif
 extra.omnios ooce/library/libid3tag
 extra.omnios ooce/library/libjpeg-turbo
+extra.omnios ooce/library/libmcrypt
 extra.omnios ooce/library/libogg
 extra.omnios ooce/library/libpng
 extra.omnios ooce/library/libsodium
@@ -65,8 +70,10 @@ extra.omnios ooce/multimedia/x264
 extra.omnios ooce/multimedia/x265
 extra.omnios ooce/network/fping
 extra.omnios ooce/network/irssi
+extra.omnios ooce/network/mosh
 extra.omnios ooce/network/nsd
 extra.omnios ooce/network/openldap
+extra.omnios ooce/network/sic
 extra.omnios ooce/network/smtp/postfix
 extra.omnios ooce/network/tcpdump
 extra.omnios ooce/network/unbound
@@ -91,6 +98,7 @@ extra.omnios ooce/util/hyperfine
 extra.omnios ooce/util/jq
 extra.omnios ooce/util/pass
 extra.omnios ooce/util/rargs
+extra.omnios ooce/util/rlwrap
 extra.omnios ooce/util/stress-ng
 extra.omnios ooce/util/u-boot
 extra.omnios ooce/util/xjobs
