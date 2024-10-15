@@ -63,6 +63,7 @@ extra.omnios ooce/database/postgresql-16/mysql_fdw
 extra.omnios ooce/database/postgresql-16/pg_repack
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/database/rrdtool
+extra.omnios ooce/database/victoriametrics
 extra.omnios ooce/developer/aarch64-gcc10
 extra.omnios ooce/developer/aarch64-gnu-binutils
 extra.omnios ooce/developer/aarch64-linker
