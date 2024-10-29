@@ -180,7 +180,7 @@
 | ooce/network/proxy/squid	| 6.9		| http://www.squid-cache.org/Versions/v6/ | [cgrzemba](https://github.com/cgrzemba)
 | ooce/network/tailscale	| 1.76.3	| https://github.com/nshalman/tailscale/releases https://www.tailscale.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/tcpdump		| 4.99.5	| https://www.tcpdump.org/release/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/unbound		| 1.21.1	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/unbound		| 1.22.0	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/wireguard-go	| 0.0.20220316	| https://www.wireguard.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/wireguard-tools	| 1.0.20210914	| https://www.wireguard.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/znc		| 1.9.1		| https://znc.in/releases/ | [omniosorg](https://github.com/omniosorg)
