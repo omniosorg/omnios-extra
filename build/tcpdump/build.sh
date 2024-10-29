@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=tcpdump
-VER=4.99.4
+VER=4.99.5
 PKG=ooce/network/tcpdump
 SUMMARY="tcpdump - TCP packet analyzer"
 DESC="tcpdump - a powerful command-line TCP packet analyzer"
