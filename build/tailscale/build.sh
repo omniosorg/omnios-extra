@@ -18,7 +18,7 @@
 
 PROG=tailscale
 PKG=ooce/network/tailscale
-VER=1.74.0
+VER=1.76.3
 SUMMARY="Tailscale"
 DESC="The easiest, most secure way to use WireGuard and 2FA."
 
