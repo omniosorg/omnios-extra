@@ -1,4 +1,4 @@
-Start of unbound 1.21.1+libevent unit test.
+Start of unbound 1.22.0+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -78,10 +78,10 @@ test services/outside_network.c:reuse_write_wait_push_back
 test services/outside_network.c:reuse_write_wait_remove
 test services/outside_network.c:reuse_write_wait_pop
 test message parse functions
-[0] did 10000 in 83.471 msec for 119802.086952 encode/sec size 615
+[0] did 10000 in 49.92 msec for 200320.512821 encode/sec size 615
 test edns ede optional encoding functions
 test localzones parent calculation functions
-1297593 checks ok.
+1298503 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl  OK
 ./testdata/auth_nsec3_ent.rpl  OK
@@ -159,6 +159,7 @@ selftest successful (33 checks).
 ./testdata/chaos_trustanchor.rpl  OK
 ./testdata/disable_edns_do.rpl  OK
 ./testdata/dns64_lookup.rpl  OK
+./testdata/dns64_prefetch_cache.rpl  OK
 ./testdata/domain_insec_ds.rpl  OK
 ./testdata/ede_acl_refused.rpl  OK
 ./testdata/ede_cache_snoop_not_auth.rpl  OK
@@ -232,6 +233,7 @@ selftest successful (33 checks).
 ./testdata/iter_lame_noaa.rpl  OK
 ./testdata/iter_lame_nosoa.rpl  OK
 ./testdata/iter_lamescrub.rpl  OK
+./testdata/iter_max_global_quota.rpl  OK
 ./testdata/iter_mod.rpl  OK
 ./testdata/iter_nat64.rpl  OK
 ./testdata/iter_nat64_prefix.rpl  OK
@@ -283,6 +285,8 @@ selftest successful (33 checks).
 ./testdata/iter_stubfirst.rpl  OK
 ./testdata/iter_stublastresort.rpl  OK
 ./testdata/iter_timeout_ra_aaaa.rpl  OK
+./testdata/iter_unverified_glue.rpl  OK
+./testdata/iter_unverified_glue_fallback.rpl  OK
 ./testdata/local_acl_override.rpl  OK
 ./testdata/local_acl_taglist.rpl  OK
 ./testdata/local_acl_taglist_action.rpl  OK
@@ -323,6 +327,7 @@ selftest successful (33 checks).
 ./testdata/rpz_respip_tcponly.rpl  OK
 ./testdata/rpz_rootwc.rpl  OK
 ./testdata/rpz_signal_nxdomain_ra.rpl  OK
+./testdata/rpz_val_block.rpl  OK
 ./testdata/rrset_rettl.rpl  OK
 ./testdata/rrset_untrusted.rpl  OK
 ./testdata/rrset_updated.rpl  OK
@@ -336,9 +341,13 @@ selftest successful (33 checks).
 ./testdata/serve_expired_client_timeout.rpl  OK
 ./testdata/serve_expired_client_timeout_no_prefetch.rpl  OK
 ./testdata/serve_expired_client_timeout_servfail.rpl  OK
+./testdata/serve_expired_client_timeout_val_bogus.rpl  OK
+./testdata/serve_expired_client_timeout_val_insecure_delegation.rpl  OK
 ./testdata/serve_expired_reply_ttl.rpl  OK
 ./testdata/serve_expired_ttl.rpl  OK
 ./testdata/serve_expired_ttl_client_timeout.rpl  OK
+./testdata/serve_expired_ttl_reset.rpl  OK
+./testdata/serve_expired_val_bogus.rpl  OK
 ./testdata/serve_expired_zerottl.rpl  OK
 ./testdata/serve_original_ttl.rpl  OK
 ./testdata/stop_nxdomain.rpl  OK
@@ -410,6 +419,8 @@ selftest successful (33 checks).
 ./testdata/val_negcache_nodata.rpl  OK
 ./testdata/val_negcache_nta.rpl  OK
 ./testdata/val_negcache_nxdomain.rpl  OK
+./testdata/val_negcache_ttl.rpl  OK
+./testdata/val_negcache_ttl_prefetch.rpl  OK
 ./testdata/val_noadwhennodo.rpl  OK
 ./testdata/val_nodata.rpl  OK
 ./testdata/val_nodata_ent.rpl  OK
