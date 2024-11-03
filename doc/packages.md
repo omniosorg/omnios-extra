@@ -19,8 +19,8 @@
 | ooce/application/nagios-plugins | 2.4.8	| http://www.nagios-plugins.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/novnc	| 1.5.0		| https://github.com/novnc/noVNC/releases | Currently used solely by zadm
 | ooce/application/php-81	| 8.1.30	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-82	| 8.2.24	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-83	| 8.3.12	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-82	| 8.2.25	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-83	| 8.3.13	| https://www.php.net/downloads.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-XX/imagick	| 3.7.0	| https://github.com/Imagick/imagick/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/application/rustdesk-server | 1.1.12	| https://github.com/rustdesk/rustdesk-server/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20230313	| https://pi.kwarc.info/historic/systems/texlive/2023/ | [omniosorg](https://github.com/omniosorg)
