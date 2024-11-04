@@ -1,11 +1,12 @@
-1/6 dav1d:headers / common.h_test  OK
-2/6 dav1d:headers / data.h_test    OK
-3/6 dav1d:headers / dav1d.h_test   OK
-4/6 dav1d:headers / headers.h_test OK
-5/6 dav1d:headers / picture.h_test OK
-6/6 dav1d:checkasm / checkasm      OK
+1/7 dav1d:headers / common.h_test  OK
+2/7 dav1d:headers / data.h_test    OK
+3/7 dav1d:headers / dav1d.h_test   OK
+4/7 dav1d:headers / headers.h_test OK
+5/7 dav1d:headers / picture.h_test OK
+6/7 dav1d:headers / version.h_test OK
+7/7 dav1d:checkasm / checkasm      OK
 
-Ok:                 6   
+Ok:                 7   
 Expected Fail:      0   
 Fail:               0   
 Unexpected Pass:    0   
