@@ -18,15 +18,14 @@
 . ../../lib/build.sh
 
 PROG=texlive
-VER=20230313
+VER=20240312
 PKG=ooce/application/texlive
 SUMMARY="TeX Live"
 DESC="LaTeX distribution"
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 set_arch 64
+set_clangver
+set_standard XPG6
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
@@ -72,7 +71,7 @@ pre_configure() {
     # config.status is broken.
     # We already export SHELL=bash in config.sh but that doesn't seem
     # to be enough.
-    CONFIGURE_CMD="/usr/bin/bash $TMPDIR/$PROG-$VER-source/configure"
+    CONFIGURE_CMD="$SHELL $TMPDIR/$PROG-$VER-source/configure"
 }
 
 dl_dist() {
@@ -85,15 +84,15 @@ install_dist() {
     dst="$DESTDIR$PREFIX/share"
     # manpages get installed from the source package into $PREFIX/share/man
     # already
-    rm -rf $TMPDIR/$PROG-$VER-texmf/texmf-dist/doc/man
-    logcmd mkdir -p $dst
+    logcmd $RM -rf $TMPDIR/$PROG-$VER-texmf/texmf-dist/doc/man
+    logcmd $MKDIR -p $dst
     logmsg "--- Copying texmf"
-    logcmd rsync -a $TMPDIR/$PROG-$VER-texmf/texmf-dist $dst/ \
+    logcmd $RSYNC -a $TMPDIR/$PROG-$VER-texmf/texmf-dist $dst/ \
         || logerr "rsync texmf"
     logmsg "--- Copying extra"
-    logcmd rsync -a $TMPDIR/$PROG-$VER-extra/tlpkg $dst/ \
+    logcmd $RSYNC -a $TMPDIR/$PROG-$VER-extra/tlpkg $dst/ \
         || logerr "rsync extra"
-    logcmd cp $TMPDIR/$PROG-$VER-extra/LICENSE.TL \
+    logcmd $CP $TMPDIR/$PROG-$VER-extra/LICENSE.TL \
         $TMPDIR/$EXTRACTED_SRC/LICENSE.TL \
         || logerr "copy LICENSE.TL"
 }
@@ -115,7 +114,7 @@ config_tex() {
 }
 
 CFLAGS+=" -I$OPREFIX/include"
-LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
+LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/${LIBDIRS[amd64]}"
 # /usr/lib/amd64/pkgconfig for mpfr
 subsume_arch amd64 PKG_CONFIG_PATH
 addpath PKG_CONFIG_PATH /usr/lib/amd64/pkgconfig
