@@ -17,14 +17,11 @@
 . ../../lib/build.sh
 
 PROG=mariadb
-VER=10.5.26
+VER=10.5.27
 PKG=ooce/database/mariadb-105
 SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
 DESC+="MySQL relational database management system"
-
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
@@ -55,6 +52,7 @@ XFORM_ARGS="
     -DUSER=mysql -DGROUP=mysql
 "
 
+CPPFLAGS+=" -I/usr/include/ncurses -DOOCEVER=$RELVER"
 CFLAGS+=" -O3 -I$OPREFIX/include -I/usr/include/gssapi"
 CXXFLAGS[i386]="$CFLAGS ${CFLAGS[i386]} -R$OPREFIX/lib"
 CXXFLAGS[amd64]="$CFLAGS ${CFLAGS[amd64]} -R$OPREFIX/lib/amd64"
