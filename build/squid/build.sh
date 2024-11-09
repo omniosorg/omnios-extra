@@ -18,7 +18,7 @@
 . ../../lib/build.sh
 
 PROG=squid
-VER=6.9
+VER=6.12
 PKG=ooce/network/proxy/squid
 SUMMARY="Squid WEB Proxy"
 DESC="Squid is a caching proxy for the Web supporting HTTP, HTTPS, FTP, "
@@ -31,9 +31,6 @@ VARPATH=/var$PREFIX
 LOGPATH=$VARPATH/logs
 RUNPATH=$VARPATH/run
 PIDFILE=$RUNPATH/squid.pid
-
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
 
