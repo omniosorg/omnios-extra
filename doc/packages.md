@@ -35,7 +35,7 @@
 | ooce/database/bdb		| 5.3.28	| http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html | [omniosorg](https://github.com/omniosorg)
 | ooce/database/lmdb		| 0.9.31	| https://github.com/LMDB/lmdb/tags https://symas.com/lmdb/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-105	| 10.5.27	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/database/mariadb-106	| 10.6.19	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/mariadb-106	| 10.6.20	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-1011	| 10.11.10	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-114	| 11.4.3	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-12	| 12.20		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
