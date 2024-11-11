@@ -1,0 +1,30 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/backend/port/sysv_shmem.c a/src/backend/port/sysv_shmem.c
+--- a~/src/backend/port/sysv_shmem.c	1970-01-01 00:00:00
++++ a/src/backend/port/sysv_shmem.c	1970-01-01 00:00:00
+@@ -288,7 +288,7 @@ static void
+ IpcMemoryDetach(int status, Datum shmaddr)
+ {
+ 	/* Detach System V shared memory block. */
+-	if (shmdt(DatumGetPointer(shmaddr)) < 0)
++	if (shmdt((void *) DatumGetPointer(shmaddr)) < 0)
+ 		elog(LOG, "shmdt(%p) failed: %m", DatumGetPointer(shmaddr));
+ }
+ 
+@@ -322,7 +322,7 @@ PGSharedMemoryIsInUse(unsigned long id1,
+ 	IpcMemoryState state;
+ 
+ 	state = PGSharedMemoryAttach((IpcMemoryId) id2, NULL, &memAddress);
+-	if (memAddress && shmdt(memAddress) < 0)
++	if (memAddress && shmdt((void *) memAddress) < 0)
+ 		elog(LOG, "shmdt(%p) failed: %m", memAddress);
+ 	switch (state)
+ 	{
+@@ -753,7 +753,7 @@ PGSharedMemoryCreate(Size size, int port
+ 				break;
+ 		}
+ 
+-		if (oldhdr && shmdt(oldhdr) < 0)
++		if (oldhdr && shmdt((void *) oldhdr) < 0)
+ 			elog(LOG, "shmdt(%p) failed: %m", oldhdr);
+ 	}
+ 
