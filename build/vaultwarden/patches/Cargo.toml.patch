@@ -9,8 +9,8 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/vaultwarden/Cargo.toml a/vaul
  lto = "fat"
  codegen-units = 1
  
-@@ -244,3 +243,7 @@ unnecessary_self_imports = "deny"
- unused_async = "deny"
+@@ -262,3 +261,7 @@ unused_async = "deny"
+ unused_self = "deny"
  verbose_file_reads = "deny"
  zero_sized_map_values = "deny"
 +
