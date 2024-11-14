@@ -10,8 +10,8 @@ Example profiles are provided in `<prefix>/share/victoriametrics`.
 
 These can edited and applied with:
 ```
-svcadm apply victoria-metrics-profile.xml
-svcadm apply vmagent-profile.xml
+svccfg apply <prefix>/share/victoriametrics/victoria-metrics-profile.xml
+svccfg apply <prefix>/share/victoriametrics/vmagent-profile.xml
 ```
 
 vmagent _requires_ at least the envvar `VM_remoteWrite_url`, an example is provided that can be applied.
