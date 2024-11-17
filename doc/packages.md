@@ -41,7 +41,7 @@
 | ooce/database/postgresql-12	| 12.21		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-13	| 13.17		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-14	| 14.14		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
-| ooce/database/postgresql-15	| 15.8		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/postgresql-15	| 15.9		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-16	| 16.4		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-17	| 17.0		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-XX/citus	| 12.1.0	| https://github.com/citusdata/citus/releases | [omniosorg](https://github.com/omniosorg)
