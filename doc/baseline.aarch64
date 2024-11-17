@@ -42,6 +42,7 @@ extra.omnios ooce/library/libmcrypt
 extra.omnios ooce/library/libogg
 extra.omnios ooce/library/libpng
 extra.omnios ooce/library/libsodium
+extra.omnios ooce/library/libtasn1
 extra.omnios ooce/library/liburcu
 extra.omnios ooce/library/libuv
 extra.omnios ooce/library/libvncserver
@@ -61,6 +62,7 @@ extra.omnios ooce/library/slang
 extra.omnios ooce/library/tiff
 extra.omnios ooce/library/tree-sitter
 extra.omnios ooce/library/unbound
+extra.omnios ooce/library/unistring
 extra.omnios ooce/library/yaml
 extra.omnios ooce/multimedia/dav1d
 extra.omnios ooce/multimedia/dcraw

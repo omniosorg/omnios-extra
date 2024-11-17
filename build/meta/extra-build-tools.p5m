@@ -50,6 +50,7 @@ depend fmri=ooce/library/libmcrypt type=require
 depend fmri=ooce/library/libogg type=require
 depend fmri=ooce/library/libpng type=require
 depend fmri=ooce/library/libsodium type=require
+depend fmri=ooce/library/libtasn1 type=require
 depend fmri=ooce/library/liburcu type=require
 depend fmri=ooce/library/libuv type=require
 depend fmri=ooce/library/libvncserver type=require
@@ -75,6 +76,7 @@ depend fmri=ooce/library/slang type=require
 depend fmri=ooce/library/tiff type=require
 depend fmri=ooce/library/tree-sitter type=require
 depend fmri=ooce/library/unbound type=require
+depend fmri=ooce/library/unistring type=require
 depend fmri=ooce/library/yaml type=require
 depend fmri=ooce/multimedia/dav1d type=require
 depend fmri=ooce/multimedia/ffmpeg type=require
