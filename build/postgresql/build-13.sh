@@ -19,7 +19,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-13
-VER=13.16
+VER=13.17
 SUMMARY="PostgreSQL 13"
 DESC="The World's Most Advanced Open Source Relational Database"
 

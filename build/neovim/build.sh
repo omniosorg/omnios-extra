@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=neovim
-VER=0.10.1
+VER=0.10.2
 PKG=ooce/editor/neovim
 SUMMARY="Neovim"
 DESC="hyperextensible Vim-based text editor"

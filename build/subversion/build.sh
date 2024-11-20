@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=subversion
-VER=1.14.3
+VER=1.14.4
 PKG=ooce/developer/subversion
 SUMMARY="Subversion is an open source version control system"
 DESC="Subversion is a version control system designed to be \
