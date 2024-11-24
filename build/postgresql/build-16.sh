@@ -19,11 +19,9 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-16
-VER=16.5
+VER=16.6
 SUMMARY="PostgreSQL 16"
 DESC="The World's Most Advanced Open Source Relational Database"
-
-min_rel 151044
 
 SKIP_LICENCES=postgresql
 
