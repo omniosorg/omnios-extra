@@ -40,6 +40,10 @@ CONFIGURE_OPTS[amd64]="
     --prefix=$PREFIX
 "
 
+# Some perl modules have started using GNU extensions when packaging their
+# distributions, so we need GNU tar first in the path.
+PATH=$GNUBIN:$PATH
+
 init
 download_source $PROG $PROG $VER
 patch_source
