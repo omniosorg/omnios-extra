@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=victoriametrics
-VER=1.102.2
+VER=1.102.8
 PKG=ooce/database/victoriametrics
 SUMMARY="VictoriaMetrics"
 DESC="Fast, cost-effective monitoring solution and time series database."
