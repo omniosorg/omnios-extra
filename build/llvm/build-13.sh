@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -23,7 +23,7 @@ SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 
 set_arch 64
-test_relver '>=' 151041 && set_clangver
+set_clangver
 set_builddir $PROG-project-$VER.src/$PROG
 
 SKIP_RTIME_CHECK=1

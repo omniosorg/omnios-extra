@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -23,7 +23,7 @@ SUMMARY="lmdb"
 DESC="Lightning Memory-Mapped Database"
 
 forgo_isaexec
-test_relver '>=' 151041 && set_clangver
+set_clangver
 
 SKIP_LICENCES=OpenLDAP
 

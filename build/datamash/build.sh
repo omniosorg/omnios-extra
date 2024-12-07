@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -27,7 +27,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-test_relver '>=' 151045 && set_clangver
+set_clangver
 
 # the test-suite requires GNU tools and we get all sorts of weird
 # test-suite errors if we don't use GNU tools to build as well

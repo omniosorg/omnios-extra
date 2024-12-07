@@ -83,7 +83,6 @@ extra.omnios ooce/developer/ccache
 extra.omnios ooce/developer/clang-13
 extra.omnios ooce/developer/clang-130 r
 extra.omnios ooce/developer/clang-15
-extra.omnios ooce/developer/clang-16
 extra.omnios ooce/developer/clang-17
 extra.omnios ooce/developer/clang-18
 extra.omnios ooce/developer/clang-19
@@ -102,7 +101,6 @@ extra.omnios ooce/developer/gyp
 extra.omnios ooce/developer/llvm-13
 extra.omnios ooce/developer/llvm-130 r
 extra.omnios ooce/developer/llvm-15
-extra.omnios ooce/developer/llvm-16
 extra.omnios ooce/developer/llvm-17
 extra.omnios ooce/developer/llvm-18
 extra.omnios ooce/developer/llvm-19
@@ -116,10 +114,8 @@ extra.omnios ooce/developer/subversion
 extra.omnios ooce/developer/valgrind
 extra.omnios ooce/developer/yasm
 extra.omnios ooce/developer/zig r
-extra.omnios ooce/developer/zig-011
 extra.omnios ooce/developer/zig-012
 extra.omnios ooce/developer/zig-013
-extra.omnios ooce/developer/zig-09
 extra.omnios ooce/driver/fuse
 extra.omnios ooce/editor/emacs
 extra.omnios ooce/editor/helix

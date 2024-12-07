@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 forgo_isaexec
-test_relver '>=' 151045 && set_clangver
+set_clangver
 
 SKIP_LICENCES=various
 

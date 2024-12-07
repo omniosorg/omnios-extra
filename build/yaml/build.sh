@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,7 +22,7 @@ PKG=ooce/library/yaml
 SUMMARY="LibYAML"
 DESC="$SUMMARY - A C library for parsing and emitting YAML."
 
-test_relver '>=' 151046 && set_clangver
+set_clangver
 
 # many false positives show up in macro warnings in the log
 SKIP_BUILD_ERRCHK=1

@@ -25,7 +25,7 @@ DESC="GNU implementation of nano, a text editor emulating pico"
 BUILD_DEPENDS_IPS="library/ncurses"
 
 set_arch 64
-test_relver '>=' 151045 && set_clangver
+set_clangver
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
