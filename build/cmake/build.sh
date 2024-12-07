@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=cmake
-VER=3.30.5
+VER=3.31.2
 PKG=ooce/developer/cmake
 SUMMARY="Build coordinator"
 DESC="An extensible system that manages the build process in a "
@@ -29,6 +29,10 @@ set_clangver
 SKIP_LICENCES=Kitware
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
+
+PKGDIFF_HELPER="
+    s:/$PROG-[0-9][0-9.]*/:/$PROG-VERSION/:
+"
 
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
