@@ -83,6 +83,7 @@ ooce/application/tig
 ooce/developer/cunit
 ooce/library/libtasn1
 ooce/library/unistring
+ooce/library/libtpms
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

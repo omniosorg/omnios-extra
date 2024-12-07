@@ -1,0 +1,8 @@
+ACTCommands.c
+DebugHelpers.c
+tpm_error.c
+tpm_maint.c
+TpmMath_Debug.c
+TpmSizeChecks.c
+Unique.c
+Vendor_TCG_Test.c
