@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,7 +22,7 @@ PKG=ooce/library/libexif
 SUMMARY="libexif"
 DESC="Reads and writes EXIF metainformation from and to image files."
 
-test_relver '>=' 151041 && set_clangver
+set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"

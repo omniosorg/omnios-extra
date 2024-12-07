@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -25,7 +25,7 @@ DESC+="general-purpose compressed audio format"
 
 BUILD_DEPENDS_IPS="ooce/library/libogg"
 
-test_relver '>=' 151041 && set_clangver
+set_clangver
 
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 

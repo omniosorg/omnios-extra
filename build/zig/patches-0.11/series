@@ -1,9 +1,0 @@
-no-ld-stack-size.patch
-add-reg-defs.patch
-verbose-link.patch
-link-libstdc++.patch
-native-libc-paths.patch
-max-component-len.patch
-add-ca-certs.patch
-hard-code-dynamic-linker.patch
-keep-frame-pointers.patch

@@ -23,7 +23,7 @@ SUMMARY="Ninja"
 DESC="A small build system with a focus on speed"
 
 set_arch 64
-test_relver '>=' 151043 && set_clangver
+set_clangver
 
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release

@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/build.zig a/build.zig
 --- a~/build.zig	1970-01-01 00:00:00
 +++ a/build.zig	1970-01-01 00:00:00
-@@ -18,7 +18,7 @@ pub fn build(b: *std.Build) void {
+@@ -20,7 +20,7 @@ pub fn build(b: *std.Build) void {
      });
  
      exe.pie = pie;
@@ -10,24 +10,23 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/build.zig a/build.zig
      exe.root_module.linkSystemLibrary("libzstd", .{});
      // https://github.com/ziglang/zig/blob/b52be973dfb7d1408218b8e75800a2da3dc69108/build.zig#L551-L554
      if (target.result.isDarwin()) {
-@@ -43,7 +43,7 @@ pub fn build(b: *std.Build) void {
+@@ -45,7 +45,7 @@ pub fn build(b: *std.Build) void {
          .link_libc = true,
      });
      unit_tests.pie = pie;
 -    unit_tests.root_module.linkSystemLibrary("ncursesw", .{});
 +    unit_tests.root_module.linkSystemLibrary("ncurses", .{});
+     unit_tests.root_module.linkSystemLibrary("libzstd", .{});
  
      const run_unit_tests = b.addRunArtifact(unit_tests);
- 
-diff -wpruN --no-dereference '--exclude=*.orig' a~/src/ui.zig a/src/ui.zig
---- a~/src/ui.zig	1970-01-01 00:00:00
-+++ a/src/ui.zig	1970-01-01 00:00:00
-@@ -11,7 +11,7 @@ pub const c = @cImport({
-     @cDefine("_XOPEN_SOURCE", "1");
-     @cInclude("stdio.h");
-     @cInclude("string.h");
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/c.zig a/src/c.zig
+--- a~/src/c.zig	1970-01-01 00:00:00
++++ a/src/c.zig	1970-01-01 00:00:00
+@@ -15,6 +15,6 @@ pub const c = @cImport({
+     if (@import("builtin").os.tag == .linux) {
+         @cInclude("sys/vfs.h"); // statfs()
+     }
 -    @cInclude("curses.h");
 +    @cInclude("ncurses/curses.h");
-     @cInclude("time.h");
-     @cInclude("wchar.h");
-     @cInclude("locale.h");
+     @cInclude("zstd.h");
+ });

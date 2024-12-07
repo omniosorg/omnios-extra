@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -25,7 +25,7 @@ DESC+="into the H.264/MPEG-4 AVC compression format"
 
 set_builddir $PROG-stable
 forgo_isaexec
-test_relver '>=' 151041 && set_clangver
+set_clangver
 
 # x264 contains BMI instructions even when built on an older CPU
 BMI_EXPECTED=1

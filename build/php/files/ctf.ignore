@@ -7,12 +7,15 @@ dba_gdbm.c
 dba_ndbm.c
 dba_qdbm.c
 dba_tcadb.c
+debug_gdb_scripts.c
 explicit_bzero.c
 gd_avif.c
 gd_webp.c
 gdxpm.c
+hash_sha_ni.c
 locale.c
 mod_mm.c
+openssl_pwhash.c
 php_scandir.c
 reentrancy.c
 shared_alloc_mmap.c
