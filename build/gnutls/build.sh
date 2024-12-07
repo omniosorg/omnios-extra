@@ -34,8 +34,6 @@ CONFIGURE_OPTS="
     --disable-static
     --disable-doc
     --enable-manpages
-    --with-included-libtasn1
-    --with-included-unistring
     --disable-openssl-compatibility
     --disable-guile
     --disable-valgrind-tests

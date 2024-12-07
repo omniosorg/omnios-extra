@@ -22,7 +22,6 @@ PKG=ooce/emulator/qemu
 SUMMARY="$PROG"
 DESC="A generic and open source machine emulator and virtualizer"
 
-LIBTASN1VER=4.19.0
 LIBSLIRPVER=4.8.0
 SPHINXVER=8.0.2
 SPHINXRTDVER=2.0.0
@@ -54,14 +53,9 @@ LDFLAGS[amd64]+=" -lsocket"
 build_dependency -meson libslirp libslirp-v$LIBSLIRPVER \
     $PROG/libslirp libslirp v$LIBSLIRPVER
 
-CONFIGURE_OPTS=" --disable-shared --enable-static"
-
-build_dependency libtasn1 libtasn1-$LIBTASN1VER \
-    $PROG/libtasn1 libtasn1 $LIBTASN1VER
-
 restore_buildenv
 
-CFLAGS+=" -I$DEPROOT$PREFIX/include -I$DEPROOT$PREFIX/include/slirp"
+CFLAGS+=" -I$DEPROOT$PREFIX/include/slirp"
 LDFLAGS[amd64]+=" -L$DEPROOT$PREFIX/lib/amd64"
 
 addpath PKG_CONFIG_PATH[amd64] $DEPROOT$PREFIX/lib/amd64/pkgconfig

@@ -81,6 +81,9 @@ ooce/library/libmcrypt
 ooce/network/sic
 ooce/application/tig
 ooce/developer/cunit
+ooce/library/libtasn1
+ooce/library/unistring
+ooce/library/libtpms
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
@@ -113,6 +116,7 @@ ooce/library/pango
 ooce/network/znc
 ooce/library/libvncserver
 ooce/network/smtp/postfix
+ooce/security/swtpm
 ###############################################################################
 .SYSROOT
 ooce/multimedia/minidlna

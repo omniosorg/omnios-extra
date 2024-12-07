@@ -1,0 +1,22 @@
+fixing: error: a label can only be part of a statement and a declaration is not a statement
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/json-glib/json-scanner.c a/json-glib/json-scanner.c
+--- a~/json-glib/json-scanner.c	1970-01-01 00:00:00
++++ a/json-glib/json-scanner.c	1970-01-01 00:00:00
+@@ -779,6 +779,7 @@ json_scanner_get_token_ll (JsonScanner
+   GString *gstring = NULL;
+   JsonTokenValue value;
+   guchar ch;
++  guint fchar;
+   
+   config = &scanner->config;
+   (*value_p).v_int64 = 0;
+@@ -889,7 +890,7 @@ json_scanner_get_token_ll (JsonScanner
+ 			  break;
+ 
+                         case 'u':
+-                          guint fchar = json_scanner_peek_next_char (scanner);
++                          fchar = json_scanner_peek_next_char (scanner);
+                           if (is_hex_digit (fchar))
+                             {
+                               gunichar ucs;

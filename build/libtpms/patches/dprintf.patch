@@ -1,0 +1,42 @@
+see: https://www.illumos.org/issues/16151 and https://www.illumos.org/issues/16505
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/tpm_library.c a/src/tpm_library.c
+--- a~/src/tpm_library.c	1970-01-01 00:00:00
++++ a/src/tpm_library.c	1970-01-01 00:00:00
+@@ -102,6 +102,36 @@ static struct sized_buffer cached_blobs[
+ static int tpmvers_choice = 0; /* default is TPM1.2 */
+ static TPM_BOOL tpmvers_locked = FALSE;
+ 
++#ifdef __illumos__
++static int vdprintf(int fd, const char *fmt, va_list ap)
++{
++    FILE *fp;
++    int ret;
++
++    fp = fdopen(fd, "w");
++    if (fp == NULL)
++        return (EOF);
++
++    ret = vfprintf(fp, fmt, ap);
++
++    (void) fclose(fp);
++
++    return (ret);
++}
++
++static int dprintf(int fd, const char *fmt, ...)
++{
++    va_list va;
++    int ret;
++
++    va_start(va, fmt);
++    ret = vdprintf(fd, fmt, va);
++    va_end(va);
++
++	return (ret);
++}
++#endif /* __illumos__ */
++
+ uint32_t TPMLIB_GetVersion(void)
+ {
+     return TPM_LIBRARY_VERSION;

@@ -1,0 +1,66 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/include/sys_dependencies.h a/include/sys_dependencies.h
+--- a~/include/sys_dependencies.h	1970-01-01 00:00:00
++++ a/include/sys_dependencies.h	1970-01-01 00:00:00
+@@ -39,7 +39,7 @@
+ #define SWTPM_SYS_DEPENDENCIES_H
+ 
+ #if !defined __OpenBSD__ && !defined __FreeBSD__ && !defined __NetBSD__ \
+- && !defined __APPLE__ && !defined __DragonFly__
++ && !defined __APPLE__ && !defined __DragonFly__ && !defined __illumos__
+  #define _GNU_SOURCE
+  #include <features.h>
+ #endif
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/swtpm/check_algos.c a/src/swtpm/check_algos.c
+--- a~/src/swtpm/check_algos.c	1970-01-01 00:00:00
++++ a/src/swtpm/check_algos.c	1970-01-01 00:00:00
+@@ -42,6 +42,10 @@
+ #include <stdio.h>
+ #include <string.h>
+ 
++#ifdef __illumos__
++# include <strings.h>
++#endif
++
+ #include "check_algos.h"
+ #include "utils.h"
+ #include "swtpm_utils.h"
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/swtpm/common.c a/src/swtpm/common.c
+--- a~/src/swtpm/common.c	1970-01-01 00:00:00
++++ a/src/swtpm/common.c	1970-01-01 00:00:00
+@@ -56,6 +56,10 @@
+ # include <seccomp.h>
+ #endif
+ 
++#ifdef __illumos__
++# include <strings.h>
++#endif
++
+ #include <libtpms/tpm_error.h>
+ 
+ #include "common.h"
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/swtpm_ioctl/tpm_ioctl.c a/src/swtpm_ioctl/tpm_ioctl.c
+--- a~/src/swtpm_ioctl/tpm_ioctl.c	1970-01-01 00:00:00
++++ a/src/swtpm_ioctl/tpm_ioctl.c	1970-01-01 00:00:00
+@@ -90,6 +90,11 @@
+ # define _IOC_NRMASK 255
+ #endif
+ 
++/* for illumos */
++#ifndef MIN
++# define MIN(a, b) ((a) < (b) ? (a) : (b))
++#endif
++
+ /* poll timeout that takes into account a busy swtpm creating a key */
+ #define DEFAULT_POLL_TIMEOUT 10000 /* ms */
+ 
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tests/sed-inplace a/tests/sed-inplace
+--- a~/tests/sed-inplace	1970-01-01 00:00:00
++++ a/tests/sed-inplace	1970-01-01 00:00:00
+@@ -1,6 +1,6 @@
+ #!/usr/bin/env bash
+ 
+-if [[ "$(uname -s)" =~ (Linux|CYGWIN_NT-) ]]; then
++if [[ "$(uname -s)" =~ (Linux|CYGWIN_NT-|SunOS) ]]; then
+ 	sed -i "$1" "$2"
+ else
+ 	sed -i '' "$1" "$2"
