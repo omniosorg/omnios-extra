@@ -51,6 +51,7 @@ depend fmri=ooce/library/libogg type=require
 depend fmri=ooce/library/libpng type=require
 depend fmri=ooce/library/libsodium type=require
 depend fmri=ooce/library/libtasn1 type=require
+depend fmri=ooce/library/libtpms type=require
 depend fmri=ooce/library/liburcu type=require
 depend fmri=ooce/library/libuv type=require
 depend fmri=ooce/library/libvncserver type=require

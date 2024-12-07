@@ -248,6 +248,7 @@ extra.omnios ooce/security/gnupg
 extra.omnios ooce/security/minisign
 extra.omnios ooce/security/oath-toolkit
 extra.omnios ooce/security/pam_radius
+extra.omnios ooce/security/swtpm
 extra.omnios ooce/server/apache-24
 extra.omnios ooce/server/apache-24/modules/fcgid
 extra.omnios ooce/server/apache-24/modules/subversion

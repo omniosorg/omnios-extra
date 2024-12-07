@@ -1,0 +1,29 @@
+fixing:
+
+swtpm_setup_utils.c:96:20: error: declaration shadows a variable in the global scope [-Werror,-Wshadow]
+   96 |     struct utsname utsname;
+      |                    ^
+/usr/include/sys/utsname.h:61:23: note: previous declaration is here
+   61 | extern struct utsname utsname;
+      |                       ^
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/swtpm_setup/swtpm_setup_utils.c a/src/swtpm_setup/swtpm_setup_utils.c
+--- a~/src/swtpm_setup/swtpm_setup_utils.c	1970-01-01 00:00:00
++++ a/src/swtpm_setup/swtpm_setup_utils.c	1970-01-01 00:00:00
+@@ -23,6 +23,8 @@
+ #include "swtpm_utils.h"
+ #include "swtpm_setup_utils.h"
+ 
++struct utsname utsname;
++
+ /* Get a configuration value given its name */
+ gchar *get_config_value(gchar *const *config_file_lines, const gchar *configname)
+ {
+@@ -93,7 +95,6 @@ int create_config_files(gboolean overwri
+     gboolean delete_files = FALSE;
+     g_auto(GStrv) configfiles = NULL;
+     g_auto(GStrv) filedata = NULL;
+-    struct utsname utsname;
+     int ret = 1;
+     size_t i;
+ 

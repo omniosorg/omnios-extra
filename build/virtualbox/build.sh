@@ -199,8 +199,8 @@ make_install() {
     bindir=out/solaris.amd64/$BUILD_TYPE
 
     # Fix the runtime path for these components to include the ooce lib
-    # in order that libpng can be found.
-    for f in VBoxSVC components/VBoxC.so; do
+    # in order that libpng and libtpms can be found.
+    for f in VBoxSVC VBoxDD.so components/VBoxC.so; do
         logcmd elfedit -e "dyn:value -s RUNPATH $rpath" $DESTDIR$PREFIX/amd64/$f
         logcmd elfedit -e "dyn:value -s RPATH $rpath" $DESTDIR$PREFIX/amd64/$f
     done

@@ -86,6 +86,7 @@ extra.omnios ooce/security/gnupg
 extra.omnios ooce/security/minisign
 extra.omnios ooce/security/oath-toolkit
 extra.omnios ooce/security/pam_radius
+extra.omnios ooce/security/swtpm
 extra.omnios ooce/system/htop
 extra.omnios ooce/system/mbuffer
 extra.omnios ooce/system/top
