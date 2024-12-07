@@ -27,7 +27,7 @@ DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 BROTLIVER=1.0.0rc
 
 set_arch 64
-test_relver '>=' 151045 && set_clangver
+set_clangver
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
