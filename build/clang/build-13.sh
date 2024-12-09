@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -25,7 +25,7 @@ DESC+="infrastructure for languages in the C language family (C, C++, "
 DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
 
 set_arch 64
-test_relver '>=' 151041 && set_clangver
+set_clangver
 set_builddir llvm-project-$VER.src/$PROG
 
 SKIP_RTIME_CHECK=1

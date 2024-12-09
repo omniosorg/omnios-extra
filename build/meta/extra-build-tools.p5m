@@ -12,6 +12,7 @@ depend fmri=ooce/application/imagemagick type=require
 depend fmri=ooce/application/php-81 type=require
 depend fmri=ooce/application/php-82 type=require
 depend fmri=ooce/application/php-83 type=require
+depend fmri=ooce/application/php-84 type=require
 depend fmri=ooce/audio/flac type=require
 depend fmri=ooce/database/bdb type=require
 depend fmri=ooce/database/lmdb type=require
@@ -105,14 +106,6 @@ depend fmri=ooce/developer/llvm-15 type=conditional \
 # clang 15 is the default clang compiler from r151045 onwards
 depend fmri=ooce/developer/clang-15 type=conditional \
     predicate=release/name@0.5.11-151045
-
-# Added llvm/clang 16 from r151045 onwards
-depend fmri=ooce/developer/llvm-16 type=conditional \
-    predicate=release/name@0.5.11-151045
-
-# clang 16 is the default clang compiler from r151047 onwards
-depend fmri=ooce/developer/clang-16 type=conditional \
-    predicate=release/name@0.5.11-151047
 
 # Added llvm/clang 18 from r151049 onwards
 depend fmri=ooce/developer/llvm-18 type=conditional \
