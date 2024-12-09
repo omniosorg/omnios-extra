@@ -157,6 +157,8 @@ extra.omnios ooce/library/libogg
 extra.omnios ooce/library/libpciaccess
 extra.omnios ooce/library/libpng
 extra.omnios ooce/library/libsodium
+extra.omnios ooce/library/libtasn1
+extra.omnios ooce/library/libtpms
 extra.omnios ooce/library/liburcu
 extra.omnios ooce/library/libusb-1
 extra.omnios ooce/library/libuv
@@ -244,6 +246,7 @@ extra.omnios ooce/security/gnupg
 extra.omnios ooce/security/minisign
 extra.omnios ooce/security/oath-toolkit
 extra.omnios ooce/security/pam_radius
+extra.omnios ooce/security/swtpm
 extra.omnios ooce/server/apache-24
 extra.omnios ooce/server/apache-24/modules/fcgid
 extra.omnios ooce/server/apache-24/modules/subversion
