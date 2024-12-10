@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=vaultwarden
-VER=1.32.5
+VER=1.32.6
 PKG=ooce/application/vaultwarden
 SUMMARY="Bitwarden compatible server"
 DESC="Unofficial Bitwarden compatible server written in Rust, formerly known "
