@@ -1,4 +1,4 @@
-From 2aaae6a0e5e6057e97c728a08f0619d0effd6d23 Mon Sep 17 00:00:00 2001
+From a453fc277e115beaaa4065c49d7ccde3e2fd6dca Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Fri, 30 Dec 2022 18:06:57 +0000
 Subject: Drop unnecessary privileges
