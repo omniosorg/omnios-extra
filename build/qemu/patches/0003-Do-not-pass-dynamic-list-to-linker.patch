@@ -1,4 +1,4 @@
-From 28f3b36350111e88df48cc94b5ad22eec7c94701 Mon Sep 17 00:00:00 2001
+From 766d1949346161682d0ce6d3efbd1ecd080b1380 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:53:22 +0000
 Subject: Do not pass --dynamic-list to linker
@@ -8,15 +8,15 @@ Subject: Do not pass --dynamic-list to linker
  1 file changed, 2 deletions(-)
 
 diff --git a/plugins/meson.build b/plugins/meson.build
-index 1cc039d29b..84f58d7055 100644
+index 98542e926f..d5a96eaed0 100644
 --- a/plugins/meson.build
 +++ b/plugins/meson.build
-@@ -11,8 +11,6 @@ if not enable_modules
+@@ -17,8 +17,6 @@ if not enable_modules
        capture: true,
        command: ['sed', '-ne', 's/^[[:space:]]*\\(qemu_.*\\);/_\\1/p', '@INPUT@'])
      emulator_link_args += ['-Wl,-exported_symbols_list,plugins/qemu-plugins-ld64.symbols']
 -  else
--    emulator_link_args += ['-Xlinker', '--dynamic-list=' + (meson.project_source_root() / 'plugins/qemu-plugins.symbols')]
+-    emulator_link_args += ['-Xlinker', '--dynamic-list=' + qemu_plugin_symbols.full_path()]
    endif
  endif
  

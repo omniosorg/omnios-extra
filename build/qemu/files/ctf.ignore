@@ -1,0 +1,4 @@
+char-parallel.c
+core-lx106.c
+power8-pmu.c
+scsi-generic.c

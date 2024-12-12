@@ -28,7 +28,8 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 set_arch 64
-set_clangver
+# earlier meson versions have a bug that fails to detect ld(1) with clang
+test_relver '>=' 151053 && set_clangver
 set_standard XPG6
 
 XFORM_ARGS="

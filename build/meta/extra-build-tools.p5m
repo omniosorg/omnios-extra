@@ -7,6 +7,7 @@ depend fmri=ooce/omnios-build-tools type=require
 depend fmri=compress/lz4 type=require
 depend fmri=driver/tuntap type=require
 depend fmri=library/unixodbc type=require
+depend fmri=network/socat type=require
 depend fmri=ooce/application/graphviz type=require
 depend fmri=ooce/application/imagemagick type=require
 depend fmri=ooce/application/php-81 type=require

@@ -17,19 +17,20 @@
 . ../../lib/build.sh
 
 PROG=qemu
-VER=9.1.2
+VER=9.2.0
 PKG=ooce/emulator/qemu
 SUMMARY="$PROG"
 DESC="A generic and open source machine emulator and virtualizer"
 
 LIBSLIRPVER=4.8.0
-SPHINXVER=8.0.2
-SPHINXRTDVER=2.0.0
+SPHINXVER=8.1.3
+SPHINXRTDVER=3.0.2
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
+test_relver '>=' 151053 && set_clangver
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
@@ -77,7 +78,7 @@ CONFIGURE_OPTS="
 "
 LDFLAGS+=" -lumem"
 
-fixup() {
+post_install() {
     # Meson strips runpaths when it installs objects, something which a lot
     # of different projects have had to patch around, see:
     #   https://github.com/mesonbuild/meson/issues/2567
@@ -103,9 +104,7 @@ fixup() {
         fi
     done
     popd >/dev/null
-}
 
-post_install() {
     manifest_start $TMPDIR/manifest.img
     manifest_add $PREFIX/bin qemu-img
     manifest_add $PREFIX/share/man/man1 'qemu-img\.1'
@@ -118,7 +117,6 @@ post_install() {
 download_source $PROG $PROG $VER
 patch_source
 build
-fixup
 PKG="ooce/util/$PROG-img" DESC="$PROG-img" SUMMARY="$PROG-img utility" \
     XFORM_ARGS+=" -DSHIPETC=#" make_package -seed $TMPDIR/manifest.img
 install_execattr
