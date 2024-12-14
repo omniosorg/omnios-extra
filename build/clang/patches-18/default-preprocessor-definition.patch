@@ -20,7 +20,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/lib/Basic/Targets/OSTargets.h
 +    // Compatibility with GCC to satisfy <sys/feature_tests.h> requirements.
      if (Opts.CPlusPlus) {
 -      Builder.defineMacro("__C99FEATURES__");
-+      Builder.defineMacro("__STDC_VERSION__", "199901L");
++      Builder.defineMacro("__STDC_VERSION__", "201112L");
 +      Builder.defineMacro("_XOPEN_SOURCE", "600");
        Builder.defineMacro("_FILE_OFFSET_BITS", "64");
 -    }

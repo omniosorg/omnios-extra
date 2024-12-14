@@ -3,3 +3,4 @@ default-preprocessor-definition.patch
 add-rpath-for-libstdcxx.patch
 no-sanitizer-runtime-lib-linking.patch
 add-__illumos__-preprocessor-definition.patch
+aarch64-target-support.patch
