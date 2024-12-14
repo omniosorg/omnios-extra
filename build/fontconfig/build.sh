@@ -22,15 +22,14 @@ PKG=ooce/library/fontconfig
 SUMMARY="$PROG"
 DESC="A library for configuring and customizing font access"
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 SKIP_LICENCES=MIT
 SKIP_RTIME_CHECK=1
 SKIP_SSP_CHECK=1
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
+forgo_isaexec
 
 BUILD_DEPENDS_IPS="
     library/expat
@@ -44,6 +43,7 @@ XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
 CONFIGURE_OPTS="
@@ -53,41 +53,30 @@ CONFIGURE_OPTS="
     --with-default-fonts=$OPREFIX/share/fonts
     --with-cache-dir=/var/$PREFIX/cache
 "
-CONFIGURE_OPTS[i386]="
-    --bindir=$PREFIX/bin/i386
-    --sbindir=$PREFIX/sbin/i386
-    --libdir=$OPREFIX/lib
-"
-CONFIGURE_OPTS[amd64]="
-    --bindir=$PREFIX/bin
-    --sbindir=$PREFIX/sbin
-    --libdir=$OPREFIX/lib/amd64
-"
-CONFIGURE_OPTS[aarch64]+="
-    --bindir=$PREFIX/bin
-    --sbindir=$PREFIX/sbin
-    --libdir=$OPREFIX/lib
-"
 
 pre_configure() {
+    typeset arch=$1
+
     # The build framework expects GNU tools
     export PATH="$GNUBIN:$PATH"
+
+    CONFIGURE_OPTS[$arch]+="
+        --libdir=$OPREFIX/${LIBDIRS[$arch]}
+    "
+
+    LDFLAGS[$arch]+=" -L$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
 }
 
 post_install() {
     logmsg "--- removing absolute symlinks"
-    logcmd rm -f $DESTDIR/etc$PREFIX/fonts/conf.d/*.conf
+    logcmd $RM -f $DESTDIR/etc$PREFIX/fonts/conf.d/*.conf
 }
-
-LDFLAGS[i386]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
-LDFLAGS[aarch64]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
 
 init
 download_source $PROG $PROG $VER
-prep_build
 patch_source
-run_autoreconf -fi
+prep_build autoconf -autoreconf
 build
 make_package
 clean_up
