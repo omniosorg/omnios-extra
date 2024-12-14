@@ -1,4 +1,4 @@
-config.h.in.patch
+utils.h.patch
 minidlna.conf.patch
 minissdp.c.patch
 monitor.c.patch
