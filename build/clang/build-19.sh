@@ -74,9 +74,6 @@ post_install() {
             $CAT << EOF >| $cfgfile
 --gcc-install-dir=$CROSSTOOLS/$a/lib/gcc/${TRIPLETS[$a]}/$crossgccver
 -fuse-ld=$CROSSTOOLS/$a/bin/ld
--stdlib++-isystem$cxxinc
--stdlib++-isystem$cxxinc/${TRIPLETS[$a]}
--stdlib++-isystem$cxxinc/backward
 EOF
         else
             $CAT << EOF >| $cfgfile
