@@ -84,6 +84,7 @@ ooce/developer/cunit
 ooce/library/libtasn1
 ooce/library/unistring
 ooce/library/libtpms
+ooce/developer/autoconf-archive
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
