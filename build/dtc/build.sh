@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=dtc
-VER=1.7.1
+VER=1.7.2
 PKG=ooce/util/dtc
 SUMMARY="Device Tree Compiler"
 DESC="$PROG - $SUMMARY"
