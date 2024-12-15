@@ -18,7 +18,7 @@
 
 PROG=listmonk
 PKG=ooce/application/listmonk
-VER=4.0.1
+VER=4.1.0
 SUMMARY="$PROG"
 DESC="Self-hosted newsletter & mailing list manager"
 
