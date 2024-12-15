@@ -30,3 +30,4 @@ file files/vmagent-profile.xml \
     set restart_fmri svc:/application/$(PROG):victoria-metrics>
 <transform file path=$(PREFIX)/bin/vmagent -> \
     set restart_fmri svc:/application/$(PROG):vmagent>
+
