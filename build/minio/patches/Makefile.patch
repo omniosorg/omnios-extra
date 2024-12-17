@@ -9,7 +9,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/Makefile a/Makefile
  
  GOARCH := $(shell go env GOARCH)
  GOOS := $(shell go env GOOS)
-@@ -172,7 +172,7 @@ build-debugging:
+@@ -180,7 +180,7 @@ build-debugging:
  
  build: checks build-debugging ## builds minio to $(PWD)
  	@echo "Building minio binary to './minio'"

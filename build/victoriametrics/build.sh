@@ -13,11 +13,12 @@
 # }}}
 
 # Copyright 2024 Guo-Rong Koh
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=victoriametrics
-VER=1.102.8
+VER=1.107.0
 PKG=ooce/database/victoriametrics
 SUMMARY="VictoriaMetrics"
 DESC="Fast, cost-effective monitoring solution and time series database."
