@@ -66,22 +66,15 @@ post_configure() {
     done
 }
 
-# we'd have to check whether the gcc version is lower or equal to 11
-# however `set_crossgcc` does not set GCCVER so we cannot check
-post_build() {
-    [ "$1" = aarch64 ] && EXPECTED_BUILD_ERRS=0 || EXPECTED_BUILD_ERRS=2
-}
-
 init
 prep_build
 
 ######################################################################
 
 # false positive due to the BUFFER_VERIFY_ERROR macro showing up in the build log
-# since there will be one error in the log after the 32-bit build but two
-# after the 64-bit build we disable error checking for harfbuzz but enable
-# it afterwards and set the expected error count to 2
-SKIP_BUILD_ERRCHK=1
+post_make() {
+    (( EXPECTED_BUILD_ERRS++ ))
+}
 
 EXPECTED_OPTIONS="CAIRO CAIRO_FT FREETYPE GLIB"
 build_dependency -merge -noctf harfbuzz harfbuzz-$HARFBUZZVER \
@@ -89,7 +82,7 @@ build_dependency -merge -noctf harfbuzz harfbuzz-$HARFBUZZVER \
 
 export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/harfbuzz"
 
-SKIP_BUILD_ERRCHK=
+unset -f post_make
 
 ######################################################################
 

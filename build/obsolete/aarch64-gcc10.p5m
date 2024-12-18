@@ -1,0 +1,4 @@
+set name=pkg.fmri value=pkg://$(PKGPUBLISHER)/ooce/developer/aarch64-gcc10@10.4.0,$(SUNOSVER)-$(PVER)
+set name=publisher value=$(PKGPUBEMAIL)
+set name=pkg.obsolete value=true
+

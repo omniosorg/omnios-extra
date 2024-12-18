@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/minicom.c a/src/minicom.c
+--- a~/src/minicom.c	1970-01-01 00:00:00
++++ a/src/minicom.c	1970-01-01 00:00:00
+@@ -995,7 +995,7 @@ void do_iconv(char **inbuf, size_t *inby
+ {
+   if (!iconv_enabled
+       || iconv(iconv_rem2local,
+-               inbuf, inbytesleft,
++               (const char **)inbuf, inbytesleft,
+                outbuf, outbytesleft) == (size_t)-1)
+     {
+       do_iconv_just_copy(inbuf, inbytesleft, outbuf, outbytesleft);

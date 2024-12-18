@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/poptint.c a/src/poptint.c
+--- a~/src/poptint.c	1970-01-01 00:00:00
++++ a/src/poptint.c	1970-01-01 00:00:00
+@@ -99,7 +99,7 @@ strdup_locale_from_utf8 (char * istr)
+ 	err = iconv(cd, NULL, NULL, NULL, NULL);
+ 	while (1) {
+ 	    *pout = '\0';
+-	    err = iconv(cd, &pin, &ib, &pout, &ob);
++	    err = iconv(cd, (const char **)&pin, &ib, &pout, &ob);
+ 	    if (err != (size_t)-1) {
+ 		if (shift_pin == NULL) {
+ 		    shift_pin = pin;
