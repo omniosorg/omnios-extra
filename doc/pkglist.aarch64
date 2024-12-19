@@ -9,6 +9,7 @@
 # 	.SYSROOT	Wait, rebuild the repo, `pkg install *` to the
 #		 	arch-specific sysroot.
 
+ooce/developer/rust
 ooce/system/htop
 ooce/library/libogg
 ooce/library/nettle
