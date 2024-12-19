@@ -14,7 +14,6 @@
 
 # Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
-. ../../lib/arch.sh
 . ../../lib/build.sh
 
 PROG=rust
@@ -30,14 +29,16 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 BUILD_DEPENDS_IPS="developer/gnu-binutils"
+# TODO: globbing only works reliably as long as we just have
+# one cross compiler version per arch.
+crossgccver=`pkg_ver aarch64/gcc*`
+crossgccver=${crossgccver%%.*}
 # `rustc` uses `gcc` as its linker. Other dependencies such as the C runtime
 # and linker are themselves pulled in as dependencies of the gcc package.
-RUN_DEPENDS_IPS="developer/gcc$GCCVER"
+RUN_DEPENDS_IPS="developer/gcc$crossgccver"
 
 # rust build requires the final install directory to be present
 [ -d "$PREFIX" ] || logcmd $PFEXEC mkdir -p $PREFIX
-
-set_arch 64
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -49,10 +50,14 @@ SKIP_RTIME_CHECK=1
 SKIP_SSP_CHECK=1
 NO_SONAME_EXPECTED=1
 
-CONFIGURE_OPTS[$BUILD_ARCH]="
+aarch64prefix=$CROSSTOOLS/aarch64/bin/${TRIPLETS[aarch64]}
+CONFIGURE_OPTS[aarch64]="
     --prefix=$PREFIX
     --sysconfdir=/etc$PREFIX
     --localstatedir=/var$PREFIX
+    --set target.${RUSTTRIPLETS[aarch64]}.cc=$aarch64prefix-gcc
+    --set target.${RUSTTRIPLETS[aarch64]}.cxx=$aarch64prefix-g++
+    --set target.${RUSTTRIPLETS[aarch64]}.ar=$aarch64prefix-ar
 "
 CONFIGURE_OPTS+="
     --release-description=OmniOS/$RELVER
@@ -60,9 +65,8 @@ CONFIGURE_OPTS+="
     --enable-local-rust
     --enable-extended
     --build=${RUSTTRIPLETS[$BUILD_ARCH]}
-    --set target.${RUSTTRIPLETS[$BUILD_ARCH]}.cc=$CC
-    --set target.${RUSTTRIPLETS[$BUILD_ARCH]}.cxx=$CXX
-    --set target.${RUSTTRIPLETS[$BUILD_ARCH]}.ar=$USRBIN/ar
+    --host=${RUSTTRIPLETS[aarch64]}
+    --target=${RUSTTRIPLETS[aarch64]}
     --enable-rpath
     --enable-ninja
     --disable-codegen-tests
@@ -73,54 +77,20 @@ CONFIGURE_OPTS+="
     --python=$PYTHON
 "
 
-TESTSUITE_SED="
-    /^$/ {
-        N
-        /failures:/b op
-    }
-    d
-    :op
-    /^gmake:/d
-    /^Build completed/d
-    n
-    b op
-"
+pre_configure() { :;
+    # rust needs to find the native gcc for bootstrapping
+    set_gccver $DEFAULT_GCC_VER
 
-pre_configure() {
-    target="${RUSTTRIPLETS[$BUILD_ARCH]}"
-
-    for a in $CROSS_ARCH; do
-        # we need the sysroot to build target support
-        init_sysroot $a ${PKGSRVR%%/}.$a
-
-        target+=",${RUSTTRIPLETS[$a]}"
-
-        archprefix=$CROSSTOOLS/$a/bin/${TRIPLETS[$a]}
-        CONFIGURE_OPTS[$BUILD_ARCH]+="
-            --set target.${RUSTTRIPLETS[$a]}.cc=$archprefix-gcc
-            --set target.${RUSTTRIPLETS[$a]}.cxx=$archprefix-g++
-            --set target.${RUSTTRIPLETS[$a]}.ar=$archprefix-ar
-        "
-        tripus=${RUSTTRIPLETS[aarch64]//-/_}
-        tripuc=${tripus^^}
-        export CARGO_TARGET_${tripuc}_RUSTFLAGS="
-            -C link-arg=--sysroot=${SYSROOT[$a]}
-        "
-    done
-
-    CONFIGURE_OPTS+=" --target=$target"
+    tripus=${RUSTTRIPLETS[aarch64]//-/_}
+    tripuc=${tripus^^}
+    export CARGO_TARGET_${tripuc}_RUSTFLAGS="
+        -C link-arg=--sysroot=${SYSROOT[aarch64]}
+    "
+    export CXXFLAGS_${tripus}="-mno-outline-atomics -mtls-dialect=trad"
 }
 
 pre_install() {
     logcmd $MKDIR -p $DESTDIR/$PREFIX || logerr "failed to create directory"
-}
-
-pre_test() {
-    # https://github.com/rust-lang/rust/commit/13588cc681c9cc451ddf6286424b1a61
-    # ^ has broken running the tests from a release tarball. Fix it by
-    # re-creating the pre-requisites.
-    logcmd $MKDIR -p .github/workflows
-    logcmd $PYTHON x.py run src/tools/expand-yaml-anchors
 }
 
 init
@@ -128,7 +98,6 @@ download_source $PROG ${PROG}c $VER-src
 patch_source
 prep_build autoconf-like
 build -noctf
-run_testsuite check
 make_package
 clean_up
 
