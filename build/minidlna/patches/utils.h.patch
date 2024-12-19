@@ -1,0 +1,18 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/utils.h a/utils.h
+--- a~/utils.h	1970-01-01 00:00:00
++++ a/utils.h	1970-01-01 00:00:00
+@@ -30,6 +30,14 @@
+ 
+ #include "minidlnatypes.h"
+ 
++#ifndef MIN
++#define MIN(a, b) ((a) < (b) ? (a) : (b))
++#endif
++
++#ifndef MAX
++#define MAX(a, b) ((a) > (b) ? (a) : (b))
++#endif
++
+ /* String functions */
+ /* We really want this one inlined, since it has a major performance impact */
+ static inline int

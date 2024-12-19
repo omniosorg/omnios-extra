@@ -70,7 +70,8 @@ extra.omnios ooce/database/postgresql-17/pg_repack
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/database/rrdtool
 extra.omnios ooce/database/victoriametrics
-extra.omnios ooce/developer/aarch64-gcc10
+extra.omnios ooce/developer/aarch64-gcc10 o
+extra.omnios ooce/developer/aarch64-gcc14
 extra.omnios ooce/developer/aarch64-gnu-binutils
 extra.omnios ooce/developer/aarch64-linker
 extra.omnios ooce/developer/aarch64-perl
