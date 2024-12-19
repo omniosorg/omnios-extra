@@ -3,7 +3,7 @@
 # Changes were developed in-house, are Solaris specific,
 # and are not suitable for upstream.
 
-diff -wpruN '--exclude=*.orig' a~/tool/config.guess a/tool/config.guess
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tool/config.guess a/tool/config.guess
 --- a~/tool/config.guess	1970-01-01 00:00:00
 +++ a/tool/config.guess	1970-01-01 00:00:00
 @@ -409,19 +409,9 @@ case "$UNAME_MACHINE:$UNAME_SYSTEM:$UNAM
@@ -29,7 +29,7 @@ diff -wpruN '--exclude=*.orig' a~/tool/config.guess a/tool/config.guess
  	echo "$SUN_ARCH"-pc-solaris2"$(echo "$UNAME_RELEASE"|sed -e 's/[^.]*//')"
  	exit ;;
      sun4*:SunOS:6*:*)
-diff -wpruN '--exclude=*.orig' a~/tool/config.sub a/tool/config.sub
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tool/config.sub a/tool/config.sub
 --- a~/tool/config.sub	1970-01-01 00:00:00
 +++ a/tool/config.sub	1970-01-01 00:00:00
 @@ -1028,7 +1028,7 @@ case $cpu-$vendor in

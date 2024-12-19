@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure.ac a/configure.ac
+--- a~/configure.ac	1970-01-01 00:00:00
++++ a/configure.ac	1970-01-01 00:00:00
+@@ -1144,8 +1144,6 @@ main()
+ 		  AC_MSG_RESULT($define_xopen_source)
+ 		  AS_IF([test x"$define_xopen_source" != xno], [
+ 		    RUBY_APPEND_OPTIONS(CPPFLAGS, -D_XOPEN_SOURCE=$define_xopen_source)
+-		    # _XOPEN_SOURCE should not be defined for C++ on Solaris.
+-		    RUBY_APPEND_OPTIONS(CXXFLAGS, -U_XOPEN_SOURCE)
+ 		  ])
+ 		])
+ 		AC_CHECK_TYPES([caddr_t],[],[],[@%:@include <sys/types.h>])

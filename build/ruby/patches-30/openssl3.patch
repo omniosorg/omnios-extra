@@ -1,4 +1,4 @@
-diff -wpruN '--exclude=*.orig' a~/ext/openssl/extconf.rb a/ext/openssl/extconf.rb
+diff -wpruN --no-dereference '--exclude=*.orig' a~/ext/openssl/extconf.rb a/ext/openssl/extconf.rb
 --- a~/ext/openssl/extconf.rb	1970-01-01 00:00:00
 +++ a/ext/openssl/extconf.rb	1970-01-01 00:00:00
 @@ -105,12 +105,11 @@ version_ok = if have_macro("LIBRESSL_VER
@@ -17,7 +17,7 @@ diff -wpruN '--exclude=*.orig' a~/ext/openssl/extconf.rb a/ext/openssl/extconf.r
  end
  
  # Prevent wincrypt.h from being included, which defines conflicting macro with openssl/x509.h
-diff -wpruN '--exclude=*.orig' a~/ext/openssl/ossl_pkey_rsa.c a/ext/openssl/ossl_pkey_rsa.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/ext/openssl/ossl_pkey_rsa.c a/ext/openssl/ossl_pkey_rsa.c
 --- a~/ext/openssl/ossl_pkey_rsa.c	1970-01-01 00:00:00
 +++ a/ext/openssl/ossl_pkey_rsa.c	1970-01-01 00:00:00
 @@ -947,7 +947,9 @@ Init_ossl_rsa(void)
