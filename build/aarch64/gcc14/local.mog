@@ -27,5 +27,9 @@ license COPYING3.LIB license=LGPLv3
     set pkg.depend.bypass-generate .*libm\.so\.0$>
 
 link path=$(PREFIX)/lib/gcc/$(TRIPLET64)/$(MAJOR) target=$(GCCVER)
-link path=$(PREFIX)/$(TRIPLET64)/include/c++/$(MAJOR) target=$(GCCVER)
+link path=$(PREFIX)/include/c++/$(MAJOR) target=$(GCCVER)
+
+# links for gcc as it looks under <TRIPLET> when cross-compiling
+link path=$(PREFIX)/$(TRIPLET64)/lib target=../lib
+link path=$(PREFIX)/$(TRIPLET64)/include target=../include
 
