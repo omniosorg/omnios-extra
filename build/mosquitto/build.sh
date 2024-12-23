@@ -17,17 +17,15 @@
 . ../../lib/build.sh
 
 PROG=mosquitto
-VER=2.0.18
+VER=2.0.20
 PKG=ooce/network/mosquitto
 SUMMARY="$PROG - an open source message broker"
 DESC="$PROG is an open source (EPL/EDL licensed) message broker that "
 DESC+="implements the MQTT protocol versions 5.0, 3.1.1 and 3.1."
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 forgo_isaexec
-set_standard XPG6
+test_relver '>=' 151053 && set_clangver
+set_standard XPG7 CFLAGS
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
@@ -53,15 +51,16 @@ CONFIGURE_OPTS="
     -DCMAKE_INSTALL_LOCALSTATEDIR=/var$PREFIX
     -DWITH_PLUGINS=NO
 "
-CONFIGURE_OPTS[i386]="
-    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib
-"
-CONFIGURE_OPTS[amd64]="
-    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/amd64
-"
-LDFLAGS+=" -lsocket -lnsl"
-LDFLAGS[i386]+=" -R$OPREFIX/lib"
-LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
+
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]="
+        -DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[$arch]}
+    "
+
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]} -lsocket"
+}
 
 init
 download_source $PROG $PROG $VER
