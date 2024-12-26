@@ -114,7 +114,7 @@
 | ooce/library/libde265		| 1.0.15	| https://github.com/strukturag/libde265/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libdwarf		| 20210528	| https://www.prevanders.net/dwarf.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libgd		| 2.3.3		| https://github.com/libgd/libgd/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libical		| 3.0.18	| https://github.com/libical/libical/releases | Currently used solely by cyrus-imapd
+| ooce/library/libical		| 3.0.19	| https://github.com/libical/libical/releases | Currently used solely by cyrus-imapd
 | ooce/library/libev		| 4.33		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libexif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/libexif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libgif		| 5.2.2		| https://sourceforge.net/projects/giflib/files/ | [omniosorg](https://github.com/omniosorg)
@@ -159,7 +159,7 @@
 | ooce/network/bind-918		| 9.18.32	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/bind-920		| 9.20.4	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/bwm-ng		| 0.6.3		| https://github.com/vgropp/bwm-ng/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/network/cyrus-imapd	| 3.8.2		| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/network/cyrus-imapd	| 3.10.0	| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/dnscrypt-proxy	| 2.1.5		| https://github.com/DNSCrypt/dnscrypt-proxy/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/dnsmasq		| 2.90		| https://thekelleys.org.uk/dnsmasq/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/fping		| 5.3		| https://github.com/schweikert/fping/releases | [omniosorg](https://github.com/omniosorg)
