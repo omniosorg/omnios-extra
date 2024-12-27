@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=icu4c
-VER=75.1
+VER=76.1
 PKG=ooce/library/icu4c
 SUMMARY="ICU - International Components for Unicode"
 DESC="A mature, widely used set of C/C++ libraries providing "
@@ -34,12 +34,11 @@ CONFIGURE_OPTS[amd64]+="
 "
 
 CXXFLAGS[aarch64]+=" -mtls-dialect=trad"
-LDFLAGS[i386]+=" -R$PREFIX/${LIBDIRS[i386]}"
-LDFLAGS[amd64]+=" -R$PREFIX/${LIBDIRS[amd64]}"
-LDFLAGS[aarch64]+=" -R$PREFIX/${LIBDIRS[aarch64]}"
 
 pre_configure() {
     typeset arch=$1
+
+    LDFLAGS[$arch]+=" -R$PREFIX/${LIBDIRS[$arch]}"
 
     ! cross_arch $arch && return
 

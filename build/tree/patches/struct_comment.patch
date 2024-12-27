@@ -1,11 +1,11 @@
 struct comment is defined in /usr/include/pwd.h under an __EXTENSIONS__ guard
 however the source requires other definitions under __EXTENSIONS__
 
-diff -wpruN '--exclude=*.orig' a~/file.c a/file.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/file.c a/file.c
 --- a~/file.c	1970-01-01 00:00:00
 +++ a/file.c	1970-01-01 00:00:00
-@@ -113,7 +113,7 @@ void freefiletree(struct _info *ent)
- struct _info **fprune(struct _info *head, char *path, bool matched, bool root)
+@@ -107,7 +107,7 @@ void freefiletree(struct _info *ent)
+ struct _info **fprune(struct _info *head, const char *path, bool matched, bool root)
  {
    struct _info **dir, *new = NULL, *end = NULL, *ent, *t;
 -  struct comment *com;
@@ -13,10 +13,10 @@ diff -wpruN '--exclude=*.orig' a~/file.c a/file.c
    struct ignorefile *ig = NULL;
    struct infofile *inf = NULL;
    char *cur, *fpath = xmalloc(sizeof(char) * MAXPATH);
-diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/info.c a/info.c
 --- a~/info.c	1970-01-01 00:00:00
 +++ a/info.c	1970-01-01 00:00:00
-@@ -31,11 +31,11 @@ extern const struct linedraw *linedraw;
+@@ -32,11 +32,11 @@ extern char xpattern[PATH_MAX];
  
  struct infofile *infostack = NULL;
  
@@ -28,18 +28,18 @@ diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
 -  struct comment *com = xmalloc(sizeof(struct comment));
 +  struct comment_ *com = xmalloc(sizeof(struct comment_));
    com->pattern = phead;
-   com->desc = xmalloc(sizeof(char *) * (lines+1));
+   com->desc = xmalloc(sizeof(char *) * (size_t)(lines+1));
    for(i=0; i < lines; i++) com->desc[i] = line[i];
-@@ -49,7 +49,7 @@ struct infofile *new_infofile(char *path
+@@ -50,7 +50,7 @@ struct infofile *new_infofile(const char
    struct stat st;
-   char buf[PATH_MAX];
+   char buf[PATH_MAX], rpath[PATH_MAX];
    struct infofile *inf;
 -  struct comment *chead = NULL, *cend = NULL, *com;
 +  struct comment_ *chead = NULL, *cend = NULL, *com;
    struct pattern *phead = NULL, *pend = NULL, *p;
    char *line[PATH_MAX];
    FILE *fp;
-@@ -117,7 +117,7 @@ void push_infostack(struct infofile *inf
+@@ -128,7 +128,7 @@ void push_infostack(struct infofile *inf
  struct infofile *pop_infostack(void)
  {
    struct infofile *inf;
@@ -48,12 +48,12 @@ diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
    struct pattern *p, *c;
    int i;
  
-@@ -145,10 +145,10 @@ struct infofile *pop_infostack(void)
+@@ -156,10 +156,10 @@ struct infofile *pop_infostack(void)
   * Returns an info pointer if a path matches a pattern.
   * top == 1 if called in a directory with a .info file.
   */
--struct comment *infocheck(char *path, char *name, int top, int isdir)
-+struct comment_ *infocheck(char *path, char *name, int top, int isdir)
+-struct comment *infocheck(const char *path, const char *name, int top, bool isdir)
++struct comment_ *infocheck(const char *path, const char *name, int top, bool isdir)
  {
    struct infofile *inf = infostack;
 -  struct comment *com;
@@ -61,22 +61,22 @@ diff -wpruN '--exclude=*.orig' a~/info.c a/info.c
    struct pattern *p;
  
    if (inf == NULL) return NULL;
-diff -wpruN '--exclude=*.orig' a~/tree.c a/tree.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tree.c a/tree.c
 --- a~/tree.c	1970-01-01 00:00:00
 +++ a/tree.c	1970-01-01 00:00:00
-@@ -805,7 +805,7 @@ struct _info *getinfo(char *name, char *
+@@ -875,7 +875,7 @@ struct _info *getinfo(const char *name,
  
- struct _info **read_dir(char *dir, int *n, int infotop)
+ struct _info **read_dir(char *dir, ssize_t *n, int infotop)
  {
 -  struct comment *com;
 +  struct comment_ *com;
    static char *path = NULL;
-   static long pathsize;
+   static size_t pathsize;
    struct _info **dl, *info;
-diff -wpruN '--exclude=*.orig' a~/tree.h a/tree.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tree.h a/tree.h
 --- a~/tree.h	1970-01-01 00:00:00
 +++ a/tree.h	1970-01-01 00:00:00
-@@ -173,15 +173,15 @@ struct ignorefile {
+@@ -168,15 +168,15 @@ struct ignorefile {
  };
  
  /* info.c */
@@ -95,12 +95,12 @@ diff -wpruN '--exclude=*.orig' a~/tree.h a/tree.h
    struct infofile *next;
  };
  
-@@ -299,7 +299,7 @@ struct ignorefile *pop_filterstack(void)
- struct infofile *new_infofile(char *path);
+@@ -297,7 +297,7 @@ struct ignorefile *pop_filterstack(void)
+ struct infofile *new_infofile(const char *path, bool checkparents);
  void push_infostack(struct infofile *inf);
  struct infofile *pop_infostack(void);
--struct comment *infocheck(char *path, char *name, int top, int isdir);
-+struct comment_ *infocheck(char *path, char *name, int top, int isdir);
- void printcomment(int line, int lines, char *s);
+-struct comment *infocheck(const char *path, const char *name, int top, bool isdir);
++struct comment_ *infocheck(const char *path, const char *name, int top, bool isdir);
+ void printcomment(size_t line, size_t lines, char *s);
  
  /* list.c */
