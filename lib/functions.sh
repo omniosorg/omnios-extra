@@ -2947,7 +2947,7 @@ build_dependency() {
             -ctf)       buildargs+=" -ctf" ;;
             -noctf)     buildargs+=" -noctf" ;;
             -oot)       oot=1 ;;
-            -meson)     meson=1 ; oot=1 ;;
+            -meson)     meson=1; oot=1 ;;
             -cmake)     cmake=1; oot=1 ;;
             -multi)     buildargs+=" -multi" ;;
         esac

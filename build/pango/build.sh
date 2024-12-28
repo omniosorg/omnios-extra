@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=pango
-VER=1.51.0
+VER=1.55.5
 PKG=ooce/library/pango
 SUMMARY="pango"
 DESC="Pango is a library for laying out and rendering of text"
@@ -25,8 +25,10 @@ DESC="Pango is a library for laying out and rendering of text"
 forgo_isaexec
 
 # Dependencies
-HARFBUZZVER=8.2.1
-FRIBIDIVER=1.0.13
+HARFBUZZVER=10.1.0
+FRIBIDIVER=1.0.16
+
+export CC_FOR_BUILD=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc
 
 # The icu4c ABI changes frequently. Lock the version
 # pulled into each build of harfbuzz.
@@ -50,12 +52,26 @@ XFORM_ARGS="
     -DFRIBIDI=$FRIBIDIVER
 "
 
+save_variable PKG_CONFIG_PATH
+
 pre_configure() {
     typeset arch=$1
 
+    _dd=$DESTDIR
+    cross_arch $arch && _dd+=.$arch
+    CPPFLAGS+=" -I$_dd$PREFIX/include/fribidi -I$_dd$PREFIX/include/harfbuzz"
+    LDFLAGS[$arch]+=" -L$_dd$PREFIX/${LIBDIRS[$arch]}"
     LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$PREFIX/${LIBDIRS[$arch]}"
     LDFLAGS[$arch]+=" -R$PREFIX/${LIBDIRS[$arch]}"
     [ $arch = i386 ] && LDFLAGS[$arch]+=" -lssp_ns"
+
+    restore_variable PKG_CONFIG_PATH
+
+    _pkgconfpath=${PKG_CONFIG_PATH[$arch]}
+    PKG_CONFIG_PATH[$arch]="$_dd$PREFIX/${LIBDIRS[$arch]}/pkgconfig"
+    PKG_CONFIG_PATH[$arch]+=":$_pkgconfpath"
+    subsume_arch $arch PKG_CONFIG_PATH
+    export PKG_CONFIG_PATH
 
     export MAKE
 }
@@ -66,50 +82,36 @@ post_configure() {
     done
 }
 
-# we'd have to check whether the gcc version is lower or equal to 11
-# however `set_crossgcc` does not set GCCVER so we cannot check
-post_build() {
-    [ "$1" = aarch64 ] && EXPECTED_BUILD_ERRS=0 || EXPECTED_BUILD_ERRS=2
-}
-
 init
-prep_build
+prep_build meson
 
 ######################################################################
 
-# false positive due to the BUFFER_VERIFY_ERROR macro showing up in the build log
-# since there will be one error in the log after the 32-bit build but two
-# after the 64-bit build we disable error checking for harfbuzz but enable
-# it afterwards and set the expected error count to 2
-SKIP_BUILD_ERRCHK=1
+save_buildenv
 
-EXPECTED_OPTIONS="CAIRO CAIRO_FT FREETYPE GLIB"
-build_dependency -merge -noctf harfbuzz harfbuzz-$HARFBUZZVER \
+CONFIGURE_OPTS="--prefix=$PREFIX"
+CONFIGURE_OPTS[aarch64]="
+    --cross-file $SRCDIR/files/aarch64-gcc.txt
+"
+
+build_dependency -meson -multi -merge -noctf fribidi fribidi-$FRIBIDIVER \
+    fribidi fribidi $FRIBIDIVER
+
+######################################################################
+
+CXXFLAGS[aarch64]+=" -mno-outline-atomics"
+
+build_dependency -meson -multi -merge -noctf harfbuzz harfbuzz-$HARFBUZZVER \
     harfbuzz harfbuzz $HARFBUZZVER
 
-export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/harfbuzz"
-
-SKIP_BUILD_ERRCHK=
+restore_buildenv
 
 ######################################################################
-
-EXPECTED_OPTIONS=""
-build_dependency -merge -noctf fribidi fribidi-$FRIBIDIVER \
-    fribidi fribidi $FRIBIDIVER
-export CPPFLAGS+=" -I$DEPROOT/$PREFIX/include/fribidi"
-
-######################################################################
-
-for arch in $ARCH_LIST; do
-    LDFLAGS[$arch]+=" -L$DEPROOT/$PREFIX/${LIBDIRS[$arch]}"
-    addpath PKG_CONFIG_PATH[$arch] $DEPROOT/$PREFIX/${LIBDIRS[$arch]}/pkgconfig
-done
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     -Db_asneeded=false
-    -Dgtk_doc=false
-    -Dinstall-tests=false
+    -Ddocumentation=false
     -Dintrospection=disabled
 "
 CONFIGURE_OPTS[i386]=" --libdir=$PREFIX/${LIBDIRS[i386]} "
@@ -155,9 +157,9 @@ fixup() {
 
 note -n "-- Building $PROG"
 
+set_builddir $PROG-$VER
 download_source $PROG $PROG $VER
 patch_source
-prep_build meson -keep
 build
 fixup
 make_package

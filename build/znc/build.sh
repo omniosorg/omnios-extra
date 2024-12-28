@@ -72,6 +72,10 @@ pre_configure() {
     typeset arch=$1
 
     LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+
+    ! cross_arch $arch && return
+
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
 }
 
 post_install() {
