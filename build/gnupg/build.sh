@@ -136,6 +136,7 @@ PATH+=":$DEPROOT$PREFIX/bin"
 
 download_source $PROG $PROG $VER
 patch_source
+run_autoreconf -fi
 build
 install_execattr
 run_testsuite check
