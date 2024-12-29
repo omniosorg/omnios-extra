@@ -33,7 +33,7 @@ CONFIGURE_OPTS[amd64]+="
     --sbindir=$PREFIX/sbin
 "
 
-CXXFLAGS[aarch64]+=" -mtls-dialect=trad"
+CXXFLAGS[aarch64]+=" -mno-outline-atomics -mtls-dialect=trad"
 
 pre_configure() {
     typeset arch=$1
