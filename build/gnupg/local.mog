@@ -22,6 +22,7 @@ license ../pinentry-$(PINENTRY)/COPYING license=GPLv2
 dir group=bin mode=0755 owner=root path=etc/$(PREFIX)
 
 <transform path=$(PREFIX)/share/(?:doc|info) -> drop>
+<transform path=$(PREFIX)/share/man/manh -> drop>
 
 # gpg needs the proc_lock_memory privilege in order to be able to lock a
 # memory segment. If it can't do that, it utters
