@@ -68,6 +68,9 @@ pre_build() {
     done
 }
 
+# TODO: if we are going to use clang as a cross-compiler we should
+# add support to the framework; this is just a hacky workaround
+# to have at least one consumer of clang++ for cross-compiling
 pre_configure() {
     typeset arch=$1
 
@@ -75,6 +78,10 @@ pre_configure() {
 
     ! cross_arch $arch && return
 
+    set_clangver
+
+    PATH=$CROSSTOOLS/$arch/bin:$PATH
+    CXX+=" --target=${TRIPLETS[$arch]}"
     LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
 }
 

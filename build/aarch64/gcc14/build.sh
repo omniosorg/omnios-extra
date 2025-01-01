@@ -13,13 +13,13 @@
 # }}}
 #
 # Copyright 2014 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 . ../common.sh
 
-PKG=ooce/developer/aarch64-gcc10
+PKG=ooce/developer/aarch64-gcc14
 PROG=gcc
-VER=10.4.0
+VER=14.2.0
 ILVER=il-1
 SUMMARY="gcc $VER-$ILVER ($ARCH)"
 DESC="The GNU Compiler Collection"
@@ -50,7 +50,7 @@ set_ssp none
 # building and putting the 32/64 objects in the right places. We also want
 # to unset all of the flags that we usually pass for a 64-bit object so that
 # gcc can properly create the multilib targets.
-CONFIGURE_OPTS[amd64]="$CONFIGURE_OPTS[i386]"
+CONFIGURE_OPTS[amd64]="${CONFIGURE_OPTS[i386]}"
 clear_archflags
 
 # Use bash for all shells - some corruption occurs in libstdc++-v3/config.status
@@ -74,7 +74,7 @@ export LD_FOR_TARGET=$PREFIX/bin/ld
 export AS_FOR_TARGET=$PREFIX/bin/$TRIPLET64-as
 export CFLAGS_FOR_TARGET="-mno-outline-atomics -mtls-dialect=trad"
 export CXXFLAGS_FOR_TARGET="-mno-outline-atomics -mtls-dialect=trad"
-export STRIP="/usr/bin/strip -x"
+export STRIP="$STRIP -x"
 export STRIP_FOR_TARGET="$STRIP"
 
 HARDLINK_TARGETS="
@@ -94,6 +94,8 @@ PKGDIFF_HELPER="
 CONFIGURE_OPTS=
 CONFIGURE_OPTS[amd64]+="
     --prefix=$PREFIX
+    --with-toolexeclibdir=$PREFIX/lib
+    --with-gxx-include-dir=$PREFIX/include/c++/$VER
     --host $NATIVE_TRIPLET64
     --build $NATIVE_TRIPLET64
     --target $TRIPLET64

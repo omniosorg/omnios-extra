@@ -23,6 +23,7 @@ SUMMARY="$PROG"
 DESC="$PROG - command line option parsing library"
 
 set_clangver
+set_standard XPG6
 
 TESTSUITE_FILTER='^[A-Z#][A-Z ]'
 

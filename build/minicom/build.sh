@@ -28,6 +28,7 @@ PREFIX+=/$PROG
 
 set_arch 64
 test_relver '>=' 151051 && set_clangver
+set_standard XPG6
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}

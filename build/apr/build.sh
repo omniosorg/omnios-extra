@@ -43,6 +43,7 @@ CONFIGURE_OPTS[amd64]+="
 CONFIGURE_OPTS[aarch64]+="
     --with-installbuilddir=$PREFIX/share/apr/aarch64/build-1
     ac_cv_file__dev_zero=yes
+    ac_cv_strerror_r_rc_int=yes
     apr_cv_process_shared_works=yes
     apr_cv_mutex_robust_shared=yes
     apr_cv_tcp_nodelay_with_cork=yes

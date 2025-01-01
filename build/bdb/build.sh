@@ -66,7 +66,7 @@ pre_configure() {
 
 init
 download_source $PROG db $VER
-patch_source
+EXTRACTED_SRC=db-$VER patch_source
 prep_build
 build
 make_package

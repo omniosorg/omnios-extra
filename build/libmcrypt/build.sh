@@ -23,9 +23,6 @@ SUMMARY="Multi-cipher cryptographic library"
 DESC="libmcrypt is a cryptographic library that conveniently brings together \
 a variety of ciphers for convenient use."
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
 "
@@ -51,6 +48,7 @@ init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
+run_autoconf -f
 build
 run_testsuite check
 strip_install

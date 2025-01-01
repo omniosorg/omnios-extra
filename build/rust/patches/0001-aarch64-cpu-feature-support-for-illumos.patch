@@ -1,0 +1,167 @@
+From 3e39942698fdc876135000d3fa12f5bad0eecfcc Mon Sep 17 00:00:00 2001
+From: Dominik Hassler <hadfl@omnios.org>
+Date: Fri, 20 Dec 2024 15:17:18 +0000
+Subject: [PATCH] aarch64 cpu feature support for illumos
+
+---
+ compiler-rt/lib/builtins/cpu_model/aarch64.c  |   7 ++
+ .../cpu_model/aarch64/fmv/illumos.inc         | 109 ++++++++++++++++++
+ .../cpu_model/aarch64/lse_atomics/illumos.inc |   5 +
+ 3 files changed, 121 insertions(+)
+ create mode 100644 compiler-rt/lib/builtins/cpu_model/aarch64/fmv/illumos.inc
+ create mode 100644 compiler-rt/lib/builtins/cpu_model/aarch64/lse_atomics/illumos.inc
+
+diff --git a/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64.c b/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64.c
+index b868caa991b2..a789a9c47745 100644
+--- a/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64.c
++++ b/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64.c
+@@ -45,6 +45,11 @@ _Bool __aarch64_have_lse_atomics
+ #elif defined(__ANDROID__)
+ #include "aarch64/hwcap.inc"
+ #include "aarch64/lse_atomics/android.inc"
++#elif defined(__illumos__)
++// clang-format off: should not reorder sys/auxv.h alphabetically
++#include <sys/auxv.h>
++// clang-format on
++#include "aarch64/lse_atomics/illumos.inc"
+ #elif __has_include(<sys/auxv.h>)
+ #include "aarch64/hwcap.inc"
+ #include "aarch64/lse_atomics/sysauxv.inc"
+@@ -73,6 +78,8 @@ struct {
+ #elif defined(__ANDROID__)
+ #include "aarch64/fmv/mrs.inc"
+ #include "aarch64/fmv/android.inc"
++#elif defined(__illumos__)
++#include "aarch64/fmv/illumos.inc"
+ #elif __has_include(<sys/auxv.h>)
+ #include "aarch64/fmv/mrs.inc"
+ #include "aarch64/fmv/sysauxv.inc"
+diff --git a/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64/fmv/illumos.inc b/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64/fmv/illumos.inc
+new file mode 100644
+index 000000000000..2a968e1a1d1f
+--- /dev/null
++++ b/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64/fmv/illumos.inc
+@@ -0,0 +1,109 @@
++#include <sys/auxv.h>
++#define HAVE_SYS_AUXV_H
++
++static void __init_cpu_features_constructor(unsigned long hwcap,
++                                            const __ifunc_arg_t *arg) {
++
++  uint64_t features = 0;
++  uint64_t hwcaps[] = { hwcap, arg->_hwcap2 };
++
++  static const struct hwcap_map_t {
++    uint32_t hw_cap;
++    uint32_t hw_index;
++    enum CPUFeatures hw_feature;
++  } hwcap_map[] = {
++    { AV_AARCH64_FP, 1, FEAT_FP },
++    { AV_AARCH64_ADVSIMD, 1, FEAT_SIMD },
++    { AV_AARCH64_SVE, 1, FEAT_SVE },
++    { AV_AARCH64_CRC32, 1, FEAT_CRC },
++    { AV_AARCH64_SB, 1, FEAT_SB },
++//    { AV_AARCH64_SSBS, 1, RESERVED_FEAT_SSBS},
++//    { AV_AARCH64_DGH, 1, RESERVED_FEAT_DGH},
++//    { AV_AARCH64_AES, 1, RESERVED_FEAT_AES},
++    { AV_AARCH64_PMULL, 1, FEAT_PMULL},
++//    { AV_AARCH64_SHA1, 1, RESERVED_FEAT_SHA1},
++    { AV_AARCH64_SHA256, 1, FEAT_SHA2},
++    { AV_AARCH64_SHA512, 1, FEAT_SHA2},
++    { AV_AARCH64_SHA3, 1, FEAT_SHA3},
++//    { AV_AARCH64_SM3, 1,
++//    { AV_AARCH64_SM4, 1,
++    { AV_AARCH64_LSE, 1, FEAT_LSE},
++    { AV_AARCH64_RDM, 1, FEAT_RDM},
++    { AV_AARCH64_FP16, 1, FEAT_FP16},
++    { AV_AARCH64_DOTPROD, 1, FEAT_DOTPROD},
++//    { AV_AARCH64_FHM, 1,
++//    { AV_AARCH64_DCPOP, 1,
++    { AV_AARCH64_F32MM, 1, FEAT_SVE_F32MM},
++    { AV_AARCH64_F64MM, 1, FEAT_SVE_F64MM},
++//    { AV_AARCH64_DCPODP, 1,
++    { AV_AARCH64_BF16, 1, FEAT_BF16},
++    { AV_AARCH64_I8MM, 1, FEAT_I8MM},
++    { AV_AARCH64_FCMA, 1, FEAT_FCMA},
++    { AV_AARCH64_JSCVT, 1, FEAT_JSCVT},
++    { AV_AARCH64_LRCPC, 1, FEAT_RCPC},
++//    { AV_AARCH64_PACA, 1,
++//    { AV_AARCH64_PACG, 1,
++    { AV_AARCH64_DIT, 1, FEAT_DIT},
++    { AV_AARCH64_2_FLAGM, 2, FEAT_FLAGM},
++    { AV_AARCH64_2_ILRCPC, 2, FEAT_RCPC},
++//    { AV_AARCH64_2_LSE2, 2,
++    { AV_AARCH64_2_FLAGM2, 2, FEAT_FLAGM2},
++    { AV_AARCH64_2_FRINTTS, 2, FEAT_FRINTTS},
++    { AV_AARCH64_2_BTI, 2, FEAT_BTI},
++    { AV_AARCH64_2_RNG, 2, FEAT_RNG},
++    { AV_AARCH64_2_MTE, 2, FEAT_MEMTAG2},
++//    { AV_AARCH64_2_MTE3, 2, RESERVED_FEAT_MEMTAG3},
++//    { AV_AARCH64_2_ECV, 2,
++//    { AV_AARCH64_2_AFP, 2,
++//    { AV_AARCH64_2_RPRES, 2, RESERVED_FEAT_RPRES},
++//    { AV_AARCH64_2_LD64B, 2,
++//    { AV_AARCH64_2_ST64BV, 2,
++//    { AV_AARCH64_2_ST64BV0, ,2
++    { AV_AARCH64_2_WFXT, 2, FEAT_WFXT},
++    { AV_AARCH64_2_MOPS, 2, FEAT_MOPS},
++//    { AV_AARCH64_2_HBC, 2,
++//    { AV_AARCH64_2_CMOW, 2,
++    { AV_AARCH64_2_SVE2, 2, FEAT_SVE2},
++//    { AV_AARCH64_2_SVE2_AES, 2, RESERVED_FEAT_SVE_AES},
++    { AV_AARCH64_2_SVE2_BITPERM, 2, FEAT_SVE_BITPERM},
++    { AV_AARCH64_2_SVE2_PMULL128, 2, FEAT_SVE_PMULL128},
++    { AV_AARCH64_2_SVE2_SHA3, 2, FEAT_SVE_SHA3},
++    { AV_AARCH64_2_SVE2_SM4, 2, FEAT_SVE_SM4},
++//    { AV_AARCH64_2_TME, 2,
++    { AV_AARCH64_2_SME, 2, FEAT_SME},
++//    { AV_AARCH64_2_SME_FA64, 2,
++//    { AV_AARCH64_2_EBF16, 2, RESERVED_FEAT_EBF16},
++    { AV_AARCH64_2_SME_F64F64, 2, FEAT_SME_F64},
++    { AV_AARCH64_2_SME_I16I64, 2, FEAT_SME_I64}
++  };
++
++  for (size_t i = 0; i < sizeof (hwcap_map) / sizeof (hwcap_map[0]); i++)
++    if (hwcaps[hwcap_map[i].hw_index - 1] & hwcap_map[i].hw_cap)
++      features |= (1ULL << hwcap_map[i].hw_feature);
++
++  __atomic_store_n(&__aarch64_cpu_features.features, features, __ATOMIC_RELAXED);
++}
++
++void __init_cpu_features_resolver(unsigned long hwcap,
++                                  const __ifunc_arg_t *arg) {
++  if (__atomic_load_n(&__aarch64_cpu_features.features, __ATOMIC_RELAXED))
++    return;
++  __init_cpu_features_constructor(hwcap, arg);
++}
++
++void CONSTRUCTOR_ATTRIBUTE __init_cpu_features(void) {
++  uint32_t hwcap[2] = {0};
++  // CPU features already initialized.
++  if (__atomic_load_n(&__aarch64_cpu_features.features, __ATOMIC_RELAXED))
++    return;
++
++  uint_t res = getisax(hwcap, 2);
++  if (res == 0)
++    return;
++
++  __ifunc_arg_t arg;
++  arg._size = sizeof(__ifunc_arg_t);
++  arg._hwcap = hwcap[0],
++  arg._hwcap2 = hwcap[1];
++  __init_cpu_features_constructor(hwcap[0], &arg);
++}
+diff --git a/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64/lse_atomics/illumos.inc b/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64/lse_atomics/illumos.inc
+new file mode 100644
+index 000000000000..78af1a19f48d
+--- /dev/null
++++ b/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64/lse_atomics/illumos.inc
+@@ -0,0 +1,5 @@
++static void CONSTRUCTOR_ATTRIBUTE init_have_lse_atomics(void) {
++  uint32_t hwcap = 0;
++  uint_t res = getisax(&hwcap, 1);
++  __aarch64_have_lse_atomics = res != 0 && (hwcap & AV_AARCH64_LSE) != 0;
++}
+-- 
+2.47.1
+

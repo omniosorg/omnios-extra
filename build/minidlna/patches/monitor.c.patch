@@ -1,32 +1,35 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/monitor.c a/monitor.c
 --- a~/monitor.c	1970-01-01 00:00:00
 +++ a/monitor.c	1970-01-01 00:00:00
-@@ -339,17 +339,21 @@ monitor_insert_directory(int fd, char *n
+@@ -298,6 +298,7 @@ monitor_insert_directory(int fd, char *n
+ 	char path_buf[PATH_MAX];
+ 	enum file_types type = TYPE_UNKNOWN;
+ 	media_types dir_types;
++	struct stat sbuf;
+ 
+ 	if( access(path, R_OK|X_OK) != 0 )
  	{
- 		if( e->d_name[0] == '.' )
+@@ -341,18 +342,11 @@ monitor_insert_directory(int fd, char *n
  			continue;
-+
-+		type = TYPE_UNKNOWN;
  		esc_name = escape_tag(e->d_name, 1);
  		snprintf(path_buf, sizeof(path_buf), "%s/%s", path, e->d_name);
 -		switch( e->d_type )
-+		if( is_dir(e->d_name) == 1 )
-+		{
-+			type = TYPE_DIR;
-+		}
-+		else if( is_reg(e->d_name) == 1 )
-+		{
-+			type = TYPE_FILE;
-+		}
-+		else
- 		{
+-		{
 -			case DT_DIR:
 -			case DT_REG:
 -			case DT_LNK:
 -			case DT_UNKNOWN:
- 				type = resolve_unknown_type(path_buf, dir_types);
+-				type = resolve_unknown_type(path_buf, dir_types);
 -			default:
 -				break;
+-		}
++		if( stat(path_buf, &sbuf) != 0 || !(S_ISDIR(sbuf.st_mode) ||
++		    S_ISREG(sbuf.st_mode) || S_ISLNK(sbuf.st_mode)) )
++			continue;
++		type = resolve_unknown_type(path_buf, dir_types);
+-		if( type == TYPE_DIR )
+-		{
++		if( type == TYPE_DIR ) {
+ 			monitor_insert_directory(fd, esc_name, path_buf);
  		}
- 		if( type == TYPE_DIR )
- 		{
+ 		else if( type == TYPE_FILE && check_notsparse(path_buf)) {
