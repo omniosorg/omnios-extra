@@ -1,3 +1,4 @@
+002-avoid-beta-warning.patch
 thread_cputime.patch
 no-html-doc.patch
 gcc14.patch
