@@ -23,8 +23,7 @@ SUMMARY="$PROG"
 DESC="A generic and open source machine emulator and virtualizer"
 
 LIBSLIRPVER=4.8.0
-SPHINXVER=8.1.3
-SPHINXRTDVER=3.0.2
+IMGHDRVER=3.13.0
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
@@ -61,13 +60,24 @@ LDFLAGS[amd64]+=" -L$DEPROOT$PREFIX/lib/amd64"
 
 addpath PKG_CONFIG_PATH[amd64] $DEPROOT$PREFIX/lib/amd64/pkgconfig
 
-pyvenv_install sphinx $SPHINXVER $TMPDIR/sphinx
-pyvenv_install sphinx-rtd-theme $SPHINXRTDVER $TMPDIR/sphinx
-PATH+=":$TMPDIR/sphinx/bin"
-
 #########################################################################
 
 note -n "-- Building $PROG"
+
+post_patch() {
+    typeset dir="$1"
+
+    # PEP 594 removed several modules ("dead batteries") starting in Python
+    # 3.13. Since sphinx depends on imghdr, we need to explicitly re-add the
+    # standard module to the temporary virtual environment until this is fixed
+    # upstream.
+    ((PYTHONPKGVER >= 313)) || return
+
+    echo "standard-imghdr==$IMGHDRVER" >> $dir/docs/requirements.txt
+    $SED -i "/sphinx_rtd_theme/a\\
+standard-imghdr = { installed = \"$IMGHDRVER\" }
+    " $dir/pythondeps.toml || logerr "sphinx imghdr insertion failed"
+}
 
 # POSIX sigwait(2) plus strnlen visibility
 set_standard POSIX+EXTENSIONS CFLAGS

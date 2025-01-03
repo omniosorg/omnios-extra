@@ -390,7 +390,8 @@ case $RELVER in
     151040)             PYTHON3VER=3.9 ;;
     15104[1-4])         PYTHON3VER=3.10 ;;
     15104[5-8])         PYTHON3VER=3.11 ;;
-    151049|15105[0-9])  PYTHON3VER=3.12 ;;
+    151049|15105[0-2])  PYTHON3VER=3.12 ;;
+    15105[3-9])         PYTHON3VER=3.13 ;;
     *)                  PYTHON3VER=3.5 ;;
 esac
 # Specify default Python version for building packages

@@ -13,12 +13,12 @@
 # }}}
 
 # Copyright 2023 Carsten Grzemba
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=mod_wsgi
-VER=5.0.0
+VER=5.0.2
 # Hard-coded here for now. If we ship more than one apache version, this will
 # need restructuring.
 PKG=ooce/server/apache-24/modules/wsgi
