@@ -1,23 +1,25 @@
-see comment in gcc14.patch
-
-diff -wpruN --no-dereference '--exclude=*.orig' a~/doc/Makefile.in a/doc/Makefile.in
---- a~/doc/Makefile.in	1970-01-01 00:00:00
-+++ a/doc/Makefile.in	1970-01-01 00:00:00
-@@ -538,11 +538,11 @@ myhtmlman_pages = \
+diff -wpruN --no-dereference '--exclude=*.orig' a~/doc/Makefile.am a/doc/Makefile.am
+--- a~/doc/Makefile.am	1970-01-01 00:00:00
++++ a/doc/Makefile.am	1970-01-01 00:00:00
+@@ -95,7 +95,7 @@ myhtmlman_pages = \
                  gpg-wks-server.1.html \
  		dirmngr-client.1.html gpg-card.1.html gpg-check-pattern.1.html
  
 -man_MANS = $(myman_pages) gnupg.7 gnupg.7.html
 +man_MANS = $(myman_pages) gnupg.7
+ 
  watchgnupg_SOURCE = gnupg.texi
+ 
+@@ -103,7 +103,7 @@ watchgnupg_SOURCE = gnupg.texi
  CLEANFILES = yat2m mkdefsinc defs.inc
+ 
  DISTCLEANFILES = gnupg.tmp gnupg.ops yat2m-stamp.tmp yat2m-stamp \
 -		 $(myman_pages) gnupg.7 gnupg.7.html $(myhtmlman_pages)
 +		 $(myman_pages) gnupg.7
  
- all: $(BUILT_SOURCES)
- 	$(MAKE) $(AM_MAKEFLAGS) all-am
-@@ -1260,7 +1260,7 @@ yat2m-stamp: $(myman_sources) defs.inc
+ yat2m: yat2m.c
+ 	$(CC_FOR_BUILD) -o $@ $(srcdir)/yat2m.c
+@@ -152,7 +152,7 @@ yat2m-stamp: $(myman_sources) defs.inc
  
  yat2m-stamp: $(YAT2M)
  
