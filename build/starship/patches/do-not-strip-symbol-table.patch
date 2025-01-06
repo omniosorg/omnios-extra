@@ -1,0 +1,11 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
+--- a~/Cargo.toml	2025-01-06 16:32:07.099033407 +0000
++++ a/Cargo.toml	2025-01-06 16:32:17.865571999 +0000
+@@ -128,7 +128,6 @@ tempfile = "3.15.0"
+ [profile.release]
+ codegen-units = 1
+ lto = true
+-strip = true
+ 
+ [[bin]]
+ name = "starship"

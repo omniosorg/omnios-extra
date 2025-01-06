@@ -26,6 +26,8 @@ BUILD_DEPENDS_IPS="
     ooce/developer/rust
 "
 
+SKIP_SSP_CHECK=1
+
 CARGO_ARGS="--no-default-features --features=gix-max-perf"
 
 set_arch 64
@@ -38,7 +40,7 @@ pre_build() {
 
 init
 clone_github_source $PROG "$GITHUB/starship/$PROG" $VER 
-BUILDDIR+=/$PROG
+append_builddir $PROG
 patch_source
 prep_build
 build_rust $CARGO_ARGS
