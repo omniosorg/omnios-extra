@@ -275,6 +275,7 @@ extra.omnios ooce/system/znapzend
 extra.omnios ooce/system/zrepl
 extra.omnios ooce/terminal/byobu
 extra.omnios ooce/terminal/minicom
+extra.omnios ooce/terminal/starship
 extra.omnios ooce/text/asciidoc
 extra.omnios ooce/text/asciidoctor
 extra.omnios ooce/text/asciinema
