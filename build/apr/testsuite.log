@@ -4,99 +4,99 @@ APR Lock Performance Test
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 1 threads    OK
-microseconds: 18319 usec
+microseconds: 23716 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 1 threads    OK
-microseconds: 18115 usec
+microseconds: 23773 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 1 threads    OK
-microseconds: 84047 usec
+microseconds: 91080 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 1 threads    OK
-microseconds: 48251 usec
+microseconds: 54455 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 2 threads    OK
-microseconds: 153029 usec
+microseconds: 128083 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 2 threads    OK
-microseconds: 252108 usec
+microseconds: 321771 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 2 threads    OK
-microseconds: 739863 usec
+microseconds: 588517 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 2 threads    OK
-microseconds: 22660602 usec
+microseconds: 21796501 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 3 threads    OK
-microseconds: 329025 usec
+microseconds: 324510 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 3 threads    OK
-microseconds: 389833 usec
+microseconds: 421241 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 3 threads    OK
-microseconds: 1270905 usec
+microseconds: 1091681 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 3 threads    OK
-microseconds: 33086968 usec
+microseconds: 35814067 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 4 threads    OK
-microseconds: 700545 usec
+microseconds: 958153 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 4 threads    OK
-microseconds: 793559 usec
+microseconds: 722224 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 4 threads    OK
-microseconds: 1814759 usec
+microseconds: 1913149 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 4 threads    OK
-microseconds: 43029566 usec
+microseconds: 49835573 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 5 threads    OK
-microseconds: 902172 usec
+microseconds: 962196 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 5 threads    OK
-microseconds: 660640 usec
+microseconds: 654519 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 5 threads    OK
-microseconds: 2337663 usec
+microseconds: 2530866 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 5 threads    OK
-microseconds: 55699046 usec
+microseconds: 58232777 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 6 threads    OK
-microseconds: 2040095 usec
+microseconds: 1992193 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 6 threads    OK
-microseconds: 1201804 usec
+microseconds: 1236000 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 6 threads    OK
-microseconds: 3418914 usec
+microseconds: 3415026 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 6 threads    OK
-microseconds: 66778145 usec
+microseconds: 66348197 usec
 Trying proc mutexes with mechanism `default'...
   mutex mechanism `default' is global in scope on this platform.
 Trying global mutexes with mechanism `default'...
@@ -132,7 +132,7 @@ testdup             :  SUCCESS
 testencode          :  SUCCESS
 testenv             :  SUCCESS
 testescape          :  SUCCESS
-testfile            :  abcdefRandom seed for test_atomic_append() is 3617717759
+testfile            :  abcdefRandom seed for test_atomic_append() is 2255882941
 SUCCESS
 testfilecopy        :  SUCCESS
 testfileinfo        :  SUCCESS
@@ -194,10 +194,10 @@ Trailers (3):
 	19 bytes
 	10 bytes
 	90000 bytes
-apr_socket_sendfile()->0, sent 211092 bytes
+apr_socket_sendfile()->0, sent 133268 bytes
 Calling apr_socket_sendfile()...
 Headers (0):
-File: 68928 bytes from offset 131072
+File: 146752 bytes from offset 53248
 Trailers (3):
 	19 bytes
 	10 bytes
@@ -205,12 +205,28 @@ Trailers (3):
 apr_socket_sendfile()->11, sent 0 bytes
 Calling apr_socket_sendfile()...
 Headers (0):
-File: 68928 bytes from offset 131072
+File: 146752 bytes from offset 53248
 Trailers (3):
 	19 bytes
 	10 bytes
 	90000 bytes
-apr_socket_sendfile()->0, sent 158957 bytes
+apr_socket_sendfile()->0, sent 131072 bytes
+Calling apr_socket_sendfile()...
+Headers (0):
+File: 15680 bytes from offset 184320
+Trailers (3):
+	19 bytes
+	10 bytes
+	90000 bytes
+apr_socket_sendfile()->11, sent 0 bytes
+Calling apr_socket_sendfile()...
+Headers (0):
+File: 15680 bytes from offset 184320
+Trailers (3):
+	19 bytes
+	10 bytes
+	90000 bytes
+apr_socket_sendfile()->0, sent 105709 bytes
 After apr_socket_sendfile(), the kernel file pointer is at offset 0.
 client: apr_socket_sendfile() worked as expected!
 Waiting for a client to connect...
@@ -228,15 +244,23 @@ Trailers (3):
 	19 bytes
 	10 bytes
 	90000 bytes
-apr_socket_sendfile()->0, sent 211092 bytes
+apr_socket_sendfile()->0, sent 133268 bytes
 Calling apr_socket_sendfile()...
 Headers (0):
-File: 68928 bytes from offset 131072
+File: 146752 bytes from offset 53248
 Trailers (3):
 	19 bytes
 	10 bytes
 	90000 bytes
-apr_socket_sendfile()->0, sent 158957 bytes
+apr_socket_sendfile()->0, sent 131072 bytes
+Calling apr_socket_sendfile()...
+Headers (0):
+File: 15680 bytes from offset 184320
+Trailers (3):
+	19 bytes
+	10 bytes
+	90000 bytes
+apr_socket_sendfile()->0, sent 105709 bytes
 After apr_socket_sendfile(), the kernel file pointer is at offset 0.
 client: apr_socket_sendfile() worked as expected!
 Waiting for a client to connect...
