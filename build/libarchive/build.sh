@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libarchive
-VER=3.7.2
+VER=3.7.7
 PKG=ooce/library/libarchive
 SUMMARY="libarchive"
 DESC="Multi-format archive and compression library"
@@ -42,15 +42,13 @@ TESTSUITE_SED="/libtool/d"
 CONFIGURE_OPTS+="
     --disable-static
 "
-CONFIGURE_OPTS[i386]+="
-    --libdir=$OPREFIX/lib
-"
-CONFIGURE_OPTS[amd64]+="
-    --libdir=$OPREFIX/lib/amd64
-"
 
-LDFLAGS[i386]+=" -Wl,-R$OPREFIX/lib"
-LDFLAGS[amd64]+=" -Wl,-R$OPREFIX/lib/amd64"
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]+=" --libdir=$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER

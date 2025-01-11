@@ -110,7 +110,7 @@
 | ooce/library/jansson		| 2.14		| https://github.com/akheron/jansson/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/json-c		| 0.18		| https://github.com/json-c/json-c/tags https://github.com/json-c/json-c/wiki | [omniosorg](https://github.com/omniosorg)
 | ooce/library/ldns		| 1.8.4		| https://nlnetlabs.nl/downloads/ldns/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libarchive	| 3.7.2		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libarchive	| 3.7.7		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libde265		| 1.0.15	| https://github.com/strukturag/libde265/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libdwarf		| 20210528	| https://www.prevanders.net/dwarf.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libgd		| 2.3.3		| https://github.com/libgd/libgd/releases | [omniosorg](https://github.com/omniosorg)
