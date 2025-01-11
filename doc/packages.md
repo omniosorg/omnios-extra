@@ -103,7 +103,7 @@
 | ooce/library/cairo		| 1.18.2	| https://cairographics.org/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/fcgi2		| 2.4.2		| https://github.com/FastCGI-Archives/fcgi2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/fontconfig	| 2.15.0	| https://www.freedesktop.org/software/fontconfig/release/ https://www.freedesktop.org/wiki/Software/fontconfig/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/freetype2	| 2.13.2	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/freetype2	| 2.13.3	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/gnutls		| 3.6.16	| https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/ https://www.gnutls.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/icu4c		| 76.1		| https://github.com/unicode-org/icu/releases | [omniosorg](https://github.com/omniosorg)
