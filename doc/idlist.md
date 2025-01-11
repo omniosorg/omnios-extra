@@ -87,6 +87,7 @@
 | illumos	| 25	| smmsp
 | extra		| 27	| postfix
 | extra		| 28	| postdrop
+| extra     | 35    | sdns
 | extra		| 45	| sasl
 | extra		| 49	| rustdesk
 | illumos	| 50	| gdm
