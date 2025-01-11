@@ -86,6 +86,7 @@ ooce/library/libtasn1
 ooce/library/unistring
 ooce/library/libtpms
 ooce/developer/autoconf-archive
+ooce/terminal/starship
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

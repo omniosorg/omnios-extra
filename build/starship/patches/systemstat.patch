@@ -1,0 +1,27 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Cargo.lock a/Cargo.lock
+--- a~/Cargo.lock	1970-01-01 00:00:00
++++ a/Cargo.lock	1970-01-01 00:00:00
+@@ -2852,9 +2852,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "systemstat"
+-version = "0.2.3"
++version = "0.2.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a24aec24a9312c83999a28e3ef9db7e2afd5c64bf47725b758cdc1cafd5b0bd2"
++checksum = "668a4db78b439df482c238f559e4ea869017f9e62ef0a059c8bfcd841a4df544"
+ dependencies = [
+  "bytesize",
+  "lazy_static",
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
+--- a~/Cargo.toml	1970-01-01 00:00:00
++++ a/Cargo.toml	1970-01-01 00:00:00
+@@ -77,7 +77,7 @@ shadow-rs = { version = "0.35.1", defaul
+ # see: https://github.com/svartalf/rust-battery/issues/33
+ starship-battery = { version = "0.10.0", optional = true }
+ strsim = "0.11.1"
+-systemstat = "=0.2.3"
++systemstat = "=0.2.4"
+ terminal_size = "0.4.0"
+ toml = { version = "0.8.19", features = ["preserve_order"] }
+ toml_edit = "0.22.22"
