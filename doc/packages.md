@@ -133,7 +133,7 @@
 | ooce/library/libusb-1		| 1.0.27	| https://github.com/libusb/libusb/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libuv		| 1.48.0	| https://github.com/libuv/libuv/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvorbis	| 1.3.7		| https://ftp.osuosl.org/pub/xiph/releases/vorbis/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libvncserver	| 0.9.14	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libvncserver	| 0.9.15	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libwebp		| 1.4.0		| https://developers.google.com/speed/webp/download | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libzip		| 1.11.1	| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/nettle		| 3.10.1	| https://ftp.gnu.org/gnu/nettle/ https://www.lysator.liu.se/~nisse/nettle/ | [omniosorg](https://github.com/omniosorg)
