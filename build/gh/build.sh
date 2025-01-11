@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=gh
 PKG=ooce/util/gh
-VER=2.63.2
+VER=2.65.0
 SUMMARY="github-cli"
 DESC="The GitHub CLI tool"
 
