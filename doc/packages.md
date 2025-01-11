@@ -137,7 +137,7 @@
 | ooce/library/libwebp		| 1.5.0		| https://developers.google.com/speed/webp/download | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libzip		| 1.11.2	| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/nettle		| 3.10.1	| https://ftp.gnu.org/gnu/nettle/ https://www.lysator.liu.se/~nisse/nettle/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/onig		| 6.9.9		| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/onig		| 6.9.10	| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pango		| 1.55.5	| https://download.gnome.org/sources/pango/cache.json https://ftp.gnome.org/pub/GNOME/sources/pango/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/pixman		| 0.43.4	| https://www.cairographics.org/releases/ http://www.pixman.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/popt		| 1.19		| https://github.com/rpm-software-management/popt/releases | [omniosorg](https://github.com/omniosorg)
