@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libzip
-VER=1.11.1
+VER=1.11.2
 PKG=ooce/library/libzip
 SUMMARY="libzip"
 DESC="A C library for reading, creating and modifying zip archives"
@@ -41,13 +41,11 @@ CONFIGURE_OPTS="
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_INSTALL_INCLUDEDIR=$OPREFIX/include
 "
-CONFIGURE_OPTS[i386]="-DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[i386]}"
-CONFIGURE_OPTS[amd64]="-DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[amd64]}"
-CONFIGURE_OPTS[aarch64]="-DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[aarch64]}"
 
 pre_configure() {
     typeset arch=$1
 
+    CONFIGURE_OPTS[$arch]="-DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[$arch]}"
     LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
 }
 
