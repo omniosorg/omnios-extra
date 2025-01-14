@@ -1,16 +1,23 @@
-PASS: libarchive_test
+FAIL: libarchive_test
 PASS: bsdtar_test
 PASS: bsdcpio_test
 PASS: bsdcat_test
 PASS: bsdunzip_test
 ============================================================================
-Testsuite summary for libarchive 3.7.2
+Testsuite summary for libarchive 3.7.7
 ============================================================================
 # TOTAL: 5
-# PASS:  5
+# PASS:  4
 # SKIP:  0
 # XFAIL: 0
-# FAIL:  0
+# FAIL:  1
 # XPASS: 0
 # ERROR: 0
 ============================================================================
+See ./test-suite.log
+Please report to libarchive-discuss@googlegroups.com
+============================================================================
+make[3]: *** [Makefile:15946: test-suite.log] Error 1
+make[2]: *** [Makefile:16054: check-TESTS] Error 2
+make[1]: *** [Makefile:16295: check-am] Error 2
+make: *** [Makefile:16297: check] Error 2

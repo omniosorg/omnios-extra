@@ -13,12 +13,12 @@
 # }}}
 
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=freetype
-VER=2.13.2
+VER=2.13.3
 PKG=ooce/library/freetype2
 SUMMARY="$PROG"
 DESC="A Free, High-Quality, and Portable Font Engine"
@@ -41,21 +41,19 @@ CONFIGURE_OPTS="
 "
 CONFIGURE_OPTS[i386]="
     --bindir=$PREFIX/bin/i386
-    --libdir=$PREFIX/lib
 "
 CONFIGURE_OPTS[amd64]="
     --bindir=$PREFIX/bin
-    --libdir=$PREFIX/lib/amd64
 "
 CONFIGURE_OPTS[aarch64]+="
     --bindir=$PREFIX/bin
-    --libdir=$PREFIX/lib
 "
 LDFLAGS[i386]+=" -lssp_ns"
 
 pre_configure() {
     typeset arch=$1
 
+    CONFIGURE_OPTS[$arch]+=" --libdir=$PREFIX/${LIBDIRS[$arch]}"
     LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}"
 }
 

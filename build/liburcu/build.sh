@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=liburcu
-VER=0.14.0
+VER=0.15.0
 PKG=ooce/library/liburcu
 SUMMARY="Userspace RCU"
 DESC="Userspace RCU (read-copy-update) library. This data synchronization "

@@ -20,7 +20,8 @@ PROG=starship
 VER=1.21.1
 PKG=ooce/terminal/starship
 SUMMARY="cross-shell prompt"
-DESC="The minimal, blazing-fast, and infinitely customizable prompt for any shell!"
+DESC="The minimal, blazing-fast, and infinitely customizable prompt "
+DESC+="for any shell!"
 
 BUILD_DEPENDS_IPS="
     ooce/developer/rust
@@ -39,7 +40,7 @@ pre_build() {
 }
 
 init
-clone_github_source $PROG "$GITHUB/starship/$PROG" $VER 
+clone_github_source $PROG "$GITHUB/starship/$PROG" v$VER
 append_builddir $PROG
 patch_source
 prep_build

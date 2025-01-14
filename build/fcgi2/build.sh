@@ -12,23 +12,30 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2020 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=fcgi2
-VER=2.4.2
+VER=2.4.4
 PKG=ooce/library/fcgi2
 SUMMARY="FactCGI Library"
 DESC="FastCGI.com fcgi2 Development Kit fork from \
 http://repo.or.cz/fcgi2.git + last snapshot"
 
+test_relver '>=' 151053 && set_clangver
 forgo_isaexec
 
 SKIP_LICENCES=OMI
 
 # SHELL gets overwritten with CONFIG_SHELL
 export CONFIG_SHELL=$SHELL
+
+pre_build() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $VER

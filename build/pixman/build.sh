@@ -12,16 +12,18 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=pixman
-VER=0.43.4
+VER=0.44.2
 PKG=ooce/library/pixman
 SUMMARY="$PROG"
 DESC="Low-level software library for pixel manipulation, providing features "
 DESC+="such as image compositing and trapezoid rasterization"
+
+test_relver '>=' 151053 && set_clangver
 
 TESTSUITE_SED='
     /Running all tests/d
