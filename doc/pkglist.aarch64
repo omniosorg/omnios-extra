@@ -10,6 +10,7 @@
 #		 	arch-specific sysroot.
 
 ooce/developer/rust
+ooce/util/atuin
 ooce/system/htop
 ooce/library/libogg
 ooce/library/nettle

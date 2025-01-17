@@ -3290,9 +3290,9 @@ build_rust() {
             PKG_CONFIG_LIBDIR+=":${SYSROOT[$b]}$OOCEOPT/${LIBDIRS[$b]}/pkgconfig"
             export PKG_CONFIG_SYSROOT_DIR PKG_CONFIG_LIBDIR
 
-            CC="$CROSSTOOLS/$b/bin/gcc"
-            CXX="$CROSSTOOLS/$b/bin/g++"
-            export CC CXX
+            TARGET_CC="$CROSSTOOLS/$b/bin/gcc"
+            TARGET_CXX="$CROSSTOOLS/$b/bin/g++"
+            export TARGET_CC TARGET_CXX
         else
             PKG_CONFIG_LIBDIR="/usr/${LIBDIRS[$b]}/pkgconfig"
             PKG_CONFIG_LIBDIR+=":$OOCEOPT/${LIBDIRS[$b]}/pkgconfig"
