@@ -88,6 +88,7 @@ ooce/library/unistring
 ooce/library/libtpms
 ooce/developer/autoconf-archive
 ooce/terminal/starship
+ooce/util/diffr
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
