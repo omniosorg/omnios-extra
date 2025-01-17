@@ -1,0 +1,7 @@
+filter_mmi_inline_assembly.c
+filter_msa_intrinsics.c
+filter_sse2_intrinsics.c
+filter_vsx_intrinsics.c
+intel_init.c
+mips_init.c
+powerpc_init.c
