@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -31,14 +31,10 @@ set_clangver
 
 # The rav1e ABI changes frequently. Lock the version
 # pulled into each build of ffmpeg.
-# TODO: since the build framework checks whether the package is installed on
-# the host system rather than the sysroot for cross-builds, this won't break
-# cross-building ffmpeg even when rav1e is not present in the sysroot
-# we should fix the framework to be able to handle arch specific build-time
-# dependencies
 RAV1EVER=`pkg_ver rav1e`
 RAV1EVER=${RAV1EVER%.*}
 BUILD_DEPENDS_IPS="=ooce/multimedia/rav1e@$RAV1EVER"
+RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -67,24 +63,17 @@ CONFIGURE_OPTS="
     --enable-libwebp
     --enable-gpl
     --enable-libx264
+    --enable-libx265
     --enable-gnutls
 "
 CONFIGURE_OPTS[i386]="
-    --enable-libx265
     --disable-librav1e
-    --libdir=$OPREFIX/lib
 "
 CONFIGURE_OPTS[amd64]="
-    --enable-libx265
     --enable-librav1e
-    --libdir=$OPREFIX/lib/amd64
 "
 CONFIGURE_OPTS[aarch64]="
-    --enable-cross-compile
-    --disable-asm
-    --disable-libx265
-    --disable-librav1e
-    --libdir=$OPREFIX/lib
+    --enable-librav1e
 "
 
 pre_configure() {
@@ -95,17 +84,20 @@ pre_configure() {
         --cxx=$CXX
     "
 
+    CONFIGURE_OPTS[$arch]+="
+        --libdir=$OPREFIX/${LIBDIRS[$arch]}
+    "
+
     # to find x264.h for builtin check
     CPPFLAGS+=" -I${SYSROOT[$arch]}$OPREFIX/include"
 
     LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
 
-    if ! cross_arch $arch; then
-        RUN_DEPENDS_IPS="$BUILD_DEPENDS_IPS"
-        return
-    fi
+    ! cross_arch $arch && return
 
     CONFIGURE_OPTS[$arch]+="
+        --enable-cross-compile
+        --disable-asm
         --sysroot=${SYSROOT[$arch]}
         --host-cc=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc
     "

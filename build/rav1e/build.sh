@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -31,16 +31,17 @@ set_arch 64
 # illumos strip removes symbol tables from archives
 export STRIP=$GNUBIN/strip
 
-build() {
-    note -n "Building $PROG"
-    build_rust
+post_build() {
+    typeset arch=$1
 
-    note -n "Building $PROG C-API"
+    _destdir=$DESTDIR
+    cross_arch $arch && _destdir+=.$arch
 
     pushd $TMPDIR/$BUILDDIR >/dev/null
 
-    logcmd $CARGO cinstall --release --library-type=cdylib \
-        --destdir=$DESTDIR --prefix=$PREFIX --libdir=$PREFIX/lib/amd64 \
+    logcmd $CARGO cinstall --release --target=${RUSTTRIPLETS[$arch]} \
+        --library-type=cdylib --destdir=$_destdir --prefix=$PREFIX \
+        --libdir=$PREFIX/${LIBDIRS[$arch]} \
         || logerr "C-API build failed"
 
     popd >/dev/null
@@ -50,9 +51,8 @@ init
 download_source $PROG v$VER
 patch_source
 prep_build
-build
+build_rust
 install_rust
-strip_install
 make_package
 clean_up
 

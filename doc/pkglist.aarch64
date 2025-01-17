@@ -89,6 +89,7 @@ ooce/library/libtpms
 ooce/developer/autoconf-archive
 ooce/terminal/starship
 ooce/util/diffr
+ooce/multimedia/rav1e
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
