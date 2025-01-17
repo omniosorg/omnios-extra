@@ -43,7 +43,7 @@ pre_configure() {
 
     ! cross_arch $arch && return
 
-    CONFIGURE_CMD+=" --cross-file $SRCDIR/files/$arch-gcc.txt"
+    CONFIGURE_CMD+=" --cross-file $BLIBDIR/meson-$arch-gcc"
 }
 
 init

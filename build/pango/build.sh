@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -91,7 +91,7 @@ save_buildenv
 
 CONFIGURE_OPTS="--prefix=$PREFIX"
 CONFIGURE_OPTS[aarch64]="
-    --cross-file $SRCDIR/files/aarch64-gcc.txt
+    --cross-file $BLIBDIR/meson-aarch64-gcc
 "
 
 build_dependency -meson -multi -merge -noctf fribidi fribidi-$FRIBIDIVER \
@@ -118,7 +118,7 @@ CONFIGURE_OPTS[i386]=" --libdir=$PREFIX/${LIBDIRS[i386]} "
 CONFIGURE_OPTS[amd64]=" --libdir=$PREFIX/${LIBDIRS[amd64]} "
 CONFIGURE_OPTS[aarch64]="
     --libdir=$PREFIX/${LIBDIRS[aarch64]}
-    --cross-file $SRCDIR/files/aarch64-gcc.txt
+    --cross-file $BLIBDIR/meson-aarch64-gcc
 "
 
 EXPECTED_OPTIONS="CAIRO CAIRO_FREETYPE CAIRO_PDF CAIRO_PS CAIRO_PNG FREETYPE"
