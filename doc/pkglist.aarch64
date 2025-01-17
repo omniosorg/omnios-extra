@@ -107,6 +107,7 @@ ooce/developer/cmake
 ooce/network/mosh
 ###############################################################################
 .SYSROOT
+ooce/application/vaultwarden
 ooce/network/unbound
 ooce/library/gnutls
 ooce/application/mc
