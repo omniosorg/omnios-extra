@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=llvm
 PKG=ooce/developer/llvm-19
-VER=19.1.6
+VER=19.1.7
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 
