@@ -90,6 +90,7 @@ ooce/developer/autoconf-archive
 ooce/terminal/starship
 ooce/util/diffr
 ooce/multimedia/rav1e
+ooce/util/htmlq
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
