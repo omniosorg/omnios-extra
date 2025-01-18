@@ -195,7 +195,7 @@
 | ooce/runtime/ruby-30		| 3.0.7		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-31		| 3.1.6		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-32		| 3.2.6		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
-| ooce/runtime/ruby-33		| 3.3.6		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
+| ooce/runtime/ruby-33		| 3.3.7		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/tcl		| 8.6.14	| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/security/gnupg		| 2.4.7		| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/security/minisign	| 0.12		| https://github.com/jedisct1/minisign/releases | [omniosorg](https://github.com/omniosorg)
