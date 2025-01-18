@@ -47,6 +47,10 @@ pre_configure() {
 
     CONFIGURE_OPTS[$arch]="-DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[$arch]}"
     LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
+
+    ! cross_arch $arch && return
+
+    export CMAKE_LIBRARY_PATH=${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}
 }
 
 init
