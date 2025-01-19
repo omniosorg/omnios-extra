@@ -1,2 +1,3 @@
-libical_cxx.so
-libicalss_cxx.so
+libical_cxx\.so
+libicalss_cxx\.so
+libxapian\.so

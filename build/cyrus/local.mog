@@ -8,10 +8,11 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYING license="BSD with attribution to CMU/MIT/others"
-license ../libical-$(ICAL)/LICENSE.MPL2.txt license=MPLv2
+license ../libical-$(ICAL)/LICENSE.MPL2.txt license=MPLv2/libical
+license ../xapian-core-$(XAPIAN)/COPYING license=GPLv2/xapian
 
 group groupname=$(GROUP) gid=89
 user ftpuser=false username=$(USER) uid=89 group=$(GROUP) \

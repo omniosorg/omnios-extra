@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -66,7 +66,7 @@ pre_configure() {
 
     ! cross_arch $arch && return
 
-    CONFIGURE_CMD+=" --cross-file $SRCDIR/files/$arch-gcc.txt"
+    CONFIGURE_CMD+=" --cross-file $BLIBDIR/meson-$arch-gcc"
 }
 
 post_install() {

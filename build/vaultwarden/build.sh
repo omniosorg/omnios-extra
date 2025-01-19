@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -35,15 +35,13 @@ WEBVAULTDIR=/var$BASEDIR/web-vault
 EXECFILE=$PREFIX/bin/$PROG
 
 BMI_EXPECTED=1
+
 CARGO_ARGS="--features sqlite,mysql,postgresql"
+
 BUILD_DEPENDS_IPS="
     ooce/developer/rust
     ooce/library/mariadb-${MARIASQLVER//./}
     ooce/library/postgresql-${PGSQLVER//./}
-"
-export RUSTFLAGS="
-    -C link-arg=-R$PREFIX/mariadb-$MARIASQLVER/lib/amd64
-    -C link-arg=-R$PREFIX/pgsql-$PGSQLVER/lib/amd64
 "
 
 XFORM_ARGS="
@@ -57,27 +55,35 @@ XFORM_ARGS="
 
 SKIP_LICENCES=bitwarden
 
-# configure runs mysql_config/pg_config to determine the proper paths
-# for the database libraries. To avoid having to rely on a particular
-# mediator value for the installed packages, set the explicitly versioned
-# bin directories first in the PATH.
-PATH=$PREFIX/mariadb-$MARIASQLVER/bin:$PREFIX/pgsql-$PGSQLVER/bin:$PATH
+pre_build() {
+    typeset arch=$1
 
-copy_sample_config() {
+    export RUSTFLAGS+="
+        -C link-arg=-L${SYSROOT[$arch]}$PREFIX/mariadb-$MARIASQLVER/${LIBDIRS[$arch]}
+        -C link-arg=-L${SYSROOT[$arch]}$PREFIX/pgsql-$PGSQLVER/${LIBDIRS[$arch]}
+        -C link-arg=-R$PREFIX/mariadb-$MARIASQLVER/${LIBDIRS[$arch]}
+        -C link-arg=-R$PREFIX/pgsql-$PGSQLVER/${LIBDIRS[$arch]}
+    "
+}
+
+post_install() {
+    typeset arch=$1
+
+    _destdir=$DESTDIR
+    cross_arch $arch && _destdir+=.$arch
+
     local relative_conffile=${CONFFILE#/}
-    local dest_confdir=$DESTDIR/${relative_conffile%/*}
+    local dest_confdir=$_destdir/${relative_conffile%/*}
 
     logmsg "-- copying sample config"
     logcmd $MKDIR -p "$dest_confdir" || logerr "mkdir failed"
-    logcmd $CP $TMPDIR/$BUILDDIR/.env.template $DESTDIR/$relative_conffile \
+    logcmd $CP $TMPDIR/$BUILDDIR/.env.template $_destdir/$relative_conffile \
         || logerr "copying configs failed"
-}
 
-get_webvault() {
     local prog_repo=bw_web_builds
     local prog=web-vault
     local relative_webvaultdir=${WEBVAULTDIR#/}
-    local dest_webvaultdir=$DESTDIR/${relative_webvaultdir%/*}
+    local dest_webvaultdir=$_destdir/${relative_webvaultdir%/*}
 
     # We need to clone the original bitwarden web pieces to incorporate the
     # licences into the final package.
@@ -93,26 +99,22 @@ get_webvault() {
         download_source "v$WEBVAULTVER" bw_web_v$WEBVAULTVER
 
     logmsg "-- copying $prog"
-    logcmd $MKDIR -p $DESTDIR/$relative_webvaultdir || logerr "mkdir failed"
-    logcmd $RSYNC -a --delete $TMPDIR/$prog/ $DESTDIR/$relative_webvaultdir/ \
+    logcmd $MKDIR -p $_destdir/$relative_webvaultdir || logerr "mkdir failed"
+    logcmd $RSYNC -a --delete $TMPDIR/$prog/ $_destdir/$relative_webvaultdir/ \
         || logerr "copying $prog failed"
 
+    xform files/$PROG.xml > $TMPDIR/$PROG.xml
+    DESTDIR=$_destdir install_smf ooce $PROG.xml
 }
 
 init
 clone_github_source $PROG "$DANIGARCIA/$PROG" $VER
-BUILDDIR+=/$PROG
+append_builddir $PROG
 patch_source
-# mio needs bumping to work around https://github.com/tokio-rs/mio/pull/1824
-run_inbuild cargo update -p mio
 prep_build
 build_rust $CARGO_ARGS
 install_rust
 strip_install
-copy_sample_config
-get_webvault
-xform files/$PROG.xml > $TMPDIR/$PROG.xml
-install_smf ooce $PROG.xml
 make_package
 clean_up
 

@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 group groupname=$(GROUP) gid=66
 user ftpuser=false username=$(USER) uid=66 group=$(GROUP) \
@@ -30,7 +30,7 @@ link path=var/$(BASEDIR)/.env \
 <transform file path=$(PREFIX)/bin -> \
     set restart_fmri svc:/network/$(PROG):default >
 
-license vaultwarden/LICENSE.txt license=AGPLv3
+license LICENSE.txt license=AGPLv3
 # bitwarden/web, from which the vaultwarden web-vault is derived, is
 # dual-licensed under GPLv3 and a custom bitwarden licence. Some pieces are,
 # however, only licensed under the bitwarden licence.

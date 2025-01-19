@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=minisign
-VER=0.11
+VER=0.12
 PKG=ooce/security/minisign
 SUMMARY="$PROG"
 DESC="Simple tool to sign files and verify signatures"

@@ -16,47 +16,52 @@
 
 . ../../lib/build.sh
 
-PROG=libzip
-VER=1.11.2
-PKG=ooce/library/libzip
-SUMMARY="libzip"
-DESC="A C library for reading, creating and modifying zip archives"
+PROG=ruby
+VER=3.4.1
+PKG=ooce/runtime/ruby-34
+SUMMARY="Ruby"
+DESC="A dynamic, open source programming language "
+DESC+="with a focus on simplicity and productivity."
 
-# refrain from building this package with clang as it adds
-# nullability attributes to headers which cause issues when
-# being used with gcc
+MAJVER=${VER%.*}
+sMAJVER=${MAJVER//./}
+set_patchdir patches-$sMAJVER
 
 OPREFIX=$PREFIX
-PREFIX+="/$PROG"
+PREFIX+=/$PROG-$MAJVER
+
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
+set_arch 64
+
+NO_SONAME_EXPECTED=1
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-    -DPKGROOT=$PROG
+    -DPKGROOT=$PROG-$MAJVER
+    -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
+    -DVERSION=$MAJVER
+    -DsVERSION=$sMAJVER
 "
 
-CONFIGURE_OPTS="
-    -DCMAKE_BUILD_TYPE=Release
-    -DCMAKE_INSTALL_PREFIX=$PREFIX
-    -DCMAKE_INSTALL_INCLUDEDIR=$OPREFIX/include
+CONFIGURE_OPTS[amd64]+="
+    --disable-install-doc
+    --libdir=$PREFIX/lib
 "
 
-pre_configure() {
-    typeset arch=$1
+CPPFLAGS+=" -I/usr/include/gmp"
+LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
 
-    CONFIGURE_OPTS[$arch]="-DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[$arch]}"
-    LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
-
-    ! cross_arch $arch && return
-
-    export CMAKE_LIBRARY_PATH=${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}
-}
+subsume_arch $BUILDARCH PKG_CONFIG_PATH
 
 init
 download_source $PROG $PROG $VER
-prep_build cmake+ninja
 patch_source
+prep_build
+run_autoconf -f
 build
 make_package
 clean_up

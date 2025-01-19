@@ -10,6 +10,7 @@
 #		 	arch-specific sysroot.
 
 ooce/developer/rust
+ooce/util/atuin
 ooce/system/htop
 ooce/library/libogg
 ooce/library/nettle
@@ -87,6 +88,9 @@ ooce/library/unistring
 ooce/library/libtpms
 ooce/developer/autoconf-archive
 ooce/terminal/starship
+ooce/util/diffr
+ooce/multimedia/rav1e
+ooce/util/htmlq
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
@@ -106,6 +110,7 @@ ooce/developer/cmake
 ooce/network/mosh
 ###############################################################################
 .SYSROOT
+ooce/application/vaultwarden
 ooce/network/unbound
 ooce/library/gnutls
 ooce/application/mc

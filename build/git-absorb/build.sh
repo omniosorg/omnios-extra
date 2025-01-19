@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=git-absorb
-VER=0.6.15
+VER=0.6.17
 PKG=ooce/developer/git-absorb
 SUMMARY="Automatically absorb changes into staged commits"
 DESC="You have a feature branch with a few commits. "

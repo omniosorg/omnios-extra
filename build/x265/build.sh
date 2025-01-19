@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -32,10 +32,13 @@ CONFIGURE_OPTS[aarch64]="
     -DCROSS_COMPILE_ARM=ON
     -DENABLE_ASSEMBLY=OFF
 "
+
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=$PREFIX
 "
+
+CXXFLAGS[aarch64]+=" -mno-outline-atomics"
 
 LDFLAGS[amd64]+=" -R$PREFIX/${LIBDIRS[amd64]}"
 LDFLAGS[aarch64]+=" -R$PREFIX/${LIBDIRS[aarch64]}"

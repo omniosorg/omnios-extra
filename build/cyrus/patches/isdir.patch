@@ -1,0 +1,40 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/mailbox.c a/imap/mailbox.c
+--- a~/imap/mailbox.c	1970-01-01 00:00:00
++++ a/imap/mailbox.c	1970-01-01 00:00:00
+@@ -75,6 +75,12 @@
+ # endif
+ #endif
+ 
++#ifdef __illumos__
++# include <fcntl.h>
++# include <sys/types.h>
++# include <sys/stat.h>
++#endif
++
+ #include "annotate.h"
+ #include "assert.h"
+ #ifdef WITH_DAV
+@@ -6045,6 +6051,10 @@ static void mailbox_delete_files(const c
+     struct dirent *f;
+     char buf[MAX_MAILBOX_PATH+1];
+     char *tail;
++#ifdef __illumos__
++    char path_buf[PATH_MAX];
++    struct stat sbuf;
++#endif
+ 
+     strlcpy(buf, path, sizeof(buf));
+ 
+@@ -6061,7 +6071,12 @@ static void mailbox_delete_files(const c
+     dirp = opendir(path);
+     if (dirp) {
+         while ((f = readdir(dirp))!=NULL) {
++#ifndef __illumos__
+             if (f->d_type == DT_DIR) {
++#else
++            snprintf(path_buf, sizeof(path_buf), "%s/%s", path, f->d_name);
++            if (stat(path_buf, &sbuf) == 0 && S_ISDIR(sbuf.st_mode)) {
++#endif
+                 /* xunlink() will fail on a directory and create syslog noise.
+                    We rmdir() later in mailbox_delete_cleanup() anyways */
+                 continue;

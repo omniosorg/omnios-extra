@@ -242,6 +242,7 @@ extra.omnios ooce/runtime/ruby-30
 extra.omnios ooce/runtime/ruby-31
 extra.omnios ooce/runtime/ruby-32
 extra.omnios ooce/runtime/ruby-33
+extra.omnios ooce/runtime/ruby-34
 extra.omnios ooce/runtime/tcl
 extra.omnios ooce/security/gnupg
 extra.omnios ooce/security/minisign
