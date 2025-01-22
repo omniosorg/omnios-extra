@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=neovim
-VER=0.10.2
+VER=0.10.3
 PKG=ooce/editor/neovim
 SUMMARY="Neovim"
 DESC="hyperextensible Vim-based text editor"
@@ -55,7 +55,8 @@ pre_configure() {
             -DUSE_BUNDLED_LIBUV=OFF
         \"
         CMAKE_EXTRA_FLAGS=\"
-            -DCMAKE_EXE_LINKER_FLAGS='-Wl,-R$OPREFIX/${LIBDIRS[$arch]} -lgcc_s'
+            -DCMAKE_EXE_LINKER_FLAGS='-Wl,-R$OPREFIX/${LIBDIRS[$arch]} -lgcc_s
+            -lumem'
         \"
     "
 
