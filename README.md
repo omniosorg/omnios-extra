@@ -739,20 +739,26 @@ packages. In the early stages of a build, this source tarball will not be
 available on the OmniOS mirror, and will be need to be made available for the
 build process.
 
-This can be done by using the `set_mirror` directive in `build.sh`. For example
-the source tarball for "Apache httpd 2.4.43" is available at the mirror:
-<https://downloads.apache.org/>. Therefore the `set_mirror` directive should be
-as follows:
+The easiest way to do this is to use `build.sh`'s `-M` option to temporarily
+point at either the original distribution site, or to a temporary directory.
 
-```none
-set_mirror "https://downloads.apache.org/"
-```
-Further in the `build.sh` file, the `download_source` directive should be as
-follows:
+For example the source tarball for "Apache httpd 2.4.43" is available at the
+mirror: <https://downloads.apache.org/>. Therefore `build.sh` can be run as:
 
-```none
-download_source $PROG $PROG $VER
+```bash
+$ ./build.sh -M https://downloads.apache.org/
 ```
+
+or, if you download `httpd-2.4.43.tar.bz2` and place it in `/tmp/apache`:
+
+```bash
+$ ./build.sh -M /tmp
+```
+
+If the download fails, look at `build.log` to determine the pathnames that
+were tried, and adjust accordingly.
+
+The mirror can also be changed permanently in `lib/site.sh`.
 
 #### Checksums:
 
