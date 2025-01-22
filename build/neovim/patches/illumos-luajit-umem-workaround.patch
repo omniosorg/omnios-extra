@@ -1,0 +1,31 @@
+--- a~/src/nvim/os_illumos.c	Tue Jan 21 16:21:57 2025
++++ a/src/nvim/os_illumos.c	Tue Jan 21 16:39:03 2025
+@@ -174,3 +174,28 @@
+ 
+ 	return (0);
+ }
++
++/*
++ * At present, due to an argument between bespoke generated assembly in LuaJIT
++ * and our linker, we cannot build LuaJIT as a shared library for use by
++ * Neovim. To work around this, we build LuaJIT statically and embed it in the
++ * nvim executable directly.  Unfortunately this means the program text for
++ * LuaJIT is placed before the heap, and LuaJIT does some ill-advised things
++ * with mmap() for memory allocation which means it forcibly tries to put
++ * memory allocations quite close to the heap.  As the brk moves up in the
++ * address space, it eventually collides with one of these low address mappings
++ * and the program crashes with an error like "E41: Out of memory" next time a
++ * malloc(3C) call fails.
++ *
++ * In order to work around this, we'll use libumem(3LIB) as our allocator
++ * instead of the base libc malloc(3C).  The umem allocator has a backend that
++ * can use mmap(2) instead of brk(2) to get memory, which avoids the clash with
++ * LuaJIT.
++ *
++ * See omnios-extra#1539 for more details.
++ */
++const char *
++_umem_options_init(void)
++{
++	return ("backend=mmap");
++}
