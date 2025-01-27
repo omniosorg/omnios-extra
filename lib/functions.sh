@@ -1559,6 +1559,7 @@ extract_archive() {
         *.tar.bz2)          $BUNZIP2 -dc $file | $TAR -xvf - $* ;;
         *.tar.lz)           $LZIP -dc $file | $TAR -xvf - $* ;;
         *.tar.gz|*.tgz)     $GZIP -dc $file | $TAR -xvf - $* ;;
+        *.7z)               $SEVENZ x $file $* ;;
         *.zip)              $UNZIP $file $* ;;
         *.tar)              $TAR -xvf $file $* ;;
         # May as well try tar. It's GNU tar which does a fair job at detecting
