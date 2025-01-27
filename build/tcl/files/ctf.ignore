@@ -3,4 +3,9 @@ exp_regexp.c
 itclTestRegisterC.c
 psGdbm.c
 psLmdb.c
+tclAlloc.c
+tclEpollNotfy.c
+tclKqueueNotfy.c
+tclThreadJoin.c
 threadNs.c
+threadUnix.c
