@@ -514,7 +514,7 @@ set_clangver() {
 
     CFLAGS[0]="${FCFLAGS[_]}"
     CXXFLAGS[0]="${FCFLAGS[_]}"
-    CTF_CFLAGS="${CTFCFLAGS[_]}"
+    CTF_CFLAGS="${CTFCFLAGS[_]} ${CTFCFLAGS[$DEFAULT_GCC_VER]}"
 
     set_ssp strong $2
 }
