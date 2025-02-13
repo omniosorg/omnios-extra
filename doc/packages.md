@@ -215,7 +215,7 @@
 | ooce/storage/minio-mc		| 2024-11-21T17-21-54Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/file-system/ntfs-3g | 2022.10.3	| https://github.com/tuxera/ntfs-3g/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/gptfdisk		| 1.0.10	| https://sourceforge.net/projects/gptfdisk/files/gptfdisk/ | [oxidecomputer](https://github.com/oxidecomputer)
-| ooce/system/clamav		| 1.4.1		| https://github.com/Cisco-Talos/clamav/tags https://www.clamav.net/downloads | [omniosorg](https://github.com/omniosorg)
+| ooce/system/clamav		| 1.4.2		| https://github.com/Cisco-Talos/clamav/tags https://www.clamav.net/downloads | [omniosorg](https://github.com/omniosorg)
 | ooce/system/htop		| 3.3.0		| https://github.com/htop-dev/htop/releases https://htop.dev/downloads.html#sources | [omniosorg](https://github.com/omniosorg)
 | ooce/system/management/ansible | 9.1.0	| https://pypi.org/rss/project/ansible/releases.xml | [omniosorg](https://github.com/omniosorg)
 | ooce/system/mbuffer		| 20241007	| https://www.maier-komor.de/mbuffer.html | [omniosorg](https://github.com/omniosorg)
