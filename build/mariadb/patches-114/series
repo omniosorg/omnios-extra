@@ -4,3 +4,4 @@ missing_concurrency.patch
 08-dtrace-invalid-conversion.patch
 disable_dbug_docs.patch
 pam-illumos.patch
+assert.patch

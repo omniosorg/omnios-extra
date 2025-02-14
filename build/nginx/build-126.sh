@@ -13,13 +13,13 @@
 # }}}
 
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nginx
 PKG=ooce/server/nginx-126
-VER=1.26.2
+VER=1.26.3
 SUMMARY="nginx 1.26 web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
