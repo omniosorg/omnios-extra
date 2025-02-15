@@ -6,10 +6,9 @@ of calls to random(), which is seeded.
 
 Duplicate message IDs have been seen in the wild, use libuuid instead.
 
-diff --git a/imap/src/c-client/oauth2_aux.c b/imap/src/c-client/oauth2_aux.c
-index d2ad6ce..ca0fadb 100644
---- a/imap/src/c-client/oauth2_aux.c
-+++ b/imap/src/c-client/oauth2_aux.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/src/c-client/oauth2_aux.c a/imap/src/c-client/oauth2_aux.c
+--- a~/imap/src/c-client/oauth2_aux.c	1970-01-01 00:00:00
++++ a/imap/src/c-client/oauth2_aux.c	1970-01-01 00:00:00
 @@ -24,6 +24,8 @@
  #include "json.h"
  #include "oauth2_aux.h"
@@ -19,7 +18,7 @@ index d2ad6ce..ca0fadb 100644
  OA2_type oauth2_find_extra_parameter(OAUTH2_S *, char *);
  JSON_S *oauth2_json_reply(OAUTH2_SERVER_METHOD_S, OAUTH2_S *, int *);
  char *xoauth2_server(char *, char *);
-@@ -148,25 +150,13 @@
+@@ -148,25 +150,13 @@ void oauth2_login_hint(OAUTH2_S *oauth2,
   */
  char *oauth2_generate_state(void)
  {
