@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -28,6 +28,8 @@ set_builddir ${PROG}_ntfsprogs-$VER
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
+
+forgo_isaexec
 
 RUN_DEPENDS_IPS="ooce/driver/fuse"
 
@@ -45,23 +47,25 @@ CONFIGURE_OPTS="
     --exec-prefix=$PREFIX
     --includedir=$OPREFIX/include
 "
-CONFIGURE_OPTS[i386]="
-    --bindir=$PREFIX/bin/i386
-    --sbindir=$PREFIX/sbin/i386
-    --libdir=$OPREFIX/lib
-"
-CONFIGURE_OPTS[amd64]="
-    --bindir=$PREFIX/bin
-    --sbindir=$PREFIX/sbin
-    --libdir=$OPREFIX/lib/amd64
-"
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]+="
+        --libdir=$OPREFIX/${LIBDIRS[$arch]}
+    "
+
+    ! cross_arch $arch && return
+
+    CONFIGURE_OPTS[$arch]+="
+        HOST_CC=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc
+    "
+}
+
 LDFLAGS[i386]+=" -lssp_ns"
 
-save_function make_install _make_install
-make_install() {
-    _make_install
-    logcmd mkdir -p $DESTDIR/usr/lib/fs/$PROG || logerr "mkdir failed"
-    logcmd cp $SRCDIR/files/fstyp $DESTDIR/usr/lib/fs/$PROG \
+post_install() {
+    logcmd $MKDIR -p $DESTDIR/usr/lib/fs/$PROG || logerr "mkdir failed"
+    logcmd $CP $SRCDIR/files/fstyp $DESTDIR/usr/lib/fs/$PROG \
         || logerr "cp fstyp failed"
 }
 
