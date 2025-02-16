@@ -92,6 +92,7 @@ ooce/util/diffr
 ooce/multimedia/rav1e
 ooce/util/htmlq
 ooce/driver/fuse
+ooce/system/file-system/ntfs-3g
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
