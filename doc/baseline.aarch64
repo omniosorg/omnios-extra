@@ -19,6 +19,7 @@ extra.omnios ooce/developer/git-absorb
 extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/protobuf
 extra.omnios ooce/developer/rust
+extra.omnios ooce/driver/fuse
 extra.omnios ooce/editor/joe
 extra.omnios ooce/file/tree
 extra.omnios ooce/fonts/liberation

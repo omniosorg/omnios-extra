@@ -1,0 +1,27 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/aarch64/Makefile a/aarch64/Makefile
+--- a~/aarch64/Makefile	1970-01-01 00:00:00
++++ a/aarch64/Makefile	1970-01-01 00:00:00
+@@ -0,0 +1,23 @@
++#
++# This file and its contents are supplied under the terms of the
++# Common Development and Distribution License ("CDDL"), version 1.0.
++# You may only use this file in accordance with the terms of version
++# 1.0 of the CDDL.
++#
++# A full copy of the text of the CDDL should have accompanied this
++# source.  A copy of the CDDL is also available via the Internet at
++# http://www.illumos.org/license/CDDL.
++#
++#
++# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
++#
++
++CFLAGS =-mcmodel=large
++include ../Makefile.com
++
++DIRSAARCH64 = $(ROOT)/usr/kernel/drv/aarch64
++
++install:
++	mkdir -p $(DIRSAARCH64)
++	$(INSTALL) -f $(ROOT)/usr/kernel/drv ../fuse.conf
++	$(INSTALL) -f $(ROOT)/usr/kernel/drv/aarch64 fuse

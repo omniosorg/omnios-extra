@@ -494,7 +494,7 @@ DESTDIR=
 # Flags for building kernel modules
 #############################################################################
 
-CFLAGS[kmod]="
+CFLAGS[kmod_amd64]="
     -mcmodel=kernel
     -fno-strict-aliasing -fno-unit-at-a-time
     -fno-optimize-sibling-calls -ffreestanding -mno-red-zone
@@ -506,7 +506,20 @@ CFLAGS[kmod]="
     -mindirect-branch=thunk-extern -mindirect-branch-register
     -fno-asynchronous-unwind-tables -fstack-protector-strong
 "
-LDFLAGS[kmod]="-ztype=kmod"
+LDFLAGS[kmod_amd64]="-ztype=kmod"
+
+CFLAGS[kmod_aarch64]="
+    -mcmodel=large
+    -fno-strict-aliasing -fno-unit-at-a-time
+    -fno-optimize-sibling-calls -ffreestanding -msave-args
+    -mgeneral-regs-only -mstrict-align -mtls-dialect=trad
+    -Winline -fno-inline-small-functions -fno-inline-functions-called-once
+    -fno-ipa-cp -fno-ipa-icf -fno-clone-functions -fno-reorder-functions
+    -fno-reorder-blocks-and-partition
+    --param=max-inline-insns-single=450 -fno-shrink-wrap
+    -fno-asynchronous-unwind-tables -fstack-protector-strong
+"
+LDFLAGS[kmod_aarch64]="-ztype=kmod"
 
 #############################################################################
 # Configuration of the packaged software

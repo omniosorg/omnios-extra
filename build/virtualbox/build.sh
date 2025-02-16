@@ -175,8 +175,8 @@ VBOX_GSOAP_INCS = $DEPROOT/usr/include
 VBOX_DO_STRIP =
 
 # link kernel modules
-TEMPLATE_VBOXR0DRV_LDFLAGS = -r ${LDFLAGS[kmod]}
-TEMPLATE_VBOXGUESTR0_LDFLAGS = -r ${LDFLAGS[kmod]}
+TEMPLATE_VBOXR0DRV_LDFLAGS = -r ${LDFLAGS[kmod_amd64]}
+TEMPLATE_VBOXGUESTR0_LDFLAGS = -r ${LDFLAGS[kmod_amd64]}
 
 EOF
     logmsg "--- building VirtualBox"
