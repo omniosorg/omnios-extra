@@ -91,6 +91,7 @@ ooce/terminal/starship
 ooce/util/diffr
 ooce/multimedia/rav1e
 ooce/util/htmlq
+ooce/driver/fuse
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
