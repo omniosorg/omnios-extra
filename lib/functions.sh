@@ -177,6 +177,10 @@ EOM
 #############################################################################
 # Log output of a command to a file
 #############################################################################
+pipelog() {
+    $TEE -a $LOGFILE 2>&1
+}
+
 logcmd() {
     typeset preserve_stdout=0
     [ "$1" = "-p" ] && shift && preserve_stdout=1
@@ -190,16 +194,12 @@ logcmd() {
     else
         if [ "$preserve_stdout" = 0 ]; then
             echo Running: "$@"
-            "$@" | $TEE -a $LOGFILE 2>&1
+            "$@" | pipelog
             return ${PIPESTATUS[0]}
         else
             "$@"
         fi
     fi
-}
-
-pipelog() {
-    $TEE -a $LOGFILE 2>&1
 }
 
 c_highlight="`$TPUT setaf 2`"
@@ -2755,6 +2755,30 @@ make_install() {
             $MAKE_INSTALL_TARGET || logerr "--- Make install failed"
     fi
     hook post_install $arch
+
+    typeset tf=$TMPDIR/pkgconfig.fix
+    : > $tf
+    logmsg "--- fixing runtime path linker option in pkg-config files"
+    while read f; do
+        logcmd $RM -f $f.orig
+        $SED -Ei.orig -e '
+            # If the line already contains -Wl,-R, next!
+            /-Wl,-R/n
+            /^Libs:/ {
+                # Replace any -R with the more widely accepted -Wl,-R
+                s/[:space:]-R/ -Wl,-R/
+                # If the above replacement succeeded, next!
+                t
+                # Augment any remaining -L with a matching -Wl,-R
+                s/-L[:space:]*([^[:space:]]+)/& -Wl,-R\1/
+            }
+        ' $f || echo "Failed to fix $f" >> $tf
+        logcmd $DIFF -u $f{.orig,}
+    done < <($FD -t f -e pc -p "${LIBDIRS[$arch]}/pkgconfig/[^/]+\\.pc\$" $DESTDIR)
+    if [ -s "$tf" ]; then
+        $CAT $tf | pipelog
+        logerr "Problem fixing pkg-config files"
+    fi
 }
 
 make_install_i386() {
@@ -3691,7 +3715,7 @@ check_rtime() {
         -f $TMPDIR/rtime.files
 
     if [ -s "$TMPDIR/rtime.err" ]; then
-        $CAT $TMPDIR/rtime.err | $TEE -a $LOGFILE
+        $CAT $TMPDIR/rtime.err | pipelog
         logerr "ELF runtime problems detected"
     fi
 }
@@ -3709,7 +3733,7 @@ check_ssp() {
     done < <(rtime_objects)
     wait
     if [ -s "$TMPDIR/rtime.ssp" ]; then
-        $CAT $TMPDIR/rtime.ssp | $TEE -a $LOGFILE
+        $CAT $TMPDIR/rtime.ssp | pipelog
         logerr "Found object(s) without SSP"
     fi
 }
@@ -3748,7 +3772,7 @@ check_soname() {
     done < <(rtime_objects -f)
     wait
     if [ -s "$TMPDIR/rtime.soname" ]; then
-        $CAT $TMPDIR/rtime.soname | $TEE -a $LOGFILE
+        $CAT $TMPDIR/rtime.soname | pipelog
         logerr "Found SONAME problems"
     fi
 }
@@ -3773,7 +3797,7 @@ check_bmi() {
     done < <(rtime_objects)
     wait
     if [ -s "$TMPDIR/rtime.bmi" ]; then
-        $CAT $TMPDIR/rtime.bmi | $TEE -a $LOGFILE
+        $CAT $TMPDIR/rtime.bmi | pipelog
         logerr "BMI instruction set found"
     fi
 }
