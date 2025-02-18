@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -27,20 +27,30 @@ set_gccver $ILLUMOS_GCC_VER
 set_arch 64
 set_builddir "illumos-${PROG}fs-Version-$VER/kernel"
 
-MAKE=$USRBIN/dmake
-# build requires ctf tools
-PATH+=":$ONBLDBIN/i386"
-
 pre_configure() {
     typeset arch=$1
 
-    CFLAGS+=" `echo ${CFLAGS[kmod]}`"
-    LDFLAGS+=" `echo ${LDFLAGS[kmod]}`"
+    CFLAGS+=" `echo ${CFLAGS[kmod_$arch]}`"
+    LDFLAGS+=" `echo ${LDFLAGS[kmod_$arch]}`"
     subsume_arch $arch CFLAGS LDFLAGS
     MAKE_ARGS=-e
+    MAKE_INSTALL_ARGS=$MAKE_ARGS
+    export MACH=$arch
 
     # No configure
     false
+}
+
+pre_make() {
+    typeset arch=$1
+
+    MAKE=$USRBIN/dmake
+    # build requires ctf tools
+    PATH+=":$ONBLDBIN/i386"
+
+    ! cross_arch $arch && return
+
+    export LD=$CROSSTOOLS/$arch/bin/ld
 }
 
 init
