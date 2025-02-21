@@ -87,7 +87,7 @@
 | ooce/developer/zig-013	| 0.13.0	| https://ziglang.org/download/index.json https://ziglang.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/driver/fuse		| 1.6		| https://github.com/jurikm/illumos-fusefs/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/emacs		| 29.4		| https://ftp.gnu.org/gnu/emacs/ https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html#Releases | [omniosorg](https://github.com/omniosorg)
-| ooce/editor/helix		| 25.01		| https://github.com/helix-editor/helix/releases| [omniosorg](https://github.com/omniosorg)
+| ooce/editor/helix		| 25.01.1	| https://github.com/helix-editor/helix/releases| [omniosorg](https://github.com/omniosorg)
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/nano		| 8.2		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/neovim		| 0.10.3	| https://github.com/neovim/neovim/releases | [omniosorg](https://github.com/omniosorg)
