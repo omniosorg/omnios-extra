@@ -18,7 +18,7 @@
 
 PROG=php
 PKG=ooce/application/php-83
-VER=8.3.16
+VER=8.3.17
 SUMMARY="PHP 8.3"
 DESC="A popular general-purpose scripting language"
 
@@ -158,7 +158,7 @@ CONFIGURE_OPTS[amd64]="
 
 CPPFLAGS+=" -I/usr/include/gmp"
 CPPFLAGS+=" -I$OPREFIX/libzip/include"
-LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
+LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/amd64"
 
 post_configure() {
     for tok in \
