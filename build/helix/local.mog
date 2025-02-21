@@ -17,7 +17,7 @@
 <transform file elfhash path=$(PREFIX)/bin/hx -> edit path bin/hx bin/hx.bin>
 file files/hx path=X/$(PREFIX)/bin/hx mode=0555
 <transform file path=X/ -> edit path X/ "">
-<transform path=$(PREFIX)/share/runtime/grammars/sources -> drop>  
+<transform path=$(PREFIX)/share/runtime/grammars/sources -> drop>
 
 license LICENSE license=MPLv2
 
