@@ -2774,6 +2774,7 @@ make_install() {
             }
         ' $f || echo "Failed to fix $f" >> $tf
         logcmd $DIFF -u $f{.orig,}
+        logcmd $RM $f.orig
     done < <($FD -t f -e pc -p "${LIBDIRS[$arch]}/pkgconfig/[^/]+\\.pc\$" $DESTDIR)
     if [ -s "$tf" ]; then
         $CAT $tf | pipelog
