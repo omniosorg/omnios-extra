@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=helix
-VER=25.01
+VER=25.01.1
 PKG=ooce/editor/helix
 SUMMARY="A post-modern modal text editor."
 DESC="A kakoune / neovim inspired editor, written in Rust."
@@ -37,8 +37,13 @@ XFORM_ARGS="
 SKIP_SSP_CHECK=1
 NO_SONAME_EXPECTED=1 # files in runtime dir
 
-install_helix_runtime() {
-    pushd $DESTDIR/$PREFIX >/dev/null || logerr "chdir $DESTDIR/$PREFIX"
+post_install() {
+    typeset arch=$1
+
+    destdir=$DESTDIR
+    cross_arch $arch && destdir+=.$arch
+
+    pushd $destdir/$PREFIX >/dev/null || logerr "chdir $destdir/$PREFIX"
 
     logcmd $MKDIR -p "share/runtime" || logerr "Failed to create runtime dir"
 
@@ -60,7 +65,6 @@ download_source -nodir $PROG $PROG $VER-source
 patch_source
 build_rust
 install_rust hx
-install_helix_runtime
 strip_install
 make_package
 clean_up

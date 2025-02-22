@@ -93,6 +93,7 @@ ooce/multimedia/rav1e
 ooce/util/htmlq
 ooce/driver/fuse
 ooce/system/file-system/ntfs-3g
+ooce/editor/helix
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
