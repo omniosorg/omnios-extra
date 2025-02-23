@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=tcl
-VER=8.6.14
-EXPECTVER=5.45.4
+VER=9.0.1
+EXPECTVER=5.45.4.1
 PKG=ooce/runtime/tcl
 SUMMARY="Tool Command Language"
 DESC="A very powerful but easy to learn dynamic programming language"
@@ -28,15 +28,15 @@ MAJVER=${VER%.*}
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
-set_builddir $PROG$VER/unix
-PATCHDIR+=-$PROG
+set_builddir $PROG$VER
+set_patchdir patches-$PROG
 
 SKIP_LICENCES=BSD-style
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 set_arch 64
+
+# the build requires gnu find
+PATH=$GNUBIN:$PATH
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -52,6 +52,12 @@ CONFIGURE_OPTS[amd64]="
     --mandir=$PREFIX/share/man
     --enable-64bit
 "
+
+pre_build() {
+    append_builddir unix
+
+    unset -f pre_build
+}
 
 post_configure() {
     pushd $TMPDIR/$BUILDDIR/../doc >/dev/null
@@ -91,8 +97,11 @@ DESC="A tool for automating interactive applications"
 TCLDIR=$DESTDIR$PREFIX/lib
 PREFIX="$OPREFIX/$PROG"
 
-BUILDDIR=$PROG$VER
-PATCHDIR=patches-$PROG
+# does not yet build with gcc 14
+((GCCVER > 13)) && set_gccver 13
+
+set_builddir $PROG-$VER
+set_patchdir patches-$PROG
 
 SKIP_LICENCES=NIST
 
@@ -113,9 +122,10 @@ CONFIGURE_OPTS[amd64]="
 "
 
 init
-download_source $PROG $PROG$VER
+download_source $PROG $PROG $VER
 patch_source
 prep_build
+run_autoconf -f
 LD_LIBRARY_PATH=$TCLDIR build
 make_package $PROG-local.mog
 clean_up
