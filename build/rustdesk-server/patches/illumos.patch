@@ -20,23 +20,23 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
 +dns-lookup = "2.0.4"
  ping = "0.4.0"
  
- [build-dependencies]
-@@ -58,3 +58,6 @@ hbb_common = { path = "libs/hbb_common"
- [workspace]
- members = ["libs/hbb_common"]
- exclude = ["ui"]
+ [target.'cfg(any(target_os = "macos", target_os = "windows"))'.dependencies]
+@@ -75,3 +75,6 @@ panic = 'abort'
+ strip = true
+ #opt-level = 'z' # only have smaller size after strip # Default is 3, better performance
+ #rpath = true # Not needed
 +
 +[patch.crates-io]
 +machine-uid = { git = "https://github.com/hadfl/machine-uid.git", branch = "illumos" }
 diff -wpruN --no-dereference '--exclude=*.orig' a~/libs/hbb_common/Cargo.toml a/libs/hbb_common/Cargo.toml
 --- a~/libs/hbb_common/Cargo.toml	1970-01-01 00:00:00
 +++ a/libs/hbb_common/Cargo.toml	1970-01-01 00:00:00
-@@ -34,7 +34,7 @@ chrono = "0.4"
- 
+@@ -48,7 +48,7 @@ sha2 = "0.10"
  [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
  mac_address = "1.1"
--machine-uid = "0.2"
-+machine-uid = "0.5.1"
- 
- [features]
- quic = []
+ default_net = { git = "https://github.com/rustdesk-org/default_net" }
+-machine-uid = { git = "https://github.com/rustdesk-org/machine-uid" }
++machine-uid = { git = "https://github.com/hadfl/machine-uid.git", branch = "illumos" }
+ [target.'cfg(not(any(target_os = "macos", target_os = "windows")))'.dependencies]
+ tokio-rustls = { version = "0.26", features = ["logging", "tls12", "ring"], default-features = false }
+ rustls-platform-verifier = "0.3.1"
