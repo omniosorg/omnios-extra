@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=rustdesk-server
-VER=1.1.12
+VER=1.1.14
 PKG=ooce/application/rustdesk-server
 SUMMARY="$PROG - remote control"
 DESC="Full-featured open source remote control alternative for self-hosting "
@@ -51,7 +51,9 @@ pre_build() {
 }
 
 init
-download_source $PROG $VER
+clone_github_source $PROG "$GITHUB/rustdesk/$PROG" $VER
+append_builddir $PROG
+run_inbuild $GIT submodule update --init --recursive
 patch_source
 prep_build
 SODIUM_USE_PKG_CONFIG=1 build_rust

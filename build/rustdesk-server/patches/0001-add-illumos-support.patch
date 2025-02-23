@@ -1,0 +1,48 @@
+From 073bae1e73f31f0f5a6acb6903cd88136dd1f41c Mon Sep 17 00:00:00 2001
+From: Dominik Hassler <hadfl@omnios.org>
+Date: Sat, 22 Feb 2025 19:16:00 +0000
+Subject: [PATCH] add illumos support
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libs/hbb_common/src/tcp.rs a/libs/hbb_common/src/tcp.rs
+--- a~/libs/hbb_common/src/tcp.rs	1970-01-01 00:00:00
++++ a/libs/hbb_common/src/tcp.rs	1970-01-01 00:00:00
+@@ -68,10 +68,11 @@ pub(crate) fn new_socket(addr: std::net:
+         std::net::SocketAddr::V6(..) => TcpSocket::new_v6()?,
+     };
+     if reuse {
+-        // windows has no reuse_port, but it's reuse_address
++        // windows has no reuse_port, but its reuse_address
+         // almost equals to unix's reuse_port + reuse_address,
+         // though may introduce nondeterministic behavior
+-        #[cfg(unix)]
++        // illumos has no support for SO_REUSEPORT
++        #[cfg(all(unix, not(target_os = "illumos")))]
+         socket.set_reuseport(true).ok();
+         socket.set_reuseaddr(true).ok();
+     }
+@@ -226,6 +227,8 @@ pub async fn listen_any(port: u16) -> Re
+     if let Ok(mut socket) = TcpSocket::new_v6() {
+         #[cfg(unix)]
+         {
++            // illumos has no support for SO_REUSEPORT
++            #[cfg(not(target_os = "illumos"))]
+             socket.set_reuseport(true).ok();
+             socket.set_reuseaddr(true).ok();
+             use std::os::unix::io::{FromRawFd, IntoRawFd};
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libs/hbb_common/src/udp.rs a/libs/hbb_common/src/udp.rs
+--- a~/libs/hbb_common/src/udp.rs	1970-01-01 00:00:00
++++ a/libs/hbb_common/src/udp.rs	1970-01-01 00:00:00
+@@ -20,10 +20,11 @@ fn new_socket(addr: SocketAddr, reuse: b
+         SocketAddr::V6(..) => Socket::new(Domain::ipv6(), Type::dgram(), None),
+     }?;
+     if reuse {
+-        // windows has no reuse_port, but it's reuse_address
++        // windows has no reuse_port, but its reuse_address
+         // almost equals to unix's reuse_port + reuse_address,
+         // though may introduce nondeterministic behavior
+-        #[cfg(unix)]
++        // illumos has no support for SO_REUSEPORT
++        #[cfg(all(unix, not(target_os = "illumos")))]
+         socket.set_reuse_port(true).ok();
+         socket.set_reuse_address(true).ok();
+     }
