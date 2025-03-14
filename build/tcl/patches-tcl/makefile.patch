@@ -3,9 +3,9 @@ man3 and mann).
 
 This patch will not be sent upstream.
 
-diff -wpruN --no-dereference '--exclude=*.orig' a~/Makefile.in a/Makefile.in
---- a~/Makefile.in	1970-01-01 00:00:00
-+++ a/Makefile.in	1970-01-01 00:00:00
+diff -wpruN --no-dereference '--exclude=*.orig' a~/unix/Makefile.in a/unix/Makefile.in
+--- a~/unix/Makefile.in	1970-01-01 00:00:00
++++ a/unix/Makefile.in	1970-01-01 00:00:00
 @@ -72,10 +72,10 @@ MAN_INSTALL_DIR		= $(INSTALL_ROOT)$(mand
  MAN1_INSTALL_DIR	= $(MAN_INSTALL_DIR)/man1
  
@@ -19,16 +19,16 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/Makefile.in a/Makefile.in
  
  # Path to the html documentation dir:
  HTML_DIR		= @HTML_DIR@
-@@ -286,7 +286,7 @@ CC_SWITCHES = $(STUB_CC_SWITCHES) ${NO_D
+@@ -285,7 +285,7 @@ CC_SWITCHES = $(STUB_CC_SWITCHES) -DBUIL
  
- APP_CC_SWITCHES = $(CC_SWITCHES) @EXTRA_APP_CC_SWITCHES@
+ APP_CC_SWITCHES = $(STUB_CC_SWITCHES) @EXTRA_APP_CC_SWITCHES@
  
 -LIBS		= @TCL_LIBS@
 +LIBS		= @TCL_LIBS@ -lc
  
  DEPEND_SWITCHES	= ${CFLAGS} -I${UNIX_DIR} -I${GENERIC_DIR} \
  	${AC_FLAGS} ${EXTRA_CFLAGS} @EXTRA_CC_SWITCHES@
-@@ -1028,7 +1028,7 @@ install-msgs:
+@@ -1146,7 +1146,7 @@ install-msgs:
  	done
  
  install-doc: doc
@@ -37,24 +37,23 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/Makefile.in a/Makefile.in
  	    if [ ! -d "$$i" ] ; then \
  		echo "Making directory $$i"; \
  		$(INSTALL_DATA_DIR) "$$i"; \
-@@ -1038,13 +1038,13 @@ install-doc: doc
+@@ -1156,13 +1156,13 @@ install-doc: doc
  	@for i in $(TOP_DIR)/doc/*.1; do \
  	    $(SHELL) $(UNIX_DIR)/installManPage $(MAN_FLAGS) $$i "$(MAN1_INSTALL_DIR)"; \
  	done
 -	@echo "Installing and cross-linking C API (.3) docs to $(MAN3_INSTALL_DIR)/"
 -	@for i in $(TOP_DIR)/doc/*.3; do \
 -	    $(SHELL) $(UNIX_DIR)/installManPage $(MAN_FLAGS) $$i "$(MAN3_INSTALL_DIR)"; \
--	done
--	@echo "Installing and cross-linking command (.n) docs to $(MANN_INSTALL_DIR)/";
--	@for i in $(TOP_DIR)/doc/*.n; do \
--	    $(SHELL) $(UNIX_DIR)/installManPage $(MAN_FLAGS) $$i "$(MANN_INSTALL_DIR)"; \
 +	@echo "Installing and cross-linking C API (.3tcl) docs to $(MAN3TCL_INSTALL_DIR)/"
 +	@for i in $(TOP_DIR)/doc/*.3tcl; do \
 +	    $(SHELL) $(UNIX_DIR)/installManPage $(MAN_FLAGS) $$i "$(MAN3TCL_INSTALL_DIR)"; \
-+	done
+ 	done
+-	@echo "Installing and cross-linking command (.n) docs to $(MANN_INSTALL_DIR)/";
+-	@for i in $(TOP_DIR)/doc/*.n; do \
+-	    $(SHELL) $(UNIX_DIR)/installManPage $(MAN_FLAGS) $$i "$(MANN_INSTALL_DIR)"; \
 +	@echo "Installing and cross-linking command (.1t) docs to $(MAN1T_INSTALL_DIR)/";
 +	@for i in $(TOP_DIR)/doc/*.1t; do \
 +	    $(SHELL) $(UNIX_DIR)/installManPage $(MAN_FLAGS) $$i "$(MAN1T_INSTALL_DIR)"; \
  	done
  
- install-headers:
+ # Public headers that define Tcl's API
