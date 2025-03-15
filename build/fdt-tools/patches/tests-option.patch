@@ -1,0 +1,21 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/meson.build a/meson.build
+--- a~/meson.build	1970-01-01 00:00:00
++++ a/meson.build	1970-01-01 00:00:00
+@@ -68,7 +68,7 @@ if get_option('tools')
+ endif
+ 
+ if not meson.is_cross_build()
+-  if get_option('tools')
++  if get_option('tools') and get_option('tests')
+     subdir('tests')
+   endif
+ endif
+diff -wpruN --no-dereference '--exclude=*.orig' a~/meson_options.txt a/meson_options.txt
+--- a~/meson_options.txt	1970-01-01 00:00:00
++++ a/meson_options.txt	1970-01-01 00:00:00
+@@ -6,3 +6,5 @@ option('valgrind', type: 'feature', valu
+        description: 'Valgrind support')
+ option('static-build', type: 'boolean', value: false,
+        description: 'Build static binaries')
++option('tests', type: 'boolean', value: true,
++       description: 'Build tests')

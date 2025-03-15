@@ -92,6 +92,7 @@ extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/cscope
 extra.omnios ooce/developer/cunit
 extra.omnios ooce/developer/dejagnu
+extra.omnios ooce/developer/fdt-tools
 extra.omnios ooce/developer/flamegraph
 extra.omnios ooce/developer/freepascal
 extra.omnios ooce/developer/gdb

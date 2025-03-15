@@ -16,6 +16,7 @@ extra.omnios ooce/developer/aarch64-esr-decoder
 extra.omnios ooce/developer/autoconf-archive
 extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/cunit
+extra.omnios ooce/developer/fdt-tools
 extra.omnios ooce/developer/git-absorb
 extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/protobuf
