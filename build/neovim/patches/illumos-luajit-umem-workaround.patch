@@ -1,6 +1,7 @@
---- a~/src/nvim/os_illumos.c	Tue Jan 21 16:21:57 2025
-+++ a/src/nvim/os_illumos.c	Tue Jan 21 16:39:03 2025
-@@ -174,3 +174,28 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/os_illumos.c a/src/nvim/os_illumos.c
+--- a~/src/nvim/os_illumos.c	1970-01-01 00:00:00
++++ a/src/nvim/os_illumos.c	1970-01-01 00:00:00
+@@ -174,3 +174,28 @@ forkpty(int *controlp, char *name, const
  
  	return (0);
  }
