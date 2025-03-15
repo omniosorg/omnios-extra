@@ -3,7 +3,7 @@ shutdown(3SOCKET) requires sys/socket.h
 diff -wpruN --no-dereference '--exclude=*.orig' a~/src/util/peekfd.c a/src/util/peekfd.c
 --- a~/src/util/peekfd.c	1970-01-01 00:00:00
 +++ a/src/util/peekfd.c	1970-01-01 00:00:00
-@@ -46,6 +46,9 @@
+@@ -49,6 +49,9 @@
  #include <termios.h>
  #endif
  #include <unistd.h>
