@@ -94,6 +94,8 @@ ooce/util/htmlq
 ooce/driver/fuse
 ooce/system/file-system/ntfs-3g
 ooce/editor/helix
+ooce/developer/aarch64-esr-decoder
+ooce/developer/fdt-tools
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
