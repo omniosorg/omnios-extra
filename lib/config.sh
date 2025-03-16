@@ -288,10 +288,10 @@ CTFCFLAGS[13]="-gdwarf-2"
 CTFCFLAGS[14]="-gdwarf-4"
 GENOFFSETS_CFLAGS="
     ${CTFCFLAGS[_]}
-    -std=gnu99
     -_gcc=-fno-eliminate-unused-debug-symbols
     -_gcc=-fno-eliminate-unused-debug-types
 "
+[ $RELVER -ge 151053 ] && GENOFFSETS_CFLAGS+=" -std=gnu99"
 
 CTF_DEFAULT=1
 
