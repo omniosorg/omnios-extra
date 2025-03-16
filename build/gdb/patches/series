@@ -1,7 +1,6 @@
 features-i386.patch
 syscalls.patch
 #
-fix-null-ptr.patch
 remove-core-warning.patch
 force-bash.patch
 fix-attach.patch

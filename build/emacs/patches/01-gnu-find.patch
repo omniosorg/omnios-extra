@@ -3,7 +3,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/lisp/progmodes/grep.el a/lisp/progmodes/grep.el
 --- a~/lisp/progmodes/grep.el	1970-01-01 00:00:00
 +++ a/lisp/progmodes/grep.el	1970-01-01 00:00:00
-@@ -506,7 +506,7 @@ This gets tacked on the end of the gener
+@@ -548,7 +548,7 @@ This gets tacked on the end of the gener
  This variable's value takes effect when `grep-compute-defaults' is called.")
  
  ;;;###autoload
