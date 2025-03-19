@@ -1,0 +1,97 @@
+From 1e2ca3fe4e0a277f615bffb1a597026bc06ab931 Mon Sep 17 00:00:00 2001
+From: Ryan Zezeski <ryan@zinascii.com>
+Date: Wed, 19 Mar 2025 08:37:26 -0400
+Subject: [PATCH] stack trace thread safety
+
+Currently the "thread local storage" test fails (for reasons unknown).
+The nature of this test failing results in multiple threads trying to
+print a stack trace concurrently using shared debug info structures.
+However, these structures are currently not MT-safe and chaos ensues.
+This patch adds a few mutexes to stop the bleeding until upstream
+fixes things.
+
+The wst_lock probably covers everything, but it was the last one I
+added. I left the other two in because they shouldn't hurt anything.
+---
+ lib/std/debug.zig          | 9 +++++++++
+ lib/std/debug/SelfInfo.zig | 7 +++++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/lib/std/debug.zig b/lib/std/debug.zig
+index 77b619a056..9a5c08996d 100644
+--- a/lib/std/debug.zig
++++ b/lib/std/debug.zig
+@@ -221,8 +221,11 @@ pub fn getStderrMutex() *std.Thread.Mutex {
+ 
+ /// TODO multithreaded awareness
+ var self_debug_info: ?SelfInfo = null;
++var sdi_lock: std.Thread.Mutex = .{};
+ 
+ pub fn getSelfDebugInfo() !*SelfInfo {
++    sdi_lock.lock();
++    defer sdi_lock.unlock();
+     if (self_debug_info) |*info| {
+         return info;
+     } else {
+@@ -690,6 +693,9 @@ fn waitForOtherThreadToFinishPanicking() void {
+     }
+ }
+ 
++// This locking could be finer, but I just want to get things working.
++var wst_lock: std.Thread.Mutex = .{};
++
+ pub fn writeStackTrace(
+     stack_trace: std.builtin.StackTrace,
+     out_stream: anytype,
+@@ -700,6 +706,8 @@ pub fn writeStackTrace(
+     var frame_index: usize = 0;
+     var frames_left: usize = @min(stack_trace.index, stack_trace.instruction_addresses.len);
+ 
++    wst_lock.lock();
++    errdefer wst_lock.unlock();
+     while (frames_left != 0) : ({
+         frames_left -= 1;
+         frame_index = (frame_index + 1) % stack_trace.instruction_addresses.len;
+@@ -707,6 +715,7 @@ pub fn writeStackTrace(
+         const return_address = stack_trace.instruction_addresses[frame_index];
+         try printSourceAtAddress(debug_info, out_stream, return_address - 1, tty_config);
+     }
++    wst_lock.unlock();
+ 
+     if (stack_trace.index > stack_trace.instruction_addresses.len) {
+         const dropped_frames = stack_trace.index - stack_trace.instruction_addresses.len;
+diff --git a/lib/std/debug/SelfInfo.zig b/lib/std/debug/SelfInfo.zig
+index ea7ecac4ed..54a6759a8e 100644
+--- a/lib/std/debug/SelfInfo.zig
++++ b/lib/std/debug/SelfInfo.zig
+@@ -30,6 +30,8 @@ const SelfInfo = @This();
+ 
+ const root = @import("root");
+ 
++// The si_lock must be held when accessing the allocator or address map.
++si_lock: std.Thread.Mutex,
+ allocator: Allocator,
+ address_map: std.AutoHashMap(usize, *Module),
+ modules: if (native_os == .windows) std.ArrayListUnmanaged(WindowsModule) else void,
+@@ -61,6 +63,7 @@ pub fn open(allocator: Allocator) OpenError!SelfInfo {
+ 
+ pub fn init(allocator: Allocator) !SelfInfo {
+     var debug_info: SelfInfo = .{
++        .si_lock = .{},
+         .allocator = allocator,
+         .address_map = std.AutoHashMap(usize, *Module).init(allocator),
+         .modules = if (native_os == .windows) .{} else {},
+@@ -458,6 +461,10 @@ fn lookupModuleDl(self: *SelfInfo, address: usize) !*Module {
+         error.Found => {},
+     }
+ 
++    // Take the lock before updating internal state.
++    self.si_lock.lock();
++    defer self.si_lock.unlock();
++
+     if (self.address_map.get(ctx.base_address)) |obj_di| {
+         return obj_di;
+     }
+-- 
+2.43.0
+
