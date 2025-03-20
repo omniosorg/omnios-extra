@@ -1,0 +1,91 @@
+From 841366f6c53387fd598a9f5b47f50a5334bb9b95 Mon Sep 17 00:00:00 2001
+From: Ryan Zezeski <ryan@zinascii.com>
+Date: Fri, 14 Mar 2025 16:27:14 -0400
+Subject: [PATCH] add arc4random_buf
+
+Add support for arc4random_buf to avoid relying on zig's internal
+tlcsprng implementation as there seems to be some flakiness with it's
+use of threadlocal when using the build runner to build the zig stage3
+compiler (see error below). This only works when the program is linked
+with libc, as should always be the case on illumos.
+
+[19/19] Building stage3
+FAILED: stage3/bin/zig /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0-build/build.amd64/stage3/bin/zig
+
+cd /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0 && /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0-b
+uild/build.amd64/zig2 build --prefix /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0-build/build.amd64/
+stage3 --zig-lib-dir /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib -Dversion-string=0.14.0 -Dtarg
+et=native -Dcpu=baseline -Denable-llvm -Dconfig_h=/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0-build
+/build.amd64/config.h -Dno-langref -Doptimize=ReleaseFast
+Segmentation fault at address 0xfffffc7feeccf448
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib/std/crypto/tlcsprng.zig:59:9: 0x1593a4f in tlsCsprn
+gFill (build)
+    if (wipe_mem.len == 0) {
+        ^
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib/std/Random.zig:58:13: 0x15efbe1 in bytes (build)
+    r.fillFn(r.ptr, buf);
+            ^
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib/std/fs/AtomicFile.zig:26:32: 0x15e84d5 in init (bui
+ld)
+        std.crypto.random.bytes(rand_buf[0..]);
+                               ^
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib/std/fs/Dir.zig:2657:31: 0x15e8099 in atomicFile (bu
+ild)
+        return AtomicFile.init(fs.path.basename(dest_path), options.mode, dir, true);
+                              ^
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib/std/fs/Dir.zig:2541:46: 0x15e8ca0 in updateFile (bu
+ild)
+    var atomic_file = try dest_dir.atomicFile(dest_path, .{ .mode = actual_mode });
+                                             ^
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib/std/Build/Step/InstallDir.zig:111:54: 0x1574176 in
+make (build)
+                const prev_status = fs.Dir.updateFile(
+                                                     ^
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib/std/Build/Step.zig:231:13: 0x15545ff in make (build
+)
+    s.makeFn(s, options) catch |err| switch (err) {
+            ^
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib/compiler/build_runner.zig:1105:31: 0x151ca08 in workerMakeOneStep (build)
+    const make_result = s.make(.{
+                              ^
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib/std/Thread/Pool.zig:119:39: 0x151d3d3 in runFn (build)
+            @call(.auto, func, closure.arguments);
+                                      ^
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib/std/Thread/Pool.zig:295:32: 0x159da4c in worker (build)
+            run_node.data.runFn(&run_node.data, id);
+                               ^
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib/std/Thread.zig:488:13: 0x155323a in callFn__anon_100548 (build)
+            @call(.auto, f, args);
+            ^
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib/std/Thread.zig:757:30: 0x151c29e in entryFn (build)
+                return callFn(f, args_ptr.*);
+                             ^
+???:?:?: 0xfffffc7fef057326 in ??? (libc.so.1)
+Unwind information for `libc.so.1:0xfffffc7fef057326` was not available, trace may be incomplete
+
+???:?:?: 0xfffffc7fef05766f in ??? (libc.so.1)
+???:?:?: 0x0 in ??? (???)
+error: the following build command crashed:
+/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/.zig-cache/o/7d72ec58c6f1742b1ecb4d994da3a6df/build /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0-build/build.amd64/zig2 /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0 /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/.zig-cache /export/home/rpz/.cache/zig --seed 0x97ac69e3 -Zb9a9429c1f2e840d --prefix /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0-build/build.amd64/stage3 -Dversion-string=0.14.0 -Dtarget=native -Dcpu=baseline -Denable-llvm -Dconfig_h=/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0-build/build.amd64/config.h -Dno-langref -Doptimize=ReleaseFast
+ninja: build stopped: subcommand failed.
+--- Make failed
+---
+ lib/std/c.zig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/std/c.zig b/lib/std/c.zig
+index 9b7d36cb32..ad741407fd 100644
+--- a/lib/std/c.zig
++++ b/lib/std/c.zig
+@@ -9327,7 +9327,7 @@ pub extern "c" fn sendfile64(out_fd: fd_t, in_fd: fd_t, offset: ?*i64, count: us
+ pub extern "c" fn setrlimit64(resource: rlimit_resource, rlim: *const rlimit) c_int;
+ 
+ pub const arc4random_buf = switch (native_os) {
+-    .dragonfly, .netbsd, .freebsd, .solaris, .openbsd, .macos, .ios, .tvos, .watchos, .visionos => private.arc4random_buf,
++    .dragonfly, .netbsd, .freebsd, .illumos, .solaris, .openbsd, .macos, .ios, .tvos, .watchos, .visionos => private.arc4random_buf,
+     else => {},
+ };
+ pub const getentropy = switch (native_os) {
+-- 
+2.43.0
+

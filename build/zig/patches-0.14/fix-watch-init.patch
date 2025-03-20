@@ -1,0 +1,27 @@
+From aa7fc1c9d627957e5c7df8a90e8613d8d4f78069 Mon Sep 17 00:00:00 2001
+From: Ryan Zezeski <ryan@zinascii.com>
+Date: Thu, 13 Mar 2025 19:46:46 -0400
+Subject: [PATCH] fix watch init
+
+I'm not sure how this was ever supposed to compile on platforms that
+don't implement the Watch API.
+---
+ lib/std/Build/Watch.zig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/std/Build/Watch.zig b/lib/std/Build/Watch.zig
+index 2ddb3ca4c2..aa94a73f37 100644
+--- a/lib/std/Build/Watch.zig
++++ b/lib/std/Build/Watch.zig
+@@ -819,7 +819,7 @@ const Os = switch (builtin.os.tag) {
+ };
+ 
+ pub fn init() !Watch {
+-    return Os.init();
++    return if (Os != void) Os.init() else error.Unsupported;
+ }
+ 
+ pub const Match = struct {
+-- 
+2.43.0
+

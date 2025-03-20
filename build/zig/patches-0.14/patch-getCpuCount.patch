@@ -1,0 +1,46 @@
+From ed2deacdb33f0d8695c1e072ae0849ea9db3f5c2 Mon Sep 17 00:00:00 2001
+From: Ryan Zezeski <ryan@zinascii.com>
+Date: Thu, 13 Mar 2025 14:29:17 -0400
+Subject: [PATCH] patch getCpuCount()
+
+The std.c._SC.NPROCESSORS_ONLN value is declared as a C ABI compatible
+enum, but while building stage 2 it complains that it's not.
+
+FAILED: zig2.c /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0-build/build.amd64/zig2.c
+cd /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0 && /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0-build/build.amd64/zig1 /tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0/lib build-exe -ofmt=c -lc -OReleaseSmall --name zig2 -femit-bin="/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0-build/build.amd64/zig2.c" -target x86_64-illumos --dep build_options --dep aro -Mroot=src/main.zig -Mbuild_options=/tmp/build_rpz/zig-0.14.0/zig-0.14.0/zig-0.14.0-build/build.amd64/config.zig -Maro=lib/compiler/aro/aro.zig
+/lib/std/Thread.zig:720:47: error: expected type 'c_int', found 'c._SC__enum_68759'
+                const rc = c.sysconf(std.c._SC.NPROCESSORS_ONLN);
+                                     ~~~~~~~~~^~~~~~~~~~~~~~~~~
+/lib/std/c.zig:2297:27: note: enum declared here
+    .solaris, .illumos => enum(c_int) {
+                          ^~~~
+/lib/std/c.zig:10260:31: note: parameter type declared here
+    extern "c" fn sysconf(sc: c_int) c_long;
+                              ^~~~~
+referenced by:
+    getCpuCount: /lib/std/Thread.zig:366:32
+    buildOutputType: src/main.zig:3354:65
+    6 reference(s) hidden; use '-freference-trace=8' to see all references
+
+Perhaps this is a bug in the compiler, but for now we get by with an
+explicit conversion.
+---
+ lib/std/Thread.zig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/std/Thread.zig b/lib/std/Thread.zig
+index 27b2b11c4a..eef5ab6130 100644
+--- a/lib/std/Thread.zig
++++ b/lib/std/Thread.zig
+@@ -717,7 +717,7 @@ const PosixThreadImpl = struct {
+                 // The "proper" way to get the cpu count would be to query
+                 // /dev/kstat via ioctls, and traverse a linked list for each
+                 // cpu.
+-                const rc = c.sysconf(std.c._SC.NPROCESSORS_ONLN);
++                const rc = c.sysconf(@intFromEnum(std.c._SC.NPROCESSORS_ONLN));
+                 return switch (posix.errno(rc)) {
+                     .SUCCESS => @as(usize, @intCast(rc)),
+                     else => |err| posix.unexpectedErrno(err),
+-- 
+2.43.0
+

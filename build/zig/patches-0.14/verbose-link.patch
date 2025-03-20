@@ -1,0 +1,14 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
+--- a~/CMakeLists.txt	1970-01-01 00:00:00
++++ a/CMakeLists.txt	1970-01-01 00:00:00
+@@ -968,6 +968,10 @@ if(NOT "${ZIG_TARGET_DYNAMIC_LINKER}" ST
+ endif()
+ 
+ 
++if(ZIG_BUILD_VERBOSE_LINK)
++  list(APPEND ZIG_BUILD_ARGS "--verbose-link")
++endif()
++
+ add_custom_target(stage3 ALL
+   DEPENDS "${PROJECT_BINARY_DIR}/stage3/bin/zig"
+ )
