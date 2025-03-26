@@ -120,6 +120,7 @@ extra.omnios ooce/developer/yasm
 extra.omnios ooce/developer/zig r
 extra.omnios ooce/developer/zig-012
 extra.omnios ooce/developer/zig-013
+extra.omnios ooce/developer/zig-014
 extra.omnios ooce/driver/fuse
 extra.omnios ooce/editor/emacs
 extra.omnios ooce/editor/helix
