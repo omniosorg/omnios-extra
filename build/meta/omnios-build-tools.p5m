@@ -4,6 +4,7 @@ set name=pkg.description value="Extra tools required to build OmniOS"
 
 depend fmri=developer/omnios-build-tools type=require
 
+depend fmri=ooce/application/graphviz type=require
 depend fmri=ooce/application/tidy type=require
 depend fmri=ooce/compress/pbzip2 type=require
 depend fmri=ooce/compress/pigz type=require
