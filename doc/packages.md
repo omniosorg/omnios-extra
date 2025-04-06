@@ -82,7 +82,7 @@
 | ooce/developer/pkgmgr		| github-latest	| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/protobuf	| 29.3		| https://github.com/protocolbuffers/protobuf/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/radare2	| 5.9.2		| https://github.com/radareorg/radare2/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/rust		| 1.85.0	| https://forge.rust-lang.org/infra/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/rust		| 1.86.0	| https://forge.rust-lang.org/infra/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/subversion	| 1.14.4	| https://downloads.apache.org/subversion/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/valgrind	| 3.24.0	| https://valgrind.org/downloads/current.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/yasm		| 1.3.0		| https://github.com/yasm/yasm/releases https://yasm.tortall.net/ | [omniosorg](https://github.com/omniosorg)
