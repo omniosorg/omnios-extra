@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=tree-sitter-langs
-VER=0.12.196
+VER=0.12.268
 PKG=ooce/text/tree-sitter-langs
 SUMMARY="$PROG"
 DESC="Tree-sitter Language Bundle for Emacs"
