@@ -35,6 +35,9 @@ NO_SONAME_EXPECTED=1
 # valgrind configure requires GNU tools
 export PATH=$GNUBIN:$PATH
 
+# use illumos file(1) which follows symlinks by default
+export FILE
+
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPREFIX=${PREFIX#/}
@@ -50,7 +53,7 @@ LDFLAGS[amd64]=
 init
 download_source $PROG $PROG $VER
 patch_source
-prep_build
+prep_build autoconf -autoreconf
 build
 make_package
 clean_up
