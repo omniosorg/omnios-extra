@@ -8,9 +8,9 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
-license Copyright.txt license=Kitware
+license LICENSE.rst license=Kitware
 
 # cmake will use lib/64 instead of lib/amd64 but does not ship libraries
 # itself. which will lead to a require-any dependency of packages that ship
