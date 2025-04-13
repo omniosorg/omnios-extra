@@ -2,7 +2,7 @@ $NetBSD: patch-common_cpu.cpp,v 1.2 2019/01/25 09:01:13 adam Exp $
 
 Retire detect512, make enable512 a global.
 
-diff -wpruN '--exclude=*.orig' a~/common/cpu.cpp a/source/common/cpu.cpp
+diff -wpruN --no-dereference '--exclude=*.orig' a~/common/cpu.cpp a/common/cpu.cpp
 --- a~/common/cpu.cpp	1970-01-01 00:00:00
 +++ a/common/cpu.cpp	1970-01-01 00:00:00
 @@ -60,7 +60,7 @@ static void sigill_handler(int sig)

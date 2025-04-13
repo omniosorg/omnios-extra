@@ -125,6 +125,8 @@ CONFIGURE_OPTS[WS]="
     -DWITH_MYSQLD_LDFLAGS=-lumem
 
     -DWITH_PIC=1
+
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 "
 
 # Make ISA binaries for mysql_config, to allow software to find the
