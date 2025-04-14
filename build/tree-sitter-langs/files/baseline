@@ -16,6 +16,7 @@ libtree-sitter-dart.so
 libtree-sitter-dockerfile.so
 libtree-sitter-doxygen.so
 libtree-sitter-dtd.so
+libtree-sitter-editorconfig.so
 libtree-sitter-elisp.so
 libtree-sitter-elixir.so
 libtree-sitter-elm.so
@@ -29,8 +30,10 @@ libtree-sitter-gitcommit.so
 libtree-sitter-gitignore.so
 libtree-sitter-gleam.so
 libtree-sitter-go.so
+libtree-sitter-gpr.so
 libtree-sitter-groovy.so
 libtree-sitter-haskell.so
+libtree-sitter-haxe.so
 libtree-sitter-hcl.so
 libtree-sitter-heex.so
 libtree-sitter-html.so

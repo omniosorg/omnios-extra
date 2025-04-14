@@ -207,6 +207,7 @@ PERL_MAKE_TEST=1
 # Paths to common tools
 #############################################################################
 USRBIN=/usr/bin
+USRHASBIN=/usr/has/bin
 OOCEOPT=/opt/ooce
 OOCEBIN=$OOCEOPT/bin
 SFWBIN=/usr/sfw/bin
@@ -228,6 +229,11 @@ done
 AR=$USRBIN/ar
 CURL=$USRBIN/curl
 ELFEDIT=$USRBIN/elfedit
+if test_relver '>=' 151053; then
+    FILE=$USRHASBIN/file
+else
+    FILE=$USRBIN/file
+fi
 GIT=$USRBIN/git
 LZIP=$USRBIN/lzip
 NAWK=$USRBIN/awk
@@ -291,7 +297,8 @@ GENOFFSETS_CFLAGS="
     -_gcc=-fno-eliminate-unused-debug-symbols
     -_gcc=-fno-eliminate-unused-debug-types
 "
-[ $RELVER -ge 151053 ] && GENOFFSETS_CFLAGS+=" -std=gnu99"
+
+test_relver '>=' 151053 && GENOFFSETS_CFLAGS+=" -std=gnu99"
 
 CTF_DEFAULT=1
 

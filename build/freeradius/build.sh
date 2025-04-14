@@ -46,7 +46,7 @@ XFORM_ARGS="
 
 set_arch 64
 set_builddir $PROG-server-$VER
-set_standard XPG6
+set_standard XPG7
 
 SKIP_RTIME_CHECK=1
 NO_SONAME_EXPECTED=1

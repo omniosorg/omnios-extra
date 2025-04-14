@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure.ac a/configure.ac
+--- a~/configure.ac	1970-01-01 00:00:00
++++ a/configure.ac	1970-01-01 00:00:00
+@@ -3848,7 +3848,7 @@ AC_MSG_CHECKING([for default platform of
+ if ! test -f /bin/sh; then
+   AC_MSG_ERROR([Shell interpreter `/bin/sh' not found.])
+ fi
+-elf_class=$( /usr/bin/file /bin/sh | sed -n 's/.*ELF \(..\)-bit.*/\1/p' )
++elf_class=$( ${FILE} /bin/sh | sed -n 's/.*ELF \(..\)-bit.*/\1/p' )
+ case "$elf_class" in
+   64)
+     default_arch="$VGCONF_ARCH_PRI";

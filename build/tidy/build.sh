@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -34,6 +34,7 @@ set_builddir "$PROG-html5-$VER"
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=$PREFIX
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 "
 CONFIGURE_OPTS[i386]="
     -DLIB_INSTALL_DIR=$PREFIX/lib

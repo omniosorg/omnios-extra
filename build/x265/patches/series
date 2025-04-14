@@ -1,3 +1,4 @@
+cmake.patch
 patch-CMakeLists.txt
 patch-common_cpu.cpp
 patch-common_cpu.h

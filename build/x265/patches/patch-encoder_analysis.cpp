@@ -2,7 +2,7 @@ $NetBSD: patch-encoder_analysis.cpp,v 1.1 2019/09/18 10:04:51 jperkin Exp $
 
 Ensure std::log() is used.
 
-diff -wpruN '--exclude=*.orig' a~/encoder/analysis.cpp a/source/encoder/analysis.cpp
+diff -wpruN --no-dereference '--exclude=*.orig' a~/encoder/analysis.cpp a/encoder/analysis.cpp
 --- a~/encoder/analysis.cpp	1970-01-01 00:00:00
 +++ a/encoder/analysis.cpp	1970-01-01 00:00:00
 @@ -2692,8 +2692,8 @@ void Analysis::classifyCU(const CUData&

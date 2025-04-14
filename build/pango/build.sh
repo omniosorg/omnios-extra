@@ -141,15 +141,14 @@ fixup() {
     for obj in $P/bin/* $P/lib/*.so* $P/lib/amd64/*.so*; do
         [ -f "$obj" ] || continue
         logmsg "--- fixing runpath for $obj"
-        if file $obj | egrep -s 'ELF 64-bit'; then
+        if $FILE $obj | egrep -s 'ELF 64-bit'; then
             logcmd elfedit -e "dyn:value -s RPATH $rpath64" $obj
             logcmd elfedit -e "dyn:value -s RUNPATH $rpath64" $obj
-        elif file $obj | egrep -s 'ELF 32-bit'; then
+        elif $FILE $obj | egrep -s 'ELF 32-bit'; then
             logcmd elfedit -e "dyn:value -s RPATH $rpath32" $obj
             logcmd elfedit -e "dyn:value -s RUNPATH $rpath32" $obj
         else
-            file $obj
-            logerr "BAD"
+            logerr "failed to determine ELF class of '$obj'"
         fi
     done
     popd >/dev/null

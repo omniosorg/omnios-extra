@@ -38,6 +38,8 @@ XFORM_ARGS="
 set_arch 64
 NO_PARALLEL_MAKE=1
 
+export MAKE
+
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --with-host-stamp=omnios
