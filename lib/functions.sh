@@ -3058,7 +3058,7 @@ python_path_fixup() {
     pushd $DESTDIR/$PREFIX/bin >/dev/null || return
     for f in *; do
         [ -f "$f" ] || continue
-        file "$f" | $EGREP -s 'executable.*python.*script' || continue
+        $FILE "$f" | $EGREP -s 'executable.*python.*script' || continue
         logmsg "Fixing python library path in $f"
         sed -i "1a\\
 import sys; sys.path.insert(1, '$PREFIX/lib/python$PYTHONVER/vendor-packages')
@@ -3265,7 +3265,7 @@ pyvenv_build() {
     for b in bin/*; do
         [ -f "$b" ] || continue
         [ -h "$b" ] && continue
-        file "$b" | egrep -s 'python.*script$' || continue
+        $FILE "$b" | $EGREP -s 'executable.*python.*script' || continue
         logmsg "Fixing shebang in $b"
         sed -i "1s^$DESTDIR^^" "$b"
     done
