@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=atuin
-VER=18.4.0
+VER=18.5.0
 PKG=ooce/util/atuin
 SUMMARY="Magical shell history"
 DESC="Replaces your existing shell history with a SQLite database and "
