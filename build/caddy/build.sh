@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=caddy
-VER=2.8.4
+VER=2.10.0
 PKG=ooce/server/caddy
 SUMMARY="Caddy web server"
 DESC="Fast and extensible multi-platform HTTP/1-2-3 web server with automatic \
