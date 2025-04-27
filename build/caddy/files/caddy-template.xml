@@ -82,7 +82,7 @@
 
             <exec_method type="method"
                          name="refresh"
-                         exec="%{config/exec} reload --config %{config/file}"
+                         exec="%{config/exec} reload --config %{config/file} --force"
                          timeout_seconds="300" />
 
             <property_group name="config"
