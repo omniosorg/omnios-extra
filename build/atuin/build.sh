@@ -36,7 +36,7 @@ set_arch 64
 export PROTOC_INCLUDE="$PREFIX/include"
 
 init
-download_source $PROG v$VER
+download_source $PROG $VER
 patch_source
 prep_build
 build_rust
