@@ -1,4 +1,4 @@
-From 555de5cd19882a0c96abaa1f4957af0a979e9c98 Mon Sep 17 00:00:00 2001
+From c03ba0eab910a887e3c6973dce2f376ddb6923cf Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:51:42 +0000
 Subject: Add support for VNICs
@@ -17,10 +17,10 @@ https://github.com/TritonDataCenter/illumos-kvm-cmd
  create mode 100644 net/vnic.c
 
 diff --git a/meson.build b/meson.build
-index 147097c652..8486d5d9e0 100644
+index 41f68d3806..44a5c542d1 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -818,7 +818,8 @@ elif host_os == 'darwin'
+@@ -850,7 +850,8 @@ elif host_os == 'darwin'
  elif host_os == 'sunos'
    socket = [cc.find_library('socket'),
              cc.find_library('nsl'),
@@ -44,7 +44,7 @@ index be53794582..07e413c3de 100644
  #ifdef CONFIG_NETMAP
  int net_init_netmap(const Netdev *netdev, const char *name,
 diff --git a/net/hub.c b/net/hub.c
-index 496a3d3b4b..dc7038746b 100644
+index cba20ebd87..9bfb3cef95 100644
 --- a/net/hub.c
 +++ b/net/hub.c
 @@ -291,6 +291,7 @@ void net_hub_check_clients(void)
@@ -69,10 +69,10 @@ index bb97b4dcbe..a396d91d3e 100644
    system_ss.add(files('tap.c', 'tap-stub.c'))
  endif
 diff --git a/net/net.c b/net/net.c
-index 7ef6885876..9babc4459e 100644
+index 39d6f28158..d808c9c8b9 100644
 --- a/net/net.c
 +++ b/net/net.c
-@@ -1247,6 +1247,7 @@ static int (* const net_client_init_fun[NET_CLIENT_DRIVER__MAX])(
+@@ -1258,6 +1258,7 @@ static int (* const net_client_init_fun[NET_CLIENT_DRIVER__MAX])(
  #ifdef CONFIG_VDE
          [NET_CLIENT_DRIVER_VDE]       = net_init_vde,
  #endif
@@ -361,7 +361,7 @@ index 0000000000..481661b583
 +	return (0);
 +}
 diff --git a/qapi/net.json b/qapi/net.json
-index 2739a2f423..d6fb755dca 100644
+index 310cc4fd19..e779194065 100644
 --- a/qapi/net.json
 +++ b/qapi/net.json
 @@ -364,6 +364,17 @@
