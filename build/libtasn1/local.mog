@@ -8,9 +8,9 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
-license doc/COPYING.LESSER license=LGPLv2.1
+license COPYING.LESSERv2 license=LGPLv2.1
 
 <transform path=.*\.la$ -> drop>
 <transform path=$(PREFIX)/share/info -> drop>
