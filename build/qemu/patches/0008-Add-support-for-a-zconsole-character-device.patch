@@ -1,4 +1,4 @@
-From 692f141e1fb4e3f39932a698d221304b21ad37e5 Mon Sep 17 00:00:00 2001
+From 2096da69b5b18139bcea5aad55eaa009143656a6 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 22 May 2023 20:31:38 +0000
 Subject: Add support for a zconsole character device
@@ -93,10 +93,10 @@ index 0000000000..86d0df36e2
 +
 +#endif
 diff --git a/chardev/meson.build b/chardev/meson.build
-index 70070a8279..e05f9424d6 100644
+index 56ee39ac0b..5a346576b0 100644
 --- a/chardev/meson.build
 +++ b/chardev/meson.build
-@@ -26,6 +26,12 @@ else
+@@ -27,6 +27,12 @@ else
      ), util)
  endif
  
@@ -110,10 +110,10 @@ index 70070a8279..e05f9424d6 100644
  
  system_ss.add(files(
 diff --git a/include/chardev/char.h b/include/chardev/char.h
-index 01df55f9e8..8e47f42149 100644
+index 429852f8d9..eb55c9e862 100644
 --- a/include/chardev/char.h
 +++ b/include/chardev/char.h
-@@ -241,6 +241,7 @@ OBJECT_DECLARE_TYPE(Chardev, ChardevClass, CHARDEV)
+@@ -242,6 +242,7 @@ OBJECT_DECLARE_TYPE(Chardev, ChardevClass, CHARDEV)
  #define TYPE_CHARDEV_PARALLEL "chardev-parallel"
  #define TYPE_CHARDEV_FILE "chardev-file"
  #define TYPE_CHARDEV_SERIAL "chardev-serial"
@@ -122,10 +122,10 @@ index 01df55f9e8..8e47f42149 100644
  #define TYPE_CHARDEV_UDP "chardev-udp"
  
 diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index fdff07fd99..f27c1b9701 100644
+index 4397a90680..088f6f87a1 100644
 --- a/include/qemu/osdep.h
 +++ b/include/qemu/osdep.h
-@@ -525,6 +525,10 @@ void qemu_anon_ram_free(void *ptr, size_t size);
+@@ -526,6 +526,10 @@ int qemu_shm_alloc(size_t size, Error **errp);
  #endif
  #endif
  
@@ -137,10 +137,10 @@ index fdff07fd99..f27c1b9701 100644
  #define SIGIO SIGPOLL
  #endif
 diff --git a/qapi/char.json b/qapi/char.json
-index e045354350..ecdef0acff 100644
+index dde2f9538f..4461db49ef 100644
 --- a/qapi/char.json
 +++ b/qapi/char.json
-@@ -467,6 +467,8 @@
+@@ -480,6 +480,8 @@
  #
  # @parallel: parallel host device
  #
@@ -149,7 +149,7 @@ index e045354350..ecdef0acff 100644
  # @pipe: pipes (since 1.5)
  #
  # @socket: stream socket
-@@ -515,6 +517,7 @@
+@@ -530,6 +532,7 @@
    'data': [ 'file',
              { 'name': 'serial', 'if': 'HAVE_CHARDEV_SERIAL' },
              { 'name': 'parallel', 'if': 'HAVE_CHARDEV_PARALLEL' },
@@ -157,7 +157,7 @@ index e045354350..ecdef0acff 100644
              'pipe',
              'socket',
              'udp',
-@@ -697,6 +700,7 @@
+@@ -723,6 +726,7 @@
                          'if': 'HAVE_CHARDEV_SERIAL' },
              'parallel': { 'type': 'ChardevHostdevWrapper',
                            'if': 'HAVE_CHARDEV_PARALLEL' },

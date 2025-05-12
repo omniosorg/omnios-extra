@@ -5,3 +5,4 @@
 0006-Add-support-for-VNICs.patch
 0007-Drop-unnecessary-privileges.patch
 0008-Add-support-for-a-zconsole-character-device.patch
+0009-include-sys-loadavg.h-for-getloadavg.patch

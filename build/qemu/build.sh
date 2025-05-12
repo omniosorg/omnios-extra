@@ -17,12 +17,12 @@
 . ../../lib/build.sh
 
 PROG=qemu
-VER=9.2.2
+VER=10.0.0
 PKG=ooce/emulator/qemu
 SUMMARY="$PROG"
 DESC="A generic and open source machine emulator and virtualizer"
 
-LIBSLIRPVER=4.8.0
+LIBSLIRPVER=4.9.0
 IMGHDRVER=3.13.0
 
 OPREFIX=$PREFIX
