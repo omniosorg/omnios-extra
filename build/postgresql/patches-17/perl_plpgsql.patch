@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/src/pl/plpgsql/src/pl_exec.c a/src/pl/plpgsql/src/pl_exec.c
 --- a~/src/pl/plpgsql/src/pl_exec.c	1970-01-01 00:00:00
 +++ a/src/pl/plpgsql/src/pl_exec.c	1970-01-01 00:00:00
-@@ -8381,6 +8381,15 @@ exec_set_found(PLpgSQL_execstate *estate
+@@ -8383,6 +8383,15 @@ exec_set_found(PLpgSQL_execstate *estate
  	PLpgSQL_var *var;
  
  	var = (PLpgSQL_var *) (estate->datums[estate->found_varno]);
