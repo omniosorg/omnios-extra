@@ -18,7 +18,7 @@
 . ../../lib/build.sh
 
 PROG=victoriametrics
-VER=1.107.0
+VER=1.117.1
 PKG=ooce/database/victoriametrics
 SUMMARY="VictoriaMetrics"
 DESC="Fast, cost-effective monitoring solution and time series database."
@@ -26,7 +26,7 @@ DESC="Fast, cost-effective monitoring solution and time series database."
 DATA=var/${PREFIX#/}/$PROG
 
 set_arch 64
-set_gover
+set_gover 1.24
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
