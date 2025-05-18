@@ -42,6 +42,8 @@ XFORM_ARGS="
 
 CONFIGURE_OPTS="--with-openssl"
 
+CPPFLAGS+=" -DOOCEVER=$RELVER"
+
 init
 download_source $PROG $PROG $VER
 patch_source
