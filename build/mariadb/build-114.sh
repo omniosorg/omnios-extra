@@ -54,14 +54,20 @@ XFORM_ARGS="
 
 CPPFLAGS+=" -I/usr/include/ncurses -DOOCEVER=$RELVER"
 CFLAGS+=" -O3 -I$OPREFIX/include -I/usr/include/gssapi"
-CXXFLAGS[i386]="$CFLAGS ${CFLAGS[i386]} -R$OPREFIX/lib"
-CXXFLAGS[amd64]="$CFLAGS ${CFLAGS[amd64]} -R$OPREFIX/lib/amd64"
-LDFLAGS[i386]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
+CXXFLAGS[i386]="$CFLAGS ${CFLAGS[i386]} -R$OPREFIX/${LIBDIRS[i386]}"
+CXXFLAGS[amd64]="$CFLAGS ${CFLAGS[amd64]} -R$OPREFIX/${LIBDIRS[amd64]}"
+CXXFLAGS[aarch64]="$CFLAGS ${CFLAGS[aarch64]} -R$OPREFIX/${LIBDIRS[aarch64]}"
+CFLAGS[aarch64]+=" -mtls-dialect=trad"
+CXXFLAGS[aarch64]+=" -mtls-dialect=trad"
+LDFLAGS[i386]+=" -L$OPREFIX/${LIBDIRS[i386]} -R$OPREFIX/${LIBDIRS[i386]}"
+LDFLAGS[amd64]+=" -L$OPREFIX/${LIBDIRS[amd64]} -R$OPREFIX/${LIBDIRS[amd64]}"
+LDFLAGS[aarch64]+=" -L$OPREFIX/${LIBDIRS[aarch64]}"
+LDFLAGS[aarch64]+=" -R$OPREFIX/${LIBDIRS[aarch64]}"
 
 CONFIGURE_OPTS=
 CONFIGURE_OPTS[i386]=
 CONFIGURE_OPTS[amd64]=
+CONFIGURE_OPTS[aarch64]=
 CONFIGURE_OPTS[i386_WS]="
     -DFEATURE_SET=xsmall
     -DCMAKE_C_FLAGS_RELEASE=\"$CFLAGS ${CFLAGS[i386]}\"
@@ -72,7 +78,7 @@ CONFIGURE_OPTS[i386_WS]="
     -DINSTALL_BINDIR=bin/i386
     -DINSTALL_SBINDIR=bin/i386
     -DINSTALL_SCRIPTDIR=bin/i386
-    -DINSTALL_LIBDIR=lib
+    -DINSTALL_LIBDIR=${LIBDIRS[i386]}
     -DWITH_MARIABACKUP=OFF
     -DWITH_UNIT_TESTS=OFF
 "
@@ -86,7 +92,19 @@ CONFIGURE_OPTS[amd64_WS]="
     -DINSTALL_BINDIR=bin
     -DINSTALL_SBINDIR=bin
     -DINSTALL_SCRIPTDIR=bin
-    -DINSTALL_LIBDIR=lib/amd64
+    -DINSTALL_LIBDIR=${LIBDIRS[amd64]}
+"
+CONFIGURE_OPTS[aarch64_WS]="
+    -DFEATURE_SET=community
+    -DCMAKE_C_FLAGS_RELEASE=\"$CFLAGS ${CFLAGS[aarch64]}\"
+    -DCMAKE_CXX_FLAGS_RELEASE=\"${CXXFLAGS[aarch64]}\"
+    -DCMAKE_EXE_LINKER_FLAGS_RELEASE=\"${LDFLAGS[aarch64]}\"
+    -DCMAKE_MODULE_LINKER_FLAGS_RELEASE=\"${LDFLAGS[aarch64]}\"
+    -DCMAKE_SHARED_LINKER_FLAGS_RELEASE=\"${LDFLAGS[aarch64]}\"
+    -DINSTALL_BINDIR=bin
+    -DINSTALL_SBINDIR=bin
+    -DINSTALL_SCRIPTDIR=bin
+    -DINSTALL_LIBDIR=${LIBDIRS[aarch64]}
 "
 CONFIGURE_OPTS[WS]="
     -DWITH_COMMENT=\"$DISTRO MariaDB Server\"
@@ -129,17 +147,64 @@ CONFIGURE_OPTS[WS]="
     -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 "
 
-# Make ISA binaries for mysql_config, to allow software to find the
-# right settings for 32/64-bit when pkg-config is not used.
-make_isa_stub() {
-    pushd $DESTDIR$PREFIX/bin >/dev/null
-    logcmd mkdir -p amd64
-    logcmd mv *_config amd64/ || logerr "mv mysql_config"
-    make_isaexec_stub_arch amd64 $PREFIX/bin
-    popd >/dev/null
+pre_configure() {
+    typeset arch=$1
+
+    ! cross_arch $arch && return
+
+    save_variable BUILDARCH
+    save_buildenv
+    set_arch $BUILD_ARCH
+    set_gccver $DEFAULT_GCC_VER
+    CONFIGURE_OPTS[$BUILD_ARCH]=
+
+    save_builddir __native_tools__
+
+    note -n "-- Building native tools"
+
+    # not installing the native tools
+    pre_install() { false; }
+
+    MAKE_TARGET=import_executables build
+    set_crossgcc $arch
+    restore_builddir __native_tools__
+    restore_buildenv
+    restore_variable BUILDARCH
+
+    unset -f pre_install
+
+    CONFIGURE_OPTS[${arch}_WS]+="
+        -DIMPORT_EXECUTABLES=$TMPDIR/$BUILDDIR/build.$BUILD_ARCH/import_executables.cmake
+        -DCMAKE_TOOLCHAIN_FILE=$SRCDIR/files/cmake-toolchain-$arch.txt
+        -DHAVE_SOLARIS_ATOMIC_EXITCODE=0
+    "
+
+    note -n "-- Building $PROG"
 }
 
-build_manifests() {
+post_install() {
+    typeset arch=$1
+
+    [ $arch = i386 ] && return
+
+    # Make ISA binaries for mysql_config, to allow software to find the
+    # right settings for 32/64-bit when pkg-config is not used.
+    if [ $arch = amd64 ]; then
+        pushd $DESTDIR$PREFIX/bin >/dev/null
+        logcmd $MKDIR -p amd64
+        logcmd $MV *_config amd64/ || logerr "mv mysql_config"
+        make_isaexec_stub_arch amd64 $PREFIX/bin
+        popd >/dev/null
+    fi
+
+    add_notes README.install
+
+    logcmd $MKDIR -p $DESTDIR/$CONFPATH
+    xform $SRCDIR/files/my.cnf > $DESTDIR/$CONFPATH/my.cnf
+    xform $SRCDIR/files/mariadb-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
+    xform $SRCDIR/files/mariadb-template > $TMPDIR/$PROG-$sMAJVER
+    install_smf -oocemethod ooce $PROG-$sMAJVER.xml $PROG-$sMAJVER
+
     manifest_start $TMPDIR/manifest.client
     manifest_add_dir $PREFIX/include mysql
     manifest_add_dir $PREFIX/lib pkgconfig amd64 amd64/pkgconfig
@@ -156,15 +221,6 @@ download_source $PROG $PROG $VER
 patch_source
 prep_build cmake+ninja
 build
-strip_install
-make_isa_stub
-add_notes README.install
-logcmd mkdir -p $DESTDIR/$CONFPATH
-xform files/my.cnf > $DESTDIR/$CONFPATH/my.cnf
-xform files/mariadb-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
-xform files/mariadb-template > $TMPDIR/$PROG-$sMAJVER
-install_smf -oocemethod ooce $PROG-$sMAJVER.xml $PROG-$sMAJVER
-build_manifests
 PKG=${PKG/database/library} SUMMARY+=" client and libraries" \
     make_package -seed $TMPDIR/manifest.client
 RUN_DEPENDS_IPS="${PKG/database/library} ooce/database/mariadb-common" \

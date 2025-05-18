@@ -31,7 +31,7 @@ ooce/library/libexif
 ooce/database/lmdb
 ooce/database/bdb
 ooce/database/postgresql-common
-ooce/database/postgresql-14 -f libsandheaders
+ooce/database/postgresql-17 -f libsandheaders
 ooce/terminal/minicom
 ooce/text/hunspell
 ooce/compress/pbzip2
@@ -104,13 +104,13 @@ ooce/network/unbound -f libsandheaders
 ooce/network/openldap
 ooce/library/fontconfig
 ooce/library/libwebp
-ooce/database/postgresql-14
+ooce/database/postgresql-17
 ooce/network/nsd
 ooce/library/slang
 ooce/util/jq
 ooce/security/minisign
 ooce/application/links
-ooce/database/mariadb-106
+ooce/database/mariadb-114
 ooce/developer/cmake
 ooce/network/mosh
 ###############################################################################
