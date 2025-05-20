@@ -387,9 +387,9 @@ case $RELVER in
     *)                  DEFAULT_CLANG_VER=13 ;;
 esac
 
-DEFAULT_GO_VER=1.23
-DEFAULT_NODE_VER=20
-DEFAULT_RUBY_VER=3.3
+DEFAULT_GO_VER=1.24
+DEFAULT_NODE_VER=22
+DEFAULT_RUBY_VER=3.4
 DEFAULT_ZIG_VER=0.12
 
 PYTHON2VER=2.7
@@ -414,8 +414,8 @@ else
 fi
 
 # Default database versions to bundle into packages which use the libraries
-PGSQLVER=14
-MARIASQLVER=10.6
+PGSQLVER=17
+MARIASQLVER=11.4
 
 # Options to turn compiler features on and off. Associative array keyed by
 # compiler version or _ for all versions.

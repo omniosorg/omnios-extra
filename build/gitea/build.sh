@@ -44,6 +44,7 @@ export PATH="$GNUBIN:$PATH"
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
 
+    subsume_arch amd64 LDFLAGS
     export LDFLAGS=" \
     -X code.gitea.io/gitea/modules/setting.CustomPath=/var$PREFIX/custom \
     -X code.gitea.io/gitea/modules/setting.CustomConf=/etc$PREFIX/app.ini \

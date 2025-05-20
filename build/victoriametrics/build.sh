@@ -26,7 +26,7 @@ DESC="Fast, cost-effective monitoring solution and time series database."
 DATA=var/${PREFIX#/}/$PROG
 
 set_arch 64
-set_gover 1.24
+set_gover
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
