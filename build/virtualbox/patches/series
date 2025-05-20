@@ -8,3 +8,4 @@ installctx.patch
 ergoctx.patch
 no-var-spool-pkg.patch
 pam-illumos.patch
+tzfile.patch
