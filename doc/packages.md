@@ -44,7 +44,7 @@
 | ooce/database/postgresql-15	| 15.13		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-16	| 16.9		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-17	| 17.5		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
-| ooce/database/postgresql-XX/citus | 12.1.5	| https://github.com/citusdata/citus/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/database/postgresql-XX/citus | 13.0.1	| https://github.com/citusdata/citus/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-XX/mysql_fdw | 2.9.2	| https://github.com/EnterpriseDB/mysql_fdw/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-XX/pg_repack | 1.5.0	| https://github.com/reorg/pg_repack/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/database/rrdtool		| 1.9.0		| https://github.com/oetiker/rrdtool-1.x/releases | [omniosorg](https://github.com/omniosorg)
