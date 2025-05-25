@@ -51,7 +51,6 @@ ok - fs_copyfile
 ok - fs_event_close_in_callback
 ok - fs_event_close_with_pending_delete_event
 ok - fs_event_close_with_pending_event
-ok - fs_event_error_reporting
 ok - fs_event_getpath
 ok - fs_event_immediate_close
 ok - fs_event_no_callback_after_close
@@ -59,6 +58,7 @@ ok - fs_event_no_callback_on_close
 ok - fs_event_ref
 ok - fs_event_start_and_close
 ok - fs_event_stop_in_cb
+not ok - fs_event_watch_delete_dir
 ok - fs_event_watch_dir
 ok - fs_event_watch_dir_recursive # SKIP Recursive directory watching not supported on this platform.
 ok - fs_event_watch_file
@@ -75,6 +75,7 @@ ok - fs_file_pos_after_op_with_offset
 ok - fs_file_sync
 ok - fs_file_write_null_buffer
 ok - fs_fstat
+ok - fs_fstat_st_dev
 ok - fs_fstat_stdio
 ok - fs_futime
 ok - fs_get_system_error
@@ -93,6 +94,7 @@ ok - fs_poll_close_request_multi_stop_start
 ok - fs_poll_close_request_stop_when_active
 ok - fs_poll_getpath
 ok - fs_poll_ref
+ok - fs_posix_delete
 ok - fs_read_bufs
 ok - fs_read_dir
 ok - fs_read_file_eof
@@ -148,6 +150,7 @@ ok - idle_check
 ok - idle_ref
 ok - idle_starvation
 ok - idna_toascii
+ok - iouring_pollhup
 ok - ip4_addr
 ok - ip6_addr_link_local
 ok - ip6_pton
@@ -169,6 +172,7 @@ ok - loop_backend_timeout
 ok - loop_close
 ok - loop_configure
 ok - loop_handles
+ok - loop_init_oom
 ok - loop_instant_close
 ok - loop_stop
 ok - loop_stop_before_run
@@ -194,6 +198,7 @@ ok - pipe_connect_on_prepare
 ok - pipe_connect_to_file
 ok - pipe_getsockname
 ok - pipe_getsockname_abstract
+ok - pipe_getsockname_autobind
 ok - pipe_getsockname_blocking
 ok - pipe_listen_without_bind
 ok - pipe_overlong_path
@@ -330,6 +335,8 @@ ok - tcp_ref2
 ok - tcp_ref2b
 ok - tcp_ref3
 ok - tcp_ref4
+not ok - tcp_reuseport
+# Assertion failed in test/test-tcp-reuseport.c on line 143: `r == 0` (-48 == 0)
 ok - tcp_rst
 ok - tcp_shutdown_after_write
 ok - tcp_try_write
@@ -345,10 +352,13 @@ ok - tcp_writealot
 ok - test_macros
 ok - thread_affinity
 ok - thread_create
+ok - thread_detach
 ok - thread_equal
 ok - thread_local_storage
 ok - thread_mutex
 ok - thread_mutex_recursive
+ok - thread_name
+ok - thread_name_threadpool
 ok - thread_priority
 ok - thread_rwlock
 ok - thread_rwlock_trylock
@@ -414,13 +424,16 @@ ok - udp_recv_in_a_row
 ok - udp_ref
 ok - udp_ref2
 ok - udp_ref3
+not ok - udp_reuseport
+# Assertion failed in test/test-udp-reuseport.c on line 179: `r == 0` (-48 == 0)
 ok - udp_send_and_recv
 ok - udp_send_hang_loop
 ok - udp_send_immediate
 ok - udp_send_unix
 ok - udp_send_unreachable
 ok - udp_sendmmsg_error
-ok - udp_try_send
+not ok - udp_try_send
+# Assertion failed in test/test-udp-try-send.c on line 126: `r == 2` (1 == 2)
 ok - uname
 ok - unref_in_prepare_cb
 ok - utf8_decode1
@@ -431,4 +444,5 @@ ok - we_get_signal
 ok - we_get_signal_one_shot
 ok - we_get_signals
 ok - we_get_signals_mixed
+ok - wtf8
 1 of 1 test failed
