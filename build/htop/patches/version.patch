@@ -6,7 +6,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/configure.ac a/configure.ac
  
  AC_PREREQ([2.69])
 -AC_INIT([htop], [m4_join([-],m4_defn([htop_release_version]),m4_defn([htop_git_version]))], [htop@groups.io], [], [https://htop.dev/])
-+AC_INIT([htop], [3.4.0], [htop@groups.io], [], [https://htop.dev/])
++AC_INIT([htop], [3.4.1], [htop@groups.io], [], [https://htop.dev/])
  
  AC_CONFIG_SRCDIR([htop.c])
  AC_CONFIG_AUX_DIR([build-aux])
