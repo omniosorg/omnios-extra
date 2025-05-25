@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libpng
-VER=1.6.47
+VER=1.6.48
 PKG=ooce/library/libpng
 SUMMARY="libpng"
 DESC="libpng is the official PNG reference library"
