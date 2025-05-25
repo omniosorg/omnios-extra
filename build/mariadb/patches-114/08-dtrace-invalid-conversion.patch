@@ -13,7 +13,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/filesort.cc a/sql/filesor
 diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.cc
 --- a~/sql/handler.cc	1970-01-01 00:00:00
 +++ a/sql/handler.cc	1970-01-01 00:00:00
-@@ -7457,18 +7457,18 @@ int handler::ha_external_lock(THD *thd,
+@@ -7468,18 +7468,18 @@ int handler::ha_external_lock(THD *thd,
    {
      if (lock_type == F_RDLCK)
      {
@@ -38,7 +38,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.
      }
    }
  
-@@ -7979,7 +7979,7 @@ int handler::ha_write_row(const uchar *b
+@@ -7994,7 +7994,7 @@ int handler::ha_write_row(const uchar *b
      }
    }
  
@@ -47,7 +47,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.
    mark_trx_read_write();
    increment_statistics(&SSV::ha_write_count);
  
-@@ -8032,7 +8032,7 @@ int handler::ha_update_row(const uchar *
+@@ -8045,7 +8045,7 @@ int handler::ha_update_row(const uchar *
    if (error)
      return error;
  
@@ -56,7 +56,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.
    mark_trx_read_write();
    increment_statistics(&SSV::ha_update_count);
  
-@@ -8111,7 +8111,7 @@ int handler::ha_delete_row(const uchar *
+@@ -8126,7 +8126,7 @@ int handler::ha_delete_row(const uchar *
    DBUG_ASSERT(buf == table->record[0] ||
                buf == table->record[1]);
  
@@ -65,7 +65,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.
    mark_trx_read_write();
    increment_statistics(&SSV::ha_delete_count);
  
-@@ -8169,7 +8169,7 @@ int handler::ha_delete_row(const uchar *
+@@ -8185,7 +8185,7 @@ int handler::ha_delete_row(const uchar *
  int handler::ha_direct_update_rows(ha_rows *update_rows, ha_rows *found_rows)
  {
    int error;
@@ -74,7 +74,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.
    mark_trx_read_write();
  
    error= direct_update_rows(update_rows, found_rows);
-@@ -8196,7 +8196,7 @@ int handler::ha_direct_delete_rows(ha_ro
+@@ -8212,7 +8212,7 @@ int handler::ha_direct_delete_rows(ha_ro
    /* Ensure we are not using binlog row */
    DBUG_ASSERT(!table->in_use->is_current_stmt_binlog_format_row());
  
@@ -86,7 +86,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/handler.cc a/sql/handler.
 diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_class.h
 --- a~/sql/sql_class.h	1970-01-01 00:00:00
 +++ a/sql/sql_class.h	1970-01-01 00:00:00
-@@ -7877,7 +7877,7 @@ inline int handler::ha_read_first_row(uc
+@@ -7885,7 +7885,7 @@ inline int handler::ha_read_first_row(uc
  inline int handler::ha_write_tmp_row(uchar *buf)
  {
    int error;
@@ -95,7 +95,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_cla
    increment_statistics(&SSV::ha_tmp_write_count);
    TABLE_IO_WAIT(tracker, PSI_TABLE_WRITE_ROW, MAX_KEY, error,
            { error= write_row(buf); })
-@@ -7888,7 +7888,7 @@ inline int handler::ha_write_tmp_row(uch
+@@ -7896,7 +7896,7 @@ inline int handler::ha_write_tmp_row(uch
  inline int handler::ha_delete_tmp_row(uchar *buf)
  {
    int error;
@@ -104,7 +104,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/sql_class.h a/sql/sql_cla
    increment_statistics(&SSV::ha_tmp_delete_count);
    TABLE_IO_WAIT(tracker, PSI_TABLE_DELETE_ROW, MAX_KEY, error,
                  { error= delete_row(buf); })
-@@ -7899,7 +7899,7 @@ inline int handler::ha_delete_tmp_row(uc
+@@ -7907,7 +7907,7 @@ inline int handler::ha_delete_tmp_row(uc
  inline int handler::ha_update_tmp_row(const uchar *old_data, uchar *new_data)
  {
    int error;
@@ -146,7 +146,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/sql_parse.cc a/sql/sql_pa
                          &thd->security_ctx->priv_user[0],
                          (char *) thd->security_ctx->host_or_ip);
  
-@@ -7689,7 +7689,7 @@ static void wsrep_prepare_for_autocommit
+@@ -7680,7 +7680,7 @@ static void wsrep_prepare_for_autocommit
  
    /* DTRACE begin */
    MYSQL_QUERY_START(rawbuf, thd->thread_id,
@@ -155,7 +155,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/sql_parse.cc a/sql/sql_pa
                      &thd->security_ctx->priv_user[0],
                      (char *) thd->security_ctx->host_or_ip);
  
-@@ -7898,7 +7898,7 @@ void mysql_parse(THD *thd, char *rawbuf,
+@@ -7889,7 +7889,7 @@ void mysql_parse(THD *thd, char *rawbuf,
            lex->set_trg_event_type_for_tables();
            MYSQL_QUERY_EXEC_START(thd->query(),
                                   thd->thread_id,
@@ -167,7 +167,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/sql_parse.cc a/sql/sql_pa
 diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/sql_prepare.cc a/sql/sql_prepare.cc
 --- a~/sql/sql_prepare.cc	1970-01-01 00:00:00
 +++ a/sql/sql_prepare.cc	1970-01-01 00:00:00
-@@ -5069,7 +5069,7 @@ bool Prepared_statement::execute(String
+@@ -5071,7 +5071,7 @@ bool Prepared_statement::execute(String
      if (query_cache_send_result_to_client(thd, thd->query(),
                                            thd->query_length()) <= 0)
      {

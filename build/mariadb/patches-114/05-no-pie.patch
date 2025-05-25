@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
 --- a~/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/CMakeLists.txt	1970-01-01 00:00:00
-@@ -276,8 +276,8 @@ MY_CHECK_AND_SET_COMPILER_FLAG("-fno-omi
+@@ -288,8 +288,8 @@ MY_CHECK_AND_SET_COMPILER_FLAG("-fno-omi
  OPTION(SECURITY_HARDENED "Use security-enhancing compiler features (stack protector, relro, etc)" ON)
  IF(SECURITY_HARDENED AND NOT WITH_ASAN AND NOT WITH_UBSAN AND NOT WITH_TSAN AND NOT WITH_GPROF AND NOT WITH_MSAN)
    # security-enhancing flags
