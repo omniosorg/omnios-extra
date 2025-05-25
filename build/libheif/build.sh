@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libheif
-VER=1.19.7
+VER=1.19.8
 PKG=ooce/library/libheif
 SUMMARY="HEIF and AVIF encoder"
 DESC="ISO/IEC 23008-12:2017 HEIF and AVIF (AV1 Image File Format) "
