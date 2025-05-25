@@ -12,14 +12,14 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=freeradius
 PKG=ooce/server/freeradius
-VER=3.2.6
-TALLOCVER=2.4.2             # https://www.samba.org/ftp/talloc/
+VER=3.2.7
+TALLOCVER=2.4.3             # https://www.samba.org/ftp/talloc/
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
 SUMMARY="FreeRADIUS $MAJVER"
