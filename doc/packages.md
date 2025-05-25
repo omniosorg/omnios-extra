@@ -211,7 +211,7 @@
 | ooce/server/freeradius	| 3.2.6		| https://github.com/FreeRADIUS/freeradius-server/releases https://freeradius.org/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/server/haproxy		| 3.0.7		| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.27.4	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/server/nginx-126		| 1.26.3	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/server/nginx-128		| 1.28.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio		| 2024-12-13T22-19-12Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio-mc		| 2024-11-21T17-21-54Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/file-system/ntfs-3g | 2022.10.3	| https://github.com/tuxera/ntfs-3g/releases | [omniosorg](https://github.com/omniosorg)
