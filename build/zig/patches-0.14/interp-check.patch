@@ -6,15 +6,10 @@ Subject: [PATCH] check for PT_INTERP before exec
 Before allowing the builder to run a command, verify that the binary
 contains a PT_INTERP entry. This avoids an issue with illumos where we
 drop a SIGKILL on the process if there is a PT_PHDR with no PT_INTERP.
----
- lib/std/Build/Step/Run.zig | 162 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 162 insertions(+)
-
-diff --git a/lib/std/Build/Step/Run.zig b/lib/std/Build/Step/Run.zig
-index a9d4808bc0..fa891d9811 100644
---- a/lib/std/Build/Step/Run.zig
-+++ b/lib/std/Build/Step/Run.zig
-@@ -1281,6 +1281,146 @@ fn runCommand(
+diff -wpruN --no-dereference '--exclude=*.orig' a~/lib/std/Build/Step/Run.zig a/lib/std/Build/Step/Run.zig
+--- a~/lib/std/Build/Step/Run.zig	1970-01-01 00:00:00
++++ a/lib/std/Build/Step/Run.zig	1970-01-01 00:00:00
+@@ -1310,6 +1310,146 @@ fn runCommand(
      }
  }
  
@@ -161,7 +156,7 @@ index a9d4808bc0..fa891d9811 100644
  const ChildProcResult = struct {
      term: std.process.Child.Term,
      elapsed_ns: u64,
-@@ -1304,6 +1444,28 @@ fn spawnChildAndCollect(
+@@ -1333,6 +1473,28 @@ fn spawnChildAndCollect(
          assert(run.stdio == .zig_test);
      }
  
@@ -190,6 +185,3 @@ index a9d4808bc0..fa891d9811 100644
      var child = std.process.Child.init(argv, arena);
      if (run.cwd) |lazy_cwd| {
          child.cwd = lazy_cwd.getPath2(b, &run.step);
--- 
-2.43.0
-

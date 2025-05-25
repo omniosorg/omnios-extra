@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
 --- a~/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/CMakeLists.txt	1970-01-01 00:00:00
-@@ -968,6 +968,10 @@ if(NOT "${ZIG_TARGET_DYNAMIC_LINKER}" ST
+@@ -978,6 +978,10 @@ if(MINGW AND "${ZIG_HOST_TARGET_ARCH}" S
  endif()
  
  
