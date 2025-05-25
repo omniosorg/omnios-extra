@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=smartmontools
-VER=7.4
+VER=7.5
 PKG=ooce/system/smartmontools
 SUMMARY="smartmontools"
 DESC="Control and monitor storage systems using SMART"
