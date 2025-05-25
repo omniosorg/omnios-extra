@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=cairo
-VER=1.18.2
+VER=1.18.4
 PKG=ooce/library/cairo
 SUMMARY="cairo"
 DESC="Cairo is a 2D graphics library with support for multiple output devices"
