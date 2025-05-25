@@ -7,7 +7,7 @@ https://github.com/illumos/illumos-gate/blob/master/usr/src/lib/libc/port/fp/fco
 diff -wpruN --no-dereference '--exclude=*.orig' a~/tests/datamash-output-format.pl a/tests/datamash-output-format.pl
 --- a~/tests/datamash-output-format.pl	1970-01-01 00:00:00
 +++ a/tests/datamash-output-format.pl	1970-01-01 00:00:00
-@@ -106,7 +106,7 @@ my @Tests =
+@@ -107,7 +107,7 @@ my @Tests =
    # with an "X".
    ['m2', '--format "%.4000f"   sum 1',  {IN_PIPE=>$in1},
      {OUT => "1.00000X\n"},

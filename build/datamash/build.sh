@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=datamash
-VER=1.8
+VER=1.9
 PKG=ooce/text/datamash
 SUMMARY="GNU $PROG"
 DESC="A command-line program which performs basic numeric, textual and "

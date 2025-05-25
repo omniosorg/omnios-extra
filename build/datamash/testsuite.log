@@ -8,7 +8,7 @@ PASS: tests/datamash-parser.pl
 PASS: tests/datamash-error-msgs.pl
 PASS: tests/datamash-md5.pl
 PASS: tests/datamash-sha.pl
-PASS: tests/datamash-rand.sh
+PASS: tests/datamash-rand.pl
 PASS: tests/datamash-stats.pl
 PASS: tests/datamash-transpose.pl
 PASS: tests/datamash-crosstab.pl
@@ -26,14 +26,15 @@ PASS: tests/datamash-io-errors-cheap.sh
 PASS: tests/datamash-strbin.sh
 datamash-valgrind.sh: skipped test: expensive: disabled by default
 SKIP: tests/datamash-valgrind.sh
+PASS: tests/datamash-vnlog.pl
 PASS: tests/decorate-tests.pl
 PASS: tests/decorate-errors.pl
 PASS: tests/decorate-sort-tests.pl
 ============================================================================
-Testsuite summary for GNU datamash 1.8-dirty
+Testsuite summary for GNU datamash 1.9
 ============================================================================
-# TOTAL: 28
-# PASS:  26
+# TOTAL: 30
+# PASS:  28
 # SKIP:  2
 # XFAIL: 0
 # FAIL:  0
