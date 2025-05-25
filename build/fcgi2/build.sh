@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=fcgi2
-VER=2.4.4
+VER=2.4.6
 PKG=ooce/library/fcgi2
 SUMMARY="FactCGI Library"
 DESC="FastCGI.com fcgi2 Development Kit fork from \

@@ -104,7 +104,7 @@
 | ooce/library/apr-util		| 1.6.3		| https://downloads.apache.org/apr/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/bdw-gc		| 8.2.8		| https://www.hboehm.info/gc/gc_source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/cairo		| 1.18.4	| https://cairographics.org/releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/fcgi2		| 2.4.4		| https://github.com/FastCGI-Archives/fcgi2/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/library/fcgi2		| 2.4.6		| https://github.com/FastCGI-Archives/fcgi2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/fontconfig	| 2.15.0	| https://www.freedesktop.org/software/fontconfig/release/ https://www.freedesktop.org/wiki/Software/fontconfig/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/freetype2	| 2.13.3	| https://sourceforge.net/projects/freetype/files/freetype2/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/gnutls		| 3.6.16	| https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/ https://www.gnutls.org/download.html | [omniosorg](https://github.com/omniosorg)
