@@ -3,15 +3,9 @@ From: "Joshua M. Clulow" <josh@sysmgr.org>
 Date: Mon, 27 Dec 2021 16:08:40 -0800
 Subject: [PATCH] illumos: correctly return error conditions
 
----
- libusb/os/illumos_usb.c | 98 ++++++++++++++++++++++++++++++++---------
- libusb/os/illumos_usb.h |  1 +
- 2 files changed, 79 insertions(+), 20 deletions(-)
-
-diff --git a/libusb/os/illumos_usb.c b/libusb/os/illumos_usb.c
-index db8dcf75..ec4b2721 100644
---- a/libusb/os/illumos_usb.c
-+++ b/libusb/os/illumos_usb.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libusb/os/illumos_usb.c a/libusb/os/illumos_usb.c
+--- a~/libusb/os/illumos_usb.c	1970-01-01 00:00:00
++++ a/libusb/os/illumos_usb.c	1970-01-01 00:00:00
 @@ -1186,7 +1186,6 @@ illumos_async_callback(union sigval arg)
  	struct libusb_transfer *xfer = tpriv->transfer;
  	struct usbi_transfer *ixfer = LIBUSB_TRANSFER_TO_USBI_TRANSFER(xfer);
@@ -24,11 +18,9 @@ index db8dcf75..ec4b2721 100644
  		return;
  	}
  
--	hpriv = usbi_get_device_handle_priv(dev_handle);
--	ep = illumos_usb_ep_index(xfer->endpoint);
 +	if (aio_error(aiocb) != ECANCELED) {
-+		hpriv = usbi_get_device_handle_priv(dev_handle);
-+		ep = illumos_usb_ep_index(xfer->endpoint);
+ 	hpriv = usbi_get_device_handle_priv(dev_handle);
+ 	ep = illumos_usb_ep_index(xfer->endpoint);
  
 -	ret = aio_error(aiocb);
 -	if (ret != 0) {
@@ -53,7 +45,7 @@ index db8dcf75..ec4b2721 100644
  	usbi_signal_transfer_completion(ixfer);
  }
  
-@@ -1478,10 +1474,6 @@ illumos_cancel_transfer(struct usbi_transfer *itransfer)
+@@ -1478,10 +1474,6 @@ illumos_cancel_transfer(struct usbi_tran
  	if (ret != AIO_CANCELED) {
  		ret = _errno_to_libusb(errno);
  	} else {
@@ -64,7 +56,7 @@ index db8dcf75..ec4b2721 100644
  		ret = LIBUSB_SUCCESS;
  	}
  
-@@ -1489,10 +1481,76 @@ illumos_cancel_transfer(struct usbi_transfer *itransfer)
+@@ -1489,10 +1481,76 @@ illumos_cancel_transfer(struct usbi_tran
  }
  
  int
@@ -144,11 +136,10 @@ index db8dcf75..ec4b2721 100644
  }
  
  int
-diff --git a/libusb/os/illumos_usb.h b/libusb/os/illumos_usb.h
-index f24c3707..4f3082c8 100644
---- a/libusb/os/illumos_usb.h
-+++ b/libusb/os/illumos_usb.h
-@@ -50,6 +50,7 @@ typedef struct illumos_device_handle_priv {
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libusb/os/illumos_usb.h a/libusb/os/illumos_usb.h
+--- a~/libusb/os/illumos_usb.h	1970-01-01 00:00:00
++++ a/libusb/os/illumos_usb.h	1970-01-01 00:00:00
+@@ -50,6 +50,7 @@ typedef struct illumos_device_handle_pri
  typedef	struct illumos_transfer_priv {
  	struct aiocb		aiocb;
  	struct libusb_transfer	*transfer;
