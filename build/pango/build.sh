@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=pango
-VER=1.55.5
+VER=1.56.3
 PKG=ooce/library/pango
 SUMMARY="pango"
 DESC="Pango is a library for laying out and rendering of text"
@@ -25,7 +25,7 @@ DESC="Pango is a library for laying out and rendering of text"
 forgo_isaexec
 
 # Dependencies
-HARFBUZZVER=10.1.0
+HARFBUZZVER=11.2.1
 FRIBIDIVER=1.0.16
 
 export CC_FOR_BUILD=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc

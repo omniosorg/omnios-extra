@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/test/meson.build a/test/meson.build
 --- a~/test/meson.build	1970-01-01 00:00:00
 +++ a/test/meson.build	1970-01-01 00:00:00
-@@ -75,7 +75,7 @@ foreach t : tests
+@@ -77,7 +77,7 @@ foreach t : tests
        [t + '.c', config_h],
        dependencies : [idep_pixman, libtestutils_dep, dep_threads, dep_openmp, dep_png],
      ),

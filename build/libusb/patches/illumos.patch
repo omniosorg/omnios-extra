@@ -3,21 +3,10 @@ From: "Joshua M. Clulow" <josh@sysmgr.org>
 Date: Mon, 27 Dec 2021 16:08:38 -0800
 Subject: [PATCH] illumos: split off from Solaris backend
 
----
- README                  |    2 +-
- configure.ac            |   19 +-
- libusb/Makefile.am      |    5 +
- libusb/os/illumos_usb.c | 1653 +++++++++++++++++++++++++++++++++++++++
- libusb/os/illumos_usb.h |   80 ++
- 5 files changed, 1752 insertions(+), 7 deletions(-)
- create mode 100644 libusb/os/illumos_usb.c
- create mode 100644 libusb/os/illumos_usb.h
-
-diff --git a/README b/README
-index a47b4bd6e..adc408c17 100644
---- a/README
-+++ b/README
-@@ -5,7 +5,7 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/README a/README
+--- a~/README	1970-01-01 00:00:00
++++ a/README	1970-01-01 00:00:00
+@@ -1,7 +1,7 @@
  # libusb
  
  libusb is a library for USB device access from Linux, macOS,
@@ -26,30 +15,26 @@ index a47b4bd6e..adc408c17 100644
  via WebUSB.
  It is written in C (Haiku backend in C++) and licensed under the GNU
  Lesser General Public License version 2.1 or, at your option, any later
-diff --git a/configure.ac b/configure.ac
-index f6cf2f9f7..fe51f2e8f 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -108,9 +108,15 @@ case $host in
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure.ac a/configure.ac
+--- a~/configure.ac	1970-01-01 00:00:00
++++ a/configure.ac	1970-01-01 00:00:00
+@@ -119,9 +119,15 @@ Please use an explicit --host=$host_cpu-
  	platform=posix
  	;;
  *-solaris*)
--	AC_MSG_RESULT([SunOS])
--	backend=sunos
--	platform=posix
 +	if test "x`uname -o`" = xillumos; then
 +		AC_MSG_RESULT([illumos])
 +		backend=illumos
 +		platform=posix
 +	else
-+		AC_MSG_RESULT([SunOS])
-+		backend=sunos
-+		platform=posix
+ 	AC_MSG_RESULT([SunOS])
+ 	backend=sunos
+ 	platform=posix
 +	fi
  	;;
  *-cygwin*)
  	AC_MSG_RESULT([Windows (using Cygwin)])
-@@ -183,7 +189,7 @@ linux)
+@@ -224,7 +230,7 @@ linux)
  		AC_CHECK_HEADER([sys/socket.h], [], [AC_MSG_ERROR([Linux socket header not found])])
  	fi
  	;;
@@ -58,7 +43,7 @@ index f6cf2f9f7..fe51f2e8f 100644
  	LIBS="${LIBS} -ldevinfo"
  	;;
  windows)
-@@ -235,7 +241,7 @@ if test "x$platform" = xposix; then
+@@ -262,7 +268,7 @@ if test "x$platform" = xposix && test "x
  fi
  
  dnl eventfd support
@@ -67,7 +52,7 @@ index f6cf2f9f7..fe51f2e8f 100644
  	AC_ARG_ENABLE([eventfd],
  		[AS_HELP_STRING([--enable-eventfd], [use eventfd for signalling [default=auto]])],
  		[use_eventfd=$enableval],
-@@ -273,7 +279,7 @@ if test "x$backend" = xlinux || test "x$backend" = xsunos; then
+@@ -300,7 +306,7 @@ if test "x$backend" = xlinux || test "x$
  fi
  
  dnl timerfd support
@@ -76,19 +61,18 @@ index f6cf2f9f7..fe51f2e8f 100644
  	AC_ARG_ENABLE([timerfd],
  		[AS_HELP_STRING([--enable-timerfd], [use timerfd for timing [default=auto]])],
  		[use_timerfd=$enableval],
-@@ -364,6 +370,7 @@ AM_CONDITIONAL([OS_NETBSD], [test "x$backend" = xnetbsd])
+@@ -392,6 +398,7 @@ AM_CONDITIONAL([OS_NETBSD], [test "x$bac
  AM_CONDITIONAL([OS_NULL], [test "x$backend" = xnull])
  AM_CONDITIONAL([OS_OPENBSD], [test "x$backend" = xopenbsd])
  AM_CONDITIONAL([OS_SUNOS], [test "x$backend" = xsunos])
 +AM_CONDITIONAL([OS_ILLUMOS], [test "x$backend" = xillumos])
  AM_CONDITIONAL([OS_WINDOWS], [test "x$backend" = xwindows])
+ AM_CONDITIONAL([OS_EMSCRIPTEN], [test "x$backend" = xemscripten])
  AM_CONDITIONAL([PLATFORM_POSIX], [test "x$platform" = xposix])
- AM_CONDITIONAL([PLATFORM_WINDOWS], [test "x$platform" = xwindows])
-diff --git a/libusb/Makefile.am b/libusb/Makefile.am
-index baf7b38f6..c6ac86452 100644
---- a/libusb/Makefile.am
-+++ b/libusb/Makefile.am
-@@ -24,6 +24,7 @@ OS_NETBSD_SRC = os/netbsd_usb.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libusb/Makefile.am a/libusb/Makefile.am
+--- a~/libusb/Makefile.am	1970-01-01 00:00:00
++++ a/libusb/Makefile.am	1970-01-01 00:00:00
+@@ -25,6 +25,7 @@ OS_NETBSD_SRC = os/netbsd_usb.c
  OS_NULL_SRC = os/null_usb.c
  OS_OPENBSD_SRC = os/openbsd_usb.c
  OS_SUNOS_SRC = os/sunos_usb.h os/sunos_usb.c
@@ -96,7 +80,7 @@ index baf7b38f6..c6ac86452 100644
  OS_WINDOWS_SRC = libusb-1.0.def libusb-1.0.rc \
  		 os/windows_common.h os/windows_common.c \
  		 os/windows_usbdk.h os/windows_usbdk.c \
-@@ -64,6 +65,10 @@ if OS_SUNOS
+@@ -74,6 +75,10 @@ if OS_SUNOS
  OS_SRC = $(OS_SUNOS_SRC)
  endif
  
@@ -107,11 +91,9 @@ index baf7b38f6..c6ac86452 100644
  if OS_WINDOWS
  OS_SRC = $(OS_WINDOWS_SRC)
  
-diff --git a/libusb/os/illumos_usb.c b/libusb/os/illumos_usb.c
-new file mode 100644
-index 000000000..db8dcf756
---- /dev/null
-+++ b/libusb/os/illumos_usb.c
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libusb/os/illumos_usb.c a/libusb/os/illumos_usb.c
+--- a~/libusb/os/illumos_usb.c	1970-01-01 00:00:00
++++ a/libusb/os/illumos_usb.c	1970-01-01 00:00:00
 @@ -0,0 +1,1653 @@
 +/*
 + *
@@ -1766,11 +1748,9 @@ index 000000000..db8dcf756
 +	.attach_kernel_driver = illumos_attach_kernel_driver,
 +	.transfer_priv_size = sizeof(illumos_xfer_priv_t),
 +};
-diff --git a/libusb/os/illumos_usb.h b/libusb/os/illumos_usb.h
-new file mode 100644
-index 000000000..f24c37075
---- /dev/null
-+++ b/libusb/os/illumos_usb.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libusb/os/illumos_usb.h a/libusb/os/illumos_usb.h
+--- a~/libusb/os/illumos_usb.h	1970-01-01 00:00:00
++++ a/libusb/os/illumos_usb.h	1970-01-01 00:00:00
 @@ -0,0 +1,80 @@
 +/*
 + *

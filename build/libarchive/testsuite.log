@@ -4,7 +4,7 @@ PASS: bsdcpio_test
 PASS: bsdcat_test
 PASS: bsdunzip_test
 ============================================================================
-Testsuite summary for libarchive 3.7.7
+Testsuite summary for libarchive 3.8.0
 ============================================================================
 # TOTAL: 5
 # PASS:  4
@@ -17,7 +17,7 @@ Testsuite summary for libarchive 3.7.7
 See ./test-suite.log
 Please report to libarchive-discuss@googlegroups.com
 ============================================================================
-make[3]: *** [Makefile:15946: test-suite.log] Error 1
-make[2]: *** [Makefile:16054: check-TESTS] Error 2
-make[1]: *** [Makefile:16295: check-am] Error 2
-make: *** [Makefile:16297: check] Error 2
+make[3]: *** [Makefile:16229: test-suite.log] Error 1
+make[2]: *** [Makefile:16337: check-TESTS] Error 2
+make[1]: *** [Makefile:16578: check-am] Error 2
+make: *** [Makefile:16580: check] Error 2

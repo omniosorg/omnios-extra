@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/build.zig a/build.zig
 --- a~/build.zig	1970-01-01 00:00:00
 +++ a/build.zig	1970-01-01 00:00:00
-@@ -189,6 +189,11 @@ pub fn build(b: *std.Build) !void {
+@@ -197,6 +197,11 @@ pub fn build(b: *std.Build) !void {
      exe.pie = pie;
      exe.entitlements = entitlements;
  

@@ -1,38 +1,40 @@
- 1/33 oob-test              OK
- 2/33 infinite-loop         OK
- 3/33 trap-crasher          OK
- 4/33 fence-image-self-test OK
- 5/33 region-translate-test OK
- 6/33 fetch-test            OK
- 7/33 a1-trap-test          OK
- 8/33 prng-test             OK
- 9/33 radial-invalid        OK
-10/33 pdf-op-test           OK
-11/33 region-test           OK
-12/33 combiner-test         OK
-13/33 scaling-crash-test    OK
-14/33 alpha-loop            OK
-15/33 scaling-helpers-test  OK
-16/33 gradient-crash-test   OK
-17/33 rotate-test           OK
-18/33 thread-test           OK
-19/33 pixel-test            OK
-20/33 alphamap              OK
-21/33 composite-traps-test  OK
-22/33 matrix-test           OK
-23/33 filter-reduction-test OK
-24/33 glyph-test            OK
-25/33 solid-test            OK
-26/33 region-contains-test  OK
-27/33 stress-test           OK
-28/33 blitters-test         OK
-29/33 cover-test            OK
-30/33 affine-test           OK
-31/33 scaling-test          OK
-32/33 composite             OK
-33/33 tolerance-test        OK
+ 1/35 oob-test               OK
+ 2/35 infinite-loop          OK
+ 3/35 trap-crasher           OK
+ 4/35 fence-image-self-test  OK
+ 5/35 region-translate-test  OK
+ 6/35 fetch-test             OK
+ 7/35 a1-trap-test           OK
+ 8/35 prng-test              OK
+ 9/35 radial-invalid         OK
+10/35 pdf-op-test            OK
+11/35 region-test            OK
+12/35 region-fractional-test OK
+13/35 combiner-test          OK
+14/35 scaling-crash-test     OK
+15/35 alpha-loop             OK
+16/35 scaling-helpers-test   OK
+17/35 gradient-crash-test    OK
+18/35 neg-stride-test        OK
+19/35 rotate-test            OK
+20/35 thread-test            OK
+21/35 pixel-test             OK
+22/35 alphamap               OK
+23/35 composite-traps-test   OK
+24/35 matrix-test            OK
+25/35 filter-reduction-test  OK
+26/35 glyph-test             OK
+27/35 solid-test             OK
+28/35 region-contains-test   OK
+29/35 stress-test            OK
+30/35 blitters-test          OK
+31/35 cover-test             OK
+32/35 affine-test            OK
+33/35 scaling-test           OK
+34/35 composite              OK
+35/35 tolerance-test         OK
 
-Ok:                 33  
+Ok:                 35  
 Expected Fail:      0   
 Fail:               0   
 Unexpected Pass:    0   

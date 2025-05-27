@@ -18,9 +18,9 @@
 . ../../lib/build.sh
 
 PROG=nginx
-PKG=ooce/server/nginx-126
-VER=1.26.3
-SUMMARY="nginx 1.26 web server"
+PKG=ooce/server/nginx-128
+VER=1.28.0
+SUMMARY="nginx 1.28 web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
 # Brotli source from https://github.com/google/ngx_brotli

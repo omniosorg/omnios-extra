@@ -18,7 +18,7 @@
 . ../../lib/build.sh
 
 PROG=postfix
-VER=3.10.1
+VER=3.10.2
 PKG=ooce/network/smtp/postfix
 SUMMARY="Postfix MTA"
 DESC="Wietse Venema's mail server alternative to sendmail"

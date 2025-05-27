@@ -5,3 +5,4 @@ missing_concurrency.patch
 disable_dbug_docs.patch
 pam-illumos.patch
 assert.patch
+super_large_pages.patch

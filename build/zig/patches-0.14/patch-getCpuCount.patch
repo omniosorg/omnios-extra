@@ -24,14 +24,9 @@ referenced by:
 
 Perhaps this is a bug in the compiler, but for now we get by with an
 explicit conversion.
----
- lib/std/Thread.zig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/lib/std/Thread.zig b/lib/std/Thread.zig
-index 27b2b11c4a..eef5ab6130 100644
---- a/lib/std/Thread.zig
-+++ b/lib/std/Thread.zig
+diff -wpruN --no-dereference '--exclude=*.orig' a~/lib/std/Thread.zig a/lib/std/Thread.zig
+--- a~/lib/std/Thread.zig	1970-01-01 00:00:00
++++ a/lib/std/Thread.zig	1970-01-01 00:00:00
 @@ -717,7 +717,7 @@ const PosixThreadImpl = struct {
                  // The "proper" way to get the cpu count would be to query
                  // /dev/kstat via ioctls, and traverse a linked list for each
@@ -41,6 +36,3 @@ index 27b2b11c4a..eef5ab6130 100644
                  return switch (posix.errno(rc)) {
                      .SUCCESS => @as(usize, @intCast(rc)),
                      else => |err| posix.unexpectedErrno(err),
--- 
-2.43.0
-

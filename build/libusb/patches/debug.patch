@@ -3,15 +3,10 @@ From: "Joshua M. Clulow" <josh@sysmgr.org>
 Date: Mon, 14 Feb 2022 12:28:13 -0800
 Subject: [PATCH] illumos: more debug logging in illumos_find_interface()
 
----
- libusb/os/illumos_usb.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/libusb/os/illumos_usb.c b/libusb/os/illumos_usb.c
-index ec4b2721..76583f33 100644
---- a/libusb/os/illumos_usb.c
-+++ b/libusb/os/illumos_usb.c
-@@ -822,6 +822,7 @@ illumos_find_interface(struct libusb_device_handle *hdev,
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libusb/os/illumos_usb.c a/libusb/os/illumos_usb.c
+--- a~/libusb/os/illumos_usb.c	1970-01-01 00:00:00
++++ a/libusb/os/illumos_usb.c	1970-01-01 00:00:00
+@@ -822,6 +822,7 @@ illumos_find_interface(struct libusb_dev
  
  	r = libusb_get_active_config_descriptor(hdev->dev, &config);
  	if (r < 0) {
@@ -19,7 +14,7 @@ index ec4b2721..76583f33 100644
  		return (LIBUSB_ERROR_INVALID_PARAM);
  	}
  
-@@ -830,16 +831,25 @@ illumos_find_interface(struct libusb_device_handle *hdev,
+@@ -830,16 +831,25 @@ illumos_find_interface(struct libusb_dev
  		    &config->interface[iface_idx];
  		int altsetting_idx;
  
@@ -35,8 +30,7 @@ index ec4b2721..76583f33 100644
  			for (ep_idx = 0; ep_idx < altsetting->bNumEndpoints;
  			    ep_idx++) {
  				const struct libusb_endpoint_descriptor *ep =
--					&altsetting->endpoint[ep_idx];
-+				    &altsetting->endpoint[ep_idx];
+ 					&altsetting->endpoint[ep_idx];
 +
 +				usbi_dbg(HANDLE_CTX(hdev), "check iface %d "
 +				    "alt %d ep_idx %d; has epa %02x",

@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=xjobs
-VER=20241010
+VER=20250209
 PKG=ooce/util/xjobs
 SUMMARY="xjobs - execute jobs in parallel"
 DESC="xjobs reads job descriptions line by line and executes them in parallel"
