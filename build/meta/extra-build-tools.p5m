@@ -29,7 +29,7 @@ depend fmri=ooce/developer/clang-17 type=require
 depend fmri=ooce/developer/protobuf type=require
 depend fmri=ooce/developer/subversion type=require
 depend fmri=ooce/developer/yasm type=require
-depend fmri=ooce/developer/zig-012 type=require
+depend fmri=ooce/developer/zig-014 type=require
 depend fmri=ooce/editor/emacs type=require
 depend fmri=ooce/fonts/liberation type=require
 depend fmri=ooce/library/apr type=require

@@ -1,24 +1,15 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/build.zig a/build.zig
 --- a~/build.zig	1970-01-01 00:00:00
 +++ a/build.zig	1970-01-01 00:00:00
-@@ -20,7 +20,7 @@ pub fn build(b: *std.Build) void {
-     });
- 
-     exe.pie = pie;
--    exe.root_module.linkSystemLibrary("ncursesw", .{});
-+    exe.root_module.linkSystemLibrary("ncurses", .{});
-     exe.root_module.linkSystemLibrary("libzstd", .{});
-     // https://github.com/ziglang/zig/blob/b52be973dfb7d1408218b8e75800a2da3dc69108/build.zig#L551-L554
-     if (target.result.isDarwin()) {
-@@ -45,7 +45,7 @@ pub fn build(b: *std.Build) void {
+@@ -17,7 +17,7 @@ pub fn build(b: *std.Build) void {
+         .strip = strip,
          .link_libc = true,
      });
-     unit_tests.pie = pie;
--    unit_tests.root_module.linkSystemLibrary("ncursesw", .{});
-+    unit_tests.root_module.linkSystemLibrary("ncurses", .{});
-     unit_tests.root_module.linkSystemLibrary("libzstd", .{});
+-    main_mod.linkSystemLibrary("ncursesw", .{});
++    main_mod.linkSystemLibrary("ncurses", .{});
+     main_mod.linkSystemLibrary("zstd", .{});
  
-     const run_unit_tests = b.addRunArtifact(unit_tests);
+     const exe = b.addExecutable(.{
 diff -wpruN --no-dereference '--exclude=*.orig' a~/src/c.zig a/src/c.zig
 --- a~/src/c.zig	1970-01-01 00:00:00
 +++ a/src/c.zig	1970-01-01 00:00:00

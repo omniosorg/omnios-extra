@@ -13,13 +13,13 @@
 # }}}
 #
 # Copyright 2021 Oxide Computer Company
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 #
 
 . ../../lib/build.sh
 
 PROG=ncdu
-VER=2.7
+VER=2.8.2
 PKG=ooce/util/ncdu
 SUMMARY="$PROG - NCurses Disk Usage"
 DESC="Disk usage analyzer with an ncurses interface"
