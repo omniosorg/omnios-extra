@@ -261,7 +261,7 @@
 | ooce/x11/header/x11-protocols	| 2024.1	| https://www.x.org/archive/individual/proto/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/header/xcb-protocols	| 1.17.0	| https://www.x.org/archive/individual/proto/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libice	| 1.1.2		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
-| ooce/x11/library/libsm	| 1.2.4		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
+| ooce/x11/library/libsm	| 1.2.6		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libx11	| 1.8.10	| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libxau	| 1.0.11	| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libxcb	| 1.17.0	| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)

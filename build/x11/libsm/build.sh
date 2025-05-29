@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=libSM
-VER=1.2.4
+VER=1.2.6
 PKG=ooce/x11/library/libsm
 SUMMARY="libSM"
 DESC="Session Management library"
