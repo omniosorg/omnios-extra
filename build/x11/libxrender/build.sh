@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=libXrender
-VER=0.9.11
+VER=0.9.12
 PKG=ooce/x11/library/libxrender
 SUMMARY="libXrender"
 DESC="X Render extension library"
