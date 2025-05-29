@@ -242,7 +242,7 @@
 | ooce/util/atuin		| 18.6.1	| https://github.com/atuinsh/atuin/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/bat			| 0.25.0	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/diffr		| 0.1.5		| https://github.com/mookid/diffr/tags | [omniosorg](https://github.com/omniosorg)
-| ooce/util/direnv		| 2.35.0	| https://github.com/direnv/direnv/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/util/direnv		| 2.36.0	| https://github.com/direnv/direnv/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/fd			| 10.2.0	| https://github.com/sharkdp/fd/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/gh			| 2.73.0	| https://github.com/cli/cli/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/htmlq		| 0.4.0		| https://github.com/mgdm/htmlq/releases/ | [omniosorg](https://github.com/omniosorg)
