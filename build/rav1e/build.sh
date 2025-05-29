@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=rav1e
-VER=0.7.1
+VER=0.8.0
 PKG=ooce/multimedia/rav1e
 SUMMARY="$PROG - AV1 encoder"
 DESC="AV1 video encoder"
