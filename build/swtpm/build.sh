@@ -17,12 +17,12 @@
 . ../../lib/build.sh
 
 PROG=swtpm
-VER=0.10.0
+VER=0.10.1
 PKG=ooce/security/swtpm
 SUMMARY="SWTPM - Software TPM Emulator"
 DESC="TPM emulators with different front-end interfaces to libtpms"
 
-JSONGLIBVER=1.9.2
+JSONGLIBVER=1.10.6
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
