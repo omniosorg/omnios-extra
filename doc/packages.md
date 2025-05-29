@@ -272,4 +272,4 @@
 | ooce/x11/library/libxrender	| 0.9.12	| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libxt	| 1.3.1		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
 | ooce/x11/library/libxtst	| 1.2.5		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
-| ooce/x11/library/xtrans	| 1.5.0		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
+| ooce/x11/library/xtrans	| 1.6.0		| https://www.x.org/archive/individual/lib/ | [omniosorg](https://github.com/omniosorg)
