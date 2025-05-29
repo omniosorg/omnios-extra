@@ -29,6 +29,9 @@ PREFIX+=/$PROG
 set_arch 64
 set_clangver
 
+# false positives show up in macro warnings in the log
+SKIP_BUILD_ERRCHK=1
+
 # the test-suite requires GNU tools and we get all sorts of weird
 # test-suite errors if we don't use GNU tools to build as well
 export PATH=$GNUBIN:$PATH
