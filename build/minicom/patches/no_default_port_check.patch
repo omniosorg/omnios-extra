@@ -5,7 +5,7 @@ configuration of the default port
 diff -wpruN --no-dereference '--exclude=*.orig' a~/configure.ac a/configure.ac
 --- a~/configure.ac	1970-01-01 00:00:00
 +++ a/configure.ac	1970-01-01 00:00:00
-@@ -259,14 +259,9 @@ AC_MSG_CHECKING(for default serial port
+@@ -236,14 +236,9 @@ AC_MSG_CHECKING(for default serial port
  
  if test "x$DFL_PORT" != x
  then

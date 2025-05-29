@@ -227,7 +227,7 @@
 | ooce/system/znapzend		| 0.23.2	| https://github.com/oetiker/znapzend/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/zrepl		| 0.6.1		| https://github.com/zrepl/zrepl/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/terminal/byobu		| 5.133		| https://launchpad.net/byobu/+download https://launchpad.net/byobu/ | [omniosorg](https://github.com/omniosorg)
-| ooce/terminal/minicom		| 2.9		| https://salsa.debian.org/api/v4/projects/minicom-team%2Fminicom/repository/tags/ https://salsa.debian.org/minicom-team/minicom/ | [omniosorg](https://github.com/omniosorg)
+| ooce/terminal/minicom		| 2.10		| https://salsa.debian.org/api/v4/projects/minicom-team%2Fminicom/repository/tags/ https://salsa.debian.org/minicom-team/minicom/ | [omniosorg](https://github.com/omniosorg)
 | ooce/terminal/starship	| 1.22.1	| https://github.com/starship/starship/releases https://starship.rs | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 10.2.1	| https://pypi.org/rss/project/asciidoc/releases.xml | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoctor		| 2.0.23	| https://github.com/asciidoctor/asciidoctor/releases/ | [omniosorg](https://github.com/omniosorg)
