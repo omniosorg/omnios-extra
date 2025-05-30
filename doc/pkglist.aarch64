@@ -98,6 +98,7 @@ ooce/developer/aarch64-esr-decoder
 ooce/developer/fdt-tools
 ooce/text/docbook-xsl
 ooce/util/getopt
+ooce/text/patchutils
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
