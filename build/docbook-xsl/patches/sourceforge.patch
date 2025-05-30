@@ -1,0 +1,23 @@
+
+Add rewrite rules for sourceforge resources
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/catalog.xml a/catalog.xml
+--- a~/catalog.xml	1970-01-01 00:00:00
++++ a/catalog.xml	1970-01-01 00:00:00
+@@ -1,8 +1,16 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+   <!-- XML Catalog file for DocBook XSL Stylesheets vsnapshot -->
++  <rewriteURI uriStartString="http://cdn.docbook.org/release/xsl/current/" rewritePrefix="./"/>
+   <rewriteURI uriStartString="https://cdn.docbook.org/release/xsl/current/" rewritePrefix="./"/>
++  <rewriteSystem systemIdStartString="http://cdn.docbook.org/release/xsl/current/" rewritePrefix="./"/>
+   <rewriteSystem systemIdStartString="https://cdn.docbook.org/release/xsl/current/" rewritePrefix="./"/>
++  <rewriteURI uriStartString="http://cdn.docbook.org/release/xsl/snapshot/" rewritePrefix="./"/>
+   <rewriteURI uriStartString="https://cdn.docbook.org/release/xsl/snapshot/" rewritePrefix="./"/>
++  <rewriteSystem systemIdStartString="http://cdn.docbook.org/release/xsl/snapshot/" rewritePrefix="./"/>
+   <rewriteSystem systemIdStartString="https://cdn.docbook.org/release/xsl/snapshot/" rewritePrefix="./"/>
++  <rewriteURI uriStartString="http://docbook.sourceforge.net/release/xsl/current/" rewritePrefix="./"/>
++  <rewriteURI uriStartString="https://docbook.sourceforge.net/release/xsl/current/" rewritePrefix="./"/>
++  <rewriteSystem systemIdStartString="http://docbook.sourceforge.net/release/xsl/current/" rewritePrefix="./"/>
++  <rewriteSystem systemIdStartString="https://docbook.sourceforge.net/release/xsl/current/" rewritePrefix="./"/>
+ </catalog>

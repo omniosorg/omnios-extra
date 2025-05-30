@@ -6,7 +6,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/src/password-store.sh a/src/p
  
  }
 -GETOPT="getopt"
-+GETOPT="/opt/ooce/pass/bin/getopt"
++GETOPT="/opt/ooce/getopt/bin/getopt"
  SHRED="shred -f -z"
  BASE64="base64"
  

@@ -12,47 +12,46 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
-PROG=pass
-VER=1.7.4
-PKG=ooce/util/pass
-SUMMARY="password store"
-DESC="$PROG - the standard unix password manager"
+PROG=xmlto
+VER=0.0.29
+PKG=ooce/util/xmlto
+SUMMARY="$PROG"
+DESC="A simple shell script for converting XML files to various formats"
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_builddir password-store-$VER
+set_clangver
+
+PATH=$GNUBIN:$PATH
+GETOPT=$OPREFIX/bin/getopt
+FIND=$GNUBIN/find
+MKTEMP=$GNUBIN/mktemp
+XML_CATALOG_FILES=$OPREFIX/docbook-xsl/catalog.xml
+export PATH GETOPT FIND MKTEMP XML_CATALOG_FILES
 
 RUN_DEPENDS_IPS="
-    developer/versioning/git
-    file/gnu-coreutils
-    shell/bash
-    ooce/file/tree
-    ooce/security/gnupg
+    ooce/text/docbook-xsl
     ooce/util/getopt
 "
 
 XFORM_ARGS="
-    -DOPREFIX=${OPREFIX#/}
     -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
-# No configure
-pre_configure() { false; }
-
-MAKE_INSTALL_ARGS="PREFIX=$PREFIX"
-
 init
-download_source $PROG $BUILDDIR
+download_source $PROG $PROG $VER
 patch_source
-prep_build
-build -noctf    # shell script
+prep_build autoconf -autoreconf
+build
 make_package
 clean_up
 

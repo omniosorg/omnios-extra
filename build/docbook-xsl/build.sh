@@ -12,47 +12,49 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
-PROG=pass
-VER=1.7.4
-PKG=ooce/util/pass
-SUMMARY="password store"
-DESC="$PROG - the standard unix password manager"
+PROG=docbook-xsl
+VER=20200603
+VERHUMAN=$VER
+PKG=ooce/text/docbook-xsl
+SUMMARY="XSLT 1.0 Stylesheets for DocBook"
+DESC="$PROG - $SUMMARY"
+
+BUILDDIR=docbook-xsl-snapshot
 
 OPREFIX=$PREFIX
-PREFIX+=/$PROG
+PREFIX+="/$PROG"
 
 set_arch 64
-set_builddir password-store-$VER
-
-RUN_DEPENDS_IPS="
-    developer/versioning/git
-    file/gnu-coreutils
-    shell/bash
-    ooce/file/tree
-    ooce/security/gnupg
-    ooce/util/getopt
-"
 
 XFORM_ARGS="
-    -DOPREFIX=${OPREFIX#/}
     -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
 "
 
-# No configure
-pre_configure() { false; }
+pre_build() {
+    typeset arch=$1
 
-MAKE_INSTALL_ARGS="PREFIX=$PREFIX"
+    destdir=$DESTDIR
+    cross_arch $arch && destdir+=".$arch"
+
+    pushd $TMPDIR/$BUILDDIR >/dev/null
+    logcmd $MKDIR -p $destdir/$PREFIX
+    $FD . | cpio -pvmud $destdir/$PREFIX >/dev/null
+    popd >/dev/null
+
+    false
+}
 
 init
-download_source $PROG $BUILDDIR
-patch_source
 prep_build
-build -noctf    # shell script
+download_source docbook $PROG $VER
+patch_source
+build
 make_package
 clean_up
 

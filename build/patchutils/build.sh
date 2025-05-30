@@ -12,40 +12,43 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2018 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
-PROG=docbook-xsl
-VER=20161215
-VERHUMAN=$VER
-PKG=ooce/text/docbook-xsl
-SUMMARY="XSLT 1.0 Stylesheets for DocBook"
-DESC="$SUMMARY"
-
-BUILDDIR=docbook-xsl-snapshot
+PROG=patchutils
+VER=0.4.2
+PKG=ooce/text/patchutils
+SUMMARY="$PROG"
+DESC="A collection of tools that operate on patch files"
 
 OPREFIX=$PREFIX
-PREFIX+="/$PROG"
+PREFIX+=/$PROG
+
+set_arch 64
+set_clangver
+
+PATH=$GNUBIN:$PATH
+XML_CATALOG_FILES=$OPREFIX/docbook-xsl/catalog.xml
+export PATH XML_CATALOG_FILES
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
-install() {
-    pushd $TMPDIR/$BUILDDIR
-    logcmd mkdir -p $DESTDIR/$PREFIX
-    find . | cpio -pvmud $DESTDIR/$PREFIX >/dev/null
-    popd
-}
+CONFIGURE_OPTS+="
+    --with-patch=$GNUBIN/patch
+    --with-diff=$GNUBIN/diff
+"
 
 init
-prep_build
-download_source docbook $PROG $VER
+download_source $PROG $VER
 patch_source
-install
+prep_build autoconf -autoreconf
+build
 make_package
 clean_up
 

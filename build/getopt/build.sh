@@ -12,47 +12,44 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
-PROG=pass
-VER=1.7.4
-PKG=ooce/util/pass
-SUMMARY="password store"
-DESC="$PROG - the standard unix password manager"
+PROG=getopt
+VER=1.1.6
+PKG=ooce/util/getopt
+SUMMARY="$PROG - parse command-line arguments from shell scripts"
+DESC="A program to help shell scripts parse command-line parameters"
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_builddir password-store-$VER
-
-RUN_DEPENDS_IPS="
-    developer/versioning/git
-    file/gnu-coreutils
-    shell/bash
-    ooce/file/tree
-    ooce/security/gnupg
-    ooce/util/getopt
-"
+set_clangver
 
 XFORM_ARGS="
-    -DOPREFIX=${OPREFIX#/}
     -DPREFIX=${PREFIX#/}
+    -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
+    -DPKGROOT=$PROG
 "
 
-# No configure
-pre_configure() { false; }
+pre_configure() {
+    typeset arch=$1
 
-MAKE_INSTALL_ARGS="PREFIX=$PREFIX"
+    subsume_arch $arch CFLAGS
+    export PREFIX CFLAGS
+
+    # no configure
+    false
+}
 
 init
-download_source $PROG $BUILDDIR
+download_source $PROG $PROG $VER
 patch_source
 prep_build
-build -noctf    # shell script
+build
 make_package
 clean_up
 
