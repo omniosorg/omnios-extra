@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=xtrans
-VER=1.5.0
+VER=1.6.0
 PKG=ooce/x11/library/xtrans
 SUMMARY="xtrans"
 DESC="X network protocol transport layer development files"

@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=direnv
-VER=2.35.0
+VER=2.36.0
 PKG=ooce/util/direnv
 SUMMARY="unclutter your .profile"
 DESC="A shell extension that can load and unload environment variables "

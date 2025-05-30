@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=texinfo
-VER=7.1.1
+VER=7.2
 PKG=ooce/text/texinfo
 SUMMARY="$PROG - the official documentation format of the GNU project"
 DESC="Texinfo uses a single source file to produce output in a number of "

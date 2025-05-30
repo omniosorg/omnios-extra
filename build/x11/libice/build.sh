@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=libICE
-VER=1.1.1
+VER=1.1.2
 PKG=ooce/x11/library/libice
 SUMMARY="libICE"
 DESC="Inter-Client Exchange Library"
