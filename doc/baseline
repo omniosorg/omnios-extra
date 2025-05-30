@@ -294,6 +294,7 @@ extra.omnios ooce/util/diffr
 extra.omnios ooce/util/direnv
 extra.omnios ooce/util/dtc r
 extra.omnios ooce/util/fd
+extra.omnios ooce/util/getopt
 extra.omnios ooce/util/gh
 extra.omnios ooce/util/htmlq
 extra.omnios ooce/util/hyperfine
