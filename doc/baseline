@@ -308,6 +308,7 @@ extra.omnios ooce/util/stress-ng
 extra.omnios ooce/util/u-boot
 extra.omnios ooce/util/uefivars
 extra.omnios ooce/util/xjobs
+extra.omnios ooce/util/xmlto
 extra.omnios ooce/util/zadm
 extra.omnios ooce/virtualization/virtualbox
 extra.omnios ooce/virtualization/virtualbox/additions

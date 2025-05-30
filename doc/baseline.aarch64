@@ -121,3 +121,4 @@ extra.omnios ooce/util/rlwrap
 extra.omnios ooce/util/stress-ng
 extra.omnios ooce/util/u-boot
 extra.omnios ooce/util/xjobs
+extra.omnios ooce/util/xmlto

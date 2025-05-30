@@ -115,6 +115,7 @@ ooce/application/links
 ooce/database/mariadb-114
 ooce/developer/cmake
 ooce/network/mosh
+ooce/util/xmlto
 ###############################################################################
 .SYSROOT
 ooce/application/vaultwarden
