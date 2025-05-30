@@ -102,6 +102,7 @@ extra.omnios ooce/system/top
 extra.omnios ooce/terminal/minicom
 extra.omnios ooce/terminal/starship
 extra.omnios ooce/text/datamash
+extra.omnios ooce/text/docbook-xsl
 extra.omnios ooce/text/hunspell
 extra.omnios ooce/text/ripgrep
 extra.omnios ooce/text/xsv

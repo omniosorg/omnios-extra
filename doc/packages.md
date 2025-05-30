@@ -233,6 +233,7 @@
 | ooce/text/asciidoctor		| 2.0.23	| https://github.com/asciidoctor/asciidoctor/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciinema		| 2.4.0		| https://github.com/asciinema/asciinema/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/datamash		| 1.9		| https://ftp.gnu.org/gnu/datamash/ | [omniosorg](https://github.com/omniosorg)
+| ooce/text/docbook-xsl		| 20200603	| https://github.com/docbook/xslt10-stylesheets/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/hunspell		| 1.7.2		| https://github.com/hunspell/hunspell/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/ripgrep		| 14.1.1	| https://github.com/BurntSushi/ripgrep/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/texinfo		| 7.2		| https://ftp.gnu.org/gnu/texinfo/ https://www.gnu.org/software/texinfo/ | [omniosorg](https://github.com/omniosorg)
