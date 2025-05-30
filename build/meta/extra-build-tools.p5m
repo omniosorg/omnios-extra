@@ -29,7 +29,6 @@ depend fmri=ooce/developer/clang-17 type=require
 depend fmri=ooce/developer/protobuf type=require
 depend fmri=ooce/developer/subversion type=require
 depend fmri=ooce/developer/yasm type=require
-depend fmri=ooce/developer/zig-014 type=require
 depend fmri=ooce/editor/emacs type=require
 depend fmri=ooce/fonts/liberation type=require
 depend fmri=ooce/library/apr type=require
@@ -126,6 +125,10 @@ depend fmri=ooce/developer/llvm-19 type=conditional \
 
 # clang 19 is required to build zig 0.14
 depend fmri=ooce/developer/clang-19 type=conditional \
+    predicate=release/name@0.5.11-151052
+
+# zig 0.14 is required to build ncdu 2.8.2+
+depend fmri=ooce/developer/zig-014 type=conditional \
     predicate=release/name@0.5.11-151052
 
 # Added llvm/clang 20 from r151053 onwards
