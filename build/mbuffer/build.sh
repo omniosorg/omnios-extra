@@ -41,6 +41,7 @@ pre_configure() {
 
     ! cross_arch $arch && return
 
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}/${LIBDIRS[$arch]}"
     export OBJDUMP="$CROSSTOOLS/$arch/bin/${TRIPLETS[$arch]}-objdump"
 }
 
