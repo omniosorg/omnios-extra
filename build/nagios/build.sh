@@ -12,12 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nagios
 VER=4.5.0
+DASHREV=1
 PKG=ooce/application/nagios
 SUMMARY="Extremely powerful network monitoring system"
 DESC="Nagios is a host and service monitor designed to inform you of network \
@@ -66,6 +67,7 @@ CONFIGURE_OPTS[amd64]="
     --sysconfdir=/etc$PREFIX
     --localstatedir=/var$PREFIX
     --with-lockfile=/var$PREFIX/run/nagios.lock
+    --with-mail=$USRBIN/mailx
 "
 
 init
