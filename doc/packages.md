@@ -180,7 +180,7 @@
 | ooce/network/sic		| 1.3		| https://tools.suckless.org/sic/ | [r7st](https://github.com/r7st)
 | ooce/network/smtp/postfix	| 3.10.2	| https://postfix.fupp.net/pub/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/proxy/squid	| 6.12		| http://www.squid-cache.org/Versions/v6/ | [cgrzemba](https://github.com/cgrzemba)
-| ooce/network/tailscale	| 1.84.0	| https://github.com/nshalman/tailscale/releases https://www.tailscale.com/ | [nshalman](https://github.com/nshalman)
+| ooce/network/tailscale	| 1.84.2	| https://github.com/nshalman/tailscale/releases https://www.tailscale.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/tcpdump		| 4.99.5	| https://www.tcpdump.org/release/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/unbound		| 1.23.0	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/znc		| 1.9.1		| https://znc.in/releases/ | [omniosorg](https://github.com/omniosorg)
