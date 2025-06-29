@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
 --- a~/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/CMakeLists.txt	1970-01-01 00:00:00
-@@ -8,16 +8,6 @@ option(NINJA_FORCE_PSELECT "Use pselect(
+@@ -8,17 +8,6 @@ option(NINJA_FORCE_PSELECT "Use pselect(
  
  project(ninja CXX)
  
@@ -10,6 +10,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.t
 -
 -if(lto_supported)
 -	message(STATUS "IPO / LTO enabled")
+-	set(CMAKE_POLICY_DEFAULT_CMP0069 NEW)
 -	set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE)
 -else()
 -	message(STATUS "IPO / LTO not supported: <${error}>")
