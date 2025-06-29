@@ -27,7 +27,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-test_relver '>=' 151051 && set_clangver
+set_clangver
 # Needed for X/Open curses/termcap
 set_standard -xcurses XPG6
 
