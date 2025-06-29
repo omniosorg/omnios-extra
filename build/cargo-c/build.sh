@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=cargo-c
-VER=0.10.13
+VER=0.10.14
 PKG=ooce/developer/cargo-c
 SUMMARY="build and install C-ABI compatible dynamic and static libraries"
 DESC="produces and installs a correct pkg-config file, a static library and "
@@ -42,6 +42,8 @@ XFORM_ARGS="
 
 SKIP_RTIME_CHECK=1
 SKIP_SSP_CHECK=1
+# cargo-c contains BMI instructions even when built on an older CPU
+BMI_EXPECTED=1
 
 build() {
     logmsg "Building 64-bit"
