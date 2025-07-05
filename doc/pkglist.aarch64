@@ -32,7 +32,6 @@ ooce/database/lmdb
 ooce/database/bdb
 ooce/database/postgresql-common
 ooce/database/postgresql-17 -f libsandheaders
-ooce/terminal/minicom
 ooce/text/hunspell
 ooce/compress/pbzip2
 ooce/compress/pigz
@@ -139,6 +138,7 @@ ooce/security/swtpm
 ooce/multimedia/minidlna
 ooce/util/pass
 ooce/library/libheif
+ooce/terminal/minicom
 ###############################################################################
 .SYSROOT
 ooce/multimedia/dcraw
