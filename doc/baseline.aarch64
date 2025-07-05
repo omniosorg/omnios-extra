@@ -24,6 +24,7 @@ extra.omnios ooce/developer/rust
 extra.omnios ooce/driver/fuse
 extra.omnios ooce/editor/helix
 extra.omnios ooce/editor/joe
+extra.omnios ooce/emulator/qemu
 extra.omnios ooce/file/tree
 extra.omnios ooce/fonts/liberation
 extra.omnios ooce/library/apr
@@ -117,6 +118,7 @@ extra.omnios ooce/util/htmlq
 extra.omnios ooce/util/hyperfine
 extra.omnios ooce/util/jq
 extra.omnios ooce/util/pass
+extra.omnios ooce/util/qemu-img
 extra.omnios ooce/util/rargs
 extra.omnios ooce/util/rlwrap
 extra.omnios ooce/util/stress-ng

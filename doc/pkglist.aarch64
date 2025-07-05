@@ -127,6 +127,7 @@ ooce/library/cairo
 ooce/library/security/libsasl2
 ###############################################################################
 .SYSROOT
+ooce/emulator/qemu
 ooce/security/gnupg
 ooce/multimedia/ffmpeg
 ooce/library/pango
