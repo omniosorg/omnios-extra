@@ -42,23 +42,31 @@ XFORM_ARGS="
 init
 prep_build
 
+post_build() {
+    typeset arch=$1
+
+    CFLAGS+=" -I$DEPROOT$PREFIX/include/slirp"
+    LDFLAGS[$arch]+=" -L$DEPROOT$PREFIX/${LIBDIRS[$arch]}"
+
+    addpath PKG_CONFIG_PATH[$arch] $DEPROOT$PREFIX/${LIBDIRS[$arch]}/pkgconfig
+}
+
 #########################################################################
 # Download and build static versions of dependencies
 
 save_buildenv
 
 CONFIGURE_OPTS=" -Ddefault_library=static"
+CONFIGURE_OPTS[aarch64]="--cross-file $BLIBDIR/meson-aarch64-gcc"
 LDFLAGS[amd64]+=" -lsocket"
+LDFLAGS[aarch64]+=" -lsocket"
 
 build_dependency -meson libslirp libslirp-v$LIBSLIRPVER \
     $PROG/libslirp libslirp v$LIBSLIRPVER
 
 restore_buildenv
 
-CFLAGS+=" -I$DEPROOT$PREFIX/include/slirp"
-LDFLAGS[amd64]+=" -L$DEPROOT$PREFIX/lib/amd64"
-
-addpath PKG_CONFIG_PATH[amd64] $DEPROOT$PREFIX/lib/amd64/pkgconfig
+unset -f post_build
 
 #########################################################################
 
@@ -86,9 +94,33 @@ CONFIGURE_OPTS="
     --localstatedir=/var$PREFIX
     --enable-docs
 "
+CONFIGURE_OPTS[aarch64]+="
+    --host-cc=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc
+    --cross-prefix=
+"
 LDFLAGS+=" -lumem"
 
+pre_configure() {
+    typeset arch=$1
+
+    ! cross_arch $arch && return
+
+    set_clangver
+
+    PATH=$CROSSTOOLS/$arch/bin:$PATH
+    CC+=" --target=${TRIPLETS[$arch]}"
+    CFLAGS[$arch]+=" $CTF_CFLAGS"
+
+    addpath PKG_CONFIG_PATH[$arch] \
+        ${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}/pkgconfig
+    addpath PKG_CONFIG_PATH[$arch] \
+        ${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}/pkgconfig
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
+}
+
 post_install() {
+    typeset arch=$1
     # Meson strips runpaths when it installs objects, something which a lot
     # of different projects have had to patch around, see:
     #   https://github.com/mesonbuild/meson/issues/2567
@@ -101,7 +133,7 @@ post_install() {
 
     local P=${PREFIX#/}
 
-    rpath64="/usr/gcc/$GCCVER/lib/amd64:$OPREFIX/lib/amd64"
+    rpath64="/usr/gcc/$GCCVER/${LIBDIRS[$arch]}:$OPREFIX/${LIBDIRS[$arch]}"
     for obj in $P/bin/*; do
         [ -f "$obj" ] || continue
         logmsg "--- fixing runpath for $obj"
