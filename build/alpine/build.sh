@@ -42,7 +42,7 @@ export MAKE
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
-    --with-host-stamp=omnios
+    --with-host-stamp=$DISTRO_LC
     --disable-debug
     --with-system-pinerc=/etc$PREFIX/pine.conf
     --with-system-fixed-pinerc=/etc$PREFIX/pine.conf.fixed

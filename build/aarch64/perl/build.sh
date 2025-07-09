@@ -82,7 +82,7 @@ configure_amd64() {
         -Umydomain \
         -Dmyuname=sunos \
         -Dosname=solaris \
-        -Dcf_by=omnios-builder \
+        -Dcf_by=$DISTRO_LC-builder \
         -Dcf_email=$PUBLISHER_EMAIL \
         -Dcc=$CROSSTOOLS/$TRIPLET64-gcc \
         -Dcpp=$CROSSTOOLS/$TRIPLET64-cpp \
