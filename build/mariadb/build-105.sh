@@ -52,7 +52,7 @@ XFORM_ARGS="
     -DUSER=mysql -DGROUP=mysql
 "
 
-CPPFLAGS+=" -I/usr/include/ncurses -DOOCEVER=$RELVER"
+CPPFLAGS+=" -I/usr/include/ncurses -DOOCEVER=$OOCEVER"
 CFLAGS+=" -O3 -I$OPREFIX/include -I/usr/include/gssapi"
 CXXFLAGS[i386]="$CFLAGS ${CFLAGS[i386]} -R$OPREFIX/lib"
 CXXFLAGS[amd64]="$CFLAGS ${CFLAGS[amd64]} -R$OPREFIX/lib/amd64"

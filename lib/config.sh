@@ -72,12 +72,13 @@ if [[ ! "$RELVER" =~ ^151[0-9]{3}$ ]]; then
     echo "Unable to determine release version (got $RELVER)"
     exit 1
 fi
+OOCEVER=$RELVER
 
 # This is here so that it can be overidden in site.sh
 test_relver() {
     typeset op="${1:?op}"
     typeset ver="${2:?ver}"
-    typeset testver="$RELVER"
+    typeset testver="$OOCEVER"
 
     case "$op" in
         ">")    ((testver > ver)) ;;
@@ -359,7 +360,7 @@ CC=gcc
 CXX=g++
 
 # Specify default GCC version for building packages
-case $RELVER in
+case $OOCEVER in
     15102[12])          DEFAULT_GCC_VER=5.1.0; ILLUMOS_GCC_VER=4.4.4 ;;
     15102[34])          DEFAULT_GCC_VER=5 ;;
     15102[56])          DEFAULT_GCC_VER=6 ;;
@@ -373,11 +374,11 @@ case $RELVER in
     15104[3-6])         DEFAULT_GCC_VER=12; ILLUMOS_GCC_VER=10 ;;
     15104[7-9]|151050)  DEFAULT_GCC_VER=13; ILLUMOS_GCC_VER=10 ;;
     15105[1-9])         DEFAULT_GCC_VER=14; ILLUMOS_GCC_VER=10 ;;
-    *) logerr "Unknown release '$RELVER', can't select compiler." ;;
+    *) logerr "Unknown release '$OOCEVER', can't select compiler." ;;
 esac
 
 # Specify default clang version for building packages
-case $RELVER in
+case $OOCEVER in
     15104[3-4])         DEFAULT_CLANG_VER=14 ;;
     15104[5-6])         DEFAULT_CLANG_VER=15 ;;
     15104[7-8])         DEFAULT_CLANG_VER=16 ;;
@@ -394,7 +395,7 @@ DEFAULT_RUBY_VER=3.4
 DEFAULT_ZIG_VER=0.14
 
 PYTHON2VER=2.7
-case $RELVER in
+case $OOCEVER in
     15103[3-6])         PYTHON3VER=3.7 ;;
     15103[7-9])         PYTHON3VER=3.9 ;;
     151040)             PYTHON3VER=3.9 ;;

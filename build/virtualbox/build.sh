@@ -132,7 +132,7 @@ make_arch() {
 
     cat << EOF > LocalConfig.kmk
 
-DEFS.solaris += OOCEVER=$RELVER
+DEFS.solaris += OOCEVER=$OOCEVER
 
 VBOX_WITH_HEADLESS = 1
 VBOX_WITH_VBOXFB =

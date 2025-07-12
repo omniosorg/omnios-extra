@@ -66,7 +66,7 @@ CONFIGURE_OPTS="
 # this currently fails in zones as it uses libdevinfo
 CONFIGURE_OPTS+=" --disable-libusb"
 
-CPPFLAGS+=" -DOOCEVER=$RELVER"
+CPPFLAGS+=" -DOOCEVER=$OOCEVER"
 
 pre_configure() {
     typeset arch=$1

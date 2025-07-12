@@ -52,7 +52,7 @@ CONFIGURE_OPTS[aarch64]+="
     gl_cv_func_strcasecmp_works=no
 "
 
-CPPFLAGS+=" -DOOCEVER=$RELVER"
+CPPFLAGS+=" -DOOCEVER=$OOCEVER"
 
 init
 download_source $PROG $PROG $VER
