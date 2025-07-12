@@ -1578,14 +1578,24 @@ set_mirror() {
 
 clone_github_source() {
     typeset -i dependency=0
-    [ "$1" = "-dependency" ] && { dependency=1; shift; }
+    typeset -i submodules=0
+
+    while [[ "$1" = -* ]]; do
+        case "$1" in
+            -dependency) dependency=1 ;;
+            -submodules) submodules=1 ;;
+            *)
+                logerr "Unknown option to clone_github_source - $1" ;;
+        esac
+        shift
+    done
 
     typeset prog="$1"
     typeset src="$2"
     typeset branch="$3"
     typeset local="$4"
     typeset depth="${5:-1}"
-    typeset fresh=0
+    typeset -i fresh=0
 
     logmsg "$prog -> $TMPDIR/$BUILDDIR/$prog"
     [ -d $TMPDIR/$BUILDDIR ] || logcmd $MKDIR -p $TMPDIR/$BUILDDIR
@@ -1593,8 +1603,7 @@ clone_github_source() {
 
     if [ -n "$local" -a -d "$local" ]; then
         logmsg "-- syncing $prog from local clone"
-        logcmd $RSYNC -ar $local/ $prog/ || logerr "rsync failed."
-        logcmd $GIT -C $prog clean -fdx
+        logcmd $RSYNC -ar --delete $local/ $prog/ || logerr "rsync failed."
         fresh=1
     elif [ ! -d $prog ]; then
         logcmd $GIT clone --no-single-branch --depth $depth $src $prog \
@@ -1603,22 +1612,37 @@ clone_github_source() {
     else
         logmsg "Using existing checkout"
     fi
+
+    typeset xbranch="`$GIT -C $prog rev-parse --abbrev-ref HEAD`"
     if [ -n "$branch" ]; then
         if ! logcmd $GIT -C $prog checkout $branch; then
-            typeset _branch=$branch
-            branch="`$GIT -C $prog rev-parse --abbrev-ref HEAD`"
-            logmsg "No $_branch branch, using $branch."
+            logmsg "No $branch branch, using $xbranch"
+            branch=$xbranch
         fi
+    else
+        logmsg "No branch specified, using $xbranch"
+        branch=$xbranch
     fi
-    if [ "$fresh" -eq 0 ]; then
-        if [ -n "$branch" ]; then
-            logcmd $GIT -C $prog reset --hard $branch \
-                || logerr "failed to reset branch"
-            logcmd $GIT -C $prog pull --rebase origin $branch \
-                || logerr "failed to pull"
+
+    ((submodules)) && \
+        logcmd $GIT -C $prog submodule update \
+        --init --checkout --recursive --jobs $MJOBS
+
+    if ((!fresh)); then
+        logcmd $GIT -C $prog reset --hard $branch \
+            || logerr "failed to reset to $branch"
+        if ((submodules)); then
+            logcmd $GIT -C $prog submodule foreach --recursive \
+                "$GIT reset --hard HEAD" \
+                || logerr "failed to reset submodules"
         fi
-        logcmd $GIT -C $prog clean -fdx
+        logcmd $GIT -C $prog pull --rebase origin $branch \
+            || logerr "failed to pull"
     fi
+
+    logcmd $GIT -C $prog clean -fdx
+    ((submodules)) && \
+        logcmd $GIT -C $prog submodule foreach --recursive "$GIT clean -fdx"
 
     $GIT -C $prog --no-pager show --shortstat
 

@@ -45,9 +45,8 @@ pre_configure() {
 CXXFLAGS[aarch64]+=" -mtls-dialect=trad"
 
 init
-clone_github_source $PROG "$GITHUB/protocolbuffers/$PROG" v$VER
+clone_github_source -submodules $PROG "$GITHUB/protocolbuffers/$PROG" v$VER
 append_builddir $PROG
-run_inbuild $GIT submodule update --init --recursive
 prep_build cmake+ninja
 patch_source
 build -noctf    # C++
