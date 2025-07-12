@@ -65,7 +65,7 @@ XFORM_ARGS="
 "
 
 CFLAGS+=" -O3"
-CPPFLAGS+=" -DWAIT_USE_POLL -DOOCEVER=$RELVER"
+CPPFLAGS+=" -DWAIT_USE_POLL -DOOCEVER=$OOCEVER"
 # postgresql has large enumerations
 CTF_FLAGS+=" -s"
 

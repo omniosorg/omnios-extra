@@ -32,7 +32,7 @@ XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 CONFIGURE_OPTS="--disable-namespacing"
 
-CPPFLAGS+=" -DOOCEVER=$RELVER"
+CPPFLAGS+=" -DOOCEVER=$OOCEVER"
 
 init
 download_source $PROG lib$PROG $VER
