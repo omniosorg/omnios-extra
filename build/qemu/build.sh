@@ -42,15 +42,6 @@ XFORM_ARGS="
 init
 prep_build
 
-post_build() {
-    typeset arch=$1
-
-    CFLAGS+=" -I$DEPROOT$PREFIX/include/slirp"
-    LDFLAGS[$arch]+=" -L$DEPROOT$PREFIX/${LIBDIRS[$arch]}"
-
-    addpath PKG_CONFIG_PATH[$arch] $DEPROOT$PREFIX/${LIBDIRS[$arch]}/pkgconfig
-}
-
 #########################################################################
 # Download and build static versions of dependencies
 
@@ -66,7 +57,11 @@ build_dependency -meson libslirp libslirp-v$LIBSLIRPVER \
 
 restore_buildenv
 
-unset -f post_build
+CFLAGS+=" -I$DEPROOT$PREFIX/include/slirp"
+for arch in $BUILDARCH; do
+    LDFLAGS[$arch]+=" -L$DEPROOT$PREFIX/${LIBDIRS[$arch]}"
+    addpath PKG_CONFIG_PATH[$arch] $DEPROOT$PREFIX/${LIBDIRS[$arch]}/pkgconfig
+done
 
 #########################################################################
 
