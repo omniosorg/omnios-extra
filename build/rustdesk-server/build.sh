@@ -51,9 +51,8 @@ pre_build() {
 }
 
 init
-clone_github_source $PROG "$GITHUB/rustdesk/$PROG" $VER
+clone_github_source -submodules $PROG "$GITHUB/rustdesk/$PROG" $VER
 append_builddir $PROG
-run_inbuild $GIT submodule update --init --recursive
 patch_source
 prep_build
 SODIUM_USE_PKG_CONFIG=1 build_rust
