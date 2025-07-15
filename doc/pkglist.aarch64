@@ -141,6 +141,7 @@ ooce/multimedia/minidlna
 ooce/util/pass
 ooce/library/libheif
 ooce/terminal/minicom
+ooce/terminal/picocom
 ###############################################################################
 .SYSROOT
 ooce/multimedia/dcraw
