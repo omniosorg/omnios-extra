@@ -276,6 +276,7 @@ extra.omnios ooce/system/znapzend
 extra.omnios ooce/system/zrepl
 extra.omnios ooce/terminal/byobu
 extra.omnios ooce/terminal/minicom
+extra.omnios ooce/terminal/picocom
 extra.omnios ooce/terminal/starship
 extra.omnios ooce/text/asciidoc
 extra.omnios ooce/text/asciidoctor
@@ -300,6 +301,7 @@ extra.omnios ooce/util/gh
 extra.omnios ooce/util/htmlq
 extra.omnios ooce/util/hyperfine
 extra.omnios ooce/util/jq
+extra.omnios ooce/util/lrzsz
 extra.omnios ooce/util/ncdu
 extra.omnios ooce/util/pass
 extra.omnios ooce/util/qemu-img
