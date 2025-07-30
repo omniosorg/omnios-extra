@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=helix
-VER=25.01.1
+VER=25.07.1
 PKG=ooce/editor/helix
 SUMMARY="A post-modern modal text editor."
 DESC="A kakoune / neovim inspired editor, written in Rust."
