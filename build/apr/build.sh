@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=apr
-VER=1.7.5
+VER=1.7.6
 PKG=ooce/library/apr
 SUMMARY="The Apache Portable Runtime library"
 DESC="The Apache Portable Runtime is a library \
