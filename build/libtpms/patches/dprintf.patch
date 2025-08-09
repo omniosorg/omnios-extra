@@ -7,7 +7,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/src/tpm_library.c a/src/tpm_l
  static int tpmvers_choice = 0; /* default is TPM1.2 */
  static TPM_BOOL tpmvers_locked = FALSE;
  
-+#ifdef __illumos__
++#if defined(__illumos__) && OOCEVER < 151054
 +static int vdprintf(int fd, const char *fmt, va_list ap)
 +{
 +    FILE *fp;
