@@ -212,7 +212,7 @@
 | ooce/server/haproxy		| 3.0.7		| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.29.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-128		| 1.28.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/storage/minio		| 2025-05-24T17-08-30Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/storage/minio		| 2025-07-23T15-54-02Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio-mc		| 2025-07-21T05-28-08Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/file-system/ntfs-3g | 2022.10.3	| https://github.com/tuxera/ntfs-3g/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/gptfdisk		| 1.0.10	| https://sourceforge.net/projects/gptfdisk/files/gptfdisk/ | [oxidecomputer](https://github.com/oxidecomputer)
