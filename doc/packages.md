@@ -251,7 +251,7 @@
 | ooce/util/gh			| 2.74.2	| https://github.com/cli/cli/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/htmlq		| 0.4.0		| https://github.com/mgdm/htmlq/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/hyperfine		| 1.19.0	| https://github.com/sharkdp/hyperfine/releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/util/jq			| 1.7.1		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/util/jq			| 1.8.1		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/lrzsz		| 0.12.20	| https://ohse.de/uwe/software/lrzsz.html | [omniosorg](https://github.com/omniosorg)
 | ooce/util/ncdu		| 2.8.2		| https://dev.yorhel.nl/download | [jclulow](https://github.com/jclulow)
 | ooce/util/pass		| 1.7.4		| https://git.zx2c4.com/password-store/refs/ | [omniosorg](https://github.com/omniosorg)
