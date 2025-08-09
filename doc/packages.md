@@ -210,7 +210,7 @@
 | ooce/server/caddy         | 2.10.0     | https://github.com/caddyserver/caddy/releases | [gkoh](https://github.com/gkoh)
 | ooce/server/freeradius	| 3.2.7		| https://github.com/FreeRADIUS/freeradius-server/releases https://freeradius.org/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/server/haproxy		| 3.0.7		| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
-| ooce/server/nginx		| 1.27.4	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/server/nginx		| 1.29.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-128		| 1.28.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio		| 2025-05-24T17-08-30Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio-mc		| 2025-05-21T01-59-54Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
