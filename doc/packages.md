@@ -77,7 +77,7 @@
 | ooce/developer/llvm-18	| 18.1.8	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-19	| 19.1.7	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/llvm-20	| 20.1.8	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/ninja		| 1.13.0	| https://github.com/ninja-build/ninja/releases https://ninja-build.org/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/ninja		| 1.13.1	| https://github.com/ninja-build/ninja/releases https://ninja-build.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/omni		| github-latest	| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| github-latest	| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/protobuf	| 29.3		| https://github.com/protocolbuffers/protobuf/releases | [omniosorg](https://github.com/omniosorg)
