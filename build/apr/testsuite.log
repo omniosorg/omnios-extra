@@ -4,99 +4,99 @@ APR Lock Performance Test
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 1 threads    OK
-microseconds: 23716 usec
+microseconds: 25872 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 1 threads    OK
-microseconds: 23773 usec
+microseconds: 36027 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 1 threads    OK
-microseconds: 91080 usec
+microseconds: 155937 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 1 threads    OK
-microseconds: 54455 usec
+microseconds: 153929 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 2 threads    OK
-microseconds: 128083 usec
+microseconds: 57037 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 2 threads    OK
-microseconds: 321771 usec
+microseconds: 113794 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 2 threads    OK
-microseconds: 588517 usec
+microseconds: 512923 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 2 threads    OK
-microseconds: 21796501 usec
+microseconds: 8679089 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 3 threads    OK
-microseconds: 324510 usec
+microseconds: 129025 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 3 threads    OK
-microseconds: 421241 usec
+microseconds: 91550 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 3 threads    OK
-microseconds: 1091681 usec
+microseconds: 652690 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 3 threads    OK
-microseconds: 35814067 usec
+microseconds: 10525564 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 4 threads    OK
-microseconds: 958153 usec
+microseconds: 810223 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 4 threads    OK
-microseconds: 722224 usec
+microseconds: 863465 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 4 threads    OK
-microseconds: 1913149 usec
+microseconds: 1719921 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 4 threads    OK
-microseconds: 49835573 usec
+microseconds: 40511010 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 5 threads    OK
-microseconds: 962196 usec
+microseconds: 893499 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 5 threads    OK
-microseconds: 654519 usec
+microseconds: 656790 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 5 threads    OK
-microseconds: 2530866 usec
+microseconds: 2085958 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 5 threads    OK
-microseconds: 58232777 usec
+microseconds: 17167457 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (UNNESTED)          OK
     Starting 6 threads    OK
-microseconds: 1992193 usec
+microseconds: 298346 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (NESTED)            OK
     Starting 6 threads    OK
-microseconds: 1236000 usec
+microseconds: 1673412 usec
 apr_thread_mutex_t Tests
     Initializing the apr_thread_mutex_t (TIMED)             OK
     Starting 6 threads    OK
-microseconds: 3415026 usec
+microseconds: 3635904 usec
 apr_thread_rwlock_t Tests
     Initializing the apr_thread_rwlock_t                    OK
     Starting 6 threads    OK
-microseconds: 66348197 usec
+microseconds: 48133413 usec
 Trying proc mutexes with mechanism `default'...
   mutex mechanism `default' is global in scope on this platform.
 Trying global mutexes with mechanism `default'...
@@ -132,7 +132,7 @@ testdup             :  SUCCESS
 testencode          :  SUCCESS
 testenv             :  SUCCESS
 testescape          :  SUCCESS
-testfile            :  abcdefRandom seed for test_atomic_append() is 2255882941
+testfile            :  abcdefRandom seed for test_atomic_append() is 3699723700
 SUCCESS
 testfilecopy        :  SUCCESS
 testfileinfo        :  SUCCESS

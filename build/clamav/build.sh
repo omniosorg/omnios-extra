@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=clamav
-VER=1.4.2
+VER=1.4.3
 PKG=ooce/system/clamav
 SUMMARY="Clam Anti-virus"
 DESC="$PROG is an open-source antivirus engine for detecting trojans, "
