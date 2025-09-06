@@ -99,6 +99,7 @@ ooce/text/docbook-xsl
 ooce/util/getopt
 ooce/text/patchutils
 ooce/util/lrzsz
+ooce/library/fstrm
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
