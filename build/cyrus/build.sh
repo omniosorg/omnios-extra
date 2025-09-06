@@ -12,18 +12,18 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=cyrus
-VER=3.10.0
+VER=3.12.1
 PKG=ooce/network/cyrus-imapd
 SUMMARY="Cyrus IMAP"
 DESC="An email, contacts and calendar server"
 
-ICALVER=3.0.19
-XAPIANVER=1.4.27
+ICALVER=3.0.20
+XAPIANVER=1.4.29
 
 # The icu4c ABI changes frequently. Lock the version
 # pulled into each build of cyrus-imapd.
@@ -122,6 +122,7 @@ CONFIGURE_OPTS="
     --enable-xapian
     --enable-jmap
     --with-sasl=$OPREFIX
+    --with-krb5-config=$USRBIN/krb5-config
 "
 CONFIGURE_OPTS[amd64]+=" --libexecdir=$PREFIX/libexec"
 

@@ -13,8 +13,8 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/mailbox.c a/imap/mailbox
 +
  #include "annotate.h"
  #include "assert.h"
- #ifdef WITH_DAV
-@@ -6045,6 +6051,10 @@ static void mailbox_delete_files(const c
+ #include "bsearch.h"
+@@ -6046,6 +6052,10 @@ static void mailbox_delete_files(const c
      struct dirent *f;
      char buf[MAX_MAILBOX_PATH+1];
      char *tail;
@@ -25,7 +25,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/mailbox.c a/imap/mailbox
  
      strlcpy(buf, path, sizeof(buf));
  
-@@ -6061,7 +6071,12 @@ static void mailbox_delete_files(const c
+@@ -6062,7 +6072,12 @@ static void mailbox_delete_files(const c
      dirp = opendir(path);
      if (dirp) {
          while ((f = readdir(dirp))!=NULL) {
