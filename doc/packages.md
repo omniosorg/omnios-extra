@@ -128,7 +128,7 @@
 | ooce/library/libmcrypt	| 2.5.8		| https://sourceforge.net/projects/mcrypt/files/Libmcrypt/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libogg		| 1.3.6		| https://ftp.osuosl.org/pub/xiph/releases/ogg/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libpciaccess	| 0.18.1	| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
-| ooce/library/libpng		| 1.6.48	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libpng		| 1.6.50	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libsodium	| 1.0.20	| https://github.com/jedisct1/libsodium/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libtasn1		| 4.20.0	| https://ftp.gnu.org/gnu/libtasn1/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libtpms		| 0.10.0	| https://github.com/stefanberger/libtpms/releases | [omniosorg](https://github.com/omniosorg)
