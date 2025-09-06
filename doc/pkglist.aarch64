@@ -117,6 +117,7 @@ ooce/database/mariadb-114
 ooce/developer/cmake
 ooce/network/mosh
 ooce/util/xmlto
+ooce/developer/protobuf-c
 ###############################################################################
 .SYSROOT
 ooce/application/vaultwarden

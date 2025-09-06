@@ -112,6 +112,7 @@ extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr
 extra.omnios ooce/developer/protobuf
+extra.omnios ooce/developer/protobuf-c
 extra.omnios ooce/developer/radare2
 extra.omnios ooce/developer/rust
 extra.omnios ooce/developer/subversion

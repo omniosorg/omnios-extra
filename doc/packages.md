@@ -81,6 +81,7 @@
 | ooce/developer/omni		| github-latest	| https://github.com/omniosorg/omni/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/pkgmgr		| github-latest	| https://github.com/omniosorg/pkgmgr/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/protobuf	| 29.3		| https://github.com/protocolbuffers/protobuf/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/protobuf-c	| 1.5.2		| https://github.com/protobuf-c/protobuf-c/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/radare2	| 5.9.2		| https://github.com/radareorg/radare2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/rust		| 1.89.0	| https://forge.rust-lang.org/infra/other-installation-methods.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/subversion	| 1.14.4	| https://downloads.apache.org/subversion/ | [omniosorg](https://github.com/omniosorg)
