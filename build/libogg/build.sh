@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libogg
-VER=1.3.5
+VER=1.3.6
 PKG=ooce/library/libogg
 SUMMARY="libogg"
 DESC="Multimedia container format"

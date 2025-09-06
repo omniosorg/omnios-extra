@@ -126,7 +126,7 @@
 | ooce/library/libidl		| 0.8.14	| https://download.gnome.org/sources/libIDL/cache.json https://download.gnome.org/sources/libIDL/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libjpeg-turbo	| 3.0.1		| https://sourceforge.net/projects/libjpeg-turbo/files/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libmcrypt	| 2.5.8		| https://sourceforge.net/projects/mcrypt/files/Libmcrypt/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libogg		| 1.3.5		| https://ftp.osuosl.org/pub/xiph/releases/ogg/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libogg		| 1.3.6		| https://ftp.osuosl.org/pub/xiph/releases/ogg/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libpciaccess	| 0.18.1	| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
 | ooce/library/libpng		| 1.6.48	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libsodium	| 1.0.20	| https://github.com/jedisct1/libsodium/releases | [omniosorg](https://github.com/omniosorg)
