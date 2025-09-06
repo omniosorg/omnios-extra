@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=fping
-VER=5.3
+VER=5.4
 PKG=ooce/network/fping
 SUMMARY="fping - send ICMP echo probes to network hosts"
 DESC="fping is a program to send ICMP echo probes to network hosts, similar to "

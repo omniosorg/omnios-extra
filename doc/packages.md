@@ -165,7 +165,7 @@
 | ooce/network/cyrus-imapd	| 3.12.1	| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/dnscrypt-proxy	| 2.1.11	| https://github.com/DNSCrypt/dnscrypt-proxy/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/dnsmasq		| 2.90		| https://thekelleys.org.uk/dnsmasq/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/fping		| 5.3		| https://github.com/schweikert/fping/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/network/fping		| 5.4		| https://github.com/schweikert/fping/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/irssi		| 1.4.5		| https://github.com/irssi/irssi/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosh		| 1.4.0		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosquitto	| 2.0.20	| https://mosquitto.org/download/ | [omniosorg](https://github.com/omniosorg)
