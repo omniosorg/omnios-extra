@@ -207,7 +207,7 @@
 | ooce/server/apache-24		| 2.4.65	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24/modules/fcgid | 2.3.9	| https://downloads.apache.org/httpd/mod_fcgid/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24/modules/wsgi | 5.0.2    | https://github.com/GrahamDumpleton/mod_wsgi/tags/ | [cgrzemba](https://github.com/cgrzemba)
-| ooce/server/caddy         | 2.10.0     | https://github.com/caddyserver/caddy/releases | [gkoh](https://github.com/gkoh)
+| ooce/server/caddy         | 2.10.2     | https://github.com/caddyserver/caddy/releases | [gkoh](https://github.com/gkoh)
 | ooce/server/freeradius	| 3.2.7		| https://github.com/FreeRADIUS/freeradius-server/releases https://freeradius.org/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/server/haproxy		| 3.0.7		| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.29.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
