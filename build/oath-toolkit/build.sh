@@ -42,6 +42,8 @@ pre_configure() {
 
     PAMDIR=${LIBDIRS[$arch]/lib/security}
     CONFIGURE_OPTS[$arch]+=" --with-pam-dir=$PAMDIR"
+    LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
+
     true
 }
 
