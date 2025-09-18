@@ -4,7 +4,7 @@ even when built with the default std=c17. however, the declarations are not expo
 diff -wpruN --no-dereference '--exclude=*.orig' a~/configure a/configure
 --- a~/configure	1970-01-01 00:00:00
 +++ a/configure	1970-01-01 00:00:00
-@@ -7992,7 +7992,7 @@ if disabled stdatomic; then
+@@ -7789,7 +7789,7 @@ if disabled stdatomic; then
  fi
  
  check_builtin stdbit "stdbit.h assert.h" \

@@ -16,27 +16,24 @@
 
 . ../../lib/build.sh
 
-PROG=fping
-VER=5.4
-PKG=ooce/network/fping
-SUMMARY="fping - send ICMP echo probes to network hosts"
-DESC="fping is a program to send ICMP echo probes to network hosts, similar to "
-DESC+="ping, but much better performing when pinging multiple hosts."
+PROG=protobuf-c
+VER=1.5.2
+PKG=ooce/developer/protobuf-c
+SUMMARY="$PROG"
+DESC="A C implementation of the Google Protocol Buffers data serialization "
+DESC+="format."
 
-set_arch 64
-test_relver '>=' 151053 && set_clangver
-set_standard XPG6
+forgo_isaexec
 
-SKIP_LICENCES=fping
-XFORM_ARGS="-DPREFIX=${PREFIX#/}"
-CONFIGURE_OPTS="--bindir=$PREFIX/bin"
+SKIP_LICENCES=protobufc
+
+export MAKE
 
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 build
-install_execattr
 make_package
 clean_up
 

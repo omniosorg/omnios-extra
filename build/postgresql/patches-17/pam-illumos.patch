@@ -1,30 +1,13 @@
 see: https://www.illumos.org/issues/15657
 struct pam_message in struct pam_conv is not const in illumos before r151051
 
-diff -wpruN --no-dereference '--exclude=*.orig' a~/src/backend/libpq/auth.c a/src/backend/libpq/auth.c
---- a~/src/backend/libpq/auth.c	1970-01-01 00:00:00
-+++ a/src/backend/libpq/auth.c	1970-01-01 00:00:00
-@@ -94,7 +94,11 @@ static int	auth_peer(hbaPort *port);
- #define PGSQL_PAM_SERVICE "postgresql"	/* Service name passed to PAM */
- 
- static int	CheckPAMAuth(Port *port, const char *user, const char *password);
-+#if OOCEVER >= 151051
- static int	pam_passwd_conv_proc(int num_msg, const struct pam_message **msg,
-+#else
-+static int	pam_passwd_conv_proc(int num_msg, struct pam_message **msg,
-+#endif
- 								 struct pam_response **resp, void *appdata_ptr);
- 
- static struct pam_conv pam_passw_conv = {
-@@ -1919,7 +1923,11 @@ auth_peer(hbaPort *port)
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/include/port/solaris.h a/src/include/port/solaris.h
+--- a~/src/include/port/solaris.h	1970-01-01 00:00:00
++++ a/src/include/port/solaris.h	1970-01-01 00:00:00
+@@ -32,4 +32,6 @@
+  * which causes OpenIndiana to declare pam_conv per the Solaris tradition,
+  * and also use that symbol to control omitting the "const" in our own code.
   */
- 
- static int
-+#if OOCEVER >= 151051
- pam_passwd_conv_proc(int num_msg, const struct pam_message **msg,
-+#else
-+pam_passwd_conv_proc(int num_msg, struct pam_message **msg,
++#if OOCEVER < 151051
+ #define _PAM_LEGACY_NONCONST 1
 +#endif
- 					 struct pam_response **resp, void *appdata_ptr)
- {
- 	const char *passwd;

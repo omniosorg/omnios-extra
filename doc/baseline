@@ -97,8 +97,8 @@ extra.omnios ooce/developer/flamegraph
 extra.omnios ooce/developer/freepascal
 extra.omnios ooce/developer/gdb
 extra.omnios ooce/developer/git-absorb
-extra.omnios ooce/developer/go-123
 extra.omnios ooce/developer/go-124
+extra.omnios ooce/developer/go-125
 extra.omnios ooce/developer/gperf
 extra.omnios ooce/developer/gyp
 extra.omnios ooce/developer/llvm-13
@@ -112,6 +112,7 @@ extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr
 extra.omnios ooce/developer/protobuf
+extra.omnios ooce/developer/protobuf-c
 extra.omnios ooce/developer/radare2
 extra.omnios ooce/developer/rust
 extra.omnios ooce/developer/subversion
@@ -139,6 +140,7 @@ extra.omnios ooce/library/cairo
 extra.omnios ooce/library/fcgi2
 extra.omnios ooce/library/fontconfig
 extra.omnios ooce/library/freetype2
+extra.omnios ooce/library/fstrm
 extra.omnios ooce/library/gnutls
 extra.omnios ooce/library/guile
 extra.omnios ooce/library/icu4c

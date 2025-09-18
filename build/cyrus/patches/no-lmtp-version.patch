@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/lmtpd.c a/imap/lmtpd.c
 --- a~/imap/lmtpd.c	1970-01-01 00:00:00
 +++ a/imap/lmtpd.c	1970-01-01 00:00:00
-@@ -216,9 +216,9 @@ int service_init(int argc __attribute__(
+@@ -222,9 +222,9 @@ int service_init(int argc __attribute__(
          dupelim = config_getswitch(IMAPOPT_DUPLICATESUPPRESSION);
  
  #ifdef USE_SIEVE

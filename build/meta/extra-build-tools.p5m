@@ -27,6 +27,7 @@ depend fmri=ooce/developer/llvm-17 type=require
 depend fmri=ooce/developer/clang-13 type=require
 depend fmri=ooce/developer/clang-17 type=require
 depend fmri=ooce/developer/protobuf type=require
+depend fmri=ooce/developer/protobuf-c type=require
 depend fmri=ooce/developer/subversion type=require
 depend fmri=ooce/developer/yasm type=require
 depend fmri=ooce/editor/emacs type=require
@@ -35,6 +36,7 @@ depend fmri=ooce/library/apr type=require
 depend fmri=ooce/library/apr-util type=require
 depend fmri=ooce/library/cairo type=require
 depend fmri=ooce/library/fcgi2 type=require
+depend fmri=ooce/library/fstrm type=require
 depend fmri=ooce/library/gnutls type=require
 depend fmri=ooce/library/icu4c type=require
 depend fmri=ooce/library/jansson type=require
