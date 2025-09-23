@@ -1,0 +1,37 @@
+From baab5ae970709cd8f38071c4f32a1d65313f0af4 Mon Sep 17 00:00:00 2001
+From: Ryan Zezeski <ryan@zinascii.com>
+Date: Wed, 3 Sep 2025 18:41:36 -0400
+Subject: [PATCH] define msghdr flags
+
+---
+ lib/std/c.zig | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/lib/std/c.zig b/lib/std/c.zig
+index 9d5e5bf9ab..40f6c6539f 100644
+--- a/lib/std/c.zig
++++ b/lib/std/c.zig
+@@ -5685,6 +5685,20 @@ pub const MSG = switch (native_os) {
+         pub const WAITFORONE = 0x2000;
+         pub const NOTIFICATION = 0x4000;
+     },
++    .illumos => struct {
++        pub const OOB = 0x0001;
++        pub const PEEK = 0x0002;
++        pub const DONTROUTE = 0x0004;
++        pub const EOR = 0x0008;
++        pub const CTRUNC = 0x0010;
++        pub const TRUNC = 0x0020;
++        pub const WAITALL = 0x0040;
++        pub const DONTWAIT = 0x0080;
++        pub const NOTIFICATION = 0x0100;
++        pub const NOSIGNAL = 0x0200;
++        pub const CMSG_CLOEXEC = 0x1000;
++        pub const CMSG_CLOFORK = 0x2000;
++    },
+     else => void,
+ };
+ pub const SOCK = switch (native_os) {
+-- 
+2.49.0
+

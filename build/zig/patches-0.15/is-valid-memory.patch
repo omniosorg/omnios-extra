@@ -1,0 +1,36 @@
+From b0261b4b0692b0fe6b6d7a2d61dfc48a2c25c486 Mon Sep 17 00:00:00 2001
+From: Ryan Zezeski <ryan@zinascii.com>
+Date: Wed, 24 Sep 2025 08:36:40 -0400
+Subject: [PATCH] use madvise to check for mapped memory
+
+Use madvise instead of msync to avoid creating unnecessary I/O on the
+swap device.
+---
+ lib/std/debug/MemoryAccessor.zig | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/lib/std/debug/MemoryAccessor.zig b/lib/std/debug/MemoryAccessor.zig
+index 7857656554..7de0a01736 100644
+--- a/lib/std/debug/MemoryAccessor.zig
++++ b/lib/std/debug/MemoryAccessor.zig
+@@ -98,6 +98,17 @@ pub fn isValidMemory(address: usize) bool {
+     if (aligned_address == 0) return false;
+     const aligned_memory = @as([*]align(page_size_min) u8, @ptrFromInt(aligned_address))[0..page_size];
+ 
++    if (native_os == .illumos) {
++        posix.madvise(aligned_memory, page_size, posix.MADV.NORMAL) catch |err| {
++            switch (err) {
++                posix.MadviseError.OutOfMemory => return false,
++                else => unreachable,
++            }
++        };
++
++        return true;
++    }
++
+     if (native_os == .windows) {
+         const windows = std.os.windows;
+ 
+-- 
+2.49.0
+
