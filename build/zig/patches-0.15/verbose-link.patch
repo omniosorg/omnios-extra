@@ -1,0 +1,26 @@
+From 43ac6d6a1896dac8ab2a0ecbcbcdd49a63392c78 Mon Sep 17 00:00:00 2001
+From: Ryan Zezeski <ryan@zinascii.com>
+Date: Wed, 24 Sep 2025 08:43:01 -0400
+Subject: [PATCH] verbose link
+
+---
+ CMakeLists.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ef371fcdd3..9ea564a5cf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -962,6 +962,9 @@ if(NOT "${ZIG_TARGET_DYNAMIC_LINKER}" STREQUAL "")
+   list(APPEND ZIG_BUILD_ARGS "-Ddynamic-linker=${ZIG_TARGET_DYNAMIC_LINKER}")
+ endif()
+ 
++if(ZIG_BUILD_VERBOSE_LINK)
++  list(APPEND ZIG_BUILD_ARGS "--verbose-link")
++endif()
+ 
+ add_custom_target(stage3 ALL
+   DEPENDS "${PROJECT_BINARY_DIR}/stage3/bin/zig"
+-- 
+2.49.0
+
