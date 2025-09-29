@@ -19,7 +19,7 @@
 PROG=micro
 # The latest release is broken on Illumos, but the git master compiles
 # at least right now. Maybe this invocation is not correct.
-VER=github-latest
+VER=master
 PKG=ooce/editor/micro
 SUMMARY="$PROG - modern and intuitive terminal-based text editor"
 DESC="Micro is a terminal-based text editor that aims to be easy to use and "
@@ -34,9 +34,6 @@ DESC+="prefer it, or because you need to."
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-set_arch 64
-set_gover
-
 export BUILD_NUMBER=$VER
 export PATH="$GNUBIN:$PATH"
 subsume_arch $BUILDARCH PKG_CONFIG_PATH
@@ -47,11 +44,31 @@ XFORM_ARGS="
     -DPROG=$PROG
 "
 
+set_arch 64
+set_gover
+
+build() {
+    pushd $TMPDIR/$BUILDDIR > /dev/null
+    export CGO_ENABLED=0
+    export GOOS=illumos
+    logcmd make build \
+        || logerr "failed to compile micro"
+    popd >/dev/null
+}
+
+install() {
+    mkdir -p $DESTDIR/$PREFIX/bin
+    cp $TMPDIR/$BUILDDIR/micro $DESTDIR/$PREFIX/bin/
+}
+
 init
-download_source "v$VER" $PROG $VER
+#download_source $PROG "$PROG-master"
+clone_github_source $PROG "$GITHUB/zyedidia/$PROG" $VER
+prep_build
 build
-tests
-strip_install
+#tests
+#strip_install
+install
 make_package
 clean_up
 
