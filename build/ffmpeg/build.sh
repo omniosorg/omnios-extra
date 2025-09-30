@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=ffmpeg
-VER=7.1.1
+VER=8.0
 PKG=ooce/multimedia/ffmpeg
 SUMMARY="ffmpeg"
 DESC="A complete, cross-platform solution to record, "
@@ -25,7 +25,7 @@ DESC+="convert and stream audio and video."
 
 # Previous versions that also need to be built and packaged since compiled
 # software may depend on it.
-PVERS="4.4.5 5.1.6 6.1.2"
+PVERS="4.4.5 5.1.6 6.1.2 7.1.1"
 
 set_clangver
 

@@ -19,7 +19,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-17
-VER=17.5
+VER=17.6
 SUMMARY="PostgreSQL 17"
 DESC="The World's Most Advanced Open Source Relational Database"
 
@@ -33,9 +33,10 @@ BUILD_DEPENDS_IPS="=ooce/library/icu4c@$ICUVER"
 
 # We want to populate the clang-related environment variables
 # and set PATH to point to the correct llvm/clang version for
-# the postgres JIT code, but we want to build with gcc.
+# the postgres JIT code, but we want to build with gcc for releases
+# before r151055
 set_clangver
-BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
+test_relver '<' 151055 && BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
 
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm

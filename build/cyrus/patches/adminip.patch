@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/global.c a/imap/global.c
 --- a~/imap/global.c	1970-01-01 00:00:00
 +++ a/imap/global.c	1970-01-01 00:00:00
-@@ -1134,3 +1134,69 @@ EXPORTED int saslprops_set_tls(struct sa
+@@ -1078,3 +1078,69 @@ EXPORTED int saslprops_set_tls(struct sa
  
      return SASL_OK;
  }
@@ -74,7 +74,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/global.c a/imap/global.c
 diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/global.h a/imap/global.h
 --- a~/imap/global.h	1970-01-01 00:00:00
 +++ a/imap/global.h	1970-01-01 00:00:00
-@@ -194,4 +194,6 @@ extern int capa_is_disabled(const char *
+@@ -196,4 +196,6 @@ extern int capa_is_disabled(const char *
  
  extern int cmd_cancelled(int insearch);
  
@@ -84,7 +84,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/global.h a/imap/global.h
 diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/imapd.c a/imap/imapd.c
 --- a~/imap/imapd.c	1970-01-01 00:00:00
 +++ a/imap/imapd.c	1970-01-01 00:00:00
-@@ -189,6 +189,7 @@ static struct protgroup *protin = NULL;
+@@ -193,6 +193,7 @@ static struct protgroup *protin = NULL;
  static const char *imapd_clienthost = "[local]";
  static int imapd_logfd = -1;
  char *imapd_userid = NULL, *proxy_userid = NULL;
@@ -92,7 +92,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/imapd.c a/imap/imapd.c
  static char *imapd_magicplus = NULL;
  struct auth_state *imapd_authstate = 0;
  static int imapd_userisadmin = 0;
-@@ -989,6 +990,7 @@ static void imapd_reset(void)
+@@ -1009,6 +1010,7 @@ static void imapd_reset(void)
      cyrus_reset_stdio();
  
      imapd_clienthost = "[local]";
@@ -100,7 +100,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/imapd.c a/imap/imapd.c
      if (imapd_logfd != -1) {
          close(imapd_logfd);
          imapd_logfd = -1;
-@@ -1159,6 +1161,9 @@ int service_main(int argc __attribute__(
+@@ -1188,6 +1190,9 @@ int service_main(int argc __attribute__(
      /* Find out name of client host */
      imapd_clienthost = get_clienthost(0, &localip, &remoteip);
  
@@ -110,7 +110,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/imapd.c a/imap/imapd.c
      if (localip && remoteip) {
          buf_setcstr(&saslprops.ipremoteport, remoteip);
          buf_setcstr(&saslprops.iplocalport, localip);
-@@ -3113,6 +3118,18 @@ static void cmd_login(char *tag, char *u
+@@ -3186,6 +3191,18 @@ static void cmd_login(char *tag, char *u
  
      if (checklimits(tag)) return;
  

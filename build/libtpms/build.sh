@@ -17,13 +17,14 @@
 . ../../lib/build.sh
 
 PROG=libtpms
-VER=0.10.0
+VER=0.10.1
 PKG=ooce/library/libtpms
 SUMMARY="$PROG"
 DESC="$PROG - library that targets the integration of TPM functionality "
 DESC+="into hypervisors"
 
 set_clangver
+set_standard XPG7
 
 export MAKE
 
