@@ -17,10 +17,12 @@
 . ../../lib/build.sh
 
 PROG=libusb
-VER=1.0.28
+VER=1.0.29
 PKG=ooce/library/libusb-1
 SUMMARY="libusb 1.0"
 DESC="A cross-platform library to access USB devices"
+
+test_relver '>=' 151055 && set_clangver
 
 BUILD_DEPENDS_IPS="
     system/header/header-ugen

@@ -99,6 +99,7 @@ ooce/text/docbook-xsl
 ooce/util/getopt
 ooce/text/patchutils
 ooce/util/lrzsz
+ooce/library/fstrm
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
@@ -117,6 +118,7 @@ ooce/database/mariadb-114
 ooce/developer/cmake
 ooce/network/mosh
 ooce/util/xmlto
+ooce/developer/protobuf-c
 ###############################################################################
 .SYSROOT
 ooce/application/vaultwarden
