@@ -1,0 +1,28 @@
+From 08bcbbb75394b80bf84b7f77428a84ef1bac48ed Mon Sep 17 00:00:00 2001
+From: Ryan Zezeski <ryan@zinascii.com>
+Date: Wed, 3 Sep 2025 17:11:30 -0400
+Subject: [PATCH] keep frame pointers
+
+---
+ build.zig | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/build.zig b/build.zig
+index 37523e66a3..1115d2f9a3 100644
+--- a/build.zig
++++ b/build.zig
+@@ -203,6 +203,11 @@ pub fn build(b: *std.Build) !void {
+     exe.pie = pie;
+     exe.entitlements = entitlements;
+ 
++    //
++    // We prefer to have the frame pointer in illumos.
++    //
++    exe.root_module.omit_frame_pointer = false;
++
+     const use_llvm = b.option(bool, "use-llvm", "Use the llvm backend");
+     exe.use_llvm = use_llvm;
+     exe.use_lld = use_llvm;
+-- 
+2.49.0
+

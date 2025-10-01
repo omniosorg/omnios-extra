@@ -1,0 +1,41 @@
+From ab1a8c52e8ce2acf27fad1481006735ceb8c838f Mon Sep 17 00:00:00 2001
+From: Ryan Zezeski <ryan@zinascii.com>
+Date: Thu, 4 Sep 2025 10:58:50 -0400
+Subject: [PATCH] define sigrt min and max
+
+---
+ lib/std/c.zig | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/lib/std/c.zig b/lib/std/c.zig
+index 9d5e5bf9ab..4c3cc6f51a 100644
+--- a/lib/std/c.zig
++++ b/lib/std/c.zig
+@@ -2583,6 +2583,8 @@ pub const _SC = if (builtin.abi.isAndroid()) enum(c_int) {
+     .solaris, .illumos => enum(c_int) {
+         PAGESIZE = 11,
+         NPROCESSORS_ONLN = 15,
++        SIGRT_MIN = 40,
++        SIGRT_MAX = 41,
+     },
+     // https://github.com/SerenityOS/serenity/blob/1dfc9e2df39dd23f1de92530677c845aae4345f2/Kernel/API/POSIX/unistd.h#L36-L52
+     .serenity => enum(c_int) {
+@@ -10464,6 +10466,7 @@ pub fn sigrtmin() u8 {
+     return switch (native_os) {
+         .freebsd => 65,
+         .netbsd => 33,
++        .illumos => @intCast(sysconf(@intFromEnum(_SC.SIGRT_MIN))),
+         else => @truncate(@as(c_uint, @bitCast(private.__libc_current_sigrtmin()))),
+     };
+ }
+@@ -10473,6 +10476,7 @@ pub fn sigrtmax() u8 {
+     return switch (native_os) {
+         .freebsd => 126,
+         .netbsd => 63,
++        .illumos => @intCast(sysconf(@intFromEnum(_SC.SIGRT_MAX))),
+         else => @truncate(@as(c_uint, @bitCast(private.__libc_current_sigrtmax()))),
+     };
+ }
+-- 
+2.49.0
+
