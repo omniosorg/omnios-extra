@@ -19,7 +19,7 @@
 
 PROG=rust
 PKG=ooce/developer/rust
-VER=1.89.0
+VER=1.90.0
 SUMMARY="Rust systems programming language"
 DESC="Rust is a systems programming language that runs blazingly fast, "
 DESC+="prevents segfaults, and guarantees thread safety."
@@ -48,6 +48,8 @@ XFORM_ARGS="
 SKIP_RTIME_CHECK=1
 SKIP_SSP_CHECK=1
 NO_SONAME_EXPECTED=1
+# cargo contains BMI instructions even when built on an older CPU
+BMI_EXPECTED=1
 
 CONFIGURE_OPTS[$BUILD_ARCH]="
     --prefix=$PREFIX
