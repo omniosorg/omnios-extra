@@ -31,6 +31,7 @@ libtree-sitter-gitignore.so
 libtree-sitter-gleam.so
 libtree-sitter-go.so
 libtree-sitter-gpr.so
+libtree-sitter-graphql.so
 libtree-sitter-groovy.so
 libtree-sitter-haskell.so
 libtree-sitter-haxe.so
@@ -74,6 +75,7 @@ libtree-sitter-ruby.so
 libtree-sitter-rust.so
 libtree-sitter-scala.so
 libtree-sitter-scheme.so
+libtree-sitter-slint.so
 libtree-sitter-smithy.so
 libtree-sitter-solidity.so
 libtree-sitter-sql.so

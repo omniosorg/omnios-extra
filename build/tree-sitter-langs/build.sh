@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=tree-sitter-langs
-VER=0.12.268
+VER=0.12.308
 PKG=ooce/text/tree-sitter-langs
 SUMMARY="$PROG"
 DESC="Tree-sitter Language Bundle for Emacs"
