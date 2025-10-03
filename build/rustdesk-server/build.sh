@@ -38,7 +38,7 @@ XFORM_ARGS="
 "
 
 SKIP_SSP_CHECK=1
-# node contains BMI instructions even when built on an older CPU
+# rustdesk contains BMI instructions even when built on an older CPU
 BMI_EXPECTED=1
 
 pre_build() {
