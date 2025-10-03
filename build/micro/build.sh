@@ -17,6 +17,7 @@
 . ../../lib/build.sh
 
 PROG=micro
+PROGNAME=micro
 # The latest release is broken on Illumos, but the git master compiles
 # at least right now. Maybe this invocation is not correct.
 VER=master
@@ -48,27 +49,34 @@ set_arch 64
 set_gover
 
 build() {
-    pushd $TMPDIR/$BUILDDIR > /dev/null
+    pushd $TMPDIR/$BUILDDIR/$PROGNAME > /dev/null
     export CGO_ENABLED=0
     export GOOS=illumos
-    logcmd make build \
-        || logerr "failed to compile micro"
+    logcmd gmake || logerr "failed to compile micro"
     popd >/dev/null
 }
 
 install() {
-    mkdir -p $DESTDIR/$PREFIX/bin
-    cp $TMPDIR/$BUILDDIR/micro $DESTDIR/$PREFIX/bin/
+    logmsg "-- installing the executable"
+    pushd $TMPDIR/$BUILDDIR/$PROGNAME > /dev/null
+    logcmd mkdir -p $DESTDIR/$PREFIX/bin  || logerr "can't create the prefix"
+    logcmd cp $PROGNAME $DESTDIR/$PREFIX/bin/ || logerr "can't copy the $PROGNAME binary"
+    popd >/dev/null
+}
+
+extract_licence() {
+    logmsg "-- extracting licence"
+    pushd $TMPDIR/$BUILDDIR/$PROGNAME > /dev/null
+	cp LICENSE $TMPDIR/$BUILDDIR/LICENCE
+	cp LICENSE-THIRD-PARTY $TMPDIR/$BUILDDIR/LICENSE-THIRD-PARTY
+    popd > /dev/null
 }
 
 init
-#download_source $PROG "$PROG-master"
 clone_github_source $PROG "$GITHUB/zyedidia/$PROG" $VER
-prep_build
 build
-#tests
-#strip_install
 install
+extract_licence
 make_package
 clean_up
 
