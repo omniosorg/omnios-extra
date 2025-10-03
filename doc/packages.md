@@ -163,7 +163,7 @@
 | ooce/multimedia/x264		| 20210613	| https://code.videolan.org/videolan/x264/-/tree/stable https://www.videolan.org/developers/x264.html | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/x265		| 3.4		| https://github.com/videolan/x265/tags https://bitbucket.org/multicoreware/x265_git/wiki/Home | [omniosorg](https://github.com/omniosorg)
 | ooce/network/bind-918		| 9.18.39	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/bind-920		| 9.20.12	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/bind-920		| 9.20.13	| https://ftp.isc.org/isc/bind9/ https://www.isc.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/bwm-ng		| 0.6.3		| https://github.com/vgropp/bwm-ng/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/cyrus-imapd	| 3.12.1	| https://github.com/cyrusimap/cyrus-imapd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/dnscrypt-proxy	| 2.1.11	| https://github.com/DNSCrypt/dnscrypt-proxy/releases | [omniosorg](https://github.com/omniosorg)
