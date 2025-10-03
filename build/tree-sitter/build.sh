@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=tree-sitter
-VER=0.24.6
+VER=0.25.10
 PKG=ooce/library/tree-sitter
 SUMMARY="$PROG"
 DESC="$PROG - parser generator tool and an incremental parsing library"
