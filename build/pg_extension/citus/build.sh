@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=citus
 PKG=ooce/database/postgresql-XX/citus
-VER=13.0.1
+VER=13.1.0
 SUMMARY="Citus PostgreSQL XX extension"
 DESC="Transforms PostgreSQL XX into a distributed database"
 
@@ -37,6 +37,9 @@ for v in $PGVERSIONS; do
     # citus 13 is not compatible with postgres 14 and earlier
     ((v <= 14)) && continue
     PREFIX=$OPREFIX/pgsql-$v
+
+    # pgsql 17 and future releases are built with clang
+    ((v >= 17)) && set_clangver
 
     # Make sure the right pg_config is used.
     export PATH="$PREFIX/bin:$OPATH"
