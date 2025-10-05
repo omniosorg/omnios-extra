@@ -21,7 +21,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Additions/solaris/In
 diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Installer/solaris/makepackage.sh a/src/VBox/Installer/solaris/makepackage.sh
 --- a~/src/VBox/Installer/solaris/makepackage.sh	1970-01-01 00:00:00
 +++ a/src/VBox/Installer/solaris/makepackage.sh	1970-01-01 00:00:00
-@@ -272,13 +272,15 @@ package_spec_fixup_content()
+@@ -293,13 +293,15 @@ package_spec_fixup_content()
  
  package_create()
  {
