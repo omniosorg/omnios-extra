@@ -72,6 +72,7 @@ CONFIGURE_OPTS="
     --with-http_sub_module
     --with-http_dav_module
     --with-stream
+    --with-stream_ssl_module
     --with-mail
     --with-mail_ssl_module
     --user=nginx
