@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=starship
-VER=1.22.1
+VER=1.23.0
 PKG=ooce/terminal/starship
 SUMMARY="cross-shell prompt"
 DESC="The minimal, blazing-fast, and infinitely customizable prompt "
@@ -29,7 +29,7 @@ BUILD_DEPENDS_IPS="
 
 SKIP_SSP_CHECK=1
 
-CARGO_ARGS="--no-default-features --features=gix-max-perf"
+CARGO_ARGS="--no-default-features"
 
 set_arch 64
 
