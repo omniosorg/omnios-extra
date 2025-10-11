@@ -88,6 +88,7 @@ extra.omnios ooce/developer/clang-17
 extra.omnios ooce/developer/clang-18
 extra.omnios ooce/developer/clang-19
 extra.omnios ooce/developer/clang-20
+extra.omnios ooce/developer/clang-21
 extra.omnios ooce/developer/cmake
 extra.omnios ooce/developer/cscope
 extra.omnios ooce/developer/cunit
@@ -108,6 +109,7 @@ extra.omnios ooce/developer/llvm-17
 extra.omnios ooce/developer/llvm-18
 extra.omnios ooce/developer/llvm-19
 extra.omnios ooce/developer/llvm-20
+extra.omnios ooce/developer/llvm-21
 extra.omnios ooce/developer/ninja
 extra.omnios ooce/developer/omni
 extra.omnios ooce/developer/pkgmgr
