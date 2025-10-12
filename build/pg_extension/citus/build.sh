@@ -38,8 +38,8 @@ for v in $PGVERSIONS; do
     ((v <= 14)) && continue
     PREFIX=$OPREFIX/pgsql-$v
 
-    # pgsql 17 and future releases are built with clang
-    ((v >= 17)) && set_clangver
+    # pgsql 17 and future releases are built with clang from r55 on
+    test_relver '>=' 151055 && ((v >= 17)) && set_clangver
 
     # Make sure the right pg_config is used.
     export PATH="$PREFIX/bin:$OPATH"
