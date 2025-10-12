@@ -137,9 +137,9 @@ depend fmri=ooce/developer/zig-014 type=conditional \
 depend fmri=ooce/developer/llvm-20 type=conditional \
     predicate=release/name@0.5.11-151053
 
-# clang 20 is the default clang compiler from r151055 onwards
+# clang 20 is required to build zig 0.15
 depend fmri=ooce/developer/clang-20 type=conditional \
-    predicate=release/name@0.5.11-151055
+    predicate=release/name@0.5.11-151054
 
 # Added llvm/clang 21 from r151055 onwards
 depend fmri=ooce/developer/llvm-21 type=conditional \
