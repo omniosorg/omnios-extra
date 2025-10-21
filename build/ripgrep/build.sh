@@ -29,6 +29,7 @@ BUILD_DEPENDS_IPS="
 "
 
 set_arch 64
+RUST_PROFILE=release-lto
 
 SKIP_LICENCES=UNLICENSE
 

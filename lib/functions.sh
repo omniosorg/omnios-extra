@@ -2613,12 +2613,15 @@ install_rust() {
 
         hook pre_install $b || return
 
+        typeset prof=release
+        [ -n "$RUST_PROFILE" ] && prof=$RUST_PROFILE
+
         destdir=$DESTDIR
         cross_arch $b && destdir+=.$b
 
         logcmd $MKDIR -p "$destdir$PREFIX/bin" \
             || logerr "Failed to create install dir"
-        logcmd $CP $TMPDIR/$BUILDDIR/target/${RUSTTRIPLETS[$b]}/release/$prog \
+        logcmd $CP $TMPDIR/$BUILDDIR/target/${RUSTTRIPLETS[$b]}/$prof/$prog \
             $destdir$PREFIX/bin/$prog || logerr "Failed to install binary"
 
         for f in `$FD "^$prog\.1\$" $TMPDIR/$BUILDDIR`; do
@@ -3355,8 +3358,14 @@ build_rust() {
             export PKG_CONFIG_LIBDIR
         fi
 
-        logcmd $CARGO build --release --target=${RUSTTRIPLETS[$b]} $@ \
-            || logerr "build failed"
+        typeset flags=
+        if [ -n "$RUST_PROFILE" ]; then
+            flags+="--profile $RUST_PROFILE "
+        else
+            flags +="--release "
+        fi
+        flags+="--target=${RUSTTRIPLETS[$b]} "
+        logcmd $CARGO build $flags $@ || logerr "build failed"
 
         popd >/dev/null
 
