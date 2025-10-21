@@ -10,3 +10,4 @@ no-var-spool-pkg.patch
 pam-illumos.patch
 tzfile.patch
 zero-sized-array.patch
+new-curl.patch
