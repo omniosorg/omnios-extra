@@ -73,6 +73,7 @@ depend fmri=ooce/library/postgresql-14 type=require
 depend fmri=ooce/library/postgresql-15 type=require
 depend fmri=ooce/library/postgresql-16 type=require
 depend fmri=ooce/library/postgresql-17 type=require
+depend fmri=ooce/library/postgresql-18 type=require
 depend fmri=ooce/library/security/libsasl2 type=require
 depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require

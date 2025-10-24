@@ -34,6 +34,7 @@ BUILD_DEPENDS_IPS="=ooce/library/icu4c@$ICUVER"
 # We want to populate the clang-related environment variables
 # and set PATH to point to the correct llvm/clang version for
 # the postgres JIT code, but we want to build with gcc for releases
+# before r151055
 set_clangver
 test_relver '<' 151055 && BASEPATH=$PATH set_gccver $DEFAULT_GCC_VER
 
