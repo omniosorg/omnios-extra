@@ -66,6 +66,7 @@ extra.omnios ooce/database/postgresql-17
 extra.omnios ooce/database/postgresql-17/citus
 extra.omnios ooce/database/postgresql-17/mysql_fdw
 extra.omnios ooce/database/postgresql-17/pg_repack
+extra.omnios ooce/database/postgresql-18
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/database/rrdtool
 extra.omnios ooce/database/victoriametrics
