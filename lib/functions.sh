@@ -1606,7 +1606,8 @@ clone_github_source() {
         logcmd $RSYNC -ar --delete $local/ $prog/ || logerr "rsync failed."
         fresh=1
     elif [ ! -d $prog ]; then
-        logcmd $GIT clone --no-single-branch --depth $depth $src $prog \
+        [ "$depth" = "-1" ] && depth= || depth="--depth $depth"
+        logcmd $GIT clone --no-single-branch $depth $src $prog \
             || logerr "clone failed"
         fresh=1
     else
