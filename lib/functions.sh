@@ -3363,7 +3363,7 @@ build_rust() {
         if [ -n "$RUST_PROFILE" ]; then
             flags+="--profile $RUST_PROFILE "
         else
-            flags +="--release "
+            flags+="--release "
         fi
         flags+="--target=${RUSTTRIPLETS[$b]} "
         logcmd $CARGO build $flags $@ || logerr "build failed"
