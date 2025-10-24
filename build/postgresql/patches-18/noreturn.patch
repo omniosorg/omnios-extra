@@ -1,0 +1,14 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/include/c.h a/src/include/c.h
+--- a~/src/include/c.h	1970-01-01 00:00:00
++++ a/src/include/c.h	1970-01-01 00:00:00
+@@ -155,9 +155,7 @@
+  * common style is to put them before the return type.  (The MSVC fallback has
+  * the same requirement.  The GCC fallback is more flexible.)
+  */
+-#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
+-#define pg_noreturn _Noreturn
+-#elif defined(__GNUC__) || defined(__SUNPRO_C)
++#if defined(__GNUC__) || defined(__SUNPRO_C)
+ #define pg_noreturn __attribute__((noreturn))
+ #elif defined(_MSC_VER)
+ #define pg_noreturn __declspec(noreturn)
