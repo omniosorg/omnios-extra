@@ -1606,9 +1606,9 @@ clone_github_source() {
         logcmd $RSYNC -ar --delete $local/ $prog/ || logerr "rsync failed."
         fresh=1
     elif [ ! -d $prog ]; then
-        [ "$depth" = "-1" ] && depth= || depth="--depth $depth"
-        logcmd $GIT clone --no-single-branch $depth $src $prog \
-            || logerr "clone failed"
+        typeset args="--no-single-branch"
+        ((depth > 0)) && args+=" --depth $depth"
+        logcmd $GIT clone $args $src $prog || logerr "clone failed"
         fresh=1
     else
         logmsg "Using existing checkout"
