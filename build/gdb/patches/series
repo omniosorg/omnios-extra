@@ -4,3 +4,4 @@ syscalls.patch
 remove-core-warning.patch
 force-bash.patch
 fix-attach.patch
+ignore-core-note0-segment.patch
