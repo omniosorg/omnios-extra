@@ -109,7 +109,6 @@ ooce/network/openldap
 ooce/library/fontconfig
 ooce/library/libwebp
 ooce/database/postgresql-17
-ooce/network/nsd
 ooce/library/slang
 ooce/util/jq
 ooce/security/minisign
@@ -127,6 +126,7 @@ ooce/library/gnutls
 ooce/application/mc
 ooce/library/cairo
 ooce/library/security/libsasl2
+ooce/network/nsd
 ###############################################################################
 .SYSROOT
 ooce/emulator/qemu
