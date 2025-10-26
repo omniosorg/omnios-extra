@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=patchutils
-VER=0.4.2
+VER=0.4.4
 PKG=ooce/text/patchutils
 SUMMARY="$PROG"
 DESC="A collection of tools that operate on patch files"
@@ -45,7 +45,7 @@ CONFIGURE_OPTS+="
 "
 
 init
-download_source $PROG $VER
+download_source $PROG $PROG $VER
 patch_source
 prep_build autoconf -autoreconf
 build
