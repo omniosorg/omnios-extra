@@ -216,7 +216,7 @@
 | ooce/server/apache-24/modules/wsgi | 5.0.2    | https://github.com/GrahamDumpleton/mod_wsgi/tags/ | [cgrzemba](https://github.com/cgrzemba)
 | ooce/server/caddy         | 2.10.2     | https://github.com/caddyserver/caddy/releases | [gkoh](https://github.com/gkoh)
 | ooce/server/freeradius	| 3.2.8		| https://github.com/FreeRADIUS/freeradius-server/releases https://freeradius.org/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/server/haproxy		| 3.2.4		| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
+| ooce/server/haproxy		| 3.2.7		| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.29.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-128		| 1.28.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio		| 2025-10-15T17-29-55Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
