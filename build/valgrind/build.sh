@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=valgrind
-VER=3.24.0
+VER=3.26.0
 PKG=ooce/developer/valgrind
 SUMMARY="An instrumentation framework for building dynamic analysis tools."
 DESC="Valgrind tools can automatically detect many memory management and "
