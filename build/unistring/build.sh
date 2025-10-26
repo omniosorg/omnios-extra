@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=unistring
-VER=1.3
+VER=1.4.1
 PKG=ooce/library/unistring
 SUMMARY="Unicode string manipulation library"
 DESC="libunistring - $SUMMARY"
@@ -31,8 +31,6 @@ TESTSUITE_FILTER="^[A-Z#][A-Z ]"
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 CONFIGURE_OPTS="--disable-namespacing"
-
-CPPFLAGS+=" -DOOCEVER=$RELVER"
 
 init
 download_source $PROG lib$PROG $VER
