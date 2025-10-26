@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=clamav
-VER=1.4.3
+VER=1.5.1
 PKG=ooce/system/clamav
 SUMMARY="Clam Anti-virus"
 DESC="$PROG is an open-source antivirus engine for detecting trojans, "
@@ -58,10 +58,16 @@ CONFIGURE_OPTS="
     -DENABLE_SYSTEMD=OFF
     -DBYTECODE_RUNTIME=llvm
 "
-CONFIGURE_OPTS[amd64]="
-    -DJSONC_LIBRARY=$OPREFIX/lib/amd64/libjson-c.so
-"
 LDFLAGS+=" -lncurses"
+
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]="
+        -DJSONC_LIBRARY=$OPREFIX/${LIBDIRS[$arch]}/libjson-c.so
+    "
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+}
 
 post_install() {
     pushd $DESTDIR/etc$PREFIX >/dev/null || logerr "pushd etc"
