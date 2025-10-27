@@ -32,6 +32,9 @@ CTF_FLAGS+=" -s"
 
 NO_SONAME_EXPECTED=1
 
+# valgrind contains BMI instructions even when built on an older CPU
+BMI_EXPECTED=1
+
 # valgrind configure requires GNU tools
 export PATH=$GNUBIN:$PATH
 

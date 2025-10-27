@@ -29,6 +29,9 @@ BUILD_DEPENDS_IPS="
 
 SKIP_SSP_CHECK=1
 
+# starship contains BMI instructions even when built on an older CPU
+BMI_EXPECTED=1
+
 CARGO_ARGS="--no-default-features"
 
 set_arch 64
