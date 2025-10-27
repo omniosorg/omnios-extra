@@ -12,6 +12,7 @@ PASS: test_IFD_enlargement
 PASS: test_open_options
 PASS: test_append_to_strip
 PASS: test_ifd_loop_detection
+PASS: test_RGBAImage
 PASS: testtypes
 PASS: test_signed_tags
 PASS: ppm2tiff_pbm.sh
@@ -92,9 +93,10 @@ PASS: tiff2rgba-rgb-3c-16b.sh
 PASS: tiff2rgba-rgb-3c-8b.sh
 PASS: testfax4.sh
 PASS: testfax3_bug_513.sh
+PASS: testfax3_bug54_1dnoEOL.sh
 PASS: testdeflatelaststripextradata.sh
-# TOTAL: 95
-# PASS:  95
+# TOTAL: 97
+# PASS:  97
 # SKIP:  0
 # XFAIL: 0
 # FAIL:  0

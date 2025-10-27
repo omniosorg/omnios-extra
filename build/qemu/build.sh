@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=qemu
-VER=10.1.0
+VER=10.1.2
 PKG=ooce/emulator/qemu
 SUMMARY="$PROG"
 DESC="A generic and open source machine emulator and virtualizer"

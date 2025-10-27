@@ -1,4 +1,4 @@
-Start of unbound 1.23.1+libevent unit test.
+Start of unbound 1.24.1+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -27,6 +27,7 @@ test util/net_help.c:str_is_ip6
 test util/net_help.c:is_pow2
 test util/net_help.c:addr_mask
 test util/net_help.c:addr_in_common
+test util/net_help.c:netblockstrtoaddr
 test util/net_help.c:sockaddr_cmp_addr
 test util/net_help.c:addr_is_ip4mapped
 test util/net_help.c:addr_is_any
@@ -44,6 +45,7 @@ test util/data/dname.c:dname_strict_subdomain
 test util/data/dname.c:dname_subdomain
 test util/data/dname.c:dname_isroot
 test util/data/dname.c:dname_remove_label
+test util/data/dname.c:dname_remove_label_limit_len
 test util/data/dname.c:dname_signame_label_count
 test util/data/dname.c:dname_iswild
 test util/data/dname.c:dname_canonical_compare
@@ -83,14 +85,16 @@ test services/outside_network.c:reuse_write_wait_push_back
 test services/outside_network.c:reuse_write_wait_remove
 test services/outside_network.c:reuse_write_wait_pop
 test message parse functions
-[0] did 10000 in 123.711 msec for 80833.555626 encode/sec size 615
+[0] did 10000 in 105.891 msec for 94436.732111 encode/sec size 615
 test edns ede optional encoding functions
 test localzones parent calculation functions
-1297943 checks ok.
+1297859 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl  OK
 ./testdata/auth_nsec3_ent.rpl  OK
+./testdata/auth_nsec3_ent_with_out_of_zone_data.rpl  OK
 ./testdata/auth_nsec3_wild.rpl  OK
+./testdata/auth_nsec3_wild_with_out_of_zone_data.rpl  OK
 ./testdata/auth_xfr.rpl  OK
 ./testdata/auth_xfr_host.rpl  OK
 ./testdata/auth_xfr_ixfr.rpl  OK
@@ -227,6 +231,7 @@ selftest successful (33 checks).
 ./testdata/iter_failreply.rpl  OK
 ./testdata/iter_fwdfirst.rpl  OK
 ./testdata/iter_fwdfirstequal.rpl  OK
+./testdata/iter_fwdfirstequaltcp.rpl  OK
 ./testdata/iter_fwdstub.rpl  OK
 ./testdata/iter_fwdstubauth.rpl  OK
 ./testdata/iter_fwdstubroot.rpl  OK
@@ -241,6 +246,7 @@ selftest successful (33 checks).
 ./testdata/iter_lame_nosoa.rpl  OK
 ./testdata/iter_lamescrub.rpl  OK
 ./testdata/iter_max_global_quota.rpl  OK
+./testdata/iter_minimise_chain.rpl  OK
 ./testdata/iter_mod.rpl  OK
 ./testdata/iter_nat64.rpl  OK
 ./testdata/iter_nat64_prefix.rpl  OK
@@ -285,6 +291,7 @@ selftest successful (33 checks).
 ./testdata/iter_scrub_ns.rpl  OK
 ./testdata/iter_scrub_ns_fwd.rpl  OK
 ./testdata/iter_scrub_ns_side.rpl  OK
+./testdata/iter_scrub_promiscuous.rpl  OK
 ./testdata/iter_scrub_rr_length.rpl  OK
 ./testdata/iter_soamin.rpl  OK
 ./testdata/iter_stub_leak.rpl  OK
@@ -318,6 +325,7 @@ selftest successful (33 checks).
 ./testdata/rpz_clientip_override.rpl  OK
 ./testdata/rpz_cname_handle.rpl  OK
 ./testdata/rpz_cname_tag.rpl  OK
+./testdata/rpz_cname_wild.rpl  OK
 ./testdata/rpz_ixfr.rpl  OK
 ./testdata/rpz_nsdname.rpl  OK
 ./testdata/rpz_nsdname_override.rpl  OK

@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=fd
-VER=10.2.0
+VER=10.3.0
 PKG=ooce/util/fd
 SUMMARY="find utility"
 DESC="fd is a simple, fast and user-friendly alternative to find"
@@ -30,8 +30,7 @@ init
 download_source $PROG v$VER
 patch_source
 prep_build
-# check default features and re-add any but use-jemalloc
-build_rust --no-default-features --features completions
+build_rust
 install_rust
 strip_install
 make_package

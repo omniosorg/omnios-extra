@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=starship
-VER=1.23.0
+VER=1.24.0
 PKG=ooce/terminal/starship
 SUMMARY="cross-shell prompt"
 DESC="The minimal, blazing-fast, and infinitely customizable prompt "

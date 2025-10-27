@@ -17,7 +17,7 @@
 . ../../../lib/build.sh
 
 PROG=aarch64-esr-decoder
-VER=0.2.1
+VER=0.2.4
 PKG=ooce/developer/aarch64-esr-decoder
 SUMMARY="aarch64 ESR decoder"
 DESC="small utility for decoding aarch64 ESR register values."

@@ -6,7 +6,7 @@ Subject: [PATCH] XXX illumos support
 diff -wpruN --no-dereference '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
 --- a~/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/CMakeLists.txt	1970-01-01 00:00:00
-@@ -39,6 +39,8 @@ include(InstallHelpers)
+@@ -35,6 +35,8 @@ include(InstallHelpers)
  include(PreventInTreeBuilds)
  include(Util)
  
@@ -45,19 +45,19 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/cmake.deps/CMakeLists.txt a/c
 diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/CMakeLists.txt a/src/nvim/CMakeLists.txt
 --- a~/src/nvim/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/src/nvim/CMakeLists.txt	1970-01-01 00:00:00
-@@ -422,6 +422,9 @@ foreach(sfile ${NVIM_SOURCES})
+@@ -431,6 +431,9 @@ foreach(sfile ${NVIM_SOURCES})
    if(NOT WIN32 AND ${f} MATCHES "^(os_win_console.c)$")
-     list(APPEND to_remove ${sfile})
+     list(REMOVE_ITEM NVIM_SOURCES ${sfile})
    endif()
 +  if(NOT ILLUMOS AND ${f} MATCHES "^(os_illumos.c)$")
 +    list(APPEND to_remove ${sfile})
 +  endif()
  endforeach()
  
- list(REMOVE_ITEM NVIM_SOURCES ${to_remove})
-diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/os/pty_process_unix.c a/src/nvim/os/pty_process_unix.c
---- a~/src/nvim/os/pty_process_unix.c	1970-01-01 00:00:00
-+++ a/src/nvim/os/pty_process_unix.c	1970-01-01 00:00:00
+ foreach(hfile ${NVIM_HEADERS})
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/os/pty_proc_unix.c a/src/nvim/os/pty_proc_unix.c
+--- a~/src/nvim/os/pty_proc_unix.c	1970-01-01 00:00:00
++++ a/src/nvim/os/pty_proc_unix.c	1970-01-01 00:00:00
 @@ -15,12 +15,8 @@
  # include <libutil.h>
  #elif defined(__OpenBSD__) || defined(__NetBSD__) || defined(__APPLE__)
@@ -74,7 +74,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/os/pty_process_unix.
  # include <pty.h>
  #endif
 @@ -46,117 +42,6 @@
- # include "os/pty_process_unix.c.generated.h"
+ # include "os/pty_proc_unix.c.generated.h"
  #endif
  
 -#if defined(__sun) && !defined(HAVE_FORKPTY)
@@ -189,7 +189,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/os/pty_process_unix.
 -#endif
 -
  /// @returns zero on success, or negative error code
- int pty_process_spawn(PtyProcess *ptyproc)
+ int pty_proc_spawn(PtyProc *ptyproc)
    FUNC_ATTR_NONNULL_ALL
 diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/os_illumos.c a/src/nvim/os_illumos.c
 --- a~/src/nvim/os_illumos.c	1970-01-01 00:00:00
@@ -389,7 +389,9 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/os_illumos.h a/src/n
 diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nvim/po/CMakeLists.txt a/src/nvim/po/CMakeLists.txt
 --- a~/src/nvim/po/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/src/nvim/po/CMakeLists.txt	1970-01-01 00:00:00
-@@ -1,5 +1,9 @@
+@@ -4,7 +4,11 @@ if(NOT ENABLE_TRANSLATIONS)
+ endif()
+ 
  find_package(Gettext REQUIRED)
 +if(ILLUMOS)
 +find_program(XGETTEXT_PRG gxgettext)
