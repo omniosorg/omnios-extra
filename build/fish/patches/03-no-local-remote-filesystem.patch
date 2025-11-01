@@ -1,0 +1,17 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/path.rs a/src/path.rs
+--- a~/src/path.rs	1970-01-01 00:00:00
++++ a/src/path.rs	1970-01-01 00:00:00
+@@ -709,7 +709,12 @@ pub fn path_remoteness(path: &wstr) -> D
+         }
+     }
+ 
+-    #[cfg(not(any(target_os = "linux", target_os = "netbsd", cygwin)))]
++    #[cfg(target_os = "illumos")]
++    {
++        return DirRemoteness::Unknown;
++    }
++
++    #[cfg(not(any(target_os = "linux", target_os = "netbsd", cygwin, target_os = "illumos")))]
+     {
+         let mut buf = MaybeUninit::uninit();
+         if unsafe { libc::statfs(narrow.as_ptr(), buf.as_mut_ptr()) } < 0 {

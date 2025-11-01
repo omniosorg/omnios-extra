@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tests/test_driver.py a/tests/test_driver.py
+--- a~/tests/test_driver.py	1970-01-01 00:00:00
++++ a/tests/test_driver.py	1970-01-01 00:00:00
+@@ -95,7 +95,7 @@ def makeenv(script_path: Path, home: Pat
+ def compile_test_helper(source_path: Path, binary_path: Path) -> None:
+     subprocess.run(
+         [
+-            "cc",
++            "gcc",
+             source_path,
+             "-o",
+             binary_path,

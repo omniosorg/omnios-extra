@@ -1,0 +1,20 @@
+--- registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.177/src/unix/solarish/mod.rs.~1~	2006-07-23 21:21:28.000000000 -0400
++++ registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.178/src/unix/solarish/mod.rs	2025-11-11 09:06:45.275025555 -0500
+@@ -2390,6 +2390,9 @@
+ // sys/sendfile.h
+ pub const SFV_FD_SELF: c_int = -2;
+ 
++// command names for confstr sys/unistd.h
++pub const _CS_PATH: c_int = 65;
++
+ const fn _CMSG_HDR_ALIGN(p: usize) -> usize {
+     (p + _CMSG_HDR_ALIGNMENT - 1) & !(_CMSG_HDR_ALIGNMENT - 1)
+ }
+@@ -2756,6 +2759,7 @@
+         addrlen: *mut crate::socklen_t,
+     ) -> ssize_t;
+     pub fn mkstemps(template: *mut c_char, suffixlen: c_int) -> c_int;
++    pub fn mkostemp(template: *mut c_char, flags: c_int) -> c_int;
+     pub fn futimesat(fd: c_int, path: *const c_char, times: *const crate::timeval) -> c_int;
+     pub fn futimens(dirfd: c_int, times: *const crate::timespec) -> c_int;
+     pub fn utimensat(

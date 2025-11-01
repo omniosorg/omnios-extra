@@ -219,6 +219,7 @@
 | ooce/server/haproxy		| 3.2.7		| https://www.haproxy.org/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx		| 1.29.2	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/server/nginx-128		| 1.28.0	| https://nginx.org/en/download.html | [omniosorg](https://github.com/omniosorg)
+| ooce/shell/fish			| 4.3.3 	| https://github.com/fish-shell/fish-shell | [omniosorg](http://github.com/omniosorg)
 | ooce/storage/minio		| 2025-10-15T17-29-55Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio-mc		| 2025-08-13T08-35-41Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/file-system/ntfs-3g | 2022.10.3	| https://github.com/tuxera/ntfs-3g/releases | [omniosorg](https://github.com/omniosorg)
