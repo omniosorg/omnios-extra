@@ -267,6 +267,7 @@ extra.omnios ooce/server/nginx
 extra.omnios ooce/server/nginx-128
 extra.omnios ooce/server/nginx-common
 extra.omnios ooce/server/webservd-common
+extra.omnios.ooce/shell/fish
 extra.omnios ooce/storage/minio
 extra.omnios ooce/storage/minio-mc
 extra.omnios ooce/system/clamav
