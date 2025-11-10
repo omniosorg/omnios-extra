@@ -2,4 +2,3 @@ aliases_patch.patch
 icu4c.patch
 socket.patch
 postconf.patch
-dict_dbm.patch
