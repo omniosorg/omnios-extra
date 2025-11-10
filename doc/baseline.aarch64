@@ -4,6 +4,7 @@ extra.omnios ooce/application/mutt
 extra.omnios ooce/application/tig
 extra.omnios ooce/application/vaultwarden
 extra.omnios ooce/audio/flac
+extra.omnios ooce/audio/opus
 extra.omnios ooce/compress/pbzip2
 extra.omnios ooce/compress/pigz
 extra.omnios ooce/database/bdb

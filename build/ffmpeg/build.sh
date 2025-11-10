@@ -65,6 +65,7 @@ CONFIGURE_OPTS="
     --enable-libx264
     --enable-libx265
     --enable-gnutls
+    --enable-libopus
 "
 CONFIGURE_OPTS[i386]="
     --disable-librav1e

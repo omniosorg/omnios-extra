@@ -100,6 +100,7 @@ ooce/util/getopt
 ooce/text/patchutils
 ooce/util/lrzsz
 ooce/library/fstrm
+ooce/audio/opus
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

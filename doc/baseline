@@ -36,6 +36,7 @@ extra.omnios ooce/application/vaultwarden
 extra.omnios ooce/application/zabbix-agent
 extra.omnios ooce/application/zabbix-server
 extra.omnios ooce/audio/flac
+extra.omnios ooce/audio/opus
 extra.omnios ooce/compress/lz4 r
 extra.omnios ooce/compress/pbzip2
 extra.omnios ooce/compress/pigz

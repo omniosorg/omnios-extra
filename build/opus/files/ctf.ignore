@@ -1,0 +1,4 @@
+celt_lpc_sse4_1.c
+debug.c
+pitch_sse2.c
+pitch_sse4_1.c
