@@ -18,6 +18,7 @@ extra.omnios ooce/application/nagios-nrdp
 extra.omnios ooce/application/nagios-nrpe
 extra.omnios ooce/application/nagios-nsca
 extra.omnios ooce/application/nagios-plugins
+extra.omnios ooce/application/navidrome
 extra.omnios ooce/application/php-81
 extra.omnios ooce/application/php-81/imagick
 extra.omnios ooce/application/php-82
@@ -206,6 +207,7 @@ extra.omnios ooce/multimedia/dav1d
 extra.omnios ooce/multimedia/dcraw
 extra.omnios ooce/multimedia/exif
 extra.omnios ooce/multimedia/ffmpeg
+extra.omnios ooce/multimedia/mediasrv-common
 extra.omnios ooce/multimedia/minidlna
 extra.omnios ooce/multimedia/rav1e
 extra.omnios ooce/multimedia/x264

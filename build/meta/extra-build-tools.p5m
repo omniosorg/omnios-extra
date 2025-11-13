@@ -78,6 +78,7 @@ depend fmri=ooce/library/postgresql-18 type=require
 depend fmri=ooce/library/security/libsasl2 type=require
 depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require
+depend fmri=ooce/library/taglib type=require
 depend fmri=ooce/library/tiff type=require
 depend fmri=ooce/library/tree-sitter type=require
 depend fmri=ooce/library/unbound type=require
@@ -89,6 +90,7 @@ depend fmri=ooce/multimedia/rav1e type=require
 depend fmri=ooce/multimedia/x264 type=require
 depend fmri=ooce/multimedia/x265 type=require
 depend fmri=ooce/runtime/node-22 type=require
+depend fmri=ooce/runtime/node-24 type=require
 depend fmri=ooce/runtime/ruby-30 type=require
 depend fmri=ooce/runtime/ruby-34 type=require
 depend fmri=ooce/server/apache-24 type=require
