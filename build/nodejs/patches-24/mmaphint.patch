@@ -29,21 +29,30 @@ previously mmap()d memory:
 diff -wpruN --no-dereference '--exclude=*.orig' a~/deps/v8/src/heap/code-range.cc a/deps/v8/src/heap/code-range.cc
 --- a~/deps/v8/src/heap/code-range.cc	1970-01-01 00:00:00
 +++ a/deps/v8/src/heap/code-range.cc	1970-01-01 00:00:00
-@@ -27,8 +27,6 @@ base::LazyInstance<std::weak_ptr<CodeRan
-     LAZY_INSTANCE_INITIALIZER;
+@@ -28,8 +28,6 @@ namespace {
  
  DEFINE_LAZY_LEAKY_OBJECT_GETTER(CodeRangeAddressHint, GetCodeRangeAddressHint)
--
+ 
 -void FunctionInStaticBinaryForAddressHint() {}
+-
  }  // anonymous namespace
  
  Address CodeRangeAddressHint::GetAddressHint(size_t code_range_size,
-@@ -59,7 +57,7 @@ Address CodeRangeAddressHint::GetAddress
-       // with a higher chances to point to the free address space range.
-       return RoundUp(preferred_region.begin(), alignment);
-     }
+@@ -41,7 +39,7 @@ Address CodeRangeAddressHint::GetAddress
+   // No recently freed region has been found, try to provide a hint for placing
+   // a code region.
+   if (it == recently_freed_.end() || it->second.empty()) {
 -    return RoundUp(FUNCTION_ADDR(&FunctionInStaticBinaryForAddressHint),
 +    return RoundUp(reinterpret_cast<Address>(GetRandomMmapAddr()),
-                    alignment);
+                    allocate_page_size);
    }
  
+@@ -280,7 +278,7 @@ base::AddressRegion CodeRange::GetPrefer
+     // When there's no embedded blob use address of a function from the binary
+     // as an approximation.
+     embedded_blob_code_start =
+-        FUNCTION_ADDR(&FunctionInStaticBinaryForAddressHint);
++        reinterpret_cast<Address>(GetRandomMmapAddr());
+     embedded_blob_code_end = embedded_blob_code_start + 1;
+   } else {
+     embedded_blob_code_end =

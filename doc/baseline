@@ -18,6 +18,7 @@ extra.omnios ooce/application/nagios-nrdp
 extra.omnios ooce/application/nagios-nrpe
 extra.omnios ooce/application/nagios-nsca
 extra.omnios ooce/application/nagios-plugins
+extra.omnios ooce/application/navidrome
 extra.omnios ooce/application/php-81
 extra.omnios ooce/application/php-81/imagick
 extra.omnios ooce/application/php-82
@@ -196,6 +197,7 @@ extra.omnios ooce/library/postgresql-17
 extra.omnios ooce/library/security/libsasl2
 extra.omnios ooce/library/serf
 extra.omnios ooce/library/slang
+extra.omnios ooce/library/taglib
 extra.omnios ooce/library/tiff
 extra.omnios ooce/library/tree-sitter
 extra.omnios ooce/library/unbound
@@ -205,6 +207,7 @@ extra.omnios ooce/multimedia/dav1d
 extra.omnios ooce/multimedia/dcraw
 extra.omnios ooce/multimedia/exif
 extra.omnios ooce/multimedia/ffmpeg
+extra.omnios ooce/multimedia/mediasrv-common
 extra.omnios ooce/multimedia/minidlna
 extra.omnios ooce/multimedia/rav1e
 extra.omnios ooce/multimedia/x264
@@ -243,9 +246,9 @@ extra.omnios ooce/runtime/expect
 extra.omnios ooce/runtime/gnu-smalltalk
 extra.omnios ooce/runtime/groovy-30
 extra.omnios ooce/runtime/groovy-40
-extra.omnios ooce/runtime/node-18
 extra.omnios ooce/runtime/node-20
 extra.omnios ooce/runtime/node-22
+extra.omnios ooce/runtime/node-24
 extra.omnios ooce/runtime/ruby-30
 extra.omnios ooce/runtime/ruby-31
 extra.omnios ooce/runtime/ruby-32

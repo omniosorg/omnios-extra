@@ -101,6 +101,7 @@ ooce/text/patchutils
 ooce/util/lrzsz
 ooce/library/fstrm
 ooce/audio/opus
+ooce/library/taglib
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

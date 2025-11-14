@@ -1,0 +1,8 @@
+# https://www.navidrome.org/docs/usage/configuration-options/#available-options
+
+LogLevel = 'INFO'
+Scanner.Schedule = '@every 24h'
+TranscodingCacheSize = '150MiB'
+FFmpegPath = '/opt/ooce/ffmpeg/bin/ffmpeg'
+MusicFolder = '/mnt/music'
+DataFolder = '/var/opt/ooce/navidrome'
