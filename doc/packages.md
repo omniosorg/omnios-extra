@@ -100,7 +100,7 @@
 | ooce/editor/helix		| 25.07.1	| https://github.com/helix-editor/helix/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/micro		| 2.0.14	| https://github.com/zyedidia/micro/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/editor/nano		| 8.6		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
+| ooce/editor/nano		| 8.7		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/neovim		| 0.11.4	| https://github.com/neovim/neovim/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/emulator/qemu		| 10.1.2	| https://www.qemu.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/file/acltool		| 1.16.2	| https://github.com/ptrrkssn/acltool/releases | [Peter Eriksson](https://github.com/ptrrkssn)
