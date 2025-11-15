@@ -1,0 +1,51 @@
+#!/usr/bin/bash
+#
+# {{{ CDDL HEADER
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+# }}}
+
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+
+. ../../lib/build.sh
+
+PROG=fish
+VER=4.2.0
+PKG=ooce/shell/fish
+SUMMARY="Fish is a smart and user-friendly command line shell"
+DESC="friendly interactive shell"
+
+SKIP_SSP_CHECK=1
+SKIP_LICENCES=COPYING
+
+BUILD_DEPENDS_IPS="ooce/developer/rust library/pcre2"
+
+set_arch 64
+
+CONFIGURE_OPTS+="
+	-DCMAKE_INSTALL_SYSCONFDIR=/etc
+	-DSYS_PCRE2_INCLUDE_DIR=/usr/include/pcre
+	-DFISH_USE_SYSTEM_PCRE2=ON
+	-DWITH_GETTEXT=ON
+"
+
+init
+#download_source $PROG fish-$VER ""
+#patch_source
+prep_build #cmake
+build_rust
+run_testsuite check
+install_rust
+strip_install
+make_package
+clean_up
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker

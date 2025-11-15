@@ -1,0 +1,14 @@
+--- fish-4.0.6/Cargo.toml~ 2025-11-01 07:18:01.887587486 +0000
++++ fish-4.0.6/Cargo.toml 2025-11-01 07:18:30.152119232 +0000
+
+@@ -71,6 +71,10 @@ serial_test = { version = "1.0.0", default-features = false }
+ cc = "1.0.94"
+ rsconf = "0.2.2"
+ 
++[patch.crates-io]
++libc = { git = "https://github.com/extrowerk/libc", branch = "illumos_patches" }
++nix = { git = "https://github.com/extrowerk/nix", branch = "illumos_patches" }
++
+ [lib]
+ crate-type = ["rlib"]
+ path = "src/lib.rs"
