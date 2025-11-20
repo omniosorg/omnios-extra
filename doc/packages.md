@@ -146,7 +146,7 @@
 | ooce/library/libuv		| 1.51.0	| https://github.com/libuv/libuv/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvorbis	| 1.3.7		| https://ftp.osuosl.org/pub/xiph/releases/vorbis/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvncserver	| 0.9.15	| https://github.com/LibVNC/libvncserver/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/library/libwebp		| 1.5.0		| https://developers.google.com/speed/webp/download | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libwebp		| 1.6.0		| https://developers.google.com/speed/webp/download | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libzip		| 1.11.4	| https://libzip.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/nettle		| 3.10.2	| https://ftp.gnu.org/gnu/nettle/ https://www.lysator.liu.se/~nisse/nettle/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/onig		| 6.9.10	| https://github.com/kkos/oniguruma/releases/ | [omniosorg](https://github.com/omniosorg)
