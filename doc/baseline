@@ -154,6 +154,7 @@ extra.omnios ooce/library/jansson
 extra.omnios ooce/library/json-c
 extra.omnios ooce/library/ldns
 extra.omnios ooce/library/libarchive
+extra.omnios ooce/library/libavif
 extra.omnios ooce/library/libde265
 extra.omnios ooce/library/libdwarf
 extra.omnios ooce/library/libev

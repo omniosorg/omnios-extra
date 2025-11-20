@@ -120,6 +120,7 @@ ooce/developer/cmake
 ooce/network/mosh
 ooce/util/xmlto
 ooce/developer/protobuf-c
+ooce/library/libavif
 ###############################################################################
 .SYSROOT
 ooce/application/vaultwarden
