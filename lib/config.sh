@@ -384,7 +384,8 @@ case $RELVER in
     151049|151050)      DEFAULT_CLANG_VER=17 ;;
     15105[1-2])         DEFAULT_CLANG_VER=18 ;;
     15105[3-4])         DEFAULT_CLANG_VER=19 ;;
-    15105[5-9])         DEFAULT_CLANG_VER=20 ;;
+    15105[5-6])         DEFAULT_CLANG_VER=20 ;;
+    15105[7-9])         DEFAULT_CLANG_VER=21 ;;
     *)                  DEFAULT_CLANG_VER=13 ;;
 esac
 

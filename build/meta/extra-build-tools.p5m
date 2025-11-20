@@ -149,3 +149,7 @@ depend fmri=ooce/developer/clang-20 type=conditional \
 depend fmri=ooce/developer/llvm-21 type=conditional \
     predicate=release/name@0.5.11-151055
 
+# clang 21 is the default clang compiler from r151057 onwards
+depend fmri=ooce/developer/clang-21 type=conditional \
+    predicate=release/name@0.5.11-151057
+
