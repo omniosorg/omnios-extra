@@ -161,7 +161,7 @@
 | ooce/library/tree-sitter	| 0.25.10	| https://github.com/tree-sitter/tree-sitter/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/unistring	| 1.4.1		| https://ftp.gnu.org/gnu/libunistring/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/yaml		| 0.2.5		| https://github.com/yaml/libyaml/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/multimedia/dav1d		| 1.5.1		| https://downloads.videolan.org/pub/videolan/dav1d/ https://www.videolan.org/projects/dav1d.html | [omniosorg](https://github.com/omniosorg)
+| ooce/multimedia/dav1d		| 1.5.2		| https://downloads.videolan.org/pub/videolan/dav1d/ https://www.videolan.org/projects/dav1d.html | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/dcraw		| 9.28.0	| https://www.dechifro.org/dcraw/archive/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/exif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/exif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/ffmpeg	| 8.0.1		| https://www.ffmpeg.org/download.html#releases | [omniosorg](https://github.com/omniosorg)
