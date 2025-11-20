@@ -45,7 +45,6 @@ extra.omnios ooce/compress/zstd r
 extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
 extra.omnios ooce/database/mariadb-1011
-extra.omnios ooce/database/mariadb-105
 extra.omnios ooce/database/mariadb-106
 extra.omnios ooce/database/mariadb-114
 extra.omnios ooce/database/mariadb-common
@@ -155,6 +154,7 @@ extra.omnios ooce/library/jansson
 extra.omnios ooce/library/json-c
 extra.omnios ooce/library/ldns
 extra.omnios ooce/library/libarchive
+extra.omnios ooce/library/libavif
 extra.omnios ooce/library/libde265
 extra.omnios ooce/library/libdwarf
 extra.omnios ooce/library/libev
@@ -180,7 +180,6 @@ extra.omnios ooce/library/libvorbis
 extra.omnios ooce/library/libwebp
 extra.omnios ooce/library/libzip
 extra.omnios ooce/library/mariadb-1011
-extra.omnios ooce/library/mariadb-105
 extra.omnios ooce/library/mariadb-106
 extra.omnios ooce/library/mariadb-114
 extra.omnios ooce/library/nettle

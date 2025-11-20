@@ -11,7 +11,7 @@ This fixes up 1b8358d9438c01c083fe4c66bcd43d755c3e2d7d
 diff -wpruN --no-dereference '--exclude=*.orig' a~/storage/innobase/include/trx0trx.h a/storage/innobase/include/trx0trx.h
 --- a~/storage/innobase/include/trx0trx.h	1970-01-01 00:00:00
 +++ a/storage/innobase/include/trx0trx.h	1970-01-01 00:00:00
-@@ -671,14 +671,14 @@ public:
+@@ -672,14 +672,14 @@ public:
    {
      ut_ad(!mutex_is_owner());
      mutex.wr_lock();

@@ -42,6 +42,7 @@ depend fmri=ooce/library/gnutls type=require
 depend fmri=ooce/library/icu4c type=require
 depend fmri=ooce/library/jansson type=require
 depend fmri=ooce/library/json-c type=require
+depend fmri=ooce/library/libavif type=require
 depend fmri=ooce/library/libev type=require
 depend fmri=ooce/library/libexif type=require
 depend fmri=ooce/library/libgd type=require
@@ -148,4 +149,8 @@ depend fmri=ooce/developer/clang-20 type=conditional \
 # Added llvm/clang 21 from r151055 onwards
 depend fmri=ooce/developer/llvm-21 type=conditional \
     predicate=release/name@0.5.11-151055
+
+# clang 21 is the default clang compiler from r151057 onwards
+depend fmri=ooce/developer/clang-21 type=conditional \
+    predicate=release/name@0.5.11-151057
 

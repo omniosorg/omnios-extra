@@ -17,13 +17,14 @@
 . ../../lib/build.sh
 
 PROG=dav1d
-VER=1.5.1
+VER=1.5.2
 PKG=ooce/multimedia/dav1d
 SUMMARY="AV1 decoder"
 DESC="AV1 cross-platform decoder, open-source, and focused on speed, "
 DESC+="size and correctness"
 
 forgo_isaexec
+test_relver '>=' 151057 && set_clangver
 # clock_gettime
 set_standard XPG6
 
@@ -43,7 +44,7 @@ pre_configure() {
         --libdir=$PREFIX/${LIBDIRS[$arch]}
     "
 
-    LDFLAGS[$arch]+=" -R$PREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
 
     ! cross_arch $arch && return
 

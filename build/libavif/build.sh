@@ -16,22 +16,13 @@
 
 . ../../lib/build.sh
 
-PROG=libjpeg-turbo
-VER=3.1.2
-PKG=ooce/library/libjpeg-turbo
-SUMMARY="libjpeg-turbo"
-DESC="SIMD-accelerated libjpeg-compatible JPEG codec library"
-
-BUILD_DEPENDS_IPS="
-    ooce/developer/cmake
-    developer/nasm
-"
+PROG=libavif
+VER=1.3.0
+PKG=ooce/library/libavif
+SUMMARY="$PROG"
+DESC="$PROG - portable C implementation of the AV1 Image File Format"
 
 set_clangver
-
-XFORM_ARGS="
-    -DPREFIX=${PREFIX#/}
-"
 
 TESTSUITE_SED='
     1,/^Test project/d
@@ -40,16 +31,30 @@ TESTSUITE_SED='
 
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
-    -DENABLE_STATIC=0
     -DCMAKE_INSTALL_PREFIX=$PREFIX
+    -DBUILD_SHARED_LIBS=ON
+    -DAVIF_CODEC_DAV1D=SYSTEM
+    -DAVIF_LIBYUV=LOCAL
 "
-
-CFLAGS[aarch64]+=" -mtls-dialect=trad"
+CONFIGURE_OPTS[i386]="
+    -DAVIF_CODEC_AOM=LOCAL
+"
+CONFIGURE_OPTS[amd64]="
+    -DAVIF_CODEC_RAV1E=SYSTEM
+    -DAVIF_BUILD_TESTS=ON
+    -DAVIF_GTEST=LOCAL
+"
+CONFIGURE_OPTS[aarch64]="
+    -DAVIF_CODEC_AOM=LOCAL
+    -DAVIF_CODEC_RAV1E=SYSTEM
+    -DCONFIG_RUNTIME_CPU_DETECT=0
+"
 
 pre_build() {
     typeset arch=$1
 
-    CONFIGURE_OPTS[$arch]="-DCMAKE_INSTALL_LIBDIR=${LIBDIRS[$arch]}"
+    CONFIGURE_OPTS[$arch]+=" -DCMAKE_INSTALL_LIBDIR=${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
 
     ! cross_arch $arch && return
 
@@ -59,9 +64,9 @@ pre_build() {
 }
 
 init
-download_source $PROG $PROG $VER
-prep_build cmake+ninja
+download_source $PROG v$VER
 patch_source
+prep_build cmake+ninja
 build
 run_testsuite
 make_package

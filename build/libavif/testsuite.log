@@ -1,0 +1,104 @@
+      Start  1: aviftest
+ 1/46 Test  #1: aviftest .........................   Passed
+      Start  2: avifyuv_limited
+ 2/46 Test  #2: avifyuv_limited ..................   Passed
+      Start  3: avifyuv_rgb
+ 3/46 Test  #3: avifyuv_rgb ......................   Passed
+      Start  4: avifallocationtest
+ 4/46 Test  #4: avifallocationtest ...............***Not Run (Disabled)
+      Start  5: avifalphanoispetest
+ 5/46 Test  #5: avifalphanoispetest ..............   Passed
+      Start  6: avifalphapremtest
+ 6/46 Test  #6: avifalphapremtest ................   Passed
+      Start  7: avifanimationtest
+ 7/46 Test  #7: avifanimationtest ................   Passed
+      Start  8: avifbasictest
+ 8/46 Test  #8: avifbasictest ....................   Passed
+      Start  9: avifchangesettingtest
+ 9/46 Test  #9: avifchangesettingtest ............   Passed
+      Start 10: avifcicptest
+10/46 Test #10: avifcicptest .....................   Passed
+      Start 11: avifclaptest
+11/46 Test #11: avifclaptest .....................   Passed
+      Start 12: avifcllitest
+12/46 Test #12: avifcllitest .....................   Passed
+      Start 13: avifcodectest
+13/46 Test #13: avifcodectest ....................   Passed
+      Start 14: avifcolrconverttest
+14/46 Test #14: avifcolrconverttest ..............   Passed
+      Start 15: avifcolrtest
+15/46 Test #15: avifcolrtest .....................   Passed
+      Start 16: avifdecodetest
+16/46 Test #16: avifdecodetest ...................   Passed
+      Start 17: avifdimgtest
+17/46 Test #17: avifdimgtest .....................   Passed
+      Start 18: avifencodetest
+18/46 Test #18: avifencodetest ...................   Passed
+      Start 19: avifgainmaptest
+19/46 Test #19: avifgainmaptest ..................   Passed
+      Start 20: avifgridapitest
+20/46 Test #20: avifgridapitest ..................***Not Run (Disabled)
+      Start 21: avifheadertest
+21/46 Test #21: avifheadertest ...................   Passed
+      Start 22: avifilocextenttest
+22/46 Test #22: avifilocextenttest ...............   Passed
+      Start 23: avifimagetest
+23/46 Test #23: avifimagetest ....................   Passed
+      Start 24: avifincrtest
+24/46 Test #24: avifincrtest .....................***Not Run (Disabled)
+      Start 25: avifiostatstest
+25/46 Test #25: avifiostatstest ..................   Passed
+      Start 26: avifkeyframetest
+26/46 Test #26: avifkeyframetest .................   Passed
+      Start 27: aviflosslesstest
+27/46 Test #27: aviflosslesstest .................***Not Run (Disabled)
+      Start 28: avifmetadatatest
+28/46 Test #28: avifmetadatatest .................***Not Run (Disabled)
+      Start 29: avifopaquetest
+29/46 Test #29: avifopaquetest ...................   Passed
+      Start 30: avifpixitest
+30/46 Test #30: avifpixitest .....................***Not Run (Disabled)
+      Start 31: avifpng16bittest
+31/46 Test #31: avifpng16bittest .................   Passed
+      Start 32: avifprogressivetest
+32/46 Test #32: avifprogressivetest ..............   Passed
+      Start 33: avifpropertytest
+33/46 Test #33: avifpropertytest .................   Passed
+      Start 34: avifpropinternaltest
+34/46 Test #34: avifpropinternaltest .............   Passed
+      Start 35: avifrangetest
+35/46 Test #35: avifrangetest ....................   Passed
+      Start 36: avifreadimagetest
+36/46 Test #36: avifreadimagetest ................   Passed
+      Start 37: avifrgbtest
+37/46 Test #37: avifrgbtest ......................   Passed
+      Start 38: avifrgbtoyuvtest
+38/46 Test #38: avifrgbtoyuvtest .................   Passed
+      Start 39: avifrgbtoyuvthreadingtest
+39/46 Test #39: avifrgbtoyuvthreadingtest ........   Passed
+      Start 40: avifscaletest
+40/46 Test #40: avifscaletest ....................   Passed
+      Start 41: avifsize0test
+41/46 Test #41: avifsize0test ....................   Passed
+      Start 42: avifstreamtest
+42/46 Test #42: avifstreamtest ...................   Passed
+      Start 43: aviftilingtest
+43/46 Test #43: aviftilingtest ...................   Passed
+      Start 44: aviftransformtest
+44/46 Test #44: aviftransformtest ................   Passed
+      Start 45: avifutilstest
+45/46 Test #45: avifutilstest ....................   Passed
+      Start 46: avify4mtest
+46/46 Test #46: avify4mtest ......................   Passed
+
+100% tests passed, 0 tests failed out of 40
+
+Total Test time (real) =
+
+The following tests did not run:
+	  4 - avifallocationtest (Disabled)
+	 20 - avifgridapitest (Disabled)
+	 24 - avifincrtest (Disabled)
+	 27 - aviflosslesstest (Disabled)
+	 28 - avifmetadatatest (Disabled)
+	 30 - avifpixitest (Disabled)
