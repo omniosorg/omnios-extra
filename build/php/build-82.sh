@@ -55,7 +55,6 @@ BUILD_DEPENDS_IPS="
     ooce/database/bdb
     ooce/database/lmdb
     ooce/library/icu4c
-    ooce/library/libgd
     ooce/library/libzip
     ooce/library/onig
 "
@@ -136,7 +135,10 @@ CONFIGURE_OPTS[amd64]="
     --with-readline=/usr
     --with-curl
     --enable-gd
+    --with-avif
     --with-jpeg
+    --with-png
+    --with-webp
     --with-freetype
     --enable-sockets
     --enable-bcmath
