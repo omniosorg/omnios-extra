@@ -1,5 +1,6 @@
 extra.omnios ooce/aarch64-build-tools
 extra.omnios ooce/application/alpine
+extra.omnios ooce/application/clifm
 extra.omnios ooce/application/fcgiwrap
 extra.omnios ooce/application/gitea
 extra.omnios ooce/application/gnuplot
