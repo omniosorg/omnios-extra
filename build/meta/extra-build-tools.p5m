@@ -10,10 +10,10 @@ depend fmri=driver/tuntap type=require
 depend fmri=library/unixodbc type=require
 depend fmri=network/socat type=require
 depend fmri=ooce/application/imagemagick type=require
-depend fmri=ooce/application/php-81 type=require
 depend fmri=ooce/application/php-82 type=require
 depend fmri=ooce/application/php-83 type=require
 depend fmri=ooce/application/php-84 type=require
+depend fmri=ooce/application/php-85 type=require
 depend fmri=ooce/audio/flac type=require
 depend fmri=ooce/audio/opus type=require
 depend fmri=ooce/database/bdb type=require

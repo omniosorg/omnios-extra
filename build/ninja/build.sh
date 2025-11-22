@@ -18,7 +18,7 @@
 
 PROG=ninja
 PKG=ooce/developer/ninja
-VER=1.13.1
+VER=1.13.2
 SUMMARY="Ninja"
 DESC="A small build system with a focus on speed"
 
@@ -28,7 +28,6 @@ set_clangver
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
     -DINSTALL_GTEST=OFF
-    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 "
 
 TESTSUITE_MAKE="./ninja_test"

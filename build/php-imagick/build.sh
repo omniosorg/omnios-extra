@@ -12,17 +12,17 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=php-imagick
-VER=3.7.0
+VER=3.8.0
 PKG=ooce/application/php-XX/imagick
 SUMMARY="The Imagick PHP extension"
 DESC="The Imagick PHP extension"
 
-PHPVERSIONS="8.1 8.2 8.3 8.4"
+PHPVERSIONS="8.2 8.3 8.4 8.5"
 
 # The ImageMagick ABI changes frequently. Lock the version
 # pulled into each build of php-imagick.

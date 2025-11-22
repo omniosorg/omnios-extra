@@ -18,7 +18,7 @@
 
 PROG=php
 PKG=ooce/application/php-84
-VER=8.4.14
+VER=8.4.15
 SUMMARY="PHP 8.4"
 DESC="A popular general-purpose scripting language"
 
@@ -90,15 +90,12 @@ CONFIGURE_OPTS[amd64]="
     --with-gmp
     --with-mysqli=mysqlnd
     --with-pdo-mysql=mysqlnd
-    --with-zlib=/usr
-    --with-zlib-dir=/usr
     --with-bz2=/usr
     --with-readline=/usr
     --with-curl
     --enable-gd
     --with-avif
     --with-jpeg
-    --with-png
     --with-webp
     --with-freetype
     --enable-sockets
@@ -124,7 +121,7 @@ LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/amd64"
 post_configure() {
     for tok in \
         HAVE_CURL HAVE_LDAP \
-        HAVE_GD_BMP HAVE_GD_FREETYPE HAVE_GD_JPG HAVE_GD_PNG \
+        HAVE_GD_FREETYPE HAVE_GD_JPG HAVE_GD_PNG HAVE_GD_WEBP HAVE_GD_AVIF \
         PDO_USE_MYSQLND HAVE_PDO_PGSQL HAVE_PGSQL \
     ; do
         $EGREP -s "define $tok 1" $TMPDIR/$BUILDDIR/main/php_config.h \
