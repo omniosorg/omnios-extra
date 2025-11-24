@@ -1,2 +1,2 @@
 amd64.patch
-strtolower.patch
+smart_string.patch

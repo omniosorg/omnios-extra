@@ -19,14 +19,14 @@ extra.omnios ooce/application/nagios-nrpe
 extra.omnios ooce/application/nagios-nsca
 extra.omnios ooce/application/nagios-plugins
 extra.omnios ooce/application/navidrome
-extra.omnios ooce/application/php-81
-extra.omnios ooce/application/php-81/imagick
 extra.omnios ooce/application/php-82
 extra.omnios ooce/application/php-82/imagick
 extra.omnios ooce/application/php-83
 extra.omnios ooce/application/php-83/imagick
 extra.omnios ooce/application/php-84
 extra.omnios ooce/application/php-84/imagick
+extra.omnios ooce/application/php-85
+extra.omnios ooce/application/php-85/imagick
 extra.omnios ooce/application/php-common
 extra.omnios ooce/application/rustdesk-server
 extra.omnios ooce/application/texlive
@@ -52,7 +52,6 @@ extra.omnios ooce/database/postgresql-13
 extra.omnios ooce/database/postgresql-13/mysql_fdw
 extra.omnios ooce/database/postgresql-13/pg_repack
 extra.omnios ooce/database/postgresql-14
-extra.omnios ooce/database/postgresql-14/citus
 extra.omnios ooce/database/postgresql-14/mysql_fdw
 extra.omnios ooce/database/postgresql-14/pg_repack
 extra.omnios ooce/database/postgresql-15
@@ -193,6 +192,7 @@ extra.omnios ooce/library/postgresql-14
 extra.omnios ooce/library/postgresql-15
 extra.omnios ooce/library/postgresql-16
 extra.omnios ooce/library/postgresql-17
+extra.omnios ooce/library/postgresql-18
 extra.omnios ooce/library/security/libsasl2
 extra.omnios ooce/library/serf
 extra.omnios ooce/library/slang

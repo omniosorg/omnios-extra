@@ -17,17 +17,13 @@
 . ../../lib/build.sh
 
 PROG=php
-PKG=ooce/application/php-81
-VER=8.1.33
-SUMMARY="PHP 8.1"
+PKG=ooce/application/php-85
+VER=8.5.0
+SUMMARY="PHP 8.5"
 DESC="A popular general-purpose scripting language"
 
-PANDAHASH=01eaaa9
-
-# panda does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
-
 set_arch 64
+set_clangver
 set_standard XPG6
 
 SKIP_LICENCES=PHP
@@ -73,41 +69,6 @@ XFORM_ARGS="
     -DsVERSION=$sMAJVER
 "
 
-init
-prep_build
-
-######################################################################
-# Build dependencies
-
-save_buildenv
-save_function make_install _make_install
-
-make_install() {
-    logcmd mkdir -p $DESTDIR/lib $DESTDIR/include
-    logcmd cp c-client/c-client.a $DESTDIR/lib/libc-client.a \
-        || logerr "Installation of libc-client.a failed"
-    logcmd cp c-client/*.h $DESTDIR/include/ \
-        || logerr "Installation of c-client headers failed"
-}
-
-CONFIGURE_CMD=/bin/true \
-    NO_PARALLEL_MAKE=1 \
-    MAKE_TARGET=gso \
-    MAKE_ARGS="SSLLIB=/usr/lib/64 SSLTYPE=unix" \
-    MAKE_ARGS_WS="
-        EXTRACFLAGS=\"-I$OPENSSLPATH/include/openssl $CFLAGS ${CFLAGS[amd64]}\"
-    " \
-    build_dependency uw-imap panda-imap-master uw-imap panda-imap $PANDAHASH
-
-save_function _make_install make_install
-restore_buildenv
-
-set_gccver $DEFAULT_GCC_VER
-
-note -n "Building $PROG $VER"
-
-######################################################################
-
 CONFIGURE_OPTS[amd64]="
     --prefix=$PREFIX
     --sysconfdir=$CONFPATH
@@ -129,23 +90,18 @@ CONFIGURE_OPTS[amd64]="
     --with-gmp
     --with-mysqli=mysqlnd
     --with-pdo-mysql=mysqlnd
-    --with-zlib=/usr
-    --with-zlib-dir=/usr
     --with-bz2=/usr
     --with-readline=/usr
     --with-curl
     --enable-gd
     --with-avif
     --with-jpeg
-    --with-png
     --with-webp
     --with-freetype
     --enable-sockets
     --enable-bcmath
     --enable-exif
     --with-zip
-    --with-imap=$DEPROOT
-    --with-imap-ssl=/usr
 
     --with-db4=$OPREFIX
     --with-lmdb=$OPREFIX
@@ -160,14 +116,13 @@ CONFIGURE_OPTS[amd64]="
 
 CPPFLAGS+=" -I/usr/include/gmp"
 CPPFLAGS+=" -I$OPREFIX/libzip/include"
-LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
+LDFLAGS+=" -static-libgcc -L$OPREFIX/lib/amd64"
 
 post_configure() {
     for tok in \
-        HAVE_CURL HAVE_IMAP HAVE_LDAP \
-        HAVE_GD_BMP HAVE_GD_FREETYPE HAVE_GD_JPG HAVE_GD_PNG \
-        MYSQLI_USE_MYSQLND PDO_USE_MYSQLND \
-        HAVE_PDO_PGSQL HAVE_PGSQL \
+        HAVE_CURL HAVE_LDAP \
+        HAVE_GD_FREETYPE HAVE_GD_JPG HAVE_GD_PNG HAVE_GD_WEBP HAVE_GD_AVIF \
+        PDO_USE_MYSQLND HAVE_PDO_PGSQL HAVE_PGSQL \
     ; do
         $EGREP -s "define $tok 1" $TMPDIR/$BUILDDIR/main/php_config.h \
             || logerr "Feature $tok is not enabled"
@@ -214,8 +169,10 @@ upload_tmp_dir = /tmp
     popd >/dev/null
 }
 
+init
 download_source $PROG $PROG $VER
 patch_source
+prep_build
 run_inbuild ./buildconf -f
 build
 xform files/php-template.xml > $TMPDIR/$PROG-$sMAJVER.xml
