@@ -90,6 +90,7 @@ CONFIGURE_OPTS[amd64]="
     --with-gmp
     --with-mysqli=mysqlnd
     --with-pdo-mysql=mysqlnd
+    --with-zlib=/usr
     --with-bz2=/usr
     --with-readline=/usr
     --with-curl
