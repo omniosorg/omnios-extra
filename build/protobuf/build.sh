@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=protobuf
-VER=29.3
+VER=33.2
 PKG=ooce/developer/protobuf
 SUMMARY="protobuf"
 DESC="Google's language-neutral, platform-neutral, extensible mechanism "
@@ -30,6 +30,7 @@ CONFIGURE_OPTS="
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_POSITION_INDEPENDENT_CODE=ON
     -Dprotobuf_BUILD_TESTS=OFF
+    -Dprotobuf_FORCE_FETCH_DEPENDENCIES=ON
 "
 
 pre_configure() {
@@ -42,10 +43,19 @@ pre_configure() {
     "
 }
 
+pre_make() {
+    typeset arch=$1
+
+    save_builddir
+    set_builddir "$BUILDDIR/_deps/absl-src"
+    patch_source patches-abseil
+    restore_builddir
+}
+
 CXXFLAGS[aarch64]+=" -mtls-dialect=trad"
 
 init
-clone_github_source -submodules $PROG "$GITHUB/protocolbuffers/$PROG" v$VER
+clone_github_source $PROG "$GITHUB/protocolbuffers/$PROG" v$VER
 append_builddir $PROG
 prep_build cmake+ninja
 patch_source
