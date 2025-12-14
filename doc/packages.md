@@ -214,7 +214,7 @@
 | ooce/security/oath-toolkit	| 2.6.13	| https://download.savannah.nongnu.org/releases/oath-toolkit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/security/pam_radius	| 3.0.0		| https://github.com/FreeRADIUS/pam_radius/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/security/swtpm		| 0.10.1	| https://github.com/stefanberger/swtpm/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/server/apache-24		| 2.4.65	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
+| ooce/server/apache-24		| 2.4.66	| https://downloads.apache.org/httpd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24/modules/fcgid | 2.3.9	| https://downloads.apache.org/httpd/mod_fcgid/ | [omniosorg](https://github.com/omniosorg)
 | ooce/server/apache-24/modules/wsgi | 5.0.2    | https://github.com/GrahamDumpleton/mod_wsgi/tags/ | [cgrzemba](https://github.com/cgrzemba)
 | ooce/server/caddy         | 2.10.2     | https://github.com/caddyserver/caddy/releases | [gkoh](https://github.com/gkoh)
