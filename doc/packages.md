@@ -202,7 +202,7 @@
 | ooce/runtime/groovy-40	| 4.0.26	| https://groovy.apache.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-20		| 20.19.6	| https://nodejs.org/download/release/index.json https://nodejs.org/dist/latest-v20.x/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/node-22		| 22.21.1	| https://nodejs.org/download/release/index.json https://nodejs.org/dist/latest-v22.x/ | [omniosorg](https://github.com/omniosorg)
-| ooce/runtime/node-24		| 24.11.1	| https://nodejs.org/download/release/index.json https://nodejs.org/dist/latest-v24.x/ | [omniosorg](https://github.com/omniosorg)
+| ooce/runtime/node-24		| 24.12.0	| https://nodejs.org/download/release/index.json https://nodejs.org/dist/latest-v24.x/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-30		| 3.0.7		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-32		| 3.2.9		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-33		| 3.3.10	| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
