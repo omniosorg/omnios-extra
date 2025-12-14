@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Source/cmCTest.cxx a/Source/cmCTest.cxx
+--- a~/Source/cmCTest.cxx	1970-01-01 00:00:00
++++ a/Source/cmCTest.cxx	1970-01-01 00:00:00
+@@ -77,8 +77,6 @@
+ #  include <be/kernel/OS.h> /* disable_debugger() API. */
+ #endif
+ 
+-struct tm;
+-
+ struct cmCTest::Private
+ {
+   Private(cmCTest* ctest)
