@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=xjobs
-VER=20250209
+VER=20250529
 PKG=ooce/util/xjobs
 SUMMARY="xjobs - execute jobs in parallel"
 DESC="xjobs reads job descriptions line by line and executes them in parallel"
