@@ -121,6 +121,7 @@ ooce/network/mosh
 ooce/util/xmlto
 ooce/developer/protobuf-c
 ooce/library/libavif
+ooce/network/mtr
 ###############################################################################
 .SYSROOT
 ooce/application/vaultwarden

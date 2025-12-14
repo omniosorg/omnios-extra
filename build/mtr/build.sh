@@ -12,18 +12,19 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=mtr
-VER=0.95
+VER=0.96
 PKG=ooce/network/mtr
 SUMMARY="mtr - network diagnostic tool"
 DESC="mtr combines the functionality of the traceroute and ping programs into "
 DESC+="a single network diagnostic tool."
 
 set_arch 64
+test_relver '>=' 151057 && set_clangver
 set_standard XPG6
 
 MTR_PACKET_PATH=$PREFIX/sbin/mtr-packet
@@ -36,10 +37,15 @@ XFORM_ARGS="
 CONFIGURE_OPTS+="
     --without-gtk
 "
-LDFLAGS[amd64]+=" -R$PREFIX/lib/amd64"
 export MAKE
 
 CFLAGS+=" -DMTR_PACKET_PATH=\\\"$MTR_PACKET_PATH\\\""
+
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG v$VER

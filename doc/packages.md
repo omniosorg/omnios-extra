@@ -180,7 +180,7 @@
 | ooce/network/mosh		| 1.4.0		| https://github.com/mobile-shell/mosh/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mosquitto	| 2.0.20	| https://mosquitto.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/mrtg		| 2.17.10	| https://oss.oetiker.ch/mrtg/pub/?M=D | [omniosorg](https://github.com/omniosorg)
-| ooce/network/mtr		| 0.95		| https://github.com/traviscross/mtr/tags | [omniosorg](https://github.com/omniosorg)
+| ooce/network/mtr		| 0.96		| https://github.com/traviscross/mtr/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nicstat		| 1.95		| https://sourceforge.net/projects/nicstat/files/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/nsd		| 4.13.0	| https://nlnetlabs.nl/downloads/nsd/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/openldap		| 2.6.10	| https://www.openldap.org/software/download/ | [omniosorg](https://github.com/omniosorg)
