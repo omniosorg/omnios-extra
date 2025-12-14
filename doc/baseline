@@ -249,7 +249,6 @@ extra.omnios ooce/runtime/node-20
 extra.omnios ooce/runtime/node-22
 extra.omnios ooce/runtime/node-24
 extra.omnios ooce/runtime/ruby-30
-extra.omnios ooce/runtime/ruby-31
 extra.omnios ooce/runtime/ruby-32
 extra.omnios ooce/runtime/ruby-33
 extra.omnios ooce/runtime/ruby-34
