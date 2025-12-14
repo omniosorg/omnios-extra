@@ -260,7 +260,7 @@
 | ooce/util/getopt		| 1.1.6		| https://frodo.looijaard.name/node/134/release | [omniosorg](https://github.com/omniosorg)
 | ooce/util/gh			| 2.82.1	| https://github.com/cli/cli/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/htmlq		| 0.4.0		| https://github.com/mgdm/htmlq/releases/ | [omniosorg](https://github.com/omniosorg)
-| ooce/util/hyperfine		| 1.19.0	| https://github.com/sharkdp/hyperfine/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/util/hyperfine		| 1.20.0	| https://github.com/sharkdp/hyperfine/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/jq			| 1.8.1		| https://github.com/stedolan/jq/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/lrzsz		| 0.12.20	| https://ohse.de/uwe/software/lrzsz.html | [omniosorg](https://github.com/omniosorg)
 | ooce/util/ncdu		| 2.9.2		| https://dev.yorhel.nl/download | [jclulow](https://github.com/jclulow)
