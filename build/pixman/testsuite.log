@@ -20,9 +20,9 @@
 20/35 thread-test            OK
 21/35 pixel-test             OK
 22/35 alphamap               OK
-23/35 composite-traps-test   OK
-24/35 matrix-test            OK
-25/35 filter-reduction-test  OK
+23/35 matrix-test            OK
+24/35 filter-reduction-test  OK
+25/35 composite-traps-test   OK
 26/35 glyph-test             OK
 27/35 solid-test             OK
 28/35 region-contains-test   OK
@@ -34,10 +34,6 @@
 34/35 composite              OK
 35/35 tolerance-test         OK
 
-Ok:                 35  
-Expected Fail:      0   
-Fail:               0   
-Unexpected Pass:    0   
-Skipped:            0   
-Timeout:            0   
+Ok:                35  
+Fail:              0   
 

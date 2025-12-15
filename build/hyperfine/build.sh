@@ -13,12 +13,12 @@
 # }}}
 
 # Copyright 2020 Stephen Gregoratto
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=hyperfine
-VER=1.19.0
+VER=1.20.0
 PKG=ooce/util/hyperfine
 SUMMARY="benchmarking tool"
 DESC="$PROG is a command-line benchmarking tool that provides "

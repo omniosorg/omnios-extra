@@ -31,7 +31,7 @@ PASS: tests/pngunknown-vpAg
 PASS: tests/pngimage-quick
 PASS: tests/pngimage-full
 ============================================================================
-Testsuite summary for libpng 1.6.52
+Testsuite summary for libpng 1.6.53
 ============================================================================
 # TOTAL: 32
 # PASS:  32

@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=ldns
-VER=1.8.4
+VER=1.9.0
 PKG=ooce/library/ldns
 SUMMARY=$PROG
 DESC="$PROG DNS programming library and drill utility"
@@ -34,7 +34,6 @@ XFORM_ARGS="
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --disable-static
-    --disable-dane-ta-usage
 "
 CONFIGURE_OPTS[i386]+="
     --bindir=$PREFIX/bin/i386

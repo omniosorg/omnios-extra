@@ -18,7 +18,7 @@
 
 PROG=gh
 PKG=ooce/util/gh
-VER=2.82.1
+VER=2.83.2
 SUMMARY="github-cli"
 DESC="The GitHub CLI tool"
 

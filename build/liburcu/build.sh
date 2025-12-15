@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=liburcu
-VER=0.15.3
+VER=0.15.5
 PKG=ooce/library/liburcu
 SUMMARY="Userspace RCU"
 DESC="Userspace RCU (read-copy-update) library. This data synchronization "

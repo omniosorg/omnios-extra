@@ -18,7 +18,7 @@
 . ../../lib/build.sh
 
 PROG=freetype
-VER=2.13.3
+VER=2.14.1
 PKG=ooce/library/freetype2
 SUMMARY="$PROG"
 DESC="A Free, High-Quality, and Portable Font Engine"
