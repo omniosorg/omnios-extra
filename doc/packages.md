@@ -142,6 +142,7 @@
 | ooce/library/libtasn1		| 4.20.0	| https://ftp.gnu.org/gnu/libtasn1/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libtpms		| 0.10.1	| https://github.com/stefanberger/libtpms/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/liburcu		| 0.15.5	| https://lttng.org/files/urcu/?O=D | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libupnp		| 1.14.25	| https://github.com/pupnp/pupnp/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libusb-1		| 1.0.29	| https://github.com/libusb/libusb/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libuv		| 1.51.0	| https://github.com/libuv/libuv/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libvorbis	| 1.3.7		| https://ftp.osuosl.org/pub/xiph/releases/vorbis/ | [omniosorg](https://github.com/omniosorg)

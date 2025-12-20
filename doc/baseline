@@ -173,6 +173,7 @@ extra.omnios ooce/library/libtasn1
 extra.omnios ooce/library/libtpms
 extra.omnios ooce/library/liburcu
 extra.omnios ooce/library/libusb-1
+extra.omnios ooce/library/libupnp
 extra.omnios ooce/library/libuv
 extra.omnios ooce/library/libvncserver
 extra.omnios ooce/library/libvorbis
