@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=opus
-VER=1.5.2
+VER=1.6
 PKG=ooce/audio/opus
 SUMMARY="$PROG"
 DESC="$PROG - an open, royalty-free, highly versatile audio codec."

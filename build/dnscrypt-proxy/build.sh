@@ -18,7 +18,7 @@
 
 PROG=dnscrypt-proxy
 PKG=ooce/network/dnscrypt-proxy
-VER=2.1.11
+VER=2.1.15
 SUMMARY="DNS proxy with support for encrypted DNS protocols"
 DESC="A flexible DNS proxy, with support for modern encrypted DNS protocols"
 DESC+=" such as DNSCrypt v2 and DNS-over-HTTP/2."
