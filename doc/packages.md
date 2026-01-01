@@ -99,7 +99,7 @@
 | ooce/editor/emacs		| 30.2		| https://ftp.gnu.org/gnu/emacs/ https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html#Releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/helix		| 25.07.1	| https://github.com/helix-editor/helix/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
-| ooce/editor/micro		| 2.0.14	| https://github.com/zyedidia/micro/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/editor/micro		| 2.0.15	| https://github.com/zyedidia/micro/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/nano		| 8.7		| https://ftp.gnu.org/gnu/nano/ | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/neovim		| 0.11.5	| https://github.com/neovim/neovim/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/emulator/qemu		| 10.1.3	| https://www.qemu.org/download/ | [omniosorg](https://github.com/omniosorg)
