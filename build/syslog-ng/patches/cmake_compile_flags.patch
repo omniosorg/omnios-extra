@@ -1,0 +1,14 @@
+diff -wpruN '--exclude=*.orig' original/CMakeLists.txt syslog-ng-4.10.2/CMakeLists.txt
+--- original/CMakeLists.txt	2026-01-01 16:46:39.687422110 +0000
++++ syslog-ng-4.10.2/CMakeLists.txt	2026-01-01 16:49:28.558680053 +0000
+@@ -391,6 +391,10 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "OSF1"
+   add_compile_definitions(_XOPEN_SOURCE=500 _XOPEN_SOURCE_EXTENDED _OSF_SOURCE _POSIX_C_SOURCE)
+ endif()
+ 
++if(CMAKE_SYSTEM_NAME STREQUAL "SunOS")
++  add_compile_definitions(__EXTENSIONS__ _XOPEN_SOURCE=600 _POSIX_C_SOURCE=200809L)
++endif()
++
+ # Let the user specify a timezone directory
+ set(TIMEZONE_DIR "" CACHE PATH "Use path as the directory to get the timezone files")
+ 

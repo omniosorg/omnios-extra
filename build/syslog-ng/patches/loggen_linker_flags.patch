@@ -1,0 +1,12 @@
+diff -wpruN '--exclude=*.orig' original/tests/loggen/CMakeLists.txt syslog-ng-4.10.2/tests/loggen/CMakeLists.txt
+--- original/tests/loggen/CMakeLists.txt	2025-12-30 16:00:10.519993748 +0000
++++ syslog-ng-4.10.2/tests/loggen/CMakeLists.txt	2025-12-30 16:02:45.646213243 +0000
+@@ -22,6 +22,8 @@ target_link_libraries(
+   GLib::GModule
+   GLib::GThread
+   OpenSSL::SSL
++  nsl
++  socket
+   )
+ 
+ set_target_properties(loggen_helper
