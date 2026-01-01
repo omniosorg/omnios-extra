@@ -20,8 +20,8 @@ PROG=micro
 PROGNAME=micro
 # The latest release is broken on illumos, but we can use a later git hash
 # until a new release is cut.
-VER=2.0.14
-HASH=115e560ee24b37893c0bbc51dcfaf5f79e0d64e8
+VER=2.0.15
+HASH=6a62575bcfdf4965f187eedafceb3400316e612b
 PKG=ooce/editor/micro
 SUMMARY="$PROG - modern and intuitive terminal-based text editor"
 DESC=`cat <<'EOM'
