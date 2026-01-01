@@ -1,0 +1,5 @@
+loggen_linker_flags.patch
+getent-sun_return_type_fix.patch
+cmake_compile_flags.patch
+slog_strings_include.patch
+syslog-ng-ctl_linker_flags.patch

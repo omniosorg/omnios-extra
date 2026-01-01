@@ -1,0 +1,39 @@
+diff -wpruN '--exclude=*.orig' original/lib/compat/getent-sun.c syslog-ng-4.10.2/lib/compat/getent-sun.c
+--- original/lib/compat/getent-sun.c	2026-01-01 09:21:14.823763600 +0000
++++ syslog-ng-4.10.2/lib/compat/getent-sun.c	2026-01-01 09:22:46.416467050 +0000
+@@ -32,7 +32,7 @@ _compat_sun__getprotobynumber_r(int prot
+                                 size_t buflen, struct protoent **result)
+ {
+   *result = getprotobynumber_r(proto, result_buf, buf, buflen);
+-  return (*result ? NULL : errno);
++  return (*result ? 0 : errno);
+ }
+ 
+ int
+@@ -41,7 +41,7 @@ _compat_sun__getprotobyname_r(const char
+                               size_t buflen, struct protoent **result)
+ {
+   *result = getprotobyname_r(name, result_buf, buf, buflen);
+-  return (*result ? NULL : errno);
++  return (*result ? 0 : errno);
+ }
+ 
+ int
+@@ -50,7 +50,7 @@ _compat_sun__getservbyport_r(int port, c
+                              size_t buflen, struct servent **result)
+ {
+   *result =  getservbyport_r(port, proto, result_buf, buf, buflen);
+-  return (*result ? NULL : errno);
++  return (*result ? 0 : errno);
+ }
+ 
+ int
+@@ -59,7 +59,7 @@ _compat_sun__getservbyname_r(const char
+                              size_t buflen, struct servent **result)
+ {
+   *result =  getservbyname_r(name, proto, result_buf, buf, buflen);
+-  return (*result ? NULL : errno);
++  return (*result ? 0 : errno);
+ }
+ 
+ #endif
