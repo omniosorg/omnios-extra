@@ -1,0 +1,3 @@
+opt/ooce/nginx/modules/ngx_http_brotli_filter_module.so
+opt/ooce/nginx/modules/ngx_http_brotli_static_module.so
+opt/ooce/nginx/modules/ngx_http_acme_module.so
