@@ -25,6 +25,8 @@ DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
 # Brotli source from https://github.com/google/ngx_brotli
 BROTLIVER=1.0.0rc
+# Acme source from https://github.com/nginx/nginx-acme
+ACMEVER=0.3.1
 
 set_arch 64
 set_clangver
@@ -38,6 +40,7 @@ CONFPATH=/etc$PREFIX
 LOGPATH=/var/log$PREFIX
 VARPATH=/var$PREFIX
 RUNPATH=$VARPATH/run
+export NGX_ACME_STATE_PREFIX=$VARPATH/acmecache
 
 BUILD_DEPENDS_IPS="library/security/openssl library/pcre2"
 RUN_DEPENDS_IPS="ooce/server/nginx-common"
@@ -52,6 +55,7 @@ XFORM_ARGS="
     -DsVERSION=
     -DDsVERSION=
     -DBROTLI=$BROTLIVER
+    -DACME=$ACMEVER
 "
 
 CONFIGURE_OPTS[amd64]=
@@ -88,8 +92,8 @@ CONFIGURE_OPTS="
     --http-uwsgi-temp-path=/tmp/.nginx/uwsgi
     --http-scgi-temp-path=/tmp/.nginx/scgi
     --add-dynamic-module=../ngx_brotli-$BROTLIVER
+    --add-dynamic-module=../nginx-acme-$ACMEVER
 "
-
 
 LDFLAGS+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
 
@@ -106,6 +110,7 @@ init
 download_source $PROG $PROG $VER
 patch_source
 BUILDDIR=ngx_brotli-$BROTLIVER download_source $PROG/brotli v$BROTLIVER
+BUILDDIR=nginx-acme-$ACMEVER download_source $PROG/acme nginx-acme $ACMEVER
 prep_build autoconf-like
 build
 copy_man_page

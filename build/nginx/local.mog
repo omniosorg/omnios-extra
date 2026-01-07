@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 #
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 <transform file path=etc/$(PREFIX)/ -> set preserve renamenew>
 <transform dir  path=var/$(OPREFIX)/$(PROG) -> set owner $(PROG)>
@@ -16,8 +16,11 @@
 <transform file path=$(PREFIX)/sbin/ \
     -> set restart_fmri svc:/network/http:$(PROG)$(sVERSION)>
 
+dir path=var/$(OPREFIX)/$(PROG)/acmecache owner=$(PROG) group=$(PROG) mode=0700
+
 license LICENSE license=simplified-BSD
 license ../ngx_brotli-$(BROTLI)/LICENSE license=simplified-BSD/ngx_brotli
+license ../nginx-acme-$(ACME)/LICENSE license=Apache2/nginx_acme
 
 <include mediated-binlink.mog>
 <include mediated-manlink.mog>
