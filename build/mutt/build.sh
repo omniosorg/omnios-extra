@@ -42,6 +42,7 @@ CONFIGURE_OPTS="
     --enable-imap
     --enable-smtp
     --with-ssl
+    --with-sasl
     --disable-doc
 "
 
