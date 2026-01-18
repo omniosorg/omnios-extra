@@ -1,0 +1,6 @@
+01-no-d_type.patch
+02-illumos-build.patch
+03-no-local-remote-filesystem.patch
+04-use-gcc-test.patch
+05-fix-illumos-flags.patch
+06-fewer-rlimit-options.patch

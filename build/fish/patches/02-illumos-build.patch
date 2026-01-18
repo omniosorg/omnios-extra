@@ -1,0 +1,11 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/build.rs a/build.rs
+--- a~/build.rs	1970-01-01 00:00:00
++++ a/build.rs	1970-01-01 00:00:00
+@@ -73,6 +73,7 @@ fn detect_cfgs(target: &mut Target) {
+         ("apple", &(|_| target_os_is_apple())),
+         ("bsd", &(|_| target_os_is_bsd())),
+         ("cygwin", &(|_| target_os_is_cygwin())),
++        ("illumos", &|_| env::var("CARGO_CFG_TARGET_OS").unwrap() == "illumos"),
+         ("have_eventfd", &|target| {
+             // FIXME: NetBSD 10 has eventfd, but the libc crate does not expose it.
+             if target_os() == "netbsd" {
