@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=opus
-VER=1.6
+VER=1.6.1
 PKG=ooce/audio/opus
 SUMMARY="$PROG"
 DESC="$PROG - an open, royalty-free, highly versatile audio codec."

@@ -15,7 +15,7 @@ PASS: tests/test_opus_extensions
 PASS: tests/test_opus_padding
 PASS: tests/test_opus_projection
 ============================================================================
-Testsuite summary for opus 1.6
+Testsuite summary for opus 1.6.1
 ============================================================================
 # TOTAL: 16
 # PASS:  16
