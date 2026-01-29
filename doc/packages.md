@@ -24,7 +24,7 @@
 | ooce/application/php-84	| 8.4.17	| https://www.php.net/downloads.php?source=Y | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-85	| 8.5.2		| https://www.php.net/downloads.php?source=Y | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-XX/imagick | 3.8.1	| https://github.com/Imagick/imagick/tags | [omniosorg](https://github.com/omniosorg)
-| ooce/application/rustdesk-server | 1.1.14	| https://github.com/rustdesk/rustdesk-server/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/application/rustdesk-server | 1.1.15	| https://github.com/rustdesk/rustdesk-server/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20240312	| https://pi.kwarc.info/historic/systems/texlive/2024/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/tidy		| 5.8.0		| https://github.com/htacg/tidy-html5/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/tig 		| 2.5.10	| https://github.com/jonas/tig/releases | [omniosorg](https://github.com/omniosorg)
