@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=starship
-VER=1.24.0
+VER=1.24.2
 PKG=ooce/terminal/starship
 SUMMARY="cross-shell prompt"
 DESC="The minimal, blazing-fast, and infinitely customizable prompt "

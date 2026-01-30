@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=jansson
-VER=2.14.1
+VER=2.15.0
 PKG=ooce/library/jansson
 SUMMARY="jansson"
 DESC="C library for encoding, decoding and manipulating JSON data"
@@ -26,11 +26,14 @@ test_relver '>=' 151055 && set_clanger
 
 CONFIGURE_OPTS="--disable-static"
 
+TESTSUITE_FILTER='^[A-Z#][A-Z ]'
+
 init
 download_source $PROG $PROG $VER
 prep_build
 patch_source
 build
+run_testsuite check
 make_package
 clean_up
 

@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=atuin
-VER=18.10.0
+VER=18.11.0
 PKG=ooce/util/atuin
 SUMMARY="Magical shell history"
 DESC="Replaces your existing shell history with a SQLite database and "
