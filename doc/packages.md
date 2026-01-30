@@ -118,7 +118,7 @@
 | ooce/library/gnutls		| 3.6.16	| https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/ https://www.gnutls.org/download.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/guile		| 2.0.14	| https://ftp.gnu.org/gnu/guile/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/icu4c		| 78.2		| https://github.com/unicode-org/icu/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/library/jansson		| 2.14.1	| https://github.com/akheron/jansson/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/library/jansson		| 2.15.0	| https://github.com/akheron/jansson/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/json-c		| 0.18		| https://github.com/json-c/json-c/tags https://github.com/json-c/json-c/wiki | [omniosorg](https://github.com/omniosorg)
 | ooce/library/ldns		| 1.9.0		| https://nlnetlabs.nl/downloads/ldns/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libarchive	| 3.8.0		| https://libarchive.org/downloads/ | [omniosorg](https://github.com/omniosorg)
