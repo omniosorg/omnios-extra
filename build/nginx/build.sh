@@ -13,7 +13,7 @@
 # }}}
 
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -94,8 +94,6 @@ CONFIGURE_OPTS="
     --add-dynamic-module=../ngx_brotli-$BROTLIVER
     --add-dynamic-module=../nginx-acme-$ACMEVER
 "
-
-LDFLAGS+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
 
 copy_man_page() {
     logmsg "--- copying man page"

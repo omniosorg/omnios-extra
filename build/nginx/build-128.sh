@@ -13,18 +13,20 @@
 # }}}
 
 # Copyright 2011-2013 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nginx
 PKG=ooce/server/nginx-128
-VER=1.28.0
+VER=1.28.1
 SUMMARY="nginx 1.28 web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
 # Brotli source from https://github.com/google/ngx_brotli
 BROTLIVER=1.0.0rc
+# Acme source from https://github.com/nginx/nginx-acme
+ACMEVER=0.3.1
 
 set_arch 64
 set_clangver
@@ -39,6 +41,7 @@ CONFPATH=/etc$PREFIX
 LOGPATH=/var/log$OPREFIX/$PROG
 VARPATH=/var$OPREFIX/$PROG
 RUNPATH=$VARPATH/run
+export NGX_ACME_STATE_PREFIX=$VARPATH/acmecache
 
 BUILD_DEPENDS_IPS="library/security/openssl library/pcre2"
 RUN_DEPENDS_IPS="ooce/server/nginx-common"
@@ -53,6 +56,7 @@ XFORM_ARGS="
     -DsVERSION=$sMAJVER
     -DDsVERSION=-$sMAJVER
     -DBROTLI=$BROTLIVER
+    -DACME=$ACMEVER
 "
 
 CONFIGURE_OPTS[amd64]=
@@ -73,6 +77,7 @@ CONFIGURE_OPTS="
     --with-http_sub_module
     --with-http_dav_module
     --with-stream
+    --with-stream_ssl_module
     --with-mail
     --with-mail_ssl_module
     --user=nginx
@@ -88,10 +93,8 @@ CONFIGURE_OPTS="
     --http-uwsgi-temp-path=/tmp/.nginx/uwsgi
     --http-scgi-temp-path=/tmp/.nginx/scgi
     --add-dynamic-module=../ngx_brotli-$BROTLIVER
+    --add-dynamic-module=../nginx-acme-$ACMEVER
 "
-
-
-LDFLAGS+=" -L$PREFIX/lib/amd64 -R$PREFIX/lib/amd64"
 
 copy_man_page() {
     logmsg "--- copying man page"
@@ -106,6 +109,7 @@ init
 download_source $PROG $PROG $VER
 patch_source
 BUILDDIR=ngx_brotli-$BROTLIVER download_source $PROG/brotli v$BROTLIVER
+BUILDDIR=nginx-acme-$ACMEVER download_source $PROG/acme nginx-acme $ACMEVER
 prep_build autoconf-like
 build
 copy_man_page
