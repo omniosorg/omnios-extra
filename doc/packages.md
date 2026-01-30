@@ -251,7 +251,7 @@
 | ooce/text/tree-sitter-langs	| 0.12.308	| https://github.com/emacs-tree-sitter/tree-sitter-langs/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/text/xsv			| 0.13.0	| https://github.com/BurntSushi/xsv/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/acmefetch		| 0.8.1		| https://github.com/oetiker/AcmeFetch/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/util/atuin		| 18.10.0	| https://github.com/atuinsh/atuin/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/util/atuin		| 18.11.0	| https://github.com/atuinsh/atuin/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/bat			| 0.26.1	| https://github.com/sharkdp/bat/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/diffr		| 0.1.5		| https://github.com/mookid/diffr/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/util/direnv		| 2.37.1	| https://github.com/direnv/direnv/releases | [omniosorg](https://github.com/omniosorg)
