@@ -1,7 +1,6 @@
-diff --git a/pam_oath/pam_modutil.h b/pam_oath/pam_modutil.h
-index de239df..d6093da 100644
---- a/pam_oath/pam_modutil.h
-+++ b/pam_oath/pam_modutil.h
+diff -wpruN --no-dereference '--exclude=*.orig' a~/pam_oath/pam_modutil.h a/pam_oath/pam_modutil.h
+--- a~/pam_oath/pam_modutil.h	1970-01-01 00:00:00
++++ a/pam_oath/pam_modutil.h	1970-01-01 00:00:00
 @@ -1,6 +1,8 @@
  #ifndef PAM_MODUTIL_H
  # define PAM_MODUTIL_H

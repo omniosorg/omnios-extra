@@ -603,7 +603,7 @@ PASS: test_build_dynlink_cxx 1 - cds_lfs_empty
 PASS: test_build_dynlink_cxx 2 - cds_lfs_empty
 PASS: test_build_dynlink_cxx 3 - cds_wfcq_empty
 ============================================================================
-Testsuite summary for userspace-rcu 0.15.5
+Testsuite summary for userspace-rcu 0.15.6
 ============================================================================
 # TOTAL: 566
 # PASS:  558
@@ -615,7 +615,7 @@ Testsuite summary for userspace-rcu 0.15.5
 ============================================================================
 Making check in benchmark
 ============================================================================
-Testsuite summary for userspace-rcu 0.15.5
+Testsuite summary for userspace-rcu 0.15.6
 ============================================================================
 # TOTAL: 0
 # PASS:  0
@@ -627,7 +627,7 @@ Testsuite summary for userspace-rcu 0.15.5
 ============================================================================
 Making check in regression
 ============================================================================
-Testsuite summary for userspace-rcu 0.15.5
+Testsuite summary for userspace-rcu 0.15.6
 ============================================================================
 # TOTAL: 0
 # PASS:  0

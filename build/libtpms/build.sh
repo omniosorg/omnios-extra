@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libtpms
-VER=0.10.1
+VER=0.10.2
 PKG=ooce/library/libtpms
 SUMMARY="$PROG"
 DESC="$PROG - library that targets the integration of TPM functionality "

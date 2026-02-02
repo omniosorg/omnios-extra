@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=fping
-VER=5.4
+VER=5.5
 PKG=ooce/network/fping
 SUMMARY="fping - send ICMP echo probes to network hosts"
 DESC="fping is a program to send ICMP echo probes to network hosts, similar to "

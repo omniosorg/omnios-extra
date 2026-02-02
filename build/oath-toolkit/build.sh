@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=oath-toolkit
-VER=2.6.13
+VER=2.6.14
 PKG=ooce/security/oath-toolkit
 SUMMARY="OATH Toolkit"
 DESC="One-time password components"
