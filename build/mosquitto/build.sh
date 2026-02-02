@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=mosquitto
-VER=2.0.20
+VER=2.0.22
 PKG=ooce/network/mosquitto
 SUMMARY="$PROG - an open source message broker"
 DESC="$PROG is an open source (EPL/EDL licensed) message broker that "

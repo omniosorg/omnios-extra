@@ -18,14 +18,15 @@ extra.omnios ooce/application/nagios-nrdp
 extra.omnios ooce/application/nagios-nrpe
 extra.omnios ooce/application/nagios-nsca
 extra.omnios ooce/application/nagios-plugins
-extra.omnios ooce/application/php-81
-extra.omnios ooce/application/php-81/imagick
+extra.omnios ooce/application/navidrome
 extra.omnios ooce/application/php-82
 extra.omnios ooce/application/php-82/imagick
 extra.omnios ooce/application/php-83
 extra.omnios ooce/application/php-83/imagick
 extra.omnios ooce/application/php-84
 extra.omnios ooce/application/php-84/imagick
+extra.omnios ooce/application/php-85
+extra.omnios ooce/application/php-85/imagick
 extra.omnios ooce/application/php-common
 extra.omnios ooce/application/rustdesk-server
 extra.omnios ooce/application/texlive
@@ -36,6 +37,7 @@ extra.omnios ooce/application/vaultwarden
 extra.omnios ooce/application/zabbix-agent
 extra.omnios ooce/application/zabbix-server
 extra.omnios ooce/audio/flac
+extra.omnios ooce/audio/opus
 extra.omnios ooce/compress/lz4 r
 extra.omnios ooce/compress/pbzip2
 extra.omnios ooce/compress/pigz
@@ -43,7 +45,6 @@ extra.omnios ooce/compress/zstd r
 extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
 extra.omnios ooce/database/mariadb-1011
-extra.omnios ooce/database/mariadb-105
 extra.omnios ooce/database/mariadb-106
 extra.omnios ooce/database/mariadb-114
 extra.omnios ooce/database/mariadb-common
@@ -51,7 +52,6 @@ extra.omnios ooce/database/postgresql-13
 extra.omnios ooce/database/postgresql-13/mysql_fdw
 extra.omnios ooce/database/postgresql-13/pg_repack
 extra.omnios ooce/database/postgresql-14
-extra.omnios ooce/database/postgresql-14/citus
 extra.omnios ooce/database/postgresql-14/mysql_fdw
 extra.omnios ooce/database/postgresql-14/pg_repack
 extra.omnios ooce/database/postgresql-15
@@ -153,6 +153,7 @@ extra.omnios ooce/library/jansson
 extra.omnios ooce/library/json-c
 extra.omnios ooce/library/ldns
 extra.omnios ooce/library/libarchive
+extra.omnios ooce/library/libavif
 extra.omnios ooce/library/libde265
 extra.omnios ooce/library/libdwarf
 extra.omnios ooce/library/libev
@@ -178,7 +179,6 @@ extra.omnios ooce/library/libvorbis
 extra.omnios ooce/library/libwebp
 extra.omnios ooce/library/libzip
 extra.omnios ooce/library/mariadb-1011
-extra.omnios ooce/library/mariadb-105
 extra.omnios ooce/library/mariadb-106
 extra.omnios ooce/library/mariadb-114
 extra.omnios ooce/library/nettle
@@ -192,9 +192,11 @@ extra.omnios ooce/library/postgresql-14
 extra.omnios ooce/library/postgresql-15
 extra.omnios ooce/library/postgresql-16
 extra.omnios ooce/library/postgresql-17
+extra.omnios ooce/library/postgresql-18
 extra.omnios ooce/library/security/libsasl2
 extra.omnios ooce/library/serf
 extra.omnios ooce/library/slang
+extra.omnios ooce/library/taglib
 extra.omnios ooce/library/tiff
 extra.omnios ooce/library/tree-sitter
 extra.omnios ooce/library/unbound
@@ -204,6 +206,7 @@ extra.omnios ooce/multimedia/dav1d
 extra.omnios ooce/multimedia/dcraw
 extra.omnios ooce/multimedia/exif
 extra.omnios ooce/multimedia/ffmpeg
+extra.omnios ooce/multimedia/mediasrv-common
 extra.omnios ooce/multimedia/minidlna
 extra.omnios ooce/multimedia/rav1e
 extra.omnios ooce/multimedia/x264
@@ -242,11 +245,10 @@ extra.omnios ooce/runtime/expect
 extra.omnios ooce/runtime/gnu-smalltalk
 extra.omnios ooce/runtime/groovy-30
 extra.omnios ooce/runtime/groovy-40
-extra.omnios ooce/runtime/node-18
 extra.omnios ooce/runtime/node-20
 extra.omnios ooce/runtime/node-22
+extra.omnios ooce/runtime/node-24
 extra.omnios ooce/runtime/ruby-30
-extra.omnios ooce/runtime/ruby-31
 extra.omnios ooce/runtime/ruby-32
 extra.omnios ooce/runtime/ruby-33
 extra.omnios ooce/runtime/ruby-34

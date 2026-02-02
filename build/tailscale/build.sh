@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=tailscale
 PKG=ooce/network/tailscale
-VER=1.88.4
+VER=1.92.5
 SUMMARY="Tailscale"
 DESC="The easiest, most secure way to use WireGuard and 2FA."
 

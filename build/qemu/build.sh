@@ -12,17 +12,17 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=qemu
-VER=10.1.2
+VER=10.2.0
 PKG=ooce/emulator/qemu
 SUMMARY="$PROG"
 DESC="A generic and open source machine emulator and virtualizer"
 
-LIBSLIRPVER=4.9.0
+LIBSLIRPVER=4.9.1
 IMGHDRVER=3.13.0
 
 OPREFIX=$PREFIX

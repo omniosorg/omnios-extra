@@ -18,7 +18,7 @@
 
 PROG=apache
 PKG=ooce/server/apache-24
-VER=2.4.65
+VER=2.4.66
 MAJVER=${VER%.*}            # M.m
 sMAJVER=${MAJVER//./}       # Mm
 SUMMARY="Apache httpd $MAJVER"

@@ -1,0 +1,28 @@
+diff -wpruN --no-deference '--exclude=*.orig' a~/src/google/protobuf/compiler/command_line_interface.cc a/src/google/protobuf/compiler/command_line_interface.cc
+--- a~/src/google/protobuf/compiler/command_line_interface.cc	1970-01-01 00:00:00
++++ a/src/google/protobuf/compiler/command_line_interface.cc	1970-01-01 00:00:00
+@@ -235,6 +235,24 @@ bool GetProtocAbsolutePath(std::string* path) {
+   if (sysctl(mib, 4, &buffer, &len, nullptr, 0) != 0) {
+     len = 0;
+   }
++#elif defined(__illumos__)
++  const char *name = getexecname();
++  char buffer[PATH_MAX];
++  size_t len;
++
++  buffer[0] = '\0';
++  if (name[0] != '/') {
++    if (!getcwd(buffer, sizeof(buffer))) {
++      return false;
++    }
++    if (strlcat(buffer, "/", sizeof(buffer)) >= sizeof(buffer)) {
++      return false;
++    }
++  }
++  len = strlcat(buffer, name, sizeof(buffer));
++  if (len >= sizeof(buffer)) {
++     len = 0;
++  }
+ #else
+   char buffer[PATH_MAX];
+   int len = readlink("/proc/self/exe", buffer, PATH_MAX);

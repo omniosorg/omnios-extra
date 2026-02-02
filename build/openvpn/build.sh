@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=openvpn
-VER=2.6.15
+VER=2.6.17
 PKG=ooce/network/openvpn
 LZOVER=2.10
 SUMMARY="OpenVPN"

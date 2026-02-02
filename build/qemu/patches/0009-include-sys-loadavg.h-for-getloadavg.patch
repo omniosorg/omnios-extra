@@ -1,4 +1,4 @@
-From 222d6ee130b229f65d9a8734d29fa972b853a154 Mon Sep 17 00:00:00 2001
+From 4107f8813ec012682ba5a3fdfeb03fc597c33f10 Mon Sep 17 00:00:00 2001
 From: Dominik Hassler <hadfl@omnios.org>
 Date: Sat, 10 May 2025 19:52:04 +0000
 Subject: include sys/loadavg.h for getloadavg
@@ -8,10 +8,10 @@ Subject: include sys/loadavg.h for getloadavg
  1 file changed, 4 insertions(+)
 
 diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 12bc086d79..545c18f183 100644
+index 837be51c40..19cd12e854 100644
 --- a/qga/commands-posix.c
 +++ b/qga/commands-posix.c
-@@ -47,6 +47,10 @@
+@@ -50,6 +50,10 @@
  #endif
  #endif
  

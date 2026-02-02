@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=mutt
-VER=2.2.14
+VER=2.2.16
 PKG=ooce/application/mutt
 SUMMARY="$PROG email client"
 DESC="$PROG is a text-based email client"
@@ -42,6 +42,7 @@ CONFIGURE_OPTS="
     --enable-imap
     --enable-smtp
     --with-ssl
+    --with-sasl
     --disable-doc
 "
 

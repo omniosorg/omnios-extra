@@ -10,11 +10,12 @@ depend fmri=driver/tuntap type=require
 depend fmri=library/unixodbc type=require
 depend fmri=network/socat type=require
 depend fmri=ooce/application/imagemagick type=require
-depend fmri=ooce/application/php-81 type=require
 depend fmri=ooce/application/php-82 type=require
 depend fmri=ooce/application/php-83 type=require
 depend fmri=ooce/application/php-84 type=require
+depend fmri=ooce/application/php-85 type=require
 depend fmri=ooce/audio/flac type=require
+depend fmri=ooce/audio/opus type=require
 depend fmri=ooce/database/bdb type=require
 depend fmri=ooce/database/lmdb type=require
 depend fmri=ooce/developer/cargo-c type=require
@@ -41,6 +42,7 @@ depend fmri=ooce/library/gnutls type=require
 depend fmri=ooce/library/icu4c type=require
 depend fmri=ooce/library/jansson type=require
 depend fmri=ooce/library/json-c type=require
+depend fmri=ooce/library/libavif type=require
 depend fmri=ooce/library/libev type=require
 depend fmri=ooce/library/libexif type=require
 depend fmri=ooce/library/libgd type=require
@@ -77,6 +79,7 @@ depend fmri=ooce/library/postgresql-18 type=require
 depend fmri=ooce/library/security/libsasl2 type=require
 depend fmri=ooce/library/serf type=require
 depend fmri=ooce/library/slang type=require
+depend fmri=ooce/library/taglib type=require
 depend fmri=ooce/library/tiff type=require
 depend fmri=ooce/library/tree-sitter type=require
 depend fmri=ooce/library/unbound type=require
@@ -88,6 +91,7 @@ depend fmri=ooce/multimedia/rav1e type=require
 depend fmri=ooce/multimedia/x264 type=require
 depend fmri=ooce/multimedia/x265 type=require
 depend fmri=ooce/runtime/node-22 type=require
+depend fmri=ooce/runtime/node-24 type=require
 depend fmri=ooce/runtime/ruby-30 type=require
 depend fmri=ooce/runtime/ruby-34 type=require
 depend fmri=ooce/server/apache-24 type=require
@@ -145,4 +149,8 @@ depend fmri=ooce/developer/clang-20 type=conditional \
 # Added llvm/clang 21 from r151055 onwards
 depend fmri=ooce/developer/llvm-21 type=conditional \
     predicate=release/name@0.5.11-151055
+
+# clang 21 is the default clang compiler from r151057 onwards
+depend fmri=ooce/developer/clang-21 type=conditional \
+    predicate=release/name@0.5.11-151057
 

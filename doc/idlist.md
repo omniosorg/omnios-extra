@@ -21,6 +21,7 @@
 | omnios	| 23	| chrony
 | omnios	| 26	| dma
 | extra		| 27	| postfix
+| extra		| 29	| mediasrv
 | illumos	| 37	| listen
 | extra		| 49	| rustdesk
 | illumos	| 50	| gdm
@@ -87,6 +88,7 @@
 | illumos	| 25	| smmsp
 | extra		| 27	| postfix
 | extra		| 28	| postdrop
+| extra		| 29	| mediasrv
 | extra		| 45	| sasl
 | extra		| 49	| rustdesk
 | illumos	| 50	| gdm

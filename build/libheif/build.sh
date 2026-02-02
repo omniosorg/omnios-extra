@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libheif
-VER=1.20.2
+VER=1.21.2
 PKG=ooce/library/libheif
 SUMMARY="HEIF and AVIF encoder"
 DESC="ISO/IEC 23008-12:2017 HEIF and AVIF (AV1 Image File Format) "
@@ -39,6 +39,8 @@ BUILD_DEPENDS_IPS="
     ooce/multimedia/x265
 "
 
+RUN_DEPENDS_IPS="=ooce/multimedia/rav1e@$RAV1EVER"
+
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 CONFIGURE_OPTS="
@@ -49,8 +51,6 @@ CONFIGURE_OPTS="
 
 pre_configure() {
     typeset arch=$1
-
-    ! cross_arch $arch && RUN_DEPENDS_IPS="=ooce/multimedia/rav1e@$RAV1EVER"
 
     export CMAKE_LIBRARY_PATH=${SYSROOT[$arch]}$PREFIX/${LIBDIRS[$arch]}
 
@@ -63,8 +63,6 @@ pre_configure() {
         -DBROTLI_ENC_INCLUDE_DIR=${SYSROOT[$arch]}/usr/include
         -DBROTLI_ENC_LIB=${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}/libbrotlienc.so
     "
-
-    cross_arch $arch && CONFIGURE_OPTS[$arch]+=" -DWITH_RAV1E=OFF"
 
     LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
 }

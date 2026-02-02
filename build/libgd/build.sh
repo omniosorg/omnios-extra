@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -31,6 +31,8 @@ PREFIX+="/$PROG"
 forgo_isaexec
 test_relver '>=' 151051 && set_clangver
 set_standard XPG6
+
+export MAKE
 
 BUILD_DEPENDS_IPS="
     library/fontconfig

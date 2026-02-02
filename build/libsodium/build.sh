@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libsodium
-VER=1.0.20
+VER=1.0.21
 PKG=ooce/library/libsodium
 SUMMARY="$PROG"
 DESC="Software library for encryption, decryption, signatures, password "

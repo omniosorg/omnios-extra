@@ -1,0 +1,17 @@
+for EncodeVarint there are 4 overloaded methods for the value type
+int32_t, uint32_t, int64_t and uint64_t
+
+for a 32-bit build, pid_t on illumos is long. however, int32_t is int
+and int64_t is long long which makes the compiler complain
+diff -wpruN --no-dereference '--exclude=*.orig' a~/absl/log/internal/config.h a/absl/log/internal/config.h
+--- a~/absl/log/internal/config.h	1970-01-01 00:00:00
++++ a/absl/log/internal/config.h	1970-01-01 00:00:00
+@@ -34,6 +34,8 @@ namespace log_internal {
+ 
+ #ifdef _WIN32
+ using Tid = uint32_t;
++#elif __illumos__
++using Tid = int32_t;
+ #else
+ using Tid = pid_t;
+ #endif

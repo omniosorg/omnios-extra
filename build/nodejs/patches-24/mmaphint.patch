@@ -1,0 +1,58 @@
+
+This reverts this v8 engine commit:
+	https://chromium.googlesource.com/v8/v8.git/+/506aeae95dd03c734e43f30ffc2a939e5bbb79bf%5E%21/
+	[heap] Allocate code close to the binary
+
+	Calls >4gb may have pretty bad performance on 64bit processors
+	that use 32bits to encode branch prediction. By passing in a function in
+	the binary as a hint to mmap it's more likely we'll be given an address
+	close to the binary. This may significantly improve performance on many
+	types of 64bit cores, especially those without hyperthreading.
+
+This bypasses the code that is elsewhere in v8 for illumos -
+GetRandomMmapAddr() - that ensures that mmap()d memory is out of the way
+of the heap so that it does not conflict.
+
+Without this patch, node fails when the heap grows to overlap with the
+previously mmap()d memory:
+
+	brk(0x04FB0000)                                 = 0
+	brk(0x04FB0000)                                 = 0
+	brk(0x04FB4000)                                 = 0
+	brk(0x04FB4000)                                 = 0
+	brk(0x04FB8000)                                 = 0
+	mmap(0x01169000, 134217728, PROT_NONE,
+	    MAP_PRIVATE|MAP_NORESERVE|MAP_ANON, 4294967295, 0) = 0x04FB8000
+	brk(0x04FB8000)                                 = 0
+	brk(0x04FBC000)                                 Err#12 ENOMEM
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/deps/v8/src/heap/code-range.cc a/deps/v8/src/heap/code-range.cc
+--- a~/deps/v8/src/heap/code-range.cc	1970-01-01 00:00:00
++++ a/deps/v8/src/heap/code-range.cc	1970-01-01 00:00:00
+@@ -28,8 +28,6 @@ namespace {
+ 
+ DEFINE_LAZY_LEAKY_OBJECT_GETTER(CodeRangeAddressHint, GetCodeRangeAddressHint)
+ 
+-void FunctionInStaticBinaryForAddressHint() {}
+-
+ }  // anonymous namespace
+ 
+ Address CodeRangeAddressHint::GetAddressHint(size_t code_range_size,
+@@ -41,7 +39,7 @@ Address CodeRangeAddressHint::GetAddress
+   // No recently freed region has been found, try to provide a hint for placing
+   // a code region.
+   if (it == recently_freed_.end() || it->second.empty()) {
+-    return RoundUp(FUNCTION_ADDR(&FunctionInStaticBinaryForAddressHint),
++    return RoundUp(reinterpret_cast<Address>(GetRandomMmapAddr()),
+                    allocate_page_size);
+   }
+ 
+@@ -280,7 +278,7 @@ base::AddressRegion CodeRange::GetPrefer
+     // When there's no embedded blob use address of a function from the binary
+     // as an approximation.
+     embedded_blob_code_start =
+-        FUNCTION_ADDR(&FunctionInStaticBinaryForAddressHint);
++        reinterpret_cast<Address>(GetRandomMmapAddr());
+     embedded_blob_code_end = embedded_blob_code_start + 1;
+   } else {
+     embedded_blob_code_end =

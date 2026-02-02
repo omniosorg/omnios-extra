@@ -18,7 +18,7 @@
 
 PROG=gitea
 PKG=ooce/application/gitea
-VER=1.23.8
+VER=1.25.2
 SUMMARY="Git with a cup of tea"
 DESC="Git with a cup of tea, painless self-hosted git service"
 
@@ -36,6 +36,9 @@ XFORM_ARGS="
     -DVERSION=$VER
 "
 
+BUILD_DEPENDS_IPS="
+	network/rsync
+"
 RUN_DEPENDS_IPS=developer/versioning/git
 
 # gitea build wants GNU grep from 1.11.x on

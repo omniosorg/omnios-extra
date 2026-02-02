@@ -19,7 +19,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/cmake/plugin.cmake a/cmake/pl
          IF(ARG_RECOMPILE_FOR_EMBEDDED)
            SET_TARGET_PROPERTIES(${target}_embedded 
              PROPERTIES COMPILE_DEFINITIONS "EMBEDDED_LIBRARY${version_string}")
-@@ -204,7 +204,7 @@ MACRO(MYSQL_ADD_PLUGIN)
+@@ -207,7 +207,7 @@ MACRO(MYSQL_ADD_PLUGIN)
  
      ADD_VERSION_INFO(${target} MODULE SOURCES)
      ADD_LIBRARY(${target} MODULE ${SOURCES}) 

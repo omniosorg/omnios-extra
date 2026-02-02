@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=mattermost
-VER=10.5.12
+VER=10.5.14
 # check for the current morph version/commit hash and create a patched branch in
 # https://github.com/omniosorg/morph; then point to that branch
 MORPHBRANCH=il_1.1.0

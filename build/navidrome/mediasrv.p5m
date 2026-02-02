@@ -1,0 +1,13 @@
+set name=pkg.fmri value=ooce/multimedia/mediasrv-common@1.0.0-$(PVER)
+set name=variant.arch value=$(ARCH)
+set name=variant.opensolaris.zone value=global value=nonglobal
+set name=description value="Common multimedia server package"
+set name=pkg.description value="Common multimedia server package"
+set name=pkg.summary value="Common multimedia server package package"
+
+dir group=bin mode=0700 owner=mediasrv path=var/opt/ooce/mediasrv
+
+group groupname=mediasrv gid=29
+user ftpuser=false username=mediasrv uid=29 group=mediasrv password=NP \
+    gcos-field="Multimedia server Reserved UID" home-dir=/var/opt/ooce/mediasrv
+
