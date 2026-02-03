@@ -1,11 +1,30 @@
-diff -wpruN --no-dereference '--exclude=*.orig' a~/build.rs a/build.rs
---- a~/build.rs	1970-01-01 00:00:00
-+++ a/build.rs	1970-01-01 00:00:00
-@@ -73,6 +73,7 @@ fn detect_cfgs(target: &mut Target) {
+--- fish-4.4.0/build.rs.~1~
++++ fish-4.4.0/build.rs	
+@@ -1,5 +1,5 @@
+ use fish_build_helper::{
+-    env_var, fish_build_dir, target_os, target_os_is_apple, target_os_is_bsd, target_os_is_cygwin,
++    env_var, fish_build_dir, target_os, target_os_is_apple, target_os_is_bsd, target_os_is_cygwin, target_os_is_illumos,
+     workspace_root,
+ };
+ use rsconf::Target;
+@@ -67,6 +67,7 @@
          ("apple", &(|_| target_os_is_apple())),
          ("bsd", &(|_| target_os_is_bsd())),
          ("cygwin", &(|_| target_os_is_cygwin())),
-+        ("illumos", &|_| env::var("CARGO_CFG_TARGET_OS").unwrap() == "illumos"),
++        ("illumos", &(|_| target_os_is_illumos())),
          ("have_eventfd", &|target| {
              // FIXME: NetBSD 10 has eventfd, but the libc crate does not expose it.
              if target_os() == "netbsd" {
+--- fish-4.4.0/crates/build-helper/src/lib.rs.old
++++ fish-4.4.0/crates/build-helper/src/lib.rs
+@@ -88,6 +88,10 @@
+     target_os() == "cygwin"
+ }
+ 
++pub fn target_os_is_illumos() -> bool {
++    target_os() == "illumos"
++}
++
+ #[macro_export]
+ macro_rules! as_os_strs {
+     [ $( $x:expr, )* ] => {

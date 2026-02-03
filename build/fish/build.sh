@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=fish
-VER=4.3.3
+VER=4.4.0
 PKG=ooce/shell/fish
 SUMMARY="Fish is a smart and user-friendly command line shell"
 DESC="friendly interactive shell"
@@ -49,7 +49,7 @@ CONFIGURE_OPTS+="
 	-DCMAKE_INSTALL_SYSCONFDIR="/etc"
 	-DSYS_PCRE2_INCLUDE_DIR="/usr/include/pcre"
 	-DFISH_USE_SYSTEM_PCRE2=ON
-	-DWITH_GETTEXT=ON
+	-DWITH_MESSAGE_LOCALIZATION=ON
 	-DWITH_DOCS=OFF
 "
 
@@ -57,9 +57,10 @@ CONFIGURE_OPTS+="
 PATH="$GNUBIN:$PATH:$OOCEBIN"
 
 crate_patch() {
-    logmsg "Patching crates"
+    logmsg "Fetching crates"
     logcmd $CARGO fetch --manifest-path $TMPDIR/$BUILDDIR/Cargo.toml \
         || logerr "Fetching crates failed"
+    logmsg "Patching crates"
     pushd $CARGO_HOME >/dev/null
     for patchfile in $SRCDIR/patches-crate/*.patch; do \
         gpatch --backup --version-control=numbered -p0 < $patchfile ; \

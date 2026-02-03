@@ -1,7 +1,6 @@
-diff -wpruN --no-dereference '--exclude=*.orig' a~/src/path.rs a/src/path.rs
---- a~/src/path.rs	1970-01-01 00:00:00
-+++ a/src/path.rs	1970-01-01 00:00:00
-@@ -709,7 +709,12 @@ pub fn path_remoteness(path: &wstr) -> D
+--- fish-4.2.0/src/path.rs.~1~	2025-11-10 02:19:40.000000000 -0500
++++ fish-4.2.0/src/path.rs	2025-11-11 08:42:04.870713261 -0500
+@@ -711,7 +711,12 @@
          }
      }
  

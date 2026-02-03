@@ -1,7 +1,6 @@
-diff -wpruN --no-dereference '--exclude=*.orig' a~/src/builtins/ulimit.rs a/src/builtins/ulimit.rs
---- a~/src/builtins/ulimit.rs	1970-01-01 00:00:00
-+++ a/src/builtins/ulimit.rs	1970-01-01 00:00:00
-@@ -20,7 +20,7 @@ pub mod limits {
+--- fish-4.2.0/src/builtins/ulimit.rs.old	2025-11-11 08:52:53.735806386 -0500
++++ fish-4.2.0/src/builtins/ulimit.rs	2025-11-11 08:55:03.968404454 -0500
+@@ -21,7 +21,7 @@
          pub const DATA: libc::c_int = libc::RLIMIT_DATA as _;
          pub const FSIZE: libc::c_int = libc::RLIMIT_FSIZE as _;
          cfg_if!(
@@ -10,7 +9,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/src/builtins/ulimit.rs a/src/
                  pub const MEMLOCK: libc::c_int = -1;
              } else {
                  pub const MEMLOCK: libc::c_int = libc::RLIMIT_MEMLOCK as _;
-@@ -30,7 +30,7 @@ pub mod limits {
+@@ -31,7 +31,7 @@
          pub const STACK: libc::c_int = libc::RLIMIT_STACK as _;
          pub const CPU: libc::c_int = libc::RLIMIT_CPU as _;
          cfg_if!(
