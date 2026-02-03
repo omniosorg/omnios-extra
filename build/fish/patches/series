@@ -1,6 +1,2 @@
-01-no-d_type.patch
-02-illumos-build.patch
-03-no-local-remote-filesystem.patch
+01-revert-termios-use-nix-wrapper-bb7dce941acf51b11ee49994f799ba90911872ac.patch
 04-use-gcc-test.patch
-05-fix-illumos-flags.patch
-06-fewer-rlimit-options.patch
