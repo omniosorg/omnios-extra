@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=navidrome
-VER=0.59.0
+VER=0.60.0
 PKG=ooce/application/navidrome
 SUMMARY="$PROG"
 DESC="$PROG - an open source web-based music collection server and streamer"
