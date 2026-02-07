@@ -1,11 +1,6 @@
-Making check in tools
-PASS: sexp-conv
-PASS: pkcs1-conv
-PASS: nettle-pbkdf2
-==================
-All 3 tests passed
-==================
 Making check in testsuite
+<command-line>: warning: "_XOPEN_SOURCE" redefined
+<built-in>: note: this is the location of the previous definition
 PASS: aes
 PASS: aes-keywrap
 PASS: arcfour
@@ -24,7 +19,6 @@ PASS: des3
 PASS: md2
 PASS: md4
 PASS: md5
-PASS: md5-compat
 PASS: memeql
 PASS: memxor
 PASS: gosthash94
@@ -69,7 +63,6 @@ PASS: umac
 PASS: meta-hash
 PASS: meta-cipher
 PASS: meta-aead
-PASS: meta-armor
 PASS: meta-mac
 PASS: buffer
 PASS: yarrow
@@ -77,6 +70,7 @@ PASS: xts
 PASS: pbkdf2
 SKIP: x86-ibt
 PASS: drbg-ctr-aes256
+PASS: slh-dsa
 PASS: sexp
 PASS: sexp-format
 PASS: rsa2sexp
@@ -128,6 +122,7 @@ PASS: symbols
 SKIP: sc-cnd-memcpy
 SKIP: sc-gcm
 SKIP: sc-memeql
+SKIP: sc-slh-dsa
 SKIP: sc-pkcs1-sec-decrypt
 SKIP: sc-rsa-sec-decrypt
 SKIP: sc-rsa-oaep-encrypt
@@ -138,11 +133,19 @@ SKIP: sc-ed25519
 SKIP: sc-ed448
 PASS: dlopen
 ====================
-All 117 tests passed
+All 116 tests passed
 ====================
+Making check in tools
+PASS: sexp-conv
+PASS: pkcs1-conv
+PASS: nettle-pbkdf2
+==================
+All 3 tests passed
+==================
 Making check in examples
 xxxxxx
 xxxxxx
+ee
 PASS: rsa-sign
 PASS: rsa-verify
 PASS: rsa-encrypt

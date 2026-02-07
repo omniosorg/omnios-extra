@@ -12,18 +12,24 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=nettle
-VER=3.10.2
+VER=4.0
 PKG=ooce/library/nettle
 SUMMARY="$PROG - low-level cryptographic library"
 DESC="Cryptographic library that is designed to fit easily in more or "
 DESC+="less any context"
 
+# Previous versions that also need to be built and packaged since compiled
+# software may depend on it.
+PVERS="3.10.2"
+
 forgo_isaexec
+# secure_getenv
+set_standard XPG8
 
 CONFIGURE_OPTS="
     --disable-static
@@ -40,9 +46,26 @@ pre_configure() {
 }
 
 init
+prep_build
+
+# Skip previous versions for cross compilation
+pre_build() { ! cross_arch $1; }
+
+# Build previous versions
+for pver in $PVERS; do
+    note -n "Building previous version: $pver"
+    set_builddir $PROG-$pver
+    download_source -dependency $PROG $PROG $pver
+    patch_source patches-`echo $pver | cut -d. -f1-2`
+    build
+done
+unset -f pre_build
+
+note -n "Building current version: $VER"
+
+set_builddir $PROG-$VER
 download_source $PROG $PROG $VER
 patch_source
-prep_build
 build
 run_testsuite check
 make_package
