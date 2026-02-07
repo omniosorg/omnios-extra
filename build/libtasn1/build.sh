@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libtasn1
-VER=4.20.0
+VER=4.21.0
 PKG=ooce/library/libtasn1
 SUMMARY="$PROG"
 DESC="ASN.1 library"

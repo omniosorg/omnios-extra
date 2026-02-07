@@ -20,7 +20,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/mysys/my_largepage.c a/mysys/
 diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/mysqld.cc a/sql/mysqld.cc
 --- a~/sql/mysqld.cc	1970-01-01 00:00:00
 +++ a/sql/mysqld.cc	1970-01-01 00:00:00
-@@ -421,7 +421,7 @@ char* opt_secure_file_priv;
+@@ -422,7 +422,7 @@ char* opt_secure_file_priv;
  my_bool lower_case_file_system= 0;
  my_bool opt_large_pages= 0;
  #ifdef HAVE_SOLARIS_LARGE_PAGES
