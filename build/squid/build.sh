@@ -18,7 +18,7 @@
 . ../../lib/build.sh
 
 PROG=squid
-VER=6.12
+VER=7.4
 PKG=ooce/network/proxy/squid
 SUMMARY="Squid WEB Proxy"
 DESC="Squid is a caching proxy for the Web supporting HTTP, HTTPS, FTP, "
@@ -111,6 +111,7 @@ CONFIGURE_OPTS[amd64]+="
 CXXFLAGS+=" -Wno-unknown-pragmas -Wno-deprecated-declarations"
 export LIBLDAP_LIBS="-lldap -llber"
 export LIBLDAP_PATH="-L$OPREFIX/${LIBDIRS[amd64]}"
+LDFLAGS[amd64]+=" -lsocket"
 LDFLAGS[amd64]+=" -Wl,-z -Wl,ignore"
 LDFLAGS[amd64]+=" -L$OPREFIX/${LIBDIRS[amd64]} -R$OPREFIX/${LIBDIRS[amd64]}"
 
