@@ -29,8 +29,8 @@ set_clangver
 SKIP_LICENCES=IPL
 
 HARDLINK_TARGETS="
-    opt/ooce/postfix/libexec/postfix/smtp
-    opt/ooce/postfix/libexec/postfix/qmgr
+    ${PREFIX#/}/postfix/libexec/postfix/smtp
+    ${PREFIX#/}/postfix/libexec/postfix/qmgr
 "
 
 OPREFIX=$PREFIX

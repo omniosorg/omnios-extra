@@ -26,8 +26,8 @@ DESC+="ZMODEM file transfer protocols."
 set_arch 64
 
 HARDLINK_TARGETS="
-    opt/ooce/bin/rx
-    opt/ooce/bin/sx
+    ${PREFIX#/}/bin/rx
+    ${PREFIX#/}/bin/sx
 "
 
 XFORM_ARGS="

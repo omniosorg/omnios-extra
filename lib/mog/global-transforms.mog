@@ -61,6 +61,7 @@
 <transform file dir path=usr/gnu/share$ -> set group sys>
 <transform file dir path=usr/lib/devfsadm -> set group sys>
 <transform file dir path=usr/lib/mdb -> set group sys>
+<transform file dir path=usr/lib/(amd64/)?pkgconfig$ -> set group other>
 
 <transform file dir path=opt/ooce/([^/]+/)?lib/(amd64/)?pkgconfig$ -> \
     set group other>
