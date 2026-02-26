@@ -684,6 +684,11 @@ reset_configure_opts() {
     done
 }
 
+set_prefix() {
+    PREFIX="$1"
+    reset_configure_opts
+}
+
 clear_archflags() {
     flatten_variables CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
 }

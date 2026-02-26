@@ -32,7 +32,7 @@ set_arch 32
 set_builddir smalltalk-$VER
 
 HARDLINK_TARGETS="
-    opt/ooce/gnu-smalltalk/bin/gst-load
+    ${PREFIX#/}/gnu-smalltalk/bin/gst-load
 "
 
 OPREFIX=$PREFIX

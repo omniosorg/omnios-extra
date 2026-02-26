@@ -166,7 +166,7 @@ VBOX_WITH_PUEL_NLS =
 VBOX_WITH_VBOXMANAGE_NLS =
 
 # configure does not properly detect include path for libvncserver
-VBoxVNC_INCS = /opt/ooce/include
+VBoxVNC_INCS = $PREFIX/include
 
 # configure does not properly detect include path or libraries for gsoap
 VBOX_GSOAP_CXX_LIBS = libgsoapssl++ libz
