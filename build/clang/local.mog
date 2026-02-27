@@ -9,7 +9,7 @@
 # http://www.illumos.org/license/CDDL.
 #
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 # Skip dependency resolution for python components
 <transform file path=$(PREFIX)/share/$(PROG)/.*\.py$ \
@@ -21,6 +21,8 @@
     -> set pkg.depend.bypass-generate .*>
 <transform file path=$(PREFIX)/libexec/(?:(?:analyze|intercept)-c(?:\+\+|c)|) \
     -> set pkg.depend.bypass-generate .*>
+
+$(COMPATSL)link path=$(PREFIX)/bin/clang-offload-packager target=llvm-offload-binary
 
 <include mediated-binlink.mog>
 <include mediated-manlink.mog>

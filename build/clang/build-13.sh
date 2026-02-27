@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -32,6 +32,7 @@ SKIP_RTIME_CHECK=1
 
 MAJVER=${VER%%.*}
 MINVER=${VER%.*}
+(($MAJVER < 22)) && COMPATSL=#
 set_patchdir patches-$MAJVER
 
 # Using the = prefix to require the specific matching version of llvm
@@ -52,6 +53,7 @@ XFORM_ARGS="
     -DPKGROOT=llvm-$MAJVER
     -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
     -DVERSION=$MAJVER
+    -DCOMPATSL=$COMPATSL
 "
 
 CONFIGURE_OPTS[amd64]=
