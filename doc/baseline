@@ -99,8 +99,8 @@ extra.omnios ooce/developer/flamegraph
 extra.omnios ooce/developer/freepascal
 extra.omnios ooce/developer/gdb
 extra.omnios ooce/developer/git-absorb
-extra.omnios ooce/developer/go-124
 extra.omnios ooce/developer/go-125
+extra.omnios ooce/developer/go-126
 extra.omnios ooce/developer/gperf
 extra.omnios ooce/developer/gyp
 extra.omnios ooce/developer/llvm-13
