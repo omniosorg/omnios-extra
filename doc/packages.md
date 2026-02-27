@@ -128,6 +128,7 @@
 | ooce/library/libgd		| 2.3.3		| https://github.com/libgd/libgd/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libical		| 3.0.20	| https://github.com/libical/libical/releases | Currently used solely by cyrus-imapd
 | ooce/library/libev		| 4.33		| http://dist.schmorp.de/libev/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libevent		| 2.1.12		| https://github.com/libevent/libevent/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libexif		| 0.6.21	| https://sourceforge.net/projects/libexif/files/libexif/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libgif		| 5.2.2		| https://sourceforge.net/projects/giflib/files/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libheif		| 1.21.2	| https://github.com/strukturag/libheif/releases | [omniosorg](https://github.com/omniosorg)
