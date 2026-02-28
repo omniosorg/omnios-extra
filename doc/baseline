@@ -201,6 +201,7 @@ extra.omnios ooce/library/tiff
 extra.omnios ooce/library/tree-sitter
 extra.omnios ooce/library/unbound
 extra.omnios ooce/library/unistring
+extra.omnios ooce/library/xxhash
 extra.omnios ooce/library/yaml
 extra.omnios ooce/multimedia/dav1d
 extra.omnios ooce/multimedia/dcraw
