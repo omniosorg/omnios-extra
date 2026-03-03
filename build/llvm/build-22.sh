@@ -16,66 +16,53 @@
 
 . ../../lib/build.sh
 
-PROG=clang
-PKG=ooce/developer/clang-13
-VER=13.0.1
-SUMMARY="C language family frontend for LLVM"
-DESC="The Clang project provides a language front-end and tooling "
-DESC+="infrastructure for languages in the C language family (C, C++, "
-DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
+PROG=llvm
+PKG=ooce/developer/llvm-22
+VER=22.1.0
+SUMMARY="Low Level Virtual Machine compiler infrastructure"
+DESC="A collection of modular and reusable compiler and toolchain technologies"
+
+min_rel 151057
 
 set_arch 64
 set_clangver
-set_builddir llvm-project-$VER.src/$PROG
+set_builddir $PROG-project-$VER.src/$PROG
 
 SKIP_RTIME_CHECK=1
+NO_SONAME_EXPECTED=1
 
 MAJVER=${VER%%.*}
-MINVER=${VER%.*}
-(($MAJVER < 22)) && COMPATSL=#
 set_patchdir patches-$MAJVER
 
-# Using the = prefix to require the specific matching version of llvm
-BUILD_DEPENDS_IPS="=ooce/developer/llvm-$MAJVER@$VER"
-
-RUN_DEPENDS_IPS="
-    =ooce/developer/llvm-$MAJVER@$MINVER
-    developer/gcc$GCCVER
-"
-
 OPREFIX=$PREFIX
-PREFIX+=/llvm-$MAJVER
+PREFIX+=/$PROG-$MAJVER
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
     -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
-    -DPKGROOT=llvm-$MAJVER
+    -DPKGROOT=$PROG-$MAJVER
     -DMEDIATOR=$PROG -DMEDIATOR_VERSION=$MAJVER
     -DVERSION=$MAJVER
-    -DCOMPATSL=$COMPATSL
 "
 
 CONFIGURE_OPTS[amd64]=
 CONFIGURE_OPTS[amd64_WS]="
     -DCMAKE_BUILD_TYPE=Release
-    -DCMAKE_INSTALL_PREFIX=\"$PREFIX\"
+    -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DCMAKE_C_COMPILER=\"$CC\"
     -DCMAKE_CXX_COMPILER=\"$CXX\"
     -DCMAKE_C_LINK_FLAGS=\"${LDFLAGS[amd64]}\"
     -DCMAKE_CXX_LINK_FLAGS=\"${LDFLAGS[amd64]}\"
-    -DGCC_INSTALL_PREFIX=\"$GCCPATH\"
-    -DCLANG_VENDOR=\"$DISTRO/$RELVER\"
-    -DCLANG_DEFAULT_RTLIB=libgcc
-    -DCLANG_DEFAULT_CXX_STDLIB=libstdc++
-    -DLLVM_DIR=\"$PREFIX/lib/cmake/llvm\"
+    -DLLVM_BUILD_LLVM_DYLIB=ON
+    -DLLVM_INCLUDE_BENCHMARKS=OFF
+    -DLLVM_INSTALL_UTILS=ON
+    -DLLVM_LINK_LLVM_DYLIB=ON
+    -DLLVM_ENABLE_RTTI=ON
 "
-# we want to end up with '$ORIGIN/../lib' as runpath and not with
-# '$PREFIX/lib:$ORIGIN/../lib'; yet we need to find libLLVM during build time
-export LD_LIBRARY_PATH="$PREFIX/lib"
 
 init
-download_source llvm llvm-project $VER.src
+download_source $PROG $PROG-project $VER.src
 patch_source
 prep_build cmake+ninja
 build -noctf    # C++

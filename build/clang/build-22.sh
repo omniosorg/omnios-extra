@@ -17,14 +17,14 @@
 . ../../lib/build.sh
 
 PROG=clang
-PKG=ooce/developer/clang-21
-VER=21.1.8
+PKG=ooce/developer/clang-22
+VER=22.1.0
 SUMMARY="C language family frontend for LLVM"
 DESC="The Clang project provides a language front-end and tooling "
 DESC+="infrastructure for languages in the C language family (C, C++, "
 DESC+="Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project"
 
-min_rel 151055
+min_rel 151057
 
 set_arch 64
 set_clangver

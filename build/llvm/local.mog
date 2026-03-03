@@ -9,11 +9,16 @@
 # http://www.illumos.org/license/CDDL.
 #
 
-# Copyright 2021 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 # Skip dependency resolution for python components
 <transform file path=$(PREFIX)/share/opt-viewer/.*\.py$ \
     -> set pkg.depend.bypass-generate .*>
+
+# clang-offload-packager used to be part of clang before
+# release 22; drop the symlink here and ship it with the clang
+# package to match earlier releases
+<transform path=$(PREFIX)/bin/clang-offload-packager$ -> drop>
 
 <include mediated-binlink.mog>
 <include mediated-manlink.mog>
