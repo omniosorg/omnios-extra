@@ -1,0 +1,25 @@
+From d2b7d4a3a8da0617437bbba5422e4adba707a330 Mon Sep 17 00:00:00 2001
+From: "Joshua M. Clulow" <josh@sysmgr.org>
+Date: Thu, 16 Mar 2023 00:36:04 -0700
+Subject: [PATCH 09/11] illumos: return busy error when device is already open
+
+---
+ libusb/os/illumos_usb.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/libusb/os/illumos_usb.c b/libusb/os/illumos_usb.c
+index 948394c9..d7228ca6 100644
+--- a/libusb/os/illumos_usb.c
++++ b/libusb/os/illumos_usb.c
+@@ -1496,6 +1496,8 @@ _errno_to_libusb(int err)
+ 		return (LIBUSB_ERROR_NO_MEM);
+ 	case ETIMEDOUT:
+ 		return (LIBUSB_ERROR_TIMEOUT);
++	case EBUSY:
++		return (LIBUSB_ERROR_BUSY);
+ 	}
+ 
+ 	return (LIBUSB_ERROR_OTHER);
+-- 
+2.40.3
+

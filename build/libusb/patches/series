@@ -1,3 +1,9 @@
-illumos.patch
-error-conditions.patch
-debug.patch
+illumos-split-off-from-Solaris-backend.patch
+illumos-correctly-return-error-conditions.patch
+illumos-more-debug-logging-in-illumos_find_interface.patch
+illumos-update_drv-based-driver-reconfiguration-does.patch
+illumos-control-transfers-should-not-call-back-durin.patch
+illumos-libusb_get_port_numbers-requires-parent_dev-.patch
+illumos-return-busy-error-when-device-is-already-ope.patch
+illumos-substantial-cleanup.patch
+illumos-control-transfers-must-report-errors-correct.patch

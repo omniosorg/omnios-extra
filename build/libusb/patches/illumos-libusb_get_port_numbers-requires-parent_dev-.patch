@@ -1,0 +1,516 @@
+From 325e4003ee101cb8261fdce7813619d51bb5548f Mon Sep 17 00:00:00 2001
+From: "Joshua M. Clulow" <josh@sysmgr.org>
+Date: Thu, 1 Dec 2022 15:27:24 -0800
+Subject: [PATCH 08/11] illumos: libusb_get_port_numbers() requires parent_dev
+ population
+
+---
+ libusb/os/illumos_usb.c | 386 ++++++++++++++++++++++++++++++++--------
+ libusb/os/illumos_usb.h |   3 +
+ 2 files changed, 310 insertions(+), 79 deletions(-)
+
+diff --git a/libusb/os/illumos_usb.c b/libusb/os/illumos_usb.c
+index a20dd648..948394c9 100644
+--- a/libusb/os/illumos_usb.c
++++ b/libusb/os/illumos_usb.c
+@@ -46,12 +46,6 @@
+ 
+ #define	DEFAULT_LISTSIZE	6
+ 
+-typedef struct {
+-	int	nargs;
+-	int	listsize;
+-	char	**string;
+-} string_list_t;
+-
+ /*
+  * Backend functions
+  */
+@@ -159,7 +153,229 @@ static int _errno_to_libusb(int);
+ static int illumos_usb_get_status(struct libusb_context *ctx, int fd);
+ 
+ static int
+-illumos_fill_in_dev_info(di_node_t node, struct libusb_device *dev)
++illumos_bus_number(struct node_args *nargs, di_node_t root_hub, uint8_t *bus)
++{
++	/*
++	 * Determine the driver name and instance number for the root hub.
++	 * We will use this to assign a USB bus number.
++	 */
++	char *driver;
++	int inum;
++	if ((driver = di_driver_name(root_hub)) == NULL ||
++	    (inum = di_instance(root_hub)) < 0) {
++		return (EIO);
++	}
++
++	char *instance;
++	if (asprintf(&instance, "%s%d", driver, inum) < 0) {
++		return (EIO);
++	}
++
++	/*
++	 * Walk through to check if we have assigned this already:
++	 */
++	for (uint_t n = 0; n < MAX_BUSES; n++) {
++		if (nargs->buses[n] == NULL) {
++			/*
++			 * If we reach an unused slot, use that slot for
++			 * this root hub:
++			 */
++			nargs->buses[n] = instance;
++			if (bus != NULL) {
++				*bus = n;
++			}
++			return (0);
++		} else if (strcmp(nargs->buses[n], instance) == 0) {
++			/*
++			 * This root hub was already assigned a device:
++			 */
++			free(instance);
++			if (bus != NULL) {
++				*bus = n;
++			}
++			return (0);
++		}
++	}
++
++	/*
++	 * We have run out of bus IDs!
++	 */
++	free(instance);
++	return (EOVERFLOW);
++}
++
++/*
++ * Our 64-bit session IDs for devices other than root hubs have the
++ * following format:
++ *
++ *	BITS
++ *	0-7		device assigned-address
++ *	8-15		hub level 0 (immediate parent) assigned-address
++ *	16-23		hub level 1 (if present)
++ *	24-31		hub level 2 (if present)
++ *	32-39		hub level 3 (if present)
++ *	40-47		hub level 4 (if present)
++ *	48-50		root hub PCI function
++ *	51-55		root hub PCI device
++ *	56-63		root hub PCI bus
++ *
++ * For a root hub, only bits 48-63 will be populated and the rest will be
++ * zero.
++ */
++static int
++illumos_make_session_id(struct node_args *nargs, di_node_t node,
++     uint64_t *sidp, uint8_t *busp, int *is_root_hub)
++{
++	uint64_t sid = 0;
++	uint_t byt = 0;
++
++	if (is_root_hub != NULL) {
++		*is_root_hub = 1;
++	}
++
++	while (node != DI_NODE_NIL) {
++		int r;
++		int *unused;
++		int root_hub = 0;
++
++		usbi_dbg(NULL, "loop %p", node);
++
++		/*
++		 * Look for the "root-hub" property on this device node.
++		 * The property is a boolean, so its mere existence
++		 * represents "true".  If true, this node is a root hub.
++		 */
++		if ((r = di_prop_lookup_ints(DDI_DEV_T_ANY, node,
++		    "root-hub", &unused)) == 0) {
++			root_hub = 1;
++		} else if (r >= 1) {
++			/*
++			 * This should never happen for a boolean property.
++			 */
++			usbi_dbg(NULL, "unexpected root-hub "
++			    "lookup return %d", r);
++			return (EIO);
++		} else if (r < 0 && errno != ENXIO) {
++			/*
++			 * Report errors other than a failure to find the
++			 * property.
++			 */
++			usbi_dbg(NULL, "unexpected root-hub "
++			    "lookup error %d", errno);
++			return (EIO);
++		}
++
++		if (!root_hub) {
++			int *addr;
++
++			if (is_root_hub != NULL) {
++				/*
++				 * If we see any other device, this is not a
++				 * root hub.
++				 */
++				*is_root_hub = 0;
++			}
++
++			/*
++			 * Get the "assigned-address" value of the current
++			 * node.  Root hubs don't have this property, but
++			 * all other USB devices (including external hubs)
++			 * must.
++			 */
++			if ((r = di_prop_lookup_ints(DDI_DEV_T_ANY, node,
++			    "assigned-address", &addr)) < 0) {
++				/*
++				 * XXX report error
++				 */
++				usbi_dbg(NULL, "unexpected address "
++				    "lookup error %d", errno);
++				return (EIO);
++			} else if (r != 1) {
++				/*
++				 * XXX Expected just one integer here, not a
++				 * boolean or a list.
++				 */
++				usbi_dbg(NULL, "unexpected address "
++				    "lookup return %d", r);
++				return (EIO);
++			} else if (*addr > UINT8_MAX || *addr < 1) {
++				/*
++				 * We need USB addresses to fit in a byte
++				 * and to be non-zero.
++				 */
++				usbi_dbg(NULL, "unexpected address %d",
++				    *addr);
++				return (EIO);
++			}
++
++			/*
++			 * Store the USB address in the session ID in the
++			 * next available byte.
++			 */
++			if (byt >= 5) {
++				/*
++				 * We have run out of slots.
++				 */
++				usbi_dbg(NULL, "ran out of slots");
++				return (EIO);
++			}
++			usbi_dbg(NULL, "slot %u = %x", byt, *addr & 0xFF);
++			sid |= (*addr & 0xFF) << (byt++ * 8);
++
++			/*
++			 * Walk one node up the device tree.
++			 */
++			node = di_parent_node(node);
++			continue;
++		}
++
++		/*
++		 * Assign a bus number to this root hub if we have not done
++		 * that already.
++		 */
++		if ((r = illumos_bus_number(nargs, node, busp)) != 0) {
++			usbi_dbg(NULL, "bus number failure %d", r);
++			return (r);
++		}
++
++		/*
++		 * This is the USB host controller.  Determine the PCI BDF
++		 * for this device and include it at the top of the session
++		 * ID:
++		 */
++		int *regs;
++		if (di_prop_lookup_ints(DDI_DEV_T_ANY, node, "reg",
++		    &regs) <= 0) {
++			/*
++			 * XXX
++			 */
++			usbi_dbg(NULL, "reg lookup failure %d %d", r, errno);
++			return (EIO);
++		}
++		sid |= (uint64_t)(PCI_REG_FUNC_G(regs[0])) << 48;
++		sid |= (uint64_t)(PCI_REG_DEV_G(regs[0])) << 51;
++		sid |= (uint64_t)(PCI_REG_BUS_G(regs[0])) << 56;
++
++		/*
++		 * Once we have found the root hub, the session ID is
++		 * complete.
++		 */
++		*sidp = sid;
++		return (0);
++	}
++
++	/*
++	 * If we get down here, it means we have walked out of the tree
++	 * without finding the root hub.
++	 */
++	usbi_dbg(NULL, "could not find root hub!");
++	return (ENOENT);
++}
++
++
++static int
++illumos_fill_in_dev_info(struct node_args *nargs, di_node_t node,
++    struct libusb_device *dev)
+ {
+ 	int proplen;
+ 	int *i, n, *addr, *port_prop;
+@@ -167,6 +383,7 @@ illumos_fill_in_dev_info(di_node_t node, struct libusb_device *dev)
+ 	uint8_t *rdata;
+ 	illumos_dev_priv_t *dpriv = usbi_get_device_priv(dev);
+ 	char match_str[PATH_MAX];
++	di_node_t parent;
+ 
+ 	/* Device descriptors */
+ 	proplen = di_prop_lookup_bytes(DDI_DEV_T_ANY, node,
+@@ -193,13 +410,54 @@ illumos_fill_in_dev_info(di_node_t node, struct libusb_device *dev)
+ 		    rdata)->bConfigurationValue;
+ 	}
+ 
++	/*
++	 * The "reg" property contains the port number that this device
++	 * is connected to, which is of course only unique within the hub
++	 * to which the device is attached.
++	 */
+ 	n = di_prop_lookup_ints(DDI_DEV_T_ANY, node, "reg", &port_prop);
+-
+-	if ((n != 1) || (*port_prop <= 0)) {
++	if (n != 1 || *port_prop <= 0) {
+ 		return (LIBUSB_ERROR_IO);
+ 	}
+ 	dev->port_number = *port_prop;
+ 
++	/*
++	 * In addition to the port number, we must also populate the
++	 * parent device pointer so that USB devices can be correctly
++	 * treated as a tree.  The parent links are used by
++	 * libusb_get_port_numbers() to construct the full path back to
++	 * the root hub (not just the local port number), which is then
++	 * used by software like hidapi to uniquely identify a device.
++	 */
++	if ((parent = di_parent_node(node)) == DI_NODE_NIL) {
++		usbi_dbg(DEVICE_CTX(dev), "could not get parent node");
++		return (LIBUSB_ERROR_IO);
++	} else {
++		uint64_t psid;
++		int is_root_hub;
++		if (illumos_make_session_id(nargs, parent, &psid, NULL,
++		    &is_root_hub) != 0) {
++			usbi_dbg(DEVICE_CTX(dev), "could not get "
++			    "session ID for parent node");
++			return (LIBUSB_ERROR_IO);
++		}
++
++		if (is_root_hub) {
++			usbi_dbg(DEVICE_CTX(dev), "parent device %llx "
++			    "for session ID %llx is a root hub",
++			    (unsigned long long)psid,
++			    (unsigned long long)dev->session_data);
++			dev->parent_dev = NULL;
++		} else if ((dev->parent_dev = usbi_get_device_by_session_id(
++		    nargs->ctx, psid)) == NULL) {
++			usbi_dbg(DEVICE_CTX(dev), "could not locate "
++			    "parent device %llx for session ID %llx",
++			    (unsigned long long)psid,
++			    (unsigned long long)dev->session_data);
++			return (LIBUSB_ERROR_IO);
++		}
++	}
++
+ 	/* device physical path */
+ 	phypath = di_devfs_path(node);
+ 	if (phypath) {
+@@ -211,7 +469,6 @@ illumos_fill_in_dev_info(di_node_t node, struct libusb_device *dev)
+ 		illumos_physpath_to_devlink(dpriv->phypath, match_str,
+ 		    &dpriv->ugenpath);
+ 		di_devfs_path_free(phypath);
+-
+ 	} else {
+ 		free(dpriv->raw_cfgdescr);
+ 
+@@ -219,7 +476,8 @@ illumos_fill_in_dev_info(di_node_t node, struct libusb_device *dev)
+ 	}
+ 
+ 	/* address */
+-	n = di_prop_lookup_ints(DDI_DEV_T_ANY, node, "assigned-address", &addr);
++	n = di_prop_lookup_ints(DDI_DEV_T_ANY, node, "assigned-address",
++	    &addr);
+ 	if (n != 1 || *addr == 0) {
+ 		usbi_dbg(DEVICE_CTX(dev), "can't get address");
+ 	} else {
+@@ -241,8 +499,9 @@ illumos_fill_in_dev_info(di_node_t node, struct libusb_device *dev)
+ 	}
+ 
+ 	usbi_dbg(DEVICE_CTX(dev),
+-	    "vid=%x pid=%x, path=%s, bus_nmber=0x%x, port_number=%d, speed=%d",
+-	    dev->device_descriptor.idVendor, dev->device_descriptor.idProduct,
++	    "vid=%x pid=%x, path=%s, bus=%u, port_number=%d, speed=%d",
++	    dev->device_descriptor.idVendor,
++	    dev->device_descriptor.idProduct,
+ 	    dpriv->phypath, dev->bus_number, dev->port_number, dev->speed);
+ 
+ 	return (LIBUSB_SUCCESS);
+@@ -252,79 +511,47 @@ static int
+ illumos_add_devices(di_devlink_t link, void *arg)
+ {
+ 	struct devlink_cbarg *largs = (struct devlink_cbarg *)arg;
+-	struct node_args *nargs;
+-	di_node_t myself, dn;
+-	uint64_t session_id = 0;
+-	uint64_t sid = 0;
+-	uint64_t bdf = 0;
++	struct node_args *nargs = largs->nargs;
+ 	struct libusb_device *dev;
+ 	illumos_dev_priv_t *devpriv;
+-	int n, *j;
+-	int i = 0;
+-	int *addr_prop;
+-	uint8_t bus_number = 0;
+-	uint32_t * regbuf = NULL;
+-	uint32_t reg;
++	int r;
+ 
+ 	UNUSED(link);
+ 
+-	nargs = (struct node_args *)largs->nargs;
+-	myself = largs->myself;
+-
+-	/*
+-	 * Construct session ID.
+-	 * session ID = dev_addr | hub addr |parent hub addr|...|root hub bdf
+-	 *		8 bits       8bits          8 bits               16bits
+-	 */
+-	if (myself == DI_NODE_NIL)
+-		return (DI_WALK_CONTINUE);
+-
+-	dn = myself;
+-	/* find the root hub */
+-	while (di_prop_lookup_ints(DDI_DEV_T_ANY, dn, "root-hub", &j) != 0) {
+-		usbi_dbg(NULL, "find_root_hub:%s", di_devfs_path(dn));
+-		n = di_prop_lookup_ints(DDI_DEV_T_ANY, dn,
+-				"assigned-address", &addr_prop);
+-		session_id |= ((addr_prop[0] & 0xff) << i++ * 8);
+-		dn = di_parent_node(dn);
+-	}
++	for (di_node_t node = di_child_node(largs->myself);
++	    node != DI_NODE_NIL; node = di_sibling_node(node)) {
++		uint64_t session_id = 0;
++		uint8_t bus_number = 0;
++		int root_hub = 0;
++		if ((r = illumos_make_session_id(nargs, node, &session_id,
++		    &bus_number, &root_hub)) != 0) {
++			usbi_dbg(NULL, "could not generate session ID (%d)",
++			    r);
++			return (DI_WALK_TERMINATE);
++		}
+ 
+-	/* dn is the root hub node */
+-	n = di_prop_lookup_ints(DDI_DEV_T_ANY, dn, "reg", (int **)&regbuf);
+-	reg = regbuf[0];
+-	bdf = (PCI_REG_BUS_G(reg) << 8) | (PCI_REG_DEV_G(reg) << 3) |
+-	    PCI_REG_FUNC_G(reg);
+-	/* bdf must larger than i*8 bits */
+-	session_id |= (bdf << i * 8);
+-	bus_number = (PCI_REG_DEV_G(reg) << 3) | PCI_REG_FUNC_G(reg);
+-
+-	usbi_dbg(NULL, "device bus address=%s:%x, name:%s",
+-	    di_bus_addr(myself), bus_number, di_node_name(dn));
+-	usbi_dbg(NULL, "session id org:%" PRIx64, session_id);
+-
+-	/* dn is the usb device */
+-	for (dn = di_child_node(myself); dn != DI_NODE_NIL;
+-	    dn = di_sibling_node(dn)) {
+-		usbi_dbg(NULL, "device path:%s", di_devfs_path(dn));
+-		/* skip hub devices, because its driver can not been unload */
+-		if (di_prop_lookup_ints(DDI_DEV_T_ANY, dn, "usb-port-count",
+-		    &addr_prop) != -1) {
+-			continue;
++		char *path = di_devfs_path(node);
++		if (path == NULL) {
++			usbi_dbg(NULL, "di_devfs_path() failure!");
++			return (DI_WALK_TERMINATE);
+ 		}
+-		/* usb_addr */
+-		n = di_prop_lookup_ints(DDI_DEV_T_ANY, dn,
+-		    "assigned-address", &addr_prop);
+-		if (n != 1 || addr_prop[0] == 0) {
+-			usbi_dbg(NULL, "cannot get valid usb_addr");
++
++		usbi_dbg(NULL,
++		    "bus number = %u, session ID = 0x%llx, path = %s",
++		    (uint_t)bus_number, (unsigned long long)session_id,
++		    path);
++
++		di_devfs_path_free(path);
++
++		if (root_hub) {
++			usbi_dbg(NULL, "skipping root hub (%llx)",
++			    (unsigned long long)session_id);
+ 			continue;
+ 		}
+ 
+-		sid = (session_id << 8) | (addr_prop[0] & 0xff) ;
+-		usbi_dbg(NULL, "session id %" PRIX64, sid);
+-
+-		dev = usbi_get_device_by_session_id(nargs->ctx, sid);
++		dev = usbi_get_device_by_session_id(nargs->ctx, session_id);
+ 		if (dev == NULL) {
+-			dev = usbi_alloc_device(nargs->ctx, sid);
++			dev = usbi_alloc_device(nargs->ctx, session_id);
+ 			if (dev == NULL) {
+ 				usbi_dbg(NULL, "can't alloc device");
+ 				continue;
+@@ -332,7 +559,7 @@ illumos_add_devices(di_devlink_t link, void *arg)
+ 			devpriv = usbi_get_device_priv(dev);
+ 			dev->bus_number = bus_number;
+ 
+-			if (illumos_fill_in_dev_info(dn, dev) !=
++			if (illumos_fill_in_dev_info(nargs, node, dev) !=
+ 			    LIBUSB_SUCCESS) {
+ 				libusb_unref_device(dev);
+ 				usbi_dbg(NULL, "get information fail");
+@@ -359,9 +586,9 @@ illumos_add_devices(di_devlink_t link, void *arg)
+ 		libusb_unref_device(dev);
+ 
+ 		usbi_dbg(NULL, "Device %s %s id=0x%" PRIx64
+-		    ", devcount:%" PRIuPTR ", bdf=%" PRIx64,
+-		    devpriv->ugenpath, di_devfs_path(dn), (uint64_t)sid,
+-		    (*nargs->discdevs)->len, bdf);
++		    ", devcount:%" PRIuPTR,
++		    devpriv->ugenpath, devpriv->phypath,
++		    (uint64_t)session_id, (*nargs->discdevs)->len);
+ 	}
+ 
+ 	return (DI_WALK_CONTINUE);
+@@ -405,6 +632,7 @@ illumos_get_device_list(struct libusb_context * ctx,
+ 	args.ctx = ctx;
+ 	args.discdevs = discdevs;
+ 	args.last_ugenpath = NULL;
++	bzero(args.buses, sizeof (args.buses));
+ 	if ((root_node = di_init("/", DINFOCPYALL)) == DI_NODE_NIL) {
+ 		usbi_dbg(ctx, "di_int() failed: errno %d (%s)", errno,
+ 		    strerror(errno));
+diff --git a/libusb/os/illumos_usb.h b/libusb/os/illumos_usb.h
+index 1ff0bf69..59abcca4 100644
+--- a/libusb/os/illumos_usb.h
++++ b/libusb/os/illumos_usb.h
+@@ -61,11 +61,14 @@ typedef struct illumos_transfer_priv {
+ 	size_t			ctrl_len;
+ } illumos_xfer_priv_t;
+ 
++#define	MAX_BUSES		256
++
+ struct node_args {
+ 	struct libusb_context	*ctx;
+ 	struct discovered_devs	**discdevs;
+ 	const char		*last_ugenpath;
+ 	di_devlink_handle_t	dlink_hdl;
++	char			*buses[MAX_BUSES];
+ };
+ 
+ struct devlink_cbarg {
+-- 
+2.40.3
+
