@@ -1,0 +1,359 @@
+From dccdca20b06c90be3a6bca4bbcafe53684a09fe1 Mon Sep 17 00:00:00 2001
+From: "Joshua M. Clulow" <josh@sysmgr.org>
+Date: Tue, 16 Aug 2022 22:34:53 -0700
+Subject: [PATCH 06/11] illumos: update_drv-based driver reconfiguration does
+ not work
+
+---
+ libusb/os/illumos_usb.c | 313 ----------------------------------------
+ 1 file changed, 313 deletions(-)
+
+diff --git a/libusb/os/illumos_usb.c b/libusb/os/illumos_usb.c
+index 76583f33..a1220278 100644
+--- a/libusb/os/illumos_usb.c
++++ b/libusb/os/illumos_usb.c
+@@ -76,11 +76,8 @@ static int illumos_submit_transfer(struct usbi_transfer *);
+ static int illumos_cancel_transfer(struct usbi_transfer *);
+ static int illumos_handle_transfer_completion(struct usbi_transfer *);
+ static int illumos_kernel_driver_active(struct libusb_device_handle *, uint8_t);
+-static int illumos_detach_kernel_driver(struct libusb_device_handle *, uint8_t);
+-static int illumos_attach_kernel_driver(struct libusb_device_handle *, uint8_t);
+ static int illumos_usb_open_ep0(illumos_dev_handle_priv_t *hpriv,
+     illumos_dev_priv_t *dpriv);
+-static int illumos_usb_ioctl(struct libusb_device *dev, int cmd);
+ 
+ static int
+ illumos_get_link(di_devlink_t devlink, void *arg)
+@@ -143,95 +140,6 @@ illumos_physpath_to_devlink(
+ 	return (0);
+ }
+ 
+-static int
+-illumos_usb_ioctl(struct libusb_device *dev, int cmd)
+-{
+-	int fd;
+-	nvlist_t *nvlist;
+-	char *end;
+-	char *phypath;
+-	char *hubpath;
+-	char path_arg[PATH_MAX];
+-	illumos_dev_priv_t *dpriv;
+-	devctl_ap_state_t devctl_ap_state;
+-	struct devctl_iocdata iocdata;
+-
+-	dpriv = usbi_get_device_priv(dev);
+-	phypath = dpriv->phypath;
+-
+-	end = strrchr(phypath, '/');
+-	if (end == NULL)
+-		return (-1);
+-	hubpath = strndup(phypath, end - phypath);
+-	if (hubpath == NULL)
+-		return (-1);
+-
+-	end = strrchr(hubpath, '@');
+-	if (end == NULL) {
+-		free(hubpath);
+-		return (-1);
+-	}
+-	end++;
+-	usbi_dbg(DEVICE_CTX(dev), "unitaddr: %s", end);
+-
+-	nvlist_alloc(&nvlist, NV_UNIQUE_NAME_TYPE, KM_NOSLEEP);
+-	nvlist_add_int32(nvlist, "port", dev->port_number);
+-	//find the hub path
+-	snprintf(path_arg, sizeof(path_arg), "/devices%s:hubd", hubpath);
+-	usbi_dbg(DEVICE_CTX(dev), "ioctl hub path: %s", path_arg);
+-
+-	fd = open(path_arg, O_RDONLY);
+-	if (fd < 0) {
+-		usbi_err(DEVICE_CTX(dev), "open failed: errno %d (%s)",
+-		    errno, strerror(errno));
+-		nvlist_free(nvlist);
+-		free(hubpath);
+-		return (-1);
+-	}
+-
+-	memset(&iocdata, 0, sizeof(iocdata));
+-	memset(&devctl_ap_state, 0, sizeof(devctl_ap_state));
+-
+-	nvlist_pack(nvlist, (char **)&iocdata.nvl_user, &iocdata.nvl_usersz,
+-	    NV_ENCODE_NATIVE, 0);
+-
+-	iocdata.cmd = DEVCTL_AP_GETSTATE;
+-	iocdata.flags = 0;
+-	iocdata.c_nodename = (char *)"hub";
+-	iocdata.c_unitaddr = end;
+-	iocdata.cpyout_buf = &devctl_ap_state;
+-	usbi_dbg(DEVICE_CTX(dev), "%p, %" PRIuPTR, iocdata.nvl_user,
+-	    iocdata.nvl_usersz);
+-
+-	errno = 0;
+-	if (ioctl(fd, DEVCTL_AP_GETSTATE, &iocdata) == -1) {
+-		usbi_err(DEVICE_CTX(dev),
+-		    "ioctl failed: fd %d, cmd %x, errno %d (%s)",
+-		    fd, DEVCTL_AP_GETSTATE, errno, strerror(errno));
+-	} else {
+-		usbi_dbg(DEVICE_CTX(dev), "dev rstate: %d",
+-		    devctl_ap_state.ap_rstate);
+-		usbi_dbg(DEVICE_CTX(dev), "dev ostate: %d",
+-		    devctl_ap_state.ap_ostate);
+-	}
+-
+-	errno = 0;
+-	iocdata.cmd = cmd;
+-	if (ioctl(fd, (int)cmd, &iocdata) != 0) {
+-		usbi_err(DEVICE_CTX(dev),
+-		    "ioctl failed: fd %d, cmd %x, errno %d (%s)",
+-		    fd, cmd, errno, strerror(errno));
+-		sleep(2);
+-	}
+-
+-	close(fd);
+-	free(iocdata.nvl_user);
+-	nvlist_free(nvlist);
+-	free(hubpath);
+-
+-	return (-errno);
+-}
+-
+ static int
+ illumos_kernel_driver_active(struct libusb_device_handle *dev_handle,
+     uint8_t interface)
+@@ -251,225 +159,6 @@ illumos_kernel_driver_active(struct libusb_device_handle *dev_handle,
+ static int _errno_to_libusb(int);
+ static int illumos_usb_get_status(struct libusb_context *ctx, int fd);
+ 
+-static string_list_t *
+-illumos_new_string_list(void)
+-{
+-	string_list_t *list;
+-
+-	list = calloc(1, sizeof(string_list_t));
+-	if (list == NULL)
+-		return (NULL);
+-	list->string = calloc(DEFAULT_LISTSIZE, sizeof(char *));
+-	if (list->string == NULL) {
+-		free(list);
+-		return (NULL);
+-	}
+-	list->nargs = 0;
+-	list->listsize = DEFAULT_LISTSIZE;
+-
+-	return (list);
+-}
+-
+-static int
+-illumos_append_to_string_list(string_list_t *list, const char *arg)
+-{
+-	char *str = strdup(arg);
+-
+-	if (str == NULL)
+-		return (-1);
+-
+-	if ((list->nargs + 1) == list->listsize) { /* +1 is for NULL */
+-		char **tmp = realloc(list->string,
+-		    sizeof(char *) * (list->listsize + 1));
+-		if (tmp == NULL) {
+-			free(str);
+-			return (-1);
+-		}
+-		list->string = tmp;
+-		list->string[list->listsize++] = NULL;
+-	}
+-	list->string[list->nargs++] = str;
+-
+-	return (0);
+-}
+-
+-static void
+-illumos_free_string_list(string_list_t *list)
+-{
+-	int i;
+-
+-	for (i = 0; i < list->nargs; i++) {
+-		free(list->string[i]);
+-	}
+-
+-	free(list->string);
+-	free(list);
+-}
+-
+-static char **
+-illumos_build_argv_list(string_list_t *list)
+-{
+-	return (list->string);
+-}
+-
+-
+-static int
+-illumos_exec_command(struct libusb_context *ctx, const char *path,
+-    string_list_t *list)
+-{
+-	pid_t pid;
+-	int status;
+-	int waitstat;
+-	int exit_status;
+-	char **argv_list;
+-
+-	argv_list = illumos_build_argv_list(list);
+-	if (argv_list == NULL)
+-		return (-1);
+-
+-	pid = fork();
+-	if (pid == 0) {
+-		/* child */
+-		execv(path, argv_list);
+-		_exit(127);
+-	} else if (pid > 0) {
+-		/* parent */
+-		do {
+-			waitstat = waitpid(pid, &status, 0);
+-		} while ((waitstat == -1 && errno == EINTR) ||
+-		    (waitstat == 0 && !WIFEXITED(status) &&
+-		    !WIFSIGNALED(status)));
+-
+-		if (waitstat == 0) {
+-			if (WIFEXITED(status))
+-				exit_status = WEXITSTATUS(status);
+-			else
+-				exit_status = WTERMSIG(status);
+-		} else {
+-			usbi_err(ctx, "waitpid failed: errno %d (%s)", errno,
+-			    strerror(errno));
+-			exit_status = -1;
+-		}
+-	} else {
+-		/* fork failed */
+-		usbi_err(ctx, "fork failed: errno %d (%s)", errno,
+-		    strerror(errno));
+-		exit_status = -1;
+-	}
+-
+-	return (exit_status);
+-}
+-
+-static int
+-illumos_detach_kernel_driver(struct libusb_device_handle *dev_handle,
+-    uint8_t interface_number)
+-{
+-	struct libusb_context *ctx = HANDLE_CTX(dev_handle);
+-	string_list_t *list;
+-	char path_arg[PATH_MAX];
+-	illumos_dev_priv_t *dpriv;
+-	int r;
+-
+-	UNUSED(interface_number);
+-
+-	dpriv = usbi_get_device_priv(dev_handle->dev);
+-	snprintf(path_arg, sizeof(path_arg), "\'\"%s\"\'", dpriv->phypath);
+-	usbi_dbg(HANDLE_CTX(dev_handle), "%s", path_arg);
+-
+-	list = illumos_new_string_list();
+-	if (list == NULL)
+-		return (LIBUSB_ERROR_NO_MEM);
+-
+-	/* attach ugen driver */
+-	r = 0;
+-	r |= illumos_append_to_string_list(list, UPDATEDRV);
+-	r |= illumos_append_to_string_list(list, "-a"); /* add rule */
+-	r |= illumos_append_to_string_list(list, "-i"); /* specific device */
+-	r |= illumos_append_to_string_list(list, path_arg); /* physical path */
+-	r |= illumos_append_to_string_list(list, "ugen");
+-	if (r) {
+-		illumos_free_string_list(list);
+-		return (LIBUSB_ERROR_NO_MEM);
+-	}
+-
+-	r = illumos_exec_command(ctx, UPDATEDRV_PATH, list);
+-	illumos_free_string_list(list);
+-	if (r < 0)
+-		return (LIBUSB_ERROR_OTHER);
+-
+-	/* reconfigure the driver node */
+-	r = 0;
+-	r |= illumos_usb_ioctl(dev_handle->dev, DEVCTL_AP_DISCONNECT);
+-	r |= illumos_usb_ioctl(dev_handle->dev, DEVCTL_AP_CONFIGURE);
+-	if (r)
+-		usbi_warn(HANDLE_CTX(dev_handle), "one or more ioctls failed");
+-
+-	snprintf(path_arg, sizeof(path_arg), "^usb/%x.%x",
+-	    dev_handle->dev->device_descriptor.idVendor,
+-	    dev_handle->dev->device_descriptor.idProduct);
+-	illumos_physpath_to_devlink(dpriv->phypath, path_arg, &dpriv->ugenpath);
+-
+-	if (access(dpriv->ugenpath, F_OK) == -1) {
+-		usbi_err(HANDLE_CTX(dev_handle),
+-		    "fail to detach kernel driver");
+-		return (LIBUSB_ERROR_IO);
+-	}
+-
+-	return (illumos_usb_open_ep0(usbi_get_device_handle_priv(dev_handle),
+-	    dpriv));
+-}
+-
+-static int
+-illumos_attach_kernel_driver(struct libusb_device_handle *dev_handle,
+-    uint8_t interface_number)
+-{
+-	struct libusb_context *ctx = HANDLE_CTX(dev_handle);
+-	string_list_t *list;
+-	char path_arg[PATH_MAX];
+-	illumos_dev_priv_t *dpriv;
+-	int r;
+-
+-	UNUSED(interface_number);
+-
+-	/* we open the dev in detach driver, so we need close it first. */
+-	illumos_close(dev_handle);
+-
+-	dpriv = usbi_get_device_priv(dev_handle->dev);
+-	snprintf(path_arg, sizeof(path_arg), "\'\"%s\"\'", dpriv->phypath);
+-	usbi_dbg(HANDLE_CTX(dev_handle), "%s", path_arg);
+-
+-	list = illumos_new_string_list();
+-	if (list == NULL)
+-		return (LIBUSB_ERROR_NO_MEM);
+-
+-	/* detach ugen driver */
+-	r = 0;
+-	r |= illumos_append_to_string_list(list, UPDATEDRV);
+-	r |= illumos_append_to_string_list(list, "-d"); /* add rule */
+-	r |= illumos_append_to_string_list(list, "-i"); /* specific device */
+-	r |= illumos_append_to_string_list(list, path_arg); /* physical path */
+-	r |= illumos_append_to_string_list(list, "ugen");
+-	if (r) {
+-		illumos_free_string_list(list);
+-		return (LIBUSB_ERROR_NO_MEM);
+-	}
+-
+-	r = illumos_exec_command(ctx, UPDATEDRV_PATH, list);
+-	illumos_free_string_list(list);
+-	if (r < 0)
+-		return (LIBUSB_ERROR_OTHER);
+-
+-	/* reconfigure the driver node */
+-	r = 0;
+-	r |= illumos_usb_ioctl(dev_handle->dev, DEVCTL_AP_CONFIGURE);
+-	r |= illumos_usb_ioctl(dev_handle->dev, DEVCTL_AP_DISCONNECT);
+-	r |= illumos_usb_ioctl(dev_handle->dev, DEVCTL_AP_CONFIGURE);
+-	if (r)
+-		usbi_warn(HANDLE_CTX(dev_handle), "one or more ioctls failed");
+-
+-	return (0);
+-}
+-
+ static int
+ illumos_fill_in_dev_info(di_node_t node, struct libusb_device *dev)
+ {
+@@ -1715,7 +1404,5 @@ const struct usbi_os_backend usbi_backend = {
+ 	.device_handle_priv_size = sizeof(illumos_dev_handle_priv_t),
+ 
+ 	.kernel_driver_active = illumos_kernel_driver_active,
+-	.detach_kernel_driver = illumos_detach_kernel_driver,
+-	.attach_kernel_driver = illumos_attach_kernel_driver,
+ 	.transfer_priv_size = sizeof(illumos_xfer_priv_t),
+ };
+-- 
+2.40.3
+

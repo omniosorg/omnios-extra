@@ -1,0 +1,437 @@
+From 59c3f1b42b7ea69043994e95b81ecb7b4b3c3388 Mon Sep 17 00:00:00 2001
+From: "Joshua M. Clulow" <josh@sysmgr.org>
+Date: Tue, 16 Aug 2022 23:08:26 -0700
+Subject: [PATCH 07/11] illumos: control transfers should not call back during
+ submission
+
+---
+ libusb/os/illumos_usb.c | 243 ++++++++++++++++++++--------------------
+ libusb/os/illumos_usb.h |  24 ++--
+ 2 files changed, 139 insertions(+), 128 deletions(-)
+
+diff --git a/libusb/os/illumos_usb.c b/libusb/os/illumos_usb.c
+index a1220278..a20dd648 100644
+--- a/libusb/os/illumos_usb.c
++++ b/libusb/os/illumos_usb.c
+@@ -1,7 +1,6 @@
+ /*
+- *
+  * Copyright (c) 2016, Oracle and/or its affiliates.
+- * Copyright 2021 Oxide Computer Company
++ * Copyright 2022 Oxide Computer Company
+  *
+  * This library is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU Lesser General Public
+@@ -900,7 +899,7 @@ illumos_async_callback(union sigval arg)
+ 
+ 		/*
+ 		 * Fetch the status for the last command on this endpoint from
+-		 * ugen(7D) so that we can translate and report it later.
++		 * ugen(4D) so that we can translate and report it later.
+ 		 */
+ 		tpriv->ugen_status = illumos_usb_get_status(TRANSFER_CTX(xfer),
+ 		    hpriv->eps[ep].statfd);
+@@ -927,6 +926,7 @@ illumos_do_async_io(struct libusb_transfer *transfer)
+ 	hpriv = usbi_get_device_handle_priv(transfer->dev_handle);
+ 	ep = illumos_usb_ep_index(transfer->endpoint);
+ 
++	tpriv->type = ILLUMOS_XFT_AIO;
+ 	tpriv->transfer = transfer;
+ 	aiocb = &tpriv->aiocb;
+ 	bzero(aiocb, sizeof(*aiocb));
+@@ -935,7 +935,7 @@ illumos_do_async_io(struct libusb_transfer *transfer)
+ 	aiocb->aio_nbytes = transfer->length;
+ 	aiocb->aio_lio_opcode =
+ 	    ((transfer->endpoint & LIBUSB_ENDPOINT_DIR_MASK) ==
+-	    LIBUSB_ENDPOINT_IN) ? LIO_READ:LIO_WRITE;
++	    LIBUSB_ENDPOINT_IN) ? LIO_READ : LIO_WRITE;
+ 	aiocb->aio_sigevent.sigev_notify = SIGEV_THREAD;
+ 	aiocb->aio_sigevent.sigev_value.sival_ptr = tpriv;
+ 	aiocb->aio_sigevent.sigev_notify_function = illumos_async_callback;
+@@ -951,121 +951,113 @@ illumos_do_async_io(struct libusb_transfer *transfer)
+ 
+ /* return the number of bytes read/written */
+ static ssize_t
+-usb_do_io(struct libusb_context *ctx, int fd, int stat_fd, void *data,
+-    size_t size, int flag, int *status)
++illumos_usb_do_io(struct libusb_context *ctx, illumos_ep_priv_t *ep,
++    illumos_xfer_priv_t *tpriv, void *data, size_t size, illumos_iodir_t dir)
+ {
+ 	int error;
+ 	ssize_t ret = -1;
+ 
+-	usbi_dbg(ctx, "usb_do_io(): datafd=%d statfd=%d size=0x%zx flag=%s",
+-	    fd, stat_fd, size, flag? "WRITE":"READ");
++	usbi_dbg(ctx,
++	    "illumos_usb_do_io(): datafd=%d statfd=%d size=0x%zx dir=%s",
++	    ep->datafd, ep->statfd, size,
++	    dir == ILLUMOS_DIR_WRITE ? "WRITE" : "READ");
+ 
+-	switch (flag) {
+-	case READ:
++	switch (dir) {
++	case ILLUMOS_DIR_READ:
+ 		errno = 0;
+-		ret = read(fd, data, size);
++		ret = read(ep->datafd, data, size);
++		error = errno;
+ 		usb_dump_data(data, size);
+ 		break;
+-	case WRITE:
++	case ILLUMOS_DIR_WRITE:
+ 		usb_dump_data(data, size);
+ 		errno = 0;
+-		ret = write(fd, data, size);
++		ret = write(ep->datafd, data, size);
++		error = errno;
+ 		break;
+ 	}
+ 
+-	usbi_dbg(ctx, "usb_do_io(): amount=%zd", ret);
++	/*
++	 * Fetch the status for the last command on this endpoint from
++	 * ugen(4D) so that we can translate and report it later.
++	 */
++	tpriv->ugen_status = illumos_usb_get_status(ctx, ep->statfd);
+ 
+-	if (ret < 0) {
+-		int save_errno = errno;
++	usbi_dbg(ctx, "illumos_usb_do_io(): amount=%zd error=%d status=%d",
++	    ret, error, tpriv->ugen_status);
+ 
++	if (ret < 0) {
+ 		usbi_dbg(ctx, "TID=%x io %s errno %d (%s)", pthread_self(),
+-		    flag?"WRITE":"READ", errno, strerror(errno));
+-
+-		/* illumos_usb_get_status will do a read and overwrite errno */
+-		error = illumos_usb_get_status(ctx, stat_fd);
+-		usbi_dbg(ctx, "io status=%d errno %d (%s)", error,
+-			save_errno, strerror(save_errno));
+-
+-		if (status) {
+-			*status = save_errno;
+-		}
+-
+-		return (save_errno);
++		    dir == ILLUMOS_DIR_WRITE ? "WRITE" : "READ",
++		    errno, strerror(errno));
+ 
+-	} else if (status) {
+-		*status = 0;
++		errno = error;
++		return (-1);
+ 	}
+ 
+ 	return (ret);
+ }
+ 
+ static int
+-solaris_submit_ctrl_on_default(struct libusb_transfer *transfer)
++illumos_submit_ctrl_on_default(struct libusb_transfer *xfer)
+ {
+-	ssize_t ret = -1, setup_ret;
+-	int status;
+-	illumos_dev_handle_priv_t *hpriv;
+-	struct libusb_device_handle *hdl = transfer->dev_handle;
+-	uint16_t wLength;
+-	uint8_t *data = transfer->buffer;
+-
+-	hpriv = usbi_get_device_handle_priv(hdl);
+-	wLength = transfer->length - LIBUSB_CONTROL_SETUP_SIZE;
++	struct libusb_context *ctx = TRANSFER_CTX(xfer);
++	struct usbi_transfer *ixfer = LIBUSB_TRANSFER_TO_USBI_TRANSFER(xfer);
++	illumos_xfer_priv_t *tpriv = usbi_get_transfer_priv(ixfer);
++	struct libusb_device_handle *hdl = xfer->dev_handle;
++	illumos_dev_handle_priv_t *hpriv = usbi_get_device_handle_priv(hdl);
++	uint8_t *data = xfer->buffer;
++	size_t datalen = xfer->length;
++	illumos_iodir_t dir =
++	    (data[0] & LIBUSB_ENDPOINT_DIR_MASK) == LIBUSB_ENDPOINT_IN ?
++	    ILLUMOS_DIR_READ : ILLUMOS_DIR_WRITE;
++	ssize_t ret;
+ 
+-	if (hpriv->eps[0].datafd == -1) {
+-		usbi_dbg(TRANSFER_CTX(transfer), "ep0 not opened");
++	tpriv->type = ILLUMOS_XFT_CTRL;
++	tpriv->transfer = xfer;
++	tpriv->ctrl_len = 0;
+ 
++	if (hpriv->eps[0].datafd < 0) {
++		usbi_dbg(ctx, "ep0 not opened");
+ 		return (LIBUSB_ERROR_NOT_FOUND);
+ 	}
+ 
+-	if ((data[0] & LIBUSB_ENDPOINT_DIR_MASK) == LIBUSB_ENDPOINT_IN) {
+-		usbi_dbg(TRANSFER_CTX(transfer), "IN request");
+-		ret = usb_do_io(TRANSFER_CTX(transfer), hpriv->eps[0].datafd,
+-		    hpriv->eps[0].statfd, data, LIBUSB_CONTROL_SETUP_SIZE,
+-		    WRITE, &status);
+-	} else {
+-		usbi_dbg(TRANSFER_CTX(transfer), "OUT request");
+-		ret = usb_do_io(TRANSFER_CTX(transfer), hpriv->eps[0].datafd,
+-		    hpriv->eps[0].statfd, transfer->buffer, transfer->length,
+-		    WRITE, (int *)&transfer->status);
+-	}
+-
+-	setup_ret = ret;
+-	if (ret < (ssize_t)LIBUSB_CONTROL_SETUP_SIZE) {
+-		usbi_dbg(TRANSFER_CTX(transfer),
+-		    "error sending control msg: %zd", ret);
+-		return (LIBUSB_ERROR_IO);
+-	}
++	if (dir == ILLUMOS_DIR_READ) {
++		/*
++		 * As per ugen(4D), to perform a control-IN transfer we must
++		 * first write(2) the USB setup data.
++		 */
++		usbi_dbg(ctx, "IN request: write setup");
++		if ((ret = illumos_usb_do_io(ctx, &hpriv->eps[0], tpriv,
++		    data, LIBUSB_CONTROL_SETUP_SIZE, ILLUMOS_DIR_WRITE)) < 0) {
++			int e = errno;
++			usbi_dbg(ctx, "IN request: setup failed (%d, %s)",
++			    e, strerror(e));
++			return (_errno_to_libusb(e));
++		} else if (ret != LIBUSB_CONTROL_SETUP_SIZE) {
++			usbi_dbg(ctx, "IN request: setup short write (%d)",
++			    (int)ret);
++			return (LIBUSB_ERROR_IO);
++		}
+ 
+-	ret = transfer->length - LIBUSB_CONTROL_SETUP_SIZE;
+-
+-	/* Read the remaining bytes for IN request */
+-	if ((wLength) && ((data[0] & LIBUSB_ENDPOINT_DIR_MASK) ==
+-	    LIBUSB_ENDPOINT_IN)) {
+-		usbi_dbg(TRANSFER_CTX(transfer), "DATA: %d",
+-		    transfer->length - (int)setup_ret);
+-		ret = usb_do_io(TRANSFER_CTX(transfer), hpriv->eps[0].datafd,
+-		    hpriv->eps[0].statfd,
+-		    transfer->buffer + LIBUSB_CONTROL_SETUP_SIZE,
+-		    wLength, READ, (int *)&transfer->status);
++		/*
++		 * Trim the setup data out of the buffer for the subsequent
++		 * read:
++		 */
++		datalen -= LIBUSB_CONTROL_SETUP_SIZE;
++		data += LIBUSB_CONTROL_SETUP_SIZE;
+ 	}
+ 
++	usbi_dbg(ctx, "%s request: data",
++	    dir == ILLUMOS_DIR_READ ? "IN" : "OUT");
++	ret = illumos_usb_do_io(ctx, &hpriv->eps[0], tpriv, data, datalen, dir);
+ 	if (ret >= 0) {
+-		LIBUSB_TRANSFER_TO_USBI_TRANSFER(transfer)->transferred = ret;
++		tpriv->ctrl_len += ret;
+ 	}
+-	usbi_dbg(TRANSFER_CTX(transfer), "Done: ctrl data bytes %zd", ret);
+-
+-	/*
+-	 * Sync transfer handling.
+-	 * We should release transfer lock here and later get it back
+-	 * as usbi_handle_transfer_completion() takes its own transfer lock.
+-	 */
+-	usbi_mutex_unlock(&LIBUSB_TRANSFER_TO_USBI_TRANSFER(transfer)->lock);
+-	ret = usbi_handle_transfer_completion(
+-	    LIBUSB_TRANSFER_TO_USBI_TRANSFER(transfer), transfer->status);
+-	usbi_mutex_lock(&LIBUSB_TRANSFER_TO_USBI_TRANSFER(transfer)->lock);
+ 
+-	return (ret);
++	usbi_dbg(ctx, "Done: ctrl data bytes %zd", ret);
++	usbi_signal_transfer_completion(ixfer);
++	return (LIBUSB_SUCCESS);
+ }
+ 
+ int
+@@ -1116,7 +1108,7 @@ illumos_submit_transfer(struct usbi_transfer *itransfer)
+ 		/* sync transfer */
+ 		usbi_dbg(ITRANSFER_CTX(itransfer),
+ 		    "CTRL transfer: %d", transfer->length);
+-		err = solaris_submit_ctrl_on_default(transfer);
++		err = illumos_submit_ctrl_on_default(transfer);
+ 		break;
+ 
+ 	case LIBUSB_TRANSFER_TYPE_BULK:
+@@ -1179,6 +1171,36 @@ illumos_cancel_transfer(struct usbi_transfer *itransfer)
+ 	return (ret);
+ }
+ 
++static int
++illumos_libusb_status(illumos_xfer_priv_t *tpriv)
++{
++	/*
++	 * Convert the ugen(4D)-level status to a libusb-level status:
++	 */
++	switch (tpriv->ugen_status) {
++	case USB_LC_STAT_TIMEOUT:
++		return (LIBUSB_TRANSFER_TIMED_OUT);
++	case USB_LC_STAT_STALL:
++		return (LIBUSB_TRANSFER_STALL);
++	case USB_LC_STAT_DISCONNECTED:
++		return (LIBUSB_TRANSFER_NO_DEVICE);
++	case USB_LC_STAT_INTERRUPTED:
++		return (LIBUSB_TRANSFER_CANCELLED);
++	case USB_LC_STAT_BUFFER_OVERRUN:
++		/*
++		 * XXX Is this right? (*_DATA_OVERRUN?)
++		 */
++		return (LIBUSB_TRANSFER_OVERFLOW);
++	default:
++		/*
++		 * Not every ugen(4D) status maps to a specific libusb-level
++		 * failure case.  Nonetheless, we must report all failures as
++		 * failures:
++		 */
++		return (LIBUSB_TRANSFER_ERROR);
++	}
++}
++
+ int
+ illumos_handle_transfer_completion(struct usbi_transfer *ixfer)
+ {
+@@ -1188,7 +1210,15 @@ illumos_handle_transfer_completion(struct usbi_transfer *ixfer)
+ 	int ret;
+ 	enum libusb_transfer_status status;
+ 
+-	if ((ret = aio_error(aiocb)) == 0) {
++	if (tpriv->type == ILLUMOS_XFT_CTRL) {
++		ixfer->transferred = tpriv->ctrl_len;
++		if (tpriv->ugen_status == USB_LC_STAT_NOERROR) {
++			status = LIBUSB_TRANSFER_COMPLETED;
++		} else {
++			status = illumos_libusb_status(tpriv);
++		}
++
++	} else if ((ret = aio_error(aiocb)) == 0) {
+ 		/*
+ 		 * The command completed.  Update the transferred length:
+ 		 */
+@@ -1212,37 +1242,7 @@ illumos_handle_transfer_completion(struct usbi_transfer *ixfer)
+ 		status = LIBUSB_TRANSFER_CANCELLED;
+ 
+ 	} else {
+-		/*
+-		 * Convert the ugen(7D)-level status to a libusb-level status:
+-		 */
+-		switch (tpriv->ugen_status) {
+-		case USB_LC_STAT_TIMEOUT:
+-			status = LIBUSB_TRANSFER_TIMED_OUT;
+-			break;
+-		case USB_LC_STAT_STALL:
+-			status = LIBUSB_TRANSFER_STALL;
+-			break;
+-		case USB_LC_STAT_DISCONNECTED:
+-			status = LIBUSB_TRANSFER_NO_DEVICE;
+-			break;
+-		case USB_LC_STAT_INTERRUPTED:
+-			status = LIBUSB_TRANSFER_CANCELLED;
+-			break;
+-		case USB_LC_STAT_BUFFER_OVERRUN:
+-			/*
+-			 * XXX Is this right? (*_DATA_OVERRUN?)
+-			 */
+-			status = LIBUSB_TRANSFER_OVERFLOW;
+-			break;
+-		default:
+-			/*
+-			 * Not every ugen(7D) status maps to a specific
+-			 * libusb-level failure case.  Nonetheless, we must
+-			 * report all failures as failures:
+-			 */
+-			status = LIBUSB_TRANSFER_ERROR;
+-			break;
+-		}
++		status = illumos_libusb_status(tpriv);
+ 	}
+ 
+ 	if (status == LIBUSB_TRANSFER_CANCELLED) {
+@@ -1287,8 +1287,9 @@ illumos_usb_get_status(struct libusb_context *ctx, int fd)
+ 
+ 	usbi_dbg(ctx, "illumos_usb_get_status(): fd=%d", fd);
+ 
++	errno = 0;
+ 	ret = read(fd, &status, sizeof(status));
+-	if (ret == sizeof(status)) {
++	if (ret == sizeof (status)) {
+ 		switch (status) {
+ 		case USB_LC_STAT_NOERROR:
+ 			usbi_dbg(ctx, "No Error");
+@@ -1366,11 +1367,13 @@ illumos_usb_get_status(struct libusb_context *ctx, int fd)
+ 		default:
+ 			usbi_dbg(ctx, "Error Not Determined %d\n",
+ 			    status);
++			status = USB_LC_STAT_UNSPECIFIED_ERR;
+ 			break;
+ 		}
+ 	} else {
+-		usbi_dbg(ctx, "read stat error: %s",strerror(errno));
+-		status = -1;
++		usbi_dbg(ctx, "read stat error: (ret %ld, error %d) %s",
++		    (long)ret, errno, strerror(errno));
++		status = USB_LC_STAT_UNSPECIFIED_ERR;
+ 	}
+ 
+ 	return (status);
+diff --git a/libusb/os/illumos_usb.h b/libusb/os/illumos_usb.h
+index 4f3082c8..1ff0bf69 100644
+--- a/libusb/os/illumos_usb.h
++++ b/libusb/os/illumos_usb.h
+@@ -1,7 +1,6 @@
+ /*
+- *
+  * Copyright (c) 2016, Oracle and/or its affiliates.
+- * Copyright 2021 Oxide Computer Company
++ * Copyright 2022 Oxide Computer Company
+  *
+  * This library is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU Lesser General Public
+@@ -25,32 +24,41 @@
+ #include <pthread.h>
+ #include "libusbi.h"
+ 
+-#define	READ	0
+-#define	WRITE	1
++typedef enum illumos_iodir {
++	ILLUMOS_DIR_READ,
++	ILLUMOS_DIR_WRITE,
++} illumos_iodir_t;
+ 
+-typedef struct illumos_device_priv {
++typedef struct illumos_dev_priv {
+ 	uint8_t	cfgvalue;		/* active config value */
+ 	uint8_t	*raw_cfgdescr;		/* active config descriptor */
+ 	char	*ugenpath;		/* name of the ugen(4) node */
+ 	char	*phypath;		/* physical path */
+ } illumos_dev_priv_t;
+ 
+-typedef	struct endpoint {
++typedef struct illumos_ep_priv {
+ 	int datafd;	/* data file */
+ 	int statfd;	/* state file */
+ } illumos_ep_priv_t;
+ 
+-typedef struct illumos_device_handle_priv {
++typedef struct illumos_dev_handle_priv {
+ 	uint8_t			altsetting[USB_MAXINTERFACES];	/* a interface's alt */
+ 	uint8_t			config_index;
+ 	illumos_ep_priv_t		eps[USB_MAXENDPOINTS];
+ 	illumos_dev_priv_t	*dpriv; /* device private */
+ } illumos_dev_handle_priv_t;
+ 
+-typedef	struct illumos_transfer_priv {
++typedef enum illumos_xfer_type {
++	ILLUMOS_XFT_AIO,
++	ILLUMOS_XFT_CTRL,
++} illumos_xfer_type_t;
++
++typedef struct illumos_transfer_priv {
++	illumos_xfer_type_t	type;
+ 	struct aiocb		aiocb;
+ 	struct libusb_transfer	*transfer;
+ 	int			ugen_status;
++	size_t			ctrl_len;
+ } illumos_xfer_priv_t;
+ 
+ struct node_args {
+-- 
+2.40.3
+
