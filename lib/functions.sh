@@ -14,7 +14,7 @@
 #
 # Copyright (c) 2014 by Delphix. All rights reserved.
 # Copyright 2015 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 #
 
 #############################################################################
@@ -691,6 +691,13 @@ set_prefix() {
 
 clear_archflags() {
     flatten_variables CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
+}
+
+set_cstandard() {
+    typeset st="$1"
+    typeset var="${2:-CFLAGS}"
+    declare -n _var=$var
+    _var[0]+=" -std=$st"
 }
 
 set_standard() {
@@ -3997,16 +4004,22 @@ restore_variables() {
 }
 
 save_buildenv() {
-    local opt
-    for opt in $BUILDENV_OPTS; do
-        save_variable $opt
+    local var
+    for var in $BUILDENV_OPTS; do
+        save_variable $var
+    done
+    for var in $*; do
+        save_variable $var
     done
 }
 
 restore_buildenv() {
-    local opt
-    for opt in $BUILDENV_OPTS; do
-        restore_variable $opt
+    local var
+    for var in $*; do
+        restore_variable $var
+    done
+    for var in $BUILDENV_varS; do
+        restore_variable $var
     done
 }
 
