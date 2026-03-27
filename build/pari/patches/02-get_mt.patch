@@ -1,0 +1,11 @@
+--- pari-2.17.3/config/get_mt	Tue Feb 27 22:12:25 2024
++++ p0/pari-2.17.3/config/get_mt	Fri Dec 19 18:31:06 2025
+@@ -3,7 +3,7 @@
+ case $thread_engine in
+ single);;
+ pthread)
+-  MT_LIBS="-lpthread"
++  MT_LIBS="" # with -lpthread unused object libpthread.so.1 warning
+   cmd="$CC $CFLAGS $extraflag -o $exe $file $MT_LIBS"
+   . log_cmd
+   if test -r $exe; then
