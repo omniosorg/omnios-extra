@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libavif
-VER=1.3.0
+VER=1.4.1
 PKG=ooce/library/libavif
 SUMMARY="$PROG"
 DESC="$PROG - portable C implementation of the AV1 Image File Format"
