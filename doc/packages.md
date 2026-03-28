@@ -209,7 +209,7 @@
 | ooce/runtime/ruby-33		| 3.3.10	| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/ruby-34		| 3.4.7		| https://www.ruby-lang.org/en/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/tcl		| 8.6.14	| https://sourceforge.net/projects/tcl/files/Tcl/ https://www.tcl.tk/software/tcltk/download.html | [omniosorg](https://github.com/omniosorg)
-| ooce/security/gnupg		| 2.4.8		| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/security/gnupg		| 2.5.18	| https://gnupg.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/security/minisign	| 0.12		| https://github.com/jedisct1/minisign/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/security/oath-toolkit	| 2.6.14	| https://download.savannah.nongnu.org/releases/oath-toolkit/ | [omniosorg](https://github.com/omniosorg)
 | ooce/security/pam_radius	| 3.0.0		| https://github.com/FreeRADIUS/pam_radius/tags | [omniosorg](https://github.com/omniosorg)
