@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=zrepl
 PKG=ooce/system/zrepl
-VER=0.6.1
+VER=0.7.0
 SUMMARY="$PROG - ZFS replication"
 DESC="$PROG is a one-stop, integrated solution for ZFS replication"
 
