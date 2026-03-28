@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=taglib
-VER=2.1.1
+VER=2.2.1
 PKG=ooce/library/taglib
 SUMMARY="$PROG"
 DESC="$PROG - a library for reading and editing the meta-data of several "

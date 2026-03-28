@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/ext/openssl/ossl_ssl.c a/ext/openssl/ossl_ssl.c
 --- a~/ext/openssl/ossl_ssl.c	1970-01-01 00:00:00
 +++ a/ext/openssl/ossl_ssl.c	1970-01-01 00:00:00
-@@ -1786,11 +1786,16 @@ ossl_start_ssl(VALUE self, int (*func)(S
+@@ -1798,11 +1798,16 @@ ossl_start_ssl(VALUE self, int (*func)(S
              io_wait_writable(io);
              continue;
            case SSL_ERROR_WANT_READ:

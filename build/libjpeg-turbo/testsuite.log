@@ -1,666 +1,668 @@
         Start   1: tjunittest-shared
-  1/331 Test   #1: tjunittest-shared ...................................   Passed
+  1/332 Test   #1: tjunittest-shared ...................................   Passed
         Start   2: tjunittest-shared-alloc
-  2/331 Test   #2: tjunittest-shared-alloc .............................   Passed
+  2/332 Test   #2: tjunittest-shared-alloc .............................   Passed
         Start   3: tjunittest-shared-yuv
-  3/331 Test   #3: tjunittest-shared-yuv ...............................   Passed
+  3/332 Test   #3: tjunittest-shared-yuv ...............................   Passed
         Start   4: tjunittest-shared-yuv-alloc
-  4/331 Test   #4: tjunittest-shared-yuv-alloc .........................   Passed
+  4/332 Test   #4: tjunittest-shared-yuv-alloc .........................   Passed
         Start   5: tjunittest-shared-yuv-nopad
-  5/331 Test   #5: tjunittest-shared-yuv-nopad .........................   Passed
+  5/332 Test   #5: tjunittest-shared-yuv-nopad .........................   Passed
         Start   6: tjunittest-shared-lossless
-  6/331 Test   #6: tjunittest-shared-lossless ..........................   Passed
+  6/332 Test   #6: tjunittest-shared-lossless ..........................   Passed
         Start   7: tjunittest-shared-lossless-alloc
-  7/331 Test   #7: tjunittest-shared-lossless-alloc ....................   Passed
+  7/332 Test   #7: tjunittest-shared-lossless-alloc ....................   Passed
         Start   8: tjunittest-shared-bmp
-  8/331 Test   #8: tjunittest-shared-bmp ...............................   Passed
+  8/332 Test   #8: tjunittest-shared-bmp ...............................   Passed
         Start   9: tjunittest12-shared
-  9/331 Test   #9: tjunittest12-shared .................................   Passed
+  9/332 Test   #9: tjunittest12-shared .................................   Passed
         Start  10: tjunittest12-shared-alloc
- 10/331 Test  #10: tjunittest12-shared-alloc ...........................   Passed
-        Start  11: tjunittest12-shared-lossless
- 11/331 Test  #11: tjunittest12-shared-lossless ........................   Passed
-        Start  12: tjunittest12-shared-lossless-alloc
- 12/331 Test  #12: tjunittest12-shared-lossless-alloc ..................   Passed
-        Start  13: tjunittest12-shared-bmp
- 13/331 Test  #13: tjunittest12-shared-bmp .............................   Passed
-        Start  14: tjunittest2-shared-lossless
- 14/331 Test  #14: tjunittest2-shared-lossless .........................   Passed
-        Start  15: tjunittest2-shared-lossless-alloc
- 15/331 Test  #15: tjunittest2-shared-lossless-alloc ...................   Passed
-        Start  16: tjunittest2-shared-bmp
- 16/331 Test  #16: tjunittest2-shared-bmp ..............................   Passed
-        Start  17: tjunittest3-shared-lossless
- 17/331 Test  #17: tjunittest3-shared-lossless .........................   Passed
-        Start  18: tjunittest3-shared-lossless-alloc
- 18/331 Test  #18: tjunittest3-shared-lossless-alloc ...................   Passed
-        Start  19: tjunittest3-shared-bmp
- 19/331 Test  #19: tjunittest3-shared-bmp ..............................   Passed
-        Start  20: tjunittest4-shared-lossless
- 20/331 Test  #20: tjunittest4-shared-lossless .........................   Passed
-        Start  21: tjunittest4-shared-lossless-alloc
- 21/331 Test  #21: tjunittest4-shared-lossless-alloc ...................   Passed
-        Start  22: tjunittest4-shared-bmp
- 22/331 Test  #22: tjunittest4-shared-bmp ..............................   Passed
-        Start  23: tjunittest5-shared-lossless
- 23/331 Test  #23: tjunittest5-shared-lossless .........................   Passed
-        Start  24: tjunittest5-shared-lossless-alloc
- 24/331 Test  #24: tjunittest5-shared-lossless-alloc ...................   Passed
-        Start  25: tjunittest5-shared-bmp
- 25/331 Test  #25: tjunittest5-shared-bmp ..............................   Passed
-        Start  26: tjunittest6-shared-lossless
- 26/331 Test  #26: tjunittest6-shared-lossless .........................   Passed
-        Start  27: tjunittest6-shared-lossless-alloc
- 27/331 Test  #27: tjunittest6-shared-lossless-alloc ...................   Passed
-        Start  28: tjunittest6-shared-bmp
- 28/331 Test  #28: tjunittest6-shared-bmp ..............................   Passed
-        Start  29: tjunittest7-shared-lossless
- 29/331 Test  #29: tjunittest7-shared-lossless .........................   Passed
-        Start  30: tjunittest7-shared-lossless-alloc
- 30/331 Test  #30: tjunittest7-shared-lossless-alloc ...................   Passed
-        Start  31: tjunittest7-shared-bmp
- 31/331 Test  #31: tjunittest7-shared-bmp ..............................   Passed
-        Start  32: tjunittest9-shared-lossless
- 32/331 Test  #32: tjunittest9-shared-lossless .........................   Passed
-        Start  33: tjunittest9-shared-lossless-alloc
- 33/331 Test  #33: tjunittest9-shared-lossless-alloc ...................   Passed
-        Start  34: tjunittest9-shared-bmp
- 34/331 Test  #34: tjunittest9-shared-bmp ..............................   Passed
-        Start  35: tjunittest10-shared-lossless
- 35/331 Test  #35: tjunittest10-shared-lossless ........................   Passed
-        Start  36: tjunittest10-shared-lossless-alloc
- 36/331 Test  #36: tjunittest10-shared-lossless-alloc ..................   Passed
-        Start  37: tjunittest10-shared-bmp
- 37/331 Test  #37: tjunittest10-shared-bmp .............................   Passed
-        Start  38: tjunittest11-shared-lossless
- 38/331 Test  #38: tjunittest11-shared-lossless ........................   Passed
-        Start  39: tjunittest11-shared-lossless-alloc
- 39/331 Test  #39: tjunittest11-shared-lossless-alloc ..................   Passed
-        Start  40: tjunittest11-shared-bmp
- 40/331 Test  #40: tjunittest11-shared-bmp .............................   Passed
+ 10/332 Test  #10: tjunittest12-shared-alloc ...........................   Passed
+        Start  11: tjunittest2-shared-lossless
+ 11/332 Test  #11: tjunittest2-shared-lossless .........................   Passed
+        Start  12: tjunittest2-shared-lossless-alloc
+ 12/332 Test  #12: tjunittest2-shared-lossless-alloc ...................   Passed
+        Start  13: tjunittest2-shared-bmp
+ 13/332 Test  #13: tjunittest2-shared-bmp ..............................   Passed
+        Start  14: tjunittest3-shared-lossless
+ 14/332 Test  #14: tjunittest3-shared-lossless .........................   Passed
+        Start  15: tjunittest3-shared-lossless-alloc
+ 15/332 Test  #15: tjunittest3-shared-lossless-alloc ...................   Passed
+        Start  16: tjunittest3-shared-bmp
+ 16/332 Test  #16: tjunittest3-shared-bmp ..............................   Passed
+        Start  17: tjunittest4-shared-lossless
+ 17/332 Test  #17: tjunittest4-shared-lossless .........................   Passed
+        Start  18: tjunittest4-shared-lossless-alloc
+ 18/332 Test  #18: tjunittest4-shared-lossless-alloc ...................   Passed
+        Start  19: tjunittest4-shared-bmp
+ 19/332 Test  #19: tjunittest4-shared-bmp ..............................   Passed
+        Start  20: tjunittest5-shared-lossless
+ 20/332 Test  #20: tjunittest5-shared-lossless .........................   Passed
+        Start  21: tjunittest5-shared-lossless-alloc
+ 21/332 Test  #21: tjunittest5-shared-lossless-alloc ...................   Passed
+        Start  22: tjunittest5-shared-bmp
+ 22/332 Test  #22: tjunittest5-shared-bmp ..............................   Passed
+        Start  23: tjunittest6-shared-lossless
+ 23/332 Test  #23: tjunittest6-shared-lossless .........................   Passed
+        Start  24: tjunittest6-shared-lossless-alloc
+ 24/332 Test  #24: tjunittest6-shared-lossless-alloc ...................   Passed
+        Start  25: tjunittest6-shared-bmp
+ 25/332 Test  #25: tjunittest6-shared-bmp ..............................   Passed
+        Start  26: tjunittest7-shared-lossless
+ 26/332 Test  #26: tjunittest7-shared-lossless .........................   Passed
+        Start  27: tjunittest7-shared-lossless-alloc
+ 27/332 Test  #27: tjunittest7-shared-lossless-alloc ...................   Passed
+        Start  28: tjunittest7-shared-bmp
+ 28/332 Test  #28: tjunittest7-shared-bmp ..............................   Passed
+        Start  29: tjunittest9-shared-lossless
+ 29/332 Test  #29: tjunittest9-shared-lossless .........................   Passed
+        Start  30: tjunittest9-shared-lossless-alloc
+ 30/332 Test  #30: tjunittest9-shared-lossless-alloc ...................   Passed
+        Start  31: tjunittest9-shared-bmp
+ 31/332 Test  #31: tjunittest9-shared-bmp ..............................   Passed
+        Start  32: tjunittest10-shared-lossless
+ 32/332 Test  #32: tjunittest10-shared-lossless ........................   Passed
+        Start  33: tjunittest10-shared-lossless-alloc
+ 33/332 Test  #33: tjunittest10-shared-lossless-alloc ..................   Passed
+        Start  34: tjunittest10-shared-bmp
+ 34/332 Test  #34: tjunittest10-shared-bmp .............................   Passed
+        Start  35: tjunittest11-shared-lossless
+ 35/332 Test  #35: tjunittest11-shared-lossless ........................   Passed
+        Start  36: tjunittest11-shared-lossless-alloc
+ 36/332 Test  #36: tjunittest11-shared-lossless-alloc ..................   Passed
+        Start  37: tjunittest11-shared-bmp
+ 37/332 Test  #37: tjunittest11-shared-bmp .............................   Passed
+        Start  38: tjunittest12-shared-lossless
+ 38/332 Test  #38: tjunittest12-shared-lossless ........................   Passed
+        Start  39: tjunittest12-shared-lossless-alloc
+ 39/332 Test  #39: tjunittest12-shared-lossless-alloc ..................   Passed
+        Start  40: tjunittest12-shared-bmp
+ 40/332 Test  #40: tjunittest12-shared-bmp .............................   Passed
         Start  41: tjunittest13-shared-lossless
- 41/331 Test  #41: tjunittest13-shared-lossless ........................   Passed
+ 41/332 Test  #41: tjunittest13-shared-lossless ........................   Passed
         Start  42: tjunittest13-shared-lossless-alloc
- 42/331 Test  #42: tjunittest13-shared-lossless-alloc ..................   Passed
+ 42/332 Test  #42: tjunittest13-shared-lossless-alloc ..................   Passed
         Start  43: tjunittest13-shared-bmp
- 43/331 Test  #43: tjunittest13-shared-bmp .............................   Passed
+ 43/332 Test  #43: tjunittest13-shared-bmp .............................   Passed
         Start  44: tjunittest14-shared-lossless
- 44/331 Test  #44: tjunittest14-shared-lossless ........................   Passed
+ 44/332 Test  #44: tjunittest14-shared-lossless ........................   Passed
         Start  45: tjunittest14-shared-lossless-alloc
- 45/331 Test  #45: tjunittest14-shared-lossless-alloc ..................   Passed
+ 45/332 Test  #45: tjunittest14-shared-lossless-alloc ..................   Passed
         Start  46: tjunittest14-shared-bmp
- 46/331 Test  #46: tjunittest14-shared-bmp .............................   Passed
+ 46/332 Test  #46: tjunittest14-shared-bmp .............................   Passed
         Start  47: tjunittest15-shared-lossless
- 47/331 Test  #47: tjunittest15-shared-lossless ........................   Passed
+ 47/332 Test  #47: tjunittest15-shared-lossless ........................   Passed
         Start  48: tjunittest15-shared-lossless-alloc
- 48/331 Test  #48: tjunittest15-shared-lossless-alloc ..................   Passed
+ 48/332 Test  #48: tjunittest15-shared-lossless-alloc ..................   Passed
         Start  49: tjunittest15-shared-bmp
- 49/331 Test  #49: tjunittest15-shared-bmp .............................   Passed
+ 49/332 Test  #49: tjunittest15-shared-bmp .............................   Passed
         Start  50: tjunittest16-shared-lossless
- 50/331 Test  #50: tjunittest16-shared-lossless ........................   Passed
+ 50/332 Test  #50: tjunittest16-shared-lossless ........................   Passed
         Start  51: tjunittest16-shared-lossless-alloc
- 51/331 Test  #51: tjunittest16-shared-lossless-alloc ..................   Passed
+ 51/332 Test  #51: tjunittest16-shared-lossless-alloc ..................   Passed
         Start  52: tjunittest16-shared-bmp
- 52/331 Test  #52: tjunittest16-shared-bmp .............................   Passed
+ 52/332 Test  #52: tjunittest16-shared-bmp .............................   Passed
         Start  53: tjbench-shared-tile-cp
- 53/331 Test  #53: tjbench-shared-tile-cp ..............................   Passed
+ 53/332 Test  #53: tjbench-shared-tile-cp ..............................   Passed
         Start  54: tjbench-shared-tile
- 54/331 Test  #54: tjbench-shared-tile .................................   Passed
+ 54/332 Test  #54: tjbench-shared-tile .................................   Passed
         Start  55: tjbench-shared-tile-gray-8x8-cmp
- 55/331 Test  #55: tjbench-shared-tile-gray-8x8-cmp ....................   Passed
+ 55/332 Test  #55: tjbench-shared-tile-gray-8x8-cmp ....................   Passed
         Start  56: tjbench-shared-tile-420-8x8-cmp
- 56/331 Test  #56: tjbench-shared-tile-420-8x8-cmp .....................   Passed
+ 56/332 Test  #56: tjbench-shared-tile-420-8x8-cmp .....................   Passed
         Start  57: tjbench-shared-tile-422-8x8-cmp
- 57/331 Test  #57: tjbench-shared-tile-422-8x8-cmp .....................   Passed
+ 57/332 Test  #57: tjbench-shared-tile-422-8x8-cmp .....................   Passed
         Start  58: tjbench-shared-tile-444-8x8-cmp
- 58/331 Test  #58: tjbench-shared-tile-444-8x8-cmp .....................   Passed
+ 58/332 Test  #58: tjbench-shared-tile-444-8x8-cmp .....................   Passed
         Start  59: tjbench-shared-tile-gray-16x16-cmp
- 59/331 Test  #59: tjbench-shared-tile-gray-16x16-cmp ..................   Passed
+ 59/332 Test  #59: tjbench-shared-tile-gray-16x16-cmp ..................   Passed
         Start  60: tjbench-shared-tile-420-16x16-cmp
- 60/331 Test  #60: tjbench-shared-tile-420-16x16-cmp ...................   Passed
+ 60/332 Test  #60: tjbench-shared-tile-420-16x16-cmp ...................   Passed
         Start  61: tjbench-shared-tile-422-16x16-cmp
- 61/331 Test  #61: tjbench-shared-tile-422-16x16-cmp ...................   Passed
+ 61/332 Test  #61: tjbench-shared-tile-422-16x16-cmp ...................   Passed
         Start  62: tjbench-shared-tile-444-16x16-cmp
- 62/331 Test  #62: tjbench-shared-tile-444-16x16-cmp ...................   Passed
+ 62/332 Test  #62: tjbench-shared-tile-444-16x16-cmp ...................   Passed
         Start  63: tjbench-shared-tile-gray-32x32-cmp
- 63/331 Test  #63: tjbench-shared-tile-gray-32x32-cmp ..................   Passed
+ 63/332 Test  #63: tjbench-shared-tile-gray-32x32-cmp ..................   Passed
         Start  64: tjbench-shared-tile-420-32x32-cmp
- 64/331 Test  #64: tjbench-shared-tile-420-32x32-cmp ...................   Passed
+ 64/332 Test  #64: tjbench-shared-tile-420-32x32-cmp ...................   Passed
         Start  65: tjbench-shared-tile-422-32x32-cmp
- 65/331 Test  #65: tjbench-shared-tile-422-32x32-cmp ...................   Passed
+ 65/332 Test  #65: tjbench-shared-tile-422-32x32-cmp ...................   Passed
         Start  66: tjbench-shared-tile-444-32x32-cmp
- 66/331 Test  #66: tjbench-shared-tile-444-32x32-cmp ...................   Passed
+ 66/332 Test  #66: tjbench-shared-tile-444-32x32-cmp ...................   Passed
         Start  67: tjbench-shared-tile-gray-64x64-cmp
- 67/331 Test  #67: tjbench-shared-tile-gray-64x64-cmp ..................   Passed
+ 67/332 Test  #67: tjbench-shared-tile-gray-64x64-cmp ..................   Passed
         Start  68: tjbench-shared-tile-420-64x64-cmp
- 68/331 Test  #68: tjbench-shared-tile-420-64x64-cmp ...................   Passed
+ 68/332 Test  #68: tjbench-shared-tile-420-64x64-cmp ...................   Passed
         Start  69: tjbench-shared-tile-422-64x64-cmp
- 69/331 Test  #69: tjbench-shared-tile-422-64x64-cmp ...................   Passed
+ 69/332 Test  #69: tjbench-shared-tile-422-64x64-cmp ...................   Passed
         Start  70: tjbench-shared-tile-444-64x64-cmp
- 70/331 Test  #70: tjbench-shared-tile-444-64x64-cmp ...................   Passed
+ 70/332 Test  #70: tjbench-shared-tile-444-64x64-cmp ...................   Passed
         Start  71: tjbench-shared-tile-gray-128x128-cmp
- 71/331 Test  #71: tjbench-shared-tile-gray-128x128-cmp ................   Passed
+ 71/332 Test  #71: tjbench-shared-tile-gray-128x128-cmp ................   Passed
         Start  72: tjbench-shared-tile-420-128x128-cmp
- 72/331 Test  #72: tjbench-shared-tile-420-128x128-cmp .................   Passed
+ 72/332 Test  #72: tjbench-shared-tile-420-128x128-cmp .................   Passed
         Start  73: tjbench-shared-tile-422-128x128-cmp
- 73/331 Test  #73: tjbench-shared-tile-422-128x128-cmp .................   Passed
+ 73/332 Test  #73: tjbench-shared-tile-422-128x128-cmp .................   Passed
         Start  74: tjbench-shared-tile-444-128x128-cmp
- 74/331 Test  #74: tjbench-shared-tile-444-128x128-cmp .................   Passed
+ 74/332 Test  #74: tjbench-shared-tile-444-128x128-cmp .................   Passed
         Start  75: tjbench-shared-tilem-cp
- 75/331 Test  #75: tjbench-shared-tilem-cp .............................   Passed
+ 75/332 Test  #75: tjbench-shared-tilem-cp .............................   Passed
         Start  76: tjbench-shared-tilem
- 76/331 Test  #76: tjbench-shared-tilem ................................   Passed
+ 76/332 Test  #76: tjbench-shared-tilem ................................   Passed
         Start  77: tjbench-shared-tile-420m-8x8-cmp
- 77/331 Test  #77: tjbench-shared-tile-420m-8x8-cmp ....................   Passed
+ 77/332 Test  #77: tjbench-shared-tile-420m-8x8-cmp ....................   Passed
         Start  78: tjbench-shared-tile-422m-8x8-cmp
- 78/331 Test  #78: tjbench-shared-tile-422m-8x8-cmp ....................   Passed
+ 78/332 Test  #78: tjbench-shared-tile-422m-8x8-cmp ....................   Passed
         Start  79: tjbench-shared-tile-420m-16x16-cmp
- 79/331 Test  #79: tjbench-shared-tile-420m-16x16-cmp ..................   Passed
+ 79/332 Test  #79: tjbench-shared-tile-420m-16x16-cmp ..................   Passed
         Start  80: tjbench-shared-tile-422m-16x16-cmp
- 80/331 Test  #80: tjbench-shared-tile-422m-16x16-cmp ..................   Passed
+ 80/332 Test  #80: tjbench-shared-tile-422m-16x16-cmp ..................   Passed
         Start  81: tjbench-shared-tile-420m-32x32-cmp
- 81/331 Test  #81: tjbench-shared-tile-420m-32x32-cmp ..................   Passed
+ 81/332 Test  #81: tjbench-shared-tile-420m-32x32-cmp ..................   Passed
         Start  82: tjbench-shared-tile-422m-32x32-cmp
- 82/331 Test  #82: tjbench-shared-tile-422m-32x32-cmp ..................   Passed
+ 82/332 Test  #82: tjbench-shared-tile-422m-32x32-cmp ..................   Passed
         Start  83: tjbench-shared-tile-420m-64x64-cmp
- 83/331 Test  #83: tjbench-shared-tile-420m-64x64-cmp ..................   Passed
+ 83/332 Test  #83: tjbench-shared-tile-420m-64x64-cmp ..................   Passed
         Start  84: tjbench-shared-tile-422m-64x64-cmp
- 84/331 Test  #84: tjbench-shared-tile-422m-64x64-cmp ..................   Passed
+ 84/332 Test  #84: tjbench-shared-tile-422m-64x64-cmp ..................   Passed
         Start  85: tjbench-shared-tile-420m-128x128-cmp
- 85/331 Test  #85: tjbench-shared-tile-420m-128x128-cmp ................   Passed
+ 85/332 Test  #85: tjbench-shared-tile-420m-128x128-cmp ................   Passed
         Start  86: tjbench-shared-tile-422m-128x128-cmp
- 86/331 Test  #86: tjbench-shared-tile-422m-128x128-cmp ................   Passed
+ 86/332 Test  #86: tjbench-shared-tile-422m-128x128-cmp ................   Passed
         Start  87: tjbench12-shared-tile-cp
- 87/331 Test  #87: tjbench12-shared-tile-cp ............................   Passed
+ 87/332 Test  #87: tjbench12-shared-tile-cp ............................   Passed
         Start  88: tjbench12-shared-tile
- 88/331 Test  #88: tjbench12-shared-tile ...............................   Passed
+ 88/332 Test  #88: tjbench12-shared-tile ...............................   Passed
         Start  89: tjbench12-shared-tile-gray-8x8-cmp
- 89/331 Test  #89: tjbench12-shared-tile-gray-8x8-cmp ..................   Passed
+ 89/332 Test  #89: tjbench12-shared-tile-gray-8x8-cmp ..................   Passed
         Start  90: tjbench12-shared-tile-420-8x8-cmp
- 90/331 Test  #90: tjbench12-shared-tile-420-8x8-cmp ...................   Passed
+ 90/332 Test  #90: tjbench12-shared-tile-420-8x8-cmp ...................   Passed
         Start  91: tjbench12-shared-tile-422-8x8-cmp
- 91/331 Test  #91: tjbench12-shared-tile-422-8x8-cmp ...................   Passed
+ 91/332 Test  #91: tjbench12-shared-tile-422-8x8-cmp ...................   Passed
         Start  92: tjbench12-shared-tile-444-8x8-cmp
- 92/331 Test  #92: tjbench12-shared-tile-444-8x8-cmp ...................   Passed
+ 92/332 Test  #92: tjbench12-shared-tile-444-8x8-cmp ...................   Passed
         Start  93: tjbench12-shared-tile-gray-16x16-cmp
- 93/331 Test  #93: tjbench12-shared-tile-gray-16x16-cmp ................   Passed
+ 93/332 Test  #93: tjbench12-shared-tile-gray-16x16-cmp ................   Passed
         Start  94: tjbench12-shared-tile-420-16x16-cmp
- 94/331 Test  #94: tjbench12-shared-tile-420-16x16-cmp .................   Passed
+ 94/332 Test  #94: tjbench12-shared-tile-420-16x16-cmp .................   Passed
         Start  95: tjbench12-shared-tile-422-16x16-cmp
- 95/331 Test  #95: tjbench12-shared-tile-422-16x16-cmp .................   Passed
+ 95/332 Test  #95: tjbench12-shared-tile-422-16x16-cmp .................   Passed
         Start  96: tjbench12-shared-tile-444-16x16-cmp
- 96/331 Test  #96: tjbench12-shared-tile-444-16x16-cmp .................   Passed
+ 96/332 Test  #96: tjbench12-shared-tile-444-16x16-cmp .................   Passed
         Start  97: tjbench12-shared-tile-gray-32x32-cmp
- 97/331 Test  #97: tjbench12-shared-tile-gray-32x32-cmp ................   Passed
+ 97/332 Test  #97: tjbench12-shared-tile-gray-32x32-cmp ................   Passed
         Start  98: tjbench12-shared-tile-420-32x32-cmp
- 98/331 Test  #98: tjbench12-shared-tile-420-32x32-cmp .................   Passed
+ 98/332 Test  #98: tjbench12-shared-tile-420-32x32-cmp .................   Passed
         Start  99: tjbench12-shared-tile-422-32x32-cmp
- 99/331 Test  #99: tjbench12-shared-tile-422-32x32-cmp .................   Passed
+ 99/332 Test  #99: tjbench12-shared-tile-422-32x32-cmp .................   Passed
         Start 100: tjbench12-shared-tile-444-32x32-cmp
-100/331 Test #100: tjbench12-shared-tile-444-32x32-cmp .................   Passed
+100/332 Test #100: tjbench12-shared-tile-444-32x32-cmp .................   Passed
         Start 101: tjbench12-shared-tile-gray-64x64-cmp
-101/331 Test #101: tjbench12-shared-tile-gray-64x64-cmp ................   Passed
+101/332 Test #101: tjbench12-shared-tile-gray-64x64-cmp ................   Passed
         Start 102: tjbench12-shared-tile-420-64x64-cmp
-102/331 Test #102: tjbench12-shared-tile-420-64x64-cmp .................   Passed
+102/332 Test #102: tjbench12-shared-tile-420-64x64-cmp .................   Passed
         Start 103: tjbench12-shared-tile-422-64x64-cmp
-103/331 Test #103: tjbench12-shared-tile-422-64x64-cmp .................   Passed
+103/332 Test #103: tjbench12-shared-tile-422-64x64-cmp .................   Passed
         Start 104: tjbench12-shared-tile-444-64x64-cmp
-104/331 Test #104: tjbench12-shared-tile-444-64x64-cmp .................   Passed
+104/332 Test #104: tjbench12-shared-tile-444-64x64-cmp .................   Passed
         Start 105: tjbench12-shared-tile-gray-128x128-cmp
-105/331 Test #105: tjbench12-shared-tile-gray-128x128-cmp ..............   Passed
+105/332 Test #105: tjbench12-shared-tile-gray-128x128-cmp ..............   Passed
         Start 106: tjbench12-shared-tile-420-128x128-cmp
-106/331 Test #106: tjbench12-shared-tile-420-128x128-cmp ...............   Passed
+106/332 Test #106: tjbench12-shared-tile-420-128x128-cmp ...............   Passed
         Start 107: tjbench12-shared-tile-422-128x128-cmp
-107/331 Test #107: tjbench12-shared-tile-422-128x128-cmp ...............   Passed
+107/332 Test #107: tjbench12-shared-tile-422-128x128-cmp ...............   Passed
         Start 108: tjbench12-shared-tile-444-128x128-cmp
-108/331 Test #108: tjbench12-shared-tile-444-128x128-cmp ...............   Passed
+108/332 Test #108: tjbench12-shared-tile-444-128x128-cmp ...............   Passed
         Start 109: tjbench12-shared-tilem-cp
-109/331 Test #109: tjbench12-shared-tilem-cp ...........................   Passed
+109/332 Test #109: tjbench12-shared-tilem-cp ...........................   Passed
         Start 110: tjbench12-shared-tilem
-110/331 Test #110: tjbench12-shared-tilem ..............................   Passed
+110/332 Test #110: tjbench12-shared-tilem ..............................   Passed
         Start 111: tjbench12-shared-tile-420m-8x8-cmp
-111/331 Test #111: tjbench12-shared-tile-420m-8x8-cmp ..................   Passed
+111/332 Test #111: tjbench12-shared-tile-420m-8x8-cmp ..................   Passed
         Start 112: tjbench12-shared-tile-422m-8x8-cmp
-112/331 Test #112: tjbench12-shared-tile-422m-8x8-cmp ..................   Passed
+112/332 Test #112: tjbench12-shared-tile-422m-8x8-cmp ..................   Passed
         Start 113: tjbench12-shared-tile-420m-16x16-cmp
-113/331 Test #113: tjbench12-shared-tile-420m-16x16-cmp ................   Passed
+113/332 Test #113: tjbench12-shared-tile-420m-16x16-cmp ................   Passed
         Start 114: tjbench12-shared-tile-422m-16x16-cmp
-114/331 Test #114: tjbench12-shared-tile-422m-16x16-cmp ................   Passed
+114/332 Test #114: tjbench12-shared-tile-422m-16x16-cmp ................   Passed
         Start 115: tjbench12-shared-tile-420m-32x32-cmp
-115/331 Test #115: tjbench12-shared-tile-420m-32x32-cmp ................   Passed
+115/332 Test #115: tjbench12-shared-tile-420m-32x32-cmp ................   Passed
         Start 116: tjbench12-shared-tile-422m-32x32-cmp
-116/331 Test #116: tjbench12-shared-tile-422m-32x32-cmp ................   Passed
+116/332 Test #116: tjbench12-shared-tile-422m-32x32-cmp ................   Passed
         Start 117: tjbench12-shared-tile-420m-64x64-cmp
-117/331 Test #117: tjbench12-shared-tile-420m-64x64-cmp ................   Passed
+117/332 Test #117: tjbench12-shared-tile-420m-64x64-cmp ................   Passed
         Start 118: tjbench12-shared-tile-422m-64x64-cmp
-118/331 Test #118: tjbench12-shared-tile-422m-64x64-cmp ................   Passed
+118/332 Test #118: tjbench12-shared-tile-422m-64x64-cmp ................   Passed
         Start 119: tjbench12-shared-tile-420m-128x128-cmp
-119/331 Test #119: tjbench12-shared-tile-420m-128x128-cmp ..............   Passed
+119/332 Test #119: tjbench12-shared-tile-420m-128x128-cmp ..............   Passed
         Start 120: tjbench12-shared-tile-422m-128x128-cmp
-120/331 Test #120: tjbench12-shared-tile-422m-128x128-cmp ..............   Passed
-        Start 121: cjpeg16-shared-lossless
-121/331 Test #121: cjpeg16-shared-lossless .............................   Passed
-        Start 122: cjpeg16-shared-lossless-cmp
-122/331 Test #122: cjpeg16-shared-lossless-cmp .........................   Passed
-        Start 123: djpeg16-shared-lossless
-123/331 Test #123: djpeg16-shared-lossless .............................   Passed
-        Start 124: djpeg16-shared-lossless-cmp
-124/331 Test #124: djpeg16-shared-lossless-cmp .........................   Passed
-        Start 125: cjpeg-shared-rgb-islow
-125/331 Test #125: cjpeg-shared-rgb-islow ..............................   Passed
-        Start 126: cjpeg-shared-rgb-islow-cmp
-126/331 Test #126: cjpeg-shared-rgb-islow-cmp ..........................   Passed
-        Start 127: djpeg-shared-rgb-islow
-127/331 Test #127: djpeg-shared-rgb-islow ..............................   Passed
-        Start 128: djpeg-shared-rgb-islow-cmp
-128/331 Test #128: djpeg-shared-rgb-islow-cmp ..........................   Passed
-        Start 129: djpeg-shared-rgb-islow-icc-cmp
-129/331 Test #129: djpeg-shared-rgb-islow-icc-cmp ......................   Passed
-        Start 130: jpegtran-shared-icc
-130/331 Test #130: jpegtran-shared-icc .................................   Passed
-        Start 131: jpegtran-shared-icc-cmp
-131/331 Test #131: jpegtran-shared-icc-cmp .............................   Passed
-        Start 132: djpeg-shared-rgb-islow-565
-132/331 Test #132: djpeg-shared-rgb-islow-565 ..........................   Passed
-        Start 133: djpeg-shared-rgb-islow-565-cmp
-133/331 Test #133: djpeg-shared-rgb-islow-565-cmp ......................   Passed
-        Start 134: djpeg-shared-rgb-islow-565D
-134/331 Test #134: djpeg-shared-rgb-islow-565D .........................   Passed
-        Start 135: djpeg-shared-rgb-islow-565D-cmp
-135/331 Test #135: djpeg-shared-rgb-islow-565D-cmp .....................   Passed
-        Start 136: cjpeg-shared-422-ifast-opt
-136/331 Test #136: cjpeg-shared-422-ifast-opt ..........................   Passed
-        Start 137: cjpeg-shared-422-ifast-opt-cmp
-137/331 Test #137: cjpeg-shared-422-ifast-opt-cmp ......................   Passed
-        Start 138: djpeg-shared-422-ifast
-138/331 Test #138: djpeg-shared-422-ifast ..............................   Passed
-        Start 139: djpeg-shared-422-ifast-cmp
-139/331 Test #139: djpeg-shared-422-ifast-cmp ..........................   Passed
-        Start 140: cjpeg-shared-440-islow
-140/331 Test #140: cjpeg-shared-440-islow ..............................   Passed
-        Start 141: cjpeg-shared-440-islow-cmp
-141/331 Test #141: cjpeg-shared-440-islow-cmp ..........................   Passed
-        Start 142: djpeg-shared-440-islow
-142/331 Test #142: djpeg-shared-440-islow ..............................   Passed
-        Start 143: djpeg-shared-440-islow-cmp
-143/331 Test #143: djpeg-shared-440-islow-cmp ..........................   Passed
-        Start 144: djpeg-shared-422m-ifast
-144/331 Test #144: djpeg-shared-422m-ifast .............................   Passed
-        Start 145: djpeg-shared-422m-ifast-cmp
-145/331 Test #145: djpeg-shared-422m-ifast-cmp .........................   Passed
-        Start 146: djpeg-shared-422m-ifast-565
-146/331 Test #146: djpeg-shared-422m-ifast-565 .........................   Passed
-        Start 147: djpeg-shared-422m-ifast-565-cmp
-147/331 Test #147: djpeg-shared-422m-ifast-565-cmp .....................   Passed
-        Start 148: djpeg-shared-422m-ifast-565D
-148/331 Test #148: djpeg-shared-422m-ifast-565D ........................   Passed
-        Start 149: djpeg-shared-422m-ifast-565D-cmp
-149/331 Test #149: djpeg-shared-422m-ifast-565D-cmp ....................   Passed
-        Start 150: cjpeg-shared-420-q100-ifast-prog
-150/331 Test #150: cjpeg-shared-420-q100-ifast-prog ....................   Passed
-        Start 151: cjpeg-shared-420-q100-ifast-prog-cmp
-151/331 Test #151: cjpeg-shared-420-q100-ifast-prog-cmp ................   Passed
-        Start 152: djpeg-shared-420-q100-ifast-prog
-152/331 Test #152: djpeg-shared-420-q100-ifast-prog ....................   Passed
-        Start 153: djpeg-shared-420-q100-ifast-prog-cmp
-153/331 Test #153: djpeg-shared-420-q100-ifast-prog-cmp ................   Passed
-        Start 154: djpeg-shared-420m-q100-ifast-prog
-154/331 Test #154: djpeg-shared-420m-q100-ifast-prog ...................   Passed
-        Start 155: djpeg-shared-420m-q100-ifast-prog-cmp
-155/331 Test #155: djpeg-shared-420m-q100-ifast-prog-cmp ...............   Passed
-        Start 156: cjpeg-shared-gray-islow
-156/331 Test #156: cjpeg-shared-gray-islow .............................   Passed
-        Start 157: cjpeg-shared-gray-islow-cmp
-157/331 Test #157: cjpeg-shared-gray-islow-cmp .........................   Passed
-        Start 158: djpeg-shared-gray-islow
-158/331 Test #158: djpeg-shared-gray-islow .............................   Passed
-        Start 159: djpeg-shared-gray-islow-cmp
-159/331 Test #159: djpeg-shared-gray-islow-cmp .........................   Passed
-        Start 160: djpeg-shared-gray-islow-rgb
-160/331 Test #160: djpeg-shared-gray-islow-rgb .........................   Passed
-        Start 161: djpeg-shared-gray-islow-rgb-cmp
-161/331 Test #161: djpeg-shared-gray-islow-rgb-cmp .....................   Passed
-        Start 162: djpeg-shared-gray-islow-565
-162/331 Test #162: djpeg-shared-gray-islow-565 .........................   Passed
-        Start 163: djpeg-shared-gray-islow-565-cmp
-163/331 Test #163: djpeg-shared-gray-islow-565-cmp .....................   Passed
-        Start 164: djpeg-shared-gray-islow-565D
-164/331 Test #164: djpeg-shared-gray-islow-565D ........................   Passed
-        Start 165: djpeg-shared-gray-islow-565D-cmp
-165/331 Test #165: djpeg-shared-gray-islow-565D-cmp ....................   Passed
-        Start 166: cjpeg-shared-420s-ifast-opt
-166/331 Test #166: cjpeg-shared-420s-ifast-opt .........................   Passed
-        Start 167: cjpeg-shared-420s-ifast-opt-cmp
-167/331 Test #167: cjpeg-shared-420s-ifast-opt-cmp .....................   Passed
-        Start 168: cjpeg-shared-3x2-float-prog
-168/331 Test #168: cjpeg-shared-3x2-float-prog .........................   Passed
-        Start 169: cjpeg-shared-3x2-float-prog-cmp
-169/331 Test #169: cjpeg-shared-3x2-float-prog-cmp .....................   Passed
-        Start 170: djpeg-shared-3x2-float-prog
-170/331 Test #170: djpeg-shared-3x2-float-prog .........................   Passed
-        Start 171: djpeg-shared-3x2-float-prog-cmp
-171/331 Test #171: djpeg-shared-3x2-float-prog-cmp .....................   Passed
-        Start 172: cjpeg-shared-3x2-ifast-prog
-172/331 Test #172: cjpeg-shared-3x2-ifast-prog .........................   Passed
-        Start 173: cjpeg-shared-3x2-ifast-prog-cmp
-173/331 Test #173: cjpeg-shared-3x2-ifast-prog-cmp .....................   Passed
-        Start 174: djpeg-shared-3x2-ifast-prog
-174/331 Test #174: djpeg-shared-3x2-ifast-prog .........................   Passed
-        Start 175: djpeg-shared-3x2-ifast-prog-cmp
-175/331 Test #175: djpeg-shared-3x2-ifast-prog-cmp .....................   Passed
-        Start 176: cjpeg-shared-420-islow-ari
-176/331 Test #176: cjpeg-shared-420-islow-ari ..........................   Passed
-        Start 177: cjpeg-shared-420-islow-ari-cmp
-177/331 Test #177: cjpeg-shared-420-islow-ari-cmp ......................   Passed
-        Start 178: jpegtran-shared-420-islow-ari
-178/331 Test #178: jpegtran-shared-420-islow-ari .......................   Passed
-        Start 179: jpegtran-shared-420-islow-ari-cmp
-179/331 Test #179: jpegtran-shared-420-islow-ari-cmp ...................   Passed
-        Start 180: cjpeg-shared-444-islow-progari
-180/331 Test #180: cjpeg-shared-444-islow-progari ......................   Passed
-        Start 181: cjpeg-shared-444-islow-progari-cmp
-181/331 Test #181: cjpeg-shared-444-islow-progari-cmp ..................   Passed
-        Start 182: djpeg-shared-420m-ifast-ari
-182/331 Test #182: djpeg-shared-420m-ifast-ari .........................   Passed
-        Start 183: djpeg-shared-420m-ifast-ari-cmp
-183/331 Test #183: djpeg-shared-420m-ifast-ari-cmp .....................   Passed
-        Start 184: jpegtran-shared-420-islow
-184/331 Test #184: jpegtran-shared-420-islow ...........................   Passed
-        Start 185: jpegtran-shared-420-islow-cmp
-185/331 Test #185: jpegtran-shared-420-islow-cmp .......................   Passed
-        Start 186: djpeg-shared-420m-islow-2_1
-186/331 Test #186: djpeg-shared-420m-islow-2_1 .........................   Passed
-        Start 187: djpeg-shared-420m-islow-2_1-cmp
-187/331 Test #187: djpeg-shared-420m-islow-2_1-cmp .....................   Passed
-        Start 188: djpeg-shared-420m-islow-15_8
-188/331 Test #188: djpeg-shared-420m-islow-15_8 ........................   Passed
-        Start 189: djpeg-shared-420m-islow-15_8-cmp
-189/331 Test #189: djpeg-shared-420m-islow-15_8-cmp ....................   Passed
-        Start 190: djpeg-shared-420m-islow-13_8
-190/331 Test #190: djpeg-shared-420m-islow-13_8 ........................   Passed
-        Start 191: djpeg-shared-420m-islow-13_8-cmp
-191/331 Test #191: djpeg-shared-420m-islow-13_8-cmp ....................   Passed
-        Start 192: djpeg-shared-420m-islow-11_8
-192/331 Test #192: djpeg-shared-420m-islow-11_8 ........................   Passed
-        Start 193: djpeg-shared-420m-islow-11_8-cmp
-193/331 Test #193: djpeg-shared-420m-islow-11_8-cmp ....................   Passed
-        Start 194: djpeg-shared-420m-islow-9_8
-194/331 Test #194: djpeg-shared-420m-islow-9_8 .........................   Passed
-        Start 195: djpeg-shared-420m-islow-9_8-cmp
-195/331 Test #195: djpeg-shared-420m-islow-9_8-cmp .....................   Passed
-        Start 196: djpeg-shared-420m-islow-7_8
-196/331 Test #196: djpeg-shared-420m-islow-7_8 .........................   Passed
-        Start 197: djpeg-shared-420m-islow-7_8-cmp
-197/331 Test #197: djpeg-shared-420m-islow-7_8-cmp .....................   Passed
-        Start 198: djpeg-shared-420m-islow-3_4
-198/331 Test #198: djpeg-shared-420m-islow-3_4 .........................   Passed
-        Start 199: djpeg-shared-420m-islow-3_4-cmp
-199/331 Test #199: djpeg-shared-420m-islow-3_4-cmp .....................   Passed
-        Start 200: djpeg-shared-420m-islow-5_8
-200/331 Test #200: djpeg-shared-420m-islow-5_8 .........................   Passed
-        Start 201: djpeg-shared-420m-islow-5_8-cmp
-201/331 Test #201: djpeg-shared-420m-islow-5_8-cmp .....................   Passed
-        Start 202: djpeg-shared-420m-islow-1_2
-202/331 Test #202: djpeg-shared-420m-islow-1_2 .........................   Passed
-        Start 203: djpeg-shared-420m-islow-1_2-cmp
-203/331 Test #203: djpeg-shared-420m-islow-1_2-cmp .....................   Passed
-        Start 204: djpeg-shared-420m-islow-3_8
-204/331 Test #204: djpeg-shared-420m-islow-3_8 .........................   Passed
-        Start 205: djpeg-shared-420m-islow-3_8-cmp
-205/331 Test #205: djpeg-shared-420m-islow-3_8-cmp .....................   Passed
-        Start 206: djpeg-shared-420m-islow-1_4
-206/331 Test #206: djpeg-shared-420m-islow-1_4 .........................   Passed
-        Start 207: djpeg-shared-420m-islow-1_4-cmp
-207/331 Test #207: djpeg-shared-420m-islow-1_4-cmp .....................   Passed
-        Start 208: djpeg-shared-420m-islow-1_8
-208/331 Test #208: djpeg-shared-420m-islow-1_8 .........................   Passed
-        Start 209: djpeg-shared-420m-islow-1_8-cmp
-209/331 Test #209: djpeg-shared-420m-islow-1_8-cmp .....................   Passed
-        Start 210: djpeg-shared-420-islow-256
-210/331 Test #210: djpeg-shared-420-islow-256 ..........................   Passed
-        Start 211: djpeg-shared-420-islow-256-cmp
-211/331 Test #211: djpeg-shared-420-islow-256-cmp ......................   Passed
-        Start 212: djpeg-shared-420-islow-565
-212/331 Test #212: djpeg-shared-420-islow-565 ..........................   Passed
-        Start 213: djpeg-shared-420-islow-565-cmp
-213/331 Test #213: djpeg-shared-420-islow-565-cmp ......................   Passed
-        Start 214: djpeg-shared-420-islow-565D
-214/331 Test #214: djpeg-shared-420-islow-565D .........................   Passed
-        Start 215: djpeg-shared-420-islow-565D-cmp
-215/331 Test #215: djpeg-shared-420-islow-565D-cmp .....................   Passed
-        Start 216: djpeg-shared-420m-islow-565
-216/331 Test #216: djpeg-shared-420m-islow-565 .........................   Passed
-        Start 217: djpeg-shared-420m-islow-565-cmp
-217/331 Test #217: djpeg-shared-420m-islow-565-cmp .....................   Passed
-        Start 218: djpeg-shared-420m-islow-565D
-218/331 Test #218: djpeg-shared-420m-islow-565D ........................   Passed
-        Start 219: djpeg-shared-420m-islow-565D-cmp
-219/331 Test #219: djpeg-shared-420m-islow-565D-cmp ....................   Passed
-        Start 220: cjpeg-shared-lossless
-220/331 Test #220: cjpeg-shared-lossless ...............................   Passed
-        Start 221: cjpeg-shared-lossless-cmp
-221/331 Test #221: cjpeg-shared-lossless-cmp ...........................   Passed
-        Start 222: djpeg-shared-lossless
-222/331 Test #222: djpeg-shared-lossless ...............................   Passed
-        Start 223: djpeg-shared-lossless-cmp
-223/331 Test #223: djpeg-shared-lossless-cmp ...........................   Passed
-        Start 224: djpeg-shared-420-islow-skip15_31
-224/331 Test #224: djpeg-shared-420-islow-skip15_31 ....................   Passed
-        Start 225: djpeg-shared-420-islow-skip15_31-cmp
-225/331 Test #225: djpeg-shared-420-islow-skip15_31-cmp ................   Passed
-        Start 226: djpeg-shared-420-islow-ari-skip16_139
-226/331 Test #226: djpeg-shared-420-islow-ari-skip16_139 ...............   Passed
-        Start 227: djpeg-shared-420-islow-ari-skip16_139-cmp
-227/331 Test #227: djpeg-shared-420-islow-ari-skip16_139-cmp ...........   Passed
-        Start 228: cjpeg-shared-420-islow-prog
-228/331 Test #228: cjpeg-shared-420-islow-prog .........................   Passed
-        Start 229: djpeg-shared-420-islow-prog-crop62x62_71_71
-229/331 Test #229: djpeg-shared-420-islow-prog-crop62x62_71_71 .........   Passed
-        Start 230: djpeg-shared-420-islow-prog-crop62x62_71_71-cmp
-230/331 Test #230: djpeg-shared-420-islow-prog-crop62x62_71_71-cmp .....   Passed
-        Start 231: djpeg-shared-420-islow-ari-crop53x53_4_4
-231/331 Test #231: djpeg-shared-420-islow-ari-crop53x53_4_4 ............   Passed
-        Start 232: djpeg-shared-420-islow-ari-crop53x53_4_4-cmp
-232/331 Test #232: djpeg-shared-420-islow-ari-crop53x53_4_4-cmp ........   Passed
-        Start 233: cjpeg-shared-444-islow
-233/331 Test #233: cjpeg-shared-444-islow ..............................   Passed
-        Start 234: djpeg-shared-444-islow-skip1_6
-234/331 Test #234: djpeg-shared-444-islow-skip1_6 ......................   Passed
-        Start 235: djpeg-shared-444-islow-skip1_6-cmp
-235/331 Test #235: djpeg-shared-444-islow-skip1_6-cmp ..................   Passed
-        Start 236: cjpeg-shared-444-islow-prog
-236/331 Test #236: cjpeg-shared-444-islow-prog .........................   Passed
-        Start 237: djpeg-shared-444-islow-prog-crop98x98_13_13
-237/331 Test #237: djpeg-shared-444-islow-prog-crop98x98_13_13 .........   Passed
-        Start 238: djpeg-shared-444-islow-prog-crop98x98_13_13-cmp
-238/331 Test #238: djpeg-shared-444-islow-prog-crop98x98_13_13-cmp .....   Passed
-        Start 239: cjpeg-shared-444-islow-ari
-239/331 Test #239: cjpeg-shared-444-islow-ari ..........................   Passed
-        Start 240: djpeg-shared-444-islow-ari-crop37x37_0_0
-240/331 Test #240: djpeg-shared-444-islow-ari-crop37x37_0_0 ............   Passed
-        Start 241: djpeg-shared-444-islow-ari-crop37x37_0_0-cmp
-241/331 Test #241: djpeg-shared-444-islow-ari-crop37x37_0_0-cmp ........   Passed
-        Start 242: jpegtran-shared-crop
-242/331 Test #242: jpegtran-shared-crop ................................   Passed
-        Start 243: jpegtran-shared-crop-cmp
-243/331 Test #243: jpegtran-shared-crop-cmp ............................   Passed
-        Start 244: example-8bit-shared-compress
-244/331 Test #244: example-8bit-shared-compress ........................   Passed
-        Start 245: example-8bit-shared-compress-cmp
-245/331 Test #245: example-8bit-shared-compress-cmp ....................   Passed
-        Start 246: example-8bit-shared-decompress
-246/331 Test #246: example-8bit-shared-decompress ......................   Passed
-        Start 247: example-8bit-shared-decompress-cmp
-247/331 Test #247: example-8bit-shared-decompress-cmp ..................   Passed
-        Start 248: cjpeg12-shared-rgb-islow
-248/331 Test #248: cjpeg12-shared-rgb-islow ............................   Passed
-        Start 249: cjpeg12-shared-rgb-islow-cmp
-249/331 Test #249: cjpeg12-shared-rgb-islow-cmp ........................   Passed
-        Start 250: djpeg12-shared-rgb-islow
-250/331 Test #250: djpeg12-shared-rgb-islow ............................   Passed
-        Start 251: djpeg12-shared-rgb-islow-cmp
-251/331 Test #251: djpeg12-shared-rgb-islow-cmp ........................   Passed
-        Start 252: djpeg12-shared-rgb-islow-icc-cmp
-252/331 Test #252: djpeg12-shared-rgb-islow-icc-cmp ....................   Passed
-        Start 253: jpegtran12-shared-icc
-253/331 Test #253: jpegtran12-shared-icc ...............................   Passed
-        Start 254: jpegtran12-shared-icc-cmp
-254/331 Test #254: jpegtran12-shared-icc-cmp ...........................   Passed
-        Start 255: cjpeg12-shared-422-ifast-opt
-255/331 Test #255: cjpeg12-shared-422-ifast-opt ........................   Passed
-        Start 256: cjpeg12-shared-422-ifast-opt-cmp
-256/331 Test #256: cjpeg12-shared-422-ifast-opt-cmp ....................   Passed
-        Start 257: djpeg12-shared-422-ifast
-257/331 Test #257: djpeg12-shared-422-ifast ............................   Passed
-        Start 258: djpeg12-shared-422-ifast-cmp
-258/331 Test #258: djpeg12-shared-422-ifast-cmp ........................   Passed
-        Start 259: cjpeg12-shared-440-islow
-259/331 Test #259: cjpeg12-shared-440-islow ............................   Passed
-        Start 260: cjpeg12-shared-440-islow-cmp
-260/331 Test #260: cjpeg12-shared-440-islow-cmp ........................   Passed
-        Start 261: djpeg12-shared-440-islow
-261/331 Test #261: djpeg12-shared-440-islow ............................   Passed
-        Start 262: djpeg12-shared-440-islow-cmp
-262/331 Test #262: djpeg12-shared-440-islow-cmp ........................   Passed
-        Start 263: djpeg12-shared-422m-ifast
-263/331 Test #263: djpeg12-shared-422m-ifast ...........................   Passed
-        Start 264: djpeg12-shared-422m-ifast-cmp
-264/331 Test #264: djpeg12-shared-422m-ifast-cmp .......................   Passed
-        Start 265: cjpeg12-shared-420-q100-ifast-prog
-265/331 Test #265: cjpeg12-shared-420-q100-ifast-prog ..................   Passed
-        Start 266: cjpeg12-shared-420-q100-ifast-prog-cmp
-266/331 Test #266: cjpeg12-shared-420-q100-ifast-prog-cmp ..............   Passed
-        Start 267: djpeg12-shared-420-q100-ifast-prog
-267/331 Test #267: djpeg12-shared-420-q100-ifast-prog ..................   Passed
-        Start 268: djpeg12-shared-420-q100-ifast-prog-cmp
-268/331 Test #268: djpeg12-shared-420-q100-ifast-prog-cmp ..............   Passed
-        Start 269: djpeg12-shared-420m-q100-ifast-prog
-269/331 Test #269: djpeg12-shared-420m-q100-ifast-prog .................   Passed
-        Start 270: djpeg12-shared-420m-q100-ifast-prog-cmp
-270/331 Test #270: djpeg12-shared-420m-q100-ifast-prog-cmp .............   Passed
-        Start 271: cjpeg12-shared-gray-islow
-271/331 Test #271: cjpeg12-shared-gray-islow ...........................   Passed
-        Start 272: cjpeg12-shared-gray-islow-cmp
-272/331 Test #272: cjpeg12-shared-gray-islow-cmp .......................   Passed
-        Start 273: djpeg12-shared-gray-islow
-273/331 Test #273: djpeg12-shared-gray-islow ...........................   Passed
-        Start 274: djpeg12-shared-gray-islow-cmp
-274/331 Test #274: djpeg12-shared-gray-islow-cmp .......................   Passed
-        Start 275: djpeg12-shared-gray-islow-rgb
-275/331 Test #275: djpeg12-shared-gray-islow-rgb .......................   Passed
-        Start 276: djpeg12-shared-gray-islow-rgb-cmp
-276/331 Test #276: djpeg12-shared-gray-islow-rgb-cmp ...................   Passed
-        Start 277: cjpeg12-shared-420s-ifast-opt
-277/331 Test #277: cjpeg12-shared-420s-ifast-opt .......................   Passed
-        Start 278: cjpeg12-shared-420s-ifast-opt-cmp
-278/331 Test #278: cjpeg12-shared-420s-ifast-opt-cmp ...................   Passed
-        Start 279: cjpeg12-shared-3x2-float-prog
-279/331 Test #279: cjpeg12-shared-3x2-float-prog .......................   Passed
-        Start 280: cjpeg12-shared-3x2-float-prog-cmp
-280/331 Test #280: cjpeg12-shared-3x2-float-prog-cmp ...................   Passed
-        Start 281: djpeg12-shared-3x2-float-prog
-281/331 Test #281: djpeg12-shared-3x2-float-prog .......................   Passed
-        Start 282: djpeg12-shared-3x2-float-prog-cmp
-282/331 Test #282: djpeg12-shared-3x2-float-prog-cmp ...................   Passed
-        Start 283: cjpeg12-shared-3x2-ifast-prog
-283/331 Test #283: cjpeg12-shared-3x2-ifast-prog .......................   Passed
-        Start 284: cjpeg12-shared-3x2-ifast-prog-cmp
-284/331 Test #284: cjpeg12-shared-3x2-ifast-prog-cmp ...................   Passed
-        Start 285: djpeg12-shared-3x2-ifast-prog
-285/331 Test #285: djpeg12-shared-3x2-ifast-prog .......................   Passed
-        Start 286: djpeg12-shared-3x2-ifast-prog-cmp
-286/331 Test #286: djpeg12-shared-3x2-ifast-prog-cmp ...................   Passed
-        Start 287: djpeg12-shared-420m-islow-2_1
-287/331 Test #287: djpeg12-shared-420m-islow-2_1 .......................   Passed
-        Start 288: djpeg12-shared-420m-islow-2_1-cmp
-288/331 Test #288: djpeg12-shared-420m-islow-2_1-cmp ...................   Passed
-        Start 289: djpeg12-shared-420m-islow-15_8
-289/331 Test #289: djpeg12-shared-420m-islow-15_8 ......................   Passed
-        Start 290: djpeg12-shared-420m-islow-15_8-cmp
-290/331 Test #290: djpeg12-shared-420m-islow-15_8-cmp ..................   Passed
-        Start 291: djpeg12-shared-420m-islow-13_8
-291/331 Test #291: djpeg12-shared-420m-islow-13_8 ......................   Passed
-        Start 292: djpeg12-shared-420m-islow-13_8-cmp
-292/331 Test #292: djpeg12-shared-420m-islow-13_8-cmp ..................   Passed
-        Start 293: djpeg12-shared-420m-islow-11_8
-293/331 Test #293: djpeg12-shared-420m-islow-11_8 ......................   Passed
-        Start 294: djpeg12-shared-420m-islow-11_8-cmp
-294/331 Test #294: djpeg12-shared-420m-islow-11_8-cmp ..................   Passed
-        Start 295: djpeg12-shared-420m-islow-9_8
-295/331 Test #295: djpeg12-shared-420m-islow-9_8 .......................   Passed
-        Start 296: djpeg12-shared-420m-islow-9_8-cmp
-296/331 Test #296: djpeg12-shared-420m-islow-9_8-cmp ...................   Passed
-        Start 297: djpeg12-shared-420m-islow-7_8
-297/331 Test #297: djpeg12-shared-420m-islow-7_8 .......................   Passed
-        Start 298: djpeg12-shared-420m-islow-7_8-cmp
-298/331 Test #298: djpeg12-shared-420m-islow-7_8-cmp ...................   Passed
-        Start 299: djpeg12-shared-420m-islow-3_4
-299/331 Test #299: djpeg12-shared-420m-islow-3_4 .......................   Passed
-        Start 300: djpeg12-shared-420m-islow-3_4-cmp
-300/331 Test #300: djpeg12-shared-420m-islow-3_4-cmp ...................   Passed
-        Start 301: djpeg12-shared-420m-islow-5_8
-301/331 Test #301: djpeg12-shared-420m-islow-5_8 .......................   Passed
-        Start 302: djpeg12-shared-420m-islow-5_8-cmp
-302/331 Test #302: djpeg12-shared-420m-islow-5_8-cmp ...................   Passed
-        Start 303: djpeg12-shared-420m-islow-1_2
-303/331 Test #303: djpeg12-shared-420m-islow-1_2 .......................   Passed
-        Start 304: djpeg12-shared-420m-islow-1_2-cmp
-304/331 Test #304: djpeg12-shared-420m-islow-1_2-cmp ...................   Passed
-        Start 305: djpeg12-shared-420m-islow-3_8
-305/331 Test #305: djpeg12-shared-420m-islow-3_8 .......................   Passed
-        Start 306: djpeg12-shared-420m-islow-3_8-cmp
-306/331 Test #306: djpeg12-shared-420m-islow-3_8-cmp ...................   Passed
-        Start 307: djpeg12-shared-420m-islow-1_4
-307/331 Test #307: djpeg12-shared-420m-islow-1_4 .......................   Passed
-        Start 308: djpeg12-shared-420m-islow-1_4-cmp
-308/331 Test #308: djpeg12-shared-420m-islow-1_4-cmp ...................   Passed
-        Start 309: djpeg12-shared-420m-islow-1_8
-309/331 Test #309: djpeg12-shared-420m-islow-1_8 .......................   Passed
-        Start 310: djpeg12-shared-420m-islow-1_8-cmp
-310/331 Test #310: djpeg12-shared-420m-islow-1_8-cmp ...................   Passed
-        Start 311: cjpeg12-shared-lossless
-311/331 Test #311: cjpeg12-shared-lossless .............................   Passed
-        Start 312: cjpeg12-shared-lossless-cmp
-312/331 Test #312: cjpeg12-shared-lossless-cmp .........................   Passed
-        Start 313: djpeg12-shared-lossless
-313/331 Test #313: djpeg12-shared-lossless .............................   Passed
-        Start 314: djpeg12-shared-lossless-cmp
-314/331 Test #314: djpeg12-shared-lossless-cmp .........................   Passed
-        Start 315: djpeg12-shared-420-islow-skip15_31
-315/331 Test #315: djpeg12-shared-420-islow-skip15_31 ..................   Passed
-        Start 316: djpeg12-shared-420-islow-skip15_31-cmp
-316/331 Test #316: djpeg12-shared-420-islow-skip15_31-cmp ..............   Passed
-        Start 317: cjpeg12-shared-420-islow-prog
-317/331 Test #317: cjpeg12-shared-420-islow-prog .......................   Passed
-        Start 318: djpeg12-shared-420-islow-prog-crop62x62_71_71
-318/331 Test #318: djpeg12-shared-420-islow-prog-crop62x62_71_71 .......   Passed
-        Start 319: djpeg12-shared-420-islow-prog-crop62x62_71_71-cmp
-319/331 Test #319: djpeg12-shared-420-islow-prog-crop62x62_71_71-cmp ...   Passed
-        Start 320: cjpeg12-shared-444-islow
-320/331 Test #320: cjpeg12-shared-444-islow ............................   Passed
-        Start 321: djpeg12-shared-444-islow-skip1_6
-321/331 Test #321: djpeg12-shared-444-islow-skip1_6 ....................   Passed
-        Start 322: djpeg12-shared-444-islow-skip1_6-cmp
-322/331 Test #322: djpeg12-shared-444-islow-skip1_6-cmp ................   Passed
-        Start 323: cjpeg12-shared-444-islow-prog
-323/331 Test #323: cjpeg12-shared-444-islow-prog .......................   Passed
-        Start 324: djpeg12-shared-444-islow-prog-crop98x98_13_13
-324/331 Test #324: djpeg12-shared-444-islow-prog-crop98x98_13_13 .......   Passed
-        Start 325: djpeg12-shared-444-islow-prog-crop98x98_13_13-cmp
-325/331 Test #325: djpeg12-shared-444-islow-prog-crop98x98_13_13-cmp ...   Passed
-        Start 326: jpegtran12-shared-crop
-326/331 Test #326: jpegtran12-shared-crop ..............................   Passed
-        Start 327: jpegtran12-shared-crop-cmp
-327/331 Test #327: jpegtran12-shared-crop-cmp ..........................   Passed
-        Start 328: example-12bit-shared-compress
-328/331 Test #328: example-12bit-shared-compress .......................   Passed
-        Start 329: example-12bit-shared-compress-cmp
-329/331 Test #329: example-12bit-shared-compress-cmp ...................   Passed
-        Start 330: example-12bit-shared-decompress
-330/331 Test #330: example-12bit-shared-decompress .....................   Passed
-        Start 331: example-12bit-shared-decompress-cmp
-331/331 Test #331: example-12bit-shared-decompress-cmp .................   Passed
+120/332 Test #120: tjbench12-shared-tile-422m-128x128-cmp ..............   Passed
+        Start 121: bmpsizetest-shared
+121/332 Test #121: bmpsizetest-shared ..................................   Passed
+        Start 122: cjpeg16-shared-lossless
+122/332 Test #122: cjpeg16-shared-lossless .............................   Passed
+        Start 123: cjpeg16-shared-lossless-cmp
+123/332 Test #123: cjpeg16-shared-lossless-cmp .........................   Passed
+        Start 124: djpeg16-shared-lossless
+124/332 Test #124: djpeg16-shared-lossless .............................   Passed
+        Start 125: djpeg16-shared-lossless-cmp
+125/332 Test #125: djpeg16-shared-lossless-cmp .........................   Passed
+        Start 126: cjpeg-shared-rgb-islow
+126/332 Test #126: cjpeg-shared-rgb-islow ..............................   Passed
+        Start 127: cjpeg-shared-rgb-islow-cmp
+127/332 Test #127: cjpeg-shared-rgb-islow-cmp ..........................   Passed
+        Start 128: djpeg-shared-rgb-islow
+128/332 Test #128: djpeg-shared-rgb-islow ..............................   Passed
+        Start 129: djpeg-shared-rgb-islow-cmp
+129/332 Test #129: djpeg-shared-rgb-islow-cmp ..........................   Passed
+        Start 130: djpeg-shared-rgb-islow-icc-cmp
+130/332 Test #130: djpeg-shared-rgb-islow-icc-cmp ......................   Passed
+        Start 131: jpegtran-shared-icc
+131/332 Test #131: jpegtran-shared-icc .................................   Passed
+        Start 132: jpegtran-shared-icc-cmp
+132/332 Test #132: jpegtran-shared-icc-cmp .............................   Passed
+        Start 133: djpeg-shared-rgb-islow-565
+133/332 Test #133: djpeg-shared-rgb-islow-565 ..........................   Passed
+        Start 134: djpeg-shared-rgb-islow-565-cmp
+134/332 Test #134: djpeg-shared-rgb-islow-565-cmp ......................   Passed
+        Start 135: djpeg-shared-rgb-islow-565D
+135/332 Test #135: djpeg-shared-rgb-islow-565D .........................   Passed
+        Start 136: djpeg-shared-rgb-islow-565D-cmp
+136/332 Test #136: djpeg-shared-rgb-islow-565D-cmp .....................   Passed
+        Start 137: cjpeg-shared-422-ifast-opt
+137/332 Test #137: cjpeg-shared-422-ifast-opt ..........................   Passed
+        Start 138: cjpeg-shared-422-ifast-opt-cmp
+138/332 Test #138: cjpeg-shared-422-ifast-opt-cmp ......................   Passed
+        Start 139: djpeg-shared-422-ifast
+139/332 Test #139: djpeg-shared-422-ifast ..............................   Passed
+        Start 140: djpeg-shared-422-ifast-cmp
+140/332 Test #140: djpeg-shared-422-ifast-cmp ..........................   Passed
+        Start 141: cjpeg-shared-440-islow
+141/332 Test #141: cjpeg-shared-440-islow ..............................   Passed
+        Start 142: cjpeg-shared-440-islow-cmp
+142/332 Test #142: cjpeg-shared-440-islow-cmp ..........................   Passed
+        Start 143: djpeg-shared-440-islow
+143/332 Test #143: djpeg-shared-440-islow ..............................   Passed
+        Start 144: djpeg-shared-440-islow-cmp
+144/332 Test #144: djpeg-shared-440-islow-cmp ..........................   Passed
+        Start 145: djpeg-shared-422m-ifast
+145/332 Test #145: djpeg-shared-422m-ifast .............................   Passed
+        Start 146: djpeg-shared-422m-ifast-cmp
+146/332 Test #146: djpeg-shared-422m-ifast-cmp .........................   Passed
+        Start 147: djpeg-shared-422m-ifast-565
+147/332 Test #147: djpeg-shared-422m-ifast-565 .........................   Passed
+        Start 148: djpeg-shared-422m-ifast-565-cmp
+148/332 Test #148: djpeg-shared-422m-ifast-565-cmp .....................   Passed
+        Start 149: djpeg-shared-422m-ifast-565D
+149/332 Test #149: djpeg-shared-422m-ifast-565D ........................   Passed
+        Start 150: djpeg-shared-422m-ifast-565D-cmp
+150/332 Test #150: djpeg-shared-422m-ifast-565D-cmp ....................   Passed
+        Start 151: cjpeg-shared-420-q100-ifast-prog
+151/332 Test #151: cjpeg-shared-420-q100-ifast-prog ....................   Passed
+        Start 152: cjpeg-shared-420-q100-ifast-prog-cmp
+152/332 Test #152: cjpeg-shared-420-q100-ifast-prog-cmp ................   Passed
+        Start 153: djpeg-shared-420-q100-ifast-prog
+153/332 Test #153: djpeg-shared-420-q100-ifast-prog ....................   Passed
+        Start 154: djpeg-shared-420-q100-ifast-prog-cmp
+154/332 Test #154: djpeg-shared-420-q100-ifast-prog-cmp ................   Passed
+        Start 155: djpeg-shared-420m-q100-ifast-prog
+155/332 Test #155: djpeg-shared-420m-q100-ifast-prog ...................   Passed
+        Start 156: djpeg-shared-420m-q100-ifast-prog-cmp
+156/332 Test #156: djpeg-shared-420m-q100-ifast-prog-cmp ...............   Passed
+        Start 157: cjpeg-shared-gray-islow
+157/332 Test #157: cjpeg-shared-gray-islow .............................   Passed
+        Start 158: cjpeg-shared-gray-islow-cmp
+158/332 Test #158: cjpeg-shared-gray-islow-cmp .........................   Passed
+        Start 159: djpeg-shared-gray-islow
+159/332 Test #159: djpeg-shared-gray-islow .............................   Passed
+        Start 160: djpeg-shared-gray-islow-cmp
+160/332 Test #160: djpeg-shared-gray-islow-cmp .........................   Passed
+        Start 161: djpeg-shared-gray-islow-rgb
+161/332 Test #161: djpeg-shared-gray-islow-rgb .........................   Passed
+        Start 162: djpeg-shared-gray-islow-rgb-cmp
+162/332 Test #162: djpeg-shared-gray-islow-rgb-cmp .....................   Passed
+        Start 163: djpeg-shared-gray-islow-565
+163/332 Test #163: djpeg-shared-gray-islow-565 .........................   Passed
+        Start 164: djpeg-shared-gray-islow-565-cmp
+164/332 Test #164: djpeg-shared-gray-islow-565-cmp .....................   Passed
+        Start 165: djpeg-shared-gray-islow-565D
+165/332 Test #165: djpeg-shared-gray-islow-565D ........................   Passed
+        Start 166: djpeg-shared-gray-islow-565D-cmp
+166/332 Test #166: djpeg-shared-gray-islow-565D-cmp ....................   Passed
+        Start 167: cjpeg-shared-420s-islow-opt
+167/332 Test #167: cjpeg-shared-420s-islow-opt .........................   Passed
+        Start 168: cjpeg-shared-420s-islow-opt-cmp
+168/332 Test #168: cjpeg-shared-420s-islow-opt-cmp .....................   Passed
+        Start 169: cjpeg-shared-3x2-float-prog
+169/332 Test #169: cjpeg-shared-3x2-float-prog .........................   Passed
+        Start 170: cjpeg-shared-3x2-float-prog-cmp
+170/332 Test #170: cjpeg-shared-3x2-float-prog-cmp .....................   Passed
+        Start 171: djpeg-shared-3x2-float-prog
+171/332 Test #171: djpeg-shared-3x2-float-prog .........................   Passed
+        Start 172: djpeg-shared-3x2-float-prog-cmp
+172/332 Test #172: djpeg-shared-3x2-float-prog-cmp .....................   Passed
+        Start 173: cjpeg-shared-3x2-ifast-prog
+173/332 Test #173: cjpeg-shared-3x2-ifast-prog .........................   Passed
+        Start 174: cjpeg-shared-3x2-ifast-prog-cmp
+174/332 Test #174: cjpeg-shared-3x2-ifast-prog-cmp .....................   Passed
+        Start 175: djpeg-shared-3x2-ifast-prog
+175/332 Test #175: djpeg-shared-3x2-ifast-prog .........................   Passed
+        Start 176: djpeg-shared-3x2-ifast-prog-cmp
+176/332 Test #176: djpeg-shared-3x2-ifast-prog-cmp .....................   Passed
+        Start 177: cjpeg-shared-420-islow-ari
+177/332 Test #177: cjpeg-shared-420-islow-ari ..........................   Passed
+        Start 178: cjpeg-shared-420-islow-ari-cmp
+178/332 Test #178: cjpeg-shared-420-islow-ari-cmp ......................   Passed
+        Start 179: jpegtran-shared-420-islow-ari
+179/332 Test #179: jpegtran-shared-420-islow-ari .......................   Passed
+        Start 180: jpegtran-shared-420-islow-ari-cmp
+180/332 Test #180: jpegtran-shared-420-islow-ari-cmp ...................   Passed
+        Start 181: cjpeg-shared-444-islow-progari
+181/332 Test #181: cjpeg-shared-444-islow-progari ......................   Passed
+        Start 182: cjpeg-shared-444-islow-progari-cmp
+182/332 Test #182: cjpeg-shared-444-islow-progari-cmp ..................   Passed
+        Start 183: djpeg-shared-420m-ifast-ari
+183/332 Test #183: djpeg-shared-420m-ifast-ari .........................   Passed
+        Start 184: djpeg-shared-420m-ifast-ari-cmp
+184/332 Test #184: djpeg-shared-420m-ifast-ari-cmp .....................   Passed
+        Start 185: jpegtran-shared-420-islow
+185/332 Test #185: jpegtran-shared-420-islow ...........................   Passed
+        Start 186: jpegtran-shared-420-islow-cmp
+186/332 Test #186: jpegtran-shared-420-islow-cmp .......................   Passed
+        Start 187: djpeg-shared-420m-islow-2_1
+187/332 Test #187: djpeg-shared-420m-islow-2_1 .........................   Passed
+        Start 188: djpeg-shared-420m-islow-2_1-cmp
+188/332 Test #188: djpeg-shared-420m-islow-2_1-cmp .....................   Passed
+        Start 189: djpeg-shared-420m-islow-15_8
+189/332 Test #189: djpeg-shared-420m-islow-15_8 ........................   Passed
+        Start 190: djpeg-shared-420m-islow-15_8-cmp
+190/332 Test #190: djpeg-shared-420m-islow-15_8-cmp ....................   Passed
+        Start 191: djpeg-shared-420m-islow-13_8
+191/332 Test #191: djpeg-shared-420m-islow-13_8 ........................   Passed
+        Start 192: djpeg-shared-420m-islow-13_8-cmp
+192/332 Test #192: djpeg-shared-420m-islow-13_8-cmp ....................   Passed
+        Start 193: djpeg-shared-420m-islow-11_8
+193/332 Test #193: djpeg-shared-420m-islow-11_8 ........................   Passed
+        Start 194: djpeg-shared-420m-islow-11_8-cmp
+194/332 Test #194: djpeg-shared-420m-islow-11_8-cmp ....................   Passed
+        Start 195: djpeg-shared-420m-islow-9_8
+195/332 Test #195: djpeg-shared-420m-islow-9_8 .........................   Passed
+        Start 196: djpeg-shared-420m-islow-9_8-cmp
+196/332 Test #196: djpeg-shared-420m-islow-9_8-cmp .....................   Passed
+        Start 197: djpeg-shared-420m-islow-7_8
+197/332 Test #197: djpeg-shared-420m-islow-7_8 .........................   Passed
+        Start 198: djpeg-shared-420m-islow-7_8-cmp
+198/332 Test #198: djpeg-shared-420m-islow-7_8-cmp .....................   Passed
+        Start 199: djpeg-shared-420m-islow-3_4
+199/332 Test #199: djpeg-shared-420m-islow-3_4 .........................   Passed
+        Start 200: djpeg-shared-420m-islow-3_4-cmp
+200/332 Test #200: djpeg-shared-420m-islow-3_4-cmp .....................   Passed
+        Start 201: djpeg-shared-420m-islow-5_8
+201/332 Test #201: djpeg-shared-420m-islow-5_8 .........................   Passed
+        Start 202: djpeg-shared-420m-islow-5_8-cmp
+202/332 Test #202: djpeg-shared-420m-islow-5_8-cmp .....................   Passed
+        Start 203: djpeg-shared-420m-islow-1_2
+203/332 Test #203: djpeg-shared-420m-islow-1_2 .........................   Passed
+        Start 204: djpeg-shared-420m-islow-1_2-cmp
+204/332 Test #204: djpeg-shared-420m-islow-1_2-cmp .....................   Passed
+        Start 205: djpeg-shared-420m-islow-3_8
+205/332 Test #205: djpeg-shared-420m-islow-3_8 .........................   Passed
+        Start 206: djpeg-shared-420m-islow-3_8-cmp
+206/332 Test #206: djpeg-shared-420m-islow-3_8-cmp .....................   Passed
+        Start 207: djpeg-shared-420m-islow-1_4
+207/332 Test #207: djpeg-shared-420m-islow-1_4 .........................   Passed
+        Start 208: djpeg-shared-420m-islow-1_4-cmp
+208/332 Test #208: djpeg-shared-420m-islow-1_4-cmp .....................   Passed
+        Start 209: djpeg-shared-420m-islow-1_8
+209/332 Test #209: djpeg-shared-420m-islow-1_8 .........................   Passed
+        Start 210: djpeg-shared-420m-islow-1_8-cmp
+210/332 Test #210: djpeg-shared-420m-islow-1_8-cmp .....................   Passed
+        Start 211: djpeg-shared-420-islow-256
+211/332 Test #211: djpeg-shared-420-islow-256 ..........................   Passed
+        Start 212: djpeg-shared-420-islow-256-cmp
+212/332 Test #212: djpeg-shared-420-islow-256-cmp ......................   Passed
+        Start 213: djpeg-shared-420-islow-565
+213/332 Test #213: djpeg-shared-420-islow-565 ..........................   Passed
+        Start 214: djpeg-shared-420-islow-565-cmp
+214/332 Test #214: djpeg-shared-420-islow-565-cmp ......................   Passed
+        Start 215: djpeg-shared-420-islow-565D
+215/332 Test #215: djpeg-shared-420-islow-565D .........................   Passed
+        Start 216: djpeg-shared-420-islow-565D-cmp
+216/332 Test #216: djpeg-shared-420-islow-565D-cmp .....................   Passed
+        Start 217: djpeg-shared-420m-islow-565
+217/332 Test #217: djpeg-shared-420m-islow-565 .........................   Passed
+        Start 218: djpeg-shared-420m-islow-565-cmp
+218/332 Test #218: djpeg-shared-420m-islow-565-cmp .....................   Passed
+        Start 219: djpeg-shared-420m-islow-565D
+219/332 Test #219: djpeg-shared-420m-islow-565D ........................   Passed
+        Start 220: djpeg-shared-420m-islow-565D-cmp
+220/332 Test #220: djpeg-shared-420m-islow-565D-cmp ....................   Passed
+        Start 221: cjpeg-shared-lossless
+221/332 Test #221: cjpeg-shared-lossless ...............................   Passed
+        Start 222: cjpeg-shared-lossless-cmp
+222/332 Test #222: cjpeg-shared-lossless-cmp ...........................   Passed
+        Start 223: djpeg-shared-lossless
+223/332 Test #223: djpeg-shared-lossless ...............................   Passed
+        Start 224: djpeg-shared-lossless-cmp
+224/332 Test #224: djpeg-shared-lossless-cmp ...........................   Passed
+        Start 225: djpeg-shared-420-islow-skip15_31
+225/332 Test #225: djpeg-shared-420-islow-skip15_31 ....................   Passed
+        Start 226: djpeg-shared-420-islow-skip15_31-cmp
+226/332 Test #226: djpeg-shared-420-islow-skip15_31-cmp ................   Passed
+        Start 227: djpeg-shared-420-islow-ari-skip16_139
+227/332 Test #227: djpeg-shared-420-islow-ari-skip16_139 ...............   Passed
+        Start 228: djpeg-shared-420-islow-ari-skip16_139-cmp
+228/332 Test #228: djpeg-shared-420-islow-ari-skip16_139-cmp ...........   Passed
+        Start 229: cjpeg-shared-420-islow-prog
+229/332 Test #229: cjpeg-shared-420-islow-prog .........................   Passed
+        Start 230: djpeg-shared-420-islow-prog-crop62x62_71_71
+230/332 Test #230: djpeg-shared-420-islow-prog-crop62x62_71_71 .........   Passed
+        Start 231: djpeg-shared-420-islow-prog-crop62x62_71_71-cmp
+231/332 Test #231: djpeg-shared-420-islow-prog-crop62x62_71_71-cmp .....   Passed
+        Start 232: djpeg-shared-420-islow-ari-crop53x53_4_4
+232/332 Test #232: djpeg-shared-420-islow-ari-crop53x53_4_4 ............   Passed
+        Start 233: djpeg-shared-420-islow-ari-crop53x53_4_4-cmp
+233/332 Test #233: djpeg-shared-420-islow-ari-crop53x53_4_4-cmp ........   Passed
+        Start 234: cjpeg-shared-444-islow
+234/332 Test #234: cjpeg-shared-444-islow ..............................   Passed
+        Start 235: djpeg-shared-444-islow-skip1_6
+235/332 Test #235: djpeg-shared-444-islow-skip1_6 ......................   Passed
+        Start 236: djpeg-shared-444-islow-skip1_6-cmp
+236/332 Test #236: djpeg-shared-444-islow-skip1_6-cmp ..................   Passed
+        Start 237: cjpeg-shared-444-islow-prog
+237/332 Test #237: cjpeg-shared-444-islow-prog .........................   Passed
+        Start 238: djpeg-shared-444-islow-prog-crop98x98_13_13
+238/332 Test #238: djpeg-shared-444-islow-prog-crop98x98_13_13 .........   Passed
+        Start 239: djpeg-shared-444-islow-prog-crop98x98_13_13-cmp
+239/332 Test #239: djpeg-shared-444-islow-prog-crop98x98_13_13-cmp .....   Passed
+        Start 240: cjpeg-shared-444-islow-ari
+240/332 Test #240: cjpeg-shared-444-islow-ari ..........................   Passed
+        Start 241: djpeg-shared-444-islow-ari-crop37x37_0_0
+241/332 Test #241: djpeg-shared-444-islow-ari-crop37x37_0_0 ............   Passed
+        Start 242: djpeg-shared-444-islow-ari-crop37x37_0_0-cmp
+242/332 Test #242: djpeg-shared-444-islow-ari-crop37x37_0_0-cmp ........   Passed
+        Start 243: jpegtran-shared-crop
+243/332 Test #243: jpegtran-shared-crop ................................   Passed
+        Start 244: jpegtran-shared-crop-cmp
+244/332 Test #244: jpegtran-shared-crop-cmp ............................   Passed
+        Start 245: example-8bit-shared-compress
+245/332 Test #245: example-8bit-shared-compress ........................   Passed
+        Start 246: example-8bit-shared-compress-cmp
+246/332 Test #246: example-8bit-shared-compress-cmp ....................   Passed
+        Start 247: example-8bit-shared-decompress
+247/332 Test #247: example-8bit-shared-decompress ......................   Passed
+        Start 248: example-8bit-shared-decompress-cmp
+248/332 Test #248: example-8bit-shared-decompress-cmp ..................   Passed
+        Start 249: cjpeg12-shared-rgb-islow
+249/332 Test #249: cjpeg12-shared-rgb-islow ............................   Passed
+        Start 250: cjpeg12-shared-rgb-islow-cmp
+250/332 Test #250: cjpeg12-shared-rgb-islow-cmp ........................   Passed
+        Start 251: djpeg12-shared-rgb-islow
+251/332 Test #251: djpeg12-shared-rgb-islow ............................   Passed
+        Start 252: djpeg12-shared-rgb-islow-cmp
+252/332 Test #252: djpeg12-shared-rgb-islow-cmp ........................   Passed
+        Start 253: djpeg12-shared-rgb-islow-icc-cmp
+253/332 Test #253: djpeg12-shared-rgb-islow-icc-cmp ....................   Passed
+        Start 254: jpegtran12-shared-icc
+254/332 Test #254: jpegtran12-shared-icc ...............................   Passed
+        Start 255: jpegtran12-shared-icc-cmp
+255/332 Test #255: jpegtran12-shared-icc-cmp ...........................   Passed
+        Start 256: cjpeg12-shared-422-ifast-opt
+256/332 Test #256: cjpeg12-shared-422-ifast-opt ........................   Passed
+        Start 257: cjpeg12-shared-422-ifast-opt-cmp
+257/332 Test #257: cjpeg12-shared-422-ifast-opt-cmp ....................   Passed
+        Start 258: djpeg12-shared-422-ifast
+258/332 Test #258: djpeg12-shared-422-ifast ............................   Passed
+        Start 259: djpeg12-shared-422-ifast-cmp
+259/332 Test #259: djpeg12-shared-422-ifast-cmp ........................   Passed
+        Start 260: cjpeg12-shared-440-islow
+260/332 Test #260: cjpeg12-shared-440-islow ............................   Passed
+        Start 261: cjpeg12-shared-440-islow-cmp
+261/332 Test #261: cjpeg12-shared-440-islow-cmp ........................   Passed
+        Start 262: djpeg12-shared-440-islow
+262/332 Test #262: djpeg12-shared-440-islow ............................   Passed
+        Start 263: djpeg12-shared-440-islow-cmp
+263/332 Test #263: djpeg12-shared-440-islow-cmp ........................   Passed
+        Start 264: djpeg12-shared-422m-ifast
+264/332 Test #264: djpeg12-shared-422m-ifast ...........................   Passed
+        Start 265: djpeg12-shared-422m-ifast-cmp
+265/332 Test #265: djpeg12-shared-422m-ifast-cmp .......................   Passed
+        Start 266: cjpeg12-shared-420-q100-ifast-prog
+266/332 Test #266: cjpeg12-shared-420-q100-ifast-prog ..................   Passed
+        Start 267: cjpeg12-shared-420-q100-ifast-prog-cmp
+267/332 Test #267: cjpeg12-shared-420-q100-ifast-prog-cmp ..............   Passed
+        Start 268: djpeg12-shared-420-q100-ifast-prog
+268/332 Test #268: djpeg12-shared-420-q100-ifast-prog ..................   Passed
+        Start 269: djpeg12-shared-420-q100-ifast-prog-cmp
+269/332 Test #269: djpeg12-shared-420-q100-ifast-prog-cmp ..............   Passed
+        Start 270: djpeg12-shared-420m-q100-ifast-prog
+270/332 Test #270: djpeg12-shared-420m-q100-ifast-prog .................   Passed
+        Start 271: djpeg12-shared-420m-q100-ifast-prog-cmp
+271/332 Test #271: djpeg12-shared-420m-q100-ifast-prog-cmp .............   Passed
+        Start 272: cjpeg12-shared-gray-islow
+272/332 Test #272: cjpeg12-shared-gray-islow ...........................   Passed
+        Start 273: cjpeg12-shared-gray-islow-cmp
+273/332 Test #273: cjpeg12-shared-gray-islow-cmp .......................   Passed
+        Start 274: djpeg12-shared-gray-islow
+274/332 Test #274: djpeg12-shared-gray-islow ...........................   Passed
+        Start 275: djpeg12-shared-gray-islow-cmp
+275/332 Test #275: djpeg12-shared-gray-islow-cmp .......................   Passed
+        Start 276: djpeg12-shared-gray-islow-rgb
+276/332 Test #276: djpeg12-shared-gray-islow-rgb .......................   Passed
+        Start 277: djpeg12-shared-gray-islow-rgb-cmp
+277/332 Test #277: djpeg12-shared-gray-islow-rgb-cmp ...................   Passed
+        Start 278: cjpeg12-shared-420s-islow-opt
+278/332 Test #278: cjpeg12-shared-420s-islow-opt .......................   Passed
+        Start 279: cjpeg12-shared-420s-islow-opt-cmp
+279/332 Test #279: cjpeg12-shared-420s-islow-opt-cmp ...................   Passed
+        Start 280: cjpeg12-shared-3x2-float-prog
+280/332 Test #280: cjpeg12-shared-3x2-float-prog .......................   Passed
+        Start 281: cjpeg12-shared-3x2-float-prog-cmp
+281/332 Test #281: cjpeg12-shared-3x2-float-prog-cmp ...................   Passed
+        Start 282: djpeg12-shared-3x2-float-prog
+282/332 Test #282: djpeg12-shared-3x2-float-prog .......................   Passed
+        Start 283: djpeg12-shared-3x2-float-prog-cmp
+283/332 Test #283: djpeg12-shared-3x2-float-prog-cmp ...................   Passed
+        Start 284: cjpeg12-shared-3x2-ifast-prog
+284/332 Test #284: cjpeg12-shared-3x2-ifast-prog .......................   Passed
+        Start 285: cjpeg12-shared-3x2-ifast-prog-cmp
+285/332 Test #285: cjpeg12-shared-3x2-ifast-prog-cmp ...................   Passed
+        Start 286: djpeg12-shared-3x2-ifast-prog
+286/332 Test #286: djpeg12-shared-3x2-ifast-prog .......................   Passed
+        Start 287: djpeg12-shared-3x2-ifast-prog-cmp
+287/332 Test #287: djpeg12-shared-3x2-ifast-prog-cmp ...................   Passed
+        Start 288: djpeg12-shared-420m-islow-2_1
+288/332 Test #288: djpeg12-shared-420m-islow-2_1 .......................   Passed
+        Start 289: djpeg12-shared-420m-islow-2_1-cmp
+289/332 Test #289: djpeg12-shared-420m-islow-2_1-cmp ...................   Passed
+        Start 290: djpeg12-shared-420m-islow-15_8
+290/332 Test #290: djpeg12-shared-420m-islow-15_8 ......................   Passed
+        Start 291: djpeg12-shared-420m-islow-15_8-cmp
+291/332 Test #291: djpeg12-shared-420m-islow-15_8-cmp ..................   Passed
+        Start 292: djpeg12-shared-420m-islow-13_8
+292/332 Test #292: djpeg12-shared-420m-islow-13_8 ......................   Passed
+        Start 293: djpeg12-shared-420m-islow-13_8-cmp
+293/332 Test #293: djpeg12-shared-420m-islow-13_8-cmp ..................   Passed
+        Start 294: djpeg12-shared-420m-islow-11_8
+294/332 Test #294: djpeg12-shared-420m-islow-11_8 ......................   Passed
+        Start 295: djpeg12-shared-420m-islow-11_8-cmp
+295/332 Test #295: djpeg12-shared-420m-islow-11_8-cmp ..................   Passed
+        Start 296: djpeg12-shared-420m-islow-9_8
+296/332 Test #296: djpeg12-shared-420m-islow-9_8 .......................   Passed
+        Start 297: djpeg12-shared-420m-islow-9_8-cmp
+297/332 Test #297: djpeg12-shared-420m-islow-9_8-cmp ...................   Passed
+        Start 298: djpeg12-shared-420m-islow-7_8
+298/332 Test #298: djpeg12-shared-420m-islow-7_8 .......................   Passed
+        Start 299: djpeg12-shared-420m-islow-7_8-cmp
+299/332 Test #299: djpeg12-shared-420m-islow-7_8-cmp ...................   Passed
+        Start 300: djpeg12-shared-420m-islow-3_4
+300/332 Test #300: djpeg12-shared-420m-islow-3_4 .......................   Passed
+        Start 301: djpeg12-shared-420m-islow-3_4-cmp
+301/332 Test #301: djpeg12-shared-420m-islow-3_4-cmp ...................   Passed
+        Start 302: djpeg12-shared-420m-islow-5_8
+302/332 Test #302: djpeg12-shared-420m-islow-5_8 .......................   Passed
+        Start 303: djpeg12-shared-420m-islow-5_8-cmp
+303/332 Test #303: djpeg12-shared-420m-islow-5_8-cmp ...................   Passed
+        Start 304: djpeg12-shared-420m-islow-1_2
+304/332 Test #304: djpeg12-shared-420m-islow-1_2 .......................   Passed
+        Start 305: djpeg12-shared-420m-islow-1_2-cmp
+305/332 Test #305: djpeg12-shared-420m-islow-1_2-cmp ...................   Passed
+        Start 306: djpeg12-shared-420m-islow-3_8
+306/332 Test #306: djpeg12-shared-420m-islow-3_8 .......................   Passed
+        Start 307: djpeg12-shared-420m-islow-3_8-cmp
+307/332 Test #307: djpeg12-shared-420m-islow-3_8-cmp ...................   Passed
+        Start 308: djpeg12-shared-420m-islow-1_4
+308/332 Test #308: djpeg12-shared-420m-islow-1_4 .......................   Passed
+        Start 309: djpeg12-shared-420m-islow-1_4-cmp
+309/332 Test #309: djpeg12-shared-420m-islow-1_4-cmp ...................   Passed
+        Start 310: djpeg12-shared-420m-islow-1_8
+310/332 Test #310: djpeg12-shared-420m-islow-1_8 .......................   Passed
+        Start 311: djpeg12-shared-420m-islow-1_8-cmp
+311/332 Test #311: djpeg12-shared-420m-islow-1_8-cmp ...................   Passed
+        Start 312: cjpeg12-shared-lossless
+312/332 Test #312: cjpeg12-shared-lossless .............................   Passed
+        Start 313: cjpeg12-shared-lossless-cmp
+313/332 Test #313: cjpeg12-shared-lossless-cmp .........................   Passed
+        Start 314: djpeg12-shared-lossless
+314/332 Test #314: djpeg12-shared-lossless .............................   Passed
+        Start 315: djpeg12-shared-lossless-cmp
+315/332 Test #315: djpeg12-shared-lossless-cmp .........................   Passed
+        Start 316: djpeg12-shared-420-islow-skip15_31
+316/332 Test #316: djpeg12-shared-420-islow-skip15_31 ..................   Passed
+        Start 317: djpeg12-shared-420-islow-skip15_31-cmp
+317/332 Test #317: djpeg12-shared-420-islow-skip15_31-cmp ..............   Passed
+        Start 318: cjpeg12-shared-420-islow-prog
+318/332 Test #318: cjpeg12-shared-420-islow-prog .......................   Passed
+        Start 319: djpeg12-shared-420-islow-prog-crop62x62_71_71
+319/332 Test #319: djpeg12-shared-420-islow-prog-crop62x62_71_71 .......   Passed
+        Start 320: djpeg12-shared-420-islow-prog-crop62x62_71_71-cmp
+320/332 Test #320: djpeg12-shared-420-islow-prog-crop62x62_71_71-cmp ...   Passed
+        Start 321: cjpeg12-shared-444-islow
+321/332 Test #321: cjpeg12-shared-444-islow ............................   Passed
+        Start 322: djpeg12-shared-444-islow-skip1_6
+322/332 Test #322: djpeg12-shared-444-islow-skip1_6 ....................   Passed
+        Start 323: djpeg12-shared-444-islow-skip1_6-cmp
+323/332 Test #323: djpeg12-shared-444-islow-skip1_6-cmp ................   Passed
+        Start 324: cjpeg12-shared-444-islow-prog
+324/332 Test #324: cjpeg12-shared-444-islow-prog .......................   Passed
+        Start 325: djpeg12-shared-444-islow-prog-crop98x98_13_13
+325/332 Test #325: djpeg12-shared-444-islow-prog-crop98x98_13_13 .......   Passed
+        Start 326: djpeg12-shared-444-islow-prog-crop98x98_13_13-cmp
+326/332 Test #326: djpeg12-shared-444-islow-prog-crop98x98_13_13-cmp ...   Passed
+        Start 327: jpegtran12-shared-crop
+327/332 Test #327: jpegtran12-shared-crop ..............................   Passed
+        Start 328: jpegtran12-shared-crop-cmp
+328/332 Test #328: jpegtran12-shared-crop-cmp ..........................   Passed
+        Start 329: example-12bit-shared-compress
+329/332 Test #329: example-12bit-shared-compress .......................   Passed
+        Start 330: example-12bit-shared-compress-cmp
+330/332 Test #330: example-12bit-shared-compress-cmp ...................   Passed
+        Start 331: example-12bit-shared-decompress
+331/332 Test #331: example-12bit-shared-decompress .....................   Passed
+        Start 332: example-12bit-shared-decompress-cmp
+332/332 Test #332: example-12bit-shared-decompress-cmp .................   Passed
 
-100% tests passed, 0 tests failed out of 331
+100% tests passed, 0 tests failed out of 332
 
 Total Test time (real) =

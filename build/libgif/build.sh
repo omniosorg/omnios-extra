@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libgif
-VER=5.2.2
+VER=6.1.2
 PKG=ooce/library/libgif
 SUMMARY="libgif"
 DESC="GIFLIB is a package of portable tools and library routines for "

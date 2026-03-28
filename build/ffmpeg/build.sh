@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=ffmpeg
-VER=8.0.1
+VER=8.1
 PKG=ooce/multimedia/ffmpeg
 SUMMARY="ffmpeg"
 DESC="A complete, cross-platform solution to record, "
@@ -25,7 +25,7 @@ DESC+="convert and stream audio and video."
 
 # Previous versions that also need to be built and packaged since compiled
 # software may depend on it.
-PVERS="4.4.6 5.1.7 6.1.3 7.1.2"
+PVERS="4.4.6 5.1.8 6.1.4 7.1.3"
 
 set_clangver
 

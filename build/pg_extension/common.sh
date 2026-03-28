@@ -10,9 +10,9 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
-PGVERSIONS="13 14 15 16 17"
+PGVERSIONS="14 15 16 17"
 
 for v in $PGVERSIONS; do
     BUILD_DEPENDS_IPS+=" ooce/library/postgresql-$v"
