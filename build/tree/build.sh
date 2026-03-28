@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=tree
-VER=2.2.1
+VER=2.3.2
 PKG=ooce/file/tree
 SUMMARY="File system tree viewer"
 DESC="The tree utility recursively displays the contents of \
