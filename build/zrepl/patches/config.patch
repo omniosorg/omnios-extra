@@ -1,6 +1,6 @@
 diff -wpruN '--exclude=*.orig' a~/config/config.go a/config/config.go
---- a~/config/config.go	1970-01-01 00:00:00
-+++ a/config/config.go	1970-01-01 00:00:00
+--- a~/internal/config/config.go 1970-01-01 00:00:00
++++ a/internal/config/config.go	1970-01-01 00:00:00
 @@ -671,8 +671,8 @@ func (t *HookEnum) UnmarshalYAML(u func(
  }
  
