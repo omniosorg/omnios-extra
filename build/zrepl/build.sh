@@ -19,6 +19,7 @@
 PROG=zrepl
 PKG=ooce/system/zrepl
 VER=0.7.0
+DASHREV=1
 SUMMARY="$PROG - ZFS replication"
 DESC="$PROG is a one-stop, integrated solution for ZFS replication"
 
