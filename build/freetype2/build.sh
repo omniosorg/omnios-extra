@@ -13,12 +13,12 @@
 # }}}
 
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=freetype
-VER=2.14.1
+VER=2.14.3
 PKG=ooce/library/freetype2
 SUMMARY="$PROG"
 DESC="A Free, High-Quality, and Portable Font Engine"

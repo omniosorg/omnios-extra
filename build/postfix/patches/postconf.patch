@@ -5,7 +5,7 @@ we can point it to a native postconf
 diff -wpruN --no-dereference '--exclude=*.orig' a~/Makefile.in a/Makefile.in
 --- a~/Makefile.in	1970-01-01 00:00:00
 +++ a/Makefile.in	1970-01-01 00:00:00
-@@ -21,8 +21,9 @@ META	= meta/main.cf.proto meta/master.cf
+@@ -22,8 +22,9 @@ META	= meta/main.cf.proto meta/master.cf
  	meta/makedefs.out $(PLUGINS)
  EXPAND	= sed -e "s;\$${LIB_PREFIX};$(LIB_PREFIX);" \
  	    -e "s;\$${LIB_SUFFIX};$(LIB_SUFFIX);"

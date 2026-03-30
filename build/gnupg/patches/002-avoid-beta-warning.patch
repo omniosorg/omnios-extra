@@ -22,16 +22,16 @@ See discussion at:
 diff -wpruN --no-dereference '--exclude=*.orig' a~/autogen.sh a/autogen.sh
 --- a~/autogen.sh	1970-01-01 00:00:00
 +++ a/autogen.sh	1970-01-01 00:00:00
-@@ -221,7 +221,7 @@ if [ "$myhost" = "find-version" ]; then
-     esac
+@@ -259,7 +259,7 @@ if [ "$myhost" = "find-version" ]; then
+     matchexcl="--exclude $package-*beta*"
  
      beta=no
 -    if [ -e .git ]; then
 +    if false; then
        ingit=yes
-       tmp=$(git describe --match "${matchstr1}" --long 2>/dev/null)
-       tmp=$(echo "$tmp" | sed s/^"$package"//)
-@@ -237,8 +237,8 @@ if [ "$myhost" = "find-version" ]; then
+       tmp=$(git describe --match "${matchstr1}" $matchexcl --long 2>/dev/null)
+       if [ -n "$tmp" ]; then
+@@ -285,8 +285,8 @@ if [ "$myhost" = "find-version" ]; then
        rvd=$((0x$(echo ${rev} | dd bs=1 count=4 2>/dev/null)))
      else
        ingit=no
@@ -39,6 +39,6 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/autogen.sh a/autogen.sh
 -      tmp="-unknown"
 +      beta=no
 +      tmp=""
+       cid="0000000"
        rev="0000000"
        rvd="0"
-     fi

@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=haproxy
-VER=3.2.10
+VER=3.2.15
 PKG=ooce/server/haproxy
 SUMMARY="HAProxy - fast and reliable http reverse proxy and load balancer"
 DESC="A TCP/HTTP reverse proxy which is particularly suited for high "

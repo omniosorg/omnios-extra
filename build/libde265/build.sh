@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=libde265
-VER=1.0.16
+VER=1.0.18
 PKG=ooce/library/libde265
 SUMMARY="h.265 codec implementation"
 DESC="Open source implementation of the h.265 video codec"
@@ -29,16 +29,23 @@ forgo_isaexec
 XFORM_ARGS="-DPREFIX=${PREFIX#/}"
 
 CONFIGURE_OPTS="
-    --disable-static
-    --disable-encoder
-    --disable-dec265
-    --disable-sherlock265
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX=$PREFIX
+    -DBUILD_SHARED_LIBS=ON
 "
+
+CXXFLAGS+=" -DHAVE_ALLOCA_H"
+
+pre_build() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]=" -DCMAKE_INSTALL_LIBDIR=${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER
 patch_source
-prep_build
+prep_build cmake+ninja
 build -noctf    # C++
 strip_install
 make_package

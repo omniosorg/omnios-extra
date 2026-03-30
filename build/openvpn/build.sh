@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=openvpn
-VER=2.6.19
+VER=2.7.0
 PKG=ooce/network/openvpn
 LZOVER=2.10
 SUMMARY="OpenVPN"
@@ -64,8 +64,6 @@ export LZO_LIBS="-L$DEPROOT/$PREFIX/lib/amd64 -llzo2"
 restore_buildenv
 
 #########################################################################
-
-CPPFLAGS+=" -DOOCEVER=$RELVER"
 
 CONFIGURE_OPTS[amd64]+="
     --includedir=$OPREFIX/include
