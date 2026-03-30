@@ -18,8 +18,9 @@
 
 case "$1" in
 'start')
-	mkdir -p /var/run/zrepl
+	mkdir -p /var/run/zrepl/stdinserver
 	chmod 700 /var/run/zrepl
+	chmod 400 /var/run/zrepl/stdinserver
 	/opt/ooce/zrepl/bin/zrepl --config "$2" daemon &
 	;;
 
