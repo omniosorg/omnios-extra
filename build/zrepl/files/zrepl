@@ -12,14 +12,14 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . /lib/svc/share/smf_include.sh
 
 case "$1" in
 'start')
-	mkdir -p /var/run/zrepl
-	chmod 700 /var/run/zrepl
+	mkdir -p /var/run/zrepl/stdinserver
+	chmod 700 /var/run/zrepl /var/run/zrepl/stdinserver
 	/opt/ooce/zrepl/bin/zrepl --config "$2" daemon &
 	;;
 
