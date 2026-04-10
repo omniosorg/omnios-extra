@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -23,11 +23,24 @@ SUMMARY="gyp - generate your projects"
 DESC="GYP is a Meta-Build system: "
 DESC+="a build system that generates other build systems."
 
+fixup_bins() {
+    for f in gyp; do
+        logmsg "--- patching command $f"
+        logcmd sed -i "
+# pkg_resources was removed from setuptools in version v82.0.0
+# Until gyp is updated to support this we patch out the unused
+# fallback so that dependency resolution doesn't look for it.
+/from pkg_resources/s/from.*/raise ImportError('pkg_resources unavailable')/
+        " $DESTDIR$PREFIX/bin/$f || logerr "sed $f failed"
+    done
+}
+
 init
 download_source $PROG $PROG $VER
 patch_source
 prep_build
 python_build
+fixup_bins
 make_package
 clean_up
 
