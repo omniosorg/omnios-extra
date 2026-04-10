@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,6 +22,10 @@ PKG=ooce/library/gnutls
 SUMMARY="GnuTLS Transport Layer Security Library"
 DESC="Secure communications library implementing the SSL, TLS and "
 DESC+="DTLS protocols and technologies around them"
+
+# TODO: drop this and the static build of nettle once
+# gnutls supports nettle 4.x
+NETTLEVER=3.10.2
 
 BUILD_DEPENDS_IPS="ooce/library/nettle"
 
@@ -45,10 +49,32 @@ CONFIGURE_OPTS="
     --with-unbound-root-key-file=/var$PREFIX/unbound/root.key
 "
 
-export MAKE
+init
+prep_build autoconf -autoreconf
+
+#########################################################################
+# Download and build nettle for headers/linking
+# the lecacy libraries are still shipped with the nettle package
+
+save_buildenv
+
+CONFIGURE_OPTS="--disable-static"
+CONFIGURE_OPTS[aarch64]+=" HOST_CC=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc"
+CPPFLAGS="-I/usr/include/gmp"
+
+build_dependency nettle nettle-$NETTLEVER \
+    nettle nettle $NETTLEVER
+
+restore_buildenv
+
+#########################################################################
 
 pre_configure() {
     typeset arch=$1
+
+    # TODO: can be dropped once gnutls supports nettle 4.x
+    CPPFLAGS+=" -I$DEPROOT$PREFIX/include"
+    LDFLAGS[$arch]+=" -L$DEPROOT$PREFIX/${LIBDIRS[$arch]}"
 
     # just using '--sysroot' does not work for cross-builds.
     CPPFLAGS+=" -I${SYSROOT[$arch]}/usr/include/gmp"
@@ -61,10 +87,12 @@ pre_configure() {
     LDFLAGS[$arch]+=" -R$PREFIX/unbound/${LIBDIRS[$arch]}"
 }
 
-init
+export MAKE
+
+note -n "-- Building $PROG"
+
 download_source $PROG $PROG $VER
 patch_source
-prep_build
 build
 run_testsuite check
 make_package
