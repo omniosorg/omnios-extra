@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=navidrome
-VER=0.60.3
+VER=0.61.1
 PKG=ooce/application/navidrome
 SUMMARY="$PROG"
 DESC="$PROG - an open source web-based music collection server and streamer"
@@ -54,7 +54,10 @@ build() {
         -L$OPREFIX/${LIBDIRS[$BUILDARCH]}
         -Wl,-R$OPREFIX/${LIBDIRS[$BUILDARCH]}
     "
-    export CGO_CPPFLAGS CGO_LDFLAGS
+    # this is a bandaid for `gen2brain/webp` which tells it to fallback to WASM
+    # over using purego. this can be removed if/when purego supports illumos.
+    EXTRA_BUILD_TAGS=nodynamic
+    export CGO_CPPFLAGS CGO_LDFLAGS EXTRA_BUILD_TAGS
 
     logmsg "Building 64-bit"
     logcmd $MAKE setup || logerr "Setup failed"
