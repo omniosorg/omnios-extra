@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -28,6 +28,18 @@ SKIP_LICENCES='GPLv2'
 
 set_arch 64
 
+fixup_bins() {
+    for f in a2x asciidoc; do
+        logmsg "--- patching command $f"
+        logcmd sed -i "
+# pkg_resources was removed from setuptools in version v82.0.0
+# Until asciidoc is updated to support this we patch out the unused
+# fallback so that dependency resolution doesn't look for it.
+/from pkg_resources/s/from.*/raise ImportError('pkg_resources unavailable')/
+        " $DESTDIR$PREFIX/bin/$f || logerr "sed $f failed"
+    done
+}
+
 extract_licence() {
     logmsg "-- extracting licence"
     sed '1,/^## LICENSE/d' < $TMPDIR/$BUILDDIR/README.md \
@@ -40,6 +52,7 @@ extract_licence
 patch_source
 prep_build
 python_build
+fixup_bins
 make_package
 clean_up
 

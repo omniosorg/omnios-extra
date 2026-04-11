@@ -12,20 +12,29 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=gnutls
-VER=3.6.16
+VER=3.8.12
 PKG=ooce/library/gnutls
 SUMMARY="GnuTLS Transport Layer Security Library"
 DESC="Secure communications library implementing the SSL, TLS and "
 DESC+="DTLS protocols and technologies around them"
 
+# TODO: drop this and the static build of nettle once
+# gnutls supports nettle 4.x
+NETTLEVER=3.10.2
+
+# Previous versions that also need to be built and packaged since compiled
+# software may depend on it.
+PVERS="3.6.16"
+
 BUILD_DEPENDS_IPS="ooce/library/nettle"
 
 forgo_isaexec
+set_standard XPG4v2
 
 SKIP_RTIME_CHECK=1
 TESTSUITE_FILTER='^[A-Z#][A-Z ]'
@@ -45,10 +54,32 @@ CONFIGURE_OPTS="
     --with-unbound-root-key-file=/var$PREFIX/unbound/root.key
 "
 
-export MAKE
+init
+prep_build autoconf -autoreconf
+
+#########################################################################
+# Download and build nettle for headers/linking
+# the lecacy libraries are still shipped with the nettle package
+
+save_buildenv
+
+CONFIGURE_OPTS="--disable-static"
+CONFIGURE_OPTS[aarch64]+=" HOST_CC=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc"
+CPPFLAGS="-I/usr/include/gmp"
+
+build_dependency nettle nettle-$NETTLEVER \
+    nettle nettle $NETTLEVER
+
+restore_buildenv
+
+#########################################################################
 
 pre_configure() {
     typeset arch=$1
+
+    # TODO: can be dropped once gnutls supports nettle 4.x
+    CPPFLAGS+=" -I$DEPROOT$PREFIX/include"
+    LDFLAGS[$arch]+=" -L$DEPROOT$PREFIX/${LIBDIRS[$arch]}"
 
     # just using '--sysroot' does not work for cross-builds.
     CPPFLAGS+=" -I${SYSROOT[$arch]}/usr/include/gmp"
@@ -61,10 +92,29 @@ pre_configure() {
     LDFLAGS[$arch]+=" -R$PREFIX/unbound/${LIBDIRS[$arch]}"
 }
 
-init
+export MAKE
+
+# Skip previous versions for cross compilation
+pre_build() { ! cross_arch $1; }
+
+# Build previous versions
+for pver in $PVERS; do
+    note -n "Building previous version: $pver"
+    set_builddir $PROG-$pver
+    save_variable CONFIGURE_OPTS
+    CONFIGURE_OPTS+=" --disable-programs --disable-doc"
+    download_source -dependency $PROG $PROG $pver
+    patch_source patches-`echo $pver | cut -d. -f1-2`
+    build
+    restore_variable CONFIGURE_OPTS
+done
+unset -f pre_build
+
+note -n "Building current version: $VER"
+
+set_builddir $PROG-$VER
 download_source $PROG $PROG $VER
 patch_source
-prep_build
 build
 run_testsuite check
 make_package

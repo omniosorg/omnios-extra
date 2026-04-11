@@ -13,12 +13,12 @@
 # }}}
 #
 # Copyright 2023 Carsten Grzemba
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=squid
-VER=7.4
+VER=7.5
 PKG=ooce/network/proxy/squid
 SUMMARY="Squid WEB Proxy"
 DESC="Squid is a caching proxy for the Web supporting HTTP, HTTPS, FTP, "
@@ -100,6 +100,7 @@ CONFIGURE_OPTS="
     --enable-wccpv2
     --disable-arch-native
     --disable-esi
+    --without-nettle
     ac_cv_path_krb5_config=/usr/bin/krb5-config
     squid_cv_OpenLDAP=0
 "
