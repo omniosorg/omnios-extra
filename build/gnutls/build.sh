@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=gnutls
-VER=3.6.16
+VER=3.8.12
 PKG=ooce/library/gnutls
 SUMMARY="GnuTLS Transport Layer Security Library"
 DESC="Secure communications library implementing the SSL, TLS and "
@@ -27,9 +27,14 @@ DESC+="DTLS protocols and technologies around them"
 # gnutls supports nettle 4.x
 NETTLEVER=3.10.2
 
+# Previous versions that also need to be built and packaged since compiled
+# software may depend on it.
+PVERS="3.6.16"
+
 BUILD_DEPENDS_IPS="ooce/library/nettle"
 
 forgo_isaexec
+set_standard XPG4v2
 
 SKIP_RTIME_CHECK=1
 TESTSUITE_FILTER='^[A-Z#][A-Z ]'
@@ -89,8 +94,25 @@ pre_configure() {
 
 export MAKE
 
-note -n "-- Building $PROG"
+# Skip previous versions for cross compilation
+pre_build() { ! cross_arch $1; }
 
+# Build previous versions
+for pver in $PVERS; do
+    note -n "Building previous version: $pver"
+    set_builddir $PROG-$pver
+    save_variable CONFIGURE_OPTS
+    CONFIGURE_OPTS+=" --disable-programs --disable-doc"
+    download_source -dependency $PROG $PROG $pver
+    patch_source patches-`echo $pver | cut -d. -f1-2`
+    build
+    restore_variable CONFIGURE_OPTS
+done
+unset -f pre_build
+
+note -n "Building current version: $VER"
+
+set_builddir $PROG-$VER
 download_source $PROG $PROG $VER
 patch_source
 build
