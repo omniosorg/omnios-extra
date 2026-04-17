@@ -25,6 +25,7 @@ DESC+="less any context"
 
 # Previous versions that also need to be built and packaged since compiled
 # software may depend on it.
+# we also need to build this for braich until everything supports nettle 4.x
 PVERS="3.10.2"
 
 forgo_isaexec
@@ -48,9 +49,6 @@ pre_configure() {
 init
 prep_build
 
-# Skip previous versions for cross compilation
-pre_build() { ! cross_arch $1; }
-
 # Build previous versions
 for pver in $PVERS; do
     note -n "Building previous version: $pver"
@@ -59,7 +57,6 @@ for pver in $PVERS; do
     patch_source patches-`echo $pver | cut -d. -f1-2`
     build
 done
-unset -f pre_build
 
 note -n "Building current version: $VER"
 
