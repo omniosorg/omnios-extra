@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libgif
-VER=6.1.2
+VER=6.1.3
 PKG=ooce/library/libgif
 SUMMARY="libgif"
 DESC="GIFLIB is a package of portable tools and library routines for "
