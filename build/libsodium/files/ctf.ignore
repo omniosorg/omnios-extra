@@ -1,5 +1,8 @@
 aead_aes256gcm_armcrypto.c
 aegis128l_armcrypto.c
 aegis256_armcrypto.c
+argon2-fill-block-neon.c
+argon2-fill-block-wasm32.c
 ipcrypt_armcrypto.c
+keccak1600_armsha3.c
 poly1305_sse2.c
