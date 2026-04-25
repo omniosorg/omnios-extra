@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libsodium
-VER=1.0.21
+VER=1.0.22
 PKG=ooce/library/libsodium
 SUMMARY="$PROG"
 DESC="Software library for encryption, decryption, signatures, password "

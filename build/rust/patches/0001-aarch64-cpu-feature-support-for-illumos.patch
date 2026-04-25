@@ -15,26 +15,24 @@ diff --git a/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64.c b/src
 index b868caa991b2..a789a9c47745 100644
 --- a/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64.c
 +++ b/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64.c
-@@ -45,6 +45,11 @@ _Bool __aarch64_have_lse_atomics
- #elif defined(__ANDROID__)
+@@ -45,6 +45,9 @@ _Bool __aarch64_have_lse_atomics
+ #include <sys/auxv.h>
  #include "aarch64/hwcap.inc"
  #include "aarch64/lse_atomics/android.inc"
 +#elif defined(__illumos__)
-+// clang-format off: should not reorder sys/auxv.h alphabetically
 +#include <sys/auxv.h>
-+// clang-format on
 +#include "aarch64/lse_atomics/illumos.inc"
- #elif defined(__linux__) && __has_include(<sys/auxv.h>)
+ #elif defined(__linux__)
+ #include <sys/auxv.h>
  #include "aarch64/hwcap.inc"
- #include "aarch64/lse_atomics/getauxval.inc"
 @@ -73,6 +78,8 @@ struct {
  #elif defined(__ANDROID__)
- #include "aarch64/fmv/mrs.inc"
+ #include "aarch64/fmv/hwcap.inc"
  #include "aarch64/fmv/android.inc"
 +#elif defined(__illumos__)
 +#include "aarch64/fmv/illumos.inc"
- #elif defined(__linux__) && __has_include(<sys/auxv.h>)
- #include "aarch64/fmv/mrs.inc"
+ #elif defined(__linux__)
+ #include "aarch64/fmv/hwcap.inc"
  #include "aarch64/fmv/getauxval.inc"
 diff --git a/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64/fmv/illumos.inc b/src/llvm-project/compiler-rt/lib/builtins/cpu_model/aarch64/fmv/illumos.inc
 new file mode 100644
