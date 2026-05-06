@@ -85,6 +85,15 @@ download_source() {
         github.com/mattermost/morph=github.com/omniosorg/morph@$MORPHBRANCH \
         || logerr "Failed to replace morph"
 
+    # external_imports.go is guarded by '//go:build enterprise' and references
+    # the private github.com/mattermost/enterprise repository. We never build
+    # with that tag, but 'go get ./...' walks every build configuration and
+    # would attempt to fetch those modules. Move the file aside; this matches
+    # what Mattermost's own Makefile does for 'modules-tidy' etc.
+    logmsg "Stashing enterprise external_imports.go"
+    logcmd $MV enterprise/external_imports.go{,.orig} \
+        || logerr "Failed to move external_imports.go aside"
+
     logmsg "Getting go dependencies"
     logcmd go get -d ./... || logerr "failed to get dependencies"
 
