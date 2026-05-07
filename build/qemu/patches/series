@@ -6,3 +6,4 @@
 0007-Drop-unnecessary-privileges.patch
 0008-Add-support-for-a-zconsole-character-device.patch
 0009-include-sys-loadavg.h-for-getloadavg.patch
+0010-fix-uname-status-check-and-guest-OS-info-retrieval-f.patch

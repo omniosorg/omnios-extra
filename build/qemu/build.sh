@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=qemu
-VER=10.2.2
+VER=11.0.0
 PKG=ooce/emulator/qemu
 SUMMARY="$PROG"
 DESC="A generic and open source machine emulator and virtualizer"
@@ -29,7 +29,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-test_relver '>=' 151053 && set_clangver
+set_clangver
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}

@@ -1,4 +1,4 @@
-From e10eea6eae76660f64a1953e811454ec3506eb40 Mon Sep 17 00:00:00 2001
+From 0378ee248e0193990a23eae79762208e5d24d0ec Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:52:31 +0000
 Subject: illumos OFD locking must span the entire file
@@ -8,7 +8,7 @@ Subject: illumos OFD locking must span the entire file
  1 file changed, 2 insertions(+)
 
 diff --git a/util/osdep.c b/util/osdep.c
-index 770369831b..962aefc562 100644
+index 4a8b8b5a90..1e5a9e2e71 100644
 --- a/util/osdep.c
 +++ b/util/osdep.c
 @@ -31,6 +31,8 @@
@@ -17,6 +17,6 @@ index 770369831b..962aefc562 100644
  
 +#undef F_OFD_SETLK
 +
- static const char *hw_version = QEMU_HW_VERSION;
- 
  int socket_set_cork(int fd, int v)
+ {
+ #if defined(SOL_TCP) && defined(TCP_CORK)
