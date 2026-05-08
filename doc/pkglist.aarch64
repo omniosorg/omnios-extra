@@ -31,7 +31,6 @@ ooce/library/libexif
 ooce/database/lmdb
 ooce/database/bdb
 ooce/database/postgresql-common
-ooce/database/postgresql-17 -f libsandheaders
 ooce/text/hunspell
 ooce/compress/pbzip2
 ooce/compress/pigz
@@ -110,7 +109,6 @@ ooce/network/unbound -f libsandheaders
 ooce/network/openldap
 ooce/library/fontconfig
 ooce/library/libwebp
-ooce/database/postgresql-17
 ooce/library/slang
 ooce/util/jq
 ooce/security/minisign
@@ -122,6 +120,7 @@ ooce/util/xmlto
 ooce/developer/protobuf-c
 ooce/library/libavif
 ooce/network/mtr
+ooce/database/postgresql-17 -f libsandheaders
 ###############################################################################
 .SYSROOT
 ooce/application/vaultwarden
@@ -131,6 +130,7 @@ ooce/application/mc
 ooce/library/cairo
 ooce/library/security/libsasl2
 ooce/network/nsd
+ooce/database/postgresql-17
 ###############################################################################
 .SYSROOT
 ooce/emulator/qemu
