@@ -1,4 +1,4 @@
-From 371c2599e2dfe33af427a7230bf5f14eb39c64b1 Mon Sep 17 00:00:00 2001
+From 83fd48e5e9d09627decd9e875c409f2e03656cb6 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:51:42 +0000
 Subject: Add support for VNICs
@@ -17,10 +17,10 @@ https://github.com/TritonDataCenter/illumos-kvm-cmd
  create mode 100644 net/vnic.c
 
 diff --git a/meson.build b/meson.build
-index d9293294d8..88a5eaa660 100644
+index ab3e97eb9f..3a5278f769 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -862,7 +862,8 @@ elif host_os == 'darwin'
+@@ -845,7 +845,8 @@ elif host_os == 'darwin'
  elif host_os == 'sunos'
    socket = [cc.find_library('socket'),
              cc.find_library('nsl'),
@@ -69,10 +69,10 @@ index da6ea635e9..5662d071fe 100644
    system_ss.add(files('tap.c', 'tap-stub.c'))
  endif
 diff --git a/net/net.c b/net/net.c
-index 8aefdb3424..08237bd41d 100644
+index a176936f9b..8d0456000a 100644
 --- a/net/net.c
 +++ b/net/net.c
-@@ -1289,6 +1289,7 @@ static int (* const net_client_init_fun[NET_CLIENT_DRIVER__MAX])(
+@@ -1290,6 +1290,7 @@ static int (* const net_client_init_fun[NET_CLIENT_DRIVER__MAX])(
  #ifdef CONFIG_VDE
          [NET_CLIENT_DRIVER_VDE]       = net_init_vde,
  #endif
