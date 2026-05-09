@@ -11,7 +11,7 @@ extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
 extra.omnios ooce/database/mariadb-114
 extra.omnios ooce/database/mariadb-common
-extra.omnios ooce/database/postgresql-17
+extra.omnios ooce/database/postgresql-18
 extra.omnios ooce/database/postgresql-common
 extra.omnios ooce/developer/aarch64-esr-decoder
 extra.omnios ooce/developer/autoconf-archive
@@ -69,7 +69,7 @@ extra.omnios ooce/library/openldap
 extra.omnios ooce/library/pango
 extra.omnios ooce/library/pixman
 extra.omnios ooce/library/popt
-extra.omnios ooce/library/postgresql-17
+extra.omnios ooce/library/postgresql-18
 extra.omnios ooce/library/security/libsasl2
 extra.omnios ooce/library/slang
 extra.omnios ooce/library/taglib

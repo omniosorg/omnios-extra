@@ -416,7 +416,7 @@ else
 fi
 
 # Default database versions to bundle into packages which use the libraries
-PGSQLVER=17
+PGSQLVER=18
 MARIASQLVER=11.4
 
 # Options to turn compiler features on and off. Associative array keyed by

@@ -120,7 +120,7 @@ ooce/util/xmlto
 ooce/developer/protobuf-c
 ooce/library/libavif
 ooce/network/mtr
-ooce/database/postgresql-17 -f libsandheaders
+ooce/database/postgresql-18 -f libsandheaders
 ###############################################################################
 .SYSROOT
 ooce/application/vaultwarden
@@ -130,7 +130,7 @@ ooce/application/mc
 ooce/library/cairo
 ooce/library/security/libsasl2
 ooce/network/nsd
-ooce/database/postgresql-17
+ooce/database/postgresql-18
 ###############################################################################
 .SYSROOT
 ooce/emulator/qemu
