@@ -2,3 +2,4 @@
 properly-check-pie.patch
 pam-illumos.patch
 disable-services.patch
+clang-22.patch
