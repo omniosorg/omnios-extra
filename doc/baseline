@@ -265,7 +265,7 @@ extra.omnios ooce/server/caddy
 extra.omnios ooce/server/freeradius
 extra.omnios ooce/server/haproxy
 extra.omnios ooce/server/nginx
-extra.omnios ooce/server/nginx-128
+extra.omnios ooce/server/nginx-130
 extra.omnios ooce/server/nginx-common
 extra.omnios ooce/server/webservd-common
 extra.omnios ooce/storage/minio
