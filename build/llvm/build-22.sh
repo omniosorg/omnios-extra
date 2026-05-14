@@ -18,7 +18,7 @@
 
 PROG=llvm
 PKG=ooce/developer/llvm-22
-VER=22.1.3
+VER=22.1.5
 SUMMARY="Low Level Virtual Machine compiler infrastructure"
 DESC="A collection of modular and reusable compiler and toolchain technologies"
 

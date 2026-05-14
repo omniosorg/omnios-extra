@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=znc
-VER=1.10.1
+VER=1.10.2
 VERHUMAN=$VER
 PKG=ooce/network/znc
 SUMMARY="$PROG - an advanced IRC bouncer"

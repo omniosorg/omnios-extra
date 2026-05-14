@@ -12,19 +12,17 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=ntfs-3g
-VER=2022.10.3
+VER=2026.2.25
 PKG=ooce/system/file-system/ntfs-3g
 SUMMARY="${PROG^^} - Read-Write NTFS Driver"
 DESC="A stable, full-featured, read-write NTFS driver for Linux, Android, "
 DESC+="Mac OS X, FreeBSD, NetBSD, OpenSolaris, QNX, Haiku, "
 DESC+="and other operating systems"
-
-set_builddir ${PROG}_ntfsprogs-$VER
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -74,7 +72,6 @@ download_source $PROG ${PROG}_ntfsprogs $VER
 patch_source
 prep_build
 build
-VER=${VER//AR/}
 make_package
 clean_up
 

@@ -385,7 +385,8 @@ case $RELVER in
     15105[1-2])         DEFAULT_CLANG_VER=18 ;;
     15105[3-4])         DEFAULT_CLANG_VER=19 ;;
     15105[5-6])         DEFAULT_CLANG_VER=20 ;;
-    15105[7-9])         DEFAULT_CLANG_VER=21 ;;
+    15105[7-8])         DEFAULT_CLANG_VER=21 ;;
+    151059|151060)      DEFAULT_CLANG_VER=22 ;;
     *)                  DEFAULT_CLANG_VER=13 ;;
 esac
 
@@ -416,7 +417,7 @@ else
 fi
 
 # Default database versions to bundle into packages which use the libraries
-PGSQLVER=17
+PGSQLVER=18
 MARIASQLVER=11.4
 
 # Options to turn compiler features on and off. Associative array keyed by

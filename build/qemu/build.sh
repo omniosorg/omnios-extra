@@ -29,7 +29,8 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_clangver
+# does not yet build with clang 22
+((DEFAULT_CLANG_VER > 21)) && set_clangver 21 || set_clangver
 
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
