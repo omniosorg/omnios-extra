@@ -19,7 +19,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-17
-VER=17.9
+VER=17.10
 SUMMARY="PostgreSQL 17"
 DESC="The World's Most Advanced Open Source Relational Database"
 
