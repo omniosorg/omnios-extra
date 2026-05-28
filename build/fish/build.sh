@@ -34,20 +34,18 @@ BUILD_DEPENDS_IPS="
 HARDLINK_TARGETS=${PREFIX#/}/bin/fish
 
 set_arch 64
-set_mirror https://github.com
-set_checksum sha256 6f4d5b438a6338e3f5dcda19a28261e2ece7a9b7ff97686685e6abdc31dbb7df
 
 CONFIGURE_OPTS="
-    -DCMAKE_BUILD_TYPE=Release 
-    -DCMAKE_INSTALL_PREFIX=$PREFIX 
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX=$PREFIX
 "
 
 CONFIGURE_OPTS[amd64]="
-    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/lib/amd64
+    -DCMAKE_INSTALL_LIBDIR=$OPREFIX/${LIBDIRS[amd64]}
 "
 
 XFORM_ARGS="
-    -DPKGROOT=${PREFIX#/opt/ooce/}
+    -DPKGROOT=$PROG
     -DOPREFIX=${OPREFIX#/}
     -DPREFIX=${PREFIX#/}
 "
@@ -55,7 +53,7 @@ XFORM_ARGS="
 SKIP_LICENSES=Various
 
 init
-download_source fish-shell/fish-shell/releases/download/${VER} ${PROG} ${VER}
+download_source fish ${PROG} ${VER}
 prep_build cmake
 patch_source
 build -noctf
