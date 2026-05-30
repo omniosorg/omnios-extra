@@ -52,6 +52,12 @@ XFORM_ARGS="
 
 SKIP_LICENSES=Various
 
+pre_build() {
+    pushd ${TMPDIR}/${EXTRACTED_SRC}
+    logcmd cargo update -p nix
+    popd
+}
+
 init
 download_source fish ${PROG} ${VER}
 prep_build cmake
