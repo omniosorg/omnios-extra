@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference a~/Cargo.toml a/Cargo.toml
+--- a~/Cargo.toml	2026-05-07 16:02:14.000000000 +0000
++++ a/Cargo.toml	2026-05-30 16:42:31.785522194 +0000
+@@ -235,3 +235,7 @@ print_stderr = "deny"
+ 
+ [lints]
+ workspace = true
+\ No newline at end of file
++
++[patch.crates-io]
++nix = { git = "https://github.com/snltd/nix", branch = "fix/termios-from-bits-retain", version = "0.31.1" }
++
