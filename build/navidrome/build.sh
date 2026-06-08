@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=navidrome
-VER=0.61.2
+VER=0.62.0
 PKG=ooce/application/navidrome
 SUMMARY="$PROG"
 DESC="$PROG - an open source web-based music collection server and streamer"
