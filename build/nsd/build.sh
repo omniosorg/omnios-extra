@@ -39,11 +39,12 @@ XFORM_ARGS="
     -DPKGROOT=$PROG-$MAJVER
 "
 
-BUILD_DEPENDS_IPS="ooce/library/libev"
-
 set_arch 64
 # need msg_flags from struct msghdr and strcasecmp
 set_standard XPG6
+
+# For protobuf
+CPPFLAGS+=" -I $OPREFIX/include"
 
 export MAKE
 
@@ -53,7 +54,6 @@ BMI_EXPECTED=1
 CONFIGURE_OPTS="
     --sysconfdir=/etc$OPREFIX
     --with-run-dir=/var$sPREFIX
-    --with-libevent=$OPREFIX
     --with-pthreads
     --localstatedir=/var$sPREFIX
     --with-configdir=/etc$sPREFIX
@@ -64,6 +64,19 @@ CONFIGURE_OPTS="
     --with-zonelistfile=/var$sPREFIX/db/zone.list
     --with-pidfile=/var$sPREFIX/run/nsd.pid
 "
+
+# Prefer libevent if this release has it (r151059 and above), otherwise
+# fall back to libev. The build will always prefer libev if it's found
+# so we need to override a couple of things.
+if [ -f /usr/include/event2/event.h ]; then
+    CONFIGURE_OPTS+="
+        --with-libevent
+        ac_cv_header_event_h=no
+        ac_cv_have_decl_EV_VERSION_MAJOR=no
+    "
+else
+    CONFIGURE_OPTS+=" --with-libevent=$OPREFIX"
+fi
 
 pre_configure() {
     typeset arch=$1
