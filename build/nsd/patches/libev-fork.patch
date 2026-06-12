@@ -1,0 +1,29 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/server.c a/server.c
+--- a~/server.c	1970-01-01 00:00:00
++++ a/server.c	1970-01-01 00:00:00
+@@ -3287,7 +3287,7 @@ nsd_event_method(void)
+ #  else
+ 	m = "?";
+ #  endif
+-#  ifdef MEMCLEAN
++#  if defined(MEMCLEAN) || defined(HAVE_EV_LOOP) || defined(HAVE_EV_DEFAULT_LOOP)
+ 	event_base_free(b);
+ #  endif
+ 	return m;
+@@ -3304,8 +3304,14 @@ nsd_child_event_base(void)
+ 	base = event_init(&secs, &now);
+ #else
+ #  if defined(HAVE_EV_LOOP) || defined(HAVE_EV_DEFAULT_LOOP)
+-	/* libev */
+-	base = (struct event_base *)ev_default_loop(EVFLAG_AUTO);
++	/* libev. Create a new loop rather than handing out the cached
++	 * default loop. The default loop survives fork() with its backend
++	 * (e.g. an illumos event port) still open and shared with the
++	 * parent, and libev's event_base_free() refuses to destroy it, so
++	 * every forked process would multiplex one kernel event object and
++	 * steal events from its relatives. A fresh loop per call gives each
++	 * process its own backend. */
++	base = (struct event_base *)ev_loop_new(EVFLAG_AUTO);
+ #  else
+ 	/* libevent */
+ #    ifdef HAVE_EVENT_BASE_NEW
