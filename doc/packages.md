@@ -50,6 +50,7 @@
 | ooce/database/postgresql-XX/pg_repack | 1.5.0	| https://github.com/reorg/pg_repack/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/database/rrdtool		| 1.9.0		| https://github.com/oetiker/rrdtool-1.x/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/database/victoriametrics	| 1.138.0	| https://github.com/VictoriaMetrics/VictoriaMetrics | [gkoh](https://github.com/gkoh)
+| ooce/database/victorialogs | 1.50.0	| https://github.com/VictoriaMetrics/VictoriaLogs | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/aarch64-esr-decoder | 0.2.4	| https://github.com/google/aarch64-esr-decoder/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/autoconf-archive | 2024.10.16	| https://ftp.gnu.org/gnu/autoconf-archive/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/autogen	| 5.18.16	| https://ftp.gnu.org/gnu/autogen/ | [omniosorg](https://github.com/omniosorg)

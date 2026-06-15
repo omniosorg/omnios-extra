@@ -1,0 +1,17 @@
+--------------------------
+VictoriaLogs Configuration
+--------------------------
+
+VictoriaLogs is not configured by configuration files. Configuration is achieved
+via command-line arguments or equivalent environment variables.
+
+For SMF service integration, service profiles with appropriate environment
+variables can be used.
+
+Example profiles are provided in `<prefix>/share/victorialogs`.
+
+These can edited and applied with:
+
+```
+svccfg apply <prefix>/share/victorialogs/victoria-logs-profile.xml
+```
