@@ -162,3 +162,7 @@ depend fmri=ooce/developer/llvm-22 type=conditional \
 depend fmri=ooce/developer/clang-22 type=conditional \
     predicate=release/name@0.5.11-151059
 
+# libevent became its own package in r151059
+depend fmri=library/libevent type=conditional \
+    predicate=release/name@0.5.11-151059
+
