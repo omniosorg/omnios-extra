@@ -17,8 +17,7 @@
 . ../../lib/build.sh
 
 PROG=nsd
-VER=4.14.2
-DASHREV=1
+VER=4.14.3
 PKG=ooce/network/nsd
 SUMMARY="Authoritative DNS server"
 DESC="The NLnet Labs Name Server Daemon (NSD) is an authoritative "
