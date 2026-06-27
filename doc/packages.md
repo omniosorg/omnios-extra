@@ -21,8 +21,8 @@
 | ooce/application/novnc	| 1.7.0		| https://github.com/novnc/noVNC/releases | Currently used solely by zadm
 | ooce/application/php-82	| 8.2.31	| https://www.php.net/downloads.php?source=Y | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-83	| 8.3.31	| https://www.php.net/downloads.php?source=Y | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-84	| 8.4.21	| https://www.php.net/downloads.php?source=Y | [omniosorg](https://github.com/omniosorg)
-| ooce/application/php-85	| 8.5.6		| https://www.php.net/downloads.php?source=Y | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-84	| 8.4.22	| https://www.php.net/downloads.php?source=Y | [omniosorg](https://github.com/omniosorg)
+| ooce/application/php-85	| 8.5.7		| https://www.php.net/downloads.php?source=Y | [omniosorg](https://github.com/omniosorg)
 | ooce/application/php-XX/imagick | 3.8.1	| https://github.com/Imagick/imagick/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/application/rustdesk-server | 1.1.15	| https://github.com/rustdesk/rustdesk-server/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/texlive	| 20240312	| https://pi.kwarc.info/historic/systems/texlive/2024/ | [omniosorg](https://github.com/omniosorg)
