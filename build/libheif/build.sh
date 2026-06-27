@@ -17,13 +17,13 @@
 . ../../lib/build.sh
 
 PROG=libheif
-VER=1.21.2
+VER=1.23.1
 PKG=ooce/library/libheif
 SUMMARY="HEIF and AVIF encoder"
 DESC="ISO/IEC 23008-12:2017 HEIF and AVIF (AV1 Image File Format) "
 DESC+="file format decoder and encoder"
 
-test_relver '>=' 151047 && set_clangver
+set_clangver
 
 # The rav1e ABI changes frequently. Lock the version
 # pulled into each build of libheif.
