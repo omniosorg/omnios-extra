@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -26,7 +26,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-test_relver '>=' 151051 && set_clangver
+set_clangver
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -34,8 +34,6 @@ XFORM_ARGS="
     -DPROG=$PROG
     -DPKGROOT=$PROG
 "
-
-CPPFLAGS+=" -I$OPREFIX/include"
 
 CONFIGURE_OPTS="
     --prefix=$PREFIX
@@ -47,8 +45,8 @@ CONFIGURE_OPTS="
 pre_configure() {
     typeset arch=$1
 
-    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
-    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+    CPPFLAGS+=" -I${SYSROOT[$arch]}/usr/include"
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}"
 }
 
 init
