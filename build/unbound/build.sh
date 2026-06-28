@@ -38,10 +38,15 @@ forgo_isaexec
 CONFIGURE_OPTS="
     --sysconfdir=/etc$OPREFIX
     --with-run-dir=/var$PREFIX
-    --with-libevent=/opt/ooce
     --with-libnghttp2
     --with-pthreads
 "
+
+if test_relver '>=' 151059; then
+    CONFIGURE_OPTS+=" --with-libevent"
+else
+    CONFIGURE_OPTS+=" --with-libevent=$OPREFIX"
+fi
 
 export MAKE
 
