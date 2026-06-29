@@ -241,6 +241,7 @@
 | ooce/terminal/minicom		| 2.11.1	| https://salsa.debian.org/api/v4/projects/minicom-team%2Fminicom/repository/tags/ https://salsa.debian.org/minicom-team/minicom/ | [omniosorg](https://github.com/omniosorg)
 | ooce/terminal/picocom		| 3.1		| https://github.com/npat-efault/picocom/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/terminal/starship	| 1.24.2	| https://github.com/starship/starship/releases https://starship.rs | [omniosorg](https://github.com/omniosorg)
+| ooce/terminal/zoxide | 0.9.9	| https://github.com/ajeetdsouza/zoxide | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoc		| 10.2.1	| https://pypi.org/rss/project/asciidoc/releases.xml | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciidoctor		| 2.0.23	| https://github.com/asciidoctor/asciidoctor/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/text/asciinema		| 2.4.0		| https://github.com/asciinema/asciinema/releases | [omniosorg](https://github.com/omniosorg)
