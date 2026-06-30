@@ -22,14 +22,16 @@ PKG=ooce/library/libev
 SUMMARY="libev"
 DESC="High-performance event loop library"
 
-OPREFIX=$PREFIX
-PREFIX+="/$PROG"
-
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
-    -DOPREFIX=${OPREFIX#/}
     -DPROG=$PROG
 "
+
+# As of r151059 we have stopped shipping the libevent v1.x compatibility
+# header with libev, since the real libevent is shipped as a core package.
+# Use an alternate mog file on older releases so the header is not dropped
+# there.
+test_relver '<' 151059 && LOCAL_MOG_FILE=prer59.mog
 
 CONFIGURE_OPTS="
     --disable-static
