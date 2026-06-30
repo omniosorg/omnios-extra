@@ -10,4 +10,4 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/server/build/release.mk a/ser
 +
  build-linux: build-linux-amd64 build-linux-arm64
  
- build-linux-amd64:
+ build-linux-amd64: setup-go-work

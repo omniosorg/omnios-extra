@@ -17,12 +17,12 @@
 . ../../lib/build.sh
 
 PROG=libde265
-VER=1.0.18
+VER=1.1.1
 PKG=ooce/library/libde265
 SUMMARY="h.265 codec implementation"
 DESC="Open source implementation of the h.265 video codec"
 
-test_relver '>=' 151047 && set_clangver
+set_clangver
 
 forgo_isaexec
 

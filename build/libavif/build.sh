@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libavif
-VER=1.4.1
+VER=1.4.2
 PKG=ooce/library/libavif
 SUMMARY="$PROG"
 DESC="$PROG - portable C implementation of the AV1 Image File Format"
