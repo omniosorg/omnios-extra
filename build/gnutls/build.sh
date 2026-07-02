@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=gnutls
-VER=3.8.12
+VER=3.8.13
 PKG=ooce/library/gnutls
 SUMMARY="GnuTLS Transport Layer Security Library"
 DESC="Secure communications library implementing the SSL, TLS and "
