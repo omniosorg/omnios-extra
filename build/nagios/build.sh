@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=nagios
-VER=4.5.0
+VER=4.5.14
 DASHREV=1
 PKG=ooce/application/nagios
 SUMMARY="Extremely powerful network monitoring system"
