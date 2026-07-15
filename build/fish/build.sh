@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=fish
-VER=4.7.1
+VER=4.8.1
 PKG=ooce/shell/fish
 SUMMARY=$PROG
 DESC="$PROG - Friendly Interactive SHell"
@@ -54,7 +54,7 @@ SKIP_LICENSES=Various
 
 pre_build() {
     pushd ${TMPDIR}/${EXTRACTED_SRC}
-    logcmd cargo update -p nix
+    logcmd cargo update -p nix@0.31
     popd
 }
 

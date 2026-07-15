@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
 --- a~/Cargo.toml	1970-01-01 00:00:00
 +++ a/Cargo.toml	1970-01-01 00:00:00
-@@ -235,3 +235,7 @@ print_stderr = "deny"
+@@ -260,3 +260,7 @@ print_stderr = "deny"
  
  [lints]
  workspace = true
