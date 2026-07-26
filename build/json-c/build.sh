@@ -12,17 +12,17 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=json-c
-VER=0.18
+VER=0.19
 PKG=ooce/library/json-c
 SUMMARY=$PROG
 DESC="$PROG - A JSON implementation in C"
 
-test_relver '>=' 151047 && set_clangver
+set_clangver
 
 BUILD_DEPENDS_IPS="
     ooce/developer/cmake
@@ -32,11 +32,10 @@ CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DBUILD_STATIC_LIBS=OFF
-    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 "
 CONFIGURE_OPTS[i386]=
 CONFIGURE_OPTS[amd64]="
-    -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib/amd64
+    -DCMAKE_INSTALL_LIBDIR=$PREFIX/${LIBDIRS[amd64]}
 "
 CONFIGURE_OPTS[aarch64]=
 

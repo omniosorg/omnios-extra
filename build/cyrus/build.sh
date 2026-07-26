@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=cyrus
-VER=3.12.2
+VER=3.12.3
 DASHREV=1
 PKG=ooce/network/cyrus-imapd
 SUMMARY="Cyrus IMAP"
@@ -45,6 +45,7 @@ SKIP_LICENCES='*attribution*'
 SKIP_RTIME_CHECK=1
 
 set_arch 64
+set_cstandard gnu17
 set_builddir $PROG-imapd-$VER
 
 XFORM_ARGS="

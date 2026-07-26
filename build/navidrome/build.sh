@@ -17,14 +17,14 @@
 . ../../lib/build.sh
 
 PROG=navidrome
-VER=0.62.0
+VER=0.63.2
 PKG=ooce/application/navidrome
 SUMMARY="$PROG"
 DESC="$PROG - an open source web-based music collection server and streamer"
 
 set_arch 64
 set_gover
-set_nodever 24
+set_nodever
 
 RUN_DEPENDS_IPS="
     ooce/multimedia/mediasrv-common

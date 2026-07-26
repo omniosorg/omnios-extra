@@ -1,0 +1,32 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
+
+license LICENSE license=MIT
+
+group groupname=$(GROUP) gid=94
+user ftpuser=false username=$(USER) uid=94 group=$(GROUP) \
+    gcos-field="Anubis HTTP defence proxy" \
+    home-dir=/var/$(PREFIX) password=NP
+
+# Home directory for the service user, and a place for persistent state
+# should an instance be configured with an on-disk storage backend.
+dir path=var/$(PREFIX) owner=$(USER) group=$(GROUP) mode=0700
+
+# default.env is a template that administrators copy to create per-instance
+# configuration files. Instance environment files must be readable by the
+# '$(USER)' account under which the service runs.
+<transform file path=etc/$(PREFIX)/default\.env$ -> set mode 0644>
+<transform file path=etc/$(PREFIX)/default\.env$ -> set preserve renamenew>
+
+<transform file path=$(PREFIX)/bin -> \
+    set restart_fmri svc:/ooce/network/$(PROG):*>
+

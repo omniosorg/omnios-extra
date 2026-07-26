@@ -1,0 +1,27 @@
+-------------------------
+Anubis Installation Notes
+-------------------------
+
+Anubis is a reverse proxy that challenges clients before passing their
+requests on to a backend web service, in order to block AI crawlers and
+other automated scrapers.
+
+This package delivers the anubis SMF service without any instances.
+Create one instance for each backend service that is to be protected.
+For example, to protect a gitea server listening on port 3000:
+
+	cp /etc/opt/ooce/anubis/default.env /etc/opt/ooce/anubis/gitea.env
+	vi /etc/opt/ooce/anubis/gitea.env
+	svccfg -s anubis add gitea
+	svcadm enable anubis:gitea
+
+Each instance reads its configuration from
+/etc/opt/ooce/anubis/<instance>.env. At a minimum, set TARGET to the
+backend service's URL, then point the ingress web server or load
+balancer at the address configured in BIND.
+
+Anubis uses a built-in bot policy by default. To customise it, copy the
+example policy from /opt/ooce/anubis/share/botPolicies.yaml alongside the
+environment file and set POLICY_FNAME to its path.
+
+-------------------------

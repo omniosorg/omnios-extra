@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+
+This file and its contents are supplied under the terms of the
+Common Development and Distribution License ("CDDL"), version 1.0.
+You may only use this file in accordance with the terms of version
+1.0 of the CDDL.
+
+A full copy of the text of the CDDL should have accompanied this
+source. A copy of the CDDL is also available via the Internet at
+http://www.illumos.org/license/CDDL.
+
+Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
+
+-->
+<service_bundle type="manifest"
+                name="anubis">
+
+    <service name="ooce/network/anubis"
+             type="service"
+             version="1">
+
+        <!--
+            This service is delivered without any instances. Each instance
+            of anubis protects a single backend service and is configured
+            via an environment file in /etc/$(PREFIX).
+
+            For example, to protect a gitea server:
+
+                cp /etc/$(PREFIX)/default.env /etc/$(PREFIX)/gitea.env
+                vi /etc/$(PREFIX)/gitea.env
+                svccfg -s anubis add gitea
+                svcadm enable anubis:gitea
+        -->
+
+        <dependency name="filesystem_local"
+                    grouping="require_all"
+                    restart_on="none"
+                    type="service">
+            <service_fmri value="svc:/system/filesystem/local:default" />
+        </dependency>
+
+        <dependency name="multi_user"
+                    grouping="require_all"
+                    restart_on="none"
+                    type="service">
+            <service_fmri value="svc:/milestone/multi-user:default" />
+        </dependency>
+
+        <dependency name="loopback"
+                    grouping="require_any"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/network/loopback" />
+        </dependency>
+
+        <dependency name="network"
+                    grouping="optional_all"
+                    restart_on="error"
+                    type="service">
+            <service_fmri value="svc:/milestone/network" />
+        </dependency>
+
+        <dependent name="anubis_multi-user-server"
+                   grouping="optional_all"
+                   restart_on="none">
+            <service_fmri value="svc:/milestone/multi-user-server" />
+        </dependent>
+
+        <exec_method type="method"
+                     name="start"
+                     exec="/lib/svc/method/ooce/$(PROG) start %i"
+                     timeout_seconds="60">
+            <method_context security_flags="aslr">
+                <method_credential user="$(USER)"
+                                   group="$(GROUP)"
+                                   privileges="basic,!proc_info,!proc_session,!file_link_any" />
+            </method_context>
+        </exec_method>
+
+        <exec_method type="method"
+                     name="stop"
+                     exec=":kill"
+                     timeout_seconds="60" />
+
+        <property_group name="startd"
+                        type="framework">
+            <propval name="duration"
+                     type="astring"
+                     value="child" />
+        </property_group>
+
+        <stability value="Unstable" />
+
+        <template>
+            <common_name>
+                <loctext xml:lang="C">Anubis - HTTP AI-crawler defence
+                proxy</loctext>
+            </common_name>
+            <documentation>
+                <doc_link name="anubis.techaro.lol"
+                          uri="https://anubis.techaro.lol/docs/" />
+            </documentation>
+        </template>
+
+    </service>
+
+</service_bundle>

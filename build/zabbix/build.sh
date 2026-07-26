@@ -55,7 +55,6 @@ CONFIGURE_OPTS="
     --datadir=$OPREFIX/share
     --enable-server
     --enable-ipv6
-    --with-libevent=$OPREFIX
     --with-net-snmp
     --with-libcurl
     --with-libxml2
@@ -64,8 +63,14 @@ CONFIGURE_OPTS="
 "
 CONFIGURE_OPTS[amd64]+="
     --libdir=$PREFIX/lib
-    --with-libevent-lib=$OPREFIX/lib/amd64
 "
+
+test_relver '>=' 151059 && USE_LIBEVENT=1 || USE_LIBEVENT=0
+
+((USE_LIBEVENT)) && LEPREFIX=/usr || LEPREFIX=$OPREFIX
+
+CONFIGURE_OPTS+=" --with-libevent=$LEPREFIX"
+CONFIGURE_OPTS[amd64]+=" --with-libevent-lib=$LEPREFIX/${LIBDIRS[amd64]}"
 
 # See https://support.zabbix.com/browse/ZBX-18210
 # and https://support.zabbix.com/browse/ZBX-16928
@@ -94,6 +99,7 @@ post_install() {
 init
 prep_build
 download_source $PROG $PROG $VER
+((USE_LIBEVENT)) || apply_patches $PATCHDIR series.libev
 patch_source
 run_autoreconf -fi
 

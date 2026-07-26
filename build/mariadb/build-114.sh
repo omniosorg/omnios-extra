@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=mariadb
-VER=11.4.10
+VER=11.4.12
 PKG=ooce/database/mariadb-114
 SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
@@ -26,6 +26,8 @@ DESC+="MySQL relational database management system"
 MAJVER=${VER%.*}
 sMAJVER=${MAJVER//./}
 set_patchdir patches-$sMAJVER
+
+test_relver '>=' 151059 && set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER

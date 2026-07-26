@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libjpeg-turbo
-VER=3.1.4.1
+VER=3.2.0
 PKG=ooce/library/libjpeg-turbo
 SUMMARY="libjpeg-turbo"
 DESC="SIMD-accelerated libjpeg-compatible JPEG codec library"
@@ -41,6 +41,7 @@ TESTSUITE_SED='
 CONFIGURE_OPTS="
     -DCMAKE_BUILD_TYPE=Release
     -DENABLE_STATIC=0
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON
     -DCMAKE_INSTALL_PREFIX=$PREFIX
 "
 

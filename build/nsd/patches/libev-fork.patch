@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/server.c a/server.c
 --- a~/server.c	1970-01-01 00:00:00
 +++ a/server.c	1970-01-01 00:00:00
-@@ -3287,7 +3287,7 @@ nsd_event_method(void)
+@@ -3289,7 +3289,7 @@ nsd_event_method(void)
  #  else
  	m = "?";
  #  endif
@@ -10,7 +10,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/server.c a/server.c
  	event_base_free(b);
  #  endif
  	return m;
-@@ -3304,8 +3304,14 @@ nsd_child_event_base(void)
+@@ -3306,8 +3306,14 @@ nsd_child_event_base(void)
  	base = event_init(&secs, &now);
  #else
  #  if defined(HAVE_EV_LOOP) || defined(HAVE_EV_DEFAULT_LOOP)

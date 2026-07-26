@@ -1,0 +1,49 @@
+#!/bin/ksh
+
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
+
+. /lib/svc/share/smf_include.sh
+
+if [ -z "$SMF_FMRI" ]; then
+	echo "SMF framework variables are not initialised."
+	exit $SMF_EXIT_ERR
+fi
+
+typeset -r ANUBIS="/$(PREFIX)/bin/$(PROG)"
+typeset -r CONFDIR="/etc/$(PREFIX)"
+
+instance="${2:-${SMF_FMRI##*:}}"
+envfile="$CONFDIR/$instance.env"
+
+case "$1" in
+start)
+	if [ ! -f "$envfile" ]; then
+		print -u2 "Configuration file '$envfile' is missing."
+		print -u2 "Copy $CONFDIR/default.env to '$envfile' and"\
+		    "customise it for this instance."
+		exit $SMF_EXIT_ERR_CONFIG
+	fi
+
+	# anubis is configured via environment variables; export everything
+	# set in the instance environment file.
+	set -a
+	. "$envfile" || exit $SMF_EXIT_ERR_CONFIG
+	set +a
+
+	exec $ANUBIS 2>&1
+	;;
+*)
+	echo "Unknown method."
+	exit $SMF_EXIT_ERR_FATAL
+	;;
+esac
+

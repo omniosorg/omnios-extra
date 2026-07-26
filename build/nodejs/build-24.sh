@@ -27,6 +27,7 @@ DESC+="servers."
 MAJVER=${VER%%.*}
 
 set_arch 64
+test_relver '>=' 151059 && set_clangver
 set_builddir $PROG-v$VER
 set_patchdir patches-$MAJVER
 
@@ -55,6 +56,15 @@ CONFIGURE_OPTS="
     --shared-zlib
     --shared-brotli
 "
+
+pre_configure() {
+    typeset arch=$1
+
+    test_relver '<' 151059 && return
+
+    subsume_arch $arch LDFLAGS
+    LDFLAGS+=" -latomic"
+}
 
 init
 download_source $PROG $PROG v$VER

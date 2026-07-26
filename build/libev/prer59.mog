@@ -12,5 +12,3 @@
 
 license LICENSE license=simplified-BSD
 
-<transform file path=$(PREFIX)/include/event.h$ -> drop>
-

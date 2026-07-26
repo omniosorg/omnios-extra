@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=ntfs-3g
-VER=2026.2.25
+VER=2026.7.7
 PKG=ooce/system/file-system/ntfs-3g
 SUMMARY="${PROG^^} - Read-Write NTFS Driver"
 DESC="A stable, full-featured, read-write NTFS driver for Linux, Android, "
@@ -28,6 +28,7 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 forgo_isaexec
+test_relver '>=' 151059 && set_clangver
 
 RUN_DEPENDS_IPS="ooce/driver/fuse"
 
@@ -51,6 +52,7 @@ pre_configure() {
     CONFIGURE_OPTS[$arch]+="
         --libdir=$OPREFIX/${LIBDIRS[$arch]}
     "
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
 
     ! cross_arch $arch && return
 
