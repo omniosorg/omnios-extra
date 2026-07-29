@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=vaultwarden
-VER=1.37.0
+VER=1.37.1
 PKG=ooce/application/vaultwarden
 SUMMARY="Bitwarden compatible server"
 DESC="Unofficial Bitwarden compatible server written in Rust, formerly known "
@@ -25,8 +25,8 @@ DESC+="as bitwarden_rs"
 
 DANIGARCIA=$GITHUB/dani-garcia
 # https://github.com/dani-garcia/bw_web_builds/releases
-WEBVAULTVER=2026.4.1
-WEBVAULTSHA256=bc232d81223d8c02a816763ea70a5a8a3fafa39ce99ceca7dc9ee1ff55ab2642
+WEBVAULTVER=2026.6.4
+WEBVAULTSHA256=d47f16ed4e756c73c88143047281f8881f1a6fb680d9bf0dd24c8adae6799592
 
 set_arch 64
 
