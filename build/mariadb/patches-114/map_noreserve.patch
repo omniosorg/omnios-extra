@@ -1,0 +1,23 @@
+The default innodb_buffer_pool_size_max of 8TiB cannot be reserved on
+illumos because anonymous mappings reserve backing store (swap) when they
+are created, irrespective of the page protections. Pass MAP_NORESERVE when
+reserving the buffer pool address range; swap is still properly reserved,
+and out-of-memory reported, when ranges are committed.
+see: https://jira.mariadb.org/browse/MDEV-38671
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/mysys/my_largepage.c a/mysys/my_largepage.c
+--- a~/mysys/my_largepage.c	1970-01-01 00:00:00
++++ a/mysys/my_largepage.c	1970-01-01 00:00:00
+@@ -492,7 +492,11 @@ char *my_large_virtual_alloc(size_t *siz
+   ptr= mmap(NULL, *size, PROT_READ | PROT_WRITE,
+             MAP_PRIVATE | OS_MAP_ANON, -1, 0);
+ # else
+-  ptr= mmap(NULL, *size, PROT_NONE, MAP_PRIVATE | OS_MAP_ANON, -1, 0);
++  ptr= mmap(NULL, *size, PROT_NONE, MAP_PRIVATE | OS_MAP_ANON
++#  ifdef __illumos__
++            | MAP_NORESERVE
++#  endif /* __illumos__ */
++            , -1, 0);
+ # endif
+   if (ptr == MAP_FAILED)
+     ptr= NULL;
