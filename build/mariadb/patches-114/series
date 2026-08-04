@@ -6,3 +6,4 @@ disable_dbug_docs.patch
 pam-illumos.patch
 assert.patch
 super_large_pages.patch
+map_noreserve.patch
