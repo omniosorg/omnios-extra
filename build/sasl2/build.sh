@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -29,6 +29,7 @@ XFORM_ARGS="
 
 forgo_isaexec
 set_standard XPG6
+set_cstandard gnu17
 
 SKIP_RTIME_CHECK=1
 SKIP_LICENCES='*'
