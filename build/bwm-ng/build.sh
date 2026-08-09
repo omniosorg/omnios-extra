@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -23,6 +23,7 @@ SUMMARY="CLI network and disk io monitor"
 DESC="small and simple console-based live network and disk io bandwidth monitor"
 
 set_arch 64
+set_cstandard gnu17
 
 init
 download_source $PROG v$VER
