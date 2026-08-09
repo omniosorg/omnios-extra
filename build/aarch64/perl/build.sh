@@ -13,18 +13,18 @@
 # }}}
 
 # Copyright 2011-2017 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../common.sh
 
 PROG=perl
 PKG=ooce/developer/aarch64-perl
-VER=5.42.0
+VER=5.44.0
 MAJVER=${VER%.*}
 SUMMARY="Perl $MAJVER Programming Language"
 DESC="A highly capable, feature-rich programming language"
 
-CROSSVER=1.6.2
+CROSSVER=1.6.4
 
 set_arch 64
 CTF_FLAGS+=" -s"
