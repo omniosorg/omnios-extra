@@ -65,6 +65,7 @@
 | illumos	| 96	| unknown
 | pkg5		| 97	| pkg5srv
 | extra		| 98	| squid
+| extra		| 99	| victorialogs
 
 ### Groups
 
@@ -132,3 +133,4 @@
 | illumos	| 96	| unknown
 | pkg5		| 97	| pkg5srv
 | extra		| 98	| squid
+| extra		| 99	| victorialogs
