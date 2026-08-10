@@ -108,15 +108,16 @@ pre_build() { ! cross_arch $1; }
 # Build previous versions
 for pver in $PVERS; do
     note -n "Building previous version: $pver"
-    save_variables BUILDDIR EXTRACTED_SRC CONFIGURE_OPTS
+    save_variables BUILDDIR EXTRACTED_SRC CONFIGURE_OPTS CFLAGS
     BUILDDIR=$PROG-$pver
     EXTRACTED_SRC=$PROG-$pver
     CONFIGURE_OPTS[amd64]+=" --disable-slapd"
+    set_cstandard gnu17
     download_source $PROG $PROG $pver
     patch_source patches-`echo $pver | cut -d. -f1-2`
     run_autoconf -f
     build
-    restore_variables BUILDDIR EXTRACTED_SRC CONFIGURE_OPTS
+    restore_variables BUILDDIR EXTRACTED_SRC CONFIGURE_OPTS CFLAGS
 done
 unset -f pre_build
 
