@@ -1,2 +1,3 @@
 file.patch
 illumos-spawn.patch
+include-stdio.h.patch
