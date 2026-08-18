@@ -33,6 +33,7 @@
 | ooce/application/vaultwarden	| 1.37.1	| https://github.com/dani-garcia/vaultwarden/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/zabbix	| 6.2.3		| https://www.zabbix.com/download_sources | [omniosorg](https://github.com/omniosorg)
 | ooce/audio/flac		| 1.5.0		| https://ftp.osuosl.org/pub/xiph/releases/flac/ https://xiph.org/flac/changelog.html | [omniosorg](https://github.com/omniosorg)
+| ooce/audio/lame		| 4.0		| https://sourceforge.net/projects/lame/	| [omniosorg](https://github.com/omniosorg)
 | ooce/audio/opus		| 1.6.1		| https://opus-codec.org/downloads/ | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pbzip2		| 1.1.13	| https://launchpad.net/pbzip2/+download | [omniosorg](https://github.com/omniosorg)
 | ooce/compress/pigz		| 2.8		| https://zlib.net/pigz/ | [omniosorg](https://github.com/omniosorg)
