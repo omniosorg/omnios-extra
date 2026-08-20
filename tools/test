@@ -58,6 +58,9 @@ add_target()
 			*/zadm:*)
 				targets["ooce/application/novnc"]=`pver NOVNCVER`
 				;;
+			*/lame:*)
+				targets["ooce/audio/mpg123"]=`pver MPG123VER`
+				;;
 		esac
 		targets[$pkg]=$ver
 	elif [[ $build = *.p5m ]]; then
