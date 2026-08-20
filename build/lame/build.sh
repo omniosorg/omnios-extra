@@ -20,37 +20,66 @@ PROG=lame
 VER=4.0
 PKG=ooce/audio/lame
 SUMMARY="The LAME MP3 encoder"
-SKIP_RTIME_CHECK=1
 DESC="A high quality MP3 enocder"
-CFLAGS+=" -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types -Wno-error=implicit-int"
 
-OPREFIX=$PREFIX
-PREFIX+="/$PROG"
+MPG123VER=1.33.7
+
+forgo_isaexec
+set_clangver
+set_standard XPG6
 
 BUILD_DEPENDS_IPS="
     developer/nasm
 "
 
+SKIP_RTIME_CHECK=1
+
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
-    -DOPREFIX=${OPREFIX#/}
-    -DPROG=$PROG
-    -DPKGROOT=$PROG
-    "
-CONFIGURE_OPTS+="
-    --prefix=$PREFIX
-    --enable-nasm
-    --disable-decoder
-    "
+"
 
-set_arch 64
+init
+prep_build
+
+#########################################################################
+
+save_buildenv
+
+# Download and build libmpg123
+CONFIGURE_OPTS="
+    --disable-components
+    --enable-libmpg123
+"
+CONFIGURE_OPTS[i386]+=" --with-cpu=x86"
+CONFIGURE_OPTS[amd64]+=" --with-cpu=x86-64"
+CONFIGURE_OPTS[aarch64]+=" --with-cpu=aarch64"
+
+build_dependency -merge mpg123 mpg123-$MPG123VER mpg123 mpg123 $MPG123VER
+
+restore_buildenv
+
+#########################################################################
+
+CONFIGURE_OPTS="
+    --enable-nasm
+"
+
+pre_configure() {
+    typeset arch=$1
+
+    _dd=$DESTDIR
+    cross_arch $arch && _dd+=.$arch
+
+    export mpg123_CFLAGS="-I$_dd$PREFIX/include"
+    export mpg123_LIBS="-L$_dd$PREFIX/${LIBDIRS[$arch]} -lmpg123"
+    LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER
 patch_source
 build
-test
-strip_install
+LD_LIBRARY_PATH=$DESTDIR$PREFIX/${LIBDIRS[$BUILD_ARCH]} run_testsuite
 make_package
 clean_up
 

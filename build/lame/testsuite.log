@@ -1,0 +1,25 @@
+LAME 4.0 64bits (https://lame.sourceforge.io)
+Using polyphase lowpass filter, transition band: 16538 Hz - 17071 Hz
+Encoding ./testcase.wav to testcase.new.mp3
+Encoding as 44.1 kHz j-stereo MPEG-1 Layer III (11x) 128 kbps qval=3
+    Frame          |  CPU time/estim | REAL time/estim | play/CPU |    ETA 
+     0/       ( 0%)|    0:00/     :  |    0:00/     :  |         x|     :  
+00:00--------------------------------------------------------------------------[K
+   kbps      %     %[K
+    0.0           [K[A[A[A     0/23     ( 0%)|    0:00/    0:00|    0:00/    0:00|   0.0000x|    0:00 
+00:00--------------------------------------------------------------------------[K
+   kbps      %     %[K
+    0.0           [K[A[A[A    23/23    (100%)|    0:00/    0:00|    0:00/    0:00|   54.620x|    0:00 
+-------------------------------------------------------------------------------[K
+   kbps        LR    MS  %     long switch short %[K
+  128.0       95.7   4.3        78.3  13.0   8.7[K
+Writing LAME Tag...done
+ReplayGain: -1.6dB
+
+real	0m0.02s
+user	0m0.01s
+sys	0m0.00s
+
+The following output has value only for a LAME-developer, do not make _any_
+assumptions about what this number means. You do not need to care about it.
+       0

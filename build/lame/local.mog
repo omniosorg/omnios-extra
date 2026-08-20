@@ -10,8 +10,9 @@
 
 # Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
-<include binlink.mog>
-<include manlink.mog>
-<transform path=$(PREFIX)/share/doc -> drop>
-
 license COPYING license=LGPLv2
+
+<transform path=$(PREFIX)/share/doc -> drop>
+# Drop static libraries
+<transform path=.*\.a$ -> drop>
+

@@ -66,6 +66,7 @@ CONFIGURE_OPTS="
     --enable-libx265
     --enable-gnutls
     --enable-libopus
+    --enable-libmp3lame
 "
 CONFIGURE_OPTS[i386]="
     --disable-librav1e
@@ -92,6 +93,7 @@ pre_configure() {
     # to find x264.h for builtin check
     CPPFLAGS+=" -I${SYSROOT[$arch]}$OPREFIX/include"
 
+    LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
     LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
 
     ! cross_arch $arch && return

@@ -1,0 +1,68 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/frontend/parse.c a/frontend/parse.c
+--- a~/frontend/parse.c	1970-01-01 00:00:00
++++ a/frontend/parse.c	1970-01-01 00:00:00
+@@ -410,13 +410,13 @@ set_id3v2tag(lame_global_flags* gfp, Tex
+         case TENC_UTF8:
+             switch (type)
+             {
+-                case 'a': return id3tag_set_textinfo_utf8(gfp, "TPE1", str);
+-                case 't': return id3tag_set_textinfo_utf8(gfp, "TIT2", str);
+-                case 'l': return id3tag_set_textinfo_utf8(gfp, "TALB", str);
+-                case 'g': return id3tag_set_textinfo_utf8(gfp, "TCON", str);
++                case 'a': return id3tag_set_textinfo_utf8(gfp, "TPE1", (char const*)str);
++                case 't': return id3tag_set_textinfo_utf8(gfp, "TIT2", (char const*)str);
++                case 'l': return id3tag_set_textinfo_utf8(gfp, "TALB", (char const*)str);
++                case 'g': return id3tag_set_textinfo_utf8(gfp, "TCON", (char const*)str);
+                 case 'c': return id3tag_set_comment_ucs2(gfp, 0, 0, str);
+-                case 'n': return id3tag_set_textinfo_utf8(gfp, "TRCK", str);
+-                case 'y': return id3tag_set_textinfo_utf8(gfp, "TYER", str);
++                case 'n': return id3tag_set_textinfo_utf8(gfp, "TRCK", (char const*)str);
++                case 'y': return id3tag_set_textinfo_utf8(gfp, "TYER", (char const*)str);
+                 case 'v': return id3tag_set_fieldvalue_ucs2(gfp, str);
+             }
+             ;;
+diff -wpruN --no-dereference '--exclude=*.orig' a~/include/lame.h a/include/lame.h
+--- a~/include/lame.h	1970-01-01 00:00:00
++++ a/include/lame.h	1970-01-01 00:00:00
+@@ -1297,6 +1297,9 @@ int CDECL id3tag_set_fieldvalue_ucs2(lam
+ int CDECL id3tag_set_fieldvalue_utf16(lame_t gfp, const unsigned short *fieldvalue);
+ 
+ /* experimental */
++int CDECL id3tag_set_fieldvalue_ucs2(lame_t gfp, const unsigned short *fieldvalue);
++
++/* experimental */
+ int CDECL id3tag_set_textinfo_utf16(lame_t gfp, char const *id, unsigned short const *text);
+ 
+ /* experimental */
+@@ -1308,6 +1311,8 @@ int CDECL id3tag_set_textinfo_utf8(lame_
+ /* experimental */
+ int CDECL id3tag_set_comment_utf8(lame_t gfp, char const *lang, char const *desc, char const *text);
+ 
++/* experimental */
++int CDECL id3tag_set_comment_ucs2(lame_t gfp, char const *lang, unsigned short const *desc, unsigned short const *text);
+ 
+ /***********************************************************************
+ *
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libmp3lame/id3tag.c a/libmp3lame/id3tag.c
+--- a~/libmp3lame/id3tag.c	1970-01-01 00:00:00
++++ a/libmp3lame/id3tag.c	1970-01-01 00:00:00
+@@ -1284,9 +1284,6 @@ id3tag_set_comment_utf16(lame_t gfp, cha
+     return id3v2_add_ucs2(gfp, ID_COMMENT, lang, desc, text);
+ }
+ 
+-extern int
+-id3tag_set_comment_ucs2(lame_t gfp, char const *lang, unsigned short const *desc, unsigned short const *text);
+-
+ 
+ int
+ id3tag_set_comment_ucs2(lame_t gfp, char const *lang, unsigned short const *desc, unsigned short const *text)
+@@ -1832,9 +1829,6 @@ id3tag_set_fieldvalue_utf16(lame_t gfp,
+     return -1;
+ }
+ 
+-extern int
+-id3tag_set_fieldvalue_ucs2(lame_t gfp, const unsigned short *fieldvalue);
+-
+ int
+ id3tag_set_fieldvalue_ucs2(lame_t gfp, const unsigned short *fieldvalue)
+ {
