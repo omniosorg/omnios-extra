@@ -1,7 +1,8 @@
-diff -wpruN '--exclude=*.orig' a~/src/libs/zbxhash/sha512crypt.c a/src/libs/zbxhash/sha512crypt.c
---- a~/src/libs/zbxhash/sha512crypt.c	1970-01-01 00:00:00
-+++ a/src/libs/zbxhash/sha512crypt.c	1970-01-01 00:00:00
-@@ -5,6 +5,8 @@ Released into the Public Domain by Ulric
+diff --git a/src/libs/zbxhash/sha512crypt.c b/src/libs/zbxhash/sha512crypt.c
+index fce7014..e9652d9 100644
+--- a/src/libs/zbxhash/sha512crypt.c
++++ b/src/libs/zbxhash/sha512crypt.c
+@@ -5,6 +5,8 @@ Released into the Public Domain by Ulrich Drepper <drepper@redhat.com>.  */
  
  #ifdef __linux__
  	#include <endian.h>
