@@ -19,14 +19,14 @@
 
 PROG=nginx
 PKG=ooce/server/nginx
-VER=1.31.3
+VER=1.31.4
 SUMMARY="nginx web server"
 DESC="nginx is a high-performance HTTP(S) server and reverse proxy"
 
 # Brotli source from https://github.com/google/ngx_brotli
 BROTLIVER=1.0.0rc
 # Acme source from https://github.com/nginx/nginx-acme
-ACMEVER=0.3.1
+ACMEVER=0.4.1
 
 set_arch 64
 set_clangver
