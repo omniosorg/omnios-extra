@@ -1,19 +1,19 @@
-
-We'd quite like fatal errors to create core files that allow analysis.
-
-diff -wpruN '--exclude=*.orig' a~/src/libs/zbxnix/sighandler.c a/src/libs/zbxnix/sighandler.c
---- a~/src/libs/zbxnix/sighandler.c	1970-01-01 00:00:00
-+++ a/src/libs/zbxnix/sighandler.c	1970-01-01 00:00:00
-@@ -209,12 +209,6 @@ void	zbx_set_common_signal_handlers(zbx_
+diff --git a/src/libs/zbxnix/sighandler.c b/src/libs/zbxnix/sighandler.c
+index 2cdf44b..b0c9824 100644
+--- a/src/libs/zbxnix/sighandler.c
++++ b/src/libs/zbxnix/sighandler.c
+@@ -321,11 +321,14 @@ void	zbx_set_common_signal_handlers(zbx_on_exit_t zbx_on_exit_cb_arg)
  	sigaction(SIGTERM, &phan, NULL);
  	sigaction(SIGUSR2, &phan, NULL);
  
--	phan.sa_sigaction = fatal_signal_handler;
--	sigaction(SIGILL, &phan, NULL);
--	sigaction(SIGFPE, &phan, NULL);
--	sigaction(SIGSEGV, &phan, NULL);
--	sigaction(SIGBUS, &phan, NULL);
--
++/* We'd quite like fatal errors to create core files that allow analysis. */
++#if !defined(__illumos__)
+ 	phan.sa_sigaction = fatal_signal_handler;
+ 	sigaction(SIGILL, &phan, NULL);
+ 	sigaction(SIGFPE, &phan, NULL);
+ 	sigaction(SIGSEGV, &phan, NULL);
+ 	sigaction(SIGBUS, &phan, NULL);
++#endif
+ 
  	phan.sa_sigaction = alarm_signal_handler;
  	sigaction(SIGALRM, &phan, NULL);
- }

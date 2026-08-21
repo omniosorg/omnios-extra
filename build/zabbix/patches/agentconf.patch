@@ -1,6 +1,7 @@
-diff -wpruN '--exclude=*.orig' a~/conf/zabbix_agentd.conf a/conf/zabbix_agentd.conf
---- a~/conf/zabbix_agentd.conf	1970-01-01 00:00:00
-+++ a/conf/zabbix_agentd.conf	1970-01-01 00:00:00
+diff --git a/conf/zabbix_agentd.conf b/conf/zabbix_agentd.conf
+index 988a971..43e18f1 100644
+--- a/conf/zabbix_agentd.conf
++++ b/conf/zabbix_agentd.conf
 @@ -8,7 +8,7 @@
  #
  # Mandatory: no
@@ -28,7 +29,7 @@ diff -wpruN '--exclude=*.orig' a~/conf/zabbix_agentd.conf a/conf/zabbix_agentd.c
  
  ### Option: DebugLevel
  #	Specifies debug level:
-@@ -319,15 +319,15 @@ Hostname=Zabbix server
+@@ -540,7 +540,7 @@ Hostname=Zabbix server
  
  ### Option: Include
  #	You may include individual files or all files in a directory in the configuration file.
@@ -37,14 +38,10 @@ diff -wpruN '--exclude=*.orig' a~/conf/zabbix_agentd.conf a/conf/zabbix_agentd.c
  #
  # Mandatory: no
  # Default:
- # Include=
- 
--# Include=/usr/local/etc/zabbix_agentd.userparams.conf
--# Include=/usr/local/etc/zabbix_agentd.conf.d/
--# Include=/usr/local/etc/zabbix_agentd.conf.d/*.conf
+@@ -549,3 +549,6 @@ Hostname=Zabbix server
+ # Include=/usr/local/etc/zabbix_agentd.userparams.conf
+ # Include=/usr/local/etc/zabbix_agentd.conf.d/
+ # Include=/usr/local/etc/zabbix_agentd.conf.d/*.conf
 +# Include=/etc/opt/ooce/zabbix/zabbix_agentd.userparams.conf
 +# Include=/etc/opt/ooce/zabbix/zabbix_agentd.conf.d/
 +Include=/etc/opt/ooce/zabbix/zabbix_agentd.conf.d/*.conf
- 
- ####### USER-DEFINED MONITORED PARAMETERS #######
- 
