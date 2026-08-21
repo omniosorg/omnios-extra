@@ -19,7 +19,7 @@
 
 PROG=postgresql
 PKG=ooce/database/postgresql-18
-VER=18.4
+VER=18.6
 SUMMARY="PostgreSQL 18"
 DESC="The World's Most Advanced Open Source Relational Database"
 
