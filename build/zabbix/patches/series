@@ -1,7 +1,12 @@
-pthread.patch
 agentconf.patch
-serverconf.patch
-signal.patch
-procstate.patch
+configure.ac.patch
+disablemd5.patch
 ldap.patch
+libdir-zabbix_js.patch
+libev.m4.patch
+postgresql.m4.patch
+procstate.patch
+pthread.patch
+serverconf.patch
 sha512crypt.patch
+signal.patch
