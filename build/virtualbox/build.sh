@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -26,6 +26,9 @@ DESC="VirtualBox is a general-purpose full virtualiser for x86 hardware, "
 DESC+="targeted at server, desktop and embedded use."
 
 SKIP_LICENCES=GPLv2/gSOAP
+
+# does not yet build with gcc 15
+((GCCVER > 14)) && set_gccver 14
 
 SKIP_RTIME_CHECK=1
 SKIP_SSP_CHECK=1

@@ -13,7 +13,7 @@
 # }}}
 
 # Copyright 2022 r7st r7st.guru@gmail.com
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -25,6 +25,7 @@ DESC="rlwrap is a 'readline wrapper', a small utility that uses the GNU "
 DESC+="Readline library to allow the editing of keyboard input for any command."
 
 set_arch 64
+set_cstandard gnu17
 
 pre_configure() {
     typeset arch=$1

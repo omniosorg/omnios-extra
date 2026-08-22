@@ -293,6 +293,7 @@ CTFCFLAGS[11]="-gdwarf-2"
 CTFCFLAGS[12]="-gdwarf-2"
 CTFCFLAGS[13]="-gdwarf-2"
 CTFCFLAGS[14]="-gdwarf-4"
+CTFCFLAGS[15]="-gdwarf-4"
 GENOFFSETS_CFLAGS="
     ${CTFCFLAGS[_]}
     -_gcc=-fno-eliminate-unused-debug-symbols
@@ -372,7 +373,8 @@ case $RELVER in
     15104[12])          DEFAULT_GCC_VER=11; ILLUMOS_GCC_VER=10 ;;
     15104[3-6])         DEFAULT_GCC_VER=12; ILLUMOS_GCC_VER=10 ;;
     15104[7-9]|151050)  DEFAULT_GCC_VER=13; ILLUMOS_GCC_VER=10 ;;
-    15105[1-9])         DEFAULT_GCC_VER=14; ILLUMOS_GCC_VER=10 ;;
+    15105[1-8])         DEFAULT_GCC_VER=14; ILLUMOS_GCC_VER=10 ;;
+    151059|15106[0-9])  DEFAULT_GCC_VER=15; ILLUMOS_GCC_VER=10 ;;
     *) logerr "Unknown release '$RELVER', can't select compiler." ;;
 esac
 

@@ -1,2 +1,3 @@
 aarch64-eh_frame-ro.patch
 0001-aarch64-cpu-feature-support-for-illumos.patch
+no-debug-compression.patch

@@ -35,6 +35,7 @@ BUILD_DEPENDS_IPS="ooce/library/nettle"
 
 forgo_isaexec
 set_standard XPG6
+set_cstandard gnu17
 
 SKIP_RTIME_CHECK=1
 TESTSUITE_FILTER='^[A-Z#][A-Z ]'

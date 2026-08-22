@@ -13,7 +13,7 @@
 # }}}
 #
 # Copyright 2011-2012 OmniTI Computer Consulting, Inc.  All rights reserved.
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../common.sh
 
@@ -30,6 +30,7 @@ BRANCH=illumos-arm64-${VER//./-}
 set_arch 64
 # Needed for X/Open curses/termcap
 set_standard -xcurses XPG6 CFLAGS
+set_cstandard gnu17
 
 CTF_FLAGS+=" -s"
 

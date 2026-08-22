@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -24,6 +24,7 @@ DESC="$PROG is a UNIX communication package providing the XMODEM, YMODEM and "
 DESC+="ZMODEM file transfer protocols."
 
 set_arch 64
+set_cstandard gnu17
 
 HARDLINK_TARGETS="
     ${PREFIX#/}/bin/rx

@@ -103,11 +103,9 @@ pre_configure() {
             --set target.${RUSTTRIPLETS[$a]}.cxx=$archprefix-g++
             --set target.${RUSTTRIPLETS[$a]}.ar=$archprefix-ar
         "
-        tripus=${RUSTTRIPLETS[aarch64]//-/_}
+        tripus=${RUSTTRIPLETS[$a]//-/_}
         tripuc=${tripus^^}
-        export CARGO_TARGET_${tripuc}_RUSTFLAGS="
-            -C link-arg=--sysroot=${SYSROOT[$a]}
-        "
+        export CARGO_TARGET_${tripuc}_RUSTFLAGS="-C link-arg=--sysroot=${SYSROOT[$a]}"
     done
 
     CONFIGURE_OPTS+=" --target=$target"

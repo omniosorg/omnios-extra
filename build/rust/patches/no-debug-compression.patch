@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/bootstrap/src/core/builder/cargo.rs a/src/bootstrap/src/core/builder/cargo.rs
+--- a~/src/bootstrap/src/core/builder/cargo.rs	1970-01-01 00:00:00
++++ a/src/bootstrap/src/core/builder/cargo.rs	1970-01-01 00:00:00
+@@ -353,7 +353,7 @@ impl Cargo {
+                 // Do not enable Zlib compression on:
+                 // - Windows, because MSVC/PDB doesn't support it
+                 // - macOS, because its linker doesn't know the flag
+-                if !self.target.is_windows() && !self.target.is_apple() {
++                if !self.target.is_windows() && !self.target.is_apple() && !self.target.triple.contains("illumos") {
+                     // If we link through cc, we need the -Wl prefix.
+                     // If we don't, then we must not add it, because the linker wouldn't
+                     // understand it.
