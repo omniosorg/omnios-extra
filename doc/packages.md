@@ -192,7 +192,7 @@
 | ooce/network/openvpn-auth-ldap | 2.0.4	| https://github.com/threerings/openvpn-auth-ldap/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/network/rclone		| 1.74.3	| https://github.com/rclone/rclone/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/sic		| 1.3		| https://tools.suckless.org/sic/ | [r7st](https://github.com/r7st)
-| ooce/network/smtp/postfix	| 3.11.5	| https://postfix.fupp.net/pub/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/smtp/postfix	| 3.11.6	| https://postfix.fupp.net/pub/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/proxy/squid	| 7.5		| https://github.com/squid-cache/squid/releases | [cgrzemba](https://github.com/cgrzemba)
 | ooce/network/tailscale	| 1.102.2	| https://github.com/nshalman/tailscale/releases https://www.tailscale.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/tcpdump		| 4.99.5	| https://www.tcpdump.org/release/ | [omniosorg](https://github.com/omniosorg)
