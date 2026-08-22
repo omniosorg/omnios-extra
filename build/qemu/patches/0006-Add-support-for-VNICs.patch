@@ -1,4 +1,4 @@
-From 83fd48e5e9d09627decd9e875c409f2e03656cb6 Mon Sep 17 00:00:00 2001
+From ce2ef43ac2332050bfcd2bbb58171a168f03ccf2 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 28 Nov 2022 14:51:42 +0000
 Subject: Add support for VNICs
@@ -17,10 +17,10 @@ https://github.com/TritonDataCenter/illumos-kvm-cmd
  create mode 100644 net/vnic.c
 
 diff --git a/meson.build b/meson.build
-index ab3e97eb9f..3a5278f769 100644
+index 49a5baf5b5..af136300f6 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -845,7 +845,8 @@ elif host_os == 'darwin'
+@@ -854,7 +854,8 @@ elif host_os == 'darwin'
  elif host_os == 'sunos'
    socket = [cc.find_library('socket'),
              cc.find_library('nsl'),
@@ -56,10 +56,10 @@ index ee5881f6d5..719792892d 100644
                  has_host_dev = 1;
                  break;
 diff --git a/net/meson.build b/net/meson.build
-index da6ea635e9..5662d071fe 100644
+index 9c8068b06d..f4ce379e3b 100644
 --- a/net/meson.build
 +++ b/net/meson.build
-@@ -56,7 +56,7 @@ elif host_os == 'linux'
+@@ -57,7 +57,7 @@ elif host_os == 'linux'
  elif host_os in bsd_oses
    system_ss.add(files('tap.c', 'tap-bsd.c'))
  elif host_os == 'sunos'
@@ -69,7 +69,7 @@ index da6ea635e9..5662d071fe 100644
    system_ss.add(files('tap.c', 'tap-stub.c'))
  endif
 diff --git a/net/net.c b/net/net.c
-index a176936f9b..8d0456000a 100644
+index 0a30579ca4..543e95ccef 100644
 --- a/net/net.c
 +++ b/net/net.c
 @@ -1290,6 +1290,7 @@ static int (* const net_client_init_fun[NET_CLIENT_DRIVER__MAX])(
@@ -361,10 +361,10 @@ index 0000000000..481661b583
 +	return (0);
 +}
 diff --git a/qapi/net.json b/qapi/net.json
-index 118bd34965..2de132b3f1 100644
+index 1a6382825c..956ae5c2f6 100644
 --- a/qapi/net.json
 +++ b/qapi/net.json
-@@ -481,6 +481,17 @@
+@@ -551,6 +551,17 @@
      '*group': 'str',
      '*mode':  'uint16' } }
  
@@ -382,7 +382,7 @@ index 118bd34965..2de132b3f1 100644
  ##
  # @NetdevBridgeOptions:
  #
-@@ -854,7 +865,7 @@
+@@ -924,7 +935,7 @@
  { 'enum': 'NetClientDriver',
    'data': [ 'none', 'nic', 'user', 'tap', 'l2tpv3', 'socket', 'stream',
              'dgram', 'vde', 'bridge', 'hubport', 'netmap', 'vhost-user',
@@ -391,7 +391,7 @@ index 118bd34965..2de132b3f1 100644
              { 'name': 'passt', 'if': 'CONFIG_PASST' },
              { 'name': 'af-xdp', 'if': 'CONFIG_AF_XDP' },
              { 'name': 'vmnet-host', 'if': 'CONFIG_VMNET' },
-@@ -886,6 +897,7 @@
+@@ -956,6 +967,7 @@
      'stream':   'NetdevStreamOptions',
      'dgram':    'NetdevDgramOptions',
      'vde':      'NetdevVdeOptions',

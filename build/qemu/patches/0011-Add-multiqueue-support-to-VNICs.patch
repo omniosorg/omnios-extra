@@ -1,20 +1,17 @@
+From e470e93aaa86ec8a457ffde50e580e9e6b1e499a Mon Sep 17 00:00:00 2001
+From: Andy Fiddaman <illumos@fiddaman.net>
+Date: Wed, 19 Aug 2026 20:14:46 +0000
 Subject: Add multiqueue support to VNICs
 
-Allow the vnic netdev backend to expose multiple queues to a device,
-via a new "queues" option (default 1). A single DLPI stream to the
-underlying VNIC is retained; transmit from any queue goes to that
-stream, and inbound packets are steered to a queue by hashing the
-flow (IP addresses plus TCP/UDP ports), so a flow always lands on
-the same queue. Only queues that the guest has started are steering
-candidates. This permits e.g.
-
-  -netdev vnic,id=net0,ifname=vnic0,queues=8
-  -device virtio-net-pci,mq=on,vectors=18,netdev=net0
-
 ---
+ net/vnic.c    | 259 +++++++++++++++++++++++++++++++++++++++-----------
+ qapi/net.json |   6 +-
+ 2 files changed, 207 insertions(+), 58 deletions(-)
+
 diff --git a/net/vnic.c b/net/vnic.c
---- a/net/vnic.c	2026-08-18 15:57:18
-+++ b/net/vnic.c	2026-08-18 15:58:48
+index 481661b583..abcfc8af8b 100644
+--- a/net/vnic.c
++++ b/net/vnic.c
 @@ -2,6 +2,7 @@
   * QEMU System Emulator Solaris VNIC support
   *
@@ -109,7 +106,7 @@ diff --git a/net/vnic.c b/net/vnic.c
  {
  	struct strbuf sbuf;
  	int flags, ret;
-@@ -90,11 +108,11 @@
+@@ -90,11 +108,11 @@ vnic_read_packet(VNICState *vsp, uint8_t *buf, int len)
  	sbuf.buf = (char *)buf;
  
  	do {
@@ -123,7 +120,7 @@ diff --git a/net/vnic.c b/net/vnic.c
  		return (0);
  	}
  
-@@ -105,7 +123,7 @@
+@@ -105,7 +123,7 @@ vnic_read_packet(VNICState *vsp, uint8_t *buf, int len)
  }
  
  static int
@@ -132,7 +129,7 @@ diff --git a/net/vnic.c b/net/vnic.c
  {
  	struct strbuf sbuf;
  	int flags, ret;
-@@ -115,11 +133,11 @@
+@@ -115,11 +133,11 @@ vnic_write_packet(VNICState *vsp, const uint8_t *buf, int len)
  	sbuf.buf = (char *)buf;
  
  	do {
@@ -146,14 +143,14 @@ diff --git a/net/vnic.c b/net/vnic.c
  		return (0);
  	}
  
-@@ -134,37 +152,134 @@
+@@ -134,37 +152,134 @@ vnic_send_completed(NetClientState *nc, ssize_t len)
  {
  	VNICState *vsp = DO_UPCAST(VNICState, vns_nc, nc);
  
 -	vnic_read_poll(vsp, true);
 +	vnic_read_poll(vsp->vns_shared, true);
- }
- 
++}
++
 +static uint32_t
 +vnic_hash(uint32_t hash, const uint8_t *buf, size_t len)
 +{
@@ -243,8 +240,8 @@ diff --git a/net/vnic.c b/net/vnic.c
 +	hash += hash << 15;
 +
 +	return (cand[hash % ncand]);
-+}
-+
+ }
+ 
  /* outside world -> VM */
  static void
  vnic_send(void *opaque)
@@ -291,7 +288,7 @@ diff --git a/net/vnic.c b/net/vnic.c
  }
  
  /* VM -> outside world */
-@@ -173,7 +288,7 @@
+@@ -173,7 +288,7 @@ vnic_receive(NetClientState *ncp, const uint8_t *buf, size_t size)
  {
  	VNICState *vsp = DO_UPCAST(VNICState, vns_nc, ncp);
  
@@ -300,7 +297,7 @@ diff --git a/net/vnic.c b/net/vnic.c
  }
  
  
-@@ -181,19 +296,25 @@
+@@ -181,19 +296,25 @@ static void
  vnic_cleanup(NetClientState *ncp)
  {
  	VNICState *vsp = DO_UPCAST(VNICState, vns_nc, ncp);
@@ -332,7 +329,7 @@ diff --git a/net/vnic.c b/net/vnic.c
  }
  
  static NetClientInfo net_vnic_info = {
-@@ -209,27 +330,38 @@
+@@ -209,27 +330,38 @@ int net_init_vnic(const Netdev *netdev, const char *name,
  {
  	const NetdevVNICOptions *vnic;
  	NetClientState *ncp;
@@ -354,11 +351,11 @@ diff --git a/net/vnic.c b/net/vnic.c
 +		    queues, vnic->ifname, VNIC_MAX_QUEUES);
 +		return (-1);
 +	}
- 
--	ret = dlpi_open(vnic->ifname, &vsp->vns_hdl, DLPI_RAW);
++
 +	vsh = g_new0(VNICShared, 1);
 +	vsh->vsh_nqueues = queues;
-+
+ 
+-	ret = dlpi_open(vnic->ifname, &vsp->vns_hdl, DLPI_RAW);
 +	ret = dlpi_open(vnic->ifname, &vsh->vsh_hdl, DLPI_RAW);
  	if (ret != DLPI_SUCCESS) {
  		error_report("vnic: failed to open interface %s, err %d",
@@ -377,7 +374,7 @@ diff --git a/net/vnic.c b/net/vnic.c
  	}
  
  	/*
-@@ -238,37 +370,50 @@
+@@ -238,37 +370,50 @@ int net_init_vnic(const Netdev *netdev, const char *name,
  	 * care about. The latter is going to ensure that we also get other
  	 * types of physical traffic such as multicast and broadcast.
  	 */
@@ -414,9 +411,7 @@ diff --git a/net/vnic.c b/net/vnic.c
  
 -	vsp->vns_fd = fd;
 +	vsh->vsh_fd = fd;
- 
--	snprintf(vsp->vns_nc.info_str, sizeof (vsp->vns_nc.info_str),
--	    "ifname=%s", vnic->ifname);
++
 +	for (i = 0; i < queues; i++) {
 +		ncp = qemu_new_net_client(&net_vnic_info, peer, "vnic", name);
 +		vsp = DO_UPCAST(VNICState, vns_nc, ncp);
@@ -424,10 +419,12 @@ diff --git a/net/vnic.c b/net/vnic.c
 +		vsh->vsh_queues[i] = vsp;
 +		vsh->vsh_refcnt++;
  
+-	snprintf(vsp->vns_nc.info_str, sizeof (vsp->vns_nc.info_str),
+-	    "ifname=%s", vnic->ifname);
 +		snprintf(vsp->vns_nc.info_str, sizeof (vsp->vns_nc.info_str),
 +		    "ifname=%s,queue=%d", vnic->ifname, i);
 +	}
-+
+ 
  	/* We have to manually intialize the polling for read */
 -	vnic_read_poll(vsp, true);
 +	vnic_read_poll(vsh, true);
@@ -440,9 +437,10 @@ diff --git a/net/vnic.c b/net/vnic.c
 +	return (-1);
  }
 diff --git a/qapi/net.json b/qapi/net.json
+index 956ae5c2f6..c595db8511 100644
 --- a/qapi/net.json
 +++ b/qapi/net.json
-@@ -487,10 +487,14 @@
+@@ -557,10 +557,14 @@
  # Connect to a VNIC on the host.
  #
  # @ifname: VNIC interface name
