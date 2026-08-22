@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2020 OmniOS Community Edition. All rights reserved.
+# Copyright 2026 OmniOS Community Edition. All rights reserved.
 
 <transform file path=etc -> set preserve true>
 <transform file path=etc -> set overlay allow>
@@ -16,5 +16,5 @@
 <include binlink.mog>
 <include manlink.mog>
 
-license COPYING license=GPLv2
+license COPYING license=AGPLv3
 

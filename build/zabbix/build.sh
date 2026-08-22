@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition.  All rights reserved.
+# Copyright 2026 OmniOS Community Edition.  All rights reserved.
 
 . ../../lib/build.sh
 
 PROG=zabbix
-VER=6.2.3
+VER=7.4.13
 PKG=ooce/application/zabbix
 SUMMARY="enterprise-class open source distributed monitoring solution"
 DESC="Zabbix is software that monitors numerous parameters of a network "
@@ -27,6 +27,7 @@ OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 # does not yet build with gcc 14
+# 2026-08-21 : untested if it is still true
 ((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
@@ -60,9 +61,10 @@ CONFIGURE_OPTS="
     --with-libxml2
     --with-openssl
     --with-ldap=$OPREFIX
-"
+    "
+
 CONFIGURE_OPTS[amd64]+="
-    --libdir=$PREFIX/lib
+    --libdir=$PREFIX/lib/
 "
 
 test_relver '>=' 151059 && USE_LIBEVENT=1 || USE_LIBEVENT=0
@@ -71,10 +73,6 @@ test_relver '>=' 151059 && USE_LIBEVENT=1 || USE_LIBEVENT=0
 
 CONFIGURE_OPTS+=" --with-libevent=$LEPREFIX"
 CONFIGURE_OPTS[amd64]+=" --with-libevent-lib=$LEPREFIX/${LIBDIRS[amd64]}"
-
-# See https://support.zabbix.com/browse/ZBX-18210
-# and https://support.zabbix.com/browse/ZBX-16928
-CFLAGS+=" -DDUK_USE_BYTEORDER=1"
 
 LDFLAGS+=" -R$OPREFIX/lib/amd64 "
 LIBS+=" -lumem"
@@ -99,7 +97,7 @@ post_install() {
 init
 prep_build
 download_source $PROG $PROG $VER
-((USE_LIBEVENT)) || apply_patches $PATCHDIR series.libev
+#((USE_LIBEVENT)) || apply_patches $PATCHDIR series.libev
 patch_source
 run_autoreconf -fi
 
