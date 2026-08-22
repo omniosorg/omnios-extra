@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2019 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -23,6 +23,7 @@ SUMMARY="$PROG"
 DESC="A perfect hash function generator"
 
 set_arch 64
+set_cstandard gnu17
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}

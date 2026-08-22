@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -27,6 +27,7 @@ Requires that nrpe be running on the remote host (either as a standalone \
 daemon or as a service under inetd)."
 
 set_arch 64
+set_cstandard gnu17
 set_builddir nrpe-$VER
 
 RUN_DEPENDS_IPS="ooce/application/nagios-common"

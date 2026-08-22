@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2022 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -26,6 +26,7 @@ which runs on the main Nagios server and accepts results and the \
 send_nsca client which is used to send results to the server."
 
 set_arch 64
+set_cstandard gnu17
 set_builddir nsca-$VER
 
 BUILD_DEPENDS_IPS="ooce/library/libmcrypt"
