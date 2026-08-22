@@ -1,0 +1,10 @@
+--- a/src/cpputils/cpputilsshared/cppdir.cc.orig	2026-05-29 16:42:30.743789271 -0400
++++ b/src/cpputils/cpputilsshared/cppdir.cc	2026-05-29 16:42:51.909915603 -0400
+@@ -17,6 +17,7 @@
+ 
+ extern "C" {
+ 
++#include <limits.h>
+ #include <sys/stat.h>
+ #include <unistd.h>
+ #include <errno.h>
