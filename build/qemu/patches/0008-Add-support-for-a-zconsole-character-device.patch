@@ -1,4 +1,4 @@
-From 791a04edfbf8f494b755ac102e72c7fb3c5352c8 Mon Sep 17 00:00:00 2001
+From 9d06b05083b7587b352b384c5e08214d44260c22 Mon Sep 17 00:00:00 2001
 From: Andy Fiddaman <illumos@fiddaman.net>
 Date: Mon, 22 May 2023 20:31:38 +0000
 Subject: Add support for a zconsole character device
@@ -111,7 +111,7 @@ index 56ee39ac0b..5a346576b0 100644
  
  system_ss.add(files(
 diff --git a/include/chardev/char.h b/include/chardev/char.h
-index c2c42e4b7a..ab6d4c5328 100644
+index 7377d8e60a..7606e0d7cd 100644
 --- a/include/chardev/char.h
 +++ b/include/chardev/char.h
 @@ -243,6 +243,7 @@ OBJECT_DECLARE_TYPE(Chardev, ChardevClass, CHARDEV)
@@ -123,10 +123,10 @@ index c2c42e4b7a..ab6d4c5328 100644
  #define TYPE_CHARDEV_UDP "chardev-udp"
  
 diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index f151578b5c..1940338faf 100644
+index 1ec5b42230..ede0a5ca0f 100644
 --- a/include/qemu/osdep.h
 +++ b/include/qemu/osdep.h
-@@ -544,6 +544,10 @@ int qemu_shm_alloc(size_t size, Error **errp);
+@@ -554,6 +554,10 @@ int qemu_shm_alloc(size_t size, Error **errp);
  #endif
  #endif
  
@@ -138,10 +138,10 @@ index f151578b5c..1940338faf 100644
  #define SIGIO SIGPOLL
  #endif
 diff --git a/qapi/char.json b/qapi/char.json
-index a4abafa680..730e619fe1 100644
+index abaccefa97..ea11fb1a78 100644
 --- a/qapi/char.json
 +++ b/qapi/char.json
-@@ -470,6 +470,8 @@
+@@ -496,6 +496,8 @@
  #
  # @parallel: parallel host device
  #
@@ -150,7 +150,7 @@ index a4abafa680..730e619fe1 100644
  # @pipe: pipes (since 1.5)
  #
  # @socket: stream socket
-@@ -520,6 +522,7 @@
+@@ -546,6 +548,7 @@
    'data': [ 'file',
              { 'name': 'serial', 'if': 'HAVE_CHARDEV_SERIAL' },
              { 'name': 'parallel', 'if': 'HAVE_CHARDEV_PARALLEL' },
@@ -158,7 +158,7 @@ index a4abafa680..730e619fe1 100644
              'pipe',
              'socket',
              'udp',
-@@ -712,6 +715,7 @@
+@@ -738,6 +741,7 @@
                          'if': 'HAVE_CHARDEV_SERIAL' },
              'parallel': { 'type': 'ChardevHostdevWrapper',
                            'if': 'HAVE_CHARDEV_PARALLEL' },
