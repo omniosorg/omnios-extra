@@ -70,6 +70,9 @@ pre_configure() {
     _dd=$DESTDIR
     cross_arch $arch && _dd+=.$arch
 
+    logcmd $RM -f $_dd$PREFIX/${LIBDIRS[$arch]}/libmpg123.la \
+        || logerr "rm libmpg123.la failed"
+
     export mpg123_CFLAGS="-I$_dd$PREFIX/include"
     export mpg123_LIBS="-L$_dd$PREFIX/${LIBDIRS[$arch]} -lmpg123"
     LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
