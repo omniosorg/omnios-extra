@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=emacs
-VER=30.2
+VER=31.1
 PKG=ooce/editor/emacs
 SUMMARY="Emacs editor"
 DESC="An extensible, customizable, free/libre text editor - and more."
@@ -65,7 +65,7 @@ CONFIGURE_OPTS="
 # emacs is not network facing, or run with elevated privileges, this is
 # not a security concern.
 LDFLAGS="-z,aslr=disable"
-LDFLAGS[amd64]+=" -R$OPREFIX/lib/amd64"
+LDFLAGS[amd64]+=" -R$OPREFIX/${LIBDIRS[amd64]}"
 
 init
 download_source $PROG $PROG $VER

@@ -92,7 +92,7 @@
 | ooce/developer/yasm		| 1.3.0		| https://github.com/yasm/yasm/releases https://yasm.tortall.net/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/zig-015	| 0.15.2	| https://ziglang.org/download/index.json https://ziglang.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/driver/fuse		| 1.6		| https://github.com/jurikm/illumos-fusefs/tags | [omniosorg](https://github.com/omniosorg)
-| ooce/editor/emacs		| 30.2		| https://ftp.gnu.org/gnu/emacs/ https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html#Releases | [omniosorg](https://github.com/omniosorg)
+| ooce/editor/emacs		| 31.1		| https://ftp.gnu.org/gnu/emacs/ https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html#Releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/helix		| 25.07.1	| https://github.com/helix-editor/helix/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/joe		| 4.6		| https://sourceforge.net/projects/joe-editor/files/JOE%20sources/ | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/micro		| 2.0.15	| https://github.com/zyedidia/micro/releases | [omniosorg](https://github.com/omniosorg)
