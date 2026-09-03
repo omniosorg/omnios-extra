@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=tree-sitter-langs
-VER=0.12.308
+VER=0.13.75
 PKG=ooce/text/tree-sitter-langs
 SUMMARY="$PROG"
 DESC="Tree-sitter Language Bundle for Emacs"
@@ -92,8 +92,7 @@ make_arch() {
     while read lang; do
         typeset dir=$lang
         case $lang in
-            xml|csv|ocaml)      dir+="/$lang" ;;
-            ocaml-interface)    dir+="/interface" ;;
+            xml|csv)            dir+="/$lang" ;;
         esac
         build_lang $lang $dir &
         parallelise $MJOBS
