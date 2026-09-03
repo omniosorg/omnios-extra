@@ -153,7 +153,7 @@
 | ooce/library/serf		| 1.3.10 	| https://downloads.apache.org/serf/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/slang		| 2.3.3		| https://www.jedsoft.org/releases/slang/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/tiff		| 4.7.2		| https://download.osgeo.org/libtiff/ https://libtiff.gitlab.io/libtiff/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/tree-sitter	| 0.25.10	| https://github.com/tree-sitter/tree-sitter/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/library/tree-sitter	| 0.27.0	| https://github.com/tree-sitter/tree-sitter/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/unistring	| 1.4.1		| https://ftp.gnu.org/gnu/libunistring/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/yaml		| 0.2.5		| https://github.com/yaml/libyaml/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/multimedia/dav1d		| 1.5.4		| https://downloads.videolan.org/pub/videolan/dav1d/ https://www.videolan.org/projects/dav1d.html | [omniosorg](https://github.com/omniosorg)
