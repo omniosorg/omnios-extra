@@ -3,14 +3,9 @@ From: Ryan Zezeski <ryan@zinascii.com>
 Date: Wed, 3 Sep 2025 17:11:30 -0400
 Subject: [PATCH] keep frame pointers
 
----
- build.zig | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/build.zig b/build.zig
-index 37523e66a3..1115d2f9a3 100644
---- a/build.zig
-+++ b/build.zig
+diff -wpruN --no-dereference '--exclude=*.orig' a~/build.zig a/build.zig
+--- a~/build.zig	1970-01-01 00:00:00
++++ a/build.zig	1970-01-01 00:00:00
 @@ -203,6 +203,11 @@ pub fn build(b: *std.Build) !void {
      exe.pie = pie;
      exe.entitlements = entitlements;
@@ -23,6 +18,3 @@ index 37523e66a3..1115d2f9a3 100644
      const use_llvm = b.option(bool, "use-llvm", "Use the llvm backend");
      exe.use_llvm = use_llvm;
      exe.use_lld = use_llvm;
--- 
-2.49.0
-

@@ -90,7 +90,7 @@
 | ooce/developer/subversion	| 1.14.4	| https://downloads.apache.org/subversion/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/valgrind	| 3.27.1	| https://valgrind.org/downloads/current.html | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/yasm		| 1.3.0		| https://github.com/yasm/yasm/releases https://yasm.tortall.net/ | [omniosorg](https://github.com/omniosorg)
-| ooce/developer/zig-015	| 0.15.1	| https://ziglang.org/download/index.json https://ziglang.org/download/ | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/zig-015	| 0.15.2	| https://ziglang.org/download/index.json https://ziglang.org/download/ | [omniosorg](https://github.com/omniosorg)
 | ooce/driver/fuse		| 1.6		| https://github.com/jurikm/illumos-fusefs/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/emacs		| 30.2		| https://ftp.gnu.org/gnu/emacs/ https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html#Releases | [omniosorg](https://github.com/omniosorg)
 | ooce/editor/helix		| 25.07.1	| https://github.com/helix-editor/helix/releases | [omniosorg](https://github.com/omniosorg)
