@@ -26,9 +26,7 @@ depend fmri=ooce/developer/gdb type=require
 depend fmri=ooce/developer/go-126 type=require
 depend fmri=ooce/developer/gperf type=require
 depend fmri=ooce/developer/llvm-13 type=require
-depend fmri=ooce/developer/llvm-17 type=require
 depend fmri=ooce/developer/clang-13 type=require
-depend fmri=ooce/developer/clang-17 type=require
 depend fmri=ooce/developer/protobuf type=require
 depend fmri=ooce/developer/protobuf-c type=require
 depend fmri=ooce/developer/subversion type=require
@@ -109,22 +107,6 @@ depend fmri=ooce/x11/library/xtrans type=require
 depend fmri=ooce/x11/library/libx11 type=require
 depend fmri=ooce/x11/library/libxau type=require
 depend fmri=ooce/x11/library/libxcb type=require
-
-# Added llvm/clang 15 from r151043 onwards
-depend fmri=ooce/developer/llvm-15 type=conditional \
-    predicate=release/name@0.5.11-151043
-
-# clang 15 is the default clang compiler from r151045 onwards
-depend fmri=ooce/developer/clang-15 type=conditional \
-    predicate=release/name@0.5.11-151045
-
-# Added llvm/clang 18 from r151049 onwards
-depend fmri=ooce/developer/llvm-18 type=conditional \
-    predicate=release/name@0.5.11-151049
-
-# clang 18 is required to build zig 0.13
-depend fmri=ooce/developer/clang-18 type=conditional \
-    predicate=release/name@0.5.11-151049
 
 # Added llvm/clang 19 from r151051 onwards
 depend fmri=ooce/developer/llvm-19 type=conditional \
