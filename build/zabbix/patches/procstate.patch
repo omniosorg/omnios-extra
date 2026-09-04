@@ -1,16 +1,14 @@
-
-See: https://support.zabbix.com/browse/ZBX-18311
-
-diff -wpruN '--exclude=*.orig' a~/src/libs/zbxsysinfo/solaris/proc.c a/src/libs/zbxsysinfo/solaris/proc.c
---- a~/src/libs/zbxsysinfo/solaris/proc.c	1970-01-01 00:00:00
-+++ a/src/libs/zbxsysinfo/solaris/proc.c	1970-01-01 00:00:00
-@@ -663,6 +663,9 @@ int	PROC_NUM(AGENT_REQUEST *request, AGE
+diff --git a/src/libs/zbxsysinfo/solaris/proc.c b/src/libs/zbxsysinfo/solaris/proc.c
+index dc5e5e3..9c8d4e5 100644
+--- a/src/libs/zbxsysinfo/solaris/proc.c
++++ b/src/libs/zbxsysinfo/solaris/proc.c
+@@ -707,6 +707,9 @@ int	proc_num(AGENT_REQUEST *request, AGENT_RESULT *result)
  		if (SUCCEED != proc_get_process_info(entries->d_name, proc_props, &proc, &psinfo))
  			continue;
  
 +		if (SUCCEED != check_procstate(&psinfo, zbx_proc_stat))
 +			continue;
 +
- 		if (SUCCEED == proc_match_props(&proc, usrinfo, procname, proccomm))
+ 		if (SUCCEED == proc_match_props(&proc, usrinfo, procname, proccomm_rxp))
  		{
  #ifdef HAVE_ZONE_H

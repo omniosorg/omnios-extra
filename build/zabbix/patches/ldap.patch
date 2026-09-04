@@ -1,7 +1,8 @@
-diff -wpruN '--exclude=*.orig' a~/m4/ldap.m4 a/m4/ldap.m4
---- a~/m4/ldap.m4	1970-01-01 00:00:00
-+++ a/m4/ldap.m4	1970-01-01 00:00:00
-@@ -95,7 +95,7 @@ AC_HELP_STRING([--with-ldap@<:@=DIR@:>@]
+diff --git a/m4/ldap.m4 b/m4/ldap.m4
+index df7b71c..20a5f5d 100644
+--- a/m4/ldap.m4
++++ b/m4/ldap.m4
+@@ -99,7 +99,7 @@ AS_HELP_STRING([--with-ldap@<:@=DIR@:>@],[Include LDAP support @<:@default=no@:>
          else
                  if test -f $_libldap_with/include/ldap.h; then
                          LDAP_INCDIR=$_libldap_with/include
@@ -10,7 +11,7 @@ diff -wpruN '--exclude=*.orig' a~/m4/ldap.m4 a/m4/ldap.m4
                          _ldap_dir_lib="$LDAP_LIBDIR"
  
                          found_ldap="yes"
-@@ -116,7 +116,7 @@ AC_HELP_STRING([--with-ldap@<:@=DIR@:>@]
+@@ -120,7 +120,7 @@ AS_HELP_STRING([--with-ldap@<:@=DIR@:>@],[Include LDAP support @<:@default=no@:>
                          AC_DEFINE(HAVE_LDAP_SOURCEIP, 1, [Define to 1 if SourceIP is supported.])
                  fi
  
@@ -19,7 +20,7 @@ diff -wpruN '--exclude=*.orig' a~/m4/ldap.m4 a/m4/ldap.m4
  
                  if test "x$enable_static" = "xyes"; then
                          LDAP_LIBS="$LDAP_LIBS -lgnutls -lpthread -lsasl2"
-@@ -125,7 +125,7 @@ AC_HELP_STRING([--with-ldap@<:@=DIR@:>@]
+@@ -129,7 +129,7 @@ AS_HELP_STRING([--with-ldap@<:@=DIR@:>@],[Include LDAP support @<:@default=no@:>
                          test "x$static_linking_support" = "xno" -a -z "$_ldap_dir_lib" && AC_MSG_ERROR(["Compiler not support statically linked libs from default folders"])
  
                          if test "x$static_linking_support" = "xno"; then
@@ -28,10 +29,11 @@ diff -wpruN '--exclude=*.orig' a~/m4/ldap.m4 a/m4/ldap.m4
                          fi
  
                          # without SSL and SASL
-diff -wpruN '--exclude=*.orig' a~/m4/libcurl.m4 a/m4/libcurl.m4
---- a~/m4/libcurl.m4	1970-01-01 00:00:00
-+++ a/m4/libcurl.m4	1970-01-01 00:00:00
-@@ -176,7 +176,7 @@ AC_HELP_STRING([--with-libcurl@<:@=DIR@:
+diff --git a/m4/libcurl.m4 b/m4/libcurl.m4
+index 5ff8abe..41bce3f 100644
+--- a/m4/libcurl.m4
++++ b/m4/libcurl.m4
+@@ -157,7 +157,7 @@ AS_HELP_STRING([--with-libcurl@<:@=FILE@:>@],[use cURL package @<:@default=no@:>
  												-lssl|-lcrypto)
  													test "x$want_openssl" = "xyes" && i="$OPENSSL_LIBS"
  											;;

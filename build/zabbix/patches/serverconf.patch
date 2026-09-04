@@ -1,6 +1,7 @@
-diff -wpruN '--exclude=*.orig' a~/conf/zabbix_server.conf a/conf/zabbix_server.conf
---- a~/conf/zabbix_server.conf	1970-01-01 00:00:00
-+++ a/conf/zabbix_server.conf	1970-01-01 00:00:00
+diff --git a/conf/zabbix_server.conf b/conf/zabbix_server.conf
+index 0e19248..f5bee74 100644
+--- a/conf/zabbix_server.conf
++++ b/conf/zabbix_server.conf
 @@ -35,7 +35,7 @@
  # Default:
  # LogFile=
@@ -36,7 +37,7 @@ diff -wpruN '--exclude=*.orig' a~/conf/zabbix_server.conf a/conf/zabbix_server.c
  
  ### Option: DBHost
  #	Database host name.
-@@ -381,6 +382,7 @@ DBUser=zabbix
+@@ -417,6 +418,7 @@ DBUser=zabbix
  # Mandatory: no
  # Default:
  # SNMPTrapperFile=/tmp/zabbix_traps.tmp
@@ -44,7 +45,7 @@ diff -wpruN '--exclude=*.orig' a~/conf/zabbix_server.conf a/conf/zabbix_server.c
  
  ### Option: StartSNMPTrapper
  #	If 1, SNMP trapper process is started.
-@@ -562,7 +564,7 @@ Timeout=4
+@@ -601,7 +603,7 @@ Timeout=4
  #
  # Mandatory: no
  # Default:
@@ -53,7 +54,7 @@ diff -wpruN '--exclude=*.orig' a~/conf/zabbix_server.conf a/conf/zabbix_server.c
  
  ### Option: Fping6Location
  #	Location of fping6.
-@@ -654,15 +656,15 @@ LogSlowQueries=3000
+@@ -1153,7 +1155,7 @@ EnableGlobalScripts=0
  
  ### Option: Include
  #	You may include individual files or all files in a directory in the configuration file.
@@ -62,14 +63,10 @@ diff -wpruN '--exclude=*.orig' a~/conf/zabbix_server.conf a/conf/zabbix_server.c
  #
  # Mandatory: no
  # Default:
- # Include=
- 
--# Include=/usr/local/etc/zabbix_server.general.conf
--# Include=/usr/local/etc/zabbix_server.conf.d/
--# Include=/usr/local/etc/zabbix_server.conf.d/*.conf
+@@ -1162,3 +1164,6 @@ EnableGlobalScripts=0
+ # Include=/usr/local/etc/zabbix_server.general.conf
+ # Include=/usr/local/etc/zabbix_server.conf.d/
+ # Include=/usr/local/etc/zabbix_server.conf.d/*.conf
 +# Include=/etc/opt/ooce/zabbix/zabbix_server.general.conf
 +# Include=/etc/opt/ooce/zabbix/zabbix_server.conf.d/
 +Include=/etc/opt/ooce/zabbix/zabbix_server.conf.d/*.conf
- 
- ### Option: SSLCertLocation
- #	Location of SSL client certificates.
