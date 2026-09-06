@@ -53,7 +53,7 @@ build() {
     note -n "Building ld(1) and headers"
 
     logcmd $BLDENV $SRCDIR/files/$ARCH.env \
-        "cd usr/src && $MAKE $MAKE_JOBS bldtools sgs" \
+        "cd usr/src && $MAKE -j$MJOBS bldtools sgs" \
         || logerr "building tools failed"
 
     logcmd $MKDIR -p $DESTDIR/$PREFIX/bin || logerr "mkdir bin failed"
@@ -98,7 +98,7 @@ build() {
         esac
 
         logcmd $BLDENV $SRCDIR/files/$ARCH.env \
-            "cd usr/src/$libdir && $MAKE $MAKE_JOBS install" \
+            "cd usr/src/$libdir && $MAKE -j$MJOBS install" \
             || logerr "building $lib failed"
 
         case $lib in

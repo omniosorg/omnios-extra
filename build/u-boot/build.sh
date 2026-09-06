@@ -58,7 +58,7 @@ make_arch() {
 
     set_args $BUILD_ARCH $NATIVE_CC
     eval set -- $MAKE_ARGS_WS
-    logcmd $MAKE $MAKE_JOBS $MAKE_ARGS "$@" $MAKE_TARGET \
+    logcmd $MAKE -j$MJOBS $MAKE_ARGS "$@" $MAKE_TARGET \
         || logerr "--- Make failed"
 
     cross_arch $arch || return
@@ -78,7 +78,7 @@ make_arch() {
     logcmd $RM -f tools/mkimage || logerr "rm tools/mkimage failed"
     set_args $arch $CC
     eval set -- $MAKE_ARGS_WS KBUILD_NOCMDDEP=1
-    logcmd $MAKE $MAKE_JOBS $MAKE_ARGS "$@" tools/ \
+    logcmd $MAKE -j$MJOBS $MAKE_ARGS "$@" tools/ \
         || logerr "--- Make cross tools failed"
 }
 

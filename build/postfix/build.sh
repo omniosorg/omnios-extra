@@ -87,7 +87,7 @@ pre_configure() {
             -DDEF_SENDMAIL_PATH=\"'${PREFIX}/sbin/sendmail'\" \
             ' || logerr "failed making native makefiles"
 
-        logcmd $MAKE $MAKE_JOBS || logerr "failed to make native tools"
+        logcmd $MAKE -j$MJOBS || logerr "failed to make native tools"
         logcmd $CP $TMPDIR/$BUILDDIR/bin/postconf $TMPDIR/ \
             || logerr "failed to copy native postconf"
 

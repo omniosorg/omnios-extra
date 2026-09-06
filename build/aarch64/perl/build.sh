@@ -138,7 +138,7 @@ make_install_amd64() {
 download_source $PROG $PROG $VER
 patch_source
 # building miniperl is racy
-MAKE_JOBS= MAKE_ARGS="miniperl" build
+NO_PARALLEL_MAKE=1 MAKE_ARGS="miniperl" build
 configure_amd64() { :; }
 MAKE_ARGS="xconfig.h modules" build
 xform files/perl > $TMPDIR/perl
