@@ -1,0 +1,14 @@
+----
+glow
+----
+
+glow reads its standard input. When run non-interactively with stdin attached
+to an open pipe that never produces data - for example over `ssh host 'glow
+file.md'` - it will block waiting for input instead of rendering the given
+file. Close stdin explicitly in that case:
+
+```
+ssh host 'glow -w 78 file.md < /dev/null'
+```
+
+This is upstream behaviour, not specific to this package.
