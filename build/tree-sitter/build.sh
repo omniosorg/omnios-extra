@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=tree-sitter
-VER=0.25.10
+VER=0.27.0
 PKG=ooce/library/tree-sitter
 SUMMARY="$PROG"
 DESC="$PROG - parser generator tool and an incremental parsing library"

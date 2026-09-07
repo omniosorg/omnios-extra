@@ -3,15 +3,10 @@ From: Ryan Zezeski <ryan@zinascii.com>
 Date: Thu, 4 Sep 2025 10:58:50 -0400
 Subject: [PATCH] define sigrt min and max
 
----
- lib/std/c.zig | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/lib/std/c.zig b/lib/std/c.zig
-index 9d5e5bf9ab..4c3cc6f51a 100644
---- a/lib/std/c.zig
-+++ b/lib/std/c.zig
-@@ -2583,6 +2583,8 @@ pub const _SC = if (builtin.abi.isAndroid()) enum(c_int) {
+diff -wpruN --no-dereference '--exclude=*.orig' a~/lib/std/c.zig a/lib/std/c.zig
+--- a~/lib/std/c.zig	1970-01-01 00:00:00
++++ a/lib/std/c.zig	1970-01-01 00:00:00
+@@ -2613,6 +2613,8 @@ pub const _SC = if (builtin.abi.isAndroi
      .solaris, .illumos => enum(c_int) {
          PAGESIZE = 11,
          NPROCESSORS_ONLN = 15,
@@ -20,7 +15,7 @@ index 9d5e5bf9ab..4c3cc6f51a 100644
      },
      // https://github.com/SerenityOS/serenity/blob/1dfc9e2df39dd23f1de92530677c845aae4345f2/Kernel/API/POSIX/unistd.h#L36-L52
      .serenity => enum(c_int) {
-@@ -10464,6 +10466,7 @@ pub fn sigrtmin() u8 {
+@@ -10539,6 +10541,7 @@ pub fn sigrtmin() u8 {
      return switch (native_os) {
          .freebsd => 65,
          .netbsd => 33,
@@ -28,7 +23,7 @@ index 9d5e5bf9ab..4c3cc6f51a 100644
          else => @truncate(@as(c_uint, @bitCast(private.__libc_current_sigrtmin()))),
      };
  }
-@@ -10473,6 +10476,7 @@ pub fn sigrtmax() u8 {
+@@ -10548,6 +10551,7 @@ pub fn sigrtmax() u8 {
      return switch (native_os) {
          .freebsd => 126,
          .netbsd => 63,
@@ -36,6 +31,3 @@ index 9d5e5bf9ab..4c3cc6f51a 100644
          else => @truncate(@as(c_uint, @bitCast(private.__libc_current_sigrtmax()))),
      };
  }
--- 
-2.49.0
-

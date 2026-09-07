@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=zig
-VER=0.15.1
+VER=0.15.2
 MAJVER=${VER%%.*}
 MINVER=${VER%.*}
 MINVER=${MINVER#*.}
@@ -25,8 +25,6 @@ PKG=ooce/developer/zig-015
 SUMMARY="$PROG programming language"
 DESC="$PROG is a general-purpose programming language and toolchain for "
 DESC+="maintaining robust, optimal, and reusable software."
-
-min_rel 151054
 
 #
 # Zig 0.15.x requires LLVM 20.1.8

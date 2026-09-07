@@ -1,3 +1,4 @@
+libtree-sitter-actionscript.so
 libtree-sitter-ada.so
 libtree-sitter-agda.so
 libtree-sitter-asm.so
@@ -9,10 +10,12 @@ libtree-sitter-c.so
 libtree-sitter-clojure.so
 libtree-sitter-cmake.so
 libtree-sitter-comment.so
+libtree-sitter-crystal.so
 libtree-sitter-css.so
 libtree-sitter-csv.so
 libtree-sitter-d.so
 libtree-sitter-dart.so
+libtree-sitter-diff.so
 libtree-sitter-dockerfile.so
 libtree-sitter-doxygen.so
 libtree-sitter-dtd.so
@@ -20,10 +23,13 @@ libtree-sitter-editorconfig.so
 libtree-sitter-elisp.so
 libtree-sitter-elixir.so
 libtree-sitter-elm.so
+libtree-sitter-erlang.so
 libtree-sitter-fish.so
 libtree-sitter-fluent.so
 libtree-sitter-fortran.so
 libtree-sitter-gdscript.so
+libtree-sitter-gdshader.so
+libtree-sitter-git-config.so
 libtree-sitter-git-rebase.so
 libtree-sitter-gitattributes.so
 libtree-sitter-gitcommit.so
@@ -56,11 +62,9 @@ libtree-sitter-make.so
 libtree-sitter-matlab.so
 libtree-sitter-mermaid.so
 libtree-sitter-meson.so
+libtree-sitter-nim.so
 libtree-sitter-ninja.so
 libtree-sitter-nix.so
-libtree-sitter-noir.so
-libtree-sitter-ocaml-interface.so
-libtree-sitter-ocaml.so
 libtree-sitter-org.so
 libtree-sitter-pascal.so
 libtree-sitter-perl.so
@@ -70,6 +74,7 @@ libtree-sitter-purescript.so
 libtree-sitter-python.so
 libtree-sitter-r.so
 libtree-sitter-racket.so
+libtree-sitter-ron.so
 libtree-sitter-rst.so
 libtree-sitter-ruby.so
 libtree-sitter-rust.so
@@ -88,5 +93,9 @@ libtree-sitter-twig.so
 libtree-sitter-typst.so
 libtree-sitter-verilog.so
 libtree-sitter-vhdl.so
+libtree-sitter-vim.so
+libtree-sitter-wat.so
+libtree-sitter-wgsl.so
 libtree-sitter-xml.so
+libtree-sitter-yaml.so
 libtree-sitter-zig.so

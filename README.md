@@ -3,9 +3,9 @@
 > **Warning**
 >
 > There is no guarantee that packages in this repository build correctly on
-> OmniOS releases earlier than **r151046**. If you wish to build on older
-> releases, check out the `pre-r151046` tag (or the `pre-r151038` tag respectively
-> if you want to build on releases earlier than **r151038**).
+> OmniOS releases earlier than **r151054**. If you wish to build on older
+> releases, check out the `pre-r151054` tag (or earlier `pre-` tags respectively
+> if you want to build on even older releases).
 
 ## Introduction
 The purpose of this document is to introduce building packages for the "OmniOS
