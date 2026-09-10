@@ -57,6 +57,8 @@ HARDLINK_TARGETS="
 SKIP_RTIME_CHECK=1
 NO_SONAME_EXPECTED=1
 
+CFLAGS[aarch64]+=" -mtls-dialect=trad"
+
 XFORM_ARGS="
     -DOPREFIX=${OPREFIX#/}
     -DPREFIX=${PREFIX#/}
@@ -94,8 +96,22 @@ CONFIGURE_OPTS="
     --with-lmdb=$OPREFIX
 "
 
-# for lmdb
-LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
+pre_configure() {
+    typeset arch=$1
+
+    # for lmdb
+    LDFLAGS[$arch]+=" -L$OPREFIX/${LIBDIRS[$arch]} -R$OPREFIX/${LIBDIRS[$arch]}"
+
+    ! cross_arch $arch && return
+
+    CONFIGURE_OPTS[$arch]+="
+        --build=${TRIPLETS[$BUILD_ARCH]}
+        --disable-tracing
+    "
+
+    # configure tries to find the build triplet prefixed gcc
+    PATH+=":/opt/gcc-$DEFAULT_GCC_VER/bin"
+}
 
 init
 download_source $PROG $PROG $VER

@@ -101,6 +101,7 @@ ooce/util/lrzsz
 ooce/library/fstrm
 ooce/audio/opus
 ooce/audio/lame
+ooce/network/bind-common
 ###############################################################################
 .SYSROOT
 ooce/audio/flac
@@ -121,6 +122,7 @@ ooce/developer/protobuf-c
 ooce/library/libavif
 ooce/network/mtr
 ooce/database/postgresql-18 -f libsandheaders
+ooce/network/bind-920
 ###############################################################################
 .SYSROOT
 ooce/application/vaultwarden
