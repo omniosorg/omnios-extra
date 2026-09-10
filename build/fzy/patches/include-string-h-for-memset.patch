@@ -1,0 +1,23 @@
+On illumos gates predating illumos#9883 (2025-08-17), <sys/select.h> expands
+FD_ZERO to a memset() call without declaring it, and src/tty.c does not include
+<string.h>. Later gates declare _memset() in the header itself.
+
+Required on r151054 (LTS, supported to 2028); verified to have no effect on
+r151058 or later, where the build and full test suite pass without it. Drop
+once r151054 leaves support.
+
+Worth offering upstream as optional hygiene -- including <string.h> in a file
+that calls FD_ZERO is correct regardless of the header defect -- but it works
+around a defect already fixed in illumos, so a maintainer may reasonably see no
+reason to carry it.
+
+--- a~/src/tty.c	2026-09-10 19:15:10.164156850 +0000
++++ a/src/tty.c	2026-09-10 19:15:10.168771125 +0000
+@@ -4,6 +4,7 @@
+ #include <stdarg.h>
+ #include <termios.h>
+ #include <sys/ioctl.h>
++#include <string.h>
+ #include <sys/select.h>
+ #include <signal.h>
+ #include <errno.h>

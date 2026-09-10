@@ -1,0 +1,53 @@
+fzy builds with -std=c99, which makes gcc define __STRICT_ANSI__. On illumos
+that selects _STRICT_STDC in <sys/feature_tests.h>, which sets _STRICT_SYMBOLS
+and hides fileno(), sigemptyset(), sigaddset() and strndup(). _GNU_SOURCE,
+which fzy already sets, is a glibc macro with no effect here; __EXTENSIONS__ is
+the illumos equivalent, and the only one that exposes everything needed --
+_XOPEN_SOURCE=700 would re-hide the non-POSIX SIGWINCH and TIOCGWINSZ that
+src/tty.c uses.
+
+The test link rule compiles test/*.c directly but omits $(CPPFLAGS), so
+preprocessor defines never reach the test sources. Upstream compensated with
+per-file macros: "#define _GNU_SOURCE" in test/test_choices.c for asprintf()
+and "#define _DEFAULT_SOURCE" in test/test_properties.c for strndup(). Routing
+CPPFLAGS through the rule makes the feature macros uniform between src/ and
+test/, so both per-file defines are removed -- the _GNU_SOURCE one would
+otherwise clash with the command-line -D_GNU_SOURCE (empty vs 1) and warn
+"_GNU_SOURCE redefined" on gcc and clang alike.
+
+Identical to https://github.com/jhawthorn/fzy/pull/208, which should be dropped
+from here if that lands.
+
+--- a~/Makefile	2026-09-10 22:30:57.095621660 +0000
++++ a/Makefile	2026-09-10 22:30:57.098043283 +0000
+@@ -1,6 +1,6 @@
+ VERSION=1.1
+ 
+-CPPFLAGS=-DVERSION=\"${VERSION}\" -D_GNU_SOURCE
++CPPFLAGS=-DVERSION=\"${VERSION}\" -D_GNU_SOURCE -D__EXTENSIONS__
+ CFLAGS+=-MD -Wall -Wextra -g -std=c99 -O3 -pedantic -Ideps -Werror=vla
+ PREFIX?=/usr/local
+ MANDIR?=$(PREFIX)/share/man
+@@ -19,7 +19,7 @@ TESTOBJECTS=test/fzytest.c test/test_pro
+ all: fzy
+ 
+ test/fzytest: $(TESTOBJECTS)
+-	$(CC) $(CFLAGS) $(CCFLAGS) -Isrc -o $@ $(TESTOBJECTS) $(LIBS)
++	$(CC) $(CPPFLAGS) $(CFLAGS) $(CCFLAGS) -Isrc -o $@ $(TESTOBJECTS) $(LIBS)
+ 
+ acceptance: fzy
+ 	cd test/acceptance && bundle --quiet && bundle exec ruby acceptance_test.rb
+--- a~/test/test_choices.c	2026-09-10 22:30:57.096490941 +0000
++++ a/test/test_choices.c	2026-09-10 22:30:57.098895607 +0000
+@@ -1,4 +1,3 @@
+-#define _GNU_SOURCE
+ #include <stdlib.h>
+ #include <string.h>
+ 
+--- a~/test/test_properties.c	2026-09-10 22:30:57.096528574 +0000
++++ a/test/test_properties.c	2026-09-10 22:30:57.098931744 +0000
+@@ -1,4 +1,3 @@
+-#define _DEFAULT_SOURCE
+ #include <string.h>
+ 
+ #include "greatest/greatest.h"

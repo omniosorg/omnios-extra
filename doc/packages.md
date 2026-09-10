@@ -254,6 +254,7 @@
 | ooce/util/diffr		| 0.1.5		| https://github.com/mookid/diffr/tags | [omniosorg](https://github.com/omniosorg)
 | ooce/util/direnv		| 2.37.1	| https://github.com/direnv/direnv/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/fd			| 10.4.2	| https://github.com/sharkdp/fd/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/util/fzy			| 1.1		| https://github.com/jhawthorn/fzy/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/util/getopt		| 1.1.6		| https://frodo.looijaard.name/node/134/release | [omniosorg](https://github.com/omniosorg)
 | ooce/util/gh			| 2.92.0	| https://github.com/cli/cli/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/util/htmlq		| 0.4.0		| https://github.com/mgdm/htmlq/releases/ | [omniosorg](https://github.com/omniosorg)
