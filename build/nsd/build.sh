@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=nsd
-VER=4.15.1
+VER=4.15.2
 PKG=ooce/network/nsd
 SUMMARY="Authoritative DNS server"
 DESC="The NLnet Labs Name Server Daemon (NSD) is an authoritative "
@@ -41,6 +41,7 @@ XFORM_ARGS="
 set_arch 64
 # need msg_flags from struct msghdr and strcasecmp
 set_standard XPG6
+test_relver '>=' 151059 && set_clangver
 
 # For protobuf
 CPPFLAGS+=" -I $OPREFIX/include"
@@ -81,7 +82,7 @@ pre_configure() {
     typeset arch=$1
 
     LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
-    LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
 }
 
 post_install() {
