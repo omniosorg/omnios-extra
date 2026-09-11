@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=mattermost
-VER=10.11.23
+VER=11.7.10
 # check for the current morph version/commit hash and create a patched branch in
 # https://github.com/omniosorg/morph; then point to that branch
 MORPHBRANCH=il_1.1.0
@@ -40,6 +40,12 @@ PREFIX+="/$PROG"
 export BUILD_NUMBER=$VER
 export PATH="$GNUBIN:$PATH"
 subsume_arch $BUILDARCH PKG_CONFIG_PATH
+
+# The webapp build optimises images using 'sharp', for which no illumos
+# binaries exist. Ask npm to install its WebAssembly build instead, which is
+# only selected when the target CPU is 'wasm32'. No other optional,
+# platform-specific package matches illumos so nothing else is affected.
+export npm_config_cpu=wasm32
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -109,32 +115,16 @@ download_source() {
     popd >/dev/null
 }
 
-build_component() {
-    prog="$1"; shift
+build() {
+    note -n "Building $PROG"
 
-    [ -n "$FLAVOR" -a "$FLAVOR" != "$prog" ] && return
-
-    note -n "Building $prog"
-
-    pushd $TMPDIR/$BUILDDIR/$prog >/dev/null
-    logcmd $MAKE "$@" || logerr "Build failed"
+    pushd $TMPDIR/$BUILDDIR/server >/dev/null
+    logcmd $MAKE build-client build-illumos package-prep \
+        || logerr "Build failed"
     popd >/dev/null
 
-    logmsg "Fixing permissions on $prog dependencies"
+    logmsg "Fixing permissions on $PROG dependencies"
     logcmd $CHMOD -R u+w $GOPATH
-}
-
-build() {
-    save_variable LDFLAGS
-    LDFLAGS+=" -R$OPREFIX/lib/amd64"
-    subsume_arch $BUILDARCH LDFLAGS
-    # we could build the webapp from within the server project
-    # using the build-client target
-    # however, node.js fails in a very weird way (missing dependencies)
-    build_component webapp dist
-    restore_variable LDFLAGS
-
-    build_component server setup-go-work build-illumos package-prep
 }
 
 install() {
