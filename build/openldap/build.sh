@@ -17,12 +17,12 @@
 . ../../lib/build.sh
 
 PROG=openldap
-VER=2.6.13
+VER=2.6.15
 PKG=ooce/network/openldap
 SUMMARY="open-source LDAP implementation"
 DESC="Open-source implementation of the Lightweight Directory Access Protocol"
 
-test_relver '>=' 151051 && set_clangver
+set_clangver
 
 # Previous versions that also need to be built and packaged since compiled
 # software may depend on it.
