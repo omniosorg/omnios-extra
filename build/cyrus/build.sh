@@ -17,14 +17,13 @@
 . ../../lib/build.sh
 
 PROG=cyrus
-VER=3.12.3
-DASHREV=1
+VER=3.12.4
 PKG=ooce/network/cyrus-imapd
 SUMMARY="Cyrus IMAP"
 DESC="An email, contacts and calendar server"
 
 ICALVER=3.0.20
-XAPIANVER=1.4.29
+XAPIANVER=2.1.0
 
 # Perl modules bundled to give the cyradm shell command line editing and
 # history.
