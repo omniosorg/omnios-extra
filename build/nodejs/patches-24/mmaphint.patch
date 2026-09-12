@@ -26,6 +26,34 @@ previously mmap()d memory:
 	brk(0x04FB8000)                                 = 0
 	brk(0x04FBC000)                                 Err#12 ENOMEM
 
+In addition, V8's GetRandomMmapAddr() only applies its illumos-specific
+"keep the hint well above the break" adjustment in the generic fallback
+branch, which x64 never reaches; on x64 the random hint is merely masked
+to 46 bits and can land anywhere in the low 64TB, including just above the
+heap. libumem's default sbrk backend is then unable to grow the heap
+(brk() fails with ENOMEM) with plenty of memory free, and node aborts with
+"process out of memory" or std::bad_alloc. This bites memory hungry
+builds such as mattermost's webpack bundle, which creates thousands of
+mappings. Confine the x64 hint to the upper half of that range.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/deps/v8/src/base/platform/platform-posix.cc a/deps/v8/src/base/platform/platform-posix.cc
+--- a~/deps/v8/src/base/platform/platform-posix.cc	1970-01-01 00:00:00
++++ a/deps/v8/src/base/platform/platform-posix.cc	1970-01-01 00:00:00
+@@ -356,6 +356,14 @@ void* OS::GetRandomMmapAddr() {
+   // the hint address to 46 bits to give the kernel a fighting chance of
+   // fulfilling our placement request.
+   raw_addr &= uint64_t{0x3FFFFFFFF000};
++#ifdef __illumos__
++  // Keep the hint well above the break (see the __sun case below): illumos
++  // honours the hint when the range is free, and a random placement in the
++  // path of the heap would otherwise leave brk() unable to grow it. Use the
++  // upper half of the 46-bit range.
++  raw_addr &= uint64_t{0x1FFFFFFFF000};
++  raw_addr += uint64_t{0x200000000000};
++#endif
+ #elif V8_TARGET_ARCH_ARM64
+ #if defined(V8_TARGET_OS_LINUX) || defined(V8_TARGET_OS_ANDROID)
+   // On Linux, the default virtual address space is limited to 39 bits when
 diff -wpruN --no-dereference '--exclude=*.orig' a~/deps/v8/src/heap/code-range.cc a/deps/v8/src/heap/code-range.cc
 --- a~/deps/v8/src/heap/code-range.cc	1970-01-01 00:00:00
 +++ a/deps/v8/src/heap/code-range.cc	1970-01-01 00:00:00

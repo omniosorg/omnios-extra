@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=unbound
-VER=1.25.1
+VER=1.26.0
 PKG=ooce/network/unbound
 SUMMARY="DNS resolver"
 DESC="Unbound is a validating, recursive, caching DNS resolver."
@@ -43,6 +43,7 @@ CONFIGURE_OPTS="
 "
 
 if test_relver '>=' 151059; then
+    set_clangver
     CONFIGURE_OPTS+=" --with-libevent"
 else
     CONFIGURE_OPTS+=" --with-libevent=$OPREFIX"
@@ -54,7 +55,8 @@ pre_configure() {
     typeset arch=$1
 
     LDFLAGS[$arch]="-L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
-    LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
 }
 
 TESTSUITE_SED="/libtool/d"

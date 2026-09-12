@@ -1,13 +1,20 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/server/build/release.mk a/server/build/release.mk
 --- a~/server/build/release.mk	1970-01-01 00:00:00
 +++ a/server/build/release.mk	1970-01-01 00:00:00
-@@ -1,5 +1,9 @@
+@@ -1,6 +1,16 @@
+ .PHONY: dist
  dist: | check-style test package
  
-+build-illumos:
++.PHONY: build-illumos
++build-illumos: setup-go-work
 +	@echo Build illumos amd64
++ifeq ($(BUILDER_GOOS_GOARCH),"illumos_amd64")
 +	env GOOS=illumos GOARCH=amd64 $(GO) build -o $(GOBIN) $(GOFLAGS) -trimpath -tags '$(BUILD_TAGS) production' -ldflags '$(LDFLAGS)' ./...
++else
++	mkdir -p $(GOBIN)/illumos_amd64
++	env GOOS=illumos GOARCH=amd64 $(GO) build -o $(GOBIN)/linux_amd64 $(GOFLAGS) -trimpath -tags '$(BUILD_TAGS) production' -ldflags '$(LDFLAGS)' ./...
++endif
 +
+ .PHONY: build-linux
  build-linux: build-linux-amd64 build-linux-arm64
  
- build-linux-amd64: setup-go-work

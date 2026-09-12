@@ -1,4 +1,4 @@
-Start of unbound 1.25.1+libevent unit test.
+Start of unbound 1.26.0+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -84,11 +84,13 @@ test services/outside_network.c:outnet_waiting_tcp_list_pop
 test services/outside_network.c:reuse_write_wait_push_back
 test services/outside_network.c:reuse_write_wait_remove
 test services/outside_network.c:reuse_write_wait_pop
+test shared_ports functions
 test message parse functions
-[0] did 10000 in 74.304 msec for 134582.256675 encode/sec size 615
+[0] did 10000 in 69.357 msec for 144181.553412 encode/sec size 615
 test edns ede optional encoding functions
 test localzones parent calculation functions
-1298267 checks ok.
+test services/mesh.c:mesh_copy_client_info
+1298368 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl  OK
 ./testdata/auth_notify_lookup.rpl  OK
@@ -98,6 +100,7 @@ selftest successful (33 checks).
 ./testdata/auth_nsec3_wild_with_out_of_zone_data.rpl  OK
 ./testdata/auth_xfr.rpl  OK
 ./testdata/auth_xfr_host.rpl  OK
+./testdata/auth_xfr_host_bogus.rpl  OK
 ./testdata/auth_xfr_ixfr.rpl  OK
 ./testdata/auth_xfr_ixfrisaxfr.rpl  OK
 ./testdata/auth_xfr_ixfrmismatch.rpl  OK
@@ -169,8 +172,11 @@ selftest successful (33 checks).
 ./testdata/chaos_trustanchor.rpl  OK
 ./testdata/disable_edns_do.rpl  OK
 ./testdata/dname_unsigned_cname.rpl  OK
+./testdata/dns64_dnssec.rpl  OK
+./testdata/dns64_fwd_nocache.rpl  OK
 ./testdata/dns64_lookup.rpl  OK
 ./testdata/dns64_prefetch_cache.rpl  OK
+./testdata/dns64_respip_bypass.rpl  OK
 ./testdata/dns_error_reporting.rpl  OK
 ./testdata/domain_insec_ds.rpl  OK
 ./testdata/ds_wildcard_cname.rpl  OK
@@ -182,8 +188,11 @@ selftest successful (33 checks).
 ./testdata/edns_client_string_opcode.rpl  OK
 ./testdata/edns_downstream_cookies.rpl  OK
 ./testdata/edns_keepalive.rpl  OK
+./testdata/edns_nsid_repeat.rpl  OK
+./testdata/errreport_agent_domain_len.rpl  OK
 ./testdata/fetch_glue.rpl  OK
 ./testdata/fetch_glue_cname.rpl  OK
+./testdata/fill_reply_uninit.rpl  OK
 ./testdata/fwd.rpl  OK
 ./testdata/fwd_0ttlservfail.rpl  OK
 ./testdata/fwd_any.rpl  OK
@@ -201,8 +210,11 @@ selftest successful (33 checks).
 ./testdata/fwd_scrub_rrsig.rpl  OK
 ./testdata/fwd_timeout.rpl  OK
 ./testdata/fwd_two.rpl  OK
+./testdata/ghost_glue_a.rpl  OK
 ./testdata/iter_auth_tc.rpl  OK
 ./testdata/iter_class_any.rpl  OK
+./testdata/iter_class_any_merge.rpl  OK
+./testdata/iter_class_mixreferral.rpl  OK
 ./testdata/iter_cname_cache.rpl  OK
 ./testdata/iter_cname_double.rpl  OK
 ./testdata/iter_cname_minimise.rpl  OK
@@ -214,6 +226,7 @@ selftest successful (33 checks).
 ./testdata/iter_dname_insec.rpl  OK
 ./testdata/iter_dname_ttl.rpl  OK
 ./testdata/iter_dname_ttl0.rpl  OK
+./testdata/iter_dname_ttl0_grace.rpl  OK
 ./testdata/iter_dname_yx.rpl  OK
 ./testdata/iter_dnsseclame_bug.rpl  OK
 ./testdata/iter_dnsseclame_ds.rpl  OK
@@ -241,6 +254,7 @@ selftest successful (33 checks).
 ./testdata/iter_fwdstubauth.rpl  OK
 ./testdata/iter_fwdstubroot.rpl  OK
 ./testdata/iter_ghost_grandchild_delegation.rpl  OK
+./testdata/iter_ghost_ns_childapex.rpl  OK
 ./testdata/iter_ghost_sub.rpl  OK
 ./testdata/iter_ghost_timewindow.rpl  OK
 ./testdata/iter_got6only.rpl  OK
@@ -296,11 +310,15 @@ selftest successful (33 checks).
 ./testdata/iter_scrub_dname_out_of_zone.rpl  OK
 ./testdata/iter_scrub_dname_rev.rpl  OK
 ./testdata/iter_scrub_dname_sec.rpl  OK
+./testdata/iter_scrub_mx.rpl  OK
 ./testdata/iter_scrub_ns.rpl  OK
 ./testdata/iter_scrub_ns_fwd.rpl  OK
+./testdata/iter_scrub_ns_min.rpl  OK
 ./testdata/iter_scrub_ns_side.rpl  OK
 ./testdata/iter_scrub_promiscuous.rpl  OK
 ./testdata/iter_scrub_rr_length.rpl  OK
+./testdata/iter_self_glue.rpl  OK
+./testdata/iter_self_glue_promisc.rpl  OK
 ./testdata/iter_soamin.rpl  OK
 ./testdata/iter_stub_leak.rpl  OK
 ./testdata/iter_stub_noroot.rpl  OK
@@ -313,6 +331,7 @@ selftest successful (33 checks).
 ./testdata/local_acl_override.rpl  OK
 ./testdata/local_acl_taglist.rpl  OK
 ./testdata/local_acl_taglist_action.rpl  OK
+./testdata/local_block_a.rpl  OK
 ./testdata/local_cname.rpl  OK
 ./testdata/local_cnameother.rpl  OK
 ./testdata/local_ds.rpl  OK
@@ -323,17 +342,22 @@ selftest successful (33 checks).
 ./testdata/long_qname.rpl  OK
 ./testdata/net_signed_servfail.rpl  OK
 ./testdata/nomem_cnametopos.rpl  OK
+./testdata/nsec_cross_zone.rpl  OK
 ./testdata/nsid_ascii.rpl  OK
 ./testdata/nsid_bogus.rpl  OK
 ./testdata/nsid_hex.rpl  OK
 ./testdata/nsid_not_set.rpl  OK
 ./testdata/refuse_xfr.rpl  OK
+./testdata/respip_bogus_rewrite.rpl  OK
+./testdata/respip_cname_loop_tagged.rpl  OK
 ./testdata/respip_dns64_lookup.rpl  OK
 ./testdata/root_key_sentinel.rpl  OK
 ./testdata/rpz_axfr.rpl  OK
 ./testdata/rpz_cached_cname.rpl  OK
 ./testdata/rpz_clientip.rpl  OK
 ./testdata/rpz_clientip_override.rpl  OK
+./testdata/rpz_clientip_passthru_cache.rpl  OK
+./testdata/rpz_clientip_passthru_dns64.rpl  OK
 ./testdata/rpz_cname_handle.rpl  OK
 ./testdata/rpz_cname_tag.rpl  OK
 ./testdata/rpz_cname_wild.rpl  OK
@@ -358,6 +382,7 @@ selftest successful (33 checks).
 ./testdata/rrset_untrusted.rpl  OK
 ./testdata/rrset_updated.rpl  OK
 ./testdata/rrset_use_cached.rpl  OK
+./testdata/rrsig_agr_wild.rpl  OK
 ./testdata/serve_expired.rpl  OK
 ./testdata/serve_expired_0ttl_nodata.rpl  OK
 ./testdata/serve_expired_0ttl_nxdomain.rpl  OK
@@ -369,14 +394,21 @@ selftest successful (33 checks).
 ./testdata/serve_expired_client_timeout_val_bogus.rpl  OK
 ./testdata/serve_expired_client_timeout_val_insecure_delegation.rpl  OK
 ./testdata/serve_expired_reply_ttl.rpl  OK
+./testdata/serve_expired_respip_cname.rpl  OK
+./testdata/serve_expired_respip_drop.rpl  OK
+./testdata/serve_expired_rpz_drop.rpl  OK
+./testdata/serve_expired_rpz_nx.rpl  OK
 ./testdata/serve_expired_ttl.rpl  OK
 ./testdata/serve_expired_ttl_client_timeout.rpl  OK
 ./testdata/serve_expired_ttl_reset.rpl  OK
 ./testdata/serve_expired_val_bogus.rpl  OK
+./testdata/serve_expired_wildcard_swap_ad.rpl  OK
 ./testdata/serve_expired_zerottl.rpl  OK
 ./testdata/serve_original_ttl.rpl  OK
 ./testdata/stop_nxdomain.rpl  OK
+./testdata/stop_nxdomain_label.rpl  OK
 ./testdata/stop_nxdomain_minimised.rpl  OK
+./testdata/sub_ds_deepcopy.rpl  OK
 ./testdata/trust_cname_chain.rpl  OK
 ./testdata/ttl_max.rpl  OK
 ./testdata/ttl_max_negative.rpl  OK
@@ -391,15 +423,18 @@ selftest successful (33 checks).
 ./testdata/val_ans_dsent.rpl  OK
 ./testdata/val_ans_nx.rpl  OK
 ./testdata/val_any.rpl  OK
+./testdata/val_any_cap.rpl  OK
 ./testdata/val_any_cname.rpl  OK
 ./testdata/val_any_dname.rpl  OK
 ./testdata/val_any_negcache.rpl  OK
+./testdata/val_canon_short_px.rpl  OK
 ./testdata/val_cname_loop1.rpl  OK
 ./testdata/val_cname_loop2.rpl  OK
 ./testdata/val_cname_loop3.rpl  OK
 ./testdata/val_cnameinsectopos.rpl  OK
 ./testdata/val_cnamenx_dblnsec.rpl  OK
 ./testdata/val_cnamenx_rcodenx.rpl  OK
+./testdata/val_cnameother.rpl  OK
 ./testdata/val_cnameqtype.rpl  OK
 ./testdata/val_cnameqtype_qmin.rpl  OK
 ./testdata/val_cnametocloser.rpl  OK
@@ -437,10 +472,12 @@ selftest successful (33 checks).
 ./testdata/val_faildnskey_ok.rpl  OK
 ./testdata/val_failure_dnskey.rpl  OK
 ./testdata/val_fwdds.rpl  OK
+./testdata/val_global_quota.rpl  OK
 ./testdata/val_keyprefetch.rpl  OK
 ./testdata/val_keyprefetch_verify.rpl  OK
 ./testdata/val_mal_wc.rpl  OK
 ./testdata/val_negcache_ds.rpl  OK
+./testdata/val_negcache_ds_nsec3.rpl  OK
 ./testdata/val_negcache_dssoa.rpl  OK
 ./testdata/val_negcache_nodata.rpl  OK
 ./testdata/val_negcache_nta.rpl  OK
@@ -533,6 +570,7 @@ selftest successful (33 checks).
 ./testdata/val_unsecds.rpl  OK
 ./testdata/val_unsecds_negcache.rpl  OK
 ./testdata/val_unsecds_qtypeds.rpl  OK
+./testdata/val_wcnsec_nods.rpl  OK
 ./testdata/val_wild_pos.rpl  OK
 ./testdata/version_bind.rpl  OK
 ./testdata/version_bind_hide.rpl  OK

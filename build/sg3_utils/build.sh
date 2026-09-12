@@ -13,12 +13,12 @@
 # }}}
 #
 # Copyright 2020 Carsten Grzemba
-# Copyright 2023 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=sg3_utils
-VER=1.48
+VER=1.49
 PKG=ooce/system/sg3_utils
 SUMMARY="the sg3-utils SCSI utilities"
 DESC="Collection of utilities for devices that use the SCSI command set. "
@@ -30,32 +30,26 @@ DESC+="and various other functions. Warning: Some of these tools access "
 DESC+="the internals of your system and the incorrect usage of them may "
 DESC+="render your system inoperable."
 
-OPREFIX=$PREFIX
-PREFIX+=/$PROG
-
-set_arch 64
-
-XFORM_ARGS="
-    -DOPREFIX=${OPREFIX#/}
-    -DPREFIX=${PREFIX#/}
-    -DPROG=$PROG
-    -DPKGROOT=$PROG
-"
+test_relver '>=' 151059 && set_clangver
+set_standard XPG6 CFLAGS
 
 CONFIGURE_OPTS="
-    --disable-static
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX=$PREFIX
 "
 
-CONFIGURE_OPTS[amd64]+="
-    --libdir=$PREFIX/lib/amd64
-"
+pre_configure() {
+    typeset arch=$1
+
+    CONFIGURE_OPTS[$arch]="-DCMAKE_INSTALL_LIBDIR=${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
+}
 
 init
 download_source $PROG $PROG $VER
 patch_source
-prep_build
+prep_build cmake+ninja
 build
-strip_install
 make_package
 clean_up
 

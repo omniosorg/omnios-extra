@@ -1,0 +1,65 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/webapp/channels/webpack.config.js a/webapp/channels/webpack.config.js
+--- a~/webapp/channels/webpack.config.js	1970-01-01 00:00:00
++++ a/webapp/channels/webpack.config.js	1970-01-01 00:00:00
+@@ -12,6 +12,7 @@ const HtmlWebpackPlugin = require('html-
+ const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+ const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
++const TerserPlugin = require('terser-webpack-plugin');
+ const webpack = require('webpack');
+ const {ModuleFederationPlugin} = require('webpack').container;
+ const WebpackPwaManifest = require('webpack-pwa-manifest');
+@@ -126,6 +127,10 @@ var config = {
+         alias: {
+             'mattermost-redux/test': 'packages/mattermost-redux/test',
+             'mattermost-redux': 'packages/mattermost-redux/src',
++
++            // Use the @mattermost/shared sources directly rather than the parcel-built dist, as parcel's native
++            // modules are not available on illumos.
++            '@mattermost/shared': path.resolve(__dirname, '..', 'platform', 'shared', 'src'),
+             '@mui/styled-engine': '@mui/styled-engine-sc',
+ 
+             // This alias restricts single version of styled components across all packages
+@@ -444,8 +449,18 @@ if (DEV) {
+     config.optimization = {
+         ...config.optimization,
+         minimizer: [
+-            '...',
++            // On illumos, the default worker pools sized to the CPU count trigger sporadic mmap/brk ENOMEM
++            // failures in node, so cap the parallelism. The terser options mirror webpack's default minimizer.
++            new TerserPlugin({
++                parallel: 4,
++                terserOptions: {
++                    compress: {
++                        passes: 2,
++                    },
++                },
++            }),
+             new ImageMinimizerPlugin({
++                concurrency: 4,
+                 minimizer: {
+                     implementation: ImageMinimizerPlugin.sharpMinify,
+                     filter: (source, sourcePath) => !sourcePath.endsWith('.gif'),
+diff -wpruN --no-dereference '--exclude=*.orig' a~/webapp/package.json a/webapp/package.json
+--- a~/webapp/package.json	1970-01-01 00:00:00
++++ a/webapp/package.json	1970-01-01 00:00:00
+@@ -6,7 +6,7 @@
+     "npm": "^11"
+   },
+   "scripts": {
+-    "postinstall": "patch-package && npm run build --workspace platform/types --workspace platform/client --workspace platform/components --workspace platform/shared",
++    "postinstall": "patch-package && npm run build --workspace platform/types --workspace platform/client --workspace platform/components",
+     "build": "node scripts/build.mjs",
+     "run": "node scripts/run.mjs",
+     "dev-server": "node scripts/dev-server.mjs",
+diff -wpruN --no-dereference '--exclude=*.orig' a~/webapp/platform/shared/package.json a/webapp/platform/shared/package.json
+--- a~/webapp/platform/shared/package.json	1970-01-01 00:00:00
++++ a/webapp/platform/shared/package.json	1970-01-01 00:00:00
+@@ -98,7 +98,6 @@
+     }
+   },
+   "scripts": {
+-    "build": "parcel build --no-optimize",
+     "check": "npm run check:eslint && npm run check:stylelint",
+     "check:eslint": "eslint --ext .js,.jsx,.tsx,.ts ./src --quiet",
+     "check:stylelint": "stylelint \"**/*.{css,scss}\"",

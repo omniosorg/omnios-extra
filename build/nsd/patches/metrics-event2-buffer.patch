@@ -8,4 +8,4 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/metrics.c a/metrics.c
 +#include <event2/buffer.h>
  #include <event2/http.h>
  #include <ctype.h>
- 
+ #include <inttypes.h>

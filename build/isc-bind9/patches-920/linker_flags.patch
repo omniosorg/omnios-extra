@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/configure.ac a/configure.ac
 --- a~/configure.ac	1970-01-01 00:00:00
 +++ a/configure.ac	1970-01-01 00:00:00
-@@ -333,17 +333,6 @@ AC_PATH_PROG([JQ], [jq])
+@@ -335,17 +335,6 @@ AC_PATH_PROG([JQ], [jq])
  AC_PATH_PROG([XMLLINT], [xmllint])
  AC_PATH_PROG([XSLTPROC], [xsltproc])
  

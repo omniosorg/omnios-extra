@@ -9,11 +9,9 @@
 # http://www.illumos.org/license/CDDL.
 #
 # Copyright 2020 Carsten Grzemba
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 license BSD_LICENSE license=simplified-BSD
 
 <transform path=.*scsi[^/]*$ -> drop>
-
-<include binlink.mog>
-<include manlink.mog>
 
