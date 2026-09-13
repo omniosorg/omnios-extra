@@ -1,0 +1,28 @@
+----
+fzf
+----
+
+The binary works on its own; the shell integration is not enabled
+automatically and has to be sourced.
+
+Bash completion is installed where bash finds it by itself, so the `**`
+completion trigger works in a new shell with no further action.
+
+The key bindings (CTRL-T, CTRL-R, ALT-C) and the zsh/fish integration must be
+sourced explicitly. Add the line for your shell to its startup file:
+
+  bash    source <prefix>/share/fzf/shell/key-bindings.bash
+
+  zsh     source <prefix>/share/fzf/shell/completion.zsh
+          source <prefix>/share/fzf/shell/key-bindings.zsh
+
+  fish    source <prefix>/share/fzf/shell/completion.fish
+          source <prefix>/share/fzf/shell/key-bindings.fish
+
+`fzf-tmux` is installed in <prefix>/bin and needs terminal/tmux.
+
+An example preview helper is available at
+<prefix>/share/fzf/fzf-preview.sh, for use with --preview.
+
+Integration files for nushell are not shipped, as nushell is not packaged
+for OmniOS.
