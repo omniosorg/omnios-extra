@@ -58,6 +58,7 @@
 | ooce/developer/autoconf-archive | 2024.10.16	| https://ftp.gnu.org/gnu/autoconf-archive/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/autogen	| 5.18.16	| https://ftp.gnu.org/gnu/autogen/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/bazel		| 6.3.2		| https://github.com/bazelbuild/bazel/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/developer/bmake		| 20260824	| https://www.crufty.net/help/sjg/bmake.html https://www.crufty.net/ftp/pub/sjg/ | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/cargo-c	| 0.10.25	| https://github.com/lu-zero/cargo-c/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/developer/ccache		| 3.6		| https://www.samba.org/ftp/ccache/ | [jimklimov](https://github.com/jimklimov)
 | ooce/developer/clang-13	| 13.0.1	| https://github.com/llvm/llvm-project/releases | [omniosorg](https://github.com/omniosorg)
