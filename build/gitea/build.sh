@@ -12,22 +12,23 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=gitea
 PKG=ooce/application/gitea
-VER=1.25.5
+VER=1.27.3
 SUMMARY="Git with a cup of tea"
 DESC="Git with a cup of tea, painless self-hosted git service"
+
+set_builddir $PROG-src-$VER
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
 set_gover
-set_nodever
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -36,7 +37,7 @@ XFORM_ARGS="
     -DVERSION=$VER
 "
 
-BUILD_DEPENDS_IPS="
+BUILD_DEPENDS_IPS+="
 	network/rsync
 "
 RUN_DEPENDS_IPS=developer/versioning/git
@@ -55,7 +56,7 @@ build() {
     "
 
     logmsg "Building 64-bit"
-    TAGS="bindata sqlite sqlite_unlock_notify" logcmd $MAKE build \
+    TAGS="bindata sqlite sqlite_mattn sqlite_unlock_notify" logcmd $MAKE build \
         || logerr "Build failed"
     ./gitea help | sed -n '/DEFAULT CONFIGURATION:/,$p'
 
@@ -83,7 +84,7 @@ install() {
 }
 
 init
-clone_go_source $PROG go-$PROG v$VER
+download_source $PROG $PROG-src $VER
 patch_source
 prep_build
 build
