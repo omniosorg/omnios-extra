@@ -1,0 +1,15 @@
+On illumos gates predating illumos#9883 (2025-08-17), <sys/select.h> expands
+FD_ZERO to a memset() call without declaring it, and src/tty.c does not include
+<string.h>. Required on r151054, no effect on r151058 or later; drop once
+r151054 leaves support.
+
+--- a~/src/tty.c	2026-09-10 19:15:10.164156850 +0000
++++ a/src/tty.c	2026-09-10 19:15:10.168771125 +0000
+@@ -4,6 +4,7 @@
+ #include <stdarg.h>
+ #include <termios.h>
+ #include <sys/ioctl.h>
++#include <string.h>
+ #include <sys/select.h>
+ #include <signal.h>
+ #include <errno.h>
