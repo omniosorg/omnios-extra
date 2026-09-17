@@ -21,6 +21,10 @@ package, or volunteer to maintain an existing or un-maintained package. No
 special commit privileges are needed and
 [assistance](#omnios-community-support-channels) is available if needed.
 
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a package or
+opening an issue. It covers what we accept here, and our policy on
+AI/LLM-assisted contributions.
+
 ### Prepare to build packages for OmniOS
 
 1. [Requirements](#requirements)
@@ -1052,6 +1056,8 @@ Coming Soon! In the meantime, [browse the build scripts of Rust packages in the 
 
 ## Final tasks before submitting a package
 
+* Make sure that you have read [CONTRIBUTING.md](CONTRIBUTING.md)
+
 * Make sure that the package has been added to `doc/baseline`
 
 * Make sure that the package has been added to `doc/packages.md`
@@ -1153,9 +1159,8 @@ git push origin master
 
 ### OmniOS community support channels
 
-* **Gitter:** Connect to the web-based [chat room on Gitter](https://gitter.im/omniosorg/Lobby).
-* **IRC:**  Join the [#omnios channel on Libera](https://web.libera.chat/#omnios).
 * **Mailing list:** general discussion and queries, please subscribe to the [omnios-discuss mailing list](https://illumos.topicbox.com/groups/omnios-discuss).
+* **IRC:**  Join the [#omnios channel on Libera](https://web.libera.chat/#omnios).
 
 ### Recommended reading
 
