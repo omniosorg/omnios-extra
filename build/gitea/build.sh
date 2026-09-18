@@ -50,15 +50,31 @@ build() {
 
     subsume_arch amd64 LDFLAGS
     export LDFLAGS=" \
-    -X code.gitea.io/gitea/modules/setting.CustomPath=/var$PREFIX/custom \
-    -X code.gitea.io/gitea/modules/setting.CustomConf=/etc$PREFIX/app.ini \
-    -X code.gitea.io/gitea/modules/setting.AppWorkPath=/var$PREFIX \
+    -X gitea.dev/modules/setting.CustomPath=/var$PREFIX/custom \
+    -X gitea.dev/modules/setting.CustomConf=/etc$PREFIX/app.ini \
+    -X gitea.dev/modules/setting.AppWorkPath=/var$PREFIX \
     "
 
     logmsg "Building 64-bit"
     TAGS="bindata sqlite sqlite_mattn sqlite_unlock_notify" logcmd $MAKE build \
         || logerr "Build failed"
-    ./gitea help | sed -n '/DEFAULT CONFIGURATION:/,$p'
+
+    typeset cfg="`./gitea help | $SED -n '
+            /DEFAULT CONFIGURATION:/,$ {
+                /AppPath/n
+                p
+            }
+        '`"
+    logmsg "$cfg"
+    for p in \
+        WorkPath:/var$PREFIX \
+        CustomPath:/var$PREFIX/custom \
+        ConfigFile:/etc$PREFIX/app.ini; do
+        typeset var=${p%%:*}
+        typeset val=${p#*:}
+        echo "$cfg" | grep -q "$var:[[:space:]]*$val\$" \
+            || logerr "$var is not $val"
+    done
 
     # Gitea version <ver> built with go<ver>
     [ "`./gitea --version | awk '{print $3}'`" = "$VER" ] \
