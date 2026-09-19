@@ -190,7 +190,7 @@
 | ooce/network/tailscale	| 1.102.3	| https://github.com/nshalman/tailscale/releases https://www.tailscale.com/ | [nshalman](https://github.com/nshalman)
 | ooce/network/tcpdump		| 4.99.5	| https://www.tcpdump.org/release/ | [omniosorg](https://github.com/omniosorg)
 | ooce/network/unbound		| 1.26.0	| https://nlnetlabs.nl/downloads/unbound/ | [omniosorg](https://github.com/omniosorg)
-| ooce/network/znc		| 1.10.2	| https://znc.in/releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/network/znc		| 1.10.3	| https://znc.in/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/ooceapps			| github-latest	| https://github.com/omniosorg/ooceapps/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/print/cups		| 2.4.19	| https://github.com/OpenPrinting/cups/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/runtime/expect		| 5.45.4	| https://sourceforge.net/projects/expect/files/Expect/ | [omniosorg](https://github.com/omniosorg)
