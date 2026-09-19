@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=ImageMagick
-VER=7.1.1-38
+VER=7.1.2-31
 PKG=ooce/application/imagemagick
 SUMMARY="$PROG - Convert, Edit, or Compose Bitmap Images"
 DESC="Use $PROG to create, edit, compose, or convert bitmap images. It can "
@@ -28,6 +28,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 reset_configure_opts
+test_relver '>=' 151059 && set_clangver
 
 SKIP_LICENCES=ImageMagick
 SKIP_RTIME_CHECK=1
@@ -40,15 +41,12 @@ BUILD_DEPENDS_IPS="
     ooce/library/libheif
     ooce/library/libjpeg-turbo
     ooce/library/libpng
+    ooce/library/libraw
     ooce/library/pango
     ooce/library/tiff
     ooce/library/libwebp
     ooce/library/libzip
     ooce/application/graphviz
-"
-
-RUN_DEPENDS_IPS="
-    ooce/multimedia/dcraw
 "
 
 XFORM_ARGS="
@@ -76,10 +74,20 @@ CONFIGURE_OPTS+=" ac_cv_have_linux_sendfile=no"
 CONFIGURE_OPTS[amd64]+=" --bindir=$PREFIX/bin"
 
 CPPFLAGS+=" -I$OPREFIX/libzip/include"
-LDFLAGS[i386]+=" -L$OPREFIX/lib -R$OPREFIX/lib"
-LDFLAGS[amd64]+=" -L$OPREFIX/lib/amd64 -R$OPREFIX/lib/amd64"
 
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -L$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"
+}
+
+# Make ISA binaries for *-config, to allow software to find the
+# right settings for 32/64-bit when pkg-config is not used.
 make_isa_stub() {
+    [ $1 != amd64 ] && return
+
     pushd $DESTDIR$PREFIX/bin >/dev/null
     logcmd mkdir -p amd64
     logcmd mv *-config amd64/ || logerr "mv -config"
@@ -92,7 +100,6 @@ prep_build
 download_source $PROG $PROG $VER
 patch_source
 build
-strip_install
 run_testsuite check
 make_isa_stub
 VER=${VER//-/.} make_package

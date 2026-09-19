@@ -155,4 +155,5 @@ ooce/terminal/picocom
 .SYSROOT
 ooce/multimedia/dcraw
 ooce/library/libgd
+ooce/application/imagemagick
 ###############################################################################
