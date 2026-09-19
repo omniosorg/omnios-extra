@@ -17,24 +17,25 @@
 . ../../lib/build.sh
 
 PROG=gnupg
-VER=2.5.18
+VER=2.5.22
 PKG=ooce/security/gnupg
 SUMMARY="$PROG - GNU Privacy Guard"
 DESC="A complete and free implementation of the OpenPGP standard"
 
 # we don't track the versions in doc/packages.md
 # check for updates when gnupg is updated
-LIBGPGERRORVER=1.59
-LIBGCRYPTVER=1.12.1
-LIBKSBAVER=1.6.8
+LIBGPGERRORVER=1.61
+LIBGCRYPTVER=1.12.4
+LIBKSBAVER=1.8.1
 LIBASSUANVER=3.0.2
 NPTHVER=1.8
-PINENTRYVER=1.3.2
+PINENTRYVER=1.3.3
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 set_arch 64
+test_relver '>=' 151059 && set_clangver
 
 SKIP_RTIME_CHECK=1
 TESTSUITE_FILTER='^[A-Z0-9][A-Z0-9 ]'
@@ -129,7 +130,7 @@ pre_configure() {
     CPPFLAGS+=" -I$DEPROOT$PREFIX/include -I$OPREFIX/include"
     LDFLAGS[$arch]+=" -L$DEPROOT$PREFIX/${LIBDIRS[$arch]}"
     LDFLAGS[$arch]+=" -L${SYSROOT[$arch]}$OPREFIX/${LIBDIRS[$arch]}"
-    LDFLAGS[$arch]+=" -R$OPREFIX/${LIBDIRS[$arch]}"
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
 }
 
 PATH+=":$DEPROOT$PREFIX/bin"
