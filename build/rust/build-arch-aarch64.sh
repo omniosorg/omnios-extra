@@ -83,9 +83,7 @@ pre_configure() { :;
 
     tripus=${RUSTTRIPLETS[aarch64]//-/_}
     tripuc=${tripus^^}
-    export CARGO_TARGET_${tripuc}_RUSTFLAGS="
-        -C link-arg=--sysroot=${SYSROOT[aarch64]}
-    "
+    export CARGO_TARGET_${tripuc}_RUSTFLAGS="-C link-arg=--sysroot=${SYSROOT[aarch64]}"
     export CXXFLAGS_${tripus}="-mno-outline-atomics -mtls-dialect=trad"
 }
 

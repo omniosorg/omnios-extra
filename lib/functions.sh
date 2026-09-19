@@ -2781,7 +2781,7 @@ make_arch() {
     typeset arch=${1:?arch}
     hook pre_make $arch
     eval set -- $MAKE_ARGS_WS
-    typeset MAKE_JOBS="-j$MJOBS"
+    typeset MAKE_JOBS="-j $MJOBS"
     [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=
     if [ -n "$LIBTOOL_NOSTDLIB" ]; then
         libtool_nostdlib "$LIBTOOL_NOSTDLIB" "$LIBTOOL_NOSTDLIB_EXTRAS"
@@ -2867,7 +2867,7 @@ make_param() {
 # Helper function that can be called by build scripts to make in a specific dir
 make_in() {
     [ -z "$1" ] && logerr "------ Make in dir failed - no dir specified"
-    typeset MAKE_JOBS="-j$MJOBS"
+    typeset MAKE_JOBS="-j $MJOBS"
     [ -n "$NO_PARALLEL_MAKE" ] && MAKE_JOBS=
     logmsg "------ make in $1"
     logcmd $MAKE $MAKE_JOBS -C $1 $MAKE_TARGET || \
