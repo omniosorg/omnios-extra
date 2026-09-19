@@ -54,6 +54,7 @@ extra.omnios ooce/library/libjpeg-turbo
 extra.omnios ooce/library/libmcrypt
 extra.omnios ooce/library/libogg
 extra.omnios ooce/library/libpng
+extra.omnios ooce/library/libraw
 extra.omnios ooce/library/libsodium
 extra.omnios ooce/library/libtasn1
 extra.omnios ooce/library/libtpms

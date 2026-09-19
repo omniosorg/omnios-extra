@@ -102,6 +102,7 @@ ooce/library/fstrm
 ooce/audio/opus
 ooce/audio/lame
 ooce/network/bind-common
+ooce/library/libraw
 ###############################################################################
 .SYSROOT
 ooce/audio/flac

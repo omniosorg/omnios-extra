@@ -136,6 +136,7 @@
 | ooce/library/libogg		| 1.3.6		| https://ftp.osuosl.org/pub/xiph/releases/ogg/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libpciaccess	| 0.18.1	| https://xorg.freedesktop.org/archive/individual/lib | [drscream](https://github.com/drscream)
 | ooce/library/libpng		| 1.6.58	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libraw		| 0.22.2	| https://www.libraw.org/download | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libsodium	| 1.0.22	| https://github.com/jedisct1/libsodium/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libtasn1		| 4.21.0	| https://ftp.gnu.org/gnu/libtasn1/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libtpms		| 0.10.2	| https://github.com/stefanberger/libtpms/releases | [omniosorg](https://github.com/omniosorg)
