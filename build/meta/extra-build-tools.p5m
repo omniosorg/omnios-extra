@@ -55,6 +55,7 @@ depend fmri=ooce/library/libjpeg-turbo type=require
 depend fmri=ooce/library/libmcrypt type=require
 depend fmri=ooce/library/libogg type=require
 depend fmri=ooce/library/libpng type=require
+depend fmri=ooce/library/libraw type=require
 depend fmri=ooce/library/libsodium type=require
 depend fmri=ooce/library/libtasn1 type=require
 depend fmri=ooce/library/libtpms type=require

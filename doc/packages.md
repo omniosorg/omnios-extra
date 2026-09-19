@@ -6,7 +6,7 @@
 | ooce/application/gitea	| 1.27.3	| https://github.com/go-gitea/gitea/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/gnuplot	| 6.0.2		| https://sourceforge.net/projects/gnuplot/files/gnuplot/ http://www.gnuplot.info/ | [omniosorg](https://github.com/omniosorg)
 | ooce/application/graphviz	| 2.44.1	| https://www2.graphviz.org/Packages/stable/portable_source/ https://graphviz.org/download/source/ | [omniosorg](https://github.com/omniosorg)
-| ooce/application/imagemagick	| 7.1.1-38	| https://imagemagick.org/archive/ | [omniosorg](https://github.com/omniosorg)
+| ooce/application/imagemagick	| 7.1.2-31	| https://github.com/ImageMagick/ImageMagick/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/links	| 2.30		| http://links.twibright.com/download.php | [omniosorg](https://github.com/omniosorg)
 | ooce/application/listmonk	| 4.1.0		| https://github.com/knadh/listmonk/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/application/mattermost	| 11.7.10	| https://docs.mattermost.com/product-overview/version-archive.html | [omniosorg](https://github.com/omniosorg)
