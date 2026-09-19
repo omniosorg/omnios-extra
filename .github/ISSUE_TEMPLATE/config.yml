@@ -1,0 +1,16 @@
+blank_issues_enabled: false
+contact_links:
+  - name: OmniOS discussion and support
+    url: https://illumos.topicbox.com/groups/omnios-discuss
+    about: >-
+      Questions about using OmniOS or its packages are best asked on the
+      omnios-discuss mailing list.
+  - name: OmniOS chat
+    url: https://web.libera.chat/#omnios
+    about: >-
+      The #omnios channel on Libera, for quick questions.
+  - name: Contribution guidelines
+    url: https://github.com/omniosorg/omnios-extra/blob/master/CONTRIBUTING.md
+    about: >-
+      What we accept here, and our policy on AI/LLM-assisted
+      contributions. Please read this before filing.
