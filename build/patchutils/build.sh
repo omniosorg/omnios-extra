@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=patchutils
-VER=0.4.4
+VER=0.4.5
 PKG=ooce/text/patchutils
 SUMMARY="$PROG"
 DESC="A collection of tools that operate on patch files"
