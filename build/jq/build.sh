@@ -12,13 +12,13 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=jq
 PKG=ooce/util/jq
-VER=1.8.1
+VER=1.8.2
 SUMMARY="$PROG - JSON query tool"
 DESC="$PROG is a lightweight and flexible command-line JSON processor"
 
@@ -27,7 +27,7 @@ PREFIX+=/$PROG
 
 BUILD_DEPENDS_IPS="ooce/library/onig"
 
-test_relver '>=' 151047 && set_clangver
+set_clangver
 
 forgo_isaexec
 
