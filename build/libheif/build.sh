@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libheif
-VER=1.23.1
+VER=1.23.4
 PKG=ooce/library/libheif
 SUMMARY="HEIF and AVIF encoder"
 DESC="ISO/IEC 23008-12:2017 HEIF and AVIF (AV1 Image File Format) "
@@ -30,8 +30,6 @@ set_clangver
 RAV1EVER=`pkg_ver rav1e`
 RAV1EVER=${RAV1EVER%.*}
 
-# TODO: we don't cross build rust software, yet. but the rav1e build-time
-# dependency is met on the build host
 BUILD_DEPENDS_IPS="
     ooce/library/libde265
     ooce/multimedia/dav1d

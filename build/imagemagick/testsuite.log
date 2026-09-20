@@ -17,6 +17,10 @@ PASS: tests/cli-colorspace.tap 16
 PASS: tests/cli-colorspace.tap 17
 PASS: tests/cli-colorspace.tap 18
 PASS: tests/cli-colorspace.tap 19
+SKIP: tests/cli-heic.tap - AVIF coder unavailable
+PASS: tests/cli-pcx.tap 1
+PASS: tests/cli-pcx.tap 2
+PASS: tests/cli-pcx.tap 3
 PASS: tests/cli-pipe.tap 1
 PASS: tests/cli-pipe.tap 2
 PASS: tests/cli-pipe.tap 3
@@ -34,13 +38,15 @@ FAIL: tests/cli-pipe.tap 14
 PASS: tests/cli-pipe.tap 15
 PASS: tests/cli-pipe.tap 16
 PASS: tests/cli-pipe.tap 17
+PASS: tests/cli-svg.tap 1
+SKIP: tests/cli-svg.tap 2 # SKIP MSVG coder unavailable
 PASS: tests/validate-colorspace.tap 1
 PASS: tests/validate-compare.tap 1
 PASS: tests/validate-composite.tap 1
 PASS: tests/validate-convert.tap 1
-PASS: tests/validate-formats-disk.tap 1
-PASS: tests/validate-formats-map.tap 1
-PASS: tests/validate-formats-memory.tap 1
+FAIL: tests/validate-formats-disk.tap 1
+FAIL: tests/validate-formats-map.tap 1
+FAIL: tests/validate-formats-memory.tap 1
 PASS: tests/validate-identify.tap 1
 PASS: tests/validate-import.tap 1
 PASS: tests/validate-magick.tap 1
@@ -49,13 +55,13 @@ PASS: tests/validate-stream.tap 1
 PASS: tests/drawtest.tap 1
 PASS: tests/wandtest.tap 1
 PASS: Magick++/tests/tests.tap 1
-PASS: Magick++/tests/tests.tap 2
+FAIL: Magick++/tests/tests.tap 2
 PASS: Magick++/tests/tests.tap 3
 PASS: Magick++/tests/tests.tap 4
 PASS: Magick++/tests/tests.tap 5
 PASS: Magick++/tests/tests.tap 6
 PASS: Magick++/tests/tests.tap 7
-PASS: Magick++/tests/tests.tap 8
+FAIL: Magick++/tests/tests.tap 8
 PASS: Magick++/tests/tests.tap 9
 PASS: Magick++/tests/tests.tap 10
 PASS: Magick++/tests/tests.tap 11
@@ -85,10 +91,10 @@ PASS: Magick++/demo/demos.tap 21
 PASS: Magick++/demo/demos.tap 22
 PASS: Magick++/demo/demos.tap 23
 PASS: Magick++/demo/demos.tap 24
-# TOTAL: 87
-# PASS:  86
-# SKIP:  0
+# TOTAL: 93
+# PASS:  85
+# SKIP:  2
 # XFAIL: 0
-# FAIL:  1
+# FAIL:  6
 # XPASS: 0
 # ERROR: 0

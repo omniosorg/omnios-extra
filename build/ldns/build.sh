@@ -12,15 +12,17 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=ldns
-VER=1.9.0
+VER=1.9.2
 PKG=ooce/library/ldns
 SUMMARY=$PROG
 DESC="$PROG DNS programming library and drill utility"
+
+test_relver '>=' 151059 && set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
@@ -49,13 +51,15 @@ CONFIGURE_OPTS[aarch64]+="
     --with-examples
 "
 
-# Building in parallel produces occasional bad objects that then fail the
-# linking stage. This needs investigation but disable parallelism for now.
-NO_PARALLEL_MAKE=1
-
 # The 'distclean' target clobbers too much including 'configure'
 make_clean() {
     logcmd $MAKE clean
+}
+
+pre_configure() {
+    typeset arch=$1
+
+    LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
 }
 
 post_install() {

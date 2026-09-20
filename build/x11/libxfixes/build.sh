@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=libXfixes
-VER=6.0.1
+VER=6.0.2
 PKG=ooce/x11/library/libxfixes
 SUMMARY="libXfixes"
 DESC="X fixes extension client library"

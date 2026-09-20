@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=libde265
-VER=1.1.1
+VER=1.1.3
 PKG=ooce/library/libde265
 SUMMARY="h.265 codec implementation"
 DESC="Open source implementation of the h.265 video codec"

@@ -591,19 +591,19 @@ PASS: test_urcu_multiflavor_single_unit_dynlink_cxx 2 - !test_mf_bp()
 PASS: test_urcu_multiflavor_single_unit_dynlink_cxx 3 - !test_mf_memb()
 PASS: test_urcu_multiflavor_single_unit_dynlink_cxx 4 - !test_mf_qsbr()
 PASS: test_build 1 - cds_lfs_empty
-PASS: test_build 2 - cds_lfs_empty
+PASS: test_build 2 - cds_wfs_empty
 PASS: test_build 3 - cds_wfcq_empty
 PASS: test_build_cxx 1 - cds_lfs_empty
-PASS: test_build_cxx 2 - cds_lfs_empty
+PASS: test_build_cxx 2 - cds_wfs_empty
 PASS: test_build_cxx 3 - cds_wfcq_empty
 PASS: test_build_dynlink 1 - cds_lfs_empty
-PASS: test_build_dynlink 2 - cds_lfs_empty
+PASS: test_build_dynlink 2 - cds_wfs_empty
 PASS: test_build_dynlink 3 - cds_wfcq_empty
 PASS: test_build_dynlink_cxx 1 - cds_lfs_empty
-PASS: test_build_dynlink_cxx 2 - cds_lfs_empty
+PASS: test_build_dynlink_cxx 2 - cds_wfs_empty
 PASS: test_build_dynlink_cxx 3 - cds_wfcq_empty
 ============================================================================
-Testsuite summary for userspace-rcu 0.15.6
+Testsuite summary for userspace-rcu 0.15.7
 ============================================================================
 # TOTAL: 566
 # PASS:  558
@@ -615,7 +615,7 @@ Testsuite summary for userspace-rcu 0.15.6
 ============================================================================
 Making check in benchmark
 ============================================================================
-Testsuite summary for userspace-rcu 0.15.6
+Testsuite summary for userspace-rcu 0.15.7
 ============================================================================
 # TOTAL: 0
 # PASS:  0
@@ -627,7 +627,7 @@ Testsuite summary for userspace-rcu 0.15.6
 ============================================================================
 Making check in regression
 ============================================================================
-Testsuite summary for userspace-rcu 0.15.6
+Testsuite summary for userspace-rcu 0.15.7
 ============================================================================
 # TOTAL: 0
 # PASS:  0

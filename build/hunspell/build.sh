@@ -12,18 +12,18 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=hunspell
-VER=1.7.2
+VER=1.7.3
 PKG=ooce/text/hunspell
 SUMMARY="$PROG"
 DESC="$PROG - spell checker"
 
 # https://github.com/LibreOffice/dictionaries/
-LIBOVER=libreoffice-24.2.3.2
+LIBOVER=libreoffice-26.8.1.1
 # https://github.com/fin-w/LibreOffice-Geiriadur-Cymraeg-Welsh-Dictionary
 CYVER=1.11
 
