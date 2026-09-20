@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../../lib/build.sh
 
 PROG=libX11
-VER=1.8.12
+VER=1.8.13
 PKG=ooce/x11/library/libx11
 SUMMARY="libX11"
 DESC="X11 core protocol client library"
