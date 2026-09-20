@@ -9,7 +9,7 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/mysys/my_largepage.c a/mysys/
  #if defined(__sun__) && defined(__GNUC__) && defined(__cplusplus) \
      && defined(_XOPEN_SOURCE)
  /* memcntl exist within sys/mman.h, but under-defines what is need to use it */
-@@ -203,7 +204,6 @@ int my_init_large_pages(void)
+@@ -204,7 +205,6 @@ int my_init_large_pages(void)
    my_get_large_page_sizes(my_large_page_sizes);
  
  #ifdef HAVE_SOLARIS_LARGE_PAGES
@@ -20,12 +20,12 @@ diff -wpruN --no-dereference '--exclude=*.orig' a~/mysys/my_largepage.c a/mysys/
 diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/mysqld.cc a/sql/mysqld.cc
 --- a~/sql/mysqld.cc	1970-01-01 00:00:00
 +++ a/sql/mysqld.cc	1970-01-01 00:00:00
-@@ -427,7 +427,7 @@ char* opt_secure_file_priv;
- my_bool lower_case_file_system= 0;
- my_bool opt_large_pages= 0;
+@@ -490,7 +490,7 @@ READ_ONLY_SYSVAR char* opt_secure_file_p
+ READ_ONLY_SYSVAR my_bool lower_case_file_system;
+ READ_ONLY_SYSVAR my_bool opt_large_pages;
  #ifdef HAVE_SOLARIS_LARGE_PAGES
 -my_bool opt_super_large_pages= 0;
 +extern my_bool opt_super_large_pages;
  #endif
  my_bool opt_myisam_use_mmap= 0;
- uint   opt_large_page_size= 0;
+ READ_ONLY_SYSVAR uint opt_large_page_size;

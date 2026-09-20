@@ -17,8 +17,7 @@
 . ../../lib/build.sh
 
 PROG=mariadb
-VER=11.4.12
-DASHREV=1
+VER=11.4.13
 PKG=ooce/database/mariadb-114
 SUMMARY="MariaDB"
 DESC="A community-developed, commercially supported fork of the "
@@ -57,15 +56,15 @@ XFORM_ARGS="
 
 CPPFLAGS+=" -I/usr/include/ncurses -DOOCEVER=$RELVER"
 CFLAGS+=" -O3 -I$OPREFIX/include -I/usr/include/gssapi"
-CXXFLAGS[i386]="$CFLAGS ${CFLAGS[i386]} -R$OPREFIX/${LIBDIRS[i386]}"
-CXXFLAGS[amd64]="$CFLAGS ${CFLAGS[amd64]} -R$OPREFIX/${LIBDIRS[amd64]}"
-CXXFLAGS[aarch64]="$CFLAGS ${CFLAGS[aarch64]} -R$OPREFIX/${LIBDIRS[aarch64]}"
+CXXFLAGS[i386]="$CFLAGS ${CFLAGS[i386]} -Wl,-R$OPREFIX/${LIBDIRS[i386]}"
+CXXFLAGS[amd64]="$CFLAGS ${CFLAGS[amd64]} -Wl,-R$OPREFIX/${LIBDIRS[amd64]}"
+CXXFLAGS[aarch64]="$CFLAGS ${CFLAGS[aarch64]} -Wl,-R$OPREFIX/${LIBDIRS[aarch64]}"
 CFLAGS[aarch64]+=" -mtls-dialect=trad"
 CXXFLAGS[aarch64]+=" -mtls-dialect=trad"
-LDFLAGS[i386]+=" -L$OPREFIX/${LIBDIRS[i386]} -R$OPREFIX/${LIBDIRS[i386]}"
-LDFLAGS[amd64]+=" -L$OPREFIX/${LIBDIRS[amd64]} -R$OPREFIX/${LIBDIRS[amd64]}"
+LDFLAGS[i386]+=" -L$OPREFIX/${LIBDIRS[i386]} -Wl,-R$OPREFIX/${LIBDIRS[i386]}"
+LDFLAGS[amd64]+=" -L$OPREFIX/${LIBDIRS[amd64]} -Wl,-R$OPREFIX/${LIBDIRS[amd64]}"
 LDFLAGS[aarch64]+=" -L$OPREFIX/${LIBDIRS[aarch64]}"
-LDFLAGS[aarch64]+=" -R$OPREFIX/${LIBDIRS[aarch64]}"
+LDFLAGS[aarch64]+=" -Wl,-R$OPREFIX/${LIBDIRS[aarch64]}"
 
 CONFIGURE_OPTS=
 CONFIGURE_OPTS[i386]=

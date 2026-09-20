@@ -1,0 +1,13 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/sql/item_numconvfunc.cc a/sql/item_numconvfunc.cc
+--- a~/sql/item_numconvfunc.cc	1970-01-01 00:00:00
++++ a/sql/item_numconvfunc.cc	1970-01-01 00:00:00
+@@ -35,6 +35,9 @@
+ // An alias for a shorter code notation
+ using enum_warning_level= Sql_state_errno_level::enum_warning_level;
+ 
++#undef _C
++#undef _B
++#undef _S
+ 
+ class Tokenizer: public Extended_string_tokenizer
+ {

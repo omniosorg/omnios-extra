@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/cmake/libfmt.cmake a/cmake/libfmt.cmake
+--- a~/cmake/libfmt.cmake	1970-01-01 00:00:00
++++ a/cmake/libfmt.cmake	1970-01-01 00:00:00
+@@ -12,7 +12,7 @@ MACRO(BUNDLE_LIBFMT)
+     SET(fmt_byproducts BUILD_BYPRODUCTS ${LIBFMT_INCLUDE_DIR}/fmt/format-inl.h)
+   ENDIF()
+ 
+-  IF(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS "4.9")
++  IF((CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS "4.9") OR CMAKE_SIZEOF_VOID_P EQUAL 4)
+     # it's for RHEL-7, gcc 4.8.5
+     # with newer fmt it complains about missing space in operator""_a()
+     SET(source URL "https://github.com/fmtlib/fmt/releases/download/11.0.2/fmt-11.0.2.zip"
