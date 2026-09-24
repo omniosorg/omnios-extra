@@ -123,6 +123,7 @@ CONFIGURE_OPTS[WS]="
     --with-pinentry-pgm=$PREFIX/bin/pinentry
     LDAPLIBS=\"-lldap_r -llber\"
 "
+CONFIGURE_OPTS[aarch64]+=" --disable-doc"
 
 pre_configure() {
     typeset arch=$1
