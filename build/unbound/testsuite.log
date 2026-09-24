@@ -1,4 +1,4 @@
-Start of unbound 1.26.0+libevent unit test.
+Start of unbound 1.26.1+libevent unit test.
 test authzone functions
 test negative cache functions
 test ub_random functions
@@ -23,6 +23,8 @@ test signature verify:./testdata/test_sigs.ed25519
 test signature verify:./testdata/test_sigs.ed448
 test DS verify:./testdata/test_ds.sha1
 test NSEC3 hash:./testdata/test_nsec3_hash.1
+test validator/val_sigcrypt.c:ds_digest_match_dnskey
+test validator/val_sigcrypt.c:rrset_canonicalize_to_buffer
 test util/net_help.c:str_is_ip6
 test util/net_help.c:is_pow2
 test util/net_help.c:addr_mask
@@ -86,11 +88,11 @@ test services/outside_network.c:reuse_write_wait_remove
 test services/outside_network.c:reuse_write_wait_pop
 test shared_ports functions
 test message parse functions
-[0] did 10000 in 69.357 msec for 144181.553412 encode/sec size 615
+[0] did 10000 in 70.877 msec for 141089.493065 encode/sec size 615
 test edns ede optional encoding functions
 test localzones parent calculation functions
 test services/mesh.c:mesh_copy_client_info
-1298368 checks ok.
+1298217 checks ok.
 selftest successful (33 checks).
 ./testdata/acl.rpl  OK
 ./testdata/auth_notify_lookup.rpl  OK
