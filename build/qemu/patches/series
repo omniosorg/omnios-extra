@@ -8,3 +8,4 @@
 0009-include-sys-loadavg.h-for-getloadavg.patch
 0010-fix-uname-status-check-and-guest-OS-info-retrieval-f.patch
 0011-Add-multiqueue-support-to-VNICs.patch
+0012-meson-check-for-getifaddrs-with-the-socket-libraries.patch
