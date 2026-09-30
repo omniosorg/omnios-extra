@@ -52,14 +52,16 @@ pre_configure() {
 
     export CMAKE_LIBRARY_PATH=${SYSROOT[$arch]}$PREFIX/${LIBDIRS[$arch]}
 
+    _libdir=${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}
     CONFIGURE_OPTS[$arch]="
         -DCMAKE_INSTALL_LIBDIR=$PREFIX/${LIBDIRS[$arch]}
         -DZLIB_INCLUDE_DIR=${SYSROOT[$arch]}/usr/include
-        -DZLIB_LIBRARY_RELEASE=${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}/libz.so
+        -DZLIB_LIBRARY_RELEASE=$_libdir/libz.so
         -DBROTLI_DEC_INCLUDE_DIR=${SYSROOT[$arch]}/usr/include
-        -DBROTLI_DEC_LIB=${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}/libbrotlidec.so
+        -DBROTLI_DEC_LIB=$_libdir/libbrotlidec.so
         -DBROTLI_ENC_INCLUDE_DIR=${SYSROOT[$arch]}/usr/include
-        -DBROTLI_ENC_LIB=${SYSROOT[$arch]}/usr/${LIBDIRS[$arch]}/libbrotlienc.so
+        -DBROTLI_ENC_LIB=$_libdir/libbrotlienc.so
+        -DBROTLI_COMMON_LIB=$_libdir/libbrotlicommon.so
     "
 
     LDFLAGS[$arch]+=" -Wl,-R$PREFIX/${LIBDIRS[$arch]}"

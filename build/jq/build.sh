@@ -51,6 +51,8 @@ pre_configure() {
     LDFLAGS[$arch]+=" -Wl,-R$OPREFIX/${LIBDIRS[$arch]}"
 }
 
+CFLAGS[aarch64]+=" -mtls-dialect=trad"
+
 init
 download_source $PROG $PROG $VER
 patch_source

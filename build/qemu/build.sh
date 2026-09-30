@@ -93,6 +93,7 @@ CONFIGURE_OPTS="
 CONFIGURE_OPTS[aarch64]+="
     --host-cc=/opt/gcc-$DEFAULT_GCC_VER/bin/gcc
     --cross-prefix=
+    --disable-hexagon-idef-parser
 "
 LDFLAGS+=" -lumem"
 
