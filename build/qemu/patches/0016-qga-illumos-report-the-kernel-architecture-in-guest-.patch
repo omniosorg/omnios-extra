@@ -1,0 +1,47 @@
+From 1cd147ecda7b2f76b9251a650fb378dce69d75ab Mon Sep 17 00:00:00 2001
+From: Andy Fiddaman <illumos@fiddaman.net>
+Date: Tue, 6 Oct 2026 19:33:55 +0100
+Subject: qga: illumos: report the kernel architecture in
+ guest-get-osinfo
+
+The machine name returned by uname(2) on illumos is the platform, such as
+i86pc, rather than the architecture that other systems report there.
+Use sysinfo(SI_ARCHITECTURE_K), giving amd64 or aarch64.
+---
+ qga/commands-posix.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index b902f3d51d..4ecac3d333 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -52,6 +52,7 @@
+ 
+ #ifdef __illumos__
+ #include <sys/loadavg.h>
++#include <sys/systeminfo.h>
+ #if defined(__x86_64__) || defined(__i386__)
+ #include <sys/sysi86.h>
+ #endif
+@@ -1402,7 +1403,21 @@ GuestOSInfo *qmp_guest_get_osinfo(Error **errp)
+     } else {
+         info->kernel_version = g_strdup(kinfo.version);
+         info->kernel_release = g_strdup(kinfo.release);
++#ifdef __illumos__
++        /*
++         * The machine name from uname(2) is the platform (e.g. i86pc) rather
++         * than the architecture; report the kernel architecture instead.
++         */
++        char arch[SYS_NMLN];
++
++        if (sysinfo(SI_ARCHITECTURE_K, arch, sizeof(arch)) != -1) {
++            info->machine = g_strdup(arch);
++        } else {
++            info->machine = g_strdup(kinfo.machine);
++        }
++#else
+         info->machine = g_strdup(kinfo.machine);
++#endif
+     }
+ 
+     if (qga_os_release != NULL) {

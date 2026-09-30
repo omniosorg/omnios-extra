@@ -1,0 +1,36 @@
+From 7dd866e26ed48a0d5aa247ef58719420f2f6eec4 Mon Sep 17 00:00:00 2001
+From: Andy Fiddaman <illumos@fiddaman.net>
+Date: Tue, 6 Oct 2026 19:25:55 +0100
+Subject: qga: illumos: look up hardware address in the right
+ address family
+
+SIOCGIFHWADDR looks the interface name up in the address family of the
+socket, so it fails with ENXIO for an IPv6-only interface queried via a
+PF_INET socket, and a warning is logged on every
+guest-network-get-interfaces call.
+---
+ qga/commands-posix.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 0c6088cd54..b902f3d51d 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -1068,7 +1068,17 @@ bool guest_get_hw_addr(struct ifaddrs *ifa, unsigned char *buf,
+     *obtained = false;
+ 
+     /* we haven't obtained HW address yet */
++#ifdef __illumos__
++    /*
++     * The interface is looked up in the address family of the socket, so
++     * use one that matches in case this is an IPv6-only interface.
++     */
++    sock = socket(ifa->ifa_addr != NULL &&
++                  ifa->ifa_addr->sa_family == AF_INET6 ? PF_INET6 : PF_INET,
++                  SOCK_STREAM, 0);
++#else
+     sock = socket(PF_INET, SOCK_STREAM, 0);
++#endif
+     if (sock == -1) {
+         error_setg_errno(errp, errno, "failed to create socket");
+         return false;

@@ -1,0 +1,29 @@
+From b96510a945c328e2336fc78b3e2ca9de973fa8ce Mon Sep 17 00:00:00 2001
+From: Andy Fiddaman <illumos@fiddaman.net>
+Date: Tue, 6 Oct 2026 19:25:56 +0100
+Subject: qga: illumos: default isa-serial path is /dev/term/b
+
+There is no /dev/ttyS0 on illumos. Default to the second serial port
+(COM2), since the first is commonly used as the console in a VM, and a
+hypervisor that adds the guest agent port after any configured serial
+ports, such as Proxmox VE, will put it there.
+---
+ qga/main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/qga/main.c b/qga/main.c
+index fd19c7037d..c80d5f09c3 100644
+--- a/qga/main.c
++++ b/qga/main.c
+@@ -47,7 +47,11 @@
+ #else /* CONFIG_BSD */
+ #define QGA_VIRTIO_PATH_DEFAULT "/dev/virtio-ports/org.qemu.guest_agent.0"
+ #endif /* CONFIG_BSD */
++#ifdef __illumos__
++#define QGA_SERIAL_PATH_DEFAULT "/dev/term/b"
++#else
+ #define QGA_SERIAL_PATH_DEFAULT "/dev/ttyS0"
++#endif
+ #define QGA_STATE_RELATIVE_DIR  "run"
+ #else
+ #define QGA_VIRTIO_PATH_DEFAULT "\\\\.\\Global\\org.qemu.guest_agent.0"

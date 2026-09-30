@@ -8,7 +8,7 @@
 # source. A copy of the CDDL is also available via the Internet at
 # http://www.illumos.org/license/CDDL.
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 license COPYING license=GPLv2
 
@@ -16,6 +16,9 @@ license COPYING license=GPLv2
 <transform path=$(PREFIX)/share/(?:applications|icons|doc) -> drop>
 
 $(SHIPETC)dir group=bin mode=0755 owner=root path=etc/$(PREFIX)
+<transform file path=etc/$(PREFIX)/qemu-ga\.conf$ -> set preserve renamenew>
+<transform file path=$(PREFIX)/bin/qemu-ga$ \
+    -> set restart_fmri svc:/ooce/system/qemu-ga:default>
 
 # All of the emulator binaries are delivered setuid, but with a
 # forced-privilege exec-attr file that adds only 'net_rawaccess' which
