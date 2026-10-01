@@ -1,0 +1,31 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/saslauthd/auth_shadow.c a/saslauthd/auth_shadow.c
+--- a~/saslauthd/auth_shadow.c	1970-01-01 00:00:00
++++ a/saslauthd/auth_shadow.c	1970-01-01 00:00:00
+@@ -125,7 +125,9 @@ auth_shadow (
+     struct spwd spbuf;
+     char spdata[PWBUFSZ];		/* spbuf indirect data goes in here */
+ 
++#   if !defined(__illumos__)
+     struct crypt_data cdata;
++#   endif
+ #  endif /* _REENTRANT */
+     /* END VARIABLES */
+ 
+@@ -180,7 +182,7 @@ auth_shadow (
+     today = (long)time(NULL)/(24L*60*60);
+ 
+ #  ifdef _REENTRANT
+-#    ifdef GETXXNAM_R_5ARG
++#    if defined(GETXXNAM_R_5ARG) && !defined(__illumos__)
+ 	(void) getspnam_r(login, &spbuf, spdata, sizeof(spdata), &sp);
+ #    else
+     sp = getspnam_r(login, &spbuf, spdata, sizeof(spdata));
+@@ -218,7 +220,7 @@ auth_shadow (
+ 	RETURN("NO Insufficient permission to access NIS authentication database (saslauthd)");
+     }
+ 
+-#  ifdef _REENTRANT
++#  if defined(_REENTRANT) && !defined(__illumos__)
+     cdata.initialized = 0;
+     cpw = crypt_r(password, sp->sp_pwdp, &cdata);
+ #  else
