@@ -6,3 +6,4 @@ configure-ldap.patch
 filterlibs.patch
 saslauthd-man.patch
 saslauthd-perms.patch
+getspnam_r.patch
