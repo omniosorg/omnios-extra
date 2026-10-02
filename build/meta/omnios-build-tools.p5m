@@ -12,6 +12,7 @@ depend fmri=ooce/developer/autoconf-archive type=require
 depend fmri=ooce/developer/ccache type=require
 depend fmri=ooce/developer/cmake type=require
 depend fmri=ooce/developer/cunit type=require
+depend fmri=ooce/developer/gyp type=require
 depend fmri=ooce/developer/ninja type=require
 depend fmri=ooce/developer/rust type=require
 depend fmri=ooce/file/lsof type=require
@@ -34,14 +35,7 @@ depend fmri=ooce/x11/library/libxt type=require
 depend fmri=ooce/developer/autogen type=require
 depend fmri=ooce/developer/dejagnu type=require
 
-# zstd was moved to core in r151035.
-depend type=require-any fmri=pkg:/compress/zstd fmri=pkg:/ooce/compress/zstd
-
 # Required to run the bison testsuite
-depend type=require-any fmri=ooce/runtime/ruby-27 fmri=ooce/runtime/ruby-30 \
-    fmri=ooce/runtime/ruby-31
-
-# Required to build nss from r151045 onwards
-depend fmri=ooce/developer/gyp type=conditional \
-    predicate=release/name@0.5.11-151045
+depend type=require-any fmri=ooce/runtime/ruby-32 fmri=ooce/runtime/ruby-33 \
+    fmri=ooce/runtime/ruby-34 fmri=ooce/runtime/ruby-40
 
