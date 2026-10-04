@@ -23,6 +23,8 @@ SUMMARY="gyp - generate your projects"
 DESC="GYP is a Meta-Build system: "
 DESC+="a build system that generates other build systems."
 
+RUN_DEPENDS_IPS="library/python-$PYTHONMAJVER/six-$PYTHONPKGVER"
+
 fixup_bins() {
     for f in gyp; do
         logmsg "--- patching command $f"
