@@ -313,6 +313,7 @@ extra.omnios ooce/util/jq
 extra.omnios ooce/util/lrzsz
 extra.omnios ooce/util/ncdu
 extra.omnios ooce/util/pass
+extra.omnios ooce/util/qemu-ga
 extra.omnios ooce/util/qemu-img
 extra.omnios ooce/util/rargs
 extra.omnios ooce/util/rlwrap

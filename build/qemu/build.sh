@@ -87,6 +87,7 @@ standard-imghdr = { installed = \"$IMGHDRVER\" }
 set_standard POSIX+EXTENSIONS CFLAGS
 
 CONFIGURE_OPTS="
+    --sysconfdir=/etc$OPREFIX
     --localstatedir=/var$PREFIX
     --enable-docs
 "
@@ -144,12 +145,27 @@ post_install() {
     done
     popd >/dev/null
 
+    logcmd $MKDIR -p $DESTDIR/etc$PREFIX || logerr "mkdir etc"
+    logcmd $CP $SRCDIR/files/qemu-ga.conf $DESTDIR/etc$PREFIX/ \
+        || logerr "cp qemu-ga.conf"
+    xform $SRCDIR/files/qemu-ga.xml > $TMPDIR/qemu-ga.xml
+    install_smf ooce qemu-ga.xml
+
     manifest_start $TMPDIR/manifest.img
     manifest_add $PREFIX/bin qemu-img
     manifest_add $PREFIX/share/man/man1 'qemu-img\.1'
     manifest_finalise $TMPDIR/manifest.img $OPREFIX
 
-    manifest_uniq $TMPDIR/manifest.{qemu,img}
+    manifest_start $TMPDIR/manifest.ga
+    manifest_add $PREFIX/bin qemu-ga
+    manifest_add $PREFIX/share/man/man7 'qemu-ga-ref\.7'
+    manifest_add $PREFIX/share/man/man8 'qemu-ga\.8'
+    manifest_add etc$PREFIX 'qemu-ga\.conf'
+    manifest_add lib/svc/manifest/ooce 'qemu-ga\.xml'
+    manifest_finalise $TMPDIR/manifest.ga $OPREFIX etc$OPREFIX \
+        lib/svc/manifest/ooce
+
+    manifest_uniq $TMPDIR/manifest.{qemu,img,ga}
     manifest_finalise $TMPDIR/manifest.qemu $OPREFIX
 }
 
@@ -158,8 +174,10 @@ patch_source
 build
 PKG="ooce/util/$PROG-img" DESC="$PROG-img" SUMMARY="$PROG-img utility" \
     XFORM_ARGS+=" -DSHIPETC=#" make_package -seed $TMPDIR/manifest.img
+PKG="ooce/util/$PROG-ga" DESC="$PROG-ga" SUMMARY="$PROG guest agent" \
+    XFORM_ARGS+=" -DSHIPETC=#" make_package -seed $TMPDIR/manifest.ga
 install_execattr
-RUN_DEPENDS_IPS="ooce/util/$PROG-img" \
+RUN_DEPENDS_IPS="ooce/util/$PROG-img ooce/util/$PROG-ga" \
     make_package -seed $TMPDIR/manifest.qemu
 clean_up
 

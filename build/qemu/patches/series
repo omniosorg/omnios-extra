@@ -9,3 +9,7 @@
 0010-fix-uname-status-check-and-guest-OS-info-retrieval-f.patch
 0011-Add-multiqueue-support-to-VNICs.patch
 0012-meson-check-for-getifaddrs-with-the-socket-libraries.patch
+0013-qga-illumos-use-init-8-for-shutdown-and-fix-guest-se.patch
+0014-qga-illumos-look-up-hardware-address-in-the-right-ad.patch
+0015-qga-illumos-default-isa-serial-path-is-dev-term-b.patch
+0016-qga-illumos-report-the-kernel-architecture-in-guest-.patch

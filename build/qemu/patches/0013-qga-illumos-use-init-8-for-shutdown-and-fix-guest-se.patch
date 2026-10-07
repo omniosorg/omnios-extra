@@ -1,0 +1,132 @@
+From 012f8118eb141046da075a3242a7091db32f1735 Mon Sep 17 00:00:00 2001
+From: Andy Fiddaman <illumos@fiddaman.net>
+Date: Tue, 6 Oct 2026 19:25:55 +0100
+Subject: qga: illumos: use init(8) for shutdown and fix
+ guest-set-time
+
+halt(8), poweroff(8) and reboot(8) on illumos do not perform an orderly
+shutdown of SMF services, and the CONFIG_SOLARIS path to shutdown(8) was
+wrong. Change run level with init(8) instead.
+
+There is no hwclock(8) on illumos. Setting the system time also updates
+the hardware clock, and sysi86(RTCSYNC) sets the system time from it.
+Use clock_settime() since settimeofday() only has one second resolution.
+---
+ qga/commands-posix.c | 63 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 62 insertions(+), 1 deletion(-)
+
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 64cdf5d06d..0c6088cd54 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -52,6 +52,9 @@
+ 
+ #ifdef __illumos__
+ #include <sys/loadavg.h>
++#if defined(__x86_64__) || defined(__i386__)
++#include <sys/sysi86.h>
++#endif
+ #endif
+ 
+ static bool ga_wait_child(pid_t pid, int *status, Error **errp)
+@@ -220,6 +223,33 @@ out:
+     return retcode;
+ }
+ 
++#ifdef __illumos__
++/*
++ * On illumos, halt(8), poweroff(8) and reboot(8) do not perform an orderly
++ * shutdown of SMF services. Change the run level via init(8) instead.
++ */
++void qmp_guest_shutdown(const char *mode, Error **errp)
++{
++    const char *level;
++
++    slog("guest-shutdown called, mode: %s", mode);
++    if (!mode || strcmp(mode, "powerdown") == 0) {
++        level = "5";
++    } else if (strcmp(mode, "halt") == 0) {
++        level = "0";
++    } else if (strcmp(mode, "reboot") == 0) {
++        level = "6";
++    } else {
++        error_setg(errp,
++                   "mode is invalid (valid values are: halt|powerdown|reboot");
++        return;
++    }
++
++    const char *argv[] = {"/sbin/init", level, NULL};
++
++    ga_run_command(argv, NULL, "shutdown", errp);
++}
++#else
+ #define POWEROFF_CMD_PATH "/sbin/poweroff"
+ #define HALT_CMD_PATH "/sbin/halt"
+ #define REBOOT_CMD_PATH "/sbin/reboot"
+@@ -293,13 +323,16 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
+ 
+     /* succeeded */
+ }
++#endif
+ 
+ void qmp_guest_set_time(bool has_time, int64_t time_ns, Error **errp)
+ {
+     int ret;
+-    Error *local_err = NULL;
+     struct timeval tv;
++#ifndef __illumos__
++    Error *local_err = NULL;
+     const char *argv[] = {"/sbin/hwclock", has_time ? "-w" : "-s", NULL};
++#endif
+ 
+     /* If user has passed a time, validate and set it. */
+     if (has_time) {
+@@ -319,13 +352,40 @@ void qmp_guest_set_time(bool has_time, int64_t time_ns, Error **errp)
+             return;
+         }
+ 
++#ifdef __illumos__
++        /* settimeofday() on illumos only has a resolution of one second */
++        struct timespec ts = {
++            .tv_sec = tv.tv_sec,
++            .tv_nsec = time_ns % 1000000000
++        };
++        ret = clock_settime(CLOCK_REALTIME, &ts);
++#else
+         ret = settimeofday(&tv, NULL);
++#endif
+         if (ret < 0) {
+             error_setg_errno(errp, errno, "Failed to set time to guest");
+             return;
+         }
+     }
+ 
++#ifdef __illumos__
++    /*
++     * On illumos, setting the system time also updates the hardware clock so
++     * there is nothing more to do in that case. If no time was passed, set
++     * the system time from the hardware clock (RTC).
++     */
++    if (!has_time) {
++#if defined(__x86_64__) || defined(__i386__)
++        if (sysi86(RTCSYNC) != 0) {
++            error_setg_errno(errp, errno,
++                             "Failed to set system time from hardware clock");
++        }
++#else
++        error_setg(errp, "Setting the system time from the hardware clock "
++                   "is not supported");
++#endif
++    }
++#else
+     /* Now, if user has passed a time to set and the system time is set, we
+      * just need to synchronize the hardware clock. However, if no time was
+      * passed, user is requesting the opposite: set the system time from the
+@@ -336,6 +396,7 @@ void qmp_guest_set_time(bool has_time, int64_t time_ns, Error **errp)
+         error_propagate(errp, local_err);
+         return;
+     }
++#endif
+ }
+ 
+ typedef enum {
