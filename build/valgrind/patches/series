@@ -1,3 +1,4 @@
 file.patch
 illumos-spawn.patch
+illumos-close_range.patch
 include-stdio.h.patch
