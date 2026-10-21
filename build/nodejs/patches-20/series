@@ -1,4 +1,0 @@
-mmaphint.patch
-madvise-remove-own-declaration.patch
-netinet-in.h.patch
-pnpm.patch
