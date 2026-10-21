@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=node
-VER=24.21.0
+VER=24.22.1
 PKG=ooce/runtime/node-24
 SUMMARY="Node.js is an evented I/O framework for the V8 JavaScript engine."
 DESC="Node.js is an evented I/O framework for the V8 JavaScript engine. "
@@ -54,7 +54,6 @@ CONFIGURE_OPTS[amd64]=
 CONFIGURE_OPTS="
     --prefix=$PREFIX
     --shared-zlib
-    --shared-brotli
 "
 
 pre_configure() {
