@@ -24,6 +24,7 @@ depend fmri=ooce/developer/cargo-c type=require
 depend fmri=ooce/developer/freepascal type=require
 depend fmri=ooce/developer/gdb type=require
 depend fmri=ooce/developer/go-126 type=require
+depend fmri=ooce/developer/go-127 type=require
 depend fmri=ooce/developer/gperf type=require
 depend fmri=ooce/developer/llvm-13 type=require
 depend fmri=ooce/developer/clang-13 type=require
