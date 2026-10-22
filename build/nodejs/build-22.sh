@@ -33,6 +33,12 @@ set_arch 64
 set_builddir $PROG-v$VER
 set_patchdir patches-$MAJVER
 
+# the default cap of one job per 2GiB of memory is a bit tight
+# for node.js builds under certain circumstances.
+# use 3GiB instead (see lib/config.sh for details)
+((PMEM / 3072 > 0 && PMEM / 3072 < MJOBS)) &&
+    MJOBS=$((PMEM / 3072 + 1))
+
 BUILD_DEPENDS_IPS="
     developer/gnu-binutils
 "

@@ -1,0 +1,21 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/deps/crates/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/diplomat_runtime.hpp a/deps/crates/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/diplomat_runtime.hpp
+--- a~/deps/crates/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/diplomat_runtime.hpp	1970-01-01 00:00:00
++++ a/deps/crates/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/diplomat_runtime.hpp	1970-01-01 00:00:00
+@@ -61,7 +61,7 @@ bool diplomat_is_str(const char* buf, si
+     typedef struct Option##name##ViewMut {union { Diplomat##name##ViewMut ok; }; bool is_ok; } Option##name##ViewMut; \
+     typedef struct Option##name##Array {union { Diplomat##name##Array ok; }; bool is_ok; } Option##name##Array; \
+ 
+-MAKE_SLICES_AND_OPTIONS(I8, int8_t)
++MAKE_SLICES_AND_OPTIONS(I8, signed char)
+ MAKE_SLICES_AND_OPTIONS(U8, uint8_t)
+ MAKE_SLICES_AND_OPTIONS(I16, int16_t)
+ MAKE_SLICES_AND_OPTIONS(U16, uint16_t)
+@@ -377,7 +377,7 @@ struct diplomat_c_span_convert {
+     using type = diplomat::capi::Diplomat##name##ViewMut; \
+   }; \
+ 
+-MAKE_SLICE_CONVERTERS(I8, int8_t)
++MAKE_SLICE_CONVERTERS(I8, signed char)
+ MAKE_SLICE_CONVERTERS(U8, uint8_t)
+ MAKE_SLICE_CONVERTERS(I16, int16_t)
+ MAKE_SLICE_CONVERTERS(U16, uint16_t)
