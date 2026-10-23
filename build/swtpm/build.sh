@@ -12,24 +12,24 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=swtpm
-VER=0.10.1
+VER=0.10.2
 PKG=ooce/security/swtpm
 SUMMARY="SWTPM - Software TPM Emulator"
 DESC="TPM emulators with different front-end interfaces to libtpms"
 
-JSONGLIBVER=1.10.6
+# https://download.gnome.org/sources/json-glib/
+JSONGLIBVER=1.10.8
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
 set_arch 64
-# earlier meson versions have a bug that fails to detect ld(1) with clang
-test_relver '>=' 151053 && set_clangver
+set_clangver
 set_standard XPG6
 
 XFORM_ARGS="
