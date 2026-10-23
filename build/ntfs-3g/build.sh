@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=ntfs-3g
-VER=2026.7.7
+VER=2026.9.28
 PKG=ooce/system/file-system/ntfs-3g
 SUMMARY="${PROG^^} - Read-Write NTFS Driver"
 DESC="A stable, full-featured, read-write NTFS driver for Linux, Android, "
