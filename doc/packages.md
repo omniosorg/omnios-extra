@@ -224,7 +224,7 @@
 | ooce/shell/fish		| 4.9.2		| https://github.com/fish-shell/fish-shell/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio		| 2025-10-15T17-29-55Z | https://github.com/minio/minio/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/storage/minio-mc		| 2025-08-13T08-35-41Z | https://github.com/minio/mc/releases | [omniosorg](https://github.com/omniosorg)
-| ooce/system/file-system/ntfs-3g | 2026.7.7	| https://github.com/tuxera/ntfs-3g/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/system/file-system/ntfs-3g | 2026.9.28	| https://github.com/tuxera/ntfs-3g/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/system/gptfdisk		| 1.0.10	| https://sourceforge.net/projects/gptfdisk/files/gptfdisk/ | [oxidecomputer](https://github.com/oxidecomputer)
 | ooce/system/clamav		| 1.5.3		| https://github.com/Cisco-Talos/clamav/tags https://www.clamav.net/downloads | [omniosorg](https://github.com/omniosorg)
 | ooce/system/htop		| 3.5.3		| https://github.com/htop-dev/htop/releases https://htop.dev/downloads.html#sources | [omniosorg](https://github.com/omniosorg)
