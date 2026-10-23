@@ -18,7 +18,7 @@
 . ../../lib/build.sh
 
 PROG=mbuffer
-VER=20260511
+VER=20261015
 PKG=ooce/system/mbuffer
 SUMMARY="$PROG - measuring buffer"
 DESC="$PROG is a tool for buffering data streams"
