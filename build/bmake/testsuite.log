@@ -1,0 +1,463 @@
+bmake: /tmp/build_/bmake-20260824/bmake/unit-tests/Makefile:551: warning: Skipping broken tests: deptgt-interrupt deptgt-silent-jobs job-flags job-output-long-lines opt-debug-x-trace sh-flags var-op-shell
+#      test  char-005c-reverse-solidus
+#      test  char-000a-new-line
+#      test  cmd-errors
+#      test  cmd-errors-jobs
+#      test  cmd-errors-lint
+#      test  cmd-interrupt
+#      test  cmdline
+#      test  cmdline-redirect-stdin
+#      test  cmdline-undefined
+#      test  comment
+#      test  compat-error
+#      test  cond-cmp-numeric
+#      test  cond-cmp-numeric-eq
+#      test  cond-cmp-numeric-ge
+#      test  cond-cmp-numeric-gt
+#      test  cond-cmp-numeric-le
+#      test  cond-cmp-numeric-lt
+#      test  cond-cmp-numeric-ne
+#      test  cond-cmp-string
+#      test  cond-cmp-unary
+#      test  cond-eof
+#      test  cond-func
+#      test  cond-func-commands
+#      test  cond-func-defined
+#      test  cond-func-empty
+#      test  cond-func-exists
+#      test  cond-func-make
+#      test  cond-func-make-main
+#      test  cond-func-target
+#      test  cond-late
+#      test  cond-op
+#      test  cond-op-and
+#      test  cond-op-and-lint
+#      test  cond-op-not
+#      test  cond-op-or
+#      test  cond-op-or-lint
+#      test  cond-op-parentheses
+#      test  cond-short
+#      test  cond-token-number
+#      test  cond-token-plain
+#      test  cond-token-string
+#      test  cond-token-var
+#      test  cond-undef-lint
+#      test  counter
+#      test  counter-append
+#      test  dep
+#      test  dep-colon
+#      test  dep-colon-bug-cross-file
+#      test  dep-double-colon
+#      test  dep-double-colon-indep
+#      test  dep-duplicate
+#      test  dep-exclam
+#      test  dep-none
+#      test  dep-op-missing
+#      test  dep-percent
+#      test  dep-var
+#      test  dep-wildcards
+#      test  depsrc
+#      test  depsrc-end
+#      test  depsrc-exec
+#      test  depsrc-ignore
+#      test  depsrc-made
+#      test  depsrc-make
+#      test  depsrc-meta
+#      test  depsrc-nometa
+#      test  depsrc-nometa_cmp
+#      test  depsrc-nopath
+#      test  depsrc-notmain
+#      test  depsrc-optional
+#      test  depsrc-phony
+#      test  depsrc-precious
+#      test  depsrc-recursive
+#      test  depsrc-silent
+#      test  depsrc-use
+#      test  depsrc-usebefore
+#      test  depsrc-usebefore-double-colon
+#      test  depsrc-wait
+#      test  deptgt
+#      test  deptgt-begin
+#      test  deptgt-begin-fail
+#      test  deptgt-begin-fail-indirect
+#      test  deptgt-default
+#      test  deptgt-delete_on_error
+#      test  deptgt-end
+#      test  deptgt-end-fail
+#      test  deptgt-end-fail-all
+#      test  deptgt-end-fail-indirect
+#      test  deptgt-end-jobs
+#      test  deptgt-error
+#      test  deptgt-ignore
+#      test  deptgt-main
+#      test  deptgt-makeflags
+#      test  deptgt-no_parallel
+#      test  deptgt-nopath
+#      test  deptgt-notparallel
+#      test  deptgt-objdir
+#      test  deptgt-order
+#      test  deptgt-path
+#      test  deptgt-path-suffix
+#      test  deptgt-phony
+#      test  deptgt-posix
+#      test  deptgt-precious
+#      test  deptgt-shell
+#      test  deptgt-silent
+#      test  deptgt-stale
+#      test  deptgt-suffixes
+#      test  dir
+#      test  dir-expand-path
+#      test  directive
+#      test  directive-dinclude
+#      test  directive-elif
+#      test  directive-elifdef
+#      test  directive-elifmake
+#      test  directive-elifndef
+#      test  directive-elifnmake
+#      test  directive-else
+#      test  directive-endfor
+#      test  directive-endif
+#      test  directive-error
+#      test  directive-export
+#      test  directive-export-env
+#      test  directive-export-impl
+#      test  directive-export-gmake
+#      test  directive-export-literal
+#      test  directive-for
+#      test  directive-for-break
+#      test  directive-for-empty
+#      test  directive-for-errors
+#      test  directive-for-escape
+#      test  directive-for-generating-endif
+#      test  directive-for-if
+#      test  directive-for-lines
+#      test  directive-for-null
+#      test  directive-hyphen-include
+#      test  directive-if
+#      test  directive-if-nested
+#      test  directive-ifdef
+#      test  directive-ifmake
+#      test  directive-ifndef
+#      test  directive-ifnmake
+#      test  directive-include
+#      test  directive-include-fatal
+#      test  directive-include-guard
+#      test  directive-info
+#      test  directive-misspellings
+#      test  directive-sinclude
+#      test  directive-undef
+#      test  directive-unexport
+#      test  directive-unexport-env
+#      test  directive-warning
+#      test  dollar
+#      test  doterror
+#      test  dotwait
+#      test  error
+#      test  export
+#      test  export-all
+#      test  export-env
+#      test  export-variants
+#      test  gnode-submake
+#      test  hanoi-include
+#      test  impsrc
+#      test  include-main
+#      test  job-output
+#      test  job-output-null
+#      test  jobs-empty-commands
+#      test  jobs-empty-commands-error
+#      test  jobs-error-indirect
+#      test  jobs-error-nested
+#      test  jobs-error-nested-make
+#      test  lint
+#      test  make-exported
+#      test  meta-cmd-cmp
+#      test  meta-output
+#      test  moderrs
+#      test  modmisc
+#      test  opt
+#      test  opt-backwards
+#      test  opt-chdir
+#      test  opt-debug
+#      test  opt-debug-all
+#      test  opt-debug-archive
+#      test  opt-debug-curdir
+#      test  opt-debug-cond
+#      test  opt-debug-dir
+#      test  opt-debug-errors
+#      test  opt-debug-errors-jobs
+#      test  opt-debug-file
+#      test  opt-debug-for
+#      test  opt-debug-graph1
+#      test  opt-debug-graph2
+#      test  opt-debug-graph3
+#      test  opt-debug-hash
+#      test  opt-debug-jobs
+#      test  opt-debug-lint
+#      test  opt-debug-loud
+#      test  opt-debug-meta
+#      test  opt-debug-making
+#      test  opt-debug-no-rm
+#      test  opt-debug-parse
+#      test  opt-debug-suff
+#      test  opt-debug-targets
+#      test  opt-debug-varraw
+#      test  opt-debug-var
+#      test  opt-define
+#      test  opt-env
+#      test  opt-file
+#      test  opt-ignore
+#      test  opt-include-dir
+#      test  opt-jobs
+#      test  opt-jobs-internal
+#      test  opt-jobs-no-action
+#      test  opt-keep-going
+#      test  opt-keep-going-indirect
+#      test  opt-keep-going-multiple
+#      test  opt-m-include-dir
+#      test  opt-no-action
+#      test  opt-no-action-at-all
+#      test  opt-no-action-runflags
+#      test  opt-no-action-touch
+#      test  opt-query
+#      test  opt-raw
+#      test  opt-silent
+#      test  opt-touch
+#      test  opt-touch-jobs
+#      test  opt-tracefile
+#      test  opt-var-expanded
+#      test  opt-var-literal
+#      test  opt-version
+#      test  opt-warnings-as-errors
+#      test  opt-where-am-i
+#      test  opt-x-reduce-exported
+#      test  order
+#      test  parse
+#      test  parse-var
+#      test  phony-end
+#      test  posix
+#      test  posix-execution
+#      test  posix-expansion
+#      test  posix-varassign
+#      test  recursive
+#      test  sh
+#      test  sh-dots
+#      test  sh-errctl
+#      test  sh-jobs
+#      test  sh-jobs-error
+#      test  sh-leading-at
+#      test  sh-leading-hyphen
+#      test  sh-leading-plus
+#      test  sh-meta-chars
+#      test  sh-multi-line
+#      test  sh-single-line
+#      test  shell-csh
+#      test  shell-custom
+#      test  shell-ksh
+#      test  shell-sh
+#      test  suff
+#      test  suff-add-later
+#      test  suff-clear-regular
+#      test  suff-clear-single
+#      test  suff-incomplete
+#      test  suff-lookup
+#      test  suff-main
+#      test  suff-main-several
+#      test  suff-phony
+#      test  suff-rebuild
+#      test  suff-self
+#      test  suff-transform-debug
+#      test  suff-transform-endless
+#      test  suff-transform-expand
+#      test  suff-transform-select
+#      test  suff-use
+#      test  sunshcmd
+#      test  ternary
+#      test  unexport
+#      test  unexport-env
+#      test  use-inference
+#      test  var-readonly
+#      test  var-scope
+#      test  var-scope-cmdline
+#      test  var-scope-env
+#      test  var-scope-global
+#      test  var-scope-local
+#      test  var-scope-local-legacy
+#      test  var-eval-short
+#      test  var-op
+#      test  var-op-append
+#      test  var-op-assign
+#      test  var-op-default
+#      test  var-op-expand
+#      test  var-op-sunsh
+#      test  var-recursive
+#      test  varcmd
+#      test  vardebug
+#      test  varfind
+#      test  varmisc
+#      test  varmod
+#      test  varmod-assign
+#      test  varmod-assign-shell
+#      test  varmod-defined
+#      test  varmod-edge
+#      test  varmod-exclam-shell
+#      test  varmod-extension
+#      test  varmod-gmtime
+#      test  varmod-hash
+#      test  varmod-head
+#      test  varmod-ifelse
+#      test  varmod-indirect
+#      test  varmod-l-name-to-value
+#      test  varmod-localtime
+#      test  varmod-loop
+#      test  varmod-loop-delete
+#      test  varmod-loop-varname
+#      test  varmod-match
+#      test  varmod-match-escape
+#      test  varmod-mtime
+#      test  varmod-no-match
+#      test  varmod-order
+#      test  varmod-order-numeric
+#      test  varmod-order-reverse
+#      test  varmod-order-shuffle
+#      test  varmod-order-string
+#      test  varmod-path
+#      test  varmod-quote
+#      test  varmod-quote-dollar
+#      test  varmod-range
+#      test  varmod-remember
+#      test  varmod-root
+#      test  varmod-select-words
+#      test  varmod-shell
+#      test  varmod-subst
+#      test  varmod-subst-regex
+#      test  varmod-sun-shell
+#      test  varmod-sun-shell1
+#      test  varmod-sysv
+#      test  varmod-tail
+#      test  varmod-to-abs
+#      test  varmod-to-lower
+#      test  varmod-to-many-words
+#      test  varmod-to-one-word
+#      test  varmod-to-separator
+#      test  varmod-to-title
+#      test  varmod-to-upper
+#      test  varmod-undefined
+#      test  varmod-unique
+#      test  varname
+#      test  varname-circumflex
+#      test  varname-dollar
+#      test  varname-dot-alltargets
+#      test  varname-dot-curdir
+#      test  varname-dot-includes
+#      test  varname-dot-includedfromdir
+#      test  varname-dot-includedfromfile
+#      test  varname-dot-libs
+#      test  varname-dot-make-dependfile
+#      test  varname-dot-make-expand_variables
+#      test  varname-dot-make-exported
+#      test  varname-dot-make-jobs
+#      test  varname-dot-make-jobs-prefix
+#      test  varname-dot-make-level
+#      test  varname-dot-make-makefile_preference
+#      test  varname-dot-make-makefiles
+#      test  varname-dot-make-meta-bailiwick
+#      test  varname-dot-make-meta-created
+#      test  varname-dot-make-meta-files
+#      test  varname-dot-make-meta-prefix
+#      test  varname-dot-make-mode
+#      test  varname-dot-make-pid
+#      test  varname-dot-make-ppid
+#      test  varname-dot-make-save_dollars
+#      test  varname-dot-makeflags
+#      test  varname-dot-makeoverrides
+#      test  varname-dot-newline
+#      test  varname-dot-objdir
+#      test  varname-dot-parsedir
+#      test  varname-dot-parsefile
+#      test  varname-dot-path
+#      test  varname-dot-shell
+#      test  varname-dot-suffixes
+#      test  varname-dot-targets
+#      test  varname-empty
+#      test  varname-make
+#      test  varname-make_stack_trace
+#      test  varname-make_print_var_on_error
+#      test  varname-make_print_var_on_error-jobs
+#      test  varname-makefile
+#      test  varname-makeflags
+#      test  varname-pwd
+#      test  varname-vpath
+#      test  varparse-dynamic
+#      test  varparse-errors
+#      test  varparse-mod
+#      test  varparse-undef-partial
+--- /tmp/build_/bmake-20260824/bmake/unit-tests/cmd-interrupt.exp	Mon Jul 22 03:09:58 2024
++++ cmd-interrupt.out	Mon Sep 14 14:48:01 2026
+@@ -1,9 +1,13 @@
+ > cmd-interrupt-ordinary
+ make: *** cmd-interrupt-ordinary removed
+-interrupt-ordinary: ok
++*** Signal 2 (continuing)
+ > cmd-interrupt-phony
+-interrupt-phony: ok
++*** Signal 2 (continuing)
+ > cmd-interrupt-precious
+-interrupt-precious: ok
+-interrupt-compat expected-fail
+-exit status 0
++*** Signal 2 (continuing)
++*** Signal 2 (continuing)
++`all' not remade because of errors.
++
++Stop.
++make: stopped making "all" in unit-tests
++exit status 1
+--- /tmp/build_/bmake-20260824/bmake/unit-tests/export.exp	Fri Feb 18 19:29:15 2022
++++ export.out	Mon Sep 14 14:48:16 2026
+@@ -1,3 +1,4 @@
++A__z="*SHLVL
+ MAKELEVEL=1
+ TMPDIR=<tmpdir>
+ UT_DOLLAR=This is $UT_FU
+--- /tmp/build_/bmake-20260824/bmake/unit-tests/sh-leading-hyphen.exp	Tue Dec 26 17:18:23 2023
++++ sh-leading-hyphen.out	Mon Sep 14 14:48:24 2026
+@@ -2,10 +2,10 @@
+ false
+ *** Error code 1 (ignored)
+ unknown-command 'needed for needshell in compat.c'
+-unknown-command: not found
++unknown-command: not found [No such file or directory]
+ *** Error code 127 (ignored)
+ unknown-long-option 'needed for needshell in compat.c'
+-unknown-long-option: not found
++unknown-long-option: not found [No such file or directory]
+ *** Error code 127 (ignored)
+ whitespace in leading part
+ exit status 0
+--- /tmp/build_/bmake-20260824/bmake/unit-tests/suff.exp	Sat Jan 18 23:53:32 2025
++++ suff.out	Mon Sep 14 14:48:24 2026
+@@ -34,7 +34,7 @@
+ Global: .INCLUDES = # (empty)
+ Global: .LIBS = # (empty)
+ Global: ignoring delete '.SHELL' as it is not found
+-Command: .SHELL = /bin/sh
++Command: .SHELL = /usr/xpg4/bin/sh
+ Global: .ALLTARGETS =  step1 edge-case.to everything ${.PREFIX}${.ARCHIVE}.additional edge-case.from edge-case.additional a*.mk .END
+ step1: @ = step1
+ step1: @ = step1
+--- /tmp/build_/bmake-20260824/bmake/unit-tests/varmod-sun-shell1.exp	Wed Nov 12 22:19:37 2025
++++ varmod-sun-shell1.out	Mon Sep 14 14:48:26 2026
+@@ -4,7 +4,7 @@
+ Evaluating modifier ${ANSWER:s...} on value "echo 42; (exit 13)" (eval-keep-dollar-and-undefined, regular)
+ Capturing the output of command "echo 42; (exit 13)"
+ Global: ignoring delete '.SHELL' as it is not found
+-Command: .SHELL = /bin/sh
++Command: .SHELL = /usr/xpg4/bin/sh
+ make: varmod-sun-shell1.mk:17: warning: Command "echo 42; (exit 13)" exited with status 13
+ Global: .MAKE.SH1.ANSWER = 42
+ Result of ${ANSWER:sh1} is "42" (eval-keep-dollar-and-undefined, regular)
+Failed tests: cmd-interrupt export sh-leading-hyphen suff varmod-sun-shell1
+*** Error code 1
+
+Stop.
+bmake: stopped making "test" in /tmp/build_/bmake-20260824/bmake/unit-tests
