@@ -18,7 +18,7 @@
 
 PROG=gitea
 PKG=ooce/application/gitea
-VER=1.27.3
+VER=28.2.0
 SUMMARY="Git with a cup of tea"
 DESC="Git with a cup of tea, painless self-hosted git service"
 
@@ -28,7 +28,7 @@ OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
 set_arch 64
-set_gover
+set_gover 1.27
 
 XFORM_ARGS="
     -DPREFIX=${PREFIX#/}
@@ -44,6 +44,8 @@ RUN_DEPENDS_IPS=developer/versioning/git
 
 # gitea build wants GNU grep from 1.11.x on
 export PATH="$GNUBIN:$PATH"
+# build with the go version from set_gover, not a toolchain downloaded for go.mod
+export GOTOOLCHAIN=local
 
 build() {
     pushd $TMPDIR/$BUILDDIR > /dev/null
