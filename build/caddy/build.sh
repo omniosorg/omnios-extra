@@ -13,11 +13,12 @@
 # }}}
 
 # Copyright 2024 Guo-Rong Koh
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=caddy
-VER=2.11.4
+VER=2.11.7
 PKG=ooce/server/caddy
 SUMMARY="Caddy web server"
 DESC="Fast and extensible multi-platform HTTP/1-2-3 web server with automatic \
