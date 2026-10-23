@@ -1,0 +1,86 @@
+
+This reverts this v8 engine commit:
+	https://chromium.googlesource.com/v8/v8.git/+/506aeae95dd03c734e43f30ffc2a939e5bbb79bf%5E%21/
+	[heap] Allocate code close to the binary
+
+	Calls >4gb may have pretty bad performance on 64bit processors
+	that use 32bits to encode branch prediction. By passing in a function in
+	the binary as a hint to mmap it's more likely we'll be given an address
+	close to the binary. This may significantly improve performance on many
+	types of 64bit cores, especially those without hyperthreading.
+
+This bypasses the code that is elsewhere in v8 for illumos -
+GetRandomMmapAddr() - that ensures that mmap()d memory is out of the way
+of the heap so that it does not conflict.
+
+Without this patch, node fails when the heap grows to overlap with the
+previously mmap()d memory:
+
+	brk(0x04FB0000)                                 = 0
+	brk(0x04FB0000)                                 = 0
+	brk(0x04FB4000)                                 = 0
+	brk(0x04FB4000)                                 = 0
+	brk(0x04FB8000)                                 = 0
+	mmap(0x01169000, 134217728, PROT_NONE,
+	    MAP_PRIVATE|MAP_NORESERVE|MAP_ANON, 4294967295, 0) = 0x04FB8000
+	brk(0x04FB8000)                                 = 0
+	brk(0x04FBC000)                                 Err#12 ENOMEM
+
+In addition, V8's GetRandomMmapAddr() only applies its illumos-specific
+"keep the hint well above the break" adjustment in the generic fallback
+branch, which x64 never reaches; on x64 the random hint is merely masked
+to 46 bits and can land anywhere in the low 64TB, including just above the
+heap. libumem's default sbrk backend is then unable to grow the heap
+(brk() fails with ENOMEM) with plenty of memory free, and node aborts with
+"process out of memory" or std::bad_alloc. This bites memory hungry
+builds such as mattermost's webpack bundle, which creates thousands of
+mappings. Confine the x64 hint to the upper half of that range.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/deps/v8/src/base/platform/platform-posix.cc a/deps/v8/src/base/platform/platform-posix.cc
+--- a~/deps/v8/src/base/platform/platform-posix.cc	1970-01-01 00:00:00
++++ a/deps/v8/src/base/platform/platform-posix.cc	1970-01-01 00:00:00
+@@ -400,6 +400,14 @@ void* OS::GetRandomMmapAddr() {
+   // the hint address to 46 bits to give the kernel a fighting chance of
+   // fulfilling our placement request.
+   raw_addr &= uint64_t{0x3FFFFFFFF000};
++#ifdef __illumos__
++  // Keep the hint well above the break (see the __sun case below): illumos
++  // honours the hint when the range is free, and a random placement in the
++  // path of the heap would otherwise leave brk() unable to grow it. Use the
++  // upper half of the 46-bit range.
++  raw_addr &= uint64_t{0x1FFFFFFFF000};
++  raw_addr += uint64_t{0x200000000000};
++#endif
+ #elif V8_TARGET_ARCH_ARM64
+ #if defined(V8_TARGET_OS_LINUX) || defined(V8_TARGET_OS_ANDROID)
+   // On Linux, the default virtual address space is limited to 39 bits when
+diff -wpruN --no-dereference '--exclude=*.orig' a~/deps/v8/src/heap/code-range.cc a/deps/v8/src/heap/code-range.cc
+--- a~/deps/v8/src/heap/code-range.cc	1970-01-01 00:00:00
++++ a/deps/v8/src/heap/code-range.cc	1970-01-01 00:00:00
+@@ -28,8 +28,6 @@ namespace {
+ 
+ DEFINE_LAZY_LEAKY_OBJECT_GETTER(CodeRangeAddressHint, GetCodeRangeAddressHint)
+ 
+-void FunctionInStaticBinaryForAddressHint() {}
+-
+ }  // anonymous namespace
+ 
+ void RedZones::Initialize(base::BoundedPageAllocator* allocator) {
+@@ -122,7 +120,7 @@ Address CodeRangeAddressHint::GetAddress
+   // No recently freed region has been found, try to provide a hint for placing
+   // a code region.
+   if (it == recently_freed_.end() || it->second.empty()) {
+-    return RoundUp(FUNCTION_ADDR(&FunctionInStaticBinaryForAddressHint),
++    return RoundUp(reinterpret_cast<Address>(GetRandomMmapAddr()),
+                    allocate_page_size);
+   }
+ 
+@@ -436,7 +434,7 @@ base::AddressRegion CodeRange::GetPrefer
+     // When there's no embedded blob use address of a function from the binary
+     // as an approximation.
+     embedded_blob_code_start =
+-        FUNCTION_ADDR(&FunctionInStaticBinaryForAddressHint);
++        reinterpret_cast<Address>(GetRandomMmapAddr());
+     embedded_blob_code_end = embedded_blob_code_start + 1;
+   } else {
+     embedded_blob_code_end =
