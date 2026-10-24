@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=soju
-VER=0.11.0
+VER=0.11.1
 PKG=ooce/network/soju
 SUMMARY="A user-friendly IRC bouncer"
 DESC="soju is a user-friendly IRC bouncer. soju connects to upstream "
@@ -29,6 +29,8 @@ PREFIX+=/$PROG
 
 set_arch 64
 set_gover
+
+BUILD_DEPENDS_IPS+=" ooce/security/gnupg"
 
 BASEDIR=$PREFIX
 EXECFILE=$PREFIX/bin/$PROG
