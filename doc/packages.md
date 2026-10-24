@@ -139,6 +139,7 @@
 | ooce/library/libpng		| 1.6.59	| http://www.libpng.org/pub/png/libpng.html | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libraw		| 0.22.2	| https://www.libraw.org/download | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libsodium	| 1.0.22	| https://github.com/jedisct1/libsodium/releases | [omniosorg](https://github.com/omniosorg)
+| ooce/library/libssh2	| 1.11.1	| https://github.com/libssh2/libssh2/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libtasn1		| 4.21.0	| https://ftp.gnu.org/gnu/libtasn1/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/libtpms		| 0.10.2	| https://github.com/stefanberger/libtpms/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/liburcu		| 0.15.7	| https://lttng.org/files/urcu/?O=D | [omniosorg](https://github.com/omniosorg)
