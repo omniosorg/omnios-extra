@@ -166,6 +166,7 @@ extra.omnios ooce/library/libpciaccess
 extra.omnios ooce/library/libpng
 extra.omnios ooce/library/libraw
 extra.omnios ooce/library/libsodium
+extra.omnios ooce/library/libssh2
 extra.omnios ooce/library/libtasn1
 extra.omnios ooce/library/libtpms
 extra.omnios ooce/library/liburcu
