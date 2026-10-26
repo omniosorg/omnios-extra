@@ -160,6 +160,7 @@ extra.omnios ooce/library/libheif
 extra.omnios ooce/library/libid3tag
 extra.omnios ooce/library/libidl
 extra.omnios ooce/library/libjpeg-turbo
+extra.omnios ooce/library/liblzo
 extra.omnios ooce/library/libmcrypt
 extra.omnios ooce/library/libogg
 extra.omnios ooce/library/libpciaccess
