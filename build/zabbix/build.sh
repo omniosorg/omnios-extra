@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=zabbix
-VER=7.4.14
+VER=7.4.16
 PKG=ooce/application/zabbix
 SUMMARY="enterprise-class open source distributed monitoring solution"
 DESC="Zabbix is software that monitors numerous parameters of a network "
