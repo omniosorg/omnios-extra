@@ -378,8 +378,8 @@ case $RELVER in
     15104[3-6])         DEFAULT_GCC_VER=12; ILLUMOS_GCC_VER=10 ;;
     15104[7-9]|151050)  DEFAULT_GCC_VER=13; ILLUMOS_GCC_VER=10 ;;
     15105[1-8])         DEFAULT_GCC_VER=14; ILLUMOS_GCC_VER=10 ;;
-    151059|15106[0-9])  DEFAULT_GCC_VER=15; ILLUMOS_GCC_VER=10 ;;
-    *) logerr "Unknown release '$RELVER', can't select compiler." ;;
+    151059|15106*)      DEFAULT_GCC_VER=15; ILLUMOS_GCC_VER=10 ;;
+    *) logerr "Unknown release '$RELVER', can't select gcc version." ;;
 esac
 
 # Specify default clang version for building packages
@@ -392,8 +392,8 @@ case $RELVER in
     15105[3-4])         DEFAULT_CLANG_VER=19 ;;
     15105[5-6])         DEFAULT_CLANG_VER=20 ;;
     15105[7-8])         DEFAULT_CLANG_VER=21 ;;
-    151059|151060)      DEFAULT_CLANG_VER=22 ;;
-    *)                  DEFAULT_CLANG_VER=13 ;;
+    151059|15106*)      DEFAULT_CLANG_VER=22 ;;
+    *) logerr "Unknown release '$RELVER', can't select clang version." ;;
 esac
 
 DEFAULT_GO_VER=1.26
@@ -410,7 +410,7 @@ case $RELVER in
     15104[5-8])         PYTHON3VER=3.11 ;;
     151049|15105[0-2])  PYTHON3VER=3.12 ;;
     15105[3-9]|15106*)  PYTHON3VER=3.13 ;;
-    *)                  PYTHON3VER=3.5 ;;
+    *) logerr "Unknown release '$RELVER', can't select python version." ;;
 esac
 # Specify default Python version for building packages
 DEFAULT_PYTHON_VER=$PYTHON3VER
