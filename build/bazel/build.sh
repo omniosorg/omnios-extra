@@ -30,6 +30,12 @@ set_arch 64
 JDKVER=11.0
 JDKHOME=/usr/jdk/openjdk$JDKVER
 
+# By default, bazel runs one action per CPU and each job can use a lot
+# of swap due to the way that the JVM reserves the heap. We limit the number
+# of jobs to one per 8 GiB of memory. This figure was arrived at through
+# experimentation.
+((PMEM / 8192 > 0 && PMEM / 8192 < MJOBS)) && MJOBS=$((PMEM / 8192))
+
 RUN_DEPENDS_IPS="
     runtime/java/openjdk${JDKVER%%.*}
     developer/gcc$GCCVER
@@ -70,7 +76,7 @@ make_arch() {
     PATH=$GNUBIN:$PATH \
         VERBOSE=yes \
         JAVA_HOME=$JDKHOME \
-        EXTRA_BAZEL_ARGS=--tool_java_runtime_version=local_jdk \
+        EXTRA_BAZEL_ARGS="--tool_java_runtime_version=local_jdk --jobs=$MJOBS" \
         logcmd ./compile.sh || logerr "build failed"
 }
 
