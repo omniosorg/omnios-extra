@@ -1,0 +1,26 @@
+The second argument of iconv() is const char ** on illumos
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libguile/ports.c a/libguile/ports.c
+--- a~/libguile/ports.c	1970-01-01 00:00:00
++++ a/libguile/ports.c	1970-01-01 00:00:00
+@@ -1377,7 +1377,7 @@ get_iconv_codepoint (SCM port, scm_t_wch
+       output = (char *) utf8_buf;
+       output_left = sizeof (utf8_buf);
+ 
+-      done = iconv (id->input_cd, &input, &input_left, &output, &output_left);
++      done = iconv (id->input_cd, (void *) &input, &input_left, &output, &output_left);
+ 
+       if (done == (size_t) -1)
+ 	{
+diff -wpruN --no-dereference '--exclude=*.orig' a~/libguile/print.c a/libguile/print.c
+--- a~/libguile/print.c	1970-01-01 00:00:00
++++ a/libguile/print.c	1970-01-01 00:00:00
+@@ -994,7 +994,7 @@ display_string_using_iconv (const void *
+       output = encoded_output;
+       output_left = sizeof (encoded_output);
+ 
+-      done = iconv (id->output_cd, &input, &input_left,
++      done = iconv (id->output_cd, (void *) &input, &input_left,
+ 		    &output, &output_left);
+ 
+       output_len = sizeof (encoded_output) - output_left;
