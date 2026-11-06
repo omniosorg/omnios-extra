@@ -1,0 +1,24 @@
+OpenSSL 3 takes a const DSA in its encoding functions, so the assignment to
+i2d_func is a pointer mismatch, which is an error from gcc 14. Declare it as
+ossl_pkey_rsa.c does.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/ext/openssl/ossl_pkey_dsa.c a/ext/openssl/ossl_pkey_dsa.c
+--- a~/ext/openssl/ossl_pkey_dsa.c	1970-01-01 00:00:00
++++ a/ext/openssl/ossl_pkey_dsa.c	1970-01-01 00:00:00
+@@ -382,14 +382,14 @@ static VALUE
+ ossl_dsa_to_der(VALUE self)
+ {
+     DSA *dsa;
+-    int (*i2d_func)(DSA *, unsigned char **);
++    int (*i2d_func)(const DSA *, unsigned char **);
+     unsigned char *p;
+     long len;
+     VALUE str;
+ 
+     GetDSA(self, dsa);
+     if(DSA_HAS_PRIVATE(dsa))
+-	i2d_func = (int (*)(DSA *,unsigned char **))i2d_DSAPrivateKey;
++	i2d_func = i2d_DSAPrivateKey;
+     else
+ 	i2d_func = i2d_DSA_PUBKEY;
+     if((len = i2d_func(dsa, NULL)) <= 0)
