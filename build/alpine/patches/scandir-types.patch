@@ -1,0 +1,44 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/src/osdep/unix/os_soln.h a/imap/src/osdep/unix/os_soln.h
+--- a~/imap/src/osdep/unix/os_soln.h	1970-01-01 00:00:00
++++ a/imap/src/osdep/unix/os_soln.h	1970-01-01 00:00:00
+@@ -72,11 +72,12 @@ int Setpgrp (int pid,int gid);
+ int portable_utime (char *file,time_t timep[2]);
+ 
+ long gethostid (void);
+-typedef int (*select_t) (struct direct *name);
+-typedef int (*compar_t) (const void *d1,const void *d2);
++typedef int (*select_t) (const struct direct *name);
++typedef int (*compar_t) (const struct direct **d1,
++			 const struct direct **d2);
+ int scandir (char *dirname,struct direct ***namelist,select_t select,
+ 	     compar_t compar);
+-int alphasort (void *d1,void *d2);
++int alphasort (const struct direct **d1,const struct direct **d2);
+ 
+ 
+ #include "env_unix.h"
+diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/src/osdep/unix/scandir.c a/imap/src/osdep/unix/scandir.c
+--- a~/imap/src/osdep/unix/scandir.c	1970-01-01 00:00:00
++++ a/imap/src/osdep/unix/scandir.c	1970-01-01 00:00:00
+@@ -63,7 +63,9 @@ int scandir (char *dirname,struct direct
+   }
+   closedir (dirp);		/* done with directory */
+ 				/* sort if necessary */
+-  if (nitems && compar) qsort (names,nitems,sizeof (struct direct *),compar);
++  if (nitems && compar)
++    qsort (names,nitems,sizeof (struct direct *),
++	   (int (*) (const void *,const void *)) compar);
+   *namelist = names;		/* return directory */
+   return nitems;		/* and size */
+ }
+@@ -74,8 +76,7 @@ int scandir (char *dirname,struct direct
+  * Returns: negative if d1 < d2, 0 if d1 == d2, positive if d1 > d2
+  */
+ 
+-int alphasort (void *d1,void *d2)
++int alphasort (const struct direct **d1,const struct direct **d2)
+ {
+-  return strcmp ((*(struct direct **) d1)->d_name,
+-		 (*(struct direct **) d2)->d_name);
++  return strcmp ((*d1)->d_name,(*d2)->d_name);
+ }

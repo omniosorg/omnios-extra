@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,8 +22,6 @@ PKG=ooce/application/alpine
 SUMMARY="Alpine Email Program"
 DESC="$PROG - an Alternatively Licensed Program for Internet News and Email"
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
@@ -54,6 +52,8 @@ CONFIGURE_OPTS="
 CONFIGURE_OPTS[amd64]+="
     --with-ldap-lib-dir=$OPREFIX/lib/amd64
 "
+
+CFLAGS+=" -std=gnu17"
 
 export LIBS=-luuid
 
