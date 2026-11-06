@@ -2,3 +2,5 @@
 02-emacs.patch
 03-relative-symlink.patch
 04-filearg.patch
+configure-tests.patch
+gcc14.patch

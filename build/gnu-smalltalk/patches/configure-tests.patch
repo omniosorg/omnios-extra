@@ -1,0 +1,129 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/build-aux/localtime.m4 a/build-aux/localtime.m4
+--- a~/build-aux/localtime.m4	1970-01-01 00:00:00
++++ a/build-aux/localtime.m4	1970-01-01 00:00:00
+@@ -16,7 +16,7 @@ AC_TRY_RUN(
+     #endif
+ 
+     extern char **environ;
+-    unset_TZ ()
++    void unset_TZ ()
+     {
+       char **from, **to;
+       for (to = from = environ; (*to = *from); from++)
+@@ -25,7 +25,7 @@ AC_TRY_RUN(
+     }
+     char TZ_GMT0[] = "TZ=GMT0";
+     char TZ_PST8[] = "TZ=PST8";
+-    main()
++    int main()
+     {
+       time_t now = time ((time_t *) 0);
+       int hour_GMT0, hour_unset;
+diff -wpruN --no-dereference '--exclude=*.orig' a~/build-aux/lrint.m4 a/build-aux/lrint.m4
+--- a~/build-aux/lrint.m4	1970-01-01 00:00:00
++++ a/build-aux/lrint.m4	1970-01-01 00:00:00
+@@ -14,7 +14,7 @@ AC_CACHE_CHECK(for working lrint, gst_cv
+       {
+ 	extern long int lrint (double);
+ 	long int l = lrint (d);
+-	exit(sizeof (l) >= 8 && l != 14988885582133630);
++	return(sizeof (l) >= 8 && l != 14988885582133630);
+       }]])],[],[gst_cv_working_lrint=no],[gst_cv_working_lrint=no])
+   fi
+   test "$silent" != yes && exec AS_MESSAGE_FD([])>&1
+diff -wpruN --no-dereference '--exclude=*.orig' a~/build-aux/readline.m4 a/build-aux/readline.m4
+--- a~/build-aux/readline.m4	1970-01-01 00:00:00
++++ a/build-aux/readline.m4	1970-01-01 00:00:00
+@@ -32,7 +32,7 @@ main()
+   rl_bind_key ('\t', rl_insert);
+   /* This is missing in BSD libedit!  */
+   rl_filename_quoting_function = (CPFunction *) readline_quote_filename;
+-  exit(0);
++  return 0;
+ }
+ EOF
+       # Link the program.  If not cross-compiling, run it too,
+diff -wpruN --no-dereference '--exclude=*.orig' a~/build-aux/strtoul.m4 a/build-aux/strtoul.m4
+--- a~/build-aux/strtoul.m4	1970-01-01 00:00:00
++++ a/build-aux/strtoul.m4	1970-01-01 00:00:00
+@@ -16,7 +16,7 @@ AC_CACHE_CHECK(for working strtoul, gst_
+ 	char *term;
+ 	int value;
+ 	value = strtoul(string, &term, 0);
+-	exit((value != 0) || (term != (string+1)));
++	return((value != 0) || (term != (string+1)));
+       }]])],[],[gst_cv_working_strtoul=no],[gst_cv_working_strtoul=no])
+   fi
+   test "$silent" != yes && exec AS_MESSAGE_FD([])>&1
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -17615,7 +17615,7 @@ else
+       {
+ 	extern long int lrint (double);
+ 	long int l = lrint (d);
+-	exit(sizeof (l) >= 8 && l != 14988885582133630);
++	return(sizeof (l) >= 8 && l != 14988885582133630);
+       }
+ _ACEOF
+ if ac_fn_c_try_run "$LINENO"; then :
+@@ -17674,7 +17674,7 @@ else
+ 	char *term;
+ 	int value;
+ 	value = strtoul(string, &term, 0);
+-	exit((value != 0) || (term != (string+1)));
++	return((value != 0) || (term != (string+1)));
+       }
+ _ACEOF
+ if ac_fn_c_try_run "$LINENO"; then :
+@@ -17761,7 +17761,7 @@ else
+     #endif
+ 
+     extern char **environ;
+-    unset_TZ ()
++    void unset_TZ ()
+     {
+       char **from, **to;
+       for (to = from = environ; (*to = *from); from++)
+@@ -17770,7 +17770,7 @@ else
+     }
+     char TZ_GMT0[] = "TZ=GMT0";
+     char TZ_PST8[] = "TZ=PST8";
+-    main()
++    int main()
+     {
+       time_t now = time ((time_t *) 0);
+       int hour_GMT0, hour_unset;
+@@ -19013,7 +19013,7 @@ main()
+   rl_bind_key ('\t', rl_insert);
+   /* This is missing in BSD libedit!  */
+   rl_filename_quoting_function = (CPFunction *) readline_quote_filename;
+-  exit(0);
++  return 0;
+ }
+ EOF
+       # Link the program.  If not cross-compiling, run it too,
+diff -wpruN --no-dereference '--exclude=*.orig' a~/snprintfv/configure a/snprintfv/configure
+--- a~/snprintfv/configure	1970-01-01 00:00:00
++++ a/snprintfv/configure	1970-01-01 00:00:00
+@@ -12994,7 +12994,7 @@ else
+ 
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+-static inline foo(bar) int bar; { return bar; }
++static inline int foo(int bar) { return bar; }
+ int
+ main ()
+ {
+diff -wpruN --no-dereference '--exclude=*.orig' a~/snprintfv/configure.ac a/snprintfv/configure.ac
+--- a~/snprintfv/configure.ac	1970-01-01 00:00:00
++++ a/snprintfv/configure.ac	1970-01-01 00:00:00
+@@ -123,7 +123,7 @@ AC_HEADER_STDC
+ AC_CHECK_HEADERS(sys/types.h)
+ 
+ AC_CACHE_CHECK([for static inline], [snv_cv_static_inline], [
+-AC_TRY_COMPILE([static inline foo(bar) int bar; { return bar; }],
++AC_TRY_COMPILE([static inline int foo(int bar) { return bar; }],
+   [return foo(0);],
+   [snv_cv_static_inline=yes],
+   [snv_cv_static_inline=no])
