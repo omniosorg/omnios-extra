@@ -10,3 +10,4 @@ pthread.patch
 serverconf.patch
 sha512crypt.patch
 signal.patch
+gcc14.patch

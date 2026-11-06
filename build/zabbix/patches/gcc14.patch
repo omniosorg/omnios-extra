@@ -1,0 +1,48 @@
+The prototypes of iconv() and shmdt() on illumos differ from the ones this code
+expects. These mismatches are errors from gcc 14.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/libs/zbxmutexs/mutexs.c a/src/libs/zbxmutexs/mutexs.c
+--- a~/src/libs/zbxmutexs/mutexs.c	1970-01-01 00:00:00
++++ a/src/libs/zbxmutexs/mutexs.c	1970-01-01 00:00:00
+@@ -181,7 +181,7 @@ void	zbx_locks_destroy(void)
+ 	for (i = 0; i < ZBX_RWLOCK_COUNT; i++)
+ 		(void)pthread_rwlock_destroy(&shared_lock->rwlocks[i]);
+ 
+-	if (-1 == shmdt(shared_lock))
++	if (-1 == shmdt((void *)shared_lock))
+ 		zabbix_log(LOG_LEVEL_TRACE, "cannot detach shared lock memory: %s", zbx_strerror(errno));
+ 
+ 	shared_lock = NULL;
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/libs/zbxstr/str.c a/src/libs/zbxstr/str.c
+--- a~/src/libs/zbxstr/str.c	1970-01-01 00:00:00
++++ a/src/libs/zbxstr/str.c	1970-01-01 00:00:00
+@@ -1335,7 +1335,7 @@ char	*zbx_convert_to_utf8(char *in, size
+ 	in_size_left = in_size;
+ 	out_size_left = out_alloc - 1;
+ 
+-	while ((size_t)(-1) == iconv(cd, &in, &in_size_left, &p, &out_size_left))
++	while ((size_t)(-1) == iconv(cd, (void *)&in, &in_size_left, &p, &out_size_left))
+ 	{
+ 		if (E2BIG != errno)
+ 			break;
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/libs/zbxxml/xml.c a/src/libs/zbxxml/xml.c
+--- a~/src/libs/zbxxml/xml.c	1970-01-01 00:00:00
++++ a/src/libs/zbxxml/xml.c	1970-01-01 00:00:00
+@@ -1079,7 +1079,7 @@ zbx_libxml_error_t;
+  *                                                                            *
+  ******************************************************************************/
+ #if 21200 > LIBXML_VERSION /* version 2.12.0 */
+-static void	libxml_handle_error_xpath_check(void *user_data, xmlErrorPtr err)
++static void	libxml_handle_error_xpath_check(void *user_data, const xmlError *err)
+ #else
+ static void	libxml_handle_error_xpath_check(void *user_data, const xmlError *err)
+ #endif
+@@ -1233,7 +1233,7 @@ out:
+  *                                                                            *
+  ******************************************************************************/
+ #if 21200 > LIBXML_VERSION /* version 2.12.0 */
+-static void	libxml_handle_error_try_read_value(void *user_data, xmlErrorPtr err)
++static void	libxml_handle_error_try_read_value(void *user_data, const xmlError *err)
+ #else
+ static void	libxml_handle_error_try_read_value(void *user_data, const xmlError *err)
+ #endif
