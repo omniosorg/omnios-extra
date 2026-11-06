@@ -1,0 +1,17 @@
+diff --git a/src/libs/zbxpoller/checks_snmp.c b/src/libs/zbxpoller/checks_snmp.c
+index 34ecb3b..81b210a 100644
+--- a/src/libs/zbxpoller/checks_snmp.c
++++ b/src/libs/zbxpoller/checks_snmp.c
+@@ -805,10 +805,12 @@ static int	zbx_snmpv3_set_auth_protocol(unsigned char snmpv3_authprotocol, struc
+ 
+ 	switch (snmpv3_authprotocol)
+ 	{
++#ifndef NETSNMP_DISABLE_MD5
+ 		case ITEM_SNMPV3_AUTHPROTOCOL_MD5:
+ 			session->securityAuthProto = usmHMACMD5AuthProtocol;
+ 			session->securityAuthProtoLen = USM_AUTH_PROTO_MD5_LEN;
+ 			break;
++#endif
+ 		case ITEM_SNMPV3_AUTHPROTOCOL_SHA1:
+ 			session->securityAuthProto = usmHMACSHA1AuthProtocol;
+ 			session->securityAuthProtoLen = USM_AUTH_PROTO_SHA_LEN;
