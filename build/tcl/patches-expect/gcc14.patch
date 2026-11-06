@@ -1,0 +1,137 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/exp_chan.c a/exp_chan.c
+--- a~/exp_chan.c	1970-01-01 00:00:00
++++ a/exp_chan.c	1970-01-01 00:00:00
+@@ -35,6 +35,7 @@
+ #include "exp_prog.h"
+ #include "exp_command.h"
+ #include "exp_log.h"
++#include "exp_event.h"
+ #include "tcldbg.h" /* Dbg_StdinMode */
+ 
+ extern int		expSetBlockModeProc _ANSI_ARGS_((int fd, int mode));
+@@ -58,7 +59,7 @@ static int		ExpGetHandleProc _ANSI_ARGS_
+ 
+ Tcl_ChannelType expChannelType = {
+     "exp",				/* Type name. */
+-    ExpBlockModeProc,			/* Set blocking/nonblocking mode.*/
++    TCL_CHANNEL_VERSION_2,		/* Channel type version. */
+     ExpCloseProc,			/* Close proc. */
+     ExpInputProc,			/* Input proc. */
+     ExpOutputProc,			/* Output proc. */
+@@ -68,6 +69,7 @@ Tcl_ChannelType expChannelType = {
+     ExpWatchProc,			/* Initialize notifier. */
+     ExpGetHandleProc,			/* Get OS handles out of channel. */
+     NULL,				/* Close2 proc */
++    ExpBlockModeProc,			/* Set blocking/nonblocking mode.*/
+ };
+ 
+ typedef struct ThreadSpecificData {
+diff -wpruN --no-dereference '--exclude=*.orig' a~/exp_clib.c a/exp_clib.c
+--- a~/exp_clib.c	1970-01-01 00:00:00
++++ a/exp_clib.c	1970-01-01 00:00:00
+@@ -9,6 +9,9 @@ would appreciate credit if this program
+ 
+ #include "expect_cf.h"
+ #include <stdio.h>
++#include <fcntl.h>
++#include <unistd.h>
++#include <sys/wait.h>
+ #include <setjmp.h>
+ #ifdef HAVE_INTTYPES_H
+ #  include <inttypes.h>
+@@ -1488,6 +1491,8 @@ expDiagLogU(str)
+ #include "expect.h"
+ #include "exp_int.h"
+ 
++extern void exp_init_tty(void);
++
+ /* exp_glob.c - expect functions for doing glob
+  *
+  * Based on Tcl's glob functions but modified to support anchors and to
+diff -wpruN --no-dereference '--exclude=*.orig' a~/exp_main_sub.c a/exp_main_sub.c
+--- a~/exp_main_sub.c	1970-01-01 00:00:00
++++ a/exp_main_sub.c	1970-01-01 00:00:00
+@@ -24,6 +24,8 @@
+ #include "exp_tty_in.h"
+ #include "exp_log.h"
+ #include "exp_event.h"
++
++int exp_tty_cooked_echo(Tcl_Interp *, exp_tty *, int *, int *);
+ #ifdef TCL_DEBUGGER
+ #include "tcldbg.h"
+ #endif
+diff -wpruN --no-dereference '--exclude=*.orig' a~/exp_pty.c a/exp_pty.c
+--- a~/exp_pty.c	1970-01-01 00:00:00
++++ a/exp_pty.c	1970-01-01 00:00:00
+@@ -32,6 +32,7 @@ would appreciate credit if this program
+ #endif
+ 
+ #include <signal.h>
++#include <fcntl.h>
+ #include <setjmp.h>
+ #include <sys/file.h>
+ #include "tcl.h"
+diff -wpruN --no-dereference '--exclude=*.orig' a~/exp_trap.c a/exp_trap.c
+--- a~/exp_trap.c	1970-01-01 00:00:00
++++ a/exp_trap.c	1970-01-01 00:00:00
+@@ -31,6 +31,7 @@ would appreciate credit if this program
+ #include "exp_prog.h"
+ #include "exp_command.h"
+ #include "exp_log.h"
++#include "exp_event.h"
+ 
+ #ifdef TCL_DEBUGGER
+ #include "tcldbg.h"
+diff -wpruN --no-dereference '--exclude=*.orig' a~/exp_win.c a/exp_win.c
+--- a~/exp_win.c	1970-01-01 00:00:00
++++ a/exp_win.c	1970-01-01 00:00:00
+@@ -9,6 +9,7 @@ would appreciate credit if you use this
+ 
+ #include "expect_cf.h"
+ #include "tcl.h"
++#include <sys/ioctl.h>
+ 
+ #ifdef NO_STDLIB_H
+ #include "../compat/stdlib.h"
+diff -wpruN --no-dereference '--exclude=*.orig' a~/pty_termios.c a/pty_termios.c
+--- a~/pty_termios.c	1970-01-01 00:00:00
++++ a/pty_termios.c	1970-01-01 00:00:00
+@@ -8,6 +8,7 @@ would appreciate credit if you use this
+ */
+ 
+ #include <stdio.h>
++#include <fcntl.h>
+ #include <signal.h>
+ 
+ #if defined(SIGCLD) && !defined(SIGCHLD)
+@@ -102,6 +103,7 @@ with openpty which supports 4000 while p
+ #include "exp_tty_in.h"
+ #include "exp_rename.h"
+ #include "exp_pty.h"
++#include "exp_int.h"
+ 
+ void expDiagLog();
+ void expDiagLogPtr();
+@@ -648,18 +650,18 @@ exp_getptyslave(
+ #if defined(HAVE_PTMX_BSD)
+ 	if (ioctl (slave, I_LOOK, buf) != 0)
+ 		if (ioctl (slave, I_PUSH, "ldterm")) {
+-			expDiagLogPtrStrStr("ioctl(%d,I_PUSH,\"ldterm\") = %s\n",slave,expErrnoMsg(errno));
++			expDiagLogPtrStr("ioctl(I_PUSH,\"ldterm\") = %s\n",expErrnoMsg(errno));
+ 	}
+ #else
+ #if defined(HAVE_PTMX)
+ 	if (ioctl(slave, I_PUSH, "ptem")) {
+-		expDiagLogPtrStrStr("ioctl(%d,I_PUSH,\"ptem\") = %s\n",slave,expErrnoMsg(errno));
++		expDiagLogPtrStr("ioctl(I_PUSH,\"ptem\") = %s\n",expErrnoMsg(errno));
+ 	}
+ 	if (ioctl(slave, I_PUSH, "ldterm")) {
+-		expDiagLogPtrStrStr("ioctl(%d,I_PUSH,\"ldterm\") = %s\n",slave,expErrnoMsg(errno));
++		expDiagLogPtrStr("ioctl(I_PUSH,\"ldterm\") = %s\n",expErrnoMsg(errno));
+ 	}
+ 	if (ioctl(slave, I_PUSH, "ttcompat")) {
+-		expDiagLogPtrStrStr("ioctl(%d,I_PUSH,\"ttcompat\") = %s\n",slave,expErrnoMsg(errno));
++		expDiagLogPtrStr("ioctl(I_PUSH,\"ttcompat\") = %s\n",expErrnoMsg(errno));
+ 	}
+ #endif
+ #endif

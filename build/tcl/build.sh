@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=tcl
-VER=8.6.14
+VER=8.6.18
 EXPECTVER=5.45.4
 PKG=ooce/runtime/tcl
 SUMMARY="Tool Command Language"
@@ -28,13 +28,11 @@ MAJVER=${VER%.*}
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
-set_builddir $PROG$VER/unix
-PATCHDIR+=-$PROG
+set_builddir $PROG$VER
+set_patchdir patches-$PROG
 
 SKIP_LICENCES=BSD-style
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
 
@@ -52,6 +50,12 @@ CONFIGURE_OPTS[amd64]="
     --mandir=$PREFIX/share/man
     --enable-64bit
 "
+
+pre_build() {
+    append_builddir unix
+
+    unset -f pre_build
+}
 
 post_configure() {
     pushd $TMPDIR/$BUILDDIR/../doc >/dev/null
@@ -91,10 +95,12 @@ DESC="A tool for automating interactive applications"
 TCLDIR=$DESTDIR$PREFIX/lib
 PREFIX="$OPREFIX/$PROG"
 
-BUILDDIR=$PROG$VER
-PATCHDIR=patches-$PROG
+set_builddir $PROG$VER
+set_patchdir patches-$PROG
 
 SKIP_LICENCES=NIST
+
+CFLAGS+=" -std=gnu17"
 
 # pkgdepend fails dependency resulution because TCL is not available, yet
 RUN_DEPENDS_IPS="ooce/runtime/tcl"
@@ -116,6 +122,7 @@ init
 download_source $PROG $PROG$VER
 patch_source
 prep_build
+run_autoconf -f
 LD_LIBRARY_PATH=$TCLDIR build
 make_package $PROG-local.mog
 clean_up

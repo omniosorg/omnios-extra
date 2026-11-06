@@ -1,6 +1,6 @@
-diff -wpruN --no-dereference '--exclude=*.orig' a~/installManPage a/installManPage
---- a~/installManPage	1970-01-01 00:00:00
-+++ a/installManPage	1970-01-01 00:00:00
+diff -wpruN --no-dereference '--exclude=*.orig' a~/unix/installManPage a/unix/installManPage
+--- a~/unix/installManPage	1970-01-01 00:00:00
++++ a/unix/installManPage	1970-01-01 00:00:00
 @@ -87,8 +87,8 @@ fi
  
  case $ManPage in

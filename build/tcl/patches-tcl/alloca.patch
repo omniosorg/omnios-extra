@@ -1,0 +1,17 @@
+SQLITE_USE_ALLOCA is set by configure, but alloca() is declared in <alloca.h>
+on illumos and sqlite does not include that. An implicit declaration is an
+error from gcc 14.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/pkgs/sqlite3.53.0/compat/sqlite3/sqlite3.c a/pkgs/sqlite3.53.0/compat/sqlite3/sqlite3.c
+--- a~/pkgs/sqlite3.53.0/compat/sqlite3/sqlite3.c	1970-01-01 00:00:00
++++ a/pkgs/sqlite3.53.0/compat/sqlite3/sqlite3.c	1970-01-01 00:00:00
+@@ -21786,6 +21786,9 @@ SQLITE_PRIVATE int sqlite3HeapNearlyFull
+ ** that deal with sqlite3StackAlloc() failures to be unreachable.
+ */
+ #ifdef SQLITE_USE_ALLOCA
++#ifdef __illumos__
++#include <alloca.h>
++#endif
+ #if !defined(alloca) && defined(_WIN32)
+ # define alloca _alloca
+ #endif
