@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -25,8 +25,6 @@ DESC="$PROG - $SUMMARY"
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
 set_standard XPG6 CFLAGS
