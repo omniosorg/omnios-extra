@@ -1,0 +1,27 @@
+The alphasort() emulation takes void * rather than const void *, so it cannot
+be passed to scandir() as a compar_t, which is an error from gcc 14.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/osdep/unix/os_soln.h a/src/osdep/unix/os_soln.h
+--- a~/src/osdep/unix/os_soln.h	1970-01-01 00:00:00
++++ a/src/osdep/unix/os_soln.h	1970-01-01 00:00:00
+@@ -76,7 +76,7 @@ typedef int (*select_t) (struct direct *
+ typedef int (*compar_t) (const void *d1,const void *d2);
+ int scandir (char *dirname,struct direct ***namelist,select_t select,
+ 	     compar_t compar);
+-int alphasort (void *d1,void *d2);
++int alphasort (const void *d1,const void *d2);
+ 
+ 
+ #include "env_unix.h"
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/osdep/unix/scandir.c a/src/osdep/unix/scandir.c
+--- a~/src/osdep/unix/scandir.c	1970-01-01 00:00:00
++++ a/src/osdep/unix/scandir.c	1970-01-01 00:00:00
+@@ -74,7 +74,7 @@ int scandir (char *dirname,struct direct
+  * Returns: negative if d1 < d2, 0 if d1 == d2, postive if d1 > d2
+  */
+ 
+-int alphasort (void *d1,void *d2)
++int alphasort (const void *d1,const void *d2)
+ {
+   return strcmp ((*(struct direct **) d1)->d_name,
+ 		 (*(struct direct **) d2)->d_name);

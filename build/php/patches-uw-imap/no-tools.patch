@@ -1,0 +1,21 @@
+Only c-client is used, so do not build the bundled tools. They are not shipped,
+and do not build with gcc 14 and later.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Makefile a/Makefile
+--- a~/Makefile	1970-01-01 00:00:00
++++ a/Makefile	1970-01-01 00:00:00
+@@ -715,14 +715,6 @@ rebuildclean:
+ 
+ bundled:
+ 	@echo Building bundled tools...
+-	$(CD) mtest;$(MAKE)
+-	$(CD) ipopd;$(MAKE)
+-	$(CD) imapd;$(MAKE)
+-	$(CD) mailutil;$(MAKE)
+-	@$(SH) -c '(test -f /usr/include/sysexits.h ) || make sysexitwarn'
+-	$(CD) mlock;$(MAKE) || true
+-	$(CD) dmail;$(MAKE) || true
+-	$(CD) tmail;$(MAKE) || true
+ 
+ 
+ sysexitwarn:
