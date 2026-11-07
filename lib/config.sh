@@ -451,6 +451,7 @@ FCFLAGS[11]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[12]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[13]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[14]+=" -fno-aggressive-loop-optimizations"
+FCFLAGS[15]+=" -fno-aggressive-loop-optimizations"
 
 # Flags to enable particular standards; see standards(7)
 typeset -A STANDARDS

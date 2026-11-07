@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -30,8 +30,6 @@ set_patchdir patches-$sMAJVER
 OPREFIX=$PREFIX
 PREFIX+=/$PROG-$MAJVER
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
 
@@ -49,6 +47,9 @@ CONFIGURE_OPTS[amd64]+="
     --disable-install-doc
     --libdir=$PREFIX/lib
 "
+
+CFLAGS+=" -std=gnu17"
+export MJIT_CFLAGS="-w -std=gnu17"
 
 CPPFLAGS+=" -I/usr/include/gmp"
 

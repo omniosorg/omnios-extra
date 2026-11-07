@@ -105,8 +105,6 @@ XFORM_ARGS="
 
 export MAKE
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 init
 prep_build

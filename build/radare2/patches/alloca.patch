@@ -1,0 +1,29 @@
+alloca() is declared in <alloca.h> on illumos, and the bundled QuickJS does not
+include that. An implicit declaration is an error from gcc 14.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/shlr/qjs/src/libregexp.c a/shlr/qjs/src/libregexp.c
+--- a~/shlr/qjs/src/libregexp.c	1970-01-01 00:00:00
++++ a/shlr/qjs/src/libregexp.c	1970-01-01 00:00:00
+@@ -22,6 +22,9 @@
+  * THE SOFTWARE.
+  */
+ #include <stdlib.h>
++#ifdef __illumos__
++#include <alloca.h>
++#endif
+ #include <stdio.h>
+ #include <stdarg.h>
+ #include <inttypes.h>
+diff -wpruN --no-dereference '--exclude=*.orig' a~/shlr/qjs/src/quickjs.c a/shlr/qjs/src/quickjs.c
+--- a~/shlr/qjs/src/quickjs.c	1970-01-01 00:00:00
++++ a/shlr/qjs/src/quickjs.c	1970-01-01 00:00:00
+@@ -23,6 +23,9 @@
+  * THE SOFTWARE.
+  */
+ #include <stdlib.h>
++#ifdef __illumos__
++#include <alloca.h>
++#endif
+ #include <stdio.h>
+ #include <stdarg.h>
+ #include <inttypes.h>

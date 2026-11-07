@@ -3,9 +3,9 @@ man3 and mann).
 
 This patch will not be sent upstream.
 
-diff -wpruN --no-dereference '--exclude=*.orig' a~/Makefile.in a/Makefile.in
---- a~/Makefile.in	1970-01-01 00:00:00
-+++ a/Makefile.in	1970-01-01 00:00:00
+diff -wpruN --no-dereference '--exclude=*.orig' a~/unix/Makefile.in a/unix/Makefile.in
+--- a~/unix/Makefile.in	1970-01-01 00:00:00
++++ a/unix/Makefile.in	1970-01-01 00:00:00
 @@ -72,10 +72,10 @@ MAN_INSTALL_DIR		= $(INSTALL_ROOT)$(mand
  MAN1_INSTALL_DIR	= $(MAN_INSTALL_DIR)/man1
  

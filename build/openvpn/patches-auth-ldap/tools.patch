@@ -1,0 +1,33 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tools/lemon.c a/tools/lemon.c
+--- a~/tools/lemon.c	1970-01-01 00:00:00
++++ a/tools/lemon.c	1970-01-01 00:00:00
+@@ -59,12 +59,12 @@ static struct action *Action_new(void);
+ static struct action *Action_sort(struct action *);
+ 
+ /********** From the file "build.h" ************************************/
+-void FindRulePrecedences();
+-void FindFirstSets();
+-void FindStates();
+-void FindLinks();
+-void FindFollowSets();
+-void FindActions();
++void FindRulePrecedences(struct lemon *);
++void FindFirstSets(struct lemon *);
++void FindStates(struct lemon *);
++void FindLinks(struct lemon *);
++void FindFollowSets(struct lemon *);
++void FindActions(struct lemon *);
+ 
+ /********* From the file "configlist.h" *********************************/
+ void Configlist_init(void);
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tools/makeheaders.c a/tools/makeheaders.c
+--- a~/tools/makeheaders.c	1970-01-01 00:00:00
++++ a/tools/makeheaders.c	1970-01-01 00:00:00
+@@ -36,6 +36,7 @@ static const char ident[] = "@(#) $Heade
+ */
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
+ #include <ctype.h>
+ #include <memory.h>
+ #include <sys/stat.h>

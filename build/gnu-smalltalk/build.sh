@@ -24,8 +24,6 @@ SUMMARY="GNU Smalltalk"
 DESC="A free implementation of the Smalltalk-80 language, \
 well-versed to scripting tasks and headless processing."
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 # 64-bit build currently segfaults, needs investigation
 set_arch 32
@@ -73,6 +71,8 @@ CONFIGURE_OPTS+="
     --with-lispdir=$OPREFIX/emacs/share/emacs/site-lisp
     --with-lispstartdir=$OPREFIX/emacs/share/emacs/site-lisp/site-start.d
 "
+
+CFLAGS+=" -std=gnu17"
 
 # GNU Smalltalk does not find gmp headers
 CPPFLAGS+=" -I/usr/include/gmp"

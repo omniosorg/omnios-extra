@@ -12,7 +12,7 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 #
-# Copyright 2024 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
@@ -22,8 +22,6 @@ PKG=ooce/library/guile
 SUMMARY="GNU Ubiquitous Intelligent Language for Extensions"
 DESC="$PROG - $SUMMARY"
 
-# does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 BUILD_DEPENDS_IPS="ooce/library/unistring ooce/library/bdw-gc"
 
@@ -37,6 +35,8 @@ XFORM_ARGS="
     -DPKGROOT=$PROG
 "
 
+CFLAGS+=" -std=gnu17"
+
 CPPFLAGS+=" -I/usr/include/gmp -I$OPREFIX/include"
 LDFLAGS+="-lsocket -lnsl"
 
@@ -48,6 +48,8 @@ CONFIGURE_OPTS="
     --disable-error-on-warning
     --disable-static
     ac_cv_type_complex_double=no
+    gl_cv_func_round_works=yes
+    guile_cv_localtime_cache=no
 "
 CONFIGURE_OPTS[i386]="
     --bindir=$PREFIX/bin/i386

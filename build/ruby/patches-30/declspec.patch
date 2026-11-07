@@ -1,0 +1,16 @@
+Do not probe for __declspec() on illumos. It is not supported, and the probes
+fail with an implicit int error from gcc 14 and later. That is the correct
+result, but it is indistinguishable from a broken configure test and fails the
+build system check for those. __attribute__ is tried as well.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tool/m4/ruby_decl_attribute.m4 a/tool/m4/ruby_decl_attribute.m4
+--- a~/tool/m4/ruby_decl_attribute.m4	1970-01-01 00:00:00
++++ a/tool/m4/ruby_decl_attribute.m4	1970-01-01 00:00:00
+@@ -18,7 +18,6 @@ RUBY_WERROR_FLAG([
+ for mac in \
+     "__attribute__ ((attrib_code)) x" \
+     "x __attribute__ ((attrib_code))" \
+-    "__declspec(attrib_code) x" \
+     x; do
+   m4_ifval([$4],mac="$mac"${rbcv_cond+" /* only if $rbcv_cond */"})
+   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([

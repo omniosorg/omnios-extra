@@ -1,0 +1,16 @@
+alloca() is declared in <alloca.h> on illumos. An implicit declaration is an
+error from gcc 14.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/osdep/unix/ssl_unix.c a/src/osdep/unix/ssl_unix.c
+--- a~/src/osdep/unix/ssl_unix.c	1970-01-01 00:00:00
++++ a/src/osdep/unix/ssl_unix.c	1970-01-01 00:00:00
+@@ -25,6 +25,9 @@
+ 
+ #define crypt ssl_private_crypt
+ #define STRING OPENSSL_STRING
++#ifdef __illumos__
++#include <alloca.h>
++#endif
+ #include <x509v3.h>
+ #include <ssl.h>
+ #include <err.h>

@@ -26,9 +26,6 @@ DESC+="and the health and integrity of servers"
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 
-# does not yet build with gcc 14
-# 2026-08-21 : untested if it is still true
-((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
 

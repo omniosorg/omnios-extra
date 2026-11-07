@@ -1,3 +1,4 @@
 02-config.patch
 openssl-EAGAIN.patch
 no-_XOPEN_SOURCE-undefine.patch
+declspec.patch

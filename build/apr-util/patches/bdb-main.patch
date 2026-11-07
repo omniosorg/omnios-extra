@@ -1,0 +1,159 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/build/dbm.m4 a/build/dbm.m4
+--- a~/build/dbm.m4	1970-01-01 00:00:00
++++ a/build/dbm.m4	1970-01-01 00:00:00
+@@ -235,7 +235,7 @@ AC_DEFUN([APU_TRY_BERKELEY_DB],
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+diff -wpruN --no-dereference '--exclude=*.orig' a~/configure a/configure
+--- a~/configure	1970-01-01 00:00:00
++++ a/configure	1970-01-01 00:00:00
+@@ -13004,7 +13004,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -13409,7 +13409,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -13810,7 +13810,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -14211,7 +14211,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -14612,7 +14612,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -15027,7 +15027,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -15431,7 +15431,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -15835,7 +15835,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -16239,7 +16239,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -16647,7 +16647,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -17058,7 +17058,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -17478,7 +17478,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -17883,7 +17883,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -18284,7 +18284,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -18685,7 +18685,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 
+@@ -19086,7 +19086,7 @@ else $as_nop
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <$apu_try_berkeley_db_header>
+-main ()
++int main ()
+ {
+   int major, minor, patch;
+ 

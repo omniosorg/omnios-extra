@@ -24,8 +24,6 @@ DESC="A popular general-purpose scripting language"
 
 PANDAHASH=01eaaa9
 
-# panda does not yet build with gcc 14
-((GCCVER > 13)) && set_gccver 13
 
 set_arch 64
 set_standard XPG6
@@ -95,7 +93,7 @@ CONFIGURE_CMD=/bin/true \
     MAKE_TARGET=gso \
     MAKE_ARGS="SSLLIB=/usr/lib/64 SSLTYPE=unix" \
     MAKE_ARGS_WS="
-        EXTRACFLAGS=\"-I$OPENSSLPATH/include/openssl $CFLAGS ${CFLAGS[amd64]}\"
+        EXTRACFLAGS=\"-I$OPENSSLPATH/include/openssl -std=gnu17 $CFLAGS ${CFLAGS[amd64]}\"
     " \
     build_dependency uw-imap panda-imap-master uw-imap panda-imap $PANDAHASH
 

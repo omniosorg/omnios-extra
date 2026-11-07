@@ -1,3 +1,5 @@
 ldap.patch
 openssl.patch
 no_export-dynamic.patch
+objc-runtime.patch
+tools.patch

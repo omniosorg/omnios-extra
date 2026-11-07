@@ -1,0 +1,50 @@
+The test for the GNU runtime misspells __GNU_LIBOBJC__ and so doesn't use the
+modern API.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/aclocal.m4 a/aclocal.m4
+--- a~/aclocal.m4	1970-01-01 00:00:00
++++ a/aclocal.m4	1970-01-01 00:00:00
+@@ -75,7 +75,7 @@ AC_DEFUN([OD_OBJC_RUNTIME],[
+ 						#include <objc/Object.h>
+ 					], [
+ 						Object *obj = @<:@Object alloc@:>@;
+-						puts(@<:@obj name@:>@);
++						(void)@<:@obj name@:>@;
+ 					])
+ 				], [
+ 					# Linked without -pthread
+@@ -96,7 +96,7 @@ AC_DEFUN([OD_OBJC_RUNTIME],[
+ 							#include <objc/Object.h>
+ 						], [
+ 							Object *obj = @<:@Object alloc@:>@;
+-							puts(@<:@obj name@:>@);
++							(void)@<:@obj name@:>@;
+ 						])
+ 					], [
+ 						# Linked with -lpthread 
+@@ -134,7 +134,7 @@ AC_DEFUN([OD_OBJC_RUNTIME],[
+ 						], [
+ 							id class = objc_lookUpClass("Object");
+ 							id obj = @<:@class alloc@:>@;
+-							puts(@<:@obj name@:>@);
++							(void)@<:@obj name@:>@;
+ 						])
+ 					], [
+ 						od_cv_objc_runtime_apple="yes"
+@@ -163,13 +163,13 @@ AC_DEFUN([OD_OBJC_RUNTIME],[
+ 							#include <objc/objc-api.h>
+ 							#endif
+ 						], [
+-							#ifdef __GNU_LIBOBJC_
++							#ifdef __GNU_LIBOBJC__
+ 							Class class = objc_lookUpClass("Object");
+-							puts(class_getName(class));_
++							(void)class_getName(class);
+ 							#else
+ 							id class = objc_lookup_class("Object");
+ 							id obj = @<:@class alloc@:>@;
+-							puts(@<:@obj name@:>@);
++							(void)@<:@obj name@:>@;
+ 							#endif
+ 						])
+ 					], [
