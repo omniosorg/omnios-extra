@@ -392,7 +392,8 @@ case $RELVER in
     15105[3-4])         DEFAULT_CLANG_VER=19 ;;
     15105[5-6])         DEFAULT_CLANG_VER=20 ;;
     15105[7-8])         DEFAULT_CLANG_VER=21 ;;
-    151059|15106*)      DEFAULT_CLANG_VER=22 ;;
+    151059|151060)      DEFAULT_CLANG_VER=22 ;;
+    15106[1-9])         DEFAULT_CLANG_VER=23 ;;
     *) logerr "Unknown release '$RELVER', can't select clang version." ;;
 esac
 

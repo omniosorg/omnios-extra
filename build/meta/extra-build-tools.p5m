@@ -150,3 +150,7 @@ depend fmri=library/libevent type=conditional \
 depend fmri=ooce/developer/llvm-23 type=conditional \
     predicate=release/name@0.5.11-151059
 
+# clang 23 is the default clang compiler from r151061 onwards
+depend fmri=ooce/developer/clang-23 type=conditional \
+    predicate=release/name@0.5.11-151061
+
