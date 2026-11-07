@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=fish
-VER=4.9.2
+VER=4.9.3
 PKG=ooce/shell/fish
 SUMMARY=$PROG
 DESC="$PROG - Friendly Interactive SHell"
