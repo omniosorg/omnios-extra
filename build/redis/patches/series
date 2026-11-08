@@ -1,0 +1,4 @@
+use_bash.patch
+gcc14.patch
+destdir.patch
+redis.conf.patch

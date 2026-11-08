@@ -22,7 +22,7 @@ dir group=$(PROG) mode=0755 owner=$(PROG) path=$(PREFIX)/client/plugins
 
 group groupname=$(PROG) gid=85
 user ftpuser=false username=$(PROG) uid=85 group=$(PROG) \
-    gcos-field="Mattermost User" home-dir=$(PREFIX) password=NP
+    gcos-field="Mattermost User" home-dir=/$(PREFIX) password=NP
 
 link path=$(PREFIX)/logs target=../../../var/log/$(PREFIX)
 link path=$(PREFIX)/data target=../../../var/$(PREFIX)/data

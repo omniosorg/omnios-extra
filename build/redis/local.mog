@@ -1,0 +1,31 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
+
+license LICENSE.txt license=AGPLv3
+
+dir group=bin mode=0755 owner=root path=var/$(PREFIX)
+dir group=$(PROG) mode=0700 owner=$(PROG) path=var/$(PREFIX)/db
+dir group=$(PROG) mode=0700 owner=$(PROG) path=var/log/$(PREFIX)
+dir group=$(PROG) mode=0755 owner=$(PROG) path=etc/$(PREFIX)
+
+group groupname=$(PROG) gid=64
+user ftpuser=false username=$(PROG) uid=64 group=$(PROG) \
+    gcos-field="Redis User" home-dir=/var/$(PREFIX) password=NP
+
+file ./tmp/src/$(PROG).conf \
+    path=etc/$(PREFIX)/$(PROG).conf \
+    owner=$(PROG) group=$(PROG) mode=0644
+
+<transform file path=etc/$(PREFIX) -> set preserve renamenew>
+
+<include binlink.mog>
+

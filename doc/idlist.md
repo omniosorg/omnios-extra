@@ -33,6 +33,7 @@
 | extra		| 56	| dnsmasq
 | extra		| 57	| dnscrypt
 | illumos	| 60	| xvm
+| extra		| 64	| redis
 | extra		| 66	| vaultwarden
 | extra		| 67	| znc
 | extra		| 68	| clamav
@@ -101,6 +102,7 @@
 | extra		| 56	| dnsmasq
 | extra		| 57	| dnscrypt
 | illumos	| 60	| xvm
+| extra		| 64	| redis
 | illumos	| 65	| netadm
 | extra		| 66	| vaultwarden
 | extra		| 67	| znc
