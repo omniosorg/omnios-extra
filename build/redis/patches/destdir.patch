@@ -1,0 +1,12 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/Makefile a/src/Makefile
+--- a~/src/Makefile	1970-01-01 00:00:00
++++ a/src/Makefile	1970-01-01 00:00:00
+@@ -70,7 +70,7 @@ else
+ endif
+ 
+ PREFIX?=/usr/local
+-INSTALL_BIN=$(PREFIX)/bin
++INSTALL_BIN=$(DESTDIR)$(PREFIX)/bin
+ INSTALL=install
+ PKG_CONFIG?=pkg-config
+ 

@@ -1,0 +1,22 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tests/modules/eventloop.c a/tests/modules/eventloop.c
+--- a~/tests/modules/eventloop.c	1970-01-01 00:00:00
++++ a/tests/modules/eventloop.c	1970-01-01 00:00:00
+@@ -17,6 +17,7 @@
+ #include <fcntl.h>
+ #include <memory.h>
+ #include <errno.h>
++#include <string.h>
+ 
+ int fds[2];
+ long long buf_size;
+diff -wpruN --no-dereference '--exclude=*.orig' a~/tests/modules/rdbloadsave.c a/tests/modules/rdbloadsave.c
+--- a~/tests/modules/rdbloadsave.c	1970-01-01 00:00:00
++++ a/tests/modules/rdbloadsave.c	1970-01-01 00:00:00
+@@ -5,6 +5,7 @@
+ #include <fcntl.h>
+ #include <memory.h>
+ #include <errno.h>
++#include <string.h>
+ 
+ /* Sanity tests to verify inputs and return values. */
+ int sanity(RedisModuleCtx *ctx, RedisModuleString **argv, int argc) {

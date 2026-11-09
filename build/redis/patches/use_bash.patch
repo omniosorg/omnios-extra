@@ -1,0 +1,9 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/scripts/build.sh a/scripts/build.sh
+--- a~/scripts/build.sh	1970-01-01 00:00:00
++++ a/scripts/build.sh	1970-01-01 00:00:00
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # build.sh — build Redis (src/) + selected modules.
+ #
+ # Usage:  scripts/build.sh [<name> ...|all|.|'*'|redis|core|none]
