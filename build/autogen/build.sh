@@ -24,9 +24,6 @@ DESC="$SUMMARY"
 
 BUILD_DEPENDS_IPS="ooce/library/guile"
 
-# does not yet build with gcc 16
-((GCCVER > 15)) && set_gccver 15
-
 set_arch 64
 
 # The build framework expects tools like `mktemp` to support GNU
