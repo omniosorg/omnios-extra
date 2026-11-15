@@ -21,12 +21,16 @@ extra.omnios ooce/application/nagios-nsca
 extra.omnios ooce/application/nagios-plugins
 extra.omnios ooce/application/navidrome
 extra.omnios ooce/application/php-82
+extra.omnios ooce/application/php-82/apcu
 extra.omnios ooce/application/php-82/imagick
 extra.omnios ooce/application/php-83
+extra.omnios ooce/application/php-83/apcu
 extra.omnios ooce/application/php-83/imagick
 extra.omnios ooce/application/php-84
+extra.omnios ooce/application/php-84/apcu
 extra.omnios ooce/application/php-84/imagick
 extra.omnios ooce/application/php-85
+extra.omnios ooce/application/php-85/apcu
 extra.omnios ooce/application/php-85/imagick
 extra.omnios ooce/application/php-common
 extra.omnios ooce/application/rustdesk-server
