@@ -26,6 +26,9 @@ DESC+="threading bugs, and profile your programs in detail."
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
+# does not yet build with gcc 16
+((GCCVER > 15)) && set_gccver 15
+
 set_arch 64
 set_ssp none
 CTF_FLAGS+=" -s"
