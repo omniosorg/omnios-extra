@@ -53,6 +53,7 @@ BUILD_DEPENDS_IPS="
     ooce/database/bdb
     ooce/database/lmdb
     ooce/library/icu4c
+    ooce/library/libsodium
     ooce/library/libzip
     ooce/library/onig
 "
@@ -138,6 +139,8 @@ CONFIGURE_OPTS[amd64]="
     --with-freetype
     --enable-sockets
     --enable-bcmath
+    --with-sodium
+    --enable-sysvsem
     --enable-exif
     --with-zip
     --with-imap=$DEPROOT
@@ -163,6 +166,7 @@ post_configure() {
         HAVE_CURL HAVE_IMAP HAVE_LDAP \
         HAVE_GD_FREETYPE HAVE_GD_JPG HAVE_GD_PNG HAVE_GD_WEBP HAVE_GD_AVIF \
         PDO_USE_MYSQLND HAVE_PDO_PGSQL HAVE_PGSQL \
+        HAVE_LIBSODIUMLIB HAVE_SYSVSEM \
     ; do
         $EGREP -s "define $tok 1" $TMPDIR/$BUILDDIR/main/php_config.h \
             || logerr "Feature $tok is not enabled"
