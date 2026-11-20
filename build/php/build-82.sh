@@ -112,6 +112,7 @@ CONFIGURE_OPTS[amd64]="
     --sysconfdir=$CONFPATH
     --localstatedir=$VARPATH
     --with-config-file-path=$CONFPATH
+    --with-config-file-scan-dir=$CONFPATH/conf.d
 
     --disable-libgcc
     --with-iconv
@@ -179,6 +180,7 @@ make_install() {
         logerr "--- Make install failed"
 
     pushd $DESTDIR/$CONFPATH >/dev/null
+    logcmd mkdir -p conf.d || logerr "--- Failed to create conf.d"
 
     # Enable PID file by default
     sed < php-fpm.conf.default > php-fpm.conf "
