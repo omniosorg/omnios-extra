@@ -44,6 +44,7 @@
 | ooce/database/mariadb-1011	| 10.11.19	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-114	| 11.4.13	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/mariadb-123	| 12.3.3	| https://downloads.mariadb.org/mariadb/+releases/ | [omniosorg](https://github.com/omniosorg)
+| ooce/database/pgbackrest | 2.60.0	| https://github.com/pgbackrest/pgbackrest/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-14	| 14.24		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-15	| 15.19		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/database/postgresql-16	| 16.15		| https://www.postgresql.org/ftp/source/ | [omniosorg](https://github.com/omniosorg)
