@@ -13,12 +13,12 @@
 # }}}
 
 # Copyright 2023 Carsten Grzemba
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=mod_wsgi
-VER=5.0.2
+VER=6.1.1
 # Hard-coded here for now. If we ship more than one apache version, this will
 # need restructuring.
 PKG=ooce/server/apache-24/modules/wsgi
@@ -32,7 +32,7 @@ sAPACHEVER=${APACHEVER//./}
 RUN_DEPENDS_IPS+=" ooce/server/apache-$sAPACHEVER"
 
 set_arch 64
-test_relver '>=' 151051 && set_clangver
+set_clangver
 
 OPREFIX=$PREFIX
 PREFIX+="/apache-$APACHEVER"
