@@ -413,7 +413,7 @@ case $RELVER in
     15104[5-8])         PYTHON3VER=3.11 ;;
     151049|15105[0-2])  PYTHON3VER=3.12 ;;
     15105[3-9]|151060)  PYTHON3VER=3.13 ;;
-    15106[1-9])         PYTHON3VER=3.13 ;;
+    15106[1-9])         PYTHON3VER=3.15 ;;
     *) logerr "Unknown release '$RELVER', can't select python version." ;;
 esac
 # Specify default Python version for building packages
