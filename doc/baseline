@@ -3,6 +3,7 @@ extra.omnios ooce/application/alpine
 extra.omnios ooce/application/anubis
 extra.omnios ooce/application/fcgiwrap
 extra.omnios ooce/application/gitea
+extra.omnios ooce/application/gitea-runner
 extra.omnios ooce/application/gnuplot
 extra.omnios ooce/application/graphviz
 extra.omnios ooce/application/imagemagick
