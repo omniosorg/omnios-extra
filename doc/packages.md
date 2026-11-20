@@ -107,7 +107,7 @@
 | ooce/file/tree		| 2.3.2		| https://gitlab.com/api/v4/projects/OldManProgrammer%2Funix-tree/repository/tags/ https://gitlab.com/OldManProgrammer/unix-tree | [omniosorg](https://github.com/omniosorg)
 | ooce/fonts/liberation		| 2.1.5		| https://github.com/liberationfonts/liberation-fonts/releases | [omniosorg](https://github.com/omniosorg)
 | ooce/library/apr		| 1.7.6 	| https://downloads.apache.org/apr/ | [omniosorg](https://github.com/omniosorg)
-| ooce/library/apr-util		| 1.6.3		| https://downloads.apache.org/apr/ | [omniosorg](https://github.com/omniosorg)
+| ooce/library/apr-util		| 1.6.6		| https://downloads.apache.org/apr/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/bdw-gc		| 8.2.8		| https://www.hboehm.info/gc/gc_source/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/cairo		| 1.18.4	| https://cairographics.org/releases/ | [omniosorg](https://github.com/omniosorg)
 | ooce/library/fcgi2		| 2.4.7		| https://github.com/FastCGI-Archives/fcgi2/releases | [omniosorg](https://github.com/omniosorg)
