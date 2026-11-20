@@ -1,3 +1,2 @@
 configure.patch
 memset_s.patch
-bdb-main.patch

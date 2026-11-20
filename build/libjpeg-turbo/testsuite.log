@@ -663,6 +663,6 @@
         Start 332: example-12bit-shared-decompress-cmp
 332/332 Test #332: example-12bit-shared-decompress-cmp .................   Passed
 
-100% tests passed, 0 tests failed out of 332
+100% tests passed out of 332
 
 Total Test time (real) =
