@@ -3,8 +3,8 @@
 3/7 headers - dav1d:dav1d.h_test   OK
 4/7 headers - dav1d:headers.h_test OK
 5/7 headers - dav1d:picture.h_test OK
-6/7 headers - dav1d:version.h_test OK
-7/7 checkasm - dav1d:checkasm      OK
+6/7 checkasm - dav1d:checkasm      OK
+7/7 headers - dav1d:version.h_test OK
 
 Ok:                7   
 Fail:              0   
