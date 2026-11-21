@@ -294,6 +294,7 @@ CTFCFLAGS[12]="-gdwarf-2"
 CTFCFLAGS[13]="-gdwarf-2"
 CTFCFLAGS[14]="-gdwarf-4"
 CTFCFLAGS[15]="-gdwarf-4"
+CTFCFLAGS[16]="-gdwarf-4"
 GENOFFSETS_CFLAGS="
     ${CTFCFLAGS[_]}
     -_gcc=-fno-eliminate-unused-debug-symbols
@@ -378,7 +379,8 @@ case $RELVER in
     15104[3-6])         DEFAULT_GCC_VER=12; ILLUMOS_GCC_VER=10 ;;
     15104[7-9]|151050)  DEFAULT_GCC_VER=13; ILLUMOS_GCC_VER=10 ;;
     15105[1-8])         DEFAULT_GCC_VER=14; ILLUMOS_GCC_VER=10 ;;
-    151059|15106*)      DEFAULT_GCC_VER=15; ILLUMOS_GCC_VER=10 ;;
+    151059|151060)      DEFAULT_GCC_VER=15; ILLUMOS_GCC_VER=10 ;;
+    15106[1-9])         DEFAULT_GCC_VER=16; ILLUMOS_GCC_VER=10 ;;
     *) logerr "Unknown release '$RELVER', can't select gcc version." ;;
 esac
 
@@ -410,7 +412,8 @@ case $RELVER in
     15104[1-4])         PYTHON3VER=3.10 ;;
     15104[5-8])         PYTHON3VER=3.11 ;;
     151049|15105[0-2])  PYTHON3VER=3.12 ;;
-    15105[3-9]|15106*)  PYTHON3VER=3.13 ;;
+    15105[3-9]|151060)  PYTHON3VER=3.13 ;;
+    15106[1-9])         PYTHON3VER=3.15 ;;
     *) logerr "Unknown release '$RELVER', can't select python version." ;;
 esac
 # Specify default Python version for building packages
@@ -453,6 +456,7 @@ FCFLAGS[12]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[13]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[14]+=" -fno-aggressive-loop-optimizations"
 FCFLAGS[15]+=" -fno-aggressive-loop-optimizations"
+FCFLAGS[16]+=" -fno-aggressive-loop-optimizations"
 
 # Flags to enable particular standards; see standards(7)
 typeset -A STANDARDS

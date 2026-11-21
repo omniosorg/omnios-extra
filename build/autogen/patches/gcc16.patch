@@ -1,0 +1,20 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/autoopts/usage.c a/autoopts/usage.c
+--- a~/autoopts/usage.c	1970-01-01 00:00:00
++++ a/autoopts/usage.c	1970-01-01 00:00:00
+@@ -1150,7 +1150,6 @@ prt_prog_detail(tOptions * opts)
+      */
+     if (displayEnum) {
+         int        ct     = opts->optCt;
+-        int        optNo  = 0;
+         tOptDesc * od     = opts->pOptDesc;
+ 
+         fputc(NL, option_usage_fp);
+@@ -1161,7 +1160,7 @@ prt_prog_detail(tOptions * opts)
+             case OPARG_TYPE_MEMBERSHIP:
+                 (*(od->pOptProc))(OPTPROC_EMIT_USAGE, od);
+             }
+-        } while (od++, optNo++, (--ct > 0));
++        } while (od++, (--ct > 0));
+     }
+ 
+     /*

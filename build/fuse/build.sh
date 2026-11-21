@@ -12,12 +12,12 @@
 # http://www.illumos.org/license/CDDL.
 # }}}
 
-# Copyright 2025 OmniOS Community Edition (OmniOSce) Association.
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
 
 . ../../lib/build.sh
 
 PROG=fuse
-VER=1.6
+VER=1.7
 PKG=ooce/driver/fuse
 SUMMARY="$PROG"
 DESC="fuse kernel module for illumos"

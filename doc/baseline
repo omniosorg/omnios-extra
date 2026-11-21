@@ -55,7 +55,6 @@ extra.omnios ooce/compress/zstd r
 extra.omnios ooce/database/bdb
 extra.omnios ooce/database/lmdb
 extra.omnios ooce/database/mariadb-1011
-extra.omnios ooce/database/mariadb-106
 extra.omnios ooce/database/mariadb-114
 extra.omnios ooce/database/mariadb-123
 extra.omnios ooce/database/mariadb-common
@@ -185,7 +184,6 @@ extra.omnios ooce/library/libvorbis
 extra.omnios ooce/library/libwebp
 extra.omnios ooce/library/libzip
 extra.omnios ooce/library/mariadb-1011
-extra.omnios ooce/library/mariadb-106
 extra.omnios ooce/library/mariadb-114
 extra.omnios ooce/library/mariadb-123
 extra.omnios ooce/library/nettle
@@ -217,7 +215,6 @@ extra.omnios ooce/multimedia/minidlna
 extra.omnios ooce/multimedia/rav1e
 extra.omnios ooce/multimedia/x264
 extra.omnios ooce/multimedia/x265
-extra.omnios ooce/network/bind-918
 extra.omnios ooce/network/bind-920
 extra.omnios ooce/network/bind-common
 extra.omnios ooce/network/bwm-ng
@@ -255,7 +252,6 @@ extra.omnios ooce/runtime/node-22
 extra.omnios ooce/runtime/node-24
 extra.omnios ooce/runtime/node-26
 extra.omnios ooce/runtime/ruby-30
-extra.omnios ooce/runtime/ruby-32
 extra.omnios ooce/runtime/ruby-33
 extra.omnios ooce/runtime/ruby-34
 extra.omnios ooce/runtime/ruby-40

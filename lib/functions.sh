@@ -2759,9 +2759,19 @@ configure_arch() {
     typeset PCPATH=
     addpath PCPATH ${PKG_CONFIG_PATH[0]}
     addpath PCPATH ${PKG_CONFIG_PATH[$arch]}
-    CFLAGS="${CFLAGS[0]} ${CFLAGS[$arch]}" \
-        CXXFLAGS="${CXXFLAGS[0]} ${CXXFLAGS[$arch]}" \
-        CPPFLAGS="${CPPFLAGS[0]} ${CPPFLAGS[$arch]}" \
+    typeset cflags="${CFLAGS[0]} ${CFLAGS[$arch]}"
+    typeset cxxflags="${CXXFLAGS[0]} ${CXXFLAGS[$arch]}"
+    typeset cppflags="${CPPFLAGS[0]} ${CPPFLAGS[$arch]}"
+    # cmake does not honour CPPFLAGS, so the preprocessor flags (including
+    # the default -D_REENTRANT) must be passed via the compiler flags
+    # instead.
+    if [[ $CONFIGURE_CMD == $CMAKE* ]]; then
+        cflags+=" $cppflags"
+        cxxflags+=" $cppflags"
+    fi
+    CFLAGS="$cflags" \
+        CXXFLAGS="$cxxflags" \
+        CPPFLAGS="$cppflags" \
         LDFLAGS="${LDFLAGS[0]} ${LDFLAGS[$arch]}" \
         PKG_CONFIG_PATH="$PCPATH" \
         CC="$CC" CXX="$CXX" \
