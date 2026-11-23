@@ -1,0 +1,25 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
+
+license LICENSE license=MIT
+
+dir path=var/$(PREFIX) owner=$(USER) group=$(GROUP) mode=0700
+
+group groupname=$(GROUP) gid=61
+user ftpuser=false username=$(USER) uid=61 group=$(GROUP) \
+    gcos-field="Gitea Actions runner" \
+    home-dir=/var/$(PREFIX) password=NP
+
+<transform file path=etc/$(PREFIX)/config.yaml -> set group $(GROUP)>
+<transform file path=etc/$(PREFIX)/config.yaml -> set mode 0640>
+<transform file path=etc/$(PREFIX)/config.yaml -> set preserve renamenew>
+

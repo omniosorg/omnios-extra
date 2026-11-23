@@ -1,0 +1,21 @@
+--------------------------
+Gitea runner Configuration
+--------------------------
+
+The runner must be registered with a Gitea instance before its service is
+enabled. Get a registration token from the instance (site, organisation or
+repository settings, Actions, Runners), then register as the service user from
+its home directory, where the registration is stored:
+
+```
+su gitea-runner -c 'cd /var/<prefix>/gitea-runner && \
+    <prefix>/gitea-runner/bin/gitea-runner register \
+    --config /etc/<prefix>/gitea-runner/config.yaml \
+    --instance https://gitea.example.com --token-file <file> \
+    --name <name> --labels <label>:host --no-interactive'
+svcadm enable ooce/application/gitea-runner
+```
+
+There is no container runtime on illumos: use labels of the form
+`<label>:host`, so that jobs run directly on the host as the `gitea-runner`
+user. The default labels refer to Docker images and cannot be served.
