@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=rat-commander
-VER=1.9.9
+VER=1.9.10
 PKG=ooce/application/rat-commander
 SUMMARY="A modern, dual pane file manager"
 DESC="A spiritual successor to Midnight-Commander with modern features like "
