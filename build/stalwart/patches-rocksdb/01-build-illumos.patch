@@ -1,0 +1,32 @@
+Compile RocksDB with its OS_SOLARIS port on illumos and link libstdc++.
+The OS_SOLARIS perf_context code does not compile (removed upstream in
+facebook/rocksdb#15449), so build with NPERF_CONTEXT.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/librocksdb-sys/build.rs a/librocksdb-sys/build.rs
+--- a~/librocksdb-sys/build.rs	1970-01-01 00:00:00
++++ a/librocksdb-sys/build.rs	1970-01-01 00:00:00
+@@ -283,6 +283,12 @@ fn build_rocksdb() {
+         config.define("OS_OPENBSD", None);
+         config.define("ROCKSDB_PLATFORM_POSIX", None);
+         config.define("ROCKSDB_LIB_IO_POSIX", None);
++    } else if target.contains("illumos") || target.contains("solaris") {
++        config.define("OS_SOLARIS", None);
++        config.define("ROCKSDB_PLATFORM_POSIX", None);
++        config.define("ROCKSDB_LIB_IO_POSIX", None);
++        // The OS_SOLARIS variant of perf_context does not compile
++        config.define("NPERF_CONTEXT", None);
+     } else if target.contains("windows") {
+         link("rpcrt4", false);
+         link("shlwapi", false);
+@@ -491,7 +497,10 @@ fn cpp_link_stdlib(target: &str) {
+         println!("cargo:rustc-link-lib=dylib={stdlib}");
+     } else if target.contains("apple") || target.contains("freebsd") || target.contains("openbsd") {
+         println!("cargo:rustc-link-lib=dylib=c++");
+-    } else if target.contains("linux") {
++    } else if target.contains("linux")
++        || target.contains("illumos")
++        || target.contains("solaris")
++    {
+         println!("cargo:rustc-link-lib=dylib=stdc++");
+     } else if target.contains("aix") {
+         println!("cargo:rustc-link-lib=dylib=c++");

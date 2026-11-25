@@ -1,0 +1,32 @@
+Use the system allocator on illumos.
+tikv-jemalloc-sys passes the Rust triple x86_64-unknown-illumos to jemalloc's
+configure, whose config.sub does not recognise 'illumos'.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/crates/main/Cargo.toml a/crates/main/Cargo.toml
+--- a~/crates/main/Cargo.toml	1970-01-01 00:00:00
++++ a/crates/main/Cargo.toml	1970-01-01 00:00:00
+@@ -43,7 +43,7 @@ rustls = { version = "0.23.46", default-
+ [target.'cfg(all(target_arch = "x86_64", any(target_os = "linux", target_os = "freebsd")))'.dependencies]
+ libc = "0.2.191"
+ 
+-[target.'cfg(not(any(target_env = "msvc", target_os = "freebsd")))'.dependencies]
++[target.'cfg(not(any(target_env = "msvc", target_os = "freebsd", target_os = "illumos")))'.dependencies]
+ tikv-jemallocator = "0.7"
+ 
+ [target.'cfg(all(target_os = "linux", target_env = "gnu"))'.dependencies]
+diff -wpruN --no-dereference '--exclude=*.orig' a~/crates/main/src/main.rs a/crates/main/src/main.rs
+--- a~/crates/main/src/main.rs	1970-01-01 00:00:00
++++ a/crates/main/src/main.rs	1970-01-01 00:00:00
+@@ -34,10 +34,10 @@ mod cpu;
+ #[cfg(feature = "dev_mode")]
+ pub mod test_data;
+ 
+-#[cfg(not(any(target_env = "msvc", target_os = "freebsd")))]
++#[cfg(not(any(target_env = "msvc", target_os = "freebsd", target_os = "illumos")))]
+ use tikv_jemallocator::Jemalloc;
+ 
+-#[cfg(not(any(target_env = "msvc", target_os = "freebsd")))]
++#[cfg(not(any(target_env = "msvc", target_os = "freebsd", target_os = "illumos")))]
+ #[global_allocator]
+ static GLOBAL: Jemalloc = Jemalloc;
+ 

@@ -1,0 +1,36 @@
+GCC on Solaris/illumos defines __STDC_VERSION__ in C++ mode, so these
+headers pick the C-only 'restrict' and '_Static_assert'.
+xxhash.h: check for C++11 first, as upstream xxHash does.
+xxph3.h: reuse the Solaris guard that xxhash.h has for XXH_RESTRICT.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/librocksdb-sys/rocksdb/util/xxhash.h a/librocksdb-sys/rocksdb/util/xxhash.h
+--- a~/librocksdb-sys/rocksdb/util/xxhash.h	1970-01-01 00:00:00
++++ a/librocksdb-sys/rocksdb/util/xxhash.h	1970-01-01 00:00:00
+@@ -1846,10 +1846,10 @@ static void* XXH_memcpy(void* dest, cons
+ 
+ /* note: use after variable declarations */
+ #ifndef XXH_STATIC_ASSERT
+-#  if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L)    /* C11 */
+-#    define XXH_STATIC_ASSERT_WITH_MESSAGE(c,m) do { _Static_assert((c),m); } while(0)
+-#  elif defined(__cplusplus) && (__cplusplus >= 201103L)            /* C++11 */
++#  if defined(__cplusplus) && (__cplusplus >= 201103L)            /* C++11 */
+ #    define XXH_STATIC_ASSERT_WITH_MESSAGE(c,m) do { static_assert((c),m); } while(0)
++#  elif defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L)    /* C11 */
++#    define XXH_STATIC_ASSERT_WITH_MESSAGE(c,m) do { _Static_assert((c),m); } while(0)
+ #  else
+ #    define XXH_STATIC_ASSERT_WITH_MESSAGE(c,m) do { struct xxh_sa { char x[(c) ? 1 : -1]; }; } while(0)
+ #  endif
+diff -wpruN --no-dereference '--exclude=*.orig' a~/librocksdb-sys/rocksdb/util/xxph3.h a/librocksdb-sys/rocksdb/util/xxph3.h
+--- a~/librocksdb-sys/rocksdb/util/xxph3.h	1970-01-01 00:00:00
++++ a/librocksdb-sys/rocksdb/util/xxph3.h	1970-01-01 00:00:00
+@@ -702,7 +702,9 @@ static const xxh_u64 PRIME64_5 = 0x27D4E
+ 
+ /* ===   Compiler specifics   === */
+ 
+-#if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L   /* >= C99 */
++#if ((defined(sun) || defined(__sun)) && __cplusplus) /* Solaris includes __STDC_VERSION__ with C++ */
++#  define XXPH_RESTRICT   /* disable */
++#elif defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L   /* >= C99 */
+ #  define XXPH_RESTRICT   restrict
+ #else
+ /* note : it might be useful to define __restrict or __restrict__ for some C++ compilers */

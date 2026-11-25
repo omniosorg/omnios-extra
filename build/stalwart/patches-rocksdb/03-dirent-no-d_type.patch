@@ -1,0 +1,25 @@
+struct dirent has no d_type member on illumos; use fstatat() instead.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/librocksdb-sys/rocksdb/env/fs_posix.cc a/librocksdb-sys/rocksdb/env/fs_posix.cc
+--- a~/librocksdb-sys/rocksdb/env/fs_posix.cc	1970-01-01 00:00:00
++++ a/librocksdb-sys/rocksdb/env/fs_posix.cc	1970-01-01 00:00:00
+@@ -703,8 +703,18 @@ class PosixFileSystem : public FileSyste
+     while ((entry = readdir(d)) != nullptr) {
+       // filter out '.' and '..' directory entries
+       // which appear only on some platforms
++#if defined(OS_SOLARIS)
++      // struct dirent has no d_type on Solaris/illumos
++      struct stat entry_stat;
++      const bool is_dir =
++          fstatat(dirfd(d), entry->d_name, &entry_stat, AT_SYMLINK_NOFOLLOW) ==
++              0 &&
++          S_ISDIR(entry_stat.st_mode);
++#else
++      const bool is_dir = entry->d_type == DT_DIR;
++#endif
+       const bool ignore =
+-          entry->d_type == DT_DIR &&
++          is_dir &&
+           (strcmp(entry->d_name, ".") == 0 ||
+            strcmp(entry->d_name, "..") == 0
+ #ifndef ASSERT_STATUS_CHECKED
