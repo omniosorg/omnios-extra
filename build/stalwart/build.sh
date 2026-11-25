@@ -65,15 +65,6 @@ post_install() {
 
     _destdir=$DESTDIR
     cross_arch $arch && _destdir+=.$arch
-
-    logmsg "-- installing environment file template"
-    logcmd $MKDIR -p $_destdir/etc$BASEDIR || logerr "mkdir failed"
-    logcmd $CP $SRCDIR/files/$PROG.env $_destdir/etc$BASEDIR/$PROG.env \
-        || logerr "copying environment file failed"
-
-    xform files/$PROG.xml > $TMPDIR/$PROG.xml
-    xform files/svc-$PROG > $TMPDIR/svc-$PROG
-    DESTDIR=$_destdir install_smf -oocemethod ooce $PROG.xml svc-$PROG
 }
 
 init

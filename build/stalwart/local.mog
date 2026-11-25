@@ -23,16 +23,4 @@ user ftpuser=false username=$(USER) uid=58 group=$(GROUP) \
 
 dir path=var/$(BASEDIR) owner=$(USER) group=$(GROUP) mode=0750
 
-<transform file path=etc/$(BASEDIR)/$(PROG)\.env$ -> \
-    set owner root>
-<transform file path=etc/$(BASEDIR)/$(PROG)\.env$ -> \
-    set group $(GROUP)>
-<transform file path=etc/$(BASEDIR)/$(PROG)\.env$ -> \
-    set mode 0640>
-<transform file path=etc/$(BASEDIR)/$(PROG)\.env$ -> \
-    set preserve true>
-
-<transform file path=$(PREFIX)/bin/$(PROG)$ -> \
-    set restart_fmri svc:/network/$(PROG):default>
-
 license LICENSES/AGPL-3.0-only.txt license=AGPLv3
