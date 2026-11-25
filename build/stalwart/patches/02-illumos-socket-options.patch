@@ -1,0 +1,23 @@
+tokio does not provide TcpSocket::set_reuseport() or set_tos_v4() on
+illumos/Solaris.
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/crates/common/src/config/server/listener.rs a/crates/common/src/config/server/listener.rs
+--- a~/crates/common/src/config/server/listener.rs	1970-01-01 00:00:00
++++ a/crates/common/src/config/server/listener.rs	1970-01-01 00:00:00
+@@ -189,7 +189,7 @@ impl Listeners {
+                 return;
+             }
+ 
+-            #[cfg(not(target_env = "msvc"))]
++            #[cfg(not(any(target_env = "msvc", target_os = "illumos", target_os = "solaris")))]
+             if let Err(err) = socket.set_reuseport(listener.socket_reuse_port) {
+                 bp.build_error(id, format!("Failed to set SO_REUSEPORT: {err}"));
+                 return;
+@@ -209,6 +209,7 @@ impl Listeners {
+                 return;
+             }
+ 
++            #[cfg(not(any(target_os = "illumos", target_os = "solaris")))]
+             if let Some(tos) = listener.socket_tos_v4
+                 && let Err(err) = socket.set_tos_v4(tos as u32)
+             {

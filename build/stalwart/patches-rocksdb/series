@@ -1,0 +1,3 @@
+01-build-illumos.patch
+02-xxhash-cxx-on-solaris.patch
+03-dirent-no-d_type.patch

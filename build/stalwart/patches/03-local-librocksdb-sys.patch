@@ -1,0 +1,12 @@
+Build against the locally patched copy of Stalwart's rust-rocksdb fork,
+cloned next to the Stalwart source by build.sh (see patches-rocksdb/).
+
+diff -wpruN --no-dereference '--exclude=*.orig' a~/Cargo.toml a/Cargo.toml
+--- a~/Cargo.toml	1970-01-01 00:00:00
++++ a/Cargo.toml	1970-01-01 00:00:00
+@@ -142,4 +142,4 @@ rpath = false
+ hickory-proto = { git = "https://github.com/stalwartlabs/hickory-dns", branch = "stalwart/0.26" }
+ hickory-net = { git = "https://github.com/stalwartlabs/hickory-dns", branch = "stalwart/0.26" }
+ hickory-resolver = { git = "https://github.com/stalwartlabs/hickory-dns", branch = "stalwart/0.26" }
+-librocksdb-sys = { git = "https://github.com/stalwartlabs/rust-rocksdb", branch = "stalwart/0.25" }
++librocksdb-sys = { path = "../rust-rocksdb/librocksdb-sys" }

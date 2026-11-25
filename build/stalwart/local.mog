@@ -1,0 +1,26 @@
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+
+# Copyright 2026 OmniOS Community Edition (OmniOSce) Association.
+
+group groupname=$(GROUP) gid=58
+user ftpuser=false username=$(USER) uid=58 group=$(GROUP) \
+    gcos-field="Stalwart mail server" \
+    home-dir=/var/$(BASEDIR) passwd=NP
+
+# Stalwart writes config.json here when the initial setup is completed in
+# the web UI.
+<transform dir path=etc/$(BASEDIR)$ -> set mode 0750>
+<transform dir path=etc/$(BASEDIR)$ -> set owner $(USER)>
+<transform dir path=etc/$(BASEDIR)$ -> set group $(GROUP)>
+
+dir path=var/$(BASEDIR) owner=$(USER) group=$(GROUP) mode=0750
+
+license LICENSES/AGPL-3.0-only.txt license=AGPLv3
