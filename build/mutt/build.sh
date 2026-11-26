@@ -22,9 +22,6 @@ PKG=ooce/application/mutt
 SUMMARY="$PROG email client"
 DESC="$PROG is a text-based email client"
 
-# does not yet build with OpenSSL 4
-set_opensslver 3
-
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
