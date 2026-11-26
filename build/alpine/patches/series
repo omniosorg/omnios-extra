@@ -3,3 +3,4 @@ uuid.patch
 autoreconf.patch
 scandir-types.patch
 qsort-type.patch
+openssl4.patch
