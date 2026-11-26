@@ -1,0 +1,21 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/osdep/unix/ssl_unix.c a/src/osdep/unix/ssl_unix.c
+--- a~/src/osdep/unix/ssl_unix.c	1970-01-01 00:00:00
++++ a/src/osdep/unix/ssl_unix.c	1970-01-01 00:00:00
+@@ -239,9 +239,15 @@ static char *ssl_start_work (SSLSTREAM *
+     (sslclientkey_t) mail_parameters (NIL,GET_SSLCLIENTKEY,NIL);
+   if (ssl_last_error) fs_give ((void **) &ssl_last_error);
+   ssl_last_host = host;
+-  if (!(stream->context = SSL_CTX_new ((flags & NET_TLSCLIENT) ?
++  if (!(stream->context = SSL_CTX_new (
++#if OPENSSL_VERSION_NUMBER >= 0x10100000
++				       TLS_client_method ()
++#else
++				       (flags & NET_TLSCLIENT) ?
+ 				       TLSv1_client_method () :
+-				       SSLv23_client_method ())))
++				       SSLv23_client_method ()
++#endif
++				       )))
+     return "SSL context failed";
+   SSL_CTX_set_options (stream->context,0);
+ 				/* disable certificate validation? */

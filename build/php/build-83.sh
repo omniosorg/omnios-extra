@@ -22,9 +22,6 @@ VER=8.3.37
 SUMMARY="PHP 8.3"
 DESC="A popular general-purpose scripting language"
 
-# does not yet build with OpenSSL 4
-set_opensslver 3
-
 PANDAHASH=01eaaa9
 
 
