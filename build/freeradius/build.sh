@@ -26,9 +26,6 @@ SUMMARY="FreeRADIUS $MAJVER"
 DESC="The open source implementation of RADIUS, an IETF protocol for AAA "
 DESC+="(Authorisation, Authentication, and Accounting)."
 
-# does not yet build with OpenSSL 4
-set_opensslver 3
-
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
