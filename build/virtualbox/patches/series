@@ -11,3 +11,4 @@ pam-illumos.patch
 tzfile.patch
 zero-sized-array.patch
 new-curl.patch
+openssl4.patch
