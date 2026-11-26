@@ -4,3 +4,4 @@ openssl3.patch
 no-_XOPEN_SOURCE-undefine.patch
 declspec.patch
 dsa-const.patch
+openssl4.patch
