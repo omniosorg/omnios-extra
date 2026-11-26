@@ -22,6 +22,9 @@ VER=2026.01
 SUMMARY="Das U-Boot"
 DESC="$SUMMARY: Universal Bootloader"
 
+# does not yet build with OpenSSL 4
+set_opensslver 3
+
 set_arch 64
 
 MAKE_TARGET="sandbox_defconfig tools"

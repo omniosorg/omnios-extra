@@ -22,6 +22,9 @@ PKG=ooce/application/nagios-plugins
 SUMMARY="Plugins for Nagios"
 DESC="This is the nagios-plugins package for Nagios."
 
+# does not yet build with OpenSSL 4
+set_opensslver 3
+
 set_arch 64
 
 BUILD_DEPENDS_IPS+="

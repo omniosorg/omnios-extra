@@ -24,6 +24,9 @@ SUMMARY="Squid WEB Proxy"
 DESC="Squid is a caching proxy for the Web supporting HTTP, HTTPS, FTP, "
 DESC+="and more."
 
+# does not yet build with OpenSSL 4
+set_opensslver 3
+
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 CONFPATH=/etc$PREFIX

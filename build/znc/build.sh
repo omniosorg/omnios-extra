@@ -24,6 +24,9 @@ SUMMARY="$PROG - an advanced IRC bouncer"
 DESC="An advanced IRC bouncer that is left connected so an IRC client "
 DESC+="can disconnect/reconnect without losing the chat session"
 
+# does not yet build with OpenSSL 4
+set_opensslver 3
+
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
 

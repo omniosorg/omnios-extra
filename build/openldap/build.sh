@@ -22,6 +22,9 @@ PKG=ooce/network/openldap
 SUMMARY="open-source LDAP implementation"
 DESC="Open-source implementation of the Lightweight Directory Access Protocol"
 
+# does not yet build with OpenSSL 4
+set_opensslver 3
+
 set_clangver
 
 # Previous versions that also need to be built and packaged since compiled

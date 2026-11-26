@@ -420,7 +420,9 @@ esac
 DEFAULT_PYTHON_VER=$PYTHON3VER
 
 # Specify expected openssl mediator setting
-if test_relver '>=' 151041; then
+if test_relver '>=' 151061; then
+    EXP_OPENSSLVER=4
+elif test_relver '>=' 151041; then
     EXP_OPENSSLVER=3
 else
     EXP_OPENSSLVER=1.1
