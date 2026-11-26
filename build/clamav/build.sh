@@ -17,14 +17,11 @@
 . ../../lib/build.sh
 
 PROG=clamav
-VER=1.5.3
+VER=1.5.5
 PKG=ooce/system/clamav
 SUMMARY="Clam Anti-virus"
 DESC="$PROG is an open-source antivirus engine for detecting trojans, "
 DESC+="viruses, malware & other malicious threats."
-
-# does not yet build with OpenSSL 4
-set_opensslver 3
 
 OPREFIX=$PREFIX
 PREFIX+="/$PROG"
