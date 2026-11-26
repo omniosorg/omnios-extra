@@ -1,0 +1,63 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/check_nrpe.c a/src/check_nrpe.c
+--- a~/src/check_nrpe.c	1970-01-01 00:00:00
++++ a/src/check_nrpe.c	1970-01-01 00:00:00
+@@ -857,9 +857,11 @@ void setup_ssl()
+ 	if (use_ssl == TRUE) {
+ 		SSL_load_error_strings();
+ 		SSL_library_init();
++#if OPENSSL_VERSION_NUMBER < 0x10100000
+ 		ENGINE_load_builtin_engines();
+ 		RAND_set_rand_engine(NULL);
+  		ENGINE_register_all_complete();
++#endif
+ 
+ #if OPENSSL_VERSION_NUMBER >= 0x10100000
+ 
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/nrpe.c a/src/nrpe.c
+--- a~/src/nrpe.c	1970-01-01 00:00:00
++++ a/src/nrpe.c	1970-01-01 00:00:00
+@@ -41,7 +41,7 @@
+ #include "acl.h"
+ 
+ #ifdef HAVE_SSL
+-# ifdef USE_SSL_DH
++# if defined(USE_SSL_DH) && OPENSSL_VERSION_NUMBER < 0x30000000
+ #  include "../include/dh.h"
+ # endif
+ #endif
+@@ -262,7 +262,6 @@ int init(void)
+ void init_ssl(void)
+ {
+ #ifdef HAVE_SSL
+-	DH            *dh;
+ 	char          seedfile[FILENAME_MAX];
+ 	char          errstr[120] = { "" };
+ 	int           i, c, x, vrfy;
+@@ -291,9 +290,11 @@ void init_ssl(void)
+ 	/* initialize SSL */
+ 	SSL_load_error_strings();
+ 	SSL_library_init();
++#if OPENSSL_VERSION_NUMBER < 0x10100000
+ 	ENGINE_load_builtin_engines();
+ 	RAND_set_rand_engine(NULL);
+  	ENGINE_register_all_complete();
++#endif
+ 
+ 	meth = SSLv23_server_method();
+ 
+@@ -497,10 +498,14 @@ void init_ssl(void)
+ 		}
+ 
+ #ifdef USE_SSL_DH
+-		dh = get_dh2048();
++# if OPENSSL_VERSION_NUMBER >= 0x30000000
++		SSL_CTX_set_dh_auto(ctx, 1);
++# else
++		DH *dh = get_dh2048();
+ 		SSL_CTX_set_tmp_dh(ctx, dh);
+ 		DH_free(dh);
+ #endif
++#endif
+ 	}
+ 
+ 	if (SSL_CTX_set_cipher_list(ctx, sslprm.cipher_list) == 0) {
