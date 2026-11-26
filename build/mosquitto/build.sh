@@ -23,9 +23,6 @@ SUMMARY="$PROG - an open source message broker"
 DESC="$PROG is an open source (EPL/EDL licensed) message broker that "
 DESC+="implements the MQTT protocol versions 5.0, 3.1.1 and 3.1."
 
-# does not yet build with OpenSSL 4
-set_opensslver 3
-
 forgo_isaexec
 test_relver '>=' 151053 && set_clangver
 set_standard XPG7 CFLAGS
