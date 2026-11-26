@@ -1,0 +1,30 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/src/osdep/unix/Makefile a/imap/src/osdep/unix/Makefile
+--- a~/imap/src/osdep/unix/Makefile	1970-01-01 00:00:00
++++ a/imap/src/osdep/unix/Makefile	1970-01-01 00:00:00
+@@ -439,7 +439,7 @@ gso:	os_sol.h	# GCC Solaris
+ 	 ACTIVEFILE=/usr/share/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+ 	 BASECFLAGS="$(GCCCFLAGS)" \
+-	 BASELDFLAGS="-lsocket -lnsl -lgen -R/usr/local/ssl/lib" \
++	 BASELDFLAGS="-lsocket -lnsl -lgen" \
+ 	 RANLIB=true CC=gcc
+ 
+ gsu:	# GCC SUN-OS
+@@ -744,7 +744,7 @@ soc:	os_sol.h	# Solaris with cc
+ 	 ACTIVEFILE=/usr/share/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+ 	 BASECFLAGS="-g -O -w" \
+-	 BASELDFLAGS="-lsocket -lnsl -lgen -R/usr/local/ssl/lib" \
++	 BASELDFLAGS="-lsocket -lnsl -lgen" \
+ 	 RANLIB=true CC=/opt/SUNWspro/bin/cc
+ 
+ 
+@@ -792,7 +792,7 @@ sol:	os_sol.h	# Solaris
+ 	 ACTIVEFILE=/usr/share/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+ 	 BASECFLAGS="-g -O2" \
+-	 BASELDFLAGS="-lsocket -lnsl -lgen -R/usr/local/ssl/lib" \
++	 BASELDFLAGS="-lsocket -lnsl -lgen" \
+ 	 RANLIB=true CC=ucbcc
+ 
+ sos:	# Secure OSF/1

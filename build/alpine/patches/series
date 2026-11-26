@@ -4,3 +4,4 @@ autoreconf.patch
 scandir-types.patch
 qsort-type.patch
 openssl4.patch
+runpath.patch
