@@ -1,0 +1,37 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Runtime/common/crypto/ssl-openssl.cpp a/src/VBox/Runtime/common/crypto/ssl-openssl.cpp
+--- a~/src/VBox/Runtime/common/crypto/ssl-openssl.cpp	1970-01-01 00:00:00
++++ a/src/VBox/Runtime/common/crypto/ssl-openssl.cpp	1970-01-01 00:00:00
+@@ -422,7 +422,7 @@ RTDECL(int) RTCrSslSessionGetCertIssuerN
+     X509 *pCert = SSL_get_certificate(pThis->pSsl);
+     if (pCert)
+     {
+-        X509_NAME *pIssuer = X509_get_issuer_name(pCert);
++        const X509_NAME *pIssuer = X509_get_issuer_name(pCert);
+         if (pIssuer)
+         {
+             char *pszSrc = X509_NAME_oneline(pIssuer, NULL, 0);
+diff -wpruN --no-dereference '--exclude=*.orig' a~/src/VBox/Runtime/common/crypto/x509-create-sign.cpp a/src/VBox/Runtime/common/crypto/x509-create-sign.cpp
+--- a~/src/VBox/Runtime/common/crypto/x509-create-sign.cpp	1970-01-01 00:00:00
++++ a/src/VBox/Runtime/common/crypto/x509-create-sign.cpp	1970-01-01 00:00:00
+@@ -156,9 +156,11 @@ RTDECL(int) RTCrX509Certificate_Generate
+         /** @todo check what the subject name is...  Offer way to specify it? */
+ 
+         /* Make it self signed: */
+-        X509_NAME *pX509Name = X509_get_subject_name(pNewCert);
+-        rcOssl = X509_NAME_add_entry_by_txt(pX509Name, "CN", MBSTRING_ASC, (unsigned char *) pvSubject, -1, -1, 0);
++        X509_NAME *pX509Name = X509_NAME_new();
++        rcOssl = X509_NAME_add_entry_by_txt(pX509Name, "CN", MBSTRING_ASC, (const unsigned char *)pvSubject, -1, -1, 0);
+         AssertStmt(rcOssl > 0, rc = RTErrInfoSet(pErrInfo, VERR_GENERAL_FAILURE, "X509_NAME_add_entry_by_txt failed"));
++        rcOssl = X509_set_subject_name(pNewCert, pX509Name);
++        AssertStmt(rcOssl > 0, rc = RTErrInfoSet(pErrInfo, VERR_GENERAL_FAILURE, "X509_set_subject_name failed"));
+         rcOssl = X509_set_issuer_name(pNewCert, pX509Name);
+         AssertStmt(rcOssl > 0, rc = RTErrInfoSet(pErrInfo, VERR_GENERAL_FAILURE, "X509_set_issuer_name failed"));
+ 
+@@ -211,6 +213,7 @@ RTDECL(int) RTCrX509Certificate_Generate
+                 rc = RTErrInfoSet(pErrInfo, VERR_CR_KEY_GEN_FAILED_RSA, "X509_sign failed");
+         }
+ 
++        X509_NAME_free(pX509Name);
+         X509_free(pNewCert);
+     }
+     else

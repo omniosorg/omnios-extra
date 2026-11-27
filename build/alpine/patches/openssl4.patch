@@ -1,0 +1,53 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/alpine/smime.c a/alpine/smime.c
+--- a~/alpine/smime.c	1970-01-01 00:00:00
++++ a/alpine/smime.c	1970-01-01 00:00:00
+@@ -389,15 +389,19 @@ output_cert_info(X509 *cert, gf_io_t pc)
+     gf_puts_uline("Serial Number", spc);
+     gf_puts(NEWLINE, spc);
+ 
+-    {   ASN1_INTEGER *bs;
++    {   const ASN1_INTEGER *bs;
++	const unsigned char *bsdata;
++	int bslen;
+ 	long l;
+ 	const char *neg;
+ 	int i;
+ 
+ 	bs = X509_get_serialNumber(cert);
+-	if (bs->length <= (int)sizeof(long)){
++	bsdata = ASN1_STRING_get0_data(bs);
++	bslen = ASN1_STRING_length(bs);
++	if (bslen <= (int)sizeof(long)){
+ 	   l = ASN1_INTEGER_get(bs);
+-           if (bs->type == V_ASN1_NEG_INTEGER){
++           if (ASN1_STRING_type(bs) == V_ASN1_NEG_INTEGER){
+ 	      l = -l;
+ 	      neg="-";
+ 	   }
+@@ -405,10 +409,10 @@ output_cert_info(X509 *cert, gf_io_t pc)
+               neg="";
+ 	   snprintf(buf, sizeof(buf), " %s%lu (%s0x%lx)", neg, l, neg, l);
+ 	} else {
+-	    snprintf(buf, sizeof(buf), "%s", bs->type == V_ASN1_NEG_INTEGER ? "(Negative)" : "");
+-	    for (i = 0; i < bs->length; i++)
+-		 snprintf(buf + strlen(buf), sizeof(buf) - strlen(buf), "%02x%s", bs->data[i],
+-			i+1 == bs->length ? "" : ":");
++	    snprintf(buf, sizeof(buf), "%s", ASN1_STRING_type(bs) == V_ASN1_NEG_INTEGER ? "(Negative)" : "");
++	    for (i = 0; i < bslen; i++)
++		 snprintf(buf + strlen(buf), sizeof(buf) - strlen(buf), "%02x%s", bsdata[i],
++			i+1 == bslen ? "" : ":");
+ 	}
+     }
+     gf_puts(buf, spc);
+diff -wpruN --no-dereference '--exclude=*.orig' a~/imap/src/osdep/unix/ssl_unix.c a/imap/src/osdep/unix/ssl_unix.c
+--- a~/imap/src/osdep/unix/ssl_unix.c	1970-01-01 00:00:00
++++ a/imap/src/osdep/unix/ssl_unix.c	1970-01-01 00:00:00
+@@ -571,7 +571,7 @@ static char *ssl_validate_cert (X509 *ce
+ 	           /* older versions of OpenSSL use "ia5" instead of dNSName */
+ 	      for (i = 0; ret && (i < n); i++)
+ 		  if ((name = sk_GENERAL_NAME_value (ext,i)) &&
+-		     (name->type = GEN_DNS) && (s = name->d.ia5->data) &&
++		     (name->type = GEN_DNS) && (s = (char *) ASN1_STRING_get0_data (name->d.ia5)) &&
+ 		     ssl_compare_hostnames (host,s)) ret = NIL;
+ 	  if(ext) GENERAL_NAMES_free(ext);
+         }

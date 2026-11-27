@@ -1,7 +1,7 @@
 diff -wpruN --no-dereference '--exclude=*.orig' a~/CMakeLists.txt a/CMakeLists.txt
 --- a~/CMakeLists.txt	1970-01-01 00:00:00
 +++ a/CMakeLists.txt	1970-01-01 00:00:00
-@@ -1256,6 +1256,8 @@ ${_}            pdcurses        ${e}${CU
+@@ -1254,6 +1254,8 @@ ${_}            pdcurses        ${e}${CU
  ${_}                            ${e}${CURSES_LIBRARIES}")
  endif()
  

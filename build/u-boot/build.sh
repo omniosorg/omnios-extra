@@ -31,11 +31,16 @@ set_args() {
     typeset arch=$1
     typeset CC=$2
 
+    # OpenSSL 4 has no ENGINE API; the stubs it provides make engine
+    # selection (mkimage -N) fail at run time instead of at link time.
     MAKE_ARGS_WS="
         V=1
         NO_PYTHON=1
         HOSTCC=\"$CC\"
-        HOSTCFLAGS=\"$CFLAGS ${CFLAGS[$arch]} -I$PREFIX/include\"
+        HOSTCFLAGS=\"
+            $CFLAGS ${CFLAGS[$arch]} -I$PREFIX/include
+            -DOPENSSL_ENGINE_STUBS
+        \"
         HOSTLDLIBS=\"
             $LDFLAGS ${LDFLAGS[$arch]}
             -L$PREFIX/${LIBDIRS[$arch]} -lnsl -lsocket

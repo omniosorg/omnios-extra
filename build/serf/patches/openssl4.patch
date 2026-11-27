@@ -1,0 +1,27 @@
+diff -wpruN --no-dereference '--exclude=*.orig' a~/buckets/ssl_buckets.c a/buckets/ssl_buckets.c
+--- a~/buckets/ssl_buckets.c	1970-01-01 00:00:00
++++ a/buckets/ssl_buckets.c	1970-01-01 00:00:00
+@@ -565,15 +565,17 @@ get_subject_alt_names(apr_array_header_t
+             GENERAL_NAME *nm = sk_GENERAL_NAME_value(names, name_idx);
+ 
+             switch (nm->type) {
+-                case GEN_DNS:
+-                    if (copy_action == ErrorOnNul &&
+-                        strlen(nm->d.ia5->data) != nm->d.ia5->length)
++                case GEN_DNS: {
++                    const char *const data =
++                        (const char *)ASN1_STRING_get0_data(nm->d.ia5);
++                    const int length = ASN1_STRING_length(nm->d.ia5);
++
++                    if (copy_action == ErrorOnNul && strlen(data) != length)
+                         return SERF_ERROR_SSL_CERT_FAILED;
+                     if (san_arr && *san_arr)
+-                        p = pstrdup_escape_nul_bytes((const char *)nm->d.ia5->data,
+-                                                     nm->d.ia5->length,
+-                                                     pool);
++                        p = pstrdup_escape_nul_bytes(data, length, pool);
+                     break;
++                }
+                 default:
+                     /* Don't know what to do - skip. */
+                     break;

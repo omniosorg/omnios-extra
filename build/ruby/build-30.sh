@@ -53,7 +53,7 @@ export MJIT_CFLAGS="-w -std=gnu17"
 
 CPPFLAGS+=" -I/usr/include/gmp"
 
-[ "$OPENSSLVER" = 3 ] && CPPFLAGS+=" -DHAVE_TS_VERIFY_CTS_SET_CERTS"
+[ "$OPENSSLVER" != 1.1 ] && CPPFLAGS+=" -DHAVE_TS_VERIFY_CTS_SET_CERTS"
 
 init
 download_source $PROG $PROG $VER

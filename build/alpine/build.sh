@@ -22,7 +22,6 @@ PKG=ooce/application/alpine
 SUMMARY="Alpine Email Program"
 DESC="$PROG - an Alternatively Licensed Program for Internet News and Email"
 
-
 OPREFIX=$PREFIX
 PREFIX+=/$PROG
 
@@ -46,11 +45,13 @@ CONFIGURE_OPTS="
     --with-system-fixed-pinerc=/etc$PREFIX/pine.conf.fixed
     --with-passfile=.pinepw
     --with-ssl-certs-dir=/etc/ssl/certs
+    --with-ssl-include-dir=$OPENSSLPATH/include/openssl
     --without-tcl
     --with-ldap-include-dir=$OPREFIX/include
 "
 CONFIGURE_OPTS[amd64]+="
     --with-ldap-lib-dir=$OPREFIX/lib/amd64
+    --with-ssl-lib-dir=$OPENSSLPATH/lib/amd64
 "
 
 CFLAGS+=" -std=gnu17"
